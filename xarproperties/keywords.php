@@ -37,7 +37,7 @@ class KeywordsProperty extends TextBoxProperty
     {
         if (!parent::validateValue($value)) return false;
 
-        $words = xarModAPIFunc('keywords', 'admin', 'separatekeywords', array('keywords' => $value));
+        $words = xarMod::apiFunc('keywords', 'admin', 'separatekeywords', array('keywords' => $value));
         $cleanwords = array();
         foreach ($words as $word) {
             if (empty($word)) continue;
@@ -54,31 +54,34 @@ class KeywordsProperty extends TextBoxProperty
 
     function getItemValue($itemid)
     {
-        return $this->getKeywords(array('value' => $itemid));
+        return $this->getKeywords(array('itemid' => $itemid));
     }
 
     public function showInput(Array $data = array())
     {
-        // The virtual datastore will use the itemid as value for this property
-        $words = $this->getKeywords($data);
+        if (!isset($data['value'])) $data['value'] = $this->getValue();
+
         $keywords = array();
-        foreach ($words as $word) $keywords[] = $word['keyword'];
+        foreach ($data['value'] as $word) $keywords[] = $word['keyword'];
         $data['value'] = implode(',', $keywords);
         return parent::showInput($data);
     }
 
     public function showOutput(Array $data = array())
     {
-        // The virtual datastore will use the itemid as value for this property
-        $words = $this->getKeywords($data);
+        if (!isset($data['value'])) $data['value'] = $this->getValue();
+
         $keywords = array();
-        foreach ($words as $word) $keywords[] = $word['keyword'];
+        foreach ($data['value'] as $word) $keywords[] = $word['keyword'];
         $data['value'] = implode(',', $keywords);
         return parent::showOutput($data);
     }
 
     private function getKeywords(Array $data = array())
     {
+        // The virtual datastore will use the itemid as value for this property
+        if (!isset($data['itemid'])) $data['itemid'] = $this->_itemid;
+
         // Make sure we have the keywords table
         xarMod::apiLoad('keywords');
 
@@ -91,7 +94,7 @@ class KeywordsProperty extends TextBoxProperty
         $q->addfield('k.keyword AS keyword');
         $q->eq('i.module_id', $this->objectref->moduleid);
         $q->eq('i.itemtype', $this->objectref->itemtype);
-        $q->eq('i.itemid', $this->_itemid);
+        $q->eq('i.itemid', $data['itemid']);
         $q->addorder('keyword', 'ASC');
 //        $q->qecho();
         $q->run();

@@ -37,7 +37,7 @@ function keywords_adminapi_limited($args)
         return;
     }
 
-    $key = xarModAPIFunc('keywords',
+    $key = xarMod::apiFunc('keywords',
                          'admin',
                          'separatekeywords',
                           array('keywords' => $keyword));

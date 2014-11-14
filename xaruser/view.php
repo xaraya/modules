@@ -186,7 +186,7 @@ function keywords_user_view($args)
 
     if (empty($keyword)) {
         // get the list of keywords that are in use
-        $words = xarModAPIFunc('keywords','user','getlist',
+        $words = xarMod::apiFunc('keywords','user','getlist',
                                array('count' => 1,
                                      'tab' => $tab));
 
@@ -215,7 +215,7 @@ function keywords_user_view($args)
             $keyword = str_replace('_',' ',$keyword);
         }
         // get the list of items to which this keyword is assigned
-        $items = xarModAPIFunc('keywords','user','getitems',
+        $items = xarMod::apiFunc('keywords','user','getitems',
                                array('keyword' => $keyword));
 
         if (!isset($items)) return;
@@ -242,13 +242,13 @@ function keywords_user_view($args)
 
             // Get the list of all item types for this module (if any)
             try {
-                $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes');
+                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes');
             } catch (Exception $e) {
                 $mytypes = array();
             }
 
             foreach ($itemtypes as $itemtype => $itemlist) {
-                $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                            array('itemtype' => $itemtype,
                                                  'itemids' => array_keys($itemlist)),
                                            0);
@@ -288,7 +288,7 @@ function keywords_user_view($args)
     // if we're given an id we redirect to item display?
     // we already got a link pointing to the item display url, why isn't that used
     // in the template instead of pointing here?
-    $items = xarModAPIFunc(
+    $items = xarMod::apiFunc(
         'keywords','user','getitems',
         array('keyword' => $keyword,
         'id' => $id)
@@ -309,7 +309,7 @@ function keywords_user_view($args)
     }
 
 // TODO: make configurable per module/itemtype
-    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+    $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                array('itemtype' => $item['itemtype'],
                                      'itemids' => array($item['itemid'])),
                                0);

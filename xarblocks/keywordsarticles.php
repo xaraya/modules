@@ -69,12 +69,12 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
             if (!empty($itemtype) && is_numeric($itemtype)) {
                 $vars['itemtype'] = $itemtype;
             } else {
-                $article = xarModAPIFunc('articles','user','get',
+                $article = xarMod::apiFunc('articles','user','get',
                                        array('aid' => $vars['itemid']));
                 $vars['itemtype'] = $article['pubtypeid'];
             }
             $vars['modid'] = xarModGetIDFromName('articles');
-            $keywords = xarModAPIFunc('keywords','user','getwords',
+            $keywords = xarMod::apiFunc('keywords','user','getwords',
                                    array('itemid' => $vars['itemid'],
                                             'itemtype' => $vars['itemtype'],
                                             'modid' => $vars['modid']));
@@ -87,7 +87,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                //$item['keyword'] = xarVarPrepForDisplay($word);
                // get the list of items to which this keyword is assigned
                //TODO Make itemtype / modid dependant
-                $items = $items + xarModAPIFunc('keywords','user','getitems',
+                $items = $items + xarMod::apiFunc('keywords','user','getitems',
                                    array('keyword' => $word,
                                         'itemtype' => $vars['ptid']));
             }
@@ -103,7 +103,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
              foreach ($itemsB as $id => $item) {
                     if ($vars['itemid'] != $item['itemid'] || $vars['modid'] != $item['moduleid']
                     || $vars['itemtype'] != $item['itemtype']) {
-                    if ( $articles = xarModAPIFunc('articles','user','get',
+                    if ( $articles = xarMod::apiFunc('articles','user','get',
                                        array('aid' => $item['itemid']))) {
                          //TODO : display config
                         //'aid','title','summary','authorid', 'pubdate','pubtypeid','notes','status','body'

@@ -23,7 +23,7 @@ function keywords_admin_overview()
 
     $data=array();
 
-    return xarTplModule('keywords', 'admin', 'main', $data,'main');
+    return xarTpl::module('keywords', 'admin', 'main', $data,'main');
 }
 
 ?>

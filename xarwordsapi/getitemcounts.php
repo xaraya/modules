@@ -9,7 +9,7 @@ function keywords_wordsapi_getitemcounts(Array $args=array())
     if (isset($keyword)) {
         // we may have been given a string list
         if (!empty($keyword) && !is_array($keyword)) {
-            $keyword = xarModAPIFunc('keywords','admin','separatekeywords',
+            $keyword = xarMod::apiFunc('keywords','admin','separatekeywords',
                 array(
                     'keywords' => $keyword,
                 ));

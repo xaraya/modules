@@ -67,7 +67,7 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
             foreach ($vars['cids'] as $id => $cid) {
                 // if we're viewing all items below a certain category, i.e. catid = _NN
                 $cid = str_replace('_', '', $cid);
-                $keywords = xarModAPIFunc('keywords','user','getwords',
+                $keywords = xarMod::apiFunc('keywords','user','getwords',
                                    array('itemid' => $cid,
                                             'modid' => $vars['modid']));
             }
@@ -78,7 +78,7 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
             foreach ($keywords as $id => $word) {
                // get the list of items to which this keyword is assigned
                //TODO Make itemtype / modid dependant
-                $items = $items + xarModAPIFunc('keywords','user','getitems',
+                $items = $items + xarMod::apiFunc('keywords','user','getitems',
                                    array('keyword' => $word,
                                         'modid' => $vars['modid']));
             }
@@ -93,7 +93,7 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
             }
              foreach ($itemsB as $id => $item) {
                  if (!in_array($item['itemid'], $vars['cids'])) {
-                        $categories = xarModAPIFunc('categories','user','getcatinfo',
+                        $categories = xarMod::apiFunc('categories','user','getcatinfo',
                                        array('cid' => $item['itemid']));
                          //TODO : display config
                         //'aid','title','summary','authorid', 'pubdate','pubtypeid','notes','status','body'

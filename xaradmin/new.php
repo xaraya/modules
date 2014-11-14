@@ -24,7 +24,7 @@ function keywords_admin_new($args)
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $data = array();
-    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarMod::apiFunc('dynamicdata','user','getobject',
                                      array('module' => 'keywords'));
     if (!isset($data['object'])) return;
     if (!empty($confirm)) {

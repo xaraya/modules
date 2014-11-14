@@ -28,7 +28,7 @@ function keywords_user_display($args)
     if (empty($itemid)) {
         return array();
     }
-    $items = xarModAPIFunc('keywords','user','getitems',
+    $items = xarMod::apiFunc('keywords','user','getitems',
                           array('id' => $itemid));
     if (!isset($items)) return;
     if (!isset($items[$itemid])) return array();
@@ -41,7 +41,7 @@ function keywords_user_display($args)
 
     if (!empty($item['itemtype'])) {
         // Get the list of all item types for this module (if any)
-        $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+        $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                  // don't throw an exception if this function doesn't exist
                                  array(), 0);
         if (isset($mytypes) && isset($mytypes[$item['itemtype']])) {
@@ -53,7 +53,7 @@ function keywords_user_display($args)
         $item['modname'] = ucwords($modinfo['name']);
     }
 
-    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+    $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                array('itemtype' => $item['itemtype'],
                                      'itemids' => array($item['itemid'])),
                                0);

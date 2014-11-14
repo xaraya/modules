@@ -89,7 +89,7 @@ function keywords_admin_privileges($args)
 
 /*
     if (!empty($moduleid)) {
-        $numitems = xarModAPIFunc('categories','user','countitems',
+        $numitems = xarMod::apiFunc('categories','user','countitems',
                                   array('modid' => $moduleid,
                                         'cids'  => (empty($cid) ? null : array($cid))
                                        ));
@@ -133,7 +133,7 @@ function keywords_admin_privileges($args)
 
 
     // Get the list of all modules currently hooked to categories
-    $hookedmodlist = xarModAPIFunc('modules','admin','gethookedmodules',
+    $hookedmodlist = xarMod::apiFunc('modules','admin','gethookedmodules',
                                    array('hookModName' => 'keywords'));
     if (!isset($hookedmodlist)) {
         $hookedmodlist = array();
@@ -170,7 +170,7 @@ function keywords_admin_privileges($args)
 
 /*
     if (!empty($moduleid)) {
-        $numitems = xarModAPIFunc('categories','user','countitems',
+        $numitems = xarMod::apiFunc('categories','user','countitems',
                                   array('modid' => $moduleid,
                                         'cids'  => (empty($cid) ? null : array($cid))
                                        ));

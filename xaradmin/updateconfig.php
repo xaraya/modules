@@ -35,7 +35,7 @@ function keywords_admin_updateconfig()
     xarModVars::set('keywords','useitemtype',$useitemtype);
 
     if (isset($keywords) && is_array($keywords)) {
-        xarModAPIFunc('keywords',
+        xarMod::apiFunc('keywords',
                       'admin',
                       'resetlimited'
         );
@@ -53,7 +53,7 @@ function keywords_admin_updateconfig()
                 }
             }
             if ($value <> '') {
-                xarModAPIFunc('keywords', 'admin', 'limited',
+                xarMod::apiFunc('keywords', 'admin', 'limited',
                               array('moduleid' => $moduleid,
                                     'keyword'  => $value,
                                     'itemtype' => $itemtype)

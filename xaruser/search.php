@@ -29,7 +29,7 @@ if (!xarSecurityCheck('ReadKeywords',0)) return '';
            return $data;
         }
 
-    $data['keys'] = xarModAPIFunc('keywords',
+    $data['keys'] = xarMod::apiFunc('keywords',
                                 'user',
                                 'search',
                                array('q' => $q));
