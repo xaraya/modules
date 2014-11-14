@@ -41,18 +41,20 @@
                 </tbody>
             </table>
             <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
-            <p class="xar-align-center">
-                <xar:if condition="xarController::isLocalReferer()">
-                    <xar:var name="label">Go back</xar:var>
-                    <xar:button type="cancel" label="$label"/>
-                    <a href="#xarServer::getVar('HTTP_REFERER')#" onclick="history.go(-1);return false;">Click here to go back</a>
-                <xar:else/>
-                    <xar:var name="label">View keywords</xar:var>
-                    <xar:set name="target">xarModURL('keywords', 'user', 'main')</xar:set>
-                    <xar:button type="link" label="$label" target="$target"/>
-                    <a href="#)#">Click here to view keywords list</a>
-                </xar:if>
-            </p>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <xar:if condition="xarController::isLocalReferer()">
+                        <xar:var name="label">Go back</xar:var>
+                        <xar:button type="cancel" label="$label"/>
+                    <xar:else/>
+                        <xar:var name="label">View keywords</xar:var>
+                        <xar:set name="target">xarModURL('keywords', 'user', 'view')</xar:set>
+                        <xar:button type="link" label="$label" target="$target"/>
+                    </xar:if>
+                </div>
+            </div>
 
         <xar:else/>
             <xar:if condition="$user_layout eq 'list'">
