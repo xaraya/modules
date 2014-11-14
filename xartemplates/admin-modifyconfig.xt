@@ -12,7 +12,7 @@
                 <xar:if condition="!empty($module_settings)">
                     <fieldset>
                         <legend>Module Settings</legend>
-                        <xar:data-form object="$module_settings" tplmodule="keywords"/>
+                        <xar:data-form object="$module_settings"/>
                     </fieldset>
                     <fieldset>
                         <legend>Admin Settings</legend>
