@@ -19,11 +19,8 @@ function keywords_user_view($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
 
-    if (!xarVarFetch('keyword', 'pre:trim:str:1:',
-        $keyword, null, XARVAR_DONT_SET)) return;
-
-    if (!xarVarFetch('startnum', 'int:1:',
-        $startnum, null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('keyword', 'pre:trim:str:1:', $keyword, null, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, null, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
 
@@ -132,6 +129,7 @@ function keywords_user_view($args)
                         'numitems' => $items_per_page,
                         'skip_restricted' => true,
                     ));
+                    
                 $data['cols_per_page'] = $cols_per_page;
                 $data['items_per_page'] = $items_per_page;
                 $data['total'] = $total;
