@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="cloud_module_id">Module</label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
-                        <xar:data-input type="dropdown" name="cloud_module_id" id="cloud_module_id" value="$cloud_module_id" options="$modlist" firstline="$firstline" onchange="this.form.submit();return false;"/>
-                        <xar:if condition="empty($modlist)">
-                            <p class="xar-note">Keywords does not appear to be hooked to any modules</p>
-                        </xar:if>
-                    </div>
-                </div>
-                <xar:if condition="!empty($cloud_module_id)">
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="cloud_itemtype">Itemtype</label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:if condition="!empty($typelist)">
-                            <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
-                            <xar:data-input type="dropdown" name="cloud_itemtype" id="cloud_itemtype" value="$cloud_itemtype" options="$typelist" firstline="$firstline" onchange="this.form.submit();return false;"/>
-                        <xar:else/>
-                            <xar:data-input type="integerbox" name="cloud_itemtype" id="cloud_itemtype" value="$cloud_itemtype" size="10"/>&#160; (0 = All Itemtypes)
-                        </xar:if>
-                    </div>
-                </div>
-                </xar:if>
-
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="fminTitle">Minimum font size to use</xar:var>
-            <label for="cloud_font_min" title="#$fminTitle#">Cloud minimum font size</label>
-        </div>
-        <div class="xar-col">
-            <xar:data-input type="integerbox" name="cloud_font_min" id="cloud_font_min" value="$cloud_font_min"/>
-        </div>
-    </div>
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="fmaxTitle">Maximum font size to use</xar:var>
-            <label for="cloud_font_max" title="#$fmaxTitle#">Cloud maximum font size</label>
-        </div>
-        <div class="xar-col">
-            <xar:data-input type="integerbox" name="cloud_font_max" id="cloud_font_max" value="$cloud_font_max"/>
-        </div>
-    </div>
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="fsTitle">The font size units to use</xar:var>
-            <label for="cloud_font_unit" title="#$fsTitle#">Cloud font size units</label>
-        </div>
-        <div class="xar-col">
-            <xar:data-input type="dropdown" name="cloud_font_unit" id="cloud_font_unit" value="$cloud_font_unit" options="$font_units"/>
-        </div>
-    </div>
-
-<!--
     <div class="xar-row">
         <div class="xar-col">
             <xar:set name="idvalue">'color' .$blockid</xar:set>
@@ -101,6 +44,31 @@
     </div>
     <div class="xar-row">
         <div class="xar-col">
+            <xar:set name="idvalue">'module_id' .$blockid</xar:set>
+            <label for="#$idvalue#" class="xar-form-label" title="#xarML('Choose the module for this block')#">
+                Module:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:var name="firstline">All</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:data-input type="module" name="module_id" id="$idvalue" value="$module_id" firstline="$firstline" maxlength="6" class="xar-form-textshort"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:set name="idvalue">'itemtype' .$blockid</xar:set>
+            <label for="#$idvalue#" class="xar-form-label" title="#xarML('Choose the itemtype for this block')#">
+                Itemtype:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="integerbox" name="itemtype" id="$idvalue" value="$itemtype" maxlength="6" class="xar-form-textshort"/>
+            &#160; (Empty field or zero means 'All')
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
             &#160;
         </div>
         <div class="xar-col">
@@ -109,5 +77,4 @@
             </xar:if>
         </div>
     </div>
--->
 </xar:template>
