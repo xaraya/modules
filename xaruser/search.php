@@ -27,10 +27,7 @@ if (!xarSecurityCheck('ReadKeywords',0)) return '';
     $data = array();
     if($q == '') return $data;
 
-    $data['keys'] = xarMod::apiFunc('keywords',
-                                'user',
-                                'search',
-                               array('q' => $q));
+    $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', array('q' => $q));
 
     if (empty ($data['keys'])){
         $data['status'] = xarML('No Keywords found matching this search');
