@@ -24,7 +24,7 @@ if (!xarSecurityCheck('ReadKeywords',0)) return '';
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
 
 
-    $data = array();
+    $data['keys'] = array();
     if($q == '') return $data;
 
     $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', array('q' => $q));

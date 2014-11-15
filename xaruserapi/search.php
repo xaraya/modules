@@ -18,14 +18,10 @@ function keywords_userapi_search($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
 
-    if (empty($args) || count($args) < 1) {
-        return;
-    }
+    if (empty($args) || count($args) < 1)  return;
 
     extract($args);
-    if($q == ''){
-        return;
-    }
+    if($q == '') return;
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
