@@ -3,7 +3,7 @@
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
         <h2>Search in Keywords</h2>
-        <xar:if condition="!empty($keys) and count($keys) gt 0">
+        <xar:if condition="!empty($keys) AND (count($keys) gt 0)">
             <h4>Keywords Found:</h4>
             <ul>
                 <xar:foreach in="$keys" key="$id" value="$item">
