@@ -13,7 +13,7 @@
 
 /**
  * Search for keywords
- * @return array Retreived keywords
+ * @return array retrieved keywords
  */
 function keywords_user_search($args)
 {
@@ -25,9 +25,7 @@ if (!xarSecurityCheck('ReadKeywords',0)) return '';
 
 
     $data = array();
-        if($q == ''){
-           return $data;
-        }
+    if($q == '') return $data;
 
     $data['keys'] = xarMod::apiFunc('keywords',
                                 'user',
