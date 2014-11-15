@@ -7,7 +7,7 @@
             <h4>Keywords Found:</h4>
             <ul>
                 <xar:foreach in="$keys" key="$id" value="$item">
-                    <li><a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $item['keyword']))#">#$item['keyword']#</a></li>
+                    <li><a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#">#$item['keyword']#</a></li>
                 </xar:foreach>
             </ul>
         <xar:else/>
