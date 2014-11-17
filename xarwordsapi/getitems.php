@@ -114,7 +114,7 @@ function keywords_wordsapi_getitems(Array $args=array())
         $select['module_id'] = 'idx.module_id';
         $select['itemtype'] = 'idx.itemtype';
         $select['itemid'] = 'idx.itemid';
-        $where[] = 'words.index_id = idx.id';
+        $where[] = 'words.id = idx.keyword_id';
         $select['module'] = 'mods.name';
         $from['mods'] = "$modstable mods";
         $where[] = 'mods.regid = idx.module_id';

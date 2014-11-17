@@ -6,6 +6,9 @@ function keywords_wordsapi_countitems(Array $args=array())
     if (isset($id) && (empty($id) || !is_numeric($id)))
         $invalid[] = 'id';
 
+    if (isset($index_id) && (empty($index_id) || !is_numeric($index_id)))
+        $invalid[] = 'index_id';
+
     if (isset($keyword)) {
         // we may have been given a string list
         if (!empty($keyword) && !is_array($keyword)) {
@@ -58,13 +61,18 @@ function keywords_wordsapi_countitems(Array $args=array())
     $orderby = array();
     $bindvars = array();
 
-    $select['count'] = "COUNT(DISTINCT words.id) as count";
+    $select['count'] = "COUNT(DISTINCT words.index_id) as count";
 
     $from['words'] = "$wordstable words";
 
     if (!empty($id)) {
         $where[] = 'words.id = ?';
         $bindvars[] = $id;
+    }
+
+    if (!empty($index_id)) {
+        $where[] = 'words.index_id = ?';
+        $bindvars[] = $index_id;
     }
 
     if (!empty($keyword)) {
