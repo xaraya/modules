@@ -19,15 +19,15 @@ function keywords_user_search($args)
 {
 if (!xarSecurityCheck('ReadKeywords',0)) return '';
 
-    if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('search',   'isset', $search,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
 
 
     $data['keys'] = array();
-    if($q == '') return $data;
+    if($search == '') return $data;
 
-    $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', array('q' => $q));
+    $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', array('search' => $search));
 
     if (empty ($data['keys'])){
         $data['status'] = xarML('No Keywords found matching this search');

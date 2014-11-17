@@ -21,48 +21,23 @@ function keywords_userapi_search($args)
     if (empty($args) || count($args) < 1)  return;
 
     extract($args);
-    if($q == '') return;
-
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $keywordstable = $xartable['keywords'];
+    if($args['search'] == '') return;
 
     // Get item
-    $query = "SELECT DISTINCT id,
-                   keyword,
-                   module_id,
-                   itemtype,
-                   itemid
-                   FROM $keywordstable
-                   WHERE keyword LIKE '%$q%'
-                   GROUP BY keyword";
+    sys::import('xaraya.structures.query');
+    $tables = xarDB::getTables();
+    $q = new Query('SELECT');
+    $q->addtable($tables['keywords'], 'k');
+    $q->addtable($tables['keywords_index'], 'i');
+    $q->join('k.id', 'i.keyword_id');
+    $q->addfield('k.keyword AS keyword');
+    $q->addfield('i.module_id AS module_id');
+    $q->addfield('i.itemtype AS itemtype');
+    $q->addfield('i.itemid AS itemid');
+    $q->like('keyword', $args['search']);
+    $q->run();
 
-    $result =& $dbconn->Execute($query);
-        if (!$result) return;
-
-        $keys = array();
-
-        if ($result->EOF) {
-        $result->Close();
-        return $keys;
-    }
-
-
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $keyword, $moduleid, $itemtype, $itemid) = $result->fields;
-        if (xarSecurityCheck('ReadKeywords',0)) {
-            $keys[] = array('id' => $id,
-                             'keyword' => $keyword,
-                             'moduleid' => $moduleid,
-                             'itemtype' => $itemtype,
-                             'itemid' => $itemid);
-        }
-    }
-    $result->Close();
-
-
-    // Return the users
-    return $keys;
+    return $q->output();
 
 }
 ?>

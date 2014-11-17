@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:set name="idvalue">'module_id' .$blockid</xar:set>
+            <label for="#$idvalue#" class="xar-form-label" title="#xarML('Choose the module for this block')#">
+                Module:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:var name="firstline">All</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:data-input type="module" name="module_id" id="$idvalue" value="$module_id" firstline="$firstline" maxlength="6" class="xar-form-textshort"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:set name="idvalue">'itemtype' .$blockid</xar:set>
+            <label for="#$idvalue#" class="xar-form-label" title="#xarML('Choose the itemtype for this block')#">
+                Itemtype:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="integerbox" name="itemtype" id="$idvalue" value="$itemtype" maxlength="6" class="xar-form-textshort"/>
+            &#160; (Empty field or zero means 'All')
+        </div>
+    </div>
+</xar:template>

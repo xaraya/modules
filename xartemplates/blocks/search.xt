@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <form action="#xarModURL('keywords','user','search')#" method="post" class="xar-margin-none">
+        <xar:set name="itemtypeid">'itemtypeid'.$_bl_block_id</xar:set>
+        <input type="hidden" name="itemtype" id="#$itemtypeid#" value="#$itemtype#"/>
+        <xar:set name="module_idid">'module_id'.$_bl_block_id</xar:set>
+        <input type="hidden" name="module_id" id="#$module_idid#" value="#$module_id#"/>
+	    <div>
+            <xar:var name="label">Search for keywords</xar:var>
+            <xar:set name="searchid">'uname'.$_bl_block_id</xar:set>
+            <label for="#$searchid#" title="#$label#">Keywords:</label>
+            <xar:data-input type="textarea" class="xar-fullwidth" name="search" id="$searchid"/>
+	        <xar:var name="label">Search</xar:var>
+            <xar:button type="submit" label="$label"/>
+	    </div>
+    </form>
+</xar:template>
