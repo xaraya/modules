@@ -16,7 +16,7 @@ function keywords_userapi_getkeywordhits($args)
     if (!isset($args['cloudtype'])) $args['cloudtype'] = 3;
 
     // Return nothing if we asked for hits and the hitcount module is not available
-    if ($args['cloudtype'] == 1 && !xarModIsAvailable('hitcount')) return array();
+    if ($args['cloudtype'] == 1 && !xarMod::isAvailable('hitcount')) return array();
 
     sys::import('xaraya.structures.query');
 
