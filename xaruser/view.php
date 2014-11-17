@@ -193,7 +193,7 @@ function keywords_user_view($args)
             if (empty($word)) continue;
             $items[] = array(
                 'url' => xarModURL(
-                    'keywords', 'user', 'main', array('keyword' => $word)
+                    'keywords', 'user', 'view', array('keyword' => $word)
                 ),
                 'label' => xarVarPrepForDisplay($word),
                 'count' => $count
@@ -320,7 +320,6 @@ function keywords_user_view($args)
     }
 
     xarController::redirect($url);
-
     return true;
 }
 
