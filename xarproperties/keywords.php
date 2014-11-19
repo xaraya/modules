@@ -13,7 +13,7 @@
 
 sys::import('modules.base.xarproperties.textbox');
 
-class KeywordsProperty extends TextBoxProperty
+class KeywordsProperty extends TextAreaProperty
 {
     public $id         = 30117;
     public $name       = 'keywords';
@@ -126,7 +126,7 @@ class KeywordsProperty extends TextBoxProperty
 # Check if we have the words in the database and add those missing
 #
     private function updateKeywords($words) 
-    {        
+    {echo "X";exit;
         if (empty($words)) return array();
         
         // Make sure we have the keywords table
