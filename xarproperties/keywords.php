@@ -126,7 +126,7 @@ class KeywordsProperty extends TextAreaProperty
 # Check if we have the words in the database and add those missing
 #
     private function updateKeywords($words) 
-    {echo "X";exit;
+    {
         if (empty($words)) return array();
         
         // Make sure we have the keywords table
