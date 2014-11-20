@@ -13,7 +13,7 @@
 
 sys::import('xaraya.structures.query');
 
-class Association extends Object
+class Keyword_Association extends Object
 {
     public $tables;
     

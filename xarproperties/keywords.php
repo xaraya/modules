@@ -172,7 +172,7 @@ class KeywordsProperty extends TextAreaProperty
         $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
         if (!empty($moduleid) && !empty($itemid)) {
             sys::import('modules.keywords.class.association');
-            $association = new Association();
+            $association = new Keyword_Association();
             $association->sync_associations($moduleid, $this->objectref->itemtype, $itemid, $keyword_ids);
         }
         return true;
@@ -188,7 +188,7 @@ class KeywordsProperty extends TextAreaProperty
         $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
         if (!empty($moduleid) && !empty($itemid)) {
             sys::import('modules.keywords.class.association');
-            $association = new Association();
+            $association = new Keyword_Association();
             $args = array(
                     'module_id'    => $moduleid,
                     'itemtype'     => $this->objectref->itemtype,
@@ -208,7 +208,7 @@ class KeywordsProperty extends TextAreaProperty
         $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
         if (!empty($moduleid) && !empty($itemid)) {
             sys::import('modules.keywords.class.association');
-            $association = new Association();
+            $association = new Keyword_Association();
             $args = array(
                     'keyword_id'  => $keyword_id,
                     'module_id'    => $moduleid,
