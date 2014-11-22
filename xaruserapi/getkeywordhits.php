@@ -24,9 +24,11 @@ function keywords_userapi_getkeywordhits($args)
     $xartable =& xarDB::getTables();
 
     $q = new Query('SELECT');
+    $q->addtable($xartable['keywords_index'],'i');
     $q->addtable($xartable['keywords'],'k');
+    $q->join('i.keyword_id', 'k.id');
     $q->addfield('k.keyword AS keyword');
-    $q->addfield('COUNT(k.id) AS count');
+    $q->addfield('COUNT(i.id) AS count');
 
     if ($args['cloudtype'] == 2) {
         xarMod::apiLoad('hitcount');
