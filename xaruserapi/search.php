@@ -39,7 +39,7 @@ function keywords_userapi_search($args)
     $q->addfield('i.itemid AS itemid');
     $a = array();
     foreach ($words as $word) {
-        $a[] = $q->plike('keyword', $args['search']);
+        $a[] = $q->plike('keyword', "%" . $words . "%");
     }
     $q->qor($a);
     $q->setgroup('keyword');
