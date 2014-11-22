@@ -47,8 +47,9 @@ function keywords_userapi_search($args)
     $q->addorder('keyword','ASC');
     $q->optimize = false;
     $q->run();
+    $result = $q->output();
 
-    return $q->output();
+    return $result;
 
 }
 ?>

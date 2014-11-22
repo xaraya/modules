@@ -8,7 +8,7 @@
                 <legend>Keywords Found</legend>
                 <ul>
                     <xar:foreach in="$keys" key="$id" value="$item">
-                        <li><a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#">#$item['keyword']#</a></li>
+                        <li><a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#">#$item['keyword']#</a> (#$count#)</li>
                     </xar:foreach>
                 </ul>
             </fieldset>
