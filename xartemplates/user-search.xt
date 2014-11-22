@@ -13,9 +13,16 @@
                 </ul>
             </fieldset>
         <xar:else/>
-                <xar:if condition="!empty($status)">
-                    <p>#$status#</p>
-                </xar:if>
+            <p>
+                <xar:ml>
+                    <xar:mlsring>
+                        No keywords found that matched #(1)
+                    <xar:mlsring>
+                    <xar:mlvar>
+                        #$search#
+                    </xar:mlvar>
+                </xar:ml>
+            </p>
         </xar:if>
     </div>
 </xar:template>
