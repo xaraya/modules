@@ -4,16 +4,18 @@
     <div class="xar-mod-body">
         <h2>Search in Keywords</h2>
         <xar:if condition="!empty($keys) AND (count($keys) gt 0)">
-            <h4>Keywords Found:</h4>
-            <ul>
-                <xar:foreach in="$keys" key="$id" value="$item">
-                    <li><a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#">#$item['keyword']#</a></li>
-                </xar:foreach>
-            </ul>
+            <fieldset>
+                <legend>Keywords Found</legend>
+                <ul>
+                    <xar:foreach in="$keys" key="$id" value="$item">
+                        <li><a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#">#$item['keyword']#</a></li>
+                    </xar:foreach>
+                </ul>
+            </fieldset>
         <xar:else/>
-            <xar:if condition="!empty($status)">
-                <p>#$status#</p>
-            </xar:if>
+                <xar:if condition="!empty($status)">
+                    <p>#$status#</p>
+                </xar:if>
         </xar:if>
     </div>
 </xar:template>
