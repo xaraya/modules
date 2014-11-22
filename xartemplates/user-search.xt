@@ -15,9 +15,9 @@
         <xar:else/>
             <p>
                 <xar:ml>
-                    <xar:mlsring>
+                    <xar:mlstring>
                         No keywords found that matched #(1)
-                    <xar:mlsring>
+                    </xar:mlstring>
                     <xar:mlvar>
                         #$search#
                     </xar:mlvar>
