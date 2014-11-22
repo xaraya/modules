@@ -41,14 +41,16 @@ function keywords_userapi_getkeywordhits($args)
     }
     $q->addgroup('k.keyword');
     $q->addorder('k.keyword','ASC');
+    $q->optimize = false;
     $q->run();
+    $result = $q->output();
 
     // Reorganize to an array where the keywords are keys
     $tags = array();
     if ($args['cloudtype'] == 2) {
-        foreach ($q->output() as $tag) $tags[$tag['keyword']] = $tag['hits'];
+        foreach ($result as $tag) $tags[$tag['keyword']] = $tag['hits'];
     } else {
-        foreach ($q->output() as $tag) $tags[$tag['keyword']] = $tag['count'];
+        foreach ($result as $tag) $tags[$tag['keyword']] = $tag['count'];
     }
     return $tags;
 }
