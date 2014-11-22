@@ -37,12 +37,15 @@ function keywords_userapi_search($args)
     $q->addfield('i.module_id AS module_id');
     $q->addfield('i.itemtype AS itemtype');
     $q->addfield('i.itemid AS itemid');
+    $q->addfield('COUNT(i.id) AS count');
     $a = array();
     foreach ($words as $word) {
         $a[] = $q->plike('keyword', "%" . $word . "%");
     }
     $q->qor($a);
     $q->setgroup('keyword');
+    $q->addorder('keyword','ASC');
+    $q->optimize = false;
     $q->run();
 
     return $q->output();
