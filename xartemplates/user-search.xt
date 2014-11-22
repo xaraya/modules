@@ -16,7 +16,7 @@
             <p>
                 <xar:ml>
                     <xar:mlstring>
-                        No keywords found that matched #(1)
+                        No keywords found that matched "#(1)"
                     </xar:mlstring>
                     <xar:mlvar>
                         #$search#
