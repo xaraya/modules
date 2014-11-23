@@ -91,15 +91,6 @@ class Publication extends DataObject
         $this->fieldlist = array();
 
         $id = parent::createItem($args);
-
-/*
-        // Call any hooked modules
-        $extraInfo = array(
-            'object' => $this->name,
-            'content' => serialize($this->getFieldVAlues(array(), 1)),
-        );
-        xarModCallHooks('item', 'create', $id, $extraInfo, 'publications', $ptid);
-*/
         return $id;
     }
 
@@ -131,14 +122,6 @@ class Publication extends DataObject
         // Save the item
         $id = parent::updateItem($args);
         
-/*
-        // Call any hooked modules
-        $extraInfo = array(
-            'object' => $this->name,
-            'content' => serialize($this->getFieldVAlues(array(), 1)),
-        );
-        xarModCallHooks('item', 'update', $id, $extraInfo, 'publications', $ptid);
-*/
         return $id;
     }
 }
