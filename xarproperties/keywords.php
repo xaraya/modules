@@ -11,7 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.base.xarproperties.textbox');
+sys::import('modules.base.xarproperties.textarea');
 
 class KeywordsProperty extends TextAreaProperty
 {
