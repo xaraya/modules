@@ -151,19 +151,18 @@ function publications_user_display($args)
     $redirect_type = $data['object']->properties['redirect_flag']->value;
     if ($redirect_type == 1) {
         // This is a simple redirect to another page
-            try {
-                $url = $data['object']->properties['redirect_url']->value;
-                
-                // Check if this is a Xaraya function
-                $pos = strpos($url, 'xar');
-                if ($pos === 0) {
-                    eval('$url = ' . $url .';');
-                }
-                
-                xarController::redirect($url, 301);    
-            } catch (Exception $e) {
-                return xarResponse::NotFound();
+        $url = $data['object']->properties['redirect_url']->value;
+        if (empty($url)) return xarResponse::NotFound();
+        try {
+            // Check if this is a Xaraya function
+            $pos = strpos($url, 'xar');
+            if ($pos === 0) {
+                eval('$url = ' . $url .';');
             }
+            xarController::redirect($url, 301);    
+        } catch (Exception $e) {
+            return xarResponse::NotFound();
+        }
     } elseif ($redirect_type == 2) {
         // This displays a page of a different module    
         // If this is from a link of a redirect child page, use the child param as new URL
@@ -178,6 +177,7 @@ function publications_user_display($args)
         }
         
         // Bail if the URL is bad
+        if (empty($url)) return xarResponse::NotFound();
         try {
             // Check if this is a Xaraya function
             $pos = strpos($url, 'xar');
