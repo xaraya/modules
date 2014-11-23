@@ -151,7 +151,7 @@ function publications_user_display($args)
     $redirect_type = $data['object']->properties['redirect_flag']->value;
     if ($redirect_type == 1) {
         // This is a simple redirect to another page
-        $url = $data['object']->properties['redirect_url']->value;
+        $url = $data['object']->properties['redirect_url']->value; 
         if (empty($url)) return xarResponse::NotFound();
         try {
             // Check if this is a Xaraya function
