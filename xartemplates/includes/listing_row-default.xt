@@ -34,6 +34,10 @@
                 <xar:if condition="$field eq $primaryalias AND !$show_primary">
                     <xar:continue />
                 </xar:if>
+                <!-- Don't show the itemtype. We only added it because we need the value -->
+                <xar:if condition="$column eq 'itemtype'">
+                    <xar:continue />
+                </xar:if>
                 <td>
                     <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditPublications',0)">
                         <a href="#xarModURL('publications','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
