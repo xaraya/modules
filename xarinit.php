@@ -184,8 +184,8 @@ function publications_init()
     xarModVars::set('publications', 'noprivspage', 4);
     xarModVars::set('publications', 'debugmode', false);
     xarModVars::get('publications', 'multilanguage', true);
-    xarModVars::set('publications', 'defaultfrontpage','[publications:user:display]&id=1');
-    xarModVars::set('publications', 'defaultbackpage','[publications:admin:view_pages]');
+    xarModVars::set('publications', 'frontend_page','[publications:user:display]&id=1');
+    xarModVars::set('publications', 'backend_page','[publications:admin:view_pages]');
     xarModVars::set('publications', 'use_process_states',0);
     xarModVars::set('publications', 'use_versions',0);
     xarModVars::set('publications', 'hide_tree_display',0);

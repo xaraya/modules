@@ -33,7 +33,7 @@ function publications_user_main($args)
 #
 # No default page, check for a redirect or just show the view page
 #
-        $redirect = xarModVars::get('publications','defaultfrontpage');
+        $redirect = xarModVars::get('publications','frontend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
             $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
