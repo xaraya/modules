@@ -32,6 +32,7 @@ function publications_user_update()
     if(!xarVarFetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
+	if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
@@ -67,7 +68,7 @@ function publications_user_update()
     // Store each item for later processing
         $itemsdata[$prefix] = $data['object']->getFieldValues(array(),1);
     }
-    
+   
     if ($data['preview'] || !$isvalid) {
         // Show debug info if called for
         if (!$isvalid && 
