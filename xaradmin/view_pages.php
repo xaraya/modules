@@ -32,7 +32,6 @@ function publications_admin_view_pages($args)
         'publications', 'user', 'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id)
     );
-    echo "<pre>";var_dump($data);exit;
 
    if (empty($data['pages'])) {
         // TODO: pass to template.

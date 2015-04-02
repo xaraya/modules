@@ -353,6 +353,7 @@ function publications_admin_view($args=array())
 
     // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $ptid)));
+    echo "<pre>";var_dump($data);exit;
     
     return xarTplModule('publications', 'admin', 'view', $data, $template);
 }
