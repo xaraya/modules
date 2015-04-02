@@ -75,7 +75,7 @@ function publications_admin_modifyconfig()
 
         //The usual bunch of vars
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'publications'));
-        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, user_menu_link', 'use_module_icons');
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, user_menu_link, use_module_icons, frontend_page, backend_page');
         $data['module_settings']->getItem();
 
         $data['shorturls'] = xarModVars::get('publications','SupportShortURLs') ? true : false;
