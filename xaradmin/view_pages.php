@@ -32,6 +32,7 @@ function publications_admin_view_pages($args)
         'publications', 'user', 'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id)
     );
+    echo "<pre>";var_dump($data);exit;
 
    if (empty($data['pages'])) {
         // TODO: pass to template.
@@ -46,7 +47,6 @@ function publications_admin_view_pages($args)
     // EditPage - allows basic changes, but no moving or renaming (good for sub-editors who manage content)
     // AddPage - new pages can be added (further checks may limit it to certain page types)
     // DeletePage - page can be renamed, moved and deleted
-    echo "<pre>";var_dump($data);exit;
     if (!empty($data['pages'])) {
         // Bring in the access property for security checks
         sys::import('modules.dynamicdata.class.properties.master');
