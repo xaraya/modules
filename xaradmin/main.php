@@ -21,7 +21,7 @@ function publications_admin_main()
     // Security Check
     if (!xarSecurityCheck('EditPublications')) return;
 
-    $redirect = xarModVars::get('publications','defaultbackpage');
+    $redirect = xarModVars::get('publications','backend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
         $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
