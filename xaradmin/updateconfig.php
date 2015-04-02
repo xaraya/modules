@@ -40,8 +40,6 @@ function publications_admin_updateconfig()
         if(!xarVarFetch('sortpubtypes',        'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('defaultlanguage',    'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('debugmode',          'checkbox', $debugmode, xarModVars::get('publications', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('frontend_page',      'str', $frontend_page, xarModVars::get('publications', 'frontend_page'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('backend_page',       'str', $backend_page, xarModVars::get('publications', 'backend_page'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('use_process_states', 'checkbox', $use_process_states, xarModVars::get('publications', 'use_process_states'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('use_versions',       'checkbox', $use_versions, xarModVars::get('publications', 'use_versions'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('hide_tree_display',  'checkbox', $hide_tree_display, xarModVars::get('publications', 'hide_tree_display'), XARVAR_NOT_REQUIRED)) return;
@@ -53,8 +51,6 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'debugmode', $debugmode);
         xarModVars::set('publications', 'usealias', $usealias);
         xarModVars::set('publications', 'usetitleforurl', $usetitleforurl);
-        xarModVars::set('publications', 'frontend_page',$defaultfrontpage);
-        xarModVars::set('publications', 'backend_page',$defaultbackpage);
         xarModVars::set('publications', 'use_process_states',$use_process_states);
         xarModVars::set('publications', 'use_versions',$use_versions);
         xarModVars::set('publications', 'hide_tree_display',$hide_tree_display);
