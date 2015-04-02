@@ -64,7 +64,7 @@ function publications_user_update()
         // Now get the input from the form
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
-    // Store each item for later processing
+        // Store each item for later processing
         $itemsdata[$prefix] = $data['object']->getFieldValues(array(),1);
     }
     
