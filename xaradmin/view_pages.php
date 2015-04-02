@@ -46,6 +46,7 @@ function publications_admin_view_pages($args)
     // EditPage - allows basic changes, but no moving or renaming (good for sub-editors who manage content)
     // AddPage - new pages can be added (further checks may limit it to certain page types)
     // DeletePage - page can be renamed, moved and deleted
+    echo "<pre>";var_dump($data);exit;
     if (!empty($data['pages'])) {
         // Bring in the access property for security checks
         sys::import('modules.dynamicdata.class.properties.master');
@@ -91,7 +92,7 @@ function publications_admin_view_pages($args)
 
     // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL());
-    echo "<pre>";var_dump($data);exit;
+    
     return $data;
 }
 
