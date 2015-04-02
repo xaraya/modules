@@ -91,7 +91,7 @@ function publications_admin_view_pages($args)
 
     // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL());
-    
+    echo "<pre>";var_dump($data);exit;
     return $data;
 }
 
