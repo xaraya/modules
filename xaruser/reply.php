@@ -74,8 +74,11 @@ function comments_user_reply()
 # --------------------------------------------------------
 # Everything is go: if there is a comment, create and go to the next page
 #
-            if (!empty($data['reply']->properties['text']->value))
+            if (!empty($data['reply']->properties['text']->value)) {
                 $data['comment_id'] = $data['reply']->createItem();
+            } else {
+                $data['comment_id'] = 0;
+            }
             xarController::redirect($data['reply']->properties['parent_url']->value.'#'.$data['comment_id']);
             return true;
 
