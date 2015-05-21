@@ -16,7 +16,7 @@
  * Displays a summary of category subscribtions and basic metrics. Provides options
  * to view details about each subscription
  */
-function pubsub_admin_viewall()
+function pubsub_admin_view()
 {
 
     $data['items'] = array();
@@ -26,9 +26,7 @@ function pubsub_admin_viewall()
     if (!xarSecurityCheck('AdminPubSub')) return;
 
     // The user API function is called
-    $events = xarMod::apiFunc('pubsub',
-                            'admin',
-                            'getall');
+    $events = xarMod::apiFunc('pubsub', 'admin', 'getall');
 
     $data['items'] = $events;
 
@@ -39,6 +37,6 @@ function pubsub_admin_viewall()
 
     return $data;
 
-} // END ViewAll
+}
 
 ?>
