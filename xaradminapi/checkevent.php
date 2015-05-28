@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * get a pubsub event id, or create the event if necessary
@@ -49,14 +50,14 @@ function pubsub_adminapi_checkevent($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // check this event isn't already in the DB
-    $query = "SELECT xar_eventid
+    $query = "SELECT eventid
               FROM  $pubsubeventstable
-              WHERE xar_modid = ?
-              AND   xar_itemtype = ?
-              AND   xar_cid = ?";
+              WHERE modid = ?
+              AND   itemtype = ?
+              AND   cid = ?";
     $bindvars = array((int)$modid, (int)$itemtype, (int)$cid);
     if (isset($extra)) {
-        $query .= ' AND xar_extra = ?';
+        $query .= ' AND extra = ?';
         array_push($bindvars, $extra);
     }
     $result = $dbconn->Execute($query, $bindvars);
@@ -81,12 +82,12 @@ function pubsub_adminapi_checkevent($args)
 
     // Add item to events table
     $query = "INSERT INTO $pubsubeventstable (
-              xar_eventid,
-              xar_modid,
-              xar_itemtype,
-              xar_cid,
-              xar_extra,
-              xar_groupdescr)
+              eventid,
+              modid,
+              itemtype,
+              cid,
+              extra,
+              groupdescr)
             VALUES (?,?,?,?,?,?)";
 
     $bindvars = array((int)$eventid, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr);
@@ -95,7 +96,7 @@ function pubsub_adminapi_checkevent($args)
     if (!$result) return;
 
     // Get the ID of the item that was inserted
-    $eventid = $dbconn->PO_Insert_ID($pubsubeventstable, 'xar_eventid');
+    $eventid = $dbconn->PO_Insert_ID($pubsubeventstable, 'eventid');
 
     // return eventID
     return $eventid;

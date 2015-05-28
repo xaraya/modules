@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * unsubscribe user from a pubsub element
@@ -28,10 +29,10 @@ function pubsub_userapi_unsubscribe($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($modid))     { $invalid[] = 'modid'; }
+    if (!isset($modid))       { $invalid[] = 'modid'; }
     if (!isset($cid))         { $invalid[] = 'cid'; }
 //    if (!isset($itemtype))  { $invalid[] = 'itemtype'; }
-    if (!isset($userid))    { $invalid[] = 'userid'; }
+    if (!isset($userid))      { $invalid[] = 'userid'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
         join(', ',$invalid), 'unsubscribe', 'Pubsub');
@@ -45,16 +46,16 @@ function pubsub_userapi_unsubscribe($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // fetch pubsubid to unsubscribe from
-    $query = "SELECT xar_pubsubid
+    $query = "SELECT pubsubid
                 FROM $pubsubeventstable, $pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = ?
-                 AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-                 AND $pubsubregtable.xar_userid = ?
-                 AND $pubsubeventstable.xar_cid = ?";
+               WHERE $pubsubeventstable.modid = ?
+                 AND $pubsubregtable.eventid = $pubsubeventstable.eventid
+                 AND $pubsubregtable.userid = ?
+                 AND $pubsubeventstable.cid = ?";
 
     $bindvars = array((int)$modid, (int)$userid, (int)$cid);
     if (isset($extra)) {
-        $query .= " AND $pubsubeventstable.xar_extra = ?";
+        $query .= " AND $pubsubeventstable.extra = ?";
         array_push($bindvars, $extra);
     }
     $result =& $dbconn->Execute($query, $bindvars);

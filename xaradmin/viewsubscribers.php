@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Displays a list of subscribers to a given category. Provides an option
@@ -29,18 +30,14 @@ function pubsub_admin_viewsubscribers()
     }
 
     if ($unsub && $pubsubid) {
-        if (!xarMod::apiFunc('pubsub',
-                           'user',
-                           'deluser',
-                            array('pubsubid' => $pubsubid))) {
+        if (!xarMod::apiFunc('pubsub', 'user', 'deluser', array('pubsubid' => $pubsubid))) {
             $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                          'deluser', 'viewsubscribers', 'Pubsub');
             throw new Exception($msg);
         }
     }
 
-    $info = xarMod::apiFunc('pubsub','admin','getevent',
-                          array('eventid' => $eventid));
+    $info = xarMod::apiFunc('pubsub','user','getevent', array('eventid' => $eventid));
     if (empty($info)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
                     'event id', 'viewsubscribers', 'Pubsub');
@@ -63,17 +60,11 @@ function pubsub_admin_viewsubscribers()
     if (!xarSecurityCheck('AdminPubSub')) return;
 
     // The user API function is called
-    $subscribers = xarMod::apiFunc('pubsub'
-                                ,'admin'
-                                ,'getsubscribers'
-                                ,array('eventid'=>$eventid));
+    $subscribers = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', array('eventid'=>$eventid));
 
     $data['items'] = $subscribers;
 
-    $data['returnurl'] = xarModURL('pubsub'
-                                  ,'admin'
-                                  ,'viewsubscribers'
-                                  ,array('eventid'=>$eventid));
+    $data['returnurl'] = xarModURL('pubsub', 'user', 'viewsubscribers', array('eventid'=>$eventid));
 
     // TODO: add a pager (once it exists in BL)
     $data['pager'] = '';

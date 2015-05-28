@@ -2,15 +2,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:template type="module" module="pubsub" file="admin-menu" />
         <h2>Event Queue</h2>
 
         <form method="POST" action="&xar-modurl-pubsub-admin-viewq;">
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="action" value="process" />
-            <input type="submit" value="#xarML('Process Queue')#" />
+            <xar:var name="label">Process Queue</xar:var>
+            <xar:button type="submit" label="$label"/>
         </form>
 
+        <fieldset>
+            <legend>
+                Event Queue
+            </legend>
+            
+            <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
+        </fieldset>
+
+<!--
         <table>
         <thead>
             <tr>
@@ -60,7 +69,7 @@
                         #$item['status']#
                     </td>
                     <td>
-                        <a href="#xarModURL('pubsub','admin','viewq',array('handlingid'=>$item['handlingid'],'action' => 'delete','authid' => $authid))#">Delete</a>
+                        <a href="#xarModURL('pubsub','admin','viewq',array('id'=>$item['id'],'action' => 'delete','authid' => $authid))#">Delete</a>
                     </td>
                  </tr>
              </xar:foreach>
@@ -74,6 +83,7 @@
         </xar:if>
         </tbody>
     </table>
+    -->
     </div>
     <!-- add the pager here -->
     #$pager#

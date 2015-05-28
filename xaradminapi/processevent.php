@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * process a pubsub event, by adding a job for each subscriber to the process queue
@@ -19,7 +20,7 @@
  * @param $args['cid'] the category id for the event
  * @param $args['extra'] some extra group criteria, and
  * @param $args['objectid'] the specific object in the module
- * @param $args['templateid'] the template id for the jobs
+ * @param $args['id'] the template id for the jobs
  * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -37,8 +38,8 @@ function pubsub_adminapi_processevent($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $invalid[] = 'objectid';
     }
-    if (!isset($templateid) || !is_numeric($templateid)) {
-        $invalid[] = 'templateid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -63,23 +64,23 @@ function pubsub_adminapi_processevent($args)
     // Create an array to list the subscriptions that need to be processed.
     $markSubscriptions = array();
 
-    $includechildren = xarModGetVar('pubsub','includechildren');
+    $includechildren = xarModVars::get('pubsub','includechildren');
     if ( !empty($cid) && $includechildren == 1 )
     {
         $ancestors = xarMod::apiFunc('categories','user','getancestors'
                                    , array('cid'=>$cid,'order'=>'self') );
         $ancestors = array_keys($ancestors);
 
-        $query = "SELECT xar_pubsubid, xar_cid
+        $query = "SELECT pubsubid, cid
                     FROM $pubsubeventstable, $pubsubregtable
-                   WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                     AND $pubsubeventstable.xar_modid =?
-                     AND $pubsubeventstable.xar_itemtype = ?";
+                   WHERE $pubsubeventstable.eventid = $pubsubregtable.eventid
+                     AND $pubsubeventstable.modid =?
+                     AND $pubsubeventstable.itemtype = ?";
 //                      . "
 //                     AND $pubsubeventstable. = " . ($cid);
         $bindvars = array((int)$modid, (int)$itemtype);
         if (isset($extra)) {
-            $query .= " AND $pubsubeventstable.xar_extra = ?";
+            $query .= " AND $pubsubeventstable.extra = ?";
             array_push($bindvars, $extra);
         }
         $result =& $dbconn->Execute($query, $bindvars);
@@ -87,9 +88,9 @@ function pubsub_adminapi_processevent($args)
 
         for (; !$result->EOF; $result->MoveNext())
         {
-            list($pubsubid, $xar_cid) = $result->fields;
+            list($pubsubid, $cid) = $result->fields;
 
-            if( $xar_cid == $cid || in_array($xar_cid, $ancestors))
+            if( $cid == $cid || in_array($cid, $ancestors))
             {
                 $markSubscriptions[] = $pubsubid;
             }
@@ -97,15 +98,15 @@ function pubsub_adminapi_processevent($args)
 
 
     } else {
-        $query = "SELECT xar_pubsubid
+        $query = "SELECT pubsubid
                     FROM $pubsubeventstable, $pubsubregtable
-                   WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                     AND $pubsubeventstable.xar_modid = ?
-                     AND $pubsubeventstable.xar_itemtype = ?
-                     AND $pubsubeventstable.xar_cid = ?";
+                   WHERE $pubsubeventstable.eventid = $pubsubregtable.eventid
+                     AND $pubsubeventstable.modid = ?
+                     AND $pubsubeventstable.itemtype = ?
+                     AND $pubsubeventstable.cid = ?";
         $bindvars = array((int)$modid, (int)$itemtype, (int)$cid);
         if (isset($extra)) {
-            $query .= " AND $pubsubeventstable.xar_extra = ?";
+            $query .= " AND $pubsubeventstable.extra = ?";
             array_push($bindvars, $extra);
         }
         $result =& $dbconn->Execute($query, $bindvars);
@@ -126,14 +127,14 @@ function pubsub_adminapi_processevent($args)
 
         // Add item
         $query = "INSERT INTO $pubsubprocesstable (
-                  xar_handlingid,
-                  xar_pubsubid,
-                  xar_objectid,
-                  xar_templateid,
-              xar_status)
+                  id,
+                  pubsubid,
+                  objectid,
+                  template_id,
+              status)
                 VALUES (?,?,?,?,
                   'pending')";
-        $bindvars = array((int)$nextId, (int)$pubsubid, (int)$objectid, (int)$templateid);
+        $bindvars = array((int)$nextId, (int)$pubsubid, (int)$objectid, (int)$template_id);
         $result2 =& $dbconn->Execute($query, $bindvars);
         if (!$result2) return;
     }

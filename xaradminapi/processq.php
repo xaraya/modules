@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Process the queue and run all pending jobs (executed by the scheduler module)
@@ -20,7 +21,7 @@
  */
 function pubsub_adminapi_processq($args)
 {
-    if (!($allindigest = xarModGetVar('pubsub','allindigest'))) {
+    if (!($allindigest = xarModVars::get('pubsub','allindigest'))) {
         $allindigest = 0;
     }
 

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+        <xar:if condition="$objectname eq 'pubsub_events'">
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_event',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a feedback sheet">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add A New Event
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_process'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_queue',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a course">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add A New Queue
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_templates'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_template',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a course section">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add A New Template
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_course_components'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_course_component',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a course component">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Course Component
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_teams'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_team',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a team">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Team
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_charges'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_charge',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a charge">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Charge
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_charge_items'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_charge_item',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a charge item">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Charge Item
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_centers'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_center',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a center">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Center
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_inscriptions'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_inscription',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a center">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Inscription
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_role_definitions'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_role',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a role">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Role
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_actions'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_action',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a role">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Action
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'pubsub_sharing'"/>
+            <xar:access level="600">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_shared',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a role">
+                    <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
+                    <xar:else />
+                        Add a New Shared Page
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:else/>
+        </xar:if>
+</xar:template>

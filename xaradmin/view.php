@@ -11,32 +11,34 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Displays a summary of category subscribtions and basic metrics. Provides options
- * to view details about each subscription
+ * View items of the gamer object
+ *
  */
-function pubsub_admin_view()
-{
+    function gamer_admin_view($args)
+    {
+        if (!xarSecurityCheck('ManageGamer')) return;
 
-    $data['items'] = array();
-    $data['authid'] = xarSecGenAuthKey();
-    $data['pager'] = '';
+        $modulename = 'gamer';
 
-    if (!xarSecurityCheck('AdminPubSub')) return;
+        // Define which object will be shown
+        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
+        if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
 
-    // The user API function is called
-    $events = xarMod::apiFunc('pubsub', 'admin', 'getall');
+        // Set a return url
+        xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServer::getCurrentURL()));
 
-    $data['items'] = $events;
-
-    // TODO: add a pager (once it exists in BL)
-    $data['pager'] = '';
-
-    // return the template variables defined in this template
-
-    return $data;
-
-}
-
+        // Get the available dropdown options
+        $object = DataObjectMaster::getObjectList(array('objectid' => 1));
+        $data['objectname'] = xarModUserVars::get($modulename,'defaultmastertable');
+        $items = $object->getItems();
+        $options = array();
+        foreach ($items as $item)
+            if (strpos($item['name'],$modulename) !== false)
+                $options[] = array('id' => $item['name'], 'name' => $item['name']);
+        $data['options'] = $options;
+        return $data;
+    }
 ?>

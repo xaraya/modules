@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Get all events
@@ -18,7 +19,7 @@
  * @returns array
  * @return array of events
 */
-function pubsub_adminapi_getall($args)
+function pubsub_userapi_getall($args)
 {
     extract($args);
     $events = array();
@@ -37,9 +38,9 @@ function pubsub_adminapi_getall($args)
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubregtable = $xartable['pubsub_subscriptions'];
 
-    $query = "SELECT $pubsubeventstable.eventid
+    $query = "SELECT $pubsubeventstable.id
                     ,$modulestable.name
                     ,$pubsubeventstable.itemtype
                     ,$categoriestable.name
@@ -47,12 +48,12 @@ function pubsub_adminapi_getall($args)
                     ,COUNT($pubsubregtable.userid) AS numsubscribers
                 FROM $pubsubeventstable
            LEFT JOIN $modulestable
-                  ON $pubsubeventstable.modid = $modulestable.regid
+                  ON $pubsubeventstable.module_id = $modulestable.regid
            LEFT JOIN $categoriestable
                   ON $pubsubeventstable.cid = $categoriestable.id
            LEFT JOIN $pubsubregtable
-                  ON $pubsubeventstable.eventid = $pubsubregtable.eventid
-            GROUP BY $pubsubeventstable.eventid
+                  ON $pubsubeventstable.id = $pubsubregtable.event_id
+            GROUP BY $pubsubeventstable.id
                     ,$modulestable.name
                     ,$pubsubeventstable.itemtype
                     ,$categoriestable.name
@@ -62,9 +63,9 @@ function pubsub_adminapi_getall($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eventid, $modname, $itemtype, $catname, $cid, $numsubscribers) = $result->fields;
+        list($id, $modname, $itemtype, $catname, $cid, $numsubscribers) = $result->fields;
         if (xarSecurityCheck('AdminPubSub', 0)) {
-            $events[] = array('eventid'        => $eventid
+            $events[] = array('id'        => $id
                              ,'modname'        => $modname
                              ,'itemtype'       => $itemtype
                              ,'catname'        => $catname

@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * create a new pubsub template
@@ -45,9 +46,9 @@ function pubsub_adminapi_addtemplate($args)
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // check this template isn't already in the DB
-    $query = "SELECT xar_templateid
+    $query = "SELECT templateid
               FROM $pubsubtemplatestable
-              WHERE xar_name = ?";
+              WHERE name = ?";
 
     $result = $dbconn->Execute($query, array($name));
     if (!$result) return;
@@ -66,16 +67,16 @@ function pubsub_adminapi_addtemplate($args)
 
     // Add item
     $query = "INSERT INTO $pubsubtemplatestable (
-              xar_templateid,
-              xar_name,
-              xar_template,
-              xar_compiled)
+              templateid,
+              name,
+              template,
+              compiled)
             VALUES (?,?,?,?)";
     $bindvars = array($nextId, $name, $template, $compiled);
     $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-    $nextId = $dbconn->PO_Insert_ID($pubsubtemplatestable, 'xar_templateid');
+    $nextId = $dbconn->PO_Insert_ID($pubsubtemplatestable, 'templateid');
 
     // return eventID
     return $nextId;

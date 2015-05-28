@@ -7,17 +7,13 @@
     <xar:if condition="$compare eq $current">
         <dd class="active">
             <a href="#xarServerGetCurrentURL()#">
-                
-                    Subscriptions
-                
+                Subscriptions
             </a>
         </dd>    
     <xar:else />
         <dd>
             <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))#">
-                
-                    Subscriptions
-                
+                Subscriptions
             </a>
         </dd>    
     </xar:if>
@@ -30,9 +26,7 @@
     <div class="xar-mod-body">
         <div align="center">
             <h2>
-                
-                    Your Subscriptions
-                
+                Your Subscriptions
             </h2>
         </div>
         <br />

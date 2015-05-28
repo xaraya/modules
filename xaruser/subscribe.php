@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * subscribe user to a pubsub element
@@ -23,32 +24,25 @@ function pubsub_user_subscribe()
 {
     // do nothing if user not logged in otherwise subscribe
     // the currently logged in user
-    if (xarUserIsLoggedIn()) {
-        $userid = xarUserGetVar('uid');
-    } else {
+    $userid = (int)xarUser::getVar('id');
+    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
         return;
     }
+
     if (!xarVarFetch('modid',      'isset', $modid,     false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cid',        'isset', $cid,       false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype',   'isset', $itemtype,  false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('returnurl',  'isset', $returnurl, false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl',  'isset', $returnurl, false, XARVAR_NOT_REQUIRED)) return;
 
     $returnurl = rawurldecode($returnurl);
 
     // Argument check
     $invalid = array();
-    if (!isset($returnurl) || !is_string($returnurl)) {
-        $invalid[] = 'returnurl';
-    }
-    if (!isset($modid) || !is_numeric($modid)) {
-        $invalid[] = 'modid';
-    }
-    if (!isset($cid) || !is_numeric($cid)) {
-        $invalid[] = 'cid';
-    }
-    if (!isset($itemtype) || !is_numeric($itemtype)) {
-        $invalid[] = 'itemtype';
-    }
+    if (!isset($returnurl) || !is_string($returnurl)) $invalid[] = 'returnurl';
+    if (!isset($modid) || !is_numeric($modid)) $invalid[] = 'modid';
+    if (!isset($cid) || !is_numeric($cid)) $invalid[] = 'cid';
+    if (!isset($itemtype) || !is_numeric($itemtype)) $invalid[] = 'itemtype';
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');
@@ -83,6 +77,6 @@ function pubsub_user_subscribe()
     xarController::redirect($returnurl);
     return true;
 
-} // END subscribe
+}
 
 ?>

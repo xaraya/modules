@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * utility function pass individual menu items to the main menu
@@ -35,7 +36,7 @@ function pubsub_adminapi_getmenulinks()
                              'label' => xarML('View Event Queue'));
         $menulinks[] = Array('url'   => xarModURL('pubsub',
                                                   'admin',
-                                                  'modifytemplates'),
+                                                  'view_templates'),
                               'title' => xarML('Modify the Pubsub Templates'),
                               'label' => xarML('Modify Templates'));
         $menulinks[] = Array('url'   => xarModURL('pubsub',

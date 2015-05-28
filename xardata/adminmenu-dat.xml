@@ -1,0 +1,49 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <mask>ManagePubSub</mask>
+            <includes>
+                <includeitem>view_events</includeitem>
+            </includes>
+            <target>view_events</target>
+            <title>Manage the events</title>
+            <label>Events</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManagePubSub</mask>
+            <includes>
+                <includeitem>view_queue</includeitem>
+            </includes>
+            <target>view_queue</target>
+            <title>Manage the queue of events</title>
+            <label>Event Queue</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManagePubSub</mask>
+            <includes>
+                <includeitem>view_templates</includeitem>
+            </includes>
+            <target>view_templates</target>
+            <title>Run restoration routines</title>
+            <label>Templates</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPubSub</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Show the overview screen</title>
+            <label>Overview</label>
+        </menuitem>
+    </menuitems>
+</menu>

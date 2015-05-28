@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * handle a pubsub 'delete' event
@@ -54,12 +55,12 @@ function pubsub_adminapi_deletehook($args)
         $itemtype = 0;
     }
 
-    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.delete");
-    if (!isset($templateid)) {
-        $templateid = xarModGetVar('pubsub',"$modname.delete");
+    $id = xarModVars::get('pubsub',"$modname.$itemtype.delete");
+    if (!isset($id)) {
+        $id = xarModVars::get('pubsub',"$modname.delete");
     }
     // if there's no 'delete' template defined for this module+itemtype, we're done here
-    if (empty($templateid)) {
+    if (empty($id)) {
         return $extrainfo;
     }
 
@@ -97,7 +98,7 @@ function pubsub_adminapi_deletehook($args)
                              'cid' => $cid,
                              'extra' => $extra,
                              'objectid' => $objectid,
-                             'templateid' => $templateid))) {
+                             'template_id' => $template_id))) {
         // oops - but life goes on in hook functions :)
         return $extrainfo;
     }

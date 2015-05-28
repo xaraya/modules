@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * handle a pubsub 'create' event
@@ -54,7 +55,7 @@ function pubsub_adminapi_createhook($args)
         $itemtype = 0;
     }
 
-    if ($createwithstatus = xarModGetVar('pubsub',"$modname.$itemtype.createwithstatus") ) {
+    if ($createwithstatus = xarModVars::get('pubsub',"$modname.$itemtype.createwithstatus") ) {
         if ($createwithstatus == 1) {
             if (isset($extrainfo['status']) & $extrainfo['status'] < 2 ) {
                 return $extrainfo;
@@ -62,9 +63,9 @@ function pubsub_adminapi_createhook($args)
         }
     }
 
-    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.create");
+    $templateid = xarModVars::get('pubsub',"$modname.$itemtype.create");
     if (!isset($templateid)) {
-        $templateid = xarModGetVar('pubsub',"$modname.create");
+        $templateid = xarModVars::get('pubsub',"$modname.create");
     }
     // if there's no 'create' template defined for this module(+itemtype), we're done here
     if (empty($templateid)) {

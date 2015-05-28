@@ -11,17 +11,21 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * View the current event queue
  */
-function pubsub_admin_viewq($args)
+function pubsub_admin_view_queue($args)
 {
+    if (!xarSecurityCheck('ManagePubSub')) return;
+    
     extract($args);
     if (!xarVarFetch('action','str', $action, '')) return;
-    if (!xarVarFetch('handlingid','int', $handlingid, 0)) return;
+    if (!xarVarFetch('id','int', $id, 0)) return;
 
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
 
     if (!empty($action)) {
         // Confirm authorisation code
@@ -38,14 +42,14 @@ function pubsub_admin_viewq($args)
                 break;
 
             case 'view':
-                if (!empty($handlingid)) {
+                if (!empty($id)) {
                     // preview message ?
                 }
                 break;
 
             case 'delete':
-                if (!empty($handlingid)) {
-                    if (!xarMod::apiFunc('pubsub','admin','deljob',array('handlingid' => $handlingid))) {
+                if (!empty($id)) {
+                    if (!xarMod::apiFunc('pubsub','admin','deljob',array('id' => $id))) {
                         return;
                     }
                     xarController::redirect(xarModURL('pubsub', 'admin', 'viewq'));
@@ -59,9 +63,7 @@ function pubsub_admin_viewq($args)
     }
 
     // The user API function is called
-    $events = xarMod::apiFunc('pubsub',
-                            'admin',
-                            'getq');
+    $events = xarMod::apiFunc('pubsub', 'user', 'getq');
 
     $data['items'] = $events;
     // TODO: add a pager (once it exists in BL)
@@ -71,6 +73,6 @@ function pubsub_admin_viewq($args)
     // return the template variables defined in this template
     return $data;
 
-} // END ViewAll
+}
 
 ?>

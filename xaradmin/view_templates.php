@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Modify the pubsub templates
@@ -21,47 +22,48 @@
  * @return bool true on success or void on failure
  * @throws no exceptions
  */
-function pubsub_admin_modifytemplates()
+function pubsub_admin_view_templates()
 {
     // Security Check
     if (!xarSecurityCheck('AdminPubSub')) return;
 
-    $data = array();
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
 
     $data['templates'] = array();
     // get the list of available templates
-    $templates = xarMod::apiFunc('pubsub','admin','getalltemplates');
+    $templates = xarMod::apiFunc('pubsub','user','getalltemplates');
     foreach ($templates as $id => $templatename) {
         $data['templates'][$id] = array('name' => $templatename,
-                                        'view' => xarModURL('pubsub','admin','modifytemplates',
+                                        'view' => xarModURL('pubsub','admin','view_templates',
                                                             array('action' => 'display',
-                                                                  'templateid' => $id)),
-                                        'edit' => xarModURL('pubsub','admin','modifytemplates',
+                                                                  'id' => $id)),
+                                        'edit' => xarModURL('pubsub','admin','view_templates',
                                                             array('action' => 'modify',
-                                                                  'templateid' => $id)),
-                                        'delete' => xarModURL('pubsub','admin','modifytemplates',
+                                                                  'id' => $id)),
+                                        'delete' => xarModURL('pubsub','admin','view_templates',
                                                               array('action' => 'delete',
-                                                                    'templateid' => $id))
+                                                                    'id' => $id))
                                        );
     }
-    $data['new'] = xarModURL('pubsub','admin','modifytemplates',
+    $data['new'] = xarModURL('pubsub','admin','view_templates',
                              array('action' => 'new'));
 
-    xarVarFetch('templateid','int',$templateid,0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('id','int',$id,0, XARVAR_NOT_REQUIRED);
     xarVarFetch('action','str:1:',$action,'', XARVAR_NOT_REQUIRED);
-    if (!empty($templateid) && !empty($action)) {
-        $info = xarMod::apiFunc('pubsub','admin','gettemplate',
-                              array('templateid' => $templateid));
+    if (!empty($id) && !empty($action)) {
+        $info = xarMod::apiFunc('pubsub','user','gettemplate',
+                              array('id' => $id));
         if (empty($info)) return;
-        $data['templateid'] = $templateid;
+        $data['id'] = $id;
         $data['name'] = $info['name'];
         $data['template'] = xarVarPrepForDisplay($info['template']);
     }
     switch ($action) {
         case 'display':
         // TODO: adapt if/when we support more template variables in runjob()
-            $tplData = array('userid' => xarUserGetVar('uid'),
-                             'name' => xarUserGetVar('uname'),
+            $tplData = array('userid' => xarUser::getVar('id'),
+                             'name' => xarUser::getVar('uname'),
                              'module' => 'example',
                              'itemtype' => 0,
                              'itemid' => 123,
@@ -78,7 +80,7 @@ function pubsub_admin_modifytemplates()
         // TODO: adapt if/when we support more template variables in runjob()
             $templatevariables = array('#$userid#','#$name#','#$module#','#$itemtype#','#$itemid#','#$title#','#$link#');
             $data['template'] = join("<br/>\n",$templatevariables);
-            $data['templateid'] = 0;
+            $data['id'] = 0;
             $data['submitbutton'] = xarML('Create Template');
             $data['action'] = 'create';
             break;
@@ -92,7 +94,7 @@ function pubsub_admin_modifytemplates()
                                      'template' => $template))) {
                 return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'modifytemplates'));
+            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
@@ -106,12 +108,12 @@ function pubsub_admin_modifytemplates()
             if (!xarVarFetch('name','str:1:',$name)) return;
             if (!xarVarFetch('template','str:1:',$template)) return;
             if (!xarMod::apiFunc('pubsub','admin','updatetemplate',
-                               array('templateid' => $templateid,
+                               array('id' => $id,
                                      'name' => $name,
                                      'template' => $template))) {
                 return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'modifytemplates'));
+            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
@@ -123,23 +125,22 @@ function pubsub_admin_modifytemplates()
         case 'confirm':
             if (!xarSecConfirmAuthKey()) return;
             if (!xarMod::apiFunc('pubsub','admin','deltemplate',
-                               array('templateid' => $templateid))) {
+                               array('id' => $id))) {
                 return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'modifytemplates'));
+            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
         case 'recompile':
             if (!xarSecConfirmAuthKey()) return;
             foreach ($templates as $id => $templatename) {
-                $info = xarMod::apiFunc('pubsub','admin','gettemplate',
-                                      array('templateid' => $id));
+                $info = xarMod::apiFunc('pubsub','user','gettemplate', array('id' => $id));
                 if (empty($info)) continue;
                 if (!xarMod::apiFunc('pubsub','admin','updatetemplate',
                                    $info)) return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'modifytemplates'));
+            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
@@ -148,7 +149,7 @@ function pubsub_admin_modifytemplates()
     }
 
     $data['authid'] = xarSecGenAuthKey();
-    $data['recompile'] = xarModURL('pubsub','admin','modifytemplates',
+    $data['recompile'] = xarModURL('pubsub','admin','view_templates',
                                    array('action' => 'recompile',
                                          'authid' => $data['authid']));
 

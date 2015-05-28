@@ -2,8 +2,15 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:template type="module" module="pubsub" file="admin-menu" />
-        <h2>Modify Templates</h2>
+        <h2>View Templates</h2>
+
+        <fieldset>
+            <legend>
+                Templates
+            </legend>
+            
+            <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
+        </fieldset>
 
         <table>
         <thead>
@@ -81,8 +88,8 @@
                 <div class="xar-form-input-wrapper-after">
                  <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="action" id="action" value="#$action#" />
-                <input type="hidden" name="templateid" id="templateid" value="#$templateid#" />
-                <input type="submit" value="#$submitbutton#" />
+                <input type="hidden" name="id" id="id" value="#$id#" />
+                <xar:button type="submit" label="$submitbutton"/>
                 </div>
             </form>
             </xar:if>

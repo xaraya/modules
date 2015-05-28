@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * handle a pubsub 'update' event
@@ -54,18 +55,18 @@ function pubsub_adminapi_updatehook($args)
     }
 
     $typeoftemplate = 'update';
-    if ($createwithstatus = xarModGetVar('pubsub',"$modname.$itemtype.createwithstatus") ) {
+    if ($createwithstatus = xarModVars::get('pubsub',"$modname.$itemtype.createwithstatus") ) {
         if ($createwithstatus == 1 & $extrainfo['status'] >= 2 & $extrainfo['oldstatus']< 2) {
             $typeoftemplate = 'create';
         }
     }
 
-    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.$typeoftemplate");
-    if (!isset($templateid)) {
-        $templateid = xarModGetVar('pubsub',"$modname.$typeoftemplate");
+    $id = xarModVars::get('pubsub',"$modname.$itemtype.$typeoftemplate");
+    if (!isset($id)) {
+        $id = xarModVars::get('pubsub',"$modname.$typeoftemplate");
     }
     // if there's no 'update' template defined for this module(+itemtype), we're done here
-    if (empty($templateid)) {
+    if (empty($id)) {
         return $extrainfo;
     }
 
@@ -103,7 +104,7 @@ function pubsub_adminapi_updatehook($args)
                              'cid' => $cid,
                              'extra' => $extra,
                              'objectid' => $objectid,
-                             'templateid' => $templateid))) {
+                             'template_id' => $templateid))) {
         // oops - but life goes on in hook functions :)
         return $extrainfo;
     }

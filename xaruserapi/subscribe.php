@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * subscribe user to a pubsub element
@@ -32,10 +33,10 @@ function pubsub_userapi_subscribe($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($modid))      { $invalid[] = 'modid'; }
-    if (!isset($cid))        { $invalid[] = 'cid'; }
-    if (!isset($itemtype))   { $invalid[] = 'itemtype'; }
-    if (!isset($userid) && !isset($email))     { $invalid[] = 'userid/email'; }
+    if (!isset($modid))                    { $invalid[] = 'modid'; }
+    if (!isset($cid))                      { $invalid[] = 'cid'; }
+    if (!isset($itemtype))                 { $invalid[] = 'itemtype'; }
+    if (!isset($userid) && !isset($email)) { $invalid[] = 'userid/email'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');

@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * update an existing pubsub subscription
@@ -48,8 +49,8 @@ function pubsub_userapi_updatesubscription($args)
 
     // Update the item
     $query = "UPDATE $pubsubregtable
-              SET xar_actionid = ?
-              WHERE xar_pubsubid = ?";
+              SET actionid = ?
+              WHERE pubsubid = ?";
     $bindvars=array($actionid, $pubsubid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
@@ -71,9 +72,8 @@ function pubsub_userapi_delsubscriptions($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($userid) || !is_numeric($userid)) {
-        $invalid[] = 'userid';
-    }
+    if (!isset($userid) || !is_numeric($userid)) $invalid[] = 'userid';
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'user', 'delsubscriptions', 'Pubsub');
@@ -87,7 +87,7 @@ function pubsub_userapi_delsubscriptions($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubregtable
-              WHERE xar_userid = ?";
+              WHERE userid = ?";
     $bindvars=array($userid);
     $dbconn->Execute($query, $bindvars);
     if (!$result) return;

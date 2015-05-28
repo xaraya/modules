@@ -11,10 +11,11 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * delete a pubsub job from the queue
- * @param $args['handlingid'] ID of the job to delete
+ * @param $args['id'] ID of the job to delete
  * @returns bool
  * @return true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -26,8 +27,8 @@ function pubsub_adminapi_deljob($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($handlingid) || !is_numeric($handlingid)) {
-        $invalid[] = 'handlingid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
@@ -39,7 +40,7 @@ function pubsub_adminapi_deljob($args)
     // TODO: Check this.  It doesn't make sense to me.  The schedular is probably being activated by an anonymous
     // process via CRON (or similiar) and won't be logged in.  Therefor, you would have to grant anonymous
     // delete access for these jobs.  That's just silly.
-//    if (!xarSecurityCheck('DeletePubSub', 1, 'item', "All:All:$handlingid:All")) return;
+//    if (!xarSecurityCheck('DeletePubSub', 1, 'item', "All:All:$id:All")) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -48,8 +49,8 @@ function pubsub_adminapi_deljob($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubprocesstable
-              WHERE xar_handlingid = ?";
-    $result = $dbconn->Execute($query, array((int)$handlingid));
+              WHERE id = ?";
+    $result = $dbconn->Execute($query, array((int)$id));
     if (!$result) return;
 
     return true;

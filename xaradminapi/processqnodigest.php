@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Process the queue and run all pending jobs (executed by the scheduler module)
@@ -30,12 +31,12 @@ function pubsub_adminapi_processqnodigest($args)
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get all jobs in pending state
-    $query = "SELECT xar_handlingid,
-                     xar_pubsubid,
-                     xar_objectid,
-                     xar_templateid
+    $query = "SELECT id,
+                     pubsub_id,
+                     object_id,
+                     template_id
               FROM $pubsubprocesstable
-              WHERE xar_status = 'pending'";
+              WHERE status = 'pending'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
@@ -43,13 +44,13 @@ function pubsub_adminapi_processqnodigest($args)
     $count = 1;
 
     while (!$result->EOF) {
-        list($handlingid,$pubsubid,$objectid,$templateid) = $result->fields;
+        list($id,$pubsub_id,$object_id,$template_id) = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
         xarMod::apiFunc('pubsub','admin','runjob',
-                      array('handlingid' => $handlingid,
-                            'pubsubid' => $pubsubid,
-                            'objectid' => $objectid,
-                            'templateid' => $templateid));
+                      array('id' => $id,
+                            'pubsub_id' => $pubsub_id,
+                            'object_id' => $object_id,
+                            'template_id' => $template_id));
         $count++;
         $result->MoveNext();
     }

@@ -11,10 +11,11 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * update an existing pubsub template
- * @param $args['templateid'] the ID of the item
+ * @param $args['id'] the ID of the item
  * @param $args['name'] the new name of the item
  * @param $args['template'] the new template text of the item
  * @returns bool
@@ -28,8 +29,8 @@ function pubsub_adminapi_updatetemplate($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($templateid) || !is_numeric($templateid)) {
-        $invalid[] = 'templateid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
@@ -44,7 +45,7 @@ function pubsub_adminapi_updatetemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$templateid")) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$id")) return;
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -56,11 +57,11 @@ function pubsub_adminapi_updatetemplate($args)
 
     // Update the item
     $query = "UPDATE $pubsubtemplatestable
-              SET xar_template = ?,
-                  xar_compiled = ?,
-                  xar_name = ?
-              WHERE xar_templateid = ?";
-    $bindvars = array($template, $compiled, $name, (int)$templateid);
+              SET template = ?,
+                  compiled = ?,
+                  name = ?
+              WHERE id = ?";
+    $bindvars = array($template, $compiled, $name, (int)$id);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

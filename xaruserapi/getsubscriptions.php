@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * return a pubsub user's subscriptions
@@ -25,9 +26,8 @@ function pubsub_userapi_getsubscriptions($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($userid) || !is_numeric($userid)) {
-        $invalid[] = 'userid';
-    }
+    if (!isset($userid) || !is_numeric($userid)) $invalid[] = 'userid';
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'user', 'getsubscriptions', 'Pubsub');
@@ -45,23 +45,23 @@ function pubsub_userapi_getsubscriptions($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // fetch items
-    $query = "SELECT $pubsubeventstable.xar_eventid
-                    ,$modulestable.xar_name
-                    ,$pubsubeventstable.xar_modid
-                    ,$pubsubeventstable.xar_itemtype
-                    ,$categoriestable.xar_name
-                    ,$pubsubeventstable.xar_cid
-                    ,$pubsubeventstable.xar_extra
-                    ,$pubsubregtable.xar_pubsubid
-                    ,$pubsubregtable.xar_actionid
+    $query = "SELECT $pubsubeventstable.eventid
+                    ,$modulestable.name
+                    ,$pubsubeventstable.modid
+                    ,$pubsubeventstable.itemtype
+                    ,$categoriestable.name
+                    ,$pubsubeventstable.cid
+                    ,$pubsubeventstable.extra
+                    ,$pubsubregtable.pubsubid
+                    ,$pubsubregtable.actionid
                 FROM $pubsubeventstable
                     ,$modulestable
                     ,$categoriestable
                     ,$pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
-                 AND $pubsubeventstable.xar_cid = $categoriestable.xar_cid
-                 AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubregtable.xar_userid =  ?";
+               WHERE $pubsubeventstable.modid = $modulestable.regid
+                 AND $pubsubeventstable.cid = $categoriestable.cid
+                 AND $pubsubeventstable.eventid = $pubsubregtable.eventid
+                 AND $pubsubregtable.userid =  ?";
 
     $result = $dbconn->Execute($query, array((int)$userid));
     if (!$result) return;

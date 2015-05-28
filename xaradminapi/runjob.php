@@ -11,13 +11,14 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * run the job
- * @param $args['handlingid'] the process handling id
+ * @param $args['id'] the process handling id
  * @param $args['pubsubid'] the subscription id
  * @param $args['objectid'] the specific object in the module
- * @param $args['templateid'] the template id for this job
+ * @param $args['id'] the template id for this job
  * @return bool true on success, false on failure
  * @throws BAD_PARAM, DATABASE_ERROR
  */
@@ -28,18 +29,11 @@ function pubsub_adminapi_runjob($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($handlingid) || !is_numeric($handlingid)) {
-        $invalid[] = 'handlingid';
-    }
-    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
-        $invalid[] = 'pubsubid';
-    }
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $invalid[] = 'objectid';
-    }
-    if (!isset($templateid) || !is_numeric($templateid)) {
-        $invalid[] = 'templateid';
-    }
+    if (!isset($id) || !is_numeric($id)) $invalid[] = 'id';
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) $invalid[] = 'pubsubid';
+    if (!isset($objectid) || !is_numeric($objectid)) $invalid[] = 'objectid';
+    if (!isset($id) || !is_numeric($id)) $invalid[] = 'id';
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'runjob', 'Pubsub');
@@ -53,16 +47,16 @@ function pubsub_adminapi_runjob($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Get info on job to run
-    $query = "SELECT xar_actionid,
-                     xar_userid,
-                     $pubsubregtable.xar_eventid,
-                     xar_modid,
-                     xar_itemtype,
-                     $pubsubregtable.xar_email
+    $query = "SELECT actionid,
+                     userid,
+                     $pubsubregtable.eventid,
+                     modid,
+                     itemtype,
+                     $pubsubregtable.email
               FROM $pubsubregtable
               LEFT JOIN $pubsubeventstable
-              ON $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-              WHERE xar_pubsubid = ?";
+              ON $pubsubregtable.eventid = $pubsubeventstable.eventid
+              WHERE pubsubid = ?";
     $result   = $dbconn->Execute($query, array((int)$pubsubid));
     if (!$result) return;
 
@@ -71,8 +65,8 @@ function pubsub_adminapi_runjob($args)
     list($actionid,$userid,$eventid,$modid,$itemtype,$email) = $result->fields;
 
     if( $userid != -1 ) {
-        $info = xarUserGetVar('email',$userid);
-        $name = xarUserGetVar('uname',$userid);
+        $info = xarUser::getVar('email',$userid);
+        $name = xarUser::getVar('uname',$userid);
     } else {
         $emailinfo = explode(' ',$email,2);
         $info    = $emailinfo[0];
@@ -83,10 +77,9 @@ function pubsub_adminapi_runjob($args)
         }
     }
 
-    $modinfo = xarModGetInfo($modid);
+    $modinfo = xarMod::getInfo($modid);
     if (empty($modinfo['name'])) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    'module', 'runjob', 'Pubsub');
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)', 'module', 'runjob', 'Pubsub');
         throw new Exception($msg);
     } else {
         $modname = $modinfo['name'];
@@ -109,15 +102,14 @@ function pubsub_adminapi_runjob($args)
         // Database information
         $pubsubtemplatestable = $xartable['pubsub_templates'];
         // Get the (compiled) template to use
-        $query = "SELECT xar_compiled, xar_template
+        $query = "SELECT compiled, template
                   FROM $pubsubtemplatestable
-                  WHERE xar_templateid = ?";
-        $result   = $dbconn->Execute($query, array((int)$templateid));
+                  WHERE id = ?";
+        $result   = $dbconn->Execute($query, array((int)$id));
         if (!$result) return;
 
         if ($result->EOF) {
-            $msg = xarML('Invalid #(1) template',
-                         'Pubsub');
+            $msg = xarML('Invalid #(1) template', 'Pubsub');
             throw new Exception($msg);
         }
 
@@ -125,8 +117,7 @@ function pubsub_adminapi_runjob($args)
         $templatecontent = $result->fields[1];
 
         if (empty($compiled)) {
-            $msg = xarML('Invalid #(1) template',
-                         'Pubsub');
+            $msg = xarML('Invalid #(1) template', 'Pubsub');
             throw new Exception($msg);
         }
         // Close the result
@@ -160,23 +151,23 @@ function pubsub_adminapi_runjob($args)
         // this event.
         // But you can use $userid to get the relevant user, as above...
 
-         if( xarModGetVar('pubsub','subjecttitle') == 1 ) {
+         if( xarModVars::get('pubsub','subjecttitle') == 1 ) {
              $subject = $tplData['title'];
          } else {
              $subject = xarML('Publish / Subscribe Notification');
          }
-         $fmail = xarConfigGetVar('adminmail');
-         $fname = xarConfigGetVar('adminmail');
+         $fmail = xarModVars::get('role', 'adminmail');
+         $fname = xarModVars::get('role', 'adminmail');
 
         // call BL with the (compiled) template to parse it and generate the HTML free plaintext version
         $html = xarTplString($compiled, $tplData);
         $tplData['htmlcontent'] = $html;
         $tplData['textcontent'] = strip_tags($html);
 
-        $UseTemplateVersions = xarModGetVar('pubsub', 'UseTemplateVersions') ? true : false;
+        $UseTemplateVersions = xarModVars::get('pubsub', 'UseTemplateVersions') ? true : false;
         if ($UseTemplateVersions) {
-             $htmltemplate = 'html-' . $templateid;
-             $texttemplate = 'text-' . $templateid;
+             $htmltemplate = 'html-' . $id;
+             $texttemplate = 'text-' . $id;
         } else {
              $htmltemplate = 'html';
              $texttemplate = 'text';
@@ -240,15 +231,15 @@ function pubsub_adminapi_runjob($args)
                                       'usetemplates' => false))) return;
         }
         // delete job from queue now it has run
-        xarMod::apiFunc('pubsub','admin','deljob', array('handlingid' => $handlingid));
+        xarMod::apiFunc('pubsub','admin','deljob', array('id' => $id));
 
     } else {
         // invalid action - update queue accordingly
         xarMod::apiFunc('pubsub','admin','updatejob',
-                      array('handlingid' => $handlingid,
-                            'pubsubid' => $pubsubid,
-                            'objectid' => $objectid,
-                            'templateid' => $templateid,
+                      array('id' => $id,
+                            'pubsub_id' => $pubsub_id,
+                            'object_id' => $object_id,
+                            'template_id' => $template_id,
                             'status' => 'error'));
         $msg = xarML('Invalid #(1) action',
                      'Pubsub');

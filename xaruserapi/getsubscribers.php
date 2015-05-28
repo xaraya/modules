@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Get the subscribers for a particular event
@@ -18,7 +19,7 @@
  * @param $args['eventid'] the event id we're looking for
  * @return array of events
  */
-function pubsub_adminapi_getsubscribers($args)
+function pubsub_userapi_getsubscribers($args)
 {
     $subscribers = array();
     /*
@@ -43,22 +44,22 @@ function pubsub_adminapi_getsubscribers($args)
     $pubsubeventstable    = $xartable['pubsub_events'];
     $pubsubregtable       = $xartable['pubsub_reg'];
 
-    $query = "SELECT $rolestable.xar_uname  AS username
-                    ,$modulestable.xar_name AS modname
-                    ,$pubsubeventstable.xar_modid AS modid
-                    ,$pubsubeventstable.xar_itemtype AS itemtype
-                    ,$pubsubeventstable.xar_cid AS cid
-                    ,$pubsubregtable.xar_subdate AS subdate
-                    ,$pubsubregtable.xar_pubsubid AS pubsubid
-                    ,$pubsubregtable.xar_email AS email
-                    ,$pubsubregtable.xar_userid AS userid
+    $query = "SELECT $rolestable.uname  AS username
+                    ,$modulestable.name AS modname
+                    ,$pubsubeventstable.modid AS modid
+                    ,$pubsubeventstable.itemtype AS itemtype
+                    ,$pubsubeventstable.cid AS cid
+                    ,$pubsubregtable.subdate AS subdate
+                    ,$pubsubregtable.pubsubid AS pubsubid
+                    ,$pubsubregtable.email AS email
+                    ,$pubsubregtable.userid AS userid
                 FROM
                     $modulestable
                     ,$pubsubeventstable
-                    ,$pubsubregtable LEFT JOIN $rolestable ON ($pubsubregtable.xar_userid     = $rolestable.xar_uid)
-               WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubeventstable.xar_modid   = $modulestable.xar_regid
-                 AND $pubsubeventstable.xar_eventid = $eventid";
+                    ,$pubsubregtable LEFT JOIN $rolestable ON ($pubsubregtable.userid     = $rolestable.id)
+               WHERE $pubsubeventstable.eventid = $pubsubregtable.eventid
+                 AND $pubsubeventstable.modid   = $modulestable.regid
+                 AND $pubsubeventstable.eventid = $eventid";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -106,6 +107,6 @@ function pubsub_adminapi_getsubscribers($args)
 
     return $subscribers;
 
-} // END getsubscribers
+}
 
 ?>

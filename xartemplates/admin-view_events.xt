@@ -6,6 +6,8 @@
             <legend>
                 Add Subscribers
             </legend>
+            
+            <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
 
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>

@@ -11,13 +11,14 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Get the queue of pending events
  * @return array list of events waiting to be processed
  * @throws DATABASE_ERROR
  */
-function pubsub_adminapi_getq($args)
+function pubsub_userapi_getq($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -26,7 +27,7 @@ function pubsub_adminapi_getq($args)
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubregtable = $xartable['pubsub_subscriptions'];
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
@@ -41,17 +42,17 @@ function pubsub_adminapi_getq($args)
     $categoriestable = $xartable['categories'];
 
     // Get all jobs in pending state
-    $query = "SELECT $pubsubprocesstable.handlingid,
-                     $pubsubprocesstable.pubsubid,
-                     $pubsubprocesstable.objectid,
-                     $pubsubprocesstable.templateid,
+    $query = "SELECT $pubsubprocesstable.id,
+                     $pubsubprocesstable.pubsub_id,
+                     $pubsubprocesstable.object_id,
+                     $pubsubprocesstable.template_id,
                      $pubsubprocesstable.status,
-                     $pubsubregtable.eventid,
+                     $pubsubregtable.event_id,
                      $pubsubregtable.userid,
-                     $pubsubregtable.actionid,
+                     $pubsubregtable.action_id,
                      $pubsubregtable.subdate,
                      $pubsubregtable.email,
-                     $pubsubeventstable.modid,
+                     $pubsubeventstable.module_id,
                      $pubsubeventstable.itemtype,
                      $pubsubeventstable.cid,
                      $pubsubeventstable.extra,
@@ -61,13 +62,13 @@ function pubsub_adminapi_getq($args)
                      $categoriestable.name
               FROM $pubsubprocesstable
          LEFT JOIN $pubsubregtable
-                ON $pubsubprocesstable.pubsubid = $pubsubregtable.pubsubid
+                ON $pubsubprocesstable.pubsub_id = $pubsubregtable.id
          LEFT JOIN $pubsubeventstable
-                ON $pubsubregtable.eventid = $pubsubeventstable.eventid
+                ON $pubsubregtable.event_id = $pubsubeventstable.id
          LEFT JOIN $pubsubtemplatestable
-                ON $pubsubprocesstable.templateid = $pubsubtemplatestable.templateid
+                ON $pubsubprocesstable.template_id = $pubsubtemplatestable.id
          LEFT JOIN $modulestable
-                ON $pubsubeventstable.modid = $modulestable.regid
+                ON $pubsubeventstable.module_id = $modulestable.regid
          LEFT JOIN $rolestable
                 ON $pubsubregtable.userid = $rolestable.id
          LEFT JOIN $categoriestable
@@ -85,7 +86,7 @@ function pubsub_adminapi_getq($args)
     $queue = array();
     while (!$result->EOF) {
         $info = array();
-        list($info['handlingid'],$info['pubsubid'],$info['objectid'],$info['templateid'],$info['status'],
+        list($info['id'],$info['pubsubid'],$info['objectid'],$info['template_id'],$info['status'],
              $info['eventid'],$info['userid'],$info['actionid'],$info['subdate'],$info['email'],
              $info['modid'],$info['itemtype'],$info['cid'],$info['extra'],
              $info['templatename'],$info['modname'],$info['username'],$info['catname']) = $result->fields;

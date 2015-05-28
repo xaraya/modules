@@ -11,13 +11,14 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Get the name of all templates
  *
  * @return array of templates ids and names
  */
-function pubsub_adminapi_getalltemplates($args)
+function pubsub_userapi_getalltemplates($args)
 {
     $templates = array();
     if (!xarSecurityCheck('AdminPubSub')) return;
@@ -26,7 +27,7 @@ function pubsub_adminapi_getalltemplates($args)
     $xartable =& xarDB::getTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
-    $query = "SELECT templateid,
+    $query = "SELECT id,
                      name
                 FROM $pubsubtemplatestable";
 
@@ -34,8 +35,8 @@ function pubsub_adminapi_getalltemplates($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($templateid, $name) = $result->fields;
-        $templates[$templateid] = $name;
+        list($id, $name) = $result->fields;
+        $templates[$id] = $name;
     }
 
     $result->Close();

@@ -11,13 +11,14 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * run the job
- * @param $args['handlingid'] the process handling id
+ * @param $args['id'] the process handling id
  * @param $args['pubsubid'] the subscription id
  * @param $args['objectid'] the specific object in the module
- * @param $args['templateid'] the template id for this job
+ * @param $args['id'] the template id for this job
  * @returns bool
  * @return true on success, false on failure
  * @throws BAD_PARAM, DATABASE_ERROR
@@ -29,8 +30,8 @@ function pubsub_adminapi_runjobdigest($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($handlingid) || !is_numeric($handlingid)) {
-        $invalid[] = 'handlingid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (!isset($pubsubid) || !is_numeric($pubsubid)) {
         $invalid[] = 'pubsubid';
@@ -38,8 +39,8 @@ function pubsub_adminapi_runjobdigest($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $invalid[] = 'objectid';
     }
-    if (!isset($templateid) || !is_numeric($templateid)) {
-        $invalid[] = 'templateid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
@@ -54,16 +55,16 @@ function pubsub_adminapi_runjobdigest($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Get info on job to run
-    $query = "SELECT xar_actionid,
-                     xar_userid,
-                     $pubsubregtable.xar_eventid,
-                     xar_modid,
-                     xar_itemtype,
-                     $pubsubregtable.xar_email
+    $query = "SELECT actionid,
+                     userid,
+                     $pubsubregtable.eventid,
+                     modid,
+                     itemtype,
+                     $pubsubregtable.email
               FROM $pubsubregtable
               LEFT JOIN $pubsubeventstable
-              ON $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-              WHERE xar_pubsubid = ?";
+              ON $pubsubregtable.eventid = $pubsubeventstable.eventid
+              WHERE pubsubid = ?";
     $result   = $dbconn->Execute($query, array((int)$pubsubid));
     if (!$result) return;
 
@@ -73,8 +74,8 @@ function pubsub_adminapi_runjobdigest($args)
 
     if( $userid != -1 )
     {
-        $info = xarUserGetVar('email',$userid);
-        $name = xarUserGetVar('uname',$userid);
+        $info = xarUser::getVar('email',$userid);
+        $name = xarUser::getVar('uname',$userid);
     } else {
         $emailinfo = explode(' ',$email,2);
         $info    = $emailinfo[0];
@@ -86,10 +87,9 @@ function pubsub_adminapi_runjobdigest($args)
         }
     }
 
-    $modinfo = xarModGetInfo($modid);
+    $modinfo = xarMod::getInfo($modid);
     if (empty($modinfo['name'])) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    'module', 'runjob', 'Pubsub');
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)', 'module', 'runjob', 'Pubsub');
         throw new Exception($msg);
     } else {
         $modname = $modinfo['name'];
@@ -112,10 +112,10 @@ function pubsub_adminapi_runjobdigest($args)
         // Database information
         $pubsubtemplatestable = $xartable['pubsub_templates'];
         // Get the (compiled) template to use
-        $query = "SELECT xar_compiled
+        $query = "SELECT compiled
                   FROM $pubsubtemplatestable
-                  WHERE xar_templateid = ?";
-        $result   = $dbconn->Execute($query, array((int)$templateid));
+                  WHERE id = ?";
+        $result   = $dbconn->Execute($query, array((int)$id));
         if (!$result) return;
 
         if ($result->EOF) {
@@ -165,7 +165,7 @@ function pubsub_adminapi_runjobdigest($args)
 
         if ($action == "htmlmail") {
             $boundary = "b" . md5(uniqid(time()));
-            $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
+            $message = "From: xarModVars::get('role', 'adminmail')\r\nReply-to: xarModVars::get('role', 'adminmail')\r\n";
             $message .= "Content-type: multipart/mixed; ";
             $message .= "boundary = $boundary\r\n\r\n";
             $message .= "This is a MIME encoded message.\r\n\r\n";
@@ -190,10 +190,10 @@ function pubsub_adminapi_runjobdigest($args)
       } else {
             // invalid action - update queue accordingly
             xarMod::apiFunc('pubsub','admin','updatejob',
-                          array('handlingid' => $handlingid,
-                                'pubsubid' => $pubsubid,
-                                'objectid' => $objectid,
-                                'templateid' => $templateid,
+                          array('id' => $id,
+                                'pubsub_id' => $pubsub_id,
+                                'object_id' => $object_id,
+                                'template_id' => $template_id,
                                 'status' => 'error'));
             $msg = xarML('Invalid #(1) action',
                          'Pubsub');

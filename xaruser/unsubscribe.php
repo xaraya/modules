@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * unsubscribe user from a pubsub element
@@ -24,11 +25,11 @@ function pubsub_user_unsubscribe($args)
 {
     // do nothing if user not logged in otherwise unsubscribe
     // the currently logged in user
-    if (xarUserIsLoggedIn()) {
-        $userid = xarUserGetVar('uid');
-    } else {
+    $userid = (int)xarUser::getVar('id');
+    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
         return;
     }
+
     if (!xarVarFetch('modid', 'int:1:', $modid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cid', 'int:1:', $cid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '', XARVAR_NOT_REQUIRED)) return;
@@ -40,18 +41,11 @@ function pubsub_user_unsubscribe($args)
     extract($args);
     // Argument check
     $invalid = array();
-    if (!isset($returnurl) || !is_string($returnurl)) {
-        $invalid[] = 'returnurl';
-    }
-    if (!isset($modid) || !is_numeric($modid)) {
-        $invalid[] = 'modid';
-    }
-    if (!isset($cid) || !is_numeric($cid)) {
-        $invalid[] = 'cid';
-    }
-    if (!isset($itemtype) || !is_numeric($itemtype)) {
-        $invalid[] = 'itemtype';
-    }
+    if (!isset($returnurl) || !is_string($returnurl)) $invalid[] = 'returnurl';
+    if (!isset($modid) || !is_numeric($modid)) $invalid[] = 'modid';
+    if (!isset($cid) || !is_numeric($cid)) $invalid[] = 'cid';
+    if (!isset($itemtype) || !is_numeric($itemtype)) $invalid[] = 'itemtype';
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
         join(', ',$invalid), 'unsubscribe', 'Pubsub');
@@ -65,13 +59,13 @@ function pubsub_user_unsubscribe($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // fetch pubsubid to unsubscribe from
-    $query = "SELECT xar_pubsubid
+    $query = "SELECT pubsubid
                 FROM $pubsubeventstable, $pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = ?
-                 AND $pubsubeventstable.xar_itemtype = ?
-                 AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-                 AND $pubsubregtable.xar_userid = ?
-                 AND $pubsubeventstable.xar_cid = ?";
+               WHERE $pubsubeventstable.modid = ?
+                 AND $pubsubeventstable.itemtype = ?
+                 AND $pubsubregtable.eventid = $pubsubeventstable.eventid
+                 AND $pubsubregtable.userid = ?
+                 AND $pubsubeventstable.cid = ?";
 
     $bindvars = array((int)$modid, $itemtype, (int)$userid, $cid);
     $result =& $dbconn->Execute($query, $bindvars);
@@ -91,6 +85,6 @@ function pubsub_user_unsubscribe($args)
     xarController::redirect($returnurl);
     return true;
 
-} // END unsubscribe
+}
 
 ?>

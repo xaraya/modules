@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * display pubsub element next to a registered event
@@ -28,14 +29,12 @@ function pubsub_user_displayicon($args)
 
     // do nothing if user not logged in otherwise subscribe
     // the currently logged in user
-    if (xarUserIsLoggedIn()) {
-        $userid = xarUserGetVar('uid');
-    } else {
+    $userid = (int)xarUser::getVar('id');
+    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
         return '';
     }
-    if (!isset($extrainfo)) {
-         $extrainfo = array();
-    }
+
+    if (!isset($extrainfo)) $extrainfo = array();
 
     /**
      * Validate parameters
@@ -70,7 +69,7 @@ function pubsub_user_displayicon($args)
         }
     } else {
         // May only subscribe to categories, no category, pubsub does nothing.
-        return array('donotdisplay'=>TRUE);
+        return array('donotdisplay' => true);
     }
 
     if (count($invalid) > 0) {
@@ -79,7 +78,7 @@ function pubsub_user_displayicon($args)
         throw new Exception($msg);
     } else {
     }
-///
+
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -110,17 +109,17 @@ function pubsub_user_displayicon($args)
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
-    $query = "SELECT xar_pubsubid
+    $query = "SELECT pubsubid
                 FROM $pubsubeventstable, $pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = ?
-                 AND $pubsubeventstable.xar_itemtype = ?
-                 AND $pubsubeventstable.xar_cid = ?
-                 AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubregtable.xar_userid = ?";
+               WHERE $pubsubeventstable.modid = ?
+                 AND $pubsubeventstable.itemtype = ?
+                 AND $pubsubeventstable.cid = ?
+                 AND $pubsubeventstable.eventid = $pubsubregtable.eventid
+                 AND $pubsubregtable.userid = ?";
 
         $bindvars = array((int)$modid, (int)$itemtype, (int)$cid, (int)$userid);
         if (isset($extra)) {
-            $query .= " AND $pubsubeventstable.xar_extra = ?";
+            $query .= " AND $pubsubeventstable.extra = ?";
             array_push($bindvars, $extra);
         }
         $result =& $dbconn->Execute($query, $bindvars);

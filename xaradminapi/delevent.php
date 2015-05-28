@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * delete a pubsub event
@@ -45,7 +46,7 @@ function pubsub_adminapi_delevent($args)
 
     // Delete item from events table
     $query = "DELETE FROM $pubsubeventstable
-            WHERE xar_eventid = ?";
+            WHERE eventid = ?";
     $dbconn->Execute($query, array((int)$eventid));
     if (!$result) return;
 

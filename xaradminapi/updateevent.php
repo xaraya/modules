@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * update an existing pubsub event
@@ -60,10 +61,10 @@ function pubsub_adminapi_updateevent($args)
 
     // Update the item
     $query = "UPDATE $pubsubeventstable
-              SET xar_modid = ?,
-                  xar_itemtype = ?,
-                  xar_groupdescr = ?
-              WHERE xar_eventid = ?";
+              SET modid = ?,
+                  itemtype = ?,
+                  groupdescr = ?
+              WHERE eventid = ?";
         $bindvars = array((int)$module, $itemtype, $groupdescr, (int)$eventid);
         $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;

@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * delete a user's pubsub subscription
@@ -46,7 +47,7 @@ function pubsub_userapi_deluser($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubregtable
-              WHERE xar_pubsubid = ?";
+              WHERE pubsubid = ?";
     $dbconn->Execute($query, array((int)$pubsubid));
 
     return true;

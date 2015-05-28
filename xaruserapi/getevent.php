@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * get information about a pubsub event
@@ -19,14 +20,14 @@
  * @return array event information on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_adminapi_getevent($args)
+function pubsub_userapi_getevent($args)
 {
     // Get arguments from argument array
     extract($args);
 
     if (empty($eventid) || !is_numeric($eventid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'event id', 'admin', 'getevent', 'Pubsub');
+                     'event id', 'user', 'getevent', 'Pubsub');
         throw new Exception($msg);
     }
 
@@ -39,19 +40,19 @@ function pubsub_adminapi_getevent($args)
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
 
-    $query = "SELECT $pubsubeventstable.xar_modid,
-                     $modulestable.xar_name,
-                     xar_itemtype,
-                     $pubsubeventstable.xar_cid,
-                     xar_extra,
-                     xar_groupdescr,
-                     $categoriestable.xar_name
+    $query = "SELECT $pubsubeventstable.modid,
+                     $modulestable.name,
+                     itemtype,
+                     $pubsubeventstable.cid,
+                     extra,
+                     groupdescr,
+                     $categoriestable.name
                 FROM $pubsubeventstable
            LEFT JOIN $modulestable
-                  ON $pubsubeventstable.xar_modid = $modulestable.xar_regid
+                  ON $pubsubeventstable.modid = $modulestable.regid
            LEFT JOIN $categoriestable
-                  ON $pubsubeventstable.xar_cid = $categoriestable.xar_cid
-               WHERE xar_eventid = ?";
+                  ON $pubsubeventstable.cid = $categoriestable.cid
+               WHERE eventid = ?";
     $result = $dbconn->Execute($query, array((int)$eventid));
     if (!$result) return;
 

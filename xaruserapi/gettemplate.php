@@ -11,23 +11,24 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * get an existing pubsub template
- * @param $args['templateid'] the ID of the item
+ * @param $args['id'] the ID of the item
  * @returns array
  * @return array of template information
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_adminapi_gettemplate($args)
+function pubsub_userapi_gettemplate($args)
 {
     // Get arguments from argument array
     extract($args);
 
     // Argument check
     $invalid = array();
-    if (!isset($templateid) || !is_numeric($templateid)) {
-        $invalid[] = 'templateid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
@@ -36,7 +37,7 @@ function pubsub_adminapi_gettemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$templateid")) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$id")) return;
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -44,19 +45,19 @@ function pubsub_adminapi_gettemplate($args)
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // Update the item
-    $query = "SELECT xar_templateid,
-                     xar_name,
-                     xar_template,
-                     xar_compiled
+    $query = "SELECT id,
+                     name,
+                     template,
+                     compiled
               FROM $pubsubtemplatestable
-              WHERE xar_templateid = ?";
-    $result = $dbconn->Execute($query, array((int)$templateid));
+              WHERE id = ?";
+    $result = $dbconn->Execute($query, array((int)$id));
     if (!$result) return;
 
     $info = array();
     if ($result->EOF) return $info;
 
-    list($info['templateid'],$info['name'],$info['template'],$info['compiled']) = $result->fields;
+    list($info['id'],$info['name'],$info['template'],$info['compiled']) = $result->fields;
     $result->Close();
 
     return $info;

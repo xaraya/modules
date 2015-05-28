@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 function pubsub_user_usermenu($args)
 {
@@ -33,7 +34,7 @@ function pubsub_user_usermenu($args)
         case 'list':
             xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your Subscriptions')));
             $items = xarMod::apiFunc('pubsub','user','getsubscriptions',
-                                   array('userid' => xarUserGetVar('uid')));
+                                   array('userid' => xarUser::getVar('id')));
             if (!isset($items)) return;
             // get the itemtype descriptions if available
             $todo = array();
@@ -69,7 +70,7 @@ function pubsub_user_usermenu($args)
         case 'unsub':
             if (!xarVarFetch('pubsubid','int:1:',$pubsubid)) return;
             $items = xarMod::apiFunc('pubsub','user','getsubscriptions',
-                                   array('userid' => xarUserGetVar('uid')));
+                                   array('userid' => xarUser::getVar('id')));
             if (!isset($items)) return;
             if (!isset($items[$pubsubid])) {
                  $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',

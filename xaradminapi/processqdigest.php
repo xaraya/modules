@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Process the queue and run all pending jobs (executed by the scheduler module)
@@ -28,21 +29,21 @@ function pubsub_adminapi_processqdigest($args)
 
     // Get the wrapper template
     $pubsubtemplatestable = $xartable['pubsub_templates'];
-    $query = "SELECT xar_compiled
+    $query = "SELECT compiled
               FROM $pubsubtemplatestable
-              WHERE xar_name= 'wrapper'";
+              WHERE name= 'wrapper'";
     $result   = $dbconn->Execute($query);
     if (!$result) $compiled ='<?php echo $contents; ?>';
     $compiled = $result->fields[0];
 
     // Get all jobs in pending state
     $pubsubprocesstable = $xartable['pubsub_process'];
-    $query = "SELECT xar_handlingid,
-                     xar_pubsubid,
-                     xar_objectid,
-                     xar_templateid
+    $query = "SELECT id,
+                     pubsub_id,
+                     object_id,
+                     template_id
               FROM $pubsubprocesstable
-              WHERE xar_status = 'pending'";
+              WHERE status = 'pending'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
@@ -56,13 +57,13 @@ function pubsub_adminapi_processqdigest($args)
 
     // now start building the digest
     while (!$result->EOF) {
-        list($handlingid,$pubsubid,$objectid,$templateid) = $result->fields;
+        list($id,$pubsub_id,$object_id,$template_id) = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
         $message= xarMod::apiFunc('pubsub','admin','runjobdigest',
-                      array('handlingid' => $handlingid,
-                            'pubsubid' => $pubsubid,
-                            'objectid' => $objectid,
-                            'templateid' => $templateid));
+                      array('id' => $id,
+                            'pubsub_id' => $pubsub_id,
+                            'object_id' => $object_id,
+                            'template_id' => $template_id));
         if (!isset($digest[$message['email']])) {
             $digest[$message['email']] = $message['content'] ;
         } else {
@@ -71,19 +72,19 @@ function pubsub_adminapi_processqdigest($args)
         if (!isset($name[$message['email']])) {
             $name[$message['email']] = $message['name'];
         }
-//      $handle[$message['email']][] = $handlingid;
-        if (!isset($handlecount[$handlingid])) {
-            $handlecount[$handlingid] = 1;
+//      $handle[$message['email']][] = $id;
+        if (!isset($handlecount[$id])) {
+            $handlecount[$id] = 1;
         } else {
-            $handlecount[$handlingid]++ ;
+            $handlecount[$id]++ ;
         }
         $count++;
         $result->MoveNext();
     }
 
-    $fmail = xarConfigGetVar('adminmail');
-    $fname = xarConfigGetVar('adminmail');
-    $sitename = xarModGetVar('themes','SiteName');
+    $fmail = xarModVars::get('role', 'adminmail');
+    $fname = xarModVars::get('role', 'adminmail');
+    $sitename = xarModVars::get('themes','SiteName');
     $subject = xarML('New articles from').' '.$sitename;
 
     foreach ($digest as $email => $content) {
@@ -104,7 +105,7 @@ function pubsub_adminapi_processqdigest($args)
                                  'fromname' => $fname))) return;
         /*
         foreach($handle[$email] as $key=>$value) {
-            if (!isset($handleverify[$handlingid])) {
+            if (!isset($handleverify[$id])) {
                 $handleverify[$value] = 1;
             } else {
                 $handleverify[$value]++;
@@ -112,10 +113,10 @@ function pubsub_adminapi_processqdigest($args)
         }
         */
     }
-    foreach ($handlecount as $handlingid=> $value) {
-//      if ($value = $handleverify[$handlingid]) {
+    foreach ($handlecount as $id=> $value) {
+//      if ($value = $handleverify[$id]) {
            xarMod::apiFunc('pubsub','admin','deljob',
-                         array('handlingid' => $handlingid));
+                         array('id' => $id));
 //        }
     }
     return $count;

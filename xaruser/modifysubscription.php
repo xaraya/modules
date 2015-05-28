@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * subscribe user to a pubsub element
@@ -35,9 +36,8 @@ function pubsub_user_modifysubscription()
     $returnurl = rawurldecode($returnurl);
 
     // the currently logged in user
-    if (xarUserIsLoggedIn()) {
-        $userid = xarUserGetVar('uid');
-    } else {
+    $userid = (int)xarUser::getVar('id');
+    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
         xarController::redirect($returnurl);
         return true;
     }
@@ -45,21 +45,21 @@ function pubsub_user_modifysubscription()
     switch ($subaction) {
         case 0:
             xarMod::apiFunc('pubsub','user','unsubscribe',
-                          array('modid'   =>$modid
-                               ,'itemtype'=>$itemtype
-                               ,'cid'     =>$cid
-                               ,'extra'   =>$extra
-                               ,'userid'  =>$userid
+                          array('modid'   => $modid
+                               ,'itemtype'=> $itemtype
+                               ,'cid'     => $cid
+                               ,'extra'   => $extra
+                               ,'userid'  => $userid
                                ));
             break;
         case 1:
             xarMod::apiFunc('pubsub','user','subscribe',
-                          array('modid'   =>$modid
-                               ,'itemtype'=>$itemtype
-                               ,'cid'     =>$cid
-                               ,'extra'   =>$extra
-                               ,'groupdescr'=>$groupdescr
-                               ,'userid'  =>$userid
+                          array('modid'     => $modid
+                               ,'itemtype'  => $itemtype
+                               ,'cid'       => $cid
+                               ,'extra'     => $extra
+                               ,'groupdescr'=> $groupdescr
+                               ,'userid'    => $userid
                                ));
             break;
         default:
@@ -69,7 +69,6 @@ function pubsub_user_modifysubscription()
 
     xarController::redirect($returnurl);
     return true;
-
-} // END modifysubscription
+}
 
 ?>

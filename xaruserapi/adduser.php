@@ -11,12 +11,13 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Add a user's subscription to an event
  * @param $args['eventid'] Event to subscribe to
  * @param $args['actionid'] Requested action for this subscription
- * @param $args['userid'] UID of User to subscribe OR
+ * @param $args['userid'] ID of User to subscribe OR
  * @param $args['email'] EMail address of anonymous user to subscribe
  * @return bool pubsub ID on success, false if not
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -62,7 +63,7 @@ function pubsub_userapi_adduser($args)
 
     // check not already subscribed
     // TODO: Just noting that this doesn't actually do anything other then a useless query
-    $query = "SELECT xar_pubsubid FROM $pubsubregtable";
+    $query = "SELECT pubsubid FROM $pubsubregtable";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
@@ -71,19 +72,19 @@ function pubsub_userapi_adduser($args)
 
     // Add item
     $query = "INSERT INTO $pubsubregtable (
-              xar_pubsubid,
-              xar_eventid,
-              xar_userid,
-              xar_actionid,
-              xar_subdate,
-              xar_email)
+              pubsubid,
+              eventid,
+              userid,
+              actionid,
+              subdate,
+              email)
             VALUES (?,?,?,?," . time() . ",?)";
     $bindvars = array($nextId, $eventid, $userid, $actionid, $email);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // return pubsub ID
-    $nextId = $dbconn->PO_Insert_ID($pubsubregtable, 'xar_pubsubid');
+    $nextId = $dbconn->PO_Insert_ID($pubsubregtable, 'pubsubid');
 
     return $nextId;
 }
