@@ -6,24 +6,24 @@ Version 0.1 16th October 2002
 Version 1.3 26th October 2003
    - rework of pubsub operation and tables
 
-* xar_pubsub_events : contains the (module + itemtype + cid) combinations
+* pubsub_events : contains the (module + itemtype + cid) combinations
                       to which (at least some) users have subscribed.
   New records are created when necessary, based on the subscription of users.
   The unique identifier for the events is the 'eventid'.
 
-* xar_pubsub_reg : contains the (eventid + userid) combinations for user
+* pubsub_reg : contains the (eventid + userid) combinations for user
                    registrations. 
   New records are created when users subscribe to a particular "event".
   The unique identifier for the subscriptions is the 'pubsubid'.
 
-* xar_pubsub_process : contains the (pubsubid + objectid + templateid) combinations
+* pubsub_process : contains the (pubsub_id + object_id + template_id) combinations
                        for any notification jobs that need to be processed by the
                        by the processq() function.
   New records are created when a create/update/delete hook is called, and users are
   subscribed to that particular "event". This is handled by the processevent() function.
-  The unique identifier for the jobs is the 'handlingid'.
+  The unique identifier for the jobs is the 'id'.
 
-* xar_pubsub_templates : contains the different templates to be used to notify users
+* pubsub_templates : contains the different templates to be used to notify users
                          when an event was found in a create/update/delete hook call.
-  The unique identifier for the templates is the 'templateid'.
+  The unique identifier for the templates is the 'id'.
 

@@ -2,9 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:template type="module" module="pubsub" file="admin-menu" />
         <h2>Overview</h2>
-           <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+            <xar:var name="label">Official Icon</xar:var>
+           <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
            <h2>
                 What is it?
             </h2>

@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * initialise the pubsub module
@@ -31,53 +32,82 @@ function pubsub_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_events";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_pubsub_events (
-            eventid             integer unsigned NOT NULL auto_increment,
-            modid               integer unsigned NOT NULL DEFAULT '0',
+            id                  integer unsigned NOT NULL auto_increment,
+            module_id           integer unsigned NOT NULL DEFAULT '0',
             itemtype            integer unsigned NOT NULL DEFAULT '0',
             cid                 integer unsigned NOT NULL DEFAULT '0',
             extra               varchar(255) NOT NULL DEFAULT '',
             groupdescr          varchar(64) NOT NULL DEFAULT '',
-            PRIMARY KEY(eventid)
+            author              integer unsigned NOT NULL default 0, 
+            timecreated         integer unsigned NOT NULL default 0, 
+            timemodified        integer unsigned NOT NULL default 0, 
+            state               tinyint(3) NOT NULL default 3, 
+            PRIMARY KEY(id)
             )";
     if (!$q->run($query)) return;
     
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_reg";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_subscriptions";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_pubsub_reg (
-            pubsubid             integer unsigned NOT NULL auto_increment,
-            eventid               integer unsigned NOT NULL DEFAULT '0',
-            userid            integer unsigned NOT NULL DEFAULT '0',
-            actionid                 integer unsigned NOT NULL DEFAULT '0',
-            subdate                 integer unsigned NOT NULL DEFAULT '0',
+    $query = "CREATE TABLE " . $prefix . "_pubsub_subscriptions (
+            id                  integer unsigned NOT NULL auto_increment,
+            event_id            integer unsigned NOT NULL DEFAULT '0',
+            userid              integer unsigned NOT NULL DEFAULT '0',
+            action_id           integer unsigned NOT NULL DEFAULT '0',
+            subdate             integer unsigned NOT NULL DEFAULT '0',
             email               varchar(255) NOT NULL DEFAULT '',
-            PRIMARY KEY(pubsubid)
+            author              integer unsigned NOT NULL default 0, 
+            timecreated         integer unsigned NOT NULL default 0, 
+            timemodified        integer unsigned NOT NULL default 0, 
+            state               tinyint(3) NOT NULL default 3, 
+            PRIMARY KEY(id)
             )";
     if (!$q->run($query)) return;
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_process";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_pubsub_process (
-            handlingid             integer unsigned NOT NULL auto_increment,
-            pubsubid               integer unsigned NOT NULL DEFAULT '0',
-            objectid            integer unsigned NOT NULL DEFAULT '0',
-            templateid                 integer unsigned NOT NULL DEFAULT '0',
-            status               varchar(100) NOT NULL DEFAULT '',
-            PRIMARY KEY(handlingid)
+            id                  integer unsigned NOT NULL auto_increment,
+            pubsub_id           integer unsigned NOT NULL DEFAULT '0',
+            object_id           integer unsigned NOT NULL DEFAULT '0',
+            template_id         integer unsigned NOT NULL DEFAULT '0',
+            status              varchar(100) NOT NULL DEFAULT '',
+            author              integer unsigned NOT NULL default 0, 
+            timecreated         integer unsigned NOT NULL default 0, 
+            timemodified        integer unsigned NOT NULL default 0, 
+            state               tinyint(3) NOT NULL default 3, 
+            PRIMARY KEY(id)
             )";
     if (!$q->run($query)) return;
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_templates";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_pubsub_templates (
-            templateid             integer unsigned NOT NULL auto_increment,
-            name          varchar(64) NOT NULL DEFAULT '',
-            template               text,
+            id                  integer unsigned NOT NULL auto_increment,
+            name                varchar(64) NOT NULL DEFAULT '',
+            template            text,
             compiled            text,
-            PRIMARY KEY(templateid),
+            author              integer unsigned NOT NULL default 0, 
+            timecreated         integer unsigned NOT NULL default 0, 
+            timemodified        integer unsigned NOT NULL default 0, 
+            state               tinyint(3) NOT NULL default 3, 
+            PRIMARY KEY(id),
             KEY templatename (name)
             )";
     if (!$q->run($query)) return;
     
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'pubsub';
+    $objects = array(
+                    'pubsub_events',
+                    'pubsub_subscriptions',
+                    'pubsub_templates',
+                    'pubsub_process',
+                     );
+
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 /*    $nextId = $dbconn->GenId($pubsubtemplatestable);
     $name = 'default';
     $template = '<xar:ml>
@@ -92,7 +122,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     $compiled = xarTplCompileString($template);
 
 
-    $query = "INSERT INTO $pubsubtemplatestable (xar_templateid, xar_name, xar_template, xar_compiled)
+    $query = "INSERT INTO $pubsubtemplatestable (id, name, template, compiled)
               VALUES (?,?,?,?)";
     $bindvars=array($nextId, $name, $template, $compiled);
     $result =& $dbconn->Execute($query,$bindvars);
@@ -146,9 +176,9 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
 // TODO: review this :-)
 
 /*    // Define instances for this module
-    $query1 = "SELECT DISTINCT xar_pubsubid FROM " . $pubsubregtable;
-    $query2 = "SELECT DISTINCT xar_eventid FROM " . $pubsubeventstable;
-    $query3 = "SELECT DISTINCT xar_handlingid FROM " . $pubsubprocesstable;
+    $query1 = "SELECT DISTINCT pubsubid FROM " . $pubsubregtable;
+    $query2 = "SELECT DISTINCT eventid FROM " . $pubsubeventstable;
+    $query3 = "SELECT DISTINCT id FROM " . $pubsubprocesstable;
 
     $instances = array(
                         array('header' => 'Pubsub ID:',
@@ -171,7 +201,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     xarRegisterMask('ReadPubSub','All','pubsub','All','All','ACCESS_READ');
     xarRegisterMask('EditPubSub','All','pubsub','All','All','ACCESS_EDIT');
     xarRegisterMask('AddPubSub','All','pubsub','All','All','ACCESS_ADD');
-    xarRegisterMask('DeletePubSub','All','pubsub','All','All','ACCESS_DELETE');
+    xarRegisterMask('ManagePubSub','All','pubsub','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminPubSub','All','pubsub','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
@@ -191,7 +221,7 @@ function pubsub_upgrade($oldversion)
     switch ($oldversion) {
         case '2.0.0':
             // We can now use local templates in the pubsub/xartemplates dir
-            xarModSetVar('pubsub','usetemplateids',1);
+            xarModVars::set('pubsub','usetemplateids',1);
         default:
             break;
     }

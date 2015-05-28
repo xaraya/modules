@@ -11,6 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Table function
@@ -25,12 +26,10 @@ function pubsub_xartables()
     // Initialise table array
     $xartable = array();
 
-    $xartable['pubsub_events'] = xarDB::getPrefix() . '_pubsub_events';
-// Note : this table is no longer in use - leave in here to handle upgrades
-    $xartable['pubsub_eventcids'] = xarDB::getPrefix() . '_pubsub_eventcids';
-    $xartable['pubsub_reg'] = xarDB::getPrefix() . '_pubsub_reg';
-    $xartable['pubsub_process'] = xarDB::getPrefix() . '_pubsub_process';
-    $xartable['pubsub_templates'] = xarDB::getPrefix() . '_pubsub_templates';
+    $xartable['pubsub_events']        = xarDB::getPrefix() . '_pubsub_events';
+    $xartable['pubsub_subscriptions'] = xarDB::getPrefix() . '_pubsub_subscriptions';
+    $xartable['pubsub_process']       = xarDB::getPrefix() . '_pubsub_process';
+    $xartable['pubsub_templates']     = xarDB::getPrefix() . '_pubsub_templates';
 
     return $xartable;
 }
