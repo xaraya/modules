@@ -76,7 +76,6 @@ function pubsub_user_subscribe()
 
     xarController::redirect($returnurl);
     return true;
-
 }
 
 ?>
