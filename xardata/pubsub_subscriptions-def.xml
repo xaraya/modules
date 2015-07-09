@@ -30,7 +30,7 @@
       <id>10575</id>
       <label>Event</label>
       <type>objectref</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>0</defaultvalue>
       <source>subscriptions.event_id</source>
       <status>33</status>
       <seq>2</seq>
