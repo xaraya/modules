@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Subscribe Form</h2>
+       <!--  
+        <div>
+	         <xar:var name="label">Back</xar:var>
+	         <xar:button type="cancel" label="$label"/>
+	         &#160;
+	         <xar:var name="label">Subscribe</xar:var>
+	         <xar:button type="submit" name="confirm" label="$label"/>
+        </div>
+         -->
+    </div>
+</xar:template>
