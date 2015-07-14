@@ -14,7 +14,7 @@ function pubsub_user_submit_form($args) {
 	    'event'   => $event_id,
 	    'user_id' => $userid,
 	    'email'   => $email,
-	);exit;
+	);
 	
 	// Get the object we are working with
 	$data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -22,10 +22,13 @@ function pubsub_user_submit_form($args) {
 			
 	// Good data: create the item
 	$itemid = $data['object']->createItem();
-	// Jump to the next page
-       	xarController::redirect(xarServer::getCurrentURL());
+var_dump(xarController::$request->isAjax());
+exit;    // If this is an AJAX call, end here
+    xarController::$request->exitAjax();
 
-	return $data;
+	// Jump to the next page
+    xarController::redirect(xarServer::getCurrentURL());
+	return true;
 }
 
 ?>
