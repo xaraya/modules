@@ -22,8 +22,8 @@ function pubsub_user_submit_form($args) {
 			
 	// Good data: create the item
 	$itemid = $data['object']->createItem();
-var_dump(xarController::$request->isAjax());
-exit;    // If this is an AJAX call, end here
+
+    // If this is an AJAX call, end here
     xarController::$request->exitAjax();
 
 	// Jump to the next page
