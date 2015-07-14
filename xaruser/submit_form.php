@@ -7,14 +7,14 @@ function pubsub_user_submit_form($args) {
 	if (!xarVarFetch('userid',      'int',    $userid,       0, XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('event_id',    'int',    $event_id,       0, XARVAR_NOT_REQUIRED)) return;
 	//if (!xarVarFetch('action_id',   'int',    $action_id,       0, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('email',       'str:1:', $email,'',XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('email',       'email', $email,'',XARVAR_NOT_REQUIRED)) return;
 	
 	// Set some default values
 	$default_values = array(
 	    'event'   => $event_id,
 	    'user_id' => $userid,
 	    'email'   => $email,
-	    'author'  => xarUser::getVar('id'),
+	    'author'  => xarUser::getVar('uname'),
 	);
 	
 	// Get the object we are working with
@@ -36,7 +36,6 @@ function pubsub_user_submit_form($args) {
 		// Good data: create the item
 		$itemid = $data['object']->createItem();
 		// Jump to the next page
-		exit;
        	xarController::redirect(xarModURL('base','user','test'));
 	}
 	return $data;
