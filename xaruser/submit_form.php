@@ -15,19 +15,20 @@ function pubsub_user_submit_form($args) {
 	    'user_id' => $userid,
 	    'email'   => $email,
 	);
+	if(!empty($email)) {
+		// Get the object we are working with
+		$data['object'] = DataObjectMaster::getObject(array('name' => $name));
+		$data['object']->setFieldValues($default_values,1);
+				
+		// Good data: create the item
+		$itemid = $data['object']->createItem();
 	
-	// Get the object we are working with
-	$data['object'] = DataObjectMaster::getObject(array('name' => $name));
-	$data['object']->setFieldValues($default_values,1);
-			
-	// Good data: create the item
-	$itemid = $data['object']->createItem();
-
-    // If this is an AJAX call, end here
-    xarController::$request->exitAjax();
-
-	// Jump to the next page
-    xarController::redirect(xarServer::getCurrentURL());
+	    	// If this is an AJAX call, end here
+	    	xarController::$request->exitAjax();
+	
+		// Jump to the next page
+	    	xarController::redirect(xarServer::getCurrentURL());
+	}
 	return true;
 }
 
