@@ -14,18 +14,16 @@ function pubsub_user_submit_form($args) {
 	    'event'   => $event_id,
 	    'user_id' => $userid,
 	    'email'   => $email,
-	    'author'  => xarUser::getVar('uname'),
 	);
 	
 	// Get the object we are working with
 	$data['object'] = DataObjectMaster::getObject(array('name' => $name));
-	$data['object']->setFieldValues($default_values);
-	
-		
+	$data['object']->setFieldValues($default_values,1);
+			
 	// Good data: create the item
 	$itemid = $data['object']->createItem();
 	// Jump to the next page
-       	xarController::redirect(xarModURL('base','user','main', array('page'=>'test')));
+       	xarController::redirect(xarServer::getCurrentURL()));
 
 	return $data;
 }
