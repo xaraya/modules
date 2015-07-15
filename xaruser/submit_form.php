@@ -8,6 +8,7 @@ function pubsub_user_submit_form($args) {
 	if (!xarVarFetch('event_id',    'int',    $event_id,       0, XARVAR_NOT_REQUIRED)) return;
 	//if (!xarVarFetch('action_id',   'int',    $action_id,       0, XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('email',       'email', $email,'',XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('returnurl', 'str',$returnurl,FALSE)) return;
 	
 	// Set some default values
 	$default_values = array(
@@ -27,7 +28,8 @@ function pubsub_user_submit_form($args) {
 	    	xarController::$request->exitAjax();
 	
 		// Jump to the next page
-	    	xarController::redirect(xarServer::getCurrentURL());
+	    	//xarController::redirect(xarServer::getCurrentURL());
+	    	xarController::redirect($returnurl);
 	}
 	return true;
 }
