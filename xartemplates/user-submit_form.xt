@@ -3,14 +3,13 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>Subscribe Form</h2>
-       <!--  
+        <xar:if condition="!empty($email)">
+     		You have subscribed successfully! 
+     	</xar:if>
         <div>
 	         <xar:var name="label">Back</xar:var>
 	         <xar:button type="cancel" label="$label"/>
 	         &#160;
-	         <xar:var name="label">Subscribe</xar:var>
-	         <xar:button type="submit" name="confirm" label="$label"/>
         </div>
-         -->
     </div>
 </xar:template>
