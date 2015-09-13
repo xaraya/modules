@@ -71,6 +71,7 @@ function publications_userapi_getprevious($args)
         $q->eq('pubtype_id', $ptid);
         $q->lt('name', $current['name']);
         $q->setorder('name', 'DESC');
+        break;
     case 'title':
         $q->eq('pubtype_id', $ptid);
         $q->lt('title', $current['title']);

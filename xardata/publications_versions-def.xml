@@ -41,7 +41,7 @@
       <id>3073</id>
       <label>Owner</label>
       <type>username</type>
-      <defaultvalue>xarUser::getVar('id')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>versions.owner</source>
       <status>33</status>
       <seq>3</seq>

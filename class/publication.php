@@ -43,7 +43,7 @@ class Publication extends DataObject
             $access->initialization_group_multiselect = true;
             $access->validation_override = true;
             $prefix = $this->getFieldPrefix();
-            
+
             // Only ignore the prefix if we are CREATING the base document
             // A translation would have a prefix of 0, which is valid
             if (empty($prefix) && $prefix !== '0') {

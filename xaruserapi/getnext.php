@@ -71,6 +71,7 @@ function publications_userapi_getnext($args)
         $q->eq('pubtype_id', $ptid);
         $q->gt('name', $current['name']);
         $q->setorder('name', 'ASC');
+        break;
     case 'title':
         $q->eq('pubtype_id', $ptid);
         $q->gt('title', $current['title']);
@@ -89,13 +90,6 @@ function publications_userapi_getnext($args)
     // Run the query
     $q->run();
     return $q->row();
-    
-    // check security - don't generate an exception here
-    if (!xarSecurityCheck('ViewPublications',0,'Publication',"$item[pubtype_id]:All:$item[owner]:$item[id]")) {
-        return array();
-    }
-
-    return $item;
 }
 
 ?>
