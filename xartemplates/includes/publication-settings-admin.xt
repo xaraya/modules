@@ -409,18 +409,16 @@
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']" group_multiselect="1"/>
     </fieldset>
-    <xar:if condition="xarModIsAvailable('categories')">
-        <fieldset>
-            <legend>
-                Categories
-            </legend>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Categories</xar:var>
-                <xar:data-label property="$properties['categories']" for="id" label="$label" />
-                <xar:data-input property="$properties['categories']" />
-            </div>
-        </fieldset>
-    </xar:if>
+    <fieldset>
+        <legend>
+            Categories
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Categories</xar:var>
+            <xar:data-label property="$properties['categories']" for="id" label="$label" />
+            <xar:data-input property="$properties['categories']" />
+        </div>
+    </fieldset>
     <fieldset>
         <legend>
             Allowed Tags
