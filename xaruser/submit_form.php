@@ -42,7 +42,7 @@ function pubsub_user_submit_form($args) {
 			xarController::redirect(xarServer::getCurrentURL());
 		} else {
 			//xarML('This email is already registered!');
-			error_reporting(0);
+			//error_reporting(0);
 			die('This email is already registered!');
 		}
 	}
