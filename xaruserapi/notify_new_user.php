@@ -76,7 +76,7 @@ function pubsub_userapi_notify_new_user($args)
 			//$total_users_count =  count($user_event_master);
 			$total_users_count =1;
 			
-			$args = array('id'               => 11,
+			$args = array('id'               => 18,
 					'sendername'       => "Administrator",
 					'senderaddress'    => "admin@eventhubsacramento.com",
 					'recipientname'    => 'EventHub_SUbscriber',
