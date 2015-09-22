@@ -81,7 +81,7 @@ function pubsub_userapi_notify_new_user($args)
 					'senderaddress'    => "admin@eventhubsacramento.com",
 					'recipientname'    => 'EventHub_SUbscriber',
 					'recipientaddress' => 'netspan@paramss.com',
-					'data' => array('emailt' => $user['email'])
+					'data' => array('email' => $user['email'])
 				);
 			$sendmail = xarModAPIFunc('mailer','user','send', $args);
 			
