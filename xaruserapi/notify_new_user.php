@@ -71,38 +71,41 @@ function pubsub_userapi_notify_new_user($args)
 		// Now send notification mail to admin with the number of events and the number of users notified
 		// if allowed to notify admin from pubsub backend
 		
-		$events_count = count($allevents);
-		//$total_users_count =  count($user_event_master);
-		$total_users_count =1;
-		
-		$args = array('id'               => 11,
-				'sendername'       => "Administrator",
-				'senderaddress'    => "admin@eventhubsacramento.com",
-				'recipientname'    => 'EventHub_SUbscriber',
-				'recipientaddress' => 'netspan@paramss.com',
-				'data' => array('events_count' => $events_count, 'users_count' => $total_users_count));
-		$sendmail = xarModAPIFunc('mailer','user','send', $args);
-		
-		if(xarModVars::get('pubsub','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-			$result .=  xarML("Emails sent to #(1) users", $total_users_count);
-			$result .= "<pre>";
-			foreach ($user_event_master as $entry) {
-				$user = $entry['user'];
-				$eventlist = $entry['events'];
-				$result .= "</pre>";
-				$result .= $user['uname'] . "(" . $user['email'] . ")<br/>";
-				/*
-				foreach ($eventlist as $event) {
-					$item = xarMod::apiFunc('publications','user','get', array('id' => $event['id']));
-					$result .= $item['title'] . "<br/>";
+		if (xarModVars::get('pubsub','sendnotice')) {
+			$events_count = count($allevents);
+			//$total_users_count =  count($user_event_master);
+			$total_users_count =1;
+			
+			$args = array('id'               => 11,
+					'sendername'       => "Administrator",
+					'senderaddress'    => "admin@eventhubsacramento.com",
+					'recipientname'    => 'EventHub_SUbscriber',
+					'recipientaddress' => 'netspan@paramss.com',
+					'data' => array('events_count' => $events_count, 'users_count' => $total_users_count));
+			$sendmail = xarModAPIFunc('mailer','user','send', $args);
+			
+			if(xarModVars::get('pubsub','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+				$result .=  xarML("Emails sent to #(1) users", $total_users_count);
+				$result .= "<pre>";
+				foreach ($user_event_master as $entry) {
+					$user = $entry['user'];
+					$eventlist = $entry['events'];
+					$result .= "</pre>";
+					$result .= $user['uname'] . "(" . $user['email'] . ")<br/>";
+					/*
+					foreach ($eventlist as $event) {
+						$item = xarMod::apiFunc('publications','user','get', array('id' => $event['id']));
+						$result .= $item['title'] . "<br/>";
+					}
+					*/
 				}
-				*/
+				 $result .= "</pre>"; 
+				return $result;
+			
+			} else {
+				$result .=  xarML("Emails sent to #(1) users", $total_users_count);
+				return $result;
 			}
-			 $result .= "</pre>"; 
-			return $result;
-		} else {
-			$result .=  xarML("Emails sent to #(1) users", $total_users_count);
-			return $result;
 		}
 	} else {
 		$result .= xarML("No events to send");
