@@ -81,7 +81,8 @@ function pubsub_userapi_notify_new_user($args)
 					'senderaddress'    => "admin@eventhubsacramento.com",
 					'recipientname'    => 'EventHub_SUbscriber',
 					'recipientaddress' => 'netspan@paramss.com',
-					'data' => array('events_count' => $events_count, 'users_count' => $total_users_count));
+				//	'data' => array('events_count' => $events_count, 'users_count' => $total_users_count)
+				);
 			$sendmail = xarModAPIFunc('mailer','user','send', $args);
 			
 			if(xarModVars::get('pubsub','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
