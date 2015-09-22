@@ -173,6 +173,8 @@
                         Please note that if you stop the scheduler or if it isn't triggered, queued events will not be processed.
                     </p>
                 </fieldset>
+                
+                
                 <fieldset>
                     <legend>
                         Notification
@@ -202,6 +204,8 @@
                         </div>
                     </div>
                 </fieldset>
+                
+                
                 <input type="hidden" name="tab" id="tab" value="#$tab#"/>
                 <xar:template file="update-button" module="base" />
             </form>

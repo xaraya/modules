@@ -32,12 +32,16 @@ function pubsub_user_submit_form($args) {
 			// Good data: create the item
 			$itemid = $data['object']->createItem();
 			
+			//send to notify_new_user
+			xarMod::apiFunc('pubsub','user','notify_new_user',$default_values['email']);
+			
 			// If this is an AJAX call, end here
 			xarController::$request->exitAjax();
 			
 			// Jump to the next page
 			xarController::redirect(xarServer::getCurrentURL());
 		} else {
+			//xarML('This email is already registered!');
 			die('This email is already registered!');
 		}
 	}
