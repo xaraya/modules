@@ -41,8 +41,8 @@ function pubsub_user_submit_form($args) {
 			// Jump to the next page
 			xarController::redirect(xarServer::getCurrentURL());
 		} else {
-			xarML('This email is already registered!');
-			//die('This email is already registered!');
+			//xarML('This email is already registered!');
+			die('This email is already registered!');
 		}
 	}
 	return true;
