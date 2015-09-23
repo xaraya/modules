@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+		<h2>
+            <xar:ml>
+                <xar:mlstring>Create New Item in #(1)</xar:mlstring>
+                <xar:mlvar>#$object:label#</xar:mlvar>
+            </xar:ml>
+        </h2>
+
+        <form method="post" action="#xarServer::getCurrentURL()#">
+          <fieldset>
+            <legend>Subscriber details</legend>
+            <xar:data-form object="$object" tplmodule="$tplmodule"/>
+          </fieldset>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                  <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                  <input type="hidden" name="name" id="name" value="#$object:name#"/>
+                  <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
+                  <input type="hidden" name="confirm" id="confirm" value="true"/>
+                  <xar:var name="label">Create</xar:var>
+                  <xar:button type="submit" value="$label"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</xar:template>
