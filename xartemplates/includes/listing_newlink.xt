@@ -122,7 +122,7 @@
             </xar:access>
         <xar:elseif condition="$objectname eq 'pubsub_subscriptions'"/>
             <xar:access level="600">
-                <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_subscription',array('tplmodule'=> $module))#" title="Add a role">
+                <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_subscriber',array('tplmodule'=> $module))#" title="Add a role">
                     <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
                     <xar:else />
