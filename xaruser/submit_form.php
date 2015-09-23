@@ -22,6 +22,7 @@ function pubsub_user_submit_form($args) {
 		$q = new Query();
 		$q->addtable($tables['pubsub_subscriptions'], 'ps');
 		$q->eq('ps.email', $default_values['email']);
+		$q->eq('ps.state', 3);
 		$q->run();
 		$result  = $q->output();
 
