@@ -12,6 +12,15 @@
         <menuitem>
             <mask>ManagePubSub</mask>
             <includes>
+                <includeitem>view_subscribers</includeitem>
+            </includes>
+            <target>view_subscribers</target>
+            <title>Manage the subscribers</title>
+            <label>Subscribers</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManagePubSub</mask>
+            <includes>
                 <includeitem>view_queue</includeitem>
             </includes>
             <target>view_queue</target>
