@@ -44,12 +44,12 @@ function html_userapi_gettag($args)
     // Get tag
     $query = "SELECT $htmltable.id,
                      $htmltable.tid,
-                     $htmltypestable.xar_type,
+                     $htmltypestable.type,
                      $htmltable.tag,
                      $htmltable.allowed
               FROM $htmltable, $htmltypestable
               WHERE $htmltable.id = ?
-              AND $htmltable.tid = $htmltypestable.xar_id";
+              AND $htmltable.tid = $htmltypestable.id";
 
         $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;

@@ -73,15 +73,15 @@ function html_init()
 
     /*****************************************************************
     * $query = "CREATE TABLE $htmltypestable (
-    *       xar_id integer unsigned NOT NULL auto_increment,
-    *       xar_type VARCHAR(20) NOT NULL default ''
-    *       PRIMARY KEY (xar_type),
+    *       id integer unsigned NOT NULL auto_increment,
+    *       type VARCHAR(20) NOT NULL default ''
+    *       PRIMARY KEY (type),
     *       UNIQUE KEY tag (xar_name))";
     *****************************************************************/
     $fields = array(
-    'xar_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//    'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-    'xar_type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
+    'id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//    'id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
     );
 
     // Create table
@@ -89,9 +89,9 @@ function html_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Create index on xar_type
+    // Create index on type
     $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
-                   'fields'    => array('xar_type'),
+                   'fields'    => array('type'),
                    'unique'    => TRUE);
 
     $query = xarDBCreateIndex($htmltypestable, $index);
@@ -106,8 +106,8 @@ function html_init()
 
     // Insert html
     $query = "INSERT INTO $htmltypestable (
-                xar_id,
-                xar_type)
+                id,
+                type)
               VALUES (?, ?)";
 
     $result =& $dbconn->Execute($query, array($nextid, (string) $defaulttype));
@@ -116,7 +116,7 @@ function html_init()
     if (!$result) return;
 
     // Get the ID of the item that was inserted
-    $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'xar_id');
+    $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'id');
 
     // The default values of the HTML tags are:
     //   0 = Not allowed
@@ -327,15 +327,15 @@ function html_upgrade($oldversion)
             // Create htmltypes table
             /*****************************************************************
             * $query = "CREATE TABLE $htmltypestable (
-            *       xar_id integer unsigned NOT NULL auto_increment,
-            *       xar_type VARCHAR(20) NOT NULL default ''
-            *       PRIMARY KEY (xar_type),
+            *       id integer unsigned NOT NULL auto_increment,
+            *       type VARCHAR(20) NOT NULL default ''
+            *       PRIMARY KEY (type),
             *       UNIQUE KEY tag (xar_name))";
             *****************************************************************/
             $fields = array(
-                'xar_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//                'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-                'xar_type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
+                'id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//                'id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+                'type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
             );
 
             // Create table
@@ -343,9 +343,9 @@ function html_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            // Create index on xar_type
+            // Create index on type
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
-                           'fields'    => array('xar_type'),
+                           'fields'    => array('type'),
                            'unique'    => TRUE);
 
             $query = xarDBCreateIndex($htmltypestable, $index);
@@ -359,8 +359,8 @@ function html_upgrade($oldversion)
 
             // Insert html
             $query = "INSERT INTO $htmltypestable (
-                         xar_id,
-                         xar_type)
+                         id,
+                         type)
                      VALUES (?, ?)";
 
             $result =& $dbconn->Execute($query, array( $nextid, (string) $defaulttype));
@@ -369,7 +369,7 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // Get the ID of the item that was inserted
-            $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'xar_id');
+            $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'id');
 
             // Add the column 'tid' to the xar_html table
              $query = xarDBAlterTable($htmltable,

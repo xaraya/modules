@@ -48,9 +48,9 @@ function html_adminapi_createtype($args)
     // Make sure $type is lowercase
     $tagtype = strtolower($tagtype);
     // Check for existence of tag type
-    $query = "SELECT xar_id
+    $query = "SELECT id
               FROM $htmltypestable
-              WHERE xar_type = ?";
+              WHERE type = ?";
     $result =& $dbconn->Execute($query,array($tagtype));
     if (!$result) return false;
 
@@ -63,8 +63,8 @@ function html_adminapi_createtype($args)
     $nextId = $dbconn->GenId($htmltypestable);
     // Add item
     $query = "INSERT INTO $htmltypestable (
-              xar_id,
-              xar_type)
+              id,
+              type)
             VALUES (
                     ?,
                     ?)";
@@ -72,9 +72,11 @@ function html_adminapi_createtype($args)
     $result =& $dbconn->Execute($query,array($nextId, $tagtype));
     if (!$result) return;
     // Get the ID of the item that we inserted
-    $id = $dbconn->PO_Insert_ID($htmltypestable, 'xar_id');
+    $id = $dbconn->PO_Insert_ID($htmltypestable, 'id');
     // Let any hooks know that we have created a new tag type
-    xarModCallHooks('item', 'createtype', $id, 'id');
+    $item['module'] = 'html';
+    $item['itemid'] = $id;
+    xarModCallHooks('item', 'createtype', $id, $item);
     // Return the id of the newly created tag to the calling process
     return $id;
 }

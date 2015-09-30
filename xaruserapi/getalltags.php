@@ -46,9 +46,9 @@ function html_userapi_getalltags($args)
     if (!empty($type)) {
         // Set WHERE clause to retrieve by tag type
         // Get ID of type
-        $query = "SELECT xar_id
+        $query = "SELECT id
                   FROM $htmltypestable
-                  WHERE xar_type = ?";
+                  WHERE type = ?";
         $result =& $dbconn->Execute($query,array($type));
         if (!$result) return;
 
@@ -59,18 +59,18 @@ function html_userapi_getalltags($args)
         $where = " WHERE $htmltable.tid = ? ";
         $bindvars = array((int) $typeid);
     } else {
-        $where = " WHERE $htmltable.tid = $htmltypestable.xar_id";
+        $where = " WHERE $htmltable.tid = $htmltypestable.id";
     }
 
     // Create query
     $query = "SELECT $htmltable.id,
                      $htmltable.tid,
-                     $htmltypestable.xar_type,
+                     $htmltypestable.type,
                      $htmltable.tag,
                      $htmltable.allowed
               FROM $htmltable, $htmltypestable";
     $query .= $where;
-    $query .= " ORDER BY $htmltypestable.xar_type, $htmltable.tag";
+    $query .= " ORDER BY $htmltypestable.type, $htmltable.tag";
 
     if (isset($bindvars) && !empty($bindvars)) {
         $result =& $dbconn->Execute($query, $bindvars);

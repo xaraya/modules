@@ -63,8 +63,8 @@ function html_adminapi_edittype($args)
 
     // Update the tag type
     $query = "UPDATE $htmltypestable
-              SET xar_type = ?
-              WHERE xar_id = ?";
+              SET type = ?
+              WHERE id = ?";
     $result =& $dbconn->Execute($query,array($tagtype, $id));
     if (!$result) return;
     // Let any hooks know that we have deleted a html

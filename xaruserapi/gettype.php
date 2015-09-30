@@ -47,17 +47,17 @@ function html_userapi_gettype($args)
     // Select by id or type
     if ($id > 0) {
         // Get tag type by id
-        $query = "SELECT $htmltypestable.xar_id,
-                         $htmltypestable.xar_type
+        $query = "SELECT $htmltypestable.id,
+                         $htmltypestable.type
                   FROM  $htmltypestable
-                  WHERE $htmltypestable.xar_id = ?";
+                  WHERE $htmltypestable.id = ?";
         $result =& $dbconn->Execute($query,array($id));
     } else {
         // Get tag type by type
-        $query = "SELECT $htmltypestable.xar_id,
-                         $htmltypestable.xar_type
+        $query = "SELECT $htmltypestable.id,
+                         $htmltypestable.type
                   FROM  $htmltypestable
-                  WHERE $htmltypestable.xar_type = ?";
+                  WHERE $htmltypestable.type = ?";
         $result =& $dbconn->Execute($query,array($type));
     }
     if (!$result) return;

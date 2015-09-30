@@ -103,7 +103,9 @@ function html_adminapi_create($args)
         xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have created a new tag
-    xarModCallHooks('item', 'create', $itemid, 'id');
+    $item['module'] = 'html';
+    $item['itemid'] = $itemid;
+    xarModCallHooks('item', 'create', $itemid, $item);
     // Return the id of the newly created tag to the calling process
     return $itemid;
 }

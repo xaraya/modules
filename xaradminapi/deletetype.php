@@ -54,7 +54,7 @@ function html_adminapi_deletetype($args)
     $htmltypestable = $xartable['htmltypes'];
 
     // Delete the tag type
-    $query = "DELETE FROM $htmltypestable WHERE xar_id = ?";
+    $query = "DELETE FROM $htmltypestable WHERE id = ?";
     $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
 

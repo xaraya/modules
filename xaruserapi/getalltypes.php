@@ -41,10 +41,10 @@ function html_userapi_getalltypes($args)
     $htmltypestable = $xartable['htmltypes'];
 
     // Get HTML tags
-    $query = "SELECT $htmltypestable.xar_id,
-                     $htmltypestable.xar_type
+    $query = "SELECT $htmltypestable.id,
+                     $htmltypestable.type
               FROM $htmltypestable
-              ORDER BY $htmltypestable.xar_type";
+              ORDER BY $htmltypestable.type";
 
     $result =& $dbconn->Execute($query);
 
