@@ -38,19 +38,19 @@ function html_init()
 
     /*****************************************************************
     * $query = "CREATE TABLE $htmltable (
-    *       xar_cid integer unsigned NOT NULL auto_increment,
-    *       xar_tid INT(11) NOT NULL default '0',
-    *       xar_tag VARCHAR(100) NOT NULL default '',
-    *       xar_allowed INT(11)  NOT NULL default '0',
-    *       PRIMARY KEY (xar_cid),
-    *       UNIQUE KEY tag (xar_tag))";
+    *       id integer unsigned NOT NULL auto_increment,
+    *       tid INT(11) NOT NULL default '0',
+    *       tag VARCHAR(100) NOT NULL default '',
+    *       allowed INT(11)  NOT NULL default '0',
+    *       PRIMARY KEY (id),
+    *       UNIQUE KEY tag (tag))";
     *****************************************************************/
     $fields = array(
-    'xar_cid'      => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//    'xar_cid'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-    'xar_tid'      => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
-    'xar_tag'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
-    'xar_allowed'  => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
+    'id'      => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//    'id'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'tid'      => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
+    'tag'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
+    'allowed'  => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
     );
 
     // Create table
@@ -58,9 +58,9 @@ function html_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Create index on xar_tag
+    // Create index on tag
     $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_tag',
-                   'fields'    => array('xar_tid, xar_tag'),
+                   'fields'    => array('tid, tag'),
                    'unique'    => TRUE);
 
     // Create index
@@ -217,10 +217,10 @@ function html_init()
 
         // Insert HTML tags
         $query = "INSERT INTO $htmltable (
-                        xar_cid,
-                        xar_tid,
-                        xar_tag,
-                        xar_allowed)
+                        id,
+                        tid,
+                        tag,
+                        allowed)
                     VALUES (?, ?, ?, ?)";
 
         $bindvars = array( $nextid,
@@ -308,15 +308,15 @@ function html_upgrade($oldversion)
 
             // Align the allowed values in xar_html to allowed
             // values in Site.Core.AlloweableHTML
-            $query = "UPDATE $htmltable SET xar_allowed=0 WHERE xar_allowed=1";
+            $query = "UPDATE $htmltable SET allowed=0 WHERE allowed=1";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            $query = "UPDATE $htmltable SET xar_allowed=1 WHERE xar_allowed=2";
+            $query = "UPDATE $htmltable SET allowed=1 WHERE allowed=2";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            $query = "UPDATE $htmltable SET xar_allowed=2 WHERE xar_allowed=3";
+            $query = "UPDATE $htmltable SET allowed=2 WHERE allowed=3";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
@@ -371,10 +371,10 @@ function html_upgrade($oldversion)
             // Get the ID of the item that was inserted
             $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'xar_id');
 
-            // Add the column 'xar_tid' to the xar_html table
+            // Add the column 'tid' to the xar_html table
              $query = xarDBAlterTable($htmltable,
                                      array('command' => 'add',
-                                           'field' => 'xar_tid',
+                                           'field' => 'tid',
                                            'type' => 'integer',
                                            'null' => false,
                                            'default' => $htmltypeid));
@@ -383,21 +383,21 @@ function html_upgrade($oldversion)
 
             // Drop current index
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_1',
-                           'fields'    => array('xar_tag'));
+                           'fields'    => array('tag'));
             $query = xarDBDropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
             if (!$result) return;
 
             // Set current html tags in xar_html to default type
             $query = "UPDATE $htmltable
-                      SET xar_tid = " . $htmltypeid;
+                      SET tid = " . $htmltypeid;
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
             // Create new index on xar_html table
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html',
-                           'fields'    => array('xar_tid, xar_tag'),
+                           'fields'    => array('tid, tag'),
                            'unique'    => TRUE);
 
             // Create index

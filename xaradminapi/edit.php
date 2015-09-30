@@ -66,8 +66,8 @@ function html_adminapi_edit($args)
 
     // Update the html
     $query = "UPDATE $htmltable
-              SET xar_tag = ?
-              WHERE xar_cid = ?";
+              SET tag = ?
+              WHERE id = ?";
     $result =& $dbconn->Execute($query,array($tag, $cid));
     if (!$result) return;
 

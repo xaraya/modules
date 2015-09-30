@@ -61,7 +61,7 @@ function html_adminapi_deletetype($args)
     if (!$result) return;
 
     // Also delete the associated tags from the xar_html table
-    $query = "DELETE FROM $htmltable WHERE xar_tid = ?";
+    $query = "DELETE FROM $htmltable WHERE tid = ?";
     $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
 

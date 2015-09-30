@@ -43,14 +43,14 @@ function html_userapi_gettag($args)
     $htmltypestable = $xartable['htmltypes'];
 
     // Get tag
-    $query = "SELECT $htmltable.xar_cid,
-                     $htmltable.xar_tid,
+    $query = "SELECT $htmltable.id,
+                     $htmltable.tid,
                      $htmltypestable.xar_type,
-                     $htmltable.xar_tag,
-                     $htmltable.xar_allowed
+                     $htmltable.tag,
+                     $htmltable.allowed
               FROM $htmltable, $htmltypestable
-              WHERE $htmltable.xar_cid = ?
-              AND $htmltable.xar_tid = $htmltypestable.xar_id";
+              WHERE $htmltable.id = ?
+              AND $htmltable.tid = $htmltypestable.xar_id";
 
         $result =& $dbconn->Execute($query,array($cid));
     if (!$result) return;

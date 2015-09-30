@@ -50,8 +50,8 @@ function html_adminapi_update($args)
 
     // Update the html tag
     $query = "UPDATE $htmltable
-              SET   xar_allowed = ?
-              WHERE xar_cid = ?";
+              SET   allowed = ?
+              WHERE id = ?";
     $result =& $dbconn->Execute($query,array($allowed, $cid));
     if (!$result) return;
     // Let any hooks know that we have deleted a html tag

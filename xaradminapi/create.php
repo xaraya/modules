@@ -75,10 +75,10 @@ function html_adminapi_create($args)
 
     // Add item
     $query = "INSERT INTO $htmltable (
-              xar_cid,
-              xar_tid,
-              xar_tag,
-              xar_allowed)
+              id,
+              tid,
+              tag,
+              allowed)
             VALUES (
               ?,
               ?,
@@ -91,7 +91,7 @@ function html_adminapi_create($args)
     if (!$result) return;
 
     // Get the ID of the item that we inserted
-    $cid = $dbconn->PO_Insert_ID($htmltable, 'xar_cid');
+    $cid = $dbconn->PO_Insert_ID($htmltable, 'id');
 
     // If this is an html tag, then
     // also add the tag to config vars

@@ -53,7 +53,7 @@ function html_adminapi_delete($args)
     $htmltable = $xartable['html'];
 
     // Delete the tag
-    $query = "DELETE FROM $htmltable WHERE xar_cid = ?";
+    $query = "DELETE FROM $htmltable WHERE id = ?";
     $result =& $dbconn->Execute($query,array($cid));
     if (!$result) return;
 

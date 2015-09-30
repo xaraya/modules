@@ -56,21 +56,21 @@ function html_userapi_getalltags($args)
         list($typeid) = $result->fields;
         $result->Close();
 
-        $where = " WHERE $htmltable.xar_tid = ? ";
+        $where = " WHERE $htmltable.tid = ? ";
         $bindvars = array((int) $typeid);
     } else {
-        $where = " WHERE $htmltable.xar_tid = $htmltypestable.xar_id";
+        $where = " WHERE $htmltable.tid = $htmltypestable.xar_id";
     }
 
     // Create query
-    $query = "SELECT $htmltable.xar_cid,
-                     $htmltable.xar_tid,
+    $query = "SELECT $htmltable.id,
+                     $htmltable.tid,
                      $htmltypestable.xar_type,
-                     $htmltable.xar_tag,
-                     $htmltable.xar_allowed
+                     $htmltable.tag,
+                     $htmltable.allowed
               FROM $htmltable, $htmltypestable";
     $query .= $where;
-    $query .= " ORDER BY $htmltypestable.xar_type, $htmltable.xar_tag";
+    $query .= " ORDER BY $htmltypestable.xar_type, $htmltable.tag";
 
     if (isset($bindvars) && !empty($bindvars)) {
         $result =& $dbconn->Execute($query, $bindvars);
