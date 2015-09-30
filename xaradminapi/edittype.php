@@ -36,8 +36,7 @@ function html_adminapi_edittype($args)
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'edittype', 'html');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // The user API function is called
@@ -48,8 +47,7 @@ function html_adminapi_edittype($args)
 
     if ($type == false) {
         $msg = xarML('No such tag  type present.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security Check

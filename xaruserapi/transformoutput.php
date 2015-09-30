@@ -29,8 +29,7 @@ function html_userapi_transformoutput($args)
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
                      'extrainfo', 'userapi', 'transformoutput', 'html');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     if (is_array($extrainfo)) {

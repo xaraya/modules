@@ -37,8 +37,7 @@ function html_adminapi_update($args)
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'update', 'html');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security Check

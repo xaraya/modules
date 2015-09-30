@@ -29,8 +29,7 @@ function html_adminapi_delete($args)
     // Argument check
     if (!isset($cid) || !is_numeric($cid)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'cid', 'adminapi', 'delete', 'html');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // The user API function is called
@@ -41,8 +40,7 @@ function html_adminapi_delete($args)
 
     if ($html == false) {
         $msg = xarML('No Such HTML tag Present', 'html');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security Check

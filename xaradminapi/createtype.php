@@ -34,8 +34,7 @@ function html_adminapi_createtype($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
                      join(', ',$invalid), 'adminapi', 'createtype', 'html');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security Check
@@ -57,8 +56,7 @@ function html_adminapi_createtype($args)
 
     if ($result->RecordCount() > 0) {
         $msg = xarML('Tag type `#(1)` already exists!', $tagtype );
-        xarErrorSet(XAR_USER_EXCEPTION, 'DUPLICATE_DATA', new SystemException($msg));
-        return false;  // story already exists
+        throw new DuplicateException();
     }
 
     // Get next ID in table

@@ -62,9 +62,7 @@ function html_admin_delete()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for deleting #(1) HTML tag #(2)',
                     'HTML', xarVarPrepForDisplay($cid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
+        return xarResponse::notFound();
     }
 
     // Remove the html tag

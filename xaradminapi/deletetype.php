@@ -28,8 +28,7 @@ function html_adminapi_deletetype($args)
     // Argument check
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'id', 'adminapi', 'deletetype', 'html');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // The user API function is called
@@ -40,8 +39,7 @@ function html_adminapi_deletetype($args)
 
     if ($type == false) {
         $msg = xarML('No Such tag type present');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security Check

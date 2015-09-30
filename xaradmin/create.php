@@ -38,8 +38,7 @@ function html_admin_create($args)
     // Check arguments
     if (empty($tag)) {
         $msg = xarML('No tag Provided, Please go back and provide a tag');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // The API function is called
