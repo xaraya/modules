@@ -85,13 +85,13 @@ function html_userapi_getalltags($args)
 
     // Put tags into an array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($cid,
+        list($id,
              $tid,
              $type,
              $tag,
              $allowed) = $result->fields;
 
-         $tags[] = array('cid'       => $cid,
+         $tags[] = array('id'        => $id,
                          'tid'       => $tid,
                          'type'      => $type,
                          'tag'       => $tag,

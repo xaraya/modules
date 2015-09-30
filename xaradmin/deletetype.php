@@ -60,7 +60,7 @@ function html_admin_deletetype()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for deleting #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($cid));
+                    'HTML', xarVarPrepForDisplay($id));
         return xarResponse::notFound();
     }
 

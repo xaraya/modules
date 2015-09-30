@@ -17,7 +17,7 @@
  * @public
  * @author John Cox
  * @author Richard Cave
- * @param $args['cid'] id of tag to get
+ * @param $args['id'] id of tag to get
  * @return array link array, or false on failure
  * @throws BAD_PARAM
  */
@@ -27,8 +27,8 @@ function html_userapi_gettag($args)
     extract($args);
 
     // Argument check
-    if (!isset($cid) || !is_numeric($cid)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'cid', 'userapi', 'get', 'html');
+    if (!isset($id) || !is_numeric($id)) {
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'id', 'userapi', 'get', 'html');
         throw new BadParameterException(null,$msg);
     }
 
@@ -51,15 +51,15 @@ function html_userapi_gettag($args)
               WHERE $htmltable.id = ?
               AND $htmltable.tid = $htmltypestable.xar_id";
 
-        $result =& $dbconn->Execute($query,array($cid));
+        $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
-    list($cid,
+    list($id,
          $tid,
          $type,
          $tag,
          $allowed) = $result->fields;
     $result->Close();
-    $tag = array('cid'      => $cid,
+    $tag = array('id'       => $id,
                  'tid'      => $tid,
                  'type'     => $type,
                  'tag'      => $tag,

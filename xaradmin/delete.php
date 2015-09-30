@@ -26,14 +26,14 @@ function html_admin_delete()
     if(!xarSecurityCheck('ManageHTML')) return;
 
     // Get parameters from input
-    if (!xarVarFetch('cid', 'int:0:', $cid)) return;
+    if (!xarVarFetch('id', 'int:0:', $id)) return;
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
     // Get the current html tag
     $html = xarModAPIFunc('html',
                           'user',
                           'gettag',
-                          array('cid' => $cid));
+                          array('id' => $id));
 
     // Check for exceptions
     if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
@@ -43,7 +43,7 @@ function html_admin_delete()
     if (!$confirm) {
 
         // Specify for which html tag you want confirmation
-        $data['cid'] = $cid;
+        $data['id'] = $id;
 
         // Data to display in the template
         $data['tag'] = xarVarPrepForDisplay($html['tag']);
@@ -61,7 +61,7 @@ function html_admin_delete()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for deleting #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($cid));
+                    'HTML', xarVarPrepForDisplay($id));
         return xarResponse::notFound();
     }
 
@@ -69,7 +69,7 @@ function html_admin_delete()
     if (!xarModAPIFunc('html',
                        'admin',
                        'delete',
-                       array('cid' => $cid))) {
+                       array('id' => $id))) {
         return; // throw back
     }
 

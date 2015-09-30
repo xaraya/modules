@@ -17,7 +17,7 @@
  * @public
  * @author John Cox
  * @author Richard Cave
- * @param $args['cid'] the ID of the html tag
+ * @param $args['id'] the ID of the html tag
  * @param $args['allowed'] the flag for the html tag
  * @throws BAD_PARAM
  */
@@ -28,8 +28,8 @@ function html_adminapi_update($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($cid) || !is_numeric($cid)) {
-        $invalid[] = 'cid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (!isset($allowed) || !is_numeric($allowed)) {
         $invalid[] = 'allowed';
@@ -51,10 +51,10 @@ function html_adminapi_update($args)
     $query = "UPDATE $htmltable
               SET   allowed = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query,array($allowed, $cid));
+    $result =& $dbconn->Execute($query,array($allowed, $id));
     if (!$result) return;
     // Let any hooks know that we have deleted a html tag
-    xarModCallHooks('item', 'update', $cid, '');
+    xarModCallHooks('item', 'update', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

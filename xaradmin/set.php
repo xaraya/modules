@@ -44,7 +44,7 @@ function html_admin_set()
             $allowed[$idx]['editurl'] = xarModURL('html',
                                                   'admin',
                                                   'edit',
-                                                  array('cid' => $allowed[$idx]['cid']));
+                                                  array('id' => $allowed[$idx]['id']));
         } else {
             $allowed[$idx]['editurl'] = '';
         }
@@ -53,7 +53,7 @@ function html_admin_set()
             $allowed[$idx]['deleteurl'] = xarModURL('html',
                                                     'admin',
                                                     'delete',
-                                                    array('cid' => $allowed[$idx]['cid']));
+                                                    array('id' => $allowed[$idx]['id']));
         } else {
             $allowed[$idx]['deleteurl'] = '';
         }

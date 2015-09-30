@@ -17,7 +17,7 @@
  * @public
  * @author John Cox
  * @author Richard Cave
- * @param $args['tags'] an array of the cids and allowed value of the html tags
+ * @param $args['tags'] an array of the ids and allowed value of the html tags
  * @throws MISSING_DATA
  */
 function html_admin_updateset()
@@ -38,12 +38,12 @@ function html_admin_updateset()
     $allowedhtml = array();
 
     // Update HTML tags
-    foreach ($tags as $cid=>$allowed) {
-        // Get the cid of the htmltag
+    foreach ($tags as $id=>$allowed) {
+        // Get the id of the htmltag
         $thistag = xarModAPIFunc('html',
                                  'user',
                                  'gettag',
-                                 array('cid' => $cid));
+                                 array('id' => $id));
 
         if ($thistag) {
             $tag = $thistag['tag'];
@@ -54,7 +54,7 @@ function html_admin_updateset()
                 if (!xarModAPIFunc('html',
                                    'admin',
                                    'update',
-                                   array('cid' => $cid,
+                                   array('id' => $id,
                                          'allowed' => $allowed)))
                     return false;
             }

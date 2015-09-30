@@ -15,7 +15,7 @@
  * Edit a tag
  *
  * @author Richard Cave
- * @param $args['cid'] ID of the tag
+ * @param $args['id'] ID of the tag
  * @param $args['tag'] the name of the tag
  * @return bool true on success, false on failure
  * @throws BAD_PARAM, MISSING_DATA
@@ -27,8 +27,8 @@ function html_adminapi_edit($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($cid) || !is_numeric($cid)) {
-        $invalid[] = 'cid';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
     }
     if (!isset($tag) || !is_string($tag)) {
         $invalid[] = 'tag';
@@ -44,7 +44,7 @@ function html_adminapi_edit($args)
     $html = xarModAPIFunc('html',
                           'user',
                           'gettag',
-                          array('cid' => $cid));
+                          array('id' => $id));
 
     if ($html == false) {
         $msg = xarML('No such tag present');
@@ -66,7 +66,7 @@ function html_adminapi_edit($args)
     $query = "UPDATE $htmltable
               SET tag = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query,array($tag, $cid));
+    $result =& $dbconn->Execute($query,array($tag, $id));
     if (!$result) return;
 
     // If this is an html tag, then
@@ -91,7 +91,7 @@ function html_adminapi_edit($args)
         xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a html
-    xarModCallHooks('item', 'edit', $cid, '');
+    xarModCallHooks('item', 'edit', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

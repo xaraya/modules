@@ -52,14 +52,6 @@ function html_adminapi_create($args)
     // Trim input
     $type = trim($type);
 
-    // Get datbase setup
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-
-    // Set tables
-    $htmltable = $xartable['html'];
-    $htmltypestable = $xartable['htmltypes'];
-
     // Make sure type is lowercase
     $type = strtolower($type);
 
@@ -69,28 +61,35 @@ function html_adminapi_create($args)
                              'gettype',
                              array('type' => $type));
 
-    // Get next ID in table
-    $nextId = $dbconn->GenId($htmltable);
-
     // Add item
-    $query = "INSERT INTO $htmltable (
-              id,
-              tid,
-              tag,
-              allowed)
-            VALUES (
-              ?,
-              ?,
-              ?,
-              ?)";
-
-    $result =& $dbconn->Execute($query,array($nextId, $tagtype['id'], $tag, $allowed));
-
-    // Check for errors
-    if (!$result) return;
+    $dbconn = xarDB::getConn();
+    $xartable =& xarDB::getTables();
+    sys::import('xaraya.structures.query');
+    $q = new Query('SELECT', $xartable['html']);
+    $q->eq('tid', $tagtype['id']);
+    $q->eq('tag', $tag);
+    $q->run();
+    $result = $q->row();
+    if (!empty($q->row())) {
+        // This tag already exists, just update
+        $q = new Query('UPDATE', $xartable['html']);
+        $q->addfield('tid', $tagtype['id']);
+        $q->addfield('tag', $tag);
+        $q->addfield('allowed', $allowed);
+        $q->eq('id', $result['id']);
+        if (!$q->run()) return;
+        return $result['id'];
+    } else {
+        // New tag, create it
+        $q = new Query('INSERT', $xartable['html']);
+        $q->addfield('tid', $tagtype['id']);
+        $q->addfield('tag', $tag);
+        $q->addfield('allowed', $allowed);
+        if (!$q->run()) return;
+    }
 
     // Get the ID of the item that we inserted
-    $cid = $dbconn->PO_Insert_ID($htmltable, 'id');
+    $itemid = $dbconn->PO_Insert_ID($xartable['html'], 'id');
 
     // If this is an html tag, then
     // also add the tag to config vars
@@ -104,8 +103,8 @@ function html_adminapi_create($args)
         xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have created a new tag
-    xarModCallHooks('item', 'create', $cid, 'cid');
+    xarModCallHooks('item', 'create', $itemid, 'id');
     // Return the id of the newly created tag to the calling process
-    return $cid;
+    return $itemid;
 }
 ?>

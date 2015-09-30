@@ -6,7 +6,7 @@
     
         <form method="post" action="&xar-modurl-html-admin-edit;" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" value="#$authid#"/>
-            <input type="hidden" name="cid" id="cid" value="#$cid#"/>
+            <input type="hidden" name="id" id="id" value="#$id#"/>
             <input type="hidden" name="confirm" id="confirm" value="1"/>
             <fieldset>
                 <legend>

@@ -17,7 +17,7 @@
  * @public
  * @author John Cox
  * @author Richard Cave
- * @param $args['cid'] ID of the html
+ * @param $args[] ID of the html
  * @return bool true on success, false on failure
  * @throws BAD_PARAM, MISSING_DATA
  */
@@ -27,8 +27,8 @@ function html_adminapi_delete($args)
     extract($args);
 
     // Argument check
-    if (!isset($cid) || !is_numeric($cid)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'cid', 'adminapi', 'delete', 'html');
+    if (!isset($id) || !is_numeric($id)) {
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', , 'adminapi', 'delete', 'html');
         throw new BadParameterException(null,$msg);
     }
 
@@ -36,7 +36,7 @@ function html_adminapi_delete($args)
     $html = xarModAPIFunc('html',
                           'user',
                           'gettag',
-                          array('cid' => $cid));
+                          array('id' => $id));
 
     if ($html == false) {
         $msg = xarML('No Such HTML tag Present', 'html');
@@ -52,7 +52,7 @@ function html_adminapi_delete($args)
 
     // Delete the tag
     $query = "DELETE FROM $htmltable WHERE id = ?";
-    $result =& $dbconn->Execute($query,array($cid));
+    $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
 
     // If this is an html tag, then
@@ -75,7 +75,7 @@ function html_adminapi_delete($args)
         xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a html
-    xarModCallHooks('item', 'delete', $cid, '');
+    xarModCallHooks('item', 'delete', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

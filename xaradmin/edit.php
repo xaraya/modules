@@ -25,7 +25,7 @@ function html_admin_edit()
     if(!xarSecurityCheck('EditHTML')) return;
 
     // Get parameters from input
-    if (!xarVarFetch('cid', 'int:0:', $cid)) return;
+    if (!xarVarFetch('id',  'int:0:', $id)) return;
     if (!xarVarFetch('tag', 'str:1:', $tag, '')) return;
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
@@ -33,7 +33,7 @@ function html_admin_edit()
     $html = xarModAPIFunc('html',
                           'user',
                           'gettag',
-                          array('cid' => $cid));
+                          array('id' => $id));
 
     // Check for exceptions
     if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
@@ -43,7 +43,7 @@ function html_admin_edit()
     if (!$confirm) {
 
         // Specify for which html tag you want confirmation
-        $data['cid'] = $cid;
+        $data['id'] = $id;
 
         // Data to display in the template
         $data['tag'] = xarVarPrepForDisplay($html['tag']);
@@ -62,7 +62,7 @@ function html_admin_edit()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for editing #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($cid));
+                    'HTML', xarVarPrepForDisplay($id));
         return xarResponse::notFound();
     }
 
@@ -70,7 +70,7 @@ function html_admin_edit()
     if (!xarModAPIFunc('html',
                        'admin',
                        'edit',
-                       array('cid' => $cid,
+                       array('id' => $id,
                              'tag' => $tag))) {
         return; // throw back
     }
