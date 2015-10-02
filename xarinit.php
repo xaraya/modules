@@ -40,7 +40,7 @@
           change_count         integer unsigned default 0 NOT NULL,
           state                tinyint unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
-        ) TYPE=MyISAM";
+        )";
         if (!$q->run($query)) return;
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_maps";
@@ -55,7 +55,7 @@
           state                tinyint unsigned default 0 NOT NULL,
           modified             integer unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
-        ) TYPE=MyISAM";
+        )";
         if (!$q->run($query)) return;
         
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_engines";
@@ -68,7 +68,7 @@
           state                tinyint unsigned default 0 NOT NULL,
           modified             integer unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
-        ) TYPE=MyISAM";
+        )";
         if (!$q->run($query)) return;
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_sources";
@@ -85,7 +85,7 @@
           state                tinyint unsigned default 0 NOT NULL,
           modified             integer unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
-        ) TYPE=MyISAM";
+        )";
         if (!$q->run($query)) return;
     # --------------------------------------------------------
     #
@@ -123,7 +123,7 @@
         xarModVars::set('sitemapper', 'xml_filename', 'sitemap');
         xarModVars::set('sitemapper', 'zip_filename', 'sitemap');
         xarModVars::set('sitemapper', 'template', '
-<urlset xmlns="http://www.sitemappers.org/schemas/sitemapper/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <xar:foreach in="$items" value="$item">
     <url>
       <loc>#$item["location"]#</loc>
