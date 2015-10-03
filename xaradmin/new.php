@@ -43,7 +43,7 @@ function crispbb_admin_new($args)
     $data['forum']->setFieldlist($forumfields);
 
     // Get the base categories ofthis module
-    $basecats = xarMod::apiFunc('crispbb','user','getallcatbases');
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
     
     if (!empty($basecid)) {

@@ -31,7 +31,7 @@ function crispbb_admin_view($args)
     // $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'forum'));
     
     // Get the base categories ofthis module
-    $basecats = xarMod::apiFunc('crispbb','user','getallcatbases');
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
     $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
     if (!empty($catid)) {
         $categories[$catid] = xarMod::apiFunc('categories', 'user', 'getcatinfo',

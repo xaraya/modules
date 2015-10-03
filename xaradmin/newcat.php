@@ -69,7 +69,7 @@ function crispbb_admin_newcat($args)
             'current_func' => 'newcat',
         ));
 
-    $basecats = xarMod::apiFunc('crispbb','user','getallcatbases');
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
 
     $data['basecid'] = $basecid;
