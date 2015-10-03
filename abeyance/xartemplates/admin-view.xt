@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<div class="xar-mod-head">
+  <span class="xar-mod-title">crispBB Administration</span>
+</div>
+<div class="xar-mod-body">
+    <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center xar-error">#$statusmsg#</p>
+    </xar:if>
+    <xar:if condition="!empty($categories)">
+        <xar:set name="upicon">xarTPLGetImage('icons/go-up.png', 'base')</xar:set>
+        <xar:set name="downicon">xarTPLGetImage('icons/go-down.png', 'base')</xar:set>
+        <xar:set name="modifyicon">xarTPLGetImage('icons/modify.png', 'base')</xar:set>
+        <xar:set name="deleteicon">xarTPLGetImage('icons/delete.png', 'base')</xar:set>
+        <xar:set name="hooksicon">xarTPLGetImage('icons/hooks.png', 'base')</xar:set>
+        <xar:set name="privsicon">xarTPLGetImage('icons/privileges.png', 'base')</xar:set>
+        <xar:set name="infoicon">xarTPLGetImage('icons/info.png', 'base')</xar:set>
+        <xar:var name="modcattitle">Modify this category</xar:var>
+        <xar:var name="delcattitle">Delete this category</xar:var>
+        <xar:var name="upcattitle">Move this category up</xar:var>
+        <xar:var name="downcattitle">Move this category down</xar:var>
+        <xar:var name="viewforumtitle">User (front end) view of this forum</xar:var>
+        <xar:var name="statsforumtitle">View forum statistics and information</xar:var>
+        <xar:var name="newforumtitle">Add a new forum to this category</xar:var>
+        <xar:var name="modforumtitle">Modify forum configuration</xar:var>
+        <xar:var name="hooksforumtitle">Modify forum hooks configuration</xar:var>
+        <xar:var name="privsforumtitle">Modify forum privileges configuration</xar:var>
+        <xar:var name="delforumtitle">Delete this forum</xar:var>
+        <xar:foreach in="$categories" key="$cid" value="$catinfo">
+            <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
+                <caption class="xar-padding-thick xar-alt-outline xar-align-left">
+                    <span class="xar-floatleft">
+                    <a href="#xarModURL('crispbb', 'admin', 'view', array('catid' => $cid))#" title="#$catinfo['description']#">
+                        All forums in #$catinfo['name']#
+                    </a>
+                    </span>
+                    <span class="xar-floatright">
+                        <xar:if condition="!empty($catinfo['modifycat'])">
+                            <a href="#$catinfo['modifycat']#" class="xar-icon" title="#$modcattitle#"><img class="xar-icon" src="#$modifyicon#" alt="Modify" /></a>
+                        </xar:if>
+                        <xar:if condition="!empty($catinfo['deletecat'])">
+                            <a href="#$catinfo['deletecat']#" class="xar-icon" title="#$delcattitle#"><img class="xar-icon" src="#$deleteicon#" alt="Delete" /></a>
+                        </xar:if>
+                        <xar:if condition="!empty($catinfo['moveup'])">
+                            <a href="#$catinfo['moveup']#" class="xar-icon" title="#$upcattitle#"><img class="xar-icon" src="#$upicon#" alt="Up" /></a>
+                        <xar:else />
+                            <img class="xar-icon-disabled" src="#$upicon#" alt="Up" />
+                        </xar:if>
+                        <xar:if condition="!empty($catinfo['movedown'])">
+                            <a href="#$catinfo['movedown']#" class="xar-icon" title="#$downcattitle#"><img class="xar-icon" src="#$downicon#" alt="Down" /></a>
+                        <xar:else />
+                            <img class="xar-icon-disabled" src="#$downicon#" alt="Down" />
+                        </xar:if>
+                    </span>
+                    <br class="xar-clearboth" />
+                </caption>
+                <!-- modules/crispbb/xartemplates/objects/showview-crispbb_forums.xt -->
+                <xar:data-view object="$catinfo['forums']" />
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <span class="xar-sub">
+                                <xar:set name="grammar">$catinfo['numforums'] == 1 ? 'forum' : 'forums'</xar:set>
+                                Showing #$catinfo['numforums']# #$grammar# in category #$catinfo['name']#
+                            </span>
+                        </td>
+                        <td class="xar-align-right">
+                            <a href="#$catinfo['newforum']#" title="#$newforumtitle#">Add Forum</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </xar:foreach>
+    <xar:else />
+        No Categories Found! <xar:if condition="!empty($newcat)"><a href="#$newcat#" title="#xarML('Create a new forum category')#">Create a category</a></xar:if>
+    </xar:if>
+</div>
+<div class="xar-mod-foot xar-align-center">
+    <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
+            Waiting
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('View deleted topics in this forum')#" />
+            Deleted
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
+            Information
+        </span>
+        <span class="xar-nowrap">
+             <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate forum topics')#" />
+             Moderate
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
+            Modify
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
+            Hooks
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
+            Privileges
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
+            Delete
+        </span>
+    </div>
+</div>
+<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+</xar:template>

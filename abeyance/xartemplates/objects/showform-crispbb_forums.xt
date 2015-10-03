@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'default'</xar:set>
+    </xar:if>
+    <xar:if condition="$layout eq 'default'">
+        <!--
+            define fields to NOT display, then any user-defined
+            properties added to the object will still show up
+        -->
+        <xar:set name="hidefields">array('fsettings', 'fprivileges', 'numtopics', 'numreplies', 'numtopicsubs', 'numtopicdels', 'numreplysubs', 'numreplydels', 'forder', 'fowner', 'lasttid')</xar:set>
+        <xar:foreach in="$properties" key="$name" value="$property">
+            <xar:if condition="in_array($name, $hidefields)"><xar:continue /></xar:if>
+            <div class="xar-form-input-wrapper">
+                <xar:data-label property="$properties[$name]" for="id" />
+                <xar:data-input property="$properties[$name]" />
+            </div>
+        </xar:foreach>
+    <xar:else />
+        Unknown Layout
+    </xar:if>
+</xar:template>

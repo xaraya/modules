@@ -41,11 +41,11 @@ function crispbb_admin_new($args)
     $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
     $forumfields = array('fname','fdesc','fstatus','ftype','category');
     $data['forum']->setFieldlist($forumfields);
-    // @CHECKME: is this necessary?
-    // Load the DD master property class. This line will likely disappear in future versions
-    sys::import('modules.dynamicdata.class.properties.master');
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('object' => 'crispbb_forums', 'property' => 'category'));
-    $basecid = count($basecats) > 0 ? $basecats[0] : null;
+
+    // Get the base categories ofthis module
+    $basecats = xarMod::apiFunc('crispbb','user','getallcatbases');
+    $basecid = count($basecats) > 0 ? $basecats[0] : 0;
+    
     if (!empty($basecid)) {
         $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
             array('cid' => $basecid));

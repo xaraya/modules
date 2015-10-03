@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="empty($timeimage)">
+    <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
+<xar:elseif condition="$timeimage eq 1" />
+    <img src="#xarTPLGetImage('timeimages/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#"  />
+<xar:elseif condition="$timeimage eq 2" />
+    <img src="#xarTPLGetImage('timeimages/comments.png', 'crispbb')#" alt="#xarML('New Replies')#"  />
+<xar:elseif condition="$timeimage eq 3" />
+    <img src="#xarTPLGetImage('timeimages/comments_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#"  />
+<xar:elseif condition="$timeimage eq 4" />
+    <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+<xar:elseif condition="$timeimage eq 5" />
+    <img src="#xarTPLGetImage('timeimages/comment_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+<xar:elseif condition="$timeimage eq 6" />
+    <img src="#xarTPLGetImage('timeimages/comments_lock.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+<xar:elseif condition="$timeimage eq 7" />
+    <img src="#xarTPLGetImage('timeimages/comments_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+<xar:elseif condition="$timeimage eq 8" />
+    <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" />
+<xar:elseif condition="$timeimage eq 9" />
+    <img src="#xarTPLGetImage('timeimages/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" />
+<xar:elseif condition="$timeimage eq 10" />
+    <img src="#xarTPLGetImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Submitted')#" title="#xarML('Topic Awaiting Approval')#" />
+<xar:else />
+    <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
+</xar:if>
+</xar:template>

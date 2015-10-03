@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout" xmlns:rdf="http://w3.org/TR/1999/PR-rdf-syntax-19990105#" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="!empty($categories[$catid]['catimage'])">
+   <image>
+    <url>#$categories[$catid]['catimage']#</url>
+    <title>#xarModVars::get('themes', 'SiteName')#</title>
+    <link>#xarServer::getBaseURL()#</link>
+    <width>32</width>
+    <height>32</height>
+    <description>#xarModVars::get('themes', 'SiteSlogan')#</description>
+  </image>
+</xar:if>
+<xar:if condition="!empty($announcements)">
+    <xar:foreach in="$announcements" value="$announcement">
+        <item>
+            <title>#$announcement['ttitle']#</title>
+            <link>#$announcement['viewtopicurl']#</link>
+            <author>#$posterlist[$announcement['towner']]['name']#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$announcement['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($announcement['tdesc'])# ]]></content:encoded>
+            <description>#xarVarPrepForDisplay($announcement['tdesc'])#</description>
+            <guid isPermaLink="true">#$announcement['viewtopicurl']#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+<xar:if condition="!empty($stickies)">
+    <xar:foreach in="$stickies" value="$sticky">
+        <item>
+            <title>#$sticky['ttitle']#</title>
+            <link>#$sticky['viewtopicurl']#</link>
+            <author>#$posterlist[$sticky['towner']]['name']#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$sticky['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($sticky['tdesc'])# ]]></content:encoded>
+            <description>#xarVarPrepForDisplay($sticky['tdesc'])#</description>
+            <guid isPermaLink="true">#$sticky['viewtopicurl']#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+<xar:if condition="!empty($faqs)">
+    <xar:foreach in="$faqs" value="$faq">
+        <item>
+            <title>#$faq['ttitle']#</title>
+            <link>#$faq['viewtopicurl']#</link>
+            <author>#$posterlist[$faq['towner']]['name']#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$faq['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($faq['tdesc'])# ]]></content:encoded>
+            <description>#xarVarPrepForDisplay($faq['tdesc'])#</description>
+            <guid isPermaLink="true">#$faq['viewtopicurl']#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+<xar:if condition="!empty($topics)">
+    <xar:foreach in="$topics" value="$topic">
+        <item>
+            <title>#$topic['ttitle']#</title>
+            <link>#$topic['viewtopicurl']#</link>
+            <author>#$posterlist[$topic['towner']]['name']#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($topic['tdesc'])# ]]></content:encoded>
+            <description>#xarVarPrepForDisplay($topic['tdesc'])#</description>
+            <guid isPermaLink="true">#$topic['viewtopicurl']#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+</xar:template>

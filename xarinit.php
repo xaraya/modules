@@ -318,11 +318,11 @@ function crispbb_init()
 #
     $catName = 'crispBB Forums';
     try {
-        $catExists = xarModAPIFunc('categories', 'user', 'getcatbyname', array('name' => $catName));
-        if (!empty($catExists[0]))
-            $basecid = $catExists[0]['cid'];
+        sys::import('modules.categories.class.worker');
+        $worker = new CategoryWorker();
+        $basecid = $worker->name2id($catName);
     } catch (Exception $e) {
-        $basecid = 0;
+        $basecid = 0;        
     }
     if (empty($basecid)) {
         sys::import('modules.dynamicdata.class.objects.master');

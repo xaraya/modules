@@ -27,10 +27,12 @@ function crispbb_admin_view($args)
     }
     $now = time();
 
-    // get forum categories
-    $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'forum'));
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('object' => 'crispbb_forums', 'property' => 'category'));
-    $parentcat = count($basecats) > 0 ? $basecats[0] : null;
+    // Get the forum base category
+    // $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'forum'));
+    
+    // Get the base categories ofthis module
+    $basecats = xarMod::apiFunc('crispbb','user','getallcatbases');
+    $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
     if (!empty($catid)) {
         $categories[$catid] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $catid));
