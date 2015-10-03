@@ -341,12 +341,12 @@ function crispbb_init()
 # Set up configuration modvars (module specific)
 #
 
-    // module settings (storage for forums and module default settings)
+    // Module settings (storage for forums and module default settings)
     xarModVars::set($module, 'ftracking', serialize(array()));
     xarModVars::set($module, 'forumsettings', serialize(array()));
     xarModVars::set($module, 'privilegesettings', serialize(array()));
 
-    // the tracker class takes care of creating the tracker object
+    // The tracker class takes care of creating the tracker object
     sys::import('modules.crispbb.class.tracker');
     $tracker = new Tracker(true);
     unset($tracker); // unsetting here causes the modvar to be stored with default values :)

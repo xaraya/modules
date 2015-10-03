@@ -33,6 +33,7 @@ function crispbb_admin_modifyconfig()
 
     $now = time();
 
+    // Check the version of this module
     $modid = xarMod::getRegID('crispbb');
     $modinfo = xarMod::getInfo($modid);
     if ($checkupdate) {
@@ -44,11 +45,20 @@ function crispbb_admin_modifyconfig()
             xarModVars::set('crispbb', 'latestversion', $hasupdate);
         }
     }
+
+    // Add the standard module settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'crispbb'));
     $data['module_settings']->setFieldList('use_module_alias, module_alias_name, enable_short_urls');
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls','frontend_page, backend_page');
     $data['module_settings']->getItem();
     $invalid = array();
-    if ($phase == 'update') {
+
+    switch (strtolower($phase)) {
+        case 'modify':
+        default:
+            break;
+
+        case 'update':
         $sessionTimeout = xarConfigVars::get(null, 'Site.Session.InactivityTimeout');
         if (!xarVarFetch('visit_timeout', "int:1:$sessionTimeout", $visit_timeout, $sessionTimeout, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showuserpanel', 'checkbox', $showuserpanel, false, XARVAR_NOT_REQUIRED)) return;
@@ -65,7 +75,10 @@ function crispbb_admin_modifyconfig()
                 return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
             }
             $currentalias = xarModVars::get('crispbb','module_alias_name');
+            
+            // Update the module settings
             $itemid = $data['module_settings']->updateItem();
+            
             $module = 'crispbb';
             $newalias = trim(xarModVars::get('crispbb', 'module_alias_name'));
             if (empty($newalias)) {
@@ -124,7 +137,7 @@ function crispbb_admin_modifyconfig()
             'current_sublink' => $sublink
         ));
 
-    // display controls
+    // Update the display controls
     $data['visit_timeout'] = xarModVars::get('crispbb', 'visit_timeout');
     $data['showuserpanel'] = xarModVars::get('crispbb', 'showuserpanel');
     $data['showsearchbox'] = xarModVars::get('crispbb', 'showsearchbox');
@@ -133,7 +146,8 @@ function crispbb_admin_modifyconfig()
     $data['showquickreply'] = xarModVars::get('crispbb', 'showquickreply');
     $data['showpermissions'] = xarModVars::get('crispbb', 'showpermissions');
     $data['showsortbox'] = xarModVars::get('crispbb', 'showsortbox');
-    // update check
+    
+    // uUpdate he version check
     $data['version'] = $modinfo['version'];
     $data['newversion'] = !empty($hasupdate) ? $hasupdate : NULL;
     $data['checkupdate'] = $checkupdate;

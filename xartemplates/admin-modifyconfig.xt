@@ -1,78 +1,79 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">crispBB Administration</span>
-</div>
-<div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
-    <xar:set name="statusmsg">xarSessionGetVar('crispbb_statusmsg')</xar:set>
-    <xar:if condition="!empty($statusmsg)">
-        <p class="xar-align-center xar-error">
-            #xarVarPrepForDisplay($statusmsg)#
-        </p>
-    </xar:if>
-    <h3>Modify Module Configuration</h3>
-    <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
-        <!--
-        <fieldset>
-            <div class="xar-form-input-wrapper">
-                <label for="checkupdate" class="xar-form-label help" title="#xarML('Check now for updates to crispbb')#">crispBB v.#$version#</label>
-                <input type="submit" name="checkupdate" id="checkupdate" value="#xarML('Check for Updates')#" />
-            </div>
-            <xar:if condition="!empty($newversion)">
-                <div class="xar-form-input-wrapper-after">
-                    <img src="#xarTpl::getImage('icons/software-update-available.png', 'base')#" title="#xarML('Update Available')#" />
-                    crispBB v.#$newversion#  is now <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('Latest release')#">available for download</a>
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">crispBB Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <xar:set name="statusmsg">xarSessionGetVar('crispbb_statusmsg')</xar:set>
+        <xar:if condition="!empty($statusmsg)">
+            <p class="xar-align-center xar-error">
+                #xarVarPrepForDisplay($statusmsg)#
+            </p>
+        </xar:if>
+        <h3>Modify Module Configuration</h3>
+        <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
+            <!--
+            <fieldset>
+                <div class="xar-form-input-wrapper">
+                    <label for="checkupdate" class="xar-form-label help" title="#xarML('Check now for updates to crispbb')#">crispBB v.#$version#</label>
+                    <input type="submit" name="checkupdate" id="checkupdate" value="#xarML('Check for Updates')#" />
                 </div>
-            <xar:elseif condition="!empty($checkupdate)" />
-                <div class="xar-form-input-wrapper-after">
-                     <img src="#xarTpl::getImage('icons/activate.png', 'base')#" title="#xarML('Up to date')#" alt="active" />
-                    <span>You are using the latest version of crispBB. Please check again later.</span>
+                <xar:if condition="!empty($newversion)">
+                    <div class="xar-form-input-wrapper-after">
+                        <img src="#xarTpl::getImage('icons/software-update-available.png', 'base')#" title="#xarML('Update Available')#" />
+                        crispBB v.#$newversion#  is now <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('Latest release')#">available for download</a>
+                    </div>
+                <xar:elseif condition="!empty($checkupdate)" />
+                    <div class="xar-form-input-wrapper-after">
+                         <img src="#xarTpl::getImage('icons/activate.png', 'base')#" title="#xarML('Up to date')#" alt="active" />
+                        <span>You are using the latest version of crispBB. Please check again later.</span>
+                    </div>
+                </xar:if>
+            </fieldset>
+            -->
+            <fieldset>
+                <legend>General Settings</legend>
+                <xar:data-form object="$module_settings"/>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" for="visit_timeout" title="#xarML('The amount of minutes since last visit before a users visit is considered new')#">Visit Timeout</label>
+                    <xar:data-input type="integerbox" name="visit_timeout" id="visit_timeout" value="$visit_timeout" /> (in minutes)
+                    <p class="xar-form-container-after">This sets the length of time since a users last visit before a visit is considered 'new'. Used in tracking user visit count, time online and last visit values.<br />The maximum value is determined by the Session Inactivity Timout (set in the base module). The recommended value for visit timeout is 15 minutes (this value has no effect on site session timeout).</p>
                 </div>
-            </xar:if>
-        </fieldset>
-        -->
-        <fieldset>
-            <xar:data-form object="$module_settings" />
-            <div class="xar-form-input-wrapper">
-                <label class="xar-form-label" for="visit_timeout" title="#xarML('The amount of minutes since last visit before a users visit is considered new')#">Visit Timeout</label>
-                <xar:data-input type="integerbox" name="visit_timeout" id="visit_timeout" value="$visit_timeout" /> (in minutes)
-                <p class="xar-form-container-after">This sets the length of time since a users last visit before a visit is considered 'new'. Used in tracking user visit count, time online and last visit values.<br />The maximum value is determined by the Session Inactivity Timout (set in the base module). The recommended value for visit timeout is 15 minutes (this value has no effect on site session timeout).</p>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
-                <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#">Show user panel?</label>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showsearchbox" id="showsearchbox" value="$showsearchbox" />
-                <label for="showsearchbox" title="#xarML('Show the search box in user displays')#">Show search box?</label>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showforumjump" id="showforumjump" value="$showforumjump" />
-                <label for="showforumjump" title="#xarML('Show the forum jump dropdown in user displays')#">Show forum jump?</label>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showtopicjump" id="showtopicjump" value="$showtopicjump" />
-                <label for="showtopicjump" title="#xarML('Show the topic jump dropdown in user displays')#">Show topic jump?</label>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showquickreply" id="showquickreply" value="$showquickreply" />
-                <label for="showquickreply" title="#xarML('Show the quick reply input in user displays')#">Show quickreply?</label>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showpermissions" id="showpermissions" value="$showpermissions" />
-                <label for="showpermissions" title="#xarML('Show the current users permissions in user displays')#">Show user permissions?</label>
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="showsortbox" id="showsortbox" value="$showsortbox" />
-                <label for="showsortbox" title="#xarML('Show the topic sort options in forum views')#">Show sort box?</label>
-            </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
+                    <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#">Show user panel?</label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showsearchbox" id="showsearchbox" value="$showsearchbox" />
+                    <label for="showsearchbox" title="#xarML('Show the search box in user displays')#">Show search box?</label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showforumjump" id="showforumjump" value="$showforumjump" />
+                    <label for="showforumjump" title="#xarML('Show the forum jump dropdown in user displays')#">Show forum jump?</label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showtopicjump" id="showtopicjump" value="$showtopicjump" />
+                    <label for="showtopicjump" title="#xarML('Show the topic jump dropdown in user displays')#">Show topic jump?</label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showquickreply" id="showquickreply" value="$showquickreply" />
+                    <label for="showquickreply" title="#xarML('Show the quick reply input in user displays')#">Show quickreply?</label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showpermissions" id="showpermissions" value="$showpermissions" />
+                    <label for="showpermissions" title="#xarML('Show the current users permissions in user displays')#">Show user permissions?</label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showsortbox" id="showsortbox" value="$showsortbox" />
+                    <label for="showsortbox" title="#xarML('Show the topic sort options in forum views')#">Show sort box?</label>
+                </div>
+            </fieldset>
             <xar:template file="update-button" module="base" />
-        </fieldset>
-    </form>
-
-
-</div>
-<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+        </form>
+    </div>
+    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

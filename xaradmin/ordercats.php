@@ -21,6 +21,7 @@
  */
 function crispbb_admin_ordercats($args)
 {
+    // Xaraya security
     if (!xarSecurityCheck('AdminCrispBB', 0) || !xarSecurityCheck('ManageCategories', 0)) {
          return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
