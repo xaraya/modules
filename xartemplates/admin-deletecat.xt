@@ -3,7 +3,6 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:template type="module" module="crispbb" file="admin-menu" />
         <h2>Delete Forum Category</h2>
         <form action="#xarModURL('crispbb', 'admin', 'deletecat')#" method="post">
         <fieldset>

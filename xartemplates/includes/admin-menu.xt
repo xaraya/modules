@@ -89,4 +89,5 @@
             </ul>
         </div>
     </xar:if>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
 </xar:template>

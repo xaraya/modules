@@ -3,7 +3,6 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:template type="module" module="crispbb" file="admin-menu" />
         <xar:if condition="empty($sublink) or ($sublink eq 'categories')">
             <h2>View Forum Categories</h2>
             <div style="margin: auto;">
