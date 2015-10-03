@@ -508,6 +508,7 @@ function crispbb_userapi_gettopics($args)
     $loggedin = xarUserIsLoggedIn();
     $uid = xarUserGetVar('id');
     $checkfailed = false;
+    $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
         $topic = array();
@@ -896,7 +897,7 @@ function crispbb_userapi_gettopics($args)
 
         $topics[$topic['tid']] = $topic;
     }
-    $result->Close();
+    $result->Close();var_dump($topics);exit;
 
     if (empty($topics) && !empty($privcheck) && $checkfailed) {
         $topics['error'] = xarML('NO_PRIVILEGES');
