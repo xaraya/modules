@@ -47,8 +47,8 @@ function crispbb_user_stats($args)
     // get forum categories
     $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
         array('fid' => 0, 'component' => 'forum'));
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
-    $parentcat = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
     $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
         array('cid' => $parentcat));
     if (!empty($categories)) {

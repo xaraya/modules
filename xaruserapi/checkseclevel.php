@@ -29,12 +29,8 @@ function crispbb_userapi_checkseclevel($args)
     static $uid = 0;
     //static $checks = array();
 
-    if (is_null($loggedin)) {
-        $loggedin=xarUserIsLoggedIn();
-    }
-    if (empty($uid)) {
-        $uid = xarUserGetVar('id');
-    }
+    if (is_null($loggedin)) $loggedin = xarUserIsLoggedIn();
+    if (empty($uid)) $uid = xarUser::getVar('id');
 
     if (!isset($fid) || empty($fid) || !is_numeric($fid)) $fid = NULL;
     if (empty($fid) && isset($check['fid']) && !empty($check['fid']) && is_numeric($check['fid'])) $fid = $check['fid'];

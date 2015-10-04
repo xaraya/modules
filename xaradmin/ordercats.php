@@ -29,8 +29,8 @@ function crispbb_admin_ordercats($args)
     if (!xarVarFetch('itemid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'pre:trim:lower:str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
-    $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $basecid = count($basecats) > 0 ? $basecats[0] : 0;
     $categories = xarMod::apiFunc('categories', 'user', 'getchildren', array('cids' => array($basecid)));
     $cids = array_keys($categories);
     if (empty($itemid) || !in_array($itemid, $cids)) $invalid[] = 'itemid';

@@ -30,11 +30,11 @@ function crispbb_admin_categories($args)
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('object' => 'crispbb_forums', 'property' => 'category'));
-    $basecid = count($basecats) > 0 ? $basecats[0] : null;
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $basecid = count($basecats) > 0 ? $basecats[0] : 0;
     $data['options'] = array();
     if (!empty($basecid)) {
-        $data['options'][] = array('cid' => $basecid);
+        $data['options'][] = array('id' => $basecid);
     }
     $data['sublink'] = $sublink;
 

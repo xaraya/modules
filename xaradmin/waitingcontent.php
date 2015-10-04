@@ -17,7 +17,6 @@
  */
 function crispbb_admin_waitingcontent()
 {
-
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
     $subtopics = array();
     foreach ($forums as $fid => $forum) {
