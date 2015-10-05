@@ -897,7 +897,7 @@ function crispbb_userapi_gettopics($args)
 
         $topics[$topic['tid']] = $topic;
     }
-    $result->Close();var_dump($topics);exit;
+    $result->Close();
 
     if (empty($topics) && !empty($privcheck) && $checkfailed) {
         $topics['error'] = xarML('NO_PRIVILEGES');

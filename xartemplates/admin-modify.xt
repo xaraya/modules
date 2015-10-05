@@ -9,16 +9,16 @@
         </xar:if>
         <h3>#$forum:properties.fname:value#</h3>
         <xar:if condition="$sublink eq 'edit'">
+            <xar:if condition="!empty($upload)">
+                <xar:set name="enctype">
+                    'multipart/form-data'
+                </xar:set>
+                <xar:else />
+                <xar:set name="enctype">
+                    'application/x-www-form-urlencoded'
+                </xar:set>
+            </xar:if>
             <form method="post" id="crispbb_admin_modify" action="#xarModURL('crispbb', 'admin', 'modify')#" enctype="#$enctype#">
-                <xar:if condition="!empty($upload)">
-                    <xar:set name="enctype">
-                        'multipart/form-data'
-                    </xar:set>
-                    <xar:else />
-                    <xar:set name="enctype">
-                        'application/x-www-form-urlencoded'
-                    </xar:set>
-                </xar:if>
                 <fieldset>
                     <xar:data-form object="$forum" />
                     <xar:if condition="!empty($hookoutput)">

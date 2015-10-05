@@ -36,7 +36,7 @@ function crispbb_userapi_checkseclevel($args)
     if (empty($fid) && isset($check['fid']) && !empty($check['fid']) && is_numeric($check['fid'])) $fid = $check['fid'];
 
     if (!isset($catid) || empty($catid) || !is_numeric($catid)) $catid = NULL;
-    if (empty($catid) && isset($check['catid']) && !empty($check['catid']) && is_numeric($check['catid'])) $catid = $check['catid'];
+    if (empty($catid) && !empty($check['category']['id']) && is_numeric($check['category']['id'])) $catid = (int)$check['category']['id'];
 
     /*
     if (isset($checks[$catid][$fid][$tid][$priv])) {
