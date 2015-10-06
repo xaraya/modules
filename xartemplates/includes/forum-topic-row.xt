@@ -67,7 +67,7 @@
     <p>
     <span class="xar-sub">By:</span>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">
-        <xar:data-output type="name" value="$posterlist[$topic['towner']]['name']"/>
+        #$posterlist[$topic['towner']]['name']#
     </a>
     </p>
     <xar:if condition="!empty($showforum)">
@@ -91,7 +91,7 @@
     <p>
     <span class="xar-sub">By:</span>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">
-        <xar:data-output type="name" value="$posterlist[$topic['towner']]['name']"/>
+        #$posterlist[$topic['powner']]['name']#
     </a>
     </p>
 </td>
