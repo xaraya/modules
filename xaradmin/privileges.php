@@ -79,8 +79,8 @@ function crispbb_admin_privileges($args)
     // get forum categories
     $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
         array('fid' => 0, 'component' => 'forum'));
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
-    $parentcat = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $basecid = count($basecats) > 0 ? $basecats[0] : 0;
     $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
         array('cid' => $parentcat));
     $numitems = xarML('probably');

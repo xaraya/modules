@@ -1,164 +1,160 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        crispBB Administration
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2>
-        Select Forums for Privilege '#$extname#'
-    </h2>
-    <form method="post" action="&xar-modurl-crispbb-admin-privileges;">
-    <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
-    <input type="hidden" name="extname" id="extname" value="#$extname#" />
-    <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
-    <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
-    <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
-    <input type="hidden" name="pparentid" id="pparentid" value="#$pparentid#" />
-    <table border="1" cellpadding="8" cellspacing="0">
-        <tr>
-            <th class="xar-align-right xar-valign-top">
-                Category
-            </th>
-            <td>
-                <select name="catid" onchange="submit()">
-                    <option value="0">
-                        All
-                    </option>
-                    <xar:foreach in="$categories" key="$cid" value="$category">
-                        <xar:if condition="!empty($catid) and $catid eq $cid">
-                            <option value="#$cid#" selected="selected">#$category['name']#</option>
-                            <xar:else />
-                            <option value="#$cid#">#$category['name']#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th class="xar-align-right xar-valign-top">
-                Forum
-            </th>
-            <td>
-                <select name="fid" onchange="submit()">
-                    <option value="0">
-                        All
-                    </option>
-                    <xar:foreach in="$forums" key="$fkey" value="$forum">
-                        <xar:if condition="!empty($fid) and $fid eq $fkey">
-                            <option value="#$fkey#" selected="selected">#$forum['fname']#</option>
-                            <xar:else />
-                            <option value="#$fkey#">#$forum['fname']#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th class="xar-align-right xar-valign-top">
-                Access Level
-            </th>
-            <td>
-                <select name="extlevel" id="extlevel">
-                    <xar:if condition="$extlevel eq 0">
-                        <option value="0" selected="selected">
-                            None
-                        </option>
-                        <xar:else />
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>
+            Select Forums for Privilege '#$extname#'
+        </h2>
+        <form method="post" action="&xar-modurl-crispbb-admin-privileges;">
+        <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+        <input type="hidden" name="extname" id="extname" value="#$extname#" />
+        <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+        <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+        <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+        <input type="hidden" name="pparentid" id="pparentid" value="#$pparentid#" />
+        <table border="1" cellpadding="8" cellspacing="0">
+            <tr>
+                <th class="xar-align-right xar-valign-top">
+                    Category
+                </th>
+                <td>
+                    <select name="catid" onchange="submit()">
                         <option value="0">
-                            None
+                            All
                         </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 100">
-                        <option value="100" selected="selected">
-                            View
+                        <xar:foreach in="$categories" key="$cid" value="$category">
+                            <xar:if condition="!empty($catid) and $catid eq $cid">
+                                <option value="#$cid#" selected="selected">#$category['name']#</option>
+                                <xar:else />
+                                <option value="#$cid#">#$category['name']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="xar-align-right xar-valign-top">
+                    Forum
+                </th>
+                <td>
+                    <select name="fid" onchange="submit()">
+                        <option value="0">
+                            All
                         </option>
-                        <xar:else />
-                        <option value="100">
-                            View
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 200">
-                        <option value="200" selected="selected">
-                            Read
-                        </option>
-                        <xar:else />
-                        <option value="200">
-                            Read
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 300">
-                        <option value="300" selected="selected">
-                            Post
-                        </option>
-                        <xar:else />
-                        <option value="300">
-                            Post
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 300">
-                        <option value="400" selected="selected">
-                            Moderate
-                        </option>
-                        <xar:else />
-                        <option value="400">
-                            Moderate
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 500">
-                        <option value="500" selected="selected">
-                            Edit
-                        </option>
-                        <xar:else />
-                        <option value="500">
-                            Edit
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 600">
-                        <option value="600" selected="selected">
-                            Add
-                        </option>
-                        <xar:else />
-                        <option value="600">
-                            Add
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 700">
-                        <option value="700" selected="selected">
-                            Delete
-                        </option>
-                        <xar:else />
-                        <option value="700">
-                            Delete
-                        </option>
-                    </xar:if>
-                    <xar:if condition="$extlevel eq 800">
-                        <option value="800" selected="selected">
-                            Admin
-                        </option>
-                        <xar:else />
-                        <option value="800">
-                            Admin
-                        </option>
-                    </xar:if>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="xar-align-center">
-                <input type="submit" value="#$refreshlabel#" />
-            </td>
-        </tr>
-    </table>
-    <p>
-        <xar:set name="grammar">$numitems == 1 ? 'forum' : 'forums'</xar:set>
-        Found #$numitems# #$grammar# matching these selection criteria
-        <hr />
-        (Instance Definition #$extinstance#)
-    </p>
-    <input type="submit" name="apply" value="#$applylabel#" /></form>
-    <xar:template type="module" module="crispbb" file="privileges-info" />
-</div>
+                        <xar:foreach in="$forums" key="$fkey" value="$forum">
+                            <xar:if condition="!empty($fid) and $fid eq $fkey">
+                                <option value="#$fkey#" selected="selected">#$forum['fname']#</option>
+                                <xar:else />
+                                <option value="#$fkey#">#$forum['fname']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="xar-align-right xar-valign-top">
+                    Access Level
+                </th>
+                <td>
+                    <select name="extlevel" id="extlevel">
+                        <xar:if condition="$extlevel eq 0">
+                            <option value="0" selected="selected">
+                                None
+                            </option>
+                            <xar:else />
+                            <option value="0">
+                                None
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 100">
+                            <option value="100" selected="selected">
+                                View
+                            </option>
+                            <xar:else />
+                            <option value="100">
+                                View
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 200">
+                            <option value="200" selected="selected">
+                                Read
+                            </option>
+                            <xar:else />
+                            <option value="200">
+                                Read
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 300">
+                            <option value="300" selected="selected">
+                                Post
+                            </option>
+                            <xar:else />
+                            <option value="300">
+                                Post
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 300">
+                            <option value="400" selected="selected">
+                                Moderate
+                            </option>
+                            <xar:else />
+                            <option value="400">
+                                Moderate
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 500">
+                            <option value="500" selected="selected">
+                                Edit
+                            </option>
+                            <xar:else />
+                            <option value="500">
+                                Edit
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 600">
+                            <option value="600" selected="selected">
+                                Add
+                            </option>
+                            <xar:else />
+                            <option value="600">
+                                Add
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 700">
+                            <option value="700" selected="selected">
+                                Delete
+                            </option>
+                            <xar:else />
+                            <option value="700">
+                                Delete
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$extlevel eq 800">
+                            <option value="800" selected="selected">
+                                Admin
+                            </option>
+                            <xar:else />
+                            <option value="800">
+                                Admin
+                            </option>
+                        </xar:if>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="xar-align-center">
+                    <input type="submit" value="#$refreshlabel#" />
+                </td>
+            </tr>
+        </table>
+        <p>
+            <xar:set name="grammar">$numitems == 1 ? 'forum' : 'forums'</xar:set>
+            Found #$numitems# #$grammar# matching these selection criteria
+            <hr />
+            (Instance Definition #$extinstance#)
+        </p>
+        <input type="submit" name="apply" value="#$applylabel#" /></form>
+        <xar:template type="module" module="crispbb" file="privileges-info" />
+    </div>
 </xar:template>

@@ -508,6 +508,7 @@ function crispbb_userapi_gettopics($args)
     $loggedin = xarUserIsLoggedIn();
     $uid = xarUserGetVar('id');
     $checkfailed = false;
+    $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
         $topic = array();

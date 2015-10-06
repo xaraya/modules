@@ -58,8 +58,8 @@ function crispbb_admin_deletecat($args)
         ));
 
     $data['layout'] = 'confirm';
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
-    $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $basecid = count($basecats) > 0 ? $basecats[0] : 0;
 
     $data['basecid'] = $basecid;
     $data['basecatinfo'] = $basecats[0];

@@ -17,7 +17,6 @@
  */
 function crispbb_admin_waitingcontent()
 {
-
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
     $subtopics = array();
     foreach ($forums as $fid => $forum) {
@@ -31,9 +30,9 @@ function crispbb_admin_waitingcontent()
         $forums[$fid]['modforumurl'] = xarModURL('crispbb', 'user', 'moderate', array('fid' => $fid, 'component' => 'topics', 'tstatus' => 2));
         unset($subtopics);
     }
-
     $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics',
         array('numsubs' => true, 'submitted' => true));
+
     foreach ($topics as $tid => $topic) {
         if (empty($topic['privs']['approvereplies'])) {
             unset($topics[$tid]);

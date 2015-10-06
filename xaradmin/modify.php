@@ -23,23 +23,32 @@
 function crispbb_admin_modify($args)
 {
     extract($args);
-    if (!xarVarFetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sublink',    'str:1:',           $sublink, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase',      'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
-    if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1:',           $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fid',        'id',               $fid, NULL, XARVAR_NOT_REQUIRED)) return;
 
+    // Get the forums object
     sys::import('modules.dynamicdata.class.objects.master');
     $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
-    //$data['forum']->joinCategories();
-    $fieldlist = array('fname','fdesc','fstatus','ftype','category');
+
+    // We only need some properties
+    $fieldlist = array('fname','fdesc','fstatus','ftype','fprivileges','category');
     $data['forum']->setFieldlist($fieldlist);
+    
+    // Get the specific form and do a privilages check
     $data['forum']->userAction = 'editforum';
     $itemid = $data['forum']->getItem(array('itemid' => $fid));
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('object' => 'crispbb_forums', 'property' => 'category'));
-    $basecid = count($basecats) > 0 ? $basecats[0] : null;
+    
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $basecid = count($basecats) > 0 ? $basecats[0] : 0;
+
+    // CHECKME: remove this?
     if ($itemid != $fid)
         return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+
+    // CrispBB security
     if (empty($data['forum']->userLevel))
         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
 

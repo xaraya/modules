@@ -126,7 +126,7 @@ function crispbb_adminapi_create($args)
     $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
         array('fid' => 0, 'component' => 'forum'));
 
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
+    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
     $numcats = count($basecats);
     $parentcat = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
     if (!empty($numcats)) {

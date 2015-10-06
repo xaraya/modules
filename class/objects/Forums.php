@@ -36,7 +36,7 @@ class Forums extends DataObject
         $this->fsettings = $fsettings;
         $fprivileges = unserialize($this->properties['fprivileges']->value);
         $this->fprivileges = $fprivileges;
-        $check = $this->getFieldValues();
+        $check = $this->getFieldValues(array(), 1);
         $check['fid'] = $this->itemid;
         $check['fprivileges'] = $this->fprivileges;
         $this->userLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',

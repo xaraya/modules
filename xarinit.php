@@ -318,23 +318,25 @@ function crispbb_init()
 #
     $catName = 'crispBB Forums';
     try {
-        $catExists = xarModAPIFunc('categories', 'user', 'getcatbyname', array('name' => $catName));
-        if (!empty($catExists[0]))
-            $basecid = $catExists[0]['cid'];
+        sys::import('modules.categories.class.worker');
+        $worker = new CategoryWorker();
+        $basecid = $worker->name2id($catName);
     } catch (Exception $e) {
-        $basecid = 0;
+        $basecid = 0;        
     }
-/*    if (empty($basecid)) {
-        $basecid = xarMod::apiFunc('categories', 'admin', 'create',
-            array(
+    if (empty($basecid)) {
+        sys::import('modules.dynamicdata.class.objects.master');
+        $categories = DataObjectMaster::getObject(array('name' => 'categories'));
+        $fieldValues = array(
                 'name' => $catName,
-                'description' => 'crispBB Base Category',
+                'description' => xarML('crispBB Base Category'),
                 'parent_id' => 0,
-            ));
+        );
+        $basecid = $categories->createItem($fieldValues);
     }
-    if (!xarMod::apiFunc('categories', 'admin', 'setcatbases',
-        array('module' => $module, 'cids' => array($basecid)))) return;*/
-
+    
+    // Save the base category in a modvar
+    xarModVars::set('crispbb', 'base_categories', serialize(array($basecid)));
 
 # --------------------------------------------------------
 #
