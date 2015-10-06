@@ -237,7 +237,7 @@
             <li>
                 Last post by
                 <a href="#$pownerurl#" title="#xarML('View Profile')#">
-                    <xar:data-output type="name" value="$posterlist[$powner]['name']"/>
+                    #$posterlist[$powner]['name']#
                 </a>
             </li>
             <li>
