@@ -31,14 +31,20 @@ function crispbb_admin_delete($args)
     sys::import('modules.dynamicdata.class.objects.master');
     $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
     //$data['forum']->joinCategories();
-    $fieldlist = array('fname','fdesc','fstatus','ftype','category','numtopics','numreplies');
+
+    // We only need some properties
+    $fieldlist = array('fname','fdesc','fstatus','ftype','fprivileges','category','numtopics','numreplies');
     $data['forum']->setFieldlist($fieldlist);
+
+    // Get the specific form and do a privilages check
     $data['forum']->userAction = 'deleteforum';
     $itemid = $data['forum']->getItem(array('itemid' => $fid));
 
+    // CHECKME: remove this?
     if ($itemid != $fid)
         return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
 
+    // CrispBB security
     if (empty($data['forum']->userLevel))
         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
 
