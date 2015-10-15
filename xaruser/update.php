@@ -140,7 +140,7 @@ function publications_user_update()
         xarController::redirect(xarModURL('publications', 'user', 'display',
                                       array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
     } else {
-    	if (!empty($return_url)) {
+    	if (!empty($data['returnurl'])) {
     		xarController::redirect($data['returnurl']);
     	} else {
     		xarController::redirect(xarModURL('publications', 'user', 'modify',
