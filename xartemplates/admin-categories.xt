@@ -21,13 +21,13 @@
             <p>The base forum category is never actually displayed within forum listings.
             The categories you add to this category will be used as your forum categories.</p>
             <form action="#xarModURL('crispbb', 'admin', 'categories')#" method="post">
-            <xar:data-input type="categorypicker" module="crispbb" categories_numberofbasecats="1" tplmodule="crispbb" name="basecid" />
-            <p>NOTE: If you change this, any existing forums belonging to categories which are not children
-            of the new base category will no longer be displayed in forum listings.</p>
-            <input type="hidden" name="phase" id="phase" value="update" />
-            <input type="hidden" name="sublink" id="sublink" value="mastercat" />
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" value="#xarML('Change Base Category')#" />
+                <xar:data-input type="categorypicker" module="crispbb" column_configuration="$column_configuration" tplmodule="crispbb" name="basecid" />
+                <p>NOTE: If you change this, any existing forums belonging to categories which are not children
+                of the new base category will no longer be displayed in forum listings.</p>
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <input type="hidden" name="sublink" id="sublink" value="mastercat" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Change Base Category')#" />
             </form>
         <!--
         <xar:elseif condition="$sublink eq 'confirm'" />
