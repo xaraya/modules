@@ -219,8 +219,8 @@ class KeywordsProperty extends TextAreaProperty
         $tables = xarDB::getTables();
         
      	//$q->addtable($tables['dam_resources'], 'resource');
-        $q->addtable($table['keywords'], 'k');
-        $q->addtable($table['keywords_index'], 'i');
+        $q->addtable($tables['keywords'], 'k');
+        $q->addtable($tables['keywords_index'], 'i');
         $q->join('i.keyword_id', 'k.id');
     	//$q->join('resource.', 'keywords.id');
         $q->addfield('i.id AS id');
