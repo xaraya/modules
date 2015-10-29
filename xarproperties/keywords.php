@@ -200,7 +200,7 @@ class KeywordsProperty extends TextAreaProperty
         return $associations;
     }
     
-    public function preList()
+ /*   public function preList()
     {
         // Bail if there is no parent object
         if (empty($this->objectref)) return true;
@@ -234,7 +234,7 @@ class KeywordsProperty extends TextAreaProperty
 	
         return true;
     }
-    
+    */
 #----------------------------------------------------------------
 # After creating a keyword entry, add the required association
 #
