@@ -225,7 +225,7 @@ class KeywordsProperty extends TextAreaProperty
     	//$q->join('resource.', 'keywords.id');
         // A zero means "all"
         // Itemtype & module ID = 0 means the objects listing
-        if (!empty($this->moduleid)) $q->eq('i.module_id', $this->moduleid);
+        if (!empty($this->module_id)) $q->eq('i.module_id', $this->module_id);
         if (!empty($this->itemtype)) $q->eq('i.itemtype', $this->itemtype);
         if (!empty($data['itemid'])) $q->eq('i.itemid', $data['itemid']);
         
