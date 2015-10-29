@@ -199,6 +199,44 @@ class KeywordsProperty extends TextAreaProperty
         }
         return $associations;
     }
+    
+    public function preList()
+    {
+        // Bail if there is no parent object
+        if (empty($this->objectref)) return true;
+
+        // Get the parent object's query;
+        $q = $this->objectref->dataquery;
+        
+        // Get the primary propety of the parent object, and its source
+        $primary = $this->objectref->primary;
+        $primary_source = $this->objectref->properties[$primary]->source;
+        
+        // Assemble the links to the object's table
+        //xarMod::load('keywords');
+        xarMod::apiLoad('keywords');
+    	//xarMod::load('dam');
+        $tables = xarDB::getTables();
+        
+     	//$q->addtable($tables['dam_resources'], 'resource');
+        $q->addtable($table['keywords'], 'k');
+        $q->addtable($table['keywords_index'], 'i');
+        $q->join('i.keyword_id', 'k.id');
+    	//$q->join('resource.', 'keywords.id');
+        $q->addfield('i.id AS id');
+        $q->addfield('k.keyword AS keyword');
+        $q->addorder('keyword', 'ASC');
+        // A zero means "all"
+        // Itemtype & module ID = 0 means the objects listing
+        if (!empty($this->module_id)) $q->eq('i.module_id', $this->module_id);
+        if (!empty($this->itemtype)) $q->eq('i.itemtype', $this->itemtype);
+        if (!empty($data['itemid'])) $q->eq('i.itemid', $data['itemid']);
+        
+        // Set the source of this property
+      	//$this->source = 'resource.keywords';
+	
+        return true;
+    }
 #----------------------------------------------------------------
 # After creating a keyword entry, add the required association
 #
