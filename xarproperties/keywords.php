@@ -200,7 +200,7 @@ class KeywordsProperty extends TextAreaProperty
         return $associations;
     }
     
-  /*  public function preList()
+    public function preList()
     {
         // Bail if there is no parent object
         if (empty($this->objectref)) return true;
@@ -223,12 +223,9 @@ class KeywordsProperty extends TextAreaProperty
         $q->addtable($tables['keywords_index'], 'i');
    //     $q->join('i.keyword_id', 'k.id');
     	//$q->join('resource.', 'keywords.id');
-        $q->addfield('i.id AS id');
-        $q->addfield('k.keyword AS keyword');
-        $q->addorder('keyword', 'ASC');
         // A zero means "all"
         // Itemtype & module ID = 0 means the objects listing
-        if (!empty($this->module_id)) $q->eq('i.module_id', $this->module_id);
+        if (!empty($this->moduleid)) $q->eq('i.module_id', $this->moduleid);
         if (!empty($this->itemtype)) $q->eq('i.itemtype', $this->itemtype);
         if (!empty($data['itemid'])) $q->eq('i.itemid', $data['itemid']);
         
@@ -237,7 +234,7 @@ class KeywordsProperty extends TextAreaProperty
 	
         return true;
     }
-    */
+    
 #----------------------------------------------------------------
 # After creating a keyword entry, add the required association
 #
