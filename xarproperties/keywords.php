@@ -221,7 +221,7 @@ class KeywordsProperty extends TextAreaProperty
      	//$q->addtable($tables['dam_resources'], 'resource');
         $q->addtable($tables['keywords'], 'k');
         $q->addtable($tables['keywords_index'], 'i');
-        $q->join('i.keyword_id', 'k.id');
+   //     $q->join('i.keyword_id', 'k.id');
     	//$q->join('resource.', 'keywords.id');
         $q->addfield('i.id AS id');
         $q->addfield('k.keyword AS keyword');
