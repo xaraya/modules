@@ -59,13 +59,13 @@ class KeywordsProperty extends TextAreaProperty
 
     public function showInput(Array $data = array())
     {
-        if(isset($this->getValue())) {
+      //  if(!empty($this->getValue())) {
 	    	if (!isset($data['value'])) $data['value'] = $this->getValue();
 			
 	        $keywords = array();
 	        foreach ($data['value'] as $word) $keywords[] = $word['keyword'];
 	        $data['value'] = implode(',', $keywords);
-        }
+     //   }
         
         return parent::showInput($data);
     }
