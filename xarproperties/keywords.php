@@ -59,7 +59,7 @@ class KeywordsProperty extends TextAreaProperty
 
     public function showInput(Array $data = array())
     {
-        if(!empty($this->getValue())) {
+        if(isset($this->getValue())) {
 	    	if (!isset($data['value'])) $data['value'] = $this->getValue();
 			
 	        $keywords = array();
