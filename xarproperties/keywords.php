@@ -234,7 +234,7 @@ class KeywordsProperty extends TextAreaProperty
         if (!empty($this->objectref->itemtype)) $q->eq('i.itemtype', $this->objectref->itemtype);
         if (!empty($data['itemid'])) $q->eq('i.itemid', $data['itemid']);
         // Set the source of this property
-      	$this->source = 'resource.keywords';
+      	$this->source = 'k.keyword';
         return true;
     }
    
