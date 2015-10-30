@@ -59,21 +59,44 @@ class KeywordsProperty extends TextAreaProperty
 
     public function showInput(Array $data = array())
     {
-        if (!isset($data['value'])) $data['value'] = $this->getValue();
-
-        $keywords = array();
-        foreach ($data['value'] as $word) $keywords[] = $word['keyword'];
-        $data['value'] = implode(',', $keywords);
+        if(!empty($this->getValue())) {
+	    	if (!isset($data['value'])) $data['value'] = $this->getValue();
+			
+	        $keywords = array();
+	        foreach ($data['value'] as $word) $keywords[] = $word['keyword'];
+	        $data['value'] = implode(',', $keywords);
+        }
+        
         return parent::showInput($data);
+    }
+
+    public function updateResource($itemid, $words) {
+    	
+		$data['values'] = implode(',', $words);
+	    xarMod::load('dam');
+	    xarMod::apiLoad('keywords');
+		$tables = xarDB::getTables();
+		$q = new Query('UPDATE');
+		$q->addtable($tables['dam_resources'], 'resource');
+		$q->addtable($tables['keywords'], 'k');
+		$q->addtable($tables['keywords_index'], 'i');
+		$q->addfield('resource.keywords', $data['values']);
+		$q->join('resource.id', 'i.itemid');
+		$q->eq('resource.id', $itemid);
+		if (!$q->run()) return false;
+		return true;
     }
 
     public function showOutput(Array $data = array())
     {
-        if (!isset($data['value'])) $data['value'] = $this->getValue();
-
-        $keywords = array();
-        foreach ($data['value'] as $word) $keywords[] = $word['keyword'];
-        $data['value'] = implode(',', $keywords);
+    	if(!empty($this->getValue())) {
+	        if (empty($data['value'])) $data['value'] = $this->getValue();
+	        $keywords = array();			
+	        foreach ($data['value'] as $word){
+	        	$keywords[] = $word['keyword'];
+	        } 
+	        $data['value'] = implode(',', $keywords);
+    	}
         return parent::showOutput($data);
     }
 
@@ -92,8 +115,8 @@ class KeywordsProperty extends TextAreaProperty
         $q->join('i.keyword_id', 'k.id');
         $q->addfield('i.id AS id');
         $q->addfield('k.keyword AS keyword');
-        $q->eq('i.module_id', $this->objectref->moduleid);
-        $q->eq('i.itemtype', $this->objectref->itemtype);
+        if (!empty($this->objectref->moduleid)) $q->eq('i.module_id', $this->objectref->moduleid);
+        if (!empty($this->objectref->itemtype)) $q->eq('i.itemtype', $this->objectref->itemtype);
         $q->eq('i.itemid', $data['itemid']);
         $q->addorder('keyword', 'ASC');
 //        $q->qecho();
@@ -105,6 +128,7 @@ class KeywordsProperty extends TextAreaProperty
     function createValue($itemid=0)
     {
         $words = $this->value;
+        $this->updateResource($this->objectref->itemid, $words);       
         $keyword_ids = $this->updateKeywords($words);
         $this->updateAssociations($itemid, $keyword_ids);
         return $itemid;
@@ -200,14 +224,13 @@ class KeywordsProperty extends TextAreaProperty
         return $associations;
     }
     
- /*   public function preList()
+	 public function preList()
     {
-        // Bail if there is no parent object
-        if (empty($this->objectref)) return true;
+    	 if (empty($this->objectref)) return true;
 
         // Get the parent object's query;
         $q = $this->objectref->dataquery;
-        
+       
         // Get the primary propety of the parent object, and its source
         $primary = $this->objectref->primary;
         $primary_source = $this->objectref->properties[$primary]->source;
@@ -218,23 +241,21 @@ class KeywordsProperty extends TextAreaProperty
     	//xarMod::load('dam');
         $tables = xarDB::getTables();
         
-     	//$q->addtable($tables['dam_resources'], 'resource');
+     	$q->addtable($tables['dam_resources'], 'resource');
         $q->addtable($tables['keywords'], 'k');
         $q->addtable($tables['keywords_index'], 'i');
-   //     $q->join('i.keyword_id', 'k.id');
-    	//$q->join('resource.', 'keywords.id');
+    	$q->join('resource.id', 'i.itemid');
+    	$q->join('i.keyword_id', 'k.id');
         // A zero means "all"
         // Itemtype & module ID = 0 means the objects listing
-        if (!empty($this->module_id)) $q->eq('i.module_id', $this->module_id);
-        if (!empty($this->itemtype)) $q->eq('i.itemtype', $this->itemtype);
+        if (!empty($this->objectref->module_id)) $q->eq('i.module_id', $this->objectref->module_id);
+        if (!empty($this->objectref->itemtype)) $q->eq('i.itemtype', $this->objectref->itemtype);
         if (!empty($data['itemid'])) $q->eq('i.itemid', $data['itemid']);
-        
         // Set the source of this property
-      	//$this->source = 'resource.keywords';
-	
+      	$this->source = 'resource.keywords';
         return true;
     }
-    */
+   
 #----------------------------------------------------------------
 # After creating a keyword entry, add the required association
 #
