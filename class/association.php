@@ -20,7 +20,7 @@ class Keyword_Association extends Object
     function __construct()
     {
         xarMod::apiLoad('keywords');
-        $this->tables = xarDB::getTables();
+        $this->tables =& xarDB::getTables();
     }
     
 /**

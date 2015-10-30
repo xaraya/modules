@@ -36,45 +36,24 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
         $itemtype = 0;
     }
 
-    if (!xarSecurityCheck('AdminKeywords', 0, 'Item', "$modid:$itemtype:All")) return '';
-
     $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
         ));
 
-    // Retrieve the list of allowed delimiters
-    $delimiters = xarModVars::get('keywords','delimiters');
-    $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
-
-    $data['auto_tag_create'] = !empty($data['auto_tag_create']) ? implode("$delimiter ", $data['auto_tag_create']) : '';
-    
     if (!empty($data['restrict_words'])) {
         $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
             array(
                 'index_id' => $data['index_id'],
             ));
-        $data['restricted_list'] = implode("$delimiter ", $restricted_list);
-        
+        $data['restricted_list'] = implode(', ', $restricted_list);
     }
-    
-    $data['delimiters'] = $delimiters;
+
     $data['module'] = $modname;
     $data['module_id'] = $modid;
     $data['itemtype'] = $itemtype;
 
-    $data['meta_options'] = array(
-        0 => array('id' => 0, 'name' => xarML('Never')),
-        1 => array('id' => 1, 'name' => xarML('Append to existing')),
-        2 => array('id' => 2, 'name' => xarML('Replace existing')),
-    );
-
-    if (!empty($data['meta_keywords'])) {
-        sys::import('modules.themes.class.xarmeta');
-        $data['meta_langs'] = xarMeta::getLanguages();
-    }
-    
     return xarTpl::module('keywords', 'hooks', 'modulemodifyconfig', $data);
 }
 ?>

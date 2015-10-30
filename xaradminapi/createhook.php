@@ -58,6 +58,11 @@ function keywords_adminapi_createhook($args)
         $itemid = $objectid;
     }
 
+    // @todo: replace this with access prop
+    // chris: amazingly, this is the only function that didn't call this originally ?
+    //if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid"))
+    //    return $extrainfo;
+
     // get settings currently in force for this module/itemtype
     $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
@@ -80,14 +85,11 @@ function keywords_adminapi_createhook($args)
         // otherwise, try fetch from form input
         if (!xarVarFetch('keywords', 'isset',
             $keywords, null, XARVAR_DONT_SET)) return;
-        // keywords from form input, check current user has permission to add keywords here 
-        if (!empty($keywords) && !xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:All"))
-            return $extrainfo;  // no permission, no worries
     }
 
     // we may have been given a string list
     if (!empty($keywords) && !is_array($keywords)) {
-        $keywords = xarModAPIFunc('keywords','admin','separekeywords',
+        $keywords = xarMod::apiFunc('keywords','admin','separatekeywords',
             array(
                 'keywords' => $keywords,
             ));
@@ -95,11 +97,7 @@ function keywords_adminapi_createhook($args)
 
     // it's ok if there are no keywords
     if (empty($keywords))
-        $keywords = array();
-
-    // see if we are auto tagging new items, and add words to list 
-    if (!empty($settings['auto_tag_create'])) 
-        $keywords = array_merge($keywords, $settings['auto_tag_create']);
+        return $extrainfo; //$keywords = array();
 
     if (!empty($settings['restrict_words'])) {
         $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
@@ -108,38 +106,6 @@ function keywords_adminapi_createhook($args)
             ));
         // store only keywords that are also in the restricted list
         $keywords = array_intersect($keywords, $restricted_list);
-        // see if managers are allowed to add to restricted list
-        if (!empty($settings['allow_manager_add'])) {
-            // see if current user is a manager
-            $data['is_manager'] = xarSecurityCheck('ManageKeywords',0,'Item', "$modid:$itemtype:All");
-            if (!empty($data['is_manager'])) {
-                // see if keywords were passed to hook call
-                if (!empty($extrainfo['restricted_extra'])) {
-                    $toadd = $extrainfo['restricted_extra'];
-                } else {
-                    // could be an item preview, try fetch from form input
-                    if (!xarVarFetch('restricted_extra', 'isset',
-                        $toadd, array(), XARVAR_NOT_REQUIRED)) return;
-                }
-                // we may have been given a string list
-                if (!empty($toadd) && !is_array($toadd)) {
-                    $toadd = xarModAPIFunc('keywords','admin','separekeywords',
-                        array(
-                            'keywords' => $toadd,
-                        ));
-                }
-                if (!empty($toadd)) {
-                    // add words to restricted list
-                    if (!xarMod::apiFunc('keywords', 'words', 'createitems',
-                        array(
-                            'index_id' => $settings['index_id'],
-                            'keyword' => array_unique(array_diff($toadd, $keywords)),
-                        ))) return;
-                    // merge words with existing keywords 
-                    $keywords = array_merge($keywords, $toadd);
-                }
-            }
-        }
     }
     $keywords = array_filter(array_unique($keywords));
 

@@ -28,7 +28,7 @@ function keywords_userapi_search($args)
 
     // Get item
     sys::import('xaraya.structures.query');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     $q = new Query('SELECT');
     $q->addtable($tables['keywords'], 'k');
     $q->addtable($tables['keywords_index'], 'i');
