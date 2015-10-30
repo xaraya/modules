@@ -70,23 +70,6 @@ class KeywordsProperty extends TextAreaProperty
         return parent::showInput($data);
     }
 
-    public function updateResource($itemid, $words) {
-    	
-		$data['values'] = implode(',', $words);
-	    xarMod::load('dam');
-	    xarMod::apiLoad('keywords');
-		$tables = xarDB::getTables();
-		$q = new Query('UPDATE');
-		$q->addtable($tables['dam_resources'], 'resource');
-		$q->addtable($tables['keywords'], 'k');
-		$q->addtable($tables['keywords_index'], 'i');
-		$q->addfield('resource.keywords', $data['values']);
-		$q->join('resource.id', 'i.itemid');
-		$q->eq('resource.id', $itemid);
-		if (!$q->run()) return false;
-		return true;
-    }
-
     public function showOutput(Array $data = array())
     {
         if (!isset($data['value'])) { 
@@ -128,7 +111,6 @@ class KeywordsProperty extends TextAreaProperty
     function createValue($itemid=0)
     {
         $words = $this->value;
-        $this->updateResource($this->objectref->itemid, $words);       
         $keyword_ids = $this->updateKeywords($words);
         $this->updateAssociations($itemid, $keyword_ids);
         return $itemid;
