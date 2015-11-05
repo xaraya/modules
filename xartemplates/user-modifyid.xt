@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title">Project Registration &amp; Releases</span></div>
+    <xar:template file="user-mod-head"/>
     <xar:if condition="!isset($tab)">
-        <xar:set name="tab">''</xar:set>
+        <xar:var name="tab">''</xar:var>
     </xar:if>
     <xar:set name="extname">ucfirst($regname)</xar:set>
     <div class="xar-mod-body">

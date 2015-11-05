@@ -7,44 +7,44 @@
         <h2>View IDs</h2>
         <xar:template type="module" file="admin-menu" />
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                  Name
-             </th>
-            <th>
-                  Options
-            </th>
-        </tr>
-        <xar:loop name="$items">
-        <tr>
-            <td>
-                #$loop:item['rid']#
-            </td>
-            <td>
-                #$loop:item['regname']#
-            </td>
-            <td align="center">
-                <xar:if condition="empty($loop:item['editurl'])">
-                     #$loop:item['edittitle']#
-                <xar:else />
-                     <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-                </xar:if>
-                |
-                <xar:if condition="empty($loop:item['deleteurl'])">
-                  #$loop:item['deletetitle']#
-                <xar:else />
-                  <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
-                </xar:if>
-            </td>
-        </tr>
-        </xar:loop>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                      Name
+                 </th>
+                <th>
+                      Options
+                </th>
+            </tr>
+            <xar:loop name="$items">
+                <tr>
+                    <td>
+                        #$loop:item['rid']#
+                    </td>
+                    <td>
+                        #$loop:item['regname']#
+                    </td>
+                    <td align="center">
+                        <xar:if condition="empty($loop:item['editurl'])">
+                             #$loop:item['edittitle']#
+                        <xar:else />
+                             <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                        </xar:if>
+                        |
+                        <xar:if condition="empty($loop:item['deleteurl'])">
+                          #$loop:item['deletetitle']#
+                        <xar:else />
+                          <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                        </xar:if>
+                    </td>
+                </tr>
+            </xar:loop>
         </table>
     </div>
     <p style="margin-top:20px;">
-    <!-- add the pager here -->
-    #$pager#
+        <!-- add the pager here -->
+        #$pager#
     </p>
 </xar:template>

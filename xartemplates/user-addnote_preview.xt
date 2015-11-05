@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">Release Module
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-    <h2>Release Module :: Preview</h2>
+        <h2>Release Module :: Preview</h2>
 
         <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -26,7 +23,7 @@
                     <label for="extensionid" class="xar-form-label">
                         Extension ID
                     </label>
-                        #$rid#
+                    #$rid#
                 </p>
                 <p>
                      <label for="extensionname" class="xar-form-label">
@@ -86,7 +83,6 @@
                        Yes - notification will be added to the New Release RSS feed
                     <xar:else/>
                        No - notification will not be added to the New Release RSS feed
-
                     </xar:if>
                 </p>
 

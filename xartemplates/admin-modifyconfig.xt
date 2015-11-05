@@ -7,38 +7,37 @@
        <h2>Modify Configuration</h2>
        <xar:template type="module" file="admin-menu" />
         <form method="post" id="post" action="&xar-modurl-release-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-        <fieldset> 
-          <legend>Display Options</legend>
-          <div class="xar-form-input-wrapper-after">
-               <xar:if condition="$shorturlschecked">
-                  <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-               <xar:else/>
-                  <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-               </xar:if>
-             <label for="shorturls" title="#xarML('Enable short URLS?')#">
-                  Enable short URLs?
-               </label>
-          </div>
+            <fieldset> 
+              <legend>Display Options</legend>
+              <div class="xar-form-input-wrapper-after">
+                   <xar:if condition="$shorturlschecked">
+                      <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                   <xar:else/>
+                      <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                   </xar:if>
+                 <label for="shorturls" title="#xarML('Enable short URLS?')#">
+                      Enable short URLs?
+                   </label>
+              </div>
 
-          <div class="xar-form-input-wrapper">
-              <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
-                  Release Items Per Page:
-               </label>
-               <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
-          </div>
-       </fieldset>
-       <xar:if condition="!empty($hooks)">
-       <fieldset>
-          <legend>Enabled Hooks</legend>
-                #$hooks#
-        </fieldset>
-        </xar:if>
+              <div class="xar-form-input-wrapper">
+                  <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
+                      Release Items Per Page:
+                   </label>
+                   <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+              </div>
+           </fieldset>
+           <xar:if condition="!empty($hooks)">
+           <fieldset>
+              <legend>Enabled Hooks</legend>
+                    #$hooks#
+            </fieldset>
+            </xar:if>
 
-        <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="#$updatebutton#" />
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        </div>
-    </form>
-
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#$updatebutton#" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            </div>
+        </form>
     </div>
 </xar:template>

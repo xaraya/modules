@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Project Registration &amp; Releases
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
+
     <xar:set name="searchlink">
         xarModURL('search','user','main')
     </xar:set>
@@ -37,8 +34,8 @@
         xarModIsHooked('hitcount')
     </xar:set>
     <div class="xar-mod-body" style="width:95%;">
-    <h2>View All Registered Projects</h2>
-    <xar:template type="module" file="user-menu" />
+        <h2>View All Registered Projects</h2>
+        <xar:template type="module" file="user-menu" />
 
         <form class="fc-full" action="&xar-modurl-release-user-view;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:if condition="!empty($catid)">
@@ -46,11 +43,9 @@
             </xar:if>
         </form>
         <xar:if condition="!isset($phase) or empty($phase)">
-            <xar:set name="displayphase">
-                
-                    All
-                
-            </xar:set>
+            <xar:var name="displayphase">
+                All
+            </xar:var>
         <xar:else />
             <xar:set name="displayphase">
                 ucfirst($phase)
@@ -75,122 +70,121 @@
             </xar:if>
         </div>
         <div class="xar-clearboth xar-fullwidth xar-align-center xar-padding-thickends">
-        <xar:if condition="$numitems lt '1'">
-            There are no extensions to display
-        <xar:else />
-            <div class="xar-accent">
-                <table width="100%" border="0" cellspacing="2" cellpadding="2">
-                <tr>
-                    <th nowrap="nowrap">
-                        <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarModURL('release','user','view',array('sort'=>'id'))#">ID</a>
-                    </th>
-                    <th width="30%" align="left">
-                        <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarModURL('release','user','view',array('sort'=>'name'))#">Name (regname sort)</a>
-                    </th>
-                    <th width="25%" align="left">
-                        <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarModURL('release','user','view',array('sort'=>'author'))#">Author (uname)</a>
-                    </th>
-                    <th width="5%">
-                        Release Notification
-                    </th>
-                    <xar:comment>jojodee: Taking out docs link here until docs actually works
-                    Putting in State instead for now
-                    <th width="10%">
-                        Docs
-                    </th>
-                    </xar:comment>
-                    <th width="10%">
-                        <a title="#xarML('Sort project extensions by Project State')#"  href="#xarModURL('release','user','view',array('sort'=>'rstate'))#">State </a>
-                    </th>
-                    <xar:if condition="$commenthook eq true">
-                        <th width="5%">
-                            Comments
-                        </th>
-                    </xar:if>
-                    <xar:if condition="xarModIsHooked('hitcount','release')">
-                        <th width="5%">
-                            Hits
-                        </th>
-                    </xar:if>
-                    <th nowrap="nowrap">
-                        Info
-                    </th>
-                </tr>
-                <xar:loop name="$items">
-                    <xar:if condition="(($loop:index + 1) % 2)">
-                        <xar:set name="$rowclass">'xar-alt'</xar:set>
-                    <xar:else/>
-                        <xar:set name="$rowclass">'xar-accent'</xar:set>
-                    </xar:if>
+            <xar:if condition="$numitems lt '1'">
+                There are no extensions to display
+            <xar:else />
+                <div class="xar-accent">
+                    <table width="100%" border="0" cellspacing="2" cellpadding="2">
                     <tr>
-                        <td nowrap="nowrap" class="#$rowclass#">
-                            #$loop:item['rid']#
-                        </td>
-                        <td align="left" valign="top" width="30%" class="#$rowclass#">
-                            #$loop:item['regname']#
-                        </td>
-                        <td align="left" valign="top" width="25%" class="#$rowclass#">
-                            <a href="#$loop:item['contacturl']#">#$loop:item['author']#</a>
-                        </td>
-                        <td width="5%" class="#$rowclass#">
-                        <xar:if condition="empty($loop:item['addurl'])">
-                            #$loop:item['addtitle']#
-                        <xar:else />
-                            <a href="#$loop:item['addurl']#">#$loop:item['addtitle']#</a>
-                        </xar:if>
-                        </td>
+                        <th nowrap="nowrap">
+                            <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarModURL('release','user','view',array('sort'=>'id'))#">ID</a>
+                        </th>
+                        <th width="30%" align="left">
+                            <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarModURL('release','user','view',array('sort'=>'name'))#">Name (regname sort)</a>
+                        </th>
+                        <th width="25%" align="left">
+                            <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarModURL('release','user','view',array('sort'=>'author'))#">Author (uname)</a>
+                        </th>
+                        <th width="5%">
+                            Release Notification
+                        </th>
                         <xar:comment>jojodee: Taking out docs link here until docs actually works
                         Putting in State instead for now
-                        <td width="10%" class="#$rowclass#">
-                        <xar:if condition="empty($loop:item['adddocs'])">
-                                              #$loop:item['docs']#  #$loop:item['adddocstitle']#
-                        <xar:else />
-                                              #$loop:item['docs']# | <a href="#$loop:item['adddocs']#">#$loop:item['adddocstitle']#</a>
-                           </xar:if>
-                        </td>
+                        <th width="10%">
+                            Docs
+                        </th>
                         </xar:comment>
-                        <td width="10%" class="#$rowclass#">
-                            #$loop:item['extstate']#
-                        </td>
+                        <th width="10%">
+                            <a title="#xarML('Sort project extensions by Project State')#"  href="#xarModURL('release','user','view',array('sort'=>'rstate'))#">State </a>
+                        </th>
                         <xar:if condition="$commenthook eq true">
-                            <td width="5%" class="#$rowclass#">
-                                #$loop:item['comments']#
-                            </td>
+                            <th width="5%">
+                                Comments
+                            </th>
                         </xar:if>
                         <xar:if condition="xarModIsHooked('hitcount','release')">
-                            <td width="5%" class="#$rowclass#">
-                                #$loop:item['hitcount']#
-                            </td>
+                            <th width="5%">
+                                Hits
+                            </th>
                         </xar:if>
-                        <td class="#$rowclass#" nowrap="nowrap">
-                                <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a>
-                            <xar:if condition="!empty($loop:item['editurl'])">
-                                | <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-                            </xar:if>
-                            <xar:if condition="!empty($loop:item['delurl'])">
-                                | <a href="#$loop:item['delurl']#">#$loop:item['deltitle']#</a>
-                            </xar:if>
-                        </td>
+                        <th nowrap="nowrap">
+                            Info
+                        </th>
                     </tr>
-                </xar:loop>
-                </table>
-            </div>
-            <p>
-        <!-- add the pager here -->
-            #$pager#
-            </p>
-        </xar:if>
-
-    </div>
-    <div style="clear: both;">
-        <span style="float: left; width: 100%; margin-top:10px;text-align: left;">
-            <h3>Syndicate this list</h3>
-            <ol>
-            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#">Entire List</a></li>
-            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#">Modules</a></li>
-            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#">Themes</a></li>
-            </ol>
-        </span>
-    </div>
+                    <xar:loop name="$items">
+                        <xar:if condition="(($loop:index + 1) % 2)">
+                            <xar:set name="$rowclass">'xar-alt'</xar:set>
+                        <xar:else/>
+                            <xar:set name="$rowclass">'xar-accent'</xar:set>
+                        </xar:if>
+                        <tr>
+                            <td nowrap="nowrap" class="#$rowclass#">
+                                #$loop:item['rid']#
+                            </td>
+                            <td align="left" valign="top" width="30%" class="#$rowclass#">
+                                #$loop:item['regname']#
+                            </td>
+                            <td align="left" valign="top" width="25%" class="#$rowclass#">
+                                <a href="#$loop:item['contacturl']#">#$loop:item['author']#</a>
+                            </td>
+                            <td width="5%" class="#$rowclass#">
+                            <xar:if condition="empty($loop:item['addurl'])">
+                                #$loop:item['addtitle']#
+                            <xar:else />
+                                <a href="#$loop:item['addurl']#">#$loop:item['addtitle']#</a>
+                            </xar:if>
+                            </td>
+                            <xar:comment>jojodee: Taking out docs link here until docs actually works
+                            Putting in State instead for now
+                            <td width="10%" class="#$rowclass#">
+                            <xar:if condition="empty($loop:item['adddocs'])">
+                                                  #$loop:item['docs']#  #$loop:item['adddocstitle']#
+                            <xar:else />
+                                                  #$loop:item['docs']# | <a href="#$loop:item['adddocs']#">#$loop:item['adddocstitle']#</a>
+                               </xar:if>
+                            </td>
+                            </xar:comment>
+                            <td width="10%" class="#$rowclass#">
+                                #$loop:item['extstate']#
+                            </td>
+                            <xar:if condition="$commenthook eq true">
+                                <td width="5%" class="#$rowclass#">
+                                    #$loop:item['comments']#
+                                </td>
+                            </xar:if>
+                            <xar:if condition="xarModIsHooked('hitcount','release')">
+                                <td width="5%" class="#$rowclass#">
+                                    #$loop:item['hitcount']#
+                                </td>
+                            </xar:if>
+                            <td class="#$rowclass#" nowrap="nowrap">
+                                    <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a>
+                                <xar:if condition="!empty($loop:item['editurl'])">
+                                    | <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                                </xar:if>
+                                <xar:if condition="!empty($loop:item['delurl'])">
+                                    | <a href="#$loop:item['delurl']#">#$loop:item['deltitle']#</a>
+                                </xar:if>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                    </table>
+                </div>
+                <p>
+            <!-- add the pager here -->
+                #$pager#
+                </p>
+            </xar:if>
+        </div>
+        <div style="clear: both;">
+            <span style="float: left; width: 100%; margin-top:10px;text-align: left;">
+                <h3>Syndicate this list</h3>
+                <ol>
+                <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#">Entire List</a></li>
+                <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#">Modules</a></li>
+                <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#">Themes</a></li>
+                </ol>
+            </span>
+        </div>
     </div>
 </xar:template>

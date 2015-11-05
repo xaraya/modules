@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Project Registration &amp; Releases
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
       <xar:set name="extname">ucfirst($regname)</xar:set>
@@ -23,8 +19,6 @@
         </xar:if>
       </h2>
       <xar:template type="module" file="user-minimenu" />
-
-
 
     <xar:if condition="$general eq 2 and $version ne 2">
         <div style="background: #f7f7f7;border-color: #ccc;padding: 0 10px 0 30px;"class="xar-border-solid xar-floatright xar-thirdwidth xar-margin-thick xar-padding-thick">

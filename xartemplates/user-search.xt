@@ -2,119 +2,96 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="!isset($ishooked) or empty($ishooked)">
-    <div class="xar-mod-head">
-       <span class="xar-mod-title">Project Registration &amp; Releases</span>
-    </div>
+    <xar:template file="user-mod-head"/>
+
     <div class="xar-mod-body">
-    <h2>Search Registered Extensions</h2>
-    <xar:template type="module" file="user-menu" />
-        <form method="post" action="&xar-modurl-release-user-search;">
-              <p><label for="q">Search for</label>
-              <input type="text" name="q" id="q" value="" size="20" />
-              <xar:set name="$search">Search</xar:set>
-              <input type="submit" name="search" value="#$search#" />
-              </p>
-             <p>
-             By author 
-             <input type="text" name="author" id="author" value="" size="20" />
-             </p>
-    </xar:if>
-    <xar:if condition="!empty($release) and count($release) gt 0">
-        <h4>
-            
-                Registered Extensions Found
-            
-            :
-        </h4>
-        <ul>
-            <xar:foreach in="$release" key="$key" value="$extension">
+        <h2>Search Registered Extensions</h2>
+        <xar:template type="module" file="user-menu" />
+            <form method="post" action="&xar-modurl-release-user-search;">
+                  <p><label for="q">Search for</label>
+                  <input type="text" name="q" id="q" value="" size="20" />
+                  <xar:set name="$search">Search</xar:set>
+                  <input type="submit" name="search" value="#$search#" />
+                  </p>
+                 <p>
+                 By author 
+                 <input type="text" name="author" id="author" value="" size="20" />
+                 </p>
+        </xar:if>
+        <xar:if condition="!empty($release) and count($release) gt 0">
+            <h4>
+                Registered Extensions Found:
+            </h4>
+            <ul>
+                <xar:foreach in="$release" key="$key" value="$extension">
 
-                 <xar:foreach in="$exttypes" key="$k" value="$v">
-                    <xar:if condition="$extension['exttype'] eq $k and ($k ne 0)">
-                          <xar:set name="exttypename">$v</xar:set>
-                    </xar:if>
-                 </xar:foreach>
-                <li>
-                    <a href="#xarModURL('release', 'user', 'display', array('eid' => $extension['eid']))#">
-                        #$exttypename# - ID #$extension['rid']#  #$extension['displname']#
-                    </a>
-                     by 
-                    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
-                </li>
-            </xar:foreach>
-        </ul>
-    <xar:else/>
-        <xar:if condition="!empty($status)">
-            <p>
-                #$status#
-            </p>
+                     <xar:foreach in="$exttypes" key="$k" value="$v">
+                        <xar:if condition="$extension['exttype'] eq $k and ($k ne 0)">
+                              <xar:set name="exttypename">$v</xar:set>
+                        </xar:if>
+                     </xar:foreach>
+                    <li>
+                        <a href="#xarModURL('release', 'user', 'display', array('eid' => $extension['eid']))#">
+                            #$exttypename# - ID #$extension['rid']#  #$extension['displname']#
+                        </a>
+                         by 
+                        <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
+                    </li>
+                </xar:foreach>
+            </ul>
+        <xar:else/>
+            <xar:if condition="!empty($status)">
+                <p>
+                    #$status#
+                </p>
+            </xar:if>
         </xar:if>
-    </xar:if>
-    <p>
-        
-            Search in
-        
-        :
-    </p>
-    <p>
-        <xar:if condition="isset($rid) && $rid eq '1'">
-            <input type="checkbox" name="rid" id="rid" value="1" checked="checked" />
-        <xar:else />
-            <input type="checkbox" name="rid" id="rid" value="1" />
-        </xar:if>
-         
+        <p>
+            Search in:
+        </p>
+        <p>
+            <xar:if condition="isset($rid) && $rid eq '1'">
+                <input type="checkbox" name="rid" id="rid" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="rid" id="rid" value="1" />
+            </xar:if>
             Extension ID
-        
-    </p>
+        </p>
 
-    <p>
-
-        <xar:if condition="isset($regname) && $regname eq '1'">
-        <input type="checkbox" name="regname" id="regname" value="1" checked="checked" />
-        <xar:else />
-        <input type="checkbox" name="regname" id="regname" value="1" />
-        </xar:if>
-        
+        <p>
+            <xar:if condition="isset($regname) && $regname eq '1'">
+            <input type="checkbox" name="regname" id="regname" value="1" checked="checked" />
+            <xar:else />
+            <input type="checkbox" name="regname" id="regname" value="1" />
+            </xar:if>
             Registered Name
-        
-
-    </p>
-    <p>
-
-        <xar:if condition="isset($displname) and $displname eq '1'">
-        <input type="checkbox" name="displname" id="displname" value="1" checked="checked" />
-        <xar:else />
-        <input type="checkbox" name="displname" id="displname" value="1" />
-        </xar:if>
-        
+        </p>
+        <p>
+            <xar:if condition="isset($displname) and $displname eq '1'">
+            <input type="checkbox" name="displname" id="displname" value="1" checked="checked" />
+            <xar:else />
+            <input type="checkbox" name="displname" id="displname" value="1" />
+            </xar:if>
             Display Name
-        
+        </p>
+        <p>
 
-    </p>
-    <p>
-
-        <xar:if condition="isset($desc) and $desc eq '1'">
-        <input type="checkbox" name="desc" id="desc" value="1" checked="checked" />
-        <xar:else />
-        <input type="checkbox" name="desc" id="desc" value="1" />
-        </xar:if>
-        
+            <xar:if condition="isset($desc) and $desc eq '1'">
+            <input type="checkbox" name="desc" id="desc" value="1" checked="checked" />
+            <xar:else />
+            <input type="checkbox" name="desc" id="desc" value="1" />
+            </xar:if>
             Extension Description
-        
+        </p>
+        <p>
 
-    </p>
-    <p>
-
-        <xar:if condition="isset($authorsearch) && $authorsearch eq 1">
-        <input type="checkbox" name="authorsearch" id="authorsearch" value="1" checked="checked" />
-        <xar:else />
-        <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
-        </xar:if>
-       
+            <xar:if condition="isset($authorsearch) && $authorsearch eq 1">
+            <input type="checkbox" name="authorsearch" id="authorsearch" value="1" checked="checked" />
+            <xar:else />
+            <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
+            </xar:if>
             Extension Author
-        
-
-    </p>
+        </p>
     <xar:if condition="empty($ishooked)">
     </div>
     </xar:if>

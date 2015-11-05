@@ -7,23 +7,19 @@
     <xar:else/>
        <xar:set name="addoclink">xarModURL('roles','user','main')</xar:set>
     </xar:if>
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Project Registration &amp; Releases
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-    <h2>
-        Release Notification Complete - Thank You
-    </h2>
-    <xar:template type="module" file="user-menu" />
-    Your Release Notification has been sent for review. It should appear on the site very shortly.
-    In the meantime you can 
-    <xar:if condition="xarUserIsLoggedIn()">
-    <a href="#$adddoclink#">begin to add online documentation.</a>.
-    <xar:else />
-    <a href="#$adddoclink#">log in to add online documentation</a>.
-    </xar:if>
+        <h2>
+            Release Notification Complete - Thank You
+        </h2>
+        <xar:template type="module" file="user-menu" />
+        Your Release Notification has been sent for review. It should appear on the site very shortly.
+        In the meantime you can 
+        <xar:if condition="xarUserIsLoggedIn()">
+            <a href="#$adddoclink#">begin to add online documentation.</a>.
+        <xar:else />
+            <a href="#$adddoclink#">log in to add online documentation</a>.
+        </xar:if>
     </div>
 </xar:template>

@@ -34,16 +34,16 @@
       </table>
 
      <xar:if condition="isset($phase)">
-    <xar:set name="displayphase">ucfirst($phasedesc)</xar:set>
-      <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
-      <xar:ml>
-          <xar:mlstring>
-            Currently displaying filtered by: <b>#(1)</b>
-          </xar:mlstring>
-          <xar:mlvar>#$displayphase#</xar:mlvar>
-      </xar:ml>
-      </div>
-    </xar:if>
+         <xar:set name="displayphase">ucfirst($phasedesc)</xar:set>
+          <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
+              <xar:ml>
+                  <xar:mlstring>
+                    Currently displaying filtered by: <b>#(1)</b>
+                  </xar:mlstring>
+                  <xar:mlvar>#$displayphase#</xar:mlvar>
+              </xar:ml>
+          </div>
+     </xar:if>
 
       <xar:if condition="!empty($message)">
           <b>#$message#</b>

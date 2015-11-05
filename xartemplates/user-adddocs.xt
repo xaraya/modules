@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Release Module
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
+
     <div class="xar-mod-body">
         <h2>Add General Documentation</h2>
         <a href="#xarModUrl('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#">Back to Documentation Types</a><br /><br />
         <xar:if condition="!empty($message)">
-        <p>
-            #$message#
-        </p>
+            <p>
+                #$message#
+            </p>
         <xar:else />
-        <table border="0" cellpadding="2" cellspacing="2" width="100%">
-        <xar:loop name="$items">
-            <tr>
-                <td align="left" valign="top" width="20%" class="xar-accent">
-                    #$title#
-                </td>
-                <td align="left" valign="top" class="xar-normal">
-                    #$docsf#
-                </td>
-            </tr>
-        </xar:loop>
-        </table>
+            <table border="0" cellpadding="2" cellspacing="2" width="100%">
+                <xar:loop name="$items">
+                    <tr>
+                        <td align="left" valign="top" width="20%" class="xar-accent">
+                            #$title#
+                        </td>
+                        <td align="left" valign="top" class="xar-normal">
+                            #$docsf#
+                        </td>
+                    </tr>
+                </xar:loop>
+            </table>
         </xar:if>
 
         <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Project Registration &amp; Releases
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-    <h2>Notify Release - Details</h2>
+        <h2>Notify Release - Details</h2>
         <xar:template type="module" file="user-menu" />
         <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -28,7 +24,7 @@
                     <label for="extensionid" class="xar-form-label">
                         Extension ID
                     </label>
-                        #$rid#
+                    #$rid#
                 </p>
                 <p>
                      <label for="extensionname" class="xar-form-label">
@@ -132,6 +128,5 @@
                 <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
             </p>
         </form>
-
     </div>
 </xar:template>

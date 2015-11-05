@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Project Registration &amp; Releases
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-    <h2>Notify File Release - Select Extension</h2>
+        <h2>Notify File Release - Select Extension</h2>
         <xar:template type="module" file="user-menu" />
-    Enter your extension ID below and select the extension type, so the system can begin the release notification process.
-       <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+        Enter your extension ID below and select the extension type, so the system can begin the release notification process.
+        <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="start" />
 

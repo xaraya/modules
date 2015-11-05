@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Project Registration &amp; Releases
-        </span>
-    </div>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-    <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
-    <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
-    <xar:set name="createid">Create ID</xar:set>
+        <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
+        <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
+        <xar:set name="createid">Create ID</xar:set>
 
-    <h2>Register a New Project ID</h2>
-    <xar:template type="module" file="user-menu" />
-    <xar:if condition="!empty($message)">
-        <div class="xar-thirdwidth">
-            #$message#<br />
-           <xar:block module="authsystem" type="login" />
-        </div>
-    <xar:else />
+        <h2>Register a New Project ID</h2>
+        <xar:template type="module" file="user-menu" />
+        <xar:if condition="!empty($message)">
+            <div class="xar-thirdwidth">
+                #$message#<br />
+               <xar:block module="authsystem" type="login" />
+            </div>
+        <xar:else />
             <form action="&xar-modurl-release-user-addid;" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
@@ -131,6 +127,5 @@
                 <input type="submit" value="#$createid#"  tabindex="6" />
             </form>
         </xar:if>
-
     </div>
 </xar:template>

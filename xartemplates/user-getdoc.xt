@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Release Module
-        </span>
-    </div>
-    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:template file="user-mod-head"/>
+
     <div class="xar-mod-body">
         <h2>Documentation</h2>
         <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid))#">
