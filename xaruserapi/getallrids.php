@@ -53,7 +53,7 @@ function release_userapi_getallrids($args)
     //Joins on Catids
     if(!empty($catid) )
     {
-        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
+        $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin', 
                               array('modid'    => 773,
                                     'itemtype' => 0, //has to stay this way til we can convert this
                                     'cids'     => array($catid),

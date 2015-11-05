@@ -69,7 +69,7 @@ function release_latestprojectsblock_display($blockinfo)
     }
     $usefeed = ($vars['showonlists'] == 1)?1:null; //null - no selection on usefeed, 1 select for lists
     // The API function is called to get all notes
-  $items = xarModAPIFunc('release', 'user', 'getallrids',
+  $items = xarMod::apiFunc('release', 'user', 'getallrids',
                      array('numitems' => $vars['numitems'],
                            'openproj' => $vars['showonlists'],
                            'sort'     => 'regtime')
@@ -94,7 +94,7 @@ function release_latestprojectsblock_display($blockinfo)
             } else {
                 $item['link'] = '';
             }
-            $exttypes = xarModAPIFunc('release','user','getexttypes');
+            $exttypes = xarMod::apiFunc('release','user','getexttypes');
             foreach ($exttypes as $k=>$v) {
                 if ($item['exttype'] == $k){
                   $item['exttypename'] = $v;

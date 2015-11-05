@@ -30,7 +30,7 @@ function release_admin_deletenote()
     } 
 
     // The user API function is called.
-    $data = xarModAPIFunc('release', 'user', 'getnote',
+    $data = xarMod::apiFunc('release', 'user', 'getnote',
                           array('rnid' => $rnid));
 
     if ($data == false) return;
@@ -50,7 +50,7 @@ function release_admin_deletenote()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!xarModAPIFunc('release', 'admin', 'deletenote',
+    if (!xarMod::apiFunc('release', 'admin', 'deletenote',
                         array('rnid' => $rnid))) return;
 
     // Redirect

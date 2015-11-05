@@ -21,7 +21,7 @@ function release_user_rssviewnotes()
 
 
     // The user API function is called.
-    $items = xarModAPIFunc('release', 'user','getallrssextnotes',array('releaseno'=>$releaseno));
+    $items = xarMod::apiFunc('release', 'user','getallrssextnotes',array('releaseno'=>$releaseno));
 
     $totalitems=count($items);
     // Check individual permissions for Edit / Delete
@@ -29,7 +29,7 @@ function release_user_rssviewnotes()
         $item = $items[$i];
 
         // The user API function is called.
-        $getid = xarModAPIFunc('release', 'user', 'getid',
+        $getid = xarMod::apiFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);

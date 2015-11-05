@@ -39,7 +39,7 @@ function release_userapi_allocateid($args)
               return false;
     }
     if (isset($ridno) && is_integer($ridno) && $ridno >0) { //could be a supplied ID, let's check if it's available.
-      $checkrid = xarModAPIFunc('release','user','getid',array('rid'=>$ridno, 'exttype'=>$exttype));
+      $checkrid = xarMod::apiFunc('release','user','getid',array('rid'=>$ridno, 'exttype'=>$exttype));
       if (isset($checkrid['regname']) && !empty($checkrid['regname'])) { //the rid is take, try again
           xarErrorFree();xarErrorHandled();
           return;

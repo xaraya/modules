@@ -54,7 +54,7 @@ function release_user_adddocs()
            if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
             // The user API function is called.
-            $data = xarModAPIFunc('release', 'user', 'getid',
+            $data = xarMod::apiFunc('release', 'user', 'getid',
                                   array('eid' => $eid));
 
             
@@ -93,7 +93,7 @@ function release_user_adddocs()
             $data['return'] = 'module';
             // The user API function is called.
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
@@ -125,7 +125,7 @@ function release_user_adddocs()
             $data['return'] = 'theme';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
@@ -157,7 +157,7 @@ function release_user_adddocs()
             $data['return'] = 'blockgroups';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
@@ -189,7 +189,7 @@ function release_user_adddocs()
             $data['return'] = 'blocks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
@@ -222,7 +222,7 @@ function release_user_adddocs()
             $data['return'] = 'hooks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
@@ -265,7 +265,7 @@ function release_user_adddocs()
            }
 
             // The user API function is called. 
-            if (!xarModAPIFunc('release', 'user', 'createdoc',
+            if (!xarMod::apiFunc('release', 'user', 'createdoc',
                                 array('eid'         => $eid,
                                       'rid'         => $rid,
                                       'type'        => $mtype,

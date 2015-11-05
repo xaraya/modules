@@ -29,7 +29,7 @@ function release_userapi_getthemeids($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    $exttypes= xarModAPIFunc('release','user','getexttypes');
+    $exttypes= xarMod::apiFunc('release','user','getexttypes');
     $text = xarML('Theme');
     $extid = array_search($text,$exttypes)
     $releaseinfo = array();

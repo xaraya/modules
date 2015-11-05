@@ -37,7 +37,7 @@ function release_userapi_updateid($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('release', 'user', 'getid',
+    $link = xarMod::apiFunc('release', 'user', 'getid',
                           array('eid' => $eid));
 
     if ($link == false) {

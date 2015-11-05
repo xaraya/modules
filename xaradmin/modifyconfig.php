@@ -26,8 +26,8 @@ function release_admin_modifyconfig()
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration')); 
 
     $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('release', 'SupportShortURLs') ? 'checked' : '';
-    $data['itemsvalue'] = xarModGetVar('release', 'itemsperpage');
+    $data['shorturlschecked'] = xarModVars::get('release', 'SupportShortURLs') ? 'checked' : '';
+    $data['itemsvalue'] = xarModVars::get('release', 'itemsperpage');
     $data['itemslabel'] = xarML('Release items per page:');
     if (!isset($data['itemsvalue'])) {
         $data['itemsvalue']=20;

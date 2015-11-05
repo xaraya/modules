@@ -21,12 +21,12 @@ function release_user_addnotes($args)
     if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
     
     if (isset($eid) && $eid>0) {
-      $data = xarModAPIFunc('release', 'user', 'getid',
+      $data = xarMod::apiFunc('release', 'user', 'getid',
                                   array('eid' => $eid));
 
     }
     if (!isset($eid) && isset($rid) && isset($exttype)) {
-      $data = xarModAPIFunc('release', 'user', 'getid',
+      $data = xarMod::apiFunc('release', 'user', 'getid',
                                   array('rid' => $rid, 'exttype' =>$exttype));
 
     }
@@ -40,7 +40,7 @@ function release_user_addnotes($args)
     }
 
 
-    $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
+    $exttypes = xarMod::apiFunc('release','user','getexttypes'); //extension types
     $data['exttypes']=$exttypes;
 
     if (empty($phase)){
@@ -75,7 +75,7 @@ function release_user_addnotes($args)
 
         case 'start':
 
-            $data = xarModAPIFunc('release', 'user', 'getid',
+            $data = xarMod::apiFunc('release', 'user', 'getid',
                                   array('rid' => $rid, 'exttype' => $exttype));
 
             $exttypename = array_search($exttype,array_flip($exttypes));
@@ -240,12 +240,12 @@ function release_user_addnotes($args)
            //if (!xarSecConfirmAuthKey()) return;
             // The user API function is called.
             $usefeed = $usefeedchecked?1:0;
-            $data = xarModAPIFunc('release', 'user', 'getid',
+            $data = xarMod::apiFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
 
             $exttype = $data['exttype'];
             // The user API function is called.
-            if (!xarModAPIFunc('release', 'user', 'createnote',
+            if (!xarMod::apiFunc('release', 'user', 'createnote',
                                 array('eid'         => $eid,
                                       'rid'         => $rid,
                                       'version'     => $version,

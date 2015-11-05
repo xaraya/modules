@@ -40,7 +40,7 @@ function release_user_addid($args)
     $stateoptions[5] = xarML('Inactive');
     $data['stateoptions']=$stateoptions;
 
-    $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
+    $exttypes = xarMod::apiFunc('release','user','getexttypes'); //extension types
 
     $data['exttypes']=$exttypes;
     if (xarUserIsLoggedIn()){
@@ -88,7 +88,7 @@ function release_user_addid($args)
                 if (!xarSecConfirmAuthKey()) return;
                 if (!isset($ridno)) $ridno = 0;
                 // The user API function is called.
-                $newid =  xarModAPIFunc('release', 'user', 'createid',
+                $newid =  xarMod::apiFunc('release', 'user', 'createid',
                                     array('ridno'     => $ridno,
                                           'uid'       => $uid,
                                           'regname'   => $regname,

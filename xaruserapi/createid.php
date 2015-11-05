@@ -28,7 +28,7 @@ function release_userapi_createid($args)
     if (!isset($ridno)) $ridno = 0; //make it zero and check for this before using it for allocations
     $regname = trim(strtolower($regname));
     //get our new registration ID for this extension type
-    $regid = xarModAPIFunc('release','user','allocateid',
+    $regid = xarMod::apiFunc('release','user','allocateid',
           array('regname' => $regname,
                 'exttype' => $exttype,
                 'ridno'     => $ridno));

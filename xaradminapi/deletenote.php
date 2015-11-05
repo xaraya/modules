@@ -32,7 +32,7 @@ function release_adminapi_deletenote($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('release', 'user', 'getnote',
+    $link = xarMod::apiFunc('release', 'user', 'getnote',
                          array('rnid' => $rnid));
 
     if ($link == false) {

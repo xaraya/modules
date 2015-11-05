@@ -29,7 +29,7 @@ function release_userapi_encode_shorturl($args)
         return;
     }
     //get the extension types
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $extname ='';
     if (isset($exttype)) {
         $exttypename = array_search($exttype,$exttypes);

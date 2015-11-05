@@ -29,7 +29,7 @@ function release_userapi_countitems($args)
     //Joins on Catids
     if(!empty($catid))
     {
-        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
+        $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin',
                               array('modid'    => 773,
                                     'itemtype' => 0,
                                     'cids'     => array($catid),

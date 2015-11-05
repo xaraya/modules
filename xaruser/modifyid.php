@@ -26,14 +26,14 @@ function release_user_modifyid($args)
     if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('eid', 'int:1:',  $eid, null, XARVAR_NOT_REQUIRED)) return;
 
-    $data = xarModAPIFunc('release', 'user', 'getid', array('eid' => $eid));
+    $data = xarMod::apiFunc('release', 'user', 'getid', array('eid' => $eid));
 
     if ($data == false) return;
 
     if (empty($phase)){
         $phase = 'modify';
     }
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $data['exttypes']=$exttypes;
     $rid = $data['rid'];
     switch(strtolower($phase)) {
@@ -126,7 +126,7 @@ function release_user_modifyid($args)
               $newmemberlist = explode(',',$newmembers);
 
               foreach ($newmemberlist as $k=>$v) {
-                  $userRole = xarModAPIFunc('roles',  'user',  'get',
+                  $userRole = xarMod::apiFunc('roles',  'user',  'get',
                                        array('uname' => trim($v)));
                   if (is_array($userRole)) {
                       $memberslist[]=$userRole['uid'];
@@ -139,7 +139,7 @@ function release_user_modifyid($args)
             }
 
             // The user API function is called.
-            if (!xarModAPIFunc('release', 'user','updateid',
+            if (!xarMod::apiFunc('release', 'user','updateid',
                                 array('eid'       => $eid,
                                       'rid'       => $rid,
                                       'uid'       => $uid,

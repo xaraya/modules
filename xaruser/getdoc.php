@@ -27,7 +27,7 @@ function release_user_getdoc()
     $rdid = xarVarCleanFromInput('rdid');
 
     // The user API function is called.
-    $item = xarModAPIFunc('release', 'user', 'getdoc',
+    $item = xarMod::apiFunc('release', 'user', 'getdoc',
                           array('rdid' => $rdid));
 
     if ($item == false) return;

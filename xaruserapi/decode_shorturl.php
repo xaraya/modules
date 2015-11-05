@@ -25,7 +25,7 @@ function release_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $flipext = array_flip($exttypes);
     $extnamearray =array();
     foreach ($exttypes as $k=>$v){
@@ -128,9 +128,9 @@ function release_userapi_decode_shorturl($params)
         $args['phase']='view';
         return array('display', $args);
     } else {
-        $cid = xarModGetVar('release','mastercids');
+        $cid = xarModVars::get('release','mastercids');
         if (xarModAPILoad('categories','user')) {
-            $cats = xarModAPIFunc('categories',
+            $cats = xarMod::apiFunc('categories',
                               'user',
                               'getcat',
                          array('cid' => $cid,

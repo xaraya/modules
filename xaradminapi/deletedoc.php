@@ -32,7 +32,7 @@ function release_adminapi_deletedoc($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('release', 'user', 'getdoc',
+    $link = xarMod::apiFunc('release', 'user', 'getdoc',
                          array('rdid' => $rdid));
 
     if ($link == false) {

@@ -30,19 +30,19 @@ function release_user_rssviewids()
         default:
 
             // The user API function is called. 
-            $items = xarModAPIFunc('release', 'user', 'getallids');
+            $items = xarMod::apiFunc('release', 'user', 'getallids');
             break;
 
         case 'themes':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getthemeids');
+            $items = xarMod::apiFunc('release', 'user', 'getthemeids');
             break;
 
         case 'modules':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getmoduleids');
+            $items = xarMod::apiFunc('release', 'user', 'getmoduleids');
             break;
     }
 
@@ -65,7 +65,7 @@ function release_user_rssviewids()
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
         $items[$i]['desc'] = xarVarPrepForDisplay($item['desc']);
 
-        $getuser = xarModAPIFunc('roles', 'user', 'get',
+        $getuser = xarMod::apiFunc('roles', 'user', 'get',
                                   array('uid' => $item['uid']));
 
         // Author Name and Contact URL

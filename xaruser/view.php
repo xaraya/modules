@@ -33,7 +33,7 @@ function release_user_view()
     $uid = xarUserGetVar('uid');
 
 
-   $xarexttypes = xarModAPIFunc('release','user','getexttypes');
+   $xarexttypes = xarMod::apiFunc('release','user','getexttypes');
     foreach ($xarexttypes as $k=>$v) {
         $testv = strtolower($v);
         if ($phase == $testv) {
@@ -47,7 +47,7 @@ function release_user_view()
     }
 
     // The user API function is called to get all extension IDs.
-    $items = xarModAPIFunc('release', 'user', 'getallrids',
+    $items = xarMod::apiFunc('release', 'user', 'getallrids',
                    array('exttype'  => $exttype,
                          'catid'     => $catid,
                          'sort'      => $sort,
@@ -80,7 +80,7 @@ function release_user_view()
         /* use the xarUserGetVar func as we only want name 
          * TODO: Where is this user taken to?
          */
-        $getuser = xarModAPIFunc('roles', 'user', 'get',
+        $getuser = xarMod::apiFunc('roles', 'user', 'get',
                                   array('uid' => $item['uid']));
 
         // Author Name and Contact URL
@@ -139,7 +139,7 @@ function release_user_view()
         $items[$i]['comments'] = '0';
         if (xarModIsAvailable('comments')){
             // Get Comments
-            $items[$i]['comments'] = xarModAPIFunc('comments', 'user', 'get_count',
+            $items[$i]['comments'] = xarMod::apiFunc('comments', 'user', 'get_count',
                                                    array('modid' => xarModGetIDFromName('release'),
                                                         'itemtype' => $item['exttype'],
                                                          'objectid' => (int)$item['eid']));
@@ -152,7 +152,7 @@ function release_user_view()
         $items[$i]['hitcount'] = '0';
         if (xarModIsAvailable('hitcount')){
             // Get Hits
-            $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user', 'get',
+            $items[$i]['hitcount'] = xarMod::apiFunc('hitcount', 'user', 'get',
                                                    array('modid' => xarModGetIDFromName('release'),
                                                          'itemtype' => $item['exttype'],
                                                          'objectid' => (int)$item['eid']));
@@ -162,7 +162,7 @@ function release_user_view()
             }
         }
 
-        $items[$i]['docs'] = xarModAPIFunc('release', 'user','countdocs',
+        $items[$i]['docs'] = xarMod::apiFunc('release', 'user','countdocs',
                                            array('eid' => $item['eid']));
 
         //Get some info for the extensions state
@@ -172,7 +172,7 @@ function release_user_view()
            }
        }
 
-       $allitems = xarModAPIFunc('release', 'user', 'countitems',array('exttype'=>$exttype,'catid'=>$catid));
+       $allitems = xarMod::apiFunc('release', 'user', 'countitems',array('exttype'=>$exttype,'catid'=>$catid));
 
            $data['pager'] = xarTplGetPager($startnum, $allitems,
            xarModURL('release', 'user', 'view', 

@@ -27,7 +27,7 @@ function release_admin_modifynote()
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
 
     // The user API function is called.
-    $data = xarModAPIFunc('release', 'user', 'getnote',
+    $data = xarMod::apiFunc('release', 'user', 'getnote',
                                   array('rnid' => $rnid));
     $eid = $data['eid'];
 
@@ -39,13 +39,13 @@ function release_admin_modifynote()
         default:
 
             // The user API function is called.
-            $id = xarModAPIFunc('release', 'user', 'getid',
+            $id = xarMod::apiFunc('release', 'user', 'getid',
                                   array('eid' => $data['eid']));
 
             if ($id == false) return;
 
             // The user API function is called.
-            $user = xarModAPIFunc('roles', 'user', 'get',
+            $user = xarMod::apiFunc('roles', 'user', 'get',
                                   array('uid' => $id['uid']));
 
             if ($id == false) return;
@@ -73,7 +73,7 @@ function release_admin_modifynote()
             $data['notesf'] = nl2br($data['notes']);
             $data['authid'] = xarSecGenAuthKey();
 
-            $exttypes = xarModAPIFunc('release','user','getexttypes');
+            $exttypes = xarMod::apiFunc('release','user','getexttypes');
             $data['exttypes']=$exttypes;
             foreach ($exttypes as $k=>$v) {
                 if ($data['exttype']==$k) {
@@ -114,7 +114,7 @@ function release_admin_modifynote()
             }
 
             // The user API function is called.
-            if (!xarModAPIFunc('release', 'admin', 'updatenote',
+            if (!xarMod::apiFunc('release', 'admin', 'updatenote',
                                 array('eid'         => $eid,
                                       'rid'         => $rid,
                                       'rnid'        => $rnid,

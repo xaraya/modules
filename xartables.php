@@ -24,18 +24,13 @@ function release_xartables()
     $xartable = array();
 
     // Get the name for the release id table
-    $releaseid = xarConfigGetVar('prefix') . '_release_id';
+    $xartable['releases'] = xarDB::getPrefix() . '_releases';
 
     // Get the name for the release notification table
-    $releasenotes = xarConfigGetVar('prefix') . '_release_notes';
+    $xartable['release_notes'] = xarDB::getPrefix() . '_release_notes';
 
     // Get the name for the release documentation table
-    $releasedocs = xarConfigGetVar('prefix') . '_release_docs';
-
-    // Set the table name
-    $xartable['release_id']     = $releaseid;
-    $xartable['release_notes']   = $releasenotes;
-    $xartable['release_docs']   = $releasedocs;
+    $xartable['release_docs'] = xarDB::getPrefix() . '_release_docs';
 
     // Return the table information
     return $xartable;

@@ -33,7 +33,7 @@ function release_user_viewnotes()
     if (empty($phase)){
         $phase = 'viewall';
     }
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $data['exttypes'] = $exttypes;
 
     switch(strtolower($phase)) {
@@ -42,9 +42,9 @@ function release_user_viewnotes()
         default:
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getallnotes',
+            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
+                                        'numitems' => xarModVars::get('release',
                                                                   'itemsperpage'),
                                         'approved' => 2,
                                         'usefeed'  => 1));//only those that want to be on the feed
@@ -57,9 +57,9 @@ function release_user_viewnotes()
         case 'certified':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getallnotes',
+            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
+                                        'numitems' => xarModVars::get('release',
                                                                   'itemsperpage'),
                                         'certified'=> 2));
 
@@ -72,9 +72,9 @@ function release_user_viewnotes()
         case 'price':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getallnotes',
+            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
+                                        'numitems' => xarModVars::get('release',
                                                                   'itemsperpage'),
                                         'price'    => 2));
             
@@ -87,9 +87,9 @@ function release_user_viewnotes()
         case 'free':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getallnotes',
+            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
+                                        'numitems' => xarModVars::get('release',
                                                                   'itemsperpage'),
                                         'price'    => 1));
             
@@ -102,9 +102,9 @@ function release_user_viewnotes()
         case 'supported':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release', 'user', 'getallnotes',
+            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
+                                        'numitems' => xarModVars::get('release',
                                                                   'itemsperpage'),
                                         'supported'=> 2));
             
@@ -121,14 +121,14 @@ function release_user_viewnotes()
         $item = $items[$i];
 
         // The user API function is called.
-        $getid = xarModAPIFunc('release', 'user', 'getid',
+        $getid = xarMod::apiFunc('release', 'user', 'getid',
                                array('eid' => $items[$i]['eid']));
 
 
         $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
                                                 array('rnid' => $item['rnid']));
 
-        $getuser = xarModAPIFunc('roles', 'user', 'get',
+        $getuser = xarMod::apiFunc('roles', 'user', 'get',
                                   array('uid' => $getid['uid']));
 
         $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
@@ -148,7 +148,7 @@ function release_user_viewnotes()
 
        //Add pager
        $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase)),
+        xarMod::apiFunc('release', 'user', 'countnotes',array('phase'=>$phase)),
         xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
                                                                            'filter'=>$filter,
                                                                             'exttype' =>$exttype)),

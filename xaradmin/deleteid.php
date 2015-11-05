@@ -32,7 +32,7 @@ function release_admin_deleteid($args)
     } 
 
     // The user API function is called.
-    $data = xarModAPIFunc('release', 'user', 'getid',
+    $data = xarMod::apiFunc('release', 'user', 'getid',
                           array('eid' => $eid));
 
     if ($data == false) return;
@@ -53,7 +53,7 @@ function release_admin_deleteid($args)
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!xarModAPIFunc('release', 'admin', 'deleteid',
+    if (!xarMod::apiFunc('release', 'admin', 'deleteid',
                         array('eid' => $eid,'rid'=>$rid, 'regname'=>$regname))) return;
 
     // Redirect

@@ -118,13 +118,13 @@ function release_user_search($args)
     } else {
         $search['author']='';
     }
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $data['exttypes']=$exttypes;
 
     $search['q']=$q;
     $seach['modid']= xarModGetIDFromName('release');
     /* Search for release information */
-    $data['release'] = xarModAPIFunc('release','user','search',$search);
+    $data['release'] = xarMod::apiFunc('release','user','search',$search);
 
     if (empty($data['release'])){
         $data['status'] = xarML('No extension found that matches your search');

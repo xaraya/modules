@@ -29,16 +29,16 @@ function release_user_displaynote($args)
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
 
     // The user API function is called.
-    $item = xarModAPIFunc('release', 'user', 'getnote',
+    $item = xarMod::apiFunc('release', 'user', 'getnote',
                           array('rnid' => $rnid));
 
     if ($item == false) return;
 
     // The user API function is called.
-    $id = xarModAPIFunc('release', 'user', 'getid',
+    $id = xarMod::apiFunc('release', 'user', 'getid',
                           array('eid' => $item['eid']));
 
-    $getuser = xarModAPIFunc('roles', 'user', 'get',
+    $getuser = xarMod::apiFunc('roles', 'user', 'get',
                               array('uid' => $id['uid']));
 
 
@@ -74,7 +74,7 @@ function release_user_displaynote($args)
        $stateoption=$stateoptions[$key];
      }
     }
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $fliptypes = array_flip($exttypes);
     $exttypename = array_search($id['exttype'],$fliptypes);
     $item['exttypename'] = $exttypename;

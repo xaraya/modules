@@ -69,7 +69,7 @@ function release_latestblock_display($blockinfo)
     }
     $usefeed = ($vars['shownonfeeditems'] == 0)?1:null; //null - no selection on usefeed, 1 selecct for rss only
     // The API function is called to get all notes
-    $items = xarModAPIFunc('release', 'user', 'getallnotes',
+    $items = xarMod::apiFunc('release', 'user', 'getallnotes',
                      array('numitems' => $vars['numitems'],
                            'usefeed'  => $usefeed)
                           );
@@ -103,7 +103,7 @@ function release_latestblock_display($blockinfo)
 
         }
     }
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $data['exttypes']=$exttypes;
     $data['blockid'] = $blockinfo['bid'];
     // Now we need to send our output to the template.

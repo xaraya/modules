@@ -35,17 +35,17 @@ function release_user_display($args)
     // The user API function is called.
 
     if (isset($eid)){
-        $id = xarModAPIFunc('release', 'user', 'getid',
+        $id = xarMod::apiFunc('release', 'user', 'getid',
                              array('eid' => $eid));
         $rid = (int)$id['rid'];
         $exttype = (int)$id['exttype'];
     }elseif (isset($rid)) { //just in case we have older url
       if (isset ($exttype)) {
-        $id = xarModAPIFunc('release', 'user', 'getid',
+        $id = xarMod::apiFunc('release', 'user', 'getid',
                           array('rid' => $rid,
                                 'exttype' => $exttype));
       }else{
-        $id = xarModAPIFunc('release', 'user', 'getid',
+        $id = xarMod::apiFunc('release', 'user', 'getid',
                           array('rid' => (int)$rid));
 
         }
@@ -54,20 +54,20 @@ function release_user_display($args)
     }
 
 
-    $cats = xarModAPIFunc('categories','user','getitemcats',
+    $cats = xarMod::apiFunc('categories','user','getitemcats',
                            array('module'=>'release','item'=>$eid)
                          );
 
 
     //set the type
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release','user','getexttypes');
     $fliptype = array_flip($exttypes);
     $exttypename = array_search($exttype,$fliptype);
     $data['exttypename']=$exttypename;
     $data['exttypes']=$exttypes;
     $data['rid'] = $rid;
     $data['eid'] = $eid;
-    $getuser = xarModAPIFunc('roles', 'user','get',
+    $getuser = xarMod::apiFunc('roles', 'user','get',
                               array('uid' => $id['uid']));
 
     $realname = $getuser['name'];
@@ -122,9 +122,9 @@ function release_user_display($args)
 
        // The user API function is called.
        $items = array();
-       $items = xarModAPIFunc('release', 'user','getallnotes',
+       $items = xarMod::apiFunc('release', 'user','getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
+                                        'numitems' => xarModVars::get('release',
                                                                   'itemsperpage'),
                                         'eid' => $eid));
         if (empty($items)){
@@ -176,7 +176,7 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 // The user API function is called.
-                $getid = xarModAPIFunc('release', 'user','getid',
+                $getid = xarMod::apiFunc('release', 'user','getid',
                                        array('eid' => $items[$i]['eid']));
 
                 $items[$i]['rid'] = xarVarPrepForDisplay($getid['rid']);
@@ -193,7 +193,7 @@ function release_user_display($args)
                     $items[$i]['editlink'] =  '';
                 }
 
-                $getuser = xarModAPIFunc('roles','user','get',
+                $getuser = xarMod::apiFunc('roles','user','get',
                                           array('uid' => $getid['uid']));
 
                 $items[$i]['contacturl'] = xarModURL('roles','user','display',
@@ -211,7 +211,7 @@ function release_user_display($args)
                 $items[$i]['changelog'] = nl2br($items[$i]['changelog']);
                 $items[$i]['notes'] = nl2br($items[$i]['notes']);
 
-                $items[$i]['comments'] = xarModAPIFunc('comments', 'user','get_count',
+                $items[$i]['comments'] = xarMod::apiFunc('comments', 'user','get_count',
                                                        array('modid' => xarModGetIDFromName('release'),
                                                              'itemtype' =>(int)$item['exttype'],
                                                              'objectid' => $item['rnid']));
@@ -224,7 +224,7 @@ function release_user_display($args)
                     $items[$i]['comments'] .= ' ';
                 }
 
-               $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user','get',
+               $items[$i]['hitcount'] = xarMod::apiFunc('hitcount', 'user','get',
                                                        array('modname' => 'release',
                                                         'itemtype' =>(int)$item['exttype'],
                                                              'objectid' => $item['rnid']));
@@ -259,7 +259,7 @@ function release_user_display($args)
             $data['mtype'] = 'mgeneral';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user','getdocs',
+            $items = xarMod::apiFunc('release', 'user','getdocs',
                                     array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
@@ -291,7 +291,7 @@ function release_user_display($args)
             $data['mtype'] = 'tgeneral';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user','getdocs',
+            $items = xarMod::apiFunc('release', 'user','getdocs',
                                     array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
@@ -322,7 +322,7 @@ function release_user_display($args)
             $data['mtype'] = 'bgroups';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user','getdocs',
+            $items = xarMod::apiFunc('release', 'user','getdocs',
                                     array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
@@ -355,7 +355,7 @@ function release_user_display($args)
             $data['mtype'] = 'mblocks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
@@ -387,7 +387,7 @@ function release_user_display($args)
             $data['mtype'] = 'mhooks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release', 'user', 'getdocs',
+            $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
                                           'type'=> $data['mtype']));
 

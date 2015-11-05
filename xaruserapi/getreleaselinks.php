@@ -39,7 +39,7 @@ function release_userapi_getreleaselinks($args)
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-     $releaseinfo = xarModAPIFunc(
+     $releaseinfo = xarMod::apiFunc(
         'release', 'user', 'getallnotes',
         array('approved' => 1)
     );

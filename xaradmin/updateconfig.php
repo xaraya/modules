@@ -23,8 +23,8 @@ function release_admin_updateconfig()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.
-    xarModSetVar('release', 'SupportShortURLs', $shorturls);
-    xarModSetVar('release', 'itemsperpage', $itemsperpage);
+    xarModVars::set('release', 'SupportShortURLs', $shorturls);
+    xarModVars::set('release', 'itemsperpage', $itemsperpage);
     xarModCallHooks('module','updateconfig','release',
                    array('module' => 'release'));
 
