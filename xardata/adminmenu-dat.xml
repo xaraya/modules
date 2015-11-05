@@ -1,0 +1,49 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Short documentation of this module</title>
+            <label>Release Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageRelease</mask>
+            <includes>
+                <includeitem>view_resources</includeitem>
+            </includes>
+            <target>view_resources</target>
+            <title>Manage the hard resources of this module</title>
+            <label>Resources</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageDAM</mask>
+            <includes>
+                <includeitem>view_virtual_resources</includeitem>
+            </includes>
+            <target>view_soft_resources</target>
+            <title>Manage the virtual resources of this module</title>
+            <label>Soft Resources</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminRelease</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Manage the master tables of this module</title>
+            <label>Master Tables</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminRelease</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</menu>

@@ -5,7 +5,6 @@
 
     <div class="xar-mod-body">
         <h2>View Docs</h2>
-        <xar:template type="module" file="admin-menu" />
         <table width="100%" border="0" cellspacing="0" cellpadding="4">
             <tr>
                 <th>

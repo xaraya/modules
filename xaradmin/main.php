@@ -10,12 +10,19 @@
 */
 function release_admin_main()
 {
-
     // Security Check
-    xarController::redirect(xarModURL('release', 'admin', 'viewnotes'));
-        
-    return array();
+    if (!xarSecurityCheck('EditRelease')) return;
 
+    $redirect = xarModVars::get('release','backend_page');
+    if (!empty($redirect)) {
+        $truecurrenturl = xarServer::getCurrentURL(array(), false);
+        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        xarController::redirect($urldata['redirecturl']);
+        return true;
+    } else {
+        xarController::redirect(xarModURL('release', 'admin', 'viewnotes'));
+    }
+    return true;
 }
 
 ?>

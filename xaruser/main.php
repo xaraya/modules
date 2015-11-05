@@ -19,11 +19,22 @@
  */
 function release_user_main()
 {
-    // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
-    
-    return array();
+    // Xaraya security
+    if(!xarSecurityCheck('ViewRelease')) return;
 
+    $redirect = xarModVars::get('release','frontend_page');
+    if (!empty($redirect)) {
+        $truecurrenturl = xarServer::getCurrentURL(array(), false);
+        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        xarController::redirect($urldata['redirecturl']);
+    } else {
+        if (xarUser::isLoggedIn()) {
+            xarController::redirect(xarModURL('release', 'user', 'view'));
+        } else {
+            xarController::redirect(xarModURL('release', 'user', 'frontpage'));
+        }
+    }
+    return true;
 }
 
 ?>

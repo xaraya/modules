@@ -6,7 +6,6 @@
     <xar:set name="submitnote">Submit Changes</xar:set>
     <div class="xar-mod-body">
         <h2>Release Module :: Preview Release By #$username#</h2>
-        <xar:template type="module" file="admin-menu" />
         <p>
             <form action="#xarModURL('release', 'admin', 'modifynote')#" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
