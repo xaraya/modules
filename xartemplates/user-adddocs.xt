@@ -1,56 +1,60 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Release Module</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2><xar:mlstring>Add General Documentation</xar:mlstring></h2>
-    <a href="#xarModUrl('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#"><xar:mlstring>Back to Documentation Types</xar:mlstring></a><br /><br />
-    <xar:if condition="!empty($message)">
-    <p>
-        #$message#
-    </p>
-    <xar:else />
-    <table border="0" cellpadding="2" cellspacing="2" width="100%">
-    <xar:loop name="$items">
-        <tr>
-            <td align="left" valign="top" width="20%" class="xar-accent">
-                #$title#
-            </td>
-            <td align="left" valign="top" class="xar-normal">
-                #$docsf#
-            </td>
-        </tr>
-    </xar:loop>
-    </table>
-    </xar:if>
-
-    <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
-       <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="mtype" id="mtype" value="#$mtype#" />
-        <input type="hidden" name="rid" id="rid" value="#$rid#" />
-        <input type="hidden" name="rid" id="eid" value="#$eid#" />        
-        <input type="hidden" name="phase" id="phase" value="update" />
-        <input type="hidden" name="return" id="return" value="#$return#" />
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Release Module</xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2><xar:mlstring>Add General Documentation</xar:mlstring></h2>
+        <a href="#xarModUrl('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#"><xar:mlstring>Back to Documentation Types</xar:mlstring></a><br /><br />
+        <xar:if condition="!empty($message)">
+        <p>
+            #$message#
+        </p>
+        <xar:else />
         <table border="0" cellpadding="2" cellspacing="2" width="100%">
+        <xar:loop name="$items">
             <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <label for="title"><xar:mlstring>Documentation Item Title</xar:mlstring></label>
+                <td align="left" valign="top" width="20%" class="xar-accent">
+                    #$title#
                 </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="title" id="title" value="" size="25" maxlength="60" tabindex="2" />
+                <td align="left" valign="top" class="xar-normal">
+                    #$docsf#
                 </td>
             </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <label for="doc"><xar:mlstring>Documentation</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <textarea name="doc" id="doc" tabindex="4" rows="10" cols="50" /></textarea>
-                </td>
-            </tr>
+        </xar:loop>
         </table>
-        <br />
-        <input type="submit" value="#xarML('Create General Documentation')#"  tabindex="6" />
-    </form>
-</div>
+        </xar:if>
+
+        <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+           <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="mtype" id="mtype" value="#$mtype#" />
+            <input type="hidden" name="rid" id="rid" value="#$rid#" />
+            <input type="hidden" name="rid" id="eid" value="#$eid#" />        
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <input type="hidden" name="return" id="return" value="#$return#" />
+            <table border="0" cellpadding="2" cellspacing="2" width="100%">
+                <tr>
+                    <td align="left" valign="top" class="xar-accent">
+                        <label for="title"><xar:mlstring>Documentation Item Title</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <input type="text" name="title" id="title" value="" size="25" maxlength="60" tabindex="2" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-accent">
+                        <label for="doc"><xar:mlstring>Documentation</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <textarea name="doc" id="doc" tabindex="4" rows="10" cols="50" /></textarea>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <input type="submit" value="#xarML('Create General Documentation')#"  tabindex="6" />
+        </form>
+    </div>
+</xar:template>

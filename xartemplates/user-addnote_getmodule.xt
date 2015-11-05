@@ -1,56 +1,59 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
-    </span>
-</div>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+        </span>
+    </div>
 
-<div class="xar-mod-body">
-<h2><xar:mlstring>Notify File Release - Select Extension</xar:mlstring></h2>
-    <xar:template type="module" file="user-menu" />
-<xar:mlstring>Enter your extension ID below and select the extension type, so the system can begin the release notification process.</xar:mlstring>
-   <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="start" />
+    <div class="xar-mod-body">
+    <h2><xar:mlstring>Notify File Release - Select Extension</xar:mlstring></h2>
+        <xar:template type="module" file="user-menu" />
+    <xar:mlstring>Enter your extension ID below and select the extension type, so the system can begin the release notification process.</xar:mlstring>
+       <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="start" />
 
-        <fieldset class="formelements xar-norm">
-        <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
-            <p>
-                <label for="rid" class="xar-form-label">
-                    <span class="help" title="#xarML('Enter the ID of your extension')#">
-                        <xar:mlstring>Extension ID</xar:mlstring>
-                    </span>
-                    </label>
-                <input type="text" name="rid" id="rid" value="#$rid#" size="5" maxlength="5" tabindex="1" />
-                <xar:if condition="!empty($regname)">
-                &nbsp; #$regname#
-                </xar:if>
-            </p>
-            <p>
-                <label for="rid" class="xar-form-label">
-                    <span class="help" title="#xarML('Select the type of your extension')#">
-                        <xar:mlstring>Extension Type</xar:mlstring>
-                    </span>
-                    </label>
+            <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
+                <p>
+                    <label for="rid" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter the ID of your extension')#">
+                            <xar:mlstring>Extension ID</xar:mlstring>
+                        </span>
+                        </label>
+                    <input type="text" name="rid" id="rid" value="#$rid#" size="5" maxlength="5" tabindex="1" />
+                    <xar:if condition="!empty($regname)">
+                    &nbsp; #$regname#
+                    </xar:if>
+                </p>
+                <p>
+                    <label for="rid" class="xar-form-label">
+                        <span class="help" title="#xarML('Select the type of your extension')#">
+                            <xar:mlstring>Extension Type</xar:mlstring>
+                        </span>
+                        </label>
 
-                   <select name="exttype" id="exttype">
-                     <xar:foreach in="$exttypes" key="$k" value="$v">
-                     <xar:if condition="$k ne 0">
-                         <xar:if condition="$exttype eq $k">
-                                <option value="#$k#" selected="selected">#$v#</option>
-                         <xar:else />
-                                <option value="#$k#">#$v#</option>
+                       <select name="exttype" id="exttype">
+                         <xar:foreach in="$exttypes" key="$k" value="$v">
+                         <xar:if condition="$k ne 0">
+                             <xar:if condition="$exttype eq $k">
+                                    <option value="#$k#" selected="selected">#$v#</option>
+                             <xar:else />
+                                    <option value="#$k#">#$v#</option>
+                             </xar:if>
                          </xar:if>
-                     </xar:if>
-                    </xar:foreach>
-                 </select>
+                        </xar:foreach>
+                     </select>
+                </p>
+                <xar:if condition="!empty($m)">
+                <span class="xar-error">#$m#</span>
+                </xar:if>
+            </fieldset>
+            <p>
+                <input type="submit" value="#xarML('Begin Release Notification')#"  tabindex="6" />
             </p>
-            <xar:if condition="!empty($m)">
-            <span class="xar-error">#$m#</span>
-            </xar:if>
-        </fieldset>
-        <p>
-            <input type="submit" value="#xarML('Begin Release Notification')#"  tabindex="6" />
-        </p>
-    </form>
-</div>
-
+        </form>
+    </div>
+</xar:template>

@@ -1,70 +1,73 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
-<h2><xar:mlstring>View Docs</xar:mlstring></h2>
-<xar:template type="module" file="admin-menu" />
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
-    <tr>
-        <th>
-            <xar:mlstring>Doc Type</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Title</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Options</xar:mlstring>
-        </th>
-    </tr>
-    <xar:loop name="$items">
-    <xar:if condition="(($loop:index + 1) % 2)">
-    <tr>
-        <td class="xar-norm">
-            #$exttypename#
-        </td>
-        <td class="xar-norm">
-            #$title#
-        </td>
-        <td align="center" class="xar-norm">
-           <xar:if condition="empty($editurl)">
-               #$edittitle#
-               <xar:else />
-                   <a href="#$editurl#">#$edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($deleteurl)">
-               #$deletetitle#
-               <xar:else />
-                   <a href="#$deleteurl#">#$deletetitle#</a>
-           </xar:if>
-        </td>
-    </tr>
-    <xar:else />
-    <tr>
-        <td class="xar-accent">
-            #exttypename#
-        </td>
-        <td class="xar-accent">
-            #$title#
-        </td>
-        <td align="center" class="xar-accent">
-           <xar:if condition="empty($editurl)">
-               #$edittitle#
-               <xar:else />
-                   <a href="#$editurl#">#$edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($deleteurl)">
-               #$deletetitle#
-               <xar:else />
-                   <a href="#$deleteurl#">#$deletetitle#</a>
-           </xar:if>
-        </td>
-    </tr>
-    </xar:if>
-    </xar:loop>
-</table>
-</div>
-<br />
-<!-- add the pager here -->
-#$pager#
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+
+    <div class="xar-mod-body">
+    <h2><xar:mlstring>View Docs</xar:mlstring></h2>
+    <xar:template type="module" file="admin-menu" />
+    <table width="100%" border="0" cellspacing="0" cellpadding="4">
+        <tr>
+            <th>
+                <xar:mlstring>Doc Type</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Title</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Options</xar:mlstring>
+            </th>
+        </tr>
+        <xar:loop name="$items">
+        <xar:if condition="(($loop:index + 1) % 2)">
+        <tr>
+            <td class="xar-norm">
+                #$exttypename#
+            </td>
+            <td class="xar-norm">
+                #$title#
+            </td>
+            <td align="center" class="xar-norm">
+               <xar:if condition="empty($editurl)">
+                   #$edittitle#
+                   <xar:else />
+                       <a href="#$editurl#">#$edittitle#</a>
+               </xar:if>
+               |
+               <xar:if condition="empty($deleteurl)">
+                   #$deletetitle#
+                   <xar:else />
+                       <a href="#$deleteurl#">#$deletetitle#</a>
+               </xar:if>
+            </td>
+        </tr>
+        <xar:else />
+        <tr>
+            <td class="xar-accent">
+                #exttypename#
+            </td>
+            <td class="xar-accent">
+                #$title#
+            </td>
+            <td align="center" class="xar-accent">
+               <xar:if condition="empty($editurl)">
+                   #$edittitle#
+                   <xar:else />
+                       <a href="#$editurl#">#$edittitle#</a>
+               </xar:if>
+               |
+               <xar:if condition="empty($deleteurl)">
+                   #$deletetitle#
+                   <xar:else />
+                       <a href="#$deleteurl#">#$deletetitle#</a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:if>
+        </xar:loop>
+    </table>
+    </div>
+    <br />
+    <!-- add the pager here -->
+    #$pager#
+</xar:template>

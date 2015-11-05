@@ -1,64 +1,68 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Release Module</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-<h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
-<xar:if condition="!empty($message)">
-    #$message#
-<xar:else />
-
-    <xar:mlstring>From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
-
-    <div style="text-align:center;">
-        <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="rid" id="rid" value="#$rid#" />
-        <input type="hidden" name="eid" id="eid" value="#$eid#" />
-        <input type="hidden" name="name" id="name" value="#$name#" />
-        <table border="0" cellpadding="5">
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>Extension ID</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$rid#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>Extension Registered Name</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$name#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>Description</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$desc#
-                </td>
-            </tr>
-        </table>
-        <br /><br />
-        <xar:if condition="$exttype eq 1">
-        <input type="radio" name="phase" id="phase" value="module"  />
-            <xar:mlstring>General Use</xar:mlstring>
-        <input type="radio" name="phase" id="phase" value="blocks"  />
-            <xar:mlstring>Blocks Documentation</xar:mlstring>
-        <input type="radio" name="phase" id="phase" value="hooks"  />
-            <xar:mlstring>Hooks Documentation</xar:mlstring>
-        <xar:else />
-        <input type="radio" name="phase" id="phase" value="theme"  />
-            <xar:mlstring>General Use</xar:mlstring>
-        <input type="radio" name="phase" id="phase" value="blockgroups"  />
-            <xar:mlstring>Defined Block Groups</xar:mlstring><br /><br />
-        </xar:if>
-        <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
-        </form>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Release Module</xar:mlstring>
+        </span>
     </div>
-</xar:if>
-</div>
+    <div class="xar-mod-body">
+    <h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
+    <xar:if condition="!empty($message)">
+        #$message#
+    <xar:else />
+
+        <xar:mlstring>From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
+
+        <div style="text-align:center;">
+            <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="rid" id="rid" value="#$rid#" />
+            <input type="hidden" name="eid" id="eid" value="#$eid#" />
+            <input type="hidden" name="name" id="name" value="#$name#" />
+            <table border="0" cellpadding="5">
+                <tr>
+                    <td align="left" valign="top" class="xar-accent">
+                        <xar:mlstring>Extension ID</xar:mlstring>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        #$rid#
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-accent">
+                        <xar:mlstring>Extension Registered Name</xar:mlstring>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        #$name#
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-accent">
+                        <xar:mlstring>Description</xar:mlstring>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        #$desc#
+                    </td>
+                </tr>
+            </table>
+            <br /><br />
+            <xar:if condition="$exttype eq 1">
+            <input type="radio" name="phase" id="phase" value="module"  />
+                <xar:mlstring>General Use</xar:mlstring>
+            <input type="radio" name="phase" id="phase" value="blocks"  />
+                <xar:mlstring>Blocks Documentation</xar:mlstring>
+            <input type="radio" name="phase" id="phase" value="hooks"  />
+                <xar:mlstring>Hooks Documentation</xar:mlstring>
+            <xar:else />
+            <input type="radio" name="phase" id="phase" value="theme"  />
+                <xar:mlstring>General Use</xar:mlstring>
+            <input type="radio" name="phase" id="phase" value="blockgroups"  />
+                <xar:mlstring>Defined Block Groups</xar:mlstring><br /><br />
+            </xar:if>
+            <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
+            </form>
+        </div>
+    </xar:if>
+    </div>
+</xar:template>

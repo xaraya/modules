@@ -1,180 +1,183 @@
-<xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span>
-</div>
-</xar:comment>
-<xar:if condition="!isset($tab)">
-    <xar:set name="tab">''</xar:set>
-</xar:if>
-<xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
-<xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
-<xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
-<xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
-<xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'95'))</xar:set>
-<xar:set name="extname">ucfirst($regname)</xar:set>
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
-    <h2><xar:mlstring>Extension Release Details</xar:mlstring></h2>
-    
- <xar:template type="module" file="user-minimenu" />
-    <div class="docs-article-wrapper">
-
-              <h2 style="float: left; width: 20%; text-align:left;">
-                  <xar:foreach in="$exttypes" key="$k" value="$v">
-                      <xar:if condition="$exttype eq $k">
-                           #$v#:
-                      </xar:if>
-                  </xar:foreach>
-              </h2>
-              <h2 style="float: right; width: 78%; text-align: left;">
-              <a href="#$extensionpage#" title="#xarML('View the Extension Overview Page')#">
-                  #$extname#&nbsp; <xar:mlstring>Version </xar:mlstring>#$version#
-              </a>
-              </h2>
-              <div style="clear: both;">
-                 <h2 style="float: left; width:20%; text-align: left;">
-                       <xar:mlstring>Released: </xar:mlstring>
-                 </h2>
-                 <span style="float: right; width: 78%;text-align: left;">
-                       #xarLocaleFormatDate('%d %B %Y %H:%M', $time)#
-                 </span>
-              </div>
-              <div style="clear: both;">
-                 <h2 style="float: left; width: 20%;text-align: left; ">
-                      <xar:mlstring>Author</xar:mlstring>:
-                 </h2>
-                 <span style="float: right; width: 78%;text-align: left;">
-                      <a href="#$contacturl#">#$realname#</a>
-                  </span>
-                </div>
-               <div style="clear: both;">
-                 <h2 style="float: left; width: 20%;text-align: left; ">
-                       <xar:mlstring>Name:</xar:mlstring>
-                 </h2>
-                 <span style="float: right; width: 78%;text-align: left;">
-                    #$displname#
-                 </span>
-               </div>
-               <div style="clear: both;">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Description:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                      #$desc#
-                   </span>
-               </div>
-               <div style="clear: both;">
-                   <h2 style="float: left; width: 20%;text-align: left; ">
-                       <xar:mlstring>Class:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       <xar:if condition="$class eq '0'">
-                           <xar:mlstring>Core</xar:mlstring>
-                       <xar:else />
-                           <xar:mlstring>Non-Core</xar:mlstring>
-                       </xar:if>
-                   </span>
-               </div>
-               <div style="clear: both;">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Additional Notes:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       #$notes#
-                   </span>
-               </div>
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Changelog:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       #$changelog#
-                   </span>
-               </div>
-               <xar:if condition="!empty($enotes)">
-               <div style="clear: both;">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Editor notes:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       #$enotes#
-                   </span>
-               </div>
-               </xar:if>
-               <xar:if condition="!empty($demolink)">
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Demo Link:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       <a href="#$demolink#">#$demolink#</a>
-                   </span>
-               </div>
-               </xar:if>
-               <xar:if condition="!empty($dllink)">
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Download Link:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       <a href="#$dllink#">#$dllink#</a>
-                   </span>
-               </div>
-               </xar:if>
-               <xar:if condition="!empty($supportlink)">
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Support Link:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       <a href="#$supportlink#">#$supportlink#</a>
-                   </span>
-               </div>
-               </xar:if>
-               <xar:if condition="$price eq '2'">
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20;%text-align: left;">
-                      <xar:mlstring>Price:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                        #$priceterms#
-                   </span>
-               </div>
-               </xar:if>
-               <xar:if condition="!empty($certifiedstatus)">
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                       <xar:mlstring>Certified:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       #$certifiedstatus#
-                   </span>
-               </div>
-               </xar:if>
-               <xar:if condition="!empty($stateoption)">
-               <div style="clear: both; ">
-                   <h2 style="float: left; width: 20%;text-align: left;">
-                      <xar:mlstring>Status:</xar:mlstring>
-                   </h2>
-                   <span style="float: right; width: 78%;text-align: left;">
-                       #$stateoption#
-                   </span>
-               </div>
-               </xar:if>
-               <p />
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:comment>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span>
     </div>
-<div style="clear: both; width:98%; ">
-    <p style="text-align:center;">
-        <a href="#$extlisturl#"><xar:mlstring>Extension List</xar:mlstring></a> ::
-        <a href="#$extreleaseurl#"><xar:mlstring>Recent Releases</xar:mlstring></a>
+    </xar:comment>
+    <xar:if condition="!isset($tab)">
+        <xar:set name="tab">''</xar:set>
+    </xar:if>
+    <xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
+    <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
+    <xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
+    <xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
+    <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'95'))</xar:set>
+    <xar:set name="extname">ucfirst($regname)</xar:set>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span>
+    </div>
+    <div class="xar-mod-body">
+        <h2><xar:mlstring>Extension Release Details</xar:mlstring></h2>
+    
+     <xar:template type="module" file="user-minimenu" />
+        <div class="docs-article-wrapper">
 
-    </p>
+                  <h2 style="float: left; width: 20%; text-align:left;">
+                      <xar:foreach in="$exttypes" key="$k" value="$v">
+                          <xar:if condition="$exttype eq $k">
+                               #$v#:
+                          </xar:if>
+                      </xar:foreach>
+                  </h2>
+                  <h2 style="float: right; width: 78%; text-align: left;">
+                  <a href="#$extensionpage#" title="#xarML('View the Extension Overview Page')#">
+                      #$extname#&nbsp; <xar:mlstring>Version </xar:mlstring>#$version#
+                  </a>
+                  </h2>
+                  <div style="clear: both;">
+                     <h2 style="float: left; width:20%; text-align: left;">
+                           <xar:mlstring>Released: </xar:mlstring>
+                     </h2>
+                     <span style="float: right; width: 78%;text-align: left;">
+                           #xarLocaleFormatDate('%d %B %Y %H:%M', $time)#
+                     </span>
+                  </div>
+                  <div style="clear: both;">
+                     <h2 style="float: left; width: 20%;text-align: left; ">
+                          <xar:mlstring>Author</xar:mlstring>:
+                     </h2>
+                     <span style="float: right; width: 78%;text-align: left;">
+                          <a href="#$contacturl#">#$realname#</a>
+                      </span>
+                    </div>
+                   <div style="clear: both;">
+                     <h2 style="float: left; width: 20%;text-align: left; ">
+                           <xar:mlstring>Name:</xar:mlstring>
+                     </h2>
+                     <span style="float: right; width: 78%;text-align: left;">
+                        #$displname#
+                     </span>
+                   </div>
+                   <div style="clear: both;">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Description:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                          #$desc#
+                       </span>
+                   </div>
+                   <div style="clear: both;">
+                       <h2 style="float: left; width: 20%;text-align: left; ">
+                           <xar:mlstring>Class:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           <xar:if condition="$class eq '0'">
+                               <xar:mlstring>Core</xar:mlstring>
+                           <xar:else />
+                               <xar:mlstring>Non-Core</xar:mlstring>
+                           </xar:if>
+                       </span>
+                   </div>
+                   <div style="clear: both;">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Additional Notes:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           #$notes#
+                       </span>
+                   </div>
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Changelog:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           #$changelog#
+                       </span>
+                   </div>
+                   <xar:if condition="!empty($enotes)">
+                   <div style="clear: both;">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Editor notes:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           #$enotes#
+                       </span>
+                   </div>
+                   </xar:if>
+                   <xar:if condition="!empty($demolink)">
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Demo Link:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           <a href="#$demolink#">#$demolink#</a>
+                       </span>
+                   </div>
+                   </xar:if>
+                   <xar:if condition="!empty($dllink)">
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Download Link:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           <a href="#$dllink#">#$dllink#</a>
+                       </span>
+                   </div>
+                   </xar:if>
+                   <xar:if condition="!empty($supportlink)">
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Support Link:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           <a href="#$supportlink#">#$supportlink#</a>
+                       </span>
+                   </div>
+                   </xar:if>
+                   <xar:if condition="$price eq '2'">
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20;%text-align: left;">
+                          <xar:mlstring>Price:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                            #$priceterms#
+                       </span>
+                   </div>
+                   </xar:if>
+                   <xar:if condition="!empty($certifiedstatus)">
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                           <xar:mlstring>Certified:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           #$certifiedstatus#
+                       </span>
+                   </div>
+                   </xar:if>
+                   <xar:if condition="!empty($stateoption)">
+                   <div style="clear: both; ">
+                       <h2 style="float: left; width: 20%;text-align: left;">
+                          <xar:mlstring>Status:</xar:mlstring>
+                       </h2>
+                       <span style="float: right; width: 78%;text-align: left;">
+                           #$stateoption#
+                       </span>
+                   </div>
+                   </xar:if>
+                   <p />
+        </div>
+    <div style="clear: both; width:98%; ">
+        <p style="text-align:center;">
+            <a href="#$extlisturl#"><xar:mlstring>Extension List</xar:mlstring></a> ::
+            <a href="#$extreleaseurl#"><xar:mlstring>Recent Releases</xar:mlstring></a>
 
-</div>
-</div>
-<div >
-       #$hooks#
-</div>
+        </p>
 
+    </div>
+    </div>
+    <div >
+           #$hooks#
+    </div>
+</xar:template>

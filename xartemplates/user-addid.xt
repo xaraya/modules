@@ -1,132 +1,136 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
-    </span>
-</div>
-
-<div class="xar-mod-body">
-<xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
-<xar:set name="retryID">xarModURL('release','user','view')</xar:set>
-<xar:set name="createid"><xar:mlstring>Create ID</xar:mlstring></xar:set>
-
-<h2><xar:mlstring>Register a New Project ID</xar:mlstring></h2>
-<xar:template type="module" file="user-menu" />
-<xar:if condition="!empty($message)">
-    <div class="xar-thirdwidth">
-        #$message#<br />
-       <xar:block module="authsystem" type="login" />
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+        </span>
     </div>
-<xar:else />
-        <form action="&xar-modurl-release-user-addid;" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="phase" id="phase" value="update" />
-            <fieldset class="formelements xar-norm">
-            <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
-            <xar:if condition="isset($msg) and !empty($msg)">
-            <p class="xar-error">#$msg#</p>
-            </xar:if>
-           <p class="param">
-                <label for="ridno" class="xar-form-label">
-                    <span class="help" title="#xarML('If you want a particular number as an id, enter it here. If available it will be used.')#">
-                        <xar:mlstring>Registration ID:</xar:mlstring>
-                    </span>
-                </label>
-                <input type="text" name="ridno" id="ridno" value="" size="15" maxlength="15" tabindex="1" />
-                <xar:mlstring> Leave blank, unless you want to nominate a specific ID for your extension.</xar:mlstring>
-            </p>
-            <p class="param">
-                <label for="startbackup" class="xar-form-label">
-                    <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
-                        <xar:mlstring>Extension Registered Name</xar:mlstring>
-                    </span>
-                </label>
-                <input type="text" name="regname" id="regname" value="" size="25" maxlength="60" tabindex="2" />
-                <xar:mlstring>Lower case, no spaces or special characters (underscore and hyphens accepted).</xar:mlstring>
-            </p>
 
-            <p class="param">
-                <label for="displname" class="xar-form-label">
-                    <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
-                        <xar:mlstring>Extension Display Name</xar:mlstring>
-                    </span>
-                </label>
-                <input type="text" name="displname" id="displname" value="" size="25" maxlength="60" tabindex="2" />
-             </p>
+    <div class="xar-mod-body">
+    <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
+    <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
+    <xar:set name="createid"><xar:mlstring>Create ID</xar:mlstring></xar:set>
 
-             <p>
-                <label for="desc" class="xar-form-label">
-                    <span class="help" title="#xarML('Enter a description for your extension.')#">
-                        <xar:mlstring>Description</xar:mlstring>
-                    </span>
-                </label>
-                <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" /></textarea>
-              </p>
-              
-              <p>
-                  <label for="idtype" class="xar-form-label">
-                      <span class="help" title="#xarML('Select the type of extension.')#">
-                          <xar:mlstring>Type</xar:mlstring>
-                      </span>
-                  </label>
-                  <select name="exttype" id="exttype">
-                     <xar:foreach in="$exttypes" key="$k" value="$v">
-                     <xar:if condition="$k ne 0">
-                         <xar:if condition="$exttype eq $k">
-                                <option value="#$k#" selected="selected">#$v#</option>
-                         <xar:else />
-                                <option value="#$k#">#$v#</option>
-                         </xar:if>
-                     </xar:if>
-                    </xar:foreach>
-                 </select>
-               </p>
-               <p>
-                   <label for="class" class="xar-form-label">
-                      <span class="help" title="#xarML('Select the class.')#">
-                          <xar:mlstring>Class</xar:mlstring>
-                      </span>
-                   </label>
-                   <select name="class" id="class">
-                   <xar:if condition="$class eq '0'">
-                        <option value="0" selected="selected"><xar:mlstring>Core</xar:mlstring></option>
-                        <option value="1"><xar:mlstring>Non-Core</xar:mlstring></option>
-                    <xar:else />
-                        <option value="0"><xar:mlstring>Core</xar:mlstring></option>
-                        <option value="1" selected="selected"><xar:mlstring>Non-Core</xar:mlstring></option>
-                    </xar:if>
-                    </select>
-                </p>
-                <p>
-                    <label for="rstate" class="xar-form-label">
-                        <span class="help" title="#xarML('Current development status of your extension')#">
-                            <xar:mlstring>Extension Status:</xar:mlstring>
-                        </span>
-                     </label>
-                     <select name="rstate" id="rstate" size="1">
-                      <xar:foreach in="$stateoptions" value="$v" key="$k">
-                         <option name="rstate.#$k#" value="#$k#">#$v#</option>
-                      </xar:foreach>
-                      </select>
-                  </p>
-                  
-                <p>
-                    <label for="openproj" class="xar-form-label">
-                       <span class="help" title="#xarML('Do you want this listed on public blocks')#">
-                           <xar:mlstring>Add to Latest Project List?</xar:mlstring>
+    <h2><xar:mlstring>Register a New Project ID</xar:mlstring></h2>
+    <xar:template type="module" file="user-menu" />
+    <xar:if condition="!empty($message)">
+        <div class="xar-thirdwidth">
+            #$message#<br />
+           <xar:block module="authsystem" type="login" />
+        </div>
+    <xar:else />
+            <form action="&xar-modurl-release-user-addid;" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <fieldset class="formelements xar-norm">
+                <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
+                <xar:if condition="isset($msg) and !empty($msg)">
+                <p class="xar-error">#$msg#</p>
+                </xar:if>
+               <p class="param">
+                    <label for="ridno" class="xar-form-label">
+                        <span class="help" title="#xarML('If you want a particular number as an id, enter it here. If available it will be used.')#">
+                            <xar:mlstring>Registration ID:</xar:mlstring>
                         </span>
                     </label>
-                    <xar:if condition="$openproj eq '1'">
-                        <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
-                    <xar:else/>
-                         <input type="checkbox" name="openproj" id="openproj" value="1" />
-                     </xar:if>
-                 </p>
-                 <p>
-                        #$cathook#
-                 </p>
-            </fieldset>
-            <input type="submit" value="#$createid#"  tabindex="6" />
-        </form>
-    </xar:if>
+                    <input type="text" name="ridno" id="ridno" value="" size="15" maxlength="15" tabindex="1" />
+                    <xar:mlstring> Leave blank, unless you want to nominate a specific ID for your extension.</xar:mlstring>
+                </p>
+                <p class="param">
+                    <label for="startbackup" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
+                            <xar:mlstring>Extension Registered Name</xar:mlstring>
+                        </span>
+                    </label>
+                    <input type="text" name="regname" id="regname" value="" size="25" maxlength="60" tabindex="2" />
+                    <xar:mlstring>Lower case, no spaces or special characters (underscore and hyphens accepted).</xar:mlstring>
+                </p>
 
-</div>
+                <p class="param">
+                    <label for="displname" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
+                            <xar:mlstring>Extension Display Name</xar:mlstring>
+                        </span>
+                    </label>
+                    <input type="text" name="displname" id="displname" value="" size="25" maxlength="60" tabindex="2" />
+                 </p>
+
+                 <p>
+                    <label for="desc" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter a description for your extension.')#">
+                            <xar:mlstring>Description</xar:mlstring>
+                        </span>
+                    </label>
+                    <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" /></textarea>
+                  </p>
+              
+                  <p>
+                      <label for="idtype" class="xar-form-label">
+                          <span class="help" title="#xarML('Select the type of extension.')#">
+                              <xar:mlstring>Type</xar:mlstring>
+                          </span>
+                      </label>
+                      <select name="exttype" id="exttype">
+                         <xar:foreach in="$exttypes" key="$k" value="$v">
+                         <xar:if condition="$k ne 0">
+                             <xar:if condition="$exttype eq $k">
+                                    <option value="#$k#" selected="selected">#$v#</option>
+                             <xar:else />
+                                    <option value="#$k#">#$v#</option>
+                             </xar:if>
+                         </xar:if>
+                        </xar:foreach>
+                     </select>
+                   </p>
+                   <p>
+                       <label for="class" class="xar-form-label">
+                          <span class="help" title="#xarML('Select the class.')#">
+                              <xar:mlstring>Class</xar:mlstring>
+                          </span>
+                       </label>
+                       <select name="class" id="class">
+                       <xar:if condition="$class eq '0'">
+                            <option value="0" selected="selected"><xar:mlstring>Core</xar:mlstring></option>
+                            <option value="1"><xar:mlstring>Non-Core</xar:mlstring></option>
+                        <xar:else />
+                            <option value="0"><xar:mlstring>Core</xar:mlstring></option>
+                            <option value="1" selected="selected"><xar:mlstring>Non-Core</xar:mlstring></option>
+                        </xar:if>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="rstate" class="xar-form-label">
+                            <span class="help" title="#xarML('Current development status of your extension')#">
+                                <xar:mlstring>Extension Status:</xar:mlstring>
+                            </span>
+                         </label>
+                         <select name="rstate" id="rstate" size="1">
+                          <xar:foreach in="$stateoptions" value="$v" key="$k">
+                             <option name="rstate.#$k#" value="#$k#">#$v#</option>
+                          </xar:foreach>
+                          </select>
+                      </p>
+                  
+                    <p>
+                        <label for="openproj" class="xar-form-label">
+                           <span class="help" title="#xarML('Do you want this listed on public blocks')#">
+                               <xar:mlstring>Add to Latest Project List?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:if condition="$openproj eq '1'">
+                            <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
+                        <xar:else/>
+                             <input type="checkbox" name="openproj" id="openproj" value="1" />
+                         </xar:if>
+                     </p>
+                     <p>
+                            #$cathook#
+                     </p>
+                </fieldset>
+                <input type="submit" value="#$createid#"  tabindex="6" />
+            </form>
+        </xar:if>
+
+    </div>
+</xar:template>

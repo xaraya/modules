@@ -1,49 +1,52 @@
-<xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
-<xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
-<xar:set name="extregisterurl">xarModURL('release','user','addid')</xar:set>
-<xar:comment>
-    xaraya.com specific tags
-    <xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
-    <xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
-    <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
-    </xar:comment>
-<div class="xar-mod-head">
-	<span class="xar-mod-title">
-		<xar:mlstring>
-			Xaraya Extension Registration and Release
-		</xar:mlstring>
-	</span>
-</div>
-<h2><xar:mlstring>Overview</xar:mlstring></h2>
-<xar:template type="module" file="user-menu" />
-<div class="xar-mod-body">
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
+    <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
+    <xar:set name="extregisterurl">xarModURL('release','user','addid')</xar:set>
     <xar:comment>
-        xaraya.com specific block
-        <xar:blockgroup name="releasemodule" id="releasemodule" />
-    </xar:comment>
+        xaraya.com specific tags
+        <xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
+        <xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
+        <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
+        </xar:comment>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>
+                Xaraya Extension Registration and Release
+            </xar:mlstring>
+        </span>
+    </div>
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <xar:template type="module" file="user-menu" />
+    <div class="xar-mod-body">
+        <xar:comment>
+            xaraya.com specific block
+            <xar:blockgroup name="releasemodule" id="releasemodule" />
+        </xar:comment>
 
-<p>
-<xar:mlstring>Xaraya uses extensions, also known as modules or themes, that each have a unique ID to identify them by. This unique ID is not only used in the Xaraya codebase itself, but also used to track and aggregate documentation, releases, information and activities that are related to a specific Extenstion.</xar:mlstring>
-</p>
-<p>
-<xar:mlstring>The release module is Xaraya.com's tool of tracking module and theme information.  It does this by: </xar:mlstring>
-</p>
-<ol >
-    <li>
-        <strong><xar:mlstring>Tracking Module and Theme ID's</xar:mlstring></strong>
-        <p style="margin-bottom:20px;"><xar:mlstring>You can view all Registered Extensions in the </xar:mlstring><a href="#$extlisturl#"><xar:mlstring>Extension List View Page'</xar:mlstring></a>.<xar:mlstring>You can also </xar:mlstring><a href="#$extregisterurl#"><xar:mlstring>register your own extensions</xar:mlstring></a><xar:mlstring> with the link from that page.</xar:mlstring>
-        </p>
-    </li>
-    <li><strong><xar:mlstring>Tracking Version Release and History of Modules and Themes</xar:mlstring></strong>
-        <p style="margin-bottom:20px;"><xar:mlstring>Extensions that have already been release can be viewed on the </xar:mlstring><a href="#$extreleaseurl#"><xar:mlstring>Recent Extension Release page</xar:mlstring></a>.
-        </p>
-    </li>
-    <li><strong><xar:mlstring>Providing Extension IDs for Documentation of Modules and Themes</xar:mlstring></strong>
-        <p style="margin-bottom:20px;"><xar:mlstring>Xaraya Extension Documentation is linked directly to a relevant extension via the Extension ID on any relevant document.
-           You can view specific Extension documentation for Extension API References, Admin Extension Guides or the Theme Reference areas of
-           the xaraya.com site.</xar:mlstring>
-        </p>
-    </li>
-</ol>
-</div>
-
+    <p>
+    <xar:mlstring>Xaraya uses extensions, also known as modules or themes, that each have a unique ID to identify them by. This unique ID is not only used in the Xaraya codebase itself, but also used to track and aggregate documentation, releases, information and activities that are related to a specific Extenstion.</xar:mlstring>
+    </p>
+    <p>
+    <xar:mlstring>The release module is Xaraya.com's tool of tracking module and theme information.  It does this by: </xar:mlstring>
+    </p>
+    <ol >
+        <li>
+            <strong><xar:mlstring>Tracking Module and Theme ID's</xar:mlstring></strong>
+            <p style="margin-bottom:20px;"><xar:mlstring>You can view all Registered Extensions in the </xar:mlstring><a href="#$extlisturl#"><xar:mlstring>Extension List View Page'</xar:mlstring></a>.<xar:mlstring>You can also </xar:mlstring><a href="#$extregisterurl#"><xar:mlstring>register your own extensions</xar:mlstring></a><xar:mlstring> with the link from that page.</xar:mlstring>
+            </p>
+        </li>
+        <li><strong><xar:mlstring>Tracking Version Release and History of Modules and Themes</xar:mlstring></strong>
+            <p style="margin-bottom:20px;"><xar:mlstring>Extensions that have already been release can be viewed on the </xar:mlstring><a href="#$extreleaseurl#"><xar:mlstring>Recent Extension Release page</xar:mlstring></a>.
+            </p>
+        </li>
+        <li><strong><xar:mlstring>Providing Extension IDs for Documentation of Modules and Themes</xar:mlstring></strong>
+            <p style="margin-bottom:20px;"><xar:mlstring>Xaraya Extension Documentation is linked directly to a relevant extension via the Extension ID on any relevant document.
+               You can view specific Extension documentation for Extension API References, Admin Extension Guides or the Theme Reference areas of
+               the xaraya.com site.</xar:mlstring>
+            </p>
+        </li>
+    </ol>
+    </div>
+</xar:template>

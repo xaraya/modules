@@ -1,25 +1,29 @@
-<xar:set name="adddoclink">xarModURL('release','user','adddocs')</xar:set>
-<xar:if condition="xarUserIsLoggedIn()">
-    <xar:set name="adddoclink">xarModURL('articles','admin','new',array('ptid'=>'9','catid'=>'18'))</xar:set>
-<xar:else/>
-   <xar:set name="addoclink">xarModURL('roles','user','main')</xar:set>
-</xar:if>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
-    </span>
-</div>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="adddoclink">xarModURL('release','user','adddocs')</xar:set>
+    <xar:if condition="xarUserIsLoggedIn()">
+        <xar:set name="adddoclink">xarModURL('articles','admin','new',array('ptid'=>'9','catid'=>'18'))</xar:set>
+    <xar:else/>
+       <xar:set name="addoclink">xarModURL('roles','user','main')</xar:set>
+    </xar:if>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+        </span>
+    </div>
 
-<div class="xar-mod-body">
-<h2>
-    <xar:mlstring>Release Notification Complete - Thank You</xar:mlstring>
-</h2>
-<xar:template type="module" file="user-menu" />
-<xar:mlstring>Your Release Notification has been sent for review. It should appear on the site very shortly.
-In the meantime you can </xar:mlstring>
-<xar:if condition="xarUserIsLoggedIn()">
-<a href="#$adddoclink#"><xar:mlstring>begin to add online documentation.</xar:mlstring></a>.
-<xar:else />
-<a href="#$adddoclink#"><xar:mlstring>log in to add online documentation</xar:mlstring></a>.
-</xar:if>
-</div>
+    <div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>Release Notification Complete - Thank You</xar:mlstring>
+    </h2>
+    <xar:template type="module" file="user-menu" />
+    <xar:mlstring>Your Release Notification has been sent for review. It should appear on the site very shortly.
+    In the meantime you can </xar:mlstring>
+    <xar:if condition="xarUserIsLoggedIn()">
+    <a href="#$adddoclink#"><xar:mlstring>begin to add online documentation.</xar:mlstring></a>.
+    <xar:else />
+    <a href="#$adddoclink#"><xar:mlstring>log in to add online documentation</xar:mlstring></a>.
+    </xar:if>
+    </div>
+</xar:template>

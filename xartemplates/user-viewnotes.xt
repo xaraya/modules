@@ -1,77 +1,81 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-  <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-body">
+      <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
 
-  <div style="margin-top:20px; margin-bottom:40px;">
+      <div style="margin-top:20px; margin-bottom:40px;">
 
-  <span style="float:left; text-align:left; width:15%;">
-    <strong><xar:mlstring>Filter By</xar:mlstring>:</strong>
-  </span>
-  <span style="float:left; text-align:left; width:85%;">
+      <span style="float:left; text-align:left; width:15%;">
+        <strong><xar:mlstring>Filter By</xar:mlstring>:</strong>
+      </span>
+      <span style="float:left; text-align:left; width:85%;">
 
-  <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
-      <input type="radio" name="phase" id="phase" value="certified"  />
-      <xar:mlstring>Certified</xar:mlstring>
-      &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="price"  />
-      <xar:mlstring>Commercial</xar:mlstring>
-      &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="free"  />
-      <xar:mlstring>Free</xar:mlstring>
-      &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
-      <xar:mlstring>Supported</xar:mlstring>
-    &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
-  </form>
-  </span>
-</div>
-<xar:if condition="isset($phase)">
-<xar:set name="displayphase">ucfirst($phase)</xar:set>
-  <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
-  <xar:ml>
-      <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
-      <xar:mlvar>#$displayphase#</xar:mlvar>
-  </xar:ml>
-  </div>
-</xar:if>
-
-  <xar:if condition="!empty($message)">
-      <b>#$message#</b>
-  <xar:else />        
-    <xar:loop name="$items">
-      <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
-        <div class="xar-norm" style="padding: 3px;">
-         <xar:foreach in="$exttypes" key="$k" value="$v">
-               <xar:if condition="$k ne 0">
-                         <xar:if condition="$loop:item['exttype'] eq $k">
-                                [#$v#]
-                         </xar:if>
-                     </xar:if>
-         </xar:foreach>
-          <h1><a class="xar-title" href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h1>
-          <div class="xar-accent" style="padding: 2px;">
-            <span class="xar-sub">
-              <xar:mlstring>Author</xar:mlstring>: 
-              <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
-              <xar:mlstring>on</xar:mlstring>
-              #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
-                  <xar:if condition="!empty($loop:item['counter'])">
-                    (#$loop:item['hitcount']# <xar:mlstring>Reads</xar:mlstring>)
-                  </xar:if>
-            </span>
-          </div>
-          <b>Version:</b>&nbsp;&nbsp; #$loop:item['version']#
-             <p>#$loop:item['desc']#</p>
-          <div align="right">
-            <a href="#$loop:item['displaylink']#"><xar:mlstring>Read More</xar:mlstring></a>
-            <xar:if condition="!empty($loop:item['comments'])">
-              -- #$loop:item['comments']# <xar:mlstring>Comments</xar:mlstring>
-            </xar:if>
-          </div>
-        </div>
+      <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+          <input type="radio" name="phase" id="phase" value="certified"  />
+          <xar:mlstring>Certified</xar:mlstring>
+          &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="price"  />
+          <xar:mlstring>Commercial</xar:mlstring>
+          &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="free"  />
+          <xar:mlstring>Free</xar:mlstring>
+          &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
+          <xar:mlstring>Supported</xar:mlstring>
+        &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
+      </form>
+      </span>
+    </div>
+    <xar:if condition="isset($phase)">
+    <xar:set name="displayphase">ucfirst($phase)</xar:set>
+      <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
+      <xar:ml>
+          <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
+          <xar:mlvar>#$displayphase#</xar:mlvar>
+      </xar:ml>
       </div>
-    </xar:loop>
-<p>
-<!-- add the pager here -->
-#$pager#
-</p>
-  </xar:if>
-</div>
+    </xar:if>
+
+      <xar:if condition="!empty($message)">
+          <b>#$message#</b>
+      <xar:else />        
+        <xar:loop name="$items">
+          <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
+            <div class="xar-norm" style="padding: 3px;">
+             <xar:foreach in="$exttypes" key="$k" value="$v">
+                   <xar:if condition="$k ne 0">
+                             <xar:if condition="$loop:item['exttype'] eq $k">
+                                    [#$v#]
+                             </xar:if>
+                         </xar:if>
+             </xar:foreach>
+              <h1><a class="xar-title" href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h1>
+              <div class="xar-accent" style="padding: 2px;">
+                <span class="xar-sub">
+                  <xar:mlstring>Author</xar:mlstring>: 
+                  <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
+                  <xar:mlstring>on</xar:mlstring>
+                  #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
+                      <xar:if condition="!empty($loop:item['counter'])">
+                        (#$loop:item['hitcount']# <xar:mlstring>Reads</xar:mlstring>)
+                      </xar:if>
+                </span>
+              </div>
+              <b>Version:</b>&nbsp;&nbsp; #$loop:item['version']#
+                 <p>#$loop:item['desc']#</p>
+              <div align="right">
+                <a href="#$loop:item['displaylink']#"><xar:mlstring>Read More</xar:mlstring></a>
+                <xar:if condition="!empty($loop:item['comments'])">
+                  -- #$loop:item['comments']# <xar:mlstring>Comments</xar:mlstring>
+                </xar:if>
+              </div>
+            </div>
+          </div>
+        </xar:loop>
+    <p>
+    <!-- add the pager here -->
+    #$pager#
+    </p>
+      </xar:if>
+    </div>
+</xar:template>

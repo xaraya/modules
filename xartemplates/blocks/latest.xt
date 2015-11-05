@@ -1,36 +1,37 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
-<xar:set name="releaselink">
-    xarModURL('release','user','viewnotes') 
-</xar:set>
-<xar:if condition="count($items) ge 1">
-    <ul>
-        <xar:foreach in="$items" value="$item">
-            <xar:if condition="empty($item['link'])">
-                <li>
-                    #xarVarPrepForDisplay($item['rid'])# 
-                </li>
-                <xar:else />
-                <li>
-                    <a href="#$item['link']#">
-                        #xarVarPrepForDisplay(ucfirst($item['regname']))# V#xarVarPrepForDisplay($item['version'])#
-                    </a>
-                </li>
-            </xar:if>
-        </xar:foreach>
-    </ul>
-    <p class="fc-text-c">
-        <a href="#$releaselink#">
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="releaselink">
+        xarModURL('release','user','viewnotes') 
+    </xar:set>
+    <xar:if condition="count($items) ge 1">
+        <ul>
+            <xar:foreach in="$items" value="$item">
+                <xar:if condition="empty($item['link'])">
+                    <li>
+                        #xarVarPrepForDisplay($item['rid'])# 
+                    </li>
+                    <xar:else />
+                    <li>
+                        <a href="#$item['link']#">
+                            #xarVarPrepForDisplay(ucfirst($item['regname']))# V#xarVarPrepForDisplay($item['version'])#
+                        </a>
+                    </li>
+                </xar:if>
+            </xar:foreach>
+        </ul>
+        <p class="fc-text-c">
+            <a href="#$releaselink#">
+                <xar:mlstring>
+                    Browse All Releases 
+                </xar:mlstring>
+            </a>
+        </p>
+        <xar:else />
+        <p class="fc-text-c">
             <xar:mlstring>
-                Browse All Releases 
+                No Release to Display 
             </xar:mlstring>
-        </a>
-    </p>
-    <xar:else />
-    <p class="fc-text-c">
-        <xar:mlstring>
-            No Release to Display 
-        </xar:mlstring>
-    </p>
-</xar:if>
+        </p>
+    </xar:if>
+</xar:template>

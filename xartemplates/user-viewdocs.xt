@@ -1,58 +1,62 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-<h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
-<xar:mlstring>Click module name for contact information</xar:mlstring>
-<br /><br />
-<div align="center">
-<div class="xar-accent">
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-body">
+    <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+    <xar:mlstring>Click module name for contact information</xar:mlstring>
+    <br /><br />
+    <div align="center">
+    <div class="xar-accent">
 
-<table width="100%" border="0" cellspacing="0" cellpadding="1">
-    <tr>    
-        <td>
-            <table width="100%" border="0" cellspacing="1" cellpadding="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="1">
+        <tr>    
+            <td>
+                <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                    <tr>
+                        <th width="20%">
+                            <xar:mlstring>Name</xar:mlstring>
+                        </th>
+                        <th width="5%">
+                            <xar:mlstring>General Docs</xar:mlstring>
+                        </th>
+                        <th width="5%">
+                            <xar:mlstring>Blocks</xar:mlstring>
+                        </th>
+                        <th width="5%">
+                            <xar:mlstring>Hooks</xar:mlstring>
+                        </th>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+            <xar:loop name="$items">
+            <xar:if condition="$docstatus eq 2">
+        <tr>
+            <td>
+            <table width="100%" border="0" cellspacing="1">
                 <tr>
-                    <th width="20%">
-                        <xar:mlstring>Name</xar:mlstring>
-                    </th>
-                    <th width="5%">
-                        <xar:mlstring>General Docs</xar:mlstring>
-                    </th>
-                    <th width="5%">
-                        <xar:mlstring>Blocks</xar:mlstring>
-                    </th>
-                    <th width="5%">
-                        <xar:mlstring>Hooks</xar:mlstring>
-                    </th>
+                    <td align="left" valign="top" width="20%" class="xar-norm">
+                        <a href="#$contacturl#">#$regname#</a>
+                    </td>
+                    <td align="center" valign="top" width="5%" class="xar-norm">
+
+                    </td>
+                    <td align="center" valign="top" width="5%" class="xar-norm">
+
+                    </td>
+                    <td align="center" valign="top" width="5%" class="xar-norm">
+
+                    </td>
                 </tr>
             </table>
-        </td>
-    </tr>
-        <xar:loop name="$items">
-        <xar:if condition="$docstatus eq 2">
-    <tr>
-        <td>
-        <table width="100%" border="0" cellspacing="1">
-            <tr>
-                <td align="left" valign="top" width="20%" class="xar-norm">
-                    <a href="#$contacturl#">#$regname#</a>
-                </td>
-                <td align="center" valign="top" width="5%" class="xar-norm">
+            </td>
+        <tr>
+        </xar:if>
+        </xar:loop>
+    </table>
 
-                </td>
-                <td align="center" valign="top" width="5%" class="xar-norm">
-
-                </td>
-                <td align="center" valign="top" width="5%" class="xar-norm">
-
-                </td>
-            </tr>
-        </table>
-        </td>
-    <tr>
-    </xar:if>
-    </xar:loop>
-</table>
-
-</div>
-</div>
+    </div>
+    </div>
+</xar:template>

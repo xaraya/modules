@@ -1,57 +1,61 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2><xar:mlstring>Notify a File Release </xar:mlstring></h2>
-    <xar:template type="module" file="user-menu" />
-    <xar:if condition="!empty($message)">
-        #$message#
-    <xar:else />
-    <p>
-    <xar:mlstring>From this screen, you will be adding a release note for your extension.
-                  Please enter all applicable information.  
-                  
-                  Release notes are held for validation.
-                  If your extension has never had a release before, it may take extra time to
-                  validate its' status.  
-    </xar:mlstring>
-    </p>
-    <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="getbasics" />    
-        <input type="hidden" name="rid" id="rid" value="#$rid#" /> 
-        <input type="hidden" name="eid" id="eid" value="#$eid#" />
-        <input type="hidden" name="regname" id="regname" value="#$regname#" />
-      
-        <fieldset class="formelements xar-norm">
-            <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
- 
-            <p class="param">
-                <label for="extensionid" class="xar-form-label">
-                    <xar:mlstring>Extension ID</xar:mlstring>
-                </label>
-                    #$rid#
-            </p>
-            <p>
-                 <label for="extensionname" class="xar-form-label">
-                    <xar:mlstring>Extension Registered Name</xar:mlstring>
-                </label>
-                #$regname#
-            </p>
-            <p>
-                 <label for="description" class="xar-form-label">
-                    <xar:mlstring>Description</xar:mlstring>
-                </label>
-                <div class="xar-form-input-wrapper">
-                    #$desc#
-                </div>
-            </p>
-        </fieldset>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2><xar:mlstring>Notify a File Release </xar:mlstring></h2>
+        <xar:template type="module" file="user-menu" />
+        <xar:if condition="!empty($message)">
+            #$message#
+        <xar:else />
         <p>
-            <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
+        <xar:mlstring>From this screen, you will be adding a release note for your extension.
+                      Please enter all applicable information.  
+                  
+                      Release notes are held for validation.
+                      If your extension has never had a release before, it may take extra time to
+                      validate its' status.  
+        </xar:mlstring>
         </p>
-    </form>
-</xar:if>
-</div>
+        <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="getbasics" />    
+            <input type="hidden" name="rid" id="rid" value="#$rid#" /> 
+            <input type="hidden" name="eid" id="eid" value="#$eid#" />
+            <input type="hidden" name="regname" id="regname" value="#$regname#" />
+      
+            <fieldset class="formelements xar-norm">
+                <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
+ 
+                <p class="param">
+                    <label for="extensionid" class="xar-form-label">
+                        <xar:mlstring>Extension ID</xar:mlstring>
+                    </label>
+                        #$rid#
+                </p>
+                <p>
+                     <label for="extensionname" class="xar-form-label">
+                        <xar:mlstring>Extension Registered Name</xar:mlstring>
+                    </label>
+                    #$regname#
+                </p>
+                <p>
+                     <label for="description" class="xar-form-label">
+                        <xar:mlstring>Description</xar:mlstring>
+                    </label>
+                    <div class="xar-form-input-wrapper">
+                        #$desc#
+                    </div>
+                </p>
+            </fieldset>
+            <p>
+                <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
+            </p>
+        </form>
+    </xar:if>
+    </div>
+</xar:template>

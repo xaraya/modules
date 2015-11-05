@@ -1,8 +1,12 @@
-<xar:loop name="$items">
-<item>
-    <title>#$loop:item.regname# - Version #$loop:item.version# - #$loop:item.type#</title>
-    <link>#$loop:item.displaylink#</link>
-    <description>#$loop:item.desc#</description>
-    <guid isPermaLink="false">http://www.xaraya.com</guid> 
-</item>
-</xar:loop>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:loop name="$items">
+        <item>
+            <title>#$loop:item.regname# - Version #$loop:item.version# - #$loop:item.type#</title>
+            <link>#$loop:item.displaylink#</link>
+            <description>#$loop:item.desc#</description>
+            <guid isPermaLink="false">http://www.xaraya.com</guid> 
+        </item>
+    </xar:loop>
+</xar:template>

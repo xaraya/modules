@@ -1,166 +1,169 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span></div>
-<xar:if condition="!isset($tab)">
-    <xar:set name="tab">''</xar:set>
-</xar:if>
-<xar:set name="extname">ucfirst($regname)</xar:set>
-<div class="xar-mod-body">
-<h2><xar:mlstring>Modify Registered Extension Entry</xar:mlstring></h2>
-<xar:template type="module" file="user-minimenu" />
-    <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="update" />    
-        <input type="hidden" name="rid" id="rid" value="#$rid#" />
-        <input type="hidden" name="eid" id="eid" value="#$eid#" />        
-        <input type="hidden" name="certified" id="certified" value="#$certified#" />
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span></div>
+    <xar:if condition="!isset($tab)">
+        <xar:set name="tab">''</xar:set>
+    </xar:if>
+    <xar:set name="extname">ucfirst($regname)</xar:set>
+    <div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Registered Extension Entry</xar:mlstring></h2>
+    <xar:template type="module" file="user-minimenu" />
+        <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />    
+            <input type="hidden" name="rid" id="rid" value="#$rid#" />
+            <input type="hidden" name="eid" id="eid" value="#$eid#" />        
+            <input type="hidden" name="certified" id="certified" value="#$certified#" />
 
-        <table border="0" width="99%" cellpadding="5">
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <xar:mlstring>Extension ID</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$rid#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <xar:sec id="checkregname" mask="AdminRelease" catch="false" >
-                        <input type="text" name="regname" id="regname" value="#$regname#" size="25" maxlength="60" tabindex="2" />
-                    <xar:else/>
-                        <input type="hidden" name="regname" id="regname" value="#$regname#" />
-                        #$regname#
-                    </xar:sec>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <xar:mlstring>Type</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                 <xar:sec mask="AdminRelease" catch="false">
-                 <select name="exttype" id="exttype">
-                     <xar:foreach in="$exttypes" key="$k" value="$v">
-                     <xar:if condition="$k ne 0">
-                         <xar:if condition="$exttype eq $k">
-                                <option value="#$k#" selected="selected">#$v#</option>
-                         <xar:else />
-                                <option value="#$k#">#$v#</option>
+            <table border="0" width="99%" cellpadding="5">
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <xar:mlstring>Extension ID</xar:mlstring>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        #$rid#
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <xar:sec id="checkregname" mask="AdminRelease" catch="false" >
+                            <input type="text" name="regname" id="regname" value="#$regname#" size="25" maxlength="60" tabindex="2" />
+                        <xar:else/>
+                            <input type="hidden" name="regname" id="regname" value="#$regname#" />
+                            #$regname#
+                        </xar:sec>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <xar:mlstring>Type</xar:mlstring>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                     <xar:sec mask="AdminRelease" catch="false">
+                     <select name="exttype" id="exttype">
+                         <xar:foreach in="$exttypes" key="$k" value="$v">
+                         <xar:if condition="$k ne 0">
+                             <xar:if condition="$exttype eq $k">
+                                    <option value="#$k#" selected="selected">#$v#</option>
+                             <xar:else />
+                                    <option value="#$k#">#$v#</option>
+                             </xar:if>
                          </xar:if>
-                     </xar:if>
-                    </xar:foreach>
-                 </select> 
-                <xar:else />
-                     #$exttypename#
-                </xar:sec>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="uid"><xar:mlstring>New owner User ID</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                 <!--
-                   <xar:data-input type="userlist" name="uid" id="uid" value="$uid" size ="5" tabindex="2" validation="state:3" />
-                 -->
-                    <input type="text" name="uid" id="uid" value="#$uid#" size="5" maxlength="10" tabindex="2" />
+                        </xar:foreach>
+                     </select> 
+                    <xar:else />
+                         #$exttypename#
+                    </xar:sec>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="uid"><xar:mlstring>New owner User ID</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                     <!--
+                       <xar:data-input type="userlist" name="uid" id="uid" value="$uid" size ="5" tabindex="2" validation="state:3" />
+                     -->
+                        <input type="text" name="uid" id="uid" value="#$uid#" size="5" maxlength="10" tabindex="2" />
 
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                 <label for="newmembers"><xar:mlstring>Members</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="newmembers" id="newmembers" value="#$memberlist#" size="40" maxlength="250" tabindex="2" />
-                    <xar:mlstring>Comma separated list of usernames</xar:mlstring>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="displname" id="displname" tabindex="3" value="#$displname#" size="40" maxlength="250" >
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50">#$desc#</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <xar:mlstring>Class</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                <xar:if condition="$class eq '0'">
-                    <input type="radio" name="class" value="0" checked="checked" /><xar:mlstring>Core</xar:mlstring>
-                    <input type="radio" name="class" value="1" /><xar:mlstring>Non-Core</xar:mlstring>
-                <xar:else />
-                    <input type="radio" name="class" value="0" /><xar:mlstring>Core</xar:mlstring>
-                    <input type="radio" name="class" value="1" checked="checked" /><xar:mlstring>Non-Core</xar:mlstring>
-                </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="rstate" class="help" title="#xarML('Please enter the current development state of your extension.')#">
-                        <xar:mlstring>Extension State:</xar:mlstring>
-                    </label>&nbsp;&nbsp;
-                </td>
-                <td align="left" valign="top" class="xar-norm">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                     <label for="newmembers"><xar:mlstring>Members</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <input type="text" name="newmembers" id="newmembers" value="#$memberlist#" size="40" maxlength="250" tabindex="2" />
+                        <xar:mlstring>Comma separated list of usernames</xar:mlstring>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <input type="text" name="displname" id="displname" tabindex="3" value="#$displname#" size="40" maxlength="250" >
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50">#$desc#</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <xar:mlstring>Class</xar:mlstring>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                    <xar:if condition="$class eq '0'">
+                        <input type="radio" name="class" value="0" checked="checked" /><xar:mlstring>Core</xar:mlstring>
+                        <input type="radio" name="class" value="1" /><xar:mlstring>Non-Core</xar:mlstring>
+                    <xar:else />
+                        <input type="radio" name="class" value="0" /><xar:mlstring>Core</xar:mlstring>
+                        <input type="radio" name="class" value="1" checked="checked" /><xar:mlstring>Non-Core</xar:mlstring>
+                    </xar:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="rstate" class="help" title="#xarML('Please enter the current development state of your extension.')#">
+                            <xar:mlstring>Extension State:</xar:mlstring>
+                        </label>&nbsp;&nbsp;
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
                     
-                    <select name="rstate" id="rstate" size="1">
-                    <xar:foreach in="$stateoptions" value="$v" key="$k">
-                        <xar:if condition="$k eq $rstate">
-                            <option value="#$k#" selected="selected">#$v#</option>
-                        <xar:else />
-                            <option value="#$k#">#$v#</option>
-                        </xar:if>
-                    </xar:foreach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="scmlink"><xar:mlstring>SCM Link</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <xar:data-input type="url" name="scmlink" value="$scmlink" id="scmlink" size="100" maxlength="250" />
-                </td>
-            </tr>
+                        <select name="rstate" id="rstate" size="1">
+                        <xar:foreach in="$stateoptions" value="$v" key="$k">
+                            <xar:if condition="$k eq $rstate">
+                                <option value="#$k#" selected="selected">#$v#</option>
+                            <xar:else />
+                                <option value="#$k#">#$v#</option>
+                            </xar:if>
+                        </xar:foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="scmlink"><xar:mlstring>SCM Link</xar:mlstring></label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <xar:data-input type="url" name="scmlink" value="$scmlink" id="scmlink" size="100" maxlength="250" />
+                    </td>
+                </tr>
             
-             <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="openproj" class="xar-form-label">
-                       <span class="help" title="#xarML('Do you want this listed on public blocks')#">
-                           <xar:mlstring>Add to Latest Project List?</xar:mlstring>
-                        </span>
-                    </label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <xar:if condition="$openproj eq 1">
-                        <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
-                    <xar:else/>
-                         <input type="checkbox" name="openproj" id="openproj" value="1" />
-                     </xar:if>
-                </td>
-             </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm" colspan="2">
-                    #$cathook#
-                </td>
-            </tr>
-        </table>            
-        <p>
-            <input type="submit" value="#xarML('Modify ID')#"  tabindex="6" />
-        </p>
-    </form>
-</div>
-
+                 <tr>
+                    <td align="left" valign="top" class="xar-norm">
+                        <label for="openproj" class="xar-form-label">
+                           <span class="help" title="#xarML('Do you want this listed on public blocks')#">
+                               <xar:mlstring>Add to Latest Project List?</xar:mlstring>
+                            </span>
+                        </label>
+                    </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <xar:if condition="$openproj eq 1">
+                            <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
+                        <xar:else/>
+                             <input type="checkbox" name="openproj" id="openproj" value="1" />
+                         </xar:if>
+                    </td>
+                 </tr>
+                <tr>
+                    <td align="left" valign="top" class="xar-norm" colspan="2">
+                        #$cathook#
+                    </td>
+                </tr>
+            </table>            
+            <p>
+                <input type="submit" value="#xarML('Modify ID')#"  tabindex="6" />
+            </p>
+        </form>
+    </div>
+</xar:template>
