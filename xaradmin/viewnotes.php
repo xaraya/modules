@@ -179,7 +179,7 @@ function release_admin_viewnotes()
      $data['pager'] = xarTplGetPager($startnum,
         xarMod::apiFunc('release', 'user', 'countnotes',array('phase'=>$phase,'filter'=>$filter)),
         xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
-        xarModGetUserVar('release', 'itemsperpage', $uid));
+        xarModUserVars::get('release', 'itemsperpage', $uid));
     }
 
     $data['phase'] = $phasedesc;

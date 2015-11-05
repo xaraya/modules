@@ -52,7 +52,7 @@ function release_user_view()
                          'catid'     => $catid,
                          'sort'      => $sort,
                          'startnum'  => $startnum,
-                         'numitems'  => xarModGetUserVar('release',
+                         'numitems'  => xarModUserVars::get('release',
                                                         'itemsperpage',$uid),
                           ));
 
@@ -180,7 +180,7 @@ function release_user_view()
                      'exttype'=>$exttype,
                      'catid'=>$catid,
                      'sort'=>$sort)),
-               xarModGetUserVar('release', 'itemsperpage', $uid));
+               xarModUserVars::get('release', 'itemsperpage', $uid));
 
     }
     if (!isset($allitems)) {

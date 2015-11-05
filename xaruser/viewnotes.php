@@ -152,7 +152,7 @@ function release_user_viewnotes()
         xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
                                                                            'filter'=>$filter,
                                                                             'exttype' =>$exttype)),
-        xarModGetUserVar('release', 'itemsperpage', $uid));
+        xarModUserVars::get('release', 'itemsperpage', $uid));
     }
 
 

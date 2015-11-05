@@ -29,13 +29,13 @@ function release_admin_viewids()
     }
     // The user API function is called. 
     $items = xarMod::apiFunc('release', 'user', 'getallrids',
-                       array('exttype' => $exttype,
+                       array('exttype'  => $exttype,
                              'startnum' => $startnum,
-                             'numitems' => xarModGetUserVar('release',
+                             'numitems' => xarModUserVars::get('release',
                                                             'itemsperpage',$uid),
                               ));
 
-    if (empty($items)) throw new BadParameterException(null,xarML('There are no items to display in the release module'));
+    if (empty($items)) return xarTpl::module('release', 'user', 'errors', array('layout' => 'no_items'));
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
@@ -66,7 +66,7 @@ function release_admin_viewids()
     $data['pager'] = xarTplGetPager($startnum,
         xarMod::apiFunc('release', 'user', 'countitems',array('exttype'=>$exttype)),
         xarModURL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
-        xarModGetUserVar('release', 'itemsperpage', $uid));
+        xarModUserVars::get('release', 'itemsperpage', $uid));
     // Add the array of items to the template variables
     $data['items'] = $items;
     return $data;

@@ -81,7 +81,7 @@ function release_userapi_getallrids($args)
             LEFT JOIN $rolestable
             ON $releasetable.xar_uid = $rolestable.xar_uid";
     $bindvars = array();
-
+die("Y");
     $from ='';
     $where = array();
     if (!empty($catid) && count(array($catid)) > 0) 
