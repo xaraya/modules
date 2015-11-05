@@ -14,12 +14,8 @@ function release_userapi_getid($args)
 {
     extract($args);
 
-    if (!isset($eid) && (!isset($rid))) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
+    if (!isset($eid) && (!isset($rid))) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 

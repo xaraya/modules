@@ -29,24 +29,14 @@ function release_userapi_updateid($args)
         (!isset($regname)) ||
         (!isset($displname)) ||
         (!isset($exttype)) ||
-        (!isset($class))) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
+        (!isset($class))) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
 
     // The user API function is called
     $link = xarMod::apiFunc('release', 'user', 'getid',
                           array('eid' => $eid));
 
-    if ($link == false) {
-        $msg = xarML('No Such Release ID Present');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
-        return;
-    }
+    if ($link == false) throw new BadParameterException(null,xarML('No Such Release ID Present'));
+
     //this should not change once registered
     if (!isset($regtime)) {
        $regtime=$link['regtime'];

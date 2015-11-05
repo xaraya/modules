@@ -24,24 +24,13 @@ function release_adminapi_deleteid($args)
     extract($args);
 
     // Argument check
-    if (!isset($rid)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
+    if (!isset($rid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
 
     // The user API function is called
     $link = xarMod::apiFunc('release', 'user', 'getid',
                          array('eid' => $eid));
 
-    if ($link == false) {
-        $msg = xarML('No Such Release ID Present');
-        xarErrorSet(XAR_USER_EXCEPTION, 
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
-        return; 
-    }
+    if ($link == false) throw new EmptyParameterException(null,xarML('No Such Release ID Present'));
 
     // Security Check
     if(!xarSecurityCheck('DeleteRelease')) return;

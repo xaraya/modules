@@ -155,7 +155,7 @@ function release_user_modifyid($args)
                                       'openproj'  => $openproj,
                                       'cids'      => $cids))) return;
 
-                xarResponseRedirect(xarModURL('release', 'user', 'display',array('eid'=>$eid)));
+                xarResponse::redirect(xarModURL('release', 'user', 'display',array('eid'=>$eid)));
           return true;
 
             break;

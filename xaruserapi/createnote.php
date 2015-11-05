@@ -20,14 +20,7 @@ function release_userapi_createnote($args)
     if ((!isset($rid)) ||
         (!isset($eid)) ||
         (!isset($exttype)) ||
-        (!isset($version))) {
-
-        $msg = xarML('Wrong arguments to release_userapi_create.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
-        return false;
-    }
+        (!isset($version))) throw new BadParameterException(null,xarML('Wrong arguments to release_userapi_create'));
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();

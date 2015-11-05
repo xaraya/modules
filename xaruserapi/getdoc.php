@@ -14,12 +14,7 @@ function release_userapi_getdoc($args)
 {
     extract($args);
 
-    if (!isset($rdid)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
+    if (!isset($rdid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

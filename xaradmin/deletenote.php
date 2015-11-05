@@ -54,7 +54,7 @@ function release_admin_deletenote()
                         array('rnid' => $rnid))) return;
 
     // Redirect
-    xarResponseRedirect(xarModURL('release', 'admin', 'viewnotes'));
+    xarResponse::redirect(xarModURL('release', 'admin', 'viewnotes'));
 
     // Return
     return true;

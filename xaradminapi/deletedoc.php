@@ -24,24 +24,13 @@ function release_adminapi_deletedoc($args)
     extract($args);
 
     // Argument check
-    if (!isset($rdid)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
+    if (!isset($rdid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
 
     // The user API function is called
     $link = xarMod::apiFunc('release', 'user', 'getdoc',
                          array('rdid' => $rdid));
 
-    if ($link == false) {
-        $msg = xarML('No Such Release Doc Present');
-        xarErrorSet(XAR_USER_EXCEPTION, 
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
-        return; 
-    }
+    if ($link == false) throw new EmptyParameterException(null,xarML('No Such Release Doc Present'));
 
     // Security Check
     if(!xarSecurityCheck('DeleteRelease')) return;

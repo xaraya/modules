@@ -28,14 +28,7 @@ function release_userapi_createdoc($args)
         (!isset($title)) ||
         (!isset($doc)) ||
         (!isset($exttype)) ||
-        (!isset($approved))) {
-
-        $msg = xarML('Wrong arguments to release_userapi_createdoc.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
-        return false;
-    }
+        (!isset($approved))) throw new BadParameterException(null,xarML('Wrong arguments to release_userapi_createdoc'));
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();

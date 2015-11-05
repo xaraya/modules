@@ -17,14 +17,8 @@ function release_userapi_createid($args)
 
     // Argument check
     if ((!isset($regname)) ||
-        (!isset($exttype))) {
+        (!isset($exttype))) throw new BadParameterException(null,xarML('Wrong arguments to release_userapi_createid'));
 
-        $msg = xarML('Wrong arguments to release_userapi_createid.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
-        return false;
-    }
     if (!isset($ridno)) $ridno = 0; //make it zero and check for this before using it for allocations
     $regname = trim(strtolower($regname));
     //get our new registration ID for this extension type

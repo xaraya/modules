@@ -114,7 +114,7 @@ function release_user_addid($args)
                     return $data;
                 }
 
-                xarResponseRedirect(xarModURL('release', 'user', 'display',array('eid'=>$newid)));
+                xarResponse::redirect(xarModURL('release', 'user', 'display',array('eid'=>$newid)));
                 return true;
                 break;
         }
