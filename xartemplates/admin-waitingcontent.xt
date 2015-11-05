@@ -8,7 +8,7 @@
     <xar:else />
         <strong>#$counted#</strong></p>
         <xar:foreach in="$loop" value="$item">
-        &nbsp;&nbsp;<a href="#$item['link']#" title="#$item['regname']#">#$item['regname']#</a>
+        &#160;&#160;<a href="#$item['link']#" title="#$item['regname']#">#$item['regname']#</a>
         <br />
         </xar:foreach>
     </xar:if>

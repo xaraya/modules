@@ -25,7 +25,7 @@
                         </label>
                     <input type="text" name="rid" id="rid" value="#$rid#" size="5" maxlength="5" tabindex="1" />
                     <xar:if condition="!empty($regname)">
-                    &nbsp; #$regname#
+                    &#160; #$regname#
                     </xar:if>
                 </p>
                 <p>

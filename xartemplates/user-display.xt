@@ -19,7 +19,7 @@
           <xar:mlvar>#$extname#</xar:mlvar>
         </xar:ml>
         <xar:if condition="!empty($editlink)">
-            &nbsp;<a href="#$editlink#">[edit]</a>
+            &#160;<a href="#$editlink#">[edit]</a>
         </xar:if>
       </h2>
       <xar:template type="module" file="user-minimenu" />
@@ -31,9 +31,9 @@
             <p>
                <xar:mlstring>Latest Version:</xar:mlstring>
                    <xar:if condition="!empty($latest['version'])">
-                       <strong>#$latest['version']#</strong>&nbsp;&nbsp; #xarLocaleFormatDate('%d %B %Y ', $latest['time'])#
+                       <strong>#$latest['version']#</strong>&#160;&#160; #xarLocaleFormatDate('%d %B %Y ', $latest['time'])#
                    <xar:else />
-                        &nbsp;<xar:mlstring>Unavailable</xar:mlstring>
+                        &#160;<xar:mlstring>Unavailable</xar:mlstring>
                    </xar:if>
             </p>
             <p>
@@ -41,7 +41,7 @@
                <xar:if condition="!empty($latest['dllink'])">
                    <a href="#$latest['dllink']#"><xar:mlstring>Download Now</xar:mlstring></a>
                <xar:else />
-                   &nbsp;<xar:mlstring>Unavailable</xar:mlstring>
+                   &#160;<xar:mlstring>Unavailable</xar:mlstring>
                </xar:if>
             </p>
             <xar:comment>TODO: Fix the following - add fields. For now some links.</xar:comment>

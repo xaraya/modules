@@ -16,13 +16,13 @@
       <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
           <input type="radio" name="phase" id="phase" value="certified"  />
           <xar:mlstring>Certified</xar:mlstring>
-          &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="price"  />
+          &#160;&#160;<input type="radio" name="phase" id="phase" value="price"  />
           <xar:mlstring>Commercial</xar:mlstring>
-          &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="free"  />
+          &#160;&#160;<input type="radio" name="phase" id="phase" value="free"  />
           <xar:mlstring>Free</xar:mlstring>
-          &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
+          &#160;&#160;<input type="radio" name="phase" id="phase" value="supported"  />
           <xar:mlstring>Supported</xar:mlstring>
-        &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
+        &#160;&#160;<input type="submit" value="Refresh"  tabindex="6" />
       </form>
       </span>
     </div>
@@ -61,7 +61,7 @@
                       </xar:if>
                 </span>
               </div>
-              <b>Version:</b>&nbsp;&nbsp; #$loop:item['version']#
+              <b>Version:</b>&#160;&#160; #$loop:item['version']#
                  <p>#$loop:item['desc']#</p>
               <div align="right">
                 <a href="#$loop:item['displaylink']#"><xar:mlstring>Read More</xar:mlstring></a>

@@ -33,7 +33,7 @@
                   </h2>
                   <h2 style="float: right; width: 78%; text-align: left;">
                   <a href="#$extensionpage#" title="#xarML('View the Extension Overview Page')#">
-                      #$extname#&nbsp; <xar:mlstring>Version </xar:mlstring>#$version#
+                      #$extname#&#160; <xar:mlstring>Version </xar:mlstring>#$version#
                   </a>
                   </h2>
                   <div style="clear: both;">

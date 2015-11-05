@@ -115,7 +115,7 @@
                     <td align="left" valign="top" class="xar-norm">
                         <label for="rstate" class="help" title="#xarML('Please enter the current development state of your extension.')#">
                             <xar:mlstring>Extension State:</xar:mlstring>
-                        </label>&nbsp;&nbsp;
+                        </label>&#160;&#160;
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                     

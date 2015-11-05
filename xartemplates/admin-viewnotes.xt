@@ -17,18 +17,18 @@
           <tr>
               <td width="30%">
                   <xar:mlstring>Certification Status</xar:mlstring>:<br />
-                  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
-                  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
+                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
+                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
               </td>
               <td width="30%">
                   <xar:mlstring>Price</xar:mlstring>:<br />
-                  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
-                  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
+                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
+                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
               </td>
               <td width="30%">
                   <xar:mlstring>Support</xar:mlstring>:<br />
-                  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
-                  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
+                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
+                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
               </td>
           </tr>
       </table>
