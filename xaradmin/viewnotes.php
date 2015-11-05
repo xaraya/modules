@@ -30,7 +30,7 @@ function release_admin_viewnotes()
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
-    $uid = xarUserGetVar('uid');
+    $uid = xarUser::getVar('id');
     $data['items'] = array();
 
     if (empty($phase)){

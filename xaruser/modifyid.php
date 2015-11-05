@@ -43,14 +43,14 @@ function release_user_modifyid($args)
 
             // The user API function is called.
 
-            $uid = xarUserGetVar('uid');
+            $uid = xarUser::getVar('id');
             $memberstring = '';
             $members=trim($data['members']);
             if (isset($members) && !empty($members)) {
                $memberdata = unserialize($members);
                 if (count($memberdata)>0) {
                     foreach ($memberdata as $k => $v) {
-                       $memberlist[]=xarUserGetVar('uname',$v);
+                       $memberlist[] = xarUser::getVar('uname',$v);
                     }
                 }
                 $memberstring='';

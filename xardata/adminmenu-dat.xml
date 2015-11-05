@@ -12,20 +12,20 @@
         <menuitem>
             <mask>ManageRelease</mask>
             <includes>
-                <includeitem>view_resources</includeitem>
+                <includeitem>viewnotes</includeitem>
             </includes>
-            <target>view_resources</target>
-            <title>Manage the hard resources of this module</title>
-            <label>Resources</label>
+            <target>viewnotes</target>
+            <title>Manage release information</title>
+            <label>Information</label>
         </menuitem>
         <menuitem>
-            <mask>ManageDAM</mask>
+            <mask>ManageRelease</mask>
             <includes>
-                <includeitem>view_virtual_resources</includeitem>
+                <includeitem>viewids</includeitem>
             </includes>
-            <target>view_soft_resources</target>
-            <title>Manage the virtual resources of this module</title>
-            <label>Soft Resources</label>
+            <target>viewids</target>
+            <title>Manage release information</title>
+            <label>IDs</label>
         </menuitem>
         <menuitem>
             <mask>AdminRelease</mask>

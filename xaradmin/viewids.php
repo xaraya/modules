@@ -18,7 +18,7 @@ function release_admin_viewids()
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
-    $uid = xarUserGetVar('uid');
+    $uid = xarUser::getVar('id');
 
     $xarexttypes = xarMod::apiFunc('release','user','getexttypes');
     foreach ($xarexttypes as $k=>$v) {
@@ -35,11 +35,7 @@ function release_admin_viewids()
                                                             'itemsperpage',$uid),
                               ));
 
-    if (empty($items)) {
-        $msg = xarML('There are no items to display in the release module');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
+    if (empty($items)) throw new BadParameterException(null,xarML('There are no items to display in the release module'));
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {

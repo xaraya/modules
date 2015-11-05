@@ -28,10 +28,8 @@ function release_userapi_createid($args)
                 'ridno'     => $ridno));
 
     if (!($regid)){
-      $msg = xarML('<p>Sorry, unable to create an ID for this extension. The name you requested is either already registered for that extension type, or there is a problem with the name format. Please check the name for valid characters, and choose a valid name if necessary to try again.</p>');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',                       
-                    new SystemException($msg));
-        return false;
+        $msg = xarML('<p>Sorry, unable to create an ID for this extension. The name you requested is either already registered for that extension type, or there is a problem with the name format. Please check the name for valid characters, and choose a valid name if necessary to try again.</p>');
+        throw new Exception(null,$msg);
     }
     //we now have our new rid for this extension
     $rid = $regid;

@@ -87,7 +87,7 @@ function release_user_addnotes($args)
                         array('m'=>$m,'rid'=>$rid,'exttype'=>$exttype,'phase'=>'getmodule')));
             }
 
-            $uid = xarUserGetVar('uid');
+            $uid = xarUser::getVar('id');
 
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
                 $message = '';

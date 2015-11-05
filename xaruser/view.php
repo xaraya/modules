@@ -30,7 +30,7 @@ function release_user_view()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    $uid = xarUserGetVar('uid');
+    $uid = xarUser::getVar('id');
 
 
    $xarexttypes = xarMod::apiFunc('release','user','getexttypes');
@@ -77,7 +77,7 @@ function release_user_view()
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
         $items[$i]['rstate'] = xarVarPrepForDisplay($item['rstate']);        
-        /* use the xarUserGetVar func as we only want name 
+        /* use the xarUser::getVar func as we only want name 
          * TODO: Where is this user taken to?
          */
         $getuser = xarMod::apiFunc('roles', 'user', 'get',

@@ -24,19 +24,13 @@ function release_userapi_allocateid($args)
 
     if (!isset($regname) || !isset($exttype)) {
        $msg = xarML('Both a registration name and extension type were not provided and are needed for registration.');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
-        return false;
+        throw new Exception(null,$msg);
     }
     //check the name - common to all types?
     // Argument check
     if (!ereg("^[a-z0-9][a-z0-9_-]*[a-z0-9]$", $regname)) {
-              $msg = xarML('Registered name may only contain alphanumeric characters, included underscore or hypen, and no spaces.');
-              xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
-              return false;
+        $msg = xarML('Registered name may only contain alphanumeric characters, included underscore or hypen, and no spaces.');
+        throw new Exception(null,$msg);
     }
     if (isset($ridno) && is_integer($ridno) && $ridno >0) { //could be a supplied ID, let's check if it's available.
       $checkrid = xarMod::apiFunc('release','user','getid',array('rid'=>$ridno, 'exttype'=>$exttype));
@@ -64,10 +58,8 @@ function release_userapi_allocateid($args)
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-       $msg = xarML('Sorry, the name you requested is already registered for that extension type, please choose another.');
-        xarErrorSet(XAR_USER_EXCEPTION,'BAD_PARAM',
-        new SystemException($msg));
-          return false;
+        $msg = xarML('Sorry, the name you requested is already registered for that extension type, please choose another.');
+        throw new Exception(null,$msg);
     }
 
     $bindvars=array();

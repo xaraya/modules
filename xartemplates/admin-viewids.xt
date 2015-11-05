@@ -11,10 +11,10 @@
                     ID
                 </th>
                 <th>
-                      Name
+                    Name
                  </th>
                 <th>
-                      Options
+                    Options
                 </th>
             </tr>
             <xar:loop name="$items">
@@ -33,9 +33,9 @@
                         </xar:if>
                         |
                         <xar:if condition="empty($loop:item['deleteurl'])">
-                          #$loop:item['deletetitle']#
+                            #$loop:item['deletetitle']#
                         <xar:else />
-                          <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                            <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
                         </xar:if>
                     </td>
                 </tr>

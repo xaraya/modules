@@ -27,7 +27,7 @@ function release_user_viewnotes()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    $uid = xarUserGetVar('uid');
+    $uid = xarUser::getVar('id');
     $data['items'] = array();
 
     if (empty($phase)){

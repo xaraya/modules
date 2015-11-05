@@ -72,7 +72,7 @@ function release_user_display($args)
 
     $realname = $getuser['name'];
     //determine edit link
-    if ((xarUserGetVar('uid') == $id['uid']) || xarSecurityCheck('EditRelease',0)) {
+    if ((xarUser::getVar('id') == $id['uid']) || xarSecurityCheck('EditRelease',0)) {
         $data['editlink']=xarModURL('release','user','modifyid',array('eid'=>$eid));
     } else {
         $data['editlink']='';
@@ -93,7 +93,7 @@ function release_user_display($args)
         $memberdata = unserialize($members);
         if (count($memberdata)>0) {
             foreach ($memberdata as $k => $v) {
-                $memberlist[]=array($v=>xarUserGetVar('uname',$v));
+                $memberlist[]=array($v => xarUser::getVar('uname',$v));
             }
         }
 
@@ -271,7 +271,7 @@ function release_user_display($args)
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
                 $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
@@ -303,7 +303,7 @@ function release_user_display($args)
             for ($i = 0; $i < $numitems; $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
                 $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
@@ -335,7 +335,7 @@ function release_user_display($args)
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
                 $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
@@ -367,7 +367,7 @@ function release_user_display($args)
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
                 $items[$i]['docurl'] = xarModURL('release', 'user', 'getdoc',
                                                  array('rdid' => $item['rdid']));
@@ -399,7 +399,7 @@ function release_user_display($args)
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
                 $items[$i]['docurl'] = xarModURL('release', 'user', 'getdoc',
                                                  array('rdid' => $item['rdid']));

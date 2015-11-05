@@ -48,7 +48,7 @@ function release_user_addid($args)
 
             case 'add':
             default:
-                $data['uid'] = xarUserGetVar('uid');
+                $data['uid'] = xarUser::getVar('id');
                 $data['authid'] = xarSecGenAuthKey();
 
                 $item['module'] = 'release';
@@ -82,7 +82,7 @@ function release_user_addid($args)
                 if (!xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 
                 // Get the UID of the person submitting the module
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $openproj = isset($openproj)? 1:0;
                 // Confirm authorisation code
                 if (!xarSecConfirmAuthKey()) return;

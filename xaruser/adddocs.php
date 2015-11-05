@@ -58,7 +58,7 @@ function release_user_adddocs()
                                   array('eid' => $eid));
 
             
-            $uid = xarUserGetVar('uid');
+            $uid = xarUser::getVar('id');
 
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
                 $message = '';
@@ -109,7 +109,7 @@ function release_user_adddocs()
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
             }
 
@@ -141,7 +141,7 @@ function release_user_adddocs()
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
             }
 
@@ -173,7 +173,7 @@ function release_user_adddocs()
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
             }
 
@@ -205,7 +205,7 @@ function release_user_adddocs()
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
             }
 
@@ -238,7 +238,7 @@ function release_user_adddocs()
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
 
-                $uid = xarUserGetVar('uid');
+                $uid = xarUser::getVar('id');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
             }
 

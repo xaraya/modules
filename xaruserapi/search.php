@@ -98,7 +98,7 @@ function release_userapi_search($args)
                                 'regname' => $regname,
                                 'displname' => $displname,
                                 'desc' => $desc,
-                                'author' => xarUserGetVar('name',$uid),
+                                'author' => xarUser::getVar('name',$uid),
                                 'exttype' => $exttype );
         }
     }
