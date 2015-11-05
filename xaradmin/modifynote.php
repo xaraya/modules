@@ -136,7 +136,7 @@ function release_admin_modifynote()
                                       'rstate'      => $rstate,
                                       'usefeed'     => $usefeed))) return;
 
-            xarResponse::redirect(xarModURL('release', 'user', 'displaynote',array('rnid'=>$rnid)));
+            xarController::redirect(xarModURL('release', 'user', 'displaynote',array('rnid'=>$rnid)));
 
             return true;
 

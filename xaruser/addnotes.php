@@ -83,7 +83,7 @@ function release_user_addnotes($args)
             if (!isset($data['regname']) || empty($data['regname'])) {
                  $m = xarML('Sorry, that extension number and extension type combination does not exist');
 
-                 xarResponse::redirect(xarModURL('release', 'user', 'addnotes',
+                 xarController::redirect(xarModURL('release', 'user', 'addnotes',
                         array('m'=>$m,'rid'=>$rid,'exttype'=>$exttype,'phase'=>'getmodule')));
             }
 

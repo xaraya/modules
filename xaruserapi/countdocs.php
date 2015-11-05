@@ -20,8 +20,8 @@ function release_userapi_countdocs($args)
 {
     extract ($args);
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_docs'];
 

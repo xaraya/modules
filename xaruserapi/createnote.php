@@ -23,8 +23,8 @@ function release_userapi_createnote($args)
         (!isset($version))) throw new BadParameterException(null,xarML('Wrong arguments to release_userapi_create'));
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_notes'];
 

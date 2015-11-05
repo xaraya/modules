@@ -98,8 +98,8 @@ function release_user_search($args)
 
     if (isset($author)) {
         // Check user id is real (can't use roles api here - throws a fit - need a utility function)
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn =& xarDB::getConn();
+        $xartable =& xarDB::getTables();
 
         // Get user information
         $rolestable = $xartable['roles'];

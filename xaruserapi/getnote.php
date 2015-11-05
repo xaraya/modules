@@ -21,8 +21,8 @@ function release_userapi_getnote($args)
 
     if (!isset($rnid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_notes'];
 

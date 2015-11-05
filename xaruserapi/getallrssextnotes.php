@@ -29,8 +29,8 @@ function release_userapi_getallrssextnotes($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasenotes = $xartable['release_notes'];
     //Need to only get the last x release notes for efficiency

@@ -28,7 +28,7 @@ function release_admin_updateconfig()
     xarModCallHooks('module','updateconfig','release',
                    array('module' => 'release'));
 
-    xarResponse::redirect(xarModURL('release', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('release', 'admin', 'modifyconfig'));
 
     // Return
     return true;

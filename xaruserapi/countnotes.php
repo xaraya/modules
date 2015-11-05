@@ -25,8 +25,8 @@ function release_userapi_countnotes($args)
      $phase='viewall';
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasenotes = $xartable['release_notes'];
     $releaseids = $xartable['release_id'];

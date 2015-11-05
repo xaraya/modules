@@ -37,8 +37,8 @@ function release_userapi_getdocs($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasedocstable = $xartable['release_docs'];
 

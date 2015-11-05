@@ -36,8 +36,8 @@ function release_adminapi_deletenote($args)
     if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasenotetable = $xartable['release_notes'];
 

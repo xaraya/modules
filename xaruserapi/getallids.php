@@ -35,8 +35,8 @@ function release_userapi_getallids($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_id'];
     $bindvars=array();

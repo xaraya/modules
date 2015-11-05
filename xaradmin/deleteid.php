@@ -57,7 +57,7 @@ function release_admin_deleteid($args)
                         array('eid' => $eid,'rid'=>$rid, 'regname'=>$regname))) return;
 
     // Redirect
-    xarResponse::redirect(xarModURL('release', 'admin', 'viewids'));
+    xarController::redirect(xarModURL('release', 'admin', 'viewids'));
 
     // Return
     return true;

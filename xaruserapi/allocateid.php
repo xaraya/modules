@@ -50,8 +50,8 @@ function release_userapi_allocateid($args)
      }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_id'];
 

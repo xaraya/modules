@@ -29,8 +29,8 @@ function release_userapi_search($args)
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $releasetable = & $xartable['release_id'];
     $where = '';
     $releases = array();

@@ -37,8 +37,8 @@ function release_userapi_createid($args)
     $rid = $regid;
 
      // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_id'];
     //We want to fill in the missing eids 

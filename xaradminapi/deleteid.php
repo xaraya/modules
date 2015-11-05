@@ -36,8 +36,8 @@ function release_adminapi_deleteid($args)
     if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_id'];
 

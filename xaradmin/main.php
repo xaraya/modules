@@ -12,7 +12,7 @@ function release_admin_main()
 {
 
     // Security Check
-    xarResponse::redirect(xarModURL('release', 'admin', 'viewnotes'));
+    xarController::redirect(xarModURL('release', 'admin', 'viewnotes'));
         
     return array();
 

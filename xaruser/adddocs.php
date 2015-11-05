@@ -273,7 +273,7 @@ function release_user_adddocs()
                                       'doc'         => $doc,
                                       'approved'    => $approved))) return;
 
-            xarResponse::redirect(xarModURL('release', 'user', 'adddocs', array('phase' => $return, 
+            xarController::redirect(xarModURL('release', 'user', 'adddocs', array('phase' => $return, 
                                                                               'eid' => $eid)));
 
            $data = '';

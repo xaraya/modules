@@ -45,8 +45,8 @@ function release_userapi_getallrids($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_id'];
     $rolestable = $xartable['roles'];

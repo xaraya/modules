@@ -21,8 +21,8 @@ function release_userapi_getallrssmodsnotes($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasenotes = $xartable['release_notes'];
 

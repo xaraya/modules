@@ -39,8 +39,8 @@ function release_adminapi_updatenote($args)
     if(!xarSecurityCheck('EditRelease')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $releasenotetable = $xartable['release_notes'];
 
