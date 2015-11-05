@@ -3,14 +3,14 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Release Module</xar:mlstring>
+            Release Module
         </span>
     </div>
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-body">
-        <h2><xar:mlstring>Documentation</xar:mlstring></h2>
+        <h2>Documentation</h2>
         <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid))#">
-            <xar:mlstring>Back to General Information</xar:mlstring>
+            Back to General Information
         </a>
         <h3>#$title#</h3>
            <p>#$docsf#</p>

@@ -3,27 +3,27 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="!isset($ishooked) or empty($ishooked)">
     <div class="xar-mod-head">
-       <span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span>
+       <span class="xar-mod-title">Project Registration &amp; Releases</span>
     </div>
     <div class="xar-mod-body">
-    <h2><xar:mlstring>Search Registered Extensions</xar:mlstring></h2>
+    <h2>Search Registered Extensions</h2>
     <xar:template type="module" file="user-menu" />
         <form method="post" action="&xar-modurl-release-user-search;">
-              <p><label for="q"><xar:mlstring>Search for</xar:mlstring></label>
+              <p><label for="q">Search for</label>
               <input type="text" name="q" id="q" value="" size="20" />
-              <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
+              <xar:set name="$search">Search</xar:set>
               <input type="submit" name="search" value="#$search#" />
               </p>
              <p>
-             <xar:mlstring>By author </xar:mlstring>
+             By author 
              <input type="text" name="author" id="author" value="" size="20" />
              </p>
     </xar:if>
     <xar:if condition="!empty($release) and count($release) gt 0">
         <h4>
-            <xar:mlstring>
+            
                 Registered Extensions Found
-            </xar:mlstring>
+            
             :
         </h4>
         <ul>
@@ -38,7 +38,7 @@
                     <a href="#xarModURL('release', 'user', 'display', array('eid' => $extension['eid']))#">
                         #$exttypename# - ID #$extension['rid']#  #$extension['displname']#
                     </a>
-                    <xar:mlstring> by </xar:mlstring>
+                     by 
                     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
                 </li>
             </xar:foreach>
@@ -51,9 +51,9 @@
         </xar:if>
     </xar:if>
     <p>
-        <xar:mlstring>
+        
             Search in
-        </xar:mlstring>
+        
         :
     </p>
     <p>
@@ -62,9 +62,9 @@
         <xar:else />
             <input type="checkbox" name="rid" id="rid" value="1" />
         </xar:if>
-         <xar:mlstring>
+         
             Extension ID
-        </xar:mlstring>
+        
     </p>
 
     <p>
@@ -74,9 +74,9 @@
         <xar:else />
         <input type="checkbox" name="regname" id="regname" value="1" />
         </xar:if>
-        <xar:mlstring>
+        
             Registered Name
-        </xar:mlstring>
+        
 
     </p>
     <p>
@@ -86,9 +86,9 @@
         <xar:else />
         <input type="checkbox" name="displname" id="displname" value="1" />
         </xar:if>
-        <xar:mlstring>
+        
             Display Name
-        </xar:mlstring>
+        
 
     </p>
     <p>
@@ -98,9 +98,9 @@
         <xar:else />
         <input type="checkbox" name="desc" id="desc" value="1" />
         </xar:if>
-        <xar:mlstring>
+        
             Extension Description
-        </xar:mlstring>
+        
 
     </p>
     <p>
@@ -110,9 +110,9 @@
         <xar:else />
         <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
         </xar:if>
-       <xar:mlstring>
+       
             Extension Author
-        </xar:mlstring>
+        
 
     </p>
     <xar:if condition="empty($ishooked)">

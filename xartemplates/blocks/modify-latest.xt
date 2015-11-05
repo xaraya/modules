@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-form-input-wrapper">
         <label for="numitems#$blockid#" title="#xarML('Enter the number of items to display.')#" class="xar-form-label">
-            <xar:mlstring>Number of Items:</xar:mlstring>
+            Number of Items:
         </label>
         <input type="text" name="numitems" id="numitems#$blockid#" value="5" size="5" maxlength="5" />
         <br style="clear:both;" />
@@ -15,7 +15,7 @@
             <input type="checkbox" name="shownonfeeditems" id="shownonfeeditems" value="1" />
         </xar:if>
         <label for="numitems#$blockid#" title="#xarML('Display items not marked for RSS feed?.')#">
-            <xar:mlstring>Add non-RSS feed items?</xar:mlstring>
+            Add non-RSS feed items?
         </label>
         <br style="clear:both;" />
     </div>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Project Registration &amp; Releases</span></div>
     <xar:if condition="!isset($tab)">
         <xar:set name="tab">''</xar:set>
     </xar:if>
     <xar:set name="extname">ucfirst($regname)</xar:set>
     <div class="xar-mod-body">
-    <h2><xar:mlstring>Modify Registered Extension Entry</xar:mlstring></h2>
+    <h2>Modify Registered Extension Entry</h2>
     <xar:template type="module" file="user-minimenu" />
         <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -19,7 +19,7 @@
             <table border="0" width="99%" cellpadding="5">
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <xar:mlstring>Extension ID</xar:mlstring>
+                        Extension ID
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         #$rid#
@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
+                        <label for="regname">Extension Registered Name</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <xar:sec id="checkregname" mask="AdminRelease" catch="false" >
@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <xar:mlstring>Type</xar:mlstring>
+                        Type
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                      <xar:sec mask="AdminRelease" catch="false">
@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <label for="uid"><xar:mlstring>New owner User ID</xar:mlstring></label>
+                        <label for="uid">New owner User ID</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                      <!--
@@ -74,16 +74,16 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                     <label for="newmembers"><xar:mlstring>Members</xar:mlstring></label>
+                     <label for="newmembers">Members</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <input type="text" name="newmembers" id="newmembers" value="#$memberlist#" size="40" maxlength="250" tabindex="2" />
-                        <xar:mlstring>Comma separated list of usernames</xar:mlstring>
+                        Comma separated list of usernames
                     </td>
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
+                        <label for="displname">Display Name</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <input type="text" name="displname" id="displname" tabindex="3" value="#$displname#" size="40" maxlength="250" >
@@ -91,7 +91,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
+                        <label for="desc">Description</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50">#$desc#</textarea>
@@ -99,22 +99,22 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <xar:mlstring>Class</xar:mlstring>
+                        Class
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                     <xar:if condition="$class eq '0'">
-                        <input type="radio" name="class" value="0" checked="checked" /><xar:mlstring>Core</xar:mlstring>
-                        <input type="radio" name="class" value="1" /><xar:mlstring>Non-Core</xar:mlstring>
+                        <input type="radio" name="class" value="0" checked="checked" />Core
+                        <input type="radio" name="class" value="1" />Non-Core
                     <xar:else />
-                        <input type="radio" name="class" value="0" /><xar:mlstring>Core</xar:mlstring>
-                        <input type="radio" name="class" value="1" checked="checked" /><xar:mlstring>Non-Core</xar:mlstring>
+                        <input type="radio" name="class" value="0" />Core
+                        <input type="radio" name="class" value="1" checked="checked" />Non-Core
                     </xar:if>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
                         <label for="rstate" class="help" title="#xarML('Please enter the current development state of your extension.')#">
-                            <xar:mlstring>Extension State:</xar:mlstring>
+                            Extension State:
                         </label>&#160;&#160;
                     </td>
                     <td align="left" valign="top" class="xar-norm">
@@ -132,7 +132,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
-                        <label for="scmlink"><xar:mlstring>SCM Link</xar:mlstring></label>
+                        <label for="scmlink">SCM Link</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <xar:data-input type="url" name="scmlink" value="$scmlink" id="scmlink" size="100" maxlength="250" />
@@ -143,7 +143,7 @@
                     <td align="left" valign="top" class="xar-norm">
                         <label for="openproj" class="xar-form-label">
                            <span class="help" title="#xarML('Do you want this listed on public blocks')#">
-                               <xar:mlstring>Add to Latest Project List?</xar:mlstring>
+                               Add to Latest Project List?
                             </span>
                         </label>
                     </td>

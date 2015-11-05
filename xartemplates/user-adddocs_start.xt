@@ -3,16 +3,16 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Release Module</xar:mlstring>
+            Release Module
         </span>
     </div>
     <div class="xar-mod-body">
-    <h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
+    <h2>Release Module :: Add Documentation</h2>
     <xar:if condition="!empty($message)">
         #$message#
     <xar:else />
 
-        <xar:mlstring>From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
+        From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).
 
         <div style="text-align:center;">
             <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
@@ -23,7 +23,7 @@
             <table border="0" cellpadding="5">
                 <tr>
                     <td align="left" valign="top" class="xar-accent">
-                        <xar:mlstring>Extension ID</xar:mlstring>
+                        Extension ID
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         #$rid#
@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-accent">
-                        <xar:mlstring>Extension Registered Name</xar:mlstring>
+                        Extension Registered Name
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         #$name#
@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-accent">
-                        <xar:mlstring>Description</xar:mlstring>
+                        Description
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         #$desc#
@@ -49,16 +49,16 @@
             <br /><br />
             <xar:if condition="$exttype eq 1">
             <input type="radio" name="phase" id="phase" value="module"  />
-                <xar:mlstring>General Use</xar:mlstring>
+                General Use
             <input type="radio" name="phase" id="phase" value="blocks"  />
-                <xar:mlstring>Blocks Documentation</xar:mlstring>
+                Blocks Documentation
             <input type="radio" name="phase" id="phase" value="hooks"  />
-                <xar:mlstring>Hooks Documentation</xar:mlstring>
+                Hooks Documentation
             <xar:else />
             <input type="radio" name="phase" id="phase" value="theme"  />
-                <xar:mlstring>General Use</xar:mlstring>
+                General Use
             <input type="radio" name="phase" id="phase" value="blockgroups"  />
-                <xar:mlstring>Defined Block Groups</xar:mlstring><br /><br />
+                Defined Block Groups<br /><br />
             </xar:if>
             <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
             </form>

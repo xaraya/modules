@@ -3,13 +3,13 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+            Project Registration &amp; Releases
         </span>
     </div>
 
     <div class="xar-mod-body">
       <xar:set name="extname">ucfirst($regname)</xar:set>
-      <xar:set name="goback"><xar:mlstring>Back to List</xar:mlstring></xar:set>
+      <xar:set name="goback">Back to List</xar:set>
       <xar:set name="listview">xarModURL('release','user','view',array('tab'=>'back'))</xar:set>
       <h2>
         <xar:ml>
@@ -29,61 +29,61 @@
     <xar:if condition="$general eq 2 and $version ne 2">
         <div style="background: #f7f7f7;border-color: #ccc;padding: 0 10px 0 30px;"class="xar-border-solid xar-floatright xar-thirdwidth xar-margin-thick xar-padding-thick">
             <p>
-               <xar:mlstring>Latest Version:</xar:mlstring>
+               Latest Version:
                    <xar:if condition="!empty($latest['version'])">
                        <strong>#$latest['version']#</strong>&#160;&#160; #xarLocaleFormatDate('%d %B %Y ', $latest['time'])#
                    <xar:else />
-                        &#160;<xar:mlstring>Unavailable</xar:mlstring>
+                        &#160;Unavailable
                    </xar:if>
             </p>
             <p>
-               <xar:mlstring>Latest Release:</xar:mlstring>
+               Latest Release:
                <xar:if condition="!empty($latest['dllink'])">
-                   <a href="#$latest['dllink']#"><xar:mlstring>Download Now</xar:mlstring></a>
+                   <a href="#$latest['dllink']#">Download Now</a>
                <xar:else />
-                   &#160;<xar:mlstring>Unavailable</xar:mlstring>
+                   &#160;Unavailable
                </xar:if>
             </p>
             <xar:comment>TODO: Fix the following - add fields. For now some links.</xar:comment>
                <xar:if condition="!empty($latest['nightlylink'])">
-                <p><xar:mlstring>Nightly Dev Build: </xar:mlstring><a href="#$nightlylink#">Xaraya Nightly</a></p>
+                <p>Nightly Dev Build: <a href="#$nightlylink#">Xaraya Nightly</a></p>
                 </xar:if>
                <xar:if condition="!empty($latest['scmlink'])">
-                 <p><xar:mlstring>Browse ChangeSets: </xar:mlstring><a href="#$scmlink#">Monotone View</a></p>
+                 <p>Browse ChangeSets: <a href="#$scmlink#">Monotone View</a></p>
                </xar:if>
-            <p><xar:mlstring>Documentation Links: </xar:mlstring>
-               <a href="#$latest['onsitedocs']#"><xar:mlstring>Onsite Docs</xar:mlstring></a>
+            <p>Documentation Links: 
+               <a href="#$latest['onsitedocs']#">Onsite Docs</a>
             </p>
         </div>
         <div class="xar-form-wrapper xar-padding-thickends">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Extension Type:</xar:mlstring></span>
+                Extension Type:</span>
                 #$exttypename#
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
                 <xar:ml>
-                <xar:mlstring>#(1) ID:</xar:mlstring>
-                <xar:mlvar>#$exttypename#</xar:mlvar>
+                    <xar:mlstring>#(1) ID:</xar:mlstring>
+                    <xar:mlvar>#$exttypename#</xar:mlvar>
                 </xar:ml>
             </span>
                 #$rid#
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Registered Name:</xar:mlstring></span>
+                Registered Name:</span>
                 #$extname#
         </div>
 
 
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Display Name:</xar:mlstring></span>
+                Display Name:</span>
                 #$displname#
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Description:</xar:mlstring>
+                Description:
             </span>
             <div class="xar-form-container-after">
                 #$desc#
@@ -91,26 +91,26 @@
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Class:</xar:mlstring>
+                Class:
             </span>
 
             <xar:if condition="$class == 0">
-                <xar:mlstring>Core</xar:mlstring>
+                Core
             <xar:else />
-                <xar:mlstring>Non-Core</xar:mlstring>
+                Non-Core
             </xar:if>
 
         </div>
 
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Author/Team Lead:</xar:mlstring></span>
+                Author/Team Lead:</span>
                 <a href="#$contacturl#">#$realname#</a>
         </div>
 
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Project Members:</xar:mlstring>
+                Project Members:
             </span>
                 <xar:if condition="!empty($memberstring)">
                     #$memberstring#
@@ -118,35 +118,35 @@
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Ext State:</xar:mlstring></span>
+                Ext State:</span>
                 #$rstatesel#
         </div>
         <div class="xar-clearboth">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>SCM Link:</xar:mlstring></span>
+                SCM Link:</span>
                 <xar:if condition="!empty($scmlink)">
-                    <a href="#$scmlink#"><xar:mlstring>Browse Changes</xar:mlstring></a>
+                    <a href="#$scmlink#">Browse Changes</a>
                 </xar:if>
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Last Modified:</xar:mlstring></span>
+                Last Modified:</span>
             <xar:if condition="isset($modified) and !empty($modified)">
                 #xarLocaleGetFormattedDate('medium',$modified)# #xarLocaleGetFormattedTime('medium',$modified)#
             </xar:if>
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Registration Date:</xar:mlstring></span>
+                Registration Date:</span>
             <xar:if condition="$regtime gt 0">
                 #xarLocaleGetFormattedDate('medium',$regtime)#
             <xar:else />
-                <xar:mlstring>A while ago (unknown)</xar:mlstring>
+                A while ago (unknown)
             </xar:if>
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
-                <xar:mlstring>Categories:</xar:mlstring></span>
+                Categories:</span>
                 <xar:categories-catinfo module="release" itemtype="0" itemid="$rid" base="11" ifempty="No Classification"/>
                 <!--<xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />-->
         </div>
@@ -157,21 +157,21 @@
             <form action="#xarModURL('release', 'user', 'display')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="rid" id="rid" value="#$rid#" />
             <input type="radio" name="phase" id="phase" value="view"  />
-            <xar:mlstring>Basic Information</xar:mlstring>
+            Basic Information
             <input type="radio" name="phase" id="phase" value="version"  />
-            <xar:mlstring>Version History</xar:mlstring>
+            Version History
         <xar:if condition="$exttype eq 1">
             <input type="radio" name="phase" id="phase" value="docsmodule"  />
-            <xar:mlstring>General Use</xar:mlstring>
+            General Use
             <input type="radio" name="phase" id="phase" value="docsblocks"  />
-            <xar:mlstring>Blocks Documentation</xar:mlstring>
+            Blocks Documentation
             <input type="radio" name="phase" id="phase" value="docshooks"  />
-            <xar:mlstring>Hooks Documentation</xar:mlstring>
+            Hooks Documentation
         <xar:else />
             <input type="radio" name="phase" id="phase" value="docstheme"  />
-            <xar:mlstring>General Use</xar:mlstring>
+            General Use
             <input type="radio" name="phase" id="phase" value="docsblockgroups"  />
-            <xar:mlstring>Defined Block Groups</xar:mlstring>
+            Defined Block Groups
         </xar:if>
             <input type="submit" value="Refresh"  tabindex="6" />
             </form>
@@ -184,31 +184,31 @@
             #$message#
             </h3>
         <xar:else />
-            <h2 ><xar:mlstring>Version History</xar:mlstring></h2>
+            <h2 >Version History</h2>
             <xar:loop name="$items">
                 <h3>
                     <a href="#$loop:item['displaylink']#">
                     <xar:ml>
-                        <xar:mlstring>#(1) Version #(2)</xar:mlstring>
+                        </:mlstring>#(1) Version #(2)</xar:mlstring>
                         <xar:mlvar>#$extname#</xar:mlvar>
                         <xar:mlvar>#$loop:item['version']#</xar:mlvar>
                     </xar:ml>
                     </a>
                     <xar:if condition="!empty($loop:item['editlink'])">
-                    <a href="#$loop:item['editlink']#">[<xar:mlstring>edit</xar:mlstring>]</a>
+                    <a href="#$loop:item['editlink']#">[edit]</a>
                     </xar:if>
                 </h3>
                 <div class="xar-accent" style="padding: 2px;">
                 <span class="xar-sub">
-                    <xar:mlstring>Author:</xar:mlstring>
+                    Author:
                     <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
-                    <xar:mlstring>Date:</xar:mlstring>
+                    Date:
                     #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
                 </span>
                 </div>
                 <div style="clear: both; padding-top:5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Release Version:</xar:mlstring></b>
+                    <b>Release Version:</b>
                 </span>
                 <span style="float: right; width: 68%; text-align: left;">
                     #$loop:item['version']#
@@ -217,7 +217,7 @@
                 <xar:if condition="!empty($loop:item['demolink'])">
                 <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Demo Link:</xar:mlstring></b>
+                    <b>Demo Link:</b>
                 </span>
                   <span style="float: right; width: 68%; text-align: left;">
                     <a href="#$loop:item['demolink']#">#$loop:item['demolink']#</a>
@@ -226,7 +226,7 @@
                 </xar:if>
                 <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Download Link:</xar:mlstring></b>
+                    <b>Download Link:</b>
                 </span>
                  <span style="float: right; width: 68%; text-align: left;">
                     <a href="#$loop:item['dllink']#">#$loop:item['dllink']#</a>
@@ -235,7 +235,7 @@
                 <xar:if condition="$loop:item['price'] eq 2">
                 <div style="clear: both; padding-top: 5px;">
                     <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Price:</xar:mlstring></b>
+                    <b>Price:</b>
                 </span>
                    <span style="float: right; width: 68%; text-align: left;">
                    #$loop:item['priceterms']#<br />
@@ -244,7 +244,7 @@
                 </xar:if>
                 <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Certified:</xar:mlstring></b>
+                    <b>Certified:</b>
                 </span>
                 <span style="float: right; width: 68%; text-align: left;">
                     #$loop:item['certifiedstatus']#<br />
@@ -252,7 +252,7 @@
                 </div>
                 <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Extension State:</xar:mlstring></b>
+                    <b>Extension State:</b>
                 </span>
                  <span style="float: right; width: 68%; text-align: left;">
                     #$loop:item['rstatesel']#
@@ -260,7 +260,7 @@
                 </div>
                 <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Changelog:</xar:mlstring></b>
+                    <b>Changelog:</b>
                 </span>
                    <span style="float: right; width: 68%; text-align: left;">
                     #$loop:item['changelog']#
@@ -268,7 +268,7 @@
                 </div>
                 <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Additional Notes:</xar:mlstring></b>
+                    <b>Additional Notes:</b>
                 </span>
                  <span style="float: right; width: 68%; text-align: left;">
                     #$loop:item['notes']#
@@ -277,7 +277,7 @@
                 <xar:if condition="xarSecurityCheck('AdminRelease',0)">
                 <div style="clear: both; padding-top: 5px; padding-bottom:20px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                    <b><xar:mlstring>Editor Notes:</xar:mlstring></b>
+                    <b>Editor Notes:</b>
                 </span>
                    <span style="float: right; width: 68%; text-align: left;">
                     <i> #$loop:item['enotes']# </i>

@@ -10,36 +10,36 @@
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="#xarML('Extension Registration and Release - what would you like to do?')#">
-           <xar:mlstring>Select:</xar:mlstring>
+           Select:
         </dt>
         <xar:set name="tabclass">($activetab=='view') || ($activetab =='display')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-user-view;" title="#xarML('View listing of all registered extension projects')#">
-                    <xar:mlstring>View Extension List</xar:mlstring>
+                    View Extension List
                 </a>
             </dd>
         <xar:set name="tabclass">($activetab=='addid')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-user-addid;" title="#xarML('Get a registered ID for your extension project')#">
-                    <xar:mlstring>Register an Extension</xar:mlstring>
+                    Register an Extension
                 </a>
             </dd>
         <xar:set name="tabclass">($activetab=='addnotes')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-user-addnotes;" title="#xarML('Announce a project extension file release')#">
-                    <xar:mlstring>Announce a Release</xar:mlstring>
+                    Announce a Release
                 </a>
             </dd>
         <xar:set name="tabclass">($activetab =='search')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-user-search;&amp;displname=1&amp;regid=1&amp;regname=1&amp;desc=1&amp;authorsearch=1" title="#xarML('Search Project Extensions')#">
-                    <xar:mlstring>Search Extensions</xar:mlstring>
+                    Search Extensions
                 </a>
             </dd>
         <xar:set name="tabclass">($activetab =='main' and $activemod =='release')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-user-main;" title="#xarML('Help with extension project registration or releases')#">
-                    <xar:mlstring>Help</xar:mlstring>
+                    Help
                 </a>
             </dd>
 

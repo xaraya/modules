@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Release Module</span></div>
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-body">
-    <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
-    <xar:mlstring>Click module name for contact information</xar:mlstring>
+    <h2>View Modules and Themes</h2>
+    Click module name for contact information
     <br /><br />
     <div align="center">
     <div class="xar-accent">
@@ -16,16 +16,16 @@
                 <table width="100%" border="0" cellspacing="1" cellpadding="0">
                     <tr>
                         <th width="20%">
-                            <xar:mlstring>Name</xar:mlstring>
+                            Name
                         </th>
                         <th width="5%">
-                            <xar:mlstring>General Docs</xar:mlstring>
+                            General Docs
                         </th>
                         <th width="5%">
-                            <xar:mlstring>Blocks</xar:mlstring>
+                            Blocks
                         </th>
                         <th width="5%">
-                            <xar:mlstring>Hooks</xar:mlstring>
+                            Hooks
                         </th>
                     </tr>
                 </table>

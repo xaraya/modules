@@ -22,16 +22,16 @@
         </ul>
         <p class="fc-text-c">
             <a href="#$releaselink#">
-                <xar:mlstring>
+                
                     Browse All Releases 
-                </xar:mlstring>
+                
             </a>
         </p>
         <xar:else />
         <p class="fc-text-c">
-            <xar:mlstring>
+            
                 No Release to Display 
-            </xar:mlstring>
+            
         </p>
     </xar:if>
 </xar:template>

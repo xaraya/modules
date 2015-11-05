@@ -2,12 +2,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
-        <span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring>
+        <span class="xar-mod-title">Release Module
         </span>
     </div>
 
     <div class="xar-mod-body">
-    <h2><xar:mlstring>Release Module :: Preview</xar:mlstring></h2>
+    <h2>Release Module :: Preview</h2>
 
         <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -21,37 +21,37 @@
             <input type="hidden" name="supportcheck" id="supportcheck" value="#$supportcheck#" />
         
             <fieldset class="formelements xar-norm">
-            <legend><xar:mlstring>Extension Release Detailed Preview</xar:mlstring></legend>
+            <legend>Extension Release Detailed Preview</legend>
                 <p class="param">
                     <label for="extensionid" class="xar-form-label">
-                        <xar:mlstring>Extension ID</xar:mlstring>
+                        Extension ID
                     </label>
                         #$rid#
                 </p>
                 <p>
                      <label for="extensionname" class="xar-form-label">
-                        <xar:mlstring>Extension Registered Name</xar:mlstring>
+                        Extension Registered Name
                     </label>
                     #$regname#
                 </p>
 
                 <p>
                      <label for="versionnumber" class="xar-form-label">
-                        <xar:mlstring>Version Number</xar:mlstring>
+                        Version Number
                     </label>
                     #$version#
                 </p>
 
                 <p>
                      <label for="downloadlink" class="xar-form-label">
-                        <xar:mlstring>Download Link</xar:mlstring>
+                        Download Link
                     </label>
                     <a href="#$dllink#">#$dllink#</a>
                 </p>
                 <xar:if condition="$pricecheck eq '2'">
                 <p>
                      <label for="price" class="xar-form-label">
-                        <xar:mlstring>Price</xar:mlstring>
+                        Price
                     </label>
                     #$price#
                 </p>
@@ -59,7 +59,7 @@
                 <xar:if condition="$democheck eq '2'">
                 <p>
                      <label for="demolink" class="xar-form-label">
-                         <xar:mlstring>Demo Link</xar:mlstring>
+                         Demo Link
                     </label>
                     <a href="#$demolink#">#$demolink#</a>
                 </p>
@@ -67,32 +67,32 @@
                 <xar:if condition="$supportcheck eq '2'">
                 <p>
                      <label for="supportlink" class="xar-form-label">
-                         <xar:mlstring>Support Link</xar:mlstring>
+                         Support Link
                     </label>
                     <a href="#$supportlink#">#$supportlink#</a>
                 </p>
                 </xar:if>
                 <p>
                      <label for="extensionstate" class="xar-form-label">
-                         <xar:mlstring>Extension State</xar:mlstring>
+                         Extension State
                     </label>
                     #$extstate#
                 </p>
                 <p>
                      <label for="usefeed" class="xar-form-label">
-                         <xar:mlstring>Add to Release RSS Feed?</xar:mlstring>
+                         Add to Release RSS Feed?
                     </label>
                     <xar:if condition="$usefeed eq '1'">
-                       <xar:mlstring>Yes - notification will be added to the New Release RSS feed</xar:mlstring>
+                       Yes - notification will be added to the New Release RSS feed
                     <xar:else/>
-                       <xar:mlstring>No - notification will not be added to the New Release RSS feed</xar:mlstring>
+                       No - notification will not be added to the New Release RSS feed
 
                     </xar:if>
                 </p>
 
                 <p>
                      <label for="changelog" class="xar-form-label">
-                         <xar:mlstring>ChangeLog</xar:mlstring>
+                         ChangeLog
                     </label>
                     <div class="xar-form-input-wrapper">
                          #$changelogf#
@@ -100,7 +100,7 @@
                 </p>
                 <p style="clear:left;">
                      <label for="additionalnotes" class="xar-form-label">
-                        <xar:mlstring>Additional Notes</xar:mlstring>
+                        Additional Notes
                     </label>
                     <div class="xar-form-input-wrapper">
                         #$notesf#
@@ -109,7 +109,7 @@
                 <p>
                     <label for="version" class="xar-form-label">
                         <span class="help" title="#xarML('Check the version number')#">
-                            <xar:mlstring>Version Number</xar:mlstring>
+                            Version Number
                         </span>
                     </label>
                      <input type="text" name="version" value="#$version#" size="10" maxlength="100" />
@@ -117,7 +117,7 @@
                 <p>
                     <label for="dllink" class="xar-form-label">
                         <span class="help" title="#xarML('Check the download link for your release.')#">
-                            <xar:mlstring>Download Link</xar:mlstring>
+                            Download Link
                         </span>
                     </label>
                     <input type="text" name="dllink" value="#$dllink#" size="30" maxlength="100" />
@@ -126,7 +126,7 @@
                 <p>
                    <label for="demolink" class="xar-form-label">
                         <span class="help" title="#xarML('Check the link to the demonstration for your release.')#">
-                            <xar:mlstring>Demo Link</xar:mlstring>
+                            Demo Link
                         </span>
                     </label>
                     <input type="text" name="demolink" value="#$demolink#" size="30" maxlength="100" />
@@ -136,7 +136,7 @@
                 <p>
                    <label for="supportlink" class="xar-form-label">
                         <span class="help" title="#xarML('Check the support link for your release.')#">
-                            <xar:mlstring>Supported Link</xar:mlstring>
+                            Supported Link
                         </span>
                    </label>
                     <input type="text" name="supportlink" value="#$supportlink#" size="30" maxlength="100" />
@@ -146,7 +146,7 @@
                 <p>
                    <label for="price" class="xar-form-label">
                         <span class="help" title="#xarML('Check the the price.')#">
-                            <xar:mlstring>Price</xar:mlstring>
+                            Price
                         </span>
                     </label>
                     <input type="text" name="price" value="#$price#" size="10" maxlength="100" />
@@ -156,7 +156,7 @@
                 <p>
                     <label for="rstate" class="xar-form-label">
                         <span class="help" title="#xarML('Check development status of your extension')#">
-                           <xar:mlstring>Extension Status:</xar:mlstring>
+                           Extension Status:
                          </span>
                     </label>
                     <select name="rstate" id="rstate" size="1">
@@ -172,7 +172,7 @@
                  <p>
                     <label for="rstate" class="xar-form-label">
                         <span class="help" title="#xarML('Do you want this listed on the new release RSS feed?')#">
-                           <xar:mlstring>Add to RSS New Release feed?</xar:mlstring>
+                           Add to RSS New Release feed?
                          </span>
                     </label>
                     <xar:if condition="$usefeed eq '1'">
@@ -184,7 +184,7 @@
                 <p>
                     <label for="changelog" class="xar-form-label">
                         <span class="help" title="#xarML('Check your changelog for the release')#">
-                            <xar:mlstring>ChangeLog</xar:mlstring>
+                            ChangeLog
                         </span>
                     </label>
                     <div class="xar-form-input-wrapper">
@@ -194,7 +194,7 @@
                 <p>
                     <label for="notes" class="xar-form-label">
                         <span class="help" title="#xarML('Check your changelog for the release')#">
-                            <xar:mlstring>Additional Notes</xar:mlstring>
+                            Additional Notes
                         </span>
                     </label>
                     <div class="xar-form-input-wrapper">

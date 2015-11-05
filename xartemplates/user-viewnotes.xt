@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Release Module</span></div>
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-body">
-      <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+      <h2>View Modules and Themes</h2>
 
       <div style="margin-top:20px; margin-bottom:40px;">
 
       <span style="float:left; text-align:left; width:15%;">
-        <strong><xar:mlstring>Filter By</xar:mlstring>:</strong>
+        <strong>Filter By:</strong>
       </span>
       <span style="float:left; text-align:left; width:85%;">
 
       <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
           <input type="radio" name="phase" id="phase" value="certified"  />
-          <xar:mlstring>Certified</xar:mlstring>
+          Certified
           &#160;&#160;<input type="radio" name="phase" id="phase" value="price"  />
-          <xar:mlstring>Commercial</xar:mlstring>
+          Commercial
           &#160;&#160;<input type="radio" name="phase" id="phase" value="free"  />
-          <xar:mlstring>Free</xar:mlstring>
+          Free
           &#160;&#160;<input type="radio" name="phase" id="phase" value="supported"  />
-          <xar:mlstring>Supported</xar:mlstring>
+          Supported
         &#160;&#160;<input type="submit" value="Refresh"  tabindex="6" />
       </form>
       </span>
@@ -52,21 +52,21 @@
               <h1><a class="xar-title" href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h1>
               <div class="xar-accent" style="padding: 2px;">
                 <span class="xar-sub">
-                  <xar:mlstring>Author</xar:mlstring>: 
+                  Author: 
                   <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
-                  <xar:mlstring>on</xar:mlstring>
+                  on
                   #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
                       <xar:if condition="!empty($loop:item['counter'])">
-                        (#$loop:item['hitcount']# <xar:mlstring>Reads</xar:mlstring>)
+                        (#$loop:item['hitcount']# Reads)
                       </xar:if>
                 </span>
               </div>
               <b>Version:</b>&#160;&#160; #$loop:item['version']#
                  <p>#$loop:item['desc']#</p>
               <div align="right">
-                <a href="#$loop:item['displaylink']#"><xar:mlstring>Read More</xar:mlstring></a>
+                <a href="#$loop:item['displaylink']#">Read More</a>
                 <xar:if condition="!empty($loop:item['comments'])">
-                  -- #$loop:item['comments']# <xar:mlstring>Comments</xar:mlstring>
+                  -- #$loop:item['comments']# Comments
                 </xar:if>
               </div>
             </div>

@@ -2,9 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
-    <p><strong><xar:mlstring>In Releases</xar:mlstring> : </strong>
+    <p><strong>In Releases : </strong>
     <xar:if condition="empty($loop)">
-        <xar:mlstring>None</xar:mlstring></p>
+        None</p>
     <xar:else />
         <strong>#$counted#</strong></p>
         <xar:foreach in="$loop" value="$item">

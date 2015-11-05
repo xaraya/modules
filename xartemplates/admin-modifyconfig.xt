@@ -4,11 +4,11 @@
     <xar:template file="admin-mod-head"/>
 
     <div class="xar-mod-body">
-       <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+       <h2>Modify Configuration</h2>
        <xar:template type="module" file="admin-menu" />
         <form method="post" id="post" action="&xar-modurl-release-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
         <fieldset> 
-          <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+          <legend>Display Options</legend>
           <div class="xar-form-input-wrapper-after">
                <xar:if condition="$shorturlschecked">
                   <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
@@ -16,20 +16,20 @@
                   <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                </xar:if>
              <label for="shorturls" title="#xarML('Enable short URLS?')#">
-                  <xar:mlstring>Enable short URLs?</xar:mlstring>
+                  Enable short URLs?
                </label>
           </div>
 
           <div class="xar-form-input-wrapper">
               <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
-                  <xar:mlstring>Release Items Per Page:</xar:mlstring>
+                  Release Items Per Page:
                </label>
                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
           </div>
        </fieldset>
        <xar:if condition="!empty($hooks)">
        <fieldset>
-          <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+          <legend>Enabled Hooks</legend>
                 #$hooks#
         </fieldset>
         </xar:if>

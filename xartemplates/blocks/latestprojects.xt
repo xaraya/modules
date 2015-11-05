@@ -11,8 +11,9 @@
                     <li>#xarVarPrepForDisplay($item['rid'])#</li>
                     <xar:else />
                     <xar:set name="nicename">xarVarPrepForDisplay(ucfirst($item['regname']))</xar:set>
-                    <li><xar:ml>
-                    <xar:mlstring>#(1) <a href="#(2)">#(3)</a> by <a href="#(4)">#(5)</a></xar:mlstring>
+                    <li>
+                        <xar:ml>
+                            <xar:mlstring>#(1) <a href="#(2)">#(3)</a> by <a href="#(4)">#(5)</a></xar:mlstring>
                     <xar:mlvar>#$item['exttypename']#</xar:mlvar>
                     <xar:mlvar>#$item['link']#</xar:mlvar>
                     <xar:mlvar>#$nicename#</xar:mlvar>
@@ -24,16 +25,16 @@
         </ul>
         <p class="fc-text-c">
             <a href="#$releaselink#">
-                <xar:mlstring>
+                
                     Browse All Registered Extensions
-                </xar:mlstring>
+                
             </a>
         </p>
         <xar:else />
         <p class="fc-text-c">
-            <xar:mlstring>
+            
                 No New Regisered Extensions to Display
-            </xar:mlstring>
+            
         </p>
     </xar:if>
 </xar:template>

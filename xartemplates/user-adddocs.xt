@@ -3,12 +3,12 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Release Module</xar:mlstring>
+            Release Module
         </span>
     </div>
     <div class="xar-mod-body">
-        <h2><xar:mlstring>Add General Documentation</xar:mlstring></h2>
-        <a href="#xarModUrl('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#"><xar:mlstring>Back to Documentation Types</xar:mlstring></a><br /><br />
+        <h2>Add General Documentation</h2>
+        <a href="#xarModUrl('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#">Back to Documentation Types</a><br /><br />
         <xar:if condition="!empty($message)">
         <p>
             #$message#
@@ -38,7 +38,7 @@
             <table border="0" cellpadding="2" cellspacing="2" width="100%">
                 <tr>
                     <td align="left" valign="top" class="xar-accent">
-                        <label for="title"><xar:mlstring>Documentation Item Title</xar:mlstring></label>
+                        <label for="title">Documentation Item Title</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <input type="text" name="title" id="title" value="" size="25" maxlength="60" tabindex="2" />
@@ -46,7 +46,7 @@
                 </tr>
                 <tr>
                     <td align="left" valign="top" class="xar-accent">
-                        <label for="doc"><xar:mlstring>Documentation</xar:mlstring></label>
+                        <label for="doc">Documentation</label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
                         <textarea name="doc" id="doc" tabindex="4" rows="10" cols="50" /></textarea>

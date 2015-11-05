@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
 
     <div class="xar-mod-body">
-        <h2><xar:mlstring>Delete an ID</xar:mlstring></h2>
+        <h2>Delete an ID</h2>
         <xar:template type="module" file="admin-menu" />
         <form method="post" action="#xarModURL('release', 'admin', 'deleteid')#" method="post" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -12,23 +12,23 @@
             <input type="hidden" name="confirm" id="confirm" value="1" />
             <input type="hidden" name="confirmation" id="confirmation" value="1" />
             <fieldset>
-            <legend><xar:mlstring>Confirm deletion</xar:mlstring></legend>
+            <legend>Confirm deletion</legend>
             <div class="xar-form-input-wrapper-after">
                   <label for="regid" class="xar-form-label">
-                  <xar:mlstring>Registered ID:</xar:mlstring>
+                  Registered ID:
                   </label>
                    #$rid#
                </div>
                <div class="xar-form-input-wrapper-after">
                   <label for="regname" class="xar-form-label">
-                  <xar:mlstring>Extension Registered Name:</xar:mlstring>
+                  Extension Registered Name:
                   </label>
                    #$regname#
                </div>
             </fieldset>
             <input type="submit" value="#xarML('Confirm')#"  tabindex="1" />
     
-            <a href="#xarModURL('release', 'admin', 'viewids')#"><xar:mlstring>Cancel deletion of release id</xar:mlstring></a>
+            <a href="#xarModURL('release', 'admin', 'viewids')#">Cancel deletion of release id</a>
         </form>        
     </div>
 </xar:template>

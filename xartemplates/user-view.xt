@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+            Project Registration &amp; Releases
         </span>
     </div>
     <xar:set name="searchlink">
@@ -37,7 +37,7 @@
         xarModIsHooked('hitcount')
     </xar:set>
     <div class="xar-mod-body" style="width:95%;">
-    <h2><xar:mlstring>View All Registered Projects</xar:mlstring></h2>
+    <h2>View All Registered Projects</h2>
     <xar:template type="module" file="user-menu" />
 
         <form class="fc-full" action="&xar-modurl-release-user-view;" method="post" enctype="application/x-www-form-urlencoded">
@@ -47,9 +47,9 @@
         </form>
         <xar:if condition="!isset($phase) or empty($phase)">
             <xar:set name="displayphase">
-                <xar:mlstring>
+                
                     All
-                </xar:mlstring>
+                
             </xar:set>
         <xar:else />
             <xar:set name="displayphase">
@@ -76,44 +76,44 @@
         </div>
         <div class="xar-clearboth xar-fullwidth xar-align-center xar-padding-thickends">
         <xar:if condition="$numitems lt '1'">
-            <xar:mlstring>There are no extensions to display</xar:mlstring>
+            There are no extensions to display
         <xar:else />
             <div class="xar-accent">
                 <table width="100%" border="0" cellspacing="2" cellpadding="2">
                 <tr>
                     <th nowrap="nowrap">
-                        <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarModURL('release','user','view',array('sort'=>'id'))#"><xar:mlstring>ID</xar:mlstring></a>
+                        <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarModURL('release','user','view',array('sort'=>'id'))#">ID</a>
                     </th>
                     <th width="30%" align="left">
-                        <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarModURL('release','user','view',array('sort'=>'name'))#"><xar:mlstring>Name (regname sort)</xar:mlstring></a>
+                        <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarModURL('release','user','view',array('sort'=>'name'))#">Name (regname sort)</a>
                     </th>
                     <th width="25%" align="left">
-                        <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uname)</xar:mlstring></a>
+                        <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarModURL('release','user','view',array('sort'=>'author'))#">Author (uname)</a>
                     </th>
                     <th width="5%">
-                        <xar:mlstring>Release Notification</xar:mlstring>
+                        Release Notification
                     </th>
                     <xar:comment>jojodee: Taking out docs link here until docs actually works
                     Putting in State instead for now
                     <th width="10%">
-                        <xar:mlstring>Docs</xar:mlstring>
+                        Docs
                     </th>
                     </xar:comment>
                     <th width="10%">
-                        <a title="#xarML('Sort project extensions by Project State')#"  href="#xarModURL('release','user','view',array('sort'=>'rstate'))#"><xar:mlstring>State </xar:mlstring></a>
+                        <a title="#xarML('Sort project extensions by Project State')#"  href="#xarModURL('release','user','view',array('sort'=>'rstate'))#">State </a>
                     </th>
                     <xar:if condition="$commenthook eq true">
                         <th width="5%">
-                            <xar:mlstring>Comments</xar:mlstring>
+                            Comments
                         </th>
                     </xar:if>
                     <xar:if condition="xarModIsHooked('hitcount','release')">
                         <th width="5%">
-                            <xar:mlstring>Hits</xar:mlstring>
+                            Hits
                         </th>
                     </xar:if>
                     <th nowrap="nowrap">
-                        <xar:mlstring>Info</xar:mlstring>
+                        Info
                     </th>
                 </tr>
                 <xar:loop name="$items">
@@ -184,11 +184,11 @@
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 100%; margin-top:10px;text-align: left;">
-            <h3><xar:mlstring>Syndicate this list</xar:mlstring></h3>
+            <h3>Syndicate this list</h3>
             <ol>
-            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#"><xar:mlstring>Entire List</xar:mlstring></a></li>
-            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#"><xar:mlstring>Modules</xar:mlstring></a></li>
-            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
+            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#">Entire List</a></li>
+            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#">Modules</a></li>
+            <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#">Themes</a></li>
             </ol>
         </span>
     </div>

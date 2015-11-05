@@ -13,38 +13,38 @@
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="#xarML('Choose an action to perform')#">
-          <xar:mlstring>Actions:</xar:mlstring>
+          Actions:
         </dt>
 
         <xar:sec mask="EditRelease" catch="false">
             <xar:set name="tabclass">($activetab=='viewids')||($activetab=='deleteid')||($activetab=='modifyid')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-admin-viewids;">
-                    <xar:mlstring>Manage Registrations</xar:mlstring>
+                    Manage Registrations
                 </a>
             </dd>
             <xar:set name="tabclass">($activetab=='viewnotes')||($activetab=='modifynote')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-admin-viewnotes;">
-                    <xar:mlstring>Manage Release Notes</xar:mlstring>
+                    Manage Release Notes
                 </a>
             </dd>
            <xar:set name="tabclass">($activetab=='viewdocs')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-admin-viewdocs;">
-                    <xar:mlstring>View Docs</xar:mlstring>
+                    View Docs
                 </a>
             </dd>
             <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-release-admin-modifyconfig;">
-                <xar:mlstring>Modify Config</xar:mlstring>
+                Modify Config
               </a>
             </dd>
             <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-release-admin-overview;">
-                    <xar:mlstring>Overview</xar:mlstring>
+                    Overview
                 </a>
             </dd>
         </xar:sec>

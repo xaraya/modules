@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+            Project Registration &amp; Releases
         </span>
     </div>
     <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
@@ -18,7 +18,7 @@
 
 
     <div class="xar-mod-body">
-    <h2><xar:mlstring>Notify Release - Basic Details</xar:mlstring></h2>
+    <h2>Notify Release - Basic Details</h2>
         <xar:template type="module" file="user-menu" />
         <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -28,24 +28,24 @@
             <input type="hidden" name="regname" id="regname" value="#$regname#" />
  
             <fieldset class="formelements xar-norm">
-            <legend><xar:mlstring>Extension basic details</xar:mlstring></legend>
+            <legend>Extension basic details</legend>
 
                 <p class="param">
                     <label for="extensionid" class="xar-form-label">
-                        <xar:mlstring>Extension ID</xar:mlstring>
+                        Extension ID
                     </label>
                     #$rid#
                 </p>
                 <p class="param">
                     <label for="registeredname" class="xar-form-label">
-                        <xar:mlstring>Extension Registered Name</xar:mlstring>
+                        Extension Registered Name
                     </label>
                     #$regname#
                 </p>
                 <p>
                     <label for="version" class="xar-form-label">
                        <span class="help" title="#xarML('Enter the new version number for this release.')#">
-                           <xar:mlstring>New Version Number</xar:mlstring>
+                           New Version Number
                        </span>
                     </label>
                     <input type="text" name="version" value="" size="10" maxlength="100" />
@@ -53,32 +53,32 @@
                 <p>
                     <label for="pricecheck" class="xar-form-label">
                         <span class="help" title="#xarML('Is this a commercial or free extension and release?')#">
-                            <xar:mlstring>Commercial or Free?</xar:mlstring>
+                            Commercial or Free?
                         </span>
                     </label>
                     <select name="pricecheck" id="pricecheck">
                         <xar:if condition="$pricecheck eq '2'">
-                            <option value="1"><xar:mlstring>Free</xar:mlstring></option>
-                            <option value="2" selected="selected"><xar:mlstring>Commercial</xar:mlstring></option>
+                            <option value="1">Free</option>
+                            <option value="2" selected="selected">Commercial</option>
                         <xar:else />
-                            <option value="1" selected="selected"><xar:mlstring>Free</xar:mlstring></option>
-                            <option value="2"><xar:mlstring>Commercial</xar:mlstring></option>
+                            <option value="1" selected="selected">Free</option>
+                            <option value="2">Commercial</option>
                         </xar:if>
                     </select>
                 </p>
                 <p>
                     <label for="democheck" class="xar-form-label">
                         <span class="help" title="#xarML('Do you have a demonstration of the release?')#">
-                            <xar:mlstring>Have a Demo?</xar:mlstring>
+                            Have a Demo?
                         </span>
                     </label>
                     <select name="democheck" id="democheck">
                         <xar:if condition="$democheck eq '2'">
-                            <option value="1"><xar:mlstring>No</xar:mlstring></option>
-                            <option value="2" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                            <option value="1">No</option>
+                            <option value="2" selected="selected">Yes</option>
                         <xar:else />
-                            <option value="1" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                            <option value="2"><xar:mlstring>Yes</xar:mlstring></option>
+                            <option value="1" selected="selected">No</option>
+                            <option value="2">Yes</option>
                         </xar:if>
                     </select>
                 </p>
@@ -89,16 +89,16 @@
                     <p>
                     <label for="supportcheck" class="xar-form-label">
                         <span class="help" title="#xarML('Do you have a demonstration of the release?')#">
-                            <xar:mlstring>Is this Extension Supported?</xar:mlstring>
+                            Is this Extension Supported?
                         </span>
                     </label>
                     <select name="supportcheck" id="supportcheck">
                          <xar:if condition="$supportcheck eq '2'">
-                             <option value="1"><xar:mlstring>No</xar:mlstring></option>
-                             <option value="2" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                             <option value="1">No</option>
+                             <option value="2" selected="selected">Yes</option>
                          <xar:else />
-                             <option value="1" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                             <option value="2"><xar:mlstring>Yes</xar:mlstring></option>
+                             <option value="1" selected="selected">No</option>
+                             <option value="2">Yes</option>
                          </xar:if>
                     </select>
                 </p>

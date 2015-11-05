@@ -5,20 +5,20 @@
         <xar:style scope="module" file="navtabs" module="base" />
             <dl class="xar-tabs">
                 <dt class="help" title="#xarML('Click on a tab to explore further')#">
-                    <xar:mlstring>
+                    
                         Options:
-                    </xar:mlstring>
+                    
                 </dt>
                <xar:if condition="$tab eq 'back'">
                    <dd class="active">
                        <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>View Extensions List</xar:mlstring>
+                           View Extensions List
                        </a>
                    </dd>
                <xar:else />
                    <dd>
                         <a href="&xar-modurl-release-user-view;">
-                            <xar:mlstring>View Extension List</xar:mlstring></a>
+                            View Extension List</a>
                    </dd>
                </xar:if>
                <xar:if condition="$tab eq 'basic'">
@@ -34,7 +34,7 @@
                    <dd>
                         <a href="#xarModUrl('release', 'user', 'display', array('eid' => (int)$eid, 'phase' => 'view', 'tab'=>'basic'))#">
                               <xar:ml>
-                                  <xar:mlstring>#(1) Summary</xar:mlstring>
+                                  #(1) Summary
                                   <xar:mlvar>#$extname#</xar:mlvar>
                               </xar:ml>
                         </a>
