@@ -103,8 +103,6 @@ function release_latestblock_display($blockinfo)
 
         }
     }
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
-    $data['exttypes']=$exttypes;
     $data['blockid'] = $blockinfo['bid'];
     // Now we need to send our output to the template.
     // Just return the template data.
