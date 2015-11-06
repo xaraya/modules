@@ -50,10 +50,10 @@ function release_init()
             members             text,
             scm_link            varchar(64) NOT NULL DEFAULT '',
             open_project        tinyint NOT NULL DEFAULT '0',
-            exttype             integer unsigned NOT NULL DEFAULT '0',
+            extension_type      integer unsigned NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
-            KEY i_release_id (name,exttype),
-            KEY i_release_id_rid (rid,exttype)
+            KEY i_release_id (name,extension_type),
+            KEY i_release_id_rid (rid,extension_type)
             )";
     if (!$q->run($query)) return;
 
@@ -78,7 +78,7 @@ function release_init()
             approved            tinyint NOT NULL DEFAULT '0',
             rstate              tinyint NOT NULL DEFAULT '0',
             usefeed             tinyint NOT NULL DEFAULT '1',
-            exttype             integer unsigned NOT NULL DEFAULT '0',
+            extension_type      integer unsigned NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
             KEY i_release_notes_id (release_id)
             )";

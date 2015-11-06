@@ -196,15 +196,15 @@
       <seq>18</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="ext_type">
+    <property name="extension_type">
       <id>12476</id>
-      <label>Ext Type</label>
-      <type>integerbox</type>
+      <label>Extension Type</label>
+      <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
-      <source>notes.exttype</source>
+      <source>notes.extension_type</source>
       <status>34</status>
       <seq>19</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:53:"modules/release/xardata/extension_type_values-dat.xml";}</configuration>
     </property>
   </properties>
 </object>
