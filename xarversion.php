@@ -27,13 +27,34 @@ $modversion['user'] = 1;
 $modversion['admin'] = 1;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
-$modversion['dependency']     = array();
-$modversion['dependencyinfo'] = array(
-                                0 => array(
-                                        'name' => 'Xaraya Core',
-                                        'version_ge' => '2.4.0'
-                                     ),
-                                      );
-$modversion['propertyinfo'] = array(
-                                );
+    $modversion['dependency']     = array();
+    $modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.4.0'
+                                         ),
+                                    30065 => array(
+                                            'name' => 'publications',
+                                            'minversion' => '2.0.0'
+                                         ),
+                                    30032 => array(
+                                            'name' => 'members',
+                                            'minversion' => '2.0.0'
+                                         ),
+                                    30032 => array(
+                                            'name' => 'members',
+                                            'minversion' => '2.0.0'
+                                         ),
+                                          );
+    $modversion['propertyinfo'] = array(
+                                    30059 => array(
+                                        'name' => 'datetime',
+                                        ),
+                                    30099 => array(
+                                        'name' => 'pager',
+                                        ),
+                                    30100 => array(
+                                        'name' => 'listing',
+                                        ),
+                                    );
 ?>
