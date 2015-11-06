@@ -1,0 +1,110 @@
+<object name="release_docs">
+  <objectid>1005</objectid>
+  <label>Release Docs</label>
+  <module_id>182</module_id>
+  <itemtype>395</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
+  <sources>a:1:{s:4:&quot;docs&quot;;a:2:{i:0;s:16:&quot;xar_release_docs&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:1:{i:0;a:18:{s:2:&quot;id&quot;;s:1:&quot;9&quot;;s:4:&quot;name&quot;;s:5:&quot;Users&quot;;s:11:&quot;description&quot;;s:32:&quot;Categories related to site users&quot;;s:5:&quot;image&quot;;s:0:&quot;&quot;;s:8:&quot;template&quot;;s:0:&quot;&quot;;s:9:&quot;parent_id&quot;;s:1:&quot;1&quot;;s:7:&quot;left_id&quot;;s:1:&quot;4&quot;;s:8:&quot;right_id&quot;;s:1:&quot;9&quot;;s:12:&quot;child_object&quot;;s:0:&quot;&quot;;s:5:&quot;links&quot;;s:1:&quot;0&quot;;s:5:&quot;state&quot;;s:1:&quot;3&quot;;s:11:&quot;category_id&quot;;s:2:&quot;27&quot;;s:17:&quot;child_category_id&quot;;s:1:&quot;9&quot;;s:7:&quot;item_id&quot;;s:1:&quot;0&quot;;s:9:&quot;module_id&quot;;s:4:&quot;1005&quot;;s:8:&quot;itemtype&quot;;s:3:&quot;182&quot;;s:12:&quot;basecategory&quot;;s:1:&quot;0&quot;;i:0;s:1:&quot;0&quot;;}}</category>
+  <properties>
+    <property name="id">
+      <id>12433</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>docs.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="release_id">
+      <id>12434</id>
+      <label>Release ID</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>docs.release_id</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="eid">
+      <id>12435</id>
+      <label>EID</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>docs.eid</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="title">
+      <id>12436</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>docs.title</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="docs">
+      <id>12437</id>
+      <label>Docs</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>docs.docs</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="ext_type">
+      <id>12438</id>
+      <label>Ext Type</label>
+      <type>integerbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>docs.exttype</source>
+      <status>34</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time">
+      <id>12439</id>
+      <label>Time</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>docs.time</source>
+      <status>66</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="approved">
+      <id>12440</id>
+      <label>Approved</label>
+      <type>checkbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>docs.approved</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="seq">
+      <id>12452</id>
+      <label>Order</label>
+      <type>integerbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>docs.seq</source>
+      <status>34</status>
+      <seq>20</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+  </properties>
+</object>

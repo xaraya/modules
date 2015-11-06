@@ -32,9 +32,9 @@ function release_init()
     $q = new Query();
     $prefix = xarDB::getPrefix();
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_releases";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_release_releases";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_releases (
+    $query = "CREATE TABLE " . $prefix . "_release_releases (
             id                  integer unsigned NOT NULL auto_increment,
             rid                 integer unsigned NOT NULL DEFAULT '0',
             user_id             integer unsigned NOT NULL DEFAULT '0',
@@ -95,19 +95,7 @@ function release_init()
             exttype             integer unsigned NOT NULL DEFAULT '0',
             time                integer unsigned NOT NULL DEFAULT '0',
             approved            tinyint NOT NULL DEFAULT '1',
-            
-            price               integer unsigned NOT NULL DEFAULT '0',
-            price_terms         varchar(255) NOT NULL DEFAULT '',
-            demo                tinyint NOT NULL DEFAULT '1',
-            demo_link           varchar(255) NOT NULL DEFAULT '',
-            dl_link             varchar(255) NOT NULL DEFAULT '',
-            supported           tinyint NOT NULL DEFAULT '1',
-            support_link        varchar(255) NOT NULL DEFAULT '',
-            changelog           text,
-            enotes              text,
-            certified           tinyint NOT NULL DEFAULT '1',
-            rstate              tinyint NOT NULL DEFAULT '0',
-            usefeed             tinyint NOT NULL DEFAULT '1',
+            seq                 tinyint NOT NULL DEFAULT '1',
             PRIMARY KEY(id)
             )";
     if (!$q->run($query)) return;
@@ -118,9 +106,9 @@ function release_init()
 #
     $module = 'release';
     $objects = array(
-//                     'release_releases',
-//                     'release_releases_notes',
-//                     'release_releases_docs',
+                     'release_releases',
+                     'release_notes',
+                     'release_docs',
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

@@ -24,7 +24,7 @@ function release_xartables()
     $xartable = array();
 
     // Get the name for the release id table
-    $xartable['releases'] = xarDB::getPrefix() . '_releases';
+    $xartable['releases'] = xarDB::getPrefix() . '_release_releases';
 
     // Get the name for the release notification table
     $xartable['release_notes'] = xarDB::getPrefix() . '_release_notes';
