@@ -176,15 +176,15 @@
       <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="release_state">
+    <property name="state">
       <id>12489</id>
-      <label>Release State</label>
-      <type>integerbox</type>
+      <label>State</label>
+      <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
-      <source>notes.rstate</source>
+      <source>notes.state</source>
       <status>34</status>
       <seq>17</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:52:"modules/release/xardata/release_state_values-dat.xml";}</configuration>
     </property>
     <property name="use_feed">
       <id>12490</id>
