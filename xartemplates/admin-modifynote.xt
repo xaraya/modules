@@ -3,7 +3,6 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
 
-    <xar:set name="submitnote">Submit Changes</xar:set>
     <div class="xar-mod-body">
         <h2>Release Module :: Preview Release By #$username#</h2>
         <p>
@@ -271,7 +270,8 @@
                         </td>
                     </tr>
                 </table>
-                <input type="submit" value="#$submitnote#"  tabindex="6" />
+                <xar:var name="label">Submit Changes</xar:var>
+                <xar:button type="submit" label="$label" tabindex="1" />
             </form>
         </p>
     </div>

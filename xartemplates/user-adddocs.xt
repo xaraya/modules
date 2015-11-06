@@ -51,7 +51,8 @@
                 </tr>
             </table>
             <br />
-            <input type="submit" value="#xarML('Create General Documentation')#"  tabindex="6" />
+            <xar:var name="label">Create General Documentation</xar:var>
+            <xar:button type="submit" label="$label" tabindex="6" />
         </form>
     </div>
 </xar:template>

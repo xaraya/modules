@@ -40,7 +40,8 @@
                     </tr>
                 </table>
                 <br /><br />
-                <input type="submit" value="#xarML('Begin Release Notification')#"  tabindex="6" />
+                <xar:var name="label">Begin Release Notification</xar:var>
+                <xar:button type="submit" label="$label" tabindex="6" />
             </form>
         </div>
     </div>

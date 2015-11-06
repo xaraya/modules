@@ -25,7 +25,8 @@
                    #$regname#
                </div>
             </fieldset>
-            <input type="submit" value="#xarML('Confirm')#"  tabindex="1" />
+            <xar:var name="label">Confirm</xar:var>
+            <xar:button type="submit" label="$label" tabindex="1" />
     
             <a href="#xarModURL('release', 'admin', 'viewids')#">Cancel deletion of release id</a>
         </form>        

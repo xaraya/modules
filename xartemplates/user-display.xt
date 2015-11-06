@@ -167,7 +167,8 @@
             <input type="radio" name="phase" id="phase" value="docsblockgroups"  />
             Defined Block Groups
         </xar:if>
-            <input type="submit" value="Refresh"  tabindex="6" />
+            <xar:var name="label">Refresh</xar:var>
+            <xar:button type="submit" label="$label" tabindex="6" />
             </form>
     </xar:comment>
 

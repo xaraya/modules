@@ -22,7 +22,9 @@
           Free
           &#160;&#160;<input type="radio" name="phase" id="phase" value="supported"  />
           Supported
-        &#160;&#160;<input type="submit" value="Refresh"  tabindex="6" />
+        &#160;&#160;                
+        <xar:var name="label">Refresh</xar:var>
+        <xar:button type="submit" label="$label" tabindex="6" />
       </form>
       </span>
     </div>

@@ -10,8 +10,8 @@
             <form method="post" action="&xar-modurl-release-user-search;">
                   <p><label for="q">Search for</label>
                   <input type="text" name="q" id="q" value="" size="20" />
-                  <xar:set name="$search">Search</xar:set>
-                  <input type="submit" name="search" value="#$search#" />
+                  <xar:var name="label">Search</xar:var>
+                  <xar:button type="submit" name="search" label="$label" />
                   </p>
                  <p>
                  By author 

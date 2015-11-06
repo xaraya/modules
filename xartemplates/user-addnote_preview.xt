@@ -200,7 +200,8 @@
 
             </fieldset>
             <p>
-                <input type="submit" value="#xarML('Announce!')#"  tabindex="6" />
+                <xar:var name="label">Announce!</xar:var>
+                <xar:button type="submit" label="$label" tabindex="6" />
             </p>
         </form>
     </div>

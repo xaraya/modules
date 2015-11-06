@@ -162,7 +162,8 @@
                 </tr>
             </table>            
             <p>
-                <input type="submit" value="#xarML('Modify ID')#"  tabindex="6" />
+                <xar:var name="label">Modify ID</xar:var>
+                <xar:button type="submit" label="$label" tabindex="6" />
             </p>
         </form>
     </div>

@@ -125,7 +125,8 @@
                 </p>
            </fieldset>
             <p>
-                <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
+                <xar:var name="label">Continue</xar:var>
+                <xar:button type="submit" label="$label" tabindex="6" />
             </p>
         </form>
     </div>
