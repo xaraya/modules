@@ -18,7 +18,7 @@
  * @TODO : sort ok but need to make sticky over categories etc ...and vice versa
  */
 function release_user_view()
-{
+{return array();
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase',    'str:1:', $phase,    'all', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'int',    $catid,    NULL,  XARVAR_NOT_REQUIRED)) {return;}
@@ -56,15 +56,6 @@ function release_user_view()
                                                         'itemsperpage',$uid),
                           ));
 
-    //Add common definition of the extension state array
-    //TODO: <jojodee> This needs to be extensible ..not hard coded here ...
-    $stateoptions=array();
-    $stateoptions[0] = xarML('Planning');
-    $stateoptions[1] = xarML('Alpha');
-    $stateoptions[2] = xarML('Beta');
-    $stateoptions[3] = xarML('Production/Stable');
-    $stateoptions[4] = xarML('Mature');
-    $stateoptions[5] = xarML('Inactive');
 
     $numitems = count($items);
 

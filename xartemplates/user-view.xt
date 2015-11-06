@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
-
+<!--
     <xar:set name="searchlink">
         xarModURL('search','user','main')
     </xar:set>
@@ -171,7 +171,6 @@
                     </table>
                 </div>
                 <p>
-            <!-- add the pager here -->
                 #$pager#
                 </p>
             </xar:if>
@@ -186,5 +185,5 @@
                 </ol>
             </span>
         </div>
-    </div>
+    </div>-->
 </xar:template>

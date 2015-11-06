@@ -1,0 +1,48 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>View all extensions IDs</title>
+            <label>View Registration</label>
+        </menuitem>
+        <menuitem>
+            <mask>ViewRelease</mask>
+            <includes>
+                <includeitem>viewnotes</includeitem>
+            </includes>
+            <target>viewnotes</target>
+            <title>View all extensions releases</title>
+            <label>Recent Releases</label>
+        </menuitem>
+        <menuitem>
+            <mask>ViewRelease</mask>
+            <includes>
+                <includeitem>addid</includeitem>
+            </includes>
+            <target>addid</target>
+            <title>Add an extension ID so it will not be duplicated</title>
+            <label>Add Registration</label>
+        </menuitem>
+        <menuitem>
+            <mask>ViewRelease</mask>
+            <includes>
+                <includeitem>addnotes</includeitem>
+            </includes>
+            <target>addnotes</target>
+            <title>Add an extension release note</title>
+            <label>Add Release Notes</label>
+        </menuitem>
+        <menuitem>
+            <mask>ViewRelease</mask>
+            <includes>
+                <includeitem>adddocs</includeitem>
+            </includes>
+            <target>adddocs</target>
+            <title>Add an extension documentation</title>
+            <label>Add Documentation</label>
+        </menuitem>
+    </menuitems>
+</menu>
