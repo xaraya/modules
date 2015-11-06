@@ -40,7 +40,7 @@
       <id>12574</id>
       <label>User ID</label>
       <type>username</type>
-      <defaultvalue>xarUser::getVar('id')</defaultvalue>
+      <defaultvalue>xarUser::getVar('name')</defaultvalue>
       <source>release.user_id</source>
       <status>33</status>
       <seq>3</seq>
