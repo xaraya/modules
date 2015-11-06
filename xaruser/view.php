@@ -106,7 +106,7 @@ function release_user_view()
             $items[$i]['editurl'] = '';
         }
       // Delete
-        if (($uid == $item['uid']) or (xarSecurityCheck('DeleteRelease', 0))) {
+        if (($uid == $item['uid']) or (xarSecurityCheck('ManageRelease', 0))) {
             $items[$i]['delurl'] = xarModURL('release', 'admin', 'deleteid',
                                                array('eid' => $item['eid']));
             $items[$i]['deltitle'] = xarML('Delete');

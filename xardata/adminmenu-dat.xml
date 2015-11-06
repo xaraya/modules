@@ -12,20 +12,38 @@
         <menuitem>
             <mask>ManageRelease</mask>
             <includes>
-                <includeitem>viewnotes</includeitem>
+                <includeitem>viewids</includeitem>
             </includes>
-            <target>viewnotes</target>
-            <title>Manage release information</title>
-            <label>Information</label>
+            <target>viewids</target>
+            <title>View Registered IDs on the system</title>
+            <label>View IDs</label>
         </menuitem>
         <menuitem>
             <mask>ManageRelease</mask>
             <includes>
-                <includeitem>viewids</includeitem>
+                <includeitem>viewnotes</includeitem>
             </includes>
-            <target>viewids</target>
-            <title>Manage release information</title>
-            <label>IDs</label>
+            <target>viewnotes</target>
+            <title>View Release Notifications</title>
+            <label>View Notifications</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageRelease</mask>
+            <includes>
+                <includeitem>viewdocs</includeitem>
+            </includes>
+            <target>viewdocs</target>
+            <title>View Release Docs</title>
+            <label>View Documentation</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageRelease</mask>
+            <includes>
+                <includeitem>waitingcontent</includeitem>
+            </includes>
+            <target>waitingcontent</target>
+            <title>View the waiting releases</title>
+            <label>Waiting Content</label>
         </menuitem>
         <menuitem>
             <mask>AdminRelease</mask>

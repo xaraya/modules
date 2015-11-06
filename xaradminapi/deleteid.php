@@ -33,7 +33,7 @@ function release_adminapi_deleteid($args)
     if ($link == false) throw new EmptyParameterException(null,xarML('No Such Release ID Present'));
 
     // Security Check
-    if(!xarSecurityCheck('DeleteRelease')) return;
+    if(!xarSecurityCheck('ManageRelease')) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();

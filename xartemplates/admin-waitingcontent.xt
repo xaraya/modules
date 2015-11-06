@@ -2,14 +2,16 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
-    <p><strong>In Releases : </strong>
-    <xar:if condition="empty($loop)">
-        None</p>
-    <xar:else />
-        <strong>#$counted#</strong></p>
-        <xar:foreach in="$loop" value="$item">
-        &#160;&#160;<a href="#$item['link']#" title="#$item['regname']#">#$item['regname']#</a>
-        <br />
-        </xar:foreach>
-    </xar:if>
+    <p>
+        <strong>In Releases : </strong>
+        <xar:if condition="empty($loop)">
+            None
+        <xar:else />
+            <strong>#$counted#</strong>
+            <xar:foreach in="$loop" value="$item">
+                &#160;&#160;<a href="#$item['link']#" title="#$item['regname']#">#$item['regname']#</a>
+                <br />
+            </xar:foreach>
+        </xar:if>
+    </p>
 </xar:template>

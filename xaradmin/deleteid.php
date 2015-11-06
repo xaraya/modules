@@ -39,7 +39,7 @@ function release_admin_deleteid($args)
     $rid = $data['rid'];
     $regname = $data['regname'];
     // Security Check
-    if(!xarSecurityCheck('DeleteRelease')) return;
+    if(!xarSecurityCheck('ManageRelease')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {

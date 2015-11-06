@@ -53,7 +53,7 @@ function release_admin_viewids()
         }
 
         $items[$i]['deletetitle'] = xarML('Delete');
-        if (xarSecurityCheck('DeleteRelease', 0)) {
+        if (xarSecurityCheck('ManageRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deleteid',
                                                array('eid' => $item['eid']));
         } else {

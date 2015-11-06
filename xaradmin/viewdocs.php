@@ -120,7 +120,7 @@ function release_admin_viewdocs()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('DeleteRelease', 0)) {
+        if (xarSecurityCheck('ManageRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deletenote',
                                                array('rnid' => $item['rnid']));
         } else {

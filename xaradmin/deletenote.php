@@ -36,7 +36,7 @@ function release_admin_deletenote()
     if ($data == false) return;
 
     // Security Check
-    if(!xarSecurityCheck('DeleteRelease')) return;
+    if(!xarSecurityCheck('ManageRelease')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
