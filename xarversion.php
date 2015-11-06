@@ -27,6 +27,13 @@ $modversion['user'] = 1;
 $modversion['admin'] = 1;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
-// Dependent on categories
-$modversion['dependency'] = array(147); //categories
+$modversion['dependency']     = array();
+$modversion['dependencyinfo'] = array(
+                                0 => array(
+                                        'name' => 'Xaraya Core',
+                                        'version_ge' => '2.4.0'
+                                     ),
+                                      );
+$modversion['propertyinfo'] = array(
+                                );
 ?>
