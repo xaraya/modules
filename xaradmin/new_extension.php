@@ -47,7 +47,7 @@ function release_admin_new_extension($args)
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('release','admin','view_etensions'));
+            xarController::redirect(xarModURL('release','admin','view_extensions'));
             return true;
         }
     }
