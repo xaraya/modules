@@ -38,7 +38,7 @@
     </property>
     <property name="author">
       <id>12882</id>
-      <label>Auther</label>
+      <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('name')</defaultvalue>
       <source>extension.author_id</source>
