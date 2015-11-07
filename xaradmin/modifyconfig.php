@@ -25,19 +25,40 @@ function release_admin_modifyconfig()
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls','use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey(); 
+    switch (strtolower($phase)) {
+        case 'modify':
+        default:
+            
+            switch ($data['tab']) {
+                case 'general':
+                    break;
+                default:
+                    break;
+            }
 
-    // Specify some labels and values for display
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration')); 
+            break;
 
-    $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModVars::get('release', 'SupportShortURLs') ? 'checked' : '';
-    $data['itemsvalue'] = xarModVars::get('release', 'itemsperpage');
-    $data['itemslabel'] = xarML('Release items per page:');
-    if (!isset($data['itemsvalue'])) {
-        $data['itemsvalue']=20;
+        case 'update':
+            // Confirm authorisation code
+            if (!xarSecConfirmAuthKey()) return;
+            switch ($data['tab']) {
+                case 'general':
+                    $isvalid = $data['module_settings']->checkInput();
+                    if (!$isvalid) {
+                        return xarTplModule('release','admin','modifyconfig', $data);
+                    } else {
+                        $itemid = $data['module_settings']->updateItem();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            // Jump to the next page
+            xarController::redirect(xarModURL('release', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+            return true;
+            break;
     }
+
     $hooks = xarModCallHooks('module', 'modifyconfig', 'release',
         array('module' => 'release'));
     if (empty($hooks)) {
