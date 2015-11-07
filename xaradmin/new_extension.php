@@ -25,6 +25,7 @@ function release_admin_new_extension($args)
     if (!xarVarFetch('name',       'str',    $name,            'release_extensions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
+    sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'release_extensions'));
     $data['tplmodule'] = 'release';
 

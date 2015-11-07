@@ -26,6 +26,7 @@ function release_admin_modify_extension($args)
     if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',     $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
+    sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
