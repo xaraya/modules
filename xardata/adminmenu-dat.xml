@@ -12,9 +12,9 @@
         <menuitem>
             <mask>ManageRelease</mask>
             <includes>
-                <includeitem>viewids</includeitem>
+                <includeitem>view_extensions</includeitem>
             </includes>
-            <target>viewids</target>
+            <target>view_extensions</target>
             <title>View Registered Extensions on the system</title>
             <label>View Extensions</label>
         </menuitem>

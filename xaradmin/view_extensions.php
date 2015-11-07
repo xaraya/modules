@@ -10,7 +10,7 @@
  * @subpackage Release Module
  * @link http://xaraya.com/index.php/release/773.html
  */
-function release_admin_viewids()
+function release_admin_view_extensions()
 {
     if (!xarSecurityCheck('EditRelease')) return;
 

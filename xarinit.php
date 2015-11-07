@@ -36,8 +36,8 @@ function release_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_release_extensions (
             id                  integer unsigned NOT NULL auto_increment,
-            rid                 integer unsigned NOT NULL DEFAULT '0',
-            user_id             integer unsigned NOT NULL DEFAULT '0',
+            extension_id        integer unsigned NOT NULL DEFAULT '0',
+            author_id           integer unsigned NOT NULL DEFAULT '0',
             name                varchar(64) NOT NULL DEFAULT '',
             display_name        varchar(64) NOT NULL DEFAULT '',
             description         text,
@@ -53,7 +53,7 @@ function release_init()
             extension_type      integer unsigned NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
             KEY i_release_id (name,extension_type),
-            KEY i_release_id_rid (rid,extension_type)
+            KEY i_release_id_rid (extension_id,extension_type)
             )";
     if (!$q->run($query)) return;
 
@@ -175,6 +175,7 @@ function release_init()
     xarRegisterMask('ViewRelease','All','release','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('EditRelease','All','release','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddRelease','All','release','All','All','ACCESS_ADD');
     xarRegisterMask('ManageRelease','All','release','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
     xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');

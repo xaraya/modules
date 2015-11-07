@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="user-mod-head"/>
+
+    <div class="xar-mod-body">
+        <h2>Register a New Extension</h2>
+
+        <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+            <fieldset>
+              <legend>Extension Information</legend>
+              <xar:data-form object="$object" tplmodule="$tplmodule"/>
+            </fieldset>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="name" id="name" value="#$object:name#"/>
+                    <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
+                    <input type="hidden" name="confirm" id="confirm" value="true"/>
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" name="cancel" value="$label" />&#160;
+                    <xar:var name="label">Create</xar:var>
+                    <xar:button type="submit" name="post" value="$label" class="btn-primary"/>
+                </div>
+            </div>
+        </form>
+<!--
+        <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+        </form>
+        <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
+        <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
+
+
+        <xar:template type="module" file="user-menu" />
+        <xar:if condition="!empty($message)">
+            <div class="xar-thirdwidth">
+                #$message#<br />
+               <xar:block module="authsystem" type="login" />
+            </div>
+        <xar:else />
+            <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <fieldset class="formelements xar-norm">
+                    <legend>Extension Information</legend>
+               <p class="param">
+                    <label for="ridno" class="xar-form-label">
+                        <span class="help" title="#xarML('If you want a particular number as an id, enter it here. If available it will be used.')#">
+                            Registration ID:
+                        </span>
+                    </label>
+                    <input type="text" name="ridno" id="ridno" value="" size="15" maxlength="15" tabindex="1" />
+                     Leave blank, unless you want to nominate a specific ID for your extension.
+                </p>
+                <p class="param">
+                    <label for="startbackup" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
+                            Extension Registered Name
+                        </span>
+                    </label>
+                    <input type="text" name="regname" id="regname" value="" size="25" maxlength="60" tabindex="2" />
+                    Lower case, no spaces or special characters (underscore and hyphens accepted).
+                </p>
+
+                <p class="param">
+                    <label for="displname" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
+                            Extension Display Name
+                        </span>
+                    </label>
+                    <input type="text" name="displname" id="displname" value="" size="25" maxlength="60" tabindex="2" />
+                 </p>
+
+                 <p>
+                    <label for="desc" class="xar-form-label">
+                        <span class="help" title="#xarML('Enter a description for your extension.')#">
+                            Description
+                        </span>
+                    </label>
+                    <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" /></textarea>
+                  </p>
+              
+                  <p>
+                      <label for="idtype" class="xar-form-label">
+                          <span class="help" title="#xarML('Select the type of extension.')#">
+                              Type
+                          </span>
+                      </label>
+                      <select name="exttype" id="exttype">
+                         <xar:foreach in="$exttypes" key="$k" value="$v">
+                         <xar:if condition="$k ne 0">
+                             <xar:if condition="$exttype eq $k">
+                                    <option value="#$k#" selected="selected">#$v#</option>
+                             <xar:else />
+                                    <option value="#$k#">#$v#</option>
+                             </xar:if>
+                         </xar:if>
+                        </xar:foreach>
+                     </select>
+                   </p>
+                   <p>
+                       <label for="class" class="xar-form-label">
+                          <span class="help" title="#xarML('Select the class.')#">
+                              Class
+                          </span>
+                       </label>
+                       <select name="class" id="class">
+                       <xar:if condition="$class eq '0'">
+                            <option value="0" selected="selected">Core</option>
+                            <option value="1">Non-Core</option>
+                        <xar:else />
+                            <option value="0">Core</option>
+                            <option value="1" selected="selected">Non-Core</option>
+                        </xar:if>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="rstate" class="xar-form-label">
+                            <span class="help" title="#xarML('Current development status of your extension')#">
+                                Extension Status:
+                            </span>
+                         </label>
+                         <select name="rstate" id="rstate" size="1">
+                          <xar:foreach in="$stateoptions" value="$v" key="$k">
+                             <option name="rstate.#$k#" value="#$k#">#$v#</option>
+                          </xar:foreach>
+                          </select>
+                      </p>
+                  
+                    <p>
+                        <label for="openproj" class="xar-form-label">
+                           <span class="help" title="#xarML('Do you want this listed on public blocks')#">
+                               Add to Latest Project List?
+                            </span>
+                        </label>
+                        <xar:if condition="$openproj eq '1'">
+                            <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
+                        <xar:else/>
+                             <input type="checkbox" name="openproj" id="openproj" value="1" />
+                         </xar:if>
+                     </p>
+                     <p>
+                            #$cathook#
+                     </p>
+                </fieldset>
+                <xar:var name="label">Create ID</xar:var>
+                <xar:button type="submit" label="$label" tabindex="6" />
+            </form>
+        </xar:if>
+        -->
+    </div>
+</xar:template>

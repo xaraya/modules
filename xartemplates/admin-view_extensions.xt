@@ -6,7 +6,10 @@
     <div class="xar-mod-body">
         <h2>View Extensions</h2>
         
-        <xar:data-input type="listing" object="$object"/>
+        <xar:data-input type="listing" 
+                        object="$object"
+                        fieldlist="name,extension_id,extension_type,author,state"
+                        />
         <!--
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
             <tr>
