@@ -40,7 +40,7 @@
       <id>12882</id>
       <label>Author</label>
       <type>username</type>
-      <defaultvalue>xarUser::getVar('name')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>extension.author_id</source>
       <status>33</status>
       <seq>3</seq>
