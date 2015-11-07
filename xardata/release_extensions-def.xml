@@ -38,13 +38,13 @@
     </property>
     <property name="author">
       <id>12882</id>
-      <label>Author</label>
+      <label>Auther</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>extension.author_id</source>
       <status>33</status>
       <seq>3</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";s:27:"initialization_display_name";s:5:"uname";}</configuration>
     </property>
     <property name="name">
       <id>12883</id>
