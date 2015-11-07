@@ -17,9 +17,9 @@
         </dt>
 
         <xar:sec mask="EditRelease" catch="false">
-            <xar:set name="tabclass">($activetab=='viewids')||($activetab=='deleteid')||($activetab=='modifyid')?'active':''</xar:set>
+            <xar:set name="tabclass">($activetab=='view_extensions')||($activetab=='deleteid')||($activetab=='modifyid')?'active':''</xar:set>
             <dd class="#$tabclass#">
-                <a href="&xar-modurl-release-admin-viewids;">
+                <a href="&xar-modurl-release-admin-view_extensions;">
                     Manage Registrations
                 </a>
             </dd>
