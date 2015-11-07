@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$layout eq 'view_all'">
+    <xar:elseif condition="$objectname eq 'release_extensions'"/>
+        <xar:access level="600">
+            <xar:var name="title">Add A New Extension</xar:var>
+            <xar:set name="link">xarModURL($module,'admin','new_extension')</xar:set>
+            <a style="font-weight:bold;" href ="#$link#">
+                <xar:if condition="xarModVars::get('release', 'use_module_icons')">
+                    <xar:set name="imgfile">'icons/'.'document-new.png'</xar:set>
+                    <xar:img scope="theme" file="$imgfile" class="xar-icon" alt="$title"/>
+                <xar:else />
+                    #$title#
+                </xar:if>
+            </a>
+        </xar:access>
+    <xar:else/>
+    </xar:if>
+</xar:template>

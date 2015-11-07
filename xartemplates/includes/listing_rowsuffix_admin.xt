@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition = "xarModVars::get('dam','use_module_icons')">
+    <xar:if condition = "xarModVars::get('release','use_module_icons')">
         <td class="#$item_class#" style="text-align: left;" nowrap="nowrap">
             <xar:if condition="$objectname eq 'release_extensions'">
                 <xar:access level="200">
