@@ -1,6 +1,6 @@
-<object name="release_releases">
+<object name="release_extensions">
   <objectid>1014</objectid>
-  <label>Releases</label>
+  <label>Extensions</label>
   <module_id>182</module_id>
   <itemtype>394</itemtype>
   <class>DataObject</class>
@@ -11,7 +11,7 @@
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config></config>
-  <sources>a:1:{s:7:&quot;release&quot;;a:2:{i:0;s:20:&quot;xar_release_releases&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <sources>a:1:{s:9:&quot;extension&quot;;a:2:{i:0;s:22:&quot;xar_release_extensions&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations></relations>
   <objects></objects>
   <category>a:0:{}</category>
@@ -21,7 +21,7 @@
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>release.id</source>
+      <source>extension.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration>a:0:{}</configuration>
@@ -31,7 +31,7 @@
       <label>RID</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>release.rid</source>
+      <source>extension.rid</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
@@ -41,7 +41,7 @@
       <label>User ID</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('name')</defaultvalue>
-      <source>release.user_id</source>
+      <source>extension.user_id</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:0:{}</configuration>
@@ -51,7 +51,7 @@
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>release.name</source>
+      <source>extension.name</source>
       <status>33</status>
       <seq>4</seq>
       <configuration>a:0:{}</configuration>
@@ -61,7 +61,7 @@
       <label>Display Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>release.display_name</source>
+      <source>extension.display_name</source>
       <status>33</status>
       <seq>5</seq>
       <configuration>a:0:{}</configuration>
@@ -71,7 +71,7 @@
       <label>Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>release.description</source>
+      <source>extension.description</source>
       <status>34</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
@@ -81,7 +81,7 @@
       <label>Class</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
-      <source>release.class</source>
+      <source>extension.class</source>
       <status>33</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
@@ -91,7 +91,7 @@
       <label>Certified</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
-      <source>release.certified</source>
+      <source>extension.certified</source>
       <status>33</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
@@ -101,7 +101,7 @@
       <label>Approved</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
-      <source>release.approved</source>
+      <source>extension.approved</source>
       <status>33</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
@@ -111,7 +111,7 @@
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
-      <source>release.state</source>
+      <source>extension.state</source>
       <status>33</status>
       <seq>10</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:52:"modules/release/xardata/release_state_values-dat.xml";}</configuration>
@@ -121,7 +121,7 @@
       <label>Registration Time</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>release.registration_time</source>
+      <source>extension.registration_time</source>
       <status>66</status>
       <seq>11</seq>
       <configuration>a:0:{}</configuration>
@@ -131,7 +131,7 @@
       <label>Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>release.modified</source>
+      <source>extension.modified</source>
       <status>66</status>
       <seq>12</seq>
       <configuration>a:0:{}</configuration>
@@ -141,7 +141,7 @@
       <label>Members</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>release.members</source>
+      <source>extension.members</source>
       <status>34</status>
       <seq>13</seq>
       <configuration>a:0:{}</configuration>
@@ -151,7 +151,7 @@
       <label>SCM Link</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>release.scm_link</source>
+      <source>extension.scm_link</source>
       <status>34</status>
       <seq>14</seq>
       <configuration>a:0:{}</configuration>
@@ -161,7 +161,7 @@
       <label>Open Project</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
-      <source>release.open_project</source>
+      <source>extension.open_project</source>
       <status>33</status>
       <seq>15</seq>
       <configuration>a:0:{}</configuration>
@@ -171,7 +171,7 @@
       <label>Extension Type</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
-      <source>release.extension_type</source>
+      <source>extension.extension_type</source>
       <status>34</status>
       <seq>16</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:53:"modules/release/xardata/extension_type_values-dat.xml";}</configuration>

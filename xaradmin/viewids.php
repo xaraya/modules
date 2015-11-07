@@ -12,7 +12,14 @@
  */
 function release_admin_viewids()
 {
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarSecurityCheck('EditRelease')) return;
+
+    // Get the object to be listed
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_extensions'));
+
+    return $data;
+
+    /*if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
@@ -70,6 +77,7 @@ function release_admin_viewids()
     // Add the array of items to the template variables
     $data['items'] = $items;
     return $data;
+    */
 }
 
 ?>

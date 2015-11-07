@@ -4,7 +4,10 @@
     <xar:template file="admin-mod-head"/>
 
     <div class="xar-mod-body">
-        <h2>View IDs</h2>
+        <h2>View Extensions</h2>
+        
+        <xar:data-input type="listing" object="$object"/>
+        <!--
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
             <tr>
                 <th>
@@ -41,9 +44,6 @@
                 </tr>
             </xar:loop>
         </table>
+    -->
     </div>
-    <p style="margin-top:20px;">
-        <!-- add the pager here -->
-        #$pager#
-    </p>
 </xar:template>

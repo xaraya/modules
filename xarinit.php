@@ -32,9 +32,9 @@ function release_init()
     $q = new Query();
     $prefix = xarDB::getPrefix();
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_release_releases";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_release_extensions";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_release_releases (
+    $query = "CREATE TABLE " . $prefix . "_release_extensions (
             id                  integer unsigned NOT NULL auto_increment,
             rid                 integer unsigned NOT NULL DEFAULT '0',
             user_id             integer unsigned NOT NULL DEFAULT '0',
@@ -106,7 +106,7 @@ function release_init()
 #
     $module = 'release';
     $objects = array(
-                     'release_releases',
+                     'release_extensions',
                      'release_notes',
                      'release_docs',
                      );

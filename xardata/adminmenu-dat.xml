@@ -15,8 +15,8 @@
                 <includeitem>viewids</includeitem>
             </includes>
             <target>viewids</target>
-            <title>View Registered IDs on the system</title>
-            <label>View IDs</label>
+            <title>View Registered Extensions on the system</title>
+            <label>View Extensions</label>
         </menuitem>
         <menuitem>
             <mask>ManageRelease</mask>
