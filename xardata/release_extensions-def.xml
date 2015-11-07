@@ -11,10 +11,10 @@
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config></config>
-  <sources>a:1:{s:9:&quot;extension&quot;;a:2:{i:0;s:22:&quot;xar_release_extensions&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <sources>a:1:{s:9:"extension";a:2:{i:0;s:22:"xar_release_extensions";i:1;s:8:"internal";}}</sources>
   <relations></relations>
   <objects></objects>
-  <category>a:0:{}</category>
+  <category></category>
   <properties>
     <property name="id">
       <id>12880</id>
@@ -38,7 +38,7 @@
     </property>
     <property name="author">
       <id>12882</id>
-      <label>Auther</label>
+      <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>extension.author_id</source>
