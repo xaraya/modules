@@ -33,10 +33,11 @@ $modversion['dependencyinfo'] = array(
                                         'name' => 'Xaraya Core',
                                         'version_ge' => '2.4.0'
                                      ),
+                                     /*
                                 30065 => array(
                                         'name' => 'publications',
                                         'minversion' => '2.0.0'
-                                     ),
+                                     ),*/
                                       );
 $modversion['propertyinfo'] = array(
                                 30059 => array(
