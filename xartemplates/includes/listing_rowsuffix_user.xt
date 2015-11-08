@@ -4,17 +4,17 @@
         <td class="#$item_class#" style="text-align: left;" nowrap="nowrap">
             <xar:if condition="$objectname eq 'release_extensions'">
                 <xar:access level="200">
-                    <a href="#xarModURL($module, 'admin', 'display_extension', array('itemid' => $loopitem[$primaryalias]))#" title="#xarML('Display this item')#" style="margin-right: 5px">
+                    <a href="#xarModURL($module, 'user', 'display_extension', array('itemid' => $loopitem[$primaryalias]))#" title="#xarML('Display this item')#" style="margin-right: 5px">
                         <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display')#"/>
                     </a>
                 </xar:access>
                 <xar:access level="500">
-                    <a href="#xarModURL($module, 'admin', 'modify_extension', array('itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                    <a href="#xarModURL($module, 'user', 'modify_extension', array('itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
                         <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
                     </a>
                 </xar:access>
                 <xar:access level="700">
-                    <a href="#xarModURL($module, 'admin', 'delete_extension', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                    <a href="#xarModURL($module, 'user', 'delete_extension', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
                         <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
                     </a>
                 </xar:access>
