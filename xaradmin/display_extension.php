@@ -1,9 +1,9 @@
 <?php
 /**
- * Foo Module
+ * Release Module
  *
  * @package modules
- * @subpackage foo
+ * @subpackage release
  * @category Third Party Xaraya Module
  * @version 1.0.0
  * @copyright (C) 2014 Netspan AG
@@ -11,7 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Display an item of the foo object
+ * Display an item of the release extensions object
  *
  */
     sys::import('modules.dynamicdata.class.objects.master');
