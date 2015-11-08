@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="$layout eq 'view_all'">
-    <xar:elseif condition="$objectname eq 'dam_resources'"/>
+    <xar:elseif condition="$objectname eq 'releasae_extensions'"/>
         <xar:access level="600">
-            <xar:var name="title">Add A New Resource</xar:var>
+            <xar:var name="title">Add A New Extension</xar:var>
             <xar:set name="link">xarModURL($module,'user','new_extension')</xar:set>
             <a style="font-weight:bold;" href ="#$link#">
                 <xar:if condition="xarModVars::get('release', 'use_module_icons')">
