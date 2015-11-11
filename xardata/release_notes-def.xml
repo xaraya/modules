@@ -49,7 +49,7 @@
     <property name="price">
       <id>2845</id>
       <label>Price</label>
-      <type>static</type>
+      <type>number</type>
       <defaultvalue>0</defaultvalue>
       <source>notes.price</source>
       <status>33</status>
