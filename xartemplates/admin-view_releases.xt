@@ -8,7 +8,6 @@
         
         <xar:data-input type="listing" 
                         object="$object"
-                        fieldlist="name,extension_id,extension_type,author,state"
                         />
     </div>
 </xar:template>
