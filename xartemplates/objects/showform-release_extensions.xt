@@ -12,6 +12,8 @@
                 <xar:data-input property="$properties['id']" />
             </div>
         </div>
+    <xar:else/>
+        <xar:data-input property="$properties['id']" hidden="hidden"/>
     </xar:if>
     <div class="xar-row">
         <div class="xar-col">
@@ -160,5 +162,13 @@
                 <xar:data-input property="$properties['scm_link']" />
             </div>
         </div>
+    <xar:else/>
+        <xar:data-input property="$properties['author']" hidden="hidden"/>
+        <xar:data-input property="$properties['certified']" hidden="hidden"/>
+        <xar:data-input property="$properties['approved']" hidden="hidden"/>
+        <xar:data-input property="$properties['registration_time']" hidden="hidden"/>
+        <xar:data-input property="$properties['modified']" hidden="hidden"/>
+        <xar:data-input property="$properties['members']" hidden="hidden"/>
+        <xar:data-input property="$properties['scm_link']" hidden="hidden"/>
     </xar:if>
 </xar:template>

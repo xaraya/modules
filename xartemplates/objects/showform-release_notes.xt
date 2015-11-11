@@ -12,98 +12,125 @@
                 <xar:data-input property="$properties['id']" />
             </div>
         </div>
+    <xar:else/>
+        <xar:data-input property="$properties['id']" hidden="hidden"/>
     </xar:if>
     <div class="xar-row">
         <div class="xar-col">
-            <xar:var name="label">Extension Registered Name</xar:var>
-            <xar:data-label property="$properties['name']" for="id" label="$label" />
+            <xar:var name="label">Extension ID</xar:var>
+            <xar:data-label property="$properties['release_id']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['name']" />
-            &#160;Lower case, no spaces or special characters (underscore and hyphens accepted).
-        </div>
-    </div>
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="label">Registration ID</xar:var>
-            <xar:data-label property="$properties['extension_id']" for="id" label="$label" />
-        </div>
-        <div class="xar-col">
-            <xar:data-input property="$properties['extension_id']" />
-            &#160;Leave blank, unless you want to nominate a specific ID for your extension. 
+            <xar:data-input property="$properties['release_id']" />
         </div>
     </div>
     <div class="xar-row">
         <div class="xar-col">
-            <xar:var name="label">Extension Display Name</xar:var>
-            <xar:data-label property="$properties['display_name']" for="id" label="$label" />
+            <xar:var name="label">Version</xar:var>
+            <xar:data-label property="$properties['version']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['display_name']" />
-        </div>
-    </div>
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="label">Description</xar:var>
-            <xar:data-label property="$properties['description']" for="id" label="$label" />
-        </div>
-        <div class="xar-col">
-            <xar:data-input property="$properties['description']" style="width: 270px!important;"/>
+            <xar:data-input property="$properties['version']" />
         </div>
     </div>
     <div class="xar-row">
         <div class="xar-col">
-            <xar:var name="label">Type</xar:var>
-            <xar:data-label property="$properties['extension_type']" for="id" label="$label" />
+            <xar:var name="label">Price</xar:var>
+            <xar:data-label property="$properties['price']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['extension_type']" />
-        </div>
-    </div>
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="label">Class</xar:var>
-            <xar:data-label property="$properties['class']" for="id" label="$label" />
-        </div>
-        <div class="xar-col">
-            <xar:data-input property="$properties['class']" />
+            <xar:data-input property="$properties['price']" />
         </div>
     </div>
     <div class="xar-row">
         <div class="xar-col">
-            <xar:var name="label">Extension Status</xar:var>
-            <xar:data-label property="$properties['state']" for="id" label="$label" />
+            <xar:var name="label">Terms</xar:var>
+            <xar:data-label property="$properties['terms']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['state']" />
-        </div>
-    </div>
-    <div class="xar-row">
-        <div class="xar-col">
-            <xar:var name="label">Add to latest project list</xar:var>
-            <xar:data-label property="$properties['open_project']" for="id" label="$label" />
-        </div>
-        <div class="xar-col">
-            <xar:data-input property="$properties['open_project']" />
+            <xar:data-input property="$properties['terms']" style="width: 270px!important;"/>
         </div>
     </div>
     <div class="xar-row">
         <div class="xar-col">
-            <xar:var name="label">Categories</xar:var>
-            <xar:data-label property="$properties['categories']" for="id" label="$label" />
+            <xar:var name="label">Demo</xar:var>
+            <xar:data-label property="$properties['demo']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['categories']" />
+            <xar:data-input property="$properties['demo']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Demo Link</xar:var>
+            <xar:data-label property="$properties['demo_link']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['demo_link']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">DL Link</xar:var>
+            <xar:data-label property="$properties['dl_link']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['dl_link']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Support</xar:var>
+            <xar:data-label property="$properties['support']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['support']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Support Link</xar:var>
+            <xar:data-label property="$properties['support_link']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['support_link']" />
         </div>
     </div>
     <xar:if condition="$isallowed">
         <div class="xar-row">
             <div class="xar-col">
-                <xar:var name="label">Author</xar:var>
-                <xar:data-label property="$properties['author']" for="id" label="$label" />
+                <xar:var name="label">Changelog</xar:var>
+                <xar:data-label property="$properties['changelog']" for="id" label="$label" />
             </div>
             <div class="xar-col">
-                <xar:data-input property="$properties['author']" />
+                <xar:data-input property="$properties['changelog']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Notes</xar:var>
+                <xar:data-label property="$properties['notes']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['notes']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Time</xar:var>
+                <xar:data-label property="$properties['time']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['time']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">E Notes</xar:var>
+                <xar:data-label property="$properties['e_notes']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['e_notes']" />
             </div>
         </div>
         <div class="xar-row">
@@ -126,39 +153,38 @@
         </div>
         <div class="xar-row">
             <div class="xar-col">
-                <xar:var name="label">Registration</xar:var>
-                <xar:data-label property="$properties['registration_time']" for="id" label="$label" />
+                <xar:var name="label">State</xar:var>
+                <xar:data-label property="$properties['state']" for="id" label="$label" />
             </div>
             <div class="xar-col">
-                <xar:data-input property="$properties['registration_time']" />
+                <xar:data-input property="$properties['state']" />
             </div>
         </div>
         <div class="xar-row">
             <div class="xar-col">
-                <xar:var name="label">Modified</xar:var>
-                <xar:data-label property="$properties['modified']" for="id" label="$label" />
+                <xar:var name="label">Use Feed</xar:var>
+                <xar:data-label property="$properties['use_feed']" for="id" label="$label" />
             </div>
             <div class="xar-col">
-                <xar:data-input property="$properties['modified']" />
+                <xar:data-input property="$properties['use_feed']" />
             </div>
         </div>
         <div class="xar-row">
             <div class="xar-col">
-                <xar:var name="label">Members</xar:var>
-                <xar:data-label property="$properties['members']" for="id" label="$label" />
+                <xar:var name="label">Extension Type</xar:var>
+                <xar:data-label property="$properties['extension_type']" for="id" label="$label" />
             </div>
             <div class="xar-col">
-                <xar:data-input property="$properties['members']" />
+                <xar:data-input property="$properties['extension_type']" />
             </div>
         </div>
-        <div class="xar-row">
-            <div class="xar-col">
-                <xar:var name="label">SCM Link</xar:var>
-                <xar:data-label property="$properties['scm_link']" for="id" label="$label" />
-            </div>
-            <div class="xar-col">
-                <xar:data-input property="$properties['scm_link']" />
-            </div>
-        </div>
+    <xar:else/>
+        <xar:data-input property="$properties['author']" hidden="hidden"/>
+        <xar:data-input property="$properties['certified']" hidden="hidden"/>
+        <xar:data-input property="$properties['approved']" hidden="hidden"/>
+        <xar:data-input property="$properties['registration_time']" hidden="hidden"/>
+        <xar:data-input property="$properties['modified']" hidden="hidden"/>
+        <xar:data-input property="$properties['members']" hidden="hidden"/>
+        <xar:data-input property="$properties['scm_link']" hidden="hidden"/>
     </xar:if>
 </xar:template>
