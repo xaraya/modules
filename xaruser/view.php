@@ -528,22 +528,23 @@ function publications_user_view($args)
 //    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
 //    $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
+    $q = $data['object']->dataquery;
     
 // Cater to default settings
     if ($data['sort'] == 'date ASC') {
-        $data['object']->dataquery->setorder('modify_date', 'ASC');
+        $q->setorder('modify_date', 'ASC');
     } elseif ($data['sort'] == 'modify_date' || $data['sort'] == 'date') {
-        $data['object']->dataquery->setorder('modify_date', 'DESC');
+        $q->setorder('modify_date', 'DESC');
     } else {
         // Sort by whatever was passed, if the property exists
         if (isset($data['object']->properties[$data['sort']]))
-            $data['object']->dataquery->setorder($data['object']->properties[$data['sort']]->source, 'ASC');
+            $q->setorder($data['object']->properties[$data['sort']]->source, 'ASC');
     }
 
 // Settings for the pager
     $data['numitems'] = (int)$numitems;
     $data['startnum'] = (int)$startnum;
-    $data['object']->dataquery->setrowstodo($numitems);
+    $q->setrowstodo($numitems);
     
 // Set the page template if needed
 // Page template for frontpage or depending on publication type (optional)
