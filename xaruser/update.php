@@ -140,8 +140,12 @@ function publications_user_update()
         xarController::redirect(xarModURL('publications', 'user', 'display',
                                       array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
     } else {
-        xarController::redirect(xarModURL('publications', 'user', 'modify',
-                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
+    	if (!empty($data['returnurl'])) {
+    		xarController::redirect($data['returnurl']);
+    	} else {
+    		xarController::redirect(xarModURL('publications', 'user', 'modify',
+                                   array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
+    	}
         return true;
     }
 }
