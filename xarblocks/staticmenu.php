@@ -135,7 +135,7 @@
         
         // Get the information on publication types
         $pubtypes = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-        $pubtypes->dataquery->gt('state',2);
+        $pubtypes->dataquery->gt($pubtypes->properties['state']->source,2);
         $typeinfo = $pubtypes->getItems();
 
         foreach ($g->getNodes() as $node) {
