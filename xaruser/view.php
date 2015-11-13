@@ -30,7 +30,7 @@ function publications_user_view($args)
 {
     // Get parameters
     if (!xarVarFetch('ptid',     'id',    $ptid,      xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('startnum', 'int:0', $startnum,  1,    XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -517,10 +517,10 @@ function publications_user_view($args)
         }
     }
 
-    // Specific layout within a template (optional)
+// Specific layout within a template (optional)
     if (isset($layout)) $data['layout'] = $layout;
 
-    // Get the publications we want to view
+// Get the publications we want to view
     $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
     $data['objectname'] = $data['pubtypeobject']->properties['name']->value;
     $data['ptid'] = (int)$ptid;
@@ -535,7 +535,9 @@ function publications_user_view($args)
     } elseif ($data['sort'] == 'modify_date' || $data['sort'] == 'date') {
         $data['object']->dataquery->setorder('modify_date', 'DESC');
     } else {
-        $data['object']->dataquery->setorder($data['sort'], 'ASC');
+        // Sort by whatever was passed, if the property exists
+        if (isset($data['object']->properties[$data['sort']]))
+            $data['object']->dataquery->setorder($data['object']->properties[$data['sort']]->source, 'ASC');
     }
 
 // Settings for the pager
@@ -543,9 +545,9 @@ function publications_user_view($args)
     $data['startnum'] = (int)$startnum;
     $data['object']->dataquery->setrowstodo($numitems);
     
-    // Set the page template if needed
-    // Page template for frontpage or depending on publication type (optional)
-    // Note : this cannot be overridden in templates
+// Set the page template if needed
+// Page template for frontpage or depending on publication type (optional)
+// Note : this cannot be overridden in templates
     if (!empty($data['pubtypeobject']->properties['page_template']->value)) {
         $pagename = $data['pubtypeobject']->properties['page_template']->value;
         $position = strpos($pagename,'.');
@@ -560,7 +562,7 @@ function publications_user_view($args)
 // Throw all the settings we are using into the cache
     xarCore::setCached('publications', 'settings_' . $data['ptid'], $data['settings']);
 
-    // Flag this as the current list view
+// Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $data['ptid'])));
     
     return xarTplModule('publications', 'user', 'view', $data, $data['template']);
