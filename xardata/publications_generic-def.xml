@@ -248,7 +248,7 @@
     <property name="theme">
       <id>259</id>
       <label>Theme</label>
-      <type>static</type>
+      <type>objectref</type>
       <defaultvalue></defaultvalue>
       <source>publication.theme</source>
       <status>34</status>
