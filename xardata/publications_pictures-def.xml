@@ -138,7 +138,7 @@
     <property name="itemtype">
       <id>887</id>
       <label>Type</label>
-      <type>objectref</type>
+      <type>static</type>
       <defaultvalue>5</defaultvalue>
       <source>publication.pubtype_id</source>
       <status>33</status>
@@ -228,7 +228,7 @@
     <property name="theme">
       <id>259</id>
       <label>Theme</label>
-      <type>objectref</type>
+      <type>static</type>
       <defaultvalue></defaultvalue>
       <source>publication.theme</source>
       <status>34</status>
