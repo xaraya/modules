@@ -17,7 +17,6 @@
  */
 function publications_admin_main()
 {
-
     // Security Check
     if (!xarSecurityCheck('EditPublications')) return;
 
