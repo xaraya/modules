@@ -16,7 +16,7 @@
  */
     sys::import('modules.dynamicdata.class.objects.master');
     
-    function release_admin_display_extension()
+    function release_admin_display_documentation()
     {
         if (!xarSecurityCheck('ReadRelease')) return;
 
