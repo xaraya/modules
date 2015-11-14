@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:template file="admin-mod-head"/>
+    <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
         <h2>View Releases</h2>
