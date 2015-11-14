@@ -4,14 +4,14 @@
     <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-        <h2>Delete Release</h2>
+        <h2>Delete Release Documentation</h2>
         <h3 class="xar-align-center">
-            Confirm Deleting This Release?
+            Confirm deleting this documentation?
         </h3>
 
         <xar:data-display object="$object"/>
 
-        <form method="post" action="#xarModURL('release','user','delete_release')#">
+        <form method="post" action="#xarModURL('release','user','delete_documentation')#">
             <div class="xar-row">
                 <div class="xar-col">
                 </div>

@@ -11,7 +11,7 @@
 
         <xar:data-display object="$object"/>
 
-        <form method="post" action="#xarServer::getCurrentURL()#">
+        <form method="post" action="#xarModURL('release','admin','delete_release')#">
             <div class="xar-row">
                 <div class="xar-col">
                 </div>

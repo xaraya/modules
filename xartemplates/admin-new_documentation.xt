@@ -6,7 +6,7 @@
     <div class="xar-mod-body">
         <h2>Register New Release Documentation</h2>
 
-        <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarModURL('release','admin','new_documentation')#" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset>
               <legend>Documentation Information</legend>
               <xar:data-form object="$object" tplmodule="$tplmodule"/>

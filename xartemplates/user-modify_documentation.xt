@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:template file="admin-mod-head"/>
+    <xar:template file="user-mod-head"/>
 
     <h2>Modify Release Documentation</h2>
 
@@ -12,7 +12,7 @@
         </fieldset>
     </xar:if>
 
-    <form method="post" action="#xarModURL('release','admin','modify_documentation')#">
+    <form method="post" action="#xarModURL('release','user','modify_documentation')#">
         <fieldset>
             <legend>Modify documentation details</legend>
             <xar:data-form object="$object" tplmodule="$tplmodule"/>

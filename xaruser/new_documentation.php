@@ -18,7 +18,7 @@
  * @return array
  * @author Release module development team
  */
-function release_admin_new_documentation($args)
+function release_user_new_documentation($args)
 {
     if (!xarSecurityCheck('AddRelease')) return;
 

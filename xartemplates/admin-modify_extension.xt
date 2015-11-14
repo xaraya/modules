@@ -12,7 +12,7 @@
         </fieldset>
     </xar:if>
 
-    <form method="post" action="#xarServer::getCurrentURL()#">
+    <form method="post" action="#xarModURL('release','admin','modify_extension')#">
         <fieldset>
             <legend>Modify item details</legend>
             <xar:data-form object="$object" tplmodule="$tplmodule"/>

@@ -15,7 +15,7 @@ function release_admin_view_documentation()
     if (!xarSecurityCheck('EditRelease')) return;
 
     // Get the object to be listed
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_documentation'));
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_docs'));
 
     return $data;
 }
