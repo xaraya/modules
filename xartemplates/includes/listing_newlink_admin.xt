@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">xxx
     <xar:if condition="$layout eq 'view_all'">
     <xar:elseif condition="$objectname eq 'release_extensions'"/>
         <xar:access level="600">

@@ -1,17 +1,17 @@
 <?php
 /**
- * Modify an ID
+ * Modify an extension
  *
  * @package modules
+ * @subpackage Release Module
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Release Module
  * @link http://xaraya.com/index.php/release/773.html
  */
 /**
- * Modify an ID by user
+ * Modify an extension by user
  *
  * @param $rid
  *
@@ -42,13 +42,13 @@ function release_admin_modify_extension($args)
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('release','admin','modify_release', $data);        
+            return xarTplModule('release','admin','modify_extension', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('release','admin','view_releases'));
+            xarController::redirect(xarModURL('release','admin','view_extensions'));
             return true;
         }
     }
