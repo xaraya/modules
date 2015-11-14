@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
 
-    <h2>Modify Release</h2>
+    <h2>Modify Release Documentation</h2>
 
     <xar:if condition="isset($preview)">
         <fieldset>
@@ -14,7 +14,7 @@
 
     <form method="post" action="#xarServer::getCurrentURL()#">
         <fieldset>
-            <legend>Modify release details</legend>
+            <legend>Modify documentation details</legend>
             <xar:data-form object="$object" tplmodule="$tplmodule"/>
         </fieldset>
         <div class="xar-row">
@@ -31,7 +31,7 @@
                 <xar:var name="label">Update</xar:var>
                 <xar:button type="submit" name="post" value="$label" class="btn-primary"/>&#160;
                 <xar:var name="label">Delete</xar:var>
-                <xar:set name="target">xarModURL('release', 'admin', 'delete_release', array('itemid' => $object->properties['id']->value))</xar:set>
+                <xar:set name="target">xarModURL('release', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
                 <xar:button type="link" target="$target" value="$label" class="btn-danger"/>
             </div>
         </div>

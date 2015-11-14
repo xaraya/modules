@@ -4,11 +4,11 @@
     <xar:template file="admin-mod-head"/>
 
     <div class="xar-mod-body">
-        <h2>Register a New Release</h2>
+        <h2>Register New Release Documentation</h2>
 
-        <form action="#xarModURL('release','admin','new_release')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset>
-              <legend>Release Information</legend>
+              <legend>Documentation Information</legend>
               <xar:data-form object="$object" tplmodule="$tplmodule"/>
             </fieldset>
             <div class="xar-row">

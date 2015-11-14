@@ -2,8 +2,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
+
     <div class="xar-mod-body">
-        <h2><xar:data-label object="$object"/></h2>
-        <xar:data-display object="$object" tplmodule="release"/>
+        <h2>View Release Documentation</h2>
+        
+        <xar:data-input type="listing" 
+                        object="$object"
+                        fieldlist="name,extension_id,extension_type,author,state"
+                        />
     </div>
 </xar:template>
