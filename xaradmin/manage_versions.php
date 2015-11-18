@@ -23,7 +23,7 @@ function publications_admin_manage_versions($args)
     
     sys::import('modules.dynamicdata.class.objects.master');
     $entries = DataObjectMaster::getObjectList(array('name' => 'publications_versions'));
-    $entries->dataquery->eq('page_id', $data['page_id']);
+    $entries->dataquery->eq($entries->properties['page_id']->source, $data['page_id']);
     $data['versions'] = $entries->countItems() + 1;
     
     if ($data['versions'] < 2) return $data;
@@ -47,8 +47,8 @@ function publications_admin_manage_versions($args)
         $page->getItem(array('itemid' => $data['page_id']));
         $content_array_1 = $page->getFieldValues(array(), 1);
     } else {
-        $version->dataquery->eq('page_id', $data['page_id']);
-        $version->dataquery->eq('version_number', $version_1);
+        $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
+        $version->dataquery->eq($version->properties['version_number']->source, $version_1);
         $items = $version->getItems();
         if (count($items) > 1)
             throw new Exception(xarML('More than one instance with the version number #(1)', $version_1));
@@ -61,8 +61,8 @@ function publications_admin_manage_versions($args)
         $content_array_2 = $page->getFieldValues(array(), 1);
     } else {
         $version->dataquery->clearconditions();
-        $version->dataquery->eq('page_id', $data['page_id']);
-        $version->dataquery->eq('version_number', $version_2);
+        $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
+        $version->dataquery->eq($version->properties['version_number']->source, $version_2);
         $items = $version->getItems();
         if (count($items) > 1)
             throw new Exception(xarML('More than one instance with the version number #(1)', $version_2));

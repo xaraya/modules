@@ -23,7 +23,7 @@ function publications_admin_display_version($args)
     
     sys::import('modules.dynamicdata.class.objects.master');
     $entries = DataObjectMaster::getObjectList(array('name' => 'publications_versions'));
-    $entries->dataquery->eq('page_id', $data['page_id']);
+    $entries->dataquery->eq($entries->properties['page_id']->source, $data['page_id']);
     $data['versions'] = $entries->countItems();
     
     if ($data['versions'] < 1) return $data;
@@ -34,8 +34,8 @@ function publications_admin_display_version($args)
         
     // Get the content data for the display
     $version = DataObjectMaster::getObjectList(array('name' => 'publications_versions'));
-    $version->dataquery->eq('page_id', $data['page_id']);
-    $version->dataquery->eq('version_number', $version_1);
+    $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
+    $version->dataquery->eq($version->properties['version_number']->source, $version_1);
     $items = $version->getItems();
     if (count($items) > 1)
         throw new Exception(xarML('More than one instance with the version number #(1)', $version_1));
