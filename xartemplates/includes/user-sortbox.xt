@@ -15,7 +15,9 @@
     <xar:data-input type="dropdown" name="order" id="order" value="$sortorder" options="$orderoptions" />
     <label for="period">From the:</label>
     <xar:data-input type="dropdown" name="period" id="period" value="$period" options="$timeoptions" />
-    &#160;&#160;&#160; <input type="submit" value="#xarML('Sort')#" />
+    &#160;&#160;&#160;
+    <xar:var name="label">Sort</xar:var>
+    <xar:button type="submit" label="$label" />
     </div>
 </form>
 </xar:if>

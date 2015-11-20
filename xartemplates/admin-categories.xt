@@ -27,7 +27,8 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="sublink" id="sublink" value="mastercat" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#xarML('Change Base Category')#" />
+                <xar:var name="label">Change Base Category</xar:var>
+                <xar:button type="submit" label="$label" />
             </form>
         <!--
         <xar:elseif condition="$sublink eq 'confirm'" />

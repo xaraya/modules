@@ -24,7 +24,8 @@
             </div>
             </fieldset>
             <div class="xar-form-input-wrapper-after">
-                <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
+                <xar:var name="label">Confirm</xar:var>
+                <xar:button type="submit" name="confirm" label="$label" />
             </div>
         </form>
     </div>

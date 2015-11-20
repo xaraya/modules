@@ -57,7 +57,6 @@ function crispbb_admin_unlinkhooks()
                 }
             }
         }
-        $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
         $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',

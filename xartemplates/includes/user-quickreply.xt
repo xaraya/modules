@@ -26,7 +26,11 @@
         <xar:if condition="!empty($return_url)">
             <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
         </xar:if>
-        <input type="submit" value="#xarML('Post Reply')#" />&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
+        <xar:var name="label">Post Reply</xar:var>
+        <xar:button type="submit" label="$label" />
+        &#160;&#160;
+        <xar:var name="label">Preview</xar:var>
+        <xar:button type="submit" name="preview" label="$label" />
     </div>
 </form>
 </xar:if>

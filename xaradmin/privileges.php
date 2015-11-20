@@ -103,9 +103,6 @@ function crispbb_admin_privileges($args)
                   'pparentid'    => $pparentid,
                  );
 
-    $data['refreshlabel'] = xarML('Refresh');
-    $data['applylabel'] = xarML('Finish and Apply to Privilege');
-
     return $data;
 }
 
