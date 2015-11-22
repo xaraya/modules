@@ -65,9 +65,13 @@ function crispbb_admin_view($args)
             $catinfo['forums']->layout = 'admin';
             $fieldlist = array('fname', 'fdesc','fprivileges','ftype');
             $catinfo['forums']->setFieldlist($fieldlist);
+            
+            // Filter by categories
             $catinfo['forums']->setCategories($cid);
-            $filter = array('sort' => 'forder ASC', 'linkfield' => 'fname', 'catid' => $cid);
-            $catinfo['forums']->getItems($filter);
+            // Sort by forum sequence
+            $catinfo['forums']->setSort('forder ASC');
+            
+            $catinfo['forums']->getItems();
             $catinfo['numforums'] = count($catinfo['forums']->items);
             $catinfo['newforum'] = LinkCache::getCachedURL('crispbb', 'admin', 'new', array('catid' => $cid));
             $catinfo['view'] = LinkCache::getCachedURL('crispbb', 'admin', 'view', array('catid' => $cid));
