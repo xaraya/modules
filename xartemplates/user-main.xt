@@ -102,6 +102,8 @@
                                     <a href="#$forum['pownerurl']#" title="#xarML('View profile')#">
                                         <xar:data-output type="name" value="$posterlist[$forum['powner']]['name']"/>
                                     </a>
+                                <xar:else/>
+                                    <xar:data-output type="name" value="$posterlist[$forum['powner']]['name']"/>
                                 </xar:if>
                             </p>
                         <xar:else />
