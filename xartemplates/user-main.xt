@@ -99,9 +99,9 @@
                             <p>
                                 <span class="xar-sub">By:</span>
                                 <xar:if condition="!empty($forum['pownerurl'])">
-                                <a href="#$forum['pownerurl']#" title="#xarML('View profile')#">
-                                    <xar:data-output type="name" value="$posterlist[$forum['powner']]['name']"/>
-                                </a>
+                                    <a href="#$forum['pownerurl']#" title="#xarML('View profile')#">
+                                        <xar:data-output type="name" value="$posterlist[$forum['powner']]['name']"/>
+                                    </a>
                                 </xar:if>
                             </p>
                         <xar:else />
