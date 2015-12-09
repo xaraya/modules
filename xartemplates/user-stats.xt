@@ -55,7 +55,7 @@
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topstarters" value="$topstarter">
                 <li><a href="#xarModURL('roles', 'user', 'display', array('id' => $topstarter['id']))#" title="#xarML('View Profile')#">
-                    <xar:data-output type="name" value="$topstarter['name']"/>
+                    <xar:data-output type="username" value="$topstarter['name']"/>
                 </a> (#$topstarter['numtopics']#)</li>
             </xar:foreach>
             </ul>
@@ -67,7 +67,7 @@
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topposters" value="$topposter">
                 <li><a href="#xarModURL('roles', 'user', 'display', array('id' => $topposter['id']))#" title="#xarML('View Profile')#">
-                    <xar:data-output type="name" value="$topposter['name']"/>
+                    <xar:data-output type="username" value="$topposter['name']"/>
                 </a> (#$topposter['numreplies']#)</li>
             </xar:foreach>
             </ul>
