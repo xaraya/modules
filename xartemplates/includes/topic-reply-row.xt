@@ -58,7 +58,7 @@
     <xar:comment>This function returns a list of info for all the users who appear on this page in the $posterlist array. This contains data from roles userapi getall. </xar:comment>
     <xar:comment>Show posters name, linking to their profile</xar:comment>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">
-        <xar:data-output type="name" value="$posterlist[$post['powner']]['name']"/>
+        <xar:data-output type="username" value="$posterlist[$post['powner']]['name']"/>
     </a>
     <br />
     Joined:
