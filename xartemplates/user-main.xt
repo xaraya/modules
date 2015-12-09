@@ -37,8 +37,8 @@
                 <tr>
                     <th scope="col" class="timeimage">&#160;</th>
                     <th scope="col" class="foruminfo xar-halfwidth">Forum</th>
-                    <th scope="col" class="postinfo">Posts</th>
-                    <th scope="col" class="lastpost">Last Post</th>
+                    <th scope="col" class="postinfo">Info</th>
+                    <th scope="col" class="lastpost">Latest Post</th>
                 </tr>
             </thead>
             <tfoot>
