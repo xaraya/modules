@@ -1,0 +1,47 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+            </includes>
+            <target>main</target>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageRealms</mask>
+            <includes>
+                <includeitem>view_realms</includeitem>
+            </includes>
+            <target>view_realms</target>
+            <title>Manage realms</title>
+            <label>Manage Realms</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageRealms</mask>
+            <includes>
+                <includeitem>view_members</includeitem>
+            </includes>
+            <target>view_members</target>
+            <title>Manage members of realms</title>
+            <label>Manage Realm Members</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminRealms</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Manage the master tables of this module</title>
+            <label>Master Tables</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminRealms</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the Realms configuration</title>
+            <label>Modify Config</label>
+        </menuitem>
+    </menuitems>
+</menu>

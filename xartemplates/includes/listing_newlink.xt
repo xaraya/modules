@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:access level="600">
+        <xar:if condition="$object->name eq 'realms_realms'">
+            <xar:set name="returnurl">xarModURL($module,'admin','view')</xar:set>
+            <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Realm</a>
+        <xar:else/>
+            <xar:set name="returnurl">xarModURL($module,'admin','view_members')</xar:set>
+            <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_member',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Member</a>
+        </xar:if>
+    </xar:access>
+</xar:template>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
+            <xar:var name="firstline">Choose a realm</xar:var>        
+            <xar:set name="firstline">"0,$firstline"</xar:set>        
+            <xar:data-input type="dropdown" name="realm_id" value="$realm_id" firstline="$firstline" options="$options" onchange="javascript:submit()"/>
+        </form>
+        <xar:data-input type="listing" objectname="realms_members" fieldlist="name,user_name,email,state" conditions="$conditions" tplmodule="realms" layout="view_members"/>
+    </div>
+</xar:template>

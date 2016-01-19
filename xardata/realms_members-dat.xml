@@ -1,0 +1,15 @@
+<items>
+  <realms_members itemid="1">
+    <id>1</id>
+    <name>%Member%Default%%%</name>
+    <realm_id>1</realm_id>
+    <created>1309003902</created>
+    <modified>1309003902</modified>
+    <state>3</state>
+    <role_link>0</role_link>
+    <role_id>0</role_id>
+    <uname>defaultmember</uname>
+    <email>none@none.com</email>
+    <passwd>229daf4a54a54b8264c0ff7ea7af350f</passwd>
+  </realms_members>
+</items>

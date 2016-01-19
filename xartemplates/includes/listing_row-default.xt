@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <tr class="#$item_class#">
+        <xar:template file="listing_rowprefix" module="$module" property="listing"/>
+
+        <xar:if condition="$object->name eq 'realms_realms'">
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loopitem[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
+                    <xar:continue />
+                </xar:if>
+                <td>
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditRealms',0)">
+                        <a href="#xarModURL('realms','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </a>
+                    <xar:else />
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadRealms',0)">
+                            <a href="#xarModURL('dynamicdata','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                                <xar:data-output property="$properties[$column]" value="$value"/>
+                            </a>
+                        <xar:else />
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </xar:if>
+                    </xar:if>
+                </td>
+            </xar:foreach>
+        <xar:elseif condition="$object->name eq 'realms_members'"/>
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loopitem[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
+                    <xar:continue />
+                </xar:if>
+                <td>
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditRealms',0)">
+                        <a href="#xarModURL('realms','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </a>
+                    <xar:else />
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadRealms',0)">
+                            <a href="#xarModURL('dynamicdata','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                                <xar:data-output property="$properties[$column]" value="$value"/>
+                            </a>
+                        <xar:else />
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </xar:if>
+                    </xar:if>
+                </td>
+            </xar:foreach>
+        <xar:else/>
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loopitem[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
+                    <xar:continue />
+                </xar:if>
+                <td>
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditRealms',0)">
+                        <a href="#xarModURL('realms','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </a>
+                    <xar:else />
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadRealms',0)">
+                            <a href="#xarModURL('dynamicdata','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                                <xar:data-output property="$properties[$column]" value="$value"/>
+                            </a>
+                        <xar:else />
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </xar:if>
+                    </xar:if>
+                </td>
+            </xar:foreach>
+        </xar:if>
+
+
+        <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
+    </tr>
+</xar:template>

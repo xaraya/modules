@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html-->
+    <xar:if condition="$isrealmed">
+        <xar:data-output type="objectref" name="$name" refobject="$refobject" store_prop="$store_prop" firstline="$firstline" value="$value"/>
+        <input type="hidden" name="#$name#" value="#$value#"/>
+    <xar:else />
+        <xar:data-input type="objectref" name="$name" refobject="$refobject" store_prop="$store_prop" firstline="$firstline" value="$value"/>
+    </xar:if> 
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

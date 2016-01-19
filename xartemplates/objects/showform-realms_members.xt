@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
+    <xar:data-input property="$properties['id']" hidden="hidden"/>            
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Name</xar:var>
+        <xar:data-label property="$properties['name']" for="id" label="$label" />
+        <xar:data-input property="$properties['name']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">User Name</xar:var>
+        <xar:data-label property="$properties['uname']" for="id" label="$label" />
+        <xar:data-input property="$properties['uname']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Password</xar:var>
+        <xar:data-label property="$properties['password']" for="id" label="$label" />
+        <xar:data-input property="$properties['password']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Email</xar:var>
+        <xar:data-label property="$properties['email']" for="id" label="$label" />
+        <xar:data-input property="$properties['email']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">State</xar:var>
+        <xar:data-label property="$properties['state']" for="id" label="$label" />
+        <xar:data-input property="$properties['state']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Realm</xar:var>
+        <xar:data-label property="$properties['realm_id']" for="id" label="$label" />
+        <xar:data-input property="$properties['realm_id']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Created</xar:var>
+        <xar:data-label property="$properties['created']" for="id" label="$label" />
+        <xar:data-input property="$properties['created']" />            
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Modified</xar:var>
+        <xar:data-label property="$properties['modified']" for="id" label="$label" />
+        <xar:data-input property="$properties['modified']" />            
+    </div>
+    <xar:set name="info">xarController::$request->getInfo()</xar:set>
+    <xar:if condition="$info[2] eq 'new_member'">
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Create role</xar:var>
+            <xar:data-label property="$properties['role_link']" for="id" label="$label" />
+            <xar:data-input property="$properties['role_link']" />            
+        </div>
+        <xar:data-input property="$properties['role_id']" hidden="hidden"/>            
+    <xar:elseif condition="$info[2] eq 'modify_member'"/>
+        <xar:data-input property="$properties['role_link']" hidden="hidden"/>            
+        <div class="xar-form-input-wrapper">
+            <xar:data-input property="$properties['role_link']" hidden="hidden"/>            
+            <xar:var name="firstline">No link</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:var name="label">Link to role</xar:var>
+            <xar:data-label property="$properties['role_id']" for="id" label="$label" />
+            <xar:data-input property="$properties['role_id']" state="98" firstline="$firstline"/>            
+        </div>
+    <xar:else/>
+        <xar:data-input property="$properties['role_link']" hidden="hidden"/>            
+        <xar:data-input property="$properties['role_id']" hidden="hidden"/>            
+    </xar:if>
+</xar:template>

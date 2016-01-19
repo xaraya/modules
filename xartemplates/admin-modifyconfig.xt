@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>
+            Modify Configuration
+        </h2>
+        <ul class="xar-tabs">
+            <xar:if condition="$tab eq 'general'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+                <a class="#$linkclass#" href="#xarModURL('realms', 'admin', 'modifyconfig', array('tab' => 'general'))#">
+                    General
+                </a>
+            </li>
+<!--
+            <xar:if condition="$tab eq 'tab2'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+
+            <li class="#$tabclass#">
+                <a class="#$linkclass#" href="#xarModURL('realms', 'admin', 'modifyconfig', array('tab' => 'tab2'))#">
+                    Tab2
+                </a>
+            </li>
+
+            <xar:if condition="$tab eq 'tab3'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+
+            <li class="#$tabclass#">
+                <a class="#$linkclass#" href="#xarModURL('realms', 'admin', 'modifyconfig', array('tab' => 'tab3'))#">
+                    Tab3
+                </a>
+            </li>
+-->
+        </ul>
+        <xar:comment>
+             - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
+        </xar:comment>
+        <xar:if condition="$tab eq 'general'">
+            <form method="post" action="&xar-modurl-realms-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                <h3>
+                    General Options
+                </h3>
+                <xar:data-form object="$module_settings"/>
+                <fieldset>
+                    <div class="xar-form-input-wrapper">
+                        <label for="link_role" class="xar-form-label" title="#xarML('Define whether realm members have an associated role defined')#">
+                           Create Role for New members 
+                        </label>
+                        <xar:set name="value">xarModVars::get('realms', 'link_role')</xar:set>
+                        <xar:data-input type="checkbox" name="link_role" value="$value"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="link_role" class="xar-form-label" title="#xarML('Define which realm new members get assigned to')#">
+                           New members belong to
+                        </label>
+                        <xar:set name="value">xarModVars::get('realms', 'default_realm')</xar:set>
+                        <xar:var name="firstline">All realms</xar:var>
+                        <xar:set name="firstline">"0,$firstline"</xar:set>
+                        <xar:data-input type="objectref" name="default_realm" refobject="realms_realms" store_prop="id" value="$value" firstline="$firstline"/>
+                    </div>
+                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
+            </form>
+            <xar:comment>
+                 - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
+            </xar:comment>
+            <xar:elseif condition="$tab eq 'tab2'"/>
+            <xar:comment>
+                 - - - - - - - - - - - - - - - - - - - Begin Tab3 Options  - - - - - - - - - - - - - - - - - - -
+            </xar:comment>
+            <xar:elseif condition="$tab eq 'tab3'"/>
+        </xar:if>
+    </div>
+</xar:template>

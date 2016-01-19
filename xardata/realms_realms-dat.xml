@@ -1,0 +1,28 @@
+<items>
+  <realms_realms itemid="1">
+    <id>1</id>
+    <name>Default Mandant</name>
+    <code>12345</code>
+    <description>Mandant to be assigned in lieu of any others</description>
+    <configuration>a:1:{s:5:"Units";s:43:"1,Marketing;1,Sales;3,Production;4,Finance;";}</configuration>
+    <main_member>1</main_member>
+    <theme>11005</theme>
+    <time_created>1268855260</time_created>
+    <time_modified>1268855260</time_modified>
+    <owner>5</owner>
+    <state>3</state>
+  </realms_realms>
+  <realms_realms itemid="2">
+    <id>1</id>
+    <name>Limbo</name>
+    <code>67890</code>
+    <description>Members of this mandant see nothing at all, and are not seen by anyone</description>
+    <configuration></configuration>
+    <main_member></main_member>
+    <theme>11005</theme>
+    <time_created>1268855260</time_created>
+    <time_modified>1268855260</time_modified>
+    <owner>5</owner>
+    <state>3</state>
+  </realms_realms>
+</items>
