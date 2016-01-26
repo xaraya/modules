@@ -528,6 +528,9 @@ function publications_user_view($args)
 //    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
 //    $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
+// Set the itemtype to static for filtering
+    $data['object']->modifyProperty('itemtype', array('type' => 1));
+
     $q = $data['object']->dataquery;
     
 // Cater to default settings
