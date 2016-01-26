@@ -562,9 +562,6 @@ function publications_user_view($args)
         }
         xarTpl::setPageTemplateName($pagetemplate);
     }
-    if (xarUser::getVar('uname') == 'admin') {
-        $q->qecho();exit;
-    }
 
 // Throw all the settings we are using into the cache
     xarCore::setCached('publications', 'settings_' . $data['ptid'], $data['settings']);
