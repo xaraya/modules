@@ -1,0 +1,236 @@
+<items>
+  <payments_gateways_config itemid="1">
+    <id>1</id>
+    <configuration_title>Login ID</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_LOGIN_ID</configuration_key>
+    <configuration_value>8wd65QSj</configuration_value>
+    <configuration_desc>The login ID used for the Authorize.net service</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="2">
+    <id>2</id>
+    <configuration_title>Transaction Key</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_TRANSACTION_KEY</configuration_key>
+    <configuration_value>8CP6zJ7uD875J6tY</configuration_value>
+    <configuration_desc>Transaction key used for encrypting data</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="3">
+    <id>3</id>
+    <configuration_title>MD5 Hash</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_MD5_HASH</configuration_key>
+    <configuration_value>SecPay</configuration_value>
+    <configuration_desc>The MD5 hash value to verify transactions with</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="4">
+    <id>4</id>
+    <configuration_title>Transaction Server</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_TRANSACTION_SERVER</configuration_key>
+    <configuration_value>Test</configuration_value>
+    <configuration_desc>Perform transactions on the live or test server. The test server should only be used by developers with Authorize.net test accounts.</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="5">
+    <id>5</id>
+    <configuration_title>Transaction Mode</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_TRANSACTION_MODE</configuration_key>
+    <configuration_value>Test</configuration_value>
+    <configuration_desc>Transaction mode used for processing orders</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="6">
+    <id>6</id>
+    <configuration_title>Transaction Method</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_TRANSACTION_METHOD</configuration_key>
+    <configuration_value>Authorization</configuration_value>
+    <configuration_desc>The processing method to use for each transaction.</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="7">
+    <id>7</id>
+    <configuration_title>Set Order Status</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_ORDER_STATUS_ID</configuration_key>
+    <configuration_value>0</configuration_value>
+    <configuration_desc>Set the status of orders made with this payment module to this value</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="8">
+    <id>8</id>
+    <configuration_title>cURL Program Location</configuration_title>
+    <configuration_key>AUTHORIZENET_CC_AIM_CURL</configuration_key>
+    <configuration_value>/usr/bin/curl</configuration_value>
+    <configuration_desc>The location to the cURL program application.</configuration_desc>
+    <configuration_group_id>8</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="9">
+    <id>9</id>
+    <configuration_title>Account Number</configuration_title>
+    <configuration_key>IPAYMENT_CC_USER_ID</configuration_key>
+    <configuration_value>99999</configuration_value>
+    <configuration_desc>Merchant’s iPayment account number.</configuration_desc>
+    <configuration_group_id>7</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="10">
+    <id>10</id>
+    <configuration_title>User ID</configuration_title>
+    <configuration_key>IPAYMENT_CC_USER_ID</configuration_key>
+    <configuration_value>99999</configuration_value>
+    <configuration_desc>Merchant’s iPayment user id.</configuration_desc>
+    <configuration_group_id>7</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="11">
+    <id>11</id>
+    <configuration_title>User Password</configuration_title>
+    <configuration_key>IPAYMENT_CC_USER_PASSWORD</configuration_key>
+    <configuration_value>0</configuration_value>
+    <configuration_desc>Merchant’s iPayment user password.</configuration_desc>
+    <configuration_group_id>7</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="12">
+    <id>12</id>
+    <configuration_title>Transaction Method</configuration_title>
+    <configuration_key>IPAYMENT_CC_TRANSACTION_METHOD</configuration_key>
+    <configuration_value>preauth</configuration_value>
+    <configuration_desc>The processing method to use for each transaction.</configuration_desc>
+    <configuration_group_id>7</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="13">
+    <id>13</id>
+    <configuration_title>Enable iPayment</configuration_title>
+    <configuration_key>IPAYMENT_CC_TRANSACTION_SERVER</configuration_key>
+    <configuration_value>true</configuration_value>
+    <configuration_desc>Perform transactions on the live or test server. The test server should only be used by developers with Authorize.net test accounts.</configuration_desc>
+    <configuration_group_id>7</configuration_group_id>
+  </payments_gateways_config>
+  <!--Psspl:Added the configuration data for paypal standard.-->
+  <payments_gateways_config itemid="14">
+    <id>14</id>
+    <configuration_title>STANDARD ID</configuration_title>
+    <configuration_key>PAYPAL_STANDARD_CC_TRANSACTION_ID</configuration_key>
+    <configuration_value>yogesh_1210858289_biz@paramss.com</configuration_value>
+    <configuration_desc>The email address of the PayPal account selling the item.</configuration_desc>
+    <configuration_group_id>6</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="15">
+    <id>15</id>
+    <configuration_title>Debug E-Mail Address</configuration_title>
+    <configuration_key>PAYPAL_STANDARD_CC_TRANSACTION_DEBUG_EMAIL</configuration_key>
+    <configuration_value></configuration_value>
+    <configuration_desc>All parameters of an Invalid IPN notification will be sent to this email address if one is entered.</configuration_desc>
+    <configuration_group_id>6</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="16">
+    <id>16</id>
+    <configuration_title>Gateway Server</configuration_title>
+    <configuration_key>PAYPAL_STANDARD_CC_TRANSACTION_GATEWAY_SERVER</configuration_key>
+    <configuration_value>sandbox</configuration_value>
+    <configuration_desc>Use the testing (sandbox) or live gateway server for transactions?</configuration_desc>
+    <configuration_group_id>6</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="17">
+    <id>17</id>
+    <configuration_title>Trasaction method</configuration_title>
+    <configuration_key>PAYPAL_STANDARD_CC_TRANSACTION_METHOD</configuration_key>
+    <configuration_value>_xclick</configuration_value>
+    <configuration_desc>Use the trasaction method depends upon order object</configuration_desc>
+    <configuration_group_id>6</configuration_group_id>
+  </payments_gateways_config>        
+  <!--Psspl:Added Configuration fields for saferpay.-->
+  <payments_gateways_config itemid="18">
+    <id>18</id>
+    <configuration_title>ACCOUNT ID</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_ACCOUNT_ID</configuration_key>
+    <configuration_value>99867-94913159</configuration_value>
+    <configuration_desc>The saferpay account identifier to use for the transaction.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="19">
+    <id>19</id>
+    <configuration_title>Trasaction Language</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_DEFAULT_LANGUAGE</configuration_key>
+    <configuration_value>en</configuration_value>
+    <configuration_desc>Specifies the language for the Virtual Terminal session. Possible values are en (English), de(German), fr(French) and it(Italian).Per default the Virtual Terminal uses the browsers language setting to determine the dialog language.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>        
+  <payments_gateways_config itemid="20">
+    <id>20</id>
+    <configuration_title>DESCRIPTION</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_TEXT_DESCRIPTION</configuration_key>
+    <configuration_value>Test Saferpay Description</configuration_value>
+    <configuration_desc>A textual description of the article or offer which will be displayed in the Saferpay Virtual Terminal.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>        
+  <payments_gateways_config itemid="21">
+    <id>21</id>
+    <configuration_title>Title</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_TEXT_TITLE</configuration_key>
+    <configuration_value>Test_Saferpay_Title</configuration_value>
+    <configuration_desc>Use the trasaction method depends upon order object</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>        
+  <payments_gateways_config itemid="22">
+    <id>22</id>
+    <configuration_title>Card Holder Name</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_CCNAME</configuration_key>
+    <configuration_value>yes</configuration_value>
+    <configuration_desc>Optional Values yes or no.If set to yes the card holder name input field is active.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>
+  <payments_gateways_config itemid="23">
+    <id>23</id>
+    <configuration_title>CC number</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_CCCVC</configuration_key>
+    <configuration_value>yes</configuration_value>
+    <configuration_desc>Optional Values yes or no.If set to yes the CVC2 input field is active.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>                
+  <payments_gateways_config itemid="24">
+    <id>24</id>
+    <configuration_title>ALLOWCOLLECT</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_ALLOWCOLLECT</configuration_key>
+    <configuration_value>no</configuration_value>
+    <configuration_desc>Specified if multiple offers may be collected in the Virtual Terminal before a reservation is performed on the total amount.If this option is set to yes, the DELIVERY option must be activiated.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>                
+  <payments_gateways_config itemid="25">
+    <id>25</id>
+    <configuration_title>DELIVERY</configuration_title>
+    <configuration_key>MODULE_PAYMENT_SAFERPAYGW_DELIVERY</configuration_key>
+    <configuration_value>no</configuration_value>
+    <configuration_desc>If set to yes a input form for the customer delivery address appears during the Virtual Terminal session.</configuration_desc>
+    <configuration_group_id>2</configuration_group_id>
+  </payments_gateways_config>  
+  <payments_gateways_config itemid="26">    
+    <id>26</id>    
+    <configuration_title>Shop Login</configuration_title>    
+    <configuration_key>GESTPAY_SHOP_LOGIN</configuration_key>    
+    <configuration_value>GESPAY46093</configuration_value>    
+    <configuration_desc>The code registered in GestPay customer details</configuration_desc>    
+    <configuration_group_id>9</configuration_group_id>  
+  </payments_gateways_config>   
+  <payments_gateways_config itemid="27">    
+    <id>27</id>    
+    <configuration_title>OTP .ric File Path</configuration_title>    
+    <configuration_key>GESTPAY_RIC_FILEPATH</configuration_key>    
+    <configuration_value>var/180443__2009_13_38_57.ric</configuration_value>    
+    <configuration_desc>The path of the .ric file to extract and use OPTs from it. (For ex. "var/shoplogin.ric") The file must be present in "html/var/" directory</configuration_desc>    
+    <configuration_group_id>9</configuration_group_id>  
+  </payments_gateways_config> 
+  <payments_gateways_config itemid="28">    
+    <id>28</id>    
+    <configuration_title>OTP .ris File Path</configuration_title>    
+    <configuration_key>GESTPAY_RIS_FILEPATH</configuration_key>    
+    <configuration_value>var/180443__2009_13_39_5.ris</configuration_value>    
+    <configuration_desc>The path of the .ris file containing the GestPay response OTPs. (For ex. "var/shoplogin.ris") The file must be present in "html/var/" directory</configuration_desc>    
+    <configuration_group_id>9</configuration_group_id>  
+  </payments_gateways_config>            
+  <payments_gateways_config itemid="29">   
+    <id>29</id>    
+    <configuration_title>OTP Re-order Level</configuration_title>    
+    <configuration_key>GESTPAY_OTP_REORDER</configuration_key>    
+    <configuration_value>10</configuration_value>    
+    <configuration_desc>The minimum number of OTPs that are left in .ric file. It will be used to send OTP re-order email when number of OTPs left in .ric file come to this level</configuration_desc>    
+    <configuration_group_id>9</configuration_group_id>  
+  </payments_gateways_config>          
+</items>

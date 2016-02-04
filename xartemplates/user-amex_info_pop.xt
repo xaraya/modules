@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Psspl:Added the code for american Express information -->
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <head style="background-color: white">
+            <xar:blockgroup name="header" id="header"/>
+            <title>                
+                4 Digit Card Security Code
+            </title> 
+            <base href="&xar-baseurl;index.php"/>
+            <style type="text/css">
+                @import url(&xar-baseurl;#xarTplGetThemeDir()#/style/style.css); 
+            </style> 
+        </head>
+        <body>
+            <h2>
+                4 Digit Card Security Code
+            </h2>
+            <div style="font-size: 10pt">
+                For your safety and security, you are required to enter your card's security code. The American Express security code is a 4-digit number printed on the front of your card. It appears after and to the right of your card number.
+            </div>
+            <div style="padding: 10">
+                <a href="#xarModURL('payments','user','cvc_info_pop')#" onclick="PropertiesDialog('#xarModURL('payments','user','cvc_info_pop')#'); return false;">
+                    <b>Using Visa, MasterCard or Discover?</b>
+                </a>
+            </div>
+            <div style="text-align: center;">
+                <img src="#xarTplGetImage('cv_amex_card.gif')#" alt="cvc number information"/>
+            </div>
+            <form action="" style="text-align: right">
+                <input type="button" name="" align="right" value="Close Window" onClick="window.close(); return(false);"/>
+                <input name="form_charset" type="hidden" value="UTF-8"/>
+            </form>
+        </body>
+    </html>
+</xar:template>

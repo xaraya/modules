@@ -1,0 +1,92 @@
+<?php
+/**
+ * Payments Module
+ *
+ * @package modules
+ * @subpackage payments
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2016 Luetolf-Carroll GmbH
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
+ */
+    function payments_user_phase2()
+    {
+        //      if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecurityCheck('SubmitPayments')) return;
+        //Psspl:Set the error_message to null string.
+        xarSession::setVar('error_message' , "");
+        
+        // Check for demo mode 
+        $demousers = unserialize(xarModVars::get('payments','demousers'));
+        if (xarModVars::get('payments','enable_demomode') && in_array(xarUserGetVar('uname'),$demousers)) {
+            return xarTplModule('payments','user','demomode2',array('returnurl' => ''));
+        }
+
+        //Psspl:Implemented the code for return url.
+        //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}        
+        if (!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    XARVAR_DONT_SET)) {return;}
+        
+        //Psspl:Implemented the code for return url.
+        $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));       
+        $return_url_property->initialization_associative_array = 1;         
+        $return_url_property->checkInput('return_url');
+        $data['return_url'] = $return_url_property->value;
+        
+        //Psspl: modified the code for storing return url into session.
+        xarSession::setVar('return_url',serialize($data['return_url']));
+        // Get the order object
+        $orderobjectname = xarModVars::get('payments','orderobject');
+        $orderobject = DataObjectMaster::getObject(array('name' => $orderobjectname));
+        // Check for an order object, suppress exception if not found
+        $isvalidorder = $orderobject->checkInput(array(),1);
+        $orderProperties = $orderobject->getProperties();
+        $data['order_object'] = $orderobject;
+        $data['order_properties'] = $orderProperties;
+
+        // Get the payment object
+        $paymentobject = DataObjectMaster::getObject(array('name' => 'payments_ccpayments'));
+
+        //Psspl: Removed regex_rule which is not allow to validate valid Credit Card number.
+        //TODO: Need to find out a way to apply regex_rule also to validate Credit Card number.
+        //$object->properties['number']->validation_regex = $data['paymentmethod']['regex_rule'];
+        $isvalidpayment = $paymentobject->checkInput(array(),1);
+        $data['payment_object'] = $paymentobject;
+        $data['payment_properties'] = $paymentobject->getProperties();
+
+        $data['authid'] = xarSecGenAuthKey();
+
+        // If the input is not good repropose the previous page
+        if (!$isvalidorder || !$isvalidpayment) {
+            $module_id = xarSession::getVar('clientmodule');
+            $process = xarModVars::get('payments', 'process',$module_id);
+            switch ($process) {
+                case 0:
+                default:
+                    return xarTplModule('payments','user','errors',array('layout' => 'no_process'));                
+                case 1:
+                    return xarTplModule('payments','user', 'phase1',$data);
+                case 2:
+                    return xarTplModule('payments','user', 'phase1',$data);
+                case 3:
+                    return xarTplModule('payments','user', 'onestep',$data);
+            }
+        }
+
+        // We have valid input, save it
+        $paymentfields = $paymentobject->getFieldValues();
+        xarSession::SetVar('paymentfields',serialize($paymentfields));
+        $orderfields = $orderobject->getFieldValues();
+        xarSession::SetVar('orderfields',serialize($orderfields));
+
+        //Psspl:Assigned the cc_type to paymentmethod.
+        $paymentmethod=$paymentfields['cc_type'];
+        //Psspl:Added the method for creating the paymentmethod object.
+        $object = DataObjectMaster::getObject(array('name' => 'payments_paymentmethods'));
+        $object->getItem(array('itemid' => $paymentmethod));
+        $data['paymentmethod'] = $object->getFieldValues();
+        
+        return $data;
+    }
+
+?>

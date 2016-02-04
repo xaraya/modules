@@ -1,0 +1,79 @@
+<object name="payments_gateways">
+  <objectid>90</objectid>
+  <label>Gateways</label>
+  <module_id>182</module_id>
+  <itemtype>65</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>9</maxid>
+  <access>a:0:{}</access>
+  <isalias>false</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:8:&quot;gateways&quot;;a:2:{i:0;s:21:&quot;xar_payments_gateways&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <properties>
+    <property name="id">
+      <id>1023</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>gateways.id</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>1024</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>gateways.name</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="description">
+      <id>1025</id>
+      <label>Description</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>gateways.description</source>
+      <status>34</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="class">
+      <id>1026</id>
+      <label>Class</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>gateways.class</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="class_path">
+      <id>1027</id>
+      <label>Class Path</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>gateways.classpath</source>
+      <status>34</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>1028</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>gateways.state</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:20:"1,Inactive;3,Active;";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+  </properties>
+</object>

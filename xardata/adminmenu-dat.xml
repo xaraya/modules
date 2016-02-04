@@ -1,0 +1,30 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManagePayments</mask>
+            <includes>
+            <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Manage the master tables of this module</title>
+            <label>Master Tables</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPayments</mask>
+            <includes>
+            <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the Payments configuration</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</menu>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="demousers">
+        implode(',', array_keys(unserialize(xarModVars::get('payments', 'demousers'))))
+    </xar:set>
+    <div class="xar-form-input-wrapper" style="padding-bottom: 10px;">
+        <label for="enable_demomode" title="#xarML('This checkbox enables the demo mode')#" class="xar-form-label">
+            Enable Demo Mode:
+        </label>
+        <xar:set name="value">xarModVars::get('payments','enable_demomode')</xar:set>
+        <xar:data-input type="checkbox" name="enable_demomode" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper" style="padding-bottom: 10px;">
+        Enter a list of user names separated by commas. Incorrect user names  will be ignored.<br />
+        <label for="demousers" title="#xarML('These users have their passwords set to the password entered')#" class="xar-form-label">
+            Demo Users
+        </label>
+        <xar:data-input type="textarea" name="demousers" value="$demousers"/>
+    </div>
+</xar:template>

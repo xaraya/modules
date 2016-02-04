@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('payments','useModuleAlias')">
+                <xar:var scope="module" module="payments" name="aliasname"/>
+            <xar:else />
+                View Payments
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            View Payments
+        </h2>
+
+        <xar:if condition="xarModIsAvailable('export')">
+        <div class="export-button">
+            <a href="#xarmodurl('payments','user','export')#" title="Download / process active transactions">
+                Download / Process
+            </a>
+        </div>
+        </xar:if>
+
+        <xar:set name="eh">sys::import('xaraya.structures.query')</xar:set>
+        <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0)">
+            <xar:set name="dumb">1;$condition=new Query();</xar:set>
+        <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ProcessPayments',0)"/>
+            <xar:set name="dumb">1;$condition=new Query();$condition->eq('state',3);</xar:set>
+        </xar:if>
+    
+        <xar:data-input type="listing" objectname="payments_ccpayments" tplmodule="payments" conditions="$condition"/>
+
+    </div>
+</xar:template>

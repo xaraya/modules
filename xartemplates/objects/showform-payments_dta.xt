@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender']" hidden="hidden"/>
+    <xar:data-input property="$properties['dta_type']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_line_4']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <label for="defaultvatcode" title="#xarML('The date to execute this payment')#">            
+                Payment date:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['transaction_date']"/>
+        </div>
+    </div>
+    <xar:set name="dta_type">$properties['dta_type']->value</xar:set>
+    <xar:if condition="$dta_type eq '826'">
+        <xar:data-input property="$properties['iban']" hidden="hidden"/>
+        <xar:data-input property="$properties['bic']" hidden="hidden"/>
+        <xar:data-input property="$properties['reason']" hidden="hidden"/>
+        <xar:set name="style1">'width: 56mm'</xar:set>
+        <xar:set name="style2">'width: 20mm'</xar:set>
+        <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffcc99;'</xar:set>
+        <div class="xar-middle-payment" >
+            <table >
+                <tr>
+                    <td style="#$style3#width: 55mm; text-align: left; padding-left: 10px; padding-top: 10px">Einzahlung Giro</td>
+                    <td style="#$style3#width: 90mm; text-align: left; padding-left: 15mm;; padding-top: 10px">Versement Virement</td>
+                    <td style="#$style3#width: 40mm; text-align: center;; padding-top: 10px">Versamento Girata</td>
+                </tr>
+                <tr>
+                    <td width="199" align="left" style="background-color: ##ffcc99; color: ##ff6600;">
+                        <table>
+                            <tr>
+                                <td style="width: 100%; text-align: left; color: ##ff6600; padding-left: 10px">
+                                    Einzahlung/ Versament pour / Versamento per
+                                    <br /><br /><br />
+                                    Zugunsten von / En faveur de / A favore di
+                                    <br />
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_1']" style="$style1"/>
+                                    </div>
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_2']" style="$style1"/>
+                                    </div>
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_3']" style="$style1"/>
+                                    </div>
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_4']" style="$style1"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" align="right" style="color: ##ff6600;">
+                                    <div class="xar-row">
+                                    Konto / Compte / Conto 
+                                    <xar:data-input property="$properties['post_account']" style="$style2"/>
+                                    </div>
+                                    <div class="xar-row">
+                                    <xar:data-input property="$properties['currency']" style="width: 15mm"/>
+                                    <xar:data-input property="$properties['amount']" style="$style2"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="height: 200px; text-align: left; background-color: ##ffcc99; color: ##ff6600; padding-left: 15mm; vertical-align: top">
+                        Bitte keine Mitteilungen anbringen<br />
+                        Pas de communication s.v.p.<br />
+                        Non aggiungete communicaziono p.f.<br />
+                        <br /><br /><br />
+                        Referenz-Nr. / No de reference / No di riferimento
+                        <!-- For testing purposes. Need to implement dd for this fields later -->
+                        <xar:data-input property="$properties['reference_number']" /><br /><br /><br />
+                        Einbezahlt von / Versé par / Versato da<br />
+                        <xar:data-output property="$properties['sender']" />
+                    </td>
+                    <td align="right" style="height: 200px; text-align: right; background-color: ##ffcc99; color: ##ff6600;padding-left: 15mm;vertical-align: top">				
+                    </td>
+                </tr>
+            </table>
+            <br /><br />
+        </div><!-- xar-middle-payment -->
+    <xar:elseif condition="$dta_type eq 'lukb_orange'"/>
+        <xar:template filename="lukb_orange"/>
+    <xar:elseif condition="$dta_type eq '827'"/>
+        <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
+        <xar:set name="style1">'width: 56mm'</xar:set>
+        <xar:set name="style2">'width: 20mm'</xar:set>
+        <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffefef;'</xar:set>
+        <div class="xar-middle-payment">
+            <table style="width: 879px;">
+                <tr>
+                    <td style="#$style3#width: 55mm; text-align: left; padding-left: 10px; padding-top: 10px">Einzahlung Giro</td>
+                    <td style="#$style3#width: 90mm; text-align: left; padding-left: 15mm;; padding-top: 10px">Versement Virement</td>
+                    <td style="#$style3#width: 40mm; text-align: center;; padding-top: 10px">Versamento Girata</td>
+                </tr>
+                <tr>
+                    <td width="199" align="left" style="background-color: ##ffefef; color: ##ff3333;">
+                        <table>
+                            <tr>
+                                <td width="100%" align="left" style="color: ##ff3333; padding-left: 10px">
+                                    Einzahlung/ Versament pour / Versamento per
+                                    <br /><br /><br />
+                                    Zugunsten von / Enfaveur de / A favore di
+                                    <br />
+                                    <xar:data-input property="$properties['iban']" style="width: 30mm"/>&#160;
+                                    <xar:data-input property="$properties['bic']" style="width: 15mm" />&#160;
+                                    <!-- image of search -->
+                                    <xar:set name="image_name">"p_005.gif"</xar:set>
+                                    <img src="var/uploads/#$image_name#" />
+                                    <!--image of search ends -->
+                                    <br />
+                                    IBAN/Bankkonto Begunstigter  &#160;&#160;  	BC-Nummer
+                                    <br /><br />
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_1']" style="$style1"/>
+                                    </div>
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_2']" style="$style1"/>
+                                    </div>
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_3']" style="$style1"/>
+                                    </div>
+                                    <div class="xar-row">
+                                        <xar:data-input property="$properties['address_4']" style="$style1"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" align="right" style="color: ##ff3333;">
+                                    (Post-)Konto/Compte/Conto &#160;&#160;&#160;
+                                    <xar:data-input property="$properties['post_account']" style="$style2" /><br />
+                                    &#160;&#160; &#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <xar:data-input property="$properties['currency']" style="width: 15mm"/>
+                                    &#160;&#160;&#160; 
+                                    <xar:data-input property="$properties['amount']" style="$style2"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="height: 200px; text-align: left; background-color: ##ffefef; color: ##ff3333; padding-left: 15mm; vertical-align: top">
+                        Zahlungszweck / Motif versement<br />
+                        Motivo versamento<br />
+                        <xar:data-input property="$properties['reason']" /><br /><br />
+                        Giro aus Konto<br />
+                        Virement du Compte<br />
+                        Girata dal conto<br />
+                        <br /><br />
+                        Einbezahlt von / Versé par / Versato da
+                        <br />
+                        Lutolf Markus
+                    </td>
+                    <td align="right" style="height: 200px; text-align: right; background-color: ##ffefef; color: ##ff3333;padding-left: 15mm;vertical-align: top">				
+                    </td>
+                </tr>
+            </table>
+        </div><!-- xar-middle-payment -->
+        <!--
+        <img src="#xarTpl::getImage('p_002.gif', 'property','paymentslip')#"/>
+        -->
+    </xar:if>
+</xar:template>

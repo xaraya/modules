@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <table>
+        <tr>
+            <td style="	vertical-align: text-top;">
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Name</xar:var>
+                        <xar:data-label property="$properties['name']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['name']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Account</xar:var>
+                        <xar:data-label property="$properties['account']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['account']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">IBAN</xar:var>
+                        <xar:data-label property="$properties['iban']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['iban']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Clearing</xar:var>
+                        <xar:data-label property="$properties['clearing']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['clearing']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Bank Name</xar:var>
+                        <xar:data-label property="$properties['bank_name']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['bank_name']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Bank Short Name</xar:var>
+                        <xar:data-label property="$properties['bank_short_name']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['bank_short_name']"/>                    
+                    </div>        
+                </div>
+            </td>
+            <td style="width: 10%">
+            </td>
+            <td style="	vertical-align: text-top;">
+                <xar:if condition="xarIsParent('Administrators', xarUser::getVar('uname'))">
+                    <div class="xar-row">
+                        <div class="xar-col-condensed">
+                            <xar:var name="label">ID</xar:var>
+                            <xar:data-label property="$properties['id']" label="$label"/>                    
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input property="$properties['id']"/>                    
+                        </div>        
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col-condensed">
+                            <xar:var name="label">Created</xar:var>
+                            <xar:data-label property="$properties['created']" label="$label"/>                    
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input property="$properties['created']"/>                    
+                        </div>        
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col-condensed">
+                            <xar:var name="label">Modified</xar:var>
+                            <xar:data-label property="$properties['modified']" label="$label"/>                    
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input property="$properties['modified']"/>                    
+                        </div>        
+                    </div>
+                <xar:else/>
+                    <xar:data-input property="$properties['id']" hidden="hidden"/>
+                    <xar:data-input property="$properties['author']" hidden="hidden"/>
+                    <xar:data-input property="$properties['created']" hidden="hidden"/>
+                    <xar:data-input property="$properties['modified']" hidden="hidden"/>
+                </xar:if>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Account Holder</xar:var>
+                        <xar:data-label property="$properties['account_holder']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['account_holder']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Address 1</xar:var>
+                        <xar:data-label property="$properties['address_1']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['address_1']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Address 2</xar:var>
+                        <xar:data-label property="$properties['address_2']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['address_2']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Address 3</xar:var>
+                        <xar:data-label property="$properties['address_3']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['address_3']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">Address 4</xar:var>
+                        <xar:data-label property="$properties['address_4']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['address_4']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
+                        <xar:var name="label">State</xar:var>
+                        <xar:data-label property="$properties['state']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['state']"/>                    
+                    </div>        
+                </div>
+            </td>
+        </tr>
+    </table>
+</xar:template>

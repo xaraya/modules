@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Psspl:Added the template for return link-->
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div style="clear:both ; margin-left: 10px; text-align: Left">
+   <xar:if condition="!empty($return_url['cancel_return'])">
+      <a href="#$return_url.cancel_return#">
+         <h5 style="text-align: left">  
+             <xar:if condition="!empty($return_url['cancel_text'])">
+                #$return_url.cancel_text#
+             <xar:else/>
+                Go Back
+             </xar:if>
+         </h5>  
+      </a>   
+    </xar:if>
+   </div>         
+</xar:template>

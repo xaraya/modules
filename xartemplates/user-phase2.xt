@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('payments','useModuleAlias')">
+                <xar:var scope="module" module="payments" name="aliasname"/>
+            <xar:else />
+                Payments
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            Verify the payment information
+        </h2>
+        <h2>
+            Payment by&#160;#$paymentmethod['name']#&#160;<img src="#xarTplGetImage($paymentmethod['icon'])#" alt="#$paymentmethod['name']#"/>
+        </h2>
+        
+        <form method="post" action="#xarModURL('payments','user','phase3')#">
+            <div style="margin-top: 10px">
+                Please confirm your data:
+            </div>
+            
+            <!-- Display the credit card info entered -->
+            <!--Psspl:Added the CreditCardType.--> 
+            <xar:data-display object="$payment_object" fieldlist="name,cc_type,number,expiration_date,control_number"/>
+
+            <!-- Display the order ifr one exists -->
+            <xar:if condition="!empty($order_object)">
+                <div style="clear:both">&#160;</div>
+                <!--Psspl:Added the Fieldlist attribute.-->
+                <xar:data-display object="$order_object" fieldlist="net_amount,currency" />
+            </xar:if>
+            <!--Psspl:Implemented the code for return url.-->
+            <xar:if condition="!empty($return_url)"> 
+                <xar:template file="return-link" type="module"/>
+            </xar:if>
+            
+            <div style="clear:both">&#160;</div>
+            <div class="xar-form-input-wrapper-after">
+                <!--Psspl:Implemented the code for return url.-->
+                <xar:if condition="!empty($return_url)">
+                    <div style="clear:both ;display:none">
+                            <xar:data-input type="array" name="return_url" value="$return_url" associative_array='1'/>
+                    </div>
+                </xar:if> 
+                <!--Psspl:Implemented the code for allowEdit_Payment.-->
+                <xar:if condition="isset($allowEdit_Payment) AND $allowEdit_Payment eq 1 ">
+                    <input type="hidden" name="allowEdit_Payment" id="allowEdit_Payment" value="#$allowEdit_Payment#"/>                    
+                </xar:if>
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <!--Psspl: Added missing hidden fields to resolve exception. -->
+                <xar:data-input property="$payment_properties['id']" hidden="hidden"/>
+                <xar:data-input property="$payment_properties['state']" hidden="hidden" value="3"/>
+                <xar:data-input property="$payment_properties['time_created']" hidden="hidden"/>
+                <xar:data-input property="$payment_properties['order_reference']" hidden="hidden"/>
+                <input type="hidden" name="paymentmethod" id="paymentmethod" value="#$paymentmethod.id#"/>
+                <!--Psspl: Added makechanges button -->
+                <input name="MakeChanges" type="submit" value="#xarML('Make Changes')#"/>
+                <input type="submit" value="#xarML('Continue')#"/>
+            </div>
+        </form>
+    </div>
+</xar:template>

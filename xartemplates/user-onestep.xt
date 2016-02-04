@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('payments','useModuleAlias')">
+                <xar:var scope="module" module="payments" name="aliasname"/>
+            <xar:else />
+                Payments
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            Enter payment information
+        </h2>
+        <!--Psspl:Added code for Display Error Message.-->
+        <xar:if condition="xarSession::getVar('error_message')">
+            &#160;<span class="xar-error">#xarSession::getVar('error_message')#</span>
+       </xar:if>
+        <form method="post" action="#xarModURL('payments','user','phase2')#">
+           <!--Added the credit card type[cc_type] in form-->
+            <xar:data-form object="$payment_object" fieldlist="name,cc_type,number,expiration_date"/>
+            <!--Psspl:Added the code for security code info-->
+            <xar:javascript filename="openDialog.js"/>
+            <div>
+                <div style="float: left">
+                    <xar:data-form object="$payment_object" name="payment" fieldlist="control_number"/>
+                </div>
+                <div style="margin-left: 10px; float: left">
+                    <a href="#xarModURL('payments','user','cvc_info_pop')#" onclick="PropertiesDialog('#xarModURL('payments','user','cvc_info_pop')#'); return false;">
+                        <span style="font-size: 8pt">Where is my security code?</span>
+                    </a>
+                </div>
+            </div>
+            <!--Psspl:Implemented the code for return url.-->
+            <xar:if condition="!empty($return_url)"> 
+                <xar:template file="return-link" type="module"/>
+            </xar:if>                       
+            <div style="clear:both">&#160;</div>
+                <!--Psspl:Implemented the code for allowEdit_Payment url.-->    
+                <xar:if condition="!empty($allowEdit_Payment) AND $allowEdit_Payment eq 1">
+                    <xar:data-display object="$order_object" fieldlist="amount,currency"/>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:data-input property="$order_properties['amount']" hidden="hidden"/>
+                        <xar:data-input property="$order_properties['currency']" hidden="hidden"/>                      
+                    </div>
+                <xar:else />                
+                    <xar:data-form object="$order_object" fieldlist="amount,currency"/>
+                </xar:if>
+            <div style="clear:both">&#160;</div>
+            <div class="xar-form-input-wrapper-after">
+                <!--Psspl:Implemented the code for return url.-->
+                <xar:if condition="!empty($return_url)">
+                    <div style="clear:both ;display:none">
+                        <xar:data-input type="array" name="return_url" value="$return_url" associative_array='1'/>
+                    </div>
+                </xar:if>
+                <!--Psspl:Implemented the code for allowEdit_Payment url.-->        
+                <xar:if condition="isset($allowEdit_Payment) AND $allowEdit_Payment eq 1 ">
+                     <input type="hidden" name="allowEdit_Payment" id="allowEdit_Payment" value="#$allowEdit_Payment#"/>                    
+                </xar:if>
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <!--Psspl: Added missing hidden fields . -->
+                <xar:data-input property="$payment_properties['state']" hidden="hidden" value="3"/>
+                <xar:data-input property="$payment_properties['id']" hidden="hidden"/>
+                <xar:data-input property="$payment_properties['order_reference']" hidden="hidden"/>
+                <!--Psspl: Added missing hidden field time_processed.-->
+                <xar:data-input property="$payment_properties['time_processed']" hidden="hidden"/>
+                <xar:data-input property="$payment_properties['time_created']" hidden="hidden"/>
+                <xar:data-input property="$order_properties['id']" hidden="hidden"/>
+                <input type="submit" value="#xarML('Continue')#"/>
+            </div>
+        </form>
+    </div>
+</xar:template>

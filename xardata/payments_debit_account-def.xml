@@ -1,0 +1,170 @@
+<object name="payments_debit_account">
+  <objectid>1355</objectid>
+  <label>Debit Accounts</label>
+  <module_id>182</module_id>
+  <itemtype>427</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
+  <sources>a:1:{s:13:&quot;debit_account&quot;;a:2:{i:0;s:26:&quot;xar_payments_debit_account&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:0:{}</category>
+  <properties>
+    <property name="id">
+      <id>17180</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="name">
+      <id>17181</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="account">
+      <id>17182</id>
+      <label>Account</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.account</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="iban">
+      <id>17183</id>
+      <label>IBAN</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.iban</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="clearing">
+      <id>17184</id>
+      <label>Clearing</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.clearing</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="account_holder">
+      <id>17185</id>
+      <label>Account Holder</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.holder</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="address_1">
+      <id>17186</id>
+      <label>Address 1</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.address1</source>
+      <status>34</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="address_2">
+      <id>17187</id>
+      <label>Address 2</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.address2</source>
+      <status>34</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="address_3">
+      <id>17188</id>
+      <label>Address 3</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.address3</source>
+      <status>34</status>
+      <seq>9</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="address_4">
+      <id>17189</id>
+      <label>Address 4</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.address4</source>
+      <status>34</status>
+      <seq>10</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="bank_name">
+      <id>17190</id>
+      <label>Bank Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.bank_name</source>
+      <status>34</status>
+      <seq>11</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="bank_short_name">
+      <id>17191</id>
+      <label>Bank Short Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.bank_short_name</source>
+      <status>33</status>
+      <seq>12</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="created">
+      <id>17192</id>
+      <label>Created</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>debit_account.time_created</source>
+      <status>66</status>
+      <seq>13</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="modified">
+      <id>17193</id>
+      <label>Modified</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>debit_account.time_modified</source>
+      <status>66</status>
+      <seq>14</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="state">
+      <id>17194</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>debit_account.state</source>
+      <status>33</status>
+      <seq>15</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:43:"modules/base/xardata/drodown_values-dat.xml";}</configuration>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,57 @@
+<items>
+  <payments_relation itemid="1">
+    <id>1</id>
+    <gateway_id>7</gateway_id>
+    <paymentmethod_id>3</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="2">
+    <id>2</id>
+    <gateway_id>7</gateway_id>
+    <paymentmethod_id>4</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="3">
+    <id>3</id>
+    <gateway_id>7</gateway_id>
+    <paymentmethod_id>8</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="4">
+    <id>4</id>
+    <gateway_id>7</gateway_id>
+    <paymentmethod_id>2</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="5">
+    <id>5</id>
+    <gateway_id>7</gateway_id>
+    <paymentmethod_id>1</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="6">
+    <id>6</id>
+    <gateway_id>8</gateway_id>
+    <paymentmethod_id>3</paymentmethod_id>
+  </payments_relation>  
+  <payments_relation itemid="7">
+    <id>7</id>
+    <gateway_id>8</gateway_id>
+    <paymentmethod_id>5</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="8">
+    <id>8</id>
+    <gateway_id>8</gateway_id>
+    <paymentmethod_id>4</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="9">
+    <id>9</id>
+    <gateway_id>8</gateway_id>
+    <paymentmethod_id>8</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="10">
+    <id>10</id>
+    <gateway_id>8</gateway_id>
+    <paymentmethod_id>2</paymentmethod_id>
+  </payments_relation>
+  <payments_relation itemid="11">
+    <id>11</id>
+    <gateway_id>8</gateway_id>
+    <paymentmethod_id>1</paymentmethod_id>
+  </payments_relation>
+</items>

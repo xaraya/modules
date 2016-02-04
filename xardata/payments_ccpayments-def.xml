@@ -1,0 +1,119 @@
+<object name="payments_ccpayments">
+  <objectid>92</objectid>
+  <label>Credit Cards</label>
+  <module_id>182</module_id>
+  <itemtype>67</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>false</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:10:&quot;ccpayments&quot;;a:2:{i:0;s:23:&quot;xar_payments_ccpayments&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <properties>
+    <property name="id">
+      <id>1037</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.id</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>1038</id>
+      <label>Name on Card</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:9:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:21:"validation_min_length";s:1:"4";s:29:"validation_min_length_invalid";s:43:"The name must be at least 4 characters long";s:21:"validation_max_length";s:2:"40";s:16:"validation_regex";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="cc_type">
+      <id>1039</id>
+      <label>Credit Card Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.cc_type</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:8:{s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:76:"xarModAPIFunc('payments','user','getallpaymenttypes',array('category' => 3))";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="number">
+      <id>1040</id>
+      <label>Card Number</label>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.number</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:9:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:21:"validation_min_length";s:2:"10";s:29:"validation_min_length_invalid";s:31:"The number entered is too short";s:21:"validation_max_length";s:0:"";s:16:"validation_regex";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="expiration_date">
+      <id>1041</id>
+      <label>Expiration Date</label>
+      <type>static</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>ccpayments.expiration</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:7:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:9:"monthyear";s:21:"validation_min_length";s:0:"";s:21:"validation_max_length";s:0:"";s:16:"validation_regex";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="control_number">
+      <id>1042</id>
+      <label>Security Code</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.controlnumber</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:11:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_min_value";s:0:"";s:20:"validation_max_value";s:0:"";s:21:"validation_min_length";s:1:"3";s:29:"validation_min_length_invalid";s:43:"The security code must be at least 3 digits";s:21:"validation_max_length";s:0:"";s:16:"validation_regex";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="order_reference">
+      <id>1043</id>
+      <label>Order Reference</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.order_reference</source>
+      <status>34</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="time_created">
+      <id>1044</id>
+      <label>Time Created</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>ccpayments.time_created</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="time_processed">
+      <id>1046</id>
+      <label>Processed</label>
+      <type>datetime</type>
+      <defaultvalue>0</defaultvalue>
+      <source>ccpayments.time_processed</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>1045</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>ccpayments.state</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:20:"1,Inactive;3,Active;";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,99 @@
+<object name="payments_paymentmethods">
+  <objectid>91</objectid>
+  <label>Payment Types</label>
+  <module_id>182</module_id>
+  <itemtype>66</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>10</maxid>
+  <access>a:0:{}</access>
+  <isalias>false</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:7:&quot;methods&quot;;a:2:{i:0;s:27:&quot;xar_payments_paymentmethods&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <properties>
+    <property name="id">
+      <id>1029</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.id</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>1030</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.name</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="category">
+      <id>1031</id>
+      <label>Category</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.category</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:48:"1,Cash;2,Money Order;3,Credit Card;4,Debit Card;";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="description">
+      <id>1032</id>
+      <label>Description</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.description</source>
+      <status>34</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="icon">
+      <id>1033</id>
+      <label>Icon</label>
+      <type>image</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.icon</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration>a:10:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:20:"gif,jpg,jpeg,png,bmp";s:21:"validation_min_length";s:0:"";s:21:"validation_max_length";s:0:"";s:16:"validation_regex";s:0:"";s:27:"initialization_image_source";s:5:"local";s:28:"initialization_basedirectory";s:31:"code/modules/payments/xarimages";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="regex_rule">
+      <id>1034</id>
+      <label>Regex Rule</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.regex</source>
+      <status>34</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="control_number">
+      <id>1035</id>
+      <label>Security Code</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.controlnumber</source>
+      <status>34</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>1036</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>methods.state</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:20:"1,Inactive;3,Active;";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+  </properties>
+</object>

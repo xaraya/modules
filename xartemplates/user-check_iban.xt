@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('payments','useModuleAlias')">
+                <xar:var scope="module" module="payments" name="aliasname"/>
+            <xar:else />
+                Display Item
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <form name="form" action="#xarModURL('payments','user','check_iban')#" method="post">
+
+            <div class="xar-row">
+                <div class="xar-col">
+                    Enter an IBAN number
+                </div>
+                <div class="xar-col">
+                    <xar:data-input type="textbox" name="iban" value="$iban"/>
+                </div>
+            </div>
+            
+            <xar:if condition="$confirm">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        Result
+                    </div>
+                    <div class="xar-col">
+                        <xar:set name="check">$ibanobject->check()</xar:set>
+                        <xar:if condition="$check">
+                            The IBAN has the correct format
+                        <xar:else/>
+                            The IBAN does not have the correct format
+                        </xar:if>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        Human Readable Format
+                    </div>
+                    <div class="xar-col">
+                        #$ibanobject->humanFormat()#
+                    </div>
+                </div>
+                <xar:set name="parts">$ibanobject->parts()</xar:set>
+                <xar:foreach in="$parts" key="$key" value="$part">
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <xar:set name="uckey">ucfirst($key)</xar:set>
+                            #$uckey#
+                        </div>
+                        <div class="xar-col">
+                            #$part#
+                        </div>
+                    </div>
+                </xar:foreach>
+            </xar:if>
+
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="confirm" id="confirm" value="true" />
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" name="cancel" value="$label" />&#160;
+                    <xar:var name="label">Check</xar:var>
+                    <xar:button type="submit" name="post" value="$label" class="btn-primary"/>&#160;
+                </div>
+            </div>
+        </form>
+    </div>
+</xar:template>

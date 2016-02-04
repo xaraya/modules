@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('DeletePayments',0) AND $total gt 0">
+        <div style="text-align:center; padding-top:10px;">
+            <input type="hidden" name="idlist" id="idlist"/>
+            <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+
+            <xar:set name="options">array(
+                 array('id'=>'','name'=>'Select action')
+                ,array('id'=>'0','name'=>'Delete Selected Items')
+                ,array('id'=>'1','name'=>'Reject Selected Items')
+                ,array('id'=>'2','name'=>'Process Selected Items')
+                ,array('id'=>'3','name'=>'Activate Selected Items')
+                )
+            </xar:set>
+
+            &#160;
+            <xar:data-input type="dropdown" name="operation" options="$options"/>&#160;
+            <input type="submit" value="#xarML('Execute')#"/>&#160;
+            <xar:javascript module="listings" filename="checkall.js"/>
+            <a href="javascript:listings_checkall(true)">Check All</a>&#160;|&#160;
+            <a href="javascript:listings_checkall(false)">Uncheck All</a>
+        </div>
+    <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ProcessPayments',0) AND $total gt 0"/>
+        <div style="text-align:center; padding-top:10px;">
+            <input type="hidden" name="idlist" id="idlist"/>
+            <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+
+            <xar:set name="options">array(
+                 array('id'=>'','name'=>'Select action')
+                ,array('id'=>'1','name'=>'Reject Selected Items')
+                )
+            </xar:set>
+
+            &#160;
+            <xar:data-input type="dropdown" name="operation" options="$options"/>&#160;
+            <input type="submit" value="#xarML('Execute')#"/>&#160;
+            <xar:javascript module="listings" filename="checkall.js"/>
+            <a href="javascript:listings_checkall(true)">Check All</a>&#160;|&#160;
+            <a href="javascript:listings_checkall(false)">Uncheck All</a>
+        </div>
+    </xar:if>
+</xar:template>

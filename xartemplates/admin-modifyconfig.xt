@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>        
+            Modify Configuration        
+        </h2>
+        <div>
+            <xar:template file="headerconfig" type="module"/>
+        </div>
+
+        <xar:comment> Begin General Options
+        </xar:comment>
+
+        <form method="post" action="&xar-modurl-payments-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+            <xar:if condition="$tab eq 'payments_general'">
+                <h3>                
+                    General Options                
+                </h3>
+                <xar:data-form object="$module_settings"/>
+            <xar:else />
+                <h3>
+                    <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
+                    <xar:ml>                    
+                        <xar:mlstring>Module Defaults for #(1)</xar:mlstring>                    
+                        <xar:mlvar>#$ucname#</xar:mlvar>
+                    </xar:ml>
+                </h3>
+            </xar:if>
+            <fieldset>
+                <legend>                
+                    Defaults                
+                </legend>
+                <xar:template file="defaults"/>
+            </fieldset>
+            <fieldset>
+                <legend>                
+                    Process Settings                
+                </legend>
+                <xar:template file="process"/>
+            </fieldset>
+            <fieldset>
+                <legend>                
+                    Demo Mode                
+                </legend>
+                <xar:template file="demomode"/>
+            </fieldset>
+            <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#"/>
+            <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+            <xar:template file="update-button" module="base" />
+        </form>
+    </div>
+</xar:template>

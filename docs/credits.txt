@@ -1,0 +1,15 @@
+1. Designation: Xaraya Payments module
+
+2. Author: Marc Lutolf <marc@luetolf-carroll.com>
+
+3. Copyright: (C) 2016 Luetolf-Carroll GmbH
+
+4. License: GPL {@link http://www.gnu.org/licenses/gpl.html}
+
+5. Contributors: Param Software Services
+                 Christoph Vieth <cvieth@coreweb.de>
+
+6. Antecedents: based on the Xaraya framework
+                DTA stuff based on https://github.com/cvieth/php-dta-ch
+
+7. Third party code:

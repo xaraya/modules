@@ -1,0 +1,77 @@
+<items>
+  <payments_gateways itemid="1">
+    <id>1</id>
+    <name>Worldpay</name>
+    <description></description>
+    <class>WorldPay</class>
+    <class_path>code/modules/payments/class/worldpay.php</class_path>
+    <state>1</state>
+  </payments_gateways>
+  <payments_gateways itemid="2">
+    <id>2</id>
+    <name>Saferpay</name>
+    <description></description>
+    <class>SaferPay</class>
+    <class_path>code/modules/payments/class/saferpay.php</class_path>
+    <state>3</state>
+  </payments_gateways>
+  <payments_gateways itemid="3">
+    <id>3</id>
+    <name>SecPay</name>
+    <description></description>
+    <class>SecPay</class>
+    <class_path>code/modules/payments/class/secpay.php</class_path>
+    <state>1</state>
+  </payments_gateways>
+  <payments_gateways itemid="4">
+    <id>4</id>
+    <name>PsiGate</name>
+    <description></description>
+    <class>PsiGate</class>
+    <class_path>code/modules/payments/class/psigate.php</class_path>
+    <state>1</state>
+  </payments_gateways>
+  <payments_gateways itemid="5">
+    <id>5</id>
+    <name>CC</name>
+    <description></description>
+    <class>CC</class>
+    <class_path>code/modules/payments/class/cc.php</class_path>
+    <state>1</state>
+  </payments_gateways>
+  <payments_gateways itemid="6">
+    <id>6</id>
+    <name>PayPal Standard</name>
+    <description></description>
+    <class>PayPalStandard</class>
+    <class_path>code/modules/payments/class/paypalstandard.php</class_path>
+    <!--Psspl:Change the gateway state as active.-->
+    <state>3</state>
+  </payments_gateways>
+  <!-- Psspl: Added new iPayment entry -->
+  <payments_gateways itemid="7">
+    <id>7</id>
+    <name>iPayment</name>
+    <description></description>
+    <class>iPayment_cc</class>
+    <class_path>code/modules/payments/class/iPayment_cc.php</class_path>
+    <state>3</state>
+  </payments_gateways>
+ <!-- Psspl: Added new Authorize.net entry -->
+  <payments_gateways itemid="8">
+    <id>8</id>
+    <name>Authorize.net </name>
+    <description></description>
+    <class>authorizenet_cc_aim</class>
+    <class_path>code/modules/payments/class/authorizenet_cc_aim.php</class_path>
+    <state>3</state>
+  </payments_gateways>
+  <payments_gateways itemid="9">
+      <id>9</id>    
+      <name>GestPay</name>    
+      <description></description>    
+      <class>GestPay</class>    
+      <class_path>code/modules/payments/class/gestpay.php</class_path>    
+      <state>3</state>  
+  </payments_gateways>
+</items>

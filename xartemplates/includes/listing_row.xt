@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$layout eq 'combined'">
+        <xar:template file="listing_row-combined" module="$module" property="listing"/>
+    <xar:else />
+        <!-- filter for the 2 levels of admin -->
+        <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('AdminPayments',0) AND $total gt 0">
+            <xar:template file="listing_row-default" module="$module" property="listing"/>
+        <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0) AND $total gt 0 AND $loopitem['state'] eq 3"/>
+        <!-- $loopitem['ft1_state'] -->
+            <xar:template file="listing_row-default" module="$module" property="listing"/>
+        </xar:if>
+    </xar:if>
+</xar:template>

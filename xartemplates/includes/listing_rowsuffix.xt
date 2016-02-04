@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
+        <xar:set name="objectname">$object->name</xar:set>
+        <xar:if condition="$objectname eq 'payments_dta'">
+            <xar:access level="200">
+                 <a href="#xarModURL('payments','user','display_dta',array('itemid' => $loopitem[$primaryalias]))#"
+                 title="Display this payment">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'display.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">E</b>
+                    </xar:if>
+                 </a>
+            </xar:access>
+            <xar:access level="600">
+                <a href="#xarModURL('payments','user','create_dta_file',array('itemid' => $loopitem[$primaryalias]))#"
+                title="Create payment file">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'document-save.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">C</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+            <xar:access level="500">
+                <a href="#xarModURL('payments','user','modify_dta',array('itemid' => $loopitem[$primaryalias]))#"
+                title="Modify this payment">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">M</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+            <xar:access level="700">
+                <a href="#xarModURL('payments','user','delete_dta',array('itemid' => $loopitem[$primaryalias]))#"
+                title="Delete this payment">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">D</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'payments_debit_account'"/>
+            <xar:access level="200">
+                 <a href="#xarModURL('payments','user','display_debit_account',array('itemid' => $loopitem[$primaryalias]))#"
+                 title="Display this debit accoun">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'display.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">E</b>
+                    </xar:if>
+                 </a>
+            </xar:access>
+            <xar:access level="500">
+                <a href="#xarModURL('payments','user','modify_debit_account',array('itemid' => $loopitem[$primaryalias]))#"
+                title="Modify this debit account">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">M</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+            <xar:access level="700">
+                <a href="#xarModURL('payments','user','delete_debit_account',array('itemid' => $loopitem[$primaryalias]))#"
+                title="Delete this debit account">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">D</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+        </xar:if>
+    </td>
+    <td style="text-align: center;">
+        <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+    </td>
+</xar:template>

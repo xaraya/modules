@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$tabmodule ne 'payments'">
+        <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
+    <xar:else />
+        <xar:set name="regid">0</xar:set>
+    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label for="gateway" title="#xarML('The payment gateway this module uses')#" class="xar-form-label">
+            Gateway:            
+        </label>
+        <xar:set name="options">
+            array()
+        </xar:set>
+        <xar:foreach in="$items" value="$item">
+            <xar:set name="option">
+                array('id' => $item['id'], 'name' =>  $item['name']);
+                $options[] = $option;                
+            </xar:set>
+        </xar:foreach>
+        <xar:set name="value">xarModItemVars::get('payments', 'gateway', $regid)</xar:set>
+        <xar:data-input type="object" name="gateway" value="$value" options="$options" firstline="Choose a gateway"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="customerobject" title="#xarML('The customer object this module gets its data from')#" class="xar-form-label">
+            Customer Object:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'customerobject', $regid)</xar:set>
+        <xar:data-input type="object" name="customerobject" value="$value" store_prop="name" firstline="Choose a customer object"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultcurrency" title="#xarML('The currency to use if none is passed')#" class="xar-form-label">
+            Default Currency:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'defaultcurrency', $regid)</xar:set>
+        <xar:data-input type="textbox" name="defaultcurrency" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultamount" title="#xarML('The amount to use if none is passed')#" class="xar-form-label">
+            Default Amount:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'defaultamount', $regid)</xar:set>
+        <xar:data-input type="textbox" name="defaultamount" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="allowanonpay" title="#xarML('Whether or not only registered users can make payments')#" class="xar-form-label">            
+            Anonymous Payments:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'allowanonpay', $regid)</xar:set>
+        <xar:data-input type="checkbox" name="allowanonpay" value="$value"/>
+    </div>
+</xar:template>

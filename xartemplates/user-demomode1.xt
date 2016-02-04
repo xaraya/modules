@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title">Payment Demo Mode</span></div>
+    <div class="xar-mod-body">
+        <fieldset>
+            <legend>Demo Mode Gateway</legend>
+            <xar:var name="label">System Message</xar:var>
+            <xar:img scope="theme" file="user-error.png" alt="$label" width="96" height="96" class="xar-module-icon"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                <xar:set name="name">xarUserGetVar('name')</xar:set>
+                    The user <xar:data-output type="name" value="$name"/> is set for payments demo mode.
+                    <br/>
+                    This page simulates the Payment module's access to an external gateway. No actual payment will be executed.
+                    <br/>
+                    To continue simulating the process after payment would be executed, click on "Constinue".
+                </div>                    
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <form method="post" action="#xarModURL('payments','user','phase2')#">
+                    <xar:var name="label">Go back</xar:var>
+                    <xar:button type="cancel" label="$label"/>
+                    &#160;
+                    <xar:var name="label">Continue</xar:var>
+                    <xar:button type="submit" label="$label"/>
+            </form>
+            </div>
+        </fieldset>
+    </div>
+</xar:template>

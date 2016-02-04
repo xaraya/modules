@@ -1,0 +1,44 @@
+<items>
+  <payments_dta_types itemid="1">
+    <id>1</id>
+    <code>826</code>
+    <name>ESR Payment (orange)</name>
+    <state>3</state>
+  </payments_dta_types>
+  <payments_dta_types itemid="2">
+    <id>2</id>
+    <code>827</code>
+    <name>CHF Payment Inland</name>
+    <state>3</state>
+  </payments_dta_types>
+  <payments_dta_types itemid="3">
+    <id>3</id>
+    <code>830</code>
+    <name>Int'l Payment</name>
+    <state>3</state>
+  </payments_dta_types>
+  <payments_dta_types itemid="4">
+    <id>4</id>
+    <code>832</code>
+    <name>Bank Check</name>
+    <state>3</state>
+  </payments_dta_types>
+  <payments_dta_types itemid="5">
+    <id>5</id>
+    <code>836</code>
+    <name>IBAN Payment</name>
+    <state>3</state>
+  </payments_dta_types>
+  <payments_dta_types itemid="6">
+    <id>6</id>
+    <code>837</code>
+    <name>Universal Payment</name>
+    <state>3</state>
+  </payments_dta_types>
+  <payments_dta_types itemid="7">
+    <id>7</id>
+    <code>890</code>
+    <name>Total record</name>
+    <state>3</state>
+  </payments_dta_types>
+</items>

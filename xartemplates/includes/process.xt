@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$tabmodule ne 'payments'">
+        <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
+    <xar:else />
+        <xar:set name="regid">0</xar:set>
+    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label for="payments_active" title="#xarML('Whether the payments module is used or ignored in a process')#" class="xar-form-label">            
+            Payments are active:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'payments_active', $regid)</xar:set>
+        <xar:data-input type="checkbox" name="payments_active" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="orderobject" title="#xarML('Choose a standard process for the payment')#" class="xar-form-label">            
+                Process Sequence:            
+        </label>
+        <xar:set name="options">
+            array(
+                array('id' => 0, 'name' =>  'Choose a process'),
+                array('id' => 1, 'name' =>  'Choose amount first'),
+                array('id' => 2, 'name' =>  'Choose payment type first'),
+                array('id' => 3, 'name' =>  'One step'),
+            )
+        </xar:set>
+        <xar:set name="value">xarModItemVars::get('payments', 'process', $regid)</xar:set>
+        <xar:data-input type="dropdown" name="process" value="$value" options="$options"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="productobject" title="#xarML('The product object this module uses to get product data')#" class="xar-form-label">            
+            Product Object:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'productobject', $regid)</xar:set>
+        <xar:data-input type="object" name="productobject" value="$value" store_prop="name" firstline="Choose a product object"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="orderobject" title="#xarML('The order object this module uses to get orders data')#" class="xar-form-label">            
+            Order Object:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'orderobject', $regid)</xar:set>
+        <xar:data-input type="object" name="orderobject" value="$value" store_prop="name" firstline="Choose an order object"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="runpayments" title="#xarML('Whether the payment information entered is actually sent to the gateway')#" class="xar-form-label">            
+            Run payments:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'runpayments', $regid)</xar:set>
+        <xar:data-input type="checkbox" name="runpayments" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="savetodb" title="#xarML('Whether the payment information is saved to database')#" class="xar-form-label">            
+            Save to database:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'savetodb', $regid)</xar:set>
+        <xar:data-input type="checkbox" name="savetodb" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="alertemail" title="#xarML('Whether to send an alert email when a payment is registered')#" class="xar-form-label">            
+            Send alert emails:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'alertemail', $regid)</xar:set>
+        <xar:data-input type="checkbox" name="alertemail" value="$value"/>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="alertemailaddr" title="#xarML('The email address to send alert emails to')#" class="xar-form-label">            
+            Alert email address:            
+        </label>
+        <xar:set name="value">xarModItemVars::get('payments', 'alertemailaddr', $regid)</xar:set>
+        <xar:data-input type="textbox" name="alertemailaddr" value="$value"/>
+    </div>
+</xar:template>

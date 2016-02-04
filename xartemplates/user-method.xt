@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('payments','useModuleAlias')">
+                <xar:var scope="module" module="payments" name="aliasname"/>
+            <xar:else />
+                Payments
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            Choose Your Payment Method
+        </h2>
+        
+        <xar:if condition="count($items)">
+            <form method="post" action="#xarModURL('payments','user','phase1')#">
+                <xar:set name="options">
+                    array()
+                </xar:set>
+                <div>
+                    <xar:foreach in="$items" value="$item">
+                        <xar:data-output property="$properties['icon']" value="$item['icon']"/>
+                        <xar:set name="option">
+                            array('id' => $item['id'], 'name' =>  $item['name']);
+                            $options[] = $option;                
+                        </xar:set>
+                    </xar:foreach>
+                </div>
+                <div style="margin-top: 10px">
+                    Choose one of the following:
+                </div>
+                <xar:data-input type="radio" name="paymentmethod" options="$options" value="$paymentmethod" layout="vertical"/>
+                <div style="clear:both">&#160;</div>
+                <xar:if condition="isset($invalid) AND $invalid">
+                    &#160;<span class="xar-error">Please choose a payment method</span>
+                </xar:if>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <!--Psspl:set the hidden field for MakeChanges -->
+                    <input type="hidden" name="MakeChanges" id="MakeChanges" value="#$MakeChanges#"/>
+                    <input type="submit" value="#xarML('Continue')#"/>
+                </div>
+            </form>
+        <xar:else />
+            No payment methods are currently available
+        </xar:if>
+    </div>
+</xar:template>

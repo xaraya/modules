@@ -1,0 +1,79 @@
+<object name="payments_gateways_config">
+  <objectid>93</objectid>
+  <label>Gateways Configuration</label>
+  <module_id>182</module_id>
+  <itemtype>68</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>29</maxid>
+  <access>a:0:{}</access>
+  <isalias>false</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:6:&quot;config&quot;;a:2:{i:0;s:28:&quot;xar_payments_gateways_config&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <properties>
+    <property name="id">
+      <id>1047</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>config.id</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="configuration_title">
+      <id>1048</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>config.configuration_title</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="configuration_key">
+      <id>1049</id>
+      <label>Key</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>config.configuration_key</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="configuration_value">
+      <id>1050</id>
+      <label>Value</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>config.configuration_value</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="configuration_desc">
+      <id>1051</id>
+      <label>Description</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>config.configuration_desc</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+    <property name="configuration_group_id">
+      <id>1052</id>
+      <label>Group id</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>config.configuration_group_id</source>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

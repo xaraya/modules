@@ -1,0 +1,102 @@
+<items>
+  <payments_paymentmethods itemid="1">
+    <id>1</id>
+    <name>Visa</name>
+    <category>3</category>
+    <description></description>
+    <icon>cc_visa.jpg</icon>
+    <regex_rule>'^4[0-9]{12}([0-9]{3})?$'</regex_rule>
+    <control_number>1</control_number>
+    <state>3</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="2">
+    <id>2</id>
+    <name>Mastercard</name>
+    <category>3</category>
+    <description></description>
+    <icon>cc_mastercard.jpg</icon>
+    <regex_rule>'^5[1-5][0-9]{14}$'</regex_rule>
+    <control_number>0</control_number>
+    <state>3</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="3">
+    <id>3</id>
+    <name>American Express</name>
+    <category>3</category>
+    <description></description>
+    <icon>cc_amex.jpg</icon>
+    <regex_rule>'^3[47][0-9]{13}$'</regex_rule>
+    <control_number>0</control_number>
+    <state>3</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="4">
+    <id>4</id>
+    <name>Diners Club</name>
+    <category>3</category>
+    <description></description>
+    <icon>cc_diners.jpg</icon>
+    <regex_rule>'^3(0[0-5]|[68][0-9])[0-9]{11}$'</regex_rule>
+    <control_number>0</control_number>
+    <state>3</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="5">
+    <id>5</id>
+    <name>Discover</name>
+    <category>3</category>
+    <description></description>
+    <icon>cc_discover.jpg</icon>
+    <regex_rule>'^6011[0-9]{12}$'</regex_rule>
+    <control_number>0</control_number>
+    <state>1</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="6">
+    <id>6</id>
+    <name>JCB</name>
+    <category>3</category>
+    <description></description>
+    <icon>cc_jcb.jpg</icon>
+    <regex_rule>'^(3[0-9]{4}|2131|1800)[0-9]{11}$'</regex_rule>
+    <control_number>0</control_number>
+    <state>1</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="7">
+    <id>7</id>
+    <name>Australian Bank Card</name>
+    <category>4</category>
+    <description></description>
+    <icon></icon>
+    <regex_rule>'^5610[0-9]{12}$'</regex_rule>
+    <control_number>0</control_number>
+    <state>1</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="8">
+    <id>8</id>
+    <name>ELV</name>
+    <category>2</category>
+    <description></description>
+    <icon>elv.jpg</icon>
+    <regex_rule></regex_rule>
+    <control_number>0</control_number>
+    <state>3</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="9">
+    <id>9</id>
+    <name>GiroPay</name>
+    <category>2</category>
+    <description></description>
+    <icon>giropay.gif</icon>
+    <regex_rule></regex_rule>
+    <control_number>0</control_number>
+    <state>1</state>
+  </payments_paymentmethods>
+  <payments_paymentmethods itemid="10">
+    <id>10</id>
+    <name>Cheque</name>
+    <category>2</category>
+    <description></description>
+    <icon>cheque.jpg</icon>
+    <regex_rule></regex_rule>
+    <control_number>0</control_number>
+    <state>1</state>
+  </payments_paymentmethods>
+</items>

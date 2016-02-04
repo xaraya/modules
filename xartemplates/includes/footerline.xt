@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0) AND $total gt 0">
+        <div style="text-align:center; padding-top:10px;">
+            <input type="hidden" name="idlist" id="idlist"/>
+            <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+
+            <xar:set name="options">array(
+                array('id'=>'0', 'name'=>'Select action'),
+                array('id'=>'1','name'=>'Delete Selected Items')
+                )
+            </xar:set>
+
+            &#160;
+            <!-- moved the onchange to onsubmit so we can set the checkboxes before or after the dropdown selection, else the selection will be wrong -->
+            <xar:set name="onchange">
+                "members_getchecked('list','idlist');document.getElementById('redirecttarget').value = this.value;document.getElementById('list');"
+            </xar:set>
+            <xar:data-input type="dropdown" name="operation" options="$options"/>&#160;
+            <input type="submit" value="#xarML('Execute')#"/>&#160;
+            <a href="javascript:listings_checkall(document.forms['listingslist'],true)">Check All</a>&#160;|&#160;
+            <a href="javascript:listings_checkall(document.forms['listingslist'],false)">Uncheck All</a>
+        </div>
+    <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ProcessPayments',0) AND $total gt 0"/>
+        <div style="text-align:center; padding-top:10px;">
+            <input type="hidden" name="idlist" id="idlist"/>
+            <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+
+            <xar:set name="options">array(
+                array('id'=>'0', 'name'=>'Select action'),
+                array('id'=>'100','name'=>'De-activate')
+                )
+            </xar:set>
+
+            &#160;
+            <!-- moved the onchange to onsubmit so we can set the checkboxes before or after the dropdown selection, else the selection will be wrong -->
+            <xar:set name="onchange">
+                "members_getchecked('list','idlist');document.getElementById('redirecttarget').value = this.value;document.getElementById('list');"
+            </xar:set>
+            <xar:data-input type="dropdown" name="operation" options="$options"/>&#160;
+            <input type="submit" value="#xarML('Execute')#"/>&#160;
+            <a href="javascript:listings_checkall(document.forms['listingslist'],true)">Check All</a>&#160;|&#160;
+            <a href="javascript:listings_checkall(document.forms['listingslist'],false)">Uncheck All</a>
+        </div>
+    </xar:if>
+</xar:template>

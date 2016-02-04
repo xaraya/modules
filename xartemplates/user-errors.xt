@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title">Payment Error</span></div>
+    <div class="xar-mod-body">
+        <fieldset>
+            <legend>Problem with Payment</legend>
+            <xar:var name="label">System Message</xar:var>
+            <xar:img scope="theme" file="user-error.png" alt="$label" width="96" height="96" class="xar-module-icon"/>
+            <xar:if condition="!isset($layout)">
+                <div style="margin-top: 20px; margin-left: 20px">
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </div>                    
+            <xar:elseif condition="$layout eq 'no_gateway'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    Payments are currently not available.
+                    <br />
+                    Please contact us or check back later
+                </div>
+            <xar:elseif condition="$layout eq 'no_process'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    Payments are currently not available.
+                    <br />
+                    Please contact us or check back later
+                </div>
+            <xar:else />
+                <div style="margin-top: 20px; margin-left: 20px">
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </div>                    
+            </xar:if>
+            <!--Psspl:Implemented the code for return url.-->   
+            <xar:if condition="!empty($return_url)">
+                <xar:template file="return-link" type="module"/>
+            </xar:if>
+        </fieldset>
+    </div>
+</xar:template>
