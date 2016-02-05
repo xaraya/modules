@@ -21,22 +21,24 @@ function payments_user_create_dta_file()
 
     if (!xarVarFetch('name',       'str',    $name,            'payments_dta', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
 
     // Get the payments object
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['tplmodule'] = 'payments';
     
     // Get the debit account information
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
-
+ echo "<pre>";var_dump($debit_fields);
     sys::import('modules.payments.class.dta_TA827');
     $dta = new DTA_TA827();
     
     $fields = $data['object']->getFieldValues(array(), 1);
-    echo "<pre>";var_dump($fields);
+   var_dump($fields);
 //    exit;
 
     $dta->setRecipientClearingNr(292);
