@@ -137,7 +137,7 @@ class DTA {
 
     public function setClientClearingNr($clearingNr) {
         if (!is_integer($clearingNr))
-            throw new Exception(xarML("Invalid client bank clearing number"));
+            throw new Exception(xarML("Invalid client bank clearing number: #(1)", $clearingNr));
         else
             $this->clientClearingNr = $clearingNr;
     }
@@ -151,7 +151,7 @@ class DTA {
 
     public function setInputSequenceNr($sequenceNr) {
         if (!is_integer($sequenceNr))
-            throw new Exception(xarML("Invalid input sequence number"));
+            throw new Exception(xarML("Invalid input sequence number: #(1)"), $sequenceNr);
         else
             $this->inputSequenceNr = $sequenceNr;
     }
@@ -177,7 +177,7 @@ class DTA {
 
     public function setDtaId($DtaID) {
         if (!(strlen($DtaID) == 5))
-            throw new Exception(xarML("Invalid DTA ID"));
+            throw new Exception(xarML("Invalid DTA ID: #(1)"), $DtaID);
         else
             $this->DtaID = $dtaId;
     }
@@ -199,7 +199,7 @@ class DTA {
 
     public function setDebitAccount($debitAccount) {
         if (strlen($debitAccount) > 24)
-            throw new Exeption(xarML("Invalid debit account"));
+            throw new Exeption(xarML("Invalid debit account: #(1)", $debitAccount));
         else
             $this->debitAccount = str_pad($debitAccount, 24, $this->fillChar);
     }
@@ -209,7 +209,7 @@ class DTA {
             throw new Exception(xarML("The debit account is not set"));
         else {
             if (strlen($this->debitAccount) != 24)
-                throw new Exception(xarML("Invalid debit account"));
+                throw new Exception(xarML("Invalid debit account: #(1)", $this->debitAccount));
             else
                 return $this->debitAccount;
         }
@@ -229,7 +229,7 @@ class DTA {
 
         // Überprüfen des Betrages
         if (!((is_float($amount)) || (is_integer($amount))))
-            throw new Exception(xarML("The amount is not numeric"));
+            throw new Exception(xarML("The amount is not numeric: #(1)"), $amount);
         else {
             $this->paymentAmountNumeric = $amount;
             $amount = str_pad(number_format($amount, 2, ',', ''), 12, $this->fillChar);
@@ -258,7 +258,7 @@ class DTA {
             throw new Exception(xarML("The payment amount is not set"));
         else {
             if (strlen($this->paymentAmount) != (6 + 3 + 12))
-                throw new Exception(xarML("The payment amount does not have the correct length"));
+                throw new Exception(xarML("The payment amount does not have the correct length: #(1)"), $this->paymentAmount);
             else
                 return $this->paymentAmount;
         }

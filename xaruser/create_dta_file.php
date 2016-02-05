@@ -29,7 +29,7 @@ function payments_user_create_dta_file()
     
     // Get the debit account information
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
-    $data['debit_account']->getItem('itemid' => 1);
+    $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
 
     sys::import('modules.payments.class.dta_TA827');
@@ -41,7 +41,7 @@ function payments_user_create_dta_file()
 
     $dta->setRecipientClearingNr(292);
     $dta->setCreationDate((int)$fields['transaction_date']);
-    $dta->setClientClearingNr($debit_fields['clearing']);
+    $dta->setClientClearingNr((int)$debit_fields['clearing']);
     $dta->setPaymentAmount((float)$fields['amount'], $fields['currency'], $fields['transaction_date']);
     $dta->setClient($debit_fields['address_1'], $debit_fields['address_2'], $debit_fields['address_3'], $debit_fields['address_4']);
     $dta->setRecipient($fields['post_account'], $fields['address_1'], $fields['address_2'], $fields['address_3'], $fields['address_4']);
