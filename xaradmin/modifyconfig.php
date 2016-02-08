@@ -41,7 +41,7 @@
         }*/
 
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'payments'));
-        $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls');
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
         $data['module_settings']->getItem();
 
         $regid = xarMod::getRegID($tabmodule);
@@ -72,7 +72,7 @@
                 if (!xarVarFetch('defaultamount',  'float',    $defaultamount, xarModVars::get('payments', 'defaultamount'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('process',        'int',      $process, xarModVars::get('payments', 'process'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('allowanonpay',   'checkbox', $allowanonpay, xarModVars::get('payments', 'allowanonpay'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('payments_active',   'checkbox', $payments_active, xarModVars::get('payments', 'payments_active'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('payments_active','checkbox', $payments_active, xarModVars::get('payments', 'payments_active'), XARVAR_NOT_REQUIRED)) return;
 
                 $modvars = array(
                                 'customerobject',

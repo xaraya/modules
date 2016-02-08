@@ -71,7 +71,17 @@
                     xarController::redirect(xarModURL('payments', 'user', 'onestep', $args));
                 else 
                     xarController::redirect(xarModURL('payments', 'user', 'amount'));
-                break;                
+                break;   
+            default:             
+                $redirect = xarModVars::get('payments','frontend_page');
+                if (!empty($redirect)) {
+                    $truecurrenturl = xarServer::getCurrentURL(array(), false);
+                    $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+                    xarController::redirect($urldata['redirecturl']);
+                } else {
+                    xarController::redirect(xarModURL('payments', 'user', 'test'));
+                }
+                break;
         }
         return true;
     }
