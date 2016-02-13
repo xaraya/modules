@@ -19,6 +19,8 @@ sys::import('xaraya.structures.datetime');
 
 class DTA {
 
+    const CRLF = "\r\n";       
+    
     protected $fillChar             = ' ';
     
     // Header fields
@@ -47,7 +49,7 @@ class DTA {
     {
         $string = '';
         while ($segment = array_pop($record)) {
-            $string = $segment . $string;
+            $string = $segment . self::CRLF . $string;
         }
         return $string;
     }
