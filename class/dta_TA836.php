@@ -25,5 +25,23 @@ class DTA_TA836 extends DTA{
         $this->paymentType = $paymentType;
     }
 
+    public function setClient($line1, $line2, $line3, $line4) 
+    {
+        $client = array();
+        array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 35, $this->fillChar));
+        array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 35, $this->fillChar));
+        array_push($client, str_pad(strtoupper($this->replaceChars($line2)), 35, $this->fillChar));
+        $this->client = $client;
+    }
+
+    protected function getSegment02()
+    {
+        $segment02 = '02'
+                . $this->getConversionRate()
+                . $this->getClient()
+                . $this->getPadding(9)
+                ;
+        return $segment02;
+    }
 }
 ?>

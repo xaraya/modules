@@ -21,5 +21,14 @@ class DTA_TA832 extends DTA{
 
     protected $transactionType = 832;
     
+    protected function getSegment02()
+    {
+        $segment02 = '02'
+                . $this->getConversionRate()
+                . $this->getClient()
+                . $this->getPadding(18)
+                ;
+        return $segment02;
+    }
 }
 ?>

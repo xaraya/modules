@@ -24,6 +24,5 @@ class DTA_TA837 extends DTA{
     public function setPaymentType($paymentType=0) {
         $this->paymentType = $paymentType;
     }
-
 }
 ?>

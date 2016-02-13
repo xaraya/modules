@@ -17,21 +17,23 @@
 
 sys::import('modules.payments.class.dta');
 
-class DTA_TA890 {
+class DTA_TA890 extends DTA {
 
     protected $transactionType = 890;
 
-    public function setClientClearingNr($clearingNr) {
+    public function setClientClearingNr($clearingNr) 
+    {
         $this->clientClearingNr = $this->getPadding(7);
     }
 
-    public function record()
+    public function getRecord()
     {
         $record = array();
         $segment01 = '01'
                 . $this->getHeader()
                 . $this->getTotalAmount()
-                . $this->getPadding(59);
+                ;
+        $segment01 = str_pad($segment01, 128, $this->fillChar);
         array_push($record, $segment01);
         return $record;
     }
@@ -57,12 +59,7 @@ class DTA_TA890 {
      * @throws Exception
      */
     private function getTotalAmount() {
-        if ($this->totalAmount == NULL)
-            throw new Exception(xarML("The total amount is not set"));
-        elseif (strlen($this->totalAmount) != 16)
-            throw new Exception(xarML("The total amount does not have the proper length"));
-        else
-            return $this->totalAmount;
+        return $this->totalAmount;
     }
 }
 

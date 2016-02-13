@@ -42,42 +42,65 @@ class DTA_TA827 extends DTA{
         $this->paymentType = $paymentType;
     }
 
+    public function setPaymentAmount($amount, $currencyCode, $valuta = NULL) 
+    {
+        $paymentAmount = '';
+
+        // Check the value date
+        if ($valuta == NULL)
+            $valuta = '      ';
+        else {
+            $valuta = $this->transformDate($valuta);
+            if (!is_numeric($valuta) || (strlen($valuta) != 6 ))
+                throw new Exception(xarML("The value date must have the format DDMMYY: #(1)", $valuta));
+        }
+
+        // Check the amount
+        if (!((is_float($amount)) || (is_integer($amount))))
+            throw new Exception(xarML("The amount is not numeric: #(1)"), $amount);
+        else {
+            $this->paymentAmountNumeric = $amount;
+            $amount = str_pad(number_format($amount, 2, ',', ''), 12, $this->fillChar);
+        }
+
+        // Check the currency code
+        if (!strlen($currencyCode) == 3 )
+            throw new Exception(xarML("Invalid currency code"));
+
+        $paymentAmount = $valuta . $currencyCode . $amount;
+        if (strlen($paymentAmount) != (6 + 3 + 12 ))
+            throw new Exception(xarML("Invalid amount: #(1)", $paymentAmount));
+        else
+            $this->paymentAmount = $paymentAmount;
+    }
+
+    protected function getConversionRate() 
+    {
+        return '';
+    }
+
+    protected function getBankAddressID() 
+    {
+        return '';
+    }
+    
     public function getRecord()
     {
         $record = array();
         // Segment 01
-        $segment01 = '01'
-                . $this->getHeader()
-                . $this->getReferenceNr()
-                . $this->getDebitAccount()
-            /*
-                . $this->getPaymentAmount()
-                . $this->getPadding(14)
-                */
-                ;var_dump($segment01);exit;
-        array_push($record, $segment01);
+        array_push($record, $this->getSegment01());
 
         // Segment 02
-        $segment02 = '02'
-                . $this->getClient()
-                . $this->getPadding(30);
-        array_push($record, $segment02);
+        array_push($record, $this->getSegment02());
 
         // segment 03
-        $segment03 = '03'
-                . $this->getRecipient();
-        array_push($record, $segment03);
+        array_push($record, $this->getSegment03());
 
         // segment 04
-        $segment04 = '04'
-                . $this->getPaymentReason()
-                . $this->getPadding(14);
-        array_push($record, $segment04);
+        array_push($record, $this->getSegment04());
 /*
         // segment 05
-        $segment05 = '05'
-                . $this->getEndRecipient();
-        array_push($record, $segment05);
+        array_push($record, $this->getSegment05());
 */
         return $record;
     }

@@ -47,20 +47,38 @@ function payments_user_create_dta_file()
     $fields = $data['object']->getFieldValues(array(), 1);
 //    exit;
 
+    // Header information
     $dta->setRecipientClearingNr(292);
     $dta->setCreationDate((int)$fields['transaction_date']);
     $dta->setClientClearingNr((int)$debit_fields['clearing']);
+    $dta->setDataFileSender("LCL16");
+    
+    $dta->setDebitAccount($debit_fields['iban']);
     $dta->setPaymentAmount((float)$fields['amount'], $fields['currency'], $fields['transaction_date']);
     $dta->setClient($debit_fields['address_1'], $debit_fields['address_2'], $debit_fields['address_3'], $debit_fields['address_4']);
     $dta->setRecipient($fields['post_account'], $fields['address_1'], $fields['address_2'], $fields['address_3'], $fields['address_4']);
-    $lines = explode('\n', $fields['reason']);
+    $lines = explode(PHP_EOL, $fields['reason']);
     $dta->setPaymentReason($lines);
     
-    $dta->setDataFileSender("LCL16");
     $dta->setInputSequenceNr(2);
     
-   var_dump($fields);
-   $dta->getRecord();
+    var_dump($fields);
+    $dta->getRecord();
+   
+    sys::import('modules.payments.class.dta_TA890');
+    $dta_total = new DTA_TA890();
+
+    // Header information
+    $dta_total->setRecipientClearingNr(292);
+    $dta_total->setCreationDate((int)$fields['transaction_date']);
+    $dta_total->setClientClearingNr((int)$debit_fields['clearing']);
+    $dta_total->setDataFileSender("LCL16");
+    $dta_total->setInputSequenceNr(2);
+
+    // Record information
+    $dta_total->setTotalAmount($fields['amount']);
+    $dta_total->getRecord();
+
 
     if ($data['confirm']) {
     

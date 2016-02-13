@@ -41,11 +41,13 @@ class DTA {
     protected $processingFlag       = '0';
     
     // Record fields
-    private $debitAccount;
-    private $paymentAmount;
-    private $paymentAmountNumeric;
-    private $client;
+    protected $debitAccount;
+    protected $paymentAmount;
+    protected $client;
+    protected $recipient;
+    protected $paymentReasen;
     
+    private $paymentAmountNumeric;
     protected $totalAmount;
     
     
@@ -75,7 +77,7 @@ class DTA {
                 . $this->getTransactionType()
                 . $this->getPaymentType()
                 . $this->getProcessingFlag()
-                ;
+                ;var_dump($header);
         return $header;
     }
 
@@ -121,40 +123,55 @@ class DTA {
 
     private function setPaymentType() {}
 
-    protected function setDebitAccount($debitAccount) 
+    public function setDebitAccount($debitAccount) 
     {
-        if ($this->debitAccount == NULL)
-            throw new Exception(xarML("The debit account is not set"));
+        if (strlen($debitAccount) > 24)
+            throw new Exception(xarML("Invalid debit account: #(1)"), $debitAccount);
         else {
-            if (strlen($this->debitAccount) != 24)
-                throw new Exception(xarML("Invalid debit account: #(1)", $this->debitAccount));
-            else
-                return $this->debitAccount;
+            $this->debitAccount = str_pad($debitAccount, 24, $this->fillChar);
         }
     }
 
-
-    protected function getDebitAccount() 
+    public function setClient($line1, $line2, $line3, $line4) 
     {
-        if ($this->debitAccount == NULL)
-            throw new Exception(xarML("The debit account is not set"));
-        else {
-            if (strlen($this->debitAccount) != 24)
-                throw new Exception(xarML("Invalid debit account: #(1)", $this->debitAccount));
-            else
-                return $this->debitAccount;
-        }
+        $client = array();
+        array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 24, $this->fillChar));
+        array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 24, $this->fillChar));
+        array_push($client, str_pad(strtoupper($this->replaceChars($line2)), 24, $this->fillChar));
+        array_push($client, str_pad(strtoupper($this->replaceChars($line1)), 24, $this->fillChar));
+        $this->client = $client;
     }
+
+    public function setRecipient($account, $line1, $line2, $line3, $line4) 
+    {
+        $recipient = array();
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 24))), 24, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line3, 0, 24))), 24, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line2, 0, 24))), 24, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line1, 0, 24))), 24, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper('/C/' . $account), 30, $this->fillChar));
+        $this->recipient = $recipient;
+    }
+
+    public function setPaymentReason($lines=array()) 
+    {
+        $reason = array();
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (strlen($line) > 28)
+            throw new Exception(xarML("Exceeds 28 characters: #(1)"), $line);
+            array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 28, $this->fillChar));
+        }
+        $this->paymentReason = $reason;
+    }
+
 
 
 
 
     private function getProcessingDay() 
     {
-        if ($this->processingDay == NULL)
-            throw new Exception(xarML("The processing day is not set"));
-        else
-            return $this->processingDay;
+        return $this->processingDay;
     }
 
     private function getRecipientClearingNr() 
@@ -212,9 +229,98 @@ class DTA {
         return mt_rand(100000, 999999) . $this->getInputSequenceNr();
     }
 
+    protected function getDebitAccount() 
+    {
+        return $this->debitAccount;
+    }
+
+    protected function getPaymentAmount() 
+    {
+        return $this->paymentAmount;
+    }
+
+    protected function getClient() 
+    {
+        $clients = $this->client;
+        $client = '';
+        while ($line = array_pop($clients)) {
+            $client .= $line;
+        }
+        return $client;
+    }
+
+    private function getRecipient() 
+    {
+        $recipients = $this->recipient;
+        $recipient = '';
+        while ($line = array_pop($recipients)) {
+            $recipient .= $line;
+        }
+        return $recipient;
+    }
+
+    private function getPaymentReason() {
+        $reasons = $this->paymentReason;
+        $reason = '';
+        while ($line = array_pop($reasons)) {
+            $reason .= $line;
+        }
+        return $reason;
+    }
 
 
-    private function transformDate($timestamp=0) 
+    // Record segments
+    protected function getSegment01()
+    {
+        $segment01 = '01'
+                . $this->getHeader()
+                . $this->getReferenceNr()
+                . $this->getDebitAccount()
+                . $this->getPaymentAmount()
+                ;
+        $segment01 = str_pad($segment01, 128, $this->fillChar);
+        return $segment01;
+    }
+
+    protected function getSegment02()
+    {
+        $segment02 = '02'
+                . $this->getConversionRate()
+                . $this->getClient()
+                ;
+        $segment02 = str_pad($segment02, 128, $this->fillChar);
+        return $segment02;
+    }
+
+    protected function getSegment03()
+    {
+        $segment03 = '03'
+                . $this->getRecipient()
+                ;
+        $segment03 = str_pad($segment03, 128, $this->fillChar);
+        return $segment03;
+    }
+
+    protected function getSegment04()
+    {
+        $segment04 = '04'
+                . $this->getPaymentReason()
+                . $this->getBankAddressID()
+                ;
+        $segment04 = str_pad($segment04, 128, $this->fillChar);
+        return $segment04;
+    }
+
+    protected function getSegment05()
+    {
+        $segment05 = '05'
+                . $this->getEndRecipient()
+                ;
+        $segment05 = str_pad($segment05, 128, $this->fillChar);
+        return $segment05;
+    }
+
+    protected function transformDate($timestamp=0) 
     {
         $timestamp = (int)$timestamp;
         if (empty($timestamp)) return '000000';
@@ -231,132 +337,8 @@ class DTA {
     }
 
 
-    public function setPaymentAmount($amount, $currencyCode, $valuta = NULL) 
-    {
-        $paymentAmount = '';
 
-        // Überprüfen des Valuta
-        if ($valuta == NULL)
-            $valuta = '      ';
-        else {
-            $valuta = $this->transformDate($valuta);
-            if (!is_numeric($valuta) || (strlen($valuta) != 6 ))
-                throw new Exception(xarML("The value date must have the format DDMMYY"));
-        }
 
-        // Überprüfen des Betrages
-        if (!((is_float($amount)) || (is_integer($amount))))
-            throw new Exception(xarML("The amount is not numeric: #(1)"), $amount);
-        else {
-            $this->paymentAmountNumeric = $amount;
-            $amount = str_pad(number_format($amount, 2, ',', ''), 12, $this->fillChar);
-        }
-
-        // Check the currency code
-        if (!strlen($currencyCode) == 3 )
-            throw new Exception(xarML("Invalid currency code"));
-
-        $paymentAmount = $valuta . $currencyCode . $amount;
-        if (strlen($paymentAmount) != (6 + 3 + 12 ))
-            throw new Exception(xarML("Invalid amount"));
-        else
-            $this->paymentAmount = $paymentAmount;
-    }
-
-    public function getPaymentAmountNumeric() 
-    {
-        if ($this->paymentAmountNumeric == NULL)
-            throw new Exception(xarML("The payment amount is not set"));
-        else
-            return $this->paymentAmountNumeric;
-    }
-
-    private function getPaymentAmount() 
-    {
-        if ($this->paymentAmount == NULL)
-            throw new Exception(xarML("The payment amount is not set"));
-        else {
-            if (strlen($this->paymentAmount) != (6 + 3 + 12))
-                throw new Exception(xarML("The payment amount does not have the correct length: #(1)"), $this->paymentAmount);
-            else
-                return $this->paymentAmount;
-        }
-    }
-
-    public function setClient($line1, $line2, $line3, $line4) 
-    {
-        $client = array();
-        array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 24, $this->fillChar));
-        array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 24, $this->fillChar));
-        array_push($client, str_pad(strtoupper($this->replaceChars($line2)), 24, $this->fillChar));
-        array_push($client, str_pad(strtoupper($this->replaceChars($line1)), 24, $this->fillChar));
-        $this->client = $client;
-    }
-
-    private function getClient() 
-    {
-        if ($this->client == NULL)
-            throw new Exception(xarML("The client is not set"));
-        else {
-            $clients = $this->client;
-            $client = '';
-            while ($line = array_pop($clients)) {
-                $client .= $line;
-            }
-            return $client;
-        }
-    }
-
-    public function setRecipient($account, $line1, $line2, $line3, $line4) 
-    {
-        $recipient = array();
-        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 24))), 24, $this->fillChar));
-        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line3, 0, 24))), 24, $this->fillChar));
-        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line2, 0, 24))), 24, $this->fillChar));
-        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line1, 0, 24))), 24, $this->fillChar));
-        array_push($recipient, str_pad(strtoupper('/C/' . $account), 30, $this->fillChar));
-        $this->recipient = $recipient;
-    }
-
-    private function getRecipient() 
-    {
-        if ($this->recipient == NULL)
-            throw new Exception(xarML("The recipient is not set"));
-        else {
-            $recipients = $this->recipient;
-            $recipient = '';
-            while ($line = array_pop($recipients)) {
-                $recipient .= $line;
-            }
-            return $recipient;
-        }
-    }
-
-    public function setPaymentReason($lines=array()) 
-    {
-        $reason = array();
-        foreach ($lines as $line) {
-            array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 28, $this->fillChar));
-        }
-        $this->paymentReason = $reason;
-    }
-
-    private function getPaymentReason() 
-    {
-        if ($this->paymentReason == NULL)
-            return $this->getPadding(28)
-                    . $this->getPadding(28)
-                    . $this->getPadding(28)
-                    . $this->getPadding(28);
-        else {
-            $reasons = $this->paymentReason;
-            $reason = '';
-            while ($line = array_pop($reasons)) {
-                $reason .= $line;
-            }
-            return $reason;
-        }
-    }
 
     private function getEndRecipient() 
     {
