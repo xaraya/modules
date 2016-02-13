@@ -52,10 +52,10 @@ class DTA_File {
         foreach ($this->transactions as $transaction) {
             $sum += $transaction->getPaymentAmountNumeric();
         }
-        echo "Sum Amount: " . $sum . " &euro;<br />\n";
+//        echo "Sum Amount: " . $sum . " &euro;<br />\n";
         $id = $this->addTransaction(890);
         $totalRecord = $this->loadTransaction($id);
-        echo "Sum Records: " . $id . " <br />\n";
+//        echo "Sum Records: " . $id . " <br />\n";
         $totalRecord->setTotalAmount($sum);
         $this->saveTransaction($id, $totalRecord);
     }
@@ -78,10 +78,11 @@ class DTA_File {
             $output .= $transaction->toString();
         }
 
-        return output;
+        return $output;
     }
 
     public function download() {
+        $output = $this->toString();
     /*
         $this->createTotalRecord();
         $output = '';
@@ -94,7 +95,7 @@ class DTA_File {
         
         header('Content-type: text/plain');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
-        echo $transaction->toString();
+        echo $output;
         exit;
     }
     

@@ -19,14 +19,6 @@ sys::import('xaraya.structures.datetime');
 
 class DTA {
 
-    const FS1 = 0x01;           // SOH
-    const FS2 = 0x0D254E;       // CRLF+
-    const FS3 = 0x0D257A;       // CRLF:
-    const FS4 = 0x0D2560;       // CRLF-
-    const FS5 = 0x03;           // ETX
-    const TAG = 0x7A;           // :
-    const CS2 = 0x0D25;         // CRLF
-    
     protected $fillChar             = ' ';
     
     // Header fields
@@ -45,26 +37,21 @@ class DTA {
     protected $paymentAmount;
     protected $client;
     protected $recipient;
-    protected $paymentReasen;
+    protected $paymentReason;
     
     private $paymentAmountNumeric;
     protected $totalAmount;
     
     
-    public function record()
+    protected function concatenateRecord($record)
     {
-        $string  = self::FS1;
-        $string .= $this->header();
-        $string .= self::FS2;
-        $string .= '20';
-        $string .= self::TAG;
-
-        $string .= self::FS3;
-        $string .= '25';
-        $string .= self::TAG;
+        $string = '';
+        while ($segment = array_pop($record)) {
+            $string = $segment . $string;
+        }
         return $string;
     }
-    
+
     public function getHeader() 
     {
         $header = $this->getProcessingDay()
@@ -243,8 +230,10 @@ class DTA {
     {
         $clients = $this->client;
         $client = '';
-        while ($line = array_pop($clients)) {
-            $client .= $line;
+        if (!empty($clients)) {
+            while ($line = array_pop($clients)) {
+                $client .= $line;
+            }
         }
         return $client;
     }
@@ -253,8 +242,10 @@ class DTA {
     {
         $recipients = $this->recipient;
         $recipient = '';
-        while ($line = array_pop($recipients)) {
-            $recipient .= $line;
+        if (!empty($recipients)) {
+            while ($line = array_pop($recipients)) {
+                $recipient .= $line;
+            }
         }
         return $recipient;
     }
@@ -263,8 +254,10 @@ class DTA {
     {
         $reasons = $this->paymentReason;
         $reason = '';
-        while ($line = array_pop($reasons)) {
-            $reason .= $line;
+        if (!empty($reasons)) {
+            while ($line = array_pop($reasons)) {
+                $reason .= $line;
+            }
         }
         return $reason;
     }

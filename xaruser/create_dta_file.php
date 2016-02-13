@@ -36,8 +36,6 @@ function payments_user_create_dta_file()
     $q = $data['object']->dataquery;
     $items = $data['object']->getItems();
     
- echo "<pre>";
- 
     // Get the DTA class to create a file
     sys::import('modules.payments.class.dtafile');
     $dta = new DTA_File("LCL16", (int)$debit_fields['clearing']);
@@ -47,32 +45,39 @@ function payments_user_create_dta_file()
 //    $dta = new DTA_TA827();
 //    $dta->setDataFileSender("LCL16");
 //    $dta->setClientClearingNr((int)$debit_fields['clearing']);
-//    $dta->setDebitAccount($debit_fields['iban']);
-//    $dta->setClient($debit_fields['address_1'], $debit_fields['address_2'], $debit_fields['address_3'], $debit_fields['address_4']);
     
     $index = 1;
     $total_amount = 0;
     $dta_file_contents = '';
     foreach ($items as $item) {
-        $dta->addtransaction($item['dta_type']);
         // Add the debit fields to the corresponding properties in the DTA object
         $item['sender_line_1'] = $debit_fields['address_1'];
         $item['sender_line_2'] = $debit_fields['address_2'];
         $item['sender_line_3'] = $debit_fields['address_3'];
         $item['sender_line_4'] = $debit_fields['address_4'];
 
-        // Header information
-//        $dta->setCreationDate((int)$item['transaction_date']);
-//        $dta->setRecipientClearingNr((int)$item['bic']);
+        // Create a transaction
+        $i = $dta->addTransaction($item['dta_type']);
+        $thisTransaction = $dta->loadTransaction($i);
+        
+        // Add values
+        $thisTransaction->setCreationDate((int)$item['transaction_date']);
+        $thisTransaction->setRecipientClearingNr((int)$item['bic']);
+        $thisTransaction->setDebitAccount($debit_fields['iban']);
+        
+        $thisTransaction->setClient($debit_fields['address_1'], $debit_fields['address_2'], $debit_fields['address_3'], $debit_fields['address_4']);
+
+        $thisTransaction->setPaymentAmount((float)$item['amount'], $item['currency'], $item['transaction_date']);
+        $thisTransaction->setRecipient($item['post_account'], $item['address_1'], $item['address_2'], $item['address_3'], $item['address_4']);
+        $lines = explode(PHP_EOL, $item['reason']);
+        $thisTransaction->setPaymentReason($lines);
     
-//        $dta->setPaymentAmount((float)$item['amount'], $item['currency'], $item['transaction_date']);
-//        $dta->setRecipient($item['post_account'], $item['address_1'], $item['address_2'], $item['address_3'], $item['address_4']);
-//        $lines = explode(PHP_EOL, $item['reason']);
-//        $dta->setPaymentReason($lines);
-    
+        // Save it
+        $dta->saveTransaction($i, $thisTransaction);
 //        $dta->setInputSequenceNr($index);
-        $index++;
-        $total_amount += $item['amount'];
+//        $
+//        $index++;
+//        $total_amount += $item['amount'];
         
         $dta->download();
 //        var_dump($dta->getRecord());exit;

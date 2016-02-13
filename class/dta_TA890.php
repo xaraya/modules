@@ -26,7 +26,7 @@ class DTA_TA890 extends DTA {
         $this->clientClearingNr = $this->getPadding(7);
     }
 
-    public function getRecord()
+    public function toString()
     {
         $record = array();
         $segment01 = '01'
@@ -35,8 +35,8 @@ class DTA_TA890 extends DTA {
                 ;
         $segment01 = str_pad($segment01, 128, $this->fillChar);
         array_push($record, $segment01);
-        var_dump($record);
-        return $record;
+        $string = $this->concatenateRecord($record);
+        return $string;
     }
 
     /**

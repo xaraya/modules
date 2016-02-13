@@ -35,7 +35,7 @@ class DTA_TA826 extends DTA{
         $this->client = $client;
     }
 
-    protected function getCOnversionRate() 
+    protected function getConversionRate() 
     {
         return '';
     }
@@ -50,7 +50,7 @@ class DTA_TA826 extends DTA{
         return $segment03;
     }
     
-    public function getRecord()
+    public function toString()
     {
         $record = array();
         // Segment 01
