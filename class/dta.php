@@ -77,7 +77,7 @@ class DTA {
                 . $this->getTransactionType()
                 . $this->getPaymentType()
                 . $this->getProcessingFlag()
-                ;var_dump($header);
+                ;
         return $header;
     }
 
@@ -86,7 +86,7 @@ class DTA {
         $this->processingDay = $this->transformDate(0);
     }
 
-    public function setRecipientClearingNr($clearingNr) 
+    public function setRecipientClearingNr($clearingNr=0) 
     {
         $this->recipientClearingNr = $this->getPadding(12);
     }
@@ -259,7 +259,8 @@ class DTA {
         return $recipient;
     }
 
-    private function getPaymentReason() {
+    private function getPaymentReason() 
+    {
         $reasons = $this->paymentReason;
         $reason = '';
         while ($line = array_pop($reasons)) {
@@ -338,7 +339,10 @@ class DTA {
 
 
 
-
+    public function getPaymentAmountNumeric() 
+    {
+        return $this->paymentAmountNumeric;
+    }
 
     private function getEndRecipient() 
     {

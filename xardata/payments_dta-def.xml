@@ -149,7 +149,7 @@
     <property name="dta_type">
       <id>16898</id>
       <label>Payment Type</label>
-      <type>objectref</type>
+      <type>textbox</type>
       <defaultvalue>827</defaultvalue>
       <source>payments.dta_type</source>
       <status>33</status>

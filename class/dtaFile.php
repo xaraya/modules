@@ -12,7 +12,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
-class dtaFile {
+class DTA_File {
 
     private $transactions = array();
     private $transactionCounter = 0;
@@ -30,10 +30,12 @@ class dtaFile {
     public function addTransaction($type) {
         $this->transactionCounter++;
         $seqNr = $this->transactionCounter;
-        $this->transactions[$seqNr] = new dtaChTransaction($type);
+        sys::import('modules.payments.class.dta_TA' . $type);
+        $class = 'DTA_TA' . $type;
+        $this->transactions[$seqNr] = new $class();
         $this->transactions[$seqNr]->setInputSequenceNr($seqNr);
         $this->transactions[$seqNr]->setCreationDate($this->creationDate);
-        $this->transactions[$seqNr]->setDtaId($this->ident);
+        $this->transactions[$seqNr]->setDataFileSender($this->ident);
         return $seqNr;
     }
 
@@ -51,7 +53,7 @@ class dtaFile {
             $sum += $transaction->getPaymentAmountNumeric();
         }
         echo "Sum Amount: " . $sum . " &euro;<br />\n";
-        $id = $this->addTransaction(dtaChTransaction::TA890);
+        $id = $this->addTransaction(890);
         $totalRecord = $this->loadTransaction($id);
         echo "Sum Records: " . $id . " <br />\n";
         $totalRecord->setTotalAmount($sum);
@@ -80,20 +82,22 @@ class dtaFile {
     }
 
     public function download() {
+    /*
         $this->createTotalRecord();
         $output = '';
         foreach ($this->transactions as $transaction) {
             $output .= $transaction->toString();
         }
-
+*/
         $filename = 'DTAExport_' . time() . ".txt";
         file_put_contents('DTAExport_' . time() . ".txt", $output);
         
         header('Content-type: text/plain');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
-        echo $output;
+        echo $transaction->toString();
         exit;
     }
+    
 }
 
 ?>

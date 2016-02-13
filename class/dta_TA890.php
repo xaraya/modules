@@ -35,6 +35,7 @@ class DTA_TA890 extends DTA {
                 ;
         $segment01 = str_pad($segment01, 128, $this->fillChar);
         array_push($record, $segment01);
+        var_dump($record);
         return $record;
     }
 
@@ -44,7 +45,8 @@ class DTA_TA890 extends DTA {
      * @param float|int $amount
      * @throws Exception
      */
-    public function setTotalAmount($amount) {
+    public function setTotalAmount($amount) 
+    {
         // Check the amount
         if (!((is_float($amount)) || (is_integer($amount))))
             throw new Exception(xarML("The total amount is not a number"));
@@ -58,7 +60,8 @@ class DTA_TA890 extends DTA {
      * @return string
      * @throws Exception
      */
-    private function getTotalAmount() {
+    private function getTotalAmount() 
+    {
         return $this->totalAmount;
     }
 }

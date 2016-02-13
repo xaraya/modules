@@ -31,7 +31,7 @@ class DTA_TA827 extends DTA{
      * @param int $clearingNr
      * @throws Exception
      */
-    public function setRecipientClearingNr($clearingNr) {
+    public function setRecipientClearingNr($clearingNr=0) {
         if (!is_integer($clearingNr))
             throw new Exception(xarML("Invalid recipient bank clearing number: #(1)", $clearingNr));
         else
@@ -101,7 +101,7 @@ class DTA_TA827 extends DTA{
 /*
         // segment 05
         array_push($record, $this->getSegment05());
-*/
+*/var_dump($record);
         return $record;
     }
     
