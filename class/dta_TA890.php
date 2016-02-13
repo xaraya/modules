@@ -19,6 +19,12 @@ sys::import('modules.payments.class.dta');
 
 class DTA_TA890 {
 
+    protected $transactionType = 890;
+
+    public function setClientClearingNr($clearingNr) {
+        $this->clientClearingNr = $this->getPadding(7);
+    }
+
     public function record()
     {
         $record = array();

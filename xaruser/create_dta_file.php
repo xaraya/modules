@@ -33,12 +33,18 @@ function payments_user_create_dta_file()
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
- echo "<pre>";var_dump($debit_fields);
+ echo "<pre>";//var_dump($debit_fields);echo "XXX";
+ 
+    // Add the debit fields to the corresponding properties in the DTA object
+    $data['object']->properties['sender_line_1']->value = $data['debit_account']->properties['address_1']->value;
+    $data['object']->properties['sender_line_2']->value = $data['debit_account']->properties['address_2']->value;
+    $data['object']->properties['sender_line_3']->value = $data['debit_account']->properties['address_3']->value;
+    $data['object']->properties['sender_line_4']->value = $data['debit_account']->properties['address_4']->value;
+
     sys::import('modules.payments.class.dta_TA827');
     $dta = new DTA_TA827();
     
     $fields = $data['object']->getFieldValues(array(), 1);
-   var_dump($fields);
 //    exit;
 
     $dta->setRecipientClearingNr(292);
@@ -49,6 +55,12 @@ function payments_user_create_dta_file()
     $dta->setRecipient($fields['post_account'], $fields['address_1'], $fields['address_2'], $fields['address_3'], $fields['address_4']);
     $lines = explode('\n', $fields['reason']);
     $dta->setPaymentReason($lines);
+    
+    $dta->setDataFileSender("LCL16");
+    $dta->setInputSequenceNr(2);
+    
+   var_dump($fields);
+   $dta->getRecord();
 
     if ($data['confirm']) {
     

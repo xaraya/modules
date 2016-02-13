@@ -27,14 +27,20 @@ class DTA {
     const TAG = 0x7A;           // :
     const CS2 = 0x0D25;         // CRLF
     
-    private $fillChar = ' ';
-    private $processingDay;
-    private $recipientClearingNr;
-    private $creationDate;
-    private $clientClearingNr;
+    protected $fillChar             = ' ';
+    
+    // Header fields
+    protected $processingDay        = '000000';
+    protected $recipientClearingNr;
+    protected $creationDate;
+    protected $clientClearingNr;
+    protected $dataFileSender;
     private $inputSequenceNr;
-    private $transactionType;
-    private $DtaID;
+    protected $transactionType;
+    protected $paymentType          = '0';
+    protected $processingFlag       = '0';
+    
+    // Record fields
     private $debitAccount;
     private $paymentAmount;
     private $paymentAmountNumeric;
@@ -57,70 +63,159 @@ class DTA {
         return $string;
     }
     
-    protected function getHeader() {
+    public function getHeader() 
+    {
         $header = $this->getProcessingDay()
                 . $this->getRecipientClearingNr()
                 . $this->getOutputSequenceNr()
                 . $this->getCreationDate()
                 . $this->getClientClearingNr()
-                . $this->getDtaId()
+                . $this->getDataFileSender()
                 . $this->getInputSequenceNr()
                 . $this->getTransactionType()
                 . $this->getPaymentType()
-                . $this->getProcessingFlag();
+                . $this->getProcessingFlag()
+                ;
         return $header;
     }
 
-    public function setProcessingDay($processingDay) {
-        if ((!is_numeric($processingDay)) && (!(strlen($processingDay) == 6)))
-            throw new Exception(xarML("The processign day must have the format DDMMYY"));
-        else
-            $this->processingDay = $processingDay;
+    public function setProcessingDay($timestamp=0) 
+    {
+        $this->processingDay = $this->transformDate(0);
     }
 
-    private function getProcessingDay() {
+    public function setRecipientClearingNr($clearingNr) 
+    {
+        $this->recipientClearingNr = $this->getPadding(12);
+    }
+
+    public function setCreationDate($timestamp=0) 
+    {
+        $this->creationDate =  $this->transformDate($timestamp);
+    }
+
+    public function setClientClearingNr($clearingNr) 
+    {
+        if (!is_integer($clearingNr))
+            throw new Exception(xarML("Invalid client bank clearing number: #(1)", $clearingNr));
+        else
+            $this->clientClearingNr = str_pad($clearingNr, 7, $this->fillChar);
+    }
+
+    public function setDataFileSender($senderID) 
+    {
+        if (!(strlen($senderID) == 5))
+            throw new Exception(xarML("Invalid DTA ID: #(1)"), $senderID);
+        else
+            $this->dataFileSender = $senderID;
+    }
+
+    public function setInputSequenceNr($sequenceNr) 
+    {
+        if (!is_integer($sequenceNr))
+            throw new Exception(xarML("Invalid input sequence number: #(1)"), $sequenceNr);
+        else
+            $this->inputSequenceNr = str_pad($sequenceNr, 5, '0', STR_PAD_LEFT);
+            
+    }
+
+    private function setPaymentType() {}
+
+    protected function setDebitAccount($debitAccount) 
+    {
+        if ($this->debitAccount == NULL)
+            throw new Exception(xarML("The debit account is not set"));
+        else {
+            if (strlen($this->debitAccount) != 24)
+                throw new Exception(xarML("Invalid debit account: #(1)", $this->debitAccount));
+            else
+                return $this->debitAccount;
+        }
+    }
+
+
+    protected function getDebitAccount() 
+    {
+        if ($this->debitAccount == NULL)
+            throw new Exception(xarML("The debit account is not set"));
+        else {
+            if (strlen($this->debitAccount) != 24)
+                throw new Exception(xarML("Invalid debit account: #(1)", $this->debitAccount));
+            else
+                return $this->debitAccount;
+        }
+    }
+
+
+
+
+    private function getProcessingDay() 
+    {
         if ($this->processingDay == NULL)
             throw new Exception(xarML("The processing day is not set"));
         else
             return $this->processingDay;
     }
 
-    /**
-     * Set the bank clearing number of the recipients bank
-     * 
-     * @param int $clearingNr
-     * @throws Exception
-     */
-    public function setRecipientClearingNr($clearingNr) {
-        if (!is_integer($clearingNr))
-            throw new Exception(xarML("The clearing number is incorrect"));
-        else
-            $this->recipientClearingNr = $clearingNr;
+    private function getRecipientClearingNr() 
+    {
+        return $this->recipientClearingNr;
     }
 
-    private function getRecipientClearingNr() {
-        if ($this->recipientClearingNr != NULL)
-            return str_pad($this->recipientClearingNr, 12, $this->fillChar);
-        else
-            return $this->getPadding(12);
-    }
-
-    private function getOutputSequenceNr() {
+    private function getOutputSequenceNr() 
+    {
         return '00000';
     }
 
-    public function setCreationDate($timestamp=0) {
-        $this->creationDate =  $this->transformDate($timestamp);
+    private function getCreationDate() 
+    {
+        return $this->creationDate;
     }
 
-    private function getCreationDate() {
-        if ($this->creationDate == NULL)
-            throw new Exception("The creation date is not set");
-        else
-            return $this->creationDate;
+    private function getClientClearingNr() 
+    {
+        return $this->clientClearingNr;
     }
 
-    private function transformDate($timestamp=0) {
+    private function getDataFileSender() 
+    {
+        return $this->dataFileSender;
+    }
+
+    private function getInputSequenceNr() 
+    {
+        return $this->inputSequenceNr;
+    }
+
+    private function getTransactionType() 
+    {
+        return $this->transactionType;
+    }
+
+    private function getPaymentType() 
+    {
+        return $this->paymentType;
+    }
+
+    private function getProcessingFlag() 
+    {
+        return $this->processingFlag;
+    }
+
+    protected function getReferenceNr() 
+    {
+        return $this->getDataFileSender() . $this->getTransactionID();
+    }
+
+    private function getTransactionID() 
+    {
+        return mt_rand(100000, 999999) . $this->getInputSequenceNr();
+    }
+
+
+
+    private function transformDate($timestamp=0) 
+    {
         $timestamp = (int)$timestamp;
         if (empty($timestamp)) return '000000';
 
@@ -135,87 +230,9 @@ class DTA {
         return $day . $month . $year;
     }
 
-    public function setClientClearingNr($clearingNr) {
-        if (!is_integer($clearingNr))
-            throw new Exception(xarML("Invalid client bank clearing number: #(1)", $clearingNr));
-        else
-            $this->clientClearingNr = $clearingNr;
-    }
 
-    private function getClientClearingNr() {
-        if ($this->clientClearingNr == NULL)
-            throw new Exception(xarML("The client bank clearing number is not set"));
-        else
-            return str_pad($this->clientClearingNr, 7, $this->fillChar);
-    }
-
-    public function setInputSequenceNr($sequenceNr) {
-        if (!is_integer($sequenceNr))
-            throw new Exception(xarML("Invalid input sequence number: #(1)"), $sequenceNr);
-        else
-            $this->inputSequenceNr = $sequenceNr;
-    }
-
-    private function getInputSequenceNr() {
-        if ($this->inputSequenceNr == NULL)
-            throw new Exception(xarML("The input sequence number is not set"));
-        else
-            return str_pad($this->inputSequenceNr, 5, '0', STR_PAD_LEFT);
-    }
-
-    private function getTransactionType() {
-        return $this->transactionType;
-    }
-
-    private function getPaymentType() {
-        return '0';
-    }
-
-    private function getProcessingFlag() {
-        return '0';
-    }
-
-    public function setDtaId($DtaID) {
-        if (!(strlen($DtaID) == 5))
-            throw new Exception(xarML("Invalid DTA ID: #(1)"), $DtaID);
-        else
-            $this->DtaID = $dtaId;
-    }
-
-    private function getDtaID() {
-        if ($this->DtaID == NULL)
-            throw new Exception(xarML("The DTA ID is not set"));
-        else
-            return $this->DtaID;
-    }
-
-    private function getTransactionID() {
-        return mt_rand(100000, 999999) . $this->getInputSequenceNr();
-    }
-
-    private function getReferenceNr() {
-        return $this->getDtaID() . $this->getTransactionID();
-    }
-
-    public function setDebitAccount($debitAccount) {
-        if (strlen($debitAccount) > 24)
-            throw new Exeption(xarML("Invalid debit account: #(1)", $debitAccount));
-        else
-            $this->debitAccount = str_pad($debitAccount, 24, $this->fillChar);
-    }
-
-    private function getDebitAccount() {
-        if ($this->debitAccount == NULL)
-            throw new Exception(xarML("The debit account is not set"));
-        else {
-            if (strlen($this->debitAccount) != 24)
-                throw new Exception(xarML("Invalid debit account: #(1)", $this->debitAccount));
-            else
-                return $this->debitAccount;
-        }
-    }
-
-    public function setPaymentAmount($amount, $currencyCode, $valuta = NULL) {
+    public function setPaymentAmount($amount, $currencyCode, $valuta = NULL) 
+    {
         $paymentAmount = '';
 
         // Überprüfen des Valuta
@@ -246,14 +263,16 @@ class DTA {
             $this->paymentAmount = $paymentAmount;
     }
 
-    public function getPaymentAmountNumeric() {
+    public function getPaymentAmountNumeric() 
+    {
         if ($this->paymentAmountNumeric == NULL)
             throw new Exception(xarML("The payment amount is not set"));
         else
             return $this->paymentAmountNumeric;
     }
 
-    private function getPaymentAmount() {
+    private function getPaymentAmount() 
+    {
         if ($this->paymentAmount == NULL)
             throw new Exception(xarML("The payment amount is not set"));
         else {
@@ -264,7 +283,8 @@ class DTA {
         }
     }
 
-    public function setClient($line1, $line2, $line3, $line4) {
+    public function setClient($line1, $line2, $line3, $line4) 
+    {
         $client = array();
         array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 24, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 24, $this->fillChar));
@@ -273,7 +293,8 @@ class DTA {
         $this->client = $client;
     }
 
-    private function getClient() {
+    private function getClient() 
+    {
         if ($this->client == NULL)
             throw new Exception(xarML("The client is not set"));
         else {
@@ -286,7 +307,8 @@ class DTA {
         }
     }
 
-    public function setRecipient($account, $line1, $line2, $line3, $line4) {
+    public function setRecipient($account, $line1, $line2, $line3, $line4) 
+    {
         $recipient = array();
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 24))), 24, $this->fillChar));
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line3, 0, 24))), 24, $this->fillChar));
@@ -296,7 +318,8 @@ class DTA {
         $this->recipient = $recipient;
     }
 
-    private function getRecipient() {
+    private function getRecipient() 
+    {
         if ($this->recipient == NULL)
             throw new Exception(xarML("The recipient is not set"));
         else {
@@ -309,7 +332,8 @@ class DTA {
         }
     }
 
-    public function setPaymentReason($lines=array()) {
+    public function setPaymentReason($lines=array()) 
+    {
         $reason = array();
         foreach ($lines as $line) {
             array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 28, $this->fillChar));
@@ -317,7 +341,8 @@ class DTA {
         $this->paymentReason = $reason;
     }
 
-    private function getPaymentReason() {
+    private function getPaymentReason() 
+    {
         if ($this->paymentReason == NULL)
             return $this->getPadding(28)
                     . $this->getPadding(28)
@@ -333,7 +358,8 @@ class DTA {
         }
     }
 
-    private function getEndRecipient() {
+    private function getEndRecipient() 
+    {
         return $this->getPadding(30)
                 . $this->getPadding(24)
                 . $this->getPadding(24)
@@ -341,7 +367,8 @@ class DTA {
                 . $this->getPadding(24);
     }
 
-    protected function getPadding($length) {
+    protected function getPadding($length) 
+    {
         $padding = '';
         for ($i = 1; $i <= $length; $i++) {
             $padding .= $this->fillChar;
@@ -349,7 +376,8 @@ class DTA {
         return $padding;
     }
 
-    private function replaceChars($string) {
+    private function replaceChars($string) 
+    {
          $replace_chars = array(
          'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
          'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
