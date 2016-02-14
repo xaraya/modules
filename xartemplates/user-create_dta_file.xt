@@ -7,15 +7,16 @@
         </h2>
 
         <fieldset>
-            <legend>Payment details</legend>
-<!--            <xar:data-display object="$object" tplmodule="$tplmodule"/> -->
+            <legend>Payment list</legend>
+            <xar:data-input type="listing"
+                            object="$object" 
+                            tplmodule="$tplmodule"/>
         </fieldset>
         <div class="xar-row">
             <div class="xar-col">
             </div>
             <div class="xar-col">
                 <input type="hidden" name="name" id="name" value="#$object:name#"/>
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
                 <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
                 <xar:var name="label">Back</xar:var>
                 <xar:button type="cancel" name="cancel" value="$label" />&#160;

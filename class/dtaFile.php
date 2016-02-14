@@ -12,6 +12,11 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
+/**
+ * Class to collect transaction data into a file
+ *
+ */
+
 class DTA_File {
 
     private $transactions = array();
@@ -83,13 +88,7 @@ class DTA_File {
 
     public function download() {
         $output = $this->toString();
-    /*
-        $this->createTotalRecord();
-        $output = '';
-        foreach ($this->transactions as $transaction) {
-            $output .= $transaction->toString();
-        }
-*/
+
         $filename = 'DTAExport_' . time() . ".txt";
         file_put_contents('DTAExport_' . time() . ".txt", $output);
         

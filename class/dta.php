@@ -12,6 +12,7 @@
  */
 /**
  * Wrapper class for DTA payments
+ * Based on Six DTA Standards: http://www.six-interbank-clearing.com/en/home/standardization/dta.html
  *
  */
 
@@ -19,7 +20,7 @@ sys::import('xaraya.structures.datetime');
 
 class DTA {
 
-    const CRLF = "\r\n";       
+    const CRLF                      = "\r\n";       
     
     protected $fillChar             = ' ';
     
@@ -40,7 +41,9 @@ class DTA {
     protected $client;
     protected $recipient;
     protected $paymentReason;
+    protected $conversionRate;
     
+    // Record fields for 890
     private $paymentAmountNumeric;
     protected $totalAmount;
     
@@ -154,6 +157,15 @@ class DTA {
         $this->paymentReason = $reason;
     }
 
+    public function setConversionRate($rate) 
+    {
+        // Check the amount
+        if (!((is_float($rate)) || (is_integer($rate))))
+            throw new Exception(xarML("The rate is not numeric: #(1)"), $rate);
+        else {
+            $this->conversionRate = str_pad(number_format($rate, 6, ',', ''), 12, $this->fillChar);
+        }
+    }
 
 
 
@@ -262,6 +274,11 @@ class DTA {
             }
         }
         return $reason;
+    }
+
+    protected function getConversionRate()
+    {
+        return $this->conversionRate;
     }
 
 

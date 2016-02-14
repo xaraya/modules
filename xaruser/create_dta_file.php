@@ -40,15 +40,6 @@ function payments_user_create_dta_file()
     sys::import('modules.payments.class.dtafile');
     $dta = new DTA_File("LCL16", (int)$debit_fields['clearing']);
     
-    // Get the DTA class
-//    sys::import('modules.payments.class.dta_TA827');
-//    $dta = new DTA_TA827();
-//    $dta->setDataFileSender("LCL16");
-//    $dta->setClientClearingNr((int)$debit_fields['clearing']);
-    
-    $index = 1;
-    $total_amount = 0;
-    $dta_file_contents = '';
     foreach ($items as $item) {
         // Add the debit fields to the corresponding properties in the DTA object
         $item['sender_line_1'] = $debit_fields['address_1'];
@@ -74,34 +65,9 @@ function payments_user_create_dta_file()
     
         // Save it
         $dta->saveTransaction($i, $thisTransaction);
-//        $dta->setInputSequenceNr($index);
-//        $
-//        $index++;
-//        $total_amount += $item['amount'];
-        
-        $dta->download();
-//        var_dump($dta->getRecord());exit;
-//        $dta_file_contents .= $dta->getRecord();
     }
-    
-//    var_dump($items);
-/*   
-    sys::import('modules.payments.class.dta_TA890');
-    $dta = new DTA_TA890();
+//            $dta->download();
 
-    // Header information
-    $dta->setCreationDate();
-    $dta->setRecipientClearingNr();
-    $dta->setClientClearingNr((int)$debit_fields['clearing']);
-    $dta->setDataFileSender("LCL16");
-    $dta->setInputSequenceNr($index);
-
-    // Record information
-    $dta->setTotalAmount($total_amount);
-    $dta->getRecord();
-    $dta_file_contents .= $dta->getRecord();
-*/
-exit;
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
