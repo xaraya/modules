@@ -62,6 +62,8 @@ class DTA_TA826 extends DTA{
         // segment 03
         array_push($record, $this->getSegment03());
 
+        // Final segment
+        $string = $this->concatenateRecord($record);
         return $record;
     }
 }

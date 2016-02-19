@@ -70,6 +70,7 @@ class DTA_TA827 extends DTA{
         // segment 05
         array_push($record, $this->getSegment05());
 */
+        // Final segment
         $string = $this->concatenateRecord($record);
         return $string;
     }
