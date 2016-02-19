@@ -374,7 +374,7 @@ class DTA {
         return $padding;
     }
 
-    private function replaceChars($string) 
+    protected function replaceChars($string) 
     {
          $replace_chars = array(
          'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
