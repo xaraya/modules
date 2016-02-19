@@ -38,7 +38,7 @@ function payments_user_create_dta_file()
     
     // Get the DTA class to create a file
     sys::import('modules.payments.class.dtafile');
-    $dta = new DTA_File("LCL16", (int)$debit_fields['clearing']);
+    $dta = new DTA_File("NTN16", (int)$debit_fields['clearing']);
     
     foreach ($items as $item) {
         // Add the debit fields to the corresponding properties in the DTA object
@@ -66,28 +66,6 @@ function payments_user_create_dta_file()
         // Save it
         $dta->saveTransaction($i, $thisTransaction);
     }
-//            $dta->download();
-
-    if ($data['confirm']) {
-    
-        // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
-        
-        // Get the data from the form
-        $isvalid = $data['object']->checkInput();
-        
-        if (!$isvalid) {
-            // Bad data: redisplay the form with error messages
-            return xarTplModule('payments','user','new_dta', $data);        
-        } else {
-            // Good data: create the item
-            $itemid = $data['object']->createItem();
-            
-            // Jump to the next page
-            xarController::redirect(xarModURL('payments','user','view_dta'));
-            return true;
-        }
-    }
-    return $data;
+    $dta->download();
 }
 ?>
