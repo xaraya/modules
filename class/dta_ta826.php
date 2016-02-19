@@ -44,7 +44,7 @@ class DTA_TA826 extends DTA{
     {
         $segment02 = '03'
                 . $this->getRecipient()
-                . $this->getReason()
+                . $this->getPaymentReason()
                 ;
         $segment03 = str_pad($segment03, 128, $this->fillChar);
         return $segment03;
