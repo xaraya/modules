@@ -174,6 +174,7 @@
         if (!$q->run($query)) return;
 
         if (xarMod::isAvailable('mailer')) {
+        /*
             //Psspl : Added mail template for sending OTP Re-order email.
             $dbconn = xarDB::getConn();
             $query = "Select name from " . $prefix . "_mailer_mails where name = 'OTP Re-order Email'";
@@ -201,6 +202,7 @@
                     if (!$result) return;
                 }
             }
+            */
         }
         
     # --------------------------------------------------------
