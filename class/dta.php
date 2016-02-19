@@ -296,7 +296,7 @@ class DTA {
         return $recipient;
     }
 
-    private function getPaymentReason() 
+    protected function getPaymentReason() 
     {
         $reasons = $this->paymentReason;
         $reason = '';
