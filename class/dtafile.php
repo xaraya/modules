@@ -35,7 +35,7 @@ class DTA_File {
     public function addTransaction($type) {
         $this->transactionCounter++;
         $seqNr = $this->transactionCounter;
-        sys::import('modules.payments.class.dta_TA' . $type);
+        sys::import('modules.payments.class.dta_ta' . $type);
         $class = 'DTA_TA' . $type;
         $this->transactions[$seqNr] = new $class();
         $this->transactions[$seqNr]->setInputSequenceNr($seqNr);
