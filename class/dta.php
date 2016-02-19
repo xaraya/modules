@@ -284,7 +284,7 @@ class DTA {
         return $client;
     }
 
-    private function getRecipient() 
+    protected function getRecipient() 
     {
         $recipients = $this->recipient;
         $recipient = '';
