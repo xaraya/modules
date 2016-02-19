@@ -42,7 +42,7 @@ class DTA_TA826 extends DTA{
 
     protected function getSegment03()
     {
-        $segment02 = '03'
+        $segment03 = ''
                 . $this->getRecipient()
                 . $this->getPaymentReason()
                 ;
