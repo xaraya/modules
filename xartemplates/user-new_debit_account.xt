@@ -3,8 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
-        <xar:var name="title">Create New Debit Account</xar:var>
-        <xar:template file="title" module="grader" type="module"/>
+        <h3>Create New Debit Account</h3>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
 
