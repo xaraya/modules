@@ -35,6 +35,30 @@ class DTA_TA826 extends DTA{
         $this->client = $client;
     }
 
+    public function setRecipient($account, $line1, $line2, $line3, $line4) 
+    {
+        $recipient = array();
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 20))), 20, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line3, 0, 20))), 20, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line2, 0, 20))), 20, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line1, 0, 20))), 20, $this->fillChar));
+        array_push($recipient, str_pad(strtoupper('/C/' . $account), 12, $this->fillChar));
+        $this->recipient = $recipient;
+    }
+
+    public function setPaymentReason($lines=array()) 
+    {
+        $reason = array();
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (strlen($line) > 27)
+            throw new Exception(xarML("Exceeds 27 characters: #(1)"), $line);
+            array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 27, $this->fillChar));
+        }
+        $reason .= '  ';
+        $this->paymentReason = $reason;
+    }
+
     protected function getConversionRate() 
     {
         return '';
@@ -43,9 +67,9 @@ class DTA_TA826 extends DTA{
     protected function getSegment03()
     {
         $segment03 = ''
-                . $this->getRecipient()
+//                . $this->getRecipient()
                 . $this->getPaymentReason()
-                ;
+                ;var_dump($segment03);var_dump(strlen($segment03));exit;
         $segment03 = str_pad($segment03, 128, $this->fillChar);
         return $segment03;
     }
@@ -62,9 +86,8 @@ class DTA_TA826 extends DTA{
         // segment 03
         array_push($record, $this->getSegment03());
 
-        // Final segment
         $string = $this->concatenateRecord($record);
-        return $record;
+        return $string;
     }
 }
 ?>

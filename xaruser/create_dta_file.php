@@ -34,6 +34,11 @@ function payments_user_create_dta_file()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
     $q = $data['object']->dataquery;
+    
+    if (!empty($data['itemid'])) {
+        $q->eq('id', $data['itemid']);
+    } else {
+    }
     $items = $data['object']->getItems();
     
     // Get the DTA class to create a file

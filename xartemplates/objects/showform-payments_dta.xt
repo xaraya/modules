@@ -9,6 +9,7 @@
     <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_4']" hidden="hidden"/>
+    <xar:data-input property="$properties['processed']" hidden="hidden"/>
     <xar:data-input property="$properties['created']" hidden="hidden"/>
     <div class="xar-row">
         <div class="xar-col-condensed">
