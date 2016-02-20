@@ -55,7 +55,7 @@ class DTA_TA826 extends DTA{
             throw new Exception(xarML("Exceeds 27 characters: #(1)"), $line);
             array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 27, $this->fillChar));
         }
-        $reason .= '  ';
+        array_push($reason, '  ');
         $this->paymentReason = $reason;
     }
 
@@ -67,9 +67,9 @@ class DTA_TA826 extends DTA{
     protected function getSegment03()
     {
         $segment03 = ''
-//                . $this->getRecipient()
+                . $this->getRecipient()
                 . $this->getPaymentReason()
-                ;var_dump($segment03);var_dump(strlen($segment03));exit;
+                ;
         $segment03 = str_pad($segment03, 128, $this->fillChar);
         return $segment03;
     }
