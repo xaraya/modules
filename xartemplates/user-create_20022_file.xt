@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="user-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Display ISO20022 Payment
+        </h2>
+
+        <fieldset>
+            <legend>Payment</legend>
+            <!-- Header -->
+            <pre>
+  <xar:element name="document">
+    <xar:element name="GrpHdr">
+      <xar:element name="MsgId">
+        placeholder
+      </xar:element>
+      <xar:element name="CreDtTm">
+        #date('Y-m-d\TH:i:sP')#
+      </xar:element>
+      <xar:element name="NbOfTxs">
+        #$number_of_transactions#
+      </xar:element>
+      <xar:element name="CtrlSum">
+        #$control_sum#
+      </xar:element>
+      <xar:element name="InitgPty">
+          <xar:element name="Nm">
+            placeholder
+          </xar:element>
+      </xar:element>
+    </xar:element>
+  </xar:element>
+
+    <xar:element name="PmtInf">
+      <xar:element name="PmtInfId">
+        placeholder
+      </xar:element>
+      <xar:element name="PmtMtd">
+        placeholder
+      </xar:element>
+      <xar:element name="BtchBookg">
+        placeholder
+      </xar:element>
+      <xar:element name="ReqdExctnDt">
+        placeholder
+      </xar:element>
+      <xar:element name="DbtrAcct">
+        <xar:element name="Id">
+          <xar:element name="IBAN">
+            #$debit_account->properties['iban']->value#
+          </xar:element>
+        </xar:element>
+      </xar:element>
+      <xar:element name="DbtrAgt">
+        <xar:element name="FinInstnId">
+          <xar:element name="BIC">
+            #$debit_account->properties['clearing']->value#
+          </xar:element>
+        </xar:element>
+      </xar:element>
+    </xar:element>
+    
+    <xar:foreach in="$items" value="$item">
+
+        <xar:element name="CdtTrfTxInf">
+          <xar:element name="PmtId">
+            <xar:element name="InstrId">
+                placeholder
+            </xar:element>
+            <xar:element name="EndToEndId">
+                placeholder
+            </xar:element>
+          </xar:element>
+        </xar:element>
+        <xar:element name="PmtTpInf">
+          <xar:element name="LclInstrm">
+            <xar:element name="Prtry">
+                placeholder
+            </xar:element>
+          </xar:element>
+        </xar:element>
+        <xar:element name="Amt">
+          <xar:element name="InstdAmt">
+            <xar:attribute name="Ccy">#$item['currency']#</xar:attribute>
+                  #$item['amount']#
+          </xar:element>
+        </xar:element>
+        <xar:element name="CdtrAcct">
+          <xar:element name="Id">
+            <xar:element name="Othr">
+              <xar:element name="Id">
+                #$item['post_account']#
+              </xar:element>
+            </xar:element>
+          </xar:element>
+        </xar:element>
+        <xar:element name="RmtInf">
+          <xar:element name="Strd">
+            <xar:element name="CdtrRefInf">
+              <xar:element name="Ref">
+                #$item['reference_number']#
+              </xar:element>
+            </xar:element>
+          </xar:element>
+        </xar:element>
+    </xar:foreach>
+            </pre>
+            <!--
+                <xar:document/>
+                <xar:element name="InstdAmt">
+                    <xar:attribute name="Ccy">
+                        placeholder
+                    </xar:attribute>
+                          placeholder
+                  </xar:element>
+-->
+
+        </fieldset>
+        <div class="xar-row">
+            <div class="xar-col">
+            </div>
+            <div class="xar-col">
+                <input type="hidden" name="name" id="name" value="#$object:name#"/>
+                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
+                <xar:var name="label">Back</xar:var>
+                <xar:button type="cancel" name="cancel" value="$label" />&#160;
+            </div>
+        </div>
+    </div>
+</xar:template>

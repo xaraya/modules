@@ -1,0 +1,66 @@
+<?php
+/**
+ * Payments Module
+ *
+ * @package modules
+ * @subpackage payments
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2016 Luetolf-Carroll GmbH
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
+ */
+/**
+ * Create a new item of the paymnts_dta object
+ *
+ */
+
+function payments_user_create_20022_file()
+{
+    if (!xarSecurityCheck('AddPayments')) return;
+
+    if (!xarVarFetch('name',       'str',    $name,            'payments_dta', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+
+    $data['tplmodule'] = 'payments';
+
+    // Get the debit account information
+    $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
+    $data['debit_account']->getItem(array('itemid' => 1));
+    $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
+    var_dump($debit_fields);
+    
+    // Get the payments object
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
+    $q = $data['object']->dataquery;
+    
+    if (!empty($data['itemid'])) {
+        $q->eq('id', $data['itemid']);
+    } else {
+    }
+    $data['items'] = $data['object']->getItems();var_dump($data['items']);
+
+    
+    // Get the DTA class to create a file
+    sys::import('modules.payments.class.dtafile');
+    $dta = new DTA_File("NTN16", (int)$debit_fields['clearing']);
+    
+    $data['control_sum'] = 0;
+    foreach ($data['items'] as $item) {
+        $data['control_sum'] += $item['amount'];
+    }
+    $data['number_of_transactions'] = $item['amount'];
+    
+    $output = xarTpl::module('payments', 'user', 'create_20022_file', $data);
+var_dump($output);exit;
+    $filename = 'ISO20022Export_' . time() . ".txt";
+    file_put_contents('ISO20022Export_' . time() . ".txt", $output);
+        
+    header('Content-type: text/plain');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    echo $output;
+    exit;
+}
+?>

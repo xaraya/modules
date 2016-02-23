@@ -14,7 +14,7 @@
                  </a>
             </xar:access>
             <xar:access level="600">
-                <a href="#xarModURL('payments','user','create_dta_file',array('itemid' => $loopitem[$primaryalias]))#"
+                <a href="#xarModURL('payments','user','create_20022_file',array('itemid' => $loopitem[$primaryalias]))#"
                 title="Create payment file">
                     <xar:if condition = "xarModVars::get('payments','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/'.'document-save.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
