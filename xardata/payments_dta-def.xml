@@ -1,8 +1,8 @@
 <object name="payments_dta">
-  <objectid>286</objectid>
+  <objectid>1354</objectid>
   <label>DTA Payments</label>
   <module_id>182</module_id>
-  <itemtype>206</itemtype>
+  <itemtype>426</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -14,9 +14,10 @@
   <sources>a:1:{s:8:&quot;payments&quot;;a:2:{i:0;s:16:&quot;xar_payments_dta&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:0:{}</category>
   <properties>
     <property name="id">
-      <id>6754</id>
+      <id>17161</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -26,7 +27,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="iban">
-      <id>6755</id>
+      <id>17162</id>
       <label>IBAN</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -36,7 +37,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="bic">
-      <id>6756</id>
+      <id>17163</id>
       <label>BIC</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -46,7 +47,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_1">
-      <id>6757</id>
+      <id>17164</id>
       <label>Address 1</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -56,7 +57,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_2">
-      <id>6758</id>
+      <id>17165</id>
       <label>Address 2</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -66,7 +67,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_3">
-      <id>6759</id>
+      <id>17166</id>
       <label>Address 3</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -76,7 +77,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_4">
-      <id>6760</id>
+      <id>17167</id>
       <label>Address 4</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -86,7 +87,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="post_account">
-      <id>6761</id>
+      <id>17168</id>
       <label>Post Account</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -96,7 +97,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="currency">
-      <id>6762</id>
+      <id>17169</id>
       <label>Currency</label>
       <type>currency</type>
       <defaultvalue>EUR</defaultvalue>
@@ -106,7 +107,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="amount">
-      <id>6763</id>
+      <id>17170</id>
       <label>Amount</label>
       <type>number</type>
       <defaultvalue>0</defaultvalue>
@@ -116,7 +117,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reference_number">
-      <id>6764</id>
+      <id>17171</id>
       <label>Reference</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -126,7 +127,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reason">
-      <id>6765</id>
+      <id>17172</id>
       <label>Reason</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -136,7 +137,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_account">
-      <id>6766</id>
+      <id>17173</id>
       <label>Sender Account</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -146,7 +147,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="dta_type">
-      <id>6767</id>
+      <id>17174</id>
       <label>Payment Type</label>
       <type>textbox</type>
       <defaultvalue>827</defaultvalue>
@@ -156,7 +157,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"payments_dta_types";s:25:"initialization_store_prop";s:4:"code";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="transaction_date">
-      <id>6768</id>
+      <id>17175</id>
       <label>Transaction Date</label>
       <type>date</type>
       <defaultvalue>time()</defaultvalue>
@@ -166,7 +167,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_1">
-      <id>6769</id>
+      <id>17176</id>
       <label>Sender Line 1</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -176,7 +177,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_2">
-      <id>6770</id>
+      <id>17177</id>
       <label>Sender Line 2</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -186,7 +187,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_3">
-      <id>6771</id>
+      <id>17178</id>
       <label>Sender Line 3</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -196,7 +197,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_4">
-      <id>6772</id>
+      <id>17179</id>
       <label>Sender Line 4</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -205,15 +206,25 @@
       <seq>19</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="created">
-      <id>6788</id>
-      <label>Created</label>
-      <type>datetime</type>
-      <defaultvalue>time()</defaultvalue>
-      <source>payments.time_created</source>
-      <status>66</status>
+    <property name="sender_reference">
+      <id>17196</id>
+      <label>Sender reference</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.sender_reference</source>
+      <status>33</status>
       <seq>20</seq>
-      <configuration></configuration>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="processed">
+      <id>17195</id>
+      <label>Processed</label>
+      <type>datetime</type>
+      <defaultvalue>-1</defaultvalue>
+      <source>payments.time_processed</source>
+      <status>33</status>
+      <seq>21</seq>
+      <configuration>a:0:{}</configuration>
     </property>
   </properties>
 </object>
