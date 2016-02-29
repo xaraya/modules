@@ -11,13 +11,18 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Create a new item of the paymnts_dta object
+ * Create a new item of the payments_dta object
  *
  */
 
 function payments_user_create_20022_file()
 {
     if (!xarSecurityCheck('AddPayments')) return;
+    
+    // Make sure comments in templates are switched off
+    if (xarModVars::get('themes', 'ShowTemplates')) {
+        return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
+    }
 
     if (!xarVarFetch('name',       'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;

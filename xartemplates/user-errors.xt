@@ -25,6 +25,10 @@
                     <br />
                     Please contact us or check back later
                 </div>
+            <xar:elseif condition="$layout eq 'no_comments'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    Please make sure HTML comments in templates are turned off.
+                </div>
             <xar:else />
                 <div style="margin-top: 20px; margin-left: 20px">
                     No error message is available.
