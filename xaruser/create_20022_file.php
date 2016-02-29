@@ -48,19 +48,14 @@ function payments_user_create_20022_file()
     }
     $data['items'] = $data['object']->getItems();var_dump($data['items']);
 
-    
-    // Get the DTA class to create a file
-    sys::import('modules.payments.class.dtafile');
-    $dta = new DTA_File("NTN16", (int)$debit_fields['clearing']);
-    
-    $data['control_sum'] = 0;
+        $data['control_sum'] = 0;
     foreach ($data['items'] as $item) {
         $data['control_sum'] += $item['amount'];
     }
     $data['number_of_transactions'] = $item['amount'];
     
     $output = xarTpl::module('payments', 'user', 'create_20022_file', $data);
-var_dump($output);exit;
+
     $filename = 'ISO20022Export_' . time() . ".txt";
     file_put_contents('ISO20022Export_' . time() . ".txt", $output);
         
