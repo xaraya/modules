@@ -127,7 +127,7 @@
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_payments_dta (
             id               integer unsigned NOT NULL auto_increment,
-            dta_type         varchar(64) NOT NULL default '',
+            payment_type     varchar(64) NOT NULL default '',
             iban             varchar(64) NOT NULL default '',
             bic              varchar(64) NOT NULL default '',
             address1         varchar(64) NOT NULL default '',
@@ -252,6 +252,8 @@
         xarModVars::set('payments', 'payments_active', 1);
         xarModVars::set('payments', 'enable_demomode', 0);
         xarModVars::set('payments', 'demousers', serialize(array()));
+        xarModVars::set('payments', 'message_id', 0);                   // Used to generate a unique ID for ebanking messages
+        xarModVars::set('payments', 'message_prefix', 'Payment');       // Used to generate a unique ID for ebanking messages
     # --------------------------------------------------------
     #
     # Create DD objects

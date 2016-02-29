@@ -73,6 +73,8 @@
                 if (!xarVarFetch('process',        'int',      $process, xarModVars::get('payments', 'process'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('allowanonpay',   'checkbox', $allowanonpay, xarModVars::get('payments', 'allowanonpay'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('payments_active','checkbox', $payments_active, xarModVars::get('payments', 'payments_active'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('message_id',     'int',      $message_id, xarModVars::get('payments', 'message_id'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('message_prefix', 'str',      $message_prefix, xarModVars::get('payments', 'message_prefix'), XARVAR_NOT_REQUIRED)) return;
 
                 $modvars = array(
                                 'customerobject',
@@ -87,6 +89,8 @@
                                 'process',
                                 'allowanonpay',
                                 'payments_active',
+                                'message_id',
+                                'message_prefix',
                                 );
 
                 if ($data['tab'] == 'payments_general') {

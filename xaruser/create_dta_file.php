@@ -53,7 +53,7 @@ function payments_user_create_dta_file()
         $item['sender_line_4'] = $debit_fields['address_4'];
 
         // Create a transaction
-        $i = $dta->addTransaction($item['dta_type']);
+        $i = $dta->addTransaction($item['payment_type']);
         $thisTransaction = $dta->loadTransaction($i);
         
         // Add values

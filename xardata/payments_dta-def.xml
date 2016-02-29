@@ -1,6 +1,6 @@
-<object name="payments_dta">
+<object name="payments_transactions">
   <objectid>1354</objectid>
-  <label>DTA Payments</label>
+  <label>Payment Transactions</label>
   <module_id>182</module_id>
   <itemtype>426</itemtype>
   <class>DataObject</class>
@@ -146,12 +146,12 @@
       <seq>14</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="dta_type">
+    <property name="payment_type">
       <id>17174</id>
       <label>Payment Type</label>
       <type>textbox</type>
       <defaultvalue>827</defaultvalue>
-      <source>payments.dta_type</source>
+      <source>payments.payment_type</source>
       <status>33</status>
       <seq>15</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"payments_dta_types";s:25:"initialization_store_prop";s:4:"code";s:27:"initialization_display_prop";s:4:"name";}</configuration>

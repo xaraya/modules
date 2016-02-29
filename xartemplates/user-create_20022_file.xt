@@ -13,7 +13,7 @@
   <xar:element name="document">
     <xar:element name="GrpHdr">
       <xar:element name="MsgId">
-        placeholder
+        #$message_identifier#
       </xar:element>
       <xar:element name="CreDtTm">
         #date('Y-m-d\TH:i:sP')#
@@ -26,24 +26,34 @@
       </xar:element>
       <xar:element name="InitgPty">
           <xar:element name="Nm">
-            placeholder
+            #$debit_account->properties['account_holder']->value#
           </xar:element>
       </xar:element>
     </xar:element>
   </xar:element>
 
+  <xar:foreach in="$items" value="$item">
+  
+    <xar:if condition="$item['payment_type'] eq '826'">
+        <xar:set name="payment_type">'CH01'</xar:set>
+    <xar:elseif condition="$item['payment_type'] eq '827'"/>
+        <xar:set name="payment_type">'CH01'</xar:set>
+    <xar:else/>
+        <xar:set name="payment_type">$item['payment_type']</xar:set>
+    </xar:if>
+
     <xar:element name="PmtInf">
       <xar:element name="PmtInfId">
-        placeholder
+        #$group_reference#
       </xar:element>
       <xar:element name="PmtMtd">
-        placeholder
+        #$payment_method#
       </xar:element>
       <xar:element name="BtchBookg">
-        placeholder
+        #$batch_booking#
       </xar:element>
       <xar:element name="ReqdExctnDt">
-        placeholder
+        #date('Y-m-d', $item['transaction_date'])#
       </xar:element>
       <xar:element name="DbtrAcct">
         <xar:element name="Id">
@@ -61,22 +71,20 @@
       </xar:element>
     </xar:element>
     
-    <xar:foreach in="$items" value="$item">
-
         <xar:element name="CdtTrfTxInf">
           <xar:element name="PmtId">
             <xar:element name="InstrId">
-                placeholder
+                #$item['id']#
             </xar:element>
             <xar:element name="EndToEndId">
-                placeholder
+                #$item['sender_reference']#
             </xar:element>
           </xar:element>
         </xar:element>
         <xar:element name="PmtTpInf">
           <xar:element name="LclInstrm">
             <xar:element name="Prtry">
-                placeholder
+                #$payment_type#
             </xar:element>
           </xar:element>
         </xar:element>

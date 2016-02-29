@@ -19,7 +19,7 @@ function payments_user_create_20022_file()
 {
     if (!xarSecurityCheck('AddPayments')) return;
 
-    if (!xarVarFetch('name',       'str',    $name,            'payments_dta', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
 
@@ -30,6 +30,12 @@ function payments_user_create_20022_file()
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
     var_dump($debit_fields);
+    
+    // Misc info
+    $data['payment_method'] = "TRF";
+    $data['batch_booking'] = "true";
+    $data['group_reference'] = 1;
+    $data['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier', array('id' => 1));
     
     // Get the payments object
     sys::import('modules.dynamicdata.class.objects.master');
