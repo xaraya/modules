@@ -52,11 +52,14 @@ function payments_user_create_20022_file()
     }
     $data['items'] = $data['object']->getItems();
 
-        $data['control_sum'] = 0;
+    // Generate the number of transactions
+    $data['number_of_transactions'] = count($data['items']);
+    
+    // Generate the control sum
+    $data['control_sum'] = 0;
     foreach ($data['items'] as $item) {
         $data['control_sum'] += $item['amount'];
     }
-    $data['number_of_transactions'] = $item['amount'];
     
     $output = xarTpl::module('payments', 'user', 'create_20022_file', $data);
 

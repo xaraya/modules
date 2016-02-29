@@ -20,7 +20,6 @@
           </xar:element>
       </xar:element>
     </xar:element>
-  </xar:element>
 
   <xar:foreach in="$items" value="$item">
   
@@ -103,4 +102,5 @@
           </xar:element>
         </xar:element>
     </xar:foreach>
+  </xar:element>
 </xar:template>
