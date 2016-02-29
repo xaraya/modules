@@ -46,6 +46,7 @@ function payments_user_create_20022_file()
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
     $q = $data['object']->dataquery;
     
+    // Get the items to be transmitted
     if (!empty($data['itemid'])) {
         $q->eq('id', $data['itemid']);
     } else {
