@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:template file="user-mod-head"/>
-    <div class="xar-mod-body">
-        <h2>Display ISO20022 Payment
-        </h2>
-
-        <fieldset>
-            <legend>Payment</legend>
-            <!-- Header -->
-            <pre>
   <xar:element name="document">
     <xar:element name="GrpHdr">
       <xar:element name="MsgId">
@@ -113,27 +103,4 @@
           </xar:element>
         </xar:element>
     </xar:foreach>
-            </pre>
-            <!--
-                <xar:document/>
-                <xar:element name="InstdAmt">
-                    <xar:attribute name="Ccy">
-                        placeholder
-                    </xar:attribute>
-                          placeholder
-                  </xar:element>
--->
-
-        </fieldset>
-        <div class="xar-row">
-            <div class="xar-col">
-            </div>
-            <div class="xar-col">
-                <input type="hidden" name="name" id="name" value="#$object:name#"/>
-                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
-                <xar:var name="label">Back</xar:var>
-                <xar:button type="cancel" name="cancel" value="$label" />&#160;
-            </div>
-        </div>
-    </div>
 </xar:template>

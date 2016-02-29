@@ -29,7 +29,6 @@ function payments_user_create_20022_file()
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
-    var_dump($debit_fields);
     
     // Misc info
     $data['payment_method'] = "TRF";
@@ -46,7 +45,7 @@ function payments_user_create_20022_file()
         $q->eq('id', $data['itemid']);
     } else {
     }
-    $data['items'] = $data['object']->getItems();var_dump($data['items']);
+    $data['items'] = $data['object']->getItems();
 
         $data['control_sum'] = 0;
     foreach ($data['items'] as $item) {
