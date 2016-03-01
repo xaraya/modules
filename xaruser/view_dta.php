@@ -41,7 +41,7 @@ function payments_user_view_dta($args)
     }
 #------------------------------------------------------------
 
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_dta'));
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
     $q = $data['object']->dataquery;
     
     // Only active payments

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-        <xar:if condition="$objectname eq 'payments_dta'">
+        <xar:if condition="$objectname eq 'payments_transactions'">
             <xar:access level="600">
                 <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_dta',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a payment">
                     <xar:if condition = "xarModVars::get('payments','use_module_icons')">

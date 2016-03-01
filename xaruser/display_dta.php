@@ -19,7 +19,7 @@ function payments_user_display_dta()
 {
     if (!xarSecurityCheck('EditPayments')) return;
 
-    if (!xarVarFetch('name',       'str',      $name,            'payments_dta', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str',      $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');

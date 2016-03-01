@@ -19,7 +19,7 @@ function payments_user_new_dta()
 {
     if (!xarSecurityCheck('AddPayments')) return;
 
-    if (!xarVarFetch('name',         'str',    $name,            'payments_dta', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',         'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',      'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('payment_type', 'str',    $data['payment_type'],'827',     XARVAR_NOT_REQUIRED)) return;
 

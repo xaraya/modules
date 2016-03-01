@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
         <xar:set name="objectname">$object->name</xar:set>
-        <xar:if condition="$objectname eq 'payments_dta'">
+        <xar:if condition="$objectname eq 'payments_transactions'">
             <xar:access level="200">
                  <a href="#xarModURL('payments','user','display_dta',array('itemid' => $loopitem[$primaryalias]))#"
                  title="Display this payment">
