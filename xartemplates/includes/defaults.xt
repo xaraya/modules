@@ -5,48 +5,90 @@
     <xar:else />
         <xar:set name="regid">0</xar:set>
     </xar:if>
-    <div class="xar-form-input-wrapper">
-        <label for="gateway" title="#xarML('The payment gateway this module uses')#" class="xar-form-label">
-            Gateway:            
-        </label>
-        <xar:set name="options">
-            array()
-        </xar:set>
-        <xar:foreach in="$items" value="$item">
-            <xar:set name="option">
-                array('id' => $item['id'], 'name' =>  $item['name']);
-                $options[] = $option;                
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="gateway" title="#xarML('The payment gateway this module uses')#" class="xar-form-label">
+                Gateway:            
+            </label>
+            <xar:set name="options">
+                array()
             </xar:set>
-        </xar:foreach>
-        <xar:set name="value">xarModItemVars::get('payments', 'gateway', $regid)</xar:set>
-        <xar:data-input type="object" name="gateway" value="$value" options="$options" firstline="Choose a gateway"/>
+        </div>
+        <div class="xar-col">
+            <xar:foreach in="$items" value="$item">
+                <xar:set name="option">
+                    array('id' => $item['id'], 'name' =>  $item['name']);
+                    $options[] = $option;                
+                </xar:set>
+            </xar:foreach>
+            <xar:set name="value">xarModItemVars::get('payments', 'gateway', $regid)</xar:set>
+            <xar:data-input type="object" name="gateway" value="$value" options="$options" firstline="Choose a gateway"/>
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <label for="customerobject" title="#xarML('The customer object this module gets its data from')#" class="xar-form-label">
-            Customer Object:            
-        </label>
-        <xar:set name="value">xarModItemVars::get('payments', 'customerobject', $regid)</xar:set>
-        <xar:data-input type="object" name="customerobject" value="$value" store_prop="name" firstline="Choose a customer object"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="customerobject" title="#xarML('The customer object this module gets its data from')#" class="xar-form-label">
+                Customer Object:            
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModItemVars::get('payments', 'customerobject', $regid)</xar:set>
+            <xar:data-input type="object" name="customerobject" value="$value" store_prop="name" firstline="Choose a customer object"/>
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <label for="defaultcurrency" title="#xarML('The currency to use if none is passed')#" class="xar-form-label">
-            Default Currency:            
-        </label>
-        <xar:set name="value">xarModItemVars::get('payments', 'defaultcurrency', $regid)</xar:set>
-        <xar:data-input type="textbox" name="defaultcurrency" value="$value"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="defaultcurrency" title="#xarML('The currency to use if none is passed')#" class="xar-form-label">
+                Default Currency:            
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModItemVars::get('payments', 'defaultcurrency', $regid)</xar:set>
+            <xar:data-input type="textbox" name="defaultcurrency" value="$value"/>
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <label for="defaultamount" title="#xarML('The amount to use if none is passed')#" class="xar-form-label">
-            Default Amount:            
-        </label>
-        <xar:set name="value">xarModItemVars::get('payments', 'defaultamount', $regid)</xar:set>
-        <xar:data-input type="textbox" name="defaultamount" value="$value"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="defaultamount" title="#xarML('The amount to use if none is passed')#" class="xar-form-label">
+                Default Amount:            
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModItemVars::get('payments', 'defaultamount', $regid)</xar:set>
+            <xar:data-input type="textbox" name="defaultamount" value="$value"/>
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <label for="allowanonpay" title="#xarML('Whether or not only registered users can make payments')#" class="xar-form-label">            
-            Anonymous Payments:            
-        </label>
-        <xar:set name="value">xarModItemVars::get('payments', 'allowanonpay', $regid)</xar:set>
-        <xar:data-input type="checkbox" name="allowanonpay" value="$value"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="allowanonpay" title="#xarML('Whether or not only registered users can make payments')#" class="xar-form-label">            
+                Anonymous Payments:            
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModItemVars::get('payments', 'allowanonpay', $regid)</xar:set>
+            <xar:data-input type="checkbox" name="allowanonpay" value="$value"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="message_id" title="#xarML('A numeric ID used to construct a unique message identifier for ebanking')#" class="xar-form-label">            
+                Message ID            
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('payments', 'message_id')</xar:set>
+            <xar:data-input type="textbox" name="message_id" value="$value"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="message_prefix" title="#xarML('A prefix used to construct a unique message identifier for ebanking')#" class="xar-form-label">            
+                Message Prefix            
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('payments', 'message_prefix')</xar:set>
+            <xar:data-input type="textbox" name="message_prefix" value="$value"/>
+        </div>
     </div>
 </xar:template>

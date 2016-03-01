@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:element name="document">
+  
+    <!-- Begin header -->
     <xar:element name="GrpHdr">
       <xar:element name="MsgId">
         #$message_identifier#
@@ -19,88 +21,92 @@
             #$debit_account->properties['account_holder']->value#
           </xar:element>
       </xar:element>
-    </xar:element>
 
-  <xar:foreach in="$items" value="$item">
+      <!-- Begin payment info -->
+      <xar:element name="PmtInf">
+        <xar:foreach in="$items" value="$item">
   
-    <xar:if condition="$item['payment_type'] eq '826'">
-        <xar:set name="payment_type">'CH01'</xar:set>
-    <xar:elseif condition="$item['payment_type'] eq '827'"/>
-        <xar:set name="payment_type">'CH01'</xar:set>
-    <xar:else/>
-        <xar:set name="payment_type">$item['payment_type']</xar:set>
-    </xar:if>
+          <xar:if condition="$item['payment_type'] eq '826'">
+            <xar:set name="payment_type">'CH01'</xar:set>
+          <xar:elseif condition="$item['payment_type'] eq '827'"/>
+            <xar:set name="payment_type">'CH01'</xar:set>
+          <xar:else/>
+            <xar:set name="payment_type">$item['payment_type']</xar:set>
+          </xar:if>
 
-    <xar:element name="PmtInf">
-      <xar:element name="PmtInfId">
-        #$group_reference#
-      </xar:element>
-      <xar:element name="PmtMtd">
-        #$payment_method#
-      </xar:element>
-      <xar:element name="BtchBookg">
-        #$batch_booking#
-      </xar:element>
-      <xar:element name="ReqdExctnDt">
-        #date('Y-m-d', $item['transaction_date'])#
-      </xar:element>
-      <xar:element name="DbtrAcct">
-        <xar:element name="Id">
-          <xar:element name="IBAN">
-            #$debit_account->properties['iban']->value#
+          <xar:element name="PmtInfId">
+            #$group_reference#
           </xar:element>
-        </xar:element>
-      </xar:element>
-      <xar:element name="DbtrAgt">
-        <xar:element name="FinInstnId">
-          <xar:element name="BIC">
-            #$debit_account->properties['clearing']->value#
+          <xar:element name="PmtMtd">
+            #$payment_method#
           </xar:element>
-        </xar:element>
-      </xar:element>
-    </xar:element>
+          <xar:element name="BtchBookg">
+            #$batch_booking#
+          </xar:element>
+          <xar:element name="ReqdExctnDt">
+            #date('Y-m-d', $item['transaction_date'])#
+          </xar:element>
+          <xar:element name="DbtrAcct">
+            <xar:element name="Id">
+              <xar:element name="IBAN">
+                #$debit_account->properties['iban']->value#
+              </xar:element>
+            </xar:element>
+          </xar:element>
+          <xar:element name="DbtrAgt">
+            <xar:element name="FinInstnId">
+              <xar:element name="BIC">
+                #$debit_account->properties['clearing']->value#
+              </xar:element>
+            </xar:element>
+          </xar:element>
     
-        <xar:element name="CdtTrfTxInf">
-          <xar:element name="PmtId">
-            <xar:element name="InstrId">
-                #$item['id']#
+            <xar:element name="CdtTrfTxInf">
+              <xar:element name="PmtId">
+                <xar:element name="InstrId">
+                    #$item['id']#
+                </xar:element>
+                <xar:element name="EndToEndId">
+                    #$item['sender_reference']#
+                </xar:element>
+              </xar:element>
             </xar:element>
-            <xar:element name="EndToEndId">
-                #$item['sender_reference']#
+            <xar:element name="PmtTpInf">
+              <xar:element name="LclInstrm">
+                <xar:element name="Prtry">
+                    #$payment_type#
+                </xar:element>
+              </xar:element>
             </xar:element>
-          </xar:element>
-        </xar:element>
-        <xar:element name="PmtTpInf">
-          <xar:element name="LclInstrm">
-            <xar:element name="Prtry">
-                #$payment_type#
+            <xar:element name="Amt">
+              <xar:element name="InstdAmt">
+                <xar:attribute name="Ccy">#$item['currency']#</xar:attribute>
+                      #$item['amount']#
+              </xar:element>
             </xar:element>
-          </xar:element>
-        </xar:element>
-        <xar:element name="Amt">
-          <xar:element name="InstdAmt">
-            <xar:attribute name="Ccy">#$item['currency']#</xar:attribute>
-                  #$item['amount']#
-          </xar:element>
-        </xar:element>
-        <xar:element name="CdtrAcct">
-          <xar:element name="Id">
-            <xar:element name="Othr">
+            <xar:element name="CdtrAcct">
               <xar:element name="Id">
-                #$item['post_account']#
+                <xar:element name="Othr">
+                  <xar:element name="Id">
+                    #$item['post_account']#
+                  </xar:element>
+                </xar:element>
               </xar:element>
             </xar:element>
-          </xar:element>
-        </xar:element>
-        <xar:element name="RmtInf">
-          <xar:element name="Strd">
-            <xar:element name="CdtrRefInf">
-              <xar:element name="Ref">
-                #$item['reference_number']#
+            <xar:element name="RmtInf">
+              <xar:element name="Strd">
+                <xar:element name="CdtrRefInf">
+                  <xar:element name="Ref">
+                    #$item['reference_number']#
+                  </xar:element>
+                </xar:element>
               </xar:element>
             </xar:element>
-          </xar:element>
-        </xar:element>
-    </xar:foreach>
+        </xar:foreach>
+      <!-- End payment info -->
+      </xar:element>
+    <!-- End header -->
+    </xar:element>
+  <!-- End document tag -->
   </xar:element>
 </xar:template>

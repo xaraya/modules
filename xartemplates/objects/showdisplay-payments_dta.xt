@@ -11,8 +11,8 @@
             <xar:data-output property="$properties['transaction_date']"/>
         </div>
     </div>
-    <xar:set name="dta_type">$properties['dta_type']->value</xar:set>
-    <xar:if condition="$dta_type eq '826'">
+    <xar:set name="payment_type">$properties['payment_type']->value</xar:set>
+    <xar:if condition="$payment_type eq '826'">
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffcc99;'</xar:set>
@@ -77,9 +77,9 @@
             </table>
             <br /><br />
         </div><!-- xar-middle-payment -->
-    <xar:elseif condition="$dta_type eq 'lukb_orange'"/>
+    <xar:elseif condition="$payment_type eq 'lukb_orange'"/>
         <xar:template filename="lukb_orange"/>
-    <xar:elseif condition="$dta_type eq '827'"/>
+    <xar:elseif condition="$payment_type eq '827'"/>
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffefef;'</xar:set>

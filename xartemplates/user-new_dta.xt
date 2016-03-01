@@ -13,7 +13,7 @@
                     array('id' => 'transfer', 'name' => 'Bank transfer'),
                 )
             </xar:set>
-            <xar:data-input type="dropdown" name="dta_type" value="$dta_type" options="$options" onchange="this.form.submit()"/>
+            <xar:data-input type="dropdown" name="payment_type" value="$payment_type" options="$options" onchange="this.form.submit()"/>
         </form>
         <form method="post" action="#xarServer::getCurrentURL()#">
 
