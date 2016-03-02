@@ -30,6 +30,17 @@ function payments_user_modify_dta()
     $data['tplmodule'] = 'payments';
     $data['authid'] = xarSecGenAuthKey('payments');
 
+    // Get the debit account information
+    $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
+    $data['debit_account']->getItem(array('itemid' => 1));
+    $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
+
+    $data['object']->properties['sender_reference']->value = $debit_fields['account_holder'];
+    $data['object']->properties['sender_line_1']->value = $debit_fields['address_1'];
+    $data['object']->properties['sender_line_2']->value = $debit_fields['address_2'];
+    $data['object']->properties['sender_line_3']->value = $debit_fields['address_3'];
+    $data['object']->properties['sender_line_4']->value = $debit_fields['address_4'];
+
     if ($data['confirm']) {
     
         // Check for a valid confirmation key

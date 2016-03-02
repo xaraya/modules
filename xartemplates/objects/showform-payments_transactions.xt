@@ -82,16 +82,16 @@
                         <!-- For testing purposes. Need to implement dd for this fields later -->
                         <xar:data-input property="$properties['reference_number']" /><br /><br /><br />
                         Einbezahlt von / Versé par / Versato da<br />
-                        <xar:data-output property="$properties['sender']" />
-                        <xar:data-input property="$properties['sender']" hidden="hidden"/>
-                        <xar:data-output property="$properties['sender_line1']" />
-                        <xar:data-output property="$properties['sender_line2']" />
-                        <xar:data-output property="$properties['sender_line3']" />
-                        <xar:data-output property="$properties['sender_line4']" />
-                        <xar:data-input property="$properties['sender_line1']" hidden="hidden"/>
-                        <xar:data-input property="$properties['sender_line2']" hidden="hidden"/>
-                        <xar:data-input property="$properties['sender_line3']" hidden="hidden"/>
-                        <xar:data-input property="$properties['sender_line4']" hidden="hidden"/>
+                        <xar:data-output property="$properties['sender_reference']" /><br/>
+                        <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
+                        <xar:data-output property="$properties['sender_line_1']" /><br/>
+                        <xar:data-output property="$properties['sender_line_2']" /><br/>
+                        <xar:data-output property="$properties['sender_line_3']" /><br/>
+                        <xar:data-output property="$properties['sender_line_4']" />
+                        <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
+                        <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
+                        <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
+                        <xar:data-input property="$properties['sender_line_4']" hidden="hidden"/>
                     </td>
                     <td align="right" style="height: 200px; text-align: right; background-color: ##ffcc99; color: ##ff6600;padding-left: 15mm;vertical-align: top">				
                     </td>
@@ -169,16 +169,16 @@
                         <br /><br />
                         Einbezahlt von / Versé par / Versato da
                         <br />
-                        <xar:data-output property="$properties['sender']" />
-                        <xar:data-input property="$properties['sender']" hidden="hidden"/>
-                        <xar:data-output property="$properties['sender_line1']" />
-                        <xar:data-output property="$properties['sender_line2']" />
-                        <xar:data-output property="$properties['sender_line3']" />
-                        <xar:data-output property="$properties['sender_line4']" />
-                        <xar:data-input property="$properties['sender_line1']" hidden="hidden"/>
-                        <xar:data-input property="$properties['sender_line2']" hidden="hidden"/>
-                        <xar:data-input property="$properties['sender_line3']" hidden="hidden"/>
-                        <xar:data-input property="$properties['sender_line4']" hidden="hidden"/>
+                        <xar:data-output property="$properties['sender_reference']" /><br/>
+                        <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
+                        <xar:data-output property="$properties['sender_line_1']" /><br/>
+                        <xar:data-output property="$properties['sender_line_2']" /><br/>
+                        <xar:data-output property="$properties['sender_line_3']" /><br/>
+                        <xar:data-output property="$properties['sender_line_4']" />
+                        <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
+                        <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
+                        <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
+                        <xar:data-input property="$properties['sender_line_4']" hidden="hidden"/>
                     </td>
                     <td align="right" style="height: 200px; text-align: right; background-color: ##ffefef; color: ##ff3333;padding-left: 15mm;vertical-align: top">				
                     </td>
