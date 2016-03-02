@@ -8,21 +8,13 @@
     xmlns:php="http://php.net/xsl"
     exclude-result-prefixes="php xar">
 
-<!--
-  <xsl:template match="xar:document">
-    <xsl:element name="Document">&#160;
-      <xsl:attribute name="xmlns">
-        http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd
-      </xsl:attribute>
-      <xsl:attribute name="xmlns:xsi">
-        http://www.w3.org/2001/XMLSchema-instance
-      </xsl:attribute>
-      <xsl:attribute name="xsi:schemaLocation">
-        http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd  pain.001.001.03.ch.02.xsd
-      </xsl:attribute>
-    </xsl:element>
+
+  <xsl:template match="xar:ISO20022Document">
+    <Document xmlns="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd  pain.001.001.03.ch.02.xsd">
+      <xsl:apply-templates/>
+    </Document>
   </xsl:template>
--->    
+<!--  
   <xsl:template match="xar:document">
     <xsl:element name="CstmrCdtTrfInitn">
         <xsl:call-template name="epayment-header"/>
@@ -131,5 +123,5 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
-
+-->
 </xsl:stylesheet>
