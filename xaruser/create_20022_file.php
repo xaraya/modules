@@ -33,7 +33,7 @@ function payments_user_create_20022_file()
     // Get the debit account information
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
-    $debit_fields = $data['debit_account']->getFieldValues(array(), 1);var_dump($debit_fields);
+    $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
     
     // Misc info
     $data['payment_method'] = "TRF";
