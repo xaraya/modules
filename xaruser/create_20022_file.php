@@ -64,8 +64,8 @@ function payments_user_create_20022_file()
     
     $output = xarTpl::module('payments', 'user', 'create_20022_file', $data);
 
-    $filename = 'ISO20022Export_' . time() . ".txt";
-    file_put_contents('ISO20022Export_' . time() . ".txt", $output);
+    $filename = 'ISO20022Export_' . time() . ".xml";
+    file_put_contents($filename, $output);
         
     header('Content-type: text/plain');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
