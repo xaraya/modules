@@ -62,7 +62,10 @@ function payments_user_create_20022_file()
         $data['control_sum'] += $item['amount'];
     }
     
-    $output = xarTpl::module('payments', 'user', 'create_20022_file', $data);
+    // Create an XML declaration
+    $output = '<?xml version="1.0" encoding="utf-8"?>';
+    // Add the file contents
+    $output .= xarTpl::module('payments', 'user', 'create_20022_file', $data);
 
     $filename = 'ISO20022Export_' . time() . ".xml";
     file_put_contents($filename, $output);
