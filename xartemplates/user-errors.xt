@@ -29,6 +29,10 @@
                 <div style="margin-top: 20px; margin-left: 20px">
                     Please make sure HTML comments in templates are turned off.
                 </div>
+            <xar:elseif condition="$layout eq 'bad_msg_identifier'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    The message identifier for the payment does not conform to the SWIFT character set
+                </div>
             <xar:else />
                 <div style="margin-top: 20px; margin-left: 20px">
                     No error message is available.

@@ -30,6 +30,7 @@ function payments_adminapi_get_message_identifier($args)
     } else {
         $identifier = $id;
     }
+    $identifier = xarMod::apiFunc('payments', 'admin', 'check_swift_char', array('string' => $identifier));
     return $identifier;
 }
 ?>
