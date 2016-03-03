@@ -4,22 +4,12 @@
     <!-- Begin header -->
     <xar:element name="CstmrCdtTrfInitn">
       <xar:element name="GrpHdr">
-        <xar:element name="MsgId">
-          #$message_identifier#
-        </xar:element>
-        <xar:element name="CreDtTm">
-          #date('Y-m-d\TH:i:sP')#
-        </xar:element>
-        <xar:element name="NbOfTxs">
-          #$number_of_transactions#
-        </xar:element>
-        <xar:element name="CtrlSum">
-          #$control_sum#
-        </xar:element>
+        <xar:element name="MsgId">#$message_identifier#</xar:element>
+        <xar:element name="CreDtTm">#date('Y-m-d\TH:i:sP')#</xar:element>
+        <xar:element name="NbOfTxs">#$number_of_transactions#</xar:element>
+        <xar:element name="CtrlSum">#$control_sum#</xar:element>
         <xar:element name="InitgPty">
-            <xar:element name="Nm">
-              #$debit_account->properties['account_holder']->value#
-            </xar:element>
+            <xar:element name="Nm">#$debit_account->properties['account_holder']->value#</xar:element>
         </xar:element>
       </xar:element>
 
@@ -35,71 +25,47 @@
             <xar:set name="payment_type">$item['payment_type']</xar:set>
           </xar:if>
 
-          <xar:element name="PmtInfId">
-            #$group_reference#
-          </xar:element>
-          <xar:element name="PmtMtd">
-            #$payment_method#
-          </xar:element>
-          <xar:element name="BtchBookg">
-            #$batch_booking#
-          </xar:element>
-          <xar:element name="ReqdExctnDt">
-            #date('Y-m-d', $item['transaction_date'])#
-          </xar:element>
+          <xar:element name="PmtInfId">#$group_reference#</xar:element>
+          <xar:element name="PmtMtd">#$payment_method#</xar:element>
+          <xar:element name="BtchBookg">#$batch_booking#</xar:element>
+          <xar:element name="ReqdExctnDt">#date('Y-m-d', $item['transaction_date'])#</xar:element>
           <xar:element name="DbtrAcct">
             <xar:element name="Id">
-              <xar:element name="IBAN">
-                #$debit_account->properties['iban']->value#
-              </xar:element>
+              <xar:element name="IBAN">#$debit_account->properties['iban']->value#</xar:element>
             </xar:element>
           </xar:element>
           <xar:element name="DbtrAgt">
             <xar:element name="FinInstnId">
-              <xar:element name="BIC">
-                #$debit_account->properties['clearing']->value#
-              </xar:element>
+              <xar:element name="BIC">#$debit_account->properties['clearing']->value#</xar:element>
             </xar:element>
           </xar:element>
     
             <xar:element name="CdtTrfTxInf">
               <xar:element name="PmtId">
-                <xar:element name="InstrId">
-                    #$item['id']#
-                </xar:element>
-                <xar:element name="EndToEndId">
-                    #$item['sender_reference']#
-                </xar:element>
+                <xar:element name="InstrId">#$item['id']#</xar:element>
+                <xar:element name="EndToEndId">#$item['sender_reference']#</xar:element>
               </xar:element>
             </xar:element>
             <xar:element name="PmtTpInf">
               <xar:element name="LclInstrm">
-                <xar:element name="Prtry">
-                    #$payment_type#
-                </xar:element>
+                <xar:element name="Prtry">#$payment_type#</xar:element>
               </xar:element>
             </xar:element>
             <xar:element name="Amt">
               <xar:element name="InstdAmt">
-                <xar:attribute name="Ccy">#$item['currency']#</xar:attribute>
-                      #$item['amount']#
-              </xar:element>
+                <xar:attribute name="Ccy">#$item['currency']#</xar:attribute>#$item['amount']#</xar:element>
             </xar:element>
             <xar:element name="CdtrAcct">
               <xar:element name="Id">
                 <xar:element name="Othr">
-                  <xar:element name="Id">
-                    #$item['post_account']#
-                  </xar:element>
+                  <xar:element name="Id">#$item['post_account']#</xar:element>
                 </xar:element>
               </xar:element>
             </xar:element>
             <xar:element name="RmtInf">
               <xar:element name="Strd">
                 <xar:element name="CdtrRefInf">
-                  <xar:element name="Ref">
-                    #$item['reference_number']#
-                  </xar:element>
+                  <xar:element name="Ref">#$item['reference_number']#</xar:element>
                 </xar:element>
               </xar:element>
             </xar:element>
