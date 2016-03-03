@@ -2,23 +2,25 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:ISO20022Document>
     <!-- Begin header -->
-    <xar:element name="GrpHdr">
-      <xar:element name="MsgId">
-        #$message_identifier#
-      </xar:element>
-      <xar:element name="CreDtTm">
-        #date('Y-m-d\TH:i:sP')#
-      </xar:element>
-      <xar:element name="NbOfTxs">
-        #$number_of_transactions#
-      </xar:element>
-      <xar:element name="CtrlSum">
-        #$control_sum#
-      </xar:element>
-      <xar:element name="InitgPty">
-          <xar:element name="Nm">
-            #$debit_account->properties['account_holder']->value#
-          </xar:element>
+    <xar:element name="CstmrCdtTrfInitn">
+      <xar:element name="GrpHdr">
+        <xar:element name="MsgId">
+          #$message_identifier#
+        </xar:element>
+        <xar:element name="CreDtTm">
+          #date('Y-m-d\TH:i:sP')#
+        </xar:element>
+        <xar:element name="NbOfTxs">
+          #$number_of_transactions#
+        </xar:element>
+        <xar:element name="CtrlSum">
+          #$control_sum#
+        </xar:element>
+        <xar:element name="InitgPty">
+            <xar:element name="Nm">
+              #$debit_account->properties['account_holder']->value#
+            </xar:element>
+        </xar:element>
       </xar:element>
 
       <!-- Begin payment info -->
@@ -104,7 +106,7 @@
         </xar:foreach>
       <!-- End payment info -->
       </xar:element>
-    <!-- End header -->
+    <!-- End transaction -->
     </xar:element>
   <!-- End document tag -->
   </xar:ISO20022Document>
