@@ -9,7 +9,7 @@
         <fieldset>
             <xar:data-input type="listing" 
                             object="$object" 
-                            fieldlist="name,bank_short_name,account_holder,account,iban"
+                            fieldlist="name,bank_short_name,account_holder,account,iban,bic"
                             tplmodule="payments"
                             />
         </fieldset>
