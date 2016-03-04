@@ -32,6 +32,15 @@
                 </div>
                 <div class="xar-row">
                     <div class="xar-col-condensed">
+                        <xar:var name="label">BIC</xar:var>
+                        <xar:data-label property="$properties['bic']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['bic']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
                         <xar:var name="label">Clearing</xar:var>
                         <xar:data-label property="$properties['clearing']" label="$label"/>                    
                     </div>

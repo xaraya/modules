@@ -159,6 +159,7 @@
             name             varchar(64) NOT NULL default '',
             account          varchar(64) NOT NULL default '',
             iban             varchar(64) NOT NULL default '',
+            bic              varchar(64) NOT NULL default '',
             clearing         varchar(64) NOT NULL default '',
             holder           varchar(64) NOT NULL default '',
             address1         varchar(64) NOT NULL default '',

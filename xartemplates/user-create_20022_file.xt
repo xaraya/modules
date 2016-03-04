@@ -29,6 +29,9 @@
           <xar:element name="PmtMtd">#$payment_method#</xar:element>
           <xar:element name="BtchBookg">#$batch_booking#</xar:element>
           <xar:element name="ReqdExctnDt">#date('Y-m-d', $item['transaction_date'])#</xar:element>
+          <xar:element name="Dbtr">
+            <xar:element name="Nm">#$debit_account->properties['account_holder']->value#</xar:element>
+          </xar:element>
           <xar:element name="DbtrAcct">
             <xar:element name="Id">
               <xar:element name="IBAN">#$debit_account->properties['iban']->value#</xar:element>
@@ -36,7 +39,7 @@
           </xar:element>
           <xar:element name="DbtrAgt">
             <xar:element name="FinInstnId">
-              <xar:element name="BIC">#$debit_account->properties['clearing']->value#</xar:element>
+              <xar:element name="BIC">#$debit_account->properties['bic']->value#</xar:element>
             </xar:element>
           </xar:element>
     
