@@ -84,8 +84,13 @@ function payments_user_create_20022_file()
         $data['control_sum'] += $item['amount'];
         
         // Cannot send in the past
-        if ((int)$item['transaction_date'] < $today) {
-            $item['transaction_date'] = time();
+        $tobject->setTimestamp((int)$item['transaction_date']);
+        $tobject->setSecond(0);
+        $tobject->setMinute(0);
+        $tobject->setHour(0);
+        $send_date = $tobject->getTimestamp();
+        if ($send_date < $today) {
+            $item['transaction_date'] = $today;
         }
     }
     
