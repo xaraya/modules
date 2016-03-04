@@ -69,7 +69,7 @@ function payments_user_create_20022_file()
     $today = $tobject->getTimestamp();
     
     // Run through the transactions and do validity checks
-    foreach ($data['items'] as $item) {
+    foreach ($data['items'] as $key => $item) {
         // Add the debit fields to the corresponding properties in the DTA object
         $item['sender_account'] = $debit_fields['account_holder'];
         $item['sender_line_1']  = $debit_fields['address_1'];
@@ -90,7 +90,7 @@ function payments_user_create_20022_file()
         $tobject->setHour(0);
         $send_date = $tobject->getTimestamp();
         if ($send_date < $today) {
-            $item['transaction_date'] = $today;
+            $data['items'][$key]['transaction_date'] = $today;
         }
     }
     
