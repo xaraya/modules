@@ -58,8 +58,17 @@ function payments_user_create_20022_file()
     // Generate the number of transactions
     $data['number_of_transactions'] = count($data['items']);
     
-    // Run through the transactions and dod validity checks
     $data['control_sum'] = 0;
+    
+    sys::import('xaraya.structures.query');
+    $tobject = new XarDateTime();
+    $tobject->setTimestamp(time());
+    $tobject->setSecond(0);
+    $tobject->setMinute(0);
+    $tobject->setHour(0);
+    $today = $tobject->getTimestamp();
+    
+    // Run through the transactions and do validity checks
     foreach ($data['items'] as $item) {
         // Add the debit fields to the corresponding properties in the DTA object
         $item['sender_account'] = $debit_fields['account_holder'];
@@ -75,7 +84,7 @@ function payments_user_create_20022_file()
         $data['control_sum'] += $item['amount'];
         
         // Cannot send in the past
-        if ($item['transaction_date'] < time() + 86400) {
+        if ((int)$item['transaction_date'] < $today) {
             $item['transaction_date'] = time();
         }
     }
