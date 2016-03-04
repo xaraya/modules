@@ -45,27 +45,26 @@
                 <xar:element name="InstrId">#$item['id']#</xar:element>
                 <xar:element name="EndToEndId">#$item['sender_reference']#</xar:element>
               </xar:element>
-            </xar:element>
-            <xar:element name="PmtTpInf">
-              <xar:element name="LclInstrm">
-                <xar:element name="Prtry">#$payment_type#</xar:element>
-              </xar:element>
-            </xar:element>
-            <xar:element name="Amt">
-              <xar:element name="InstdAmt">
-                <xar:attribute name="Ccy">#$item['currency']#</xar:attribute>#$item['amount']#</xar:element>
-            </xar:element>
-            <xar:element name="CdtrAcct">
-              <xar:element name="Id">
-                <xar:element name="Othr">
-                  <xar:element name="Id">#$item['post_account']#</xar:element>
+              <xar:element name="PmtTpInf">
+                <xar:element name="LclInstrm">
+                  <xar:element name="Prtry">#$payment_type#</xar:element>
                 </xar:element>
               </xar:element>
-            </xar:element>
-            <xar:element name="RmtInf">
-              <xar:element name="Strd">
-                <xar:element name="CdtrRefInf">
-                  <xar:element name="Ref">#$item['reference_number']#</xar:element>
+              <xar:element name="Amt">
+                <xar:element name="InstdAmt"><xar:attribute name="Ccy">#$item['currency']#</xar:attribute>#$item['amount']#</xar:element>
+              </xar:element>
+              <xar:element name="CdtrAcct">
+                <xar:element name="Id">
+                  <xar:element name="Othr">
+                    <xar:element name="Id">#$item['post_account']#</xar:element>
+                  </xar:element>
+                </xar:element>
+              </xar:element>
+              <xar:element name="RmtInf">
+                <xar:element name="Strd">
+                  <xar:element name="CdtrRefInf">
+                    <xar:element name="Ref">#$item['reference_number']#</xar:element>
+                  </xar:element>
                 </xar:element>
               </xar:element>
             </xar:element>
