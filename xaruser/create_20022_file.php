@@ -58,10 +58,26 @@ function payments_user_create_20022_file()
     // Generate the number of transactions
     $data['number_of_transactions'] = count($data['items']);
     
-    // Generate the control sum
+    // Run through the transactions and dod validity checks
     $data['control_sum'] = 0;
     foreach ($data['items'] as $item) {
+        // Add the debit fields to the corresponding properties in the DTA object
+        $item['sender_account'] = $debit_fields['account_holder'];
+        $item['sender_line_1']  = $debit_fields['address_1'];
+        $item['sender_line_2']  = $debit_fields['address_2'];
+        $item['sender_line_3']  = $debit_fields['address_3'];
+        $item['sender_line_4']  = $debit_fields['address_4'];
+        $item['sender_iban']    = $debit_fields['iban'];
+        $item['sender_bic']     = $debit_fields['bic'];
+        $item['processed']      = time();
+
+        // Generate the control sum
         $data['control_sum'] += $item['amount'];
+        
+        // Cannot send in the past
+        if ($item['transaction_date'] < time() + 86400) {
+            $item['transaction_date'] = time();
+        }
     }
     
     // Create an XML declaration
