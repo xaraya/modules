@@ -11,11 +11,11 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Display an item of the payments_dta object
+ * Display an item of the payments_transaction object
  *
  */
     
-function payments_user_display_dta()
+function payments_user_display_transaction()
 {
     if (!xarSecurityCheck('EditPayments')) return;
 

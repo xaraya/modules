@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
-        <h3>Create New DTA Payment</h3>
+        <h3>Create New Payment</h3>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <xar:set name="options">

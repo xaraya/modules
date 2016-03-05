@@ -11,11 +11,11 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Create a new item of the paymnts_dta object
+ * Create a new item of the paymnts_transaction object
  *
  */
 
-function payments_user_new_dta()
+function payments_user_new_transaction()
 {
     if (!xarSecurityCheck('AddPayments')) return;
 
@@ -53,13 +53,13 @@ function payments_user_new_dta()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('payments','user','new_dta', $data);        
+            return xarTplModule('payments','user','new_transaction', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments','user','view_dta'));
+            xarController::redirect(xarModURL('payments','user','view_transaction'));
             return true;
         }
     }

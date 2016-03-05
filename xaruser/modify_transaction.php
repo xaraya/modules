@@ -11,11 +11,11 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Modify an item of the payments_dta object
+ * Modify an item of the payments_transaction object
  *
  */
     
-function payments_user_modify_dta()
+function payments_user_modify_transaction()
 {
     if (!xarSecurityCheck('EditPayments')) return;
 
@@ -51,13 +51,13 @@ function payments_user_modify_dta()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('payments','user','modify_dta', $data);        
+            return xarTplModule('payments','user','modify_transaction', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments','user','view_dta'));
+            xarController::redirect(xarModURL('payments','user','view_transactions'));
             return true;
         }
     }

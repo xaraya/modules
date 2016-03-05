@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Display DTA Payment
+        <h2>Display Payment
         </h2>
 
         <fieldset>

@@ -4,7 +4,7 @@
         <xar:set name="objectname">$object->name</xar:set>
         <xar:if condition="$objectname eq 'payments_transactions'">
             <xar:access level="200">
-                 <a href="#xarModURL('payments','user','display_dta',array('itemid' => $loopitem[$primaryalias]))#"
+                 <a href="#xarModURL('payments','user','display_transaction',array('itemid' => $loopitem[$primaryalias]))#"
                  title="Display this payment">
                     <xar:if condition = "xarModVars::get('payments','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/'.'display.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
@@ -23,21 +23,34 @@
                     </xar:if>
                 </a>
             </xar:access>
-            <xar:access level="500">
-                <a href="#xarModURL('payments','user','modify_dta',array('itemid' => $loopitem[$primaryalias]))#"
-                title="Modify this payment">
-                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
-                        <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
-                    <xar:else />
-                        <b style="margin-right: 5px">M</b>
-                    </xar:if>
-                </a>
-            </xar:access>
+            <!-- Only modify if not yet processed -->
+            <xar:if condition="empty($loopitem['processed'])">
+                <xar:access level="500">
+                    <a href="#xarModURL('payments','user','modify_transaction',array('itemid' => $loopitem[$primaryalias]))#"
+                    title="Modify this payment">
+                        <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                            <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                        <xar:else />
+                            <b style="margin-right: 5px">M</b>
+                        </xar:if>
+                    </a>
+                </xar:access>
+            </xar:if>
             <xar:access level="700">
-                <a href="#xarModURL('payments','user','delete_dta',array('itemid' => $loopitem[$primaryalias]))#"
+                <a href="#xarModURL('payments','user','delete_transaction',array('itemid' => $loopitem[$primaryalias]))#"
                 title="Delete this payment">
                     <xar:if condition = "xarModVars::get('payments','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">D</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+            <xar:access level="600">
+                <a href="#xarModURL('payments','user','clone_transaction',array('itemid' => $loopitem[$primaryalias]))#"
+                title="Clone this payment">
+                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'add.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
                     <xar:else />
                         <b style="margin-right: 5px">D</b>
                     </xar:if>

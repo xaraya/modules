@@ -3,7 +3,7 @@
     <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-        <h3>View DTA Payments
+        <h3>View ISO2002 Payments
         </h3>
 
         <fieldset>
@@ -23,7 +23,7 @@
         <fieldset>
             <xar:data-input type="listing" 
                             object="$object" 
-                            fieldlist="transaction_date,payment_type,address_1,currency,amount"
+                            fieldlist="transaction_date,payment_type,address_1,currency,amount,processed"
                             tplmodule="payments"
                             />
         </fieldset>

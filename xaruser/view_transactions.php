@@ -11,14 +11,14 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * View items of the payments object
+ * View items of the payments_transactions object
  *
  */
-function payments_user_view_dta($args)
+function payments_user_view_transactions($args)
 {
     // Data Managers have access
     if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) return;
-    xarTplSetPageTitle('View DTA Payments');
+    xarTplSetPageTitle('View ISO20022 Payments');
 
     // Load the user's daemon
     sys::import('modules.payments.class.daemon');
@@ -48,8 +48,9 @@ function payments_user_view_dta($args)
 //    $q->eq('state', 3);
     
     // Only payments within the chosen period
+    // Add 60 days to the future, which ISO20022 payments allow
     $q->ge('transaction_date', $data['period'][0]);
-    $q->le('transaction_date', $data['period'][1]);
+    $q->le('transaction_date', $data['period'][1] + 3600*24*60);
 
     return $data;
 }
