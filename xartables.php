@@ -27,6 +27,7 @@ function payments_xartables()
     $xartable['payments_gateways_config'] = xarDB::getPrefix() . '_payments_gateways_config';
     $xartable['payments_relation'] = xarDB::getPrefix() . '_payments_relation';
     $xartable['payments_transactions'] = xarDB::getPrefix() . 'payments_transactions';
+    $xartable['payments_debit_account'] = xarDB::getPrefix() . 'payments_debit_account';
 
     // Return the table information
     return $xartable;
