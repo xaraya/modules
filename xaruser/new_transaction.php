@@ -62,7 +62,7 @@ function payments_user_new_transaction()
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
     
-    $data['object']->properties['sender']->value = $debit_fields['account_holder'];
+    $data['object']->properties['sender_account']->value = $debit_fields['account_holder'];
     $data['object']->properties['sender_line_1']->value = $debit_fields['address_1'];
     $data['object']->properties['sender_line_2']->value = $debit_fields['address_2'];
     $data['object']->properties['sender_line_3']->value = $debit_fields['address_3'];
