@@ -56,7 +56,7 @@ function payments_user_new_debit_account()
             $postal_code = isset($newfields['postal_code']) ? $newfields['postal_code'] : '';
             $country = isset($newfields['country']) ? $newfields['country'] : '';
             if (!empty($country)) {
-                $countryobject = DataPropertyMaster::getProperty(array('name' => 'country'));
+                $countryobject = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
                 $countryobject->value = $country;
                 $country = $countryobject->getValue();
             }
