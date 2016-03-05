@@ -45,8 +45,8 @@ function payments_user_new_debit_account()
     // If we have data, transfer it to the new object
     $sourcefields = $sourceobject->getFieldValues(array(), 1);
     if (!empty($sourcefields)) {
-        if (isset($sourcefields['name'])) $data['object']->properties['name']->value = $sourcefields['name'];
-        if (isset($sourcefields['name'])) $data['object']->properties['account_holder']->value = $sourcefields['account_holder'];
+        if (isset($sourcefields['company'])) $data['object']->properties['name']->value = $sourcefields['company'];
+        if (isset($sourcefields['company'])) $data['object']->properties['account_holder']->value = $sourcefields['company'];
     }
 
 # --------------------------------------------------------
