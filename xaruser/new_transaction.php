@@ -19,17 +19,45 @@ function payments_user_new_transaction()
 {
     if (!xarSecurityCheck('AddPayments')) return;
 
-    if (!xarVarFetch('name',         'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',      'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('payment_type', 'str',    $data['payment_type'],'827',     XARVAR_NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
+    
+# --------------------------------------------------------
+#
+# Get the payment transactions object
+#
+    if (!xarVarFetch('name',         'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
+
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->properties['payment_type']->setValue($data['payment_type']);
     $data['tplmodule'] = 'payments';
     $data['authid'] = xarSecGenAuthKey('payments');
 
-    // Get the debit account information
+# --------------------------------------------------------
+#
+# Check if we are passing an object item
+#
+    if (!xarVarFetch('object',         'str',    $object,            '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid',         'int',    $itemid,            '', XARVAR_NOT_REQUIRED)) return;
+    
+    $sourceobject = DataObjectMaster::getObject(array('name' => $object));
+    $sourceobject->getItem(array('itemid' => $itemid));
+    
+    // If we have data, transfer it to the new object
+    $sourcefields = $sourceobject->getFieldValues(array(), 1);
+    if (!empty($sourcefields)) {
+        if (isset($sourcefields['amount'])) $data['object']->properties['amount']->value = $sourcefields['amount'];
+        if (isset($sourcefields['currency'])) $data['object']->properties['currency']->value = $sourcefields['currency'];
+        if (isset($sourcefields['transaction_date'])) $data['object']->properties['transaction_date']->value = $sourcefields['transaction_date'];
+        if (isset($sourcefields['code'])) $data['object']->properties['sender_reference']->value = $sourcefields['code'];
+    }
+
+# --------------------------------------------------------
+#
+# Get the debit account information
+#
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
@@ -40,6 +68,10 @@ function payments_user_new_transaction()
     $data['object']->properties['sender_line_3']->value = $debit_fields['address_3'];
     $data['object']->properties['sender_line_4']->value = $debit_fields['address_4'];
 
+# --------------------------------------------------------
+#
+# The create button was clicked
+#
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
