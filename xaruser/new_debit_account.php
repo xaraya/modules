@@ -55,9 +55,14 @@ function payments_user_new_debit_account()
             $city = isset($newfields['city']) ? $newfields['city'] : '';
             $postal_code = isset($newfields['postal_code']) ? $newfields['postal_code'] : '';
             $country = isset($newfields['country']) ? $newfields['country'] : '';
+            if (!empty($country)) {
+                $countryobject = DataPropertyMaster::getProperty(array('name' => 'country'));
+                $countryobject->value = $country;
+                $country = $countryobject->getValue();
+            }
             $data['object']->properties['address_1']->value = $street;
             $data['object']->properties['address_2']->value = $city . " " . $postal_code;
-            $data['object']->properties['address_3']->value = $address->getCountry();
+            $data['object']->properties['address_3']->value = $country;
         }
         if (isset($sourcefields['company'])) $data['object']->properties['name']->value = $sourcefields['company'];
         if (isset($sourcefields['company'])) $data['object']->properties['account_holder']->value = $sourcefields['company'];
