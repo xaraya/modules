@@ -135,6 +135,26 @@
       <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="sender_object">
+      <id>6856</id>
+      <label>Sender Object</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.sender_object</source>
+      <status>66</status>
+      <seq>13</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_itemid">
+      <id>6857</id>
+      <label>Sender Itemid</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.sender_itemid</source>
+      <status>66</status>
+      <seq>14</seq>
+      <configuration></configuration>
+    </property>
     <property name="created">
       <id>6785</id>
       <label>Created</label>
@@ -142,7 +162,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>debit_account.time_created</source>
       <status>66</status>
-      <seq>13</seq>
+      <seq>15</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="modified">
@@ -152,7 +172,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>debit_account.time_modified</source>
       <status>66</status>
-      <seq>14</seq>
+      <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
@@ -162,7 +182,7 @@
       <defaultvalue>3</defaultvalue>
       <source>debit_account.state</source>
       <status>33</status>
-      <seq>15</seq>
+      <seq>17</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
     <property name="bic">
@@ -172,7 +192,7 @@
       <defaultvalue></defaultvalue>
       <source>debit_account.bic</source>
       <status>33</status>
-      <seq>16</seq>
+      <seq>18</seq>
       <configuration></configuration>
     </property>
   </properties>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['sender_object']" hidden="hidden"/>                    
+    <xar:data-input property="$properties['sender_itemid']" hidden="hidden"/>                    
     <table>
         <tr>
             <td style="	vertical-align: text-top;">
