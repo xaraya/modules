@@ -45,6 +45,15 @@ function payments_user_new_debit_account()
     // If we have data, transfer it to the new object
     $sourcefields = $sourceobject->getFieldValues(array(), 1);
     if (!empty($sourcefields)) {
+        $address = DataPropertyMaster::getProperty(array('name' => 'address'));
+        if (isset($sourcefields['address']) {
+            $address->value = $sourcefields['address'];
+            $addressfields = $address->getValueArray();
+            if (isset($addressfields[0])) $data['object']->properties['address_1']->value = $addressfields[0];
+            if (isset($addressfields[1])) $data['object']->properties['address_2']->value = $addressfields[1];
+            if (isset($addressfields[2])) $data['object']->properties['address_3']->value = $addressfields[2];
+            if (isset($addressfields[3])) $data['object']->properties['address_4']->value = $addressfields[3];
+        }
         if (isset($sourcefields['company'])) $data['object']->properties['name']->value = $sourcefields['company'];
         if (isset($sourcefields['company'])) $data['object']->properties['account_holder']->value = $sourcefields['company'];
     }
