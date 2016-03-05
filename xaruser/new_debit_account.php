@@ -49,10 +49,15 @@ function payments_user_new_debit_account()
         if (isset($sourcefields['address'])) {
             $address->value = $sourcefields['address'];
             $addressfields = $address->getValueArray();
-            if (isset($addressfields[0])) $data['object']->properties['address_1']->value = $addressfields[0]['value'];
-            if (isset($addressfields[1])) $data['object']->properties['address_2']->value = $addressfields[1]['value'];
-            if (isset($addressfields[2])) $data['object']->properties['address_3']->value = $addressfields[2]['value'];
-            if (isset($addressfields[3])) $data['object']->properties['address_4']->value = $addressfields[3]['value'];
+            $newfields = array();
+            foreach ($addressfields as $field) $newfields[$field['id']] = $field['value'];
+            $street = isset($newfields['street']) ? $newfields['street'] : '';
+            $city = isset($newfields['city']) ? $newfields['city'] : '';
+            $postal_code = isset($newfields['postal_code']) ? $newfields['postal_code'] : '';
+            $country = isset($newfields['country']) ? $newfields['country'] : '';
+            $data['object']->properties['address_1']->value = $street;
+            $data['object']->properties['address_2']->value = $city . " " . $postal_code;
+            $data['object']->properties['address_2']->value = $country;
         }
         if (isset($sourcefields['company'])) $data['object']->properties['name']->value = $sourcefields['company'];
         if (isset($sourcefields['company'])) $data['object']->properties['account_holder']->value = $sourcefields['company'];
