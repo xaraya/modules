@@ -46,7 +46,7 @@ function payments_user_new_debit_account()
     $sourcefields = $sourceobject->getFieldValues(array(), 1);
     if (!empty($sourcefields)) {
         $address = DataPropertyMaster::getProperty(array('name' => 'address'));
-        if (isset($sourcefields['address']) {
+        if (isset($sourcefields['address'])) {
             $address->value = $sourcefields['address'];
             $addressfields = $address->getValueArray();
             if (isset($addressfields[0])) $data['object']->properties['address_1']->value = $addressfields[0];
