@@ -168,6 +168,8 @@
             address4         varchar(64) NOT NULL default '',
             bank_name        varchar(64) NOT NULL default '',
             bank_short_name  varchar(64) NOT NULL default '',
+            sender_object    varchar(64) NOT NULL default '',
+            sender_itemid    integer unsigned NOT NULL default 0,
             time_created     integer unsigned NOT NULL default 0,
             time_modified    integer unsigned NOT NULL default 0,
             state            tinyint(3) NOT NULL default 3, 
