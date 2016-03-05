@@ -66,6 +66,8 @@ function payments_user_new_debit_account()
         }
         if (isset($sourcefields['name'])) $data['object']->properties['name']->value = $sourcefields['name'];
         if (isset($sourcefields['name'])) $data['object']->properties['account_holder']->value = $sourcefields['name'];
+        $data['object']->properties['sender_object']->value = $object;
+        $data['object']->properties['sender_itemid']->value = $itemid;
     }
 
 # --------------------------------------------------------
