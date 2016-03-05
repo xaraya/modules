@@ -82,8 +82,8 @@
                         <!-- For testing purposes. Need to implement dd for this fields later -->
                         <xar:data-input property="$properties['reference_number']" /><br /><br /><br />
                         Einbezahlt von / Versé par / Versato da<br />
-                        <xar:data-output property="$properties['sender_reference']" /><br/>
-                        <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
+                        <xar:data-output property="$properties['sender_account']" /><br/>
+                        <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
                         <xar:data-output property="$properties['sender_line_1']" /><br/>
                         <xar:data-output property="$properties['sender_line_2']" /><br/>
                         <xar:data-output property="$properties['sender_line_3']" /><br/>
@@ -169,8 +169,8 @@
                         <br /><br />
                         Einbezahlt von / Versé par / Versato da
                         <br />
-                        <xar:data-output property="$properties['sender_reference']" /><br/>
-                        <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
+                        <xar:data-output property="$properties['sender_account']" /><br/>
+                        <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
                         <xar:data-output property="$properties['sender_line_1']" /><br/>
                         <xar:data-output property="$properties['sender_line_2']" /><br/>
                         <xar:data-output property="$properties['sender_line_3']" /><br/>
