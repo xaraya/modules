@@ -57,7 +57,7 @@ function payments_user_new_debit_account()
             $country = isset($newfields['country']) ? $newfields['country'] : '';
             $data['object']->properties['address_1']->value = $street;
             $data['object']->properties['address_2']->value = $city . " " . $postal_code;
-            $data['object']->properties['address_2']->value = $country;
+            $data['object']->properties['address_3']->value = $address->getCountry();
         }
         if (isset($sourcefields['company'])) $data['object']->properties['name']->value = $sourcefields['company'];
         if (isset($sourcefields['company'])) $data['object']->properties['account_holder']->value = $sourcefields['company'];
