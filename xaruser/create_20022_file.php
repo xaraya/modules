@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Create a new item of the payments_dta object
+ * Create a file to send to the bank
  *
  */
 
@@ -30,12 +30,18 @@ function payments_user_create_20022_file()
 
     $data['tplmodule'] = 'payments';
 
-    // Get the debit account information
+# --------------------------------------------------------
+#
+# Get the debit account information
+#
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
     
-    // Misc info
+# --------------------------------------------------------
+#
+# Define miscellaneous information
+#
     $data['payment_method'] = "TRF";
     $data['batch_booking'] = "true";
     $data['group_reference'] = 1;
@@ -43,23 +49,26 @@ function payments_user_create_20022_file()
     if(empty($data['message_identifier'])) {
         return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
     }
+
+# --------------------------------------------------------
+#
+# Get the items to be transmitted
+#
     // Get the payments object
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
     $q = $data['object']->dataquery;
     
-    // Get the items to be transmitted
     if (!empty($data['itemid'])) {
         $q->eq('id', $data['itemid']);
     } else {
     }
     $data['items'] = $data['object']->getItems();
 
-    // Generate the number of transactions
-    $data['number_of_transactions'] = count($data['items']);
-    
-    $data['control_sum'] = 0;
-    
+# --------------------------------------------------------
+#
+# Run through the transactions and do validity checks
+#
     sys::import('xaraya.structures.query');
     $tobject = new XarDateTime();
     $tobject->setTimestamp(time());
@@ -68,7 +77,27 @@ function payments_user_create_20022_file()
     $tobject->setHour(0);
     $today = $tobject->getTimestamp();
     
-    // Run through the transactions and do validity checks
+    foreach ($data['items'] as $key => $item) {
+        // Cannot send in the past
+        $tobject->setTimestamp((int)$item['transaction_date']);
+        $tobject->setSecond(0);
+        $tobject->setMinute(0);
+        $tobject->setHour(0);
+        $send_date = $tobject->getTimestamp();
+        if ($send_date < $today) {
+            $data['items'][$key]['transaction_date'] = $today;
+        }
+    }
+    
+# --------------------------------------------------------
+#
+# Update fields of the payment items
+#
+    // Generate the number of transactions
+    $data['number_of_transactions'] = count($data['items']);
+    
+    $data['control_sum'] = 0;
+    
     foreach ($data['items'] as $key => $item) {
         // Add the debit fields to the corresponding properties in the DTA object
         $data['items'][$key]['sender_account'] = $debit_fields['account_holder'];
@@ -82,18 +111,12 @@ function payments_user_create_20022_file()
 
         // Generate the control sum
         $data['control_sum'] += $item['amount'];
-        
-        // Cannot send in the past
-        $tobject->setTimestamp((int)$item['transaction_date']);
-        $tobject->setSecond(0);
-        $tobject->setMinute(0);
-        $tobject->setHour(0);
-        $send_date = $tobject->getTimestamp();
-        if ($send_date < $today) {
-            $data['items'][$key]['transaction_date'] = $today;
-        }
     }
     
+# --------------------------------------------------------
+#
+# Send the file to the browser
+#
     // Create an XML declaration
     $output = '<?xml version="1.0" encoding="utf-8"?>';
     // Add the file contents
