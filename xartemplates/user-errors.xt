@@ -33,6 +33,10 @@
                 <div style="margin-top: 20px; margin-left: 20px">
                     The message identifier for the payment does not conform to the SWIFT character set
                 </div>
+            <xar:elseif condition="$layout eq 'no_sender'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    There is no client/sender defined for this payment
+                </div>
             <xar:else />
                 <div style="margin-top: 20px; margin-left: 20px">
                     No error message is available.

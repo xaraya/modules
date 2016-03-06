@@ -55,8 +55,15 @@ function payments_user_new_transaction()
 # Get the debit account information
 #
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
-    $data['debit_account']->getItem(array('itemid' => 1));
-    $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
+    $q = $data['debit_account']->dataquery;
+    $q->eq('sender_object', $info['sender_object']);
+    $q->eq('sender_itemid', $info['sender_itemid']);
+    $q->run();
+    if(empty($q->output())) {
+        return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
+    }
+        
+    $debit_fields = $q->row();
     
     $data['object']->properties['sender_account']->value = $debit_fields['account_holder'];
     $data['object']->properties['sender_line_1']->value = $debit_fields['address_1'];
