@@ -146,6 +146,8 @@
             sender_account   varchar(255) NOT NULL default '',
             sender_reference varchar(255) NOT NULL default '',
             transaction_date integer unsigned NOT NULL default 0,
+            payment_object   varchar(64) NOT NULL default '',
+            payment_itemid   integer unsigned NOT NULL default 0,
             time_created     integer unsigned NOT NULL default 0,
             time_processed   integer unsigned NOT NULL default 0,
             PRIMARY KEY (id)

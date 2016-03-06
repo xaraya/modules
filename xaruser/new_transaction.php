@@ -52,6 +52,28 @@ function payments_user_new_transaction()
 
 # --------------------------------------------------------
 #
+# Check if we already have a transaction created
+#
+    if (!empty($info['beneficiary_object']) && !empty($info['beneficiary_itemid'])) {
+        $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
+        $q = $payments->dataquery;
+        $q->eq('beneficiary_object', $info['beneficiary_object']);
+        $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
+        $q->eq('state', 3);
+        $items = $payments->getItems();
+        // Sanity check
+        if (count($items) > 1) {
+            return xarTpl::module('payments','user','errors',array('layout' => 'non_unique_source'));
+        }
+        if (count($items) == 1) {
+            $item = current($items);
+            xarController::redirect(xarModURL('payments', 'user', 'modify_transaction', array('itemid' => $item['id']));
+            return true;
+        }
+    }
+
+# --------------------------------------------------------
+#
 # Get the debit account information
 #
     $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
@@ -70,6 +92,17 @@ function payments_user_new_transaction()
     $data['object']->properties['sender_line_2']->value  = $item['address_2'];
     $data['object']->properties['sender_line_3']->value  = $item['address_3'];
     $data['object']->properties['sender_line_4']->value  = $item['address_4'];
+
+# --------------------------------------------------------
+#
+# Get the beneficiary information of thee last payment of the same type
+#
+    $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
+    $q = $payments->dataquery;
+    $q->eq('beneficiary_object', $info['beneficiary_object']);
+    $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
+    $q->eq('payment_type', $data['payment_type']);
+    $items = $payments->getItems();
 
 # --------------------------------------------------------
 #

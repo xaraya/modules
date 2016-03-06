@@ -37,6 +37,10 @@
                 <div style="margin-top: 20px; margin-left: 20px">
                     There is no client/sender defined for this payment
                 </div>
+            <xar:elseif condition="$layout eq 'non_unique_source'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    This payment has more than one source
+                </div>
             <xar:else />
                 <div style="margin-top: 20px; margin-left: 20px">
                     No error message is available.
