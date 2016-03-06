@@ -36,7 +36,7 @@ function payments_user_new_transaction()
 
 # --------------------------------------------------------
 #
-# Check if we are passing an object item
+# Check if we are passing an api item
 #
     if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
     
@@ -44,18 +44,10 @@ function payments_user_new_transaction()
         $function = rawurldecode($api);
         eval("\$info = \"$function\";");
         
-        var_dump($info);exit;
-    }
-    $sourceobject = DataObjectMaster::getObject(array('name' => $object));
-    $sourceobject->getItem(array('itemid' => $itemid));
-    
-    // If we have data, transfer it to the new object
-    $sourcefields = $sourceobject->getFieldValues(array(), 1);
-    if (!empty($sourcefields)) {
-        if (isset($sourcefields['amount'])) $data['object']->properties['amount']->value = $sourcefields['amount'];
-        if (isset($sourcefields['currency'])) $data['object']->properties['currency']->value = $sourcefields['currency'];
-        if (isset($sourcefields['transaction_date'])) $data['object']->properties['transaction_date']->value = $sourcefields['transaction_date'];
-        if (isset($sourcefields['code'])) $data['object']->properties['sender_reference']->value = $sourcefields['code'];
+        foreach ($info as $key => $value) {
+            if (isset($data['object']->properties[$key]))
+                $data['object']->properties[$key]->value = $value;
+        }
     }
 
 # --------------------------------------------------------
