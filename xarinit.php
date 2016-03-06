@@ -148,8 +148,11 @@
             transaction_date integer unsigned NOT NULL default 0,
             payment_object   varchar(64) NOT NULL default '',
             payment_itemid   integer unsigned NOT NULL default 0,
+            beneficiary_object varchar(64) NOT NULL default '',
+            beneficiary_itemid integer unsigned NOT NULL default 0,
             time_created     integer unsigned NOT NULL default 0,
             time_processed   integer unsigned NOT NULL default 0,
+            state            tinyint(3) NOT NULL default 3, 
             PRIMARY KEY (id)
         )";
         if (!$q->run($query)) return;
