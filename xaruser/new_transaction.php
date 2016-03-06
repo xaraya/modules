@@ -41,7 +41,10 @@ function payments_user_new_transaction()
     if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
     
     if (!empty($api)) {
-        $function = rawurldecode($api);var_dump();exit;
+        $function = rawurldecode($api);
+        eval("\$info = \"$function\";");
+        
+        var_dump($info);exit;
     }
     $sourceobject = DataObjectMaster::getObject(array('name' => $object));
     $sourceobject->getItem(array('itemid' => $itemid));
