@@ -101,8 +101,11 @@ function payments_user_new_transaction()
     $q = $payments->dataquery;
     $q->eq('beneficiary_object', $info['beneficiary_object']);
     $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
-    $q->eq('payment_type', $data['payment_type']);
+    $q->setorder('transaction_date', 'DESC');
     $items = $payments->getItems();
+    if (!empty($items)) {
+        $item = current($items);var_dump($item);exit;
+    }
 
 # --------------------------------------------------------
 #
