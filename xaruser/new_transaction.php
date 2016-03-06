@@ -105,7 +105,11 @@ function payments_user_new_transaction()
     $items = $payments->getItems();
     if (!empty($items)) {
         $item = current($items);var_dump($item);
-        $data['object']->properties['payment_type']->value  = $item['payment_type'];
+        if (!empty($item['payment_type'])) $data['object']->properties['payment_type']->value  = $item['payment_type'];
+        if (!empty($item['reference_number'])) $data['object']->properties['reference_number']->value  = $item['reference_number'];
+        if (!empty($item['post_account'])) $data['object']->properties['post_account']->value  = $item['post_account'];
+        if (!empty($item['iban'])) $data['object']->properties['iban']->value  = $item['iban'];
+        if (!empty($item['bic'])) $data['object']->properties['bic']->value  = $item['bic'];
     }
 
 # --------------------------------------------------------
