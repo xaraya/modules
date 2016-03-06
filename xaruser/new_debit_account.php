@@ -36,8 +36,8 @@ function payments_user_new_debit_account()
 #
 # Check if we are passing an object item
 #
-    if (!xarVarFetch('obj',         'str',    $object,            '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid',      'int',    $itemid,            '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('obj',        'str',    $object,            '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid',     'int',    $itemid,            '', XARVAR_NOT_REQUIRED)) return;
     
     $sourceobject = DataObjectMaster::getObject(array('name' => $object));
     $sourceobject->getItem(array('itemid' => $itemid));
