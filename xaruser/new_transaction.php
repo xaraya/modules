@@ -42,7 +42,7 @@ function payments_user_new_transaction()
     
     if (!empty($api)) {
         $function = rawurldecode($api);
-        eval("\$info = \"$function\";");
+        eval("\$info = $function;");
         
         foreach ($info as $key => $value) {
             if (isset($data['object']->properties[$key]))
