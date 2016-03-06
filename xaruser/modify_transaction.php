@@ -47,25 +47,25 @@ function payments_user_modify_transaction()
             if (isset($data['object']->properties[$key]))
                 $data['object']->properties[$key]->value = $value;
         }
-    }
 
 # --------------------------------------------------------
 #
 # Get the debit account information
 #
-    $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
-    $q = $data['debit_account']->dataquery;
-    $q->eq('sender_object', $info['sender_object']);
-    $q->eq('sender_itemid', $info['sender_itemid']);
-    $items = $data['debit_account']->getItems();
+        $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
+        $q = $data['debit_account']->dataquery;
+        $q->eq('sender_object', $info['sender_object']);
+        $q->eq('sender_itemid', $info['sender_itemid']);
+        $items = $data['debit_account']->getItems();
 
-    if(!empty($items)) {
-        $item = current($items);
-        $data['object']->properties['sender_account']->value = $item['account_holder'];
-        $data['object']->properties['sender_line_1']->value  = $item['address_1'];
-        $data['object']->properties['sender_line_2']->value  = $item['address_2'];
-        $data['object']->properties['sender_line_3']->value  = $item['address_3'];
-        $data['object']->properties['sender_line_4']->value  = $item['address_4'];
+        if(!empty($items)) {
+            $item = current($items);
+            $data['object']->properties['sender_account']->value = $item['account_holder'];
+            $data['object']->properties['sender_line_1']->value  = $item['address_1'];
+            $data['object']->properties['sender_line_2']->value  = $item['address_2'];
+            $data['object']->properties['sender_line_3']->value  = $item['address_3'];
+            $data['object']->properties['sender_line_4']->value  = $item['address_4'];
+        }
     }
     
 
