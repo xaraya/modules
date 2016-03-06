@@ -104,7 +104,8 @@ function payments_user_new_transaction()
     $q->setorder('transaction_date', 'DESC');
     $items = $payments->getItems();
     if (!empty($items)) {
-        $item = current($items);var_dump($item);exit;
+        $item = current($items);var_dump($item);
+        $data['object']->properties['payment_type']->value  = $item['payment_type'];
     }
 
 # --------------------------------------------------------
