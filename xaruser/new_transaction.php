@@ -135,7 +135,7 @@ function payments_user_new_transaction()
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments','user','view_transaction'));
+            xarController::redirect(xarModURL('payments','user','view_transactions'));
             return true;
         }
     }
