@@ -21,8 +21,6 @@ function payments_user_new_transaction()
 
     if (!xarVarFetch('confirm',      'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('payment_type', 'str',    $data['payment_type'],'827',     XARVAR_NOT_REQUIRED)) return;
-
-    sys::import('modules.dynamicdata.class.objects.master');
     
 # --------------------------------------------------------
 #
@@ -30,6 +28,7 @@ function payments_user_new_transaction()
 #
     if (!xarVarFetch('name',         'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
 
+    sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->properties['payment_type']->setValue($data['payment_type']);
     $data['tplmodule'] = 'payments';
@@ -39,9 +38,11 @@ function payments_user_new_transaction()
 #
 # Check if we are passing an object item
 #
-    if (!xarVarFetch('obj',          'str',    $object,            '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid',       'int',    $itemid,            '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
     
+    if (!empty($api)) {
+        $function = rawurldecode($api);var_dump();exit;
+    }
     $sourceobject = DataObjectMaster::getObject(array('name' => $object));
     $sourceobject->getItem(array('itemid' => $itemid));
     
