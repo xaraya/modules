@@ -4,6 +4,7 @@
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <xar:data-input property="$properties['sender']" hidden="hidden"/>
     <xar:data-input property="$properties['payment_type']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>

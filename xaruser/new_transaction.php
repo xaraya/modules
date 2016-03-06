@@ -104,7 +104,7 @@ function payments_user_new_transaction()
     $q->setorder('transaction_date', 'DESC');
     $items = $payments->getItems();
     if (!empty($items)) {
-        $item = current($items);var_dump($item);
+        $item = current($items);
         if (!empty($item['payment_type'])) $data['object']->properties['payment_type']->value  = $item['payment_type'];
         if (!empty($item['reference_number'])) $data['object']->properties['reference_number']->value  = $item['reference_number'];
         if (!empty($item['post_account'])) $data['object']->properties['post_account']->value  = $item['post_account'];
