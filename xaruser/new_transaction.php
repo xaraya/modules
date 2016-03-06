@@ -59,12 +59,12 @@ function payments_user_new_transaction()
     $q->eq('sender_object', $info['sender_object']);
     $q->eq('sender_itemid', $info['sender_itemid']);
     $q->run();
-    if(empty($q->output())) {
+    $result = $q->output();
+    if(empty($result)) {
         return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
     }
         
     $debit_fields = $q->row();
-    
     $data['object']->properties['sender_account']->value = $debit_fields['account_holder'];
     $data['object']->properties['sender_line_1']->value = $debit_fields['address_1'];
     $data['object']->properties['sender_line_2']->value = $debit_fields['address_2'];
