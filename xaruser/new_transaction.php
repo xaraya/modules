@@ -67,7 +67,7 @@ function payments_user_new_transaction()
         }
         if (count($items) == 1) {
             $item = current($items);
-            xarController::redirect(xarModURL('payments', 'user', 'modify_transaction', array('itemid' => $item['id']));
+            xarController::redirect(xarModURL('payments', 'user', 'modify_transaction', array('itemid' => $item['id'])));
             return true;
         }
     }
