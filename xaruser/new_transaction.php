@@ -54,7 +54,7 @@ function payments_user_new_transaction()
 #
 # Get the debit account information
 #
-    $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
+    $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
     $q = $data['debit_account']->dataquery;
     $q->eq('sender_object', $info['sender_object']);
     $q->eq('sender_itemid', $info['sender_itemid']);
