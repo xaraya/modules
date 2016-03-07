@@ -6,14 +6,11 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xar="http://xaraya.com/2004/blocklayout"
     xmlns:php="http://php.net/xsl"
-    xmlns="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd  pain.001.001.03.ch.02.xsd"
-    exclude-result-prefixes="php xar">
+    exclude-result-prefixes="xsl php xar">
 
 
   <xsl:template match="xar:ISO20022Document">
-    <Document>
+    <Document namespace="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd  pain.001.001.03.ch.02.xsd">
       <xsl:apply-templates/>
     </Document>
   </xsl:template>
