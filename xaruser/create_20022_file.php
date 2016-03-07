@@ -39,6 +39,18 @@ function payments_user_create_20022_file()
     
 # --------------------------------------------------------
 #
+# Define miscellaneous information
+#
+    $data['payment_method'] = "TRF";
+    $data['batch_booking'] = "true";
+    $data['group_reference'] = 1;
+    $data['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier', array('id' => 1));
+    if(empty($data['message_identifier'])) {
+        return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
+    }
+
+# --------------------------------------------------------
+#
 # Get the items to be transmitted
 #
     // Get the payments object
@@ -74,12 +86,6 @@ function payments_user_create_20022_file()
         if ($send_date < $today) {
             $data['items'][$key]['transaction_date'] = $today;
         }
-
-        // Add message identifier
-        $data['items'][$key]['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier');
-        if(empty($data['items'][$key]['message_identifier'])) {
-            return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
-        }
     }
     
 # --------------------------------------------------------
@@ -103,9 +109,10 @@ function payments_user_create_20022_file()
         $data['items'][$key]['processed']      = time();
 
         // Add miscellaneous information
-        $data['items'][$key]['payment_method'] = "TRF";
-        $data['items'][$key]['batch_booking'] = "true";
-        $data['items'][$key]['group_reference'] = 1;
+        $data['items'][$key]['payment_method']  = $data['payment_method'];
+        $data['items'][$key]['batch_booking']   = $data['batch_booking'];
+        $data['items'][$key]['group_reference'] = $data['group_reference'];
+        $data['items'][$key]['message_identifier'] = $data['message_identifier'];
     
         // Generate the control sum
         $data['control_sum'] += $item['amount'];
