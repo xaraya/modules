@@ -68,7 +68,6 @@ function payments_user_modify_transaction()
         }
     }
     
-
 # --------------------------------------------------------
 #
 # The create button was clicked
