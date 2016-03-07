@@ -95,7 +95,7 @@ function payments_user_new_transaction()
 
 # --------------------------------------------------------
 #
-# Get the beneficiary information of thee last payment of the same type
+# Get the beneficiary information of the last payment if one exists
 #
     $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
     $q = $payments->dataquery;
@@ -105,7 +105,10 @@ function payments_user_new_transaction()
     $items = $payments->getItems();
     if (!empty($items)) {
         $item = current($items);
-        if (!empty($item['payment_type'])) $data['object']->properties['payment_type']->value  = $item['payment_type'];
+        if (!empty($item['payment_type'])) {
+            $data['object']->properties['payment_type']->value  = $item['payment_type'];
+            $data['payment_type'] = $item['payment_type'];
+        }
         if (!empty($item['reference_number'])) $data['object']->properties['reference_number']->value  = $item['reference_number'];
         if (!empty($item['post_account'])) $data['object']->properties['post_account']->value  = $item['post_account'];
         if (!empty($item['iban'])) $data['object']->properties['iban']->value  = $item['iban'];
