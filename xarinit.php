@@ -127,6 +127,7 @@
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_payments_dta (
             id               integer unsigned NOT NULL auto_increment,
+            message_id       varchar(64) NOT NULL default '',
             payment_type     varchar(64) NOT NULL default '',
             iban             varchar(64) NOT NULL default '',
             bic              varchar(64) NOT NULL default '',

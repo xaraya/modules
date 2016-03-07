@@ -2,8 +2,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['message_id']" hidden="hidden"/>
     <xar:data-input property="$properties['sender']" hidden="hidden"/>
     <xar:data-input property="$properties['payment_type']" hidden="hidden"/>
+    <xar:data-input property="$properties['payment_method']" hidden="hidden"/>
+    <xar:data-input property="$properties['batch_booking']" hidden="hidden"/>
+    <xar:data-input property="$properties['group_reference']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>

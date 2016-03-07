@@ -24,7 +24,6 @@ function payments_user_create_20022_file()
         return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
     }
 
-    if (!xarVarFetch('name',       'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
 
@@ -40,23 +39,11 @@ function payments_user_create_20022_file()
     
 # --------------------------------------------------------
 #
-# Define miscellaneous information
-#
-    $data['payment_method'] = "TRF";
-    $data['batch_booking'] = "true";
-    $data['group_reference'] = 1;
-    $data['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier', array('id' => 1));
-    if(empty($data['message_identifier'])) {
-        return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
-    }
-
-# --------------------------------------------------------
-#
 # Get the items to be transmitted
 #
     // Get the payments object
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
     $q = $data['object']->dataquery;
     
     if (!empty($data['itemid'])) {
@@ -87,6 +74,12 @@ function payments_user_create_20022_file()
         if ($send_date < $today) {
             $data['items'][$key]['transaction_date'] = $today;
         }
+
+        // Add message identifier
+        $data['items'][$key]['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier'));
+        if(empty($data['items'][$key]['message_identifier'])) {
+            return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
+        }
     }
     
 # --------------------------------------------------------
@@ -109,6 +102,11 @@ function payments_user_create_20022_file()
         $data['items'][$key]['sender_bic']     = $debit_fields['bic'];
         $data['items'][$key]['processed']      = time();
 
+        // Add miscellaneous information
+        $data['items'][$key]['payment_method'] = "TRF";
+        $data['items'][$key]['batch_booking'] = "true";
+        $data['items'][$key]['group_reference'] = 1;
+    
         // Generate the control sum
         $data['control_sum'] += $item['amount'];
     }
