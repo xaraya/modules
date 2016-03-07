@@ -135,7 +135,7 @@ function payments_user_create_20022_file()
     // Add the file contents
     $output .= xarTpl::module('payments', 'user', 'create_20022_file', $data);
 
-    $filename = 'ISO20022Export_' . time() . ".xml";
+    $filename = 'ISO20022_' . $data['message_identifier'] . '_' . time() . ".xml";
     file_put_contents($filename, $output);
         
     header('Content-type: text/plain');
