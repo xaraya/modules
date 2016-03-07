@@ -2,19 +2,19 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:ISO20022Document>
     <!-- Begin header -->
-    <xar:element name="CstmrCdtTrfInitn">
-      <xar:element name="GrpHdr">
-        <xar:element name="MsgId">#$message_identifier#</xar:element>
-        <xar:element name="CreDtTm">#date('Y-m-d\TH:i:sP')#</xar:element>
-        <xar:element name="NbOfTxs">#$number_of_transactions#</xar:element>
-        <xar:element name="CtrlSum">#$control_sum#</xar:element>
-        <xar:element name="InitgPty">
-            <xar:element name="Nm">#$debit_account->properties['account_holder']->value#</xar:element>
-        </xar:element>
-      </xar:element>
+    <xar:isoelement name="CstmrCdtTrfInitn">
+      <xar:isoelement name="GrpHdr">
+        <xar:isoelement name="MsgId">#$message_identifier#</xar:isoelement>
+        <xar:isoelement name="CreDtTm">#date('Y-m-d\TH:i:sP')#</xar:isoelement>
+        <xar:isoelement name="NbOfTxs">#$number_of_transactions#</xar:isoelement>
+        <xar:isoelement name="CtrlSum">#$control_sum#</xar:isoelement>
+        <xar:isoelement name="InitgPty">
+            <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
+        </xar:isoelement>
+      </xar:isoelement>
 
       <!-- Begin payment info -->
-      <xar:element name="PmtInf">
+      <xar:isoelement name="PmtInf">
         <xar:foreach in="$items" value="$item">
   
           <xar:if condition="$item['payment_type'] eq '826'">
@@ -25,57 +25,57 @@
             <xar:set name="payment_type">$item['payment_type']</xar:set>
           </xar:if>
 
-          <xar:element name="PmtInfId">#$group_reference#</xar:element>
-          <xar:element name="PmtMtd">#$payment_method#</xar:element>
-          <xar:element name="BtchBookg">#$batch_booking#</xar:element>
-          <xar:element name="ReqdExctnDt">#date('Y-m-d', $item['transaction_date'])#</xar:element>
-          <xar:element name="Dbtr">
-            <xar:element name="Nm">#$debit_account->properties['account_holder']->value#</xar:element>
-          </xar:element>
-          <xar:element name="DbtrAcct">
-            <xar:element name="Id">
-              <xar:element name="IBAN">#$debit_account->properties['iban']->value#</xar:element>
-            </xar:element>
-          </xar:element>
-          <xar:element name="DbtrAgt">
-            <xar:element name="FinInstnId">
-              <xar:element name="BIC">#$debit_account->properties['bic']->value#</xar:element>
-            </xar:element>
-          </xar:element>
+          <xar:isoelement name="PmtInfId">#$group_reference#</xar:isoelement>
+          <xar:isoelement name="PmtMtd">#$payment_method#</xar:isoelement>
+          <xar:isoelement name="BtchBookg">#$batch_booking#</xar:isoelement>
+          <xar:isoelement name="ReqdExctnDt">#date('Y-m-d', $item['transaction_date'])#</xar:isoelement>
+          <xar:isoelement name="Dbtr">
+            <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
+          </xar:isoelement>
+          <xar:isoelement name="DbtrAcct">
+            <xar:isoelement name="Id">
+              <xar:isoelement name="IBAN">#$debit_account->properties['iban']->value#</xar:isoelement>
+            </xar:isoelement>
+          </xar:isoelement>
+          <xar:isoelement name="DbtrAgt">
+            <xar:isoelement name="FinInstnId">
+              <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
+            </xar:isoelement>
+          </xar:isoelement>
     
-            <xar:element name="CdtTrfTxInf">
-              <xar:element name="PmtId">
-                <xar:element name="InstrId">#$item['id']#</xar:element>
-                <xar:element name="EndToEndId">#$item['sender_reference']#</xar:element>
-              </xar:element>
-              <xar:element name="PmtTpInf">
-                <xar:element name="LclInstrm">
-                  <xar:element name="Prtry">#$payment_type#</xar:element>
-                </xar:element>
-              </xar:element>
-              <xar:element name="Amt">
-                <xar:element name="InstdAmt"><xar:attribute name="Ccy">#$item['currency']#</xar:attribute>#$item['amount']#</xar:element>
-              </xar:element>
-              <xar:element name="CdtrAcct">
-                <xar:element name="Id">
-                  <xar:element name="Othr">
-                    <xar:element name="Id">#$item['post_account']#</xar:element>
-                  </xar:element>
-                </xar:element>
-              </xar:element>
-              <xar:element name="RmtInf">
-                <xar:element name="Strd">
-                  <xar:element name="CdtrRefInf">
-                    <xar:element name="Ref">#$item['reference_number']#</xar:element>
-                  </xar:element>
-                </xar:element>
-              </xar:element>
-            </xar:element>
+            <xar:isoelement name="CdtTrfTxInf">
+              <xar:isoelement name="PmtId">
+                <xar:isoelement name="InstrId">#$item['id']#</xar:isoelement>
+                <xar:isoelement name="EndToEndId">#$item['sender_reference']#</xar:isoelement>
+              </xar:isoelement>
+              <xar:isoelement name="PmtTpInf">
+                <xar:isoelement name="LclInstrm">
+                  <xar:isoelement name="Prtry">#$payment_type#</xar:isoelement>
+                </xar:isoelement>
+              </xar:isoelement>
+              <xar:isoelement name="Amt">
+                <xar:isoelement name="InstdAmt"><xar:attribute name="Ccy">#$item['currency']#</xar:attribute>#$item['amount']#</xar:isoelement>
+              </xar:isoelement>
+              <xar:isoelement name="CdtrAcct">
+                <xar:isoelement name="Id">
+                  <xar:isoelement name="Othr">
+                    <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
+                  </xar:isoelement>
+                </xar:isoelement>
+              </xar:isoelement>
+              <xar:isoelement name="RmtInf">
+                <xar:isoelement name="Strd">
+                  <xar:isoelement name="CdtrRefInf">
+                    <xar:isoelement name="Ref">#$item['reference_number']#</xar:isoelement>
+                  </xar:isoelement>
+                </xar:isoelement>
+              </xar:isoelement>
+            </xar:isoelement>
         </xar:foreach>
       <!-- End payment info -->
-      </xar:element>
+      </xar:isoelement>
     <!-- End transaction -->
-    </xar:element>
+    </xar:isoelement>
   <!-- End document tag -->
   </xar:ISO20022Document>
 </xar:template>
