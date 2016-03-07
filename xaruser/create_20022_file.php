@@ -113,7 +113,7 @@ function payments_user_create_20022_file()
         $data['items'][$key]['payment_method']  = $data['payment_method'];
         $data['items'][$key]['batch_booking']   = $data['batch_booking'];
         $data['items'][$key]['group_reference'] = $data['group_reference'];
-        $data['items'][$key]['message_identifier'] = $data['message_identifier'];
+        $data['items'][$key]['message_id']      = $data['message_identifier'];
     
         // Generate the control sum
         $data['control_sum'] += $item['amount'];
