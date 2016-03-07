@@ -285,5 +285,45 @@
       <seq>27</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
+    <property name="message_id">
+      <id>6864</id>
+      <label>Message ID</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.message_id</source>
+      <status>33</status>
+      <seq>28</seq>
+      <configuration></configuration>
+    </property>
+    <property name="payment_method">
+      <id>6865</id>
+      <label>Payment method</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.payment_method</source>
+      <status>33</status>
+      <seq>29</seq>
+      <configuration></configuration>
+    </property>
+    <property name="batch_booking">
+      <id>6866</id>
+      <label>Batch booking</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.batch_booking</source>
+      <status>33</status>
+      <seq>30</seq>
+      <configuration></configuration>
+    </property>
+    <property name="group_reference">
+      <id>6867</id>
+      <label>Group reference</label>
+      <type>integerbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>payments.group_reference</source>
+      <status>33</status>
+      <seq>31</seq>
+      <configuration></configuration>
+    </property>
   </properties>
 </object>
