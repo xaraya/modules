@@ -20,7 +20,7 @@ function payments_adminapi_get_message_identifier($args)
     if (isset($args['id']) && is_numeric($args['id'])) {
         $id = $args['id'];
     } else {
-        $id = xarModVars::get('payments', 'message_id');
+        $id = (int)xarModVars::get('payments', 'message_id');
     }
     xarModVars::set('payments', 'message_id', $id + 1);
     
