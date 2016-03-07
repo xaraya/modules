@@ -14,6 +14,7 @@
                 )
             </xar:set>
             <xar:data-input type="dropdown" name="payment_type" value="$payment_type" options="$options" onchange="this.form.submit()"/>
+            <input type="hidden" name="type_changed" id="type_changed" value="1"/>
         </form>
         <form method="post" action="#xarServer::getCurrentURL()#">
 
