@@ -24,7 +24,7 @@
     <div class="xar-row">
         <div class="xar-col-condensed">
             <label for="defaultvatcode" title="#xarML('The date to execute this payment')#">            
-                Payment date:
+                Execution date:
             </label>
         </div>
         <div class="xar-col">
@@ -109,8 +109,6 @@
             </table>
             <br /><br />
         </div><!-- xar-middle-payment -->
-    <xar:elseif condition="$payment_type eq 'lukb_orange'"/>
-        <xar:template filename="lukb_orange"/>
     <xar:elseif condition="$payment_type eq '827'"/>
         <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
         <xar:set name="style1">'width: 56mm'</xar:set>
@@ -198,5 +196,57 @@
         <!--
         <img src="#xarTpl::getImage('p_002.gif', 'property','paymentslip')#"/>
         -->
+    <xar:elseif condition="$payment_type eq '111'"/>
+        <div class="xar-row">
+            <div class="xar-col">
+                Beneficiary name
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['address_1']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                Beneficiary address
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['address_2']"/>&#160;street, number<br/>
+                <xar:data-input property="$properties['address_3']"/>&#160;postal code, town<br/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                Beneficiary IBAN
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['iban']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                Amount
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['currency']"/>&#160;
+                <xar:data-input property="$properties['amount']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                Sender
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['sender_account']" /><br/>
+                <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
+                <xar:data-output property="$properties['sender_line_1']" /><br/>
+                <xar:data-output property="$properties['sender_line_2']" /><br/>
+                <xar:data-output property="$properties['sender_line_3']" /><br/>
+                <xar:data-output property="$properties['sender_line_4']" />
+                <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
+                <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
+                <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
+                <xar:data-input property="$properties['sender_line_4']" hidden="hidden"/>
+            </div>
+        </div>
     </xar:if>
 </xar:template>

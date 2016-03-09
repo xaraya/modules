@@ -45,27 +45,9 @@ function payments_user_new_debit_account()
     // If we have data, transfer it to the new object
     $sourcefields = $sourceobject->getFieldValues(array(), 1);
     if (!empty($sourcefields)) {
-        $address = DataPropertyMaster::getProperty(array('name' => 'address'));
-        if (isset($sourcefields['address'])) {
-            $address->value = $sourcefields['address'];
-            $addressfields = $address->getValueArray();
-            $newfields = array();
-            foreach ($addressfields as $field) $newfields[$field['id']] = $field['value'];
-            $street = isset($newfields['street']) ? $newfields['street'] : '';
-            $city = isset($newfields['city']) ? $newfields['city'] : '';
-            $postal_code = isset($newfields['postal_code']) ? $newfields['postal_code'] : '';
-            $country = isset($newfields['country']) ? $newfields['country'] : '';
-            if (!empty($country)) {
-                $countryobject = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
-                $countryobject->value = $country;
-                $country = $countryobject->getValue();
-            }
-            $data['object']->properties['address_1']->value = $street;
-            $data['object']->properties['address_2']->value = $city . " " . $postal_code;
-            $data['object']->properties['address_3']->value = $country;
-        }
         if (isset($sourcefields['name'])) $data['object']->properties['name']->value = $sourcefields['name'];
         if (isset($sourcefields['name'])) $data['object']->properties['account_holder']->value = $sourcefields['name'];
+        if (isset($sourcefields['address'])) $data['object']->properties['address']->value = $sourcefields['address'];
         $data['object']->properties['sender_object']->value = $object;
         $data['object']->properties['sender_itemid']->value = $itemid;
     }

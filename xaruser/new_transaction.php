@@ -41,6 +41,7 @@ function payments_user_new_transaction()
 #
     if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
     
+    $info = array();
     if (!empty($api)) {
         $function = rawurldecode($api);
         eval("\$info = $function;");
@@ -77,43 +78,51 @@ function payments_user_new_transaction()
 #
 # Get the debit account information
 #
-    $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
-    $q = $data['debit_account']->dataquery;
-    $q->eq('sender_object', $info['sender_object']);
-    $q->eq('sender_itemid', $info['sender_itemid']);
-    $items = $data['debit_account']->getItems();
+    if (!empty($info['sender_object']) && !empty($info['sender_itemid'])) {
+        $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
+        $q = $data['debit_account']->dataquery;
+        $q->eq('sender_object', $info['sender_object']);
+        $q->eq('sender_itemid', $info['sender_itemid']);
+        $items = $data['debit_account']->getItems();
 
-    if(empty($items)) {
-        return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
-    }
+        if(empty($items)) {
+            return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
+        }
     
-    $item = current($items);
-    $data['object']->properties['sender_account']->value = $item['account_holder'];
-    $data['object']->properties['sender_line_1']->value  = $item['address_1'];
-    $data['object']->properties['sender_line_2']->value  = $item['address_2'];
-    $data['object']->properties['sender_line_3']->value  = $item['address_3'];
-    $data['object']->properties['sender_line_4']->value  = $item['address_4'];
+        $item = current($items);
+        // The debtor name
+        $data['object']->properties['sender_account']->value = $item['account_holder'];
+        // The debtor address
+        $lines = xarMod::apiFunc('payment', 'admin', 'unpack_address', array('address' => $item['address']));
+
+        if (isset($address_lines['street'])) $data['object']->properties['sender_line_1']->value  = $address_lines['street'];
+        $data['object']->properties['sender_line_2']->value  = $lines[2];
+        $data['object']->properties['sender_line_3']->value  = $lines[3];
+        $data['object']->properties['sender_line_4']->value  = $lines[4];
+    }
 
 # --------------------------------------------------------
 #
 # Get the beneficiary information of the last payment if one exists
 #
-    $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
-    $q = $payments->dataquery;
-    $q->eq('beneficiary_object', $info['beneficiary_object']);
-    $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
-    $q->setorder('transaction_date', 'DESC');
-    $items = $payments->getItems();
-    if (!empty($items)) {
-        $item = current($items);
-        if (!empty($item['payment_type']) && !$type_changed) {
-            $data['object']->properties['payment_type']->value  = $item['payment_type'];
-            $data['payment_type'] = $item['payment_type'];
+    if (!empty($info['beneficiary_object']) && !empty($info['beneficiary_itemid'])) {
+        $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
+        $q = $payments->dataquery;
+        $q->eq('beneficiary_object', $info['beneficiary_object']);
+        $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
+        $q->setorder('transaction_date', 'DESC');
+        $items = $payments->getItems();
+        if (!empty($items)) {
+            $item = current($items);
+            if (!empty($item['payment_type']) && !$type_changed) {
+                $data['object']->properties['payment_type']->value  = $item['payment_type'];
+                $data['payment_type'] = $item['payment_type'];
+            }
+            if (!empty($item['reference_number'])) $data['object']->properties['reference_number']->value  = $item['reference_number'];
+            if (!empty($item['post_account'])) $data['object']->properties['post_account']->value  = $item['post_account'];
+            if (!empty($item['iban'])) $data['object']->properties['iban']->value  = $item['iban'];
+            if (!empty($item['bic'])) $data['object']->properties['bic']->value  = $item['bic'];
         }
-        if (!empty($item['reference_number'])) $data['object']->properties['reference_number']->value  = $item['reference_number'];
-        if (!empty($item['post_account'])) $data['object']->properties['post_account']->value  = $item['post_account'];
-        if (!empty($item['iban'])) $data['object']->properties['iban']->value  = $item['iban'];
-        if (!empty($item['bic'])) $data['object']->properties['bic']->value  = $item['bic'];
     }
 
 # --------------------------------------------------------
