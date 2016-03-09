@@ -25,7 +25,7 @@ function payments_adminapi_unpack_address($args)
     // Get an address property
     $address = DataPropertyMaster::getProperty(array('name' => 'address'));
     // Give it our address value
-    $address->value = $sourcefields['address'];
+    $address->value = $args['address'];
     // Get the address array elements back
     $addressfields = $address->getValueArray();
     
