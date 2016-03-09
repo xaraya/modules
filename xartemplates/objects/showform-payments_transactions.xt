@@ -179,10 +179,18 @@
                         <br />
                         <xar:data-output property="$properties['sender_account']" /><br/>
                         <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
-                        <xar:data-output property="$properties['sender_line_1']" /><br/>
-                        <xar:data-output property="$properties['sender_line_2']" /><br/>
-                        <xar:data-output property="$properties['sender_line_3']" /><br/>
-                        <xar:data-output property="$properties['sender_line_4']" />
+                        <xar:if condition="!empty($properties['sender_line_1']->value)">
+                            <xar:data-output property="$properties['sender_line_1']" /><br/>
+                        </xar:if>
+                        <xar:if condition="!empty($properties['sender_line_2']->value)">
+                            <xar:data-output property="$properties['sender_line_2']" /><br/>
+                        </xar:if>
+                        <xar:if condition="!empty($properties['sender_line_3']->value)">
+                            <xar:data-output property="$properties['sender_line_3']" /><br/>
+                        </xar:if>
+                        <xar:if condition="!empty($properties['sender_line_4']->value)">
+                            <xar:data-output property="$properties['sender_line_4']" /><br/>
+                        </xar:if>
                         <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
                         <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
                         <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
