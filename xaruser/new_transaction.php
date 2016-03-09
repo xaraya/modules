@@ -96,9 +96,9 @@ function payments_user_new_transaction()
         $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
 
         if (isset($address_lines['street'])) $data['object']->properties['sender_line_1']->value  = $address_lines['street'];
-        $data['object']->properties['sender_line_2']->value  = $lines[2];
-        $data['object']->properties['sender_line_3']->value  = $lines[3];
-        $data['object']->properties['sender_line_4']->value  = $lines[4];
+        $data['object']->properties['sender_line_2']->value  = $lines[1];
+        $data['object']->properties['sender_line_3']->value  = $lines[2];
+        $data['object']->properties['sender_line_4']->value  = $lines[3];
     }
 
 # --------------------------------------------------------
