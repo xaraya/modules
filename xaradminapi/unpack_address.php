@@ -45,7 +45,7 @@ function payments_adminapi_unpack_address($args)
     }
     
     // Rearrange the fileds into lines, srating with line 1
-    $line = array(
+    $lines = array(
         1 => $street,
         2 => $city . " " . $postal_code,
         3 => $country,
