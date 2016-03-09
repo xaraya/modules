@@ -168,6 +168,7 @@
             bic              varchar(64) NOT NULL default '',
             clearing         varchar(64) NOT NULL default '',
             holder           varchar(64) NOT NULL default '',
+            address          text,
             address1         varchar(64) NOT NULL default '',
             address2         varchar(64) NOT NULL default '',
             address3         varchar(64) NOT NULL default '',

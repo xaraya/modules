@@ -117,6 +117,15 @@
                 </div>
                 <div class="xar-row">
                     <div class="xar-col-condensed">
+                        <xar:var name="label">Address</xar:var>
+                        <xar:data-label property="$properties['address']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['address']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
                         <xar:var name="label">Address 1</xar:var>
                         <xar:data-label property="$properties['address_1']" label="$label"/>                    
                     </div>
