@@ -93,7 +93,7 @@ function payments_user_new_transaction()
         // The debtor name
         $data['object']->properties['sender_account']->value = $item['account_holder'];
         // The debtor address
-        $lines = xarMod::apiFunc('payment', 'admin', 'unpack_address', array('address' => $item['address']));
+        $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
 
         if (isset($address_lines['street'])) $data['object']->properties['sender_line_1']->value  = $address_lines['street'];
         $data['object']->properties['sender_line_2']->value  = $lines[2];
