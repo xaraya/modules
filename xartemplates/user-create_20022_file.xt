@@ -194,7 +194,7 @@
                   </xar:isoelement>
                 <xar:elseif condition="$item['payment_type'] eq 6"/>
                   <!-- Unstructured -->
-                  <xar:isoelement name="Ustrd">#$item['remittance_comment']#</xar:isoelement>
+                  <xar:isoelement name="Ustrd">#$item['reason']#</xar:isoelement>
                 </xar:if>
               </xar:isoelement>
               
