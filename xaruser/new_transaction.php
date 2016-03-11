@@ -94,17 +94,17 @@ function payments_user_new_transaction()
         $data['object']->properties['sender_account']->value = $item['account_holder'];
         // The debtor address
         $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
-
-        if (isset($address_lines['street'])) $data['object']->properties['sender_line_1']->value  = $address_lines['street'];
+        if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
         $data['object']->properties['sender_line_2']->value  = $lines[1];
         $data['object']->properties['sender_line_3']->value  = $lines[2];
-        $data['object']->properties['sender_line_4']->value  = $lines[3];
+        $data['object']->properties['sender_line_4']->value  = $lines[4];
     }
 
 # --------------------------------------------------------
 #
 # Get the beneficiary information of the last payment if one exists
 #
+    $previous_exists = false;
     if (!empty($info['beneficiary_object']) && !empty($info['beneficiary_itemid'])) {
         $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
         $q = $payments->dataquery;
@@ -113,6 +113,7 @@ function payments_user_new_transaction()
         $q->setorder('transaction_date', 'DESC');
         $items = $payments->getItems();
         if (!empty($items)) {
+            $previous_exists = true;
             $item = current($items);
             if (!empty($item['payment_type']) && !$type_changed) {
                 $data['object']->properties['payment_type']->value  = $item['payment_type'];
@@ -123,6 +124,11 @@ function payments_user_new_transaction()
             if (!empty($item['iban'])) $data['object']->properties['iban']->value  = $item['iban'];
             if (!empty($item['bic'])) $data['object']->properties['bic']->value  = $item['bic'];
         }
+    }
+    
+    // If we have no previous payment, chekc if a paymnt type was passed
+    if (($previous_exists == false) && isset($info['payment_type'])) {
+        $data['object']->properties['payment_type']->value = $info['payment_type'];
     }
 
 # --------------------------------------------------------
