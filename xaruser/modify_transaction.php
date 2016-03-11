@@ -65,9 +65,9 @@ function payments_user_modify_transaction()
             // The debtor address
             $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
             if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
-            $data['object']->properties['sender_line_2']->value  = $lines[1];
-            $data['object']->properties['sender_line_3']->value  = $lines[2];
-            $data['object']->properties['sender_line_4']->value  = $lines[4];
+            if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
+            if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
+            if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
         }
     }
     

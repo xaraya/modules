@@ -215,7 +215,7 @@
         <!--
         <img src="#xarTpl::getImage('p_002.gif', 'property','paymentslip')#"/>
         -->
-    <xar:elseif condition="$payment_type eq '3.2'"/>
+    <xar:elseif condition="$payment_type eq 6"/>
 <!-- Salary payment -->
         <xar:data-input property="$properties['bic']" hidden="hidden"/>
         <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
