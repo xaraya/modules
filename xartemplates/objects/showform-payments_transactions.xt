@@ -217,6 +217,9 @@
         -->
     <xar:elseif condition="$payment_type eq '3.2'"/>
 <!-- Salary payment -->
+        <xar:data-input property="$properties['bic']" hidden="hidden"/>
+        <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
+        <xar:data-input property="$properties['post_account']" hidden="hidden"/>
         <div class="xar-row">
             <div class="xar-col">
                 Beneficiary name
@@ -266,15 +269,10 @@
             </div>
             <div class="xar-col">
                 <xar:data-output property="$properties['sender_account']" /><br/>
-                <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
 <!--                <xar:data-output property="$properties['sender_line_1']" /><br/> -->
                 <xar:data-output property="$properties['sender_line_2']" /><br/>
                 <xar:data-output property="$properties['sender_line_3']" /><br/>
                 <xar:data-output property="$properties['sender_line_4']" />
-                <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
-                <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
-                <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
-                <xar:data-input property="$properties['sender_line_4']" hidden="hidden"/>
             </div>
         </div>
     </xar:if>
