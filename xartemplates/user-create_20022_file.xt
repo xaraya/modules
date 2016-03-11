@@ -127,7 +127,7 @@
                     <xar:isoelement name="BIC">#$item['bic']#</xar:isoelement>
                   </xar:isoelement>
                 </xar:isoelement>
-              <xar:elseif condition="$item['payment_type'] eq 6">
+              <xar:elseif condition="$item['payment_type'] eq 6"/>
                 <xar:isoelement name="CdtrAgt">
                   <xar:isoelement name="FinInstnId">
                     <xar:isoelement name="ClrSysMmbId">

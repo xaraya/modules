@@ -45,11 +45,11 @@ function payments_adminapi_unpack_address($args)
     }
     
     // Rearrange the fileds into lines, srating with line 1
-    if (!empty($city)) $city .= " " . $postal_code;
     $lines = array(
         1 => $street,
         2 => $city,
-        3 => $country,
+        3 => $postal_code,
+        4 => $country,
     );
     return $lines;
 }
