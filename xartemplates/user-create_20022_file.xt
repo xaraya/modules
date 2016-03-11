@@ -146,8 +146,6 @@
                   <xar:isoelement name="Nm">#$item['address_1']#</xar:isoelement>
                   <xar:isoelement name="PstlAdr">
                     <xar:isoelement name="StrtNm">#$item['address_2']#</xar:isoelement>
-                    <xar:isoelement name="BldgNb"></xar:isoelement>
-                    <xar:isoelement name="PstCd"></xar:isoelement>
                     <xar:isoelement name="TwnNm">#$item['address_3']#</xar:isoelement>
                     <xar:isoelement name="Ctry">#$item['address_4']#</xar:isoelement>
                   </xar:isoelement>
@@ -162,9 +160,7 @@
                       <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
                     </xar:isoelement>
                   <xar:elseif condition="$item['payment_type'] eq 6"/>
-                    <xar:isoelement name="Id">
-                      <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
-                    </xar:isoelement>
+                    <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
                   </xar:if>
                 </xar:isoelement>
               </xar:isoelement>
