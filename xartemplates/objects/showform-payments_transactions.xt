@@ -253,12 +253,20 @@
         </div>
         <div class="xar-row">
             <div class="xar-col">
+                Remittance information
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['reason']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
                 Sender
             </div>
             <div class="xar-col">
                 <xar:data-output property="$properties['sender_account']" /><br/>
                 <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
-                <xar:data-output property="$properties['sender_line_1']" /><br/>
+<!--                <xar:data-output property="$properties['sender_line_1']" /><br/> -->
                 <xar:data-output property="$properties['sender_line_2']" /><br/>
                 <xar:data-output property="$properties['sender_line_3']" /><br/>
                 <xar:data-output property="$properties['sender_line_4']" />
