@@ -86,7 +86,7 @@
           <!-- Ultimate Debtor -->
           <xar:if condition="$item['payment_type'] eq 3">
             <xar:isoelement name="UltmtDbtr">
-              <xar:isoelement name="Nm">#$debit_account->properties['debit_account']->value#</xar:isoelement>
+              <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
               <xar:isoelement name="PstlAdr">
                 <xar:isoelement name="StrtNm">#$debit_address[1]#</xar:isoelement>
                 <!-- Unused for now
