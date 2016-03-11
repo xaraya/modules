@@ -129,6 +129,7 @@ function payments_user_new_transaction()
     // If we have no previous payment, chekc if a paymnt type was passed
     if (($previous_exists == false) && isset($info['payment_type'])) {
         $data['object']->properties['payment_type']->value = $info['payment_type'];
+        $data['payment_type'] = $info['payment_type'];
     }
 
 # --------------------------------------------------------
