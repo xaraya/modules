@@ -217,7 +217,6 @@
         -->
     <xar:elseif condition="$payment_type eq 3"/>
 <!-- Bank transfer -->
-        <xar:data-input property="$properties['bic']" hidden="hidden"/>
         <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
         <xar:data-input property="$properties['post_account']" hidden="hidden"/>
         <div class="xar-row">
@@ -245,6 +244,14 @@
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['iban']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                Beneficiary BIC
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['bic']"/>
             </div>
         </div>
         <div class="xar-row">
