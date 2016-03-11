@@ -73,9 +73,9 @@
               <xar:elseif condition="$item['payment_type'] eq 3"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
-                      <xar:isoelement name="MmbId">CHBCC</xar:isoelement>
+                      <xar:isoelement name="Cd">CHBCC</xar:isoelement>
                     </xar:isoelement>
-                    <xar:isoelement name="Cd">#$debit_account->properties['clearing']->value#</xar:isoelement>
+                    <xar:isoelement name="MmbId">#$debit_account->properties['clearing']->value#</xar:isoelement>
                 </xar:isoelement>
               <xar:elseif condition="$item['payment_type'] eq 6"/>
                 <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
