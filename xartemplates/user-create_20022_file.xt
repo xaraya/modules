@@ -70,12 +70,12 @@
               <xar:if condition="$item['payment_type'] eq 826">
                 <!-- orange payment slip -->
                 <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
-              <xar:elseif condition="$item['payment_type'] eq 1"/>
+              <xar:elseif condition="$item['payment_type'] eq 3"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
-                      <xar:isoelement name="Cd">#$debit_account->properties['clearing']->value#</xar:isoelement>
+                      <xar:isoelement name="MmbId">"CHBCC</xar:isoelement>
                     </xar:isoelement>
-                    <xar:isoelement name="MmbId">"CHBCC</xar:isoelement>
+                    <xar:isoelement name="Cd">#$debit_account->properties['clearing']->value#</xar:isoelement>
                 </xar:isoelement>
               <xar:elseif condition="$item['payment_type'] eq 6"/>
                 <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
@@ -84,12 +84,14 @@
           </xar:isoelement>
     
           <!-- Ultimate Debtor -->
-          <xar:if condition="$item['payment_type'] eq 1">
+          <xar:if condition="$item['payment_type'] eq 3">
             <xar:isoelement name="UltmtDbtr">
               <xar:isoelement name="Nm">#$debit_account->properties['debit_account']->value#</xar:isoelement>
               <xar:isoelement name="PstlAdr">
                 <xar:isoelement name="StrtNm">#$debit_address[1]#</xar:isoelement>
+                <!-- Unused for now
                 <xar:isoelement name="BldgNb"></xar:isoelement>
+                -->
                 <xar:isoelement name="PstCd">#$debit_address[3]#</xar:isoelement>
                 <xar:isoelement name="TwnNm">#$debit_address[2]#</xar:isoelement>
                 <xar:isoelement name="Ctry">#$debit_address[4]#</xar:isoelement>
@@ -121,7 +123,7 @@
               </xar:isoelement>
 
               <!-- Creditor agent -->
-              <xar:if condition="$item['payment_type'] eq 1">
+              <xar:if condition="$item['payment_type'] eq 3">
                 <xar:isoelement name="CdtrAgt">
                   <xar:isoelement name="FinInstnId">
                     <xar:isoelement name="BIC">#$item['bic']#</xar:isoelement>
@@ -141,7 +143,20 @@
               </xar:if>
 
               <!-- Creditor -->
-              <xar:if condition="$item['payment_type'] eq 6">
+              <xar:if condition="$item['payment_type'] eq 3">
+                <xar:isoelement name="Cdtr">
+                  <xar:isoelement name="Nm">#$item['address_1']#</xar:isoelement>
+                  <xar:isoelement name="PstlAdr">
+                    <xar:isoelement name="StrtNm">#$item['address_2']#</xar:isoelement>
+                    <!--unused for now
+                    <xar:isoelement name="BldgNb"></xar:isoelement>
+                    <xar:isoelement name="PstCd"></xar:isoelement>
+                     -->
+                    <xar:isoelement name="TwnNm">#$item['address_3']#</xar:isoelement>
+                    <xar:isoelement name="Ctry">#$item['country_code']#</xar:isoelement>
+                  </xar:isoelement>
+                </xar:isoelement>
+              <xar:elseif condition="$item['payment_type'] eq 6"/>
                 <xar:isoelement name="Cdtr">
                   <xar:isoelement name="Nm">#$item['address_1']#</xar:isoelement>
                   <xar:isoelement name="PstlAdr">
@@ -163,6 +178,8 @@
                     <xar:isoelement name="Othr">
                       <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
                     </xar:isoelement>
+                  <xar:elseif condition="$item['payment_type'] eq 3"/>
+                    <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
                   <xar:elseif condition="$item['payment_type'] eq 6"/>
                     <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
                   </xar:if>
@@ -170,7 +187,7 @@
               </xar:isoelement>
               
               <!-- Ultimate creditor -->
-              <xar:if condition="$item['payment_type'] eq 1">
+              <xar:if condition="$item['payment_type'] eq 3">
                 <xar:isoelement name="UltmtCdtr">
                   <xar:isoelement name="Nm">#$item['post_account']#</xar:isoelement>
                 </xar:isoelement>
