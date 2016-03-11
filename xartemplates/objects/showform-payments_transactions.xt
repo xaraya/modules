@@ -235,7 +235,7 @@
             <div class="xar-col">
                 <xar:data-input property="$properties['address_2']"/>&#160;street, number<br/>
                 <xar:data-input property="$properties['address_3']"/>&#160;postal code, town<br/>
-                <xar:data-input property="$properties['address_4']"/>&#160;country
+                <xar:data-input property="$properties['address_4']"/>&#160;country<br/>
                 <xar:data-input property="$properties['country_code']"/>&#160;country code
             </div>
         </div>
