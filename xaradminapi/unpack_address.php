@@ -50,7 +50,7 @@ function payments_adminapi_unpack_address($args)
         2 => $city,
         3 => $postal_code,
         4 => $country,
-        4 => strtoupper($countryobject->value),
+        5 => strtoupper($countryobject->value),
     );
     return $lines;
 }
