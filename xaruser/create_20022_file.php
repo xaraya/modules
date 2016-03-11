@@ -36,6 +36,8 @@ function payments_user_create_20022_file()
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
+    $data['debit_address'] = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_fields['address']));
+
     
 # --------------------------------------------------------
 #
