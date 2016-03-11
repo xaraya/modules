@@ -73,7 +73,7 @@
               <xar:elseif condition="$item['payment_type'] eq 3"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
-                      <xar:isoelement name="MmbId">"CHBCC</xar:isoelement>
+                      <xar:isoelement name="MmbId">CHBCC</xar:isoelement>
                     </xar:isoelement>
                     <xar:isoelement name="Cd">#$debit_account->properties['clearing']->value#</xar:isoelement>
                 </xar:isoelement>
@@ -94,7 +94,7 @@
                 -->
                 <xar:isoelement name="PstCd">#$debit_address[3]#</xar:isoelement>
                 <xar:isoelement name="TwnNm">#$debit_address[2]#</xar:isoelement>
-                <xar:isoelement name="Ctry">#$debit_address[4]#</xar:isoelement>
+                <xar:isoelement name="Ctry">#$debit_address[5]#</xar:isoelement>
               </xar:isoelement>
             </xar:isoelement>
           </xar:if>
