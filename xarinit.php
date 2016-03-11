@@ -136,6 +136,7 @@
             address3         varchar(64) NOT NULL default '',
             address4         varchar(64) NOT NULL default '',
             post_code        varchar(64) NOT NULL default '',
+            country_code     varchar(3) NOT NULL default '',
             currency         varchar(64) NOT NULL default '',
             amount           decimal(15,5) NOT NULL default 0,
             reference        varchar(255) NOT NULL default '',
