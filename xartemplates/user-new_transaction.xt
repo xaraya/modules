@@ -10,8 +10,8 @@
                 array(
                     array('id' => '827', 'name' => 'Red'),
                     array('id' => '826', 'name' => 'Orange'),
-                    array('id' => '3', 'name' => 'Bank transfer'),
-                    array('id' => '3.2', 'name' => 'Salary payment'),
+                    array('id' => 3, 'name' => 'Bank transfer'),
+                    array('id' => 6, 'name' => 'Salary payment'),
                 )
             </xar:set>
             <xar:data-input type="dropdown" name="payment_type" value="$payment_type" options="$options" onchange="this.form.submit()"/>
