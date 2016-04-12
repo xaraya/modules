@@ -23,7 +23,7 @@
       <xar:isoelement name="PmtInf">
         <xar:foreach in="$items" value="$item">
   
-          <xar:if condition="$item['payment_type'] eq '826'">
+          <xar:if condition="$item['payment_type'] eq '1'">
             <xar:set name="payment_type">'CH01'</xar:set>
           <xar:elseif condition="$item['payment_type'] eq '827'"/>
             <xar:set name="payment_type">'CH01'</xar:set>
@@ -67,7 +67,7 @@
           <!-- Debtor Agent -->
           <xar:isoelement name="DbtrAgt">
             <xar:isoelement name="FinInstnId">
-              <xar:if condition="$item['payment_type'] eq 826">
+              <xar:if condition="$item['payment_type'] eq 1">
                 <!-- orange payment slip -->
                 <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
               <xar:elseif condition="$item['payment_type'] eq 3"/>
@@ -109,7 +109,7 @@
               </xar:isoelement>
               
               <!-- Payment type information -->
-              <xar:if condition="$item['payment_type'] eq 826">
+              <xar:if condition="$item['payment_type'] eq 1">
                 <xar:isoelement name="PmtTpInf">
                   <xar:isoelement name="LclInstrm">
                     <xar:isoelement name="Prtry">#$payment_type#</xar:isoelement>
@@ -174,7 +174,7 @@
               <!-- Creditor account -->
               <xar:isoelement name="CdtrAcct">
                 <xar:isoelement name="Id">
-                  <xar:if condition="$item['payment_type'] eq 826">
+                  <xar:if condition="$item['payment_type'] eq 1">
                     <xar:isoelement name="Othr">
                       <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
                     </xar:isoelement>
@@ -202,7 +202,7 @@
 
               <!-- Remittance information -->
               <xar:isoelement name="RmtInf">
-                <xar:if condition="$item['payment_type'] eq 826">
+                <xar:if condition="$item['payment_type'] eq 1">
                   <!-- Structured -->
                   <xar:isoelement name="Strd">
                     <xar:isoelement name="CdtrRefInf">
