@@ -51,6 +51,7 @@ function payments_user_view_transactions($args)
     // Add 60 days to the future, which ISO20022 payments allow
     $q->ge('transaction_date', $data['period'][0]);
     $q->le('transaction_date', $data['period'][1] + 3600*24*60);
+    $q->setorder('transaction_date', 'DESC');
 
     return $data;
 }
