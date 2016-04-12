@@ -176,7 +176,8 @@
                 <xar:isoelement name="Id">
                   <xar:if condition="$item['payment_type'] eq 1">
                     <xar:isoelement name="Othr">
-                      <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
+                      <xar:set name="account">str_replace('_','',$item['post_account'])</xar:set>
+                      <xar:isoelement name="Id">#$account#</xar:isoelement>
                     </xar:isoelement>
                   <xar:elseif condition="$item['payment_type'] eq 3"/>
                     <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
