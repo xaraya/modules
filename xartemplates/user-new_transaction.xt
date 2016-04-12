@@ -9,7 +9,7 @@
             <xar:set name="options">
                 array(
                     array('id' => '827', 'name' => 'Red'),
-                    array('id' => '826', 'name' => 'Orange'),
+                    array('id' => '1', 'name' => 'Orange'),
                     array('id' => 3, 'name' => 'Bank transfer'),
                     array('id' => 6, 'name' => 'Salary payment'),
                 )

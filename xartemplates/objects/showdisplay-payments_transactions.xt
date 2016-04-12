@@ -12,7 +12,7 @@
         </div>
     </div>
     <xar:set name="payment_type">$properties['payment_type']->value</xar:set>
-    <xar:if condition="$payment_type eq '826'">
+    <xar:if condition="$payment_type eq '1'">
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffcc99;'</xar:set>

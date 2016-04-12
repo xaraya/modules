@@ -33,7 +33,7 @@
     </div>
     
     <xar:set name="payment_type">$properties['payment_type']->value</xar:set>
-    <xar:if condition="$payment_type eq '826'">
+    <xar:if condition="$payment_type eq '1'">
 <!-- Orange payment slip -->
         <xar:data-input property="$properties['iban']" hidden="hidden"/>
         <xar:data-input property="$properties['bic']" hidden="hidden"/>
