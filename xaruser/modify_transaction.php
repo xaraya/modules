@@ -81,13 +81,13 @@ function payments_user_modify_transaction()
         // Check for a valid confirmation key
         if(!xarSecConfirmAuthKey()) return;
 
-        // Get the data from the form
-        $isvalid = $data['object']->checkInput();
-        
         // Disable fields we are not using and don't want to check
         if ($data['object']->properties['payment_type']->value == 1) {
             $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
+        
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
