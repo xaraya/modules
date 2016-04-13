@@ -55,7 +55,8 @@
           <!-- Debtor account -->
           <xar:isoelement name="DbtrAcct">
             <xar:isoelement name="Id">
-              <xar:isoelement name="IBAN">#$debit_account->properties['iban']->value#</xar:isoelement>
+              <xar:set name="iban">str_replace(' ','',$debit_account->properties['iban']->value)</xar:set>
+              <xar:isoelement name="IBAN">#$iban#</xar:isoelement>
             </xar:isoelement>
             <xar:if condition="$item['payment_type'] eq 6">
               <xar:isoelement name="Tp">
@@ -180,9 +181,10 @@
                       <xar:isoelement name="Id">#$account#</xar:isoelement>
                     </xar:isoelement>
                   <xar:elseif condition="$item['payment_type'] eq 3"/>
-                    <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
+                    <xar:set name="iban">str_replace(' ','',$item['iban'])</xar:set>
+                    <xar:isoelement name="IBAN">#$iban#</xar:isoelement>
                   <xar:elseif condition="$item['payment_type'] eq 6"/>
-                    <xar:isoelement name="IBAN">#$item['iban']#</xar:isoelement>
+                    <xar:isoelement name="IBAN">#$iban#</xar:isoelement>
                   </xar:if>
                 </xar:isoelement>
               </xar:isoelement>
