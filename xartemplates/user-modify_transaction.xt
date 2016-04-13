@@ -22,6 +22,7 @@
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
+                    <input type="hidden" name="payment_type" id="payment_type" value="#$payment_type#"/>
                     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                     <input type="hidden" name="name" id="name" value="#$object:name#"/>
                     <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>

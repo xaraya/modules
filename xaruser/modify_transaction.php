@@ -21,6 +21,7 @@ function payments_user_modify_transaction()
 
     if (!xarVarFetch('name',       'str',      $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('payment_type', 'str',    $data['payment_type'], '827',  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
@@ -82,6 +83,11 @@ function payments_user_modify_transaction()
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
+        
+        // Disable fields we are not using and don't want to check
+        if ($data['payment_type'] == 1) {
+            $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+        }
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
