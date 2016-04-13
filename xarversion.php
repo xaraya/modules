@@ -42,4 +42,18 @@ $modversion['dependencyinfo'] = array(
                                         'version_ge' => '2.4.0'
                                      ),
                                       );
+$modversion['propertyinfo'] = array(
+                                    30059 => array(
+                                        'name' => 'datetime',
+                                        ),
+                                    30099 => array(
+                                        'name' => 'pager',
+                                        ),
+                                    30100 => array(
+                                        'name' => 'listing',
+                                        ),
+                                    30143 => array(
+                                        'name' => 'iban',
+                                        ),
+                                    );
 ?>
