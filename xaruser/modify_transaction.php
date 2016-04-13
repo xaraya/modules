@@ -85,7 +85,7 @@ function payments_user_modify_transaction()
         $isvalid = $data['object']->checkInput();
         
         // Disable fields we are not using and don't want to check
-        if ($data['object']->properties['payment_type'] == 1) {
+        if ($data['object']->properties['payment_type']->value == 1) {
             $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
         
