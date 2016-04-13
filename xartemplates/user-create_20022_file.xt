@@ -207,7 +207,8 @@
                   <!-- Structured -->
                   <xar:isoelement name="Strd">
                     <xar:isoelement name="CdtrRefInf">
-                      <xar:isoelement name="Ref">#$item['reference_number']#</xar:isoelement>
+                      <xar:set name="reference">str_replace(' ','',$item['reference_number'])</xar:set>
+                      <xar:isoelement name="Ref">#$reference#</xar:isoelement>
                     </xar:isoelement>
                   </xar:isoelement>
                 <xar:elseif condition="$item['payment_type'] eq 6"/>
