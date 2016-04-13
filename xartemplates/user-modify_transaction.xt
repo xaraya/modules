@@ -6,12 +6,18 @@
         <h2>Modify Payment
         </h2>
 
-        <xar:if condition="isset($preview)">
-            <fieldset>
-                <legend>Preview</legend>
-                <xar:data-display object="$object" tplmodule="$tplmodule"/>
-            </fieldset>
-        </xar:if>
+        <form method="post" action="#xarServer::getCurrentURL()#">
+            <xar:set name="options">
+                array(
+                    array('id' => '827', 'name' => 'Red'),
+                    array('id' => '1', 'name' => 'Orange'),
+                    array('id' => 3, 'name' => 'Bank transfer'),
+                    array('id' => 6, 'name' => 'Salary payment'),
+                )
+            </xar:set>
+            <xar:data-input type="dropdown" name="payment_type" value="$payment_type" options="$options" onchange="this.form.submit()"/>
+            <input type="hidden" name="type_changed" id="type_changed" value="1"/>
+        </form>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
