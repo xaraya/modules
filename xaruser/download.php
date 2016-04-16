@@ -27,6 +27,7 @@ function publications_user_download()
     $filetype = filetype($filepath);
     $filename = basename($filepath);
     
+    // Xaraya security
     if (!xarSecurityCheck('ManagePublications')) return;
 
 # --------------------------------------------------------

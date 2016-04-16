@@ -15,6 +15,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_create()
 {
+    // Xaraya security
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}

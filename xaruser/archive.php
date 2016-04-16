@@ -14,6 +14,9 @@
  */
 function publications_user_archive($args)
 {
+    // Xaraya security
+    if (!xarSecurityCheck('ModeratePublications')) return;
+
     // Get parameters from user
     if (!xarVarFetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}

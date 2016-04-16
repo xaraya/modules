@@ -21,6 +21,9 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_modify($args)
 {
+    // Xaraya security
+    if (!xarSecurityCheck('ModeratePublications')) return;
+
     extract($args);
 
     // Get parameters
