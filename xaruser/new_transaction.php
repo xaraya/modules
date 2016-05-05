@@ -110,7 +110,7 @@ function payments_user_new_transaction()
         $q = $payments->dataquery;
         $q->eq('beneficiary_object', $info['beneficiary_object']);
         $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
-        $q->setorder('transaction_date', 'DESC');
+        $q->setorder('processed', 'DESC');
         $items = $payments->getItems();
         if (!empty($items)) {
             $previous_exists = true;
