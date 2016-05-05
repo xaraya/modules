@@ -114,7 +114,7 @@ function payments_user_new_transaction()
         $items = $payments->getItems();
         if (!empty($items)) {
             $previous_exists = true;
-            $item = current($items);
+            $item = reset($items);
             if (!empty($item['payment_type']) && !$type_changed) {
                 $data['object']->properties['payment_type']->value  = $item['payment_type'];
                 $data['payment_type'] = $item['payment_type'];
@@ -126,7 +126,7 @@ function payments_user_new_transaction()
         }
     }
     
-    // If we have no previous payment, chekc if a paymnt type was passed
+    // If we have no previous payment, check if a paymnt type was passed
     if (($previous_exists == false) && isset($info['payment_type'])) {
         $data['object']->properties['payment_type']->value = $info['payment_type'];
         $data['payment_type'] = $info['payment_type'];
