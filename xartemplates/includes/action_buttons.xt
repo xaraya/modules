@@ -56,6 +56,7 @@
             <xar:if condition="$author eq xarUserGetVar('id')">
                 <form action="#xarModURL('comments', 'user', 'delete')#" method="post" class="xar-comments-actions">
                     <div>
+                        <input type="hidden" name="confirm" id="confirm" value="true#"/>
                         <input type="hidden" name="parent_url" value="#xarServer::getCurrentURL()#"/>
                         <input type="hidden" name="id" value="#$item['id']#"/>
                         <xar:var name="label">Delete</xar:var>
