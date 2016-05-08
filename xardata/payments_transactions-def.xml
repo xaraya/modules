@@ -149,7 +149,7 @@
       <id>6847</id>
       <label>Payment Type</label>
       <type>textbox</type>
-      <defaultvalue>827</defaultvalue>
+      <defaultvalue>2</defaultvalue>
       <source>payments.payment_type</source>
       <status>33</status>
       <seq>15</seq>

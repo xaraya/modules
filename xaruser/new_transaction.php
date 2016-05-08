@@ -20,7 +20,7 @@ function payments_user_new_transaction()
     if (!xarSecurityCheck('AddPayments')) return;
 
     if (!xarVarFetch('confirm',      'bool',   $data['confirm'],      false,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('payment_type', 'str',    $data['payment_type'], '827',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('payment_type', 'str',    $data['payment_type'], '2',  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('type_changed', 'int',    $type_changed,         0,      XARVAR_NOT_REQUIRED)) return;
     
 # --------------------------------------------------------

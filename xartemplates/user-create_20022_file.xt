@@ -25,7 +25,7 @@
   
           <xar:if condition="$item['payment_type'] eq '1'">
             <xar:set name="payment_type">'CH01'</xar:set>
-          <xar:elseif condition="$item['payment_type'] eq '827'"/>
+          <xar:elseif condition="$item['payment_type'] eq '2'"/>
             <xar:set name="payment_type">'CH01'</xar:set>
           <xar:else/>
             <xar:set name="payment_type">$item['payment_type']</xar:set>
