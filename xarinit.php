@@ -148,6 +148,7 @@
             sender_account   varchar(255) NOT NULL default '',
             sender_reference varchar(255) NOT NULL default '',
             transaction_date integer unsigned NOT NULL default 0,
+            financial_inst   varchar(255) NOT NULL default '',
             payment_object   varchar(64) NOT NULL default '',
             payment_itemid   integer unsigned NOT NULL default 0,
             beneficiary_object varchar(64) NOT NULL default '',

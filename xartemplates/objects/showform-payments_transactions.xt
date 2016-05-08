@@ -140,7 +140,9 @@
                             <tr>
                                 <td width="100%" align="left" style="color: ##ff3333; padding-left: 10px">
                                     Einzahlung/ Versament pour / Versamento per
-                                    <br /><br /><br />
+                                    <br />
+                                    <xar:data-input property="$properties['financial_institution']" rows="3" cols="20"/>
+                                    <br /><br />
                                     Zugunsten von / Enfaveur de / A favore di
                                     <br />
                                     <xar:data-input property="$properties['iban']" style="width: 30mm"/>&#160;
