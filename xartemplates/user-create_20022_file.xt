@@ -136,7 +136,7 @@
                   <xar:isoelement name="FinInstnId">
                     <xar:isoelement name="Nm">#$item['financial_institution']#</xar:isoelement>
                     <xar:isoelement name="Othr">
-                        <xar:isoelement name="Id">#$item['post_code']#</xar:isoelement>
+                        <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
                     </xar:isoelement>
                   </xar:isoelement>
                 </xar:isoelement>
