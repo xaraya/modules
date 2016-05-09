@@ -120,7 +120,7 @@
             </table>
             <br /><br />
         </div><!-- xar-middle-payment -->
-    <xar:elseif condition="$payment_type eq '2'"/>
+    <xar:elseif condition="$payment_type eq '2.2'"/>
 <!-- Red payment slip -->
         <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
         <xar:data-input property="$properties['country_code']" hidden="hidden"/>

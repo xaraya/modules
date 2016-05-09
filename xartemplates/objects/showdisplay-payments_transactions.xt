@@ -83,7 +83,7 @@
         </div><!-- xar-middle-payment -->
     <xar:elseif condition="$payment_type eq 'lukb_orange'"/>
         <xar:template filename="lukb_orange"/>
-    <xar:elseif condition="$payment_type eq '2'"/>
+    <xar:elseif condition="$payment_type eq '2.2'"/>
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffefef;'</xar:set>
