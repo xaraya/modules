@@ -200,10 +200,10 @@
                     </xar:isoelement>
                   <xar:elseif condition="($item['payment_type'] eq 2.2) OR ($item['payment_type'] eq 3)"/>
                     <xar:set name="credit_iban">str_replace(' ','',$item['iban'])</xar:set>
-                    <xar:isoelement name="IBAN">#$iban#</xar:isoelement>
+                    <xar:isoelement name="IBAN">#$credit_iban#</xar:isoelement>
                   <xar:elseif condition="$item['payment_type'] eq 6"/>
                     <xar:set name="credit_iban">str_replace(' ','',$item['iban'])</xar:set>
-                    <xar:isoelement name="IBAN">#$iban#</xar:isoelement>
+                    <xar:isoelement name="IBAN">#$credit_iban#</xar:isoelement>
                   </xar:if>
                 </xar:isoelement>
               </xar:isoelement>
