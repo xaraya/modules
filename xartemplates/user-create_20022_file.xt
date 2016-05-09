@@ -27,6 +27,9 @@
             <xar:set name="payment_type">'CH01'</xar:set>
           <xar:elseif condition="$item['payment_type'] eq '2.2'"/>
             <xar:set name="payment_type">'CH03'</xar:set>
+          <xar:elseif condition="$item['payment_type'] eq '6'"/>
+            <!-- Salary payments are a variation of type 3 -->
+            <xar:set name="payment_type">'3'</xar:set>
           <xar:else/>
             <xar:set name="payment_type">$item['payment_type']</xar:set>
           </xar:if>
