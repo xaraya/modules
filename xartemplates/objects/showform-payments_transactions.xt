@@ -39,6 +39,7 @@
         <xar:data-input property="$properties['bic']" hidden="hidden"/>
         <xar:data-input property="$properties['reason']" hidden="hidden"/>
         <xar:data-input property="$properties['country_code']" hidden="hidden"/>
+        <xar:data-input property="$properties['financial_institution']" hidden="hidden"/>
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffcc99;'</xar:set>
@@ -221,6 +222,7 @@
         -->
     <xar:elseif condition="$payment_type eq 3"/>
 <!-- Bank transfer -->
+        <xar:data-input property="$properties['financial_institution']" hidden="hidden"/>
         <xar:data-input property="$properties['reference_number']" hidden="hidden"/>
         <xar:data-input property="$properties['post_account']" hidden="hidden"/>
         <div class="xar-row">

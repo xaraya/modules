@@ -3,8 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Modify Payment
-        </h2>
+        <h2>Modify Payment</h2>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <xar:set name="options">
