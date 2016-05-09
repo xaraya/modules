@@ -131,7 +131,7 @@
               </xar:isoelement>
 
               <!-- Creditor agent -->
-              <xar:if condition="$item['payment_type'] eq 2.1">
+              <xar:if condition="$item['payment_type'] eq 2.2">
                 <xar:isoelement name="CdtrAgt">
                   <xar:isoelement name="FinInstnId">
                     <xar:set name="inst_address">explode(PHP_EOL, $item['financial_institution'])</xar:set>

@@ -9,7 +9,7 @@
         <form method="post" action="#xarServer::getCurrentURL()#">
             <xar:set name="options">
                 array(
-                    array('id' => 2, 'name' => 'Red'),
+                    array('id' => 2.2, 'name' => 'Red'),
                     array('id' => 1, 'name' => 'Orange'),
                     array('id' => 3, 'name' => 'Bank transfer'),
                     array('id' => 6, 'name' => 'Salary payment'),
