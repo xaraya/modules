@@ -117,7 +117,7 @@
               </xar:isoelement>
               
               <!-- Payment type information -->
-              <xar:if condition="$item['payment_type'] eq 1">
+              <xar:if condition="($item['payment_type'] eq 1) OR ($item['payment_type'] eq 2)">
                 <xar:isoelement name="PmtTpInf">
                   <xar:isoelement name="LclInstrm">
                     <xar:isoelement name="Prtry">#$payment_type#</xar:isoelement>
