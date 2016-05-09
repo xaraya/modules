@@ -134,7 +134,9 @@
               <xar:if condition="$item['payment_type'] eq 2">
                 <xar:isoelement name="CdtrAgt">
                   <xar:isoelement name="FinInstnId">
-                    <xar:isoelement name="Nm">#$item['financial_institution']#</xar:isoelement>
+                    <xar:set name="inst_address">explode(PHP_EOL, $item['financial_institution'])</xar:set>
+                    <xar:set name="inst_name">trim($inst_address[0])</xar:set>
+                    <xar:isoelement name="Nm">#$inst_name#</xar:isoelement>
                     <xar:isoelement name="Othr">
                         <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
                     </xar:isoelement>
