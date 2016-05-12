@@ -27,7 +27,7 @@ class ISO20022 extends DataObject
 
         // Sanitize some property values
         $string = $this->properties['address_1']->value;
-        $this->properties['address_1']->value = xarMod::apiFunc('payments', 'admin', 'sanitize_string', array('string' => $string));
+        $this->properties['address_1']->value = xarMod::apiFunc('payments', 'admin', 'sanitize_swift', array('string' => $string));
         
         return $isvalid;
     }
