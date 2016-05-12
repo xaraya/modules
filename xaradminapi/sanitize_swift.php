@@ -37,7 +37,7 @@ function payments_adminapi_sanitize_swift($args)
      $f = preg_replace(array('/[\&]/', '/[\@]/', '/[\#]/'), array('-and-', '-at-', '-number-'), $f);
      $f = preg_replace('/[^(\x20-\x7F)]*/','', $f); // removes any special chars we missed
      $f = str_replace('\"', '\'', $f); // turn double quotes into single quotes
-     $f = preg_replace('/[^\w\-\.]+/', '', $f); // remove non-word chars (leaving hyphens and periods)
+//     $f = preg_replace('/[^\w\-\.]+/', '', $f); // remove non-word chars (leaving hyphens and periods)
      $f = preg_replace('/[\-]+/', '-', $f); // converts groups of hyphens into one
      return $f;
 }
