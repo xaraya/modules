@@ -26,8 +26,8 @@ class ISO20022 extends DataObject
         $isvalid = parent::checkInput($args,$suppress,$priority);
 
         // Sanitize some property values
-//        $string = $this->properties['access']->value;
-//        $this->properties['access']->value = xarMod::apiFunc('payments', 'admin', 'sanitize_string', array('string' => $string));
+        $string = $this->properties['address_1']->value;
+        $this->properties['address_1']->value = xarMod::apiFunc('payments', 'admin', 'sanitize_string', array('string' => $string));
         
         return $isvalid;
     }
