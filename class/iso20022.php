@@ -18,7 +18,7 @@
  
 sys::import('modules.dynamicdata.class.objects.base');
 
-class ISO2002 extends DataObject
+class ISO20022 extends DataObject
 {
     public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
     {
