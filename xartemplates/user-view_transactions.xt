@@ -24,6 +24,7 @@
             <xar:data-input type="listing" 
                             object="$object" 
                             fieldlist="transaction_date,payment_type,address_1,currency,amount,processed"
+                            show_bulk="0"
                             tplmodule="payments"
                             />
         </fieldset>
