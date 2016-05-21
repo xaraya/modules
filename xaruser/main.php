@@ -79,7 +79,7 @@
                     $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
                     xarController::redirect($urldata['redirecturl']);
                 } else {
-                    xarController::redirect(xarModURL('payments', 'user', 'test'));
+                    xarController::redirect(xarModURL('payments', 'user', 'view_transactions'));
                 }
                 break;
         }

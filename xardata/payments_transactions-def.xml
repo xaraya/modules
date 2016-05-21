@@ -28,7 +28,7 @@
     <property name="iban">
       <id>6835</id>
       <label>IBAN</label>
-      <type>textbox</type>
+      <type>iban</type>
       <defaultvalue></defaultvalue>
       <source>payments.iban</source>
       <status>33</status>
@@ -149,7 +149,7 @@
       <id>6847</id>
       <label>Payment Type</label>
       <type>textbox</type>
-      <defaultvalue>2</defaultvalue>
+      <defaultvalue>827</defaultvalue>
       <source>payments.payment_type</source>
       <status>33</status>
       <seq>15</seq>
@@ -333,6 +333,16 @@
       <source>payments.country_code</source>
       <status>33</status>
       <seq>32</seq>
+      <configuration></configuration>
+    </property>
+    <property name="financial_institution">
+      <id>6877</id>
+      <label>Financial Institution</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.financial_inst</source>
+      <status>34</status>
+      <seq>33</seq>
       <configuration></configuration>
     </property>
   </properties>

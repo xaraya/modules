@@ -199,7 +199,13 @@
                   <xar:if condition="$item['payment_type'] eq 1">
                     <xar:isoelement name="Othr">
                       <xar:set name="account">str_replace('-','',$item['post_account'])</xar:set>
-                      <xar:isoelement name="Id">#$account#</xar:isoelement>
+                      <xar:if condition="strlen($account) eq 8">
+                        <!-- Postal accounts with 8 digits are accepted as is -->
+                        <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
+                      </xar:else/>
+                        <!-- Other account types get their dashes stripped -->
+                        <xar:isoelement name="Id">#$account#</xar:isoelement>
+                      </xar:if>
                     </xar:isoelement>
                   <xar:elseif condition="($item['payment_type'] eq 2.2) OR ($item['payment_type'] eq 3)"/>
                     <xar:set name="credit_iban">str_replace(' ','',$item['iban'])</xar:set>
