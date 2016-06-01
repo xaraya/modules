@@ -202,7 +202,7 @@
                       <xar:if condition="strlen($account) eq 8">
                         <!-- Postal accounts with 8 digits are accepted as is -->
                         <xar:isoelement name="Id">#$item['post_account']#</xar:isoelement>
-                      </xar:else/>
+                      <xar:else/>
                         <!-- Other account types get their dashes stripped -->
                         <xar:isoelement name="Id">#$account#</xar:isoelement>
                       </xar:if>
