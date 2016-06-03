@@ -478,7 +478,7 @@ function crispbb_init()
                   array('callerModName' => 'base', 'hookModName' => $module));
 
     // hook search
-    if (xarModIsAvailable('search')) {
+    if (xarMod::isAvailable('search')) {
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'search', 'hookModName' => $module));
     }

@@ -240,7 +240,7 @@ function crispbb_userapi_gettopics($args)
         $addme = 1;
     }
 
-    if (empty($noratings) && xarModIsAvailable('ratings')) {
+    if (empty($noratings) && xarMod::isAvailable('ratings')) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
         $ratingsdef = xarMod::apiFunc('ratings', 'user', 'leftjoin',
             array(
