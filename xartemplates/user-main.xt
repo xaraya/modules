@@ -37,8 +37,8 @@
                 <tr>
                     <th scope="col" class="timeimage">&#160;</th>
                     <th scope="col" class="foruminfo xar-halfwidth">Forum</th>
-                    <th scope="col" class="postinfo">Posts</th>
-                    <th scope="col" class="lastpost">Last Post</th>
+                    <th scope="col" class="postinfo">Info</th>
+                    <th scope="col" class="lastpost">Latest Post</th>
                 </tr>
             </thead>
             <tfoot>
@@ -84,7 +84,6 @@
                     </td>
                     <td class="lastpost xar-valign-top">
                         <xar:if condition="!empty($forum['lasttid'])">
-                            <span class="xar-sub">In:</span>
                             <xar:if condition="!empty($forum['lasttopicurl'])">
                                 <a href="#$forum['lasttopicurl']#">#$forum['ttitle']#</a>
                             <xar:else />
@@ -100,7 +99,7 @@
                                 <span class="xar-sub">By:</span>
                                 <xar:if condition="!empty($forum['pownerurl'])">
                                     <a href="#$forum['pownerurl']#" title="#xarML('View profile')#">
-                                        <xar:data-output type="name" value="$posterlist[$forum['powner']]['name']"/>
+                                        <xar:data-output type="username" value="$posterlist[$forum['powner']]['name']"/>
                                     </a>
                                 <xar:else/>
                                     <xar:data-output type="name" value="$posterlist[$forum['powner']]['name']"/>
