@@ -34,7 +34,8 @@
                     <div class="xar-form-input-wrapper-after">
                         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
-                        <input type="submit" id="confirm" name="confirm" value="#xarML('Add Forum')#" />
+                        <xar:var name="label">Add Forum</xar:var>
+                        <xar:button type="submit" name="confirm" label="$label" />
                     </div>
                 </fieldset>
             </form>

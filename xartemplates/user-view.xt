@@ -24,7 +24,7 @@
     </div>
     <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
-    <xar:if condition="xarModIsAvailable('crispsubs')">
+    <xar:if condition="xarMod::isAvailable('crispsubs')">
         <xar:comment>
         Show a link to subscribe or unsubscribe from all topics in this forum
         <xar:crispsubs-view modname="crispbb" itemtype="$topicstype" itemid="0" />
@@ -83,7 +83,7 @@
                 <th scope="col" class="topicicon"></th>
                 <th scope="col" class="topicinfo">Topic</th>
                 <th scope="col" class="postinfo">Info</th>
-                <th scope="col" class="replyinfo xar-thirdwidth">Last Post</th>
+                <th scope="col" class="replyinfo xar-thirdwidth">Latest Post</th>
                 <xar:if condition="!empty($modforumurl)">
                 <th scope="col" id="checkall#$fid#">&#160;</th>
                 <xar:set name="numcols">'6'</xar:set>
@@ -127,7 +127,7 @@
                         <th scope="col" class="topicicon"></th>
                         <th scope="col" class="topicinfo">Topic</th>
                         <th scope="col" class="postinfo">Info</th>
-                        <th scope="col" class="replyinfo xar-thirdwidth">Last Post</th>
+                        <th scope="col" class="replyinfo xar-thirdwidth">Latest Post</th>
                         <xar:if condition="!empty($modforumurl)">
                         <th scope="col" id="checkall#$fid#">&#160;</th>
                         <xar:set name="numcols">'5'</xar:set>
@@ -170,14 +170,15 @@
         <xar:if condition="!empty($modforumurl)">
             <span class="xar-floatright xar-align-right">
                 <label for="modaction" title="#xarML('Select action to perform on selected topics')#">
-                    With Selected:
+                    With Selected
                 </label>
                 <xar:data-input type="dropdown" name="modaction" id="modaction" options="$modactions" />
                 <input type="hidden" name="fid" id="fid" value="#$fid#" />
                 <input type="hidden" name="component" id="component" value="topics" />
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="return_url" id="return_url" value="#xarServer::getCurrentURL()#" />
-                <input type="submit" value="#xarML('Update')#" />
+                <xar:var name="label">Update</xar:var>
+                <xar:button type="submit" label="$label" />
             </span>
         </xar:if>
         <br class="xar-clearboth" />
@@ -235,9 +236,9 @@
             </li>
             <xar:if condition="!empty($powner) and !empty($ptime)">
             <li>
-                Last post by
+                Latest post by
                 <a href="#$pownerurl#" title="#xarML('View Profile')#">
-                    <xar:data-output type="name" value="$posterlist[$powner]['name']"/>
+                    <xar:data-output type="username" value="$posterlist[$powner]['name']"/>
                 </a>
             </li>
             <li>

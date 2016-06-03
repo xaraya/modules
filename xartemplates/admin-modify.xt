@@ -32,7 +32,8 @@
                         <input type="hidden" name="fid" id="fid" value="#$fid#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="sublink" id="sublink" value="edit" />
-                        <input type="submit" name="confirm" id="confirm" value="#xarML('Update Forum')#" />
+                        <xar:var name="label">Update Forum</xar:var>
+                        <xar:button type="submit" name="confirm" label="$label" />
                     </div>
                 </fieldset>
             </form>
@@ -71,7 +72,8 @@
                             <input type="hidden" name="fid" id="fid" value="#$fid#" />
                             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <input type="hidden" name="phase" id="phase" value="update" />
-                            <input type="submit" value="#xarML('Update Configuration')#" />
+                            <xar:var name="label">Update Configuration</xar:var>
+                            <xar:button type="submit" label="$label" />
                         </div>
                     </fieldset>
                 </xar:if>
@@ -129,7 +131,8 @@
                         <input type="hidden" name="fid" id="fid" value="#$fid#" />
                         <input type="hidden" name="sublink" id="sublink" value="privileges" />
                         <input type="hidden" name="phase" id="phase" value="update" />
-                        <input type="submit" value="#xarML('Update Privileges')#" />
+                        <xar:var name="label">Update Privileges</xar:var>
+                        <xar:button type="submit" label="$label" />
                     </div>
                 </fieldset>
             </form>

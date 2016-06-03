@@ -239,7 +239,8 @@
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                     <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus))#" />
-                    <input type="submit" value="#xarML('Update Topics')#" />
+                    <xar:var name="label">Update Topics</xar:var>
+                    <xar:button type="submit" label="$label" />
                 </div>
             </form>
         <xar:elseif condition="$modaction eq 'move'" />
@@ -396,7 +397,8 @@
                         <input type="hidden" name="component" id="component" value="topics" />
                         <input type="hidden" name="modaction" id="modaction" value="move" />
                         <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid))#" />
-                        <input type="submit" value="#xarML('Move Topic')#" />
+                        <xar:var name="label">Move Topic</xar:var>
+                        <xar:button type="submit" label="$label" />
                     </div>
                 </fieldset>
             </form>
@@ -620,7 +622,8 @@
                         <input type="hidden" name="tid" id="tid" value="#$tid#" />
                         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid))#" />
-                        <input type="submit" value="#xarML('Update Posts')#" />
+                        <xar:var name="label">Update Posts</xar:var>
+                        <xar:button type="submit" label="$label" />
                     </div>
                 </fieldset>
             </form>
@@ -801,7 +804,8 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="split" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <input type="submit" value="#xarML('Split Posts')#" />
+                <xar:var name="label">Split Posts</xar:var>
+                <xar:button type="submit" label="$label" />
             </div>
         </form>
         </xar:if>

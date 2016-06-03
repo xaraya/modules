@@ -54,6 +54,26 @@ function crispbb_admin_categories($args)
             $isvalid = $picker->checkInput('basecid');
             xarController::redirect(xarModURL('crispbb', 'admin', 'categories',array('sublink' => 'mastercat')));
         }
+        $picker_basecat_config = serialize(
+                                    array(
+                                        'initialization_include_no_cat' => 1,
+                                        'initialization_include_all_cats' => 0,
+                                        'initialization_basecategories' => array(
+                                                array(
+                                                    0 => 'Forum Dropdown',
+                                                    1 => unserialize(xarModVars::get('crispbb', 'base_categories')),
+                                                    2 => true,
+                                                    3 => 1,
+                                                )
+                                        ),
+                                    )
+        );
+        $data['column_configuration'] = serialize(array(
+                            array("Forum Name",2,"New Forum",""),
+                            array("Base Category",100,0,$picker_basecat_config),
+                            array("Include Self",14,0,""),
+                            array("Select Type",6,0,'a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"1,Single Dropdown;2,Multiple - One Box;3,Multiple - Two Boxes;";}')
+                            ));
         $data['authid'] = xarSecGenAuthKey();
     }
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',

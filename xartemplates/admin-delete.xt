@@ -15,7 +15,9 @@
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
-                    <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Delete')#" />
+                    <input type="submit" id="confirm" value="#xarML('')#" />
+                    <xar:var name="label">Confirm Delete</xar:var>
+                    <xar:button type="submit" name="confirm" label="$label" />
                 </div>
             </fieldset>
         </form>

@@ -177,7 +177,11 @@
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <input type="hidden" name="fid" id="fid" value="#$fid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="submit" value="#xarML('Post Topic')#" tabindex="9" />&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="10" />
+                <xar:var name="label">Post Topic</xar:var>
+                <xar:button type="submit" label="$label" tabindex="9" />
+                &#160;&#160;
+                <xar:var name="label">Preview</xar:var>
+                <xar:button type="submit" name="preview" label="$label" tabindex="10" />
             </div>
         </fieldset>
     </form>

@@ -10,10 +10,10 @@
   <access>a:0:{}</access>
   <isalias>true</isalias>
   <datastore>relational</datastore>
-  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
-  <sources>a:1:{s:5:&quot;posts&quot;;a:2:{i:0;s:17:&quot;xar_crispbb_posts&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
-  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
-  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <config></config>
+  <sources>a:1:{s:5:"posts";a:2:{i:0;s:17:"xar_crispbb_posts";i:1;s:8:"internal";}}</sources>
+  <relations></relations>
+  <objects></objects>
   <category></category>
   <properties>
     <property name="id">

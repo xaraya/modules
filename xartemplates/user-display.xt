@@ -211,7 +211,8 @@
             <input type="hidden" name="component" id="component" value="posts" />
             <input type="hidden" name="phase" id="phase" value="update" />
             <input type="hidden" name="tid" id="tid" value="#$tid#" />
-            <input type="submit" value="#xarML('Update')#" />
+            <xar:var name="label">Update</xar:var>
+            <xar:button type="submit" label="$label" />
         </span>
         </xar:if>
         <br class="xar-clearboth" />

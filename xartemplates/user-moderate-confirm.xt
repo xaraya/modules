@@ -76,8 +76,9 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
-                <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                <xar:var name="label">Confirm Action</xar:var>
+                <xar:button type="submit" name="confirm" label="$label" />
             </div>
         </form>
         <xar:elseif condition="$modaction eq 'move'" />
@@ -126,7 +127,8 @@
                 <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
                 <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
+                <xar:var name="label"></xar:var>
+                <xar:button type="submit" label="$label" />
             </div>
         </form>
         </xar:if>
@@ -157,7 +159,8 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
+                <xar:var name="label"></xar:var>
+                <xar:button type="submit" label="$label" />
             </div>
         </form>
         <xar:else />
@@ -216,7 +219,8 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="split" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
+                <xar:var name="label"></xar:var>
+                <xar:button type="submit" label="$label" />
             </div>
         </form>
         </xar:if>

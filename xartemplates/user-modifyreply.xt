@@ -143,7 +143,11 @@
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="pid" id="pid" value="#$pid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="submit" value="#xarML('Update Reply')#" tabindex="6" />&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="7" />
+                <xar:var name="label">Update Reply</xar:var>
+                <xar:button type="submit" label="$label" tabindex="6" />
+                &#160;&#160;
+                <xar:var name="label">Preview</xar:var>
+                <xar:button type="submit" name="preview" label="$label" tabindex="7" />
             </div>
         </fieldset>
     </form>
