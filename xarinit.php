@@ -330,7 +330,7 @@ function crispbb_init()
         $fieldValues = array(
                 'name' => $catName,
                 'description' => xarML('crispBB Base Category'),
-                'parent_id' => 0,
+                'parent_id' => 1,
         );
         $basecid = $categories->createItem($fieldValues);
     }

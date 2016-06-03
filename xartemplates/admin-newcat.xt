@@ -25,8 +25,10 @@
                 </fieldset>
             </xar:for>
             <fieldset class="xar-norm">
-                <div class="xar-form-input-wrapper">
-                    <div class="xar-form-container-after">
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                         <input type="hidden" name="phase" value="update" />
                         <xar:var name="label">Add</xar:var>
