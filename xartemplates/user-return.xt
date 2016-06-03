@@ -27,7 +27,7 @@
         <a href="&xar-baseurl;" title="#xarML('Go to site index')#">Home</a>
         </div>
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#">Forum Index</a>
+        <a href="#xarModURL('crispbb', 'user', 'forum_index')#" title="#xarML('Go to main forum index')#">Forum Index</a>
         </div>
     <xar:else />
         <div class="xar-form-input-wrapper-after">
@@ -37,7 +37,7 @@
 
     <xar:if condition="!empty($catid) and isset($categories[$catid])">
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+        <a href="#xarModURL('crispbb', 'user', 'forum_index', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
         </div>
     </xar:if>
     <xar:if condition="!empty($fid) and !empty($fname) and !empty($fdesc)">

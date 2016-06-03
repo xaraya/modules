@@ -596,6 +596,17 @@ function crispbb_delete()
 #
 # The function below pretty much takes care of everything else that needs to be removed
 #
+    // Remove the crispbb categories
+    sys::import('modules.categories.class.worker');
+    $worker = new CategoryWorker();
+    $base_categories = unserialize(xarModVars::get('crispbb', 'base_categories'));
+    foreach ($base_categories as $base_category) {
+        $worker->delete($base_category);
+    }
+
+    // Remove the crispbb category links
+    xarMod::apiFunc('categories', 'admin', 'unlinkcids', array('modid' => xarMod::getRegID('crispbb'), 'itemtype' => 1));
+    
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 
     /* Deletion successful*/

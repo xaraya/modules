@@ -31,7 +31,7 @@ function crispbb_user_displayreply($args)
 
     if ($post == 'NO_PRIVILEGES') {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
+        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'forum_index');
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
         xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));

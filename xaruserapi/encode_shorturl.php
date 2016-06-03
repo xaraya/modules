@@ -54,7 +54,7 @@ function crispbb_userapi_encode_shorturl($args)
         if (isset($forums[$fid])) {
             $forum = $forums[$fid];
         }
-        if ($func == 'main' && !empty($action) && $action == 'read') {
+        if ($func == 'forum_index' && !empty($action) && $action == 'read') {
             unset($get['func']);
             unset($get['action']);
             $path[] = 'read';
@@ -157,7 +157,7 @@ function crispbb_userapi_encode_shorturl($args)
                 }
             }
         }
-    } elseif ($func == 'main') { // ../crispbb
+    } elseif ($func == 'forum_index') { // ../crispbb
         unset($get['func']);
         if (isset($catid) && is_numeric($catid)) {
             if (isset($cats[$catid])) {

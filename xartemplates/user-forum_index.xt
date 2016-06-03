@@ -59,7 +59,7 @@
                 <tr class="#$rowclass#">
                     <td class="timeimage xar-align-center xar-valign-middle">
                         <xar:if condition="!empty($forum['forumreadurl'])">
-                            <a href="#xarModURL('crispbb', 'user','main', array('fid' => $forum['fid'], 'action' => 'read'))#" title="#xarML('Mark this forum read')#"><xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" /></a>
+                            <a href="#xarModURL('crispbb', 'user','forum_index', array('fid' => $forum['fid'], 'action' => 'read'))#" title="#xarML('Mark this forum read')#"><xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" /></a>
                         <xar:else />
                             <xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" />
                         </xar:if>
