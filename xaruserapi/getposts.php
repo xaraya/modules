@@ -705,7 +705,7 @@ function crispbb_userapi_getposts($args)
                                         'pstatus' => $post['pstatus'],
                                         'modaction' => 'undelete',
                                         'phase' => 'update',
-                                        'pids' => array($post['pid'] => 1)
+                                        'pids' => $post['pid'],
                                 ));
                             } else {
                             $post['deletereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -715,7 +715,7 @@ function crispbb_userapi_getposts($args)
                                         'pstatus' => $post['pstatus'],
                                         'modaction' => 'delete',
                                         'phase' => 'update',
-                                        'pids' => array($post['pid'] => 1)
+                                        'pids' => $post['pid'],
                                 ));
                             }
                     }
@@ -735,7 +735,7 @@ function crispbb_userapi_getposts($args)
                                         'pstatus' => $post['pstatus'],
                                         'modaction' => 'purge',
                                         'phase' => 'update',
-                                        'pids' => array($post['pid'] => 1)
+                                        'pids' => $post['pid'],
                                 ));
                     }
                 }
