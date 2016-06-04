@@ -57,7 +57,13 @@ function crispbb_user_moderate($args)
         break;
         case 'topics':
             if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tids', 'list', $tids, array(), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tids', 'str', $tidkeys, '', XARVAR_NOT_REQUIRED)) return;
+            
+            // The tids are a comma separated list, turn them into an array
+            $tidkeys = explode(',', $tidkeys);
+            $tids = array();
+            foreach ($tidkeys as $key) $tids[$key] = 1;
+            
             if ($modaction != 'move') {
                 if (!xarVarFetch('tstatus', 'int', $tstatus, 0, XARVAR_NOT_REQUIRED)) return;
                 $forumoptions = array();

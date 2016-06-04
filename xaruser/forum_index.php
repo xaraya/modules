@@ -18,7 +18,6 @@
  */
 function crispbb_user_forum_index()
 {
-
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('action', 'enum:read', $action, '', XARVAR_NOT_REQUIRED)) return;
     if ($action == 'read') {
