@@ -678,7 +678,7 @@ function crispbb_userapi_getposts($args)
                                     'pstatus' => $post['pstatus'],
                                     'modaction' => 'approve',
                                     'phase' => 'update',
-                                    'pids' => $post['pid']),
+                                    'pids' => $post['pid'],
                                 ));
                     }
                     // topic splitters
@@ -691,7 +691,7 @@ function crispbb_userapi_getposts($args)
                                         'pstatus' => $post['pstatus'],
                                         'modaction' => 'split',
                                         'phase' => 'update',
-                                        'pids' => $post['pid']),
+                                        'pids' => $post['pid'],
                                 ));
                     }
                     // post deleters
