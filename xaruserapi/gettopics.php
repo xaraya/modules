@@ -26,8 +26,8 @@ function crispbb_userapi_gettopics($args)
         $cids = array($catid);
     }
     if (empty($cids)) $cids = array();
-    // get hitcount unless asked not to
-    $nohitcount = isset($nohitcount) ? 1 : 0;
+    // Get hitcount unless asked not to
+    $nohitcount = (!xarMod::isAvailable('hitcount') || isset($nohitcount)) ? 1 : 0;
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -240,7 +240,7 @@ function crispbb_userapi_gettopics($args)
         $addme = 1;
     }
 
-    if (empty($noratings) && xarModIsAvailable('ratings')) {
+    if (empty($noratings) && xarMod::isAvailable('ratings')) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
         $ratingsdef = xarMod::apiFunc('ratings', 'user', 'leftjoin',
             array(
@@ -376,8 +376,7 @@ function crispbb_userapi_gettopics($args)
         $bindvars[] = $towner;
     }
 
-    if (!empty($q))
-    {
+    if (!empty($q)) {
         if (empty($searchfields)) $searchfields = array();
         $search = $q;
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
@@ -694,7 +693,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'open',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             } else {
                                 $topic['closetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -704,7 +703,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'close',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             }
                         }
@@ -716,7 +715,7 @@ function crispbb_userapi_gettopics($args)
                                         'component' => 'topics',
                                         'fid' => $topic['fid'],
                                         'modaction' => 'move',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                         }
                         // topic splitters
@@ -742,7 +741,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'unlock',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             } else {
                                 $topic['locktopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -752,7 +751,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'lock',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             }
                         }
@@ -767,7 +766,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'undelete',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             } else {
                                 $topic['deletetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -777,7 +776,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'delete',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             }
                         }
@@ -802,7 +801,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'purge',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                         }
                     } else {
@@ -817,7 +816,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'undelete',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             } else {
                                 $topic['deletetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -827,7 +826,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'delete',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             }
                         }
@@ -841,7 +840,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'purge',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                         }
                     }

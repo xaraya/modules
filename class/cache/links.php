@@ -5,7 +5,7 @@ class LinkCache Extends xarServer
     private static $cachedLinks = array();
     private static $cachedParams = array();
 
-    public static function getCachedURL($modName = 'crispbb', $modType = 'user', $funcName = 'main', $args = array(), $generateXMLURL = NULL, $fragment = NULL, $entrypoint = array())
+    public static function getCachedURL($modName = 'crispbb', $modType = 'user', $funcName = 'forum_index', $args = array(), $generateXMLURL = NULL, $fragment = NULL, $entrypoint = array())
     {
         // build the key
         $key = $modName.$modType.$funcName;

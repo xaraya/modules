@@ -28,7 +28,7 @@ function crispbb_user_redirect($args)
     if (!xarVarFetch('fid', 'id', $current_fid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('tid', 'id', $current_tid, NULL, XARVAR_DONT_SET)) return;
 
-    $return_func = 'main'; // default return action
+    $return_func = 'forum_index'; // default return action
     $return_args = array();
 
     if (isset($forumjump)) {

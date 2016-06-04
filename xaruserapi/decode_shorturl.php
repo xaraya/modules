@@ -36,12 +36,12 @@ function crispbb_userapi_decode_shorturl($params)
 
     // forum index
     if (empty($params[1]) || (preg_match('/^index/i', $params[1]))) {
-        return array('main', $args);
+        return array('forum_index', $args);
     // forum category
     } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[1],$matches)) {
         $catid = $matches[1];
         $args['catid'] = $catid;
-        return array('main', $args);
+        return array('forum_index', $args);
     // search forums
     } elseif (preg_match('/^search/i', $params[1]) && empty($params[2])) {
         return array('search', $args);
@@ -73,7 +73,7 @@ function crispbb_userapi_decode_shorturl($params)
             $args['action'] = 'read';
             $args['fid'] = $fid;
         }
-        return array('main', $args);
+        return array('forum_index', $args);
     }  elseif (preg_match('/^f(_?[0-9 +-]+)/',$params[1],$matches1)) {
         $fid = $matches1[1];
         $args['fid'] = $fid;
@@ -197,7 +197,7 @@ function crispbb_userapi_decode_shorturl($params)
         } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches1)) {
             $catid = $matches1[1];
             $args['catid'] = $catid;
-            return array('main', $args);
+            return array('forum_index', $args);
         // search forums
         }
     }

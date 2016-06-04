@@ -92,7 +92,7 @@ function crispbb_userapi_getitemtypes($args)
         if ($item['fid'] == 0) {
             if ($item['component'] == 'forum') {
                 $label = xarML('All Forums in crispBB');
-                $url = xarModURL('crispbb', 'user', 'main');
+                $url = xarModURL('crispbb', 'user', 'forum_index');
             } else {
                 $label = xarML('All #(1) in crispBB', ucfirst($item['component']));
                 $url = xarModURL('crispbb', 'user', 'search');

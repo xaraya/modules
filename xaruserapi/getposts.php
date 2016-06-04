@@ -538,7 +538,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'open',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         } else {
                             $post['closetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -548,7 +548,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'close',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         }
                     }
@@ -563,7 +563,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'approve',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         }
                     }
@@ -575,7 +575,7 @@ function crispbb_userapi_getposts($args)
                                         'component' => 'topics',
                                         'fid' => $post['fid'],
                                         'modaction' => 'move',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                     }
                     // topic splitters
@@ -601,7 +601,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'unlock',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         } else {
                             $post['locktopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -611,7 +611,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'lock',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         }
                     }
@@ -626,7 +626,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'undelete',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         } else {
                             $post['deletetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
@@ -636,7 +636,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'delete',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                         }
                     }
@@ -658,7 +658,7 @@ function crispbb_userapi_getposts($args)
                                     'tstatus' => $post['tstatus'],
                                     'modaction' => 'purge',
                                     'phase' => 'update',
-                                    'tids' => $tids,
+                                    'tids' => implode(',', array_keys($tids)),
                             ));
                     }
                 } else {

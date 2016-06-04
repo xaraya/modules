@@ -24,7 +24,7 @@
     </div>
     <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
-    <xar:if condition="xarModIsAvailable('crispsubs')">
+    <xar:if condition="xarMod::isAvailable('crispsubs')">
         <xar:comment>
         Show a link to subscribe or unsubscribe from all topics in this forum
         <xar:crispsubs-view modname="crispbb" itemtype="$topicstype" itemid="0" />

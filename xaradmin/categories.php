@@ -39,21 +39,8 @@ function crispbb_admin_categories($args)
     $data['sublink'] = $sublink;
 
     if ($sublink == 'mastercat') {
-        if ($phase == 'update') {
-            if (!$confirm) {
-                // @TODO:
-                //$data['sublink'] = 'confirm';
-                //return $data;
-            }
-            // Confirm authorisation code.
-            if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-            }
-            sys::import('modules.dynamicdata.class.properties.master');
-            $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
-            $isvalid = $picker->checkInput('basecid');
-            xarController::redirect(xarModURL('crispbb', 'admin', 'categories',array('sublink' => 'mastercat')));
-        }
+        sys::import('modules.dynamicdata.class.properties.master');
+        $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
         $picker_basecat_config = serialize(
                                     array(
                                         'initialization_include_no_cat' => 1,
@@ -74,6 +61,22 @@ function crispbb_admin_categories($args)
                             array("Include Self",14,0,""),
                             array("Select Type",6,0,'a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"1,Single Dropdown;2,Multiple - One Box;3,Multiple - Two Boxes;";}')
                             ));
+        if ($phase == 'update') {
+            if (!$confirm) {
+                // @TODO:
+                //$data['sublink'] = 'confirm';
+                //return $data;
+            }
+            // Confirm authorisation code.
+            if (!xarSecConfirmAuthKey()) {
+                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+            }
+            $isvalid = $picker->checkInput('basecid');
+            if ($isvalid) {
+                //$picker->createValue();
+            }
+            xarController::redirect(xarModURL('crispbb', 'admin', 'categories',array('sublink' => 'mastercat')));
+        }
         $data['authid'] = xarSecGenAuthKey();
     }
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',

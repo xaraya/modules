@@ -26,7 +26,7 @@
     </xar:if>
     <xar:comment>In most cases crispBB will link to an appropriate page the user has access to, if all else fails though, the main user function is linked, change this if you'd prefer them go somewhere else, eg for guests, you might prefer a link to login</xar:comment>
     <xar:if condition="empty($return_url)">
-        <xar:set name="return_url">#xarModURL('crispbb', 'user','main')#</xar:set>
+        <xar:set name="return_url">#xarModURL('crispbb', 'user','forum_index')#</xar:set>
     </xar:if>
     <p>
     <a href="#$return_url#">Click here to go back</a>

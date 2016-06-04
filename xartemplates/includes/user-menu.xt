@@ -8,10 +8,10 @@
             <a href="&xar-baseurl;" title="#xarML('Go to site index')#">Home</a>
             #$pageSeparator#
         </xar:if>
-        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#">Forum Index</a>
+        <a href="#xarModURL('crispbb', 'user', 'forum_index')#" title="#xarML('Go to main forum index')#">Forum Index</a>
         <xar:if condition="!empty($catid) and isset($categories[$catid])">
             #$pageSeparator#
-            <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+            <a href="#xarModURL('crispbb', 'user', 'forum_index', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
         </xar:if>
         <xar:if condition="!empty($fid) and !empty($fname) and !empty($fdesc)">
             #$pageSeparator#

@@ -330,7 +330,7 @@ function crispbb_init()
         $fieldValues = array(
                 'name' => $catName,
                 'description' => xarML('crispBB Base Category'),
-                'parent_id' => 0,
+                'parent_id' => 1,
         );
         $basecid = $categories->createItem($fieldValues);
     }
@@ -478,7 +478,7 @@ function crispbb_init()
                   array('callerModName' => 'base', 'hookModName' => $module));
 
     // hook search
-    if (xarModIsAvailable('search')) {
+    if (xarMod::isAvailable('search')) {
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'search', 'hookModName' => $module));
     }
@@ -596,6 +596,17 @@ function crispbb_delete()
 #
 # The function below pretty much takes care of everything else that needs to be removed
 #
+    // Remove the crispbb categories
+    sys::import('modules.categories.class.worker');
+    $worker = new CategoryWorker();
+    $base_categories = unserialize(xarModVars::get('crispbb', 'base_categories'));
+    foreach ($base_categories as $base_category) {
+        $worker->delete($base_category);
+    }
+
+    // Remove the crispbb category links
+    xarMod::apiFunc('categories', 'admin', 'unlinkcids', array('modid' => xarMod::getRegID('crispbb'), 'itemtype' => 1));
+    
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 
     /* Deletion successful*/
