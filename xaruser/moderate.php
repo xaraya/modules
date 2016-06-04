@@ -80,14 +80,8 @@ function crispbb_user_moderate($args)
 
                 if ($phase == 'update') {
                     // do validations for current action
-                    $seentids = array();
-                    if (!empty($tids) && is_array($tids)) {
-                        foreach ($tids as $seentid) {
-                            if (empty($seentid)) continue;
-                            $seentids[$seentid] = 1;
-                        }
-                        $seentids = !empty($seentids) ? array_keys($seentids) : array();
-                    }
+                    $seentids = !empty($tids) ? array_keys($tids) : array();
+                    
                     if (empty($seentids) || !is_array($seentids)) {
                         $invalid['tids'] = xarML('No topics selected for this action');
                     }
@@ -327,7 +321,8 @@ function crispbb_user_moderate($args)
                                     array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus));
                             }
                         }
-                        return xarController::redirect($return_url);
+                        xarController::redirect($return_url);
+                        return true;
                     }
                 }
                 if (empty($return_url)) {
@@ -437,14 +432,9 @@ function crispbb_user_moderate($args)
                     return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
                 $data = $forums[$fid];
-                $seentids = array();
-                if (!empty($tids) && is_array($tids)) {
-                    foreach ($tids as $seentid => $checked) {
-                        if (empty($seentid) || empty($checked)) continue;
-                        $seentids[$seentid] = 1;
-                    }
-                    $seentids = !empty($seentids) ? array_keys($seentids) : array();
-                }
+                
+                $seentids = !empty($tids) ? array_keys($tids) : array();
+
                 if (!empty($seentids) && is_array($seentids)) {
                     $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics',
                         array('tid' => $seentids));
