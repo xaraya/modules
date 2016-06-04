@@ -914,7 +914,8 @@ function crispbb_user_moderate($args)
                         if (empty($return_url)) {
                             $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
                         }
-                        return xarController::redirect($return_url);
+                        xarController::redirect($return_url);
+                        return true;
                     }
                 }
                 $pstatuses = array(0);
@@ -1330,8 +1331,6 @@ function crispbb_user_moderate($args)
     $data['return_url'] = $return_url;
 
     xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
-
-
 
     return $data;
 }
