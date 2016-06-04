@@ -127,7 +127,7 @@
                 <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
                 <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <xar:var name="label"></xar:var>
+                <xar:var name="label">Confirm Action</xar:var>
                 <xar:button type="submit" label="$label" />
             </div>
         </form>
@@ -159,7 +159,7 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <xar:var name="label"></xar:var>
+                <xar:var name="label">Confirm Action</xar:var>
                 <xar:button type="submit" label="$label" />
             </div>
         </form>
@@ -219,7 +219,7 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="split" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <xar:var name="label"></xar:var>
+                <xar:var name="label">Confirm Action</xar:var>
                 <xar:button type="submit" label="$label" />
             </div>
         </form>
