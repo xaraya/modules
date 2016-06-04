@@ -379,11 +379,11 @@ function crispbb_user_search()
                         if (isset($iconlists[$item['fid']])) {
                             $iconlist = $iconlists[$item['fid']];
                         }
-                        if (empty($iconlist)) {
-                            $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                                array('iconfolder' => $data['iconfolder']));
-                            $iconlists[$item['fid']] = $iconlist;
-                        }
+//                        if (empty($iconlist)) {
+//                            $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
+//                                array('iconfolder' => $data['iconfolder']));
+//                            $iconlists[$item['fid']] = $iconlist;
+//                        }
                         if (!empty($iconlist[$item['topicicon']])) {
                             $item['topicicon'] = $iconlist[$item['topicicon']]['imagepath'];
                         } else {
