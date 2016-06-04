@@ -725,9 +725,15 @@ function crispbb_user_moderate($args)
         break;
         case 'posts':
             if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pids', 'list', $pids, array(), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pids', 'str', $pidkeys, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pstatus', 'int', $pstatus, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('layout', 'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) return;
+
+            // The pids are a comma separated list, turn them into an array
+            $pidkeys = explode(',', $pidkeys);
+            $pids = array();
+            foreach ($pidkeys as $key) $pids[$key] = 1;
+
             $data = xarMod::apiFunc('crispbb', 'user', 'gettopic',
                 array('tid' => $tid, 'privcheck' => true, 'numsubs' => true));
             if (empty($data['modtopicurl'])) $data = 'NO_PRIVILEGES';
