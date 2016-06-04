@@ -82,8 +82,8 @@ function crispbb_user_moderate($args)
                     // do validations for current action
                     $seentids = array();
                     if (!empty($tids) && is_array($tids)) {
-                        foreach ($tids as $seentid => $checked) {
-                            if (empty($seentid) || empty($checked)) continue;
+                        foreach ($tids as $seentid) {
+                            if (empty($seentid)) continue;
                             $seentids[$seentid] = 1;
                         }
                         $seentids = !empty($seentids) ? array_keys($seentids) : array();
