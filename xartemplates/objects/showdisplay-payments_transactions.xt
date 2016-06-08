@@ -65,7 +65,7 @@
                         Pas de communication s.v.p.<br />
                         Non aggiungete communicaziono p.f.<br />
                         <br /><br /><br />
-                        Referenz-Nr. / No de reference / No di riferimento
+                        Referenz-Nr. / No de reference / No di riferimento<br />
                         <!-- For testing purposes. Need to implement dd for this fields later -->
                         <xar:data-output property="$properties['reference_number']" /><br /><br /><br />
                         Einbezahlt von / Versé par / Versato da<br />
