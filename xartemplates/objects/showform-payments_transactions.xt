@@ -22,7 +22,7 @@
     <xar:data-input property="$properties['created']" hidden="hidden"/>
     <xar:data-input property="$properties['state']" hidden="hidden"/>
     <div class="xar-row">
-        <div class="xar-col-condensed">
+        <div class="xar-col">
             <label for="defaultvatcode" title="#xarML('The date to execute this payment')#">            
                 Execution date:
             </label>
