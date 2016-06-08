@@ -33,7 +33,6 @@ function payments_user_new_transaction()
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->properties['payment_type']->setValue($data['payment_type']);
     $data['tplmodule'] = 'payments';
-    $data['authid'] = xarSecGenAuthKey('payments');
 
 # --------------------------------------------------------
 #
