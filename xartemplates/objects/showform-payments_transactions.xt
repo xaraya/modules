@@ -22,7 +22,7 @@
     <xar:data-input property="$properties['created']" hidden="hidden"/>
     <xar:data-input property="$properties['state']" hidden="hidden"/>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <label for="defaultvatcode" title="#xarML('The date to execute this payment')#">            
                 Execution date:
             </label>
@@ -226,7 +226,7 @@
         <xar:data-input property="$properties['reference_number']"      hidden="hidden"/>
         <xar:data-input property="$properties['post_account']"          hidden="hidden"/>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Beneficiary name
             </div>
             <div class="xar-col">
@@ -234,7 +234,7 @@
             </div>
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Beneficiary address
             </div>
             <div class="xar-col">
@@ -245,7 +245,7 @@
             </div>
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Beneficiary IBAN
             </div>
             <div class="xar-col">
@@ -253,7 +253,7 @@
             </div>
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Beneficiary BIC
             </div>
             <div class="xar-col">
@@ -261,7 +261,7 @@
             </div>
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Amount
             </div>
             <div class="xar-col">
@@ -270,7 +270,7 @@
             </div>
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Remittance information
             </div>
             <div class="xar-col">
@@ -278,7 +278,7 @@
             </div>
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 Sender
             </div>
             <div class="xar-col">
