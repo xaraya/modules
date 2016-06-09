@@ -719,9 +719,9 @@ function crispbb_user_moderate($args)
             if (!xarVarFetch('layout', 'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) return;
 
             // The pids are a comma separated list, turn them into an array
-            $pidkeys = explode(',', $pidkeys);
+            $pidkeyarray = explode(',', $pidkeys);
             $pids = array();
-            foreach ($pidkeys as $key) $pids[$key] = 1;
+            foreach ($pidkeyarray as $key) $pids[$key] = 1;
 
             $data = xarMod::apiFunc('crispbb', 'user', 'gettopic',
                 array('tid' => $tid, 'privcheck' => true, 'numsubs' => true));
@@ -805,6 +805,7 @@ function crispbb_user_moderate($args)
                         if (!$confirm) {
                             // pass data to confirmation template
                             $data['posts'] = $posts;
+                            $data['pids'] = $pidkeys;
                             $data['modaction'] = $modaction;
                             $data['component'] = $component;
                             $data['pageTitle'] = xarML('Confirm Action');
@@ -1280,7 +1281,7 @@ function crispbb_user_moderate($args)
                 $data['movefid'] = $movefid;
                 $data['ttitle'] = empty($mergetid) ? $ttitle : '';
                 $data['forumoptions'] = $forumoptions;
-                $data['pids'] = $pids;
+                $data['pids'] = $pidkeys;
                 if ($mergetid) {
                     $numitems = 10;
                     $data['ftopics'] = xarMod::apiFunc('crispbb', 'user', 'gettopics',

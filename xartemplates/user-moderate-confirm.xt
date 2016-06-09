@@ -128,7 +128,7 @@
                 <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <xar:var name="label">Confirm Action</xar:var>
-                <xar:button type="submit" label="$label" />
+                <xar:button type="submit" name="confirm" label="$label" />
             </div>
         </form>
         </xar:if>
@@ -147,9 +147,9 @@
                     <xar:foreach in="$posts" key="$pid" value="$post">
                         <p class="xar-form-container-after">
                             <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
-                            <input type="hidden" name="pids[#$pid#]" id="pids_#$pid#" value="1" />
                         </p>
                     </xar:foreach>
+                    <input type="hidden" name="pids" id="pids" value="#$pids#" />
                 </div>
             </xar:if>
             <div class="xar-form-input-wrapper-after">
@@ -160,7 +160,7 @@
                 <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <xar:var name="label">Confirm Action</xar:var>
-                <xar:button type="submit" label="$label" />
+                <xar:button type="submit" name="confirm" label="$label" />
             </div>
         </form>
         <xar:else />
@@ -220,7 +220,7 @@
                 <input type="hidden" name="modaction" id="modaction" value="split" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <xar:var name="label">Confirm Action</xar:var>
-                <xar:button type="submit" label="$label" />
+                <xar:button type="submit" name="confirm" label="$label" />
             </div>
         </form>
         </xar:if>
