@@ -260,7 +260,7 @@
                     <div class="xar-form-input-wrapper">
                         <label class="xar-form-label">From Forum:</label>
                         <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#">
-                        #$fname#
+                            #$fname#
                         </a>
                         <xar:if condition="empty($mergetid)">
                             <xar:data-input type="checkbox" name="shadow" id="shadow" value="$shadow" />
@@ -270,11 +270,11 @@
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="movefid" class="xar-form-label help" title="#xarML('Move the topic to this forum')#">To Forum:</label>
+                        <label for="movefid" class="xar-form-label" title="#xarML('Move the topic to this forum')#">To Forum:</label>
                         <xar:if condition="empty($mergetid)">
-                        <xar:data-input type="dropdown" name="movefid" id="movefid" value="$movefid" options="$forumoptions" />
+                            <xar:data-input type="dropdown" name="movefid" id="movefid" value="$movefid" options="$forumoptions" />
                         <xar:else />
-                        <xar:data-input type="dropdown" name="movefid" id="movefid_move" value="$movefid" options="$forumoptions" onchange="this.form.submit();"  />
+                            <xar:data-input type="dropdown" name="movefid" id="movefid_move" value="$movefid" options="$forumoptions" onchange="this.form.submit();"  />
                         </xar:if>
                     </div>
                     <xar:if condition="!empty($invalid['movefid'])">

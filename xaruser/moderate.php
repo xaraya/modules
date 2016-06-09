@@ -432,8 +432,8 @@ function crispbb_user_moderate($args)
                     return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
                 $data = $forums[$fid];
-                
-                $seentids = !empty($tids) ? array_keys($tids) : array();
+
+                $seentids = !empty($tids) ? $tids : array();
 
                 if (!empty($seentids) && is_array($seentids)) {
                     $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics',
@@ -450,7 +450,6 @@ function crispbb_user_moderate($args)
                     xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
-
                 if ($phase == 'update') {
                     // do validations for move
                     if ($mergetid) {
