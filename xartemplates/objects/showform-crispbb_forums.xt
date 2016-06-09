@@ -11,11 +11,14 @@
         -->
         <xar:set name="hidefields">array('fsettings', 'fprivileges', 'numtopics', 'numreplies', 'numtopicsubs', 'numtopicdels', 'numreplysubs', 'numreplydels', 'forder', 'fowner', 'lasttid')</xar:set>
         <xar:foreach in="$properties" key="$name" value="$property">
-            <xar:if condition="in_array($name, $hidefields)"><xar:continue /></xar:if>
-            <div class="xar-form-input-wrapper">
-                <xar:data-label property="$properties[$name]" for="id" />
-                <xar:data-input property="$properties[$name]" />
-            </div>
+            <xar:if condition="in_array($name, $hidefields)">
+                <xar:data-input property="$properties[$name]" hidden="hidden"/>
+            <xar:else/>
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label property="$properties[$name]" for="id" />
+                    <xar:data-input property="$properties[$name]" />
+                </div>
+            </xar:if>
         </xar:foreach>
     <xar:else />
         Unknown Layout
