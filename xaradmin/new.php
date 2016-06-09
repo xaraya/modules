@@ -198,7 +198,7 @@ function crispbb_admin_new($args)
             'current_type' => 'admin',
             'current_func' => 'new',
             'current_sublink' => $sublink,
-            'catid' => !empty($cids) ? $cids[0] : NULL,
+            'catid' => !empty($cids) ? reset($cids) : NULL,
             'secLevels' => $secLevels
         ));
 
