@@ -660,7 +660,7 @@ function crispbb_userapi_gettopics($args)
                                         'tstatus' => $topic['tstatus'],
                                         'modaction' => 'approve',
                                         'phase' => 'update',
-                                        'tids' => $tids,
+                                        'tids' => implode(',', array_keys($tids)),
                                 ));
                             }
                         }
