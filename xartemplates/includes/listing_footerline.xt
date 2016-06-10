@@ -8,8 +8,8 @@
 
                 <xar:set name="options">array(
                     array('id'=>'', 'name'=>'Select action'),
-                    array('id'=>'10','name'=>'Delete Selected Items')
-                    array('id'=>'15','name'=>'Create Payment File')
+                    array('id'=>'10','name'=>'Delete Selected Items'),
+                    array('id'=>'15','name'=>'Create Payment File'),
                     )
                 </xar:set>
 
