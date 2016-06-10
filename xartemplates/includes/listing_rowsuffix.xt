@@ -89,7 +89,9 @@
             </xar:access>
         </xar:if>
     </td>
-    <td style="text-align: center;">
-        <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+    <td style="text-align: right;">
+        <xar:if condition="empty($loopitem['processed'])">
+            <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" />
+        </xar:if>
     </td>
 </xar:template>
