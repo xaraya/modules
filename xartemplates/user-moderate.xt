@@ -252,9 +252,9 @@
                             <xar:foreach in="$topics" key="$tid" value="$topic">
                                 <p class="xar-form-container-after">
                                     <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
-                                    <input type="hidden" name="tids[#$tid#]" id="tids_#$tid#" value="1" />
                                 </p>
                             </xar:foreach>
+                            <input type="hidden" name="tids" id="tids" value="#$tids#" />
                         </div>
                     </xar:if>
                     <div class="xar-form-input-wrapper">

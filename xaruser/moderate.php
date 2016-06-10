@@ -60,9 +60,9 @@ function crispbb_user_moderate($args)
             if (!xarVarFetch('tids', 'str', $tidkeys, '', XARVAR_NOT_REQUIRED)) return;
             
             // The tids are a comma separated list, turn them into an array
-            $tidkeys = explode(',', $tidkeys);
+            $tidkeyarray = explode(',', $tidkeys);
             $tids = array();
-            foreach ($tidkeys as $key) $tids[$key] = 1;
+            foreach ($tidkeyarray as $key) $tids[$key] = 1;
             
             if ($modaction != 'move') {
                 if (!xarVarFetch('tstatus', 'int', $tstatus, 0, XARVAR_NOT_REQUIRED)) return;
@@ -433,7 +433,7 @@ function crispbb_user_moderate($args)
                 }
                 $data = $forums[$fid];
 
-                $seentids = !empty($tids) ? $tids : array();
+                $seentids = !empty($tids) ? array_keys($tids) : array();
 
                 if (!empty($seentids) && is_array($seentids)) {
                     $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics',
@@ -499,6 +499,7 @@ function crispbb_user_moderate($args)
                         // check for confirmation
                         if (!$confirm) {
                             // pass data to confirmation template
+                            $data['tids'] = $tidkeys;
                             $data['topics'] = $topics;
                             $data['modaction'] = $modaction;
                             $data['movefid'] = $movefid;
@@ -703,13 +704,13 @@ function crispbb_user_moderate($args)
                         $numitems);
                 }
                 $pageTitle = xarML('Move Topic(s)');
+                $data['tids'] = $tidkeys;
                 $data['topics'] = $topics;
                 $data['shadow'] = $shadow;
                 $data['forumoptions'] = $forumoptions;
                 $data['movefid'] = empty($movefid) ? $fid : $movefid;
                 $data['movetid'] = $movetid;
                 $data['mergetid'] = $mergetid;
-                $data['tids'] = $tids;
             }
         break;
         case 'posts':
