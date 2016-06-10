@@ -198,7 +198,7 @@
                 <xar:isoelement name="Id">
                   <xar:if condition="$item['payment_type'] eq 1">
                     <xar:isoelement name="Othr">
-                      <xar:set name="account">transaction->properties['reference_number']->transformAccount()</xar:set>
+                      <xar:set name="account">$transaction->properties['reference_number']->transformAccount()</xar:set>
                       <xar:isoelement name="Id">#$account#</xar:isoelement>
                     </xar:isoelement>
                   <xar:elseif condition="($item['payment_type'] eq 2.2) OR ($item['payment_type'] eq 3)"/>
