@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:access level="700">
+        <xar:if condition="$total gt 0">
+            <div style="text-align:center; padding-top:10px;">
+                <input type="hidden" name="idlist" id="idlist"/>
+                <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+
+                <xar:set name="options">array(
+                    array('id'=>'', 'name'=>'Select action'),
+                    array('id'=>'10','name'=>'Delete Selected Items')
+                    array('id'=>'15','name'=>'Create Payment File')
+                    )
+                </xar:set>
+
+                &#160;
+                <xar:data-input type="dropdown" name="operation" options="$options"/>&#160;
+                <xar:var name="label">Execute</xar:var>
+                <xar:button type="submit" label="$label"/>&#160;
+                <xar:javascript filename="checkall.js" property="listing" position="body"/>
+                <a href="javascript:listing_checkall(true)">Check All</a>&#160;|&#160;
+                <a href="javascript:listing_checkall(false)">Uncheck All</a>
+            </div>
+        </xar:if>
+    </xar:access>
+</xar:template>
