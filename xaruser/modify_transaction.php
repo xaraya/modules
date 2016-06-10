@@ -32,7 +32,6 @@ function payments_user_modify_transaction()
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['tplmodule'] = 'payments';
-    $data['authid'] = xarSecGenAuthKey('payments');
 
 # --------------------------------------------------------
 #

@@ -97,7 +97,7 @@ function payments_user_create_20022_file()
     // Generate the number of transactions
     $data['number_of_transactions'] = count($data['items']);
     
-    $transaction = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
+    $data['transaction'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
     $data['control_sum'] = 0;
     
     foreach ($data['items'] as $key => $item) {
@@ -121,11 +121,11 @@ function payments_user_create_20022_file()
         $data['control_sum'] += $item['amount'];
         
         // Get this transaction
-        $transaction->getItem(array('itemid' => $item['id']));
+        $data['transaction']->getItem(array('itemid' => $item['id']));
         // Add the data
-        $transaction->setFieldValues($data['items'][$key],1);
+        $data['transaction']->setFieldValues($data['items'][$key],1);
         // Update the database transaction
-        $transaction->updateItem(array('itemid' => $item['id']));
+        $data['transaction']->updateItem(array('itemid' => $item['id']));
     }
     
 # --------------------------------------------------------

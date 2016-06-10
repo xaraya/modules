@@ -118,7 +118,7 @@
     <property name="reference_number">
       <id>6844</id>
       <label>Reference</label>
-      <type>textbox</type>
+      <type>esr</type>
       <defaultvalue></defaultvalue>
       <source>payments.reference</source>
       <status>34</status>
