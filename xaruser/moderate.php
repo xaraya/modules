@@ -726,6 +726,11 @@ function crispbb_user_moderate($args)
 
             $data = xarMod::apiFunc('crispbb', 'user', 'gettopic',
                 array('tid' => $tid, 'privcheck' => true, 'numsubs' => true));
+                
+            // Send the topic data we are coming from to the template
+            $data['fromtid'] = $data['tid'];
+            $data['fromttitle'] = $data['ttitle'];
+
             if (empty($data['modtopicurl'])) $data = 'NO_PRIVILEGES';
             if (!is_array($data)) {
                 if ($data == 'BAD_DATA') {
