@@ -184,9 +184,9 @@
                     <xar:foreach in="$posts" key="$pid" value="$post">
                         <p class="xar-form-container-after">
                             <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
-                            <input type="hidden" name="pids[#$pid#]" id="pids_#$pid#" value="1" />
                         </p>
                     </xar:foreach>
+                    <input type="hidden" name="pids" id="pids" value="#$pids#" />
                 </div>
             </xar:if>
             <xar:if condition="empty($mergetid)">

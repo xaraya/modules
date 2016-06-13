@@ -1096,6 +1096,7 @@ function crispbb_user_moderate($args)
                     if (empty($invalid)) {
                         if (!$confirm) {
                             // pass data to confirmation template
+                            $data['pids'] = implode(',', $seenpids);
                             $data['posts'] = $posts;
                             $data['modaction'] = $modaction;
                             $data['movefid'] = $movefid;
