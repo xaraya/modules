@@ -168,6 +168,7 @@
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">From Topic:</label>
                 <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
+                #$fromttitle#
                 </a>
             </div>
             <xar:if condition="!empty($posts)">
