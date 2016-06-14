@@ -56,6 +56,9 @@ function crispbb_user_moderate($args)
             $pageTitle = xarML('Waiting Content');
         break;
         case 'topics':
+# --------------------------------------------------------
+# We are performing an action on one or more topics
+#
             if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tids', 'str', $tidkeys, '', XARVAR_NOT_REQUIRED)) return;
             
@@ -65,6 +68,9 @@ function crispbb_user_moderate($args)
             foreach ($tidkeyarray as $key) $tids[$key] = 1;
             
             if ($modaction != 'move') {
+# --------------------------------------------------------
+# We are performing an action on a topic that is not a move
+#
                 if (!xarVarFetch('tstatus', 'int', $tstatus, 0, XARVAR_NOT_REQUIRED)) return;
                 $forumoptions = array();
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
@@ -142,7 +148,9 @@ function crispbb_user_moderate($args)
                     }
 
                     if (empty($invalid)) {
-                        // check for confirmation
+# --------------------------------------------------------
+# Display the confirmation page
+#
                         if (!$confirm) {
                             // pass data to confirmation template
                             $data['topics'] = $topics;
@@ -153,7 +161,9 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
-                        // finally, perform requested action
+# --------------------------------------------------------
+# Finally, perform the requested action
+#
                         if (!xarSecConfirmAuthKey()) return;
                         $seenposters = array();
                         // perform the action on each topic in turn
@@ -416,6 +426,9 @@ function crispbb_user_moderate($args)
                 $data['tstatusoptions'] = $tstatusoptions;
                 $data['forumoptions'] = $forumoptions;
                 $data['tstatus'] = $tstatus;
+# --------------------------------------------------------
+# We are moving a topic
+#
             } else {
                 if (!xarVarFetch('movefid', 'id', $movefid, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -451,7 +464,9 @@ function crispbb_user_moderate($args)
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
                 if ($phase == 'update') {
-                    // do validations for move
+# --------------------------------------------------------
+# Check for valid data for the move
+#
                     if ($mergetid) {
                         if (empty($movetid)) { // no topic to merge with
                             $invalid['mergetid'] = xarML('Select a topic to merge into');
@@ -498,7 +513,9 @@ function crispbb_user_moderate($args)
                     if (empty($invalid)) {
                         // check for confirmation
                         if (!$confirm) {
-                            // pass data to confirmation template
+# --------------------------------------------------------
+# Display the confirmation page
+#
                             $data['tids'] = $tidkeys;
                             $data['topics'] = $topics;
                             $data['modaction'] = $modaction;
@@ -514,7 +531,9 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
-                        // finally, perform requested action
+# --------------------------------------------------------
+# Finally, perform the requested action
+#
                         if (!xarSecConfirmAuthKey())
                             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
 
@@ -714,6 +733,9 @@ function crispbb_user_moderate($args)
             }
         break;
         case 'posts':
+# --------------------------------------------------------
+# We are performing an action on one or more posts
+#
             if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pids', 'str', $pidkeys, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pstatus', 'int', $pstatus, 0, XARVAR_NOT_REQUIRED)) return;
@@ -751,6 +773,9 @@ function crispbb_user_moderate($args)
 
             if (empty($pids)) $modaction = '';
             if ($modaction != 'split') {
+# --------------------------------------------------------
+# We are performing an action that is not a split (delete, undelete etc.)
+#
                 if ($sort == 'ttime') $sort = 'ptime';
                 if ($phase == 'update') {
                     // do validations for current action
@@ -809,7 +834,9 @@ function crispbb_user_moderate($args)
 
                     if (empty($invalid)) {
                         if (!$confirm) {
-                            // pass data to confirmation template
+# --------------------------------------------------------
+# Display the confirmation page
+#
                             $data['posts'] = $posts;
                             $data['pids'] = $pidkeys;
                             $data['modaction'] = $modaction;
@@ -818,6 +845,9 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
+# --------------------------------------------------------
+# Finally, perform the requested action
+#
                         if (!xarSecConfirmAuthKey())
                             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
                         $seenposters = array();
@@ -1001,9 +1031,12 @@ function crispbb_user_moderate($args)
                     $data['totalposts'],
                     xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems);
+# --------------------------------------------------------
+# We are splitting or merging one or more posts
+#
             } else {
                 if (!xarVarFetch('movefid', 'id', $movefid, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
+//                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('ttitle', 'str:1:255', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
                 $forumoptions = array();
@@ -1047,7 +1080,9 @@ function crispbb_user_moderate($args)
                 }
 
                 if ($phase == 'update') {
-                    // do validations for split
+# --------------------------------------------------------
+# Check for valid data for the split
+#
                     if ($mergetid) {
                         if (empty($movetid)) { // no topic to merge with
                             $invalid['mergetid'] = xarML('Select a topic to merge into');
@@ -1095,13 +1130,15 @@ function crispbb_user_moderate($args)
                     }
                     if (empty($invalid)) {
                         if (!$confirm) {
-                            // pass data to confirmation template
+# --------------------------------------------------------
+# Display the confirmation page
+#
                             $data['pids'] = implode(',', $seenpids);
                             $data['posts'] = $posts;
                             $data['modaction'] = $modaction;
                             $data['movefid'] = $movefid;
                             $data['mergetid'] = $mergetid;
-                            $data['movetid'] = $movetid;
+//                            $data['movetid'] = $movetid;
                             $data['ttitle'] = $ttitle;
                             $data['targettid'] = !empty($checkt) ? $checkt : array();
                             $data['targetfid'] = !empty($checkf) ? $checkf : array();
@@ -1110,11 +1147,16 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
+# --------------------------------------------------------
+# Finally, perform the requested action
+#
                         if (!xarSecConfirmAuthKey())
                             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
 
                         if ($mergetid) {
-                            // topic we're merging into
+# --------------------------------------------------------
+# We are merging into a different topic
+#
                             $target = $checkt;
                             // posts to merge, sorted oldest first
                             $newposts = xarMod::apiFunc('crispbb', 'user', 'getposts',
@@ -1200,6 +1242,9 @@ function crispbb_user_moderate($args)
                                 ))) return;
                             unset($lasttopic);
                         } else {
+# --------------------------------------------------------
+# We are splitting the posts
+#
                             $target = $checkf;
                             $created = false;
                             // posts to split, sorted oldest first
@@ -1222,6 +1267,7 @@ function crispbb_user_moderate($args)
                                             'fid' => $target['fid'],
                                             'ttype' => 0
                                         ))) return;
+var_dump($target);exit;
                                     $created = true;
                                 } else { // subsequent replies
                                     if (!xarMod::apiFunc('crispbb', 'user', 'updatepost',
@@ -1284,7 +1330,7 @@ function crispbb_user_moderate($args)
 
                 $data['posts'] = $posts;
                 $data['mergetid'] = $mergetid;
-                $data['movetid'] = $movetid;
+//                $data['movetid'] = $movetid;
                 $data['movefid'] = $movefid;
                 $data['ttitle'] = empty($mergetid) ? $ttitle : '';
                 $data['forumoptions'] = $forumoptions;

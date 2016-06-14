@@ -165,62 +165,84 @@
         </form>
         <xar:else />
         <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
-            <div class="xar-form-input-wrapper">
-                <label class="xar-form-label">From Topic:</label>
-                <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
-                #$fromttitle#
-                </a>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label class="xar-form-label">From Topic:</label>
+                </div>
+                <div class="xar-col">
+                    <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
+                    #$fromttitle#
+                    </a>
+                </div>
             </div>
             <xar:if condition="!empty($posts)">
-                <div class="xar-form-input-wrapper">
-                    <label for="pids" class="xar-form-label help" title="#xarML('Posts this action will be performed upon')#">
-                        <xar:if condition="empty($mergetid)">
-                            Split
-                        <xar:else />
-                            Merge
-                        </xar:if>
-                        Post(s):
-                    </label>
-                    <xar:foreach in="$posts" key="$pid" value="$post">
-                        <p class="xar-form-container-after">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="pids" class="xar-form-label" title="#xarML('Posts this action will be performed upon')#">
+                            <xar:if condition="empty($mergetid)">
+                                Split
+                            <xar:else />
+                                Merge
+                            </xar:if>
+                            Post(s):
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:foreach in="$posts" key="$pid" value="$post">
                             <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
-                        </p>
-                    </xar:foreach>
-                    <input type="hidden" name="pids" id="pids" value="#$pids#" />
+                        </xar:foreach>
+                        <input type="hidden" name="pids" id="pids" value="#$pids#" />
+                    </div>
                 </div>
             </xar:if>
             <xar:if condition="empty($mergetid)">
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        To New Topic:
-                    </label>
-                    #$ttitle#
-                    <input type="hidden" name="ttitle" id="ttitle" value="#$ttitle#" />
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label class="xar-form-label">
+                            To New Topic:
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        #$ttitle#
+                        <input type="hidden" name="ttitle" id="ttitle" value="#$ttitle#" />
+                    </div>
                 </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        In Forum:
-                    </label>
-                    #$targetfid['fname']#
-                    <input type="hidden" name="movefid" id="movefid" value="#$movefid#" />
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label class="xar-form-label">
+                            In Forum:
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        #$targetfid['fname']#
+                        <input type="hidden" name="movefid" id="movefid" value="#$movefid#" />
+                    </div>
                 </div>
             <xar:else />
-                <div class="xar-form-input-wrapper">
-                    <label for="movetid" class="xar-form-label help" title="#xarML('The topic selected topics will be merged into')#">Into Topic:</label>
-                    <a href="#$targettid['viewtopicurl']#" title="#xarML('View Topic')#">#$targettid['ttitle']#</a>
-                    <input type="hidden" name="movetid" id="movetid" value="#$movetid#" />
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="movetid" class="xar-form-label help" title="#xarML('The topic selected topics will be merged into')#">Into Topic:</label>
+                    </div>
+                    <div class="xar-col">
+                        <a href="#$targettid['viewtopicurl']#" title="#xarML('View Topic')#">#$targettid['ttitle']#</a>
+                        <input type="hidden" name="movetid" id="movetid" value="#$movetid#" />
+                    </div>
                 </div>
             </xar:if>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="component" id="component" value="posts" />
-                <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="modaction" id="modaction" value="split" />
-                <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <xar:var name="label">Confirm Action</xar:var>
-                <xar:button type="submit" name="confirm" label="$label" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <input type="hidden" name="component" id="component" value="posts" />
+                    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+                    <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="modaction" id="modaction" value="split" />
+                    <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                </div>
+                <div class="xar-col">
+                    <xar:var name="label">Confirm Action</xar:var>
+                    <xar:button type="submit" name="confirm" label="$label" />
+                </div>
             </div>
         </form>
         </xar:if>
