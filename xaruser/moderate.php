@@ -1245,18 +1245,21 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # We are splitting the posts
 #
+                            // Get the posts to split/merge
                             $target = $checkf;
                             $created = false;
-                            // posts to split, sorted oldest first
+                            // Get the posts to split, sorted oldest first
                             $newposts = xarMod::apiFunc('crispbb', 'user', 'getposts',
                                 array(
                                     'pid' => array_keys($posts),
                                     'sort' => 'ptime',
                                     'order' => 'ASC'
                                 ));
-                            // create the new topic in the selected forum
+                                
+                            // Create a topic and replies in the selected forum from the posts we split/merge
                             foreach ($newposts as $newpid => $newpost) {
-                                if (!$created) { // first post is the new topic
+                                if (!$created) {
+                                    // The first post we split/merge is the new topic
                                     if (!$newtid = xarMod::apiFunc('crispbb', 'user', 'createtopic',
                                         array(
                                             'ttitle' => $ttitle,
@@ -1267,9 +1270,9 @@ function crispbb_user_moderate($args)
                                             'fid' => $target['fid'],
                                             'ttype' => 0
                                         ))) return;
-var_dump($target);exit;
                                     $created = true;
-                                } else { // subsequent replies
+                                } else { 
+                                // The subsequent posts we split/merge become replies to the new topic
                                     if (!xarMod::apiFunc('crispbb', 'user', 'updatepost',
                                         array(
                                             'pid' => $newpid,
@@ -1279,14 +1282,16 @@ var_dump($target);exit;
                                 }
                                 $lastpid = $newpid; // keep track of the last post id
                            }
-                           // update last post id for the new topic
+                           
+                           // Update the last post id for the new topic
                            if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
                                array(
                                     'tid' => $newtid,
                                     'lastpid' => $lastpid,
                                     'nohooks' => true
                                ))) return;
-                           // update last topic id for the forum topic was created in
+                               
+                           // Update the last topic id for the forum the new topic we have created
                             $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!xarMod::apiFunc('crispbb', 'admin', 'update',
@@ -1296,7 +1301,8 @@ var_dump($target);exit;
                                     'nohooks' => true
                                 ))) return;
                             unset($lasttopic);
-                            // update last post pid for the topic posts were split from
+                            
+                            // Update the last post pid for the topic that the posts were split from
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', array('tid' => $tid, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1));
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
                             if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
@@ -1306,7 +1312,8 @@ var_dump($target);exit;
                                     'nohooks' => true
                                 ))) return;
                             unset($lastreply);
-                            // update the forum that posts were moved from
+                            
+                            // Update the forum that the posts were moved from
                             $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!xarMod::apiFunc('crispbb', 'admin', 'update',
@@ -1317,6 +1324,8 @@ var_dump($target);exit;
                                 ))) return;
                             unset($lasttopic);
                         }
+                        
+                        // For all actions get the next page and jump to it
                         if (empty($return_url)) {
                             if (!empty($newtid)) {
                                 $return_url = xarModURL('crispbb','user', 'display', array('tid' => $newtid));
@@ -1324,10 +1333,12 @@ var_dump($target);exit;
                                 $return_url = xarModURL('crispbb','user', 'display', array('tid' => $tid));
                             }
                         }
-                        return xarController::redirect($return_url);
+                        xarController::redirect($return_url);
+                        return true;
                     }
                 }
 
+                // Collect post/topic data for the page to be displayed
                 $data['posts'] = $posts;
                 $data['mergetid'] = $mergetid;
 //                $data['movetid'] = $movetid;
@@ -1358,21 +1369,23 @@ var_dump($target);exit;
                 }
             }
 
+            // Create the title string for this page
             $pageTitle = xarML('Moderate #(1) #(2)', $data['ttitle'], $component);
         break;
     }
 
-    $data['userpanel'] = $tracker->getUserPanelInfo();
-
-    $data['invalid'] = $invalid;
-    $data['pageTitle'] = $pageTitle;
-    $data['component'] = $component;
-    $data['modaction'] = $modaction;
-    $data['startnum'] = $startnum;
-    $data['sort'] = $sort;
-    $data['order'] = $order;
+    // Collect general data for the page to be displayed
+    $data['userpanel']  = $tracker->getUserPanelInfo();
+    $data['invalid']    = $invalid;
+    $data['pageTitle']  = $pageTitle;
+    $data['component']  = $component;
+    $data['modaction']  = $modaction;
+    $data['startnum']   = $startnum;
+    $data['sort']       = $sort;
+    $data['order']      = $order;
     $data['return_url'] = $return_url;
 
+    // Set the title of the page to be displayed
     xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
