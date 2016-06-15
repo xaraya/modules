@@ -150,11 +150,11 @@ function crispbb_user_moderate($args)
                     }
 
                     if (empty($invalid)) {
+                        if (!$confirm) {
 # --------------------------------------------------------
 # Display the confirmation page
 #
-                        if (!$confirm) {
-                            // pass data to confirmation template
+                            $data['tids'] = $tidkeys;
                             $data['topics'] = $topics;
                             $data['modaction'] = $modaction;
                             $data['component'] = $component;
