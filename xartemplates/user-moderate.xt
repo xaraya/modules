@@ -204,7 +204,7 @@
                                     <img src="#xarTpl::getImage('icons/delete.png', 'base')#" alt="Delete" title="#xarML('Delete this topic permanently')#" />
                                     </a>
                                 </xar:if>
-                                <input type="checkbox" name="tids[#$tid#]" id="tids_#$tid#" value="1" />
+                                <input type="hidden" name="tids" id="tids" value="#$tids#" />
                             </td>
                             <xar:set name="rowclass">$rowclass=='xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                         </tr>
@@ -232,59 +232,77 @@
                         <span class="xar-error">#$invalid['tids']#</span>
                     </div>
                 </xar:if>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="phase" id="phase" value="update" />
-                    <input type="hidden" name="component" id="component" value="topics" />
-                    <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
-                    <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                    <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus))#" />
-                    <xar:var name="label">Update Topics</xar:var>
-                    <xar:button type="submit" label="$label" />
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
+                        <input type="hidden" name="phase" id="phase" value="update" />
+                        <input type="hidden" name="component" id="component" value="topics" />
+                        <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
+                        <input type="hidden" name="fid" id="fid" value="#$fid#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus))#" />
+                        <xar:var name="label">Update Topics</xar:var>
+                        <xar:button type="submit" label="$label" />
+                    </div>
                 </div>
             </form>
         <xar:elseif condition="$modaction eq 'move'" />
             <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
                 <fieldset>
                     <xar:if condition="!empty($topics)">
-                        <div class="xar-form-input-wrapper">
-                            <label for="tids" class="xar-form-label help" title="#xarML('Topics this action will be performed upon')#">Move topic(s):</label>
-                            <xar:foreach in="$topics" key="$tid" value="$topic">
-                                <p class="xar-form-container-after">
+                        <div class="xar-row">
+                            <div class="xar-col">
+                                <label for="tids" class="xar-form-label help" title="#xarML('Topics this action will be performed upon')#">Move topic(s):</label>
+                            </div>
+                            <div class="xar-col">
+                                <xar:foreach in="$topics" key="$tid" value="$topic">
                                     <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
-                                </p>
-                            </xar:foreach>
-                            <input type="hidden" name="tids" id="tids" value="#$tids#" />
+                                </xar:foreach>
+                                <input type="hidden" name="tids" id="tids" value="#$tids#" />
+                            </div>
                         </div>
                     </xar:if>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label">From Forum:</label>
-                        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#">
-                            #$fname#
-                        </a>
-                        <xar:if condition="empty($mergetid)">
-                            <xar:data-input type="checkbox" name="shadow" id="shadow" value="$shadow" />
-                            <label for="shadow" class="help" title="#xarML('Optionally leave a shadow topic in this forum linking to the moved topic')#">Create shadow topic(s)</label>
-                        <xar:else />
-                            <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
-                        </xar:if>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label">From Forum:</label>
+                        </div>
+                        <div class="xar-col">
+                            <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#">
+                                #$fname#
+                            </a>
+                            <xar:if condition="empty($mergetid)">
+                                <xar:data-input type="checkbox" name="shadow" id="shadow" value="$shadow" />
+                                <label for="shadow" class="help" title="#xarML('Optionally leave a shadow topic in this forum linking to the moved topic')#">Create shadow topic(s)</label>
+                            <xar:else />
+                                <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
+                            </xar:if>
+                        </div>
                     </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="movefid" class="xar-form-label" title="#xarML('Move the topic to this forum')#">To Forum:</label>
-                        <xar:if condition="empty($mergetid)">
-                            <xar:data-input type="dropdown" name="movefid" id="movefid" value="$movefid" options="$forumoptions" />
-                        <xar:else />
-                            <xar:data-input type="dropdown" name="movefid" id="movefid_move" value="$movefid" options="$forumoptions" onchange="this.form.submit();"  />
-                        </xar:if>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="movefid" class="xar-form-label" title="#xarML('Move the topic to this forum')#">To Forum:</label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:if condition="empty($mergetid)">
+                                <xar:data-input type="dropdown" name="movefid" id="movefid" value="$movefid" options="$forumoptions" />
+                            <xar:else />
+                                <xar:data-input type="dropdown" name="movefid" id="movefid_move" value="$movefid" options="$forumoptions" onchange="this.form.submit();"  />
+                            </xar:if>
+                        </div>
                     </div>
                     <xar:if condition="!empty($invalid['movefid'])">
                         <div class="xar-form-input-wrapper-after">
                             <span class="xar-error">#$invalid['movefid']#</span>
                         </div>
                     </xar:if>
-                    <div class="xar-form-input-wrapper-after">
-                        <xar:data-input type="checkbox" name="mergetid" id="mergetid" onchange="this.form.submit();" value="$mergetid" />
-                        <label for="mergetid" class="help" title="#xarML('Optionally merge posts from selected topic(s) into another topic')#">Merge topic(s) into another topic in selected forum</label>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input type="checkbox" name="mergetid" id="mergetid" onchange="this.form.submit();" value="$mergetid" />
+                            <label for="mergetid" class="help" title="#xarML('Optionally merge posts from selected topic(s) into another topic')#">Merge topic(s) into another topic in selected forum</label>
+                        </div>
                     </div>
                     <xar:if condition="!empty($invalid['mergetid'])">
                         <div class="xar-form-input-wrapper-after">
@@ -390,15 +408,19 @@
                             <br class="xar-clearboth" />
                         </div>
                     </xar:if>
-                    <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                        <input type="hidden" name="phase" id="phase" value="update" />
-                        <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                        <input type="hidden" name="component" id="component" value="topics" />
-                        <input type="hidden" name="modaction" id="modaction" value="move" />
-                        <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid))#" />
-                        <xar:var name="label">Move Topic</xar:var>
-                        <xar:button type="submit" label="$label" />
+                    <div class="xar-row">
+                        <div class="xar-col">
+                        </div>
+                        <div class="xar-col">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <input type="hidden" name="phase" id="phase" value="update" />
+                            <input type="hidden" name="fid" id="fid" value="#$fid#" />
+                            <input type="hidden" name="component" id="component" value="topics" />
+                            <input type="hidden" name="modaction" id="modaction" value="move" />
+                            <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid))#" />
+                            <xar:var name="label">Move Topic</xar:var>
+                            <xar:button type="submit" label="$label" />
+                        </div>
                     </div>
                 </fieldset>
             </form>
