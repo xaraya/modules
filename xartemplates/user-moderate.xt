@@ -451,11 +451,15 @@
             </div>
             <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
                 <fieldset>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label">Topic:</label>
-                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
-                        #$ttitle#
-                        </a>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label">Topic:</label>
+                        </div>
+                        <div class="xar-col">
+                            <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
+                            #$ttitle#
+                            </a>
+                        </div>
                     </div>
                     <table class="xar-fullwidth xar-margin-none xar-alt-outline">
                         <caption class="xar-alt-outline xar-padding-thick xar-margin-thicktop">
@@ -651,55 +655,73 @@
             </form>
         <xar:else />
         <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
-            <div class="xar-form-input-wrapper">
-                <label class="xar-form-label">Topic:</label>
-                <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
-                #$fromttitle#
-                </a>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label class="xar-form-label">Topic:</label>
+                </div>
+                <div class="xar-col">
+                    <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
+                    #$fromttitle#
+                    </a>
+                </div>
             </div>
             <xar:if condition="!empty($posts)">
-                <div class="xar-form-input-wrapper">
-                    <label for="pids" class="xar-form-label help" title="#xarML('Posts this action will be performed upon')#">
-                        <xar:if condition="empty($mergetid)">
-                            Split
-                        <xar:else />
-                            Merge
-                        </xar:if>
-                        Post(s):
-                    </label>
-                    <xar:foreach in="$posts" key="$pid" value="$post">
-                        <p class="xar-form-container-after">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="pids" class="xar-form-label help" title="#xarML('Posts this action will be performed upon')#">
+                            <xar:if condition="empty($mergetid)">
+                                Split
+                            <xar:else />
+                                Merge
+                            </xar:if>
+                            Post(s):
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:foreach in="$posts" key="$pid" value="$post">
                             <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
-                        </p>
-                    </xar:foreach>
-                    <input type="hidden" name="pids" id="pids" value="#$pids#" />
+                        </xar:foreach>
+                        <input type="hidden" name="pids" id="pids" value="#$pids#" />
+                    </div>
                 </div>
             </xar:if>
-            <div class="xar-form-input-wrapper-after">
-                <xar:set name="checked">empty($mergetid) ? 'checked="checked"' : ''</xar:set>
-                <xar:if condition="empty($mergetid)">
-                <input type="radio" name="mergetid" id="mergetid_0" value="0" onchange="this.form.submit();" checked="checked" />
-                <xar:else />
-                <input type="radio" name="mergetid" id="mergetid_0" value="0" onchange="this.form.submit();" />
-                </xar:if>
-                <label class="help" title="#xarML('Create a new topic from the oldest post')#">Create new topic from oldest post</label>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <xar:set name="checked">empty($mergetid) ? 'checked="checked"' : ''</xar:set>
+                    <xar:if condition="empty($mergetid)">
+                        <input type="radio" name="mergetid" id="mergetid_0" value="0" onchange="this.form.submit();" checked="checked" />
+                    <xar:else />
+                        <input type="radio" name="mergetid" id="mergetid_0" value="0" onchange="this.form.submit();" />
+                    </xar:if>
+                    <label class="help" title="#xarML('Create a new topic from the oldest post')#">Create new topic from oldest post</label>
+                </div>
             </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:set name="checked">!empty($mergetid) ? 'checked="checked"' : ''</xar:set>
-                <xar:if condition="!empty($mergetid)">
-                <input type="radio" name="mergetid" id="mergetid_1" value="1" onchange="this.form.submit();" checked="checked" />
-                <xar:else />
-                <input type="radio" name="mergetid" id="mergetid_1" value="1" onchange="this.form.submit();" />
-                </xar:if>
-                <label class="help" title="#xarML('Merge selected posts into another topic')#">Merge posts into another topic</label>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <xar:set name="checked">!empty($mergetid) ? 'checked="checked"' : ''</xar:set>
+                    <xar:if condition="!empty($mergetid)">
+                        <input type="radio" name="mergetid" id="mergetid_1" value="1" onchange="this.form.submit();" checked="checked" />
+                    <xar:else />
+                        <input type="radio" name="mergetid" id="mergetid_1" value="1" onchange="this.form.submit();" />
+                    </xar:if>
+                    <label class="help" title="#xarML('Merge selected posts into another topic')#">Merge posts into another topic</label>
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="movefid" class="xar-form-label help" title="#xarML('Select a forum')#">In Forum:</label>
-                <xar:if condition="empty($mergetid)">
-                <xar:data-input type="dropdown" name="movefid" id="movefid_split" value="$movefid" options="$forumoptions"  />
-                <xar:else />
-                <xar:data-input type="dropdown" name="movefid" id="movefid_merge" value="$movefid" options="$forumoptions" onchange="this.form.submit();" />
-                </xar:if>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label for="movefid" class="xar-form-label help" title="#xarML('Select a forum')#">In Forum:</label>
+                </div>
+                <div class="xar-col">
+                    <xar:if condition="empty($mergetid)">
+                        <xar:data-input type="dropdown" name="movefid" id="movefid_split" value="$movefid" options="$forumoptions"  />
+                    <xar:else />
+                        <xar:data-input type="dropdown" name="movefid" id="movefid_merge" value="$movefid" options="$forumoptions" onchange="this.form.submit();" />
+                    </xar:if>
+                </div>
             </div>
             <xar:if condition="!empty($invalid['movefid'])">
                 <div class="xar-form-input-wrapper-after">
@@ -712,15 +734,23 @@
                 </div>
             </xar:if>
             <xar:if condition="empty($mergetid)">
-                <div class="xar-form-input-wrapper">
-                    <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin,$topictitlemax)</xar:set>
-                    <label for="ttitle" class="xar-form-label help" title="#$ttitlelabel#">New Topic Title:</label>
-                    <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" />
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin,$topictitlemax)</xar:set>
+                        <label for="ttitle" class="xar-form-label help" title="#$ttitlelabel#">New Topic Title:</label>
+                    </div>
+                    <div class="xar-col">
+                        <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" />
+                    </div>
                 </div>
                 <xar:if condition="!empty($invalid['ttitle'])">
-                <div class="xar-form-input-wrapper-after">
-                    <span class="xar-error">#$invalid['ttitle']#</span>
-                </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                        </div>
+                        <div class="xar-col">
+                            <span class="xar-error">#$invalid['ttitle']#</span>
+                        </div>
+                    </div>
                 </xar:if>
             <xar:else />
                 <table class="xar-fullwidth xar-alt-outline xar-margin-none">
@@ -819,15 +849,19 @@
                     <br class="xar-clearboth" />
                 </div>
             </xar:if>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="component" id="component" value="posts" />
-                <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="modaction" id="modaction" value="split" />
-                <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                <xar:var name="label">Split Posts</xar:var>
-                <xar:button type="submit" label="$label" />
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="component" id="component" value="posts" />
+                    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="modaction" id="modaction" value="split" />
+                    <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                    <xar:var name="label">Split Posts</xar:var>
+                    <xar:button type="submit" label="$label" />
+                </div>
             </div>
         </form>
         </xar:if>

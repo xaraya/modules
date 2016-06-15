@@ -100,7 +100,7 @@ function crispbb_user_moderate($args)
                         $invalid['tids'] = xarML('No topics found');
                     }
 
-                    // take no chances here, devious users could have changed input manually
+                    // Take no chances here, devious users could have changed input manually
                     // so we check each topic to make sure the user has adequate privs
                     $allowed = true;
                     foreach ($topics as $tcheck) {
@@ -508,7 +508,7 @@ function crispbb_user_moderate($args)
                         }
                     }
 
-                    // a failure here generally means the user manually changed params somewhere
+                    // A failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
                         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
@@ -541,7 +541,7 @@ function crispbb_user_moderate($args)
                             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
 
                         if ($mergetid) {
-                            // topic we're merging into
+                            // The topic we're merging into
                             $target = $checkt;
                             // posts to merge, sorted oldest first
                             $newposts = xarMod::apiFunc('crispbb', 'user', 'getposts',
@@ -551,7 +551,7 @@ function crispbb_user_moderate($args)
                                     'sort' => 'ptime',
                                     'order' => 'ASC'
                                 ));
-                            // can't have posts with times older than the topic start
+                            // Can't have posts with times older than the topic start
                             $mintime = $target['ttime'];
                             foreach ($newposts as $newpid => $newpost) {
                                 // reply posted before last reply time
@@ -564,7 +564,7 @@ function crispbb_user_moderate($args)
                                 if ($newpost['firstpid'] == $newpid) {
                                     $newpost['poststype'] = $newpost['topicstype'];
                                 }
-                                // move the post
+                                // Move the post
                                 if (!xarMod::apiFunc('crispbb', 'user', 'updatepost',
                                     array(
                                         'pid' => $newpost['pid'],
@@ -585,7 +585,7 @@ function crispbb_user_moderate($args)
                                     'lastpid' => $lastpost['pid'],
                                     'nohooks' => true
                                 ))) return;
-                            // remove the merged topics
+                            // Remove the merged topics
                             foreach ($topics as $tid => $topic) {
                                 // mark topic merged
                                 $tsettings = $data['tsettings'];
@@ -605,7 +605,7 @@ function crispbb_user_moderate($args)
                                         'nohooks' => true
                                     ))) return;
                             }
-                            // get the last reply in the forum topics were moved from
+                            // Get the last reply in the forum topics were moved from
                             $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $fid, 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             // update the forum the topics were moved from
@@ -615,7 +615,7 @@ function crispbb_user_moderate($args)
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
                                     'nohooks' => true
                                 ))) return;
-                            // get the last reply in the forum topics were moved to
+                            // Get the last reply in the forum topics were moved to
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
                             // update the forum the topics were moved to
@@ -634,7 +634,7 @@ function crispbb_user_moderate($args)
                             }
                             return xarController::redirect($return_url);
                         } else {
-                            // forum we're moving topics to
+                            // The forum we're moving topics to
                             $target = $checkf;
                             foreach ($topics as $tid => $topic) {
                                 $tsettings = $topic['tsettings'];
@@ -673,7 +673,8 @@ function crispbb_user_moderate($args)
                                     xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
                                 }
                             }
-                            // get the last reply in the forum topics were moved from
+                            
+                            // Get the last reply in the forum topics were moved from
                             $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $fid, 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             // update the forum the topics were moved from
@@ -683,7 +684,8 @@ function crispbb_user_moderate($args)
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
                                     'nohooks' => true
                                 ))) return;
-                            // get the last reply in the forum topics were moved to
+                                
+                            // Get the last reply in the forum topics were moved to
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
                             // update the forum the topics were moved from
@@ -704,7 +706,7 @@ function crispbb_user_moderate($args)
                         }
                     }
                 }
-                // pass data to form template
+                // Pass the data to the form template
                 if ($mergetid) {
                     $data['ftopics'] = xarMod::apiFunc('crispbb', 'user', 'gettopics',
                         array(
@@ -739,10 +741,10 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # We are performing an action on one or more posts
 #
-            if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pids', 'str', $pidkeys, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tid',     'int', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pids',    'str', $pidkeys, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pstatus', 'int', $pstatus, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('layout', 'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('layout',  'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) return;
 
             // The pids are a comma separated list, turn them into an array
             $pidkeyarray = explode(',', $pidkeys);
@@ -1161,14 +1163,15 @@ function crispbb_user_moderate($args)
 # We are merging into a different topic
 #
                             $target = $checkt;
-                            // posts to merge, sorted oldest first
+                            // Get the posts to merge, sorted oldest to first
                             $newposts = xarMod::apiFunc('crispbb', 'user', 'getposts',
                                 array(
                                     'pid' => array_keys($posts),
                                     'sort' => 'ptime',
                                     'order' => 'ASC'
                                 ));
-                            // can't have posts with times older than the topic start
+                                
+                            // Cherck that we don't have posts with times older than the topic start
                             $mintime = $target['ttime'];
                             foreach ($newposts as $newpid => $newpost) {
                                 // reply posted before last reply time
@@ -1181,7 +1184,7 @@ function crispbb_user_moderate($args)
                                 if ($newpost['firstpid'] == $newpid) {
                                     $newpost['poststype'] = $newpost['topicstype'];
                                 }
-                                // move the post
+                                // Move the post to its new place
                                 if (!xarMod::apiFunc('crispbb', 'user', 'updatepost',
                                     array(
                                         'pid' => $newpost['pid'],
@@ -1192,7 +1195,8 @@ function crispbb_user_moderate($args)
                                     ))) return;
                                 $mintime = $newpost['ptime'];
                             }
-                            // update the topic that posts were moved from
+                            
+                            // Update the topic that posts were moved from
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts',
                                 array(
                                     'tid' => $tid,
@@ -1203,43 +1207,46 @@ function crispbb_user_moderate($args)
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
                             if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
                                 array(
-                                    'tid' => $tid,
+                                    'tid'     => $tid,
                                     'lastpid' => $lastreply['pid'],
                                     'nohooks' => true
                                 ))) return;
                             unset($lastreply);
-                            // update the forum that posts were moved from
+                            
+                            // Update the forum that posts were moved from
                             $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!xarMod::apiFunc('crispbb', 'admin', 'update',
                                 array(
-                                    'fid' => $data['fid'],
+                                    'fid'     => $data['fid'],
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
                                     'nohooks' => true
                                 ))) return;
                             unset($lasttopic);
-                            // update the topic that posts were moved to
+                            
+                            // Update the topic that the posts were moved to
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts',
                                 array(
-                                    'tid' => $target['tid'],
+                                    'tid'      => $target['tid'],
                                     'numitems' => 1,
-                                    'sort' => 'ptime',
-                                    'order' => 'DESC'
+                                    'sort'     => 'ptime',
+                                    'order'    => 'DESC'
                                 ));
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
                             if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
                                 array(
-                                    'tid' => $target['tid'],
+                                    'tid'     => $target['tid'],
                                     'lastpid' => $lastreply['pid'],
                                     'nohooks' => true
                                 ))) return;
                             unset($lastreply);
-                            // update the forum that posts were moved to
+                            
+                            // Update the forum that the posts were moved to
                             $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!xarMod::apiFunc('crispbb', 'admin', 'update',
                                 array(
-                                    'fid' => $target['fid'],
+                                    'fid'     => $target['fid'],
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
                                     'nohooks' => true
                                 ))) return;
@@ -1295,7 +1302,7 @@ function crispbb_user_moderate($args)
                                ))) return;
                                
                            // Update the last topic id for the forum the new topic we have created
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => (int)$target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!xarMod::apiFunc('crispbb', 'admin', 'update',
                                 array(
@@ -1317,7 +1324,7 @@ function crispbb_user_moderate($args)
                             unset($lastreply);
                             
                             // Update the forum that the posts were moved from
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => (int)$data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!xarMod::apiFunc('crispbb', 'admin', 'update',
                                 array(
