@@ -1171,7 +1171,7 @@ function crispbb_user_moderate($args)
                                     'order' => 'ASC'
                                 ));
                                 
-                            // Cherck that we don't have posts with times older than the topic start
+                            // Check that we don't have posts with times older than the topic start
                             $mintime = $target['ttime'];
                             foreach ($newposts as $newpid => $newpost) {
                                 // reply posted before last reply time
