@@ -65,7 +65,7 @@
                         </div>
                         <div class="xar-col">
                             <xar:foreach in="$topics" key="$tid" value="$topic">
-                                    <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
+                                <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
                             </xar:foreach>
                             <input type="hidden" name="tids" id="tids" value="#$tids#" />
                         </div>
@@ -82,6 +82,9 @@
                         <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                         <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                        <xar:var name="label">Cancel</xar:var>
+                        <xar:button type="cancel" name="cancel" label="$label" />
+                        &#160;
                         <xar:var name="label">Confirm Action</xar:var>
                         <xar:button type="submit" name="confirm" label="$label" />
                     </div>
@@ -150,6 +153,9 @@
                         <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
                         <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                        <xar:var name="label">Cancel</xar:var>
+                        <xar:button type="cancel" name="cancel" label="$label" />
+                        &#160;
                         <xar:var name="label">Confirm Action</xar:var>
                         <xar:button type="submit" name="confirm" label="$label" />
                     </div>
@@ -176,9 +182,7 @@
                         </div>
                         <div class="xar-col">
                             <xar:foreach in="$posts" key="$pid" value="$post">
-                                <p class="xar-form-container-after">
-                                    <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
-                                </p>
+                                <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
                             </xar:foreach>
                             <input type="hidden" name="pids" id="pids" value="#$pids#" />
                         </div>
@@ -194,6 +198,9 @@
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                        <xar:var name="label">Cancel</xar:var>
+                        <xar:button type="cancel" name="cancel" label="$label" />
+                        &#160;
                         <xar:var name="label">Confirm Action</xar:var>
                         <xar:button type="submit" name="confirm" label="$label" />
                     </div>
@@ -276,6 +283,9 @@
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                     </div>
                     <div class="xar-col">
+                        <xar:var name="label">Cancel</xar:var>
+                        <xar:button type="cancel" name="cancel" label="$label" />
+                        &#160;
                         <xar:var name="label">Confirm Action</xar:var>
                         <xar:button type="submit" name="confirm" label="$label" />
                     </div>
