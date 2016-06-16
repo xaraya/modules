@@ -1259,13 +1259,46 @@ function crispbb_user_moderate($args)
                             $target = $checkf;
                             $created = false;
                             // Get the posts to split, sorted oldest first
-                            $newposts = xarMod::apiFunc('crispbb', 'user', 'getposts',
+                            $newpost = xarMod::apiFunc('crispbb', 'user', 'getpost',
                                 array(
                                     'pid'   => array_keys($posts),
                                     'sort'  => 'ptime',
                                     'order' => 'ASC'
                                 ));
                                 
+                            // Create a new topic in the traget forum that is the first post of those being split
+                            if (!$newtid = xarMod::apiFunc('crispbb', 'user', 'createtopic',
+                                array(
+                                    'ttitle'    => $ttitle,
+                                    'tstatus'   => 0,
+                                    'tsettings' => $data['tsettings'],
+                                    'towner'    => $newpost['powner'],
+                                    'firstpid'  => $newpost['pid'],
+                                    'fid'       => $target['fid'],
+                                    'ttype'     => 0
+                                ))) return;
+
+                            // Get all the posts in the current topic later than the first one
+                            $splitposts = xarMod::apiFunc('crispbb', 'user', 'getlaterposts',
+                                array(
+                                    'tid'         => $newpost['tid'],
+                                    'ts'          => $newpost['ptime'],
+                                    'include_ts'  => 1
+                                ));
+
+                            // Update the split posts to reflect the new tid
+                            foreach ($splitposts as $splitpost) {
+                                if (!xarMod::apiFunc('crispbb', 'user', 'updatepost',
+                                    array(
+                                        'pid'     => $splitpost['id'],
+                                        'tid'     => $newtid,
+                                        'nohooks' => true
+                                    ))) return;
+
+                                $lastpid = $splitpost['id']; // keep track of the last post id
+                            }
+
+/*
                             // Create a topic and replies in the selected forum from the posts we split/merge
                             foreach ($newposts as $newpid => $newpost) {
                                 if (!$created) {
@@ -1292,7 +1325,7 @@ function crispbb_user_moderate($args)
                                 }
                                 $lastpid = $newpid; // keep track of the last post id
                            }
-                           
+*/                           
                            // Update the last post id for the new topic
                            if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
                                array(
