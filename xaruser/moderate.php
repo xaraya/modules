@@ -1044,6 +1044,7 @@ function crispbb_user_moderate($args)
 //                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('ttitle', 'str:1:255', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('pdesc', 'str:1:255', $pdesc, '', XARVAR_NOT_REQUIRED)) return;
                 $forumoptions = array();
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
@@ -1145,6 +1146,7 @@ function crispbb_user_moderate($args)
                             $data['mergetid'] = $mergetid;
 //                            $data['movetid'] = $movetid;
                             $data['ttitle'] = $ttitle;
+                            $data['pdesc'] = $pdesc;
                             $data['targettid'] = !empty($checkt) ? $checkt : array();
                             $data['targetfid'] = !empty($checkf) ? $checkf : array();
                             $data['component'] = $component;
@@ -1164,7 +1166,7 @@ function crispbb_user_moderate($args)
 #
                             $target = $checkt;
                             // Get the posts to merge, sorted oldest to first
-                            $newposts = xarMod::apiFunc('crispbb', 'user', 'getposts',
+                            $newpost = xarMod::apiFunc('crispbb', 'user', 'getpost',
                                 array(
                                     'pid' => array_keys($posts),
                                     'sort' => 'ptime',
@@ -1270,6 +1272,7 @@ function crispbb_user_moderate($args)
                             if (!$newtid = xarMod::apiFunc('crispbb', 'user', 'createtopic',
                                 array(
                                     'ttitle'    => $ttitle,
+                                    'pdesc'     => $pdesc,
                                     'tstatus'   => 0,
                                     'tsettings' => $data['tsettings'],
                                     'towner'    => $newpost['powner'],

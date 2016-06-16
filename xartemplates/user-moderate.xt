@@ -734,6 +734,9 @@
                 </div>
             </xar:if>
             <xar:if condition="empty($mergetid)">
+                <xar:if condition="empty($ttitle)">
+                    <xar:set name="ttitle">xarML('Split from #(1)', $fromttitle)</xar:set>
+                </xar:if>
                 <div class="xar-row">
                     <div class="xar-col">
                         <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin,$topictitlemax)</xar:set>
@@ -749,6 +752,27 @@
                         </div>
                         <div class="xar-col">
                             <span class="xar-error">#$invalid['ttitle']#</span>
+                        </div>
+                    </div>
+                </xar:if>
+                <xar:if condition="empty($pdesc)">
+                    <xar:set name="pdesc">xarML('Split from #(1)', $fromttitle)</xar:set>
+                </xar:if>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:set name="pdesclabel">xarML('Enter a topic description between #(1) and #(2) characters', $topictitlemin,$topictitlemax)</xar:set>
+                        <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#">New Topic Description:</label>
+                    </div>
+                    <div class="xar-col">
+                        <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="255" class="xar-form-textxxlong" />
+                    </div>
+                </div>
+                <xar:if condition="!empty($invalid['pdesc'])">
+                    <div class="xar-row">
+                        <div class="xar-col">
+                        </div>
+                        <div class="xar-col">
+                            <span class="xar-error">#$invalid['pdesc']#</span>
                         </div>
                     </div>
                 </xar:if>

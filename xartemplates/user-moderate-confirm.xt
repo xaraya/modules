@@ -206,7 +206,7 @@
                     </div>
                 </div>
             </form>
-            <xar:else />
+        <xar:else />
             <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
                 <div class="xar-row">
                     <div class="xar-col">
@@ -246,8 +246,10 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            #$ttitle#
+                            #$ttitle#<br/>
+                            #$pdesc#
                             <input type="hidden" name="ttitle" id="ttitle" value="#$ttitle#" />
+                            <input type="hidden" name="pdesc" id="pdesc" value="#$pdesc#" />
                         </div>
                     </div>
                     <div class="xar-row">
