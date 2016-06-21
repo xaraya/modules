@@ -19,10 +19,24 @@
  * @return array
  * @throws none
  */
+
+/**
+ * Defualts
+ *
+ * component    topics
+ * modaction    NULL
+ * phase        form
+ * confirm      false
+ */
  sys::import('modules.base.class.pager');
 function crispbb_user_moderate($args)
 {
     extract($args);
+
+# --------------------------------------------------------
+#
+# Check for good data
+#
     if (!xarVarFetch('component', 'enum:topics:posts:waiting', $component, 'topics', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modaction', 'str', $modaction, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:update:form', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
@@ -425,6 +439,7 @@ function crispbb_user_moderate($args)
                     array('check' => $check, 'priv' => 'editforum'))) {
                         $modactions[] = array('id' => 'purge', 'name' => xarML('Purge'));
                 }
+                $data['tids'] = $tidkeys;
                 $data['modactions'] = $modactions;
                 $data['tstatusoptions'] = $tstatusoptions;
                 $data['forumoptions'] = $forumoptions;
@@ -1041,10 +1056,11 @@ function crispbb_user_moderate($args)
 #
             } else {
                 if (!xarVarFetch('movefid', 'id', $movefid, NULL, XARVAR_NOT_REQUIRED)) return;
-//                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('ttitle', 'str:1:255', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('pdesc', 'str:1:255', $pdesc, '', XARVAR_NOT_REQUIRED)) return;
+                var_dump($_POST);
                 $forumoptions = array();
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
@@ -1089,7 +1105,7 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # Check for valid data for the split
 #
-                    if ($mergetid) {
+                    if ($mergetid) {//var_dump(empty($movetid));die("X");
                         if (empty($movetid)) { // no topic to merge with
                             $invalid['mergetid'] = xarML('Select a topic to merge into');
                         } elseif ($movetid == $tid) {
@@ -1160,12 +1176,12 @@ function crispbb_user_moderate($args)
                         if (!xarSecConfirmAuthKey())
                             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
 
-                        if ($mergetid) {
+                        if ($mergetid) {die("X");
 # --------------------------------------------------------
 # We are merging into a different topic
 #
                             $target = $checkt;
-                            // Get the posts to merge, sorted oldest to first
+                            // Get the oldest post to split.
                             $newpost = xarMod::apiFunc('crispbb', 'user', 'getpost',
                                 array(
                                     'pid' => array_keys($posts),
@@ -1173,6 +1189,15 @@ function crispbb_user_moderate($args)
                                     'order' => 'ASC'
                                 ));
                                 
+                            // Get all the posts in the current topic later than the first one
+                            $newposts = xarMod::apiFunc('crispbb', 'user', 'getlaterposts',
+                                array(
+                                    'tid'         => $newpost['tid'],
+                                    'ts'          => $newpost['ptime'],
+                                    'include_ts'  => 1
+                                ));
+
+                            
                             // Check that we don't have posts with times older than the topic start
                             $mintime = $target['ttime'];
                             foreach ($newposts as $newpid => $newpost) {
@@ -1198,7 +1223,7 @@ function crispbb_user_moderate($args)
                                 $mintime = $newpost['ptime'];
                             }
                             
-                            // Update the topic that posts were moved from
+                            // Get the last post remaining in the old topic
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts',
                                 array(
                                     'tid' => $tid,
@@ -1207,6 +1232,8 @@ function crispbb_user_moderate($args)
                                     'order' => 'DESC'
                                 ));
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+                            
+                            // Update the topic that posts were moved from
                             if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
                                 array(
                                     'tid'     => $tid,
@@ -1226,7 +1253,7 @@ function crispbb_user_moderate($args)
                                 ))) return;
                             unset($lasttopic);
                             
-                            // Update the topic that the posts were moved to
+                            // Get the last post remaining in the new topic
                             $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts',
                                 array(
                                     'tid'      => $target['tid'],
@@ -1235,6 +1262,8 @@ function crispbb_user_moderate($args)
                                     'order'    => 'DESC'
                                 ));
                             $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+
+                            // Update the topic that the posts were moved to
                             if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
                                 array(
                                     'tid'     => $target['tid'],
@@ -1260,7 +1289,7 @@ function crispbb_user_moderate($args)
                             // Get the posts to split/merge
                             $target = $checkf;
                             $created = false;
-                            // Get the posts to split, sorted oldest first
+                            // Get the oldest post to split. This is the topic start for the new topic
                             $newpost = xarMod::apiFunc('crispbb', 'user', 'getpost',
                                 array(
                                     'pid'   => array_keys($posts),
