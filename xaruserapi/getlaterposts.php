@@ -29,8 +29,9 @@ function crispbb_userapi_getlaterposts($args)
     $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['crispbb_posts']);
     
-    // For now, just return the ID field
-    $q->addfield('id');
+    // For now, just return the ID and time fields
+//    $q->addfield('id');
+//    $q->addfield('ptime');
     
     // Only those posts that belong to this topic
     $q->eq('tid', $args['tid']);
