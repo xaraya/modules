@@ -280,6 +280,8 @@ function crispbb_user_display($args)
         $pageTitle .= xarML(' - Page #(1)',$pageNumber);
     }
     $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
+    $data['fids'] = implode(',', array_keys($data['forumoptions']));
+    
     xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     $data['viewstatsurl'] = xarModURL('crispbb', 'user', 'stats');

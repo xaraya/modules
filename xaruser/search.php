@@ -32,10 +32,10 @@ function crispbb_user_search()
 
     // crispbb specific args from search form or redirect
     if (!xarVarFetch('crispbb_component', 'enum:replies:topics', $component, 'topics', XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_fields', 'list', $searchfields, array(), XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_fids', 'list', $fids, array(), XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_start', 'int', $starttime, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_end', 'int', $endtime, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('crispbb_fields',    'str', $searchfields, '', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('crispbb_fids',      'str', $fids, '', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('crispbb_start',     'int', $starttime, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('crispbb_end',       'int', $endtime, NULL, XARVAR_DONT_SET)) return;
 
     // search args from redirect
     if (!xarVarFetch('towner', 'id', $towner, NULL, XARVAR_DONT_SET)) return;
@@ -64,14 +64,10 @@ function crispbb_user_search()
 
     if (!isset($q) && !empty($forums)) { // no search performed, pre-select some options
         if (empty($fids)) {
-        foreach($forums as $fid => $forum) {
-            $fids[$fid] = 1;
-        }
+            $fids = implode(',', $forum);
         }
         if (empty($searchfields)) {
-        foreach ($reqfields as $reqfield) {
-            $searchfields[$reqfield] = 1;
-        }
+            $searchfields = implode(',', $reqfields);
         }
     }
 
@@ -182,8 +178,8 @@ function crispbb_user_search()
         }
         if (!empty($fids)) {
             $searchfids = array();
-            foreach ($fids as $reqfid => $fidval) {
-                if (empty($fidval) || !is_numeric($fidval) || empty($forums[$reqfid])) continue;
+            $fidkeys = explode(',', $fids);
+            foreach ($fidkeys as $reqfid) {
                 $searchfids[$reqfid] = 1;
             }
             if (!empty($searchfids)) {
@@ -400,7 +396,7 @@ function crispbb_user_search()
         }
     }
 
-
+    $data['fids'] = $fids;
     $data['results'] = $results;
     $data['forums'] = $forums;
     $data['crispbb_fids'] = $fids;

@@ -159,6 +159,7 @@ function crispbb_user_forum_index()
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
 
     $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
+    $data['fids'] = implode(',', array_keys($data['forumoptions']));
 
     $pageTitle = empty($catid) ? xarML('Forum Index') : $categories[$catid]['name'];
     $data['pageTitle'] = $pageTitle;
