@@ -1105,7 +1105,7 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # Check for valid data for the split
 #
-                    if ($mergetid) {//var_dump(empty($movetid));die("X");
+                    if ($mergetid) {
                         if (empty($movetid)) { // no topic to merge with
                             $invalid['mergetid'] = xarML('Select a topic to merge into');
                         } elseif ($movetid == $tid) {
@@ -1197,7 +1197,6 @@ function crispbb_user_moderate($args)
                                     'ts'          => $firstpost['ptime'],
                                     'include_ts'  => 1
                                 ));
-var_dump($newposts);
                             
                             // Check that we don't have posts with times older than the topic start
                             $mintime = $target['ttime'];
@@ -1215,7 +1214,7 @@ var_dump($newposts);
                                 // Move the post to its new place
                                 if (!xarMod::apiFunc('crispbb', 'user', 'updatepost',
                                     array(
-                                        'pid' => $newpost['pid'],
+                                        'pid' => $newpost['id'],
                                         'tid' => $target['tid'],
                                         'ptime' => $newpost['ptime'],
                                         'poststype' => $newpost['poststype'],
