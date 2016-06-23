@@ -64,7 +64,7 @@ function crispbb_user_search()
 
     if (!isset($q) && !empty($forums)) { // no search performed, pre-select some options
         if (empty($fids)) {
-            $fids = implode(',', $forum);
+            $fids = implode(',', array_keys($forums));
         }
         if (empty($searchfields)) {
             $searchfields = implode(',', $reqfields);
@@ -190,7 +190,7 @@ function crispbb_user_search()
             unset($searchfids);
         }
         if (!empty($searchfields)) {
-            $search['searchfields'] = array_keys($searchfields);
+            $search['searchfields'] = explode(',', $searchfields);
         }
         $search['tstatus'] = array(0,1);
         $search['pstatus'] = 0;
