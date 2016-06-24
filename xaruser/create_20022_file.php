@@ -130,7 +130,6 @@ function payments_user_create_20022_file()
         // Get this transaction
         $data['transaction']->getItem(array('itemid' => $item['id']));
         // Add the data
-        $data['items'][$key]['processed'] = 0;
         $data['transaction']->setFieldValues($data['items'][$key],1);
         // Update the database transaction
         $data['transaction']->updateItem(array('itemid' => $item['id']));
