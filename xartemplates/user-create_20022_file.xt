@@ -23,6 +23,7 @@
       <xar:isoelement name="PmtInf">
         <xar:foreach in="$items" value="$item">
   
+          <!-- Set ome vars -->
           <xar:if condition="$item['payment_type'] eq '1'">
             <xar:set name="payment_type">'CH01'</xar:set>
           <xar:elseif condition="$item['payment_type'] eq '2.2'"/>
@@ -34,6 +35,7 @@
             <xar:set name="payment_type">$item['payment_type']</xar:set>
           </xar:if>
 
+          <!-- General -->
           <xar:isoelement name="PmtInfId">#$group_reference#</xar:isoelement>
           <xar:isoelement name="PmtMtd">#$payment_method#</xar:isoelement>
           <xar:isoelement name="BtchBookg">#$batch_booking#</xar:isoelement>

@@ -41,6 +41,10 @@
                 <div style="margin-top: 20px; margin-left: 20px">
                     This payment has more than one source
                 </div>
+            <xar:elseif condition="$layout eq 'no_payments_id'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    Cannot create a payments file
+                </div>
             <xar:else />
                 <div style="margin-top: 20px; margin-left: 20px">
                     No error message is available.

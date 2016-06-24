@@ -18,15 +18,19 @@
 function payments_user_create_20022_file()
 {
     if (!xarSecurityCheck('AddPayments')) return;
-    
+
     // Make sure comments in templates are switched off
     if (xarModVars::get('themes', 'ShowTemplates')) {
         return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
     }
-
+    
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('idlist' ,    'str',    $data['idlist'] , '' ,       XARVAR_NOT_REQUIRED)) return;
 
+    // If we have an idlist, turn it into an array
+    if (!empty($data['idlist'])) $data['idlist'] = explode(',', $data['idlist']);
+    
     $data['tplmodule'] = 'payments';
 
 # --------------------------------------------------------
@@ -38,14 +42,14 @@ function payments_user_create_20022_file()
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
     $data['debit_address'] = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_fields['address']));
 
-    
+
 # --------------------------------------------------------
 #
 # Define miscellaneous information
 #
     $data['payment_method'] = "TRF";
     $data['batch_booking'] = "true";
-    $data['group_reference'] = 1;
+    $data['group_reference'] = time() . "-" . xrUser::getVar('id');
     $data['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier');
     if(empty($data['message_identifier'])) {
         return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
@@ -62,7 +66,10 @@ function payments_user_create_20022_file()
     
     if (!empty($data['itemid'])) {
         $q->eq('id', $data['itemid']);
+    } elseif (!empty($data['idlist'])) {
+        $q->in('id', $data['idlist']);
     } else {
+        return xarTpl::module('payments','user','errors',array('layout' => 'no_payments_id'));
     }
     $data['items'] = $data['object']->getItems();
 
@@ -99,7 +106,7 @@ function payments_user_create_20022_file()
     
     $data['transaction'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
     $data['control_sum'] = 0;
-    
+//    echo "<pre>";var_dump($data['items']);exit;
     foreach ($data['items'] as $key => $item) {
         // Add the debit fields to the corresponding properties in the DTA object
         $data['items'][$key]['sender_account'] = $debit_fields['account_holder'];
@@ -123,11 +130,12 @@ function payments_user_create_20022_file()
         // Get this transaction
         $data['transaction']->getItem(array('itemid' => $item['id']));
         // Add the data
+        $data['items'][$key]['processed'] = 0;
         $data['transaction']->setFieldValues($data['items'][$key],1);
         // Update the database transaction
         $data['transaction']->updateItem(array('itemid' => $item['id']));
     }
-    
+
 # --------------------------------------------------------
 #
 # Send the file to the browser
