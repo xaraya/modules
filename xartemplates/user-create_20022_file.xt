@@ -21,27 +21,15 @@
 
 <!-- Begin payment info -->
       <xar:isoelement name="PmtInf">
-        <xar:foreach in="$items" value="$item">
   
-          <!-- Set ome vars -->
-          <xar:if condition="$item['payment_type'] eq '1'">
-            <xar:set name="payment_type">'CH01'</xar:set>
-          <xar:elseif condition="$item['payment_type'] eq '2.2'"/>
-            <xar:set name="payment_type">'CH03'</xar:set>
-          <xar:elseif condition="$item['payment_type'] eq '6'"/>
-            <!-- Salary payments are a variation of type 3 -->
-            <xar:set name="payment_type">'3'</xar:set>
-          <xar:else/>
-            <xar:set name="payment_type">$item['payment_type']</xar:set>
-          </xar:if>
-
-          <!-- General -->
-          <xar:isoelement name="PmtInfId">#$group_reference#</xar:isoelement>
-          <xar:isoelement name="PmtMtd">#$payment_method#</xar:isoelement>
-          <xar:isoelement name="BtchBookg">#$batch_booking#</xar:isoelement>
+        <!-- General -->
+        <xar:isoelement name="PmtInfId">#$group_reference#</xar:isoelement>
+        <xar:isoelement name="PmtMtd">#$payment_method#</xar:isoelement>
+        <xar:isoelement name="BtchBookg">#$batch_booking#</xar:isoelement>
+        <xar:set name="common">reset($items)</xar:set>
 
           <!-- Category purpose -->
-          <xar:if condition="$item['payment_type'] eq 6">
+          <xar:if condition="$common['payment_type'] eq 6">
             <xar:isoelement name="PmtTpInf">
               <xar:isoelement name="CtgyPurp">
                 <xar:isoelement name="Cd">SALA</xar:isoelement>
@@ -49,8 +37,8 @@
             </xar:isoelement>
           </xar:if>
 
-          <!-- Requested execution date -->
-          <xar:isoelement name="ReqdExctnDt">#date('Y-m-d', $item['transaction_date'])#</xar:isoelement>
+          <!-- Requested execution date, the same for all payments -->
+          <xar:isoelement name="ReqdExctnDt">#date('Y-m-d', $common['transaction_date'])#</xar:isoelement>
           
           <!-- Debtor -->
           <xar:isoelement name="Dbtr">
@@ -63,7 +51,7 @@
               <xar:set name="debit_iban">str_replace(' ','',$debit_account->properties['iban']->value)</xar:set>
               <xar:isoelement name="IBAN">#$debit_iban#</xar:isoelement>
             </xar:isoelement>
-            <xar:if condition="$item['payment_type'] eq 6">
+            <xar:if condition="$common['payment_type'] eq 6">
               <xar:isoelement name="Tp">
                 <xar:isoelement name="Prtry">CND</xar:isoelement>
               </xar:isoelement>
@@ -73,31 +61,31 @@
           <!-- Debtor Agent -->
           <xar:isoelement name="DbtrAgt">
             <xar:isoelement name="FinInstnId">
-              <xar:if condition="$item['payment_type'] eq 1">
+              <xar:if condition="$common['payment_type'] eq 1">
                 <!-- orange payment slip -->
                 <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
-              <xar:elseif condition="$item['payment_type'] eq 2.2"/>
+              <xar:elseif condition="$common['payment_type'] eq 2.2"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
                       <xar:isoelement name="Cd">CHBCC</xar:isoelement>
                     </xar:isoelement>
                     <xar:isoelement name="MmbId">#$debit_account->properties['clearing']->value#</xar:isoelement>
                 </xar:isoelement>
-              <xar:elseif condition="$item['payment_type'] eq 3"/>
+              <xar:elseif condition="$common['payment_type'] eq 3"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
                       <xar:isoelement name="Cd">CHBCC</xar:isoelement>
                     </xar:isoelement>
                     <xar:isoelement name="MmbId">#$debit_account->properties['clearing']->value#</xar:isoelement>
                 </xar:isoelement>
-              <xar:elseif condition="$item['payment_type'] eq 6"/>
+              <xar:elseif condition="$common['payment_type'] eq 6"/>
                 <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
               </xar:if>
             </xar:isoelement>
           </xar:isoelement>
     
           <!-- Ultimate Debtor -->
-          <xar:if condition="$item['payment_type'] eq 3">
+          <xar:if condition="$common['payment_type'] eq 3">
             <xar:isoelement name="UltmtDbtr">
               <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
               <xar:isoelement name="PstlAdr">
@@ -112,6 +100,20 @@
             </xar:isoelement>
           </xar:if>
         
+        <xar:foreach in="$items" value="$item">
+
+          <!-- Set ome vars -->
+          <xar:if condition="$item['payment_type'] eq '1'">
+            <xar:set name="payment_type">'CH01'</xar:set>
+          <xar:elseif condition="$item['payment_type'] eq '2.2'"/>
+            <xar:set name="payment_type">'CH03'</xar:set>
+          <xar:elseif condition="$item['payment_type'] eq '6'"/>
+            <!-- Salary payments are a variation of type 3 -->
+            <xar:set name="payment_type">'3'</xar:set>
+          <xar:else/>
+            <xar:set name="payment_type">$item['payment_type']</xar:set>
+          </xar:if>
+
 <!-- Begin transaction info -->
             <xar:isoelement name="CdtTrfTxInf">
 
