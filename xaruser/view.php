@@ -47,6 +47,7 @@ function crispbb_user_view($args)
     }
 
     $data = $forums[$fid];
+    $data['fids'] = implode(',', array_keys($forums));
 
     $data['tstatus'] = NULL;
     $privs = $data['privs'];
