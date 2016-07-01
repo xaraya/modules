@@ -3,7 +3,7 @@
     <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-        <h3>Delete Course</h3>
+        <h3>Delete Payment</h3>
 
         <xar:data-display object="$object" tplmodule="grader" />
         <form method="post" action="#xarServer::getCurrentURL()#">
