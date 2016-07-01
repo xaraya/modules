@@ -25,6 +25,7 @@
                             object="$object" 
                             fieldlist="transaction_date,payment_type,address_1,currency,amount,processed"
                             tplmodule="payments"
+                            show_bulk="true"
                             />
         </fieldset>
     </div>
