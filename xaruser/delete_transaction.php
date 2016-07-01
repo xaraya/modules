@@ -21,10 +21,6 @@ function payments_user_delete_transaction()
     if (!xarSecurityCheck('ManagePayments')) return;
     xarTplSetPageTitle('Delete Payment');
 
-    // Grader security
-    sys::import('modules.grader.class.access');
-   // Access::check('Charges', 'delete');
-
     if(!xarVarFetch('confirmed',  'bool', $confirmed,  false, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemid',     'str',  $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('idlist',     'str',  $idlist,     NULL,  XARVAR_DONT_SET)) {return;}
@@ -37,7 +33,7 @@ function payments_user_delete_transaction()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('grader', 'user','view_transactions'));
+            xarController::redirect(xarModURL('payments', 'user','view_transactions'));
         }
     }
 
