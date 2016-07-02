@@ -56,6 +56,9 @@
                     </xar:if>
                 </a>
             </xar:access>
+            <xar:if condition="empty($loopitem['processed'])">
+                <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" />
+            </xar:if>
         <xar:elseif condition="$objectname eq 'payments_debit_account'"/>
             <xar:access level="200">
                  <a href="#xarModURL('payments','user','display_debit_account',array('itemid' => $loopitem[$primaryalias]))#"
@@ -87,11 +90,6 @@
                     </xar:if>
                 </a>
             </xar:access>
-        </xar:if>
-    </td>
-    <td style="text-align: right;">
-        <xar:if condition="empty($loopitem['processed'])">
-            <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" />
         </xar:if>
     </td>
 </xar:template>
