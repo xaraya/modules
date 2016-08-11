@@ -19,10 +19,9 @@ function payments_user_modify_transaction()
 {
     if (!xarSecurityCheck('EditPayments')) return;
 
-    if (!xarVarFetch('name',       'str',      $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('payment_type', 'str',    $data['payment_type'], '2',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',         'str',      $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid' ,      'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',      'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
 #
@@ -31,6 +30,7 @@ function payments_user_modify_transaction()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['payment_type'] = $data['object']->properties['payment_type']->value;
     $data['tplmodule'] = 'payments';
 
 # --------------------------------------------------------
