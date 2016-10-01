@@ -20,10 +20,10 @@
 <!-- End group header -->
 
 <!-- Main loop for each payment -->
+      <xar:set name="index">0</xar:set>
       <xar:foreach in="$items" value="$item">
 
 <!-- Begin payment info -->
-      <xar:set name="index">0</xar:set>
       <xar:isoelement name="PmtInf">
   
         <!-- General -->
