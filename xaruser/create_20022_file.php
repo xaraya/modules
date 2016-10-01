@@ -47,9 +47,9 @@ function payments_user_create_20022_file()
 #
 # Define miscellaneous information
 #
+    $data['group_reference'] = time() . "-" . xarUser::getVar('id');
     $data['payment_method'] = "TRF";
     $data['batch_booking'] = "true";
-    $data['group_reference'] = time() . "-" . xarUser::getVar('id');
     $data['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier');
     if(empty($data['message_identifier'])) {
         return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));

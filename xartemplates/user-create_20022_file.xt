@@ -23,13 +23,18 @@
       <xar:foreach in="$items" value="$item">
 
 <!-- Begin payment info -->
+      <xar:set name="index">0</xar:set>
       <xar:isoelement name="PmtInf">
   
         <!-- General -->
-        <xar:isoelement name="PmtInfId">#$group_reference#</xar:isoelement>
+        <!-- Payment ID -->
+        <!-- This has the form time() + userID + index -->
+        <xar:set name="index">$index + 1</xar:set>
+        <xar:set name="payment_id">group_reference . "-" . $index</xar:set>
+        <xar:isoelement name="PmtInfId">#$payment_id#</xar:isoelement>
+        
         <xar:isoelement name="PmtMtd">#$payment_method#</xar:isoelement>
         <xar:isoelement name="BtchBookg">#$batch_booking#</xar:isoelement>
-        <xar:set name="common">reset($items)</xar:set>
 
           <!-- Category purpose -->
           <xar:if condition="$item['payment_type'] eq 6">
