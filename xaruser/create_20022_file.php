@@ -20,10 +20,10 @@ function payments_user_create_20022_file()
     if (!xarSecurityCheck('AddPayments')) return;
 
     // Make sure comments in templates are switched off
-    if (xarModVars::get('themes', 'ShowTemplates')) {
+    if (xarModVars::get('themes', 'ShowTemplates')) {die("Fix Me");
         return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
     }
-    
+
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,        XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('idlist' ,    'str',    $data['idlist'] , '' ,       XARVAR_NOT_REQUIRED)) return;
@@ -96,7 +96,7 @@ function payments_user_create_20022_file()
             $data['items'][$key]['transaction_date'] = $today;
         }
     }
-    
+
 # --------------------------------------------------------
 #
 # Update fields of the payment items
