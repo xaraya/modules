@@ -20,7 +20,7 @@ function payments_user_create_20022_file()
     if (!xarSecurityCheck('AddPayments')) return;
 
     // Make sure comments in templates are switched off
-    if (xarModVars::get('themes', 'ShowTemplates')) {die("Fix Me");
+    if (xarModVars::get('themes', 'ShowTemplates')) {die("Fix Me: HTML comments are on");
         return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
     }
 

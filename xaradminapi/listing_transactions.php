@@ -17,6 +17,6 @@
 
 function payments_adminapi_listing_transactions($args)
 {
-    xarMod::guiFunc('payments', 'user', 'create_20022_file');
+    return xarMod::guiFunc('payments', 'user', 'create_20022_file');
 }
 ?>
