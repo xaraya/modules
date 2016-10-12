@@ -95,9 +95,11 @@ function publications_admin_modifyconfig()
 
         // Implode the names for each page into a path for display.
         $data['treeoptions'] = array();
-        foreach ($data['tree']['pages'] as $key => $page) {
-    //        $data['tree']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
-            $data['treeoptions'][] = array('id' => $page['id'], 'name' => '/' . implode('/', $page['namepath']));
+        if (!empty($data['tree']['pages'])) {
+            foreach ($data['tree']['pages'] as $key => $page) {
+        //        $data['tree']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
+                $data['treeoptions'][] = array('id' => $page['id'], 'name' => '/' . implode('/', $page['namepath']));
+            }
         }
 
         // Module alias for short URLs
