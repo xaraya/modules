@@ -95,6 +95,12 @@ function payments_user_modify_transaction()
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
+            // Update the entry in the matchings table
+            $tables = xarDB::getTables();
+            $q = new Query('UPDATE', $tables['payments_matchings']);
+            $q->eq('payment_id', $itemid);
+            $q->addfield('settled_amount', $data['object']->properties['amount']->value);
+            
             // Jump to the next page
             xarController::redirect(xarModURL('payments','user','view_transactions'));
             return true;

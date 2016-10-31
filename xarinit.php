@@ -186,6 +186,24 @@
         )";
         if (!$q->run($query)) return;
 
+    # --------------------------------------------------------
+    #
+    # Table structure for table payments matchings
+    #
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_payments_matchings";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_payments_matchings (
+          id                integer unsigned NOT NULL auto_increment,
+          payment_id        integer unsigned NOT NULL default 0,
+          object            varchar(64) NOT NULL default '',
+          itemid            integer unsigned NOT NULL default 0,
+          settled_amount    decimal(15,5) NOT NULL default 0,
+          PRIMARY KEY (`id`),
+          KEY `foreign_id` (`object`,`itemid`),
+          KEY `payment_id` (`payment_id`)
+        )";
+        if (!$q->run($query)) return;
+
         if (xarMod::isAvailable('mailer')) {
         /*
             //Psspl : Added mail template for sending OTP Re-order email.

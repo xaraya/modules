@@ -158,6 +158,14 @@ function payments_user_new_transaction()
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
+            // Craete an entry in the matchings table
+            $tables = xarDB::getTables();
+            $q = new Query('INSERT', $tables['payments_matchings']);
+            $q->addfield('payment_id', $itemid);
+            $q->addfield('object', $info['payment_object']);
+            $q->addfield('itemid', $info['payment_itemid']);
+            $q->addfield('settled_amount', $data['object']->properties['amount']->value);
+            
             // Jump to the next page
             xarController::redirect(xarModURL('payments','user','view_transactions'));
             return true;
