@@ -165,6 +165,7 @@ function payments_user_new_transaction()
             $q->addfield('object', $info['payment_object']);
             $q->addfield('itemid', $info['payment_itemid']);
             $q->addfield('settled_amount', $data['object']->properties['amount']->value);
+            $q->run();
             
             // Jump to the next page
             xarController::redirect(xarModURL('payments','user','view_transactions'));

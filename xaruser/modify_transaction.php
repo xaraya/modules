@@ -100,6 +100,7 @@ function payments_user_modify_transaction()
             $q = new Query('UPDATE', $tables['payments_matchings']);
             $q->eq('payment_id', $itemid);
             $q->addfield('settled_amount', $data['object']->properties['amount']->value);
+            $q->run();
             
             // Jump to the next page
             xarController::redirect(xarModURL('payments','user','view_transactions'));
