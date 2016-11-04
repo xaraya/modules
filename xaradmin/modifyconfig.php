@@ -16,7 +16,7 @@
  */
 function scheduler_admin_modifyconfig()
 {
-// Security Check
+    // Security Check
     if (!xarSecurityCheck('AdminScheduler')) return;
 
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
