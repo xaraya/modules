@@ -9,14 +9,18 @@ writeInLog();
 function writeInLog()
 {
 	//$url = "http://eventhubsacramento.com/writeinlog.php";
-	$url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=test";
+//	$url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=test";
+    // Call the scheduler using the default route (to make sure the URL is solvable)
+    $url = xarController::URL('scheduler', 'user', 'test', array(), null, null, array(), 'default');
 	$content = getUrlContent($url);
 	echo $content;
 }
 
 function callScheduler()
 {
-	$url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=main";
+//	$url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=main";
+    // Call the scheduler using the default route (to make sure the URL is solvable)
+    $url = xarController::URL('scheduler', 'user', 'main', array(), null, null, array(), 'default');
 	$content = getUrlContent($url);
 	echo $content;
 }
