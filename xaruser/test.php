@@ -16,23 +16,33 @@
  */
 function scheduler_user_test()
 {
-    //callscheduler();
-    $date = date('d.m.Y h:i:s');
-    xarLogMessage('Entered in scheduler_user_test');
-    xarLogMessage('Current Date time');
-    xarLogVariable('datetime', $date);
-
+    callScheduler();
     writeInLog();
 }
+
 function callScheduler()
 {
-    $url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=main";
+    // Call the scheduler using the default route (to make sure the URL is solvable)
+    $url = xarController::URL('scheduler', 'user', 'main', array(), null, null, array(), 'default');
     $content = getUrlContent($url);
+    return true;
 }
+
 function writeInLog()
 {
-    $url = "http://eventhubsacramento.com/writeinlog.php";
-    $content = getUrlContent($url);
+    $date = date('d.m.Y h:i:s');
+    
+    // The Xaraya log (if enabled)
+    xarLog::message('Entered in scheduler_user_test');
+    xarLog::message('Current Date time');
+    xarLog::variable('datetime', $date);
+
+    // The scheduler test log
+    $msg = "Current Date";
+    $log = $msg . "   |  Date:  " . $date."\n";
+    $path = sys::varpath() . "/logs/testscheduler.log";
+    error_log($log, 3, $path);
+    return true;
 }
 
 function getUrlContent($url, $loop = 0, $delay = 0)
