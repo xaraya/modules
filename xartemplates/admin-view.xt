@@ -2,6 +2,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:data-input type="listing" objectname="scheduler_jobs" tplmodule="scheduler" />
+        <xar:data-input type="listing" 
+                        objectname="scheduler_jobs" 
+                        fieldlist="module,type,function,job_trigger, source_type, source,start_date,end_date"
+                        show_alphabet="false"
+                        tplmodule="scheduler" />
     </div>
 </xar:template>
