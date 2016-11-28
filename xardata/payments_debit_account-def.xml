@@ -48,7 +48,7 @@
     <property name="iban">
       <id>6776</id>
       <label>IBAN</label>
-      <type>textbox</type>
+      <type>iban</type>
       <defaultvalue></defaultvalue>
       <source>debit_account.iban</source>
       <status>33</status>
@@ -193,6 +193,16 @@
       <source>debit_account.bic</source>
       <status>33</status>
       <seq>18</seq>
+      <configuration></configuration>
+    </property>
+    <property name="address">
+      <id>6868</id>
+      <label>Address</label>
+      <type>address</type>
+      <defaultvalue></defaultvalue>
+      <source>debit_account.address</source>
+      <status>33</status>
+      <seq>19</seq>
       <configuration></configuration>
     </property>
   </properties>
