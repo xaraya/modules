@@ -3,8 +3,8 @@
   <label>Payment Transactions</label>
   <module_id>182</module_id>
   <itemtype>208</itemtype>
-  <class>DataObject</class>
-  <filepath>auto</filepath>
+  <class>ISO20022</class>
+  <filepath>modules/payments/class/iso20022.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <access>a:0:{}</access>
@@ -61,7 +61,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address2</source>
-      <status>34</status>
+      <status>33</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -71,7 +71,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address3</source>
-      <status>34</status>
+      <status>33</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -81,7 +81,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address4</source>
-      <status>34</status>
+      <status>33</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -91,7 +91,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.post_code</source>
-      <status>34</status>
+      <status>33</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -121,7 +121,7 @@
       <type>esr</type>
       <defaultvalue></defaultvalue>
       <source>payments.reference</source>
-      <status>34</status>
+      <status>33</status>
       <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -131,7 +131,7 @@
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>payments.reason</source>
-      <status>34</status>
+      <status>33</status>
       <seq>13</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -141,7 +141,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_account</source>
-      <status>34</status>
+      <status>33</status>
       <seq>14</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -171,7 +171,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_line1</source>
-      <status>34</status>
+      <status>36</status>
       <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
