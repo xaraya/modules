@@ -24,7 +24,7 @@ class CalendarDisplayProperty extends DataProperty
     public $reqmodules = array('calendar');
     
     public $timeframe  = 'week';
-    public $owner      ;
+    public $owner;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -33,7 +33,7 @@ class CalendarDisplayProperty extends DataProperty
         // Set for runtime
         $this->tplmodule = 'calendar';
         $this->filepath   = 'modules/calendar/xarproperties';
-        $this->owner = xarSession::getVar('role_id');
+        $this->owner = xarUser::getVar('id');
     }
 
     public function showInput(Array $data = array())
