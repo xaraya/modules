@@ -31,7 +31,7 @@ $modversion['category']       = 'Content';
 $modversion['dependencyinfo'] = array(
                                     0 => array(
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.24.0'
+                                            'version_ge' => '2.4.0'
                                          ),
                                     8 => array(
                                             'name' => 'icalendar',
