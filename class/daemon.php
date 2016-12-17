@@ -101,17 +101,17 @@ class Daemon extends Object
         // NOTE: when we call serialize here, the __sleep() magic method is called
         try {
             if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
-                xarSession::setVar('daemon', serialize($this));
+                xarSession::setVar('paymentsdaemon', serialize($this));
             } else {
-                xarModUserVars::set('ledgerba', 'daemon', serialize($this));
+                xarModUserVars::set('payments', 'daemon', serialize($this));
             }
         } catch (Exception $e) {
             if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
-                xarSession::delVar('daemon');
-                xarSession::setVar('daemon', serialize($this));
+                xarSession::delVar('paymentsdaemon');
+                xarSession::setVar('paymentsdaemon', serialize($this));
             } else {
-                xarModUserVars::delete('ledgerba', 'daemon');
-                xarModUserVars::set('ledgerba', 'daemon', serialize($this));
+                xarModUserVars::delete('payments', 'daemon');
+                xarModUserVars::set('payments', 'daemon', serialize($this));
             }
         }
     }
@@ -124,9 +124,9 @@ class Daemon extends Object
     public function delete()
     {
             if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
-                xarSession::delVar('daemon');
+                xarSession::delVar('paymentsdaemon');
             } else {
-                xarModUserVars::delete('ledgerba', 'daemon');
+                xarModUserVars::delete('payments', 'daemon');
             }
         return true;
     }
@@ -141,12 +141,12 @@ class Daemon extends Object
         if (!isset(self::$instance)) {
             // try unserializing the stored object
             if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
-                self::$instance = @unserialize(xarSession::getVar('daemon'));
+                self::$instance = @unserialize(xarSession::getVar('paymentsdaemon'));
             } else {
                 if (!empty($id)) {
-                    self::$instance = @unserialize(xarModUserVars::get('ledgerba', 'daemon', $id));
+                    self::$instance = @unserialize(xarModUserVars::get('payments', 'daemon', $id));
                 } else {
-                    self::$instance = @unserialize(xarModUserVars::get('ledgerba', 'daemon'));
+                    self::$instance = @unserialize(xarModUserVars::get('payments', 'daemon'));
                 }
             }
             // fall back to new instance (first run)
