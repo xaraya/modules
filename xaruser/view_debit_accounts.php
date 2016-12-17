@@ -37,7 +37,7 @@ function payments_user_view_debit_accounts($args)
     
     // Only active accounts
     $q->eq('state', 3);
-    $q->qecho();
+//    $q->qecho();
     return $data;
 }
 ?>
