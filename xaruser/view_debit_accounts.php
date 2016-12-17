@@ -21,8 +21,7 @@ function payments_user_view_debit_accounts($args)
     xarTplSetPageTitle('View Debit Accounts');
 
     // Load the user's daemon
-    sys::import('modules.payments.class.daemon');
-    $daemon = Daemon::getInstance();
+    $daemon = xarMod::apiFunc('payments', 'admin', 'get_daemon');
     $data = $daemon->checkInput();
 
 #------------------------------------------------------------
@@ -30,9 +29,13 @@ function payments_user_view_debit_accounts($args)
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
     $q = $data['object']->dataquery;
     
-    // Only active payments
-    $q->eq('state', 3);
+    // Only accounts of this mandant
+    $q->eq('sender_object', 'ledgerba_mandant');
+    $q->eq('sender_itemid', $ledger_daemon->getCurrentMandant());
     
+    // Only active accounts
+    $q->eq('state', 3);
+    $q->qecho();
     return $data;
 }
 ?>

@@ -1,0 +1,22 @@
+<usermenu>
+    <menuitems>
+        <menuitem>
+            <mask>ManagePayments</mask>
+            <includes>
+                <includeitem>view_transactions</includeitem>
+            </includes>
+            <target>view_transactions</target>
+            <title>View Payments stored in the database</title>
+            <label>Manage Payments</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManagePayments</mask>
+            <includes>
+                <includeitem>view_debit_accounts</includeitem>
+            </includes>
+            <target>view_debit_accounts</target>
+            <title>Manage Debit Accounts</title>
+            <label>Manage Accounts</label>
+        </menuitem>
+    </menuitems>
+</usermenu>
