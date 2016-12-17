@@ -29,9 +29,11 @@ function payments_user_view_debit_accounts($args)
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
     $q = $data['object']->dataquery;
     
-    // Only accounts of this mandant
-    $q->eq('sender_object', 'ledgerba_mandant');
-    $q->eq('sender_itemid', $ledger_daemon->getCurrentMandant());
+    if (xarMod::isAvailable('ledgerba')) {
+        // Only accounts of this mandant
+        $q->eq('sender_object', 'ledgerba_mandant');
+        $q->eq('sender_itemid', $daemon->getCurrentMandant());
+    }
     
     // Only active accounts
     $q->eq('state', 3);

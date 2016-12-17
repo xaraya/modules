@@ -34,13 +34,13 @@ function payments_user_new_debit_account()
 
 # --------------------------------------------------------
 #
-# Check if we are passing an object item
+# Check if we are passing an object item that identifies the entity using this module
 #
-    if (!xarVarFetch('obj',        'str',    $object,            '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('obj',        'str',    $objectname,        '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid',     'int',    $itemid,            '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($object)) {
-        $sourceobject = DataObjectMaster::getObject(array('name' => $object));
+        $sourceobject = DataObjectMaster::getObject(array('name' => $objectname));
         $sourceobject->getItem(array('itemid' => $itemid));
     
         // If we have data, transfer it to the new object
@@ -49,7 +49,7 @@ function payments_user_new_debit_account()
             if (isset($sourcefields['name'])) $data['object']->properties['name']->value = $sourcefields['name'];
             if (isset($sourcefields['name'])) $data['object']->properties['account_holder']->value = $sourcefields['name'];
             if (isset($sourcefields['address'])) $data['object']->properties['address']->value = $sourcefields['address'];
-            $data['object']->properties['sender_object']->value = $object;
+            $data['object']->properties['sender_object']->value = $objectname;
             $data['object']->properties['sender_itemid']->value = $itemid;
         }
     }
