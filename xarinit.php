@@ -262,6 +262,7 @@
     #
     # Set up modvars
     #
+        xarModVars::set('payments', 'module_created', time());
         xarModVars::set('payments', 'items_per_page', 20);
         xarModVars::set('payments', 'use_module_alias',0);
         xarModVars::set('payments', 'module_alias_name','Payments');
