@@ -47,7 +47,7 @@ function payments_user_clone_debit_account()
         if (!empty($return_url)) {
             xarController::redirect($return_url);
         } else {
-            xarController::redirect(xarModURL('payments', 'user', 'view_debit_accounts'));
+            xarController::redirect(xarModURL('payments', 'user', 'modify_debit_account'));
         }
     }
     return $data;
