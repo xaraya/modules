@@ -62,10 +62,13 @@ function payments_user_new_transaction()
         $q->eq('payment_itemid', $info['payment_itemid']);
         $q->eq('state', 3);
         $items = $payments->getItems();
+        
         // Sanity check
         if (count($items) > 1) {
             return xarTpl::module('payments','user','errors',array('layout' => 'non_unique_source'));
         }
+        
+        // If we have a single item, it means we already created a payment slip. Go modify it
         if (count($items) == 1) {
             $item = current($items);
             xarController::redirect(xarModURL('payments', 'user', 'modify_transaction', array('itemid' => $item['id'], 'api' => $api)));
@@ -82,13 +85,21 @@ function payments_user_new_transaction()
         $q = $data['debit_account']->dataquery;
         $q->eq('sender_object', $info['sender_object']);
         $q->eq('sender_itemid', $info['sender_itemid']);
-        $items = $data['debit_account']->getItems();
+        $data['accounts'] = $data['debit_account']->getItems();
 
-        if(empty($items)) {
+        if(empty($data['accounts'])) {
             return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
         }
     
-        $item = current($items);
+        $item = current($data['accounts']);
+        // Check if we have a currency of the same type as the payment
+        data['account'] = 0;
+        foreach ($data['accounts'] as $id => $account) {
+            if ($account['currency'] = $data['object']->properties['currency']->value) {
+                data['account'] = $id;
+                $item = $account;
+            }
+        }
         // The debtor name
         $data['object']->properties['sender_account']->value = $item['account_holder'];
         // The debtor address
@@ -125,7 +136,7 @@ function payments_user_new_transaction()
         }
     }
     
-    // If we have no previous payment, check if a paymnt type was passed
+    // If we have no previous payment, check if a payment type was passed
     if (($previous_exists == false) && isset($info['payment_type'])) {
         $data['object']->properties['payment_type']->value = $info['payment_type'];
         $data['payment_type'] = $info['payment_type'];
