@@ -52,6 +52,15 @@
                 </div>
                 <div class="xar-row">
                     <div class="xar-col-condensed">
+                        <xar:var name="label">Currency</xar:var>
+                        <xar:data-label property="$properties['currency']" label="$label"/>                    
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['currency']"/>                    
+                    </div>        
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col-condensed">
                         <xar:var name="label">Bank Name</xar:var>
                         <xar:data-label property="$properties['bank_name']" label="$label"/>                    
                     </div>
