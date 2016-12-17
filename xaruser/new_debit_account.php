@@ -23,7 +23,7 @@ function payments_user_new_debit_account()
 
 # --------------------------------------------------------
 #
-# Get the payment transactions object
+# Get the debit account object
 #
     if (!xarVarFetch('name',       'str',    $name,            'payments_debit_account', XARVAR_NOT_REQUIRED)) return;
 
@@ -38,18 +38,20 @@ function payments_user_new_debit_account()
 #
     if (!xarVarFetch('obj',        'str',    $object,            '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid',     'int',    $itemid,            '', XARVAR_NOT_REQUIRED)) return;
+
+    if (!empty($object)) {
+        $sourceobject = DataObjectMaster::getObject(array('name' => $object));
+        $sourceobject->getItem(array('itemid' => $itemid));
     
-    $sourceobject = DataObjectMaster::getObject(array('name' => $object));
-    $sourceobject->getItem(array('itemid' => $itemid));
-    
-    // If we have data, transfer it to the new object
-    $sourcefields = $sourceobject->getFieldValues(array(), 1);
-    if (!empty($sourcefields)) {
-        if (isset($sourcefields['name'])) $data['object']->properties['name']->value = $sourcefields['name'];
-        if (isset($sourcefields['name'])) $data['object']->properties['account_holder']->value = $sourcefields['name'];
-        if (isset($sourcefields['address'])) $data['object']->properties['address']->value = $sourcefields['address'];
-        $data['object']->properties['sender_object']->value = $object;
-        $data['object']->properties['sender_itemid']->value = $itemid;
+        // If we have data, transfer it to the new object
+        $sourcefields = $sourceobject->getFieldValues(array(), 1);
+        if (!empty($sourcefields)) {
+            if (isset($sourcefields['name'])) $data['object']->properties['name']->value = $sourcefields['name'];
+            if (isset($sourcefields['name'])) $data['object']->properties['account_holder']->value = $sourcefields['name'];
+            if (isset($sourcefields['address'])) $data['object']->properties['address']->value = $sourcefields['address'];
+            $data['object']->properties['sender_object']->value = $object;
+            $data['object']->properties['sender_itemid']->value = $itemid;
+        }
     }
 
 # --------------------------------------------------------

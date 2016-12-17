@@ -21,8 +21,7 @@ function payments_user_view_transactions($args)
     xarTplSetPageTitle('View ISO20022 Payments');
 
     // Load the user's daemon
-    sys::import('modules.payments.class.daemon');
-    $daemon = Daemon::getInstance();
+    $daemon = xarMod::apiFunc('payments', 'admin', 'get_daemon');
     $data = $daemon->checkInput();
 
 #------------------------------------------------------------

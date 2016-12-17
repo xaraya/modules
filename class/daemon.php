@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
-class Daemon extends Object
+class PaymentsDaemon extends Object
 {
     private static $instance;
     
