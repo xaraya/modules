@@ -77,7 +77,6 @@ function payments_user_modify_transaction()
     // We always need a sender reference of sorts for the payment
     if (empty($data['object']->properties['sender_reference']->value)) 
         $data['object']->properties['sender_reference']->value = xarML('Undefined');
-var_dump($data['object']->getFieldValues());
 
 # --------------------------------------------------------
 #

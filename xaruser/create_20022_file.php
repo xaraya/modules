@@ -37,11 +37,12 @@ function payments_user_create_20022_file()
 #
 # Get the debit account information
 #
+    // All the debit accounts we will display
+    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $data['object']->properties['sender_itemid']->value));
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
     $data['debit_account']->getItem(array('itemid' => 1));
     $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
     $data['debit_address'] = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_fields['address']));
-
 
 # --------------------------------------------------------
 #
@@ -57,7 +58,7 @@ function payments_user_create_20022_file()
 
 # --------------------------------------------------------
 #
-# Get the items to be transmitted
+# Get the payments to be transmitted
 #
     // Get the payments object
     sys::import('modules.dynamicdata.class.objects.master');
