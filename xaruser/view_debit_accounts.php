@@ -29,6 +29,7 @@ function payments_user_view_debit_accounts($args)
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
     $q = $data['object']->dataquery;
     
+    // If we are using the ledger modules...
     if (xarMod::isAvailable('ledgerba')) {
         // Only accounts of this mandant
         $q->eq('sender_object', 'ledgerba_mandant');
