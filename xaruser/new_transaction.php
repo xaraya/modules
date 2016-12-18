@@ -98,6 +98,9 @@ function payments_user_new_transaction()
         }
     }
 
+    // Set the chosen dbit account
+    $data['object']->properties['sender_itemid']->value = $debit_account['id'];
+        
     // Set the debtor name
     $data['object']->properties['sender_account']->value = $debit_account['account_holder'];
         

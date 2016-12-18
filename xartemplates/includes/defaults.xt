@@ -44,7 +44,7 @@
         </div>
         <div class="xar-col">
             <xar:set name="value">xarModItemVars::get('payments', 'defaultcurrency', $regid)</xar:set>
-            <xar:data-input type="textbox" name="defaultcurrency" value="$value"/>
+            <xar:data-input type="currency" name="defaultcurrency" value="$value"/>
         </div>
     </div>
     <div class="xar-row">
