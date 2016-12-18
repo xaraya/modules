@@ -58,6 +58,9 @@ function payments_user_modify_transaction()
     // The debit account for this transaction
     $debit_account = $data['debit_accounts'][$data['object']->properties['sender_itemid']->value];
 
+    // Set the debtor name
+    $data['object']->properties['sender_account']->value = $debit_account['account_holder'];
+        
     // Set the debtor address
     $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_account['address']));
     if (!empty($lines[3])) $lines[2] .= " " . $lines[3];

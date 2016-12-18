@@ -80,37 +80,33 @@ function payments_user_new_transaction()
 #
 # Get the debit account information
 #
-    if (!empty($info['sender_object']) && !empty($info['sender_itemid'])) {
-        $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
-        $q = $data['debit_account']->dataquery;
-        $q->eq('sender_object', $info['sender_object']);
-        $q->eq('sender_itemid', $info['sender_itemid']);
-        $data['accounts'] = $data['debit_account']->getItems();
-
-        if(empty($data['accounts'])) {
-            return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
-        }
+    // All the debit accounts we will display
+    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $data['object']->properties['sender_itemid']->value));
     
-        $item = current($data['accounts']);
-        // Check if we have a currency of the same type as the payment
-        $data['account'] = 0;
-        foreach ($data['accounts'] as $id => $account) {
-            if ($account['currency'] = $data['object']->properties['currency']->value) {
-                $data['account'] = $id;
-                $item = $account;
-            }
-        }
-        die("X");
-        // Set the debtor name
-        $data['object']->properties['sender_account']->value = $item['account_holder'];
-        
-        // Set the debtor address
-        $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
-        if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
-        if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
-        if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
-        if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
+    if(empty($data['debit_accounts'])) {
+        return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
     }
+    
+    // Set the debit account for this transaction as the first one
+    $debit_account = current($data['debit_accounts']);
+
+    // Now check if we have a currency of the same type as the payment
+    foreach ($data['debit_accounts'] as $id => $account) {
+        if ($account['currency'] == $data['object']->properties['currency']->value) {
+            $debit_account = $account;
+            break;
+        }
+    }
+
+    // Set the debtor name
+    $data['object']->properties['sender_account']->value = $debit_account['account_holder'];
+        
+    // Set the debtor address
+    $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_account['address']));
+    if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
+    if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
+    if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
+    if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
 
 # --------------------------------------------------------
 #

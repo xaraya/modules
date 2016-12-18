@@ -21,7 +21,9 @@
         <form method="post" action="#xarServer::getCurrentURL()#">
 
           <fieldset>
-            <xar:data-form object="$object" tplmodule="$tplmodule"/>
+            <xar:data-form object="$object" 
+                           debit_accounts="$debit_accounts"
+                           tplmodule="$tplmodule"/>
           </fieldset>
           <div class="xar-row">
               <div class="xar-col">
