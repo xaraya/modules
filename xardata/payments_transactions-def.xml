@@ -61,7 +61,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address2</source>
-      <status>34</status>
+      <status>33</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -71,7 +71,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address3</source>
-      <status>34</status>
+      <status>33</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -81,7 +81,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address4</source>
-      <status>34</status>
+      <status>33</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -91,7 +91,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.post_code</source>
-      <status>34</status>
+      <status>33</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -99,7 +99,7 @@
       <id>6842</id>
       <label>Currency</label>
       <type>currency</type>
-      <defaultvalue>EUR</defaultvalue>
+      <defaultvalue>xarModVars::get('payments','defaultcurrency')</defaultvalue>
       <source>payments.currency</source>
       <status>33</status>
       <seq>10</seq>
@@ -121,7 +121,7 @@
       <type>esr</type>
       <defaultvalue></defaultvalue>
       <source>payments.reference</source>
-      <status>34</status>
+      <status>33</status>
       <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -131,7 +131,7 @@
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>payments.reason</source>
-      <status>34</status>
+      <status>33</status>
       <seq>13</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -141,7 +141,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_account</source>
-      <status>34</status>
+      <status>33</status>
       <seq>14</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -171,7 +171,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_line1</source>
-      <status>34</status>
+      <status>33</status>
       <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -181,7 +181,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_line2</source>
-      <status>34</status>
+      <status>33</status>
       <seq>17</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -191,7 +191,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_line3</source>
-      <status>34</status>
+      <status>33</status>
       <seq>18</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -201,7 +201,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_line4</source>
-      <status>34</status>
+      <status>33</status>
       <seq>19</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -341,7 +341,7 @@
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>payments.financial_inst</source>
-      <status>34</status>
+      <status>33</status>
       <seq>33</seq>
       <configuration></configuration>
     </property>
@@ -353,7 +353,7 @@
       <source>payments.sender_itemid</source>
       <status>33</status>
       <seq>34</seq>
-      <configuration></configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";}</configuration>
     </property>
   </properties>
 </object>
