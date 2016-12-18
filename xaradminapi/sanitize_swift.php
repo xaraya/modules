@@ -14,8 +14,8 @@
  */
 function payments_adminapi_sanitize_swift($args)
 {
-    if (empty($args['string'])) 
-        throw new BadParameterException('string');
+    if (empty($args['string'])) return $args['string'];
+
     $f = $args['string'];
         
      // a combination of various methods
