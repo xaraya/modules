@@ -280,7 +280,7 @@
         </div>
         <div class="xar-row">
             <div class="xar-col-condensed">
-                Remittance information
+                Remittance info
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['reason']"/>
@@ -342,7 +342,7 @@
         </div>
         <div class="xar-row">
             <div class="xar-col">
-                Remittance information
+                Remittance info
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['reason']"/>
