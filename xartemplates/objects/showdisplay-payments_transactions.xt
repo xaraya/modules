@@ -3,16 +3,28 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-row">
         <div class="xar-col-condensed">
-            <label for="defaultvatcode" title="#xarML('The date to execute this payment')#">            
+            <label for="payment_date" title="#xarML('The date to execute this payment')#">            
                 Payment date:
             </label>
         </div>
         <div class="xar-col">
-            <xar:data-output property="$properties['transaction_date']"/>
+            <xar:data-output property="$properties['transaction_date']" name="payment_date"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <label for="debit_account" title="#xarML('The account to debit for this payment')#">            
+                Debit account:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="accounts">xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $properties['sender_itemid']->value))</xar:set>
+            <xar:data-output type="dropdown" name="debit_account" options="$accounts" value="1"/>
         </div>
     </div>
     <xar:set name="payment_type">$properties['payment_type']->value</xar:set>
     <xar:if condition="$payment_type eq '1'">
+<!-- Orange payment slip -->
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffcc99;'</xar:set>
@@ -84,6 +96,7 @@
     <xar:elseif condition="$payment_type eq 'lukb_orange'"/>
         <xar:template filename="lukb_orange"/>
     <xar:elseif condition="$payment_type eq '2.2'"/>
+<!-- Red payment slip -->
         <xar:set name="style1">'width: 56mm'</xar:set>
         <xar:set name="style2">'width: 20mm'</xar:set>
         <xar:set name="style3">'font: 11px Arial; font-weight:bold; background-color: ##ffefef;'</xar:set>
@@ -161,8 +174,136 @@
                 </tr>
             </table>
         </div><!-- xar-middle-payment -->
-        <!--
-        <img src="#xarTpl::getImage('p_002.gif', 'property','paymentslip')#"/>
-        -->
+    <xar:elseif condition="$payment_type eq 3"/>
+<!-- Bank transfer -->
+        <xar:data-output property="$properties['financial_institution']" hidden="hidden"/>
+        <xar:data-output property="$properties['reference_number']"      hidden="hidden"/>
+        <xar:data-output property="$properties['post_account']"          hidden="hidden"/>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Beneficiary
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['address_1']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                &#160;
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['address_2']"/><br/>
+                <xar:data-output property="$properties['address_3']"/><br/>
+                <xar:data-output property="$properties['address_4']"/><br/>
+                <xar:data-output property="$properties['country_code']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Beneficiary IBAN
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['iban']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Beneficiary BIC
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['bic']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Amount
+            </div>
+            <div class="xar-col">
+                #$properties['currency']->value#&#160;
+                <xar:data-output property="$properties['amount']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Remittance info
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['reason']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Sender
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['sender_account']" /><br/>
+<!--                <xar:data-output property="$properties['sender_line_1']" /><br/> -->
+                <xar:data-output property="$properties['sender_line_2']" /><br/>
+                <xar:data-output property="$properties['sender_line_3']" /><br/>
+                <xar:data-output property="$properties['sender_line_4']" />
+            </div>
+        </div>
+    <xar:elseif condition="$payment_type eq 6"/>
+<!-- Salary payment -->
+        <xar:data-output property="$properties['bic']"                   hidden="hidden"/>
+        <xar:data-output property="$properties['reference_number']"      hidden="hidden"/>
+        <xar:data-output property="$properties['post_account']"          hidden="hidden"/>
+        <xar:data-output property="$properties['financial_institution']" hidden="hidden"/>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Beneficiary
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['address_1']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                &#160;
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['address_2']"/><br/>
+                <xar:data-output property="$properties['address_3']"/><br/>
+                <xar:data-output property="$properties['address_4']"/><br/>
+                <xar:data-output property="$properties['country_code']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Beneficiary IBAN
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['iban']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Amount
+            </div>
+            <div class="xar-col">
+                #$properties['currency']->value#&#160;
+                <xar:data-output property="$properties['amount']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Remittance info
+            </div>
+            <div class="xar-col-condensed">
+                <xar:data-output property="$properties['reason']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                Sender
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['sender_account']" /><br/>
+<!--                <xar:data-output property="$properties['sender_line_1']" /><br/> -->
+                <xar:data-output property="$properties['sender_line_2']" /><br/>
+                <xar:data-output property="$properties['sender_line_3']" /><br/>
+                <xar:data-output property="$properties['sender_line_4']" />
+            </div>
+        </div>
     </xar:if>
 </xar:template>

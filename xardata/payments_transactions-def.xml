@@ -61,7 +61,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address2</source>
-      <status>33</status>
+      <status>34</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -71,7 +71,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address3</source>
-      <status>33</status>
+      <status>34</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -81,7 +81,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.address4</source>
-      <status>33</status>
+      <status>34</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -91,7 +91,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.post_code</source>
-      <status>33</status>
+      <status>34</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -121,7 +121,7 @@
       <type>esr</type>
       <defaultvalue></defaultvalue>
       <source>payments.reference</source>
-      <status>33</status>
+      <status>34</status>
       <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -131,7 +131,7 @@
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>payments.reason</source>
-      <status>33</status>
+      <status>34</status>
       <seq>13</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -141,7 +141,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_account</source>
-      <status>33</status>
+      <status>34</status>
       <seq>14</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -171,7 +171,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_line1</source>
-      <status>36</status>
+      <status>34</status>
       <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -343,6 +343,16 @@
       <source>payments.financial_inst</source>
       <status>34</status>
       <seq>33</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_itemid">
+      <id>7311</id>
+      <label>Sender Itemid</label>
+      <type>dropdown</type>
+      <defaultvalue>0</defaultvalue>
+      <source>payments.sender_itemid</source>
+      <status>33</status>
+      <seq>34</seq>
       <configuration></configuration>
     </property>
   </properties>

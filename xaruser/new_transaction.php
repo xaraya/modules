@@ -93,16 +93,18 @@ function payments_user_new_transaction()
     
         $item = current($data['accounts']);
         // Check if we have a currency of the same type as the payment
-        data['account'] = 0;
+        $data['account'] = 0;
         foreach ($data['accounts'] as $id => $account) {
             if ($account['currency'] = $data['object']->properties['currency']->value) {
-                data['account'] = $id;
+                $data['account'] = $id;
                 $item = $account;
             }
         }
-        // The debtor name
+        die("X");
+        // Set the debtor name
         $data['object']->properties['sender_account']->value = $item['account_holder'];
-        // The debtor address
+        
+        // Set the debtor address
         $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
         if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
         if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];

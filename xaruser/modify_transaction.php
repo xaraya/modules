@@ -38,7 +38,7 @@ function payments_user_modify_transaction()
 # Check if we are passing an api item
 #
     if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!empty($api)) {
         $function = rawurldecode($api);
         eval("\$info = $function;");
@@ -47,33 +47,12 @@ function payments_user_modify_transaction()
             if (isset($data['object']->properties[$key]))
                 $data['object']->properties[$key]->value = $value;
         }
-
-# --------------------------------------------------------
-#
-# Get the debit account information
-#
-        $data['debit_account'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
-        $q = $data['debit_account']->dataquery;
-        $q->eq('sender_object', $info['sender_object']);
-        $q->eq('sender_itemid', $info['sender_itemid']);
-        $items = $data['debit_account']->getItems();
-
-        if(!empty($items)) {
-            $item = current($items);
-            // The debtor name
-            $data['object']->properties['sender_account']->value = $item['account_holder'];
-            // The debtor address
-            $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $item['address']));
-            if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
-            if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
-            if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
-            if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
-        }
     }
-    
+
+
 # --------------------------------------------------------
 #
-# The create button was clicked
+# The update button was clicked
 #
     if ($data['confirm']) {
     

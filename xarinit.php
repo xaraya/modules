@@ -145,6 +145,7 @@
             sender_line2     varchar(255) NOT NULL default '',
             sender_line3     varchar(255) NOT NULL default '',
             sender_line4     varchar(255) NOT NULL default '',
+            sender_itemid    integer unsigned NOT NULL default 0,
             sender_account   varchar(255) NOT NULL default '',
             sender_reference varchar(255) NOT NULL default '',
             transaction_date integer unsigned NOT NULL default 0,
