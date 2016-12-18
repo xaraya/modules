@@ -43,7 +43,7 @@
       <source>payments.bic</source>
       <status>33</status>
       <seq>4</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"8";}</configuration>
     </property>
     <property name="address_1">
       <id>6837</id>
@@ -53,7 +53,7 @@
       <source>payments.address1</source>
       <status>33</status>
       <seq>5</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="address_2">
       <id>6838</id>
@@ -63,7 +63,7 @@
       <source>payments.address2</source>
       <status>33</status>
       <seq>6</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="address_3">
       <id>6839</id>
@@ -73,7 +73,7 @@
       <source>payments.address3</source>
       <status>33</status>
       <seq>7</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="address_4">
       <id>6840</id>
@@ -213,7 +213,7 @@
       <source>payments.sender_reference</source>
       <status>33</status>
       <seq>20</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="processed">
       <id>6854</id>
@@ -333,7 +333,7 @@
       <source>payments.country_code</source>
       <status>33</status>
       <seq>32</seq>
-      <configuration></configuration>
+      <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";s:21:"validation_max_length";s:1:"2";}</configuration>
     </property>
     <property name="financial_institution">
       <id>6877</id>
