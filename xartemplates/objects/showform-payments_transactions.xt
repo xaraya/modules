@@ -244,7 +244,7 @@
         </div>
         <div class="xar-row">
             <div class="xar-col-condensed">
-                Beneficiary address
+                Beneficiary
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['address_2']"/>&#160;street, number<br/>
