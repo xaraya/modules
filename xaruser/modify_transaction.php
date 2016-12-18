@@ -19,16 +19,16 @@ function payments_user_modify_transaction()
 {
     if (!xarSecurityCheck('EditPayments')) return;
 
-    if (!xarVarFetch('name',         'str',      $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,      'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',      'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid' ,       'int',      $data['itemid'] ,       0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',       'checkbox', $data['confirm'],       false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('debit_account', 'int',      $data['debit_account'], 0,     XARVAR_NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
 #
 # Get the payment transactions object
 #
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['payment_type'] = $data['object']->properties['payment_type']->value;
     $data['tplmodule'] = 'payments';
@@ -39,6 +39,7 @@ function payments_user_modify_transaction()
 #
     if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
 
+    $info = array();
     if (!empty($api)) {
         $function = rawurldecode($api);
         eval("\$info = $function;");
@@ -55,6 +56,11 @@ function payments_user_modify_transaction()
 #
     // All the debit accounts we will display
     $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $data['object']->properties['sender_itemid']->value));
+
+    if(empty($data['debit_accounts'])) {
+        return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
+    }
+    
     // The debit account for this transaction
     $debit_account = $data['debit_accounts'][$data['object']->properties['sender_itemid']->value];
 
