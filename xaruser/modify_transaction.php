@@ -49,6 +49,21 @@ function payments_user_modify_transaction()
         }
     }
 
+# --------------------------------------------------------
+#
+# Get the debit account information
+#
+    // All the debit accounts we will display
+    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $data['object']->properties['sender_itemid']->value));
+    // The debit account for this transaction
+    $debit_account = $data['debit_accounts'][$data['object']->properties['sender_itemid']->value];
+
+    // Set the debtor address
+    $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_account['address']));
+    if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
+    if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
+    if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
+    if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
 
 # --------------------------------------------------------
 #

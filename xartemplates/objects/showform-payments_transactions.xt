@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <xar:data-input property="$properties['message_id']" hidden="hidden"/>
     <xar:data-input property="$properties['sender']" hidden="hidden"/>
@@ -38,8 +37,7 @@
             </label>
         </div>
         <div class="xar-col">
-            <xar:set name="accounts">xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $properties['sender_itemid']->value))</xar:set>
-            <xar:data-input property="$properties['sender_itemid']" options="$accounts" value="1"/>
+            <xar:data-input property="$properties['sender_itemid']" options="$debit_accounts"/>
         </div>
     </div>
     
