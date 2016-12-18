@@ -74,6 +74,11 @@ function payments_user_modify_transaction()
     if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
     if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
 
+    // We always need a sender reference of sorts for the payment
+    if (empty($data['object']->properties['sender_reference']->value)) 
+        $data['object']->properties['sender_reference']->value = xarML('Undefined');
+var_dump($data['object']->getFieldValues());
+
 # --------------------------------------------------------
 #
 # The update button was clicked

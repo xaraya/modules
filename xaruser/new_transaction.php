@@ -97,7 +97,7 @@ function payments_user_new_transaction()
         }
     }
 
-    // Set the chosen dbit account
+    // Set the chosen debit account
     $data['object']->properties['sender_itemid']->value = $debit_account['id'];
         
     // Set the debtor name
@@ -109,6 +109,10 @@ function payments_user_new_transaction()
     if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
     if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
     if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
+
+    // We always need a sender reference of sorts for the payment
+    if (empty($data['object']->properties['sender_reference']->value)) 
+        $data['object']->properties['sender_reference']->value = xarML('Undefined');
 
 # --------------------------------------------------------
 #
@@ -152,7 +156,7 @@ function payments_user_new_transaction()
         if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
 
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+//        if(!xarSecConfirmAuthKey()) return;
         
         // Disable fields we are not using and don't want to check
         if ($data['payment_type'] == '1') {
