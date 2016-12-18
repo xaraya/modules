@@ -54,7 +54,7 @@ function payments_user_new_transaction()
 #
 # Check if we already have a transaction created
 #
-    if (!empty($info['beneficiary_object']) && !empty($info['beneficiary_itemid'])) {
+    if (!empty($info['payment_object']) && !empty($info['payment_itemid'])) {
         $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
         $q = $payments->dataquery;
         $q->eq('payment_object', $info['payment_object']);
@@ -115,11 +115,11 @@ function payments_user_new_transaction()
 # Get the beneficiary information of the last payment if one exists
 #
     $previous_exists = false;
-    if (!empty($info['beneficiary_object']) && !empty($info['beneficiary_itemid'])) {
+    if (!empty($info['payment_object']) && !empty($info['payment_itemid'])) {
         $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
         $q = $payments->dataquery;
-        $q->eq('beneficiary_object', $info['beneficiary_object']);
-        $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
+        $q->eq('payment_object', $info['payment_object']);
+        $q->eq('payment_itemid', $info['payment_itemid']);
         $q->setorder('processed', 'DESC');
         $items = $payments->getItems();
         if (!empty($items)) {
@@ -169,14 +169,16 @@ function payments_user_new_transaction()
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
-            // Craete an entry in the matchings table
-            $tables = xarDB::getTables();
-            $q = new Query('INSERT', $tables['payments_matchings']);
-            $q->addfield('payment_id', $itemid);
-            $q->addfield('object', $info['payment_object']);
-            $q->addfield('itemid', $info['payment_itemid']);
-            $q->addfield('settled_amount', $data['object']->properties['amount']->value);
-            $q->run();
+            // If we are matching payments to some other object, create an entry in the matchings table
+            if (!empty($info['payment_object']) && !empty($info['payment_itemid'])) {
+                $tables = xarDB::getTables();
+                $q = new Query('INSERT', $tables['payments_matchings']);
+                $q->addfield('payment_id', $itemid);
+                $q->addfield('object', $info['payment_object']);
+                $q->addfield('itemid', $info['payment_itemid']);
+                $q->addfield('settled_amount', $data['object']->properties['amount']->value);
+                $q->run();
+            }
             
             // Jump to the next page
             xarController::redirect(xarModURL('payments','user','view_transactions'));
