@@ -38,7 +38,7 @@
     <property name="bic">
       <id>6836</id>
       <label>BIC</label>
-      <type>textbox</type>
+      <type>bic</type>
       <defaultvalue></defaultvalue>
       <source>payments.bic</source>
       <status>33</status>

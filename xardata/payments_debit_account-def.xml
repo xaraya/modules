@@ -16,7 +16,7 @@
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
   <properties>
     <property name="id">
-      <id>6773</id>
+      <id>7291</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -26,7 +26,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="name">
-      <id>6774</id>
+      <id>7292</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -36,7 +36,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="account">
-      <id>6775</id>
+      <id>7293</id>
       <label>Account</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -46,7 +46,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="iban">
-      <id>6776</id>
+      <id>7294</id>
       <label>IBAN</label>
       <type>iban</type>
       <defaultvalue></defaultvalue>
@@ -56,7 +56,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="clearing">
-      <id>6777</id>
+      <id>7295</id>
       <label>Clearing</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -66,7 +66,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="account_holder">
-      <id>6778</id>
+      <id>7296</id>
       <label>Account Holder</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -76,7 +76,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_1">
-      <id>6779</id>
+      <id>7297</id>
       <label>Address 1</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -86,7 +86,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_2">
-      <id>6780</id>
+      <id>7298</id>
       <label>Address 2</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -96,7 +96,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_3">
-      <id>6781</id>
+      <id>7299</id>
       <label>Address 3</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -106,7 +106,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address_4">
-      <id>6782</id>
+      <id>7300</id>
       <label>Address 4</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -116,7 +116,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="bank_name">
-      <id>6783</id>
+      <id>7301</id>
       <label>Bank Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -126,7 +126,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="bank_short_name">
-      <id>6784</id>
+      <id>7302</id>
       <label>Bank Short Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -136,7 +136,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_object">
-      <id>6856</id>
+      <id>7303</id>
       <label>Sender Object</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -146,7 +146,7 @@
       <configuration></configuration>
     </property>
     <property name="sender_itemid">
-      <id>6857</id>
+      <id>7304</id>
       <label>Sender Itemid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -156,7 +156,7 @@
       <configuration></configuration>
     </property>
     <property name="created">
-      <id>6785</id>
+      <id>7305</id>
       <label>Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -166,7 +166,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="modified">
-      <id>6786</id>
+      <id>7306</id>
       <label>Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -176,7 +176,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>6787</id>
+      <id>7307</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
@@ -186,9 +186,9 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
     <property name="bic">
-      <id>6855</id>
+      <id>7308</id>
       <label>BIC</label>
-      <type>textbox</type>
+      <type>bic</type>
       <defaultvalue></defaultvalue>
       <source>debit_account.bic</source>
       <status>33</status>
@@ -196,7 +196,7 @@
       <configuration></configuration>
     </property>
     <property name="address">
-      <id>6868</id>
+      <id>7309</id>
       <label>Address</label>
       <type>address</type>
       <defaultvalue></defaultvalue>
@@ -206,7 +206,7 @@
       <configuration></configuration>
     </property>
     <property name="currency">
-      <id>6892</id>
+      <id>7310</id>
       <label>Currency</label>
       <type>currency</type>
       <defaultvalue>USD</defaultvalue>
