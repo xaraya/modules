@@ -355,5 +355,35 @@
       <seq>34</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";}</configuration>
     </property>
+    <property name="sender_iban">
+      <id>7312</id>
+      <label>Sender IBAN</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.sender_iban</source>
+      <status>33</status>
+      <seq>35</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_bic">
+      <id>7313</id>
+      <label>Sender BIC</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.sender_bic</source>
+      <status>33</status>
+      <seq>36</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_clearing">
+      <id>7314</id>
+      <label>Sender Clearing</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.sender_clearing</source>
+      <status>33</status>
+      <seq>37</seq>
+      <configuration></configuration>
+    </property>
   </properties>
 </object>
