@@ -76,7 +76,7 @@ function payments_user_create_20022_file()
 
 # --------------------------------------------------------
 #
-# Run through the transactions and do validity checks
+# Run through the payments and do validity checks
 #
     sys::import('xaraya.structures.query');
     $tobject = new XarDateTime();
@@ -102,7 +102,7 @@ function payments_user_create_20022_file()
 #
 # Update fields of the payment items
 #
-    // Generate the number of transactions
+    // Generate the number of payments
     $data['number_of_transactions'] = count($data['items']);
     
     $data['transaction'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
@@ -110,14 +110,15 @@ function payments_user_create_20022_file()
 
     foreach ($data['items'] as $key => $item) {
         // Add the debit fields to the corresponding properties in the DTA object
-        $data['items'][$key]['sender_account'] = $debit_fields['account_holder'];
-        $data['items'][$key]['sender_line_1']  = $debit_fields['address_1'];
-        $data['items'][$key]['sender_line_2']  = $debit_fields['address_2'];
-        $data['items'][$key]['sender_line_3']  = $debit_fields['address_3'];
-        $data['items'][$key]['sender_line_4']  = $debit_fields['address_4'];
-        $data['items'][$key]['sender_iban']    = $debit_fields['iban'];
-        $data['items'][$key]['sender_bic']     = $debit_fields['bic'];
-        $data['items'][$key]['processed']      = time();
+        $data['items'][$key]['sender_account']  = $debit_fields['account_holder'];
+        $data['items'][$key]['sender_line_1']   = $debit_fields['address_1'];
+        $data['items'][$key]['sender_line_2']   = $debit_fields['address_2'];
+        $data['items'][$key]['sender_line_3']   = $debit_fields['address_3'];
+        $data['items'][$key]['sender_line_4']   = $debit_fields['address_4'];
+        $data['items'][$key]['sender_iban']     = $debit_fields['iban'];
+        $data['items'][$key]['sender_bic']      = $debit_fields['bic'];
+        $data['items'][$key]['sender_clearing'] = $debit_fields['clearing'];
+        $data['items'][$key]['processed']       = time();
 
         // Add miscellaneous information
         $data['items'][$key]['payment_method']  = $data['payment_method'];

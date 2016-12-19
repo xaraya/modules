@@ -50,13 +50,13 @@
           
           <!-- Debtor -->
           <xar:isoelement name="Dbtr">
-            <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
+            <xar:isoelement name="Nm">#$item['sender_account']#</xar:isoelement>
           </xar:isoelement>
 
           <!-- Debtor account -->
           <xar:isoelement name="DbtrAcct">
             <xar:isoelement name="Id">
-              <xar:set name="debit_iban">str_replace(' ','',$debit_account->properties['iban']->value)</xar:set>
+              <xar:set name="debit_iban">str_replace(' ','',$item['sender_iban'])</xar:set>
               <xar:isoelement name="IBAN">#$debit_iban#</xar:isoelement>
             </xar:isoelement>
             <xar:if condition="$item['payment_type'] eq 6">
@@ -71,23 +71,23 @@
             <xar:isoelement name="FinInstnId">
               <xar:if condition="$item['payment_type'] eq 1">
                 <!-- orange payment slip -->
-                <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
+                <xar:isoelement name="BIC">#$item['sender_bic']#</xar:isoelement>
               <xar:elseif condition="$item['payment_type'] eq 2.2"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
                       <xar:isoelement name="Cd">CHBCC</xar:isoelement>
                     </xar:isoelement>
-                    <xar:isoelement name="MmbId">#$debit_account->properties['clearing']->value#</xar:isoelement>
+                    <xar:isoelement name="MmbId">#$item['sender_clearing']#</xar:isoelement>
                 </xar:isoelement>
               <xar:elseif condition="$item['payment_type'] eq 3"/>
                 <xar:isoelement name="ClrSysMmbId">
                     <xar:isoelement name="ClrSysId">
                       <xar:isoelement name="Cd">CHBCC</xar:isoelement>
                     </xar:isoelement>
-                    <xar:isoelement name="MmbId">#$debit_account->properties['clearing']->value#</xar:isoelement>
+                    <xar:isoelement name="MmbId">#$item['sender_clearing']#</xar:isoelement>
                 </xar:isoelement>
               <xar:elseif condition="$item['payment_type'] eq 6"/>
-                <xar:isoelement name="BIC">#$debit_account->properties['bic']->value#</xar:isoelement>
+                <xar:isoelement name="BIC">#$item['sender_bic']#</xar:isoelement>
               </xar:if>
             </xar:isoelement>
           </xar:isoelement>
@@ -95,7 +95,7 @@
           <!-- Ultimate Debtor -->
           <xar:if condition="$item['payment_type'] eq 3">
             <xar:isoelement name="UltmtDbtr">
-              <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
+              <xar:isoelement name="Nm">#$item['sender_account']#</xar:isoelement>
               <xar:isoelement name="PstlAdr">
                 <xar:isoelement name="StrtNm">#$debit_address[1]#</xar:isoelement>
                 <!-- Unused for now
