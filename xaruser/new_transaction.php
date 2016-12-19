@@ -110,6 +110,11 @@ function payments_user_new_transaction()
     if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
     if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
 
+    // Set the debtor bank information
+    $data['object']->properties['sender_iban']->value = $debit_account['iban'];
+    $data['object']->properties['sender_bic']->value = $debit_account['bic'];
+    $data['object']->properties['sender_clearing']->value = $debit_account['clearing'];
+
     // We always need a sender reference of sorts for the payment
     if (empty($data['object']->properties['sender_reference']->value)) 
         $data['object']->properties['sender_reference']->value = xarML('Undefined');
