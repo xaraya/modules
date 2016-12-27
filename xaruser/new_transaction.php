@@ -170,7 +170,7 @@ function payments_user_new_transaction()
         
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
-        var_dump($_POST);
+        
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTplModule('payments','user','new_transaction', $data);        
