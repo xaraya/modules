@@ -9,9 +9,9 @@
     <xar:data-input property="$properties['group_reference']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_reference']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_account']" hidden="hidden"/>
-    <xar:data-input property="$properties['sender_iban']" hidden="hidden"/>
-    <xar:data-input property="$properties['sender_bic']" hidden="hidden"/>
-    <xar:data-input property="$properties['sender_clearing']" hidden="hidden"/>
+    <xar:data-input property="$properties['sender_iban']" xhidden="hidden"/>
+    <xar:data-input property="$properties['sender_bic']" xhidden="hidden"/>
+    <xar:data-input property="$properties['sender_clearing']" xhidden="hidden"/>
     <xar:data-input property="$properties['sender_line_1']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_2']" hidden="hidden"/>
     <xar:data-input property="$properties['sender_line_3']" hidden="hidden"/>
