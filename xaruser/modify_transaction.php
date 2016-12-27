@@ -95,6 +95,7 @@ function payments_user_modify_transaction()
         // Disable fields we are not using and don't want to check
         if ($data['object']->properties['payment_type']->value == 1) {
             $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+            $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
         
         // Get the data from the form
