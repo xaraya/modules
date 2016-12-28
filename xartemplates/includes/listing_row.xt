@@ -6,7 +6,7 @@
         <!-- filter for the 2 levels of admin -->
         <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('AdminPayments',0) AND $total gt 0">
             <xar:template file="listing_row-default" module="$module" property="listing"/>
-        <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0) AND $total gt 0 AND $loopitem['state'] eq 3"/>
+        <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0) AND $total gt 0 "/>
         <!-- $loopitem['ft1_state'] -->
             <xar:template file="listing_row-default" module="$module" property="listing"/>
         </xar:if>

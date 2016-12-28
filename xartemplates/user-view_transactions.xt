@@ -23,7 +23,7 @@
         <fieldset>
             <xar:data-input type="listing" 
                             object="$object" 
-                            fieldlist="transaction_date,payment_type,address_1,currency,amount,processed"
+                            fieldlist="transaction_date,payment_type,address_1:Address,currency,amount,processed"
                             tplmodule="payments"
                             show_bulk="true"
                             />
