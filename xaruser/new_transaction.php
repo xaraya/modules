@@ -164,7 +164,7 @@ function payments_user_new_transaction()
 //        if(!xarSecConfirmAuthKey()) return;
         
         // Disable fields we are not using and don't want to check
-        switch ((int)$data['payment_type']->value) {
+        switch ((int)$data['payment_type']) {
             case 1:
                 $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
