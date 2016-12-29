@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <tr>
+    <xar:if condition="!empty($loopitem['processed'])">
+        <xar:set name="background">'##f1f1f1'</xar:set>
+    <xar:else/>
+        <xar:set name="background">'##ffffff'</xar:set>
+    </xar:if>
+    
+    <tr style="background: #$background#;">
         <xar:if condition="$objectname eq 'payments_transactions'">
             <xar:template file="listing_rowprefix" module="$module" property="listing"/>
             <xar:foreach in="$fields" key="$field">
