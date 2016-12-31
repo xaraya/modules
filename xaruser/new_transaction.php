@@ -52,7 +52,7 @@ function payments_user_new_transaction()
 
 # --------------------------------------------------------
 #
-# Check if we already have a transaction created
+# Check if we already have a transaction created for this payment
 #
     if (!empty($info['payment_object']) && !empty($info['payment_itemid'])) {
         $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
@@ -128,7 +128,9 @@ function payments_user_new_transaction()
         $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
         $q = $payments->dataquery;
         $q->eq('payment_object', $info['payment_object']);
-        $q->eq('payment_itemid', $info['payment_itemid']);
+        $q->eq('beneficiary_object', $info['beneficiary_object']);
+        $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
+        $q->eq('state', 3);
         $q->setorder('processed', 'DESC');
         $items = $payments->getItems();
         if (!empty($items)) {
