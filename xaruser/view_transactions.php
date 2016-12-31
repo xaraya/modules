@@ -62,6 +62,7 @@ function payments_user_view_transactions($args)
     $q->ge('transaction_date', $data['period'][0]);
     $q->le('transaction_date', $data['period'][1] + 3600*24*60);
     $q->setorder('transaction_date', 'DESC');
+    $q->setorder('time_created', 'DESC');
 
 //    $q->qecho();
 
