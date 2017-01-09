@@ -28,7 +28,11 @@ function sitemapper_admin_modifyconfig()
     sys::import('modules.dynamicdata.class.objects.master');
     $engines = DataObjectMaster::getObjectList(array('name' => 'sitemapper_engines'));
     $data['engines'] = $engines->getItems(array('where' => 'state = 3'));
-    $data['modules_available'] = xarMod::apiFunc('modules', 'admin', 'getitems');
+    $modules_available = xarMod::apiFunc('modules', 'admin', 'getitems');
+    
+    // Resort so that we get the regids in the checkboxlist
+    $data['modules_available'] = array();
+    foreach ($modules_available as $row) $data['modules_available'][] = array('id' => $row['regid'], 'name' => $row['regid']);
     
     switch (strtolower($phase)) {
         case 'modify':

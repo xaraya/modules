@@ -117,12 +117,12 @@
     # Set up modvars
     #
         xarModVars::set('sitemapper', 'defaultmastertable', 'sitemapper_engines');
-        xarModVars::set('sitemapper', 'submit_engines', 'a:0:{}');
+        xarModVars::set('sitemapper', 'submit_engines', '');
         xarModVars::set('sitemapper', 'file_create_xml', true);
         xarModVars::set('sitemapper', 'file_create_zip', true);
         xarModVars::set('sitemapper', 'xml_filename', 'sitemap');
         xarModVars::set('sitemapper', 'zip_filename', 'sitemap');
-        xarModVars::set('sitemapper', 'modules_to_map', 'a:0:{}');
+        xarModVars::set('sitemapper', 'modules_to_map', '');
         xarModVars::set('sitemapper', 'template', '
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <xar:foreach in="$items" value="$item">
