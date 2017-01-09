@@ -79,7 +79,8 @@
                         <label for="modules_to_map" title="#xarML('Modules to include in the sitemapper')#" class="xar-form-label">                                
                             Modules to map:                                
                         </label>
-                        <xar:data-input type="checkboxlist" name="modules_to_map" value="" />
+                        <xar:set name="value">xarModVars::get('sitemapper', 'modules_to_map')</xar:set>
+                        <xar:data-input type="checkboxlist" name="modules_to_map" value="$value" options="$modules_available"/>
                     </div>
                 </fieldset>                
                 <fieldset>
