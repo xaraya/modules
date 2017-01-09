@@ -32,7 +32,7 @@ function sitemapper_admin_modifyconfig()
     
     // Resort so that we get the regids in the checkboxlist
     $data['modules_available'] = array();
-    foreach ($modules_available as $row) $data['modules_available'][] = array('id' => $row['regid'], 'name' => $row['regid']);
+    foreach ($modules_available as $row) $data['modules_available'][] = array('id' => $row['regid'], 'name' => $row['name']);
     
     switch (strtolower($phase)) {
         case 'modify':
