@@ -122,6 +122,7 @@
         xarModVars::set('sitemapper', 'file_create_zip', true);
         xarModVars::set('sitemapper', 'xml_filename', 'sitemap');
         xarModVars::set('sitemapper', 'zip_filename', 'sitemap');
+        xarModVars::set('sitemapper', 'modules_to_map', 'a:0:{}');
         xarModVars::set('sitemapper', 'template', '
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <xar:foreach in="$items" value="$item">
