@@ -260,7 +260,7 @@ function publications_init()
     sys::import('xaraya.structures.hooks.observer');
 
     // Enable publications hooks for search
-    if (xarModIsAvailable('search')) {
+    if (xarMod::isAvailable('search')) {
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'search', 'hookModName' => 'publications'));
     }
@@ -270,17 +270,17 @@ function publications_init()
                   array('callerModName' => 'publications', 'hookModName' => 'categories'));
 */
     // Enable comments hooks for publications
-    if (xarModIsAvailable('comments')) {
+    if (xarMod::isAvailable('comments')) {
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'publications', 'hookModName' => 'comments'));
     }
     // Enable hitcount hooks for publications
-    if (xarModIsAvailable('hitcount')) {
+    if (xarMod::isAvailable('hitcount')) {
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'publications', 'hookModName' => 'hitcount'));
     }
     // Enable ratings hooks for publications
-    if (xarModIsAvailable('ratings')) {
+    if (xarMod::isAvailable('ratings')) {
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'publications', 'hookModName' => 'ratings'));
     }

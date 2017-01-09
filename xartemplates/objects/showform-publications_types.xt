@@ -125,28 +125,28 @@
         </div>
     </fieldset>
     <fieldset>
-        <xar:set name="access">$properties['access']->getValue()</xar:set>
+        <xar:set name="access">unserialize($properties['access']->value)</xar:set>
         <legend>
             Access
         </legend>
         <legend>
             Add Access
         </legend>
-        <xar:data-input property="$properties['access']" name="access_add" value="$access['add']" group_multiselect="1"/>
+        <xar:data-input type="access" name="access_add" value="$access['add']" group_multiselect="1"/>
         <hr/>
         <legend>
             Display Access
         </legend>
-        <xar:data-input property="$properties['access']" name="access_display" value="$access['display']" group_multiselect="1"/>
+        <xar:data-input type="access" name="access_display" value="$access['display']" group_multiselect="1"/>
         <hr/>
         <legend>
             Modify Access
         </legend>
-        <xar:data-input property="$properties['access']" name="access_modify" value="$access['modify']" group_multiselect="1"/>
+        <xar:data-input type="access" name="access_modify" value="$access['modify']" group_multiselect="1"/>
         <hr/>
         <legend>
             Delete Access
         </legend>
-        <xar:data-input property="$properties['access']" name="access_delete" value="$access['delete']" group_multiselect="1"/>
+        <xar:data-input type="access" name="access_delete" value="$access['delete']" group_multiselect="1"/>
     </fieldset>
 </xar:template>
