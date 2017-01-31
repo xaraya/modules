@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>
+            Modify Configuration
+        </h2>
+        <xar:set name="xmldata">'modifyconfig'</xar:set>
+        <xar:template type="module" module="base" file="admin-menu-skel"/>
+        <!--
+             - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
+        -->
+        <xar:if condition="$tab eq 'general'">
+            <xar:ajax-form form="modifyconfig-form"/>
+            <form id="modifyconfig-form" method="post" action="&xar-modurl-otp-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        General Options
+                    </legend>
+                    <xar:data-form object="$module_settings"/>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Global Parameters
+                    </legend>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <xar:var name="label">The number of one time passwords in the sequences created</xar:var>
+                            <label for="sequence" title="#$label#">
+                                Sequence length
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('otp', 'sequence')</xar:set>
+                            <xar:data-input type="integerbox" name="sequence" value="$value"/>
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <xar:var name="label">The algorithm used for encryption</xar:var>
+                            <label for="algorithm" title="#$label#">
+                                Algorithm
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('otp', 'algorithm')</xar:set>
+                            <xar:data-input type="dropdown" name="algorithm" options="$available_algorithms" value="$value"/>
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <xar:var name="label">The time a sequence expires</xar:var>
+                            <label for="expires" title="#$label#">
+                                Expires
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('otp', 'expires')</xar:set>
+                            <xar:data-input type="timeperiod" name="expires" value="$value"/>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>                    
+                        Debugging                    
+                    </legend>
+                    <xar:template file="debug"/>
+                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
+            </form>
+        <!--
+                 - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
+        -->
+        <xar:elseif condition="$tab eq 'tab2'"/>
+        </xar:if>
+    </div>
+</xar:template>
