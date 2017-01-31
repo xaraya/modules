@@ -68,7 +68,8 @@ function otp_adminapi_generate_otp($args)
     if ($args['save']) {
         // Add this otp to the database
         $passphrase = $one_time['hex_otp'];
-        if (empty($q->row())) {
+        $result = $q->row();
+        if (empty($result)) {
             $q = new Query('INSERT', $tables['otp_otps']);
             $q->addfield('user_ident',   $args['user_ident']);
             $q->addfield('passphrase',   $passphrase);
