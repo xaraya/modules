@@ -38,16 +38,12 @@ function otp_userapi_getall_otps($args)
     if (isset($time_expires)) $q->gt('time_expires', $time_expires);
     
     $q->run();
+//    $q->qecho();
     
     // Index by user identification
     $result = array();
     foreach ($q->output() as $row) $result[$row['user_ident']] = $row;
-    
-    // If we only have one row, then return just that as a simple array
-    // This is a bit dicey, but in fact we usually expect only 1 row here
-    if (count($result) == 1)
-        $result = reset($result);
-        
+
     return $result;
 }
 
