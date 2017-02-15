@@ -241,7 +241,7 @@
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
       <source>publication.summary_template</source>
-      <status>34</status>
+      <status>33</status>
       <seq>30</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
     </property>
