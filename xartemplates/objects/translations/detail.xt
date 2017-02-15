@@ -39,14 +39,23 @@
                     </div>
                     <br />
                     -->
-                    <br />
-                    <xar:data-output property="$properties['source']" />
-                    <br />
-                    <xar:data-output property="$properties['translation']" />
-                    <br />
-                    <span class="xar-quote">
-                        <xar:data-output property="$properties['notes']" /> 
-                    </span>
+                    <table>
+                        <tr>
+                            <td style="width: 50%">
+                                <xar:data-output property="$properties['source']" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%">
+                                <xar:data-output property="$properties['translation']" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+                        <span class="xar-quote">
+                            <xar:data-output property="$properties['notes']" /> 
+                        </span>
+                    </div>
                 </td>
             </tr>
         </table>
