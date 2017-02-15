@@ -350,7 +350,7 @@ function publications_user_view($args)
     }
 
     // retrieve the number of comments for each article
-    if (xarModIsAvailable('coments')) {
+    if (xarMod::isAvailable('coments')) {
         if ($data['settings']['show_comments']) {
             $idlist = array();
             foreach ($publications as $article) {
@@ -363,7 +363,7 @@ function publications_user_view($args)
     }
 
     // retrieve the keywords for each article
-    if (xarModIsAvailable('coments')) {
+    if (xarMod::isAvailable('coments')) {
         if ($data['settings']['show_keywords']) {
             $idlist = array();
             foreach ($publications as $article) {
