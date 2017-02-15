@@ -24,12 +24,6 @@
 
     <xar:set name="now">time()</xar:set>
 
-    <!-- For debugging -->
-    <xar:set name="debug">xarModVars::get('publications','debugmode') &amp;&amp; in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))</xar:set>
-    <xar:if condition="$debug">
-        <xar:set name="dummy">$object->dataquery->qecho()</xar:set>
-    </xar:if>
-
     <!-- Get the list of object items we want -->
     <!-- Note: itemtype is already defined in the code -->
     <xar:data-getitems properties="$properties" values="$items" object="$object" param="xarServer::getCurrentURL()" numitems="$numitems" startnum="$startnum" count="count">
@@ -45,6 +39,12 @@
         </xar:andconditions>
       </xar:select>
     </xar:data-getitems>
+
+    <!-- For debugging -->
+    <xar:set name="debug">xarModVars::get('publications','debugmode') &amp;&amp; in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))</xar:set>
+    <xar:if condition="$debug">
+        <xar:set name="dummy">$object->dataquery->qecho()</xar:set>
+    </xar:if>
 
     <!-- For debugging
     <xar:set name="dummy">var_dump($items)</xar:set>
