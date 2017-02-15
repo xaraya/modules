@@ -139,7 +139,7 @@
       <id>808</id>
       <label>Type</label>
       <type>static</type>
-      <defaultvalue>xarModVars::get('publications', 'defaultpubtype')</defaultvalue>
+      <defaultvalue>8</defaultvalue>
       <source>publication.pubtype_id</source>
       <status>33</status>
       <seq>24</seq>
