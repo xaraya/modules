@@ -41,12 +41,10 @@
                     -->
                     <table>
                         <tr>
-                            <td style="width: 50%">
+                            <td style="width: 50%; padding: 3px; vertical-align: text-top;">
                                 <xar:data-output property="$properties['source']" />
                             </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%">
+                            <td style="width: 50%; padding: 3px; vertical-align: text-top;">
                                 <xar:data-output property="$properties['translation']" />
                             </td>
                         </tr>
