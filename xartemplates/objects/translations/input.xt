@@ -6,7 +6,7 @@
             <xar:var name="label">Name</xar:var>
             <xar:data-label property="$properties['name']" for="id" label="$label" />
         </div>
-        <div class="xar-col">
+        <div class="xar-col-expanded">
             <xar:data-input property="$properties['name']" />
         </div>
     </div>
@@ -15,7 +15,7 @@
             <xar:var name="label">Title</xar:var>
             <xar:data-label property="$properties['title']" for="id" label="$label" />
         </div>
-        <div class="xar-col">
+        <div class="xar-col-expanded">
             <xar:data-input property="$properties['title']" />
         </div>
     </div>
@@ -24,7 +24,7 @@
             <xar:var name="label">Description</xar:var>
             <xar:data-label property="$properties['description']" for="id" label="$label" />
         </div>
-        <div class="xar-col">
+        <div class="xar-col-expanded">
             <xar:data-input property="$properties['description']" />
         </div>
     </div>
@@ -33,7 +33,7 @@
             <xar:var name="label">Source Text</xar:var>
             <xar:data-label property="$properties['source']" for="id" label="$label" />
         </div>
-        <div class="xar-col">
+        <div class="xar-col-expanded">
             <xar:data-input property="$properties['source']" style="width: 700px" />
         </div>
     </div>
@@ -42,7 +42,7 @@
             <xar:var name="label">Translation</xar:var>
             <xar:data-label property="$properties['translation']" for="id" label="$label" />
         </div>
-        <div class="xar-col">
+        <div class="xar-col-expanded">
             <xar:data-input property="$properties['translation']" style="width: 700px" />
         </div>
     </div>
@@ -51,13 +51,13 @@
             <xar:var name="label">Notes</xar:var>
             <xar:data-label property="$properties['notes']" for="id" label="$label" />
         </div>
-        <div class="xar-col">
+        <div class="xar-col-expanded">
             <xar:data-input property="$properties['notes']" />
         </div>
     </div>
     <xar:if condition="!$properties['parent']->value">
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-expanded">
                 <xar:data-input property="$properties['position']"/>
             </div>
         </div>

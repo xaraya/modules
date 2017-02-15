@@ -20,12 +20,13 @@
         <div>
             <xar:template file="listing_pagerline" module="$module" property="listing" />
         </div>
-        <table style="clear:both; width: 100%" border="0">
-            <xar:template file="listing_header" module="$module" property="listing" />
-            <xar:template file="listing_body" module="$module" property="listing" />
-        </table>
         <xar:if condition="empty($total)">
-                  <p class="xar-align-center">There are no items selected</p>
+            <p class="xar-align-center">There are no items selected</p>
+        <xar:else/>
+            <table style="clear:both; width: 100%" border="0">
+                <xar:template file="listing_header" module="$module" property="listing" />
+                <xar:template file="listing_body" module="$module" property="listing" />
+            </table>
         </xar:if>
         <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" style="clear: both">
             <xar:template file="listing_footerline" module="$module" property="listing" />
