@@ -8,14 +8,12 @@
         </a>
     </xar:access>
     <xar:access group="$allowed['modify']['group']">
-        &#160;
         <xar:var name="label">Modify this publication</xar:var>
         <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTplGetImage('icons/modify.png','base')#"/>
         </a>
     </xar:access>
     <xar:access group="$allowed['delete']['group']">
-        &#160;
         <xar:var name="label">Delete this publication</xar:var>
         <a href="#xarModURL('publications', 'user', 'delete',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTplGetImage('icons/delete.png','base')#"/>
