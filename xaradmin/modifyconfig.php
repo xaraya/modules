@@ -24,12 +24,6 @@ function publications_admin_modifyconfig()
         // Configuration specific to a publication type
         if (!xarSecurityCheck('AdminPublications',1,'Publication',$data['ptid'] . ":All:All:All")) return;
 
-        if (empty($pubtypes[$data['ptid']]['config']['state']['label'])) {
-            $data['withstate'] = 0;
-        } else {
-            $data['withstate'] = 1;
-        }
-
         $viewoptions = array();
         $viewoptions[] = array('id' => 1, 'name' => xarML('Latest Items'));
 
