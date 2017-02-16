@@ -433,13 +433,7 @@
                             </label>
                         </div>
                         <div class="xar-col" style="width: 25%">
-                            <xar:data-input type="checkbox" name="title_transform" checked="$settings['title_transform']" />
-                            <xar:if condition="!empty($withstate)">
-                                <xar:data-input name="settings[defaultstate]" id="settings_defaultstate" options="$states" value="$defaultstate"/>
-                            <xar:else />
-                                <input type="hidden" name="settings[defaultstate]" id="settings_defaultstate" value="2" />
-                                    N/A
-                            </xar:if>
+                            <xar:data-input type="dropdown" name="settings[defaultstate]" id="settings_defaultstate" options="$states" value="$settings['defaultstate']"/>
                         </div>
                         <div class="xar-col" style="width: 10%">
                         </div>
