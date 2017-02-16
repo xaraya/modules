@@ -8,46 +8,30 @@
     <!-- Load the stylesheet for this publication type -->
     <xar:style method="import" module="publications" file="translation" title="Translation Stylesheet"/>
     
-    <div class="xar-norm xar-standard-box-padding">
-        <xar:if condition="!empty($categories) and count($categories) gt 0">[
-            <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
-                <a href="#$cat['clink']#">#$cat['cname']#</a>
-            </xar:foreach>]
-        </xar:if>
-        
-        <xar:template file="editicons"/>
-        
-        <span class="xar-publications-translation-summary-title">
-            <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
-                <xar:data-output property="$properties['title']" />
-            </a>
-            <xar:if condition="!empty($counter)">
-                <xar:if condition="$counter eq 1">(#$counter#&#160;
-                read)
-                <xar:else />(#$counter#&#160;
-                reads)</xar:if>
-            </xar:if>
-        </span>
-        <xar:set name="locales">explode(',', $settings['custom_displayed_locales'])</xar:set>
-        <xar:if condition="empty($locales)">
-            <xar:set name="col_width">100</xar:set>
-        <xar:else/>
-            <xar:set name="col_width">100/count($locales)</xar:set>
-        </xar:if>
-        <div class="xar-row">
-            <xar:foreach in="$locales" value="$locale">
-                <div class="xar-col" style="width: #$col_width#%">
-#$locale#
-                </div>
-            </xar:foreach>
+    <div class="xar-row">
+        <div class="xar-col-expanded" style="width: 100%;">
+            <div style="float: left">
+                <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value))#">
+                    <xar:data-output property="$properties['title']" />
+                </a>
+            </div>
+    
+            <div style="float: right">
+                <!-- Edit icons if allowed -->
+                <xar:template file="editicons"/>
+            </div>
+            <div style="float: right">
+                <!-- Print button -->
+                <xar:template file="print"/>
+            </div>
         </div>
-        <div class="xar-publications-translation-summary-keywords">
-            <xar:if condition="!empty($keywords)">
-                Keywords:
-                <xar:loop name="$keywords">
-                    <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=&gt; $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
-                </xar:loop>
-            </xar:if>
-        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col" style="width: 48%; padding: 5px; vertical-align: top;">
+            <xar:data-output property="$properties['source']"/>
+        </div> 
+        <div class="xar-col" style="width: 48%; padding: 5px; vertical-align: top;">
+            <xar:data-output property="$properties['translation']"/>
+        </div> 
     </div>
 </xar:template>
