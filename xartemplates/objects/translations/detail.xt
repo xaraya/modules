@@ -15,7 +15,7 @@
     <xar:if condition="$publication_state lt 3 AND !xarSecurityCheck('ManagePublications',0)">
         This item cannot be viewed
     <xar:else />
-        <div class="xar-row"  style="width: 98%">
+        <div class="xar-row" style="width: 98%">
             <div class="xar-col" style="width: 100%">
                 <div class="xar-title">
                     <xar:data-output property="$properties['title']" />
@@ -28,15 +28,15 @@
                 </div>
             </div>
         </div>
-        <div class="xar-row"  style="width: 98%">
-            <div class="xar-col" style="width: 50%; padding: 5px; vertical-align: text-top;">
+        <div class="xar-row" style="width: 98%">
+            <div class="xar-col" style="width: 50%; padding: 5px; vertical-align: top;">
                 <xar:data-output property="$properties['source']" />
             </div> 
-            <div class="xar-col" style="width: 50%; padding: 5px; vertical-align: text-top;">
+            <div class="xar-col" style="width: 50%; padding: 5px; vertical-align: top;">
                 <xar:data-output property="$properties['translation']" />
             </div> 
         </div>
-        <div class="xar-row"  style="width: 98%">
+        <div class="xar-row" style="width: 98%">
             <div class="xar-col" style="width: 100%">
                 <span class="xar-quote">
                     <xar:data-output property="$properties['notes']" /> 
