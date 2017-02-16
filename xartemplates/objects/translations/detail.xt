@@ -15,35 +15,34 @@
     <xar:if condition="$publication_state lt 3 AND !xarSecurityCheck('ManagePublications',0)">
         This item cannot be viewed
     <xar:else />
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-            <tr>
-                <td colspan="2" align="left" valign="top" class="xar-normal">
-
-                    <div class="xar-title">
-                        <xar:data-output property="$properties['title']" />
+        <div class="xar-row"  style="width: 98%">
+            <div class="xar-col" style="width: 100%">
+                <div class="xar-title">
+                    <xar:data-output property="$properties['title']" />
+        
+                    <!-- Edit icons if allowed -->
+                    <xar:template file="editicons"/>
             
-                        <!-- Edit icons if allowed -->
-                        <xar:template file="editicons"/>
-                
-                        <!-- Print button -->
-                        <xar:template file="print"/>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 50%; padding: 5px; vertical-align: text-top;">
-                    <xar:data-output property="$properties['source']" />
-                </td>
-                <td style="width: 50%; padding: 5px; vertical-align: text-top;">
-                    <xar:data-output property="$properties['translation']" />
-                </td>
-            </tr>
-            <tr>
-                <span colspan="2" class="xar-quote">
+                    <!-- Print button -->
+                    <xar:template file="print"/>
+                </div>
+            </div>
+        </div>
+        <div class="xar-row"  style="width: 98%">
+            <div class="xar-col" style="width: 50%; padding: 5px; vertical-align: text-top;">
+                <xar:data-output property="$properties['source']" />
+            </div> 
+            <div class="xar-col" style="width: 50%; padding: 5px; vertical-align: text-top;">
+                <xar:data-output property="$properties['translation']" />
+            </div> 
+        </div>
+        <div class="xar-row"  style="width: 98%">
+            <div class="xar-col" style="width: 100%">
+                <span class="xar-quote">
                     <xar:data-output property="$properties['notes']" /> 
                 </span>
-            </tr>
-        </table>
+            </div>
+        </div>
         <!-- Link to previous or next -->
         <div class="xar-normal xar-align-right xar-padding-thick">
             <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
