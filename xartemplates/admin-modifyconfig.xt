@@ -261,6 +261,7 @@
                                     array('id' => 'author', 'name' => 'Author'),
                                     array('id' => 'summary', 'name' => 'Summary'),
                                     array('id' => 'pubtype_id,date', 'name' => 'Customized'),
+                                    array('id' => 'left_id', 'name' => 'Tree'),
                                 )
                             </xar:set>
                             <xar:data-input name="settings[defaultsort]" type="dropdown" options="$options" value="$settings['defaultsort']" />&#160;
