@@ -16,13 +16,16 @@
         This item cannot be viewed
     <xar:else />
         <div class="xar-row">
-            <div class="xar-col" style="width: 100%">
-                <div class="xar-title">
+            <div class="xar-col-expanded" style="width: 100%;">
+                <div style="float: left">
                     <xar:data-output property="$properties['title']" />
-        
+                </div>
+    
+                <div style="float: right">
                     <!-- Edit icons if allowed -->
                     <xar:template file="editicons"/>
-            
+                </div>
+                <div style="float: right">
                     <!-- Print button -->
                     <xar:template file="print"/>
                 </div>
