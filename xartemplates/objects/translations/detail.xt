@@ -17,7 +17,7 @@
     <xar:else />
         <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
-                <td align="left" valign="top" class="xar-normal">
+                <td colspan="2" align="left" valign="top" class="xar-normal">
 
                     <div class="xar-title">
                         <xar:data-output property="$properties['title']" />
@@ -28,33 +28,20 @@
                         <!-- Print button -->
                         <xar:template file="print"/>
                     </div>
-                    <!--
-                    <xar:if condition="!empty($counter)">
-                        (#$counter#
-                            Reads
-                        )
-                    </xar:if>
-                    <div align="right">
-                        <span class="xar-sub"> #$topic_icons# </span>
-                    </div>
-                    <br />
-                    -->
-                    <table>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; vertical-align: text-top;">
-                                <xar:data-output property="$properties['source']" />
-                            </td>
-                            <td style="width: 50%; padding: 3px; vertical-align: text-top;">
-                                <xar:data-output property="$properties['translation']" />
-                            </td>
-                        </tr>
-                    </table>
-                    <div>
-                        <span class="xar-quote">
-                            <xar:data-output property="$properties['notes']" /> 
-                        </span>
-                    </div>
                 </td>
+            </tr>
+            <tr>
+                <td style="width: 50%; padding: 3px; vertical-align: text-top;">
+                    <xar:data-output property="$properties['source']" />
+                </td>
+                <td style="width: 50%; padding: 3px; vertical-align: text-top;">
+                    <xar:data-output property="$properties['translation']" />
+                </td>
+            </tr>
+            <tr>
+                <span colspan="2" class="xar-quote">
+                    <xar:data-output property="$properties['notes']" /> 
+                </span>
             </tr>
         </table>
         <!-- Link to previous or next -->
