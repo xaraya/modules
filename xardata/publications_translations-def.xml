@@ -109,7 +109,7 @@
       <id>940</id>
       <label>State</label>
       <type>dropdown</type>
-      <defaultvalue>1</defaultvalue>
+      <defaultvalue>xarMod::apiFunc('publication','user','getsetting',array('ptid'=>9,'setting'=>'defaultstate'))</defaultvalue>
       <source>publication.state</source>
       <status>33</status>
       <seq>21</seq>
