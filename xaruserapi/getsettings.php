@@ -16,9 +16,7 @@
  * @param $args array containing the publication type
  * @return array of setting keys and values
  */
- 
- sys::import('modules.dynamicdata.class.objects.master');
- 
+  
 function publications_userapi_getsettings($data)
 {
     if (empty($data['ptid']))
@@ -28,6 +26,7 @@ function publications_userapi_getsettings($data)
     if (xarCore::isCached('publications', 'settings_' . $data['ptid']))
         return xarCore::getCached('publications', 'settings_' . $data['ptid']);
 
+    sys::import('modules.dynamicdata.class.objects.master');
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
 
