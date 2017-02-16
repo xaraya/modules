@@ -110,7 +110,7 @@
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
-      <defaultvalue>xarMod::apiFunc('publication','user','getsetting',array('ptid'=>5,'setting'=>'defaultstate'))</defaultvalue>
+      <defaultvalue>xarMod::apiFunc('publications','user','getsetting',array('ptid'=>5,'setting'=>'defaultstate'))</defaultvalue>
       <status>33</status>
       <seq>21</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Deleted;1,Inactive;2,Draft;3,Active;4,Frontpage;5,Empty;";}</configuration>
