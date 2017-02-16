@@ -61,7 +61,7 @@
       <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.body1</source>
-      <status>34</status>
+      <status>33</status>
       <seq>5</seq>
       <configuration></configuration>
     </property>
@@ -71,7 +71,7 @@
       <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.body2</source>
-      <status>34</status>
+      <status>33</status>
       <seq>6</seq>
       <configuration></configuration>
     </property>
@@ -291,7 +291,7 @@
       <type>access</type>
       <defaultvalue>xarMod::apiFunc('publications','admin','getpubtypeaccess',array('ptid'=&gt;9))</defaultvalue>
       <source>publication.access</source>
-      <status>162</status>
+      <status>161</status>
       <seq>39</seq>
       <configuration>a:0:{}</configuration>
     </property>
