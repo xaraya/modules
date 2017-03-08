@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
+        <xar:data-output type="linktrail"/>
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('payments','use_module_alias')">
                 <xar:var scope="module" module="payments" name="module_alias_name"/>
