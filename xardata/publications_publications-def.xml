@@ -29,7 +29,7 @@
       <id>836</id>
       <label>Name</label>
       <type>textbox</type>
-      <defaultvalue>new_generic_document</defaultvalue>
+      <defaultvalue>xarMod::apiFunc('publications','user','get_nextname',array('ptid'=> (int)xarModVars::get('publications', 'defaultpubtype')))</defaultvalue>
       <source>publication.name</source>
       <status>33</status>
       <seq>2</seq>

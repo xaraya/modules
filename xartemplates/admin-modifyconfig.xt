@@ -245,7 +245,7 @@
                     </div>
                     <div class="xar-row">
                         <div class="xar-col" style="width: 20%">
-                            <label class="help xar-form-label" for="defaultsort" title="#xarML('Sorting by default.')#">
+                            <label class="help xar-form-label" for="defaultsort" title="#xarML('Sorting by default')#">
                                 Default sort order
                             </label>
                         </div>
@@ -277,14 +277,16 @@
                             <input type="text" name="settings[number_of_columns]" id="settings_number_of_columns" size="1" maxlength="2" value="#$settings['number_of_columns']#" />
                         </div>
                     </div>
-                    <!--
-                    <div class="xar-form-input-wrapper">
-                        <label for="admin_items_per_page" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
-                                Items per page on admin view
-                        </label> 
-                        <input type="text" name="settings[admin_items_per_page]" id="settings_admin_items_per_page" size="3" maxlength="3" value="#$settings['admin_items_per_page']#" />
+                    <div class="xar-row">
+                        <div class="xar-col" style="width: 20%">
+                            <label class="help xar-form-label" for="namestring" title="#xarML('String to identify the document')#">
+                                Default ID string for name
+                            </label> 
+                        </div>
+                        <div class="xar-col" style="width: 25%">
+                            <xar:data-input type="textbox" name="settings[namestring]" id="settings_namestring" value="$settings['namestring']" />
+                        </div>
                     </div>
-                    -->
                 </fieldset>
                 <fieldset class="xar-norm">
                     <legend>
@@ -293,7 +295,7 @@
                     <div class="xar-row">
                         <div class="xar-col" style="width: 20%">
                             <label for="show_prevnext" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
-                                Show link to previous/next item in display
+                                Show previous/next links
                             </label>
                         </div>
                         <div class="xar-col" style="width: 25%">

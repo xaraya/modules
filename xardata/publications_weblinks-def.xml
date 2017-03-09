@@ -29,7 +29,7 @@
       <id>1460</id>
       <label>Name</label>
       <type>textbox</type>
-      <defaultvalue>new_web_link</defaultvalue>
+      <defaultvalue>xarMod::apiFunc('publications','user','get_nextname',array('ptid'=> 13))</defaultvalue>
       <source>publication.name</source>
       <status>33</status>
       <seq>2</seq>

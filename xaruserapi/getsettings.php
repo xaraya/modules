@@ -55,6 +55,7 @@ function publications_userapi_getglobalsettings()
                 'defaultsort'           => "name",
                 'show_categories'       => false,
                 'show_catcount'         => false,
+                'namestring'            => 'pub',
                 'show_prevnext'         => true,
                 'show_keywords'         => false,
                 'show_comments'         => false,
