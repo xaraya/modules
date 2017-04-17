@@ -2,23 +2,15 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
         <xar:if condition="$objectname eq 'payments_transactions'">
             <xar:access level="600">
-                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_transaction',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a payment">
-                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
-                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#" style="margin-right: 5px; vertical-align: top;"/>
-                    <xar:else />
-                        Add A New Payment
-                    </xar:if>
-                </a>
+                <xar:set name="link">xarModURL($module,'user','new_transaction',array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+                <xar:var name="label">New Payment</xar:var>
+                <xar:button type="link" target="$link" label="$label"/>
             </xar:access>
         <xar:elseif condition="$objectname eq 'payments_debit_account'"/>
             <xar:access level="600">
-                <a style="font-weight:bold;" href ="#xarModURL($module,'user','new_debit_account',array('name'=> $objectname, 'tplmodule'=> $module))#" title="Add a payment">
-                    <xar:if condition = "xarModVars::get('payments','use_module_icons')">
-                        <img src="#xarTpl::getImage('icons/document-new.png', 'base')#" style="margin-right: 5px; vertical-align: top;"/>
-                    <xar:else />
-                        Add A New Debit Account
-                    </xar:if>
-                </a>
+                <xar:set name="link">xarModURL($module,'user','new_debit_account',array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+                <xar:var name="label">New Debit Account</xar:var>
+                <xar:button type="link" target="$link" label="$label"/>
             </xar:access>
         <xar:else/>
         </xar:if>
