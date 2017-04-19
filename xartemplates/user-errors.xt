@@ -1,61 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title">Payment Error</span></div>
+    <xar:template file="user-mod-head"/>
+
     <div class="xar-mod-body">
-        <fieldset>
-            <legend>Problem with Payment</legend>
-            <xar:var name="label">System Message</xar:var>
-            <xar:img scope="theme" file="user-error.png" alt="$label" width="96" height="96" class="xar-module-icon"/>
-            <xar:if condition="!isset($layout)">
-                <div style="margin-top: 20px; margin-left: 20px">
-                    No error message is available.
-                    <br />
-                    Please contact the system administrator.
-                </div>                    
-            <xar:elseif condition="$layout eq 'no_gateway'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    Payments are currently not available.
-                    <br />
-                    Please contact us or check back later
-                </div>
-            <xar:elseif condition="$layout eq 'no_process'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    Payments are currently not available.
-                    <br />
-                    Please contact us or check back later
-                </div>
-            <xar:elseif condition="$layout eq 'no_comments'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    Please make sure HTML comments in templates are turned off.
-                </div>
-            <xar:elseif condition="$layout eq 'bad_msg_identifier'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    The message identifier for the payment does not conform to the SWIFT character set
-                </div>
-            <xar:elseif condition="$layout eq 'no_sender'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    There is no client/sender defined for this payment
-                </div>
-            <xar:elseif condition="$layout eq 'non_unique_source'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    This payment has more than one source
-                </div>
-            <xar:elseif condition="$layout eq 'no_payments_id'"/>
-                <div style="margin-top: 20px; margin-left: 20px">
-                    Cannot create a payments file
-                </div>
-            <xar:else />
-                <div style="margin-top: 20px; margin-left: 20px">
-                    No error message is available.
-                    <br />
-                    Please contact the system administrator.
-                </div>                    
-            </xar:if>
-            <!--Psspl:Implemented the code for return url.-->   
-            <xar:if condition="!empty($return_url)">
-                <xar:template file="return-link" type="module"/>
-            </xar:if>
-        </fieldset>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Payment Problem
+                </h3>
+            </div>
+            <div class="panel-body">
+                <xar:var name="label">System Message</xar:var>
+                <xar:img scope="theme" file="user-error.png" alt="$label" width="96" height="96" class="xar-module-icon"/>
+                <xar:if condition="!isset($layout)">
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        No error message is available.
+                        <br />
+                        Please contact the system administrator.
+                    </div>                    
+                <xar:elseif condition="$layout eq 'no_gateway'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        Payments are currently not available.
+                        <br />
+                        Please contact us or check back later
+                    </div>
+                <xar:elseif condition="$layout eq 'no_process'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        Payments are currently not available.
+                        <br />
+                        Please contact us or check back later
+                    </div>
+                <xar:elseif condition="$layout eq 'no_comments'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        Please make sure HTML comments in templates are turned off.
+                    </div>
+                <xar:elseif condition="$layout eq 'bad_msg_identifier'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        The message identifier for the payment does not conform to the SWIFT character set
+                    </div>
+                <xar:elseif condition="$layout eq 'no_sender'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        There is no client/sender defined for this payment
+                    </div>
+                <xar:elseif condition="$layout eq 'non_unique_source'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        This payment has more than one source
+                    </div>
+                <xar:elseif condition="$layout eq 'no_payments_id'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        Cannot create a payments file
+                    </div>
+                <xar:else />
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        No error message is available.
+                        <br />
+                        Please contact the system administrator.
+                    </div>                    
+                </xar:if>
+                <!--Psspl:Implemented the code for return url.-->   
+                <xar:if condition="!empty($return_url)">
+                    <xar:template file="return-link" type="module"/>
+                </xar:if>
+            </div>
+        </div>
     </div>
 </xar:template>
