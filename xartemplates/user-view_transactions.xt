@@ -3,9 +3,9 @@
     <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-        <h3>View ISO2002 Payments
-        </h3>
-
+        <xar:var name="page_title">View ISO2002 Payments</xar:var>
+        <xar:template file="xar-mod-user-page-head" type="module" module="ledgerba"/>
+        
         <form method="post" action="#xarServer::getCurrentURL()#" class="form-inline" >
             <xar:data-input type="timeframe" name="period" value="$period" frames="past" show="dropdown,calendar"/>
             <input type="hidden" name="refresh" value="1"/>
