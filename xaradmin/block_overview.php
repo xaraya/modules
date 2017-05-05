@@ -20,12 +20,12 @@ function translations_admin_block_overview()
     if (!xarVarFetch('extid', 'id', $id)) return;
 
     $data = xarMod::apiFunc('blocks','types','getitem',array('type_id' => $id, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
-    $data['dnType'] = XARMLS_DNTYPE_BLOCK;
+    $data['dnType'] = xarMLS::DNTYPE_BLOCK;
     $data['dnName'] = $data['type'];
     $data['blockid'] = $id;
 
-    $druidbar = translations_create_druidbar(INFO, XARMLS_DNTYPE_BLOCK, $data['type'], $id);
-    $opbar = translations_create_opbar(OVERVIEW, XARMLS_DNTYPE_BLOCK, $data['type'], $id);
+    $druidbar = translations_create_druidbar(INFO, xarMLS::DNTYPE_BLOCK, $data['type'], $id);
+    $opbar = translations_create_opbar(OVERVIEW, xarMLS::DNTYPE_BLOCK, $data['type'], $id);
     $data = array_merge($data, $druidbar, $opbar);
 
     return $data;

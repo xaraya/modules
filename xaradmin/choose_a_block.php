@@ -18,9 +18,9 @@ function translations_admin_choose_a_block()
 
     if (!$blocklist = xarMod::apiFunc('blocks','types','getitems',array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE))) return;
 
-    $data = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_BLOCK, '', 0);
+    $data = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_BLOCK, '', 0);
     $data['blocklist'] = $blocklist;
-    $data['dnType'] = XARMLS_DNTYPE_BLOCK;
+    $data['dnType'] = xarMLS::DNTYPE_BLOCK;
     return $data;
 }
 

@@ -29,9 +29,9 @@ function translations_admin_choose_a_module()
     $modlist = array_merge($modlist1,$modlist2);
     ksort($modlist);
 
-    $tplData = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_MODULE, '', 0);
+    $tplData = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_MODULE, '', 0);
     $tplData['modlist'] = $modlist;
-    $tplData['dnType'] = XARMLS_DNTYPE_MODULE;
+    $tplData['dnType'] = xarMLS::DNTYPE_MODULE;
     return $tplData;
 }
 

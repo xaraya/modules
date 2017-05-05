@@ -24,20 +24,20 @@ function translations_admin_generate_trans_result()
     $locale = translations_release_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
-        case XARMLS_DNTYPE_CORE:
+        case xarMLS::DNTYPE_CORE:
         $res = xarMod::apiFunc('translations','admin','generate_core_trans',$args);
         break;
-        case XARMLS_DNTYPE_MODULE:
+        case xarMLS::DNTYPE_MODULE:
         $args['modid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_module_trans',$args);
         break;
-        case XARMLS_DNTYPE_THEME:
+        case xarMLS::DNTYPE_THEME:
         $args['themeid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_theme_trans',$args);
-        case XARMLS_DNTYPE_PROPERTY:
+        case xarMLS::DNTYPE_PROPERTY:
         $args['propertyid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_property_trans',$args);
-        case XARMLS_DNTYPE_BLOCK:
+        case xarMLS::DNTYPE_BLOCK:
         $args['blockid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_block_trans',$args);
         break;
@@ -56,11 +56,11 @@ function translations_admin_generate_trans_result()
 
     $data['dnType'] = $dnType;
 
-    if ($dnType == XARMLS_DNTYPE_CORE)         $dnTypeText = 'core';
-    elseif ($dnType == XARMLS_DNTYPE_THEME)    $dnTypeText = 'theme';
-    elseif ($dnType == XARMLS_DNTYPE_MODULE)   $dnTypeText = 'module';
-    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
-    elseif ($dnType == XARMLS_DNTYPE_BLOCK)    $dnTypeText = 'block';
+    if ($dnType == xarMLS::DNTYPE_CORE)         $dnTypeText = 'core';
+    elseif ($dnType == xarMLS::DNTYPE_THEME)    $dnTypeText = 'theme';
+    elseif ($dnType == xarMLS::DNTYPE_MODULE)   $dnTypeText = 'module';
+    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'property';
+    elseif ($dnType == xarMLS::DNTYPE_BLOCK)    $dnTypeText = 'block';
     else $dnTypeText = '';
     $data['dnTypeText'] = $dnTypeText;
 

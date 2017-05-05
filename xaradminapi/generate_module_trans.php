@@ -51,7 +51,7 @@ function translations_adminapi_generate_module_trans($args)
 
     $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;
-    if (!$backend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
+    if (!$backend->bindDomain(xarMLS::DNTYPE_MODULE, $modname)) {
         $msg = xarML('Before generating translations you must first generate skels.');
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'module')));
         throw new Exception($msg);
@@ -59,7 +59,7 @@ function translations_adminapi_generate_module_trans($args)
 
     $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
+    if (!$gen->bindDomain(xarMLS::DNTYPE_MODULE, $modname)) return;
 
     $module_contexts_list[] = 'modules:'.$modname.'::common';
 

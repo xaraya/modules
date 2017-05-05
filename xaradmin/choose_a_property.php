@@ -24,9 +24,9 @@ function translations_admin_choose_a_property()
     $q->run();
     $propertylist = $q->output();
     
-    $data = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_PROPERTY, '', 0);
+    $data = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_PROPERTY, '', 0);
     $data['propertylist'] = $propertylist;
-    $data['dnType'] = XARMLS_DNTYPE_PROPERTY;
+    $data['dnType'] = xarMLS::DNTYPE_PROPERTY;
     return $data;
 }
 

@@ -19,9 +19,9 @@ function translations_admin_choose_a_theme()
 
     if (!($themelist = xarMod::apiFunc('themes','admin','getthemelist',array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
-    $tplData = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_THEME, '', 0);
+    $tplData = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_THEME, '', 0);
     $tplData['themelist'] = $themelist;
-    $tplData['dnType'] = XARMLS_DNTYPE_THEME;
+    $tplData['dnType'] = xarMLS::DNTYPE_THEME;
     return $tplData;
 }
 

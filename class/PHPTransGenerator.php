@@ -120,7 +120,7 @@ class PHPTranslationsGenerator
         }
 
         switch ($dnType) {
-            case XARMLS_DNTYPE_MODULE:
+            case xarMLS::DNTYPE_MODULE:
             $this->baseDir = sys::code() . "$modules_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
 
@@ -131,7 +131,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
-            case XARMLS_DNTYPE_PROPERTY:
+            case xarMLS::DNTYPE_PROPERTY:
             $this->baseDir = "$properties_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
@@ -142,7 +142,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
-            case XARMLS_DNTYPE_BLOCK:
+            case xarMLS::DNTYPE_BLOCK:
             $this->baseDir = "$blocks_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
@@ -153,7 +153,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
-            case XARMLS_DNTYPE_THEME:
+            case xarMLS::DNTYPE_THEME:
             $this->baseDir = "$themes_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
@@ -164,7 +164,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
-            case XARMLS_DNTYPE_CORE:
+            case xarMLS::DNTYPE_CORE:
             $this->baseDir = $core_dir.'/';
         }
 

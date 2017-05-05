@@ -36,9 +36,9 @@ function translations_adminapi_release_core_trans($args)
         throw new Exception($msg);
     }
 
-    // return translations_make_package('xaraya', XARCORE_VERSION_NUM, $dirpath, $locale);
+    // return translations_make_package('xaraya', xarCore::VERSION_NUM, $dirpath, $locale);
     $newargs['basefilename'] = 'xaraya';
-    $newargs['version'] = XARCORE_VERSION_NUM;
+    $newargs['version'] = xarCore::VERSION_NUM;
     $newargs['dirpath'] = $dirpath;
     $newargs['locale'] = $locale;
     $backend = xarMod::apiFunc('translations','admin','make_package',$newargs);

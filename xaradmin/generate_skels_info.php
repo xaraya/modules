@@ -26,11 +26,11 @@ function translations_admin_generate_skels_info()
     $data = array_merge($druidbar, $opbar);
     $data['dnType'] = $dnType;
 
-    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
-    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
-    elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
+    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
+    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
+    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
+    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'property';
+    elseif ($dnType == xarMLS::DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
     $data['dnTypeText'] = $dnTypeText;
 

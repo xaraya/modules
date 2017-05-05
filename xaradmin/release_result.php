@@ -24,14 +24,14 @@ function translations_admin_release_result()
     $locale = translations_release_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
-        case XARMLS_DNTYPE_CORE:
+        case xarMLS::DNTYPE_CORE:
         $res = xarMod::apiFunc('translations','admin','release_core_trans',$args);
         break;
-        case XARMLS_DNTYPE_MODULE:
+        case xarMLS::DNTYPE_MODULE:
         $args['modid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','release_module_trans',$args);
         break;
-        case XARMLS_DNTYPE_THEME:
+        case xarMLS::DNTYPE_THEME:
         $args['themeid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','release_theme_trans',$args);
         break;

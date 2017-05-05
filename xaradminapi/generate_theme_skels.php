@@ -46,7 +46,7 @@ function translations_adminapi_generate_theme_skels($args)
     // Load core translations
     $core_backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($core_backend)) return;
-    if (!$core_backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
+    if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) theme, you must first generate skels for the core.', $themename);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
@@ -87,7 +87,7 @@ function translations_adminapi_generate_theme_skels($args)
     $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
 
-    if ($backend->bindDomain(XARMLS_DNTYPE_THEME, $themedir)) {
+    if ($backend->bindDomain(xarMLS::DNTYPE_THEME, $themedir)) {
         if ($backend->hasContext('themes:','common')){
             if (!$backend->loadContext('themes:','common')) return;
         }
@@ -124,7 +124,7 @@ function translations_adminapi_generate_theme_skels($args)
 
     $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(XARMLS_DNTYPE_THEME, $themedir)) return;
+    if (!$gen->bindDomain(xarMLS::DNTYPE_THEME, $themedir)) return;
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {

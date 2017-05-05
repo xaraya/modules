@@ -36,7 +36,7 @@ function translations_admin_start()
     }
 
     $data['working_locale'] = translations_working_locale();
-    $data['dnType'] = XARMLS_DNTYPE_CORE;
+    $data['dnType'] = xarMLS::DNTYPE_CORE;
     return $data;
 }
 

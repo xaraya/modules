@@ -14,7 +14,7 @@
 
 /* EVENT */function translations_adminevt_OnModLoad($args)
 {
-    if (xarMLSGetMode() != XARMLS_UNBOXED_MULTI_LANGUAGE_MODE) {
+    if (xarMLSGetMode() != xarMLS::UNBOXED_MULTI_LANGUAGE_MODE) {
         $msg = xarML('To execute the translations module you must set the Multi Language System mode to UNBOXED.');
             throw new Exception($msg);
     }
@@ -41,7 +41,7 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
     $stepCount = 0;
 
     switch ($dnType) {
-    case XARMLS_DNTYPE_CORE:
+    case xarMLS::DNTYPE_CORE:
         $stepLabels[CHOOSE] = xarML('Core');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
@@ -62,7 +62,7 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepCount = $currentStep + 1;
 
         break;
-    case XARMLS_DNTYPE_MODULE:
+    case xarMLS::DNTYPE_MODULE:
         $stepLabels[CHOOSE] = xarML('Choose a module');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
@@ -83,7 +83,7 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepCount = $currentStep + 1;
 
         break;
-    case XARMLS_DNTYPE_PROPERTY:
+    case xarMLS::DNTYPE_PROPERTY:
         $stepLabels[CHOOSE] = xarML('Choose a property');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
@@ -104,7 +104,7 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepCount = $currentStep + 1;
 
         break;
-    case XARMLS_DNTYPE_BLOCK:
+    case xarMLS::DNTYPE_BLOCK:
         $stepLabels[CHOOSE] = xarML('Choose a block');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
@@ -125,7 +125,7 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepCount = $currentStep + 1;
 
         break;
-    case XARMLS_DNTYPE_THEME:
+    case xarMLS::DNTYPE_THEME:
         $stepLabels[CHOOSE] = xarML('Choose a theme');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
@@ -171,19 +171,19 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
     // Overview | Generate skels | Translate | Delete fuzzy | Generate translations | Release package
     $opLabels[OVERVIEW] = xarML('Overview');
     switch ($dnType) {
-        case XARMLS_DNTYPE_CORE:
+        case xarMLS::DNTYPE_CORE:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
         break;
-        case XARMLS_DNTYPE_MODULE:
+        case xarMLS::DNTYPE_MODULE:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
         break;
-        case XARMLS_DNTYPE_PROPERTY:
+        case xarMLS::DNTYPE_PROPERTY:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'property_overview', $urlarray);
         break;
-        case XARMLS_DNTYPE_BLOCK:
+        case xarMLS::DNTYPE_BLOCK:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'block_overview', $urlarray);
         break;
-        case XARMLS_DNTYPE_THEME:
+        case xarMLS::DNTYPE_THEME:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
         break;
     }
@@ -236,13 +236,13 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
     $currentTra = -1;
     switch ($dnType) {
-        case XARMLS_DNTYPE_CORE:
+        case xarMLS::DNTYPE_CORE:
         $subtypes = array();
         $subnames = array();
         $entrydata = array();
 
         $args = array();
-        $args['dntype'] = XARMLS_DNTYPE_CORE;
+        $args['dntype'] = xarMLS::DNTYPE_CORE;
         $args['dnname'] = 'xaraya';
         $args['subtype'] = 'core:';
         $args['subname'] = 'core';
@@ -256,7 +256,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
         break;
 
-        case XARMLS_DNTYPE_MODULE:
+        case xarMLS::DNTYPE_MODULE:
 
         $modid = $extid;
 
@@ -295,7 +295,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$module_context);
             $args = array();
             $ctxtype2 = 'modules:'.$ctxtype1;
-            $args['dntype'] = XARMLS_DNTYPE_MODULE;
+            $args['dntype'] = xarMLS::DNTYPE_MODULE;
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
@@ -308,7 +308,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
         break;
 
-        case XARMLS_DNTYPE_PROPERTY:
+        case xarMLS::DNTYPE_PROPERTY:
 
         xarMod::apiLoad('dynamicdata');
         $tables =& xarDB::getTables();
@@ -351,7 +351,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$property_context);
             $args = array();
             $ctxtype2 = 'properties:'.$ctxtype1;
-            $args['dntype'] = XARMLS_DNTYPE_PROPERTY;
+            $args['dntype'] = xarMLS::DNTYPE_PROPERTY;
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
@@ -364,7 +364,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
         break;
 
-        case XARMLS_DNTYPE_BLOCK:
+        case xarMLS::DNTYPE_BLOCK:
 
         $blockinfo = xarMod::apiFunc('blocks','types','getitem',array('type_id' => $extid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
         
@@ -402,7 +402,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$block_context);
             $args = array();
             $ctxtype2 = 'blocks:'.$ctxtype1;
-            $args['dntype'] = XARMLS_DNTYPE_BLOCK;
+            $args['dntype'] = xarMLS::DNTYPE_BLOCK;
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
@@ -415,7 +415,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
         break;
 
-        case XARMLS_DNTYPE_THEME:
+        case xarMLS::DNTYPE_THEME:
         $themeid = $extid;
         if (!$themeinfo = xarMod::getInfo($themeid,'theme')) return;
 
@@ -426,7 +426,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $selectedsubname = $subname;
 
         $theme_contexts_list[] = array(
-                                    'dntype' => XARMLS_DNTYPE_THEME,
+                                    'dntype' => xarMLS::DNTYPE_THEME,
                                     'dnname' => $themename,
                                     'subtype' => 'themes:',
                                     'subname' => 'common');
@@ -443,7 +443,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             }
             $subname = basename($file,'.xt');
             $theme_contexts_list[] = array(
-                                        'dntype' => XARMLS_DNTYPE_THEME,
+                                        'dntype' => xarMLS::DNTYPE_THEME,
                                         'dnname' => $themename,
                                         'subtype' => 'themes:' . $dirname,
                                         'subname' => $subname);

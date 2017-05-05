@@ -27,13 +27,13 @@ function translations_admin_delete_fuzzy_result()
     if (!isset($backend)) return;
 
     switch ($dnType) {
-        case XARMLS_DNTYPE_CORE:
+        case xarMLS::DNTYPE_CORE:
             $ctxType = 'core:';
             break;
-        case XARMLS_DNTYPE_MODULE:
+        case xarMLS::DNTYPE_MODULE:
             $ctxType = 'modules:';
             break;
-        case XARMLS_DNTYPE_THEME:
+        case xarMLS::DNTYPE_THEME:
             $ctxType = 'themes:';
             break;
     }

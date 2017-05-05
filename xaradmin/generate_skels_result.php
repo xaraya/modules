@@ -27,10 +27,10 @@ function translations_admin_generate_skels_result()
     $locale = translations_working_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
-        case XARMLS_DNTYPE_CORE:
+        case xarMLS::DNTYPE_CORE:
         $res = xarMod::apiFunc('translations','admin','generate_core_skels',$args);
         break;
-        case XARMLS_DNTYPE_MODULE:
+        case xarMLS::DNTYPE_MODULE:
 
             if ($dnTypeAll) {
 
@@ -58,15 +58,15 @@ function translations_admin_generate_skels_result()
                 $res = xarMod::apiFunc('translations','admin','generate_module_skels',$args);
             }
         break;
-        case XARMLS_DNTYPE_PROPERTY:
+        case xarMLS::DNTYPE_PROPERTY:
         $args['propertyid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_property_skels',$args);
         break;
-        case XARMLS_DNTYPE_BLOCK:
+        case xarMLS::DNTYPE_BLOCK:
         $args['blockid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_block_skels',$args);
         break;
-        case XARMLS_DNTYPE_THEME:
+        case xarMLS::DNTYPE_THEME:
         $args['themeid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_theme_skels',$args);
         break;
@@ -82,11 +82,11 @@ function translations_admin_generate_skels_result()
     $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
     $data['dnType'] = $dnType;
 
-    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
-    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
-    elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
+    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
+    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
+    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
+    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'property';
+    elseif ($dnType == xarMLS::DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
     $data['dnTypeText'] = $dnTypeText;
     $data['dnTypeAll']= $dnTypeAll;

@@ -27,12 +27,12 @@ function translations_admin_property_overview()
     $q->run();
     $data = $q->row();
     
-    $data['dnType'] = XARMLS_DNTYPE_PROPERTY;
+    $data['dnType'] = xarMLS::DNTYPE_PROPERTY;
     $data['dnName'] = $data['name'];
     $data['propertyid'] = $id;
 
-    $druidbar = translations_create_druidbar(INFO, XARMLS_DNTYPE_PROPERTY, $data['name'], $id);
-    $opbar = translations_create_opbar(OVERVIEW, XARMLS_DNTYPE_PROPERTY, $data['name'], $id);
+    $druidbar = translations_create_druidbar(INFO, xarMLS::DNTYPE_PROPERTY, $data['name'], $id);
+    $opbar = translations_create_opbar(OVERVIEW, xarMLS::DNTYPE_PROPERTY, $data['name'], $id);
     $data = array_merge($data, $druidbar, $opbar);
 
     return $data;

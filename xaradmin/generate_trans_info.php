@@ -31,9 +31,9 @@ function translations_admin_generate_trans_info()
 
     $tplData['dnType'] = $dnType;
 
-    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
+    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
+    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
+    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
     else $dnTypeText = '';
     $tplData['dnTypeText'] = $dnTypeText;
 

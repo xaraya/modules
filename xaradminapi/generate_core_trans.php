@@ -42,7 +42,7 @@ function translations_adminapi_generate_core_trans($args)
     $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;
 
-    if (!$backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
+    if (!$backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before generating translations you must first generate skels for locale #(1)', $ref_locale);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'core')));
         throw new Exception($msg);
@@ -51,7 +51,7 @@ function translations_adminapi_generate_core_trans($args)
 
     $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) return;
+    if (!$gen->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) return;
     if (!$gen->create('core:', 'core')) return;
 
     $statistics['core'] = array('entries'=>0, 'keyEntries'=>0);

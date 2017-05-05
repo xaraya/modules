@@ -53,7 +53,7 @@ function translations_adminapi_generate_property_skels($args)
     // Load core translations
     $core_backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($core_backend)) return;
-    if (!$core_backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
+    if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) property, you must first generate skels for the core.', $propertyname);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
@@ -115,7 +115,7 @@ function translations_adminapi_generate_property_skels($args)
     $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
 
-    if ($backend->bindDomain(XARMLS_DNTYPE_PROPERTY,$propertyname)) {
+    if ($backend->bindDomain(xarMLS::DNTYPE_PROPERTY,$propertyname)) {
         if ($backend->hasContext('properties:','common')){
             if (!$backend->loadContext('properties:','common')) return;
         }
@@ -152,7 +152,7 @@ function translations_adminapi_generate_property_skels($args)
 
     $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(XARMLS_DNTYPE_PROPERTY, $propertyname)) return;
+    if (!$gen->bindDomain(xarMLS::DNTYPE_PROPERTY, $propertyname)) return;
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {

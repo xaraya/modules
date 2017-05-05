@@ -72,11 +72,11 @@ function translations_admin_translate_subtype()
     $data = array_merge($data, $opbar, $trabar, $druidbar);
     $data['dnType'] = $dnType;
 
-    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
-    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'propety';
-    elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
+    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
+    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
+    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
+    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'propety';
+    elseif ($dnType == xarMLS::DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
     $data['dnTypeText'] = $dnTypeText;
 
