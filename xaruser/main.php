@@ -18,7 +18,7 @@ function translations_user_main($args)
     if(!xarSecurityCheck('ReadTranslations')) return;
     if (!xarUser::IsLoggedIn()) return xarResponse::notFound();
 
-    $redirect = xarModVars::get('translations','defaultfrontpage');
+    $redirect = xarModVars::get('translations','frontend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
         $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
