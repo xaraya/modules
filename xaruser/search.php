@@ -58,6 +58,7 @@ function crispbb_user_search()
     list($current_module) = xarController::$request->getInfo();
     $data['searchactive'] = $current_module == 'search' ? true : false;
 
+    sys::import('modules.crispbb.class.tracker');
     $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
     $data['userpanel'] = $tracker->getUserPanelInfo();
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
