@@ -10,22 +10,21 @@
             </p>
         </fieldset>
 
-        <form method="post" action="#xarModURL('scheduler','admin','delete')#">
+        <form method="post" action="#xarModURL('scheduler','admin','test')#">
             <div class="xar-row">
                 <div class="xar-col">
-                    &#160;
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                     <input type="hidden" name="confirm" id="confirm" value="true"/>
                     <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
-                    <xar:var name="label">Delete Job</xar:var>
-                    <xar:button type="submit" label="$label" />
                     <xar:set name="returnurl">
                         #xarModURL('scheduler', 'admin', 'view')#
                     </xar:set>
                     <xar:var name="label">Cancel</xar:var>
                     <xar:button type="cancel" label="$label" onclick="window.location='#$returnurl#';"/>
+                    <xar:var name="label">Run</xar:var>
+                    <xar:button type="submit" label="$label" />
                 </div>
             </div>
         </form>

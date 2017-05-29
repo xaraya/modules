@@ -37,9 +37,17 @@ function scheduler_admin_test()
     // Confirm Auth Key
     if (!xarSecConfirmAuthKey()) {return;}
 
-    // Ru the job
-    //$job->deleteItem(array('itemid' => $itemid));
+    // Run the job
+    sys::import('modules.dynamicdata.class.objects.master');
+    $job = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
+    $job->getItem(array('itemid' => $itemid));
     
+    $result = xarMod::apiFunc(
+                        $job->properties['module']->value,
+                        $job->properties['type']->value,
+                        $job->properties['function']->value,
+                            );
+    var_dump($result);
     // Go back to the view page
     xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
     return true;
