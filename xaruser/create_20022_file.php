@@ -35,15 +35,6 @@ function payments_user_create_20022_file()
 
 # --------------------------------------------------------
 #
-# Get the debit account information
-#
-    $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
-    $data['debit_account']->getItem(array('itemid' => 1));
-    $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
-    $data['debit_address'] = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_fields['address']));
-
-# --------------------------------------------------------
-#
 # Define miscellaneous information
 #
     $data['group_reference'] = time() . "-" . xarUser::getVar('id');
@@ -98,6 +89,12 @@ function payments_user_create_20022_file()
 
 # --------------------------------------------------------
 #
+# Get the debit account object
+#
+    $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
+
+# --------------------------------------------------------
+#
 # Update fields of the payment items
 #
     // Generate the number of payments
@@ -107,6 +104,11 @@ function payments_user_create_20022_file()
     $data['control_sum'] = 0;
 
     foreach ($data['items'] as $key => $item) {
+        // Get the debit account information for this payment
+        $data['debit_account']->getItem(array('itemid' => $item['sender_itemid']));
+        $debit_fields = $data['debit_account']->getFieldValues(array(), 1);
+        $data['debit_address'] = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_fields['address']));
+
         // Add the debit fields to the corresponding properties in the DTA object
         $data['items'][$key]['sender_account']  = $debit_fields['account_holder'];
         $data['items'][$key]['sender_line_1']   = $debit_fields['address_1'];
