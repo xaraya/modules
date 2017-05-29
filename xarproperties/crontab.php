@@ -68,6 +68,10 @@ class CrontabProperty extends DataProperty
                 'nextrun' => 0,
             ));
         if (empty($data['value'])) $data['value'] = $this->getValue();
+        if (!is_array($data['value'])) {
+            $this->value = $data['value'];
+            $data['value'] = $this->getValue();
+        }
         return parent::showInput($data);
     }
 
@@ -84,6 +88,10 @@ class CrontabProperty extends DataProperty
                 'nextrun' => 0,
             ));
         if (empty($data['value'])) $data['value'] = $this->getValue();
+        if (!is_array($data['value'])) {
+            $this->value = $data['value'];
+            $data['value'] = $this->getValue();
+        }
         return parent::showOutput($data);
     }
 
