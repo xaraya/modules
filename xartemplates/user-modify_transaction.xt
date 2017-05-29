@@ -14,7 +14,7 @@
                     array('id' => 6,   'name' => 'Salary payment'),
                 )
             </xar:set>
-            <xar:data-input type="dropdown" name="payment_type" value="$payment_type" options="$options" onchange="this.form.submit()"/>
+            <xar:data-input type="dropdown" name="payment_type" value="$payment_type" options="$options" style="width: 200px" onchange="this.form.submit()"/>
             <input type="hidden" name="type_changed" id="type_changed" value="1"/>
         </form>
 
