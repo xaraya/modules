@@ -37,7 +37,7 @@ $GLOBALS['systemConfiguration'] = $systemConfiguration;
  * Load the Xaraya core
  */
 sys::import('xaraya.core');
-    xarCoreInit(xarCore::SYSTEM_ALL);
+    xarCore::xarInit(xarCore::SYSTEM_ALL);
     $homedir = xarServer::getBaseURL();
 
     // update the last run time
