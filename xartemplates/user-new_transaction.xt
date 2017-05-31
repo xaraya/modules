@@ -8,7 +8,7 @@
         <form method="post" action="#xarServer::getCurrentURL()#">
           <div class="xar-row">
               <div class="xar-col-condensed">
-                <b>Payment Type:</b>
+                <b>Payment type:</b>
               </div>
               <div class="xar-col">
                 <xar:set name="options">
