@@ -6,7 +6,7 @@
         <xar:set name="objectname">$object->name</xar:set>
         <xar:if condition="$objectname eq 'payments_transactions'">
 
-            <div style="display:inline;">
+            <div style="display: inline;" nowrap="nowrap">
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Actions
