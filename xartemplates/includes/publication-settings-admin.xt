@@ -210,6 +210,12 @@
             <div class="xar-row">
                 <xar:var name="firstline">(current template)</xar:var>
                 <xar:set name="firstline">",$firstline"</xar:set>
+                <xar:set name="this_theme">strtolower($properties['theme']->value)</xar:set>
+                <xar:if condition="!empty($this_theme)">
+                    <xar:set name="base_directory">"themes/" . $this_theme . "/pages"</xar:set>
+                    <xar:set name="dummy">1;$properties['page_template']->initialization_basedirectory = $base_directory</xar:set>
+                    <xar:set name="dummy">1;$properties['page_template']->getOptions()</xar:set>
+                </xar:if>
                 <div class="xar-col">
                     <xar:var name="label">Page Template</xar:var>
                     <xar:data-label property="$properties['page_template']" for="id" label="$label" />
