@@ -127,9 +127,9 @@ function publications_userapi_get($args)
             FROM $publicationstable
             $where";
     if (!empty($id)) {
-        $result =& $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query,$bindvars);
     } else {
-        $result =& $dbconn->SelectLimit($query,1,0,$bindvars);
+        $result = $dbconn->SelectLimit($query,1,0,$bindvars);
     }
     if (!$result) return;
 
