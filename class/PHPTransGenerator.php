@@ -39,6 +39,7 @@ class PHPTranslationsGenerator
         $themes_dir     = "$php_dir/themes";
         $properties_dir = "$php_dir/properties";
         $blocks_dir     = "$php_dir/blocks";
+        $objects_dir    = "$php_dir/objects";
 
         $canWrite = 1;
         if (file_exists($locales_dir)) {
@@ -48,11 +49,13 @@ class PHPTranslationsGenerator
                         file_exists($properties_dir) && 
                         file_exists($blocks_dir) && 
                         file_exists($themes_dir) &&
+                        file_exists($objects_dir) &&
                         file_exists($core_dir)) {
                         if (!is_writeable($modules_dir)) $canWrite = 0;
                         if (!is_writeable($properties_dir)) $canWrite = 0;
                         if (!is_writeable($blocks_dir)) $canWrite = 0;
                         if (!is_writeable($themes_dir)) $canWrite = 0;
+                        if (!is_writeable($objects_dir)) $canWrite = 0;
                         if (!is_writeable($core_dir)) $canWrite = 0;
                     } else {
                         if (is_writeable($php_dir)) {
@@ -76,6 +79,11 @@ class PHPTranslationsGenerator
                             } else {
                                 mkdir($themes_dir, 0777);
                             }
+                            if (file_exists($objects_dir)) {
+                                if (!is_writeable($objects_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($objects_dir, 0777);
+                            }
                             if (file_exists($core_dir)) {
                                 if (!is_writeable($core_dir)) $canWrite = 0;
                             } else {
@@ -92,6 +100,7 @@ class PHPTranslationsGenerator
                         mkdir($properties_dir, 0777);
                         mkdir($blocks_dir, 0777);
                         mkdir($themes_dir, 0777);
+                        mkdir($objects_dir, 0777);
                         mkdir($core_dir, 0777);
                     } else {
                         $canWrite = 0; // var/locales/LOCALE is unwriteable
@@ -105,6 +114,7 @@ class PHPTranslationsGenerator
                     mkdir($properties_dir, 0777);
                     mkdir($blocks_dir, 0777);
                     mkdir($themes_dir, 0777);
+                    mkdir($objects_dir, 0777);
                     mkdir($core_dir, 0777);
                 } else {
                     $canWrite = 0; // var/locales is unwriteable
@@ -164,8 +174,12 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
+            case xarMLS::DNTYPE_OBJECT:
+            $this->baseDir = $objects_dir.'/';
+            break;
             case xarMLS::DNTYPE_CORE:
             $this->baseDir = $core_dir.'/';
+            break;
         }
 
         return true;

@@ -10,7 +10,7 @@
  * @link http://xaraya.com/index.php/release/77.html
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
  * Parse the generation request and show a result page.
@@ -19,6 +19,8 @@ function translations_admin_generate_skels_result()
 {
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
+
+    if (!xarSecConfirmAuthKey()) return;
 
     if (!xarVarFetch('dnType','int',$dnType)) return;
     if (!xarVarFetch('dnName','str:1:',$dnName)) return;
@@ -70,6 +72,10 @@ function translations_admin_generate_skels_result()
         $args['themeid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_theme_skels',$args);
         break;
+        case xarMLS::DNTYPE_OBJECT:
+        $args['objectid'] = $extid;
+        $res = xarMod::apiFunc('translations','admin','generate_object_skels',$args);
+        break;
     }
     if (!isset($res)) return;
 
@@ -80,15 +86,9 @@ function translations_admin_generate_skels_result()
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
-    $data['dnType'] = $dnType;
 
-    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
-    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'property';
-    elseif ($dnType == xarMLS::DNTYPE_BLOCK) $dnTypeText = 'block';
-    else $dnTypeText = '';
-    $data['dnTypeText'] = $dnTypeText;
+    $data['dnType'] = $dnType;
+    $data['dnTypeText'] = xarMLSContext::getContextTypeText($dnType);
     $data['dnTypeAll']= $dnTypeAll;
     $data['dnName'] = $dnName;
     $data['extid'] = $extid;

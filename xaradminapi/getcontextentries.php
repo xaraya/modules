@@ -29,19 +29,8 @@ function translations_adminapi_getcontextentries($args)
 
     if (!isset($backend)) return;
     if (!$backend->bindDomain($dnType, $dnName)) {
-        if ($dnType == xarMLS::DNTYPE_MODULE) {
-            $msg = xarML('Could not bind translation backend to module \'#(1)\'. Try regenerating skeletons.', $dnName);
-        } elseif ($dnType == xarMLS::DNTYPE_PROPERTY) {
-            $msg = xarML('Could not bind translation backend to property \'#(1)\'. Try regenerating skeletons.', $dnName);
-        } elseif ($dnType == xarMLS::DNTYPE_BLOCK) {
-            $msg = xarML('Could not bind translation backend to block \'#(1)\'. Try regenerating skeletons.', $dnName);
-        } elseif ($dnType == xarMLS::DNTYPE_THEME) {
-            $msg = xarML('Could not bind translation backend to theme \'#(1)\'. Try regenerating skeletons.', $dnName);
-        } elseif ($dnType == xarMLS::DNTYPE_CORE) {
-            $msg = xarML('Could not bind translation backend to core. Try regenerating skeletons.');
-        } else {
-            $msg = xarML('Could not bind translation: unknown domain type');
-        }
+        $dnTypeText = xarMLSContext::getContextTypeText($dnType);
+        $msg = xarML('Could not bind translation backend to #(1) \'#(2)\'. Try regenerating skeletons.', $dnTypeText, $dnName);
         throw new Exception($msg);
     }
     if (!$backend->loadContext($ctxType, $ctxName)) return;

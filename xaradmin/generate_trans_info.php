@@ -30,13 +30,7 @@ function translations_admin_generate_trans_info()
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
     $tplData['dnType'] = $dnType;
-
-    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
-    else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
-
+    $tplData['dnTypeText'] = xarMLSContext::getContextTypeText($dnType);
     $tplData['dnName'] = $dnName;
     $tplData['extid'] = $extid;
 

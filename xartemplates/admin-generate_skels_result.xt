@@ -20,22 +20,28 @@
                 Skels successfully generated. The results are shown below.
             </p>
             <table class="xar-fullwidth xar-noborder xar-align-left" cellpadding="2" cellspacing="1">
-            <tr>
-            <th>Job</th>
-            <th>Entries</th><th>Key Entries</th>
-            </tr>
-            <xar:loop name="$statistics">
-            <tr><td>#$loop:key#</td><td>#$loop:item['entries']#</td><td>#$loop:item['keyEntries']#</td></tr>
-            </xar:loop>
+                <tr>
+                    <th>Job</th>
+                    <th>Entries</th>
+                    <th>Key Entries</th>
+                </tr>
+                <xar:loop name="$statistics">
+                    <tr>
+                        <td>#$loop:key#</td>
+                        <td>#$loop:item['entries']#</td>
+                        <td>#$loop:item['keyEntries']#</td>
+                    </tr>
+                </xar:loop>
             </table>
-            <p><xar:ml>
-            <xar:mlstring>The operation took #(1) seconds.</xar:mlstring>
-            <xar:mlvar>#$time#</xar:mlvar>
-            </xar:ml>
+            <p>
+                <xar:ml>
+                    <xar:mlstring>The operation took #(1) seconds.</xar:mlstring>
+                    <xar:mlvar>#$time#</xar:mlvar>
+                </xar:ml>
             </p>
         <xar:else />
             <p>
-            All module skeletons successfully generated. 
+                All module skeletons successfully generated. 
             </p>
         </xar:if>
         <br />

@@ -25,14 +25,9 @@ function translations_admin_release_info()
     $druidbar = translations_create_druidbar(REL, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(RELEASE, $dnType, $dnName, $extid);
     $tplData = array_merge($druidbar, $opbar);
+
     $tplData['dnType'] = $dnType;
-
-    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
-    else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
-
+    $tplData['dnTypeText'] = xarMLSContext::getContextTypeText($dnType);
     $tplData['dnName'] = $dnName;
     $tplData['extid'] = $extid;
 

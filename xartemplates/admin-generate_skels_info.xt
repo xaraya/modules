@@ -20,9 +20,11 @@
         Now we're going to generate skels, this operation could take several minutes. Just take a break!
         </p>
         <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
-        <input type="hidden" name="dnType" value="#$dnType#"/>
-        <input type="hidden" name="dnName" value="#$dnName#"/>
-        <input type="hidden" name="extid" value="#$extid#"/>
+            <input type="hidden" id="dnType" name="dnType" value="#$dnType#"/>
+            <input type="hidden" id="dnName" name="dnName" value="#$dnName#"/>
+            <input type="hidden" id="extid" name="extid" value="#$extid#"/>
+            <input type="hidden" id="authid" name="authid" value="#xarSecGenAuthKey()#"/>
+            
             <xar:var name="label">Go</xar:var>
             <xar:button type="submit" label="$label"/>
         </form>

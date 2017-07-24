@@ -70,6 +70,11 @@
                     Translate a theme
                   </a>
                 </li>
+                <li>
+                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'object'))#">
+                    Translate a dataobject
+                  </a>
+                </li>
               </ul>
         </fieldset>
 

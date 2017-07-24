@@ -24,14 +24,9 @@ function translations_admin_delete_fuzzy()
     $druidbar = translations_create_druidbar(DELFUZZY, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(DEL_FUZZY, $dnType, $dnName, $extid);
     $tplData = array_merge($druidbar, $opbar);
+
     $tplData['dnType'] = $dnType;
-
-    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
-    else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
-
+    $data['dnTypeText'] = xarMLSContext::getContextTypeText($dnType);
     $tplData['dnName'] = $dnName;
     $tplData['extid'] = $extid;
 

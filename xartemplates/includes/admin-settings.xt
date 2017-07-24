@@ -8,6 +8,7 @@
     <xar:if condition="$dnType == xarMLS::DNTYPE_THEME"><xar:set name="menu_dntypetext">'theme'</xar:set></xar:if>
     <xar:if condition="$dnType == xarMLS::DNTYPE_PROPERTY"><xar:set name="menu_dntypetext">'property'</xar:set></xar:if>
     <xar:if condition="$dnType == xarMLS::DNTYPE_BLOCK"><xar:set name="menu_dntypetext">'block'</xar:set></xar:if>
+    <xar:if condition="$dnType == xarMLS::DNTYPE_OBJECT"><xar:set name="menu_dntypetext">'object'</xar:set></xar:if>
     <xar:else />
         <xar:set name="menu_dntypetext">''</xar:set>
     </xar:if>

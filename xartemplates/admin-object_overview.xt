@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+       <h2>Translate Dataobjects</h2>
+       <xar:template file="admin-settings" type="module"/>
+
+        <xar:template type="module" file="druidbar"/>
+        Object display name: #$object:label#<br />
+        Object name: #$object:name#<br />
+        <br />
+        Make a choice:<br />
+        <br />
+        <xar:template type="module" file="opbar"/>
+    </div>
+</xar:template>

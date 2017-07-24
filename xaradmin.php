@@ -10,6 +10,7 @@
  * @link http://xaraya.com/index.php/release/77.html
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
 /* EVENT */function translations_adminevt_OnModLoad($args)
@@ -115,7 +116,7 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[DOWNLOAD] = xarML('Download');
 
         $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_block');
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'property_overview', $urlarray);
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'bock_overview', $urlarray);
         $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
         $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
         $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
@@ -137,6 +138,27 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
 
         $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
         $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+
+        $stepCount = $currentStep + 1;
+
+        break;
+    case xarMLS::DNTYPE_OBJECT:
+        $stepLabels[CHOOSE] = xarML('Choose a dataobject');
+        $stepLabels[INFO] = xarML('Overview');
+        $stepLabels[GENSKELS] = xarML('Skel. Generation');
+        $stepLabels[TRAN] = xarML('Translate');
+        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+        $stepLabels[GENTRANS] = xarML('Trans. Generation');
+        $stepLabels[REL] = xarML('Release');
+        $stepLabels[DOWNLOAD] = xarML('Download');
+
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_object');
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'object_overview', $urlarray);
         $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
         $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
         $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
@@ -185,6 +207,9 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
         break;
         case xarMLS::DNTYPE_THEME:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
+        break;
+        case xarMLS::DNTYPE_OBJECT:
+        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'object_overview', $urlarray);
         break;
     }
     $opLabels[GEN_SKELS] = xarML('Generate skels');
@@ -461,6 +486,50 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             }
         }
         break;
+
+        case xarMLS::DNTYPE_OBJECT:
+        $objectid = $extid;
+        sys::import('modules.dynamicdata.class.objects.master');
+        $object = DataObjectMaster::getObject(array('objectid' => $objectid));
+
+        if (!$objectinfo = DataObjectMaster::getObjectInfo(array('objectid' => $objectid))) return;
+
+        $objectname = $object->name;
+        $objectdir = $object->name;
+
+        $selectedsubtype = $subtype;
+        $selectedsubname = $subname;
+
+        $object_contexts_list[] = array(
+                                    'dntype'  => xarMLS::DNTYPE_OBJECT,
+                                    'dnname'  => 'object',
+                                    'subtype' => 'objects:',
+                                    'subname' => 'common');
+
+        $propertynames = xarMod::apiFunc('translations','admin','get_object_properties',array('object' => $object));
+
+        $prefix = 'objects/'.$objectname;
+        foreach ($propertynames as $name) {
+            $subname = $name;
+            $object_contexts_list[] = array(
+                                        'dntype'  => xarMLS::DNTYPE_OBJECT,
+                                        'dnname'  => $objectname,
+                                        'subtype' => 'objects:'.$objectname,
+                                        'subname' => $subname);
+        }
+
+        $subtypes = array();
+        $subnames = array();
+        $entrydata = array();
+        foreach ($object_contexts_list as $object_context) {
+            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$object_context);
+            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                $entrydata[] = $entry;
+                $subtypes[] = $object_context['subtype'];
+                $subnames[] = $object_context['subname'];
+            }
+        }
+        break;
     }
     $subData = array('subtypes'=>$subtypes,
                  'subnames'=>$subnames,
@@ -473,7 +542,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 function translations_working_locale($locale = NULL)
 {
     if (!$locale) {
-        $locale = xarSessionGetVar('translations_working_locale');
+        $locale = xarSession::getVar('translations_working_locale');
         if (!$locale) {
             $locale = xarMLSGetCurrentLocale();
             xarSessionSetVar('translations_working_locale', $locale);
@@ -487,7 +556,7 @@ function translations_working_locale($locale = NULL)
 function translations_release_locale($locale = NULL)
 {
     if (!$locale) {
-        $locale = xarSessionGetVar('translations_release_locale');
+        $locale = xarSession::getVar('translations_release_locale');
         if (!$locale) {
             $locale = translations_working_locale();
             xarSessionSetVar('translations_release_locale', $locale);

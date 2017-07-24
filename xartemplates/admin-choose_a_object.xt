@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Choose a Dataobject</h2>
+        <xar:template file="admin-settings" type="module"/>
+
+        <xar:template type="module" file="druidbar"/>
+        <p class="xar-form-input-wrapper-before">
+          Choose which dataobject you want to translate from the list below.
+        </p>
+        <ul>
+            <xar:loop name="$objectlist">
+              <li><a href="#xarModURL('translations', 'admin', 'object_overview', array('extid' => $loop:item['objectid']))#">
+                #$loop:item['label']# (#$loop:item['name']#)
+              </a></li>
+            </xar:loop>
+        </ul>
+    </div>
+</xar:template>

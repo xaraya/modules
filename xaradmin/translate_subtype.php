@@ -70,16 +70,9 @@ function translations_admin_translate_subtype()
     $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype,$subname);
     $druidbar = translations_create_druidbar(TRAN, $dnType, $dnName, $extid);
     $data = array_merge($data, $opbar, $trabar, $druidbar);
+
     $data['dnType'] = $dnType;
-
-    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
-    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'propety';
-    elseif ($dnType == xarMLS::DNTYPE_BLOCK) $dnTypeText = 'block';
-    else $dnTypeText = '';
-    $data['dnTypeText'] = $dnTypeText;
-
+    $data['dnTypeText'] = xarMLSContext::getContextTypeText($dnType);
     $data['dnName'] = $dnName;
     $data['extid'] = $extid;
 

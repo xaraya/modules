@@ -26,17 +26,7 @@ function translations_admin_delete_fuzzy_result()
                              array('interface' => 'ReferencesBackend', 'locale' => $locale)); 
     if (!isset($backend)) return;
 
-    switch ($dnType) {
-        case xarMLS::DNTYPE_CORE:
-            $ctxType = 'core:';
-            break;
-        case xarMLS::DNTYPE_MODULE:
-            $ctxType = 'modules:';
-            break;
-        case xarMLS::DNTYPE_THEME:
-            $ctxType = 'themes:';
-            break;
-    }
+    $ctxType = xarMLSContext::getContextTypePrefix($dnType);
     $ctxName = 'fuzzy';
 
     if ($backend->bindDomain($dnType,$dnName)) {

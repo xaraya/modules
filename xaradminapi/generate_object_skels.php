@@ -10,29 +10,31 @@
  * @link http://xaraya.com/index.php/release/77.html
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
 /**
  * generate translations XML skels for a specified theme
- * @param $args['themeid'] theme registry identifier
+ * @param $args['objectid'] object identifier
  * @param $args['locale'] locale name
  * @returns array
  * @return statistics on generation process
  */
-function translations_adminapi_generate_theme_skels($args)
+function translations_adminapi_generate_object_skels($args)
 {
-    // To suppress an error in safe mode we supply a @ here, no other way i think
+    // To suppress an error in safe mode we supply a @ here, no other way I think
     @set_time_limit(0);
 
     // Get arguments
     extract($args);
 
     // Argument check
-    assert('isset($themeid) && isset($locale)');
+    assert('isset($objectid) && isset($locale)');
 
-    if (!$modinfo = xarMod::getInfo($themeid,'theme')) return;
-    $themename = $modinfo['name'];
-    $themedir = $modinfo['osdirectory'];
+    $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('objectid' => $objectid));
+    if (!is_object($tplData['object'])) return;
+    $objectlabel = $tplData['object']->label;
+    $objectname = $tplData['object']->name;
 
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
@@ -47,59 +49,73 @@ function translations_adminapi_generate_theme_skels($args)
     $core_backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($core_backend)) return;
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
-        $msg = xarML('Before you can generate skels for the #(1) theme, you must first generate skels for the core.', $themename);
+        $msg = xarML('Before you can generate skels for the #(1) object, you must first generate skels for the core.', $objectname);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) return;
 
-    // Parse files
+    // Get the properties that are translatable
     $transEntriesCollection = array();
     $transKeyEntriesCollection = array();
-    $theme_contexts_list = array();
+    $object_contexts_list = array();
 
-    $files = xarMod::apiFunc('translations','admin','get_files',array('themedir'=>$themedir));
-
-    $prefix = 'themes/'.$themename;
-    foreach ($files as $file) {
-        $dirname = dirname($file);
-        if (strpos($prefix,$dirname) == 0) {
-            $dirname = substr($dirname, strlen($prefix) + 1);
-        } else {
-            throw new Exception('mismatch: ' . $prefix . " " . $dirname);
+    // Disable any properties that re not translatable
+    foreach ($tplData['object']->properties as $name => $property) {
+        // We need the ID as a reference: include it in any case
+        if ($property->type == 21) {
+            $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+            continue;
         }
-        $subname = basename($file,'.xt');
-        $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
-        $parser = new TPLParser();
-        $parser->parse($file);
-        ${$dirname . "names"}[] = $subname;
-
-        $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
-        $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
+        
+        if (!$property->translatable) {
+            $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+        } else {
+            // We need translatable properties to be shown in listings for this exercise
+            $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+            $object_contexts_list[] = 'objects:'.':'.$objectname.':'.$name;
+        }
     }
+    // Force regeneration of the field list
+    $fieldlist = $tplData['object']->getFieldList(1);
 
-    $transEntriesCollection = theme_translations_gather_common_entries($transEntriesCollection);
-    $transKeyEntriesCollection = theme_translations_gather_common_entries($transKeyEntriesCollection);
+    // Get the items of translatable properties
+    $items = $tplData['object']->getItems();
+
+    $translation_enries = array();
+    $prefix = 'objects/'.$objectname;
+    foreach ($items as $item) {
+        foreach ($item as $key => $element) {
+            // Don't try and translate the ID fields. We just need them as a reference
+            if ($key == 'id') continue;
+            
+            $transEntriesCollection[$objectname.'::'.$key][$element][] = array('line' => $item['id'], 'file' => $objectname.'::'.$key);
+            $transKeyEntriesCollection[$objectname.'::'.$key] = array();
+        }
+    }
+        
+    $transEntriesCollection = object_translations_gather_common_entries($transEntriesCollection);
+    $transKeyEntriesCollection = object_translations_gather_common_entries($transKeyEntriesCollection);
 
     $subnames[] = 'common';
     // Load previously made translations
     $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
 
-    if ($backend->bindDomain(xarMLS::DNTYPE_THEME, $themedir)) {
-        if ($backend->hasContext('themes:','common')){
-            if (!$backend->loadContext('themes:','common')) return;
+    if ($backend->bindDomain(xarMLS::DNTYPE_OBJECT, $objectname)) {
+        if ($backend->hasContext('objects:','common')){
+            if (!$backend->loadContext('objects:','common')) return;
         }
-        foreach ($theme_contexts_list as $theme_context) {
-            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$theme_context);
-            if ($backend->hasContext('themes:'.$ctxtype1,$ctxname1)){
-                if (!$backend->loadContext('themes:'.$ctxtype1,$ctxname1)) return;
+        foreach ($object_contexts_list as $object_context) {
+            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$object_context);
+            if ($backend->hasContext('objects:'.$ctxtype1,$ctxname1)){
+                if (!$backend->loadContext('objects:'.$ctxtype1,$ctxname1)) return;
             }
         }
     }
 
     // Load KEYS
-    $filename = "themes/$themedir/KEYS";
+    $filename = "objects/$objectname/KEYS";
     $KEYS = array();
     if (file_exists($filename)) {
         $lines = file($filename);
@@ -123,7 +139,7 @@ function translations_adminapi_generate_theme_skels($args)
 
     $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(xarMLS::DNTYPE_THEME, $themedir)) return;
+    if (!$gen->bindDomain(xarMLS::DNTYPE_OBJECT, $objectname)) return;
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
@@ -144,13 +160,15 @@ function translations_adminapi_generate_theme_skels($args)
                 $entry = $core_backend->getEntry($string);
                 if (isset($entry)) continue;
 
+                // There is no core translation: up the number of entries 
                 $statistics[$subname]['entries']++;
-                // Get previous translation, it's void if not yet translated
+                
+                // Get previous translation, it's empty if not yet translated
                 $translation = $backend->translate($string);
                 $marked = $backend->markEntry($string);
-
+                
                 if (!$fileAlreadyOpen) {
-                    if (!$gen->create('themes:'.$ctxtype1,$ctxname1)) return;
+                    if (!$gen->create('objects:'.$ctxtype1,$ctxname1)) return;
                     $fileAlreadyOpen = true;
                 }
                 // Add entry
@@ -173,7 +191,7 @@ function translations_adminapi_generate_theme_skels($args)
             if (!$translation && isset($KEYS[$key])) $translation = $KEYS[$key];
 
             if (!$fileAlreadyOpen) {
-                if (!$gen->create('themes:'.$ctxtype1,$ctxname1)) return;
+                if (!$gen->create('objects:'.$ctxtype1,$ctxname1)) return;
                 $fileAlreadyOpen = true;
             }
             // Add key entry
@@ -183,10 +201,10 @@ function translations_adminapi_generate_theme_skels($args)
         if ($fileAlreadyOpen) {
             $gen->close();
         } else {
-            $gen->deleteIfExists('themes:'.$ctxtype1,$ctxname1);
+            $gen->deleteIfExists('objects:'.$ctxtype1,$ctxname1);
         }
     }
-    if (!$gen->open('themes:','fuzzy')) return;
+    if (!$gen->open('objects:','fuzzy')) return;
     $fuzzyEntries = $backend->getFuzzyEntries();
     foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
         // Add entry
@@ -205,7 +223,7 @@ function translations_adminapi_generate_theme_skels($args)
 }
 
 /* PRIVATE FUNCTIONS */
-function theme_translations_gather_common_entries($transEntriesCollection)
+function object_translations_gather_common_entries($transEntriesCollection)
 {
     $commonEntries = array();
     $subnames = array_keys($transEntriesCollection);

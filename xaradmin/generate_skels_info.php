@@ -10,6 +10,7 @@
  * @link http://xaraya.com/index.php/release/77.html
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
 function translations_admin_generate_skels_info()
@@ -24,16 +25,9 @@ function translations_admin_generate_skels_info()
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
     $data = array_merge($druidbar, $opbar);
+
     $data['dnType'] = $dnType;
-
-    if ($dnType == xarMLS::DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == xarMLS::DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == xarMLS::DNTYPE_MODULE) $dnTypeText = 'module';
-    elseif ($dnType == xarMLS::DNTYPE_PROPERTY) $dnTypeText = 'property';
-    elseif ($dnType == xarMLS::DNTYPE_BLOCK) $dnTypeText = 'block';
-    else $dnTypeText = '';
-    $data['dnTypeText'] = $dnTypeText;
-
+    $data['dnTypeText'] = xarMLSContext::getContextTypeText($dnType);
     $data['dnName'] = $dnName;
     $data['extid'] = $extid;
 

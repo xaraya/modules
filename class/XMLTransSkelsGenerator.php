@@ -11,6 +11,10 @@
  * @author Marco Canini
  */
 
+/**
+ * Translations Module
+ *
+ */
 class XMLTranslationsSkelsGenerator
 {
     var $locale;
@@ -34,17 +38,20 @@ class XMLTranslationsSkelsGenerator
         $themes_dir     = "$xml_dir/themes";
         $properties_dir = "$xml_dir/properties";
         $blocks_dir     = "$xml_dir/blocks";
+        $objects_dir    = "$xml_dir/objects";
 
+        // General check that all the diretories at the top level we need to translate a site are presnet and writable
         $canWrite = 1;
         if (file_exists($locales_dir)) {
             if (file_exists($locale_dir)) {
                 if (file_exists($xml_dir)) {
-                    if (file_exists($modules_dir) && file_exists($properties_dir) && file_exists($blocks_dir) && file_exists($themes_dir) &&
+                    if (file_exists($modules_dir) && file_exists($properties_dir) && file_exists($blocks_dir) && file_exists($themes_dir) && file_exists($objects_dir) &&
                         file_exists($core_dir)) {
                         if (!is_writeable($modules_dir)) $canWrite = 0;
                         if (!is_writeable($properties_dir)) $canWrite = 0;
                         if (!is_writeable($blocks_dir)) $canWrite = 0;
                         if (!is_writeable($themes_dir)) $canWrite = 0;
+                        if (!is_writeable($objects_dir)) $canWrite = 0;
                         if (!is_writeable($core_dir)) $canWrite = 0;
                     } else {
                         if (is_writeable($xml_dir)) {
@@ -68,6 +75,11 @@ class XMLTranslationsSkelsGenerator
                             } else {
                                 mkdir($themes_dir, 0777);
                             }
+                            if (file_exists($objects_dir)) {
+                                if (!is_writeable($objects_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($objects_dir, 0777);
+                            }
                             if (file_exists($core_dir)) {
                                 if (!is_writeable($core_dir)) $canWrite = 0;
                             } else {
@@ -84,6 +96,7 @@ class XMLTranslationsSkelsGenerator
                         mkdir($properties_dir, 0777);
                         mkdir($blocks_dir, 0777);
                         mkdir($themes_dir, 0777);
+                        mkdir($objects_dir, 0777);
                         mkdir($core_dir, 0777);
                     } else {
                         $canWrite = 0; // var/locales/LOCALE is unwriteable
@@ -97,6 +110,7 @@ class XMLTranslationsSkelsGenerator
                     mkdir($properties_dir, 0777);
                     mkdir($blocks_dir, 0777);
                     mkdir($themes_dir, 0777);
+                    mkdir($objects_dir, 0777);
                     mkdir($core_dir, 0777);
                 } else {
                     $canWrite = 0; // var/locales is unwriteable
@@ -106,11 +120,15 @@ class XMLTranslationsSkelsGenerator
             $canWrite = 0; // var/locales missed
         }
 
+        // Bail if one or more of the directories cannot be written to
         if (!$canWrite) {
             $msg = xarML("The directories under #(1) must be writeable by PHP.", $locales_dir);
             throw new Exception($msg);
         }
 
+        // Check that all the directories for this locale below the top level exist
+        // In general these are 1 level for the DNTYPE and below that a second level of one or more directories
+        // If not create them
         switch ($dnType) {
             case xarMLS::DNTYPE_MODULE:
             $this->baseDir = "$modules_dir/$dnName/";
@@ -156,23 +174,28 @@ class XMLTranslationsSkelsGenerator
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
+            case xarMLS::DNTYPE_OBJECT:
+            $this->baseDir = "$objects_dir/";
+            break;
             case xarMLS::DNTYPE_CORE:
             $this->baseDir = $core_dir.'/';
+            break;
         }
 
         return true;
     }
 
-    function create($ctxType, $ctxName)
+    function create($contextType, $contextName)
     {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
 
-        if (!mb_ereg("^[a-z]+:$", $ctxType)) {
-           list($prefix,$directory) = explode(':',$ctxType);
-           if ($directory != "") $this->fileName .= $directory . "/";
+        // Complete the directory path if the context directory is not empty
+        if (!mb_ereg("^[a-z]+:$", $contextType)) {
+            $contextParts = xarMLSContext::getContextTypeComponents($contextType);
+            if (!empty($contextParts[1])) $this->fileName .= $contextParts[1] . "/";
         }
-        $this->fileName .= $ctxName . ".xml";
+        $this->fileName .= $contextName . ".xml";
 
         $this->fp = $this->fopen_recursive($this->fileName.'.swp', 'w');
 
@@ -197,16 +220,17 @@ class XMLTranslationsSkelsGenerator
         return fopen ($path, $mode);
     }
     
-    function open($ctxType, $ctxName)
+    function open($contextType, $contextName)
     {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
 
-        if (!mb_ereg("^[a-z]+:$", $ctxType)) {
-           list($prefix,$directory) = explode(':',$ctxType);
-           if ($directory != "") $this->fileName .= $directory . "/";
+        // Complete the directory path if the context directory is not empty
+        if (!mb_ereg("^[a-z]+:$", $contextType)) {
+            $contextParts = xarMLSContext::getContextTypeComponents($contextType);
+            if (!empty($contextParts[1])) $this->fileName .= $contextParts[1] . "/";
         }
-        $this->fileName .= $ctxName . ".xml";
+        $this->fileName .= $contextName . ".xml";
 
         if (file_exists($this->fileName)) {
             $lines = file($this->fileName);
@@ -237,16 +261,17 @@ class XMLTranslationsSkelsGenerator
         return true;
     }
 
-    function deleteIfExists($ctxType, $ctxName)
+    function deleteIfExists($contextType, $contextName)
     {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
 
-        if (!mb_ereg("^[a-z]+:$", $ctxType)) {
-           list($prefix,$directory) = explode(':',$ctxType);
-           if ($directory != "") $this->fileName .= $directory . "/";
+        // Complete the directory path if the context directory is not empty
+        if (!mb_ereg("^[a-z]+:$", $contextType)) {
+            $contextParts = xarMLSContext::getContextTypeComponents($contextType);
+            if (!empty($contextParts[1])) $this->fileName .= $contextParts[1] . "/";
         }
-        $this->fileName .= $ctxName . ".xml";
+        $this->fileName .= $contextName . ".xml";
         if (file_exists($this->fileName)) unlink($this->fileName);
         return true;
     }
@@ -260,14 +285,14 @@ class XMLTranslationsSkelsGenerator
         $translation = htmlspecialchars($translation);
         $string = htmlspecialchars($string);
         fwrite($this->fp, "<entry>");
-        fwrite($this->fp, "<string>".$string."</string>");
-        fwrite($this->fp, "<translation>".$translation."</translation>");
+        fwrite($this->fp, "\n\t<string>".$string."</string>");
+        fwrite($this->fp, "\n\t<translation>".$translation."</translation>");
         if (xarModVars::get('translations', 'maxreferences')) {
-            fwrite($this->fp, "\t\t<references>\n");
+            fwrite($this->fp, "\n\t<references>");
             foreach($references as $reference) {
-                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\"/>\n");
+                fwrite($this->fp, "\n\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\"/>\n");
             }
-            fwrite($this->fp, "\t\t</references>\n");
+            fwrite($this->fp, "\t</references>\n");
         }
         fwrite($this->fp, "</entry>\n");
     }
@@ -278,16 +303,16 @@ class XMLTranslationsSkelsGenerator
         //$translation = utf8_encode($translation);
 
         fwrite($this->fp, "<keyEntry>");
-        fwrite($this->fp, "<key>".$key."</key>");
-        fwrite($this->fp, "<translation>".$translation."</translation>");
+        fwrite($this->fp, "\n\t<<key>".$key."</key>");
+        fwrite($this->fp, "\n\t<<translation>".$translation."</translation>");
         if (xarModVars::get('translations', 'maxreferences')) {
-            fwrite($this->fp, "\t\t<references>\n");
+            fwrite($this->fp, "\n\t<references>\n");
             foreach($references as $reference) {
-                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\"/>\n");
+                fwrite($this->fp, "\n\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\"/>\n");
             }
-            fwrite($this->fp, "\t\t</references>\n");
+            fwrite($this->fp, "\t</references>\n");
         }
-        fwrite($this->fp, "\t</keyEntry>\n");
+        fwrite($this->fp, "</keyEntry>\n");
     }
 
 }
