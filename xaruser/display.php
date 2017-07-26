@@ -33,7 +33,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_display($args)
 {
-    // Get parameters from user
+// Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
 // Note we support both id and itemid
