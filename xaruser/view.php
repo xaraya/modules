@@ -353,7 +353,7 @@ function publications_user_view($args)
     }
 
     // retrieve the number of comments for each article
-    if (xarMod::isAvailable('coments')) {
+    if (xarMod::isAvailable('comments')) {
         if ($data['settings']['show_comments']) {
             $idlist = array();
             foreach ($publications as $article) {
@@ -504,7 +504,6 @@ function publications_user_view($args)
         $number++;echo $number;
     }
 ------------------------------------------------------------ */
-
 
     // TODO: verify for other URLs as well
     if ($ishome) {
