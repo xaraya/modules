@@ -85,7 +85,8 @@ function publications_admin_modifyconfig()
         }
 
         // Get the tree of all pages.
-        $data['tree'] = xarMod::apiFunc('publications', 'user', 'getpagestree', array('dd_flag' => false));    
+//        $data['tree'] = xarMod::apiFunc('publications', 'user', 'getpagestree', array('dd_flag' => false));    
+        $data['tree'] = array();
 
         // Implode the names for each page into a path for display.
         $data['treeoptions'] = array();
