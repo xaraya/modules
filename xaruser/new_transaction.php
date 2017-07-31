@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Create a new item of the paymnts_transaction object
+ * Create a new item of the payments_transaction object
  *
  */
 
