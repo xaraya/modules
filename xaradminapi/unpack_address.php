@@ -44,7 +44,7 @@ function payments_adminapi_unpack_address($args)
         $country = $countryobject->getValue();
     }
     
-    // Rearrange the fileds into lines, srating with line 1
+    // Rearrange the fields into lines, srating with line 1
     $lines = array(
         1 => $street,
         2 => $city,
