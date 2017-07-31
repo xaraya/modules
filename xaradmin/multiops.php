@@ -38,7 +38,7 @@ function payments_admin_multiops()
     $ids = explode(',',$idlist);
     $totalids = count($ids);
 
-    if (($totalids <=0)) xarController::redirect($returnurl);
+    if (($totalids <= 0)) xarController::redirect($returnurl);
 
 
     // doin stuff with items
