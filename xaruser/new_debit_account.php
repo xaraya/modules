@@ -30,7 +30,6 @@ function payments_user_new_debit_account()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['tplmodule'] = 'payments';
-    $data['authid'] = xarSecGenAuthKey('payments');
 
 # --------------------------------------------------------
 #
