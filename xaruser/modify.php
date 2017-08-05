@@ -131,6 +131,13 @@ function publications_user_modify($args)
         $data['items'][$key] = $data['object']->getFieldValues(array(),1);
     }
     
+# --------------------------------------------------------
+#
+# Cache data
+#
+    // Now we can cache all data away for blocks, subitems etc.
+    xarCoreCache::setCached('Publications', 'itemid', $data['itemid']);
+
     return $data;
 }
 
