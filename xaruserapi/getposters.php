@@ -140,7 +140,7 @@ function crispbb_userapi_getposters($args)
         $query .= ' ORDER BY '.join(',', $orderby);
     }
 
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
     $posters = array();
     for (; !$result->EOF; $result->MoveNext()) {

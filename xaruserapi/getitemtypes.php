@@ -75,7 +75,7 @@ function crispbb_userapi_getitemtypes($args)
 
     $query .= ' ORDER BY ' . $itemtypestable . '.id ASC, '.$itemtypestable . '.component ASC';
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     $itemtypes = array();
     for (; !$result->EOF; $result->MoveNext()) {

@@ -197,7 +197,7 @@ function crispbb_userapi_getforums($args)
     } else {
         $query .= " ORDER BY " . $forumstable . '.forder';
     }
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
     $forums = array();
     // module defaults
