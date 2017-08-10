@@ -147,7 +147,7 @@ function crispbb_userapi_updatepost($args)
     $query .= " WHERE id = ?";
     $bindvars[] = $pid;
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
 

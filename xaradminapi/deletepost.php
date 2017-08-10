@@ -44,7 +44,7 @@ function crispbb_adminapi_deletepost($args)
 
     // remove post
     $query = "DELETE FROM $poststable WHERE id = " . $pid;
-    $result = &$dbconn->Execute($query,array());
+    $result = $dbconn->Execute($query,array());
     if (!$result) return;
 
     $item['module'] = 'crispbb';

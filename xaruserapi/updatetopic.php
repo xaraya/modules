@@ -178,7 +178,7 @@ function crispbb_userapi_updatetopic($args)
     $query .= " WHERE id = ?";
     $bindvars[] = $tid;
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
 

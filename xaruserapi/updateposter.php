@@ -51,7 +51,7 @@ function crispbb_userapi_updateposter($args)
         $bindvars[] = $uid;
         $bindvars[] = $numtopics;
         $bindvars[] = $numreplies;
-        $result = &$dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     } else {
         // update poster
@@ -65,7 +65,7 @@ function crispbb_userapi_updateposter($args)
         $query .= " SET " . join(',', $set);
         $query .= " WHERE id = ?";
         $bindvars[] = $uid;
-        $result = &$dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     }
 

@@ -114,7 +114,7 @@ function crispbb_userapi_createpost($args)
     $bindvars[] = $ptext;
     $bindvars[] = serialize($psettings);
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     $pid = $dbconn->PO_Insert_ID($poststable, 'id');

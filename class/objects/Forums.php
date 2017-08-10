@@ -74,22 +74,22 @@ class Forums extends DataObject
             // remove posts
             if (!empty($pids)) {
                 $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
-                $result = &$dbconn->Execute($query,array());
+                $result = $dbconn->Execute($query,array());
             }
             // remove topics
             if (!empty($tids)) {
                 // first from topics table
                 $query = "DELETE FROM $topicstable WHERE id IN (" . join(',', $tids) . ")";
-                $result = &$dbconn->Execute($query,array());
+                $result = $dbconn->Execute($query,array());
                 // then from hooks table
                 $query = "DELETE FROM $hookstable WHERE tid IN (" . join(',', $tids) . ")";
-                $result = &$dbconn->Execute($query,array());
+                $result = $dbconn->Execute($query,array());
             }
             // remove forum itemtype.
             // @TODO check for existence of topic and post components for this forum
             // in other forums (moved/merged topics and posts) and remove if none found
             $query = "DELETE FROM $itemtypestable WHERE fid = ? AND component = 'Forum'";
-            $result = &$dbconn->Execute($query,array($this->itemid));
+            $result = $dbconn->Execute($query,array($this->itemid));
             // We're done, commit
             $dbconn->commit();
         } catch (Exception $e) {

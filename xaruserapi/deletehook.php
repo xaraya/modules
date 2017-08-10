@@ -73,7 +73,7 @@ function crispbb_userapi_deletehook($args)
     $query .= ' AND itemid = ?';
     $bindvars[] = $itemid;
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
 

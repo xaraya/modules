@@ -51,7 +51,7 @@ function crispbb_adminapi_deletetopic($args)
     // remove posts
     if (!empty($pids)) {
         $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
-        $result = &$dbconn->Execute($query,array());
+        $result = $dbconn->Execute($query,array());
         if (!$result) return;
         $item = array();
         $item['module'] = 'crispbb';
@@ -65,11 +65,11 @@ function crispbb_adminapi_deletetopic($args)
     // remove topic
     // first from topics table
     $query = "DELETE FROM $topicstable WHERE id = " . $tid;
-    $result = &$dbconn->Execute($query,array());
+    $result = $dbconn->Execute($query,array());
     if (!$result) return;
     // then from hooks table
     $query = "DELETE FROM $hookstable WHERE tid = " . $tid;
-    $result = &$dbconn->Execute($query,array());
+    $result = $dbconn->Execute($query,array());
     if (!$result) return;
 
     $item['module'] = 'crispbb';

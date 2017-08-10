@@ -107,7 +107,7 @@ function crispbb_userapi_createtopic($args)
     $bindvars[] = $ttitle;
     $bindvars[] = serialize($tsettings);
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     $tid = $dbconn->PO_Insert_ID($topicstable, 'id');

@@ -48,7 +48,7 @@ function crispbb_adminapi_createitemtype($args)
         )
         VALUES (?,?,?)";
     $bindvars = array($nextId, $fid, $component);
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
     $itemtype = $dbconn->PO_Insert_ID($itemtypestable, 'id');

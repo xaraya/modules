@@ -121,7 +121,7 @@ function crispbb_userapi_createhook($args)
     $bindvars[] = $objectid;
     $bindvars[] = $tid;
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     $hid = $dbconn->PO_Insert_ID($hookstable, 'id');

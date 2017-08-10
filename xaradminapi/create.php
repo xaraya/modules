@@ -106,7 +106,7 @@ function crispbb_adminapi_create($args)
     $bindvars[] = serialize($fprivileges);
     $bindvars[] = 0;
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     $fid = $dbconn->PO_Insert_ID($forumstable, 'id');

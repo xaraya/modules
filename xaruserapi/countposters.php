@@ -55,7 +55,7 @@ function crispbb_userapi_countposters($args)
     if (!empty($where)) {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();

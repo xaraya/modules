@@ -92,7 +92,7 @@ function crispbb_user_displayhook($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     if ($result->EOF) {
     } else {

@@ -295,7 +295,7 @@ function crispbb_userapi_countposts($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();

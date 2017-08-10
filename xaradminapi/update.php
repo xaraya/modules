@@ -247,7 +247,7 @@ function crispbb_adminapi_update($args)
     $query .= " WHERE id = ?";
     $bindvars[] = $fid;
 
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
 
