@@ -30,7 +30,7 @@ x* - function xarEvt_init($args, $whatElseIsGoingLoaded)
 x*   - return true (doesnt do anything)
  * - function xarEvt_trigger($eventName, $value = NULL)
  *   - if (!xarEvt__checkEvent($eventName)) return
- *   - shall we catch xarLogMessage("Triggered event ($eventName)")  ???
+ *   - shall we catch xarLog::message("Triggered event ($eventName)")  ???
  *   - no return if ok (?return true?)
  * - function xarEvt_notify($modName, $modType, $eventName, $value)
  *   - if (!xarEvt__checkEvent($eventName)) return;

@@ -9,7 +9,12 @@
         } else {
             $basedir = sys::lib() . 'xaraya/';
             $files = get_core_php_files($basedir,'php');
+
             foreach ($files as $file) {
+                 // Ignore some files for now
+                 if($file == 'lib/xaraya/creole.php') continue;
+                 if($file == 'lib/xaraya/structures/sequences/runtests.php') continue;
+
                 include_once($file);
             }
             $data['items'] = array(array('name' => 'core files in the xaraya directory'));
@@ -58,7 +63,7 @@
                          // if the new path is a file
                          } elseif(is_file($path)) {
                              // get the file extension by taking everything after the last dot
-                             $f = explode('.',end($subdirectories));
+                             $f = explode('.', end($subdirectories));
                              $extension = end($f);
 
                              // if there is no filter set or the filter is set and matches

@@ -21,7 +21,11 @@
                 $basedir = sys::code() . 'modules/' . $item['name'];
                 $files = get_module_php_files($basedir,'php');
                 foreach ($files as $file) {
-                    include_once($file);
+                    try {
+                        include_once($file);
+                    } catch(Exception $e) {
+                        var_dump();
+                    }
                 }
                 $checked_modules[] = $item;
             }

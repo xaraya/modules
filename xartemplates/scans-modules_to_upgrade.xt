@@ -17,8 +17,7 @@
                 No modules need to be upgraded
             </xar:if>
         </fieldset>
-        <fieldset>
-            <xar:button type="cancel" label="Back"/>
-        </fieldset>
+        <xar:var name="label">Back</xar:var>
+        <xar:button type="cancel" label="$label"/>
     </div>
 </xar:template>
