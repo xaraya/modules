@@ -44,13 +44,13 @@ function payments_adminapi_unpack_address($args)
         $country = $countryobject->getValue();
     }
     
-    // Rearrange the fields into lines, srating with line 1
+    // Rearrange the fields into lines, starting with line 1
     $lines = array(
         1 => $street,
         2 => $city,
         3 => $postal_code,
         4 => $country,
-//        5 => strtoupper($countryobject->value),
+        5 => strtoupper($countryobject->value),     // Country code
     );
     return $lines;
 }
