@@ -157,7 +157,7 @@
     </property>
     <property name="transaction_date">
       <id>7066</id>
-      <label>Transaction Date</label>
+      <label>Execution Date</label>
       <type>date</type>
       <defaultvalue>time()</defaultvalue>
       <source>payments.transaction_date</source>

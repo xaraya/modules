@@ -12,11 +12,11 @@
               </button>
   
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <xar:access level="600">
+                        <li><a href="#xarModURL($module, 'user', 'create_20022_file', array('itemid' => $thisID))#">Create Payment File</a></li>
+                    </xar:access>
                     <xar:access level="200">
                         <li><a href="#xarModURL($module, 'user', 'display_transaction', array('itemid' => $thisID))#">Display</a></li>
-                    </xar:access>
-                    <xar:access level="600">
-                        <li><a href="#xarModURL($module, 'user', 'create_20022_file', array('itemid' => $thisID))#">Create File</a></li>
                     </xar:access>
                     <!-- Only modify if not yet processed -->
                     <xar:if condition="empty($loopitem['processed'])">
