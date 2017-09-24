@@ -128,7 +128,9 @@ function payments_user_create_20022_file()
     
         // Generate the control sum
         $data['control_sum'] += $item['amount'];
-        
+    }
+
+    foreach ($data['items'] as $key => $item) {        
         // Get this transaction
         $data['transaction']->getItem(array('itemid' => $item['id']));
         // Add the data
@@ -136,7 +138,6 @@ function payments_user_create_20022_file()
         // Update the database transaction
         $data['transaction']->updateItem(array('itemid' => $item['id']));
     }
-
 # --------------------------------------------------------
 #
 # Send the file to the browser
