@@ -35,7 +35,8 @@ function payments_user_modify_transaction()
     // Allow overiding the payment typ from the form
     $payment_type = $data['object']->properties['payment_type']->value;
     if (!xarVarFetch('payment_type', 'str',      $data['payment_type'], $payment_type,     XARVAR_NOT_REQUIRED)) return;
-
+    $data['object']->properties['payment_type']->value = $data['payment_type'];
+    
 # --------------------------------------------------------
 #
 # Check if we are passing an api item
