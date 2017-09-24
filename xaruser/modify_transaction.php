@@ -30,8 +30,11 @@ function payments_user_modify_transaction()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
     $data['object']->getItem(array('itemid' => $data['itemid']));
-    $data['payment_type'] = $data['object']->properties['payment_type']->value;
     $data['tplmodule'] = 'payments';
+
+    // Allow overiding the payment typ from the form
+    $payment_type = $data['object']->properties['payment_type']->value;
+    if (!xarVarFetch('payment_type', 'str',      $data['payment_type'], $payment_type,     XARVAR_NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
 #
