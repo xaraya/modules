@@ -226,7 +226,7 @@
               <!-- Ultimate creditor -->
               <xar:if condition="$item['payment_type'] eq 3">
                 <xar:isoelement name="UltmtCdtr">
-                  <xar:isoelement name="Nm">#$item['address_1']#</xar:isoelement>
+                  <xar:isoelement name="Nm">#xarVarPrepForDisplay($item['address_1'])#</xar:isoelement>
                 </xar:isoelement>
               </xar:if>
               
