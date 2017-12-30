@@ -34,7 +34,7 @@
                 </div>
                 <div class="xar-row">
                     <div class="xar-col-condensed">
-                        <xar:var name="label">BIC</xar:var>
+                        <xar:var name="label">BIC/SWIFT</xar:var>
                         <xar:data-label property="$properties['bic']" label="$label"/>                    
                     </div>
                     <div class="xar-col">
