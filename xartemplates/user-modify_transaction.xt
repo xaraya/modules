@@ -19,12 +19,18 @@
         </form>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
-            <fieldset>
-                <legend>Payment details</legend>
-                <xar:data-form object="$object" 
-                               debit_accounts="$debit_accounts"
-                               tplmodule="$tplmodule"/>
-            </fieldset>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Payment details
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <xar:data-form object="$object" 
+                                   debit_accounts="$debit_accounts"
+                                   tplmodule="$tplmodule"/>
+                </div>
+            </div>
             <div class="xar-row">
                 <div class="xar-col">
                 </div>
