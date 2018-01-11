@@ -28,7 +28,18 @@
                 <xar:else />
                     No modules were checked
                 </xar:if>
+                <xar:if condition="!empty($error_files)">
+                    The following files had errors:
+                    <ul>
+                        <xar:foreach in="$error_files" value="$file">
+                            <li>
+                                #$file#
+                            </li>
+                        </xar:foreach>
+                    </ul>
+                </xar:if>
             </fieldset>
+            
             <xar:var name="label">Back</xar:var>
             <xar:button type="cancel" label="$label"/>
             <xar:var name="label">Back to Scans</xar:var>

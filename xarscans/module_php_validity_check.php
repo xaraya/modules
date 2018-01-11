@@ -17,6 +17,7 @@
                 $items = array(xarMod::getInfo($item, $type = 'module'));
             }
             $checked_modules = array();
+            $data['error_files'] = array();
             foreach ($items as $item) {
                 $basedir = sys::code() . 'modules/' . $item['name'];
                 $files = get_module_php_files($basedir,'php');
@@ -24,7 +25,7 @@
                     try {
                         include_once($file);
                     } catch(Exception $e) {
-                        var_dump();
+                        $data['error_files'][] = $file;
                     }
                 }
                 $checked_modules[] = $item;
