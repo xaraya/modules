@@ -241,6 +241,7 @@ function scheduler_userapi_runjobs($args)
                     }
                     break;
                 }
+                $log[] = xarML('XX: ') . $isvalid;
             }
             if (!$isvalid) {
                 $log[] = xarML('Skipped: ') . $jobname;
