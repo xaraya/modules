@@ -52,7 +52,7 @@ function scheduler_userapi_runjobs($args)
     } else {
         $jobs = xarMod::apiFunc('scheduler','user','getall',$args);
     }
-
+var_dump($jobs);exit;
 # --------------------------------------------------------
 #
 # Get the jobs object for easy updating
