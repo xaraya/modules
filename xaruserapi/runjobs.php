@@ -227,19 +227,19 @@ function scheduler_userapi_runjobs($args)
             // Try and get the host via the IP
             if (!$isvalid) {
                 $log[] = xarML('XX: ') . $jobname;
-                if (!empty($ip)) {
+                if (!empty($ip)) {echo 1;
                     $hostname = @gethostbyaddr($ip);
                     // same player, shoot again...
-                    if (empty($hostname)) {
+                    if (empty($hostname)) {echo 2;
                         $hostname = @gethostbyaddr($ip);
                     }
-
+echo 3;
                     if (empty($hostname)) {
                         $hostname = 'unknown';
                     } else {
                         $isvalid = true;
                     }
-                    break;
+echo 4;                    break;
                 }
                 $log[] = xarML('XX: ') . $isvalid;
             }
