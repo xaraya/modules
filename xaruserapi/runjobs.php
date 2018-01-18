@@ -223,8 +223,9 @@ function scheduler_userapi_runjobs($args)
                     }
                     break;
             }
+            
+            // Try and get the host via the IP
             if (!$isvalid) {
-                $log[] = xarML('Invalid source');
                 if (!empty($ip)) {
                     $hostname = @gethostbyaddr($ip);
                     // same player, shoot again...
@@ -243,6 +244,8 @@ function scheduler_userapi_runjobs($args)
             if (!$isvalid) {
                 $log[] = xarML('Skipped: ') . $jobname;
                 continue;
+            } else {
+                $log[] = xarML('Host: ') . $hostname;
             }
         }
 
