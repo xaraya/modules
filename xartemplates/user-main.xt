@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <xar:template file="admin-mod-head"/>
+    <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
         <xar:if condition="!empty($output)">
             <xar:foreach in="$output" value="$row">
