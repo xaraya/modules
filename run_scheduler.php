@@ -37,14 +37,14 @@ $GLOBALS['systemConfiguration'] = $systemConfiguration;
  * Load the Xaraya core
  */
 sys::import('xaraya.core');
-    xarCore::xarInit(xarCore::SYSTEM_ALL);
-    $homedir = xarServer::getBaseURL();
+xarCore::xarInit(xarCore::SYSTEM_ALL);
+$homedir = xarServer::getBaseURL();
 
-    // update the last run time
-    xarModVars::set('scheduler','lastrun',time());
-    xarModVars::set('scheduler','running',1);
+// update the last run time
+xarModVars::set('scheduler','lastrun',time());
+xarModVars::set('scheduler','running',1);
 
-    // call the API function to run the jobs
-    echo xarMod::apiFunc('scheduler','user','runjobs');
+// call the API function to run the jobs
+echo xarMod::apiFunc('scheduler','user','runjobs');
 
 ?>

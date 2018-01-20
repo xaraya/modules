@@ -16,6 +16,11 @@
  */
 function scheduler_user_main()
 {
+    // Security Check
+    if (!xarSecurityCheck('AdminScheduler')) {
+        return xarResponse::Forbidden(xarML('No access to this page'));
+    }
+
     // Check when we last ran the scheduler
     $lastrun = xarModVars::get('scheduler', 'lastrun');
     $now = time();
@@ -31,7 +36,6 @@ function scheduler_user_main()
         // Update the last run time
         xarModVars::set('scheduler','lastrun',$now);
     }
-
     
     xarModVars::set('scheduler','running',1);
     $data['output'] = xarMod::apiFunc('scheduler','user','runjobs');
