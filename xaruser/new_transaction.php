@@ -20,7 +20,6 @@ function payments_user_new_transaction()
     if (!xarSecurityCheck('AddPayments')) return;
 
     if (!xarVarFetch('confirm',       'bool',   $data['confirm'],       false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('payment_type',  'str',    $data['payment_type'],  '1',   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('type_changed',  'int',    $type_changed,          0,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('debit_account', 'int',    $data['debit_account'], 0,     XARVAR_NOT_REQUIRED)) return;
     
@@ -30,7 +29,6 @@ function payments_user_new_transaction()
 #
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
-    $data['object']->properties['payment_type']->setValue($data['payment_type']);
     $data['tplmodule'] = 'payments';
 
 # --------------------------------------------------------
@@ -131,7 +129,7 @@ function payments_user_new_transaction()
         $q->eq('beneficiary_object', $info['beneficiary_object']);
         $q->eq('beneficiary_itemid', $info['beneficiary_itemid']);
         $q->eq('state', 3);
-        $q->setorder('processed', 'DESC');
+        $q->setorder('time_processed', 'DESC');
         $items = $payments->getItems();
         if (!empty($items)) {
             $previous_exists = true;
@@ -153,6 +151,10 @@ function payments_user_new_transaction()
         $data['payment_type'] = $info['payment_type'];
     }
 
+    // Let the payment type from the template override everything else
+    if (!xarVarFetch('payment_type',  'str',    $data['payment_type'],  '1',   XARVAR_NOT_REQUIRED)) return;
+    $data['object']->properties['payment_type']->setValue($data['payment_type']);
+
 # --------------------------------------------------------
 #
 # The create button was clicked
@@ -167,15 +169,23 @@ function payments_user_new_transaction()
         
         // Disable fields we are not using and don't want to check
         switch ($data['payment_type']) {
+            // Orange slip
             case 1:
                 $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
             break;
+            // Red slip
             case '2.2':
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
             break;
+            // Bank transfer
+            case '3':
+                $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+            break;
+            // Salary payment
             case 6:
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+                $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
             break;
         }
         
