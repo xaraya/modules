@@ -1,0 +1,11 @@
+<items>
+  <cacher_caches itemid="1">
+    <id>1</id>
+    <name>Default Cache</name>
+    <directory>var/cacher</directory>
+    <extension>xc</extension>
+    <expiration_time>2592000</expiration_time>
+    <time_created>1519231610</time_created>
+    <state>3</state>
+  </cacher_caches>
+</items>
