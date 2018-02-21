@@ -74,6 +74,7 @@ function cacher_init()
 #
     $module = 'cacher';
     $objects = array(
+                    'cacher_caches'
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
