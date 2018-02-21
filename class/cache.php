@@ -6,18 +6,16 @@
  * @subpackage cacher
  * @category Third Party Xaraya Module
  * @version 1.0.0
- * @copyright (C) 2014 Luetolf-Carroll GmbH
+ * @copyright (C) 2018 Luetolf-Carroll GmbH
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
 sys::import('xaraya.caching.storage.filesystem');
 
-class CacherCache extends xarTemplateCache implements ixarTemplateCache
+class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Storage
 {
-    public $dir = '';
-    public $blksize = 0;
-    public $bsknown = false;
+    public $ext = 'xc';                 // Extension for the cached files
 
     public function __construct(Array $args = array())
     {
@@ -41,6 +39,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         $this->storage = 'filesystem';
     }
 
+/*
     public function setNamespace($namespace = '')
     {
         $this->namespace = $namespace;
@@ -55,7 +54,6 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         $cache_key = str_replace(':', '.', $cache_key);
         return $cache_key;
     }
-
     public function isCached($key = '', $expire = 0, $log = 1)
     {
         if (empty($expire)) {
@@ -63,7 +61,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         }
         $cache_key = $this->getCacheKey($key);
 
-        $cache_file = $this->dir . '/' . $cache_key . '.php';
+        $cache_file = $this->dir . '/' . $cache_key . $this->ext;
 
         if (// the file is present AND
             file_exists($cache_file) &&
@@ -90,7 +88,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         }
         $cache_key = $this->getCacheKey($key);
 
-        $cache_file = $this->dir . '/' . $cache_key . '.php';
+        $cache_file = $this->dir . '/' . $cache_key . $this->ext;
 
         if ($this->type == 'template') {
             // CHECKME: the file will be included in xarTemplate.php ?
@@ -114,6 +112,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         }
         return $data;
     }
+*/
 
     public function setCached($key = '', $value = '', $expire = 0)
     {
@@ -123,7 +122,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         $cache_key = $this->getCacheKey($key);
 
         $tmp_file = $this->dir . '/' . $cache_key; // without extension
-        $cache_file = $this->dir . '/' . $cache_key . '.php';
+        $cache_file = $this->dir . '/' . $cache_key . $this->ext;
 
         $fp = @fopen($tmp_file, "w");
         if (!empty($fp)) {
@@ -143,13 +142,14 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
     {
         $cache_key = $this->getCacheKey($key);
 
-        $cache_file = $this->dir . '/' . $cache_key . '.php';
+        $cache_file = $this->dir . '/' . $cache_key . $this->ext;
 
         if (file_exists($cache_file)) {
             @unlink($cache_file);
         }
     }
 
+/*
     public function flushCached($key = '')
     {
         // add namespace prefix (not the type here)
@@ -165,7 +165,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
             @unlink($lockfile);
         }
     }
-
+*/
     public function doGarbageCollection($expire = 0)
     {
         $time = time() - ($expire + 60); // take some margin here
@@ -174,7 +174,7 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
             while (($file = readdir($handle)) !== false) {
                 $cache_file = $this->dir . '/' . $file;
                 if ((filemtime($cache_file) < $time) &&
-                    (strpos($file, '.php') !== false)) {
+                    (strpos($file, $this->ext) !== false)) {
                     @unlink($cache_file);
                 }
             }
@@ -337,5 +337,11 @@ class CacherCache extends xarTemplateCache implements ixarTemplateCache
         }
         return $list;
     }
+    
+     public function setExtension($x) {$this->ext = $x;}
+     public function getExtension()   {return $this->ext;}
+     public function setDirectory($x) {$this->dir = $x;}
+     public function getDirectory()   {return $this->dir;}
+
 }
 ?>
