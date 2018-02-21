@@ -19,6 +19,15 @@
             <label>Master Tables</label>
         </menuitem>
         <menuitem>
+            <mask>ManageCacher</mask>
+            <includes>
+                <includeitem>view_files</includeitem>
+            </includes>
+            <target>view_files</target>
+            <title>View the cached files</title>
+            <label>View Files</label>
+        </menuitem>
+        <menuitem>
             <mask>AdminCacher</mask>
             <includes>
                 <includeitem>modifyconfig</includeitem>

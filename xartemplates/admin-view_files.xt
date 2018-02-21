@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
+            Choose a cache:
+            <xar:var name="firstline">Choose a cache</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:data-input type="objectref" name="cache" refobject="cacher_caches" store_prop="id" value="$cache" firstline="$firstline" onchange="javascript:submit()"/>
+        </form>
+        <xar:if condition="!empty($cache)">
+        <xar:else/>
+            No files to display
+        </xar:if>
+    </div>
+</xar:template>
