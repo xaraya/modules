@@ -11,7 +11,18 @@
         </h2>
 
         <p>
-            Dummy cacher text
+            The Cacher modules lets you define and manage file system based caches on your site.
+        </p>
+        <p>
+            You can define one or more file caches at different physical locations.
+        </p>
+        <p>
+            The module is based on Xaraya's file storage caching and includes functionality to:
+            <ul>
+                <li>Create, modify and delete cache definitions</li>
+                <li>Add or remove files from a cache</li>
+                <li>Update cache files when the original file changes</li>
+            </ul>
         </p>
         <div style="clear:both">&#160;</div>
     </div>
