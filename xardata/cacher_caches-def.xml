@@ -46,6 +46,16 @@
       <seq>3</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="extension">
+      <id>31286</id>
+      <label>Extension</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>caches.file_extension</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="expiration_time">
       <id>31287</id>
       <label>Expiration Time</label>
@@ -53,7 +63,7 @@
       <defaultvalue>0</defaultvalue>
       <source>caches.expiration_time</source>
       <status>33</status>
-      <seq>4</seq>
+      <seq>5</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
@@ -63,7 +73,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>caches.timecreated</source>
       <status>65</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
@@ -73,7 +83,7 @@
       <defaultvalue>3</defaultvalue>
       <source>caches.state</source>
       <status>33</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>

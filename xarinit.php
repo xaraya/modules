@@ -34,6 +34,7 @@ function cacher_init()
         id                integer unsigned NOT NULL auto_increment,
         name              varchar(254) NOT NULL default '', 
         directory         varchar(254) NOT NULL default '', 
+        file_extension    varchar(10) NOT NULL default 'xc', 
         expiration_time   integer unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         state             tinyint(3) NOT NULL default 3, 
