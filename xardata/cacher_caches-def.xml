@@ -26,9 +26,9 @@
       <seq>1</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="caches">
+    <property name="name">
       <id>31285</id>
-      <label>Caches</label>
+      <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>caches.name</source>

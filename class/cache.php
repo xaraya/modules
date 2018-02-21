@@ -1,202 +1,341 @@
 <?php
 /**
- * Template caching abstraction
+ * Cacher Module
  *
- * @package core\caching
- * @subpackage caching
- * @category Xaraya Web Applications Framework
- * @version 2.4.0
- * @copyright see the html/credits.html file in this release
+ * @package modules
+ * @subpackage cacher
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Luetolf-Carroll GmbH
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.info
- *
- * @author Marcel van der Boom <mrb@hsdev.com>
-**/
-sys::import('xaraya.exceptions');
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
+ */
 
-/**
-  * Declare an interface for the xarTemplateCache class so we dont shoot
-  * ourselves in the foot.
-  *
-  * @todo make caches all have the same interface
-**/
-interface IxarTemplateCache
+sys::import('xaraya.caching.storage.filesystem');
+
+class CacherCache extends xarTemplateCache implements ixarTemplateCache
 {
-    static function init($dir, $active);
-    static function getKey($fileName);
-    static function saveKey($fileName);
-    static function saveEntry($fileName, $data);
-    static function isDirty($fileName);
-    static function cacheFile($fileName);   // wrong for sure
-    static function sourceFile($key);       // arguably wrong
-}
+    public $dir = '';
+    public $blksize = 0;
+    public $bsknown = false;
 
-/**
- * @package core\caching
- * @subpackage caching
- * @category Xaraya Web Applications Framework
- * @version 2.4.0
- * @copyright see the html/credits.html file in this release
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.info
- *
- * @author Marcel van der Boom <mrb@hsdev.com>
-**/
-/**
- * Class to model the xar compiled template cache
- *
- * @todo bring this into the cache hierarchy in general so it can inherit from xarCache or something like that.
- * @todo this is still poorly abstracted, i would like to make a difference between the cache and its entries
- * @todo yes, i know this is similar to caching/storage/filesystem, but that one isnt ready yet :-) getting to that later.
-**/
-class xarTemplateCache extends Object implements ixarTemplateCache
-{
-    // Inactive means that we reuse one file in the cache all the time.
-    private static $inactiveKeySeed    = 'youreallyreallyneedtocachetemplates';
-    private static $dir         = '';    // location
-    private static $active      = true;  // template cache is active by default.
-
-    /**
-     * Initialize template cache
-     *
-     * @param string $dir    location of the cache
-     * @param bool   $active is the cache active?
-    **/
-    public static function init($dir, $active)
+    public function __construct(Array $args = array())
     {
-        if($active === false) self::$active = false;
+        parent::__construct($args);
 
-        if(!is_writable($dir)) {
-            $msg = "xarTemplateCache::init: Cannot write in the directory '#(1)', ";
-            if(self::isActive()) {
-                $msg .= "but the setting: 'cache templates' is set to 'On'.\n";
-            } else {
-                $msg .= "and the setting: 'cache template ' is set to 'Off.\n"
-                      . "Although you can switch the template cache to off (not recommended), I still need that directory to be writable.\n";
-            }
-            $msg .= "You need to change the permissions on the mentioned file/directory.";
-            throw new GeneralException($dir, $msg);
+        if ($this->type == 'template') {
+            // CHECKME: this assumes that we create this instance after loading xarTemplate.php
+            $this->dir = sys::varpath() . xarConst::TPL_CACHEDIR;
+
+        } elseif ($this->type == 'variable') {
+            $this->dir = realpath($this->cachedir);
+
+        } else {
+            $this->dir = realpath($this->cachedir . '/' . $this->type);
         }
-        self::$dir = $dir;
+
+        // CHECKME: we don't use 'type/namespace' as prefix for the cache keys here,
+        //          because the output cache directories are already split by type
+        $this->prefix = $this->namespace;
+
+        $this->storage = 'filesystem';
     }
 
-    /**
-     * Get the cache key for a sourcefile
-     *
-     * @param  string $fileName  For which file do we need the key?
-     * @return string            The cache key for this sourcefilename
-     * @todo what if cache is not active? still return the md5 key?
-    **/
-    public static function getKey($fileName)
+    public function setNamespace($namespace = '')
     {
-        // Simple MD5 hash over the filename determines the key for the cache
-        if(!self::isActive()) $fileName=self::$inactiveKeySeed;
-        return md5($fileName);
+        $this->namespace = $namespace;
+        // the default prefix for the cache keys will be 'type/namespace', except in filesystem (for now)
+        $this->prefix = $this->namespace;
     }
 
-    /**
-     * Save the cache key for a sourcefile
-     *
-     * @param  string $sourceFileName  For which file are we entering the key?
-     * @return boolean true on success, false on failure
-     * @todo   exceptions?
-     * @todo   typically writing of these keys occurs in bursts, can we leave file open until we're done?
-     * @todo   hmm, write the key when inactive too? feels like not, to keep it minimal
-    **/
-    public static function saveKey($fileName)
+    public function getCacheKey($key = '')
     {
-        if(!self::isActive()) return true;
-        // FIXME: this has to be reviewed
-        if($fileName == 'memory') return true;
-        if($fd = fopen(self::$dir . '/CACHEKEYS', 'a')) {
-            fwrite($fd, self::getKey($fileName).': '.$fileName."\n");
-            fclose($fd);
+        $cache_key = parent::getCacheKey($key);
+        // cfr. variable caching
+        $cache_key = str_replace(':', '.', $cache_key);
+        return $cache_key;
+    }
+
+    public function isCached($key = '', $expire = 0, $log = 1)
+    {
+        if (empty($expire)) {
+            $expire = $this->expire;
+        }
+        $cache_key = $this->getCacheKey($key);
+
+        $cache_file = $this->dir . '/' . $cache_key . '.php';
+
+        if (// the file is present AND
+            file_exists($cache_file) &&
+            // the file has something in it AND
+            filesize($cache_file) > 0 &&
+            // (cached files don't expire OR this file hasn't expired yet) AND
+            ($expire == 0 ||
+             filemtime($cache_file) > time() - $expire)) {
+
+            $this->modtime = filemtime($cache_file);
+            if ($log) $this->logStatus('HIT', $key);
             return true;
+
+        } else {
+            if ($log) $this->logStatus('MISS', $key);
+            return false;
         }
-        return false;
     }
 
-    /* Private methods */
-    private static function isActive()
+    public function getCached($key = '', $output = 0, $expire = 0)
     {
-        return self::$active;
+        if (empty($expire)) {
+            $expire = $this->expire;
+        }
+        $cache_key = $this->getCacheKey($key);
+
+        $cache_file = $this->dir . '/' . $cache_key . '.php';
+
+        if ($this->type == 'template') {
+            // CHECKME: the file will be included in xarTemplate.php ?
+            $data = '';
+
+        } elseif ($output) {
+            // output the file directly to the browser
+            @readfile($cache_file);
+            return true;
+
+        } elseif (function_exists('file_get_contents')) {
+            $data = file_get_contents($cache_file);
+
+        } else {
+            $data = '';
+            $file = @fopen($cache_file, "rb");
+            if ($file) {
+                while (!feof($file)) $data .= fread($file, 1024);
+                fclose($file);
+            }
+        }
+        return $data;
     }
 
-    /* Things really belonging somewhere else */
+    public function setCached($key = '', $value = '', $expire = 0)
+    {
+        if (empty($expire)) {
+            $expire = $this->expire;
+        }
+        $cache_key = $this->getCacheKey($key);
+
+        $tmp_file = $this->dir . '/' . $cache_key; // without extension
+        $cache_file = $this->dir . '/' . $cache_key . '.php';
+
+        $fp = @fopen($tmp_file, "w");
+        if (!empty($fp)) {
+            @fwrite($fp, $value);
+            @fclose($fp);
+            // rename() doesn't overwrite existing files in Windows
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                @copy($tmp_file, $cache_file);
+                @unlink($tmp_file);
+            } else {
+                @rename($tmp_file, $cache_file);
+            }
+        }
+    }
+
+    public function delCached($key = '')
+    {
+        $cache_key = $this->getCacheKey($key);
+
+        $cache_file = $this->dir . '/' . $cache_key . '.php';
+
+        if (file_exists($cache_file)) {
+            @unlink($cache_file);
+        }
+    }
+
+    public function flushCached($key = '')
+    {
+        // add namespace prefix (not the type here)
+        if (!empty($this->namespace)) {
+            $key = $this->namespace . $key;
+        }
+
+        $this->_flushDirCached($key, $this->dir);
+
+        // check the cache size and clear the lockfile set by sizeLimitReached()
+        $lockfile = $this->cachedir . '/cache.' . $this->type . 'full';
+        if ($this->getCacheSize() < $this->sizelimit && file_exists($lockfile)) {
+            @unlink($lockfile);
+        }
+    }
+
+    public function doGarbageCollection($expire = 0)
+    {
+        $time = time() - ($expire + 60); // take some margin here
+
+        if ($handle = @opendir($this->dir)) {
+            while (($file = readdir($handle)) !== false) {
+                $cache_file = $this->dir . '/' . $file;
+                if ((filemtime($cache_file) < $time) &&
+                    (strpos($file, '.php') !== false)) {
+                    @unlink($cache_file);
+                }
+            }
+            closedir($handle);
+        }
+    }
+
+    public function getCacheInfo()
+    {
+        if (empty($this->blksize)) {
+            $dirstat = stat($this->dir);
+            // we know the filesystem blocksize, use this to better calc the disk usage
+            if ($dirstat['blksize'] > 0) {
+                $this->blksize = $dirstat['blksize'] / 8;
+                $this->bsknown = true;
+            } else { // just count of the used bytes
+                $this->blksize = 1;
+                $this->bsknown = false;
+            }
+        }
+
+        $this->size = 0;
+        $this->items = 0;
+        $this->modtime = 0;
+        $this->size = $this->_getCacheDirSize($this->dir, true);
+
+        return array('size'    => $this->size,
+                     'items'   => $this->items,
+                     'hits'    => $this->hits,
+                     'misses'  => $this->misses,
+                     'modtime' => $this->modtime);
+    }
+
+    public function saveFile($key = '', $filename = '')
+    {
+        if (empty($filename)) return;
+
+        $cache_key = $this->getCacheKey($key);
+
+        $cache_file = $this->dir . '/' . $cache_key . '.php';
+
+        // we use a direct file copy here, instead of getting the value again (cfr. session-less page caching)
+        if (file_exists($cache_file)) {
+            @copy($cache_file, $filename);
+        }
+    }
 
     /**
-     * Save an entry into the template cache
-     *
-     * @param  string $fileName  for which source file?
-     * @param  string $data      what to save
-     * @return boolean   true on success, false on failure
-     * @todo   doesnt belong here
-    **/
-    public static function saveEntry($fileName, $data)
+     * private function for use in flushCached()
+     */
+    private function _flushDirCached($key = '', $dir = false)
     {
-        // write data into the cache file
-        $data = str_replace('?><?php','',$data);
-        if($fd = fopen(self::cacheFile($fileName), 'w')) {
-            fwrite($fd, $data); fclose($fd);
+        if (!$dir || !is_dir($dir)) {
+            return;
         }
-        // Add an entry into CACHEKEYS if needed
-        return self::saveKey($fileName);
-    }
 
-    /**
-     * Determine if a cache entry is dirty, i.e. needs recompilation.
-     *
-     * @param  string $fileName source file
-     * @return boolean  true when cache entry is dirty, false otherwise
-    **/
-    public static function isDirty($fileName)
-    {
-        if(!self::isActive()) return true; // always dirty
-
-        $cacheFile = self::cacheFile($fileName);
-        // Logic here is:
-        // 1. if the compiled template file exists AND
-        // 2. The source file does not exist ( we will have to fall back, but it's weird) OR
-        // 3. modification time of source is smaller than modification time of the compiled template AND
-        // 4. DEBUG: when the XSL transformation file has NOT been changed more recently than the compiled template
-        // THEN we do NOT need to compile the file.
-        if ( file_exists($cacheFile) &&
-             ( !file_exists($fileName) ||
-               ( filemtime($fileName) < filemtime($cacheFile)
-               ) ) ) return false; // not dirty
-
-        return true; // either cache not active of entry needs recompilation
-    }
-
-    public static function cacheFile($fileName)
-    {
-        return self::$dir . '/' . self::getKey($fileName) . '.php';
-    }
-
-    public static function sourceFile($key)
-    {
-        $sourceFile = null;
-        if(self::isActive()) {
-            $fileName = $key . '.php';
-            // Dont use try/catch here, as this may be called directly from
-            // the exception handler (which we probably should avoid then?)
-            //
-            if ($fd = @fopen(self::$dir . '/CACHEKEYS', 'r')) {
-                while($cache_entry = fscanf($fd, "%s\t%s\n")) {
-                    list($hash, $template) = $cache_entry;
-
-                    // Strip the colon
-                    $hash = substr($hash,0,-1);
-                    if($hash == $key) {
-                        // Found the file, source is $template
-                        $sourceFile = $template;
-                        break;
+        if (substr($dir,-1) != "/") $dir .= "/";
+        if ($dirId = opendir($dir)) {
+            while (($item = readdir($dirId)) !== false) {
+                if ($item[0] != '.') {
+                    if (is_dir($dir . $item)) {
+                        $this->_flushDirCached($key, $dir . $item);
+                    } else {
+                        if ((preg_match("#$key#", $item)) &&
+                            (strpos($item, '.php') !== false)) {
+                            @unlink($dir . $item);
+                        }
                     }
                 }
-                fclose($fd);
             }
         }
-        return $sourceFile;
+        closedir($dirId);
+    }
+
+    /**
+     * private function for use in getCacheSize()
+     */
+    private function _getCacheDirSize($dir = false, $countitems = false)
+    {
+        $size = 0;
+        $count = 0;
+
+        if ($this->bsknown) {
+            if ($dir && is_dir($dir)) {
+                if (substr($dir,-1) != "/") $dir .= "/";
+                if ($dirId = opendir($dir)) {
+                    while (($item = readdir($dirId)) !== false) {
+                        if ($item != "." && $item != "..") {
+                            $filestat = stat($dir . $item);
+                            $size += ($filestat['blocks'] * $this->blksize);
+                            if (is_dir($dir . $item)) {
+                                $size += $this->_getCacheDirSize($dir . $item, $countitems);
+                            } elseif ($countitems) {
+                                $count++;
+                                if ($this->modtime < $filestat['mtime']) {
+                                    $this->modtime = $filestat['mtime'];
+                                }
+                            }
+                        }
+                    }
+                    closedir($dirId);
+                }
+            }
+        } else {
+            if ($dir && is_dir($dir)) {
+                if (substr($dir,-1) != "/") $dir .= "/";
+                if ($dirId = opendir($dir)) {
+                    while (($item = readdir($dirId)) !== false) {
+                        if ($item != "." && $item != "..") {
+                            if (is_dir($dir . $item)) {
+                                $size += $this->_getCacheDirSize($dir . $item, $countitems);
+                            } else {
+                                $size += filesize($dir . $item);
+                                if ($countitems) {
+                                    $count++;
+                                    $time = filemtime($dir . $item);
+                                    if ($this->modtime < $time) {
+                                        $this->modtime = $time;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    closedir($dirId);
+                }
+            }
+        }
+        if ($countitems) {
+            $this->items = $this->items + $count;
+        }
+        return $size;
+    }
+
+    public function getCachedList()
+    {
+        $list = array();
+        if ($handle = @opendir($this->dir)) {
+            while (($file = readdir($handle)) !== false) {
+                // filter out the keys that don't start with the right type/namespace prefix
+                if (!empty($this->prefix) && strpos($file, $this->prefix) !== 0) continue;
+            // CHECKME: this assumes the code is always hashed
+                if (!preg_match('/^(.*)-(\w*)\.php$/',$file,$matches)) {
+                    continue;
+                }
+                $key = $matches[1];
+                $code = $matches[2];
+                $cache_file = $this->dir . '/' . $file;
+                $time = filemtime($cache_file);
+                $size = filesize($cache_file);
+                $check = '';
+                // remove the prefix from the key
+                if (!empty($this->prefix)) $key = str_replace($this->prefix,'',$key);
+                $list[] = array('key'   => $key,
+                                'code'  => $code,
+                                'time'  => $time,
+                                'size'  => $size,
+                                'check' => $check);
+            }
+            closedir($handle);
+        }
+        return $list;
     }
 }
 ?>
