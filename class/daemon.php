@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
-class PaymentsDaemon extends Object
+class PaymentsDaemon extends xarObject
 {
     private static $instance;
     
