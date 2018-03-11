@@ -132,7 +132,7 @@
       <type>dropdown</type>
       <defaultvalue>2</defaultvalue>
       <source>pubtypes.sitemap_source_flag</source>
-      <status>34</status>
+      <status>33</status>
       <seq>11</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:49:"2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
@@ -142,7 +142,7 @@
       <type>dropdown</type>
       <defaultvalue>2</defaultvalue>
       <source>pubtypes.menu_source_flag</source>
-      <status>34</status>
+      <status>33</status>
       <seq>12</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:49:"2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
