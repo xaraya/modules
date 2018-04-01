@@ -60,6 +60,8 @@ function mime_init()
     // to return right away otherwise we could have
     // some tables created and some not.
     foreach ($fields as $table => $data) {
+        $query = xarDBDropTable($xartable[$table]);
+        $result = $dbconn->Execute($query);
         $query = xarDBCreateTable($xartable[$table], $data);
         $result = $dbconn->Execute($query);
         if (!$result) {
@@ -77,7 +79,7 @@ function mime_init()
     if ($error) {
         foreach ($tables as $table) {
             $query = xarDBDropTable($xartable[$table]);
-            $result =& $dbconn->Execute($query);
+            $result = $dbconn->Execute($query);
 
             if(!$result)
                 return;
