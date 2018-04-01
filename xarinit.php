@@ -61,7 +61,7 @@ function mime_init()
     // some tables created and some not.
     foreach ($fields as $table => $data) {
         $query = xarDBCreateTable($xartable[$table], $data);
-        $result =& $dbconn->Execute($query);
+        $result = $dbconn->Execute($query);
         if (!$result) {
             $tables[$table] = FALSE;
             $error |= TRUE;
