@@ -106,6 +106,7 @@ function payments_user_modify_transaction()
             // Red slip
             case '2.2':
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+                $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
             break;
             // Bank transfer
             case '3':
