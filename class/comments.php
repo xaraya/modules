@@ -13,7 +13,7 @@
  */
     sys::import('xaraya.structures.tree');
 
-    class Comments extends Object
+    class Comments extends xarObject
     {
         function get(int $id)
         {
