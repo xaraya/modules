@@ -39,7 +39,7 @@ function comments_init()
         'author'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'medium','default'=>1),
         'title'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>100),
         'text'      => array('type'=>'text',     'null'=>TRUE,   'size'=>'medium'),
-        'parent_id' => array('type'=>'integer',  'null'=>FALSE, 'default'=>0),
+        'parent_id' => array('type'=>'integer',  'null'=>FALSE, 'default'=> '0'),
         'parent_url'=> array('type'=>'text',     'null'=>FALSE,  'size'=>'medium'),
         'module_id' => array('type'=>'integer',  'null'=>TRUE),
         'itemtype'  => array('type'=>'integer',  'null'=>false),
