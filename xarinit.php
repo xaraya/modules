@@ -45,8 +45,8 @@ function comments_init()
         'itemtype'  => array('type'=>'integer',  'null'=>false),
         'itemid'    => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'hostname'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
-        'left_id'   => array('type'=>'integer',  'null'=>FALSE, 'default'=>0),
-        'right_id'  => array('type'=>'integer',  'null'=>FALSE, 'default'=>0),
+        'left_id'   => array('type'=>'integer',  'null'=>FALSE, 'default'=> '0),
+        'right_id'  => array('type'=>'integer',  'null'=>FALSE, 'default'=> '0),
         'anonpost'  => array('type'=>'integer',  'null'=>TRUE,   'size'=>'tiny', 'default'=>0),
         'status'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'tiny'),
     );
