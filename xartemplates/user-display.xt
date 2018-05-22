@@ -25,6 +25,9 @@
     -->
 
     <xar:sec mask="ReadComments" catch="false">
+        <xar:if condition="!isset($comments)">
+            <xar:set name="comments">array()</xar:set>
+        </xar:if>
         <xar:set name="number_of_comments">count($comments)</xar:set>
         <xar:if condition="$package['settings']['render'] ne 'nocomments'">
             <!--
