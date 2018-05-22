@@ -53,7 +53,7 @@ function comments_init()
 
     $query = xarDBCreateTable($xartable['comments'], $fields);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result)
         return;
 
@@ -63,7 +63,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_right',
@@ -72,7 +72,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_parent_id',
@@ -81,7 +81,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_moduleid',
@@ -90,7 +90,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemtype',
@@ -99,7 +99,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemid',
@@ -108,7 +108,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_status',
@@ -117,7 +117,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_author',
@@ -126,7 +126,7 @@ function comments_init()
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     // Create blacklist tables
@@ -141,7 +141,7 @@ function comments_init()
 
     $query = xarDBCreateTable($xartable['blacklist'], $fields);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $module = 'comments';
