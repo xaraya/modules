@@ -3,43 +3,43 @@
      <xar:foreach in="$comments" value="$comment">
         <div class="xar-accent-outline xar-comments-comment">
              <a name="#$comment['id']#"></a>
-                <xar:set name="item">$comment</xar:set>
-                <xar:if condition="count($comments) gt 1">
-                    <xar:template file="action_buttons"/>
-                </xar:if>
+            <xar:set name="item">$comment</xar:set>
+            <xar:if condition="count($comments) gt 1">
+                <xar:template file="action_buttons"/>
+            </xar:if>
 
-                <!-- show changelog -->
-                <xar:sec mask="ModerateComments" catch="false">
-                    <xar:if condition="xarModIsHooked('changelog','comments')">
-                        <span class="xar-sub" style="float:right;">
-                            <a href="#xarModURL('changelog','admin','showlog',array('moduleid' => 14, 'itemid'=> $comment['id']))#" title="#xarML('View Changes')#">
-                                View changes
-                            </a>
-                        </span>
-                    </xar:if>
-                </xar:sec>
-                <!-- end changelog -->
-            </div>
-            <xar:set name="dummy">$emptyobject->setFieldValues($comment,1)</xar:set>
-            <xar:data-display object="$emptyobject"/>
-            <div class="xar-accent xar-comments-comment">
-                <xar:if condition="isset($transformed_text)">
-                    <p>
-                        <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
-                            #
+            <!-- show changelog -->
+            <xar:sec mask="ModerateComments" catch="false">
+                <xar:if condition="xarModIsHooked('changelog','comments')">
+                    <span class="xar-sub" style="float:right;">
+                        <a href="#xarModURL('changelog','admin','showlog',array('moduleid' => 14, 'itemid'=> $comment['id']))#" title="#xarML('View Changes')#">
+                            View changes
                         </a>
-                    </p>
-                <xar:else />
-                    <p>
-                        <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
-                            #
-                        </a>
-                    </p>
-                    <xar:if condition="isset($comment['branchout']) and $comment['branchout'] eq 1">
-                        <a href=""> #$comment['nested_text']# </a>
-                        &#160;
-                    </xar:if>
+                    </span>
                 </xar:if>
+            </xar:sec>
+            <!-- end changelog -->
+        </div>
+        <xar:set name="dummy">$emptyobject->setFieldValues($comment,1)</xar:set>
+        <xar:data-display object="$emptyobject"/>
+        <div class="xar-accent xar-comments-comment">
+            <xar:if condition="isset($transformed_text)">
+                <p>
+                    <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
+                        #
+                    </a>
+                </p>
+            <xar:else />
+                <p>
+                    <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
+                        #
+                    </a>
+                </p>
+                <xar:if condition="isset($comment['branchout']) and $comment['branchout'] eq 1">
+                    <a href=""> #$comment['nested_text']# </a>
+                    &#160;
+                </xar:if>
+            </xar:if>
         </div>
     </xar:foreach>
 </xar:template>
