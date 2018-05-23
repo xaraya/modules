@@ -210,7 +210,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
         $new_list[] = $node;
     }
 
-    $comments_list = '';
+    $comments_list = array();
 
     // remove any items that aren't really a part of the array
     // and are just excess baggage from previous code
