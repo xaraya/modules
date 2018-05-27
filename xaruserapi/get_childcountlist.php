@@ -45,7 +45,7 @@ function comments_userapi_get_childcountlist($args)
         . " AND P1.module_id = ? AND P1.itemid = ? AND P1.itemtype = ?"
         . " GROUP BY P1.id";
 
-    $result =& $dbconn->Execute($sql, $bind);
+    $result = $dbconn->Execute($sql, $bind);
     if (!$result) return;
 
     if ($result->EOF) return array();
