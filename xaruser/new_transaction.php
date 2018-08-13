@@ -46,6 +46,10 @@ function payments_user_new_transaction()
             if (isset($data['object']->properties[$key]))
                 $data['object']->properties[$key]->value = $value;
         }
+        // Adjust the execution date if the date passed is in the past
+        if ($data['object']->properties['transaction_date']->value < time()) {
+            $data['object']->properties['transaction_date']->value = time();
+        }
     }
 
 # --------------------------------------------------------
