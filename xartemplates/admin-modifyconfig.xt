@@ -14,7 +14,7 @@
                 <fieldset>
                     <div class="xar-row">
                         <div class="xar-col">
-                          <label for="subjecttitle">Use Content's Title for EMail Subject</label>
+                          <label for="subjecttitle">Use Content's Title for Email Subject</label>
                         </div>
                         <div class="xar-col">
                           <xar:if condition="!empty($subjecttitle)">

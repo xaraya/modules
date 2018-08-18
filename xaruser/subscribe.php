@@ -24,8 +24,7 @@ function pubsub_user_subscribe()
 {
     // do nothing if user not logged in otherwise subscribe
     // the currently logged in user
-    $userid = (int)xarUser::getVar('id');
-    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
+    if (!xarUser::isLoggedIn()) {
         return;
     }
 

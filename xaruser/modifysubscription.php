@@ -35,11 +35,10 @@ function pubsub_user_modifysubscription()
 
     $returnurl = rawurldecode($returnurl);
 
-    // the currently logged in user
-    $userid = (int)xarUser::getVar('id');
-    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
+    // The currently logged in user
+    if (!xarUser::isLoggedIn()) {
         xarController::redirect($returnurl);
-        return true;
+        return;
     }
 
     switch ($subaction) {

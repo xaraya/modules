@@ -29,9 +29,8 @@ function pubsub_user_displayicon($args)
 
     // do nothing if user not logged in otherwise subscribe
     // the currently logged in user
-    $userid = (int)xarUser::getVar('id');
-    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
-        return '';
+    if (!xarUser::isLoggedIn()) {
+        return;
     }
 
     if (!isset($extrainfo)) $extrainfo = array();

@@ -50,7 +50,7 @@ function pubsub_adminapi_checkevent($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // check this event isn't already in the DB
-    $query = "SELECT eventid
+    $query = "SELECT id
               FROM  $pubsubeventstable
               WHERE modid = ?
               AND   itemtype = ?
@@ -65,8 +65,8 @@ function pubsub_adminapi_checkevent($args)
 
     // if event already exists then just return the event id;
     if (!$result->EOF) {
-        list($eventid) = $result->fields;
-        return $eventid;
+        list($id) = $result->fields;
+        return $id;
     }
 
     if (!isset($extra)) {
@@ -78,11 +78,11 @@ function pubsub_adminapi_checkevent($args)
     }
 
     // Get next ID in table
-    $eventid = $dbconn->GenId($pubsubeventstable);
+    $id = $dbconn->GenId($pubsubeventstable);
 
     // Add item to events table
     $query = "INSERT INTO $pubsubeventstable (
-              eventid,
+              id,
               modid,
               itemtype,
               cid,
@@ -90,16 +90,16 @@ function pubsub_adminapi_checkevent($args)
               groupdescr)
             VALUES (?,?,?,?,?,?)";
 
-    $bindvars = array((int)$eventid, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr);
+    $bindvars = array((int)$id, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr);
     $result = $dbconn->Execute($query, $bindvars);
 
     if (!$result) return;
 
     // Get the ID of the item that was inserted
-    $eventid = $dbconn->PO_Insert_ID($pubsubeventstable, 'eventid');
+    $id = $dbconn->PO_Insert_ID($pubsubeventstable, 'id');
 
     // return eventID
-    return $eventid;
+    return $id;
 
 }
 

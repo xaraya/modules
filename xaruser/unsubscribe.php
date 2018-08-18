@@ -25,8 +25,7 @@ function pubsub_user_unsubscribe($args)
 {
     // do nothing if user not logged in otherwise unsubscribe
     // the currently logged in user
-    $userid = (int)xarUser::getVar('id');
-    if ($userid == (int)xarConfigVars::get(null, 'Site.User.AnonymousUID')) {
+    if (!xarUser::isLoggedIn()) {
         return;
     }
 
