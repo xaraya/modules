@@ -68,7 +68,7 @@ function hitcount_adminapi_delete($args)
         if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"$modname:$itemtype:$itemid")) return;
 
         $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $xartable =& xarDB::getTables();
         $hitcounttable = $xartable['hitcount'];
 
         // Don't bother looking if the item exists here...
@@ -95,7 +95,7 @@ function hitcount_adminapi_delete($args)
 
         // Database information
         $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $xartable =& xarDB::getTables();
         $hitcounttable = $xartable['hitcount'];
 
         $bindvars = array();

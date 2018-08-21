@@ -83,7 +83,7 @@ function hitcount_adminapi_update($args)
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // set to the new hit count

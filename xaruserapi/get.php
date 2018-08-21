@@ -60,7 +60,7 @@ function hitcount_userapi_get($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items

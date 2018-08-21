@@ -63,7 +63,7 @@ function hitcount_adminapi_create($args)
     if(!xarSecurityCheck('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get a new hitcount ID
