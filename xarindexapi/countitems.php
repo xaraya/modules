@@ -69,7 +69,7 @@ function keywords_indexapi_countitems(Array $args=array())
         $query .= " GROUP BY " . implode(',', $groupby);
 
     // return the count
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     list($numitems) = $result->fields;
     $result->Close();
 

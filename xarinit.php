@@ -177,7 +177,7 @@ function keywords_upgrade($oldversion)
                 if (empty($query)) return; // throw back
 
                 // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-                $result = &$dbconn->Execute($query);
+                $result = $dbconn->Execute($query);
                 if (!$result) return;
 
                 if (!xarModRegisterHook('item', 'search', 'GUI',
