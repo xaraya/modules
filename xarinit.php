@@ -37,6 +37,10 @@ function hitcount_init()
                                                             'increment'   => true,
                                                             'primary_key' => true),
 // TODO: replace with unique id
+                                   'object_id'  => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
                                    'module_id'  => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
@@ -58,7 +62,7 @@ function hitcount_init()
                                                             'null'        => false,
                                                             'default'     => '0')));
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['hitcount'],
@@ -66,7 +70,7 @@ function hitcount_init()
                                    'fields' => array('module_id','itemtype', 'itemid'),
                                    'unique' => false));
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['hitcount'],
@@ -74,7 +78,7 @@ function hitcount_init()
                                    'fields' => array('itemid'),
                                    'unique' => false));
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['hitcount'],
@@ -82,7 +86,45 @@ function hitcount_init()
                                    'fields' => array('hits'),
                                    'unique' => false));
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    $query = xarDBCreateTable($xartable['likecount'],
+                             array('id'         => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'increment'   => true,
+                                                            'primary_key' => true),
+                                   'object_id'  => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'itemid'     => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'likes'       => array('type'        => 'integer',
+                                                            'null'        => false,
+                                                            'size'        => 'big',
+                                                            'default'     => '0')));
+
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    $query = xarDBCreateIndex($xartable['likecount'],
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
+                                   'fields' => array('object_id', 'itemid'),
+                                   'unique' => false));
+
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    $query = xarDBCreateIndex($xartable['likecount'],
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_likes',
+                                   'fields' => array('likes'),
+                                   'unique' => false));
+
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     // Set up module hooks - using hook call handlers now
