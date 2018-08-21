@@ -31,7 +31,7 @@ function ratings_userapi_getmodules($args)
             GROUP BY module_id, itemtype
             ORDER BY module_id, itemtype";
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $modlist = array();
