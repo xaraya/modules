@@ -130,9 +130,9 @@ function hitcount_init()
     // Set up module hooks - using hook call handlers now
     // from Jamaica 2.2.0 onwards we use the new hook system
     // (see observers in hitcount/class/hookobservers/)
-    xarHooks::registerObserver('ItemCreate', 'hitcount');
+    xarHooks::registerObserver('ItemCreate',  'hitcount');
     xarHooks::registerObserver('ItemDisplay', 'hitcount');
-    xarHooks::registerObserver('ItemDelete', 'hitcount');
+    xarHooks::registerObserver('ItemDelete',  'hitcount');
     // @checkme: there seems to be a 'view' hook implemented in the 2.0.0-b4 revised hook calls
     // but no such hook exists, the nearest would be the yet to be implemented ItemtypeView hook 
     //xarHooks::registerObserver('ItemtypeView', 'hitcount');
