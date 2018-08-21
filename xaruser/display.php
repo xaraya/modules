@@ -25,10 +25,6 @@ function ratings_user_display($args)
 {
     extract($args);
 
-    // itemid may be empty when called by hooks, we get it from (hook) object id
-    if (isset($objectid) && is_numeric($objectid))
-        $itemid = $args['itemid'] = $objectid;
-
     $data = array();
     $data['itemid'] = $itemid;
 
@@ -120,16 +116,13 @@ function ratings_user_display($args)
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
-    // chris: do we really need two api funcs for this? 
-    // @todo: check bug 6160, what causes the weirdness? 
     $rating = xarMod::apiFunc('ratings',
                            'user',
                            'getitems',
                            $args);
     // Select the way to get the rating
     if (!empty($rating[$itemid])) {
-        // chris: uncommenting this for now, without it the ratings hook won't function 
-        $key_id = array_keys($rating);
+//        $key_id = array_keys($rating);
         $data['rawrating'] = $rating[$key_id[0]]['rating'];
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
     } else {

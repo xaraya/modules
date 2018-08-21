@@ -21,7 +21,7 @@ function ratings_userapi_getmodules($args)
     if (!xarSecurityCheck('OverviewRatings')) return;
 
     // Database information
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 

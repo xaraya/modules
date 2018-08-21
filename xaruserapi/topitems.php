@@ -45,7 +45,7 @@ function ratings_userapi_topitems($args)
     if(!xarSecurityCheck('ReadRatings')) return;
 
     // Database information
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 

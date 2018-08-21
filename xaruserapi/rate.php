@@ -48,7 +48,7 @@ function ratings_userapi_rate($args)
 
 
     // Database information
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 

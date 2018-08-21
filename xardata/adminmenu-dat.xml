@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
         <menuitem>
             <includes>
@@ -29,4 +29,4 @@
             <label>Modify Configuration</label>
         </menuitem>
     </menuitems>
-</adminmenu>
+</menu>

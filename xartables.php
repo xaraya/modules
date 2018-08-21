@@ -26,6 +26,7 @@ function ratings_xartables()
     $xartable = array();
     // Name for ratings database entities
     $xartable['ratings'] = xarDB::getPrefix() . '_ratings';
+    $xartable['ratings_likes'] = xarDB::getPrefix() . '_ratings_likes';
     // Return table information
     return $xartable;
 }

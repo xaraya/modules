@@ -20,7 +20,7 @@ function ratings_init()
     #
     # Set tables
     #
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     // Load Table Maintainance API
     sys::import('xaraya.tableddl');
@@ -29,7 +29,7 @@ function ratings_init()
         'module_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'rating' => array('type' => 'float', 'size' => 'double', 'width' => 8, 'decimals' => 5, 'null' => false, 'default' => '0'),
+        'rating' => array('type' => 'float', 'size' => 'double', 'width' => 15, 'decimals' => 5, 'null' => false, 'default' => '0'),
         'numratings' => array('type' => 'integer', 'size' => 'medium', 'null' => false, 'default' => '1')
         );
     // Create the Table - the function will return the SQL is successful or
@@ -38,7 +38,7 @@ function ratings_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-    $result = &$dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
     // TODO: compare with having 2 indexes (cfr. hitcount)
     $query = xarDBCreateIndex($xartable['ratings'],
@@ -46,7 +46,7 @@ function ratings_init()
             'fields' => array('module_id', 'itemtype', 'itemid'),
             'unique' => true));
 
-    $result = &$dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['ratings'],
@@ -54,9 +54,59 @@ function ratings_init()
             'fields' => array('rating'),
             'unique' => false));
 
-    $result = &$dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
+    $query = xarDBCreateTable($xartable['ratings_likes'],
+                             array('id'         => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'increment'   => true,
+                                                            'primary_key' => true),
+                                   'object_id'  => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'itemid'     => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'role_id'    => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'udid'       => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0')));
+
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    $query = xarDBCreateIndex($xartable['ratings_likes'],
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
+                                   'fields' => array('object_id', 'itemid'),
+                                   'unique' => false));
+
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    $query = xarDBCreateIndex($xartable['ratings_likes'],
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_role_id',
+                                   'fields' => array('role_id'),
+                                   'unique' => false));
+
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBCreateIndex($xartable['ratings_likes'],
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_udid',
+                                   'fields' => array('udid'),
+                                   'unique' => false));
+
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+    
     # --------------------------------------------------------
     #
     # Set up modvars
@@ -206,7 +256,7 @@ function ratings_upgrade($oldversion)
 
             // modify field xar_ratings.rating
             // Get database information
-            $dbconn =& xarDB::getConn();
+            $dbconn = xarDB::getConn();
             $xartable =& xarDB::getTables();
             $query= "ALTER TABLE " . $xartable['ratings'] . "
                            MODIFY COLUMN rating double(8,5) NOT NULL default '0.00000'";

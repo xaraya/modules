@@ -42,7 +42,7 @@ function ratings_adminapi_deleteall($args)
     // avoid potential security holes or just too much wasted processing
     if(!xarSecurityCheck('DeleteRatings')) return;
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
