@@ -32,7 +32,11 @@ function publications_userapi_getitemlinks($args)
     $q->addfield('modify_date AS modified');
     $q->in('state',array(3,4));
     if (!empty($args['itemids'])) {
-        $itemids = explode(',',$args['itemids']);
+        if (is_array($args['itemids'])) {
+            $itemids = $args['itemids'];
+        } else {
+            $itemids = explode(',',$args['itemids']);
+        }
         $q->in('id',$itemids);
     }
     $q->addorder('title');
