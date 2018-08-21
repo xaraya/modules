@@ -85,7 +85,7 @@ function hitcount_adminapi_create($args)
             VALUES (?,?,?,?,?,?)";
     $bindvars = array($nextId, $modid, $itemtype, $objectid, $hits, time());
 
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $hcid = $dbconn->PO_Insert_ID($hitcounttable, 'id');

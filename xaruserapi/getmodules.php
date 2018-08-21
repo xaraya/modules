@@ -31,7 +31,7 @@ function hitcount_userapi_getmodules($args)
             FROM $hitcounttable h INNER JOIN $modulestable m ON m.regid = h.module_id
             GROUP BY m.regid, h.itemtype";
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $modlist = array();

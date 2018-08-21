@@ -100,7 +100,7 @@ function hitcount_adminapi_update($args)
               AND itemtype = ?
               AND itemid = ?";
     $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Return the new hitcount (give or take a few other hits in the meantime)

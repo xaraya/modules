@@ -77,7 +77,7 @@ function hitcount_adminapi_delete($args)
                   AND itemtype = ?
                   AND itemid = ?";
         $bindvars = array((int)$modid, (int)$itemtype, (int)$itemid);
-        $result =& $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query,$bindvars);
         if (!$result) return;
 
     // hmmm, I think we'll skip calling more hooks here... :-)
@@ -119,7 +119,7 @@ function hitcount_adminapi_delete($args)
             }
         }
 
-        $result =& $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query,$bindvars);
         if (!$result) return;
 
         return true;

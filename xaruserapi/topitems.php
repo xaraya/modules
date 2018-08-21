@@ -62,8 +62,8 @@ function hitcount_userapi_topitems($args)
         $startnum = 1;
     }
 
-    //$result =& $dbconn->Execute($query);
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
+    //$result = $dbconn->Execute($query);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
     if (!$result) return;
 
     $topitems = array();
