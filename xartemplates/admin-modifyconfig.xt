@@ -16,8 +16,6 @@
                     <legend>                    
                         Modify Hitcount Configuration                    
                     </legend>
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="phase" id="phase" value="update"/>
                     <div class="xar-form-input-wrapper">
                         <label for="countadmin" class="xar-form-label">
                             Count Administrator Hits
