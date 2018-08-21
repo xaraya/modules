@@ -3,59 +3,61 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>
-            Modify Configuration
-        </h2>
-    
-        <form action="&xar-modurl-ratings-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-    
-        <xar:set name="confcounter">1</xar:set>
-        <xar:foreach in="$settings" key="$modname" value="$config">
-            <fieldset>
-                <legend>
-                    #$config['label']#
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="ratingsstyle_#$confcounter#" class="xar-form-label">
-                        Rating Style:
-                    </label>
-                    <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
-                    <xar:set name="ratingname">'ratingsstyle[' . $modname . ']'</xar:set>
-                    <xar:set name="id">'ratingsstyle_' . $modname</xar:set>
-                    <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
-                    <xar:data-input type="dropdown" name="$ratingname" id="$id" options="$options" value="$config['ratingsstyle']"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                  <label for="seclevel_#$confcounter#" class="xar-form-label">
-                        Security Level:
-                    </label>
-                    <select name="seclevel[#$modname#]" id="seclevel_#$confcounter#">
-                    <xar:foreach in="$secleveloptions" value="$option">
-                        <xar:if condition="$option['id'] eq $config['seclevel']">
-                            <option value="#$option['id']#" selected="selected">#$option['name']#</option>
-                        <xar:else />
-                            <option value="#$option['id']#">#$option['name']#</option>
-                        </xar:if>
-                    </xar:foreach>
-                    </select>
-                </div>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="$config['shownum'] eq 1">
-                        <input type="checkbox" name="shownum[#$modname#]" id="shownum_#$confcounter#" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="shownum[#$modname#]" id="shownum_#$confcounter#" value="1" />
-                    </xar:if>
-                    <label for="shownum_#$confcounter#">
-                        Show number of ratings
-                    </label>
-                </div>
-            </fieldset>
-            <xar:set name="confcounter">$confcounter + 1</xar:set>
-        </xar:foreach>
-        <div class="xar-form-input-after">
-           <input type="hidden" name="authid" id="authid" value="#$authid#" />
-           <input type="submit" value="#xarML('Save config')#" />
-        </div>
-        </form>
+        <h2>Modify Configuration</h2>
+        <xar:if condition="$tab eq 'general'">
+            <form action="&xar-modurl-ratings-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        General Options
+                    </legend>
+                    <xar:data-form object="$module_settings" />
+                </fieldset>
+                <xar:set name="confcounter">1</xar:set>
+                <xar:foreach in="$settings" key="$modname" value="$config">
+                    <fieldset>
+                        <legend>
+                            #$config['label']#
+                        </legend>
+                        <div class="xar-form-input-wrapper">
+                            <label for="ratingsstyle_#$confcounter#" class="xar-form-label">
+                                Rating Style:
+                            </label>
+                            <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
+                            <xar:set name="ratingname">'ratingsstyle[' . $modname . ']'</xar:set>
+                            <xar:set name="id">'ratingsstyle_' . $modname</xar:set>
+                            <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
+                            <xar:data-input type="dropdown" name="$ratingname" id="$id" options="$options" value="$config['ratingsstyle']"/>
+                        </div>
+                        <div class="xar-form-input-wrapper">
+                          <label for="seclevel_#$confcounter#" class="xar-form-label">
+                                Security Level:
+                            </label>
+                            <select name="seclevel[#$modname#]" id="seclevel_#$confcounter#">
+                            <xar:foreach in="$secleveloptions" value="$option">
+                                <xar:if condition="$option['id'] eq $config['seclevel']">
+                                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
+                                <xar:else />
+                                    <option value="#$option['id']#">#$option['name']#</option>
+                                </xar:if>
+                            </xar:foreach>
+                            </select>
+                        </div>
+                        <div class="xar-form-input-wrapper-after">
+                            <xar:if condition="$config['shownum'] eq 1">
+                                <input type="checkbox" name="shownum[#$modname#]" id="shownum_#$confcounter#" value="1" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="shownum[#$modname#]" id="shownum_#$confcounter#" value="1" />
+                            </xar:if>
+                            <label for="shownum_#$confcounter#">
+                                Show number of ratings
+                            </label>
+                        </div>
+                    </fieldset>
+                    <xar:set name="confcounter">$confcounter + 1</xar:set>
+                </xar:foreach>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
+            </form>
+        </xar:if>
     </div>
 </xar:template>
