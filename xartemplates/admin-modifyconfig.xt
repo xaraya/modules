@@ -173,6 +173,35 @@
                         Please note that if you stop the scheduler or if it isn't triggered, queued events will not be processed.
                     </p>
                 </fieldset>
+                <fieldset>
+                    <legend>
+                        Notification
+                    </legend>
+                    <xar:var name="firstline">Choose a mail template</xar:var>
+					<xar:set name="firstline">"0,$firstline"</xar:set>
+					  <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="usermessage" class="xar-form-label" title="#xarML('The name of the email message to send the user')#">
+                                User Message Name
+                            </label>
+                        </div>
+                      	<div class="xar-col" style="width:30%;">
+                            <xar:set name="value">xarModVars::get('pubsub', 'usermessage')</xar:set>
+                            <xar:data-input type="dropdown" name="usermessage" value="$value" options="$regoptions" firstline="$firstline"/>
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="sendnotice" title="#xarML('Notify Admin when user subscribes')#" class="xar-form-label">
+                                Send Notice To Admin
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="checked">xarModVars::get('pubsub', 'sendnotice')</xar:set>
+                            <xar:data-input type="checkbox" name="sendnotice" checked="$checked"/>
+                        </div>
+                    </div>
+                </fieldset>
                 <input type="hidden" name="tab" id="tab" value="#$tab#"/>
                 <xar:template file="update-button" module="base" />
             </form>

@@ -22,6 +22,7 @@ function pubsub_user_submit_form($args) {
 		$q = new Query();
 		$q->addtable($tables['pubsub_subscriptions'], 'ps');
 		$q->eq('ps.email', $default_values['email']);
+		$q->eq('ps.state', 3);
 		$q->run();
 		$result  = $q->output();
 
@@ -32,12 +33,17 @@ function pubsub_user_submit_form($args) {
 			// Good data: create the item
 			$itemid = $data['object']->createItem();
 			
+			//send to notify_new_user
+			xarMod::apiFunc('pubsub','user','notify_new_user',$default_values['email']);
+			
 			// If this is an AJAX call, end here
 			xarController::$request->exitAjax();
 			
 			// Jump to the next page
 			xarController::redirect(xarServer::getCurrentURL());
 		} else {
+			//xarML('This email is already registered!');
+			//error_reporting(0);
 			die('This email is already registered!');
 		}
 	}

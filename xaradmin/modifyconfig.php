@@ -53,6 +53,7 @@ function pubsub_admin_modifyconfig()
             switch ($data['tab']) {
                 case 'general':
                 default:
+                	$data['regoptions'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "pubsub"));
                     // get the list of hooked modules
                     $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                                    array('hookModName' => 'pubsub'));
@@ -171,7 +172,9 @@ function pubsub_admin_modifyconfig()
                     xarVarFetch('allindigest',  'isset',    $allindigest,   '', XARVAR_DONT_SET);
                     xarVarFetch('wrapper',      'isset',    $wrapper,       '', XARVAR_DONT_SET);
                     xarVarFetch('usetemplateids', 'isset',  $usetemplateids, 1, XARVAR_DONT_SET);
-
+                    if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('pubsub', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+					if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
+                    
                     if (isset($settings) && is_array($settings)) {
                         foreach ($settings as $name => $value) {
                             xarModVars::set('pubsub', $name, $value);
@@ -208,6 +211,8 @@ function pubsub_admin_modifyconfig()
                         xarModVars::set('pubsub','allindigest',1);
                     }
                     xarModVars::set('pubsub','usetemplateids',$usetemplateids);
+                    xarModVars::set('pubsub', 'usermessage', $usermessage);
+                    xarModVars::set('pubsub', 'sendnotice', $sendnotice);
 
                     if (xarMod::isAvailable('scheduler')) {
                         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
