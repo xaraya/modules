@@ -17,22 +17,30 @@
  * Displays a list of subscribers to a given category. Provides an option
  * to manually remove a subscriber.
  */
-function pubsub_admin_viewsubscribers()
+function pubsub_admin_view_subscriptions()
 {
-    if (!xarVarFetch('eventid', 'int::', $eventid)) return;
-    if (!xarVarFetch('pubsubid','int::', $pubsubid, FALSE)) return;
-    if (!xarVarFetch('unsub',   'int::', $unsub, FALSE)) return;
-
+    if (!xarVarFetch('eventid', 'int::', $eventid,  0,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pubsubid','int::', $pubsubid, FALSE, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('unsub',   'int::', $unsub,    FALSE, XARVAR_NOT_REQUIRED)) return;
+/*
     if (empty($eventid)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
-                    'event id', 'viewsubscribers', 'Pubsub');
+                    'event id', 'view_subscriptions', 'Pubsub');
         throw new Exception($msg);
     }
+*/
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_subscriptions'));
+    
+    return $data;
+
+    $data['items'] = array();
+    $data['authid'] = xarSecGenAuthKey();
 
     if ($unsub && $pubsubid) {
         if (!xarMod::apiFunc('pubsub', 'user', 'deluser', array('pubsubid' => $pubsubid))) {
             $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-                         'deluser', 'viewsubscribers', 'Pubsub');
+                         'deluser', 'view_subscriptions', 'Pubsub');
             throw new Exception($msg);
         }
     }
@@ -40,7 +48,7 @@ function pubsub_admin_viewsubscribers()
     $info = xarMod::apiFunc('pubsub','user','getevent', array('eventid' => $eventid));
     if (empty($info)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
-                    'event id', 'viewsubscribers', 'Pubsub');
+                    'event id', 'view_subscriptions', 'Pubsub');
         throw new Exception($msg);
     }
 
@@ -64,7 +72,7 @@ function pubsub_admin_viewsubscribers()
 
     $data['items'] = $subscribers;
 
-    $data['returnurl'] = xarModURL('pubsub', 'user', 'viewsubscribers', array('eventid'=>$eventid));
+    $data['returnurl'] = xarModURL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
 
     // TODO: add a pager (once it exists in BL)
     $data['pager'] = '';
@@ -73,6 +81,6 @@ function pubsub_admin_viewsubscribers()
 
     return $data;
 
-} // END ViewSubscribers
+}
 
 ?>

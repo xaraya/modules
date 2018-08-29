@@ -43,7 +43,7 @@
                                 #$item['numsubscribers']#
                             </td>
                             <td>
-                                <a href="&xar-modurl-pubsub-admin-viewsubscribers;&amp;eventid=#$item['eventid']#">Subscribers</a>
+                                <a href="&xar-modurl-pubsub-admin-view_subscriptions;&amp;eventid=#$item['eventid']#">Subscribers</a>
                             </td>
                         </tr>
                     </xar:foreach>

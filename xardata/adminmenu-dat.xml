@@ -21,6 +21,15 @@
         <menuitem>
             <mask>ManagePubSub</mask>
             <includes>
+                <includeitem>view_subscriptions</includeitem>
+            </includes>
+            <target>view_subscriptions</target>
+            <title>Manage subscribers</title>
+            <label>Subscriptions</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManagePubSub</mask>
+            <includes>
                 <includeitem>view_templates</includeitem>
             </includes>
             <target>view_templates</target>

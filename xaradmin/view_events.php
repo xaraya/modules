@@ -14,7 +14,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Displays a summary of category subscribtions and basic metrics. Provides options
+ * Displays a summary of category subscriptions and basic metrics. Provides options
  * to view details about each subscription
  */
 function pubsub_admin_view_events()

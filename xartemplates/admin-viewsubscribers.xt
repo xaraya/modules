@@ -4,6 +4,8 @@
     <div class="xar-mod-body">
         <h2>Subscriber Summary</h2>
 
+        <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
+<!--
         <fieldset>
             <legend>
             <xar:ml>
@@ -45,7 +47,7 @@
                 #xarLocaleFormatDate("%a, %d-%B-%Y", $item['subdate'])#
             </td>
             <td>
-                <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
+                <a href="#xarModURL('pubsub','admin','view_subscriptions',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
             </td>
          </tr>
          </xar:foreach>
@@ -62,7 +64,7 @@
     </fieldset>
     </div>
     <div class="xar-form-input-after">
-    <!-- add the pager here -->
     #$pager#
+-->
     </div>
 </xar:template>
