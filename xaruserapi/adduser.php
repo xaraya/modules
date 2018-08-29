@@ -80,7 +80,7 @@ function pubsub_userapi_adduser($args)
               email)
             VALUES (?,?,?,?," . time() . ",?)";
     $bindvars = array($nextId, $eventid, $userid, $actionid, $email);
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // return pubsub ID

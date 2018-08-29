@@ -66,7 +66,7 @@ function pubsub_adminapi_updateevent($args)
                   groupdescr = ?
               WHERE eventid = ?";
         $bindvars = array((int)$module, $itemtype, $groupdescr, (int)$eventid);
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

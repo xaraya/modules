@@ -58,7 +58,7 @@ function pubsub_userapi_unsubscribe($args)
         $query .= " AND $pubsubeventstable.extra = ?";
         array_push($bindvars, $extra);
     }
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result || $result->EOF) return;
 
     list($pubsubid) = $result->fields;

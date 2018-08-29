@@ -59,7 +59,7 @@ function pubsub_userapi_getall($args)
                     ,$categoriestable.name
                     ,$categoriestable.id";
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {

@@ -67,7 +67,7 @@ function pubsub_user_unsubscribe($args)
                  AND $pubsubeventstable.cid = ?";
 
     $bindvars = array((int)$modid, $itemtype, (int)$userid, $cid);
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result || $result->EOF) return;
 
     list($pubsubid) = $result->fields;

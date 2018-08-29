@@ -61,7 +61,7 @@ function pubsub_userapi_getsubscribers($args)
                  AND $pubsubeventstable.modid   = $modulestable.regid
                  AND $pubsubeventstable.eventid = $eventid";
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {

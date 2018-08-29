@@ -62,7 +62,7 @@ function pubsub_adminapi_updatetemplate($args)
                   name = ?
               WHERE id = ?";
     $bindvars = array($template, $compiled, $name, (int)$id);
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

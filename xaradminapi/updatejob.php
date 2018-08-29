@@ -67,7 +67,7 @@ function pubsub_adminapi_updatejob($args)
                   status = ?
             WHERE id = ?";
         $bindvars = array((int)$pubsubid, (int)$objectid, $status, $id);
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

@@ -52,7 +52,7 @@ function pubsub_userapi_updatesubscription($args)
               SET actionid = ?
               WHERE pubsubid = ?";
     $bindvars=array($actionid, $pubsubid);
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     return true;

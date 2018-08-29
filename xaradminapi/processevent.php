@@ -83,7 +83,7 @@ function pubsub_adminapi_processevent($args)
             $query .= " AND $pubsubeventstable.extra = ?";
             array_push($bindvars, $extra);
         }
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
         for (; !$result->EOF; $result->MoveNext())
@@ -109,7 +109,7 @@ function pubsub_adminapi_processevent($args)
             $query .= " AND $pubsubeventstable.extra = ?";
             array_push($bindvars, $extra);
         }
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
         for (; !$result->EOF; $result->MoveNext())
@@ -135,7 +135,7 @@ function pubsub_adminapi_processevent($args)
                 VALUES (?,?,?,?,
                   'pending')";
         $bindvars = array((int)$nextId, (int)$pubsubid, (int)$objectid, (int)$template_id);
-        $result2 =& $dbconn->Execute($query, $bindvars);
+        $result2 = $dbconn->Execute($query, $bindvars);
         if (!$result2) return;
     }
 

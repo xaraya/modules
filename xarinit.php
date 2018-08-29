@@ -125,7 +125,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     $query = "INSERT INTO $pubsubtemplatestable (id, name, template, compiled)
               VALUES (?,?,?,?)";
     $bindvars=array($nextId, $name, $template, $compiled);
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return; */
 /*
     // Set up module hooks

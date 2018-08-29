@@ -31,7 +31,7 @@ function pubsub_userapi_getalltemplates($args)
                      name
                 FROM $pubsubtemplatestable";
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {

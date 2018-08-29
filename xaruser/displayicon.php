@@ -121,7 +121,7 @@ function pubsub_user_displayicon($args)
             $query .= " AND $pubsubeventstable.extra = ?";
             array_push($bindvars, $extra);
         }
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     if ($result->EOF) {
         /**
