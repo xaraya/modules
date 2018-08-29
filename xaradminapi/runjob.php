@@ -43,19 +43,19 @@ function pubsub_adminapi_runjob($args)
     // Database information
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Get info on job to run
     $query = "SELECT actionid,
                      userid,
-                     $pubsubregtable.eventid,
+                     $pubsubsubscriptionstable.eventid,
                      modid,
                      itemtype,
-                     $pubsubregtable.email
-              FROM $pubsubregtable
+                     $pubsubsubscriptionstable.email
+              FROM $pubsubsubscriptionstable
               LEFT JOIN $pubsubeventstable
-              ON $pubsubregtable.eventid = $pubsubeventstable.eventid
+              ON $pubsubsubscriptionstable.eventid = $pubsubeventstable.eventid
               WHERE pubsubid = ?";
     $result   = $dbconn->Execute($query, array((int)$pubsubid));
     if (!$result) return;

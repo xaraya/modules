@@ -38,21 +38,21 @@ function pubsub_userapi_getall($args)
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubregtable = $xartable['pubsub_subscriptions'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     $query = "SELECT $pubsubeventstable.id
                     ,$modulestable.name
                     ,$pubsubeventstable.itemtype
                     ,$categoriestable.name
                     ,$categoriestable.id
-                    ,COUNT($pubsubregtable.userid) AS numsubscribers
+                    ,COUNT($pubsubsubscriptionstable.userid) AS numsubscribers
                 FROM $pubsubeventstable
            LEFT JOIN $modulestable
                   ON $pubsubeventstable.module_id = $modulestable.regid
            LEFT JOIN $categoriestable
                   ON $pubsubeventstable.cid = $categoriestable.id
-           LEFT JOIN $pubsubregtable
-                  ON $pubsubeventstable.id = $pubsubregtable.event_id
+           LEFT JOIN $pubsubsubscriptionstable
+                  ON $pubsubeventstable.id = $pubsubsubscriptionstable.event_id
             GROUP BY $pubsubeventstable.id
                     ,$modulestable.name
                     ,$pubsubeventstable.itemtype

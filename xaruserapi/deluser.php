@@ -43,10 +43,10 @@ function pubsub_userapi_deluser($args)
     // Get datbase setup
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     // Delete item
-    $query = "DELETE FROM $pubsubregtable
+    $query = "DELETE FROM $pubsubsubscriptionstable
               WHERE pubsubid = ?";
     $dbconn->Execute($query, array((int)$pubsubid));
 

@@ -106,15 +106,15 @@ function pubsub_user_displayicon($args)
     $xartable =& xarDB::getTables();
 
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     $query = "SELECT pubsubid
-                FROM $pubsubeventstable, $pubsubregtable
+                FROM $pubsubeventstable, $pubsubsubscriptionstable
                WHERE $pubsubeventstable.modid = ?
                  AND $pubsubeventstable.itemtype = ?
                  AND $pubsubeventstable.cid = ?
-                 AND $pubsubeventstable.eventid = $pubsubregtable.eventid
-                 AND $pubsubregtable.userid = ?";
+                 AND $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
+                 AND $pubsubsubscriptionstable.userid = ?";
 
         $bindvars = array((int)$modid, (int)$itemtype, (int)$cid, (int)$userid);
         if (isset($extra)) {

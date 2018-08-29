@@ -176,7 +176,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
 // TODO: review this :-)
 
 /*    // Define instances for this module
-    $query1 = "SELECT DISTINCT pubsubid FROM " . $pubsubregtable;
+    $query1 = "SELECT DISTINCT pubsubid FROM " . $pubsubsubscriptionstable;
     $query2 = "SELECT DISTINCT eventid FROM " . $pubsubeventstable;
     $query3 = "SELECT DISTINCT id FROM " . $pubsubprocesstable;
 

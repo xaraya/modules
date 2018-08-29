@@ -58,7 +58,7 @@ function pubsub_adminapi_processevent($args)
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
     $pubsubeventstable  = $xartable['pubsub_events'];
-    $pubsubregtable     = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable     = $xartable['pubsub_subscriptions'];
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Create an array to list the subscriptions that need to be processed.
@@ -72,8 +72,8 @@ function pubsub_adminapi_processevent($args)
         $ancestors = array_keys($ancestors);
 
         $query = "SELECT pubsubid, cid
-                    FROM $pubsubeventstable, $pubsubregtable
-                   WHERE $pubsubeventstable.eventid = $pubsubregtable.eventid
+                    FROM $pubsubeventstable, $pubsubsubscriptionstable
+                   WHERE $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
                      AND $pubsubeventstable.modid =?
                      AND $pubsubeventstable.itemtype = ?";
 //                      . "
@@ -99,8 +99,8 @@ function pubsub_adminapi_processevent($args)
 
     } else {
         $query = "SELECT pubsubid
-                    FROM $pubsubeventstable, $pubsubregtable
-                   WHERE $pubsubeventstable.eventid = $pubsubregtable.eventid
+                    FROM $pubsubeventstable, $pubsubsubscriptionstable
+                   WHERE $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
                      AND $pubsubeventstable.modid = ?
                      AND $pubsubeventstable.itemtype = ?
                      AND $pubsubeventstable.cid = ?";

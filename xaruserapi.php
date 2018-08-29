@@ -45,10 +45,10 @@ function pubsub_userapi_updatesubscription($args)
     // Get database setup
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     // Update the item
-    $query = "UPDATE $pubsubregtable
+    $query = "UPDATE $pubsubsubscriptionstable
               SET actionid = ?
               WHERE pubsubid = ?";
     $bindvars=array($actionid, $pubsubid);
@@ -83,10 +83,10 @@ function pubsub_userapi_delsubscriptions($args)
     // Get datbase setup
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_reg'];
 
     // Delete item
-    $query = "DELETE FROM $pubsubregtable
+    $query = "DELETE FROM $pubsubsubscriptionstable
               WHERE userid = ?";
     $bindvars=array($userid);
     $dbconn->Execute($query, $bindvars);

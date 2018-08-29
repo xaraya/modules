@@ -42,22 +42,22 @@ function pubsub_userapi_getsubscribers($args)
     $rolestable           = $xartable['roles'];
     $modulestable         = $xartable['modules'];
     $pubsubeventstable    = $xartable['pubsub_events'];
-    $pubsubregtable       = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable       = $xartable['pubsub_subscriptions'];
 
     $query = "SELECT $rolestable.uname  AS username
                     ,$modulestable.name AS modname
                     ,$pubsubeventstable.modid AS modid
                     ,$pubsubeventstable.itemtype AS itemtype
                     ,$pubsubeventstable.cid AS cid
-                    ,$pubsubregtable.subdate AS subdate
-                    ,$pubsubregtable.pubsubid AS pubsubid
-                    ,$pubsubregtable.email AS email
-                    ,$pubsubregtable.userid AS userid
+                    ,$pubsubsubscriptionstable.subdate AS subdate
+                    ,$pubsubsubscriptionstable.pubsubid AS pubsubid
+                    ,$pubsubsubscriptionstable.email AS email
+                    ,$pubsubsubscriptionstable.userid AS userid
                 FROM
                     $modulestable
                     ,$pubsubeventstable
-                    ,$pubsubregtable LEFT JOIN $rolestable ON ($pubsubregtable.userid     = $rolestable.id)
-               WHERE $pubsubeventstable.eventid = $pubsubregtable.eventid
+                    ,$pubsubsubscriptionstable LEFT JOIN $rolestable ON ($pubsubsubscriptionstable.userid     = $rolestable.id)
+               WHERE $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
                  AND $pubsubeventstable.modid   = $modulestable.regid
                  AND $pubsubeventstable.eventid = $eventid";
 

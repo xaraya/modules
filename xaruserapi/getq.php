@@ -27,7 +27,7 @@ function pubsub_userapi_getq($args)
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
-    $pubsubregtable = $xartable['pubsub_subscriptions'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
@@ -47,11 +47,11 @@ function pubsub_userapi_getq($args)
                      $pubsubprocesstable.object_id,
                      $pubsubprocesstable.template_id,
                      $pubsubprocesstable.status,
-                     $pubsubregtable.event_id,
-                     $pubsubregtable.userid,
-                     $pubsubregtable.action_id,
-                     $pubsubregtable.subdate,
-                     $pubsubregtable.email,
+                     $pubsubsubscriptionstable.event_id,
+                     $pubsubsubscriptionstable.userid,
+                     $pubsubsubscriptionstable.action_id,
+                     $pubsubsubscriptionstable.subdate,
+                     $pubsubsubscriptionstable.email,
                      $pubsubeventstable.module_id,
                      $pubsubeventstable.itemtype,
                      $pubsubeventstable.cid,
@@ -61,16 +61,16 @@ function pubsub_userapi_getq($args)
                      $rolestable.uname,
                      $categoriestable.name
               FROM $pubsubprocesstable
-         LEFT JOIN $pubsubregtable
-                ON $pubsubprocesstable.pubsub_id = $pubsubregtable.id
+         LEFT JOIN $pubsubsubscriptionstable
+                ON $pubsubprocesstable.pubsub_id = $pubsubsubscriptionstable.id
          LEFT JOIN $pubsubeventstable
-                ON $pubsubregtable.event_id = $pubsubeventstable.id
+                ON $pubsubsubscriptionstable.event_id = $pubsubeventstable.id
          LEFT JOIN $pubsubtemplatestable
                 ON $pubsubprocesstable.template_id = $pubsubtemplatestable.id
          LEFT JOIN $modulestable
                 ON $pubsubeventstable.module_id = $modulestable.regid
          LEFT JOIN $rolestable
-                ON $pubsubregtable.userid = $rolestable.id
+                ON $pubsubsubscriptionstable.userid = $rolestable.id
          LEFT JOIN $categoriestable
                 ON $pubsubeventstable.cid = $categoriestable.id";
 

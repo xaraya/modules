@@ -43,14 +43,14 @@ function pubsub_userapi_unsubscribe($args)
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     // fetch pubsubid to unsubscribe from
     $query = "SELECT pubsubid
-                FROM $pubsubeventstable, $pubsubregtable
+                FROM $pubsubeventstable, $pubsubsubscriptionstable
                WHERE $pubsubeventstable.modid = ?
-                 AND $pubsubregtable.eventid = $pubsubeventstable.eventid
-                 AND $pubsubregtable.userid = ?
+                 AND $pubsubsubscriptionstable.eventid = $pubsubeventstable.eventid
+                 AND $pubsubsubscriptionstable.userid = ?
                  AND $pubsubeventstable.cid = ?";
 
     $bindvars = array((int)$modid, (int)$userid, (int)$cid);

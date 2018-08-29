@@ -42,7 +42,7 @@ function pubsub_userapi_getsubscriptions($args)
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     // fetch items
     $query = "SELECT $pubsubeventstable.eventid
@@ -52,16 +52,16 @@ function pubsub_userapi_getsubscriptions($args)
                     ,$categoriestable.name
                     ,$pubsubeventstable.cid
                     ,$pubsubeventstable.extra
-                    ,$pubsubregtable.pubsubid
-                    ,$pubsubregtable.actionid
+                    ,$pubsubsubscriptionstable.pubsubid
+                    ,$pubsubsubscriptionstable.actionid
                 FROM $pubsubeventstable
                     ,$modulestable
                     ,$categoriestable
-                    ,$pubsubregtable
+                    ,$pubsubsubscriptionstable
                WHERE $pubsubeventstable.modid = $modulestable.regid
                  AND $pubsubeventstable.cid = $categoriestable.cid
-                 AND $pubsubeventstable.eventid = $pubsubregtable.eventid
-                 AND $pubsubregtable.userid =  ?";
+                 AND $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
+                 AND $pubsubsubscriptionstable.userid =  ?";
 
     $result = $dbconn->Execute($query, array((int)$userid));
     if (!$result) return;

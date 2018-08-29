@@ -59,19 +59,19 @@ function pubsub_userapi_adduser($args)
     // Database information
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $pubsubregtable = $xartable['pubsub_reg'];
+    $pubsubsubscriptionstable = $xartable['pubsub_subscriptions'];
 
     // check not already subscribed
     // TODO: Just noting that this doesn't actually do anything other then a useless query
-    $query = "SELECT pubsubid FROM $pubsubregtable";
+    $query = "SELECT pubsubid FROM $pubsubsubscriptionstable";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
     // Get next ID in table
-    $nextId = $dbconn->GenID($pubsubregtable);
+    $nextId = $dbconn->GenID($pubsubsubscriptionstable);
 
     // Add item
-    $query = "INSERT INTO $pubsubregtable (
+    $query = "INSERT INTO $pubsubsubscriptionstable (
               pubsubid,
               eventid,
               userid,
@@ -84,7 +84,7 @@ function pubsub_userapi_adduser($args)
     if (!$result) return;
 
     // return pubsub ID
-    $nextId = $dbconn->PO_Insert_ID($pubsubregtable, 'pubsubid');
+    $nextId = $dbconn->PO_Insert_ID($pubsubsubscriptionstable, 'pubsubid');
 
     return $nextId;
 }
