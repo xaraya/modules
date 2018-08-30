@@ -75,7 +75,7 @@ function pubsub_admin_delete_subscriber()
         }
 
         // Jump to the next page
-        xarController::redirect(xarModURL('pubsub', 'admin','view_subscribers'));
+        xarController::redirect(xarModURL('pubsub', 'admin','view_subscriptions'));
         return true;
     }
 }

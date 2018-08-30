@@ -19,6 +19,9 @@
  */
 function pubsub_admin_view_subscriptions()
 {
+    if (!xarSecurityCheck('ManagePubSub')) return;
+    xarTplSetPageTitle('View Subscribers');
+
     if (!xarVarFetch('eventid', 'int::', $eventid,  0,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pubsubid','int::', $pubsubid, FALSE, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('unsub',   'int::', $unsub,    FALSE, XARVAR_NOT_REQUIRED)) return;
@@ -31,6 +34,10 @@ function pubsub_admin_view_subscriptions()
 */
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_subscriptions'));
+    $q = $data['object']->dataquery;
+    
+    // Only active domains
+    $q->eq('state', 3);
     
     return $data;
 

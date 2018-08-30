@@ -12,9 +12,9 @@
         <menuitem>
             <mask>ManagePubSub</mask>
             <includes>
-                <includeitem>view_subscribers</includeitem>
+                <includeitem>view_subscriptions</includeitem>
             </includes>
-            <target>view_subscribers</target>
+            <target>view_subscriptions</target>
             <title>Manage the subscribers</title>
             <label>Subscribers</label>
         </menuitem>

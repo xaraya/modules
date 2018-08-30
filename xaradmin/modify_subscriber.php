@@ -51,7 +51,7 @@ function pubsub_admin_modify_subscriber()
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('pubsub','admin','view_subscribers'));
+            xarController::redirect(xarModURL('pubsub','admin','view_subscriptions'));
             return true;
         }
     }
