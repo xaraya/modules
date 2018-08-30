@@ -4,7 +4,9 @@
     <div class="xar-mod-body">
         <h2>Subscriber Summary</h2>
 
-        <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
+       	<xar:data-input type="listing" 
+       	                object="$object" 
+       	                tplmodule="pubsub"/>
 <!--
         <fieldset>
             <legend>
