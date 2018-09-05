@@ -51,6 +51,7 @@ function pubsub_init()
     $query = "CREATE TABLE " . $prefix . "_pubsub_subscriptions (
             id                  integer unsigned NOT NULL auto_increment,
             event_id            integer unsigned NOT NULL DEFAULT '0',
+            groupid             integer unsigned NOT NULL DEFAULT '0',
             userid              integer unsigned NOT NULL DEFAULT '0',
             action_id           integer unsigned NOT NULL DEFAULT '0',
             subdate             integer unsigned NOT NULL DEFAULT '0',

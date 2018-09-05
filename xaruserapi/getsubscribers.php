@@ -14,14 +14,14 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Get the subscribers for a particular event
+ * Get the subscriptions for a particular event
  *
  * @param $args['eventid'] the event id we're looking for
  * @return array of events
  */
 function pubsub_userapi_getsubscribers($args)
 {
-    $subscribers = array();
+    $subscriptions = array();
     /*
      * lets get...
      *  - username (need to get from db)
@@ -91,7 +91,7 @@ function pubsub_userapi_getsubscribers($args)
                 $displayname = '';
             }
 
-            $subscribers[] = array('username'  => $username
+            $subscriptions[] = array('username'  => $username
                                   ,'displayname' => $displayname
                                   ,'modname'   => $modname
                                   ,'modid'     => $modid
@@ -105,7 +105,7 @@ function pubsub_userapi_getsubscribers($args)
 
     $result->Close();
 
-    return $subscribers;
+    return $subscriptions;
 
 }
 

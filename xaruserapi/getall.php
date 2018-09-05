@@ -45,7 +45,7 @@ function pubsub_userapi_getall($args)
                     ,$pubsubeventstable.itemtype
                     ,$categoriestable.name
                     ,$categoriestable.id
-                    ,COUNT($pubsubsubscriptionstable.userid) AS numsubscribers
+                    ,COUNT($pubsubsubscriptionstable.userid) AS numsubscriptions
                 FROM $pubsubeventstable
            LEFT JOIN $modulestable
                   ON $pubsubeventstable.module_id = $modulestable.regid
@@ -63,14 +63,14 @@ function pubsub_userapi_getall($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $modname, $itemtype, $catname, $cid, $numsubscribers) = $result->fields;
+        list($id, $modname, $itemtype, $catname, $cid, $numsubscriptions) = $result->fields;
         if (xarSecurityCheck('AdminPubSub', 0)) {
             $events[] = array('id'        => $id
                              ,'modname'        => $modname
                              ,'itemtype'       => $itemtype
                              ,'catname'        => $catname
                              ,'cid'            => $cid
-                             ,'numsubscribers' => $numsubscribers
+                             ,'numsubscriptions' => $numsubscriptions
                              );
         }
     }
