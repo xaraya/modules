@@ -19,7 +19,7 @@
  */
     sys::import('modules.dynamicdata.class.objects.master');
     
-    function pubsub_admin_new_subscriber()
+    function pubsub_admin_new_subscription()
     {
         if (!xarSecurityCheck('AddPubSub')) return;
 
@@ -27,7 +27,7 @@
         if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-        $data['tplmodule'] = 'mailer';
+        $data['tplmodule'] = 'pubsub';
         
         if ($data['confirm']) {
         
@@ -39,7 +39,7 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('pubsub','admin','new_subscriber', $data);        
+                return xarTplModule('pubsub','admin','new_subscription', $data);        
             } else {
                 // Good data: create the item
                 $item = $data['object']->createItem();
