@@ -14,7 +14,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Add Subscriber
+ * Add Subscription
  * @param sub_module
  * @param sub_itemtype
  * @param sub_category

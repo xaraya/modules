@@ -15,7 +15,7 @@
                 <includeitem>view_subscriptions</includeitem>
             </includes>
             <target>view_subscriptions</target>
-            <title>Manage the subscribers</title>
+            <title>Manage the subscriptions</title>
             <label>Subscribers</label>
         </menuitem>
         <menuitem>
@@ -26,15 +26,6 @@
             <target>view_queue</target>
             <title>Manage the queue of events</title>
             <label>Event Queue</label>
-        </menuitem>
-        <menuitem>
-            <mask>ManagePubSub</mask>
-            <includes>
-                <includeitem>view_subscriptions</includeitem>
-            </includes>
-            <target>view_subscriptions</target>
-            <title>Manage subscribers</title>
-            <label>Subscriptions</label>
         </menuitem>
         <menuitem>
             <mask>ManagePubSub</mask>

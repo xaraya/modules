@@ -91,7 +91,7 @@ function pubsub_adminapi_deletehook($args)
         }
     }
 
-    // process the event (i.e. create a job for each subscriber)
+    // process the event (i.e. create a job for each subscription)
     if (!xarMod::apiFunc('pubsub','admin','processevent',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,

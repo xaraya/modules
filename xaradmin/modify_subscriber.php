@@ -19,7 +19,7 @@
  */
 sys::import('modules.dynamicdata.class.objects.master');
 
-function pubsub_admin_modify_subscriber()
+function pubsub_admin_modify_subscription()
 {
     // Xaraya security
     if (!xarSecurityCheck('ManagePubSub')) return;
@@ -45,7 +45,7 @@ function pubsub_admin_modify_subscriber()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTpl::module('pubsub','admin','modify_subscriber', $data);        
+            return xarTpl::module('pubsub','admin','modify_subscription', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));

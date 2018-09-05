@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Subscriber Summary</h2>
+        <h2>Subscription Summary</h2>
 
        	<xar:data-input type="listing" 
        	                object="$object" 
@@ -11,7 +11,7 @@
         <fieldset>
             <legend>
             <xar:ml>
-            <xar:mlstring>Subscriber Summary for #(1) [#(2)]</xar:mlstring>
+            <xar:mlstring>Subscription Summary for #(1) [#(2)]</xar:mlstring>
             <xar:mlvar>
               #$modname#
             </xar:mlvar>

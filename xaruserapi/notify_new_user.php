@@ -52,9 +52,9 @@ function pubsub_userapi_notify_new_user($args)
 				$user['name'] = "Eventhub Subscriber";
 				$user['email']= $args;
 				
-				$subscriber_template_id = xarModVars::get('pubsub', 'usermessage');
+				$subscription_template_id = xarModVars::get('pubsub', 'usermessage');
 				
-				$args = array('id'               => $subscriber_template_id,
+				$args = array('id'               => $subscription_template_id,
 						'sendername'       => "Administrator",
 						'senderaddress'    => "admin@eventhubsacramento.com",
 						'recipientname'    => "EventHub SUbscriber",

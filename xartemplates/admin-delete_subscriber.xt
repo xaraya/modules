@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:template file="admin-mod-head"/>
   <div class="xar-mod-body">
-  <xar:var name="title">Delete Subscriber</xar:var>
+  <xar:var name="title">Delete Subscription</xar:var>
   <xar:data-display object="$object" tplmodule="$tplmodule" /> 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <div class="xar-row">

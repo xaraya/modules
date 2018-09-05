@@ -14,8 +14,8 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Displays a list of subscribers to a given category. Provides an option
- * to manually remove a subscriber.
+ * Displays a list of subscriptions to a given category. Provides an option
+ * to manually remove a subscription.
  */
 function pubsub_admin_view_subscriptions()
 {
@@ -37,7 +37,7 @@ function pubsub_admin_view_subscriptions()
     $q = $data['object']->dataquery;
     
     // Only active domains
-    $q->eq('state', 3);
+    $q->eq('subscriptions.state', 3);
     
     return $data;
 
@@ -75,9 +75,9 @@ function pubsub_admin_view_subscriptions()
     if (!xarSecurityCheck('AdminPubSub')) return;
 
     // The user API function is called
-    $subscribers = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', array('eventid'=>$eventid));
+    $subscriptions = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', array('eventid'=>$eventid));
 
-    $data['items'] = $subscribers;
+    $data['items'] = $subscriptions;
 
     $data['returnurl'] = xarModURL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
 

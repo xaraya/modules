@@ -19,11 +19,11 @@
  */
 sys::import('modules.dynamicdata.class.objects.master');
 
-function pubsub_admin_display_subscriber()
+function pubsub_admin_display_subscription()
 {
     // Xaraya security
     if (!xarSecurityCheck('ManagePubSub')) return;
-    xarTpl::setPageTitle('Display Subscriber');
+    xarTpl::setPageTitle('Display Subscription');
 
     if (!xarVarFetch('name',       'str',    $name,            'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;

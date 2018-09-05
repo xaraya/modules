@@ -14,7 +14,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * process a pubsub event, by adding a job for each subscriber to the process queue
+ * process a pubsub event, by adding a job for each subscription to the process queue
  * @param $args['modid'] the module id for the event
  * @param $args['itemtype'] the itemtype for the event
  * @param $args['cid'] the category id for the event

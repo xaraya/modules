@@ -19,7 +19,7 @@
  * @param $args['itemtype'] itemtype of event
  * @param $args['cid'] cid of event
  * @param $args['extra'] some extra group criteria
- * @param $args['userid'] the subscriber
+ * @param $args['userid'] the subscription
  * @returns output
  * @return output with pubsub information
  */

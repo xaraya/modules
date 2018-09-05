@@ -20,7 +20,7 @@
  * @param $args['cid'] cid of event
  * @param $args['extra'] some extra group criteria
  *
- * @param $args['userid'] the subscriber OR
+ * @param $args['userid'] the subscription OR
  * @param $args['email'] Email address of anonymous user
  * @param int actionid The id for the action to take
  * @param $args['groupdescr'] <unknown>

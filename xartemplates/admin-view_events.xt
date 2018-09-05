@@ -4,7 +4,7 @@
     <div class="xar-mod-body">
         <fieldset>
             <legend>
-                Add Subscribers
+                Add Subscriptions
             </legend>
             
             <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
@@ -21,7 +21,7 @@
                         Category
                     </th>
                     <th>
-                        Subscribers
+                        Subscriptions
                     </th>
                     <th>
                         Action
@@ -40,10 +40,10 @@
                                 #$item['catname']#
                             </td>
                             <td>
-                                #$item['numsubscribers']#
+                                #$item['numsubscriptions']#
                             </td>
                             <td>
-                                <a href="&xar-modurl-pubsub-admin-view_subscriptions;&amp;eventid=#$item['eventid']#">Subscribers</a>
+                                <a href="&xar-modurl-pubsub-admin-view_subscriptions;&amp;eventid=#$item['eventid']#">Subscriptions</a>
                             </td>
                         </tr>
                     </xar:foreach>
@@ -61,7 +61,7 @@
         <form action="&xar-modurl-pubsub-admin-addsubscriber;" method="post">
         <fieldset>
             <legend>
-                Add Subscribers
+                Add Subscriptions
             </legend>
 
             <div class="xar-form-input-wrapper">
@@ -104,7 +104,7 @@
             </div>
             </fieldset>
             <div class="xar-form-input-wrapper-after">
-                <xar:var name="label">Add Subscriber</xar:var>
+                <xar:var name="label">Add Subscription</xar:var>
                 <xar:button type="submit" label="$label"/>
             </div>
         </form>
