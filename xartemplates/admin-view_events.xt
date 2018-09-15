@@ -8,7 +8,7 @@
             </legend>
             
             <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
-
+<!--
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
                     <th>
@@ -43,7 +43,7 @@
                                 #$item['numsubscriptions']#
                             </td>
                             <td>
-                                <a href="&xar-modurl-pubsub-admin-view_subscriptions;&amp;eventid=#$item['eventid']#">Subscriptions</a>
+                                <a href="&xar-modurl-pubsub-admin-view_subscriptions;&amp;event_id=#$item['id']#">Subscriptions</a>
                             </td>
                         </tr>
                     </xar:foreach>
@@ -56,9 +56,10 @@
                     </tr>
                 </xar:if>
             </table>
+-->
         </fieldset>
 
-        <form action="&xar-modurl-pubsub-admin-addsubscriber;" method="post">
+        <form action="&xar-modurl-pubsub-admin-new_subscription;" method="post">
         <fieldset>
             <legend>
                 Add Subscriptions
@@ -98,7 +99,7 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">
-                    EMail Addresses
+                    Email Addresses
                 </label>
                 <textarea name="sub_email" cols="55" rows="6"></textarea>
             </div>

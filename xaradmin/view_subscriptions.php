@@ -39,6 +39,9 @@ function pubsub_admin_view_subscriptions()
     // Only active domains
     $q->eq('subscriptions.state', 3);
     
+    // If an event ID was passed, then filter on it
+    if (!empty($eventid)) $q->eq('subscriptions.event', $eventid);
+    
     return $data;
 
     $data['items'] = array();

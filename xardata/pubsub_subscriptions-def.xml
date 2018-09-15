@@ -34,7 +34,7 @@
       <source>subscriptions.event_id</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:13:"pubsub_events";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:17:"group_description";}</configuration>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:13:"pubsub_events";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="group_id">
       <id>31390</id>

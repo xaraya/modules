@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- This is a generic form template for any DD object. You can use a specific template for one particular object in this directory as showform-[objectname].xd, and/or use templates in your own [module]/xartemplates/objects directory by specifying the tplmodule="..." argument in the xar:data-form BL tag or showForm() method call. -->
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'default'</xar:set>
+    </xar:if>
+    <xar:if condition="$layout eq 'default'">
+        <xar:data-input property="$properties['id']" hidden="hidden"/>                    
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Name</xar:var>
+               <xar:data-label property="$properties['name']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['name']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Module</xar:var>
+               <xar:data-label property="$properties['module_id']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['module_id']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Item Type</xar:var>
+               <xar:data-label property="$properties['itemtype']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['itemtype']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Category</xar:var>
+               <xar:data-label property="$properties['category']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['category']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Extra Info</xar:var>
+               <xar:data-label property="$properties['extra_info']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['extra_info']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Group Description</xar:var>
+               <xar:data-label property="$properties['group_description']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['group_description']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Author</xar:var>
+               <xar:data-label property="$properties['author']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['author']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Time Created</xar:var>
+               <xar:data-label property="$properties['time_created']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['time_created']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Time Modified</xar:var>
+               <xar:data-label property="$properties['time_modified']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['time_modified']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">State</xar:var>
+               <xar:data-label property="$properties['state']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['state']"/>                    
+           </div>        
+        </div>
+    <xar:else />
+        <!-- You can also specify your own layout here or in a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype -->
+        <xar:template module="$tplmodule" file="form-$layout"/>
+    </xar:if>
+</xar:template>

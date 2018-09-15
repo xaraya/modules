@@ -14,18 +14,18 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Modify an item of the pubsub_subscriptions object
+ * Modify an item of the pubsub_events object
  *
  */
 sys::import('modules.dynamicdata.class.objects.master');
 
-function pubsub_admin_modify_subscription()
+function pubsub_admin_modify_event()
 {
     // Xaraya security
     if (!xarSecurityCheck('ManagePubSub')) return;
-    xarTpl::setPageTitle('Modify Subscriber');
+    xarTpl::setPageTitle('Modify Event');
     
-    if (!xarVarFetch('name',       'str',    $name,            'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str',    $name,            'pubsub_events', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
@@ -45,13 +45,13 @@ function pubsub_admin_modify_subscription()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTpl::module('pubsub','admin','modify_subscription', $data);        
+            return xarTpl::module('pubsub','admin','modify_event', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('pubsub','admin','view_subscriptions'));
+            xarController::redirect(xarModURL('pubsub','admin','view_events'));
             return true;
         }
     }

@@ -29,7 +29,8 @@ function pubsub_admin_view_events()
 
 
     // The user API function is called
-    $events = xarMod::apiFunc('pubsub', 'user', 'getall');
+//    $events = xarMod::apiFunc('pubsub', 'user', 'getall');
+    $events = $data['object']->getItems();
 
     $data['items'] = $events;
 

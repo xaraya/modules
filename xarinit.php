@@ -33,6 +33,7 @@ function pubsub_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_pubsub_events (
             id                  integer unsigned NOT NULL auto_increment,
+            name                varchar(64) NOT NULL DEFAULT '',
             module_id           integer unsigned NOT NULL DEFAULT '0',
             itemtype            integer unsigned NOT NULL DEFAULT '0',
             cid                 integer unsigned NOT NULL DEFAULT '0',
@@ -129,31 +130,6 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return; */
 /*
-    // Set up module hooks
-    if (!xarModRegisterHook('item',
-                           'create',
-                           'API',
-                           'pubsub',
-                           'admin',
-                           'createhook')) {
-        return false;
-    }
-    if (!xarModRegisterHook('item',
-                           'update',
-                           'API',
-                           'pubsub',
-                           'admin',
-                           'updatehook')) {
-        return false;
-    }
-    if (!xarModRegisterHook('item',
-                           'delete',
-                           'API',
-                           'pubsub',
-                           'admin',
-                           'deletehook')) {
-        return false;
-    }
 // used by categories only (for now)
     if (!xarModRegisterHook('item',
                            'display',
@@ -204,6 +180,14 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     xarRegisterMask('AddPubSub','All','pubsub','All','All','ACCESS_ADD');
     xarRegisterMask('ManagePubSub','All','pubsub','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminPubSub','All','pubsub','All','All','ACCESS_ADMIN');
+
+    # --------------------------------------------------------
+    #
+    # Set up hooks
+    #
+        xarHooks::registerObserver('ItemCreate', 'pubsub');
+        xarHooks::registerObserver('ItemUpdate', 'pubsub');
+        xarHooks::registerObserver('ItemDelete', 'pubsub');
 
     // Initialisation successful
     return true;
