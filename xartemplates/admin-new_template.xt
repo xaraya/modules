@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <form method="post" id="post" action="#xarModURL('biller','admin','new_template')#">
+            <fieldset>
+                <xar:data-form object="$object"/>
+            </fieldset>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="name" id="name" value="#$object:name#"/>
+                    <input type="hidden" name="confirm" id="confirm" value="true"/>
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" value="$label"/>
+                    <xar:var name="label">Create</xar:var>
+                    <xar:button type="submit" value="$label" class="btn-primary"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</xar:template>
