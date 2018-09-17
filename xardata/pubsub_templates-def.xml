@@ -39,7 +39,7 @@
     <property name="template">
       <id>10572</id>
       <label>Template</label>
-      <type>textbox</type>
+      <type>textarea_large</type>
       <defaultvalue></defaultvalue>
       <source>templates.template</source>
       <status>34</status>
@@ -49,7 +49,7 @@
     <property name="compiled">
       <id>10573</id>
       <label>Compiled</label>
-      <type>textbox</type>
+      <type>textarea_large</type>
       <defaultvalue></defaultvalue>
       <source>templates.compiled</source>
       <status>34</status>
