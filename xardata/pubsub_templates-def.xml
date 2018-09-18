@@ -44,7 +44,7 @@
       <source>templates.object_id</source>
       <status>33</status>
       <seq>3</seq>
-      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"objects";s:25:"initialization_store_prop";s:8:"objectid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:7:"objects";s:25:"initialization_store_prop";s:8:"objectid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="module">
       <id>31799</id>
@@ -54,7 +54,7 @@
       <source>templates.module_id</source>
       <status>33</status>
       <seq>4</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:5:"regid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="itemtype">
       <id>31800</id>
