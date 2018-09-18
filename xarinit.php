@@ -185,9 +185,9 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     #
     # Set up hooks
     #
-        xarHooks::registerObserver('ItemCreate', 'pubsub');
-        xarHooks::registerObserver('ItemUpdate', 'pubsub');
-        xarHooks::registerObserver('ItemDelete', 'pubsub');
+    xarHooks::registerObserver('ItemCreate', 'pubsub');
+    xarHooks::registerObserver('ItemUpdate', 'pubsub');
+    xarHooks::registerObserver('ItemDelete', 'pubsub');
 
     // Initialisation successful
     return true;

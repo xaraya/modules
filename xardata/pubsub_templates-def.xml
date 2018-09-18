@@ -1,8 +1,8 @@
 <object name="pubsub_templates">
-  <objectid>843</objectid>
+  <objectid>323</objectid>
   <label>PubSub Templates</label>
   <module_id>182</module_id>
-  <itemtype>343</itemtype>
+  <itemtype>220</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -14,10 +14,9 @@
   <sources>a:1:{s:9:&quot;templates&quot;;a:2:{i:0;s:20:&quot;xar_pubsub_templates&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
-  <category></category>
   <properties>
     <property name="id">
-      <id>10570</id>
+      <id>7510</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -27,7 +26,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="name">
-      <id>10571</id>
+      <id>7511</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -37,7 +36,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="template">
-      <id>10572</id>
+      <id>7512</id>
       <label>Template</label>
       <type>textarea_large</type>
       <defaultvalue></defaultvalue>
@@ -47,7 +46,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="compiled">
-      <id>10573</id>
+      <id>7513</id>
       <label>Compiled</label>
       <type>textarea_large</type>
       <defaultvalue></defaultvalue>
@@ -57,17 +56,17 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="author">
-      <id>10566</id>
+      <id>7514</id>
       <label>Author</label>
       <type>username</type>
-      <defaultvalue>xarUser::getVar('id')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>templates.author</source>
-      <status>33</status>
+      <status>65</status>
       <seq>5</seq>
       <configuration>a:7:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";s:27:"initialization_display_name";s:5:"uname";}</configuration>
     </property>
     <property name="time_created">
-      <id>10567</id>
+      <id>7515</id>
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -77,7 +76,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_modified">
-      <id>10568</id>
+      <id>7516</id>
       <label>Time Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -87,7 +86,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>10569</id>
+      <id>7517</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>

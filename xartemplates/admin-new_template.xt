@@ -3,7 +3,7 @@
     <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <form method="post" id="post" action="#xarModURL('biller','admin','new_template')#">
+        <form method="post" id="post" action="#xarModURL('pubsub','admin','new_template')#">
             <fieldset>
                 <xar:data-form object="$object"/>
             </fieldset>
