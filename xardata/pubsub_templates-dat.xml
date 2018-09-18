@@ -1,0 +1,15 @@
+<items>
+  <pubsub_templates itemid="1">
+    <id>1</id>
+    <name>Default Template</name>
+    <object>832</object>
+    <module>68</module>
+    <itemtype>0</itemtype>
+    <template></template>
+    <compiled></compiled>
+    <author>6</author>
+    <time_created>1537293201</time_created>
+    <time_modified>1537293201</time_modified>
+    <state>3</state>
+  </pubsub_templates>
+</items>

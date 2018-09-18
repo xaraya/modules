@@ -21,7 +21,6 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
     {
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
-        $extrainfo = array();return $extrainfo;
 
         try {
             $valid_array = $this->validate($extrainfo);
