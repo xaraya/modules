@@ -24,6 +24,7 @@ function pubsub_admin_new_template()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     if(empty($data['object'])) return;
+    $data['tplmodule'] = 'pubsub';
 
     if ($data['confirm']) {
 
