@@ -34,33 +34,31 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
         }
 
         $typeoftemplate = 'update';
-        if ($createwithstatus = xarModVars::get('pubsub',"$modname.$itemtype.createwithstatus") ) {
-            if ($createwithstatus == 1 & $extrainfo['status'] >= 2 & $extrainfo['oldstatus']< 2) {
-                $typeoftemplate = 'create';
-            }
+        
+        sys::import('modules.dynamicdata.class.properties.master');
+        $templates = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
+        $q = $templates->dataquery;
+        if (!empty($extrainfo['object'])) {
+            $q->eq('object_id', $extrainfo['object']);
+        } elseif (!empty($extrainfo['module_id'])) {
+            $q->eq('module_id', $extrainfo['module_id']);
+            $q->eq('itemtype', $extrainfo['itemtype']);
         }
-
-        $id = xarModVars::get('pubsub',"$modname.$itemtype.$typeoftemplate");
-        if (!isset($id)) {
-            $id = xarModVars::get('pubsub',"$modname.$typeoftemplate");
+        $q->addfield('id');
+        $q->run();
+        $result = $q->output();
+        
+        if (!empty($result)) {
+            // Use the template found
+            $row = reset($result);
+            $template_id = (int)$row['id'];
+        } elseif (empty($result) && xarModVars::get('pubsub', 'enable_default')) {
+            // Use the default template
+            $template_id = 1;
+        } else {
+            // We have no template: bail
+            return $extrainfo;
         }
-
-    // if there's no 'update' template defined for this module(+itemtype), we're done here
-    if (empty($id)) {
-        return $extrainfo;
-    }
-
-// FIXME: get categories for updated item
-    $cid = '';
-    if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
-        $cid = $extrainfo['cid'];
-    } elseif (isset($extrainfo['cids'][0]) && is_numeric($extrainfo['cids'][0])) {
-    // TODO: loop over all categories
-        $cid = $extrainfo['cids'][0];
-    } else {
-        // Do nothing if we do not get a cid.
-        return $extrainfo;
-    }
 
     $extra = null;
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
