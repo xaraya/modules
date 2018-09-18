@@ -94,7 +94,7 @@
       <source>templates.state</source>
       <status>33</status>
       <seq>8</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:39:"modules/xardata/dropdown_values-dat.xml";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>
 </object>
