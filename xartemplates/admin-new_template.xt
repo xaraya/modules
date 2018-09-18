@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
         <form method="post" id="post" action="#xarModURL('pubsub','admin','new_template')#">
             <fieldset>
-                <xar:data-form object="$object"/>
+                <xar:data-form object="$object" tplmodule="$tplmodule"/>
             </fieldset>
             <div class="xar-row">
                 <div class="xar-col">
