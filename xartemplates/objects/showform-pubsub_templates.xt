@@ -23,7 +23,7 @@
            </div>
            <div class="xar-col">
                <xar:var name="firstline">Choose an object</xar:var>
-               <xar:set name="firstline">array(array('id' => 0,'name' => $firstline))</xar:set>
+               <xar:set name="firstline">"0,$firstline"</xar:set>
                <xar:data-input property="$properties['object']" firstline="$firstline"/>                    
            </div>        
         </div>
@@ -34,7 +34,7 @@
            </div>
            <div class="xar-col">
                <xar:var name="firstline">Choose a module</xar:var>
-               <xar:set name="firstline">array(array('id' => 0,'name' => $firstline))</xar:set>
+               <xar:set name="firstline">"0,$firstline"</xar:set>
                <xar:data-input property="$properties['module']" firstline="$firstline"/>                    
            </div>        
         </div>
