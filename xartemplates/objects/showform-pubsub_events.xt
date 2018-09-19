@@ -22,7 +22,9 @@
                <xar:data-label property="$properties['object']" label="$label"/>                    
            </div>
            <div class="xar-col">
-               <xar:data-input property="$properties['object']"/>                    
+               <xar:var name="firstline">Choose an object</xar:var>
+               <xar:set name="firstline">"0,$firstline"</xar:set>
+               <xar:data-input property="$properties['object']" firstline="$firstline"/>                    
            </div>        
         </div>
         <div class="xar-row">
@@ -31,7 +33,9 @@
                <xar:data-label property="$properties['module']" label="$label"/>                    
            </div>
            <div class="xar-col">
-               <xar:data-input property="$properties['module']"/>                    
+               <xar:var name="firstline">Choose a module</xar:var>
+               <xar:set name="firstline">"0,$firstline"</xar:set>
+               <xar:data-input property="$properties['module']" firstline="$firstline"/>                    
            </div>        
         </div>
         <div class="xar-row">
