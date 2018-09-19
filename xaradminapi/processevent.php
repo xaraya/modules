@@ -51,7 +51,7 @@ function pubsub_adminapi_processevent($args)
     $queue = DataObjectMaster::getObject(array('name' => 'pubsub_process'));
 
     $tables = xarDB::getTables();
-    $q = new Query('INSERT', tables['pubsub_process']);
+    $q = new Query('INSERT', $tables['pubsub_process']);
     foreach ($args as $k => $v) {
         $q->addfield($k, $v);
     }

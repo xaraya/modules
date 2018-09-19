@@ -1,8 +1,8 @@
 <object name="pubsub_events">
-  <objectid>2347</objectid>
+  <objectid>349</objectid>
   <label>PubSub Events</label>
   <module_id>182</module_id>
-  <itemtype>541</itemtype>
+  <itemtype>218</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -14,10 +14,9 @@
   <sources>a:1:{s:6:&quot;events&quot;;a:2:{i:0;s:17:&quot;xar_pubsub_events&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
-  <category>a:0:{}</category>
   <properties>
     <property name="id">
-      <id>31346</id>
+      <id>7779</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -27,7 +26,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="name">
-      <id>31391</id>
+      <id>7780</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -36,94 +35,104 @@
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="module_id">
-      <id>31347</id>
-      <label>Module ID</label>
+    <property name="object">
+      <id>7822</id>
+      <label>Object</label>
+      <type>objectref</type>
+      <defaultvalue>0</defaultvalue>
+      <source>events.object_id</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"objects";s:25:"initialization_store_prop";s:8:"objectid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
+    </property>
+    <property name="module">
+      <id>7781</id>
+      <label>Module</label>
       <type>module</type>
       <defaultvalue></defaultvalue>
       <source>events.module_id</source>
       <status>33</status>
-      <seq>3</seq>
+      <seq>4</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="itemtype">
-      <id>31348</id>
+      <id>7782</id>
       <label>Itemtype</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
       <source>events.itemtype</source>
       <status>33</status>
-      <seq>4</seq>
+      <seq>5</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="category">
-      <id>31349</id>
+      <id>7783</id>
       <label>Category</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
       <source>events.cid</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="extra_info">
-      <id>31350</id>
+      <id>7784</id>
       <label>Extra Info</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>events.extra</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="group_description">
-      <id>31351</id>
+      <id>7785</id>
       <label>Group Description</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>events.groupdescr</source>
       <status>33</status>
-      <seq>7</seq>
+      <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="author">
-      <id>31352</id>
+      <id>7786</id>
       <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>events.author</source>
       <status>65</status>
-      <seq>8</seq>
+      <seq>9</seq>
       <configuration>a:7:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";s:27:"initialization_display_name";s:5:"uname";}</configuration>
     </property>
     <property name="time_created">
-      <id>31353</id>
+      <id>7787</id>
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>events.timecreated</source>
       <status>66</status>
-      <seq>9</seq>
+      <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_modified">
-      <id>31354</id>
+      <id>7788</id>
       <label>Time Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>events.timemodified</source>
       <status>66</status>
-      <seq>10</seq>
+      <seq>11</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>31355</id>
+      <id>7789</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
       <source>events.state</source>
       <status>33</status>
-      <seq>11</seq>
+      <seq>12</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>

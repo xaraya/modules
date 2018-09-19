@@ -34,6 +34,7 @@ function pubsub_init()
     $query = "CREATE TABLE " . $prefix . "_pubsub_events (
             id                  integer unsigned NOT NULL auto_increment,
             name                varchar(64) NOT NULL DEFAULT '',
+            object_id           integer unsigned NOT NULL DEFAULT '0',
             module_id           integer unsigned NOT NULL DEFAULT '0',
             itemtype            integer unsigned NOT NULL DEFAULT '0',
             cid                 integer unsigned NOT NULL DEFAULT '0',
