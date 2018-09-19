@@ -29,14 +29,14 @@ function pubsub_adminapi_processevent($args)
     // Get arguments from argument array
     extract($args);
     $invalid = array();
-    if (empty($module) || !is_numeric($module)) {
-        $invalid[] = 'module';
+    if (empty($module_id) || !is_numeric($module_id)) {
+        $invalid[] = 'module_id';
     }
     if (!isset($cid) || !is_numeric($cid)) {
         $invalid[] = 'cid';
     }
-    if (!isset($object) || !is_numeric($object)) {
-        $invalid[] = 'object';
+    if (!isset($object_id) || !is_numeric($object_id)) {
+        $invalid[] = 'object_id';
     }
     if (!isset($itemid) || !is_numeric($itemid)) {
         $invalid[] = 'itemid';
@@ -51,10 +51,15 @@ function pubsub_adminapi_processevent($args)
     $queue = DataObjectMaster::getObject(array('name' => 'pubsub_process'));
 
     $tables = xarDB::getTables();
+    $q = new Query('SELECT', $tables['pubsub_events']);
+
     $q = new Query('INSERT', $tables['pubsub_process']);
     foreach ($args as $k => $v) {
         $q->addfield($k, $v);
     }
+    $q->addfield('time_created', time());
+    $q->addfield('time_modified', time());
+    $q->addfield('author', xarUser::getVar('id'));
     $q->qecho();
     exit;
     $queue->createItem($args);
