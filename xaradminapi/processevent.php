@@ -50,6 +50,13 @@ function pubsub_adminapi_processevent($args)
     sys::import('modules.dynamicdata.class.properties.master');
     $queue = DataObjectMaster::getObject(array('name' => 'pubsub_process'));
 
+    $tables = xarDB::getTables();
+    $q = new Query('INSERT', tables['pubsub_process']);
+    foreach ($args as $k => $v) {
+        $q->addfield($k, $v);
+    }
+    $q->qecho();
+    exit;
     $queue->createItem($args);
     return true;
 
