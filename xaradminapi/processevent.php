@@ -29,14 +29,14 @@ function pubsub_adminapi_processevent($args)
     // Get arguments from argument array
     extract($args);
     $invalid = array();
-    if (empty($modid) || !is_numeric($modid)) {
-        $invalid[] = 'modid';
+    if (empty($module_id) || !is_numeric($module_id)) {
+        $invalid[] = 'module_id';
     }
     if (!isset($cid) || !is_numeric($cid)) {
         $invalid[] = 'cid';
     }
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $invalid[] = 'objectid';
+    if (!isset($object_id) || !is_numeric($object_id)) {
+        $invalid[] = 'object_id';
     }
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
