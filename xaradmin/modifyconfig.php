@@ -146,8 +146,8 @@ function pubsub_admin_modifyconfig()
                                                                                         'delete' => $delete);
                                 }
                             }
-                            */
                         }
+                            */
                     }
                 break;
             }
