@@ -44,8 +44,8 @@ function pubsub_admin_modifyconfig()
 
     $data['settings'] = array();
 
-    if (!xarVarFetch('phase', 'pre:trim:lower:str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'pre:trim:lower:str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'pre:trim:lower:str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('tab',   'pre:trim:lower:str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
 
     switch (strtolower($phase)) {
         case 'modify':
@@ -168,25 +168,19 @@ function pubsub_admin_modifyconfig()
                     }
                     
                     // Get parameters
-                    xarVarFetch('settings',     'isset',    $settings,      '', XARVAR_DONT_SET);
-                    xarVarFetch('subjecttitle', 'isset',    $subjecttitle,  '', XARVAR_DONT_SET);
-                    xarVarFetch('includechildren','isset',  $includechildren,'', XARVAR_DONT_SET);
-                    xarVarFetch('allindigest',  'isset',    $allindigest,   '', XARVAR_DONT_SET);
-                    xarVarFetch('wrapper',      'isset',    $wrapper,       '', XARVAR_DONT_SET);
-                    xarVarFetch('usetemplateids', 'isset',  $usetemplateids, 1, XARVAR_DONT_SET);
+                    xarVarFetch('settings',       'isset',    $settings,      '', XARVAR_DONT_SET);
+                    xarVarFetch('subjecttitle',   'checkbox', $subjecttitle,  false, XARVAR_DONT_SET);
+                    xarVarFetch('includechildren','checkbox', $includechildren,false, XARVAR_DONT_SET);
+                    xarVarFetch('allindigest',    'checkbox', $allindigest,   false, XARVAR_DONT_SET);
+                    xarVarFetch('usetemplateids', 'checkbox',  $usetemplateids, false, XARVAR_DONT_SET);
                     if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('pubsub', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 					if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
-					if (!xarVarFetch('sendnotice',        'checkbox', $enable_default_template,        xarModVars::get('pubsub', 'enable_default_template'), XARVAR_NOT_REQUIRED)) return;
+					if (!xarVarFetch('enable_default_template',        'checkbox', $enable_default_template,        false, XARVAR_NOT_REQUIRED)) return;
                     
                     if (isset($settings) && is_array($settings)) {
                         foreach ($settings as $name => $value) {
                             xarModVars::set('pubsub', $name, $value);
                         }
-                    }
-                    if (isset($wrapper)) {
-                        xarModVars::set('pubsub','wrapper',$wrapper);
-                    } else {
-                        xarModVars::set('pubsub','wrapper',0);
                     }
                     /* Bug 4777
                     if (empty($SupportShortURLs)) {
@@ -194,22 +188,10 @@ function pubsub_admin_modifyconfig()
                     } else {
                         xarModVars::set('pubsub','SupportShortURLs',1);
                     }*/
-                    if (empty($subjecttitle)) {
-                        xarModVars::set('pubsub','subjecttitle',0);
-                    } else {
-                        xarModVars::set('pubsub','subjecttitle',1);
-                    }
-                    if (empty($includechildren)) {
-                        xarModVars::set('pubsub','includechildren',0);
-                    } else {
-                        xarModVars::set('pubsub','includechildren',1);
-                    }
-                    if (empty($allindigest)) {
-                        xarModVars::set('pubsub','allindigest',0);
-                    } else {
-                        xarModVars::set('pubsub','allindigest',1);
-                    }
+                    xarModVars::set('pubsub', 'subjecttitle',$subjecttitle);
+                    xarModVars::set('pubsub', 'includechildren',$includechildren);
                     xarModVars::set('pubsub', 'usetemplateids',$usetemplateids);
+                    xarModVars::set('pubsub', 'allindigest',$allindigest);
                     xarModVars::set('pubsub', 'usermessage', $usermessage);
                     xarModVars::set('pubsub', 'sendnotice', $sendnotice);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
@@ -255,15 +237,6 @@ function pubsub_admin_modifyconfig()
     }
 
     // Bug 4777 $data['SupportShortURLs'] = xarModVars::get('pubsub','SupportShortURLs');
-    $data['numitems'] = xarModVars::get('pubsub','itemsperpage');
-    if (empty($data['numitems'])) {
-        $data['numitems'] = 20;
-    }
-    $data['subjecttitle']    = xarModVars::get('pubsub','subjecttitle');
-    $data['includechildren'] = xarModVars::get('pubsub','includechildren');
-    $data['allindigest']     = xarModVars::get('pubsub','allindigest');
-    $data['wrapper']         = xarModVars::get('pubsub','wrapper');
-    $data['usetemplateids']  = xarModVars::get('pubsub','usetemplateids');
 
     if (xarMod::isAvailable('scheduler')) {
         $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');

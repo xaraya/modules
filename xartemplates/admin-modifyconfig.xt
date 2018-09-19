@@ -17,7 +17,8 @@
                           <label for="subjecttitle">Use Content's Title for Email Subject</label>
                         </div>
                         <div class="xar-col">
-                            <xar:data-input type="checkbox" name="subjecttitle" value="$subjecttitle"/>
+                            <xar:set name="value">xarModVars::get('pubsub', 'subjecttitle')</xar:set>
+                            <xar:data-input type="checkbox" name="subjecttitle" value="$value"/>
                         </div>
                    </div>
                     <div class="xar-row">
@@ -25,7 +26,8 @@
                           <label for="usetemplateids">Use the template id for templates</label>
                         </div>
                         <div class="xar-col">
-                            <xar:data-input type="checkbox" name="usetemplateids" value="$usetemplateids"/>
+                            <xar:set name="value">xarModVars::get('pubsub', 'usetemplateids')</xar:set>
+                            <xar:data-input type="checkbox" name="usetemplateids" value="$value"/>
                         </div>
                    </div>
                     <div class="xar-row">
@@ -42,7 +44,8 @@
                           <label for="includechildren"> Include Child Categories in Subscriptions:</label>
                         </div>
                         <div class="xar-col">
-                            <xar:data-input type="checkbox" name="includechildren" value="$includechildren"/>
+                            <xar:set name="value">xarModVars::get('pubsub', 'includechildren')</xar:set>
+                            <xar:data-input type="checkbox" name="includechildren" value="$value"/>
                         </div>
                    </div>
                     <div class="xar-row">
@@ -52,7 +55,8 @@
                           </label>
                         </div>
                         <div class="xar-col">
-                            <xar:data-input type="checkbox" name="allindigest" value="$allindigest"/>
+                            <xar:set name="value">xarModVars::get('pubsub', 'allindigest')</xar:set>
+                            <xar:data-input type="checkbox" name="allindigest" value="$value"/>
                         </div>
                    </div>
                 </fieldset>
