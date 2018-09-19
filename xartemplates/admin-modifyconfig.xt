@@ -29,11 +29,16 @@
                           <label for="usetemplateids">Use the template id for templates</label>
                         </div>
                         <div class="xar-col">
-                          <xar:if condition="!empty($usetemplateids)">
-                              <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" checked="checked" />
-                          <xar:else/>
-                              <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" />
-                          </xar:if>
+                            <xar:data-property name="usetemplateids" value="$usetemplateids"/>
+                        </div>
+                   </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                          <label for="enable_default_template">Use the default template if no other template is available</label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('pubsub', 'enable_default_template')</xar:set>
+                            <xar:data-property name="enable_default_template" value="$value"/>
                         </div>
                    </div>
                     <div class="xar-row">

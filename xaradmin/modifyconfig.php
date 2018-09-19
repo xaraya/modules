@@ -64,6 +64,7 @@ function pubsub_admin_modifyconfig()
                                                      // don't throw an exception if this function doesn't exist
                                                      array(), 0);
                             // we have hooks for individual item types here
+                            /*
                             if (!isset($value[0])) {
                                 foreach ($value as $itemtype => $val) {
                                     $createwithstatus = xarModVars::get('pubsub', "$modname.$itemtype.createwithstatus");
@@ -145,6 +146,7 @@ function pubsub_admin_modifyconfig()
                                                                                         'delete' => $delete);
                                 }
                             }
+                            */
                         }
                     }
                 break;
@@ -174,6 +176,7 @@ function pubsub_admin_modifyconfig()
                     xarVarFetch('usetemplateids', 'isset',  $usetemplateids, 1, XARVAR_DONT_SET);
                     if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('pubsub', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 					if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
+					if (!xarVarFetch('sendnotice',        'checkbox', $enable_default_template,        xarModVars::get('pubsub', 'enable_default_template'), XARVAR_NOT_REQUIRED)) return;
                     
                     if (isset($settings) && is_array($settings)) {
                         foreach ($settings as $name => $value) {
@@ -213,6 +216,7 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub','usetemplateids',$usetemplateids);
                     xarModVars::set('pubsub', 'usermessage', $usermessage);
                     xarModVars::set('pubsub', 'sendnotice', $sendnotice);
+                    xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
 
                     if (xarMod::isAvailable('scheduler')) {
                         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
