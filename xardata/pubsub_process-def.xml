@@ -99,7 +99,7 @@
       <id>7728</id>
       <label>Author</label>
       <type>username</type>
-      <defaultvalue>xarUser::getVar('id')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>process.author</source>
       <status>33</status>
       <seq>9</seq>

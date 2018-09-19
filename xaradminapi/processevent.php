@@ -29,14 +29,14 @@ function pubsub_adminapi_processevent($args)
     // Get arguments from argument array
     extract($args);
     $invalid = array();
-    if (empty($module_id) || !is_numeric($module_id)) {
-        $invalid[] = 'module_id';
+    if (empty($module) || !is_numeric($module)) {
+        $invalid[] = 'module';
     }
     if (!isset($cid) || !is_numeric($cid)) {
         $invalid[] = 'cid';
     }
-    if (!isset($object_id) || !is_numeric($object_id)) {
-        $invalid[] = 'object_id';
+    if (!isset($object) || !is_numeric($object)) {
+        $invalid[] = 'object';
     }
     if (!isset($itemid) || !is_numeric($itemid)) {
         $invalid[] = 'itemid';
@@ -51,9 +51,10 @@ function pubsub_adminapi_processevent($args)
     $queue = DataObjectMaster::getObject(array('name' => 'pubsub_process'));
 
     $queue->createItem($args);
+    return true;
+
     // Create an array to list the subscriptions that need to be processed.
     $markSubscriptions = array();
-
     $includechildren = xarModVars::get('pubsub','includechildren');
     if ( !empty($cid) && $includechildren == 1 )
     {
