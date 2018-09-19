@@ -83,7 +83,9 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
                              'itemid'   => $extrainfo['itemid'],
 //                             'extra'       => $extra,
                              'object'   => $extrainfo['object_id'],
-                             'template' => $template_id));
+                             'template' => $template_id,
+                             'state'    => 2
+                             ));
                          
         // The subject expects an array of extrainfo: whether or not the event was created, we go on.
         return $extrainfo;
