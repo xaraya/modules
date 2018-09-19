@@ -75,7 +75,6 @@ function pubsub_init()
             itemtype            integer unsigned NOT NULL default 0, 
             itemid              integer unsigned NOT NULL default 0, 
             template_id         integer unsigned NOT NULL DEFAULT '0',
-            status              varchar(100) NOT NULL DEFAULT '',
             author              integer unsigned NOT NULL default 0, 
             timecreated         integer unsigned NOT NULL default 0, 
             timemodified        integer unsigned NOT NULL default 0, 

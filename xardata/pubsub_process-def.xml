@@ -85,16 +85,6 @@
       <seq>7</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"pubsub_templates";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
-    <property name="status">
-      <id>7727</id>
-      <label>Status</label>
-      <type>static</type>
-      <defaultvalue></defaultvalue>
-      <source>process.status</source>
-      <status>33</status>
-      <seq>8</seq>
-      <configuration>a:0:{}</configuration>
-    </property>
     <property name="author">
       <id>7728</id>
       <label>Author</label>
