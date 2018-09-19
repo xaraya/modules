@@ -60,11 +60,11 @@ function pubsub_admin_modifyconfig()
                     if (isset($hookedmodules) && is_array($hookedmodules)) {
                         foreach ($hookedmodules as $modname => $value) {
                             // Get the list of all item types for this module (if any)
+                            /*
                             $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                                      // don't throw an exception if this function doesn't exist
                                                      array(), 0);
                             // we have hooks for individual item types here
-                            /*
                             if (!isset($value[0])) {
                                 foreach ($value as $itemtype => $val) {
                                     $createwithstatus = xarModVars::get('pubsub', "$modname.$itemtype.createwithstatus");
