@@ -39,7 +39,7 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
         $templates = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
         $q = $templates->dataquery;
         if (!empty($extrainfo['object'])) {
-            $q->eq('object_id', $extrainfo['object']);
+            $q->eq('object_id', $extrainfo['object_id']);
         } elseif (!empty($extrainfo['module_id'])) {
             $q->eq('module_id', $extrainfo['module_id']);
             $q->eq('itemtype', $extrainfo['itemtype']);
@@ -47,12 +47,11 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
         $q->addfield('id');
         $q->run();
         $result = $q->output();
-        
         if (!empty($result)) {
             // Use the template found
             $row = reset($result);
             $template_id = (int)$row['id'];
-        } elseif (empty($result) && xarModVars::get('pubsub', 'enable_default')) {
+        } elseif (empty($result) && xarModVars::get('pubsub', 'enable_default_template')) {
             // Use the default template
             $template_id = 1;
         } else {
@@ -60,6 +59,7 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
             return $extrainfo;
         }
 
+/*
     $extra = null;
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
     if ($modname == 'comments') {
@@ -74,20 +74,17 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
             $extra .= '-' . $extrainfo['current_itemid'];
         }
     }
-
-    // process the event (i.e. create a job for each subscription)
-    if (!xarMod::apiFunc('pubsub','admin','processevent',
-                       array('modid' => $modid,
-                             'itemtype' => $itemtype,
-                             'cid' => $cid,
-                             'extra' => $extra,
-                             'objectid' => $objectid,
-                             'template_id' => $templateid))) {
-        // oops - but life goes on in hook functions :)
-        return $extrainfo;
-    }
-
-        // The subject expects an array of extrainfo
+*/
+    // Process the event (i.e. create a job for each subscription)
+    xarMod::apiFunc('pubsub','admin','processevent',
+                       array('modid'       => $extrainfo['module_id'],
+                             'itemtype'    => $extrainfo['itemtype'],
+                             'cid'         => $extrainfo['cid'],
+                             'extra'       => $extra,
+                             'object_id'   => $extrainfo['object_id'],
+                             'template_id' => $templateid));
+                             
+        // The subject expects an array of extrainfo: whether or not the event was created, we go on.
         return $extrainfo;
     }
 }
