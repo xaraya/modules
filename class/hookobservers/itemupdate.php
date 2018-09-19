@@ -77,13 +77,14 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
 */
     // Process the event (i.e. create a job for each subscription)
     xarMod::apiFunc('pubsub','admin','processevent',
-                       array('modid'       => $extrainfo['module_id'],
+                       array('module_id'   => $extrainfo['module_id'],
                              'itemtype'    => $extrainfo['itemtype'],
                              'cid'         => $extrainfo['cid'],
-                             'extra'       => $extra,
+                             'itemid'      => $extrainfo['itemid'],
+//                             'extra'       => $extra,
                              'object_id'   => $extrainfo['object_id'],
-                             'template_id' => $templateid));
-                             
+                             'template_id' => $template_id));
+  die("XX");                           
         // The subject expects an array of extrainfo: whether or not the event was created, we go on.
         return $extrainfo;
     }

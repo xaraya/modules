@@ -38,8 +38,8 @@ function pubsub_adminapi_processevent($args)
     if (!isset($object_id) || !is_numeric($object_id)) {
         $invalid[] = 'object_id';
     }
-    if (!isset($id) || !is_numeric($id)) {
-        $invalid[] = 'id';
+    if (!isset($itemid) || !is_numeric($itemid)) {
+        $invalid[] = 'itemid';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
