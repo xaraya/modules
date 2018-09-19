@@ -47,20 +47,10 @@ function pubsub_adminapi_processevent($args)
         throw new Exception($msg);
     }
 
-    if (empty($itemtype) || !is_numeric($itemtype)) {
-        $itemtype = 0;
-    }
+    sys::import('modules.dynamicdata.class.properties.master');
+    $queue = DataObjectMaster::getObject(array('name' => 'pubsub_process'));
 
-    // Security check - not via hooks
-//    if (!xarSecurityCheck('AddPubSub')) return;
-
-    // Get datbase setup
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $pubsubeventstable  = $xartable['pubsub_events'];
-    $pubsubsubscriptionstable     = $xartable['pubsub_subscriptions'];
-    $pubsubprocesstable = $xartable['pubsub_process'];
-
+    $queue->createItem($args);
     // Create an array to list the subscriptions that need to be processed.
     $markSubscriptions = array();
 
