@@ -18,11 +18,20 @@
         </div>
         <div class="xar-row">
            <div class="xar-col-condensed">
-               <xar:var name="label">Module</xar:var>
-               <xar:data-label property="$properties['module_id']" label="$label"/>                    
+               <xar:var name="label">Object</xar:var>
+               <xar:data-label property="$properties['object']" label="$label"/>                    
            </div>
            <div class="xar-col">
-               <xar:data-input property="$properties['module_id']"/>                    
+               <xar:data-input property="$properties['object']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
+               <xar:var name="label">Module</xar:var>
+               <xar:data-label property="$properties['module']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['module']"/>                    
            </div>        
         </div>
         <div class="xar-row">
