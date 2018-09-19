@@ -186,18 +186,14 @@ function pubsub_admin_modifyconfig()
                     if (isset($wrapper)) {
                         xarModVars::set('pubsub','wrapper',$wrapper);
                     } else {
-                        xarModVars::set('pubsub','wrapper',0);die("X");
-                    }/* Bug 4777
+                        xarModVars::set('pubsub','wrapper',0);
+                    }
+                    /* Bug 4777
                     if (empty($SupportShortURLs)) {
                         xarModVars::set('pubsub','SupportShortURLs',0);
                     } else {
                         xarModVars::set('pubsub','SupportShortURLs',1);
                     }*/
-                    if (empty($numitems) || !is_numeric($numitems)) {
-                        xarModVars::set('pubsub','itemsperpage',20);
-                    } else {
-                        xarModVars::set('pubsub','itemsperpage',$numitems);
-                    }
                     if (empty($subjecttitle)) {
                         xarModVars::set('pubsub','subjecttitle',0);
                     } else {
@@ -213,7 +209,7 @@ function pubsub_admin_modifyconfig()
                     } else {
                         xarModVars::set('pubsub','allindigest',1);
                     }
-                    xarModVars::set('pubsub','usetemplateids',$usetemplateids);
+                    xarModVars::set('pubsub', 'usetemplateids',$usetemplateids);
                     xarModVars::set('pubsub', 'usermessage', $usermessage);
                     xarModVars::set('pubsub', 'sendnotice', $sendnotice);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
@@ -263,11 +259,11 @@ function pubsub_admin_modifyconfig()
     if (empty($data['numitems'])) {
         $data['numitems'] = 20;
     }
-    $data['subjecttitle'] = xarModVars::get('pubsub','subjecttitle');
+    $data['subjecttitle']    = xarModVars::get('pubsub','subjecttitle');
     $data['includechildren'] = xarModVars::get('pubsub','includechildren');
-    $data['allindigest'] = xarModVars::get('pubsub','allindigest');
-    $data['wrapper'] = xarModVars::get('pubsub','wrapper');
-    $data['usetemplateids'] = xarModVars::get('pubsub','usetemplateids');
+    $data['allindigest']     = xarModVars::get('pubsub','allindigest');
+    $data['wrapper']         = xarModVars::get('pubsub','wrapper');
+    $data['usetemplateids']  = xarModVars::get('pubsub','usetemplateids');
 
     if (xarMod::isAvailable('scheduler')) {
         $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
