@@ -41,8 +41,8 @@ function pubsub_init()
             extra               varchar(255) NOT NULL DEFAULT '',
             groupdescr          varchar(64) NOT NULL DEFAULT '',
             author              integer unsigned NOT NULL default 0, 
-            timecreated         integer unsigned NOT NULL default 0, 
-            timemodified        integer unsigned NOT NULL default 0, 
+            time_created        integer unsigned NOT NULL default 0, 
+            time_modified       integer unsigned NOT NULL default 0, 
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id)
             )";
@@ -59,8 +59,8 @@ function pubsub_init()
             subdate             integer unsigned NOT NULL DEFAULT '0',
             email               varchar(255) NOT NULL DEFAULT '',
             author              integer unsigned NOT NULL default 0, 
-            timecreated         integer unsigned NOT NULL default 0, 
-            timemodified        integer unsigned NOT NULL default 0, 
+            time_created        integer unsigned NOT NULL default 0, 
+            time_modified       integer unsigned NOT NULL default 0, 
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id)
             )";
@@ -77,8 +77,8 @@ function pubsub_init()
             itemid              integer unsigned NOT NULL default 0, 
             template_id         integer unsigned NOT NULL DEFAULT '0',
             author              integer unsigned NOT NULL default 0, 
-            timecreated         integer unsigned NOT NULL default 0, 
-            timemodified        integer unsigned NOT NULL default 0, 
+            time_created        integer unsigned NOT NULL default 0, 
+            time_modified       integer unsigned NOT NULL default 0, 
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id)
             )";
@@ -95,8 +95,8 @@ function pubsub_init()
             template            text,
             compiled            text,
             author              integer unsigned NOT NULL default 0, 
-            timecreated         integer unsigned NOT NULL default 0, 
-            timemodified        integer unsigned NOT NULL default 0, 
+            time_created        integer unsigned NOT NULL default 0, 
+            time_modified       integer unsigned NOT NULL default 0, 
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id),
             KEY templatename (name)

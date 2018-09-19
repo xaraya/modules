@@ -28,6 +28,7 @@ function pubsub_adminapi_processevent($args)
 {
     // Get arguments from argument array
     extract($args);
+    /*
     $invalid = array();
     if (empty($module_id) || !is_numeric($module_id)) {
         $invalid[] = 'module_id';
@@ -49,20 +50,40 @@ function pubsub_adminapi_processevent($args)
 
     sys::import('modules.dynamicdata.class.properties.master');
     $queue = DataObjectMaster::getObject(array('name' => 'pubsub_process'));
-
+*/
     $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['pubsub_events']);
-
-    $q = new Query('INSERT', $tables['pubsub_process']);
-    foreach ($args as $k => $v) {
-        $q->addfield($k, $v);
+    $q->addfield('id');
+    if (!empty($object_id)) {
+        $q->eq('object_id', $object_id);
+    } else {
+        $q->eq('module_id', $module_id);
+        $q->eq('itemtype', $itemtype);
     }
-    $q->addfield('time_created', time());
-    $q->addfield('time_modified', time());
-    $q->addfield('author', xarUser::getVar('id'));
-    $q->qecho();
-    exit;
-    $queue->createItem($args);
+    $q->run();
+    $marked_events = $q->output();
+
+    unset($args['cid']);
+    if (!empty($object_id)) {
+        $args['module_id'] = 0;
+        $args['itemtype'] = 0;
+    } else {
+        $args['object_id'] = 0;
+    }
+    
+    $q = new Query('INSERT', $tables['pubsub_process']);
+    foreach ($marked_events as $event) {
+        foreach ($args as $k => $v) {
+            $q->addfield($k, $v);
+        }
+        $q->addfield('pubsub_id', $event['id']);
+        $q->addfield('time_created', time());
+        $q->addfield('time_modified', time());
+        $q->addfield('author', xarUser::getVar('id'));
+        $q->qecho();
+        $q->run();
+        $q->fields = array();
+    }
     return true;
 
     // Create an array to list the subscriptions that need to be processed.

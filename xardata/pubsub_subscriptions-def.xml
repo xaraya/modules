@@ -91,7 +91,7 @@
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>subscriptions.timecreated</source>
+      <source>subscriptions.time_created</source>
       <status>66</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
@@ -101,7 +101,7 @@
       <label>Time Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>subscriptions.timemodified</source>
+      <source>subscriptions.time_modified</source>
       <status>66</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>

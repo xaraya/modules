@@ -100,7 +100,7 @@
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>process.timecreated</source>
+      <source>process.time_created</source>
       <status>66</status>
       <seq>10</seq>
       <configuration>a:0:{}</configuration>
@@ -110,7 +110,7 @@
       <label>Time Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>process.timemodified</source>
+      <source>process.time_modified</source>
       <status>66</status>
       <seq>11</seq>
       <configuration>a:0:{}</configuration>

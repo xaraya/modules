@@ -101,7 +101,7 @@
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>templates.timecreated</source>
+      <source>templates.time_created</source>
       <status>66</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
@@ -111,7 +111,7 @@
       <label>Time Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>templates.timemodified</source>
+      <source>templates.time_modified</source>
       <status>66</status>
       <seq>10</seq>
       <configuration>a:0:{}</configuration>
