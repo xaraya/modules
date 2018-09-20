@@ -85,6 +85,4 @@
     </table>
     -->
     </div>
-    <!-- add the pager here -->
-    #$pager#
 </xar:template>

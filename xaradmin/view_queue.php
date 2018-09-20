@@ -61,16 +61,6 @@ function pubsub_admin_view_queue($args)
                 break;
         }
     }
-
-    // The user API function is called
-    $events = xarMod::apiFunc('pubsub', 'user', 'getq');
-
-    $data['items'] = $events;
-    // TODO: add a pager (once it exists in BL)
-    $data['pager'] = '';
-    $data['authid'] = xarSecGenAuthKey();
-
-    // return the template variables defined in this template
     return $data;
 
 }

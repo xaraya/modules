@@ -80,7 +80,7 @@ function pubsub_adminapi_processevent($args)
         $q->addfield('time_created', time());
         $q->addfield('time_modified', time());
         $q->addfield('author', xarUser::getVar('id'));
-        $q->qecho();
+//        $q->qecho();
         $q->run();
         $q->fields = array();
     }
