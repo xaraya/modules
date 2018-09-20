@@ -25,8 +25,8 @@ function pubsub_admin_delete_job()
     xarTplSetPageTitle('Delete job');
 
     if(!xarVarFetch('confirm',  'bool', $data['confirm'],  false, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str',  $data['itemid'],     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',     'str',  $idlist,     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',   'str',  $data['itemid'],   NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('idlist',   'str',  $idlist,           NULL,  XARVAR_DONT_SET)) {return;}
 
     //print_r($data['confirm']);
     if (!empty($data['itemid'])) $idlist = $data['itemid'];

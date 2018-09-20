@@ -49,7 +49,7 @@
 	                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Event')#"/>
 	            </a>
 	        </xar:access>
-    	<xar:elseif condition="$objectname eq 'pubsub_queue'"/>
+    	<xar:elseif condition="$objectname eq 'pubsub_process'"/>
 	    	<xar:access level="200">
 	             <a href="#xarModURL($module, 'admin', 'display_job', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Display this job')#" style="margin-right: 5px">
 	                    <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display Job')#"/>
