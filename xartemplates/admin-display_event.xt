@@ -3,9 +3,9 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 	<xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Display Job</h2>
+        <h2>Display Event</h2>
         <fieldset>
-            <legend>Job details</legend>
+            <legend>Event details</legend>
             <xar:data-display object="$object" tplmodule="$tplmodule"/> 
         </fieldset>
           <div class="xar-row">
