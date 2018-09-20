@@ -16,7 +16,7 @@
                     <xar:if condition = "xarModVars::get('pubsub','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/document-new.png', 'base')#"/>
                     <xar:else />
-                        Add A New Queue
+                        Add A New Job
                     </xar:if>
                 </a>
             </xar:access>
