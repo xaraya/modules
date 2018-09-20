@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+	<xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <xar:var name="title">Display Job</xar:var>
+        <fieldset>
+            <legend>Job details</legend>
+            <xar:data-display object="$object" tplmodule="$tplmodule"/> 
+        </fieldset>
+          <div class="xar-row">
+              <div class="xar-col">
+              </div>
+              <div class="xar-col">
+                  <xar:var name="label">Back</xar:var>
+                  <xar:button type="cancel" value="$label" />
+              </div>
+          </div>
+    </div>
+</xar:template>
