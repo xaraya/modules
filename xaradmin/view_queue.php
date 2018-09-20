@@ -37,7 +37,7 @@ function pubsub_admin_view_queue($args)
                 if (!xarMod::apiFunc('pubsub','admin','processq')) {
                     return;
                 }
-                xarController::redirect(xarModURL('pubsub', 'admin', 'viewq'));
+                xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
                 return true;
                 break;
 
@@ -52,7 +52,7 @@ function pubsub_admin_view_queue($args)
                     if (!xarMod::apiFunc('pubsub','admin','deljob',array('id' => $id))) {
                         return;
                     }
-                    xarController::redirect(xarModURL('pubsub', 'admin', 'viewq'));
+                    xarController::redirect(xarModURL('pubsub', 'admin', 'view_process'));
                     return true;
                 }
                 break;
