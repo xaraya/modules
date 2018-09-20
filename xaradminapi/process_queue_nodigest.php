@@ -25,11 +25,13 @@ function pubsub_adminapi_process_queue_nodigest($args)
     // Get arguments from argument array
     extract($args);
 
+    /*
     sys::import('modules.dynamicdata.class.properties.master');
     $queue = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
     $q = $queue->dataquery;
     $q->eq('state', 2);
     $jobs = $queue->getItems();
+    */
 
     // Database information
     $tables =& xarDB::getTables();
