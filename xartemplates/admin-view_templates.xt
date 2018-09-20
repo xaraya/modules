@@ -3,7 +3,6 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>View Templates</h2>
-
         <fieldset>
             <legend>
                 Templates

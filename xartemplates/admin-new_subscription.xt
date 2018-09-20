@@ -4,7 +4,6 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
 		<h2>New Subscription</h2>
-
         <form method="post" action="#xarServer::getCurrentURL()#">
           <fieldset>
             <legend>Subscription details</legend>

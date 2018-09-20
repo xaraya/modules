@@ -3,13 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>
-            <xar:ml>
-                <xar:mlstring>Delete Template #(1) in #(2)</xar:mlstring>
-                <xar:mlvar>#$object:itemid#</xar:mlvar>
-                <xar:mlvar>#$object:label#</xar:mlvar>
-            </xar:ml>
-        </h2>
+        <h2>Delete Template</h2>
         <h3 class="xar-align-center">
             Confirm Deleting This Template?
         </h3>

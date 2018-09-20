@@ -3,6 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
+        <h2>Modify Template</h2>
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
                 <xar:data-form object="$object" tplmodule="$tplmodule"/>

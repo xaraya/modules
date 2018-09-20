@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:var name="title">Modify Job</xar:var>
+        <h2>Modify Job</h2>
         <form method="post" action="#xarServer::getCurrentURL()#">
           <fieldset>
             <legend>Job details</legend>

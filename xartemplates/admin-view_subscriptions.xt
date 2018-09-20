@@ -3,7 +3,6 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>Subscription Summary</h2>
-
        	<xar:data-input type="listing" 
        	                object="$object" 
        	                tplmodule="pubsub"/>

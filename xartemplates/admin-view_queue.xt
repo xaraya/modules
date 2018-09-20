@@ -3,7 +3,6 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>Event Queue</h2>
-
         <form method="POST" action="&xar-modurl-pubsub-admin-viewq;">
             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="action" value="process" />
