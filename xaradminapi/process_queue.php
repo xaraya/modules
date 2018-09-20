@@ -19,27 +19,21 @@
  * @return number of jobs run on success, false if not
  * @throws DATABASE_ERROR
  */
-function pubsub_adminapi_processq($args)
+function pubsub_adminapi_process_queue($args)
 {
-    if (!($allindigest = xarModVars::get('pubsub','allindigest'))) {
-        $allindigest = 0;
-    }
+    $allindigest = xarModVars::get('pubsub','allindigest');
 
-    if ($allindigest == 0) {
-        if (!($count = xarMod::apiFunc('pubsub','admin','processqnodigest',$args) ) ) {
+    if (empty($allindigest)) {
+        if (!($count = xarMod::apiFunc('pubsub','admin','process_queue_nodigest',$args) ) ) {
             return;
-        } else {
-            return $count;
         }
     } else {
-        if (!($count = xarMod::apiFunc('pubsub','admin','processqdigest',$args) ) ) {
+        if (!($count = xarMod::apiFunc('pubsub','admin','process_queue_digest',$args) ) ) {
             return;
-        } else {
-            return $count;
         }
     }
     return $count;
 
-} // END processq
+}
 
 ?>

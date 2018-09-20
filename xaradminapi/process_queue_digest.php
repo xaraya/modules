@@ -18,7 +18,7 @@
  * @return mixed number of jobs run on success, false if not
  * @throws DATABASE_ERROR
  */
-function pubsub_adminapi_processqdigest($args)
+function pubsub_adminapi_process_queue_digest($args)
 {
     // Get arguments from argument array
     extract($args);

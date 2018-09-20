@@ -20,15 +20,30 @@
  * @return number of jobs run on success, false if not
  * @throws DATABASE_ERROR
  */
-function pubsub_adminapi_processqnodigest($args)
+function pubsub_adminapi_process_queue_nodigest($args)
 {
     // Get arguments from argument array
     extract($args);
 
+    sys::import('modules.dynamicdata.class.properties.master');
+    $queue = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
+    $q = $queue->dataquery;
+    $q->eq('state', 2);
+    $jobs = $queue->getItems();
+
     // Database information
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $pubsubprocesstable = $xartable['pubsub_process'];
+    $tables =& xarDB::getTables();
+    $q = new Query();
+    $q->addtable($tables['pubsub_process'], 'p');
+    $q->addtable($tables['pubsub_events'], 'e');
+    $q->join('p.event_id', 'e.id');
+    $q->addtable($tables['pubsub_subscriptions'], 's');
+    $q->join('s.event_id', 'e.id');
+    $q->qecho();
+    
+    exit;
+    
+    $pubsubprocesstable = $xartable;
 
     // Get all jobs in pending state
     $query = "SELECT id,
