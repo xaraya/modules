@@ -37,14 +37,8 @@ function pubsub_admin_view_queue($args)
                 if (!xarMod::apiFunc('pubsub','admin','processq')) {
                     return;
                 }
-                xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
+                xarController::redirect(xarModURL('pubsub', 'admin', 'view_process'));
                 return true;
-                break;
-
-            case 'view':
-                if (!empty($id)) {
-                    // preview message ?
-                }
                 break;
 
             case 'delete':
