@@ -27,33 +27,13 @@ function pubsub_admin_view_queue($args)
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
 
-    if (!empty($action)) {
+    if (!empty($action) && ($action == 'process')) {
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
-
-        switch ($action)
-        {
-            case 'process':
-                if (!xarMod::apiFunc('pubsub','admin','processq')) {
-                    return;
-                }
-                xarController::redirect(xarModURL('pubsub', 'admin', 'view_process'));
-                return true;
-                break;
-
-            case 'delete':
-                if (!empty($id)) {
-                    if (!xarMod::apiFunc('pubsub','admin','deljob',array('id' => $id))) {
-                        return;
-                    }
-                    xarController::redirect(xarModURL('pubsub', 'admin', 'view_process'));
-                    return true;
-                }
-                break;
-
-            default:
-                break;
-        }
+        
+        xarMod::apiFunc('pubsub','admin','process_queue');
+        xarController::redirect(xarModURL('pubsub', 'admin', 'view_process'));
+        return true;
     }
     return $data;
 
