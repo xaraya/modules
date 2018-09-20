@@ -70,7 +70,7 @@ function pubsub_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_pubsub_process (
             id                  integer unsigned NOT NULL auto_increment,
-            pubsub_id           integer unsigned NOT NULL DEFAULT '0',
+            event_id            integer unsigned NOT NULL DEFAULT '0',
             object_id           integer unsigned NOT NULL DEFAULT '0',
             module_id           integer unsigned NOT NULL default 0, 
             itemtype            integer unsigned NOT NULL default 0, 

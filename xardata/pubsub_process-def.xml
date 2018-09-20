@@ -1,5 +1,5 @@
 <object name="pubsub_process">
-  <objectid>344</objectid>
+  <objectid>360</objectid>
   <label>PubSub Process</label>
   <module_id>182</module_id>
   <itemtype>221</itemtype>
@@ -16,7 +16,7 @@
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
   <properties>
     <property name="id">
-      <id>7723</id>
+      <id>7900</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,18 +25,18 @@
       <seq>1</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="subscription">
-      <id>7724</id>
-      <label>Subscription</label>
+    <property name="event">
+      <id>7901</id>
+      <label>Event</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
-      <source>process.pubsub_id</source>
+      <source>process.event_id</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:20:"pubsub_subscriptions";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:5:"event";}</configuration>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:13:"pubsub_events";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="object">
-      <id>7725</id>
+      <id>7902</id>
       <label>Object</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
@@ -46,7 +46,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"objects";s:25:"initialization_store_prop";s:8:"objectid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="module">
-      <id>7732</id>
+      <id>7903</id>
       <label>Module</label>
       <type>module</type>
       <defaultvalue>0</defaultvalue>
@@ -56,7 +56,7 @@
       <configuration></configuration>
     </property>
     <property name="itemtype">
-      <id>7733</id>
+      <id>7904</id>
       <label>Itemtype</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -66,7 +66,7 @@
       <configuration></configuration>
     </property>
     <property name="item_id">
-      <id>7734</id>
+      <id>7905</id>
       <label>Item_id</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -76,7 +76,7 @@
       <configuration></configuration>
     </property>
     <property name="template">
-      <id>7726</id>
+      <id>7906</id>
       <label>Template</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
@@ -86,7 +86,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"pubsub_templates";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="author">
-      <id>7728</id>
+      <id>7907</id>
       <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('uname')</defaultvalue>
@@ -96,7 +96,7 @@
       <configuration>a:7:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";s:27:"initialization_display_name";s:5:"uname";}</configuration>
     </property>
     <property name="time_created">
-      <id>7729</id>
+      <id>7908</id>
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -106,7 +106,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_modified">
-      <id>7730</id>
+      <id>7909</id>
       <label>Time Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -116,7 +116,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>7731</id>
+      <id>7910</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
