@@ -17,6 +17,5 @@
             
             <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
         </fieldset>
-
     </div>
 </xar:template>
