@@ -76,7 +76,7 @@ function pubsub_adminapi_processevent($args)
         foreach ($args as $k => $v) {
             $q->addfield($k, $v);
         }
-        $q->addfield('pubsub_id', $event['id']);
+        $q->addfield('event_id', $event['id']);
         $q->addfield('time_created', time());
         $q->addfield('time_modified', time());
         $q->addfield('author', xarUser::getVar('id'));

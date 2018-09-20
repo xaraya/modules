@@ -16,7 +16,7 @@
             </includes>
             <target>view_subscriptions</target>
             <title>Manage the subscriptions</title>
-            <label>Subscribers</label>
+            <label>Subscriptions</label>
         </menuitem>
         <menuitem>
             <mask>ManagePubSub</mask>
