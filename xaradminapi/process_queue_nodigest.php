@@ -25,7 +25,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     // Get arguments from argument array
     extract($args);
 
-    // Database information
+    // Get the recipients
     $tables =& xarDB::getTables();
     $q = new Query();
     $q->addtable($tables['pubsub_process'], 'p');
@@ -42,6 +42,8 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addfield('p.module_id AS module_id');
     $q->addfield('p.itemtype AS itemtype');
     $q->addfield('p.itemid AS itemid');
+    // Only pending jobs
+    $q->eq('p.state',2);
 //    $q->qecho();
     $q->run();
     
@@ -64,7 +66,11 @@ function pubsub_adminapi_process_queue_nodigest($args)
             $recipients[$row['event_id']][$user->properties['email']->value] = $user->properties['name']->value;
         }
     }
-    var_dump($recipients);
+
+    $q = new Query('SELECT', $tables['pubsub_process']);
+    $q->eq('state',2);
+//    $q->qecho();
+    $q->run();
     
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
@@ -76,7 +82,8 @@ function pubsub_adminapi_process_queue_nodigest($args)
                             'module_id'   => $row['module_id'],
                             'itemtype'    => $row['itemtype'],
                             'itemid'      => $row['itemid'],
-                            'template_id' => $row['template_id']));
+                            'template_id' => $row['template_id']
+                            'recipients'  => $recipients[$row['event_id']]));
         $count++;
     }
     return $count;
