@@ -49,11 +49,11 @@ function pubsub_adminapi_process_queue_nodigest($args)
     foreach ($q->output() as $row) {
         // Add a cc email if there is one
         // Add a default name as we have no other
-        if (!empty($row['email'])) $recipients[$row['email']] = xarML('Subscriber');
+        if (!empty($row['email'])) $recipients[$row['event_id']][$row['email']] = xarML('Subscriber');
         // Add a user if one was passed
         $user_id = (int)$row['userid'];
         $user = xarMod::apiFunc('roles', 'user', 'get', array('id' => $user_id));
-        if (!empty($user)) $recipients[$user['email']] = $user['name'];
+        if (!empty($user)) $recipients[$row['event_id']][$user['email']] = $user['name'];
         // Add the descendants of a group, if one was passed
         $group_id = (int)$row['groupid'];
         sys::import('modules.dynamicdata.class.objects.master');
@@ -61,7 +61,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $group->getItem(array('itemid' => $group_id));
         $users = $group->getDescendants(3);
         foreach ($users as $user) {
-            $recipients[$user->properties['email']->value] = $user->properties['name']->value;
+            $recipients[$row['event_id']][$user->properties['email']->value] = $user->properties['name']->value;
         }
     }
     var_dump($recipients);
@@ -71,12 +71,12 @@ function pubsub_adminapi_process_queue_nodigest($args)
 
     foreach ($q->output() as $row) {
         xarMod::apiFunc('pubsub','admin','runjob',
-                      array('event_id'    => $event_id,
-                            'object_id'   => $object_id,
-                            'module_id'   => $module_id,
-                            'itemtype'    => $itemtype,
-                            'itemid'      => $itemid,
-                            'template_id' => $template_id));
+                      array('event_id'    => $row['event_id'],
+                            'object_id'   => $row['object_id'],
+                            'module_id'   => $row['module_id'],
+                            'itemtype'    => $row['itemtype'],
+                            'itemid'      => $row['itemid'],
+                            'template_id' => $row['template_id']));
         $count++;
     }
     return $count;
