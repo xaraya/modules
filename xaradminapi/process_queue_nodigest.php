@@ -71,8 +71,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
 
     foreach ($q->output() as $row) {
         xarMod::apiFunc('pubsub','admin','runjob',
-                      array('id'          => $id,
-                            'event_id'    => $event_id,
+                      array('event_id'    => $event_id,
                             'object_id'   => $object_id,
                             'module_id'   => $module_id,
                             'itemtype'    => $itemtype,
