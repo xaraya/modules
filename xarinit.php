@@ -92,8 +92,6 @@ function pubsub_init()
             object_id           integer unsigned NOT NULL default 0, 
             module_id           integer unsigned NOT NULL default 0, 
             itemtype            integer unsigned NOT NULL default 0, 
-            template            text,
-            compiled            text,
             author              integer unsigned NOT NULL default 0, 
             time_created        integer unsigned NOT NULL default 0, 
             time_modified       integer unsigned NOT NULL default 0, 
@@ -116,6 +114,20 @@ function pubsub_init()
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
+# --------------------------------------------------------
+#
+# Default data for other modules
+#    
+    // Add basic mailer templates
+    if (xarMod::isAvailable('mailer')) {
+        $dat_file = sys::code() . 'modules/' . $module . '/xardata/'.'mailer_templates-dat.xml';
+        if(file_exists($dat_file)) {
+            $data['file'] = $dat_file;
+            $objectid = xarMod::apiFunc('dynamicdata','util','import', $data);
+        }
+    }
+
 /*    $nextId = $dbconn->GenId($pubsubtemplatestable);
     $name = 'default';
     $template = '<xar:ml>

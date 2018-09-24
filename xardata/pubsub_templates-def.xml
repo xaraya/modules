@@ -83,10 +83,7 @@
       <source>templates.mail_type</source>
       <status>33</status>
       <seq>7</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:64:"1,TEXT;
-2,HTML;
-3,BlockLayout to Text;
-4,BlockLayout to HTML;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"1,TEXT;2,HTML;3,BlockLayout to Text;4,BlockLayout to HTML;";}</configuration>
     </property>
     <property name="compiled">
       <id>7939</id>
