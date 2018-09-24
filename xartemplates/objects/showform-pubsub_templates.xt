@@ -58,6 +58,15 @@
         </div>
         <div class="xar-row">
            <div class="xar-col-condensed">
+               <xar:var name="label">Mail Type</xar:var>
+               <xar:data-label property="$properties['mail_type']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['mail_type']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
                <xar:var name="label">Compiled</xar:var>
                <xar:data-label property="$properties['compiled']" label="$label"/>                    
            </div>
