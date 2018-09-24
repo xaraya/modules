@@ -24,6 +24,17 @@
  */
 function pubsub_adminapi_runjob($args)
 {
+    static $templates = array();
+    
+    // Get the template
+    if (!isset($templates[$args['template_id']])) {
+        sys::import('modules.dynamicdata.class.properties.master');
+        $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
+        $template_object->getItem(array('itemid' => $args['template_id']));
+        $templates[$args['template_id']] = $template_object->properties['template']->value;
+    }
+    $template = $templates[$args['template_id']];
+    var_dump($template);exit;
     // Get arguments from argument array
     extract($args);
 
@@ -91,7 +102,7 @@ function pubsub_adminapi_runjob($args)
             $action = 'mail';
             break;
         case 2: // currently unused
-            $action = 'htmlmail';
+            $action = 'text';
             break;
         default:
             $action = 'unknown';
