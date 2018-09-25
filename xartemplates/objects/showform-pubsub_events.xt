@@ -58,6 +58,15 @@
         </div>
         <div class="xar-row">
            <div class="xar-col-condensed">
+               <xar:var name="label">Event Type</xar:var>
+               <xar:data-label property="$properties['event_type']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['event_type']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
                <xar:var name="label">Extra Info</xar:var>
                <xar:data-label property="$properties['extra_info']" label="$label"/>                    
            </div>
