@@ -61,7 +61,7 @@ function pubsub_adminapi_runjob($args)
                   'recipientname'    => $value,
                   'recipientaddress' => $key,
                   'bccaddresses'     => array(),
-                  'data'             => $mail_data,
+                  'data'             => $args['mail_data'],
         );
         $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
     }
