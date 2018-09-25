@@ -61,6 +61,7 @@ class PubsubItemUpdateObserver extends PubsubBaseObserver implements ixarEventOb
                              'object_id'   => $extrainfo['object_id'],
                              'template_id' => $template_id,
                              'event_type'  => 'itemupdate',
+                             'url'         => $extrainfo['url'],
                              'state'       => 2
                              ));
                          

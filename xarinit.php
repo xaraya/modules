@@ -76,6 +76,7 @@ function pubsub_init()
             module_id           integer unsigned NOT NULL default 0, 
             itemtype            integer unsigned NOT NULL default 0, 
             itemid              integer unsigned NOT NULL default 0, 
+            url                 varchar(255) NOT NULL DEFAULT '',
             template_id         integer unsigned NOT NULL DEFAULT '0',
             author              integer unsigned NOT NULL default 0, 
             time_created        integer unsigned NOT NULL default 0, 

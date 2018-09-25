@@ -45,6 +45,7 @@ class PubsubItemDeleteObserver extends PubsubBaseObserver implements ixarEventOb
                              'object_id'   => $extrainfo['object_id'],
                              'template_id' => $template_id,
                              'event_type'  => 'itemdelete',
+                             'url'         => $extrainfo['url'],
                              'state'       => 2
                              ));
                          

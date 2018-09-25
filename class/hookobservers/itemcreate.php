@@ -44,7 +44,8 @@ class PubsubItemCreateObserver extends PubsubBaseObserver implements ixarEventOb
 //                             'extra'       => $extra,
                              'object_id'   => $extrainfo['object_id'],
                              'template_id' => $template_id,
-                             'event_type'=> 'itemcreate',
+                             'event_type'  => 'itemcreate',
+                             'url'         => $extrainfo['url'],
                              'state'       => 2
                              ));
                          
