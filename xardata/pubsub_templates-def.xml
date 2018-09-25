@@ -68,31 +68,11 @@
     <property name="template">
       <id>7938</id>
       <label>Template</label>
-      <type>textarea_large</type>
+      <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>templates.template</source>
-      <status>34</status>
-      <seq>6</seq>
-      <configuration>a:0:{}</configuration>
-    </property>
-    <property name="mail_type">
-      <id>7955</id>
-      <label>Mail Type</label>
-      <type>dropdown</type>
-      <defaultvalue>4</defaultvalue>
-      <source>templates.mail_type</source>
       <status>33</status>
-      <seq>7</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"1,TEXT;2,HTML;3,BlockLayout to Text;4,BlockLayout to HTML;";}</configuration>
-    </property>
-    <property name="compiled">
-      <id>7939</id>
-      <label>Compiled</label>
-      <type>textarea_large</type>
-      <defaultvalue></defaultvalue>
-      <source>templates.compiled</source>
-      <status>34</status>
-      <seq>8</seq>
+      <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="author">
@@ -102,7 +82,7 @@
       <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>templates.author</source>
       <status>65</status>
-      <seq>9</seq>
+      <seq>7</seq>
       <configuration>a:7:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";s:27:"initialization_display_name";s:5:"uname";}</configuration>
     </property>
     <property name="time_created">
@@ -112,7 +92,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>templates.time_created</source>
       <status>66</status>
-      <seq>10</seq>
+      <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_modified">
@@ -122,7 +102,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>templates.time_modified</source>
       <status>66</status>
-      <seq>11</seq>
+      <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
@@ -132,7 +112,7 @@
       <defaultvalue>3</defaultvalue>
       <source>templates.state</source>
       <status>33</status>
-      <seq>12</seq>
+      <seq>10</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>
