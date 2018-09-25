@@ -41,9 +41,9 @@ class PubsubBaseObserver extends HookObserver implements ixarEventObserver
             $template_id = 1;
         } else {
             // We have no template: bail
-            return $extrainfo;
+            return false;
         }
-        return $extrainfo;
+        return $template_id;
     }
 }
 

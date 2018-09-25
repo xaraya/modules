@@ -33,7 +33,7 @@ class PubsubItemDeleteObserver extends PubsubBaseObserver implements ixarEventOb
         }
 
         // Get information about the template we will use
-        $extrainfo = $this->getTemplate($extrainfo);
+        $template_id = $this->getTemplate($extrainfo);
 
         // Process the event (i.e. create a job for each event)
         xarMod::apiFunc('pubsub','admin','processevent',

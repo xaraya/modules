@@ -33,7 +33,7 @@ class PubsubItemUpdateObserver extends PubsubBaseObserver implements ixarEventOb
         }
 
         // Get information about the template we will use
-        $extrainfo = $this->getTemplate($extrainfo);
+        $template_id = $this->getTemplate($extrainfo);
 
 /*
     $extra = null;
