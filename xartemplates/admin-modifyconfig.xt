@@ -50,13 +50,23 @@
                    </div>
                     <div class="xar-row">
                         <div class="xar-col">
-                          <label for="includechildren">Send only one email per user
+                          <label for="allindigest">Send only one email per user
                               <!-- (you may create a template, call it 'wrapper', with a variable called # $contents # -->
                           </label>
                         </div>
                         <div class="xar-col">
                             <xar:set name="value">xarModVars::get('pubsub', 'allindigest')</xar:set>
                             <xar:data-input type="checkbox" name="allindigest" value="$value"/>
+                        </div>
+                   </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                          <label for="recognized_events">Recognized events
+                          </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('pubsub', 'recognized_events')</xar:set>
+                            <xar:data-input type="textbox" name="recognized_events" value="$value"/>
                         </div>
                    </div>
                 </fieldset>

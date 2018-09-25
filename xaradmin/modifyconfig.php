@@ -176,6 +176,7 @@ function pubsub_admin_modifyconfig()
                     if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('pubsub', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 					if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('enable_default_template',        'checkbox', $enable_default_template,        false, XARVAR_NOT_REQUIRED)) return;
+					if (!xarVarFetch('recognized_events',        'str', $recognized_events,        '', XARVAR_NOT_REQUIRED)) return;
                     
                     if (isset($settings) && is_array($settings)) {
                         foreach ($settings as $name => $value) {
@@ -195,6 +196,7 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub', 'usermessage', $usermessage);
                     xarModVars::set('pubsub', 'sendnotice', $sendnotice);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
+                    xarModVars::set('pubsub', 'recognized_events', $recognized_events);
 
                     if (xarMod::isAvailable('scheduler')) {
                         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
