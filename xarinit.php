@@ -298,7 +298,7 @@ function pubsub_delete()
     $tables =& xarDB::getTables();
     $q = new Query('DELETE', $tables['mailer_mails']);
     $q->eq('module_id', xarMod::getRegid('mailer'));
-    $q->qecho();exit;
+    $q->run();
     
     $module = 'pubsub';
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
