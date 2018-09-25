@@ -34,15 +34,9 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addtable($tables['pubsub_subscriptions'], 's');
     $q->join('s.event_id', 'e.id');
     $q->addfield('e.id AS event_id');
-    $q->addfield('e.event_type AS event_type');
     $q->addfield('s.groupid AS groupid');
     $q->addfield('s.userid AS userid');
     $q->addfield('s.email AS email');
-    $q->addfield('p.template_id AS template_id');
-    $q->addfield('p.object_id AS object_id');
-    $q->addfield('p.module_id AS module_id');
-    $q->addfield('p.itemtype AS itemtype');
-    $q->addfield('p.itemid AS itemid');
     // Only pending jobs
     $q->eq('p.state',2);
 //    $q->qecho();
@@ -73,8 +67,18 @@ function pubsub_adminapi_process_queue_nodigest($args)
     }
 
     // Get the queue again, without subscriptions
-    $q = new Query('SELECT', $tables['pubsub_process']);
-    $q->eq('state',2);
+    $q = new Query('SELECT');
+    $q->addtable($tables['pubsub_process'], 'p');
+    $q->addtable($tables['pubsub_events'], 'e');
+    $q->join('p.event_id', 'e.id');
+    $q->addfield('e.id AS event_id');
+    $q->addfield('e.event_type AS event_type');
+    $q->addfield('p.template_id AS template_id');
+    $q->addfield('p.object_id AS object_id');
+    $q->addfield('p.module_id AS module_id');
+    $q->addfield('p.itemtype AS itemtype');
+    $q->addfield('p.itemid AS itemid');
+    $q->eq('p.state',2);
 //    $q->qecho();
     $q->run();
 
@@ -91,11 +95,11 @@ function pubsub_adminapi_process_queue_nodigest($args)
     // Run through each of the entries in the queue
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
-        
+
         // Assemble the message
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
-        $mail_data['object_name'] = $object->name;
-        $mail_data['module_name'] = $xarMod::getName();
+        $mail_data['object_name'] = $event_object->name;
+        $mail_data['module_name'] = xarMod::getName();
         $mail_data['event_type'] = $row['event_type'];
         
         // Send the mails
