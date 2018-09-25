@@ -34,6 +34,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addtable($tables['pubsub_subscriptions'], 's');
     $q->join('s.event_id', 'e.id');
     $q->addfield('e.id AS event_id');
+    $q->addfield('e.event_type AS event_type');
     $q->addfield('s.groupid AS groupid');
     $q->addfield('s.userid AS userid');
     $q->addfield('s.email AS email');
