@@ -74,14 +74,16 @@ function pubsub_adminapi_processevent($args)
     
     $q = new Query('INSERT', $tables['pubsub_process']);
     foreach ($marked_events as $event) {
-        foreach ($args as $k => $v) {
-            $q->addfield($k, $v);
-        }
         $q->addfield('event_id', $event['id']);
+        $q->addfield('object_id', $object_id);
+        $q->addfield('module_id', $module_id);
+        $q->addfield('itemtype', $itemtype);
+        $q->addfield('itemid', $itemid);
+        $q->addfield('template_id', $template_id);
         $q->addfield('time_created', time());
         $q->addfield('time_modified', time());
         $q->addfield('author', xarUser::getVar('id'));
-//        $q->qecho();
+        $q->qecho();
         $q->run();
         $q->fields = array();
     }
