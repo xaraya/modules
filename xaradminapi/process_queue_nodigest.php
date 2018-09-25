@@ -27,7 +27,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
 
     // Get the recipients
     $tables =& xarDB::getTables();
-    $q = new Query();
+    $q = new Query('SELECT');
     $q->addtable($tables['pubsub_process'], 'p');
     $q->addtable($tables['pubsub_events'], 'e');
     $q->join('p.event_id', 'e.id');
@@ -68,11 +68,6 @@ function pubsub_adminapi_process_queue_nodigest($args)
         }
     }
 
-    $q = new Query('SELECT', $tables['pubsub_process']);
-    $q->eq('state',2);
-//    $q->qecho();
-    $q->run();
-    
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
 
@@ -91,6 +86,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
         $mail_data['object_name'] = $object->name;
         $mail_data['module_name'] = $xarMod::getName();
+        $mail_data['event_type'] = $row['event_type'];
         
         // Send the mails
         xarMod::apiFunc('pubsub','admin','runjob',
