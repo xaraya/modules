@@ -79,6 +79,7 @@ function pubsub_adminapi_processevent($args)
         $q->addfield('module_id', $module_id);
         $q->addfield('itemtype', $itemtype);
         $q->addfield('itemid', $itemid);
+        $q->addfield('url', $url);
         $q->addfield('template_id', $template_id);
         $q->addfield('time_created', time());
         $q->addfield('time_modified', time());
