@@ -57,7 +57,7 @@ function pubsub_adminapi_runjob($args)
                   'name'             => $template_name,
                   'sendername'       => $args['sendername'],
                   'senderaddress'    => $args['senderaddress'],
-                  'subject'          => xarML('Xaraya Notifications'),
+                  'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
                   'recipientname'    => $value,
                   'recipientaddress' => $key,
                   'bccaddresses'     => array(),
