@@ -60,6 +60,7 @@ function pubsub_adminapi_processevent($args)
         $q->eq('module_id', $module_id);
         $q->eq('itemtype', $itemtype);
     }
+    $q->eq('event_type', $event_type);
     $q->run();
     $marked_events = $q->output();
 

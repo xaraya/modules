@@ -39,6 +39,7 @@ function pubsub_init()
             itemtype            integer unsigned NOT NULL DEFAULT '0',
             cid                 integer unsigned NOT NULL DEFAULT '0',
             extra               varchar(255) NOT NULL DEFAULT '',
+            event_type          varchar(64) NOT NULL DEFAULT '',
             groupdescr          varchar(64) NOT NULL DEFAULT '',
             author              integer unsigned NOT NULL default 0, 
             time_created        integer unsigned NOT NULL default 0, 
@@ -291,6 +292,14 @@ function pubsub_delete()
         xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
 */
+    // Remove any mailer templates
+    sys::import('xaraya.structures.query');
+    xarMod::load('mailer');
+    $tables =& xarDB::getTables();
+    $q = new Query('DELETE', $tables['mailer_mails']);
+    $q->eq('module_id', xarMod::getRegid('mailer'));
+    $q->qecho();exit;
+    
     $module = 'pubsub';
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }

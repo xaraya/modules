@@ -11,7 +11,7 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
  * Process the queue and run all pending jobs (executed by the scheduler module)
@@ -80,11 +80,18 @@ function pubsub_adminapi_process_queue_nodigest($args)
                     'header'  => xarML('Notification'),
                     'footer'  => xarML('Xaraya #(1) Module', UCFirst(xarMod::getName())),
                     'title'   => date('r'),
-                    'message' => 'Hello',
     );
     
     // Run through each of the entries in the queue
+    sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
+        
+        // Assemble the message
+        $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
+        $mail_data['object_name'] = $object->name;
+        $mail_data['module_name'] = $xarMod::getName();
+        
+        // Send the mails
         xarMod::apiFunc('pubsub','admin','runjob',
                       array('event_id'      => (int)$row['event_id'],
                             'object_id'     => (int)$row['object_id'],
@@ -101,6 +108,6 @@ function pubsub_adminapi_process_queue_nodigest($args)
     }
     return $count;
 
-} // END processq
+}
 
 ?>
