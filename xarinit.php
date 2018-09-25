@@ -89,6 +89,7 @@ function pubsub_init()
     $query = "CREATE TABLE " . $prefix . "_pubsub_templates (
             id                  integer unsigned NOT NULL auto_increment,
             name                varchar(64) NOT NULL DEFAULT '',
+            description         text,
             object_id           integer unsigned NOT NULL default 0, 
             module_id           integer unsigned NOT NULL default 0, 
             itemtype            integer unsigned NOT NULL default 0, 

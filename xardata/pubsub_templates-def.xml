@@ -35,6 +35,16 @@
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="description">
+      <id>7938</id>
+      <label>Description</label>
+      <type>textarea_large</type>
+      <defaultvalue></defaultvalue>
+      <source>templates.description</source>
+      <status>34</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="object">
       <id>7935</id>
       <label>Object</label>
@@ -42,7 +52,7 @@
       <defaultvalue>0</defaultvalue>
       <source>templates.object_id</source>
       <status>33</status>
-      <seq>3</seq>
+      <seq>4</seq>
       <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:7:"objects";s:25:"initialization_store_prop";s:8:"objectid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="module">
@@ -52,7 +62,7 @@
       <defaultvalue>0</defaultvalue>
       <source>templates.module_id</source>
       <status>33</status>
-      <seq>4</seq>
+      <seq>5</seq>
       <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:5:"regid";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="itemtype">
@@ -61,16 +71,6 @@
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
       <source>templates.itemtype</source>
-      <status>33</status>
-      <seq>5</seq>
-      <configuration>a:0:{}</configuration>
-    </property>
-    <property name="template">
-      <id>7938</id>
-      <label>Template</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>templates.template</source>
       <status>33</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>

@@ -1,7 +1,8 @@
 <items>
   <pubsub_templates itemid="1">
     <id>1</id>
-    <name>Default Template</name>
+    <name>default</name>
+    <description>The default template for single pubsub notifications</description>
     <object>0</object>
     <module>0</module>
     <itemtype>0</itemtype>
