@@ -292,15 +292,15 @@ function pubsub_delete()
         xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
 */
+    $module = 'pubsub';
     // Remove any mailer templates
     sys::import('xaraya.structures.query');
     xarMod::load('mailer');
     $tables =& xarDB::getTables();
     $q = new Query('DELETE', $tables['mailer_mails']);
-    $q->eq('module_id', xarMod::getRegid('mailer'));
+    $q->eq('module_id', xarMod::getRegid($module));
     $q->run();
     
-    $module = 'pubsub';
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
