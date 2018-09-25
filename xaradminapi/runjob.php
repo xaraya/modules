@@ -25,28 +25,47 @@
 function pubsub_adminapi_runjob($args)
 {
     static $templates = array();
-    
+
     // Get the template
-    if (!isset($templates[$args['template_id']])) {
         sys::import('modules.dynamicdata.class.properties.master');
         $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
         $template_object->getItem(array('itemid' => $args['template_id']));
-        $templates[$args['template_id']] = $template_object->properties['template']->value;
+        $template_name = $template_object->properties['name']->value;
+
+    if (!isset($templates[$template_name])) {
+        $mailer_object = DataObjectMaster::getObjectList(array('name' => 'mailer_mails'));
+        
+        // Set the body to active so it will be picked up by the query
+        $mailer_object->properties['body']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+        $mailer_object->setFieldList();
+        
+        $mailer_object->dataquery->eq('mails.module_id', xarMod::getRegid('pubsub'));
+        $mailer_object->dataquery->eq('mails.name', $template_name);
+        $templates = $mailer_object->getItems();
+        if (!empty($templates)) {
+            $this_template = reset($templates);
+            $templates[$template_name] = $this_template['body'];
+        } else {
+            return false;
+        }
     }
-    $template = $templates[$args['template_id']];
-    var_dump($args);
-    var_dump($template);
     
+    // This is the data which is inserted into the mail message when it compiles
     $mail_data = array(
-                    'header' => xarML('Notification'),
-                    'footer' => xarML('Xaraya PubSub Module'),
+                    'header'  => xarML('Notification'),
+                    'footer'  => xarML('Xaraya PubSub Module'),
+                    'title'   => 'Today',
+                    'message' => 'Hello',
     );
+    
+    // Send an email to each of the subscribers of this event
     foreach ($args['recipients'] as $key => $value) {
+        $mail_data['name'] = $value;
         $mailargs = array(
-                  'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
-                  'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
-                  'subject'          => xarML('Xaraya Notifications');
-                  'message'          => 'Hello',
+                  'name'             => $template_name,
+                  'sendername'       => $args['sendername'],
+                  'senderaddress'    => $args['senderaddress'],
+                  'subject'          => xarML('Xaraya Notifications'),
                   'recipientname'    => $value,
                   'recipientaddress' => $key,
                   'bccaddresses'     => array(),
