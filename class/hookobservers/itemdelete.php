@@ -1,32 +1,55 @@
 <?php
 /**
- * Eventhub Module
+ * Pubsub Module
  *
  * @package modules
- * @subpackage eventhub module
- * @copyright (C) 2012 Netspan AG
+ * @subpackage pubsub
+ * @copyright (C) 2018 Luetolf-Carroll GmbH
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
 /**
- * Event Subject Observer
+ * ItemDelete Hook Subject Observer
  *
- * Event Subject is notified every time xarEvents::notify is called
- * see /code/modules/eventsystem/class/eventsubjects/event.php for subject info 
- *
- * This observer is responsible for logging the event to the system log
 **/
-sys::import('xaraya.structures.hooks.observer');
-class PubsubItemDeleteObserver extends HookObserver implements ixarEventObserver
+sys::import('modules.pubsub.class.hookobservers.base');
+class PubsubItemDeleteObserver extends PubsubBaseObserver implements ixarEventObserver
 {
-    public $module = 'eventhub';
     public function notify(ixarEventSubject $subject)
     {
-        // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
+        // Get extrainfo from subject (array containing object_id, module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
-        return $extrainfo;
 
+        try {
+            $valid_array = $this->validate($extrainfo);
+            // If validation failed, just return to sender
+            if (!$valid_array) return $extrainfo;
+            // Validation succeeded; take the result
+            $extrainfo = $valid_array;
+        } catch (Exception $e) {
+            // Something went wrong
+            throw $e;
+        }
+
+        // Get information about the template we will use
+        $extrainfo = $this->getTemplate($extrainfo);
+
+        // Process the event (i.e. create a job for each subscription)
+        xarMod::apiFunc('pubsub','admin','processevent',
+                       array('module_id'   => $extrainfo['module_id'],
+                             'itemtype'    => $extrainfo['itemtype'],
+                             'cid'         => $extrainfo['cid'],
+                             'itemid'      => $extrainfo['itemid'],
+//                             'extra'       => $extra,
+                             'object_id'   => $extrainfo['object_id'],
+                             'template_id' => $template_id,
+                             'message_type'=> 'itemdelete',
+                             'state'       => 2
+                             ));
+                         
+        // The subject expects an array of extrainfo: whether or not the event was created, we go on.
+        return $extrainfo;
     }
 }
 ?>

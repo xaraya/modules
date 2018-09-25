@@ -17,10 +17,9 @@ sys::import('xaraya.structures.hooks.observer');
 class PubsubBaseObserver extends HookObserver implements ixarEventObserver
 {
     public $module = 'pubsub';
+
     public function getTemplate($extrainfo)
     {
-        $typeoftemplate = 'update';
-        
         sys::import('modules.dynamicdata.class.properties.master');
         $templates = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
         $q = $templates->dataquery;

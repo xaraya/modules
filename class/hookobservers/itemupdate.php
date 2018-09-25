@@ -1,12 +1,12 @@
 <?php
 /**
- * Eventhub Module
+ * Pubsub Module
  *
  * @package modules
- * @subpackage eventhub module
- * @copyright (C) 2012 Netspan AG
+ * @subpackage pubsub
+ * @copyright (C) 2018 Luetolf-Carroll GmbH
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
 /**
@@ -16,10 +16,9 @@
 sys::import('modules.pubsub.class.hookobservers.base');
 class PubsubItemUpdateObserver extends PubsubBaseObserver implements ixarEventObserver
 {
-    public $module = 'pubsub';
     public function notify(ixarEventSubject $subject)
     {
-        // Get extrainfo from subject (array containing module, module_id, itemtype, itemid)
+        // Get extrainfo from subject (array containing object_id, module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
 
         try {
