@@ -252,10 +252,10 @@ Sizes: [
 																that's entirely separate from the structural
 																framework of the email.
 															--&gt;
-															&lt;table border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;10&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
 																&lt;tr&gt;
 																	&lt;td align=&quot;center&quot; valign=&quot;middle&quot; class=&quot;textContent&quot;&gt;
-																		&lt;h1 style=&quot;color:##FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;&quot;&gt;
+																		&lt;h1 style=&quot;color:##FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:24px;font-weight:normal;margin-bottom:5px;text-align:center;&quot;&gt;
                                                                             &lt;!-- &lt;img src=&quot;http://www.luetolf-carroll.com/grades/var/ckfinder/userfiles/images/ESADELogo.png&quot; alt=&quot;ESADE&quot;/&gt; --&gt;
                                                                             #$header#
 																		&lt;/h1&gt;

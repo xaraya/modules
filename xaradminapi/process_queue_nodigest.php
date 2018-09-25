@@ -79,7 +79,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $mail_data = array(
                     'header'  => xarML('Notification'),
                     'footer'  => xarML('Xaraya PubSub Module'),
-                    'title'   => 'Today',
+                    'title'   => date('r'),
                     'message' => 'Hello',
     );
     
