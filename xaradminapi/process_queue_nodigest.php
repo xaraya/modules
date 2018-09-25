@@ -78,6 +78,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addfield('p.module_id AS module_id');
     $q->addfield('p.itemtype AS itemtype');
     $q->addfield('p.itemid AS itemid');
+    $q->addfield('p.url AS url');
     $q->eq('p.state',2);
 //    $q->qecho();
     $q->run();
@@ -100,7 +101,8 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
         $mail_data['object_name'] = $event_object->name;
         $mail_data['module_name'] = xarMod::getName();
-        $mail_data['event_type'] = $row['event_type'];
+        $mail_data['event_type']  = $row['event_type'];
+        $mail_data['url']         = $row['url'];
         
         // Send the mails
         xarMod::apiFunc('pubsub','admin','runjob',
