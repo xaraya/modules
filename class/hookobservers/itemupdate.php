@@ -13,13 +13,13 @@
  * ItemUpdate Hook Subject Observer
  *
 **/
-sys::import('xaraya.structures.hooks.observer');
-class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
+sys::import('modules.pubsub.class.hookobservers.base');
+class PubsubItemUpdateObserver extends PubsubBaseObserver implements ixarEventObserver
 {
     public $module = 'pubsub';
     public function notify(ixarEventSubject $subject)
     {
-        // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
+        // Get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
 
         try {
@@ -33,31 +33,8 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
             throw $e;
         }
 
-        $typeoftemplate = 'update';
-        
-        sys::import('modules.dynamicdata.class.properties.master');
-        $templates = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
-        $q = $templates->dataquery;
-        if (!empty($extrainfo['object'])) {
-            $q->eq('object_id', $extrainfo['object_id']);
-        } elseif (!empty($extrainfo['module_id'])) {
-            $q->eq('module_id', $extrainfo['module_id']);
-            $q->eq('itemtype', $extrainfo['itemtype']);
-        }
-        $q->addfield('id');
-        $q->run();
-        $result = $q->output();
-        if (!empty($result)) {
-            // Use the template found
-            $row = reset($result);
-            $template_id = (int)$row['id'];
-        } elseif (empty($result) && xarModVars::get('pubsub', 'enable_default_template')) {
-            // Use the default template
-            $template_id = 1;
-        } else {
-            // We have no template: bail
-            return $extrainfo;
-        }
+        // Get information about the template we will use
+        $extrainfo = $this->getTemplate($extrainfo);
 
 /*
     $extra = null;
