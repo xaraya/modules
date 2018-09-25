@@ -50,17 +50,9 @@ function pubsub_adminapi_runjob($args)
         }
     }
     
-    // This is the data which is inserted into the mail message when it compiles
-    $mail_data = array(
-                    'header'  => xarML('Notification'),
-                    'footer'  => xarML('Xaraya PubSub Module'),
-                    'title'   => 'Today',
-                    'message' => 'Hello',
-    );
-    
     // Send an email to each of the subscribers of this event
     foreach ($args['recipients'] as $key => $value) {
-        $mail_data['name'] = $value;
+        $args['mail_data']['name'] = $value;
         $mailargs = array(
                   'name'             => $template_name,
                   'sendername'       => $args['sendername'],

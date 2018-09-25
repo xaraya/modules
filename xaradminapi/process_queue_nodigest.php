@@ -75,6 +75,14 @@ function pubsub_adminapi_process_queue_nodigest($args)
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
 
+    // This is the data which is inserted into the mail message when it compiles
+    $mail_data = array(
+                    'header'  => xarML('Notification'),
+                    'footer'  => xarML('Xaraya PubSub Module'),
+                    'title'   => 'Today',
+                    'message' => 'Hello',
+    );
+    
     // Run through each of the entries in the queue
     foreach ($q->output() as $row) {
         xarMod::apiFunc('pubsub','admin','runjob',
@@ -87,6 +95,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
                             'recipients'    => $recipients[$row['event_id']],
                             'sendername'    => xarModVars::get('pubsub', 'defaultsendername'),
                             'senderaddress' => xarModVars::get('pubsub', 'defaultsenderaddress'),
+                            'mail_data'     => $mail_data,
                             ));
         $count++;
     }
