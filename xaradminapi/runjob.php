@@ -34,7 +34,27 @@ function pubsub_adminapi_runjob($args)
         $templates[$args['template_id']] = $template_object->properties['template']->value;
     }
     $template = $templates[$args['template_id']];
-    var_dump($template);exit;
+    var_dump($args);
+    var_dump($template);
+    
+    $mail_data = array(
+                    'header' => xarML('Notification'),
+                    'footer' => xarML('Xaraya PubSub Module'),
+    );
+    foreach ($args['recipients'] as $key => $value) {
+        $mailargs = array(
+                  'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
+                  'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
+                  'subject'          => xarML('Xaraya Notifications');
+                  'message'          => 'Hello',
+                  'recipientname'    => $value,
+                  'recipientaddress' => $key,
+                  'bccaddresses'     => array(),
+                  'data'             => $mail_data,
+        );
+        $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
+    }
+var_dump($data['result']);exit;
     // Get arguments from argument array
     extract($args);
 
