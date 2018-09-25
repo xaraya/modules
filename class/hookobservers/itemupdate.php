@@ -84,6 +84,7 @@ class PubsubItemUpdateObserver extends HookObserver implements ixarEventObserver
 //                             'extra'       => $extra,
                              'object_id'   => $extrainfo['object_id'],
                              'template_id' => $template_id,
+                             'message_type'=> 'itemupdate',
                              'state'       => 2
                              ));
                          
