@@ -18,6 +18,15 @@
         </div>
         <div class="xar-row">
            <div class="xar-col-condensed">
+               <xar:var name="label">Description</xar:var>
+               <xar:data-label property="$properties['description']" label="$label"/>                    
+           </div>
+           <div class="xar-col">
+               <xar:data-input property="$properties['description']"/>                    
+           </div>        
+        </div>
+        <div class="xar-row">
+           <div class="xar-col-condensed">
                <xar:var name="label">Object</xar:var>
                <xar:data-label property="$properties['object']" label="$label"/>                    
            </div>
