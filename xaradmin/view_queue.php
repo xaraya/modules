@@ -27,7 +27,7 @@ function pubsub_admin_view_queue($args)
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
 
-    if (!empty($action) && ($action == 'process')) {die("X");
+    if (!empty($action) && ($action == 'process')) {
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
         
