@@ -207,6 +207,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     # Set up modvars
     #
         xarModVars::set('pubsub', 'enable_default_template',0);
+        xarModVars::set('pubsub', 'recognized_events','itemcreate,itemupdate,itemdelete');
 
     # --------------------------------------------------------
     #

@@ -1,6 +1,6 @@
 <items>
-  <mailer_mails itemid="1">
-    <id>1</id>
+  <mailer_mails itemid="7">
+    <id>7</id>
     <name>default</name>
     <description>The default pubsub mail template</description>
     <sender_name></sender_name>
@@ -306,7 +306,20 @@ Sizes: [
                             Dear #$name#,
                         &lt;/div&gt;
 						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
-                            #$message#
+                            An item of the object #$object_name# was
+                            &lt;xar:if condition=&quot;$event_type eq 'itemcreate'&quot;&gt;
+                                created. 
+                                &lt;xar:if condition=&quot;!empty($url)&quot;&gt;
+                                    Click &lt;a href=&quot;#$url#&quot;&gt;here&lt;/a&gt; to see it.
+                                &lt;/xar:if&gt;
+                            &lt;xar:elseif condition=&quot;$event_type eq 'itemupdate'&quot;/&gt;
+                                modified.
+                                &lt;xar:if condition=&quot;!empty($url)&quot;&gt;
+                                    Click &lt;a href=&quot;#$url#&quot;&gt;here&lt;/a&gt; to see it.
+                                &lt;/xar:if&gt;
+                            &lt;xar:elseif condition=&quot;$event_type eq 'itemdelete'&quot;/&gt;
+                                deleted.
+                            &lt;/xar:if&gt;
                         &lt;/div&gt;
 						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
                             This message was generated automatically. Please do not respond to this email.
@@ -464,7 +477,6 @@ Sizes: [
     <footer>0</footer>
     <locale>en_US.utf-8</locale>
     <owner>6</owner>
-    <editor>4</editor>
     <redirect>0</redirect>
     <redirect_address></redirect_address>
     <mail_type>4</mail_type>
@@ -475,6 +487,5 @@ Sizes: [
     <state>3</state>
     <header_x_mailer></header_x_mailer>
     <realm_id>0</realm_id>
-    <parameters></parameters>
   </mailer_mails>
 </items>

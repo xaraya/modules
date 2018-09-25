@@ -93,10 +93,19 @@ function pubsub_adminapi_process_queue_nodigest($args)
                     'title'   => date('r'),
     );
 
+    // We only recognize certain types of events
+    $recognized_events = xarModVars::get('pubsub', 'recognized_events');
+    if (empty($recognized_events)) return false;
+    
+    $recognized_events = explode(',', xarModVars::get('pubsub', 'recognized_events'));
+    foreach ($recognized_events as $k => $v) $recognized_events[$k] = trim($v);
+    
     // Run through each of the entries in the queue
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
 
+        if (!in_array($row['event_type'], $recognized events) continue;
+        
         // Assemble the message
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
         $mail_data['object_name'] = $event_object->name;
