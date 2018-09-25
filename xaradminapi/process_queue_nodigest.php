@@ -88,7 +88,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
 
     // This is the data which is inserted into the mail message when it compiles
     $mail_data = array(
-                    'header'  => xarML('Notification'),
+                    'header'  => xarML('Notification from #(1)', xarModVars::get('themes', 'SiteName')),
                     'footer'  => xarML('Xaraya #(1) Module', UCFirst(xarMod::getName())),
                     'title'   => date('r'),
     );
