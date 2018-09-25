@@ -17,7 +17,7 @@
  * View the current event queue
  */
 function pubsub_admin_view_queue($args)
-{die("X");
+{
     if (!xarSecurityCheck('ManagePubSub')) return;
     
     extract($args);
