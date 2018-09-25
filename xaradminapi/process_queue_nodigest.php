@@ -75,15 +75,19 @@ function pubsub_adminapi_process_queue_nodigest($args)
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
 
+    // Run through each of the entries in the queue
     foreach ($q->output() as $row) {
         xarMod::apiFunc('pubsub','admin','runjob',
-                      array('event_id'    => (int)$row['event_id'],
-                            'object_id'   => (int)$row['object_id'],
-                            'module_id'   => (int)$row['module_id'],
-                            'itemtype'    => (int)$row['itemtype'],
-                            'itemid'      => (int)$row['itemid'],
-                            'template_id' => (int)$row['template_id'],
-                            'recipients'  => $recipients[$row['event_id']]));
+                      array('event_id'      => (int)$row['event_id'],
+                            'object_id'     => (int)$row['object_id'],
+                            'module_id'     => (int)$row['module_id'],
+                            'itemtype'      => (int)$row['itemtype'],
+                            'itemid'        => (int)$row['itemid'],
+                            'template_id'   => (int)$row['template_id'],
+                            'recipients'    => $recipients[$row['event_id']],
+                            'sendername'    => xarModVars::get('pubsub', 'defaultsendername'),
+                            'senderaddress' => xarModVars::get('pubsub', 'defaultsenderaddress'),
+                            ));
         $count++;
     }
     return $count;
