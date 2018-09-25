@@ -17,7 +17,7 @@
  * View the current event queue
  */
 function pubsub_admin_view_queue($args)
-{
+{die("X");
     if (!xarSecurityCheck('ManagePubSub')) return;
     
     extract($args);
@@ -27,12 +27,12 @@ function pubsub_admin_view_queue($args)
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
 
-    if (!empty($action) && ($action == 'process')) {
+    if (!empty($action) && ($action == 'process')) {die("X");
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
         
         xarMod::apiFunc('pubsub','admin','process_queue');
-        xarController::redirect(xarModURL('pubsub', 'admin', 'view_process'));
+        xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
         return true;
     }
     return $data;

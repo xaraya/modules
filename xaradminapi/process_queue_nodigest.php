@@ -48,8 +48,12 @@ function pubsub_adminapi_process_queue_nodigest($args)
 //    $q->qecho();
     $q->run();
     
+    $pendings = $q->output();
+    // Bail if nothing to do
+    if (empty($pendings)) return false;
+
     $recipients = array();
-    foreach ($q->output() as $row) {
+    foreach ($pendings as $row) {
         // Add a cc email if there is one
         // Add a default name as we have no other
         if (!empty($row['email'])) $recipients[$row['event_id']][$row['email']] = xarML('Subscriber');
@@ -68,6 +72,12 @@ function pubsub_adminapi_process_queue_nodigest($args)
         }
     }
 
+    // Get the queue again, without subscriptions
+    $q = new Query('SELECT', $tables['pubsub_process']);
+    $q->eq('state',2);
+//    $q->qecho();
+    $q->run();
+
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
 
@@ -77,7 +87,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
                     'footer'  => xarML('Xaraya #(1) Module', UCFirst(xarMod::getName())),
                     'title'   => date('r'),
     );
-    
+
     // Run through each of the entries in the queue
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
