@@ -78,7 +78,7 @@
     <property name="url">
       <id>8459</id>
       <label>URL</label>
-      <type>taxpref</type>
+      <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>process.url</source>
       <status>34</status>
