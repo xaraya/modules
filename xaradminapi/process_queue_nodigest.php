@@ -134,7 +134,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $count++;
 
         // Set the job's state to inactive
-        $q1->eq('id');
+        $q1->eq('id', (int)$row['job_id']);
 //        $q1->qecho();
         $q1->run();
         // Clear this condition for the next round
