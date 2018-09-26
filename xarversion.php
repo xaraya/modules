@@ -26,4 +26,15 @@ $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Utility';
 $modversion['category']     = 'Global';
+$modversion['dependencyinfo'] = array(
+                                0 => array(
+                                        'name' => 'Xaraya Core',
+                                        'version_ge' => '2.4.0'
+                                     ),
+                                30064 => array(
+                                        'name' => 'mailer',
+                                        'displayname' => 'Mailer module',
+                                        'minversion' => '1.0.0'
+                                     ),
+                                      );
 ?>
