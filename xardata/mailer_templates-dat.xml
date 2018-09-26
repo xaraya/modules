@@ -1,6 +1,6 @@
 <items>
-  <mailer_mails itemid="7">
-    <id>7</id>
+  <mailer_mails itemid="8">
+    <id>8</id>
     <name>default</name>
     <description>The default pubsub mail template</description>
     <sender_name></sender_name>
@@ -306,7 +306,7 @@ Sizes: [
                             Dear #$name#,
                         &lt;/div&gt;
 						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
-                            An item of the object #$object_name# was
+                            An item (ID #$itemid#) of the object #$object_name# was
                             &lt;xar:if condition=&quot;$event_type eq 'itemcreate'&quot;&gt;
                                 created. 
                                 &lt;xar:if condition=&quot;!empty($url)&quot;&gt;
