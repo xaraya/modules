@@ -71,8 +71,9 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addtable($tables['pubsub_process'], 'p');
     $q->addtable($tables['pubsub_events'], 'e');
     $q->join('p.event_id', 'e.id');
-    $q->addfield('e.id AS event_id');
+//    $q->addfield('e.id AS event_id');
     $q->addfield('e.event_type AS event_type');
+    $q->addfield('p.id AS job_id');
     $q->addfield('p.template_id AS template_id');
     $q->addfield('p.object_id AS object_id');
     $q->addfield('p.module_id AS module_id');
@@ -100,6 +101,10 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $recognized_events = explode(',', xarModVars::get('pubsub', 'recognized_events'));
     foreach ($recognized_events as $k => $v) $recognized_events[$k] = trim($v);
     
+    // Set up an object to update each job
+    $q1 = new Query('UPDATE', $tables['pubsub_process']);
+    $q1->addfield('state', 1);
+
     // Run through each of the entries in the queue
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
@@ -114,7 +119,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $mail_data['url']         = $row['url'];
         
         // Send the mails
-        xarMod::apiFunc('pubsub','admin','runjob',
+        $result = xarMod::apiFunc('pubsub','admin','runjob',
                       array('event_id'      => (int)$row['event_id'],
                             'object_id'     => (int)$row['object_id'],
                             'module_id'     => (int)$row['module_id'],
@@ -127,6 +132,15 @@ function pubsub_adminapi_process_queue_nodigest($args)
                             'mail_data'     => $mail_data,
                             ));
         $count++;
+
+        if ($result !== false) {
+            // Set the job's state to inactive
+            $q1->eq('id');
+    //        $q1->qecho();
+            $q1->run();
+            // Clear this condition for the next round
+            $q1->clearconditions();
+        }
     }
     return $count;
 
