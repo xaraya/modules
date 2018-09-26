@@ -38,6 +38,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addfield('s.userid AS userid');
     $q->addfield('s.email AS email');
     // Only pending jobs
+    $q->eq('e.state',3);
     $q->eq('p.state',2);
 //    $q->qecho();
     $q->run();
@@ -114,19 +115,19 @@ function pubsub_adminapi_process_queue_nodigest($args)
         
         // Assemble the message
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
+        $mail_data['event_id']    = (int)$row['event_id'];
+        $mail_data['object_id']   = (int)$row['object_id'];
         $mail_data['object_name'] = $event_object->name;
+        $mail_data['module_id']   = (int)$row['module_id'];
         $mail_data['module_name'] = xarMod::getName();
+        $mail_data['itemtype']    = (int)$row['itemtype'];
+        $mail_data['itemid']      = (int)$row['itemid'];
         $mail_data['event_type']  = $row['event_type'];
         $mail_data['url']         = $row['url'];
         
         // Send the mails
         $results = xarMod::apiFunc('pubsub','admin','runjob',
-                      array('event_id'      => (int)$row['event_id'],
-                            'object_id'     => (int)$row['object_id'],
-                            'module_id'     => (int)$row['module_id'],
-                            'itemtype'      => (int)$row['itemtype'],
-                            'itemid'        => (int)$row['itemid'],
-                            'template_id'   => (int)$row['template_id'],
+                      array('template_id'   => (int)$row['template_id'],
                             'recipients'    => $recipients[$row['event_id']],
                             'sendername'    => xarModVars::get('pubsub', 'defaultsendername'),
                             'senderaddress' => xarModVars::get('pubsub', 'defaultsenderaddress'),
