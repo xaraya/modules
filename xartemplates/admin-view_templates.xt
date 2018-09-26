@@ -7,7 +7,9 @@
             <legend>
                 Templates
             </legend>
-            
+            <div>
+                Note that the templates defined here are just pointers and the actual templates need to be present in the mailer module. Each entry here should correspond to a mailer template of the same name.
+            </div>
             <xar:data-input type="listing" object="$object" tplmodule="pubsub"/>
         </fieldset>
 
