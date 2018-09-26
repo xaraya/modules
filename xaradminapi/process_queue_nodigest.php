@@ -103,6 +103,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     
     // Set up an object to update each job
     $q1 = new Query('UPDATE', $tables['pubsub_process']);
+    $q1->addfield('time_modified', time());
     $q1->addfield('state', 1);
 
     // Run through each of the entries in the queue
