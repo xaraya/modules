@@ -51,6 +51,7 @@ function pubsub_adminapi_runjob($args)
     }
     
     // Send an email to each of the subscribers of this event
+    $data['results'] = array();
     foreach ($args['recipients'] as $key => $value) {
         $args['mail_data']['name'] = $value;
         $mailargs = array(
@@ -64,8 +65,12 @@ function pubsub_adminapi_runjob($args)
                   'data'             => $args['mail_data'],
         );
         $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
+        $data['results'] = array_merge($data['results'], array($data['result']));
     }
-var_dump($data['result']);exit;
+    
+    return $data['results'];
+
+
     // Get arguments from argument array
     extract($args);
 

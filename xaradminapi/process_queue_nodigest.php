@@ -71,7 +71,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addtable($tables['pubsub_process'], 'p');
     $q->addtable($tables['pubsub_events'], 'e');
     $q->join('p.event_id', 'e.id');
-//    $q->addfield('e.id AS event_id');
+    $q->addfield('e.id AS event_id');
     $q->addfield('e.event_type AS event_type');
     $q->addfield('p.id AS job_id');
     $q->addfield('p.template_id AS template_id');
@@ -119,7 +119,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $mail_data['url']         = $row['url'];
         
         // Send the mails
-        $result = xarMod::apiFunc('pubsub','admin','runjob',
+        $results = xarMod::apiFunc('pubsub','admin','runjob',
                       array('event_id'      => (int)$row['event_id'],
                             'object_id'     => (int)$row['object_id'],
                             'module_id'     => (int)$row['module_id'],
@@ -133,14 +133,12 @@ function pubsub_adminapi_process_queue_nodigest($args)
                             ));
         $count++;
 
-        if ($result !== false) {
-            // Set the job's state to inactive
-            $q1->eq('id');
-    //        $q1->qecho();
-            $q1->run();
-            // Clear this condition for the next round
-            $q1->clearconditions();
-        }
+        // Set the job's state to inactive
+        $q1->eq('id');
+//        $q1->qecho();
+        $q1->run();
+        // Clear this condition for the next round
+        $q1->clearconditions();
     }
     return $count;
 
