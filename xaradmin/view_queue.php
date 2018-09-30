@@ -56,7 +56,6 @@ function pubsub_admin_view_queue($args)
                       'data'             => $args['mail_data'],
             );
             $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
-            var_dump($data['result']);exit;
         }
 
         xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
