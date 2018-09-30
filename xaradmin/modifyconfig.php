@@ -173,7 +173,6 @@ function pubsub_admin_modifyconfig()
                     xarVarFetch('includechildren','checkbox', $includechildren,false, XARVAR_DONT_SET);
                     xarVarFetch('allindigest',    'checkbox', $allindigest,   false, XARVAR_DONT_SET);
                     xarVarFetch('usetemplateids', 'checkbox',  $usetemplateids, false, XARVAR_DONT_SET);
-                    if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('pubsub', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 					if (!xarVarFetch('sendnotice_subscription',        'checkbox', $sendnotice_subscription,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('sendnotice_queue',        'checkbox', $sendnotice_queue,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('enable_default_template',        'checkbox', $enable_default_template,        false, XARVAR_NOT_REQUIRED)) return;
@@ -194,7 +193,6 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub', 'includechildren',$includechildren);
                     xarModVars::set('pubsub', 'usetemplateids',$usetemplateids);
                     xarModVars::set('pubsub', 'allindigest',$allindigest);
-                    xarModVars::set('pubsub', 'usermessage', $usermessage);
                     xarModVars::set('pubsub', 'sendnotice_subscription', $sendnotice_subscription);
                     xarModVars::set('pubsub', 'sendnotice_queue', $sendnotice_queue);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
@@ -205,8 +203,8 @@ function pubsub_admin_modifyconfig()
                         // see if we have a scheduler job running to process the pubsub queue
                         $job = xarMod::apiFunc('scheduler','user','get',
                                              array('module' => 'pubsub',
-                                                   'type' => 'admin',
-                                                   'func' => 'processq'));
+                                                   'type'   => 'admin',
+                                                   'func'   => 'processq'));
                         if (empty($job) || empty($job['interval'])) {
                             if (!empty($interval)) {
                                 // create a scheduler job

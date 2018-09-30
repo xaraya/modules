@@ -208,6 +208,8 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     #
         xarModVars::set('pubsub', 'enable_default_template',0);
         xarModVars::set('pubsub', 'recognized_events','itemcreate,itemupdate,itemdelete');
+        xarModVars::set('pubsub', 'sendnotice_subscription',false);
+        xarModVars::set('pubsub', 'sendnotice_queue',false);
 
     # --------------------------------------------------------
     #
