@@ -53,7 +53,7 @@ function pubsub_admin_modifyconfig()
             switch ($data['tab']) {
                 case 'general':
                 default:
-                	$data['regoptions'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "pubsub"));
+                	$data['regoptions'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=> 3, 'module'=> "pubsub"));
                     // get the list of hooked modules
                     $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                                    array('hookModName' => 'pubsub'));
@@ -174,7 +174,8 @@ function pubsub_admin_modifyconfig()
                     xarVarFetch('allindigest',    'checkbox', $allindigest,   false, XARVAR_DONT_SET);
                     xarVarFetch('usetemplateids', 'checkbox',  $usetemplateids, false, XARVAR_DONT_SET);
                     if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('pubsub', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-					if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
+					if (!xarVarFetch('sendnotice_subscription',        'checkbox', $sendnotice_subscription,        false, XARVAR_NOT_REQUIRED)) return;
+					if (!xarVarFetch('sendnotice_queue',        'checkbox', $sendnotice_queue,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('enable_default_template',        'checkbox', $enable_default_template,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('recognized_events',        'str', $recognized_events,        '', XARVAR_NOT_REQUIRED)) return;
                     
@@ -194,7 +195,8 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub', 'usetemplateids',$usetemplateids);
                     xarModVars::set('pubsub', 'allindigest',$allindigest);
                     xarModVars::set('pubsub', 'usermessage', $usermessage);
-                    xarModVars::set('pubsub', 'sendnotice', $sendnotice);
+                    xarModVars::set('pubsub', 'sendnotice_subscription', $sendnotice_subscription);
+                    xarModVars::set('pubsub', 'sendnotice_queue', $sendnotice_queue);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
                     xarModVars::set('pubsub', 'recognized_events', $recognized_events);
 

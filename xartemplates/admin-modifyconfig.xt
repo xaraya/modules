@@ -182,30 +182,28 @@
                 </fieldset>
                 <fieldset>
                     <legend>
-                        Notification
+                        Admin Notifications
                     </legend>
-                    <xar:var name="firstline">Choose a mail template</xar:var>
-					<xar:set name="firstline">"0,$firstline"</xar:set>
-					  <div class="xar-row">
+                    <div class="xar-row">
                         <div class="xar-col">
-                            <label for="usermessage" class="xar-form-label" title="#xarML('The name of the email message to send the user')#">
-                                User Message Name
+                            <label for="sendnotice_subscription" title="#xarML('Notify Admin when user subscribes')#" class="xar-form-label">
+                                When a user subscribes
                             </label>
                         </div>
-                      	<div class="xar-col" style="width:30%;">
-                            <xar:set name="value">xarModVars::get('pubsub', 'usermessage')</xar:set>
-                            <xar:data-input type="dropdown" name="usermessage" value="$value" options="$regoptions" firstline="$firstline"/>
+                        <div class="xar-col">
+                            <xar:set name="checked">xarModVars::get('pubsub', 'sendnotice_subscription')</xar:set>
+                            <xar:data-input type="checkbox" name="sendnotice_subscription" checked="$checked"/>
                         </div>
                     </div>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <label for="sendnotice" title="#xarML('Notify Admin when user subscribes')#" class="xar-form-label">
-                                Send Notice To Admin
+                            <label for="sendnotice_queue" title="#xarML('Notify Admin when the queue is processed')#" class="xar-form-label">
+                                When the queue is processed
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:set name="checked">xarModVars::get('pubsub', 'sendnotice')</xar:set>
-                            <xar:data-input type="checkbox" name="sendnotice" checked="$checked"/>
+                            <xar:set name="checked">xarModVars::get('pubsub', 'sendnotice_queue')</xar:set>
+                            <xar:data-input type="checkbox" name="sendnotice_queue" checked="$checked"/>
                         </div>
                     </div>
                 </fieldset>
