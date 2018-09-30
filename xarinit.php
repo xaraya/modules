@@ -297,7 +297,7 @@ function pubsub_delete()
     $module = 'pubsub';
     // Remove any mailer templates
     sys::import('xaraya.structures.query');
-    xarMod:apiLoad('mailer');
+    xarMod::apiLoad('mailer');
     $tables =& xarDB::getTables();
     $q = new Query('DELETE', $tables['mailer_mails']);
     $q->eq('module_id', xarMod::getRegid($module));
