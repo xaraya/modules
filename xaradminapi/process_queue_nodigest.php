@@ -45,7 +45,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     
     $pendings = $q->output();
     // Bail if nothing to do
-    if (empty($pendings)) return false;
+    if (empty($pendings)) return 0;
 
     $recipients = array();
     foreach ($pendings as $row) {
@@ -85,9 +85,6 @@ function pubsub_adminapi_process_queue_nodigest($args)
 //    $q->qecho();
     $q->run();
 
-    // set count to 1 so that the scheduler knows we're doing OK :)
-    $count = 1;
-
     // This is the data which is inserted into the mail message when it compiles
     $mail_data = array(
                     'header'  => xarML('Notification from #(1)', xarModVars::get('themes', 'SiteName')),
@@ -108,6 +105,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q1->addfield('state', 1);
 
     // Run through each of the entries in the queue
+    $count = 0;
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
 
