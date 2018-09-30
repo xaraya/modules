@@ -24,16 +24,11 @@ function pubsub_adminapi_process_queue($args)
     $allindigest = xarModVars::get('pubsub','allindigest');
 
     if (empty($allindigest)) {
-        if (!($count = xarMod::apiFunc('pubsub','admin','process_queue_nodigest',$args))) {
-            return;
-        }
+        $count = xarMod::apiFunc('pubsub','admin','process_queue_nodigest',$args)))
     } else {
-        if (!($count = xarMod::apiFunc('pubsub','admin','process_queue_digest',$args))) {
-            return;
-        }
+        $count = xarMod::apiFunc('pubsub','admin','process_queue_digest',$args)))
     }
     return $count;
-
 }
 
 ?>

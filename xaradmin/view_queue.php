@@ -31,7 +31,34 @@ function pubsub_admin_view_queue($args)
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
         
-        xarMod::apiFunc('pubsub','admin','process_queue');
+        $result = xarMod::apiFunc('pubsub','admin','process_queue');
+        
+        // Notify the admin if required
+        if (xarModVars::get('pubsub', 'sendnotice_queue')) {
+        
+            $admin = xarRoles::getRole(xarModVars::get('roles', 'admin'));
+
+            $args['mail_data']['message_type'] = 'queue';
+            $args['mail_data']['count']        = $result;
+            $args['mail_data']['header']       = xarML('Notification from #(1)', xarModVars::get('themes', 'SiteName'));
+            $args['mail_data']['footer']       = xarML('Xaraya #(1) Module', UCFirst(xarMod::getName()));
+            $args['mail_data']['title']        = date('r');
+            $args['mail_data']['name']         = $admin->properties['name']->value;
+
+            $mailargs = array(
+                      'name'             => 'pubsub_admin',
+                      'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
+                      'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
+                      'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
+                      'recipientname'    => $admin->properties['name']->value,
+                      'recipientaddress' => $admin->properties['email']->value,
+                      'bccaddresses'     => array(),
+                      'data'             => $args['mail_data'],
+            );
+            $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
+            var_dump($data['result']);exit;
+        }
+
         xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
         return true;
     }

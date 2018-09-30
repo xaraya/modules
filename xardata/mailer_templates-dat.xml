@@ -1,7 +1,7 @@
 <items>
   <mailer_mails itemid="8">
     <id>8</id>
-    <name>default</name>
+    <name>pubsub_default</name>
     <description>The default pubsub mail template</description>
     <sender_name></sender_name>
     <sender_address></sender_address>
@@ -476,7 +476,7 @@ Sizes: [
 --&gt;</body>
     <footer>0</footer>
     <locale>en_US.utf-8</locale>
-    <owner>6</owner>
+    <owner></owner>
     <redirect>0</redirect>
     <redirect_address></redirect_address>
     <mail_type>4</mail_type>
