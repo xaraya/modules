@@ -11,108 +11,55 @@
  * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
-
 
 function pubsub_userapi_notify_new_user($args)
 {
-// Load the publications and eventhub module so that we have access to the publications tables
-	xarModLoad('publications');
-	xarModLoad('eventhub');
+    // Send Welcome mail to the subscribed user
+				
+    $mail_data = array();
+    $mail_data['header']       = xarML('Thanks to subscribing at #(1)', xarModVars::get('themes', 'SiteName'));
+    $mail_data['footer']       = xarML('Xaraya #(1) Module', UCFirst(xarMod::getName()));
+    $mail_data['title']        = date('r');
 
-	// Get the list of events not yet broadcast
-	sys::import('xaraya.structures.query');
-	$xartables = xarDB::getTables();
-	$q = new Query();
-	$q->addtable($xartables['eventhub_broadcast'],'eb');
-	
-	// Join the publications table to get only publish events
-	$q->addtable($xartables['publications'],'pu');
-	$q->addfield('eb.id');
-	$q->addfield('eb.event_id');
-	$q->addfield('eb.broadcast');
-	$q->join('eb.event_id','pu.id');
-	$q->eq('pu.state', 3);
-	$q->eq('eb.broadcast', 0);
-	$q->run();
-	
-	$eventlist = $q->output();
-	$allevents = $eventlist;
-
-	// Set up the array to store the list of events for each user
-	$user_event_master = array();
-	$result = "";
-	
-	if(!empty($eventlist)) {
-			// send Welcome mail to the subscribed user
-			try {
-			//	$user = $entry['user'];
-			//	$eventlist = $entry['events'];			
-				$user['name'] = "Eventhub Subscriber";
-				$user['email']= $args;
-				
-				$subscription_template_id = xarModVars::get('pubsub', 'usermessage');
-				
-				$args = array('id'               => $subscription_template_id,
-						'sendername'       => "Administrator",
-						'senderaddress'    => "admin@eventhubsacramento.com",
-						'recipientname'    => "EventHub SUbscriber",
-						'recipientaddress' => $user['email'],
-					//	'data' => array('eventlist' => $eventlist, 'user' => $user)
-					);
-				
-				$sendmail = xarModAPIFunc('mailer','user','send', $args);
-				} catch (Exception $e) {
-					$result .= implode(", ", $e->getMessage());
-				}
-		/*}*/
+    $mailargs = array(
+                  'name'             => 'pubsub_welcome',
+                  'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
+                  'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
+                  'subject'          => xarML('You have subscribed at #(1)', xarModVars::get('themes', 'SiteName')),
+                  'recipientname'    => xarModVars::get('themes', 'SiteName'),
+                  'recipientaddress' => $user['email'],
+                  'data'             => $args['mail_data'],
+    );
+    
+    $result = xarMod::apiFunc('mailer','user','send', $mailargs);
 		
-		// Now send notification mail to admin with the number of events and the number of users notified
-		// if allowed to notify admin from pubsub backend
-		
-		if (xarModVars::get('pubsub','sendnotice')) {
-			$events_count = count($allevents);
-			//$total_users_count =  count($user_event_master);
-			$total_users_count =1;
-			
-			$args = array('id'               => 18,
-					'sendername'       => "Administrator",
-					'senderaddress'    => "admin@eventhubsacramento.com",
-					'recipientname'    => 'EventHub_SUbscriber',
-					'recipientaddress' => 'netspan@paramss.com',
-					'data' => array('email' => $user['email'])
-				);
-			$sendmail = xarModAPIFunc('mailer','user','send', $args);
-			
-			if(xarModVars::get('pubsub','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-				$result .=  xarML("Emails sent to #(1) users", $total_users_count);
-				$result .= "<pre>";
-				foreach ($user_event_master as $entry) {
-					$user = $entry['user'];
-					$eventlist = $entry['events'];
-					$result .= "</pre>";
-					$result .= $user['uname'] . "(" . $user['email'] . ")<br/>";
-					/*
-					foreach ($eventlist as $event) {
-						$item = xarMod::apiFunc('publications','user','get', array('id' => $event['id']));
-						$result .= $item['title'] . "<br/>";
-					}
-					*/
-				}
-				 $result .= "</pre>"; 
-				return $result;
-			
-			} else {
-				$result .=  xarML("Emails sent to #(1) users", $total_users_count);
-				return $result;
-			}
-		}
-	} else {
-		$result .= xarML("No events to send");
-		return $result;
-	}
+    // Notify the admin if required
+    if (xarModVars::get('pubsub','sendnotice_subscription')) {
+    
+        $admin = xarRoles::getRole(xarModVars::get('roles', 'admin'));
 
+        $mail_data = array();
+        $mail_data['message_type'] = 'subscription';
+        $mail_data['count']        = $result;
+        $mail_data['header']       = xarML('Notification from #(1)', xarModVars::get('themes', 'SiteName'));
+        $mail_data['footer']       = xarML('Xaraya #(1) Module', UCFirst(xarMod::getName()));
+        $mail_data['title']        = date('r');
+        $mail_data['name']         = $admin->properties['name']->value;
+
+        $mailargs = array(
+                  'name'             => 'pubsub_admin',
+                  'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
+                  'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
+                  'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
+                  'recipientname'    => $admin->properties['name']->value,
+                  'recipientaddress' => $admin->properties['email']->value,
+                  'bccaddresses'     => array(),
+                  'data'             => $args['mail_data'],
+        );
+        $result = xarMod::apiFunc('mailer','user','send', $mailargs);
+    }
 }
 
 ?>
