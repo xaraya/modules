@@ -62,7 +62,6 @@ function pubsub_admin_view_queue($args)
         return true;
     }
     return $data;
-
 }
 
 ?>

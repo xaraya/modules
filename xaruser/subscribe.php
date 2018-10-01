@@ -61,7 +61,7 @@ function pubsub_user_subscribe()
     if (empty($eventid)) return; // throw back
 
 // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
-// AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
+// Am hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
     if (!xarMod::apiFunc('pubsub',
                        'user',
                        'adduser',
