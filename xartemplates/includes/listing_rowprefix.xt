@@ -18,8 +18,9 @@
                     <xar:access level="200">
                         <li><a href="#xarModURL($module, 'user', 'display_transaction', array('itemid' => $thisID))#">Display</a></li>
                     </xar:access>
-                    <!-- Only modify if not yet processed -->
-                    <xar:if condition="empty($loopitem['processed'])">
+                    <!-- Only modify if not yet processed or if I am admin -->
+                    <xar:set name="is_admin">xarIsParent('Administrators', xarUser::getVar('uname'))</xar:set>
+                    <xar:if condition="empty($loopitem['processed']) OR $is_admin">
                         <xar:access level="500">
                             <li><a href="#xarModURL($module, 'user', 'modify_transaction', array('itemid' => $thisID))#">Modify</a></li>
                         </xar:access>
