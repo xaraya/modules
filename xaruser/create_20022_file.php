@@ -126,18 +126,32 @@ function payments_user_create_20022_file()
         $data['items'][$key]['group_reference'] = $data['group_reference'];
         $data['items'][$key]['message_id']      = $data['message_identifier'];
     
+        switch ($item['currency']) {
+            case 'USD':
+            case 'EUR':
+            case 'CHF':
+            default:
+                $decimals = 2;
+            break;
+        }
+        $data['items'][$key]['amount'] = number_format($item['amount'], $decimals, '.', '');
+        
         // Generate the control sum
         $data['control_sum'] += $item['amount'];
     }
 
-    foreach ($data['items'] as $key => $item) {        
-        // Get this transaction
-        $data['transaction']->getItem(array('itemid' => $item['id']));
-        // Add the data
-        $data['transaction']->setFieldValues($data['items'][$key],1);
-        // Update the database transaction
-        $data['transaction']->updateItem(array('itemid' => $item['id']));
-    }
+    try {
+        foreach ($data['items'] as $key => $item) {        
+            // Get this transaction
+            $data['transaction']->getItem(array('itemid' => $item['id']));
+            // Add the data
+            $data['transaction']->setFieldValues($data['items'][$key],1);
+            // Update the database transaction
+            $data['transaction']->updateItem(array('itemid' => $item['id']));
+        }
+    } catch (Exception $e) {
+        return xarTpl::module('payments','user','errors',array('layout' => 'payment_slip_fail'));
+    )
 # --------------------------------------------------------
 #
 # Send the file to the browser

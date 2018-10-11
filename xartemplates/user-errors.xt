@@ -48,7 +48,11 @@
                     </div>
                 <xar:elseif condition="$layout eq 'no_payments_id'"/>
                     <div style="margin-top: 20px; margin-left: 20px">
-                        Cannot create a payments file
+                        Cannot create a payments file: no ID
+                    </div>
+                <xar:elseif condition="$layout eq 'payment_slip_fail'"/>
+                    <div style="margin-top: 20px; margin-left: 20px">
+                        Cannot create a payments file: unknown error
                     </div>
                 <xar:else />
                     <div style="margin-top: 20px; margin-left: 20px">
