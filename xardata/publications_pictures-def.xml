@@ -75,6 +75,16 @@
       <seq>6</seq>
       <configuration></configuration>
     </property>
+    <property name="owner">
+      <id>881</id>
+      <label>Owner</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.body2</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
     <property name="notes">
       <id>882</id>
       <label>Notes</label>
@@ -82,7 +92,7 @@
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>
-      <seq>7</seq>
+      <seq>8</seq>
       <configuration></configuration>
     </property>
     <property name="parent">
