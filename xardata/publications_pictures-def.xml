@@ -120,6 +120,7 @@
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
+      <source>publication.state</source>
       <defaultvalue>xarMod::apiFunc('publications','user','getsetting',array('ptid'=>5,'setting'=>'defaultstate'))</defaultvalue>
       <status>33</status>
       <seq>21</seq>
