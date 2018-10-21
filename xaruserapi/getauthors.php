@@ -91,7 +91,7 @@ function publications_userapi_getauthors($args)
     $query .= ' ORDER BY ' . $usersdef['name'] . ' ASC';
 
     // Run the query - finally :-)
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $authors = array();

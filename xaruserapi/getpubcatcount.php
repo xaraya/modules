@@ -58,7 +58,7 @@ function publications_userapi_getpubcatcount($args)
             WHERE '. $categoriesdef['where'] .' AND '. $publicationsdef['where'] .'
             GROUP BY '. $publicationsdef['pubtype_id'] .', '. $categoriesdef['category_id'];
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
     if ($result->EOF) {
         if (!empty($args['ptid']) && empty($args['reverse'])) {

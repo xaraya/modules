@@ -54,7 +54,7 @@ function publications_userapi_getmonthcount($args)
             $query .= ' GROUP BY mymonth';
             break;
     }
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $months = array();

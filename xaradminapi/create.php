@@ -146,7 +146,7 @@ function publications_adminapi_create($args)
                       (string)  $notes,
                       (int)     $state,
                       (string)  $locale);
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
 // Get id to return

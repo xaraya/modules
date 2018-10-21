@@ -53,7 +53,7 @@ do that directly via SQL :
                 AND pubdate < ' . $pubdate . '
                 AND state = ' . $oldstate;
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 */
 

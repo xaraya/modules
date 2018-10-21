@@ -53,7 +53,7 @@ function publications_adminapi_deletepubtype($args)
     // Delete the publication type
     $query = "DELETE FROM $pubtypestable
             WHERE pubtype_id = ?";
-    $result =& $dbconn->Execute($query,array($ptid));
+    $result = $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 
     $publicationstable = $xartable['publications'];
@@ -61,7 +61,7 @@ function publications_adminapi_deletepubtype($args)
     // Delete all publications for this publication type
     $query = "DELETE FROM $publicationstable
             WHERE pubtype_id = ?";
-    $result =& $dbconn->Execute($query,array($ptid));
+    $result = $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 
 // TODO: call some kind of itemtype delete hooks here, once we have those

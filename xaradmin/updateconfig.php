@@ -83,7 +83,7 @@ function publications_admin_updateconfig()
                 $publicationstable = $xartable['publications'];
                 // Drop fulltext index on publications table
                 $query = "ALTER TABLE $publicationstable DROP INDEX $index";
-                $result =& $dbconn->Execute($query);
+                $result = $dbconn->Execute($query);
                 if (!$result) return;
                 xarModVars::set('publications', 'fulltextsearch', '');
             } elseif (!empty($fulltext) && empty($oldval)) {
@@ -95,7 +95,7 @@ function publications_admin_updateconfig()
                 $publicationstable = $xartable['publications'];
                 // Add fulltext index on publications table
                 $query = "ALTER TABLE $publicationstable ADD FULLTEXT $index (" . join(', ', $searchfields) . ")";
-                $result =& $dbconn->Execute($query);
+                $result = $dbconn->Execute($query);
                 if (!$result) return;
                 xarModVars::set('publications', 'fulltextsearch', join(',',$searchfields));
             }

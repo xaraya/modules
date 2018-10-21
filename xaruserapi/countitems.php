@@ -87,7 +87,7 @@ function publications_userapi_countitems($args)
     // Balance parentheses
     if($dbconn->databaseType == 'sqlite') $query .=')';
     // Run the query - finally :-)
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     if ($result->EOF) {

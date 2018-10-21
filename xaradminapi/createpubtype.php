@@ -73,7 +73,7 @@ function publications_adminapi_createpubtype($args)
             pubtypedescr, pubtypeconfig)
             VALUES (?,?,?,?)";
     $bindvars = array($nextId, $name, $descr, serialize($config));
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get ptid to return

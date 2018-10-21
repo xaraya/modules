@@ -108,7 +108,7 @@ function publications_adminapi_getstats($args)
               GROUP BY ' . join(', ', $newgroups) . '
               ORDER BY ' . join(', ', $newgroups);
 
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $stats = array();

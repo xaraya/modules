@@ -83,7 +83,7 @@ function publications_adminapi_updatepubtype($args)
                 pubtypeconfig = ?
             WHERE pubtype_id = ?";
     $bindvars = array($descr, serialize($config), $ptid);
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     return true;

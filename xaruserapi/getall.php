@@ -342,7 +342,7 @@ function publications_userapi_getall($args)
     if (isset($numitems) && is_numeric($numitems)) {
         $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result = $dbconn->Execute($query);
     }
     if (!$result) return;
 
