@@ -12,7 +12,8 @@
             Modify Document <xar:data-output property="$properties['title']"/>
         </h2>
         <div style="float:right">
-            <a href="#xarModURL('publications','user','view',array('ptid' => $ptid))#">
+            <xar:set name="type">xarController::$request->getInfo()</xar:set>
+            <a href="#xarModURL('publications',$type[1],'view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </div>
