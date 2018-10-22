@@ -51,7 +51,7 @@
     <xar:set name="dummy">var_dump(xarLocaleGetFormattedDate('long',$now))</xar:set>
     <xar:set name="dummy">var_dump(xarLocaleGetFormattedTime('long',$now))</xar:set>
     -->
-    
+
     <!-- Display the list of objects -->
     <xar:data-view object="$object" tplmodule="publications"/>
 
