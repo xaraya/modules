@@ -15,6 +15,10 @@
         <xar:isoelement name="CtrlSum">#$control_sum#</xar:isoelement>
         <xar:isoelement name="InitgPty">
             <xar:isoelement name="Nm">#$debit_account->properties['account_holder']->value#</xar:isoelement>
+            <xar:isoelement name="CtctDtls">
+                <xar:isoelement name="Nm">LedgerPayments</xar:isoelement>
+                <xar:isoelement name="Othr">1.0.0</xar:isoelement>
+            </xar:isoelement>
         </xar:isoelement>
       </xar:isoelement>
 <!-- End group header -->
@@ -182,7 +186,7 @@
                   <xar:isoelement name="Nm">#xarVarPrepForDisplay($item['address_1'])#</xar:isoelement>
                   <xar:isoelement name="PstlAdr">
                     <xar:isoelement name="StrtNm">#xarVarPrepForDisplay($item['address_2'])#</xar:isoelement>
-                    <!--unused for now
+                    <!-- unused for now
                     <xar:isoelement name="BldgNb"></xar:isoelement>
                     <xar:isoelement name="PstCd"></xar:isoelement>
                      -->
