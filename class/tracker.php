@@ -1,5 +1,5 @@
 <?php
-class Tracker extends Object
+class Tracker extends xarObject
 {
     private $id;                // current user
     private $now;               // current time
