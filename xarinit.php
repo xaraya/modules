@@ -363,6 +363,7 @@ function crispbb_init()
     xarModVars::set($module, 'showquickreply', true);
     xarModVars::set($module, 'showpermissions', true);
     xarModVars::set($module, 'showsortbox', true);
+    xarModVars::set($module, 'editor', 'textarea');
 
 # --------------------------------------------------------
 #
