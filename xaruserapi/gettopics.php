@@ -498,7 +498,7 @@ function crispbb_userapi_gettopics($args)
     }else {
         $query .= ' ORDER BY ' . $poststable . '.ptime DESC';
     }
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
     $topics = array();
     // module defaults
