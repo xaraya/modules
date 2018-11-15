@@ -54,7 +54,7 @@ function crispbb_user_modifyreply($args)
     */
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $errorMsg = array();
     $invalid = array();
     $now = time();

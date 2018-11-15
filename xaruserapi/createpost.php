@@ -67,7 +67,7 @@ function crispbb_userapi_createpost($args)
     }
 
     if (!isset($powner) || empty($powner) || !is_numeric($powner)) {
-        $powner = xarUserGetVar('id');
+        $powner = xarUser::getVar('id');
     }
 
     if (!isset($pstatus) || !is_numeric($pstatus)) {

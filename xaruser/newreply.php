@@ -32,7 +32,7 @@ function crispbb_user_newreply($args)
 
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $errorMsg = array();
     $invalid = array();
     $now = time();
@@ -153,7 +153,7 @@ function crispbb_user_newreply($args)
         if (!empty($quotes)) {
             foreach ($quotes as $quote) {
                 if ($hasbbcode) {
-                    $ptext .= '[quote=' . xarUserGetVar('name',$quote['powner']) . ']' . $quote['ptext'] . '[/quote]';
+                    $ptext .= '[quote=' . xarUser::getVar('name',$quote['powner']) . ']' . $quote['ptext'] . '[/quote]';
                 } elseif ($hashtml) {
                     $ptext .= '<blockquote>' . $quote['ptext'] . '</blockquote>';
                 }

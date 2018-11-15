@@ -25,7 +25,7 @@ function crispbb_user_stats($args)
 
     $data = array();
     $now = time();
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $tstatus = array(0,1); // open, closed
 
     //get forums

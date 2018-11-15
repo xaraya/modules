@@ -432,7 +432,7 @@ function crispbb_userapi_getposts($args)
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
     $posts = array();
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $loggedin = xarUserIsLoggedIn();
     $checkfailed = false;
     // module defaults

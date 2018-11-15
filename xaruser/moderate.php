@@ -56,7 +56,7 @@ function crispbb_user_moderate($args)
         }
     }
 
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $now = time();
     $invalid = array();
     $pageTitle = xarML('Moderate');

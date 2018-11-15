@@ -53,8 +53,8 @@ function example_user_usermenu($args)
             /* Its good practice for the user menu to be personalized. In order to do so, we
              * need to get some information about the user.
              */
-            $name = xarUserGetVar('name');
-            $uid = xarUserGetVar('id');
+            $name = xarUser::getVar('name');
+            $uid = xarUser::getVar('id');
             /* We also need to set the SecAuthKey, in order to stop hackers from setting user
              * vars off site.
              */

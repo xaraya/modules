@@ -242,9 +242,9 @@ function crispbb_user_search()
             $condition = $component == 'topics' ? $component : 'posts';
         }
         if (!empty($towner)) {
-            $author = xarUserGetVar('name', $towner);
+            $author = xarUser::getVar('name', $towner);
         } elseif (!empty($powner)) {
-            $author = xarUserGetVar('name', $powner);
+            $author = xarUser::getVar('name', $powner);
         }
         if (!empty($author)) {
             $condition .= ' by ' . $author;

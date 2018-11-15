@@ -34,7 +34,7 @@ function crispbb_user_modifytopic($args)
 
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $invalid = array();
     $now = time();
 

@@ -71,7 +71,7 @@ function crispbb_user_redirect($args)
 
                 break;
                 case 'towner':
-                    $return_args['towner'] = xarUserGetVar('id');
+                    $return_args['towner'] = xarUser::getVar('id');
                 break;
             }
         }

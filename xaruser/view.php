@@ -51,7 +51,7 @@ function crispbb_user_view($args)
 
     $data['tstatus'] = NULL;
     $privs = $data['privs'];
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $errorMsg = array();
     $invalid = array();
     $now = time();

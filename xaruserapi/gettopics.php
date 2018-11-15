@@ -505,7 +505,7 @@ function crispbb_userapi_gettopics($args)
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'fsettings,fprivileges,ftransfields,ttransfields,ptransfields'));
     $loggedin = xarUserIsLoggedIn();
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $checkfailed = false;
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {

@@ -21,7 +21,7 @@ function crispbb_userapi_updateposter($args)
     extract($args);
 
     if (empty($uid) || !is_numeric($uid)) {
-        $uid = xarUserGetVar('id');
+        $uid = xarUser::getVar('id');
     }
 
     $numreplies = xarMod::apiFunc('crispbb', 'user', 'countposts',

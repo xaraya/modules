@@ -72,7 +72,7 @@ function crispbb_userapi_createtopic($args)
     }
 
     if (!isset($towner) || empty($towner) || !is_numeric($towner)) {
-        $towner = xarUserGetVar('id');
+        $towner = xarUser::getVar('id');
     }
 
     if (!isset($tsettings) || empty($tsettings) || !is_array($tsettings)) {
