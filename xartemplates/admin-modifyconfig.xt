@@ -69,6 +69,18 @@
                     <label for="showsortbox" title="#xarML('Show the topic sort options in forum views')#">Show sort box?</label>
                 </div>
             </fieldset>
+            <fieldset>
+                <legend>Posting Fields</legend>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" for="editor" title="#xarML('The editor displayed in form fields')#">Editor used in fields</label>
+                    <xar:set name="editor">xarModVars::get('crispbb', 'editor')</xar:set>
+                    <xar:set name="editor_options">array('textarea' => xarML("Text Area"))</xar:set>
+                    <xar:if condition="xarMod::isAvailable('ckeditor')">
+                        <xar:set name="dummy">1;$editor_options['ckeditor'] = xarML('CK Editor')</xar:set>
+                    </xar:if>
+                    <xar:data-input type="dropdown" name="editor" id="editor" options="$editor_options" value="$editor" />
+                </div>
+            </fieldset>
             <xar:template file="update-button" module="base" />
         </form>
     </div>

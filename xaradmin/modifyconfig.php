@@ -68,6 +68,7 @@ function crispbb_admin_modifyconfig()
         if (!xarVarFetch('showquickreply', 'checkbox', $showquickreply, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showpermissions', 'checkbox', $showpermissions, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showsortbox', 'checkbox', $showsortbox, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('editor', 'str', $editor, xarModVars::get('crispbb', 'editor'), XARVAR_NOT_REQUIRED)) return;
 
         $isvalid = $data['module_settings']->checkInput();
         if ($isvalid) {
@@ -113,7 +114,8 @@ function crispbb_admin_modifyconfig()
             xarModVars::set('crispbb', 'showtopicjump', $showtopicjump);
             xarModVars::set('crispbb', 'showquickreply', $showquickreply);
             xarModVars::set('crispbb', 'showpermissions', $showpermissions);
-            xarModVars::set('crispbb', 'showsortbox', $showsortbox);
+            xarModVars::set('crispbb', 'showsortbox',   $showsortbox);
+            xarModVars::set('crispbb', 'editor',        $editor);
 
             xarModCallHooks('module','updateconfig','crispbb',
                            array('module' => 'crispbb'));

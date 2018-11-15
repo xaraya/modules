@@ -72,63 +72,67 @@
                 <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" tabindex="1" />
             </div>
             <xar:if condition="!empty($invalid['ttitle'])">
-            <div class="xar-form-input-wrapper-after">
-                <span class="xar-error">#$invalid['ttitle']#</span>
-            </div>
+                <div class="xar-form-input-wrapper-after">
+                    <span class="xar-error">#$invalid['ttitle']#</span>
+                </div>
             </xar:if>
             <xar:if condition="!empty($topicdescmax)">
-            <div class="xar-form-input-wrapper">
-                <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
-                <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#">Description:</label>
-                <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="100" class="xar-form-textxxlong" tabindex="2" />
-            </div>
-            <xar:if condition="!empty($invalid['pdesc'])">
-            <div class="xar-form-input-wrapper-after">
-                <span class="xar-error">#$invalid['pdesc']#</span>
-            </div>
-            </xar:if>
+                <div class="xar-form-input-wrapper">
+                    <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
+                    <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#">Description:</label>
+                    <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="100" class="xar-form-textxxlong" tabindex="2" />
+                </div>
+                <xar:if condition="!empty($invalid['pdesc'])">
+                    <div class="xar-form-input-wrapper-after">
+                        <span class="xar-error">#$invalid['pdesc']#</span>
+                    </div>
+                </xar:if>
             </xar:if>
             <div class="xar-form-input-wrapper">
                 <label for="ptext" class="xar-form-label help" title="#xarML('Enter your post here')#">Post</label>
-                <ul class="xar-floatleft xar-clearleft xar-margin-none" style="width:15em;">
-                <xar:if condition="$privs['html']">
-                    <li>HTML is <span style="color:green;">On</span></li>
-                    <xar:if condition="$privs['htmldeny']">
-                        <li>
-                        <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#">Disable HTML</label>
-                        <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="7" />
-                        </li>
+                <xar:if condition="xarModVars::get('crispbb', 'editor') eq 'ckeditor'">
+                    <xar:data-input type="editor" name="ptext" id="ptext" cols="60" rows="15" tabindex="3" value="$ptext"/>
+                <xar:else/>
+                    <ul class="xar-floatleft xar-clearleft xar-margin-none" style="width:15em;">
+                    <xar:if condition="$privs['html']">
+                        <li>HTML is <span style="color:green;">On</span></li>
+                        <xar:if condition="$privs['htmldeny']">
+                            <li>
+                            <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#">Disable HTML</label>
+                            <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="7" />
+                            </li>
+                        </xar:if>
+                    <xar:else />
+                        <li>HTML is <span style="color:red;">Off</span></li>
                     </xar:if>
-                <xar:else />
-                    <li>HTML is <span style="color:red;">Off</span></li>
-                </xar:if>
-                <xar:if condition="$privs['bbcode']">
-                    <li>BBCode is <span style="color:green;">On</span></li>
-                    <xar:if condition="$privs['bbcodedeny']">
-                        <li>
-                        <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#">Disable BBCode</label>
-                        <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="8" />
-                        </li>
+                    <xar:if condition="$privs['bbcode']">
+                        <li>BBCode is <span style="color:green;">On</span></li>
+                        <xar:if condition="$privs['bbcodedeny']">
+                            <li>
+                            <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#">Disable BBCode</label>
+                            <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="8" />
+                            </li>
+                        </xar:if>
+                    <xar:else />
+                        <li>BBCode is <span style="color:red;">Off</span></li>
                     </xar:if>
-                <xar:else />
-                    <li>BBCode is <span style="color:red;">Off</span></li>
-                </xar:if>
-                <xar:if condition="$privs['smilies']">
-                    <li>Smilies are <span style="color:green;">On</span></li>
-                    <xar:if condition="$privs['smiliesdeny']">
-                        <li>
-                        <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#">Disable Smilies</label>
-                        <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="9" />
-                        </li>
+                    <xar:if condition="$privs['smilies']">
+                        <li>Smilies are <span style="color:green;">On</span></li>
+                        <xar:if condition="$privs['smiliesdeny']">
+                            <li>
+                            <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#">Disable Smilies</label>
+                            <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="9" />
+                            </li>
+                        </xar:if>
+                    <xar:else />
+                        <li>Smilies are <span style="color:red;">Off</span></li>
                     </xar:if>
-                <xar:else />
-                    <li>Smilies are <span style="color:red;">Off</span></li>
+                    </ul>
+                    <div class="xar-form-container-after">
+                        #$formdisplay#
+                    </div>
+                    <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3">#$ptext#</textarea>
                 </xar:if>
-                </ul>
-                <div class="xar-form-container-after">
-                    #$formdisplay#
-                </div>
-                <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3">#$ptext#</textarea>
             </div>
             <xar:if condition="!empty($invalid['ptext'])">
             <div class="xar-form-input-wrapper-after">
