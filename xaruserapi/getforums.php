@@ -38,9 +38,115 @@ function crispbb_userapi_getforums($args)
         if (!xarVarFetch('theme', 'enum:RSS:rss:atom:xml:json', $systheme, '', XARVAR_NOT_REQUIRED)) return;
     }
     */
-
-    $dbconn = xarDB::getConn();
+    
     $xartable =& xarDB::getTables();
+
+/*  Replace current code with this?
+    sys::import('xaraya.structures.query');
+    $q = new Query('SELECT');
+    
+    // Get the forms
+    $q->addtable($xartable['crispbb_forums'], 'forums');
+    $q->addfields('forums.id AS id, fname, fdesc, fstatus, ftype, fowner, forder, lasttid, fsettings, fprivileges, numtopics, forums.numreplies AS numreplies');
+    
+    // Join on forum category
+    $q->addtable($xartable['categories_linkage'], 'linkage');
+    $q->leftjoin('forums.id','linkage.item_id');
+    $q->eq('linkage.module_id', xarMod::getRegID('crispbb'));
+    $q->addfield('linkage.category_id');
+    
+    // Join on itemtype
+    $q->addtable($xartable['crispbb_itemtypes'], 'itemtypes');
+    $q->leftjoin('forums.id', 'itemtypes.fid');
+    $q->eq('itemtypes.component', 'forum');
+    $q->addfield('itemtypes.id AS itemtype_id');
+
+    // Join on topic
+    $q->addtable($xartable['crispbb_topics'], 'topics');
+    $q->leftjoin('forums.lasttid','topics.id');
+    $q->addfields('ttitle, towner, tstatus, tsettings, topicstype, lastpid');
+
+    // Join on post
+    $q->addtable($xartable['crispbb_posts'], 'posts');
+    $q->leftjoin('topics.lastpid','posts.id');
+    $q->addfields('ptime, powner, poststype');
+
+    // Join on first post
+    $q->addtable($xartable['crispbb_posts'], 'firstpost');
+    $q->leftjoin('topics.firstpid','firstpost.id');
+    $q->addfields('firstpost.ptime AS ttime, firstpost.pdesc AS tdesc');
+
+    // Add constraints
+    // Forum ID
+    if (!empty($fid)) {
+        // Make sure the constraint is an array
+        if (!is_array($fid)) $fid = array($fid);
+        // Remove duplicate values
+        $fid = array_unique($fid);
+        // Force numeric values
+        foreach ($fid as $k => $v) {
+            if (!is_numeric($v)) {
+                unset($fid[$k]);
+            } else {
+                $fid[$k] = (int)$fid[$k];
+            }
+        }
+        // Create the constraint
+        if (count($fid) == 1) {
+            $q->eq('forums.id', reset($fid));
+        } else {
+            $q->in('forums.id', $fid);
+        }
+    }
+
+    // Forum status
+    if (isset($fstatus)) {
+        // See comments above
+        if (!is_array($fid)) $fid = array($fid);
+        $fid = array_unique($fid);
+        foreach ($fid as $k => $v) {
+            if (!is_numeric($v)) {
+                unset($fid[$k]);
+            } else {
+                $fid[$k] = (int)$fid[$k];
+            }
+        }
+        if (count($fid) == 1) {
+            $q->eq('forums.fstatus', reset($fid));
+        } else {
+            $q->in('forums.fstatus', $fid);
+        }
+    }
+    
+    // Forum type
+    if (isset($ftype)) {
+        // See comments above
+        if (!is_array($fid)) $fid = array($fid);
+        $fid = array_unique($fid);
+        foreach ($fid as $k => $v) {
+            if (!is_numeric($v)) {
+                unset($fid[$k]);
+            } else {
+                $fid[$k] = (int)$fid[$k];
+            }
+        }
+        if (count($fid) == 1) {
+            $q->eq('forums.ftype', reset($fid));
+        } else {
+            $q->in('forums.ftype', $fid);
+        }
+    }
+
+    // Grouping and order
+    $q->setgroup('forums.id');
+    $q->setorder('forums.forder', 'ASC');
+
+    $q->qecho();
+    echo "<br/><br/>";
+//    $q->run();
+//    var_dump($q->output());exit;
+*/
+    $dbconn = xarDB::getConn();
     $forumstable = $xartable['crispbb_forums'];
     $fields = array('id', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges', 'numtopics', 'numreplies');
     $select = array();
@@ -53,6 +159,7 @@ function crispbb_userapi_getforums($args)
 
     // join on forum category
     $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',array('cids' => $cids, 'modid' => xarMod::getRegID('crispbb')));
+
     if (!empty($categoriesdef)) {
         $fields[] = 'catid';
         $select[] = $categoriesdef['category_id'];
