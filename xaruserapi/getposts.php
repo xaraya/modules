@@ -433,7 +433,7 @@ function crispbb_userapi_getposts($args)
     if (!$result) return;
     $posts = array();
     $uid = xarUser::getVar('id');
-    $loggedin = xarUserIsLoggedIn();
+    $loggedin = xarUser::isLoggedIn();
     $checkfailed = false;
     // module defaults
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',

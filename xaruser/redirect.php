@@ -52,7 +52,7 @@ function crispbb_user_redirect($args)
             }
             switch ($topicjump) {
                 case 'lastvisit':
-                    if (xarUserIsLoggedIn()) {
+                    if (xarUser::isLoggedIn()) {
                         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
                         $userpanel = $tracker->getUserPanelInfo();
                         if (!empty($userpanel['lastvisit'])) {

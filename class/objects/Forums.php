@@ -139,7 +139,7 @@ class Forums extends DataObject
                     //@TODO:
                 }
                 // Logged in users
-                if (xarUserIsLoggedIn()) {
+                if (xarUser::isLoggedIn()) {
                         $link = LinkCache::getCachedURL('crispbb', 'user', 'view', array('fid' => $this->itemid, 'action' => 'read'));
                     $itemlinks['read'] = $link;
                     // forum posters
@@ -413,7 +413,7 @@ class ForumsList extends DataObjectList
                     //@TODO:
                 }
                 // Logged in users
-                if (xarUserIsLoggedIn()) {
+                if (xarUser::isLoggedIn()) {
                     $itemargs = $urlargs;
                     $itemargs['action'] = 'read';
                         // if $linktype == 'object' use getObjectURL()

@@ -43,7 +43,7 @@ function crispbb_user_forum_index()
     }
 
     // Logged in user
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
         // Start Tracking
         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
         $data['readurl'] = xarModURL('crispbb', 'user', 'forum_index', array('action' => 'read'));

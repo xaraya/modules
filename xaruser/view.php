@@ -58,7 +58,7 @@ function crispbb_user_view($args)
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,topicsortoptions,sortorderoptions'));
     // user links
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
         $data['userpanel'] = $tracker->getUserPanelInfo();
         if ($action == 'read') {

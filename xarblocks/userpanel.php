@@ -47,7 +47,7 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
  */
     function display()
     {
-        if (!xarUserIsLoggedIn()) return;
+        if (!xarUser::isLoggedIn()) return;
 
         $vars = $this->getContent();
 

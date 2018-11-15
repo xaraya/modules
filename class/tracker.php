@@ -29,7 +29,7 @@ class Tracker extends xarObject
     public function __destruct()
     {
         if (empty($this->init)) {
-            if (xarUserIsLoggedIn() && $this->id == xarUser::getVar('id')) {
+            if (xarUser::isLoggedIn() && $this->id == xarUser::getVar('id')) {
                 // store the object for this user
                 try {
                     xarModUserVars::set('crispbb', 'tracker_object', serialize($this), $this->id);
@@ -85,7 +85,7 @@ class Tracker extends xarObject
     }
     public function setUserData()
     {
-        if (!xarUserIsLoggedIn()) return true;
+        if (!xarUser::isLoggedIn()) return true;
         if (empty($this->now)) $this->setNow();
         if (empty($this->id)) $this->id = xarUser::getVar('id');
         $this->name = xarUser::getVar('name', $this->id);
@@ -111,7 +111,7 @@ class Tracker extends xarObject
 
     public function getUserPanelInfo()
     {
-        if (!xarUserIsLoggedIn()) return false;
+        if (!xarUser::isLoggedIn()) return false;
         return array(
             'id' => $this->id,
             'name' => $this->name,

@@ -310,7 +310,7 @@ function crispbb_userapi_getforums($args)
     // module defaults
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'fsettings,fprivileges,ftransfields,ttransfields,ptransfields'));
-    $loggedin = xarUserIsLoggedIn();
+    $loggedin = xarUser::isLoggedIn();
     $checkfailed = false;
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
