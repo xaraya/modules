@@ -43,7 +43,7 @@ function crispbb_user_display($args)
     }
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
-    $uid = xarUserGetVar('id');
+    $uid = xarUser::getVar('id');
     $errorMsg = array();
     $invalid = array();
     $now = time();
