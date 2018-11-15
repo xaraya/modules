@@ -218,7 +218,7 @@ function crispbb_userapi_gettopics($args)
         }
     }
     if (!empty($categoriesdef['where'])) $where[] = $categoriesdef['where'];
-    if (empty($nohitcount)) {
+    if (!$nohitcount) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
         $hitcountdef = xarMod::apiFunc('hitcount', 'user', 'leftjoin',
             array(
@@ -894,6 +894,9 @@ function crispbb_userapi_gettopics($args)
         $ptransformed = xarMod::apiFunc('crispbb', 'user', 'dotransforms', $transargs);
         $topic['transformed_pdesc'] = $ptransformed['pdesc'];
 
+        // If the hitcount module is not present we need to add this default value
+        if($nohitcount) $topic['numviews'] = 0;
+        
         $topics[$topic['tid']] = $topic;
     }
     $result->Close();
