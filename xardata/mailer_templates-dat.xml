@@ -3,6 +3,7 @@
     <id>3</id>
     <name>pubsub_default</name>
     <description>The default pubsub mail template</description>
+    <header>0</header>
     <body>&lt;!--
 Xaraya adjustments
 
@@ -470,6 +471,7 @@ Sizes: [
 	&lt;/body&gt;
 &lt;/html&gt;
 --&gt;</body>
+    <footer>0</footer>
     <locale>en_US.utf-8</locale>
     <editor>4</editor>
     <mail_type>4</mail_type>
