@@ -21,9 +21,12 @@
 */
 function pubsub_userapi_get_recognized_events()
 {
-    $events = array('all' => xarML('All'));die("X");
-    $recognized_events = trim(explode(',', xarModVars::get('pubsub', 'recognized_events')));
-    foreach ($recognized_events as $event) $events[$event] = $event;
+    $events = array('all' => xarML('All'));
+    $recognized_events = explode(',', xarModVars::get('pubsub', 'recognized_events'));
+    foreach ($recognized_events as $event) {
+        $event = trim($event);
+        if (!empty($event)) $events[$event] = $event;
+    }
     return $events;
 }
 
