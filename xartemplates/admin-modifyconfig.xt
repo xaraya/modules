@@ -71,6 +71,12 @@
                    </div>
                 </fieldset>
                 <fieldset>
+                    <legend>                    
+                        Debugging                    
+                    </legend>
+                    <xar:template file="config_debug"/>
+                </fieldset>
+                <fieldset>
                     <legend>
                         Configuration of Hooked Modules
                     </legend>
