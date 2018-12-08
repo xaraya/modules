@@ -137,7 +137,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
                             'senderaddress' => xarModVars::get('pubsub', 'defaultsenderaddress'),
                             'mail_data'     => $mail_data,
                             ));
-        $count++;
+        $count = $count + count($recipients[$row['event_id']]);
         // Set the job's state to inactive
         $q1->eq('id', (int)$row['job_id']);
 //        $q1->qecho();
