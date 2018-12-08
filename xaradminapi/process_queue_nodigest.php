@@ -109,7 +109,10 @@ function pubsub_adminapi_process_queue_nodigest($args)
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
 
+        // Is this a proper event?
         if (!in_array($row['event_type'], $recognized_events)) continue;
+        // Does this event have subscribers?
+        if (!isset($recipients[$row['event_id']])) continue;
         
         // Assemble the message
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
