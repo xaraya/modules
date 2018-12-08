@@ -27,10 +27,10 @@ function pubsub_adminapi_runjob($args)
     static $templates = array();
 
     // Get the template
-        sys::import('modules.dynamicdata.class.properties.master');
-        $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
-        $template_object->getItem(array('itemid' => $args['template_id']));
-        $template_name = $template_object->properties['name']->value;
+    sys::import('modules.dynamicdata.class.properties.master');
+    $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
+    $template_object->getItem(array('itemid' => $args['template_id']));
+    $template_name = $template_object->properties['name']->value;
 
     if (!isset($templates[$template_name])) {
         $mailer_object = DataObjectMaster::getObjectList(array('name' => 'mailer_mails'));
@@ -54,18 +54,24 @@ function pubsub_adminapi_runjob($args)
     $data['results'] = array();
     foreach ($args['recipients'] as $key => $value) {
         $args['mail_data']['name'] = $value;
-        $mailargs = array(
-                  'name'             => $template_name,
-                  'sendername'       => $args['sendername'],
-                  'senderaddress'    => $args['senderaddress'],
-                  'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
-                  'recipientname'    => $value,
-                  'recipientaddress' => $key,
-                  'bccaddresses'     => array(),
-                  'data'             => $args['mail_data'],
-        );
-        $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
-        $data['results'] = array_merge($data['results'], array($data['result']));
+        try {
+            $mailargs = array(
+                      'name'             => $template_name,
+                      'sendername'       => $args['sendername'],
+                      'senderaddress'    => $args['senderaddress'],
+                      'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
+                      'recipientname'    => $value,
+                      'recipientaddress' => $key,
+                      'bccaddresses'     => array(),
+                      'data'             => $args['mail_data'],
+            );
+            $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
+        } catch (Exception $e) {
+            $result['exception'] = $e->getMessage();
+        }
+        $result['name'] = $value;
+        $result['email'] = $key;
+        $data['results'] = array_merge($data['results'], array($result));
     }
     
     return $data['results'];
