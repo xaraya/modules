@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    If debug mode is active, the results of email message sending is written to the log, if it is active.
+    <div>
+        If debug mode is active, the results of email message sending is written to the log, if it is active.
+    </div>
+    <div>
+        Note that this can result in a lot of log entries.
+    </div>
     <div class="xar-row">
         <div class="xar-col">
             <xar:var name="label">Debug mode</xar:var>
