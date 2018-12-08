@@ -24,32 +24,46 @@
  */
 function pubsub_adminapi_runjob($args)
 {
+    // This holds the templatess we have already found
     static $templates = array();
 
     // Get the template
-    sys::import('modules.dynamicdata.class.properties.master');
-    $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
-    $template_object->getItem(array('itemid' => $args['template_id']));
-    $template_name = $template_object->properties['name']->value;
+    $template_name = '';
 
-    if (!isset($templates[$template_name])) {
+    // If no template ID was passed, take the default template
+    if (empty($args['template_id'])) $args['template_id'] = 1;
+    
+    if (!empty($args['template_id'])) {
+        sys::import('modules.dynamicdata.class.properties.master');
+        $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
+        $template_object->getItem(array('itemid' => $args['template_id']));
+        $template_name = $template_object->properties['name']->value;
+    }
+
+    // If nothing was passed, or no template was found, look among the mailer templates
+    if (empty($templates[$template_name])) {
+        // Get the mailer_mails object
         $mailer_object = DataObjectMaster::getObjectList(array('name' => 'mailer_mails'));
         
         // Set the body to active so it will be picked up by the query
         $mailer_object->properties['body']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
         $mailer_object->setFieldList();
         
+        // Get the template(s)
         $mailer_object->dataquery->eq('mails.module_id', xarMod::getRegid('pubsub'));
         $mailer_object->dataquery->eq('mails.name', $template_name);
         $templates = $mailer_object->getItems();
-        if (!empty($templates)) {
+
+        if (!empty($templates) && (count($templates) == 1)) {
             $this_template = reset($templates);
+            // Add this template to the list
             $templates[$template_name] = $this_template['body'];
         } else {
+            // False == we either didn't find one or found more than one
             return false;
         }
     }
-    
+
     // Send an email to each of the subscribers of this event
     $data['results'] = array();
     foreach ($args['recipients'] as $key => $value) {
@@ -70,7 +84,7 @@ function pubsub_adminapi_runjob($args)
             $result['exception'] = $e->getMessage();
         }
         $result['name'] = $value;
-        $result['email'] = $key;
+        $result['email'] = $key;var_dump($result);exit;
         $data['results'] = array_merge($data['results'], array($result));
     }
     

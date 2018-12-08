@@ -25,7 +25,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     // Get arguments from argument array
     extract($args);
 
-    // Get the recipients
+    // Get the events with subscriptions
     $tables =& xarDB::getTables();
     $q = new Query('SELECT');
     $q->addtable($tables['pubsub_process'], 'p');
@@ -33,16 +33,16 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->join('p.event_id', 'e.id');
     $q->addtable($tables['pubsub_subscriptions'], 's');
     $q->join('s.event_id', 'e.id');
-    $q->addfield('e.id AS event_id');
-    $q->addfield('s.groupid AS groupid');
-    $q->addfield('s.userid AS userid');
-    $q->addfield('s.email AS email');
-    // Only pending jobs
+    $q->addfield('e.id AS event_id');           // The ID of the event
+    $q->addfield('s.groupid AS groupid');       // The ID of a group of recipients
+    $q->addfield('s.userid AS userid');         // The ID of a specific user
+    $q->addfield('s.email AS email');           // The 
+    // Only want pending jobs
     $q->eq('e.state',3);
     $q->eq('p.state',2);
 //    $q->qecho();
     $q->run();
-    
+
     $pendings = $q->output();
     // Bail if nothing to do
     if (empty($pendings)) return 0;
@@ -56,14 +56,17 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $user_id = (int)$row['userid'];
         $user = xarMod::apiFunc('roles', 'user', 'get', array('id' => $user_id));
         if (!empty($user)) $recipients[$row['event_id']][$user['email']] = $user['name'];
+        
         // Add the descendants of a group, if one was passed
-        $group_id = (int)$row['groupid'];
-        sys::import('modules.dynamicdata.class.objects.master');
-        $group = DataObjectMaster::getObject(array('name' => 'roles_groups'));
-        $group->getItem(array('itemid' => $group_id));
-        $users = $group->getDescendants(3);
-        foreach ($users as $user) {
-            $recipients[$row['event_id']][$user->properties['email']->value] = $user->properties['name']->value;
+        if (!empty($row['groupid'])) {
+            $group_id = (int)$row['groupid'];
+            sys::import('modules.dynamicdata.class.objects.master');
+            $group = DataObjectMaster::getObject(array('name' => 'roles_groups'));
+            $group->getItem(array('itemid' => $group_id));
+            $users = $group->getDescendants(xarRoles::ROLES_STATE_ACTIVE);
+            foreach ($users as $user) {
+                $recipients[$row['event_id']][$user->properties['email']->value] = $user->properties['name']->value;
+            }
         }
     }
 
@@ -106,9 +109,9 @@ function pubsub_adminapi_process_queue_nodigest($args)
 
     // Run through each of the entries in the queue
     $count = 0;
+    $results = array();
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
-
         // Is this a proper event?
         if (!in_array($row['event_type'], $recognized_events)) continue;
         // Does this event have subscribers?
@@ -127,7 +130,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $mail_data['url']         = $row['url'];
         
         // Send the mails
-        $results = xarMod::apiFunc('pubsub','admin','runjob',
+        $result = xarMod::apiFunc('pubsub','admin','runjob',
                       array('template_id'   => (int)$row['template_id'],
                             'recipients'    => $recipients[$row['event_id']],
                             'sendername'    => xarModVars::get('pubsub', 'defaultsendername'),
@@ -135,14 +138,15 @@ function pubsub_adminapi_process_queue_nodigest($args)
                             'mail_data'     => $mail_data,
                             ));
         $count++;
-
+        if ($result === false) $result = xarML('Did not find a template, or more than one');
+        $results[] = $result;
         // Set the job's state to inactive
         $q1->eq('id', (int)$row['job_id']);
 //        $q1->qecho();
         $q1->run();
         // Clear this condition for the next round
         $q1->clearconditions();
-    }
+    }var_dump($results);var_dump($count);exit;
     return $count;
 
 }
