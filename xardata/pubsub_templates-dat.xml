@@ -1,8 +1,21 @@
 <items>
   <pubsub_templates itemid="1">
     <id>1</id>
-    <name>default</name>
+    <name>pubsub_default</name>
     <description>The default template for single pubsub notifications</description>
+    <object>0</object>
+    <module>0</module>
+    <itemtype>0</itemtype>
+    <template>default</template>
+    <author>3</author>
+    <time_created>1537293201</time_created>
+    <time_modified>1537293201</time_modified>
+    <state>3</state>
+  </pubsub_templates>
+  <pubsub_templates itemid="2">
+    <id>1</id>
+    <name>pubsub_admin</name>
+    <description>The default template for notifications to the administrator</description>
     <object>0</object>
     <module>0</module>
     <itemtype>0</itemtype>
