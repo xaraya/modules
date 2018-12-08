@@ -79,12 +79,12 @@ function pubsub_adminapi_runjob($args)
                       'bccaddresses'     => array(),
                       'data'             => $args['mail_data'],
             );
-            $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
+            $result['code'] = xarMod::apiFunc('mailer','user','send', $mailargs);
         } catch (Exception $e) {
             $result['exception'] = $e->getMessage();
         }
         $result['name'] = $value;
-        $result['email'] = $key;var_dump($result);exit;
+        $result['email'] = $key;var_dump($result);
         $data['results'] = array_merge($data['results'], array($result));
     }
     
