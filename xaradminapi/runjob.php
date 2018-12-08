@@ -60,6 +60,10 @@ function pubsub_adminapi_runjob($args)
             $templates[$template_name] = $this_template['body'];
         } else {
             // False == we either didn't find one or found more than one
+            if (xarModVars::get('pubsub', 'debugmode')) {
+                $message = xarML('Did not find a template, or more than one');
+                xarLog::message($message, xarLog::LEVEL_DEBUG);
+            }
             return false;
         }
     }
@@ -84,7 +88,18 @@ function pubsub_adminapi_runjob($args)
             $result['exception'] = $e->getMessage();
         }
         $result['name'] = $value;
-        $result['email'] = $key;var_dump($result);
+        $result['email'] = $key;
+        if (xarModVars::get('pubsub', 'debugmode')) {
+            $message = xarML('Sent an email to #(1) (#(2))', $result['name'], $result['email']);
+            xarLog::message($message, xarLog::LEVEL_DEBUG);
+            if (isset($result['code'])) {
+                $message = xarML('The result code was #(1)', $result['code']);
+                xarLog::message($message, xarLog::LEVEL_DEBUG);
+            } elseif (isset($result['exception'])) {
+                $message = xarML('The result was #(1)', $result['exception']);
+                xarLog::message($message, xarLog::LEVEL_DEBUG);
+            }
+        }
         $data['results'] = array_merge($data['results'], array($result));
     }
     
