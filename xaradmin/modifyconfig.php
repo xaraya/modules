@@ -177,7 +177,8 @@ function pubsub_admin_modifyconfig()
 					if (!xarVarFetch('sendnotice_queue',        'checkbox', $sendnotice_queue,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('enable_default_template',        'checkbox', $enable_default_template,        false, XARVAR_NOT_REQUIRED)) return;
 					if (!xarVarFetch('recognized_events',        'str', $recognized_events,        '', XARVAR_NOT_REQUIRED)) return;
-                    
+                    if (!xarVarFetch('debugmode',  'checkbox', $debugmode, xarModVars::get('pubsub', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
+
                     if (isset($settings) && is_array($settings)) {
                         foreach ($settings as $name => $value) {
                             xarModVars::set('pubsub', $name, $value);
@@ -197,6 +198,7 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub', 'sendnotice_queue', $sendnotice_queue);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
                     xarModVars::set('pubsub', 'recognized_events', $recognized_events);
+                    xarModVars::set('pubsub', 'debugmode', $debugmode);
 
                     if (xarMod::isAvailable('scheduler')) {
                         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
