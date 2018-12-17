@@ -219,7 +219,7 @@
       <id>7072</id>
       <label>Processed</label>
       <type>datetime</type>
-      <defaultvalue>-1</defaultvalue>
+      <defaultvalue>0</defaultvalue>
       <source>payments.time_processed</source>
       <status>33</status>
       <seq>21</seq>

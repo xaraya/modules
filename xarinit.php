@@ -131,6 +131,8 @@
             payment_type     varchar(64) NOT NULL default '',
             iban             varchar(64) NOT NULL default '',
             bic              varchar(64) NOT NULL default '',
+            bank_code        varchar(64) NOT NULL default '',
+            bank_account     varchar(64) NOT NULL default '',
             address1         varchar(64) NOT NULL default '',
             address2         varchar(64) NOT NULL default '',
             address3         varchar(64) NOT NULL default '',
