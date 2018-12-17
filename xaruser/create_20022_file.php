@@ -151,7 +151,7 @@ function payments_user_create_20022_file()
         }
     } catch (Exception $e) {
         return xarTpl::module('payments','user','errors',array('layout' => 'payment_slip_fail'));
-    )
+    }
 # --------------------------------------------------------
 #
 # Send the file to the browser
