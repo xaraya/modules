@@ -146,7 +146,7 @@
               
               <!-- Amount -->
               <xar:isoelement name="Amt">
-                <xar:isoelement name="InstdAmt"><xar:attribute name="Ccy">#$item['currency']#</xar:attribute>#$item['amount']#</xar:isoelement>
+                <xar:isoelement name="InstdAmt" Ccy="#$item['currency']#">#$item['amount']#</xar:isoelement>
               </xar:isoelement>
 
               <!-- Creditor agent -->
