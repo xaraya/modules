@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<!-- Brgin document tag -->
+<!-- Begin document tag -->
   <xar:ISO20022Document>
   
 <!-- Begin transaction tag -->

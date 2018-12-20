@@ -157,7 +157,7 @@ function payments_user_create_20022_file()
 # Send the file to the browser
 #
     // Create an XML declaration
-    $output = '<?xml version="1.0" encoding="utf-8"?>';
+    $output = '<?xml version="1.0" encoding="UTF-8"?>';
     // Add the file contents
     $output .= xarTpl::module('payments', 'user', 'create_20022_file', $data);
 
