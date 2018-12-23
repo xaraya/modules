@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
+
     <div class="xar-mod-body">
+        <xar:var name="page_title">Master Tables</xar:var>
+        <xar:template file="xar-mod-admin-page-head" type="module"/>
+
         <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
             Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()"/>
         </form>

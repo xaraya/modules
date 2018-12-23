@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
+    
     <div class="xar-mod-body">
-        <h2>
-            <!--Psspl:Check the condition for paypal gateway.-->
-            <xar:if condition="$gateway.id eq 6 or $gateway.id eq 2 or $gateway.id eq 9">
-                <xar:if condition="$gateway.id eq 6">
-                    PayPal Standard
-                </xar:if>    
-                <xar:if condition="$gateway.id eq 2">
-                    Saferpay Transaction Details
-                </xar:if>
-                <xar:if condition="$gateway.id eq 9">
-                    GestPay Transaction Details
-                </xar:if>    
-            <xar:else/>
-                Payment by&#160;#$paymentmethod['name']#&#160;<img src="#xarTplGetImage($paymentmethod['icon'])#" alt="#$paymentmethod['name']#"/>
+        <!--Psspl:Check the condition for paypal gateway.-->
+        <xar:if condition="$gateway.id eq 6 or $gateway.id eq 2 or $gateway.id eq 9">
+            <xar:if condition="$gateway.id eq 6">
+                <xar:var name="page_title">PayPal Standard</xar:var>
+                
             </xar:if>    
-        </h2>
-        
+            <xar:if condition="$gateway.id eq 2">
+                <xar:var name="page_title">Saferpay Transaction Details</xar:var>
+                
+            </xar:if>
+            <xar:if condition="$gateway.id eq 9">
+                <xar:var name="page_title">GestPay Transaction Details</xar:var>
+                
+            </xar:if>    
+        <xar:else/>
+            <xar:var name="page_title">Payment by&#160;#$paymentmethod['name']#&#160;<img src="#xarTplGetImage($paymentmethod['icon'])#" alt="#$paymentmethod['name']#"/></xar:var>
+        </xar:if>    
+        <xar:template file="xar-mod-user-page-head" type="module"/>
+       
         <form method="post" action="#xarModURL('payments','user','phase3')#">
             <div style="margin-top: 10px">
                 <!--Psspl: Display the response of payment transaction -->

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
+    
     <div class="xar-mod-body">
-        <h2>Display DTA Payment
-        </h2>
+        <xar:var name="page_title">Display DTA Payment</xar:var>
+        <xar:template file="xar-mod-user-page-head" type="module"/>
 
         <fieldset>
             <legend>Payment list</legend>

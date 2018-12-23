@@ -3,7 +3,9 @@
     <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-        <h3>Clone Transaction</h3>
+        <xar:var name="page_title">Clone Transaction</xar:var>
+        <xar:template file="xar-mod-user-page-head" type="module"/>
+        
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
                 <legend>

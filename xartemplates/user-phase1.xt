@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
+    
     <div class="xar-mod-body">
-        <h2>
-            Enter credit card information
-            <!--
-            Payment by&#160;#$paymentmethod['name']#&#160;<img src="#xarTplGetImage($paymentmethod['icon'])#" alt="#$paymentmethod['name']#"/>
-            -->
-        </h2>
+        <xar:var name="page_title">Enter credit card information</xar:var>
+        <xar:template file="xar-mod-user-page-head" type="module"/>
+
         <!--Psspl:Added code for Display Error Message.-->
         <xar:if condition="xarSession::getVar('error_message')">
             &#160;<span class="xar-error">#xarSession::getVar('error_message')#</span>

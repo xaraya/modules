@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
+    
     <div class="xar-mod-body">
         <xar:var name="label">Official Icon</xar:var>
         <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
 
-        <h2>
-            Overview
-        </h2>
+        <xar:var name="page_title">Overview</xar:var>
+        <xar:template file="xar-mod-admin-page-head" type="module"/>
 
         <p>
             Dummy payments text

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div style="clear:both"></div>
+    <div class="xar-mod-user-page-head">
+        <xar:if condition="xarUser::isLoggedIn()">
+            <xar:data-output type="linktrail"/>
+        </xar:if>
+        <xar:if condition="!empty($page_title)">
+            <h3>#$page_title#</h3>
+        <xar:else/>
+            <h3>#xarTpl::getPageTitle()#</h3>
+        </xar:if>
+    </div>
+    <xar:template file="alert_success" module="ledgerba"/>
+    <xar:template file="alert_info" module="ledgerba"/>
+    <xar:template file="alert_warning" module="ledgerba"/>
+    <xar:template file="alert_error" module="ledgerba"/>
+</xar:template>

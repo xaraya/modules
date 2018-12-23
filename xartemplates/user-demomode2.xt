@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title">Payment Demo Mode</span></div>
+    <xar:template file="user-mod-head"/>
+
     <div class="xar-mod-body">
+        <xar:var name="page_title">Payment Demo Mode</xar:var>
+        <xar:template file="xar-mod-user-page-head" type="module"/>
+        
         <fieldset>
             <legend>Demo Mode Gateway</legend>
             <xar:var name="label">System Message</xar:var>
