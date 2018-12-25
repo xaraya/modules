@@ -158,7 +158,7 @@
       <id>12471</id>
       <label>Owner</label>
       <type>username</type>
-      <defaultvalue>xarUserGetVar('uname')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>event.role_id</source>
       <status>34</status>
       <seq>15</seq>

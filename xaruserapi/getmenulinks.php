@@ -32,7 +32,7 @@ function calendar_userapi_getmenulinks()
                          'title' => xarML('Year'),
                          'label' => xarML('Year'));
 
-    if(xarUserIsLoggedIn()) {
+    if(xarUser::isLoggedIn()) {
         $menulinks[] = array('url' => xarModURL('calendar','user','modifyconfig'),
                              'title' => xarML('Modify Config'),
                              'label' => xarML('Modify Config'));

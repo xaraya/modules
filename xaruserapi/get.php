@@ -67,7 +67,7 @@ function calendar_userapi_get($args)
                 WHERE $where ";
 
     // Run the query
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
 
     if (!$result) return;
 

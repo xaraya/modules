@@ -58,7 +58,7 @@ function calendar_adminapi_create_calendars($args)
               xar_name
             ) VALUES (?, ?, ?, ?)';
 
-    $result =& $dbconn->Execute(
+    $result = $dbconn->Execute(
         $query, array(
             $nextId, $role_id, $mod_id, $calname
         )
@@ -83,7 +83,7 @@ function calendar_adminapi_create_calendars($args)
                   xar_id,
                   xar_path
                 ) VALUES (?, ?)';
-        $result =& $dbconn->Execute(
+        $result = $dbconn->Execute(
             $query, array(
                 $nextID,$fileuri
             )
@@ -96,7 +96,7 @@ function calendar_adminapi_create_calendars($args)
                       xar_calendars_id,
                       xar_files_id
                     ) VALUES (?, ?)';
-        $result =& $dbconn->Execute(
+        $result = $dbconn->Execute(
             $query, array(
                 $calendid,$fileid
             )

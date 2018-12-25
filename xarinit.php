@@ -249,7 +249,7 @@ function calendar_upgrade($oldversion)
                 'unique'    => false
             );
             $query = xarDBCreateIndex($calfilestable,$index);
-            $result =& $dbconn->Execute($query);
+            $result = $dbconn->Execute($query);
             if (!$result) return;
 
             $index = array(
@@ -258,7 +258,7 @@ function calendar_upgrade($oldversion)
                 'unique'    => false
             );
             $query = xarDBCreateIndex($calfilestable,$index);
-            $result =& $dbconn->Execute($query);
+            $result = $dbconn->Execute($query);
             if (!$result) return;
 
             return calendar_upgrade('0.1.1');

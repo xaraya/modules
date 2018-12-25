@@ -71,7 +71,7 @@ function calendar_adminapi_delete_calendar($args)
     // Get files associated with that calendar
     $query ="SELECT xar_files_id FROM $cal_filestable
              WHERE xar_calendars_id = ? LIMIT 1 ";
-    $result =& $dbconn->Execute($query, array($calid));
+    $result = $dbconn->Execute($query, array($calid));
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -82,19 +82,19 @@ function calendar_adminapi_delete_calendar($args)
     if (isset($file_id) || !empty($file_id)) {
         $query = "DELETE FROM $calfiles
                   WHERE xar_id = ?";
-        $result =& $dbconn->Execute($query, array($file_id));
+        $result = $dbconn->Execute($query, array($file_id));
         if (!$result) return;
     }
 
     // Delete item
     $query = "DELETE FROM $calendarstable
               WHERE xar_id = ?";
-    $result =& $dbconn->Execute($query, array($calid));
+    $result = $dbconn->Execute($query, array($calid));
     if (!$result) return;
 
     $query = "DELETE FROM $cal_filestable
               WHERE xar_calendars_id = ?";
-    $result =& $dbconn->Execute($query, array($calid));
+    $result = $dbconn->Execute($query, array($calid));
     if (!$result) return;
 
     $result -> Close();

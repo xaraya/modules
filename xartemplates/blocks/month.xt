@@ -23,14 +23,16 @@
                             <td style="width: 22px"><b>#$dayName#</b></td>
                         </xar:foreach>
                     </tr>
+                    <xar:set name="today">xarLocaleFormatDate('%Y%m%d',time())</xar:set>
                     <xar:set name="Day">$MonthCal->fetch()</xar:set>
                     <xar:while condition="$Day">
                         <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
                         <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI"/>
-                        <xar:if condition="$Day:isFirst()">
+                        <xar:if condition="$WeekDate">
                             <tr>
-                                <xar:while condition="1">                        
-                                    <xar:if condition="$Day:isSelected()">
+                                <xar:while condition="1">
+                                    <xar:set name="RunningDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+                                    <xar:if condition="$today eq $RunningDate">
                                         <td class="selected" style="text-align: center">
                                             <xar:if condition="empty($targetmodule)">
                                                 <a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a>

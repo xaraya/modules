@@ -84,7 +84,7 @@ function calendar_user_publish($args)
                              */
                              @fclose($fp);
                          } else {
-                             xarLog::message('failed opening standard input');
+                             xarLog::message('failed opening standard input', xarLog::LEVEL_WARNING);
                          }
 
                          if(!empty($data))
@@ -98,10 +98,10 @@ function calendar_user_publish($args)
                              }
                              else
                              {
-                                 xarLog::message( 'couldnt open file '.$curfile );
+                                 xarLog::message( 'couldnt open file '.$curfile, xarLog::LEVEL_WARNING);
                              }
                          } else {
-                             xarLog::message('failed getting any data');
+                             xarLog::message('failed getting any data', xarLog::LEVEL_WARNING);
                          }
                      }
                      // we're done here
