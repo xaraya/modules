@@ -26,10 +26,10 @@ function payments_user_create_20022_file()
 
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('idlist' ,    'str',    $data['idlist'] , '' ,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('idlist' ,    'str',    $data['idlist'] , array() ,  XARVAR_NOT_REQUIRED)) return;
 
-    // If we have an idlist, turn it into an array
-    if (!empty($data['idlist'])) $data['idlist'] = explode(',', $data['idlist']);
+    // Cater to both arrays and strings
+    if (!empty($data['idlist']) && !is_array($data['idlist'])) $data['idlist'] = explode(',', $data['idlist']);
     
     $data['tplmodule'] = 'payments';
 
