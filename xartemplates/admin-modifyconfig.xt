@@ -33,7 +33,7 @@
                                     array('id' => 2700, 'name' => xarML('45 minutes')),
                                     array('id' => 3600, 'name' => xarML('1 hour')),
                                     array('id' => 3600*2, 'name' => xarML('2 hours')),
-                                    array('id' => 3600*6, 'name' => xarML('2 hours')),
+                                    array('id' => 3600*6, 'name' => xarML('6 hours')),
                                     array('id' => 3600*24, 'name' => xarML('1 day')),
                                 )
                             </xar:set>
