@@ -74,7 +74,6 @@
           then show the time the last trigger was run.</li>
         </ul>
       </p>
-      <br />
       <h3>
         Included Hooks
       </h3>
