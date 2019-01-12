@@ -31,7 +31,7 @@ function scheduler_user_main()
         {
             $diff = time() - $lastrun;
             $data['message'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
-            return xarTpl::module('base', 'user', 'message', $data);
+            return $data;
         }
         // Update the last run time
         xarModVars::set('scheduler','lastrun',$now);

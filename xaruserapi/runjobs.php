@@ -194,6 +194,7 @@ function scheduler_userapi_runjobs($args)
             switch ($sourcetype) {
                 case 1: // Localhost
                     if (empty($proxy) && !empty($ip) && $ip == '127.0.0.1') {
+                        $hostname = 'localhost';
                         $isvalid = true;
                     }
                     $log[] = xarML('Source type: localhost');
@@ -232,12 +233,12 @@ function scheduler_userapi_runjobs($args)
                     if (empty($hostname)) {
                         $hostname = @gethostbyaddr($ip);
                     }
+                }
 
-                    if (empty($hostname)) {
-                        $hostname = 'unknown';
-                    } else {
-                        $isvalid = true;
-                    }
+                if (empty($hostname)) {
+                    $hostname = 'unknown';
+                } else {
+                    $isvalid = true;
                 }
             }
             if (!$isvalid) {
