@@ -141,11 +141,15 @@ function pubsub_adminapi_process_queue_nodigest($args)
         // Set the job's state to inactive
         $q1->eq('id', (int)$row['job_id']);
 //        $q1->qecho();
-        $q1->run();
+
+        // If we are debugging, leave the queue intact
+        if (!xarModVars::get('pubsub', 'debugmode')) {
+            $q1->run();
+        }
         // Clear this condition for the next round
         $q1->clearconditions();
         
-        // If debug mode is on, then write the results to the log
+        // If logging, then write the results to the log
         $message = xarML('Pubsub: Sent out #(1) emails', $count);
         xarLog::message($message, xarLog::LEVEL_DEBUG);
     }
