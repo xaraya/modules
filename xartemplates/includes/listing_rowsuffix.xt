@@ -14,10 +14,6 @@
                 <a href="#xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
                     <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
                 </a>
-                <a href="#xarModURL('scheduler','admin','run_test',array('itemid' => $loopitem[$primaryalias]))#"
-                title="Copy this mail">
-                    <img src="#xarTplGetImage('icons/add.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
-                </a>
             </xar:access>
             <!--
             <xar:if condition="isset($show_bulk) AND $show_bulk">

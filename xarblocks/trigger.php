@@ -48,7 +48,7 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
             return $vars;
         }
 */
-        // check when we last ran the scheduler
+        // Check when we last ran the scheduler
         $lastrun = xarModVars::get('scheduler', 'lastrun');
         $now = time() + 60; // add some margin here
         if (!empty($lastrun) && $lastrun > $now - 60*60) {
@@ -61,7 +61,7 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
             }
         }
 
-        // let's run without interruptions for a while :)
+        // Let's run without interruptions for a while :)
         @ignore_user_abort(true);
         @set_time_limit(15*60);
 
