@@ -1,15 +1,13 @@
 <?php
-// this file will call required URL of scheduler module to trigger scheduler from outside
+// This file will call required URL of the scheduler module to trigger scheduler from outside
 // for testing purpose let's first call http://eventhubsacramento.com/writeinlog.php
 
-//uncomment below for going live
+// Uncomment the next 2 lines for going live
 callScheduler();
 writeInLog();
 
 function writeInLog()
 {
-	//$url = "http://eventhubsacramento.com/writeinlog.php";
-//	$url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=test";
     // Call the scheduler using the default route (to make sure the URL is solvable)
     $url = xarController::URL('scheduler', 'user', 'test', array(), null, null, array(), 'default');
 	$content = getUrlContent($url);
@@ -18,7 +16,6 @@ function writeInLog()
 
 function callScheduler()
 {
-//	$url = "http://eventhubsacramento.com/index.php?module=scheduler&type=user&func=main";
     // Call the scheduler using the default route (to make sure the URL is solvable)
     $url = xarController::URL('scheduler', 'user', 'main', array(), null, null, array(), 'default');
 	$content = getUrlContent($url);
