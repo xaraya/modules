@@ -278,12 +278,6 @@ class XMLTranslationsSkelsGenerator
 
     function addEntry($string, $references, $translation = '')
     {
-        // string and translation are already encoded in utf-8
-        /*$string = utf8_encode(htmlspecialchars($string));
-        $translation = utf8_encode($translation);*/
-        //Allow html tags
-        $translation = htmlspecialchars($translation);
-        $string = htmlspecialchars($string);
         fwrite($this->fp, "<entry>");
         fwrite($this->fp, "\n\t<string>".$string."</string>");
         fwrite($this->fp, "\n\t<translation>".$translation."</translation>");
@@ -299,9 +293,6 @@ class XMLTranslationsSkelsGenerator
 
     function addKeyEntry($key, $references, $translation = '')
     {
-        // translation is already encoded in utf-8
-        //$translation = utf8_encode($translation);
-
         fwrite($this->fp, "<keyEntry>");
         fwrite($this->fp, "\n\t<<key>".$key."</key>");
         fwrite($this->fp, "\n\t<<translation>".$translation."</translation>");
@@ -314,7 +305,6 @@ class XMLTranslationsSkelsGenerator
         }
         fwrite($this->fp, "</keyEntry>\n");
     }
-
 }
 
 ?>
