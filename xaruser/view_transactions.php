@@ -45,6 +45,9 @@ function payments_user_view_transactions($args)
     
     // If we are using the ledger modules...
     if (xarMod::isAvailable('ledgerba')) {
+        $q->like('payment_object', 'ledger');
+        $q->like('sender_itemid', $daemon->getCurrentMandant());
+        /*
         // Add the debit_accounts table to the query
         $tables = xarDB::getTables();
         $q->addtable($tables['payments_debit_account'], 'da');
@@ -52,6 +55,7 @@ function payments_user_view_transactions($args)
         // Only accounts of this mandant
         $q->eq('da.sender_object', 'ledgerba_mandant');
         $q->eq('da.sender_itemid', $daemon->getCurrentMandant());
+        */
     } else {
         // Object is a reserved word for now ...
         if (!empty($args['obj'])) $q->eq('sender_object', $args['obj']);
