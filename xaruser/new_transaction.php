@@ -82,7 +82,9 @@ function payments_user_new_transaction()
 # Get the debit account information
 #
     // All the debit accounts we will display
-    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('itemid' => $data['object']->properties['sender_itemid']->value));
+    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('sender_object' => $info['sender_object'],
+                                                                                              'sender_itemid' => $info['sender_itemid'],
+                                                                                        ));
     
     if(empty($data['debit_accounts'])) {
         return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
