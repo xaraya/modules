@@ -52,6 +52,10 @@ function payments_user_view_transactions($args)
         // Only accounts of this mandant
         $q->eq('da.sender_object', 'ledgerba_mandant');
         $q->eq('da.sender_itemid', $daemon->getCurrentMandant());
+    } else {
+        // Object is a reserved word for now ...
+        if (!empty($args['obj'])) $q->eq('sender_object', $args['obj']);
+        if (!empty($args['itemid'])) $q->eq('sender_itemid', $args['itemid']);
     }
 
     // Only active payments
