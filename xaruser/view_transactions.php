@@ -51,7 +51,7 @@ function payments_user_view_transactions($args)
         $q->join('payments.sender_itemid', 'da.id');
         // Only accounts of this mandant
         $q->eq('da.sender_object', 'ledgerba_mandant');
-        $q->eq('da.sender_itemid', $daemon->getCurrentMandant());var_dump($daemon->getCurrentMandant());
+        $q->eq('da.sender_itemid', $daemon->getCurrentMandant());
     } else {
         // Object is a reserved word for now ...
         if (!empty($args['obj'])) $q->eq('sender_object', $args['obj']);
