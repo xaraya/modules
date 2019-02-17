@@ -45,8 +45,8 @@ function payments_user_view_transactions($args)
     
     // If we are using the ledger modules...
     if (xarMod::isAvailable('ledgerba')) {
-        $q->like('payment_object', 'ledger');
-        $q->like('sender_itemid', $daemon->getCurrentMandant());
+        $q->like('payment_object', 'ledger%');
+        $q->eq('sender_itemid', $daemon->getCurrentMandant());
         /*
         // Add the debit_accounts table to the query
         $tables = xarDB::getTables();
