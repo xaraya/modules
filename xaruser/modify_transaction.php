@@ -32,7 +32,7 @@ function payments_user_modify_transaction()
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['tplmodule'] = 'payments';
 
-    // Allow overiding the payment typ from the form
+    // Allow overiding the payment type from the form
     $payment_type = $data['object']->properties['payment_type']->value;
     if (!xarVarFetch('payment_type', 'str',      $data['payment_type'], $payment_type,     XARVAR_NOT_REQUIRED)) return;
     $data['object']->properties['payment_type']->value = $data['payment_type'];
