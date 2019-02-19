@@ -17,6 +17,9 @@
 
 function payments_userapi_get_debit_accounts($args=array())
 {
+    if (!isset($args['sender_object'])) $args['sender_object'] = '';
+    if (!isset($args['sender_itemid'])) $args['sender_object'] = 0;
+    
     sys::import('modules.dynamicdata.class.objects.master');
     $debit_account_object = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
     $q = $debit_account_object->dataquery;
@@ -25,7 +28,7 @@ function payments_userapi_get_debit_accounts($args=array())
     if (!isset($args['sender_object']) && !isset($args['sender_itemid']) && !isset($args['itemid'])) 
         die(xarML('We need either a transaction ID or a sender object and itemid combination'));
 
-    if (isset($args['itemid'])) {
+    if (!empty($args['sender_itemid'])) {
         // In this case we are passed a debit account ID. 
         // Get all the accounts that have the same sender object and itemid
         $tables = xarDB::getTables();
@@ -51,6 +54,7 @@ function payments_userapi_get_debit_accounts($args=array())
     }
     $accounts = $debit_account_object->getItems();
     $q->qecho();
+    $debit_q->qecho();
     return $accounts;
 }
 
