@@ -16,7 +16,7 @@
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
   <properties>
     <property name="id">
-      <id>7052</id>
+      <id>7221</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -26,7 +26,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="iban">
-      <id>7053</id>
+      <id>7222</id>
       <label>IBAN</label>
       <type>iban</type>
       <defaultvalue></defaultvalue>
@@ -36,7 +36,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="bic">
-      <id>7054</id>
+      <id>7223</id>
       <label>BIC</label>
       <type>bic</type>
       <defaultvalue></defaultvalue>
@@ -46,7 +46,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"8";}</configuration>
     </property>
     <property name="address_1">
-      <id>7055</id>
+      <id>7224</id>
       <label>Address 1</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -56,7 +56,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="address_2">
-      <id>7056</id>
+      <id>7225</id>
       <label>Address 2</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -66,7 +66,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="address_3">
-      <id>7057</id>
+      <id>7226</id>
       <label>Address 3</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -76,7 +76,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="address_4">
-      <id>7058</id>
+      <id>7227</id>
       <label>Address 4</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -86,7 +86,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="post_account">
-      <id>7059</id>
+      <id>7228</id>
       <label>Post Account</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -96,7 +96,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="currency">
-      <id>7060</id>
+      <id>7229</id>
       <label>Currency</label>
       <type>currency</type>
       <defaultvalue>xarModVars::get('payments','defaultcurrency')</defaultvalue>
@@ -106,7 +106,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="amount">
-      <id>7061</id>
+      <id>7230</id>
       <label>Amount</label>
       <type>number</type>
       <defaultvalue>0</defaultvalue>
@@ -116,7 +116,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reference_number">
-      <id>7062</id>
+      <id>7231</id>
       <label>Reference</label>
       <type>esr</type>
       <defaultvalue></defaultvalue>
@@ -126,7 +126,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reason">
-      <id>7063</id>
+      <id>7232</id>
       <label>Reason</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -136,7 +136,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_account">
-      <id>7064</id>
+      <id>7233</id>
       <label>Sender Account</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -146,7 +146,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="payment_type">
-      <id>7065</id>
+      <id>7234</id>
       <label>Payment Type</label>
       <type>textbox</type>
       <defaultvalue>827</defaultvalue>
@@ -156,7 +156,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"payments_dta_types";s:25:"initialization_store_prop";s:4:"code";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="transaction_date">
-      <id>7066</id>
+      <id>7235</id>
       <label>Execution Date</label>
       <type>date</type>
       <defaultvalue>time()</defaultvalue>
@@ -166,7 +166,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_1">
-      <id>7067</id>
+      <id>7236</id>
       <label>Sender Line 1</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -176,7 +176,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_2">
-      <id>7068</id>
+      <id>7237</id>
       <label>Sender Line 2</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -186,7 +186,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_3">
-      <id>7069</id>
+      <id>7238</id>
       <label>Sender Line 3</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -196,7 +196,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_line_4">
-      <id>7070</id>
+      <id>7239</id>
       <label>Sender Line 4</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -206,7 +206,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sender_reference">
-      <id>7071</id>
+      <id>7240</id>
       <label>Sender reference</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -216,7 +216,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="processed">
-      <id>7072</id>
+      <id>7241</id>
       <label>Processed</label>
       <type>datetime</type>
       <defaultvalue>0</defaultvalue>
@@ -226,7 +226,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="payment_object">
-      <id>7073</id>
+      <id>7242</id>
       <label>Payment Object</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -236,7 +236,7 @@
       <configuration></configuration>
     </property>
     <property name="payment_itemid">
-      <id>7074</id>
+      <id>7243</id>
       <label>Payment Itemid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -246,7 +246,7 @@
       <configuration></configuration>
     </property>
     <property name="beneficiary_object">
-      <id>7075</id>
+      <id>7244</id>
       <label>Beneficiary Object</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -256,7 +256,7 @@
       <configuration></configuration>
     </property>
     <property name="beneficiary_itemid">
-      <id>7076</id>
+      <id>7245</id>
       <label>Beneficiary Itemid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -266,7 +266,7 @@
       <configuration></configuration>
     </property>
     <property name="created">
-      <id>7077</id>
+      <id>7246</id>
       <label>Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -276,7 +276,7 @@
       <configuration></configuration>
     </property>
     <property name="state">
-      <id>7078</id>
+      <id>7247</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
@@ -286,7 +286,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
     <property name="message_id">
-      <id>7079</id>
+      <id>7248</id>
       <label>Message ID</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -296,7 +296,7 @@
       <configuration></configuration>
     </property>
     <property name="payment_method">
-      <id>7080</id>
+      <id>7249</id>
       <label>Payment method</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -306,7 +306,7 @@
       <configuration></configuration>
     </property>
     <property name="batch_booking">
-      <id>7081</id>
+      <id>7250</id>
       <label>Batch booking</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -316,17 +316,17 @@
       <configuration></configuration>
     </property>
     <property name="group_reference">
-      <id>7082</id>
+      <id>7251</id>
       <label>Group reference</label>
-      <type>integerbox</type>
-      <defaultvalue>1</defaultvalue>
+      <type>textbox</type>
+      <defaultvalue>100</defaultvalue>
       <source>payments.group_reference</source>
       <status>33</status>
       <seq>31</seq>
       <configuration></configuration>
     </property>
     <property name="country_code">
-      <id>7083</id>
+      <id>7252</id>
       <label>Country code</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -336,7 +336,7 @@
       <configuration>a:3:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="financial_institution">
-      <id>7084</id>
+      <id>7253</id>
       <label>Financial Institution</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -346,7 +346,7 @@
       <configuration></configuration>
     </property>
     <property name="sender_itemid">
-      <id>7085</id>
+      <id>7254</id>
       <label>Sender Itemid</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -356,7 +356,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";}</configuration>
     </property>
     <property name="sender_iban">
-      <id>7086</id>
+      <id>7255</id>
       <label>Sender IBAN</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -366,7 +366,7 @@
       <configuration></configuration>
     </property>
     <property name="sender_bic">
-      <id>7087</id>
+      <id>7256</id>
       <label>Sender BIC</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -376,13 +376,23 @@
       <configuration></configuration>
     </property>
     <property name="sender_clearing">
-      <id>7088</id>
+      <id>7257</id>
       <label>Sender Clearing</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>payments.sender_clearing</source>
       <status>33</status>
       <seq>37</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_object">
+      <id>8056</id>
+      <label>Sender Object</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>payments.sender_object</source>
+      <status>33</status>
+      <seq>38</seq>
       <configuration></configuration>
     </property>
   </properties>
