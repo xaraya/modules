@@ -53,6 +53,7 @@ function payments_userapi_get_debit_accounts($args=array())
         $q->eq('sender_itemid', $args['sender_itemid']);
     }
     $accounts = $debit_account_object->getItems();
+    echo "<br/><br/>";
     $q->qecho();
     $debit_q->qecho();
     return $accounts;
