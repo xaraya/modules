@@ -35,7 +35,7 @@ function payments_userapi_get_debit_accounts($args=array())
         $debit_q = new Query('SELECT', $tables['payments_debit_account']);
         $debit_q->addfield('sender_object');
         $debit_q->addfield('sender_itemid');
-        $debit_q->eq('sender_itemid', $args['itemid']);
+        $debit_q->eq('sender_itemid', $args['sender_itemid']);
         $debit_q->run();
         $transaction = $debit_q->row();
         if (empty($transaction)) {
