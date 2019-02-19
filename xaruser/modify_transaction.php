@@ -68,8 +68,14 @@ function payments_user_modify_transaction()
     }
     
     // The debit account for this transaction
-    $debit_account = $data['debit_accounts'][$data['object']->properties['sender_itemid']->value];
+    $debit_account = array();
+    foreach ($data['debit_accounts'] as $account) {
+        if ($account['sender_itemid'] == $data['object']->properties['sender_itemid']->value)
+            $debit_account = $account
+    }
 
+    if (empty($debit_account)) die(xarML('Debit account not found');
+    
     // Set the debtor name
     $data['object']->properties['sender_account']->value = $debit_account['account_holder'];
         
