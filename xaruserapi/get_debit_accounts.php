@@ -45,7 +45,7 @@ function payments_userapi_get_debit_accounts($args=array())
     }
 
     // An empty sender object and itemid at this point means no constraints on the accounts to be shown
-    if (!(($args['sender_object'] == '') && ($args['sender_itemid'] == null))) {
+    if (!(empty($args['sender_object']) && empty($args['sender_itemid']))) {
         $q->eq('sender_object', $args['sender_object']);
         $q->eq('sender_itemid', $args['sender_itemid']);
     }
