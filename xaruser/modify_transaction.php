@@ -74,7 +74,7 @@ function payments_user_modify_transaction()
             $debit_account = $account;
     }
 
-    if (empty($debit_account)) die(xarML('Debit account not found');
+    if (empty($debit_account)) die(xarML('Debit account not found'));
     
     // Set the debtor name
     $data['object']->properties['sender_account']->value = $debit_account['account_holder'];
