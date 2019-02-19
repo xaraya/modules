@@ -71,7 +71,7 @@ function payments_user_modify_transaction()
     $debit_account = array();
     foreach ($data['debit_accounts'] as $account) {
         if ($account['sender_itemid'] == $data['object']->properties['sender_itemid']->value)
-            $debit_account = $account
+            $debit_account = $account;
     }
 
     if (empty($debit_account)) die(xarML('Debit account not found');
