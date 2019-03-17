@@ -127,6 +127,18 @@ function reminders_init()
 
 # --------------------------------------------------------
 #
+# Default data for other modules
+#
+    // Add basic mailer templates
+    if (xarMod::isAvailable('mailer')) {
+        $dat_file = sys::code() . 'modules/' . $module . '/xardata/'.'mailer_templates-dat.xml';
+        if(file_exists($dat_file)) {
+            $data['file'] = $dat_file;
+            $objectid = xarMod::apiFunc('dynamicdata','util','import', $data);
+        }
+    }
+# --------------------------------------------------------
+#
 # Set up hooks
 #
 
@@ -141,6 +153,14 @@ function reminders_upgrade()
 function reminders_delete()
 {
     $this_module = 'reminders';
+
+    // Remove entries of this module in the mailer mails table
+    xarMod::load('mailer');
+    $tables = xarDB::getTables();
+    $q = new Query('DELETE', $tables['mailer_mails']);
+    $q->eq('module_id', xarMod::getRegid($this_module));
+    $q->run();
+
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
 }
 

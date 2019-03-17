@@ -25,7 +25,7 @@ function reminders_admin_main()
         $redirect = xarModVars::get('reminders','backend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
             xarController::redirect(xarModURL('reminders', 'admin', 'modifyconfig'));

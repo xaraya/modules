@@ -22,13 +22,27 @@ function reminders_adminapi_process($args)
     $q->addtable($tables['reminders_entries'], 'entries');
     $q->addtable($tables['reminders_emails'],  'emails');
     $q->join('entries.email_id', 'emails.id');
+    
     // Only active reminders
     $q->eq('entries.state', 3);
+    
     $q->run();
     $result = $q->output();
-    var_dump($result);
     
-    die("Dorky");
+    foreach ($result as $row) {
+        if ($args['test']) {
+            // If we are testing, then send to this user
+            $recipientname    = xarUser::getVar('name');
+            $recipientaddress = xarUser::getVar('email');
+            $bccaddress = array();
+        } else {
+            // If we are not testing, then send to the chosen participant
+            $recipientname    = $result['name'];
+            $recipientaddress = $result['address'];
+        }
+    }
+    
+    echo("Dorky");
     return true;
 }
 ?>

@@ -23,7 +23,7 @@ function reminders_userapi_getitemtypes($args)
                           'url'   => xarModURL('reminders','user','view')
                          );
 
-    $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30227, 'native' => false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30227, 'native' => false));
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));

@@ -1,5 +1,5 @@
 <object name="reminders_emails">
-  <objectid>2425</objectid>
+  <objectid>2431</objectid>
   <label>Emails</label>
   <module_id>182</module_id>
   <itemtype>555</itemtype>
@@ -17,7 +17,7 @@
   <category>a:0:{}</category>
   <properties>
     <property name="id">
-      <id>32502</id>
+      <id>32595</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -27,7 +27,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="name">
-      <id>32531</id>
+      <id>32596</id>
       <label>Name</label>
       <type>name</type>
       <defaultvalue></defaultvalue>
@@ -37,7 +37,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address">
-      <id>32503</id>
+      <id>32597</id>
       <label>Address</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -47,7 +47,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
-      <id>32504</id>
+      <id>32598</id>
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -57,7 +57,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>32505</id>
+      <id>32599</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>

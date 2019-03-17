@@ -44,7 +44,7 @@
       <source>entries.email_id</source>
       <status>33</status>
       <seq>3</seq>
-      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:17:"reminders_entries";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:7:"address";s:24:"initialization_firstline";s:25:"0,Choose an email address";}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:7:"address";s:24:"initialization_firstline";s:25:"0,Choose an email address";}</configuration>
     </property>
     <property name="due_date">
       <id>32603</id>
@@ -74,7 +74,7 @@
       <source>entries.reminder_warning_1</source>
       <status>34</status>
       <seq>6</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_1">
       <id>32606</id>
@@ -94,7 +94,7 @@
       <source>entries.reminder_warning_2</source>
       <status>34</status>
       <seq>8</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_2">
       <id>32608</id>
@@ -114,7 +114,7 @@
       <source>entries.reminder_warning_3</source>
       <status>34</status>
       <seq>10</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_3">
       <id>32610</id>
@@ -134,7 +134,7 @@
       <source>entries.reminder_warning_4</source>
       <status>34</status>
       <seq>12</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_4">
       <id>32612</id>
@@ -154,7 +154,7 @@
       <source>entries.reminder_warning_5</source>
       <status>34</status>
       <seq>14</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_5">
       <id>32614</id>
@@ -174,7 +174,7 @@
       <source>entries.reminder_warning_6</source>
       <status>34</status>
       <seq>16</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_6">
       <id>32616</id>
@@ -194,7 +194,7 @@
       <source>entries.reminder_warning_7</source>
       <status>34</status>
       <seq>18</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_7">
       <id>32618</id>
@@ -214,7 +214,7 @@
       <source>entries.reminder_warning_8</source>
       <status>34</status>
       <seq>20</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_8">
       <id>32620</id>
@@ -234,7 +234,7 @@
       <source>entries.reminder_warning_9</source>
       <status>34</status>
       <seq>22</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_9">
       <id>32622</id>
@@ -254,7 +254,7 @@
       <source>entries.reminder_warning_10</source>
       <status>34</status>
       <seq>24</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_10">
       <id>32624</id>
