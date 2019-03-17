@@ -11,11 +11,11 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
-function reminders_admin_delete()
+function reminders_admin_delete_entry()
 {
     if (!xarSecurityCheck('ManageReminders')) return;
 
-    if (!xarVarFetch('name',       'str:1',     $name,            'reminders_reminders',     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str:1',     $name,            'reminders_entries',     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',       $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'checkbox',  $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
@@ -35,7 +35,7 @@ function reminders_admin_delete()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('reminders','admin','view'));
+        xarController::redirect(xarModURL('reminders','admin','view_entries'));
         return true;
     }
     return $data;

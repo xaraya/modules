@@ -14,7 +14,7 @@
             Confirm Deleting This Item?
         </h3>
 
-        <xar:data-display object="$object"/>
+        <xar:data-display object="$object" tplmodule="reminders"/>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <div class="xar-row">
