@@ -11,15 +11,15 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Modify an item of the reminders object
+ * Modify an item of the reminders_entries object
  *
  */
     
-function reminders_admin_modify()
+function reminders_admin_modify_entry()
 {
     if (!xarSecurityCheck('EditReminders')) return;
 
-    if (!xarVarFetch('name',       'str',      $name,            'reminders_reminders', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str',      $name,            'reminders_entries', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
@@ -40,13 +40,13 @@ function reminders_admin_modify()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('reminders','admin','modify', $data);        
+            return xarTplModule('reminders','admin','modify_entry', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('reminders','admin','view'));
+            xarController::redirect(xarModURL('reminders','admin','view_entries'));
             return true;
         }
     }
