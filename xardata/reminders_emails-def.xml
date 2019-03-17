@@ -1,0 +1,70 @@
+<object name="reminders_emails">
+  <objectid>2425</objectid>
+  <label>Emails</label>
+  <module_id>182</module_id>
+  <itemtype>555</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
+  <sources>a:1:{s:6:&quot;emails&quot;;a:2:{i:0;s:20:&quot;xar_reminders_emails&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:0:{}</category>
+  <properties>
+    <property name="id">
+      <id>32502</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>emails.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="name">
+      <id>32531</id>
+      <label>Name</label>
+      <type>name</type>
+      <defaultvalue></defaultvalue>
+      <source>emails.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="address">
+      <id>32503</id>
+      <label>Address</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>emails.address</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_created">
+      <id>32504</id>
+      <label>Time Created</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>emails.timecreated</source>
+      <status>65</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="state">
+      <id>32505</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>emails.state</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
+    </property>
+  </properties>
+</object>

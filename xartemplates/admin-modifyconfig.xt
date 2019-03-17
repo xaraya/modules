@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>
+            Modify Configuration
+        </h2>
+        <xar:set name="xmldata">'modifyconfig'</xar:set>
+        <xar:template type="module" module="base" file="admin-menu-skel"/>
+        <!--
+             - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
+        -->
+        <xar:if condition="$tab eq 'general'">
+            <xar:ajax-form form="modifyconfig-form"/>
+            <form id="modifyconfig-form" method="post" action="&xar-modurl-reminders-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        General Options
+                    </legend>
+                    <xar:data-form object="$module_settings"/>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Debugging
+                    </legend>
+                    <xar:template file="config_debug"/>
+                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
+            </form>
+        <!--
+                 - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
+        -->
+        <xar:elseif condition="$tab eq 'tab2'"/>
+        </xar:if>
+    </div>
+</xar:template>

@@ -1,0 +1,40 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Short documentation of this module</title>
+            <label>Reminders Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>view_emails</includeitem>
+            </includes>
+            <target>view_emails</target>
+            <title>Manage the reminder emails</title>
+            <label>Emails</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>view_entries</includeitem>
+            </includes>
+            <target>view_entries</target>
+            <title>Manage the reminders</title>
+            <label>Entries</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminReminders</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</menu>

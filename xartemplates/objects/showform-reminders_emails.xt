@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Name</xar:var>
+            <xar:data-label property="$properties['name']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['name']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Address</xar:var>
+            <xar:data-label property="$properties['address']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['address']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">State</xar:var>
+            <xar:data-label property="$properties['state']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['state']"/>                    
+        </div>        
+    </div>
+    <xar:if condition="!empty($properties['id']->value)">
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="value">Created</xar:var>
+                <xar:data-label property="$properties['created']" value="$value"/>                    
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['created']"/>                    
+            </div>        
+        </div>
+    </xar:if>
+</xar:template>
