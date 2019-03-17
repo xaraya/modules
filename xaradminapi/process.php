@@ -29,20 +29,10 @@ function reminders_adminapi_process($args)
     $q->run();
     $result = $q->output();
     
-    // Check if we get a copy of the email(s)
-    $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
-    $checkbox->checkInput('copy_emails');
-    $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
-    
-    //Assemble the parameters for the email
-    $params['message_id'] = $data['message_id'];
-    $params['message_body'] = $data['message_body'];
-    $params['subject'] = $data['subject'];
-
     $data['results'] = array();
     // Run through the active reminders and send emails
     foreach ($result as $row) {
-        $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('row' => $row, 'params' => $params, 'copy_emails' => $bccaddress, 'test' => $data['test']));        	
+        $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('row' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $data['test']));        	
         $data['results'] = array_merge($data['results'], array($data['result']));
     }
     

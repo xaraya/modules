@@ -26,7 +26,17 @@ function reminders_admin_test()
         // Check for a valid confirmation key
         if(!xarSecConfirmAuthKey()) return;
 
-        xarMod::apiFunc('reminders', 'admin', 'process', array('test' => true));
+        //Assemble the parameters for the email
+        $params['message_id']   = $data['message_id'];
+        $params['message_body'] = $data['message_body'];
+        $params['subject']      = $data['subject'];
+
+        // Check if we get a copy of the email(s)
+        $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
+        $checkbox->checkInput('copy_emails');
+        $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
+   
+        xarMod::apiFunc('reminders', 'admin', 'process', array('test' => true, 'params' => $params, 'copy_emails' => $bccaddress));
     }
     
     sys::import('modules.dynamicdata.class.objects.master');
