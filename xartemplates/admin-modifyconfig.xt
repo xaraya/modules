@@ -22,6 +22,35 @@
                     <xar:data-form object="$module_settings"/>
                 </fieldset>
                 <fieldset>
+                    <xar:set name="base_configuration">
+                        array(
+                            array('GAP Categories',xarModVars::get('questions', 'gap_root'),false,1)
+                        )
+                    </xar:set>
+                    <xar:set name="mail_configuration">
+                        array(
+                            array('GAP Categories',xarModVars::get('questions', 'email_root'),false,1)
+                        )
+                    </xar:set>
+                    <xar:set name="pdf_configuration">
+                        array(
+                            array('GAP Categories',xarModVars::get('questions', 'pdf_root'),false,1)
+                        )
+                    </xar:set>
+                    <legend>
+                        Email Templates
+                    </legend>
+                    <div class="xar-row">
+                        <div class="xar-col-condensed">
+                            Reminder Template
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('reminders', 'gap_root')</xar:set>
+                            <xar:set name="value">array(0 => array($value => $value))</xar:set>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
                     <legend>
                         Debugging
                     </legend>

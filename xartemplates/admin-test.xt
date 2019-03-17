@@ -6,6 +6,11 @@
     </div>
     <xar:data-input type="listing" object="$object" tplmodule="reminders"/>
     <form method="post" action="#xarServer::getCurrentURL()#">
+        <div class="xar-col">
+            <xar:var name="firstline">Choose a mail message</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:data-input type="dropdown" name="message_id" value="$message_id" options="$message_options" firstline="$firstline"/>
+        </div>
         <div class="xar-row">
             <div class="xar-col">
             </div>
