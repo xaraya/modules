@@ -19,8 +19,8 @@ function reminders_admin_new_entry()
 {
     if (!xarSecurityCheck('AddReminders')) return;
 
-    if (!xarVarFetch('name',       'str',    $name,            'reminders_entries', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,               XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str',      $name,            'reminders_entries', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,               XARVAR_NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));

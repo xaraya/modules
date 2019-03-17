@@ -21,7 +21,8 @@ function reminders_xartables()
     // Initialise table array
     $xartable = array();
 
-    $xartable['reminders_tags']          = xarDB::getPrefix() . '_reminders_tags';
+    $xartable['reminders_emails']          = xarDB::getPrefix() . '_reminders_emails';
+    $xartable['reminders_entries']          = xarDB::getPrefix() . '_reminders_entries';
 
     // Return the table information
     return $xartable;
