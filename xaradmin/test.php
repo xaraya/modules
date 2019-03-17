@@ -19,15 +19,19 @@ function reminders_admin_test()
 {
     if (!xarSecurityCheck('ManageReminders')) return;
     
+    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if ($data['confirm']) {
+        
+        // Check for a valid confirmation key
+        if(!xarSecConfirmAuthKey()) return;
+
+        xarMod::apiFunc('reminders', 'admin', 'process', array('test' => true));
+    }
+    
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
     $data['object']->dataquery->eq('state', 3);
 
-    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-    if ($data['confirm']) {
-        xarMod::apiFunc('reminders', 'admin', 'process', array('test' => true));
-    }
-    
     return $data;
 }
 ?>
