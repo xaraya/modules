@@ -34,6 +34,7 @@ function reminders_init()
         id                  integer unsigned NOT NULL auto_increment,
         message             text, 
         email_id            integer unsigned NOT NULL default 0, 
+        template_id         integer unsigned NOT NULL default 0, 
         due_date            integer unsigned NOT NULL default 0, 
         recurring           tinyint unsigned NOT NULL default 0, 
         reminder_warning_1  integer unsigned NOT NULL default 0, 

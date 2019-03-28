@@ -22,6 +22,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Template</xar:var>
+            <xar:data-label property="$properties['template']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['template']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">Due Date</xar:var>
             <xar:data-label property="$properties['due_date']" label="$value"/>                    
         </div>
@@ -189,12 +198,13 @@
     </div>
     <xar:if condition="!empty($properties['id']->value)">
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 <xar:var name="value">Created</xar:var>
                 <xar:data-label property="$properties['time_created']" label="$value"/>                    
             </div>
             <div class="xar-col">
                 <xar:data-output property="$properties['time_created']"/>                    
+                <xar:data-input property="$properties['time_created']" hidden="hidden"/>
             </div>        
         </div>
     </xar:if>

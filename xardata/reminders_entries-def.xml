@@ -1,5 +1,5 @@
 <object name="reminders_entries">
-  <objectid>2432</objectid>
+  <objectid>2438</objectid>
   <label>Entries</label>
   <module_id>182</module_id>
   <itemtype>556</itemtype>
@@ -17,7 +17,7 @@
   <category>a:0:{}</category>
   <properties>
     <property name="id">
-      <id>32600</id>
+      <id>32696</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -27,7 +27,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="message">
-      <id>32601</id>
+      <id>32697</id>
       <label>Message</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -37,7 +37,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="address">
-      <id>32602</id>
+      <id>32698</id>
       <label>Address</label>
       <type>objectref</type>
       <defaultvalue>0</defaultvalue>
@@ -46,244 +46,254 @@
       <seq>3</seq>
       <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:7:"address";s:24:"initialization_firstline";s:25:"0,Choose an email address";}</configuration>
     </property>
+    <property name="template">
+      <id>32723</id>
+      <label>Template</label>
+      <type>dropdown</type>
+      <defaultvalue>0</defaultvalue>
+      <source>entries.template_id</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:19:"0,Choose a template";s:23:"initialization_function";s:94:"xarMod::apiFunc('mailer','user','getall_mails',array('module'=>xarMod::getRegID('reminders')))";}</configuration>
+    </property>
     <property name="due_date">
-      <id>32603</id>
+      <id>32699</id>
       <label>Due Date</label>
       <type>datetime</type>
       <defaultvalue>time() + 84600</defaultvalue>
       <source>entries.due_date</source>
       <status>33</status>
-      <seq>4</seq>
+      <seq>5</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="recurring">
-      <id>32604</id>
+      <id>32700</id>
       <label>Recurring</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.recurring</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_1">
-      <id>32605</id>
+      <id>32701</id>
       <label>Reminder 1</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_1</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_1">
-      <id>32606</id>
+      <id>32702</id>
       <label>Reminder 1 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_1</source>
       <status>34</status>
-      <seq>7</seq>
+      <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_2">
-      <id>32607</id>
+      <id>32703</id>
       <label>Reminder 2</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_2</source>
       <status>34</status>
-      <seq>8</seq>
+      <seq>9</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_2">
-      <id>32608</id>
+      <id>32704</id>
       <label>Reminder 2 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_2</source>
       <status>34</status>
-      <seq>9</seq>
+      <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_3">
-      <id>32609</id>
+      <id>32705</id>
       <label>Reminder 3</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_3</source>
       <status>34</status>
-      <seq>10</seq>
+      <seq>11</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_3">
-      <id>32610</id>
+      <id>32706</id>
       <label>Reminder 3 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_3</source>
       <status>34</status>
-      <seq>11</seq>
+      <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_4">
-      <id>32611</id>
+      <id>32707</id>
       <label>Reminder 4</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_4</source>
       <status>34</status>
-      <seq>12</seq>
+      <seq>13</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_4">
-      <id>32612</id>
+      <id>32708</id>
       <label>Reminder 4 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_4</source>
       <status>34</status>
-      <seq>13</seq>
+      <seq>14</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_5">
-      <id>32613</id>
+      <id>32709</id>
       <label>Reminder 5</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_5</source>
       <status>34</status>
-      <seq>14</seq>
+      <seq>15</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_5">
-      <id>32614</id>
+      <id>32710</id>
       <label>Reminder 5 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_5</source>
       <status>34</status>
-      <seq>15</seq>
+      <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_6">
-      <id>32615</id>
+      <id>32711</id>
       <label>Reminder 6</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_6</source>
       <status>34</status>
-      <seq>16</seq>
+      <seq>17</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_6">
-      <id>32616</id>
+      <id>32712</id>
       <label>Reminder 6 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_6</source>
       <status>34</status>
-      <seq>17</seq>
+      <seq>18</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_7">
-      <id>32617</id>
+      <id>32713</id>
       <label>Reminder 7</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_7</source>
       <status>34</status>
-      <seq>18</seq>
+      <seq>19</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_7">
-      <id>32618</id>
+      <id>32714</id>
       <label>Reminder 7 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_7</source>
       <status>34</status>
-      <seq>19</seq>
+      <seq>20</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_8">
-      <id>32619</id>
+      <id>32715</id>
       <label>Reminder 8</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_8</source>
       <status>34</status>
-      <seq>20</seq>
+      <seq>21</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_8">
-      <id>32620</id>
+      <id>32716</id>
       <label>Reminder 8 Done</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>entries.reminder_done_8</source>
       <status>34</status>
-      <seq>21</seq>
+      <seq>22</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_9">
-      <id>32621</id>
+      <id>32717</id>
       <label>Reminder 9</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_9</source>
       <status>34</status>
-      <seq>22</seq>
+      <seq>23</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_9">
-      <id>32622</id>
+      <id>32718</id>
       <label>Reminder 9 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_9</source>
       <status>34</status>
-      <seq>23</seq>
+      <seq>24</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_10">
-      <id>32623</id>
+      <id>32719</id>
       <label>Reminder 10</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_10</source>
       <status>34</status>
-      <seq>24</seq>
+      <seq>25</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_10">
-      <id>32624</id>
+      <id>32720</id>
       <label>Reminder 10 Done</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_10</source>
       <status>34</status>
-      <seq>25</seq>
+      <seq>26</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
-      <id>32625</id>
+      <id>32721</id>
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>entries.timecreated</source>
       <status>66</status>
-      <seq>26</seq>
+      <seq>27</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>32626</id>
+      <id>32722</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
       <source>entries.state</source>
       <status>33</status>
-      <seq>27</seq>
+      <seq>28</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>

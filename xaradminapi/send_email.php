@@ -33,20 +33,25 @@ function reminders_adminapi_send_email($data)
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $result = array();
+    $attachments = array();
     if ($data['test']) {
         // If we are testing, then send to this user
         $recipientname    = xarUser::getVar('name');
         $recipientaddress = xarUser::getVar('email');
         $bccaddress = array();
+        $data['name']->value = $data['info']['name'];
     } else {
         // If we are not testing, then send to the chosen participant
-        $recipientname    = $participant->properties['name']->getValue();
-        $recipientaddress = $participant->properties['email']->value;
+        $data['name']->value = $data['info']['name'];
+        $recipientname    = $data['name']->getValue();
+        $recipientaddress = $data['info']['email'];
     }
+    $data['reminder_text'] = $data['info']['message'];
+    unset($data['info']);
     try {
         // Set the paramenters for the send function
-        $args = array('sendername'       => xarModVars::get('questions', 'defaultsendername'),
-                      'senderaddress'    => xarModVars::get('questions', 'defaultsenderaddress'),
+        $args = array('sendername'       => xarModVars::get('reminders', 'defaultsendername'),
+                      'senderaddress'    => xarModVars::get('reminders', 'defaultsenderaddress'),
                       'recipientname'    => $recipientname,
                       'recipientaddress' => $recipientaddress,
                       'bccaddresses'     => $bccaddress,
@@ -90,19 +95,14 @@ function reminders_adminapi_send_email($data)
             // In this case we set the mail type to "text to html"
             $args['mail_type'] = 2;
         }
-
         // Send the email
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
-       
+      
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
     }
-    $result['name'] = $participant->properties['name']->getValue();
-    $result['email'] = $participant->properties['email']->value;
-    if ($data['test']) {
-        $result['test_name'] = $recipientname;
-        $result['test_email'] = $recipientaddress;
-    }
+    $result['name'] = $recipientname;
+    $result['email'] = $recipientaddress;
     return $result;
 }
 ?>
