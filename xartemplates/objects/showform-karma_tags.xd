@@ -1,0 +1,15 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-form-input-wrapper">
+        <xar:data-label property="$properties['name']" for="id"/>
+        <xar:set name="options">xarMod::apiFunc('karma','user','getall')</xar:set>
+        <xar:data-input property="$properties['name']" options="$options" mode="3" layout="vertical" style="width: 200px"/>
+    </div>
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+    <xar:data-input property="$properties['last_hit']" hidden="hidden"/>
+    <xar:data-input property="$properties['state']" hidden="hidden"/>
+    <xar:data-input property="$properties['owner']" hidden="hidden"/>
+    <xar:data-input property="$properties['count']" hidden="hidden"/>
+
+</xar:template>

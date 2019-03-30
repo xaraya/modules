@@ -1,0 +1,16 @@
+document.writeln('<div align="center">');
+document.writeln('<script type="text/javascript"><!--');
+document.writeln(' google_ad_client="pub-0061202906476576";');
+document.writeln(' google_ad_host="pub-0720175472434865";');
+document.writeln(' google_ad_width=300;');
+document.writeln(' google_ad_height=250;');
+document.writeln(' google_ad_format="300x250_as";');
+document.writeln(' google_ad_type="text_image";');
+document.writeln(' google_ad_channel="3456554611";');
+document.writeln(' google_color_border="FFFFFF";');
+document.writeln(' google_color_bg="FFFFFF";');
+document.writeln(' google_color_link="ABA000";');
+document.writeln(' google_color_url="ABA000";');
+document.writeln(' google_color_text="444444";');
+document.writeln(' //--></script> <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> </script>');
+document.writeln('</div>');

@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>	
+	
+	
+		<!-- begin header block -->
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="Generator" content="Xaraya :: 1.0.2">
+<meta name="Keywords" content="Xaraya, Content Management, PostNuke, PHP-Nuke, Development Services, Programming Services  ">
+<meta name="Description" content=" Wyome provides custom solutions built on the Xaraya development engine.">
+<meta name="rating" content="General">
+
+
+    <meta name="ICBM" content="40.704280, -80.145336">
+    <meta name="DC.title" content="John Cox">
+
+<!-- Linking for Mozilla and related browser site tab -->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://web.archive.org/web/20080723091458/http://feeds.feedburner.com/wyome">
+
+<link rel="service.feed" type="application/atom+xml" title="Atom-feed" href="http://web.archive.org/web/20080723091458/http://feeds.feedburner.com/wyome">
+
+    <link rel="alternate" type="text/html" title="Print" href="http://web.archive.org/web/20080723091458/http://wyome.com/blog/Pro_Football_Talk?theme=print">
+
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://web.archive.org/web/20080723091458/http://wyome.com/?module=xmlrpcserver">
+
+<link rel="pingback" href="http://web.archive.org/web/20080723091458/http://wyome.com/ws.php">
+<link rel="Top" type="text/html" href="http://web.archive.org/web/20080723091458/http://wyome.com/">
+<link rel="Parent" type="text/html" href="http://web.archive.org/web/20080723091458/http://wyome.com/">
+<link rel="author" href="mailto:john.cox@wyome.com">
+
+
+
+
+
+
+<link rel="contents" type="text/html" href="http://web.archive.org/web/20080723091458/http://wyome.com/articles/map/">
+
+<!-- end header block -->		<title>Road to Web 2.0: The Database Design</title>
+		<meta name="verify-v1" content="3BzVWDvEflc93EN2MqigfbfQaQ4waHCIyv4PYi56M3g=">
+		<!-- base href="http://wyome.com/index.php" -->
+		<link rel="stylesheet" type="text/css" href="Road_to_Web_2.0%20_The_Database_Design_files/style.css">
+		<link rel="stylesheet" type="text/css" href="Road_to_Web_2.0%20_The_Database_Design_files/print.css" media="print">
+		<!--  the following styles were supplied from component module  -->
+<!--  link style  -->
+<link rel="stylesheet" type="text/css" href="Road_to_Web_2.0%20_The_Database_Design_files/SyntaxHighlighter.css" media="screen">
+		<script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shCore.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushPhp.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushXml.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushCSharp.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushDelphi.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushJScript.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushPython.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushSql.js"></script>
+
+
+                <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/shBrushVb.js"></script>				<script src="Road_to_Web_2.0%20_The_Database_Design_files/urchin.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			_uacct = "UA-99400-1";
+			urchinTracker();
+		</script>
+	<script charset="utf-8" id="injection_graph_func" src="Road_to_Web_2.0%20_The_Database_Design_files/injection_graph_func.js"></script></head><body onload="window.defaultStatus='John Cox';" id="body">
+        <div id="container">
+            <div id="top-logo">
+                <h1>
+					<a href="http://web.archive.org/web/20080723091458/http://wyome.com/" title="Wyome: Plain and Simple">John Cox</a>
+					<a href="http://web.archive.org/web/20080723091458/http://feeds.feedburner.com/wyome">
+						<img src="Road_to_Web_2.0%20_The_Database_Design_files/feed.gif" style="margin-top: 2px;" alt="feed" width="16" height="16">
+					</a>
+				</h1>
+           </div>
+           <div id="content">
+<div id="display-article">
+    <div id="article-text">
+        <h2>
+            Road to Web 2.0: The Database Design        </h2>
+        <p>This
+is the first of a continuing series of articles that explore making a
+Web 2.0 application. The concepts are easy to put to use, and aren't
+that much different (in my opinion) of normal web architecture. In this
+series of articles I will be exploring my design and development a <a href="http://web.archive.org/web/20080723091458/http://com.pendio.us/">Web 2.0 application</a>.
+In this first article I will be discussing the initial database design
+of com.pendio.us for insight on the choices that I have made for a new
+style of discussion board. While I am still actively developing <a href="http://web.archive.org/web/20080723091458/http://com.pendio.us/">com.pendio.us</a>,
+(it is still rather buggy, but that is to be expected for a week old
+project) I thought it might be fun to discuss some of my design choices
+as a longer tutorial style entry. I will only be discussing the design
+of the actual application, please note that I am using several tools to
+speed my development:</p>
+<p><a href="http://web.archive.org/web/20080723091458/http://www.xaraya.com/">Xaraya</a>
+is used as my rapid application development platform. It is written in
+PHP and uses multiple Databases for it's back end. I believe most of
+the concepts that I will be exploring could easily be ported to other
+platforms, but Xaraya is the one that I am comfortable with. Any
+platform that gives you direct access to the output layer should work
+just fine. I needed something that would also send back my AJAX request
+in XML without a ton of work, and Xaraya fits the bill. For those that
+have never used Xaraya, there will be a learning curve for development,
+but the end time savings are considerable.</p>
+<p>Just a note about Xaraya and this application that I have written,
+Xaraya offers many &#8220;hooks&#8221; that I could have used to save me even more
+time. I decided to write a completely stand alone application and thus
+I did not take as much advantage as I could have of the platform.</p>
+<p><a href="http://web.archive.org/web/20080723091458/http://prototype.conio.net/">Prototype</a>
+is being used as my Javascript library. There are many out there, but
+Prototype seems to be the best documented. In addition, there are many
+other libraries (as found on their main page) which build on top of
+Prototype for some amazing features.</p>
+<p><a href="http://web.archive.org/web/20080723091458/http://www.mysql.com/">MySql</a> is being used as my back end.  I considered using <a href="http://web.archive.org/web/20080723091458/http://www.postgresql.org/">PostGreSQL</a>, as Xaraya supports both, but I am more familiar (right or wrong) with MySQL.</p>
+<p>The first thing to consider when designing a database is what do you
+want to do with your application? Thinking Web 2.0 doesn't add anything
+to that basic concept. Here is what I wanted to do with com.pendio.us:</p>
+<p>A forum that  free style tags instead of the traditional static category system.<br>
+A configurable tag cloud tag that would take more into account than just hits to a tag.<br>
+Posts that could be assigned to any or multiple tags.<br>
+User Karma that would also play into the tag cloud consideration.<br>
+Standard forum functions such as post count, subscriptions, bbcode, signatures, etc.<br>
+Better SEO than traditional forums<br>
+Expansion of future features with minimum database changes<br>
+Post Voting<br>
+Mailing list options.<br>
+User configuration</p>
+<p>Relatively simple, and pretty easy to picture. Basically, I want to
+combine tags, posts, and users together to determine the popularity of
+discussions. Looking at my initial specifications, I really only have
+to store a few text type items and everything else will be integers for
+look-ups. </p>
+<p>For tags, I need to store the tag name, but what else needs to be
+stored when thinking of a top level of my forum? I probably want to
+store the time the tag was created to add to the cloud bonus for fresh
+posts. I probably also need to know when the last post was created for
+comparisons against other users fields for the &#8220;new&#8221; icons. If I want
+standard forum features such as locked, sticky, etc type of tags, then
+I am going to need a status field. I also might want to save the user
+that created the original tag for easier look ups. Finally, I want to
+save the cloud count for the tag itself. My database picture comes
+relatively clear with these things in mind:</p>
+<p><textarea name="code" class="sql">#
+# Table structure for table `xar_ctags`
+#
+CREATE TABLE xar_ctags (
+  xar_id int(11) NOT NULL auto_increment,
+  xar_tag varchar(255) NOT NULL default '',
+  xar_timestamp int(10) unsigned NOT NULL default '0',
+  xar_lastpost int(10) unsigned NOT NULL default '0',
+  xar_status tinyint(4) NOT NULL default '1',
+  xar_uid int(10) unsigned NOT NULL default '0',
+  xar_count int(10) unsigned NOT NULL default '0',
+  xar_options text,
+  PRIMARY KEY  (xar_id),
+  KEY i_xar_ctag_tags (xar_tag),
+  KEY i_xar_ctag_timestamp (xar_timestamp),
+  KEY i_xar_ctag_lastvisit (xar_lastvisit),
+  KEY i_xar_ctag_status (xar_status),
+  KEY i_xar_ctag_uid (xar_uid),
+  KEY i_xar_ctag_count (xar_count)
+) TYPE=MyISAM;</textarea><br>
+I have a single varchar field to store the tag name. I can't imagine
+every wanting a tag name to be bigger than 255 characters, therefore I
+am using var characters. I think as tags as titles not as actual text.
+The only thing that I did not mention in my thought process was the
+options. <br>
+You will see in all three of my major tables, I host an 'options'
+field. I am using this field for future expansion. It is awfully easy
+to store a serialized array in a table for later processing. It does
+affect performance just a bit, but for those brilliant, AHA! Moments
+that you have at two o'clock in the morning, it is a easy compromise to
+make. The one change that I should have made in this table structure
+was to use tagid instead of id for the primary key name. While I am
+using tagid throughout my code, this would have simplified my comments
+just a bit.</p>
+<p>For my posts, the thought process was very much the same. I need to
+be able to capture the text that a user writes first and foremost. In
+addition, I want to collect information such as the time of the post
+and who made the post. In addition, like any other forum application, I
+want to be able to give it a status such as a sticky post or maybe even
+promote that post to the top of the tag. Finally, I do want to keep
+post count information to calculate karma for my users. Pretty simple
+when you think about this design:<br>
+<textarea name="code" class="sql">#
+# Table structure for table `xar_cposts`
+#
+CREATE TABLE xar_cposts (
+  xar_postid int(11) NOT NULL auto_increment,
+  xar_timestamp int(11) NOT NULL default '0',
+  xar_uid mediumint(9) NOT NULL default '1',
+  xar_text text,
+  xar_status tinyint(4) NOT NULL default '1',
+  xar_count int(10) unsigned NOT NULL default '0',
+  xar_options text,
+  PRIMARY KEY  (xar_postid),
+  KEY i_xar_cposts_pid (xar_postid),
+  KEY i_xar_cposts_status (xar_status),
+  KEY i_xar_cposts_uid (xar_uid),
+  KEY i_xar_cposts_count (xar_count),
+  FULLTEXT KEY xar_text (xar_text)
+) TYPE=MyISAM;</textarea><br>
+My last major sub-system that I am going to have to write for my
+application is the user data. The majority of my user information is
+covered by Xaraya, but there is some information that I want to be
+specific to my application. I want to capture Karma based on my forum.
+So, I need to know how many tags and posts a user has created. In
+addition, I want to know when the last time a user created something.
+Finally, what is the karma information in the end after another user
+&#8220;votes&#8221; for you?</p>
+<p>This was the most simple of all the tables:<br>
+<textarea name="code" class="sql">#
+# Table structure for table `xar_cusers`
+#
+CREATE TABLE xar_cusers (
+  xar_uid int(11) NOT NULL auto_increment,
+  xar_tagcount int(10) unsigned NOT NULL default '0',
+  xar_postcount int(10) unsigned NOT NULL default '0',
+  xar_timestamp int(10) unsigned NOT NULL default '0',
+  xar_options text,
+  PRIMARY KEY  (xar_uid),
+  KEY i_xar_cusers_tagcount (xar_tagcount),
+  KEY i_xar_cusers_postcount (xar_postcount),
+  KEY i_xar_cusers_timestamp (xar_timestamp)
+) TYPE=MyISAM;
+</textarea></p>
+<p>So, now I have my major sub-systems defined. I also need some glue
+to hold them all together. The easiest way to do this is to create a
+series of look up tables that can cover how the tables will interact.
+Once you have the major systems and the look-ups, it is a piece of cake
+to do a left-join on these tables to extract the meaningful information
+that my application needs. </p>
+<p>With that in mind, what glue do I need? Well, I need to know what
+post belongs to what tag. Whenever a post is created, I just need to
+update my look-up table to say, 'hey, this post is associated to these
+tags'. My look-up table is incredibly simple with that in mind:<br>
+<textarea name="code" class="sql">#
+# Table structure for table `xar_clook`
+#
+CREATE TABLE xar_clook (
+  xar_tagid int(10) unsigned NOT NULL default '0',
+  xar_postid int(10) unsigned NOT NULL default '0',
+  KEY i_xar_clook_tagid (xar_tagid),
+  KEY i_xar_clook_postid (xar_postid)
+) TYPE=MyISAM;
+</textarea><br>
+I am saving the tagid and the postid.  Since both of these are indexed, I should be able to quickly look-up on my joins.</p>
+<p>Next, I need to figure out who is subscribed to what tag so I can
+separate these subscriptions from the cattle. Well, if I am looking for
+subscriptions then I am basically assigning a user to my tag and thus
+my look-up would be something like this:<br>
+<textarea name="code" class="sql">#
+# Table structure for table `xar_csubs`
+#
+CREATE TABLE xar_csubs (
+  xar_tagid int(10) unsigned NOT NULL default '0',
+  xar_uid int(10) unsigned NOT NULL default '0',
+  KEY i_xar_csubs_tagid (xar_tagid),
+  KEY i_xar_csubs_uid (xar_uid)
+) TYPE=MyISAM;
+</textarea><br>
+Once again, incredibly simple look up table, but I have associated a
+user with my tag. Now, I can say, 'hey, I like this conversation, let
+me save it for quicker access'.</p>
+<p>Finally, no forum would be complete without letting you know
+something has been updated on your next visit. Thinking about this, I
+need to know who and what tag. I also need to have some times to
+compare. In my tag table, I have my last post time stamp. I also have
+various timestamps on each of my various subsystems, but nothing that
+compared when a visitor visited an individual tag. So, I need to make a
+field for quick access to that information.<br>
+<textarea name="code" class="sql">#
+# Table structure for table `xar_cuvisit`
+#
+CREATE TABLE xar_cuvisit (
+  xar_tagid int(10) unsigned NOT NULL default '0',
+  xar_uid int(10) unsigned NOT NULL default '0',
+  xar_timestamp int(10) unsigned NOT NULL default '0',
+  KEY i_xar_cuvisit_tagid (xar_tagid),
+  KEY i_xar_cuvisit_uid (xar_uid)
+) TYPE=MyISAM;
+</textarea><br>
+Now, I have something that I can see that user &#8220;x&#8221; visited tag &#8220;x&#8221; at
+this time. I have something that I can compare the timestamp in my tag
+field against on a user by user basis. I thought about doing this as a
+session var or even a cookie, as this table will grow substantially
+with more usage. I may still go back to that idea, but I felt that I
+also wanted the information for later use as well. With that in mind, I
+will probably purge this table of visits over &#8220;x&#8221; weeks old, thus
+keeping the size to sane levels.</p>
+<p>That, my friends, is my design for this database. Thinking about
+this a bit, I have managed to get myself into a Web 2.0 mindset without
+really deviating from normal DB design. I have tags, karma, tag clouds
+all with a traditional system of updating and monitoring.</p>
+<p>Next series up is how we access these fields from our standard API with extremely flexible SQL queries.</p>
+        <script src="Road_to_Web_2.0%20_The_Database_Design_files/wyome_002.js" type="text/javascript"></script><script src="Road_to_Web_2.0%20_The_Database_Design_files/wyome.js" type="text/javascript"></script><div align="center">
+<script type="text/javascript"><!--
+ google_ad_client="pub-0061202906476576";
+ google_ad_host="pub-0720175472434865";
+ google_ad_width=300;
+ google_ad_height=250;
+ google_ad_format="300x250_as";
+ google_ad_type="text_image";
+ google_ad_channel="3456554611";
+ google_color_border="FFFFFF";
+ google_color_bg="FFFFFF";
+ google_color_link="ABA000";
+ google_color_url="ABA000";
+ google_color_text="444444";
+ //--></script> <script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/show_ads_002.js"> </script><script src="Road_to_Web_2.0%20_The_Database_Design_files/expansion_embed.js"></script><script src="Road_to_Web_2.0%20_The_Database_Design_files/test_domain.js"></script><script>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</script><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: inline-table; height: 250px; position: relative; visibility: visible; width: 300px;"><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: block; height: 250px; position: relative; visibility: visible; width: 300px;"><iframe allowtransparency="true" hspace="0" id="google_ads_frame1" marginheight="0" marginwidth="0" name="google_ads_frame" src="Road_to_Web_2.0%20_The_Database_Design_files/ads.htm" style="left: 0pt; position: absolute; top: 0pt;" vspace="0" width="300" frameborder="0" height="250" scrolling="no"></iframe></ins></ins>
+</div>
+
+		
+		<p><a href="http://web.archive.org/web/20080723091458/http://wyome.com/docs/Road_to_Web_2.0:_The_Database_Design" onclick="window.print();return false" title="print">Print</a> | <a title="Find related stories via Technorati" href="http://web.archive.org/web/20080723091458/http://technorati.com/cosmos/search.html?url=http://wyome.com/docs/Road_to_Web_2.0:_The_Database_Design">Related</a></p>
+
+		<div id="ad" style="text-align: center;">
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-0061202906476576";
+			google_ad_width = 728;
+			google_ad_height = 90;
+			google_ad_format = "728x90_as";
+			google_ad_type = "text";
+			google_ad_channel ="1077608016";
+			google_color_border = "FFFFFF";
+			google_color_bg = "FFFFFF";
+			google_color_link = "3388cc";
+			google_color_url = "3388cc";
+			google_color_text = "000000";
+			//--></script>
+			<script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/show_ads.js">
+			</script>
+		</div>
+   </div>
+</div>
+				<div id="menu">
+					<ul>
+						<li style="margin-right: 5px; list-style-type: none; list-style-image: none; list-style-position: outside;"><a href="http://web.archive.org/web/20080723091458/http://wyome.com/base/" title="blog" style="border-bottom: medium none;">Blog Archive</a></li>
+						<li style="margin-right: 5px; list-style-type: none; list-style-image: none; list-style-position: outside;"><a href="http://web.archive.org/web/20080723091458/http://wyome.com/downloads/" title="downloads" style="border-bottom: medium none;">Downloads</a></li>
+						<li style="margin-right: 5px; list-style-type: none; list-style-image: none; list-style-position: outside;"><a href="http://web.archive.org/web/20080723091458/http://wyome.com/docs/" title="tutorials" style="border-bottom: medium none;">Tutorials</a></li>
+						<li style="margin-right: 5px; list-style-type: none; list-style-image: none; list-style-position: outside;"><a href="http://web.archive.org/web/20080723091458/http://wyome.com/keywords/" title="sitemap" style="border-bottom: medium none;">Sitemap</a></li>
+					</ul>
+				</div>
+
+           </div>
+       </div>
+		<script type="text/javascript" src="Road_to_Web_2.0%20_The_Database_Design_files/doHighlight.js"></script><!-- SOME SCRIPT SRC'S ON THIS PAGE HAVE BEEN REWRITTEN BY THE WAYBACK MACHINE
+OF THE INTERNET ARCHIVE IN ORDER TO PRESERVE THE TEMPORAL INTEGRITY OF THE SESSION. -->
+
+
+<!-- SOME LINK HREF'S ON THIS PAGE HAVE BEEN REWRITTEN BY THE WAYBACK MACHINE
+OF THE INTERNET ARCHIVE IN ORDER TO PRESERVE THE TEMPORAL INTEGRITY OF THE SESSION. -->
+
+
+<script language="Javascript">
+<!--
+
+// FILE ARCHIVED ON 20080723091458 AND RETRIEVED FROM THE
+// INTERNET ARCHIVE ON 20091026225111.
+// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+// SECTION 108(a)(3)).
+
+   var sWayBackCGI = "http://web.archive.org/web/20080723091458/";
+
+   function xResolveUrl(url) {
+      var image = new Image();
+      image.src = url;
+      return image.src;
+   }
+   function xLateUrl(aCollection, sProp) {
+      var i = 0;
+      for(i = 0; i < aCollection.length; i++) {
+         var url = aCollection[i][sProp];         if (typeof(url) == "string") { 
+          if (url.indexOf("mailto:") == -1 &&
+             url.indexOf("javascript:") == -1
+             && url.length > 0) {
+            if(url.indexOf("http") != 0) {
+                url = xResolveUrl(url);
+            }
+            url = url.replace('.wstub.archive.org','');
+            aCollection[i][sProp] = sWayBackCGI + url;
+         }
+         }
+      }
+   }
+
+   xLateUrl(document.getElementsByTagName("IMG"),"src");
+   xLateUrl(document.getElementsByTagName("A"),"href");
+   xLateUrl(document.getElementsByTagName("AREA"),"href");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"codebase");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"data");
+   xLateUrl(document.getElementsByTagName("APPLET"),"codebase");
+   xLateUrl(document.getElementsByTagName("APPLET"),"archive");
+   xLateUrl(document.getElementsByTagName("EMBED"),"src");
+   xLateUrl(document.getElementsByTagName("BODY"),"background");
+   xLateUrl(document.getElementsByTagName("TD"),"background");
+   xLateUrl(document.getElementsByTagName("INPUT"),"src");
+   var forms = document.getElementsByTagName("FORM");
+   if (forms) {
+       var j = 0;
+       for (j = 0; j < forms.length; j++) {
+              f = forms[j];
+              if (typeof(f.action)  == "string") {
+                 if(typeof(f.method)  == "string") {
+                     if(typeof(f.method) != "post") {
+                        f.action = sWayBackCGI + f.action;
+                     }
+                  }
+              }
+        }
+    }
+
+
+//-->
+</script>
+
+</body></html>
