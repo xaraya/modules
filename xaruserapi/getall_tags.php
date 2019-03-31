@@ -14,21 +14,12 @@
  * Get all tags
  *
  */
-    sys::import('xaraya.structures.query');
-    sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
-    function karma_userapi_getall_tags($args)
-    {
-        extract($args);
-
-        $xartable =& xarDB::getTables();
-        $q = new Query('SELECT', $xartable['karma_tags']);
-        $q->setorder('name','ASC');
-//        $q->qecho();
-        if (!$q->run()) return;
-
-        $items = $q->output();
-        return $items;
-    }
-
+function karma_userapi_getall_tags($args)
+{
+    $tag = DataObjectMaster::getObjectList(array('name' => 'karma_tags');
+    $items = $tag->getItems();
+    return $items;
+}
 ?>
