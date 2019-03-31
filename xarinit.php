@@ -33,17 +33,17 @@
         $query = "CREATE TABLE " . $prefix . "_karma_tags (
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(255) NOT NULL default '', 
-            timecreated       int(11) unsigned NOT NULL default '0', 
-            timelasthit       int(11) unsigned NOT NULL default '0', 
-            state             tinyint(4) NOT NULL default '1', 
-            role_id           int(11) unsigned NOT NULL default '0', 
-            count             int(11) unsigned NOT NULL default '0', 
+            timelasthit       int unsigned NOT NULL default '0', 
+            timecreated       int unsigned NOT NULL default '0', 
+            role_id           int unsigned NOT NULL default '0', 
+            count             int unsigned NOT NULL default '0', 
+            state             tinyint unsigned NOT NULL default '3', 
             PRIMARY KEY  (id), 
             KEY i_tag_name (name), 
+            KEY i_tag_timelasthit (timelasthit), 
             KEY i_tag_timecreated (timecreated), 
-            KEY i_tag_ltimelasthit (timelasthit), 
-            KEY i_tag_state (state), 
             KEY i_tag_role_id (role_id), 
+            KEY i_tag_state (state), 
             KEY i_tag_count (count) 
         )";
         if (!$q->run($query)) return;
@@ -52,21 +52,22 @@
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_karma_posts (
             id                integer unsigned NOT NULL auto_increment,
-            module_id         int default NULL,
-            itemtype          int default NULL,
-            itemid            int default NULL,
-            timecreated       int(11) unsigned NOT NULL default '0', 
-            timemodified      int(11) unsigned NOT NULL default '0', 
-            role_id           int(11) unsigned NOT NULL default '0', 
+            module_id         int unsigned NOT NULL default '0',
+            itemtype          int unsigned NOT NULL default '0',
+            itemid            int unsigned NOT NULL default '0',
+            tag_id            int unsigned NOT NULL default '0', 
+            user_id           int unsigned NOT NULL default '0', 
+            timecreated       int unsigned NOT NULL default '0', 
+            timemodified      int unsigned NOT NULL default '0', 
             text              text,
-            state             tinyint(4) NOT NULL default '1', 
-            count             int(11) unsigned NOT NULL default '0', 
+            count             int unsigned NOT NULL default '0', 
+            state             tinyint unsigned NOT NULL default '3', 
             PRIMARY KEY  (id), 
             KEY i_posts_module_id (module_id), 
             KEY i_posts_itemtype (itemtype), 
             KEY i_posts_itemid (itemid), 
             KEY i_posts_state (state), 
-            KEY i_posts_role_id (role_id), 
+            KEY i_posts_user_id (user_id), 
             KEY i_posts_count (count)
         )";
         if (!$q->run($query)) return;
@@ -75,10 +76,10 @@
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_karma_users (
             id                integer unsigned NOT NULL auto_increment,
-            tagcount          int(11) unsigned NOT NULL default '0', 
-            postcount         int(11) unsigned NOT NULL default '0', 
-            timelasttag       int(11) unsigned NOT NULL default '0', 
-            timelastpost      int(11) unsigned NOT NULL default '0', 
+            tagcount          int unsigned NOT NULL default '0', 
+            postcount         int unsigned NOT NULL default '0', 
+            timelasttag       int unsigned NOT NULL default '0', 
+            timelastpost      int unsigned NOT NULL default '0', 
             PRIMARY KEY  (id), 
             KEY i_users_tagcount (tagcount), 
             KEY i_users_postcount (postcount), 
@@ -90,8 +91,8 @@
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_tags_posts";
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_karma_tags_posts (
-            tag_id            int(11) unsigned NOT NULL default '0', 
-            post_id           int(11) unsigned NOT NULL default '0', 
+            tag_id            int unsigned NOT NULL default '0', 
+            post_id           int unsigned NOT NULL default '0', 
             KEY i_tags_posts_tag_id (tag_id), 
             KEY i_tags_posts_post_id (post_id) 
         )";
@@ -100,21 +101,21 @@
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_subscriptions";
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_karma_subscriptions (
-            tag_id            int(11) unsigned NOT NULL default '0', 
-            role_id           int(11) unsigned NOT NULL default '0', 
+            tag_id            int unsigned NOT NULL default '0', 
+            user_id           int unsigned NOT NULL default '0', 
             KEY i_subscriptions_tag_id (tag_id), 
-            KEY i_subscriptions_role_id (role_id) 
+            KEY i_subscriptions_user_id (user_id) 
         )";
         if (!$q->run($query)) return;
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_visits";
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_karma_visits (
-            tag_id            int(11) unsigned NOT NULL default '0', 
-            role_id           int(11) unsigned NOT NULL default '0', 
-            timelastvisit     int(11) unsigned NOT NULL default '0', 
+            tag_id            int unsigned NOT NULL default '0', 
+            user_id           int unsigned NOT NULL default '0', 
+            timelastvisit     int unsigned NOT NULL default '0', 
             KEY i_visits_tag_id (tag_id), 
-            KEY i_visits_role_id (role_id) ,
+            KEY i_visits_user_id (user_id) ,
             KEY i_visits_timelastvisit (timelastvisit) 
         )";
         if (!$q->run($query)) return;

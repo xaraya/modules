@@ -1,85 +1,90 @@
 <object name="karma_tags">
-<objectid>20</objectid>
-<label>Tags</label>
-<parent>objects</parent>
-<module_id>182</module_id>
-<itemtype>9</itemtype>
-<class>DataObject</class>
-<filepath></filepath>
-<urlparam>itemid</urlparam>
-<maxid>0</maxid>
-<config></config>
-<isalias>1</isalias>
-<properties>
-<property name="id">
-<id>166</id>
-<label>ID</label>
-<type>itemid</type>
-<defaultvalue></defaultvalue>
-<source>xar_karma_tags.id</source>
-<status>65</status>
-<seq>1</seq>
-<configuration></configuration>
-</property>
-<property name="name">
-<id>167</id>
-<label>Name</label>
-<type>combobox</type>
-<defaultvalue></defaultvalue>
-<source>xar_karma_tags.name</source>
-<status>33</status>
-<seq>2</seq>
-<configuration>a:3:{s:18:"display_combo_mode";s:1:"2";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";}</configuration>
-</property>
-<property name="time_created">
-<id>168</id>
-<label>Time Created</label>
-<type>formatteddatetime</type>
-<defaultvalue>time()</defaultvalue>
-<source>xar_karma_tags.timecreated</source>
-<status>33</status>
-<seq>3</seq>
-<configuration></configuration>
-</property>
-<property name="last_hit">
-<id>169</id>
-<label>Last Hit</label>
-<type>formatteddatetime</type>
-<defaultvalue>time()</defaultvalue>
-<source>xar_karma_tags.timelasthit</source>
-<status>33</status>
-<seq>4</seq>
-<configuration></configuration>
-</property>
-<property name="state">
-<id>170</id>
-<label>State</label>
-<type>dropdown</type>
-<defaultvalue>3</defaultvalue>
-<source>xar_karma_tags.state</source>
-<status>33</status>
-<seq>5</seq>
-<configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
-</property>
-<property name="owner">
-<id>171</id>
-<label>Owner</label>
-<type>username</type>
-<defaultvalue>xarUser::getVar('uname')</defaultvalue>
-<source>xar_karma_tags.role_id</source>
-<status>33</status>
-<seq>6</seq>
-<configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
-</property>
-<property name="count">
-<id>172</id>
-<label>Count</label>
-<type>integerbox</type>
-<defaultvalue>0</defaultvalue>
-<source>xar_karma_tags.count</source>
-<status>33</status>
-<seq>7</seq>
-<configuration></configuration>
-</property>
-</properties>
+  <objectid>2450</objectid>
+  <label>Tags</label>
+  <module_id>182</module_id>
+  <itemtype>559</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
+  <sources>a:1:{s:4:&quot;tags&quot;;a:2:{i:0;s:14:&quot;xar_karma_tags&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:1:{i:0;a:19:{s:2:&quot;id&quot;;s:1:&quot;5&quot;;s:4:&quot;name&quot;;s:11:&quot;DynamicData&quot;;s:11:&quot;description&quot;;s:44:&quot;Categories related to the DynamicData module&quot;;s:5:&quot;image&quot;;s:0:&quot;&quot;;s:8:&quot;template&quot;;s:0:&quot;&quot;;s:9:&quot;parent_id&quot;;s:1:&quot;4&quot;;s:7:&quot;left_id&quot;;s:1:&quot;9&quot;;s:8:&quot;right_id&quot;;s:2:&quot;16&quot;;s:12:&quot;child_object&quot;;s:0:&quot;&quot;;s:5:&quot;links&quot;;s:1:&quot;0&quot;;s:5:&quot;state&quot;;s:1:&quot;3&quot;;s:11:&quot;category_id&quot;;s:2:&quot;83&quot;;s:17:&quot;child_category_id&quot;;s:1:&quot;5&quot;;s:7:&quot;item_id&quot;;s:1:&quot;0&quot;;s:9:&quot;module_id&quot;;s:4:&quot;2450&quot;;s:8:&quot;itemtype&quot;;s:3:&quot;182&quot;;s:11:&quot;property_id&quot;;s:1:&quot;0&quot;;s:12:&quot;basecategory&quot;;s:4:&quot;1845&quot;;i:0;s:1:&quot;5&quot;;}}</category>
+  <properties>
+    <property name="id">
+      <id>32806</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>tags.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>32807</id>
+      <label>Name</label>
+      <type>combobox</type>
+      <defaultvalue></defaultvalue>
+      <source>tags.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:3:{s:18:"display_combo_mode";s:1:"2";s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";}</configuration>
+    </property>
+    <property name="last_hit">
+      <id>32808</id>
+      <label>Last Hit</label>
+      <type>static</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>tags.timelasthit</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="time_created">
+      <id>32809</id>
+      <label>Time Created</label>
+      <type>static</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>tags.timecreated</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="owner">
+      <id>32810</id>
+      <label>Owner</label>
+      <type>username</type>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
+      <source>tags.role_id</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
+    </property>
+    <property name="count">
+      <id>32811</id>
+      <label>Count</label>
+      <type>integerbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>tags.count</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>32812</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>tags.state</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
+    </property>
+  </properties>
 </object>

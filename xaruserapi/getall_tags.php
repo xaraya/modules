@@ -17,7 +17,7 @@
     sys::import('xaraya.structures.query');
     sys::import('modules.dynamicdata.class.objects.master');
 
-    function karma_userapi_getall($args)
+    function karma_userapi_getall_tags($args)
     {
         extract($args);
 
