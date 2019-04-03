@@ -19,7 +19,7 @@
     <property name="id">
       <id>32795</id>
       <label>ID</label>
-      <type>static</type>
+      <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>posts.id</source>
       <status>65</status>
