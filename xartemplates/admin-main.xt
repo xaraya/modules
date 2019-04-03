@@ -1,23 +1,16 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('karma','useModuleAlias')">
-                <xar:var scope="module" module="karma" name="aliasname"/>
-            <xar:else />
-                <xar:mlstring>Karma Administration</xar:mlstring>
-            </xar:if>
-        </span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <img src="#xarTplGetImage('admin.gif', 'karma')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
+        <xar:var name="label">Official Icon</xar:var>
+        <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon" />
 
         <h2>
-            <xar:mlstring>Overview</xar:mlstring>
+            Overview
         </h2>
 
         <p>
-            <xar:mlstring>Dummy karma text</xar:mlstring>
+            Dummy karma text
         </p>
         <div style="clear:both">&#160;</div>
     </div>
