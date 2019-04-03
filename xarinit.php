@@ -156,6 +156,7 @@
         $module = 'karma';
         $objects = array(
                          'karma_tags',
+                         'karma_posts',
                          );
 
         if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
