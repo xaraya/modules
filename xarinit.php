@@ -54,7 +54,7 @@
             id                integer unsigned NOT NULL auto_increment,
             module_id         int unsigned NOT NULL default '0',
             itemtype          int unsigned NOT NULL default '0',
-            itemid            int unsigned NOT NULL default '0',
+            item_id           int unsigned NOT NULL default '0',
             tag_id            int unsigned NOT NULL default '0', 
             user_id           int unsigned NOT NULL default '0', 
             timecreated       int unsigned NOT NULL default '0', 
@@ -65,7 +65,7 @@
             PRIMARY KEY  (id), 
             KEY i_posts_module_id (module_id), 
             KEY i_posts_itemtype (itemtype), 
-            KEY i_posts_itemid (itemid), 
+            KEY i_posts_item_id (item_id), 
             KEY i_posts_state (state), 
             KEY i_posts_user_id (user_id), 
             KEY i_posts_count (count)
