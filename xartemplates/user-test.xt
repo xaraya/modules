@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="user-mod-head"/>
+    <div class="xar-mod-body">
+        This page and its associated php file can be removed in a production environment
+    </div>
+</xar:template>

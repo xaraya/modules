@@ -1,0 +1,31 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Short documentation of this module</title>
+            <label>Scraper Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageScraper</mask>
+            <includes>
+                <includeitem>view_tables</includeitem>
+            </includes>
+            <target>view_tables</target>
+            <title>Manage the master tables of this module</title>
+            <label>Master Tables</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminScraper</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</menu>
