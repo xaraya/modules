@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="is_admin">xarIsAncestor('Admnistrators', xarUser::getVar('uname'))</xar:set>
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Name</xar:var>
+            <xar:data-label property="$properties['name']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['name']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">URL</xar:var>
+            <xar:data-label property="$properties['url']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['url']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Last Run</xar:var>
+            <xar:data-label property="$properties['last_run']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['last_run']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Last Results</xar:var>
+            <xar:data-label property="$properties['last_results']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['last_results']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Code</xar:var>
+            <xar:data-label property="$properties['code']" label="$value"/>                    
+        </div>
+        <div class="xar-col" style="width: 80%">
+            <xar:data-input property="$properties['code']"/>                    
+        </div>        
+    </div>
+    <xar:if condition="$is_admin">
+        <xar:if condition="!empty($properties['id']->value)">
+            <div class="xar-row">
+                <div class="xar-col-condensed">
+                    <xar:var name="value">Time Created</xar:var>
+                    <xar:data-label property="$properties['time_created']" label="$value"/>                    
+                </div>
+                <div class="xar-col">
+                    <xar:data-output property="$properties['time_created']"/>                    
+                    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+                </div>        
+            </div>
+            <div class="xar-row">
+                <div class="xar-col-condensed">
+                    <xar:var name="value">Owner</xar:var>
+                    <xar:data-label property="$properties['owner']" label="$value"/>                    
+                </div>
+                <div class="xar-col">
+                    <xar:data-output property="$properties['owner']"/>                    
+                    <xar:data-input property="$properties['owner']" hidden="hidden"/>
+                </div>        
+            </div>
+        </xar:if>
+    </xar:if>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">State</xar:var>
+            <xar:data-label property="$properties['state']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['state']"/>                    
+        </div>        
+    </div>
+</xar:template>

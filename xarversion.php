@@ -16,10 +16,10 @@
  *
  */
     $modversion['name']           = 'scraper';
-    $modversion['id']             = '30000';
+    $modversion['id']             = '30228';
     $modversion['version']        = '1.0.0';
     $modversion['displayname']    = xarML('Scraper');
-    $modversion['description']    = xarML('A generic Web 2.0 module');
+    $modversion['description']    = xarML('A module for scraping HTML pages');
     $modversion['credits']        = 'credits.txt';
     $modversion['help']           = 'help.txt';
     $modversion['changelog']      = 'changelog.txt';

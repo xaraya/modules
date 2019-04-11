@@ -11,15 +11,15 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Delete an item of the scraper_scraper object
+ * Delete an item of the scraper_urls object
  *
  */
 
-function scraper_admin_delete()
+function scraper_admin_delete_url()
 {
     if (!xarSecurityCheck('ManageScraper')) return;
 
-    if (!xarVarFetch('name',       'str:1',     $name,            'scraper_scraper',     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str:1',     $name,            'scraper_urls',     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',       $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'checkbox',  $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
@@ -39,7 +39,7 @@ function scraper_admin_delete()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('scraper','admin','view'));
+        xarController::redirect(xarModURL('scraper','admin','view_urls'));
         return true;
     }
     return $data;

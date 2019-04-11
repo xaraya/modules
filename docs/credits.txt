@@ -11,3 +11,5 @@
 6. Antecedents: based on the Xaraya framework
 
 7. Third party code:
+    Guzzle: http://guzzlephp.org
+    Goutte: https://github.com/FriendsOfPHP/Goutte

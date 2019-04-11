@@ -1,5 +1,5 @@
 1. Designation: Scraper module
 
-2. Purpose: to be added
+2. Purpose: A module to scrape HTML pages
 
 3. Description: to be added

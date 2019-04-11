@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * View items of the scraper_scraper object
+ * View items of the scraper_urls object
  *
  */
 function scraper_admin_view_urls($args)
@@ -21,7 +21,7 @@ function scraper_admin_view_urls($args)
     $modulename = 'scraper';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'scraper_scraper', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'scraper_urls', XARVAR_DONT_SET)) return;
 
     return $data;
 }

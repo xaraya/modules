@@ -11,15 +11,15 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Modify an item of the scraper_scraper object
+ * Modify an item of the scraper_urls object
  *
  */
     
-function scraper_admin_modify()
+function scraper_admin_modify_url()
 {
     if (!xarSecurityCheck('EditScraper')) return;
 
-    if (!xarVarFetch('name',       'str',      $name,            'scraper_scraper', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',       'str',      $name,            'scraper_urls', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
@@ -40,13 +40,13 @@ function scraper_admin_modify()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('scraper','admin','modify', $data);        
+            return xarTplModule('scraper','admin','modify_url', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('scraper','admin','view'));
+            xarController::redirect(xarModURL('scraper','admin','view_urls'));
             return true;
         }
     }

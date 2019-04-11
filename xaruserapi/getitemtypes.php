@@ -23,7 +23,7 @@ function scraper_userapi_getitemtypes($args)
                           'url'   => xarModURL('scraper','user','view')
                          );
 
-    $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30000, 'native' => false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30228, 'native' => false));
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
