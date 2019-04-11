@@ -11,14 +11,14 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * View items of the karma object
+ * View items of the karma_tags object
  *
  */
-    function karma_admin_view($args)
+    function karma_admin_view_tags($args)
     {
         if (!xarSecurityCheck('EditKarma')) return;
 
-        $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'karma'));
+        $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'karma_tags'));
         $data['object']->getItems();
         return $data;
     }

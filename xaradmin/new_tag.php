@@ -40,13 +40,13 @@ function karma_admin_new_tag()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('karma','admin','new', $data);        
+            return xarTplModule('karma','admin','new_tag', $data);        
         } else {
             // Good data: create the item
             $itemid = xarMod::apiFunc('karma', 'admin', 'new_tag',);
             
             // Jump to the next page
-            xarController::redirect(xarModURL('karma','admin','view'));
+            xarController::redirect(xarModURL('karma','admin','view_tags'));
             return true;
         }
     }
