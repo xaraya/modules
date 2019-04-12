@@ -17,9 +17,9 @@
 
 sys::import('modules.dynamicdata.class.objects.master');
 
-function karma_admin_modify_tag($args)
+function karma_adminapi_modify_tag($args)
 {
-    $tag = DataObjectMaster::getObject(array('name' => 'karma_tags');
+    $tag = DataObjectMaster::getObject(array('name' => 'karma_tags'));
     $itemid = $tag->updateItem($args);
     return $itemid;
 }

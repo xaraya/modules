@@ -11,18 +11,16 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Get a tag item
+ * Modify an item of the tags object
  *
  */
+
 sys::import('modules.dynamicdata.class.objects.master');
 
-function karma_userapi_get_tag($args)
+function karma_adminapi_modify_post($args)
 {
-    if(empty($args['itemid'])) die(xarML('No tag ID passed'));
-    
-    $tag = DataObjectMaster::getObject(array('name' => 'karma_tags'));
-    $tag->getItem(array('itemid' => $args['itemid']));
-    $tag_info = $tag->getFieldValues();
-    return $tag_info;
+	$tag = DataObjectMaster::getObject(array('name' => 'karma_posts'));
+    $itemid = $tag->updateItem($args);
+    return $itemid;
 }
 ?>
