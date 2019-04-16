@@ -56,7 +56,7 @@
             itemtype          int unsigned NOT NULL default '0',
             item_id           int unsigned NOT NULL default '0',
             tag_id            int unsigned NOT NULL default '0', 
-            user_id           int unsigned NOT NULL default '0', 
+            user_id           varchar(100) NOT NULL default '0', 
             timecreated       int unsigned NOT NULL default '0', 
             timemodified      int unsigned NOT NULL default '0', 
             text              text,
