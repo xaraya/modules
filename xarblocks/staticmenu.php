@@ -130,8 +130,7 @@
         // Define some things we will need
         $data['menuarray'] = array();
         
-        $access = DataPropertyMaster::getProperty(array('name' => 'access'
-        ));
+        $access = DataPropertyMaster::getProperty(array('name' => 'access'));
         
         // Get the information on publication types
         $pubtypes = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
