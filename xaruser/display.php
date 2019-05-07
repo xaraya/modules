@@ -236,10 +236,9 @@ function publications_user_display($args)
 
             $pattern='/(action)="([^"\r\n]*)"/';
             $page = preg_replace_callback($pattern,
-                create_function(
-                    '$matches',
-                    'return $matches[1]."=\"".xarServer::getCurrentURL()."\"";'
-                ),
+                function($matches) {
+                    return $matches[1] = xarServer::getCurrentURL();
+                },
                 $page
             );
 
