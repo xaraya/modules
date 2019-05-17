@@ -16,7 +16,7 @@ class TPLParser
     public $transEntries    = array();
     public $transKeyEntries = array();
 
-    function TPLParser()
+    function __construct()
     {
     }
 

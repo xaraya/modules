@@ -20,7 +20,7 @@ class PHPTranslationsGenerator
     var $fileName;
     var $baseDir;
     
-    function PHPTranslationsGenerator($locale)
+    function __construct($locale)
     {
         $this->locale = $locale;
         $l = xarLocaleGetInfo($locale);
