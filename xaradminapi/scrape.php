@@ -19,10 +19,16 @@ sys::import('composer.vendor.autoload');
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 
+sys::import('modules.dynamicdata.class.objects.master');
+
 function scraper_adminapi_scrape($args)
 {
-    if (!isset($args['url'])) return false;
+    if (!isset($args['id'])) return false;
 
+    // Get the URL and code for this ID
+    $charge = DataObjectMaster::getObject(array('name' => 'scraper_urls'));
+    $charge->getItem(array('itemid' => $args['id']));
+    
     // Create a Goutte client
     $client = new Client();
     
@@ -33,10 +39,16 @@ function scraper_adminapi_scrape($args)
     $client->setClient($guzzleClient);
     
     // Add the URL
-    $crawler = $client->request('GET', 'https://www.eventbrite.com/d/ca--sacramento/events/');
+    $crawler = $client->request('GET', $charge->properties['url']->value);
     
-$crawler->filter('.eds-l-pad-all-l')->each(function($node){
-  
+    // Execute the scraping code
+    $code = $charge->properties['code']->value;
+    $data = eval($code);
+    // By convention we will return an array
+    if (empty($data)) $data = array();
+
+/*$crawler->filter('.eds-l-pad-all-1')->each(function($node){
+ 
   $node->filter('.event-card__formatted-name--is-clamped')->each(function($nodeTitle){
     echo "{";
     echo '"event_title" :"' . $nodeTitle->text() . '"<br/>';
@@ -49,7 +61,8 @@ $crawler->filter('.eds-l-pad-all-l')->each(function($node){
   });
 
 });
+*/
 
-    return true;
+    return $data;
 }
 ?>

@@ -5,7 +5,7 @@
     <url>https://www.eventbrite.com/d/ca--sacramento/events/</url>
     <last_run>0</last_run>
     <last_results>0</last_results>
-    <code>$crawler-&gt;filter('.eds-l-pad-all-l')-&gt;each(function($node){
+    <code>$crawler-&gt;filter('.eds-l-pad-all-1')-&gt;each(function($node){
   
   $node-&gt;filter('.event-card__formatted-name--is-clamped')-&gt;each(function($nodeTitle){
     echo &quot;{&quot;;
