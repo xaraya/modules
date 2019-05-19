@@ -13,6 +13,11 @@
 /**
  * Scrape a URL
  *
+ * @param integer $id The ID of the 
+ * @return array $data 
+ *
+ * To test this, call
+ * $data = xarMod::apiFunc('scraper', 'admin', 'scrape', array('id' => 1));
  */
 
 sys::import('composer.vendor.autoload');
@@ -39,29 +44,14 @@ function scraper_adminapi_scrape($args)
     $client->setClient($guzzleClient);
     
     // Add the URL
+    // IMPORTANT: by convention the crawling object should always be called "$crawler"
     $crawler = $client->request('GET', $charge->properties['url']->value);
     
     // Execute the scraping code
     $code = $charge->properties['code']->value;
-    $data = eval($code);
+    eval($code);
     // By convention we will return an array
     if (empty($data)) $data = array();
-
-/*$crawler->filter('.eds-l-pad-all-1')->each(function($node){
- 
-  $node->filter('.event-card__formatted-name--is-clamped')->each(function($nodeTitle){
-    echo "{";
-    echo '"event_title" :"' . $nodeTitle->text() . '"<br/>';
-  });
-
-  $node->filter('.eds-media-card-content__sub-content')->each(function($nodeData){
-    echo "{";
-    echo '"event_time_place" :"' . $nodeData->html() . '"<br/>';
-    echo "},";
-  });
-
-});
-*/
 
     return $data;
 }
