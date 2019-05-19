@@ -69,7 +69,7 @@
     <property name="code">
       <id>32868</id>
       <label>Code</label>
-      <type>codemirror</type>
+      <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>urls.code</source>
       <status>34</status>

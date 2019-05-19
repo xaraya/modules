@@ -1,0 +1,26 @@
+<items>
+  <scraper_urls itemid="1">
+    <id>1</id>
+    <name>Test Crawler</name>
+    <url>https://www.eventbrite.com/d/ca--sacramento/events/</url>
+    <last_run>0</last_run>
+    <last_results>0</last_results>
+    <code>$crawler-&gt;filter('.eds-l-pad-all-l')-&gt;each(function($node){
+  
+  $node-&gt;filter('.event-card__formatted-name--is-clamped')-&gt;each(function($nodeTitle){
+    echo &quot;{&quot;;
+    echo '&quot;event_title&quot; :&quot;' . $nodeTitle-&gt;text() . '&quot;&lt;br/&gt;';
+  });
+
+  $node-&gt;filter('.eds-media-card-content__sub-content')-&gt;each(function($nodeData){
+    echo &quot;{&quot;;
+    echo '&quot;event_time_place&quot; :&quot;' . $nodeData-&gt;html() . '&quot;&lt;br/&gt;';
+    echo &quot;},&quot;;
+  });
+
+});</code>
+    <time_created>1554574956</time_created>
+    <owner>6</owner>
+    <state>3</state>
+  </scraper_urls>
+</items>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="is_admin">xarIsAncestor('Admnistrators', xarUser::getVar('uname'))</xar:set>
+    <xar:set name="is_admin">xarIsAncestor('Administrators', xarUser::getVar('uname'))</xar:set>
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <div class="xar-row">
         <div class="xar-col-condensed">
@@ -44,7 +44,7 @@
             <xar:data-label property="$properties['code']" label="$value"/>                    
         </div>
         <div class="xar-col" style="width: 80%">
-            <xar:data-input property="$properties['code']"/>                    
+            <xar:data-input property="$properties['code']" cols="50" rows="20"/>                    
         </div>        
     </div>
     <xar:if condition="$is_admin">
@@ -56,7 +56,6 @@
                 </div>
                 <div class="xar-col">
                     <xar:data-output property="$properties['time_created']"/>                    
-                    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
                 </div>        
             </div>
             <div class="xar-row">
@@ -66,11 +65,12 @@
                 </div>
                 <div class="xar-col">
                     <xar:data-output property="$properties['owner']"/>                    
-                    <xar:data-input property="$properties['owner']" hidden="hidden"/>
                 </div>        
             </div>
         </xar:if>
     </xar:if>
+    <xar:data-input property="$properties['time_created']" hidden="hidden"/>        
+    <xar:data-input property="$properties['owner']" hidden="hidden"/>        
     <div class="xar-row">
         <div class="xar-col-condensed">
             <xar:var name="value">State</xar:var>
