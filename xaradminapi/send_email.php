@@ -48,6 +48,7 @@ function reminders_adminapi_send_email($data)
     }
     $data['reminder_text'] = $data['info']['message'];
     unset($data['info']);
+
     try {
         // Set the paramenters for the send function
         $args = array('sendername'       => xarModVars::get('reminders', 'defaultsendername'),
@@ -71,11 +72,11 @@ function reminders_adminapi_send_email($data)
             // We have a message ID
             $args['id'] = (int)$data['params']['message_id'];
             // Get the message template
-                $object = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
-                $object->getItem(array('itemid' => $args['id']));
+            $object = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
+            $object->getItem(array('itemid' => $args['id']));
             // The subject can be overwritten
-                $args['subject'] = $object->properties['subject']->value;
-                if (!empty($data['params']['subject'])) $args['subject'] = $data['params']['subject'];
+            $args['subject'] = $object->properties['subject']->value;
+            if (!empty($data['params']['subject'])) $args['subject'] = $data['params']['subject'];
             if (!empty($data['params']['message_body'])) {
             // We have a message ID (which indicates a template) and also a message body
             // In this case we insert the latter into the former

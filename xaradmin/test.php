@@ -20,6 +20,7 @@ function reminders_admin_test()
     if (!xarSecurityCheck('ManageReminders')) return;
     
     if (!xarVarFetch('confirm',    'checkbox', $data['confirm'],    false, XARVAR_NOT_REQUIRED)) return;
+    
     if ($data['confirm']) {
         
         // Check for a valid confirmation key
