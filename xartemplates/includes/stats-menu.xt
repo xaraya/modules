@@ -83,6 +83,20 @@
                     </a>
                 </li>  
 
+  		<xar:if condition="$tab eq 'variable'">
+		    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+		    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+		<xar:else />
+		    <xar:set name="tabclass">'xar-tab'</xar:set>
+		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+		</xar:if>
+
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'variable'))#" class="#$linkclass#">
+                        Variables
+                    </a>
+                </li>  
+
 		<xar:if condition="$tab eq 'autocache'">
 		    <xar:set name="tabclass">'xar-tab-active'</xar:set>
 		    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
