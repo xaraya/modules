@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!--  License: GPL http://www.gnu.org/copyleft/gpl.html  -->
 <xar:style scope="module" module="base" file="navtabs" />
-<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
 
@@ -14,8 +14,6 @@
     <h2>Module Cache Statistics</h2>
   <xar:elseif condition="$tab eq 'object'"/>
     <h2>Object Cache Statistics</h2>
-  <xar:elseif condition="$tab eq 'variable'"/>
-    <h2>Variable Cache Statistics</h2>
   <xar:elseif condition="$tab eq 'autocache'"/>
     <h2>Auto-Cache Statistics</h2>
   <xar:else/>
@@ -32,15 +30,15 @@
         <xar:template type="module" file="stats-overview" module="xarcachemanager" />
 
     <!--  Begin Page / Block / Module / Object Statistics -->
-    <xar:elseif condition="$tab eq 'page' or $tab eq 'block' or $tab eq 'module' or $tab eq 'object' or $tab eq 'variable'" />
+    <xar:elseif condition="$tab eq 'page' or $tab eq 'block' or $tab eq 'module' or $tab eq 'object'" />
 
         <xar:template type="module" file="stats-details" module="xarcachemanager" />
 
     <!--  Begin Query Statistics -->
     <xar:elseif condition="$tab eq 'query'" />
 
-        <h3>Query Cache Statistics</h3>
-        to be defined
+        <h3><xar:mlstring>Query Cache Statistics</xar:mlstring></h3>
+        <xar:mlstring>to be defined</xar:mlstring>
 
     <!--  Begin Auto-Cache Statistics -->
     <xar:elseif condition="$tab eq 'autocache'" />

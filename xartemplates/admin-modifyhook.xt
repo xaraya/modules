@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <fieldset>
-    <legend>Cache Options</legend>
+    <legend><xar:mlstring>Cache Options</xar:mlstring></legend>
     <div class="xar-form-input-wrapper">
         <label for="nocache" class="xar-form-label" title="#xarML('Check this box if you do not want the output of this block to ever be cached.')#">
-            Do Not Cache Output:
+            <xar:mlstring>Do Not Cache Output:</xar:mlstring>
         </label>
         <xar:if condition="!empty($noCache)">
             <input type="checkbox" name="nocache" id="nocache" value="1" checked="checked" />
@@ -14,7 +14,7 @@
    </div>
    <div class="xar-form-input-wrapper">
        <label for="pageshared" class="xar-form-label" title="#xarML('Check this box if the content of this block is NOT generated dynamically based on the URI query string.')#">
-           Cache Sharing Between Pages:
+           <xar:mlstring>Cache Sharing Between Pages:</xar:mlstring>
        </label>
        <xar:if condition="$pageShared eq 1 ">
            <input type="checkbox" name="pageshared" id="pageshared" value="1" checked="checked" />
@@ -24,33 +24,33 @@
     </div>
    <div class="xar-form-input-wrapper">
        <label for="usershared" class="xar-form-label" title="#xarML('If the output cache of this block can be shared between users, select an appropriate level.')#">
-           Cache Sharing Between Users:
+           <xar:mlstring>Cache Sharing Between Users:</xar:mlstring>
        </label>
        <select name="usershared" id="usershared" size="1">
             <option value="0"> No Sharing</option>
             <xar:if condition="$userShared eq 1">
                 <option value="1" selected="selected">
-                  Group Members
+                  <xar:mlstring>Group Members</xar:mlstring>
                 </option>
                 <xar:else />
                 <option value="1">
-                  Group Members
+                  <xar:mlstring>Group Members</xar:mlstring>
                 </option>
             </xar:if>
             <xar:if condition="$userShared eq 2">
               <option value="2" selected="selected">
-                All Users
+                <xar:mlstring>All Users</xar:mlstring>
               </option>
             <xar:else />
               <option value="2">
-                All Users
+                <xar:mlstring>All Users</xar:mlstring>
               </option>
             </xar:if>
         </select>
    </div>
    <div class="xar-form-input-wrapper">
        <label for="cacheexpire" class="xar-form-label" title="#xarML('The maximum lifetime of the output cache of this block. Set to zero for no time based expiration.')#">
-            Output Cache Expiration Time (in hh:mm:ss):
+            <xar:mlstring>Output Cache Expiration Time (in hh:mm:ss):</xar:mlstring>
        </label>
        <input type="text" name="cacheexpire" id="cacheexpire" value="#$cacheExpire#" size="9" maxlength="9" />
    </div>

@@ -108,9 +108,7 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
                 $msg=xarML('The #(1) file is missing.  Please restore #(1)
                             from backup, or the xarcachemanager/config.caching.php.dist
                             file.', $cachingConfigFile);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
-                                new SystemException($msg));
-
+                throw new Exception($msg);
                 return false;
             }
         }

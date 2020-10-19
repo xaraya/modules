@@ -49,7 +49,6 @@ function xarcachemanager_admin_view($args)
     $data['BlockCachingEnabled'] = 0;
     $data['ModuleCachingEnabled'] = 0;
     $data['ObjectCachingEnabled'] = 0;
-    $data['VariableCachingEnabled'] = 0;
     $data['AutoCachingEnabled'] = 0;
     if (xarOutputCache::$pageCacheIsEnabled) {
         $data['PageCachingEnabled'] = 1;
@@ -65,9 +64,6 @@ function xarcachemanager_admin_view($args)
     }
     if (xarOutputCache::$objectCacheIsEnabled) {
         $data['ObjectCachingEnabled'] = 1;
-    }
-    if (xarCache::$variableCacheIsEnabled) {
-        $data['VariableCachingEnabled'] = 1;
     }
 
     $upper = ucfirst($tab);

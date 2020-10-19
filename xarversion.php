@@ -20,12 +20,19 @@ $modversion['credits']        = '';
 $modversion['help']           = '';
 $modversion['changelog']      = '';
 $modversion['license']        = '';
-$modversion['official']       = 1;
+$modversion['official']       = true;
 $modversion['author']         = 'jsb | mikespub';
 $modversion['contact']        = 'http://www.xaraya.com/';
-$modversion['admin']          = 1;
-$modversion['user']           = 0;
+$modversion['admin']          = true;
+$modversion['user']           = false;
 $modversion['securityschema'] = array('xarCacheManager::' => '::');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0',
+                                            'version_le' => '2.99.99',
+                                         ),
+                                      );
 ?>

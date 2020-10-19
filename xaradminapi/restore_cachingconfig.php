@@ -37,8 +37,7 @@ function xarcachemanager_adminapi_restore_cachingconfig()
                    server process owner for output caching to work.
                    Please change the permission on the #(1) directory
                    so that the web server can write to it.', $varCacheDir);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                        new SystemException($msg));
+        throw new Exception($msg)
         return false;
     }
 
@@ -50,8 +49,7 @@ function xarcachemanager_adminapi_restore_cachingconfig()
                    via the xarCacheManager module.
                    Please change the permission on the #(1) file
                    so that the web server can write to it.', $cachingConfigFile);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                        new SystemException($msg));
+        throw new Exception($msg);
         return false;
     }
 

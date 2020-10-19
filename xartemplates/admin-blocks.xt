@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-    <h2>Configure Block Caching</h2>
+    <h2><xar:mlstring>Configure Block Caching</xar:mlstring></h2>
 
     <xar:if condition="empty($blocks) or count($blocks) lt 1">
-        Block caching is currently disabled
+        <xar:mlstring>Block caching is currently disabled</xar:mlstring>
     <xar:else/>
         <form action="&xar-modurl-xarcachemanager-admin-blocks;" method="post">
         <fieldset>
             <legend>
-            
+            <xar:mlstring>
                 Block Caching Options
-            
+            </xar:mlstring>
         </legend>
         <table border="1" cellpadding="4" cellspacing="0">
         <tr>
           <th class="xar-align-center"><label title="Do you want to enable caching for this block ?">Enable<br/>Caching</label></th>
-          <th class="xar-align-center">Name</th>
-          <th class="xar-align-center">Module</th>
-          <th class="xar-align-center">Type</th>
+          <th class="xar-align-center"><xar:mlstring>Name</xar:mlstring></th>
+          <th class="xar-align-center"><xar:mlstring>Module</xar:mlstring></th>
+          <th class="xar-align-center"><xar:mlstring>Type</xar:mlstring></th>
           <th class="xar-align-center"><label title="Is the output of this block identical for all pages ?">Page Sharing</label></th>
           <th class="xar-align-center"><label title="Is the output of this block identical for all users, or for all members of the same group ?">User Sharing</label></th>
           <th class="xar-align-center"><label title="Do you want to override the default expiration time ?">Expiration Time<br />(hh:mm:ss)</label></th>
@@ -45,20 +45,20 @@
                 <input type="checkbox" name="pageshared[#$block['bid']#]" id="pageshared_#$block['bid']#" value="1"/>
               </xar:if></td>
           <td  class="xar-align-center"><select name="usershared[#$block['bid']#]" id="usershared_#$block['bid']#" size="1">
-                <option value="0"> No Sharing</option>
+                <option value="0"> <xar:mlstring>No Sharing</xar:mlstring></option>
                 <xar:if condition="$block['usershared'] eq 1">
                   <option value="1" selected="selected">
-                    Group Members</option>
+                    <xar:mlstring>Group Members</xar:mlstring></option>
                 <xar:else />
                   <option value="1">
-                    Group Members</option>
+                    <xar:mlstring>Group Members</xar:mlstring></option>
                 </xar:if>
                 <xar:if condition="$block['usershared'] eq 2">
                   <option value="2" selected="selected">
-                    All Users</option>
+                    <xar:mlstring>All Users</xar:mlstring></option>
                 <xar:else />
                   <option value="2">
-                    All Users</option>
+                    <xar:mlstring>All Users</xar:mlstring></option>
                 </xar:if>
               </select></td>
           <td  class="xar-align-center"><input type="text" name="cacheexpire[#$block['bid']#]" id="cacheexpire_#$block['bid']#" value="#$block['cacheexpire']#" size="9" maxlength="9" /></td>

@@ -4,7 +4,7 @@
 <xar:comment>Cache Statistics Auto-Cache</xar:comment>
 
         <xar:if condition="empty($withlog)">
-            <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab, 'withlog' => 1))#">Analyze Logfile</a>
+            <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab, 'withlog' => 1))#"><xar:mlstring>Analyze Logfile</xar:mlstring></a>
         </xar:if>
         <form method="post" action="#xarModURL('xarcachemanager', 'admin', 'stats')#">
           <strong><xar:ml><xar:mlstring>Overall Cache Hit Ratio : #(1)%</xar:mlstring><xar:mlvar>#$totals['ratio']#</xar:mlvar></xar:ml></strong>
@@ -16,19 +16,19 @@
           </xar:if>
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="submit" name="reset" value="#xarML('Reset')#" />
-          <br/>Note: 304 'Not Modified' hits are not logged
+          <br/><xar:mlstring>Note: 304 'Not Modified' hits are not logged</xar:mlstring>
         </form>
         <table class="xar-norm">
         <tr>
-          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'ratio'))#">Ratio</a></th>
-          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'hit'))#">Hit</a></th>
-          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'miss'))#">Miss</a></th>
-          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'total'))#">Total</a></th>
-          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'first'))#">First Seen</a></th>
-          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'last'))#">Last Seen</a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'ratio'))#"><xar:mlstring>Ratio</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'hit'))#"><xar:mlstring>Hit</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'miss'))#"><xar:mlstring>Miss</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'total'))#"><xar:mlstring>Total</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'first'))#"><xar:mlstring>First Seen</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'last'))#"><xar:mlstring>Last Seen</xar:mlstring></a></th>
         </tr>
         <tr>
-          <th colspan="6"><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'page'))#">Page</a></th>
+          <th colspan="6"><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'page'))#"><xar:mlstring>Page</xar:mlstring></a></th>
         </tr>
         <xar:foreach in="$items" key="$page" value="$count">
         <tr class="xar-alt">

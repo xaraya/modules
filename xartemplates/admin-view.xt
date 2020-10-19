@@ -2,17 +2,17 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!--  License: GPL http://www.gnu.org/copyleft/gpl.html  -->
 <xar:style scope="module" module="base" file="navtabs" />
-<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-  <h2>View Cache Item</h2>
+  <h2><xar:mlstring>View Cache Item</xar:mlstring></h2>
     <xar:template type="module" file="stats-menu" module="xarcachemanager" />
 
     <div style="overflow:auto;">
     <table class="xar-full-width xar-border-thin" cellspacing="2" cellpadding="0" valign="top">
         <tr>
             <td colspan="2" style="font-weight:bold;">
-                Browsing:&#160;#$tab# cache
+                <xar:mlstring>Browsing:&#160;</xar:mlstring>#$tab# cache
             </td>
         </tr>
         <tr>

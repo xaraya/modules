@@ -53,7 +53,6 @@ function xarcachemanager_admin_stats($args)
     $data['BlockCachingEnabled'] = 0;
     $data['ModuleCachingEnabled'] = 0;
     $data['ObjectCachingEnabled'] = 0;
-    $data['VariableCachingEnabled'] = 0;
     $data['AutoCachingEnabled'] = 0;
     if (xarOutputCache::$pageCacheIsEnabled) {
         $data['PageCachingEnabled'] = 1;
@@ -70,9 +69,6 @@ function xarcachemanager_admin_stats($args)
     if (xarOutputCache::$objectCacheIsEnabled) {
         $data['ObjectCachingEnabled'] = 1;
     }
-    if (xarCache::$variableCacheIsEnabled) {
-        $data['VariableCachingEnabled'] = 1;
-    }
     // TODO: bring in line with other cache systems ?
     $data['QueryCachingEnabled'] = 0;
 
@@ -81,7 +77,6 @@ function xarcachemanager_admin_stats($args)
         case 'block':
         case 'module':
         case 'object':
-        case 'variable':
             $upper = ucfirst($tab);
             $enabled   = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
             $storage   = $upper . 'CacheStorage'; // e.g. BlockCacheStorage

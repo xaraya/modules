@@ -2,69 +2,69 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <a name="config"></a>
-<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-    <h2>Configure Page Caching</h2>
+    <h2><xar:mlstring>Configure Page Caching</xar:mlstring></h2>
 
     <xar:if condition="empty($pages) or count($pages) lt 1">
-        Page caching is currently disabled...
+        <xar:mlstring>Page caching is currently disabled...</xar:mlstring>
     <xar:else/>
     <form action="&xar-modurl-xarcachemanager-admin-pages;" method="post">
 
     <xar:comment>this just shows the current rules for now</xar:comment>
     <fieldset>
         <legend>
-            
+            <xar:mlstring>
                 Page Caching Options
-            
+            </xar:mlstring>
         </legend>
     <table border="1" cellpadding="4" cellspacing="0">
     <tr>
       <th colspan="3">
-        Default page caching
+        <xar:mlstring>Default page caching</xar:mlstring>
       </th>
     </tr>
     <tr>
       <td>&#160;</td>
-      <td>Modules</td>
+      <td><xar:mlstring>Modules</xar:mlstring></td>
       <xar:if condition="empty($settings['PageHookedOnly'])">
-        <td>All</td>
+        <td><xar:mlstring>All</xar:mlstring></td>
       <xar:else />
-        <td>Hooked to xarCacheManager</td>
+        <td><xar:mlstring>Hooked to xarCacheManager</xar:mlstring></td>
       </xar:if>
     </tr>
     <tr>
       <td>AND</td>
-      <td>Type</td>
+      <td><xar:mlstring>Type</xar:mlstring></td>
       <td>user</td>
     </tr>
     <xar:if condition="empty($settings['PageDisplayView'])">
     <tr>
       <td>AND NOT</td>
-      <td>Function</td>
+      <td><xar:mlstring>Function</xar:mlstring></td>
       <td>display</td>
     </tr>
     </xar:if>
     <tr>
       <td>AND</td>
-      <td>Request Method</td>
+      <td><xar:mlstring>Request Method</xar:mlstring></td>
       <td>GET or HEAD</td>
     </tr>
     <tr>
       <td>AND</td>
-      <td>Theme</td>
+      <td><xar:mlstring>Theme</xar:mlstring></td>
     <xar:if condition="empty($settings['OutputDefaultTheme'])">
-      <td>All Themes</td>
+      <td><xar:mlstring>All Themes</xar:mlstring></td>
     <xar:else/>
       <td>#$settings['OutputDefaultTheme']#</td>
     </xar:if>
     </tr>
     <tr>
       <td>AND</td>
-      <td>Roles</td>
+      <td><xar:mlstring>Roles</xar:mlstring></td>
       <td>
-          Anonymous
+          <xar:mlstring>Anonymous</xar:mlstring>
           <xar:foreach in="$groups" value="$group">
               <xar:if condition="$group['id'] eq 1">
                   <xar:comment>skip Everybody</xar:comment>
@@ -81,14 +81,14 @@
     </tr>
     <tr>
       <th colspan="3">
-        Session-less page caching
+        <xar:mlstring>Session-less page caching</xar:mlstring>
       </th>
     </tr>
     <tr>
       <td colspan="3">
-        Enable session-less page caching of the following URLs for your first-time visitors
+        <xar:mlstring>Enable session-less page caching of the following URLs for your first-time visitors</xar:mlstring>
         <br/>
-        Example :<br/>
+        <xar:mlstring>Example :</xar:mlstring><br/>
         #xarServer::getBaseURL()#<br/>
         #xarServer::getBaseURL()#index.php<br/>
         <textarea name="sessionless" id="sessionless" rows="10" cols="80">#$sessionless#</textarea>
@@ -96,7 +96,7 @@
     </tr>
     <tr>
       <td colspan="2">
-        <label for="autoregenerate">Auto-regenerate session-less URL cache</label>
+        <label for="autoregenerate"><xar:mlstring>Auto-regenerate session-less URL cache</xar:mlstring></label>
       </td>
       <td>
         <xar:if condition="xarModVars::get('xarcachemanager','AutoRegenSessionless')">
@@ -108,50 +108,50 @@
     </tr>
     <tr>
       <th colspan="3">
-        Auto-cache configuration
+        <xar:mlstring>Auto-cache configuration</xar:mlstring>
       </th>
     </tr>
     <tr>
       <td colspan="3">
-        Enable automatic caching of frequently-hit pages for your first-time visitors
+        <xar:mlstring>Enable automatic caching of frequently-hit pages for your first-time visitors</xar:mlstring>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <label for="autocache_period">Period of analysis</label>
+        <label for="autocache_period"><xar:mlstring>Period of analysis</xar:mlstring></label>
       </td>
   <td>
     <input type="text" name="autocache[period]" id="autocache_period" size="9" value="#$settings['AutoCachePeriod']#" />
-    hh:mm:ss
-    [ <a href="#xarServer::getCurrentURL()##viewlog">view log</a> ]
+    <xar:mlstring>hh:mm:ss</xar:mlstring>
+    [ <a href="#xarServer::getCurrentURL()##viewlog"><xar:mlstring>view log</xar:mlstring></a> ]
   </td>
     </tr>
     <tr>
       <td colspan="2">
-        <label for="autocache_threshold">Threshold for inclusion</label>
+        <label for="autocache_threshold"><xar:mlstring>Threshold for inclusion</xar:mlstring></label>
       </td>
       <td>
         <input type="text" name="autocache[threshold]" id="autocache_threshold" size="5" value="#$settings['AutoCacheThreshold']#" />
-        hits in that period
+        <xar:mlstring>hits in that period</xar:mlstring>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <label for="autocache_maxpages">Maximum number of pages</label>
+        <label for="autocache_maxpages"><xar:mlstring>Maximum number of pages</xar:mlstring></label>
       </td>
       <td>
         <input type="text" name="autocache[maxpages]" id="autocache_maxpages" size="5" value="#$settings['AutoCacheMaxPages']#" />
-        pages in cache
+        <xar:mlstring>pages in cache</xar:mlstring>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <label for="autocache_keepstats">Keep auto-cache statistics</label>
+        <label for="autocache_keepstats"><xar:mlstring>Keep auto-cache statistics</xar:mlstring></label>
       </td>
       <td>
         <xar:if condition="!empty($settings['AutoCacheKeepStats'])">
           <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" checked="checked" />
-          [ <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache'))#">view stats</a> ]
+          [ <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache'))#"><xar:mlstring>view stats</xar:mlstring></a> ]
         <xar:else/>
           <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" />
         </xar:if>
@@ -159,7 +159,7 @@
     </tr>
     <tr>
       <td colspan="3">
-        <label for="autocache_include">Pages to include in the auto-cache</label>
+        <label for="autocache_include"><xar:mlstring>Pages to include in the auto-cache</xar:mlstring></label>
       </td>
     </tr>
     <tr>
@@ -169,7 +169,7 @@
     </tr>
     <tr>
       <td colspan="3">
-        <label for="autocache_exclude">Pages to exclude from the auto-cache</label>
+        <label for="autocache_exclude"><xar:mlstring>Pages to exclude from the auto-cache</xar:mlstring></label>
       </td>
     </tr>
     <tr>
@@ -186,7 +186,7 @@
     </form>
 
 <a name="viewlog"></a>
-    <h2>Current Auto-Cache Log [ <a href="#xarServer::getCurrentURL()##config">up</a> ]</h2>
+    <h2><xar:mlstring>Current Auto-Cache Log</xar:mlstring> [ <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>up</xar:mlstring></a> ]</h2>
     <xar:if condition="!empty($autocachepages)">
     <p><xar:ml>
       <xar:mlstring>From #(1) to #(2)</xar:mlstring>
@@ -198,7 +198,7 @@
       <xar:foreach in="$autocachehits" key="$status">
         <th>#$status#</th>
       </xar:foreach>
-      <th>Page</th>
+      <th><xar:mlstring>Page</xar:mlstring></th>
     </tr>
     <xar:foreach in="$autocachepages" key="$page" value="$count">
     <tr>
@@ -216,11 +216,11 @@
       <xar:foreach in="$autocachehits" key="$status">
         <th>#$autocachehits[$status]#</th>
       </xar:foreach>
-      <th>Total</th>
+      <th><xar:mlstring>Total</xar:mlstring></th>
     </tr>
     </table>
     <xar:if condition="!empty($autocacheproposed)">
-    <p>Current URLs proposed for session-less caching :</p>
+    <p><xar:mlstring>Current URLs proposed for session-less caching :</xar:mlstring></p>
     <ol>
     <xar:foreach in="$autocacheproposed" key="$url" value="$count">
   <li>#$url# (#$count#)</li>

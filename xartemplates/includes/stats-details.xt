@@ -11,17 +11,17 @@
     </xar:if>
     <xar:if condition="!empty($loginfo['file'])">
       &#160;Log Hit Ratio:&#160;<strong>#$loginfo['ratio']#%</strong>&#160;of&#160;#$loginfo['total']#
-      &#160;<a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab, 'withlog' => 1))#">Analyze Logfile</a>
+      &#160;<a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab, 'withlog' => 1))#"><xar:mlstring>Analyze Logfile</xar:mlstring></a>
     <xar:else/>
       &#160;Log Hit Ratio:&#160;N/A
     </xar:if>
 
     <table class="xar-norm">
     <tr>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'size'))#">Size</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'key'))#">Key</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'code'))#">Code</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'time'))#">Last Modified</a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'size'))#"><xar:mlstring>Size</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'key'))#"><xar:mlstring>Key</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'code'))#"><xar:mlstring>Code</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'time'))#"><xar:mlstring>Last Modified</xar:mlstring></a></th>
     </tr>
     <xar:foreach in="$items" key="$id" value="$item">
     <tr>
@@ -58,19 +58,19 @@
 
     <table class="xar-norm">
     <tr>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'size'))#">Size</a></th>
-      <th colspan="4"><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'key'))#">Key</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'code'))#">Code</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'time'))#">Last Modified</a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'size'))#"><xar:mlstring>Size</xar:mlstring></a></th>
+      <th colspan="4"><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'key'))#"><xar:mlstring>Key</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'code'))#"><xar:mlstring>Code</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'time'))#"><xar:mlstring>Last Modified</xar:mlstring></a></th>
     </tr>
     <tr class="xar-alt">
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'ratio'))#">Ratio</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'hit'))#">Hit</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'miss'))#">Miss</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'total'))#">Total</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'pages'))#">Pages</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'first'))#">First Seen</a></th>
-      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'last'))#">Last Seen</a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'ratio'))#"><xar:mlstring>Ratio</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'hit'))#"><xar:mlstring>Hit</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'miss'))#"><xar:mlstring>Miss</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'total'))#"><xar:mlstring>Total</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'pages'))#"><xar:mlstring>Pages</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'first'))#"><xar:mlstring>First Seen</xar:mlstring></a></th>
+      <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'last'))#"><xar:mlstring>Last Seen</xar:mlstring></a></th>
     </tr>
     <xar:foreach in="$items" key="$id" value="$item">
     <tr>

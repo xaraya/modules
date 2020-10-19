@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-    <h2>Configure Query Caching</h2>
+    <h2><xar:mlstring>Configure Query Caching</xar:mlstring></h2>
     <form action="#xarModURL('xarcachemanager', 'admin', 'queries')#" method="post">
     <fieldset>
         <legend>
-            
+            <xar:mlstring>
                 Query Caching Options
-            
+            </xar:mlstring>
         </legend>
       <p class="xar-form-input-wrapper-before">
-        Queries in the following functions could be quite expensive for large sites.
+        <xar:mlstring>Queries in the following functions could be quite expensive for large sites.
           Even if you don't use page or module output caching, you might consider using query caching
-          to save the results of individual database queries here.
+          to save the results of individual database queries here.</xar:mlstring>
       </p>
 
       <xar:comment>TODO: enable $dbconn-LogSQL() and retrieve expensive SQL queries</xar:comment>
@@ -49,7 +49,7 @@
     </div>
     </form>
     <p class="xar-form-input-wrapper">
-      Please note that cached query results will only be invalidated based on expiration time (for now ?).
+      <xar:mlstring>Please note that cached query results will only be invalidated based on expiration time (for now ?).</xar:mlstring>
     </p>
 
 </div>
