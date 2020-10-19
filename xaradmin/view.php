@@ -49,6 +49,7 @@ function xarcachemanager_admin_view($args)
     $data['BlockCachingEnabled'] = 0;
     $data['ModuleCachingEnabled'] = 0;
     $data['ObjectCachingEnabled'] = 0;
+    $data['VariableCachingEnabled'] = 0;
     $data['AutoCachingEnabled'] = 0;
     if (xarOutputCache::$pageCacheIsEnabled) {
         $data['PageCachingEnabled'] = 1;
@@ -64,6 +65,9 @@ function xarcachemanager_admin_view($args)
     }
     if (xarOutputCache::$objectCacheIsEnabled) {
         $data['ObjectCachingEnabled'] = 1;
+    }
+    if (xarCache::$variableCacheIsEnabled) {
+        $data['VariableCachingEnabled'] = 1;
     }
 
     $upper = ucfirst($tab);
@@ -97,6 +101,15 @@ function xarcachemanager_admin_view($args)
                 $data['link']   = $content['link'];
                 $data['styles'] = $content['styles'];
                 $data['script'] = $content['script'];
+	    } elseif ($tab == 'variable') {
+                // check if we serialized it for storage
+                if (!empty($value) && is_string($value) && strpos($value, ':serial:') === 0) {
+                    try {
+                        $value = unserialize(substr($value,8));
+                    } catch (Exception $e) {
+                    }
+                }
+                $data['lines']  = explode("\n", print_r($value, true));
             } else {
                 $data['lines'] = explode("\n", $value);
             }

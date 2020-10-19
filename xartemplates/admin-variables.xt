@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" module="xarcachemanager" />
+    <h2><xar:mlstring>Configure Variable Caching</xar:mlstring></h2>
+
+    <xar:if condition="empty($variables) or count($variables) lt 1">
+        <xar:mlstring>Variable caching is currently disabled</xar:mlstring>
+    <xar:else/>
+        <xar:javascript module="base" filename="checkall.js" />
+        <form action="&xar-modurl-xarcachemanager-admin-variables;" name="variablecache_form" id="variablecache_form" method="post">
+        <fieldset>
+            <legend>
+            <xar:mlstring>
+                Variable Caching Options
+            </xar:mlstring>
+        </legend>
+        <table border="1" cellpadding="4" cellspacing="0">
+        <tr>
+          <th class="xar-align-center"><label title="Do you want to enable caching for this variable ?">Enable<br/>Caching</label></th>
+          <th class="xar-align-center"><xar:mlstring>Name</xar:mlstring></th>
+          <th class="xar-align-center"><label title="Do you want to override the default expiration time ?">Expiration Time<br />(hh:mm:ss)</label></th>
+        </tr>
+        <xar:foreach in="$variables" value="$variable">
+        <tr>
+          <!-- flip from nocache in settings to docache in template -->
+          <td  class="xar-align-center"><xar:if condition="empty($variable['nocache'])">
+                <input type="checkbox" name="docache[#$variable['name']#]" id="docache_#$variable['name']#" value="1" checked="checked"/>
+             <xar:else/>
+                <input type="checkbox" name="docache[#$variable['name']#]" id="docache_#$variable['name']#" value="1"/>
+              </xar:if></td>
+          <td>
+              <a href="#$variable['name']#">#$variable['name']#</a>
+          </td>
+          <td  class="xar-align-center"><input type="text" name="cacheexpire[#$variable['name']#]" id="cacheexpire_#$variable['name']#" value="#$variable['cacheexpire']#" size="9" maxlength="9" /></td>
+        </tr>
+        </xar:foreach>
+        <tr>
+          <td class="xar-align-center">
+            <a href="javascript:xar_base_checkall(document.forms['variablecache_form'],true)"><xar:mlstring>Check All</xar:mlstring></a><br/>
+            <a href="javascript:xar_base_checkall(document.forms['variablecache_form'],false)"><xar:mlstring>Clear All</xar:mlstring></a>
+          </td>
+          <td>
+	    // TODO: add more variables + use in xarVariableCache settings afterwards<br/>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="submit" name="submit" value="#xarML('Submit')#" />
+          </td>
+          <td>
+          </td>
+        </tr>
+        </table>
+        </fieldset>
+        </form>
+    </xar:if>
+
+</div>
+</xar:template>

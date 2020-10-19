@@ -52,16 +52,25 @@
                 </td>
             </tr>
         </xar:foreach>
-        <xar:foreach in="$lines" key="$key" value="$line">
-        <tr>
-            <td class="xar-align-left" valign="top" style="font-size:small; color:red">
-                #$key#:&#160;&#160;
-            </td>
-            <td class="xar-align-left" valign="top" style="font-size:small">
-               #xarVarPrepForDisplay($line)#
-            </td>
-        </tr>
-        </xar:foreach>
+        <xar:if condition="$tab eq 'variable'">
+            <tr>
+                <td colspan="2">
+                <xar:set name="dummy">join("\n", $lines)</xar:set>
+		<pre>#$dummy#</pre>
+                </td>
+            </tr>
+        <xar:else/>
+            <xar:foreach in="$lines" key="$key" value="$line">
+            <tr>
+                <td class="xar-align-left" valign="top" style="font-size:small; color:red">
+                    #$key#:&#160;&#160;
+                </td>
+                <td class="xar-align-left" valign="top" style="font-size:small">
+                   #xarVarPrepForDisplay($line)#
+                </td>
+            </tr>
+            </xar:foreach>
+        </xar:if>
     </table>
     <xar:if condition="empty($lines)">
         This item is not in cache anymore
