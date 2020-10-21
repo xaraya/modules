@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * Save configuration settings in the config file and modVars
  *
@@ -20,20 +22,5 @@
  */
 function xarcachemanager_adminapi_config_tpl_prep($cachingConfiguration)
 {
-    if(empty($cachingConfiguration) || !is_array($cachingConfiguration)) {
-        return;
-    }
-
-    $keyslist = str_replace( '.', '', array_keys($cachingConfiguration));
-    $valueslist = array_values($cachingConfiguration);
-    $settings = array();
-
-    $arraysize = sizeof($keyslist);
-    for ($i=0;$i<$arraysize;$i++) {
-        $settings[$keyslist[$i]] = $valueslist[$i];
-    }
-
-    return $settings;
+    return xarCache_Manager::config_tpl_prep($cachingConfiguration);
 }
-
-?>

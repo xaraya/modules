@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * get configuration of module caching for all modules
  *
@@ -21,13 +23,13 @@ function xarcachemanager_adminapi_getmodules($args)
 
     // Get all module cache settings
     $modulesettings = array();
-    $serialsettings = xarModVars::get('modules','modulecache_settings');
+    $serialsettings = xarModVars::get('modules', 'modulecache_settings');
     if (!empty($serialsettings)) {
         $modulesettings = unserialize($serialsettings);
     }
 
     // Get default module functions to cache
-    $defaultmodulefunctions = unserialize(xarModVars::get('xarcachemanager','DefaultModuleCacheFunctions'));
+    $defaultmodulefunctions = unserialize(xarModVars::get('xarcachemanager', 'DefaultModuleCacheFunctions'));
 
     // Get all modules
     $modules = xarMod::apiFunc('modules', 'admin', 'getlist');
@@ -66,7 +68,7 @@ function xarcachemanager_adminapi_getmodules($args)
         // find the user GUI functions
         $userdir = realpath(sys::code() . 'modules/' . $module['directory'] . '/xaruser/');
         if ($userdir && $dh = @opendir($userdir)) {
-            while(($filename = @readdir($dh)) !== false) {
+            while (($filename = @readdir($dh)) !== false) {
                 // Got a file or directory.
                 $thisfile = $userdir . '/' . $filename;
                 if (is_file($thisfile) && preg_match('/^(.+)\.php$/', $filename, $matches)) {
@@ -78,7 +80,7 @@ function xarcachemanager_adminapi_getmodules($args)
                         $settings = array();
                         // try to find all xarVarFetch() parameters in this function
                         $params = array();
-                        $content = implode('',file($thisfile));
+                        $content = implode('', file($thisfile));
                         if (preg_match_all("/xarVarFetch\(\s*'([^']+)'/", $content, $params)) {
                             // add the parameters discovered in the function file
                             $settings['params'] = implode(',', $params[1]);
@@ -108,7 +110,7 @@ function xarcachemanager_adminapi_getmodules($args)
     foreach ($modules as $module) {
         // use the module name as key for easy lookup in xarModuleCache
         $name = $module['name'];
-// TODO: filter on something else ?
+        // TODO: filter on something else ?
         if ($name == 'authsystem' ||
             $name == 'roles' ||
             $name == 'privileges') {
@@ -119,15 +121,21 @@ function xarcachemanager_adminapi_getmodules($args)
         if (isset($modulesettings[$name])) {
             foreach ($modulesettings[$name] as $func => $settings) {
                 if ($settings['cacheexpire'] > 0) {
-                    $settings['cacheexpire'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                                               array('starttime' => $settings['cacheexpire'],
-                                                                     'direction' => 'from'));
+                    $settings['cacheexpire'] = xarMod::apiFunc(
+                        'xarcachemanager',
+                        'admin',
+                        'convertseconds',
+                        array('starttime' => $settings['cacheexpire'],
+                                                                     'direction' => 'from')
+                    );
                 }
                 $moduleconfig[$name]['cachesettings'][$func] = $settings;
             }
         }
         foreach ($modulefunctions[$name] as $func) {
-            if (isset($moduleconfig[$name]['cachesettings'][$func])) continue;
+            if (isset($moduleconfig[$name]['cachesettings'][$func])) {
+                continue;
+            }
             $settings = array();
             if (preg_match('/\w+hook$/', $func)) {
                 // default hook parameters
@@ -148,5 +156,3 @@ function xarcachemanager_adminapi_getmodules($args)
     }
     return $moduleconfig;
 }
-
-?>

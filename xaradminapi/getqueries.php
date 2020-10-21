@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * get configuration of query caching for expensive queries
  *
@@ -21,10 +23,10 @@ function xarcachemanager_adminapi_getqueries($args)
 
     $queries = array();
 
-// TODO: add some configuration options for query caching in the core
+    // TODO: add some configuration options for query caching in the core
     $queries['core'] = array('TODO' => 0);
 
-// TODO: enable $dbconn->LogSQL() and check expensive SQL queries for new candidates
+    // TODO: enable $dbconn->LogSQL() and check expensive SQL queries for new candidates
 
     $candidates = array(
                         'articles' => array('userapi.getall'), // TODO: round off current pubdate
@@ -42,15 +44,15 @@ function xarcachemanager_adminapi_getqueries($args)
                        );
 
     foreach ($candidates as $module => $querylist) {
-        if (!xarModIsAvailable($module)) continue;
+        if (!xarModIsAvailable($module)) {
+            continue;
+        }
         $queries[$module] = array();
         foreach ($querylist as $query) {
-// stored in module variables (for now ?)
-            $queries[$module][$query] = xarModVars::get($module,'cache.'.$query);
+            // stored in module variables (for now ?)
+            $queries[$module][$query] = xarModVars::get($module, 'cache.'.$query);
         }
     }
 
     return $queries;
 }
-
-?>

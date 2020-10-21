@@ -12,19 +12,19 @@
  */
 /**
  * the main administration function
- * 
+ *
  * @author jsb | mikespub
- * @access public 
+ * @access public
  * @return true on success or void on falure
  */
 function xarcachemanager_admin_main()
-{ 
+{
     // Security Check
-    if (!xarSecurityCheck('AdminXarCache')) return;
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
     // success
     return true;
-} 
-
-?>
+}

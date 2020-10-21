@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * Construct an array of the current cache keys
  *
@@ -24,7 +26,7 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     $cachekeys = array();
 
     // get cache type settings
-    $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
+    $cachetypes = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachetypes');
 
     // check if we have some settings for this cache type
     if (empty($type) || empty($cachetypes[$type])) {
@@ -56,4 +58,3 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
 
     return $cachekeys;
 }
-?>

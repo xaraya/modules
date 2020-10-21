@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * configure object caching
  * @return array
@@ -18,7 +20,9 @@ function xarcachemanager_admin_objects($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) { return; }
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     $data = array();
     if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$objectCacheIsEnabled) {
@@ -26,14 +30,16 @@ function xarcachemanager_admin_objects($args)
         return $data;
     }
 
-    xarVarFetch('submit','str',$submit,'');
+    xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
-        xarVarFetch('docache','isset',$docache,array());
-        xarVarFetch('usershared','isset',$usershared,array());
-        xarVarFetch('cacheexpire','isset',$cacheexpire,array());
+        xarVar::fetch('docache', 'isset', $docache, array());
+        xarVar::fetch('usershared', 'isset', $usershared, array());
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
 
         $newobjects = array();
         // loop over something that should return values for every object
@@ -53,19 +59,20 @@ function xarcachemanager_admin_objects($args)
                     $newobjects[$name][$method]['usershared'] = 0;
                 }
                 if (!empty($expire)) {
-                    $expire = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                              array('starttime' => $expire,
-                                                    'direction' => 'to'));
+                    $expire = xarCache_Manager::convertseconds(
+                        array('starttime' => $expire,
+                                                    'direction' => 'to')
+                    );
                 } elseif ($expire === '0') {
                     $expire = 0;
                 } else {
-                    $expire = NULL;
+                    $expire = null;
                 }
                 $newobjects[$name][$method]['cacheexpire'] = $expire;
             }
         }
         // save settings to dynamicdata in case xarcachemanager is removed later
-        xarModVars::set('dynamicdata','objectcache_settings', serialize($newobjects));
+        xarModVars::set('dynamicdata', 'objectcache_settings', serialize($newobjects));
 
         // objects could be anywhere, we're not smart enough not know exactly where yet
         $key = '';
@@ -75,16 +82,14 @@ function xarcachemanager_admin_objects($args)
         }
         // and flush the objects
         xarObjectCache::flushCached($key);
-        if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
-            xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
+        if (xarModVars::get('xarcachemanager', 'AutoRegenSessionless')) {
+            xarMod::apiFunc('xarcachemanager', 'admin', 'regenstatic');
         }
     }
 
     // Get all object caching configurations
-    $data['objects'] = xarModAPIfunc('xarcachemanager', 'admin', 'getobjects');
+    $data['objects'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getobjects');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

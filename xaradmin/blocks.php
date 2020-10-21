@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * configure block caching
  * @return array
@@ -18,7 +20,9 @@ function xarcachemanager_admin_blocks($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) { return; }
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     $data = array();
     if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$blockCacheIsEnabled) {
@@ -26,15 +30,17 @@ function xarcachemanager_admin_blocks($args)
         return $data;
     }
 
-    xarVarFetch('submit','str',$submit,'');
+    xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
-        xarVarFetch('docache','isset',$docache,array());
-        xarVarFetch('pageshared','isset',$pageshared,array());
-        xarVarFetch('usershared','isset',$usershared,array());
-        xarVarFetch('cacheexpire','isset',$cacheexpire,array());
+        xarVar::fetch('docache', 'isset', $docache, array());
+        xarVar::fetch('pageshared', 'isset', $pageshared, array());
+        xarVar::fetch('usershared', 'isset', $usershared, array());
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
 
         $newblocks = array();
         // loop over something that should return values for every block
@@ -58,13 +64,14 @@ function xarcachemanager_admin_blocks($args)
                 $newblocks[$bid]['usershared'] = 0;
             }
             if (!empty($expire)) {
-                $expire = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
-                                          array('starttime' => $expire,
-                                                'direction' => 'to'));
+                $expire = xarCache_Manager::convertseconds(
+                    array('starttime' => $expire,
+                                                'direction' => 'to')
+                );
             } elseif ($expire === '0') {
                 $expire = 0;
             } else {
-                $expire = NULL;
+                $expire = null;
             }
             $newblocks[$bid]['cacheexpire'] = $expire;
         }
@@ -75,7 +82,9 @@ function xarcachemanager_admin_blocks($args)
         // delete the whole cache blocks table and insert the new values
         $query = "DELETE FROM $blocksettings";
         $result =& $dbconn->Execute($query);
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
         foreach ($newblocks as $block) {
             $query = "INSERT INTO $blocksettings (blockinstance_id,
@@ -85,8 +94,10 @@ function xarcachemanager_admin_blocks($args)
                                                   expire)
                         VALUES (?,?,?,?,?)";
             $bindvars = array($block['bid'], $block['nocache'], $block['pageshared'], $block['usershared'], $block['cacheexpire']);
-            $result =& $dbconn->Execute($query,$bindvars);
-            if (!$result) return;
+            $result =& $dbconn->Execute($query, $bindvars);
+            if (!$result) {
+                return;
+            }
         }
 
         // blocks could be anywhere, we're not smart enough not know exactly where yet
@@ -97,16 +108,14 @@ function xarcachemanager_admin_blocks($args)
         }
         // and flush the blocks
         xarBlockCache::flushCached($key);
-        if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
-            xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
+        if (xarModVars::get('xarcachemanager', 'AutoRegenSessionless')) {
+            xarMod::apiFunc('xarcachemanager', 'admin', 'regenstatic');
         }
     }
 
     // Get all block caching configurations
-    $data['blocks'] = xarModAPIfunc('xarcachemanager', 'admin', 'getblocks');
+    $data['blocks'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getblocks');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

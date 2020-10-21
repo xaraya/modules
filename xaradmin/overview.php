@@ -20,5 +20,3 @@ function xarcachemanager_admin_overview()
     //just return to main function that displays the overview
     return xarTplModule('xarcachemanager', 'admin', 'main', $data, 'main');
 }
-
-?>

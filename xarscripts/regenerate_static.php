@@ -16,10 +16,18 @@
  */
 $systemConfiguration = array();
 include 'var/layout.system.php';
-if (!isset($systemConfiguration['rootDir'])) $systemConfiguration['rootDir'] = '../';
-if (!isset($systemConfiguration['libDir'])) $systemConfiguration['libDir'] = 'lib/';
-if (!isset($systemConfiguration['webDir'])) $systemConfiguration['webDir'] = 'html/';
-if (!isset($systemConfiguration['codeDir'])) $systemConfiguration['codeDir'] = 'code/';
+if (!isset($systemConfiguration['rootDir'])) {
+    $systemConfiguration['rootDir'] = '../';
+}
+if (!isset($systemConfiguration['libDir'])) {
+    $systemConfiguration['libDir'] = 'lib/';
+}
+if (!isset($systemConfiguration['webDir'])) {
+    $systemConfiguration['webDir'] = 'html/';
+}
+if (!isset($systemConfiguration['codeDir'])) {
+    $systemConfiguration['codeDir'] = 'code/';
+}
 $GLOBALS['systemConfiguration'] = $systemConfiguration;
 set_include_path($systemConfiguration['rootDir'] . PATH_SEPARATOR . get_include_path());
 
@@ -45,6 +53,5 @@ sys::import('xaraya.core');
 // Load the core with all optional systems loaded
 xarCoreInit(XARCORE_SYSTEM_ALL);
 
-xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
-
-?>
+sys::import('modules.xarcachemanager.class.cache_hooks');
+xarCache_Hooks::regenstatic();

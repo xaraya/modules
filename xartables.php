@@ -1,6 +1,6 @@
 <?php
 /**
- * xarCacheManager table setup 
+ * xarCacheManager table setup
  *
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
@@ -9,7 +9,7 @@
  *
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
- * @author jsb 
+ * @author jsb
 */
 
 /**
@@ -28,5 +28,3 @@ function xarcachemanager_xartables()
     // Return the table information
     return $xartable;
 }
-
-?>

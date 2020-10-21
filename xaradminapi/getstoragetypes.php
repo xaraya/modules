@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * @author jsb
  *
@@ -18,7 +20,9 @@
 function xarcachemanager_adminapi_getstoragetypes()
 {
     static $storagetypes;
-    if (!empty($storagetypes)) return $storagetypes;
+    if (!empty($storagetypes)) {
+        return $storagetypes;
+    }
 
     $storagetypes = array();
     $storagetypes['filesystem']   = array('name'    => 'filesystem',
@@ -49,4 +53,3 @@ function xarcachemanager_adminapi_getstoragetypes()
     // return the storage types and their settings
     return $storagetypes;
 }
-?>

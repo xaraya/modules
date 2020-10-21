@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * show the content of cache items
  * @param array $args with optional arguments:
@@ -22,19 +24,27 @@ function xarcachemanager_admin_view($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tab',  'str', $tab,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('key',  'str', $key,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('code', 'str', $code, NULL, XARVAR_NOT_REQUIRED)) {return;}
-
-    if (empty($tab)) {
-        xarResponse::Redirect(xarModURL('xarcachemanager','admin','stats'));
+    if (!xarVar::fetch('tab', 'str', $tab, null, xarVar::NOT_REQUIRED)) {
         return;
-    } elseif (empty($key)) {
-        xarResponse::Redirect(xarModURL('xarcachemanager','admin','stats', array('tab' => $tab)));
+    }
+    if (!xarVar::fetch('key', 'str', $key, null, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('code', 'str', $code, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
-    if (!xarSecurityCheck('AdminXarCache')) return;
+    if (empty($tab)) {
+        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'stats'));
+        return;
+    } elseif (empty($key)) {
+        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => $tab)));
+        return;
+    }
+
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     // Get the output cache directory so you can view items even if output caching is disabled
     $outputCacheDir = xarCache::getOutputCacheDir();
@@ -42,8 +52,9 @@ function xarcachemanager_admin_view($args)
     $data = array();
 
     // get the caching config settings from the config file
-    $data['settings'] = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                      array('from' => 'file', 'tpl_prep' => TRUE));
+    $data['settings'] = xarCache_Manager::get_config(
+        array('from' => 'file', 'tpl_prep' => true)
+    );
 
     $data['PageCachingEnabled'] = 0;
     $data['BlockCachingEnabled'] = 0;
@@ -101,11 +112,11 @@ function xarcachemanager_admin_view($args)
                 $data['link']   = $content['link'];
                 $data['styles'] = $content['styles'];
                 $data['script'] = $content['script'];
-	    } elseif ($tab == 'variable') {
+            } elseif ($tab == 'variable') {
                 // check if we serialized it for storage
                 if (!empty($value) && is_string($value) && strpos($value, ':serial:') === 0) {
                     try {
-                        $value = unserialize(substr($value,8));
+                        $value = unserialize(substr($value, 8));
                     } catch (Exception $e) {
                     }
                 }
@@ -117,8 +128,6 @@ function xarcachemanager_admin_view($args)
     }
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
-    $data['return_url'] = xarModURL('xarcachemanager','admin','stats', array('tab' => $tab));
+    $data['return_url'] = xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => $tab));
     return $data;
 }
-
-?>

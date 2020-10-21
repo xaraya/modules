@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * configure variable caching
  * @return array
@@ -18,7 +20,9 @@ function xarcachemanager_admin_variables($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) { return; }
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     $data = array();
     if (!xarCache::$variableCacheIsEnabled) {
@@ -26,13 +30,15 @@ function xarcachemanager_admin_variables($args)
         return $data;
     }
 
-    xarVarFetch('submit','str',$submit,'');
+    xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
-        xarVarFetch('docache','isset',$docache,array());
-        xarVarFetch('cacheexpire','isset',$cacheexpire,array());
+        xarVar::fetch('docache', 'isset', $docache, array());
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
 
         $newvariables = array();
         // loop over something that should return values for every variable
@@ -46,18 +52,19 @@ function xarcachemanager_admin_variables($args)
                 $newvariables[$name]['nocache'] = 1;
             }
             if (!empty($expire)) {
-                $expire = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                          array('starttime' => $expire,
-                                                'direction' => 'to'));
+                $expire = xarCache_Manager::convertseconds(
+                    array('starttime' => $expire,
+                                                'direction' => 'to')
+                );
             } elseif ($expire === '0') {
                 $expire = 0;
             } else {
-                $expire = NULL;
+                $expire = null;
             }
             $newvariables[$name]['cacheexpire'] = $expire;
         }
         // save settings to dynamicdata in case xarcachemanager is removed later
-        xarModVars::set('dynamicdata','variablecache_settings', serialize($newvariables));
+        xarModVars::set('dynamicdata', 'variablecache_settings', serialize($newvariables));
 
         // variables could be anywhere, we're not smart enough not know exactly where yet
         $key = '';
@@ -66,10 +73,8 @@ function xarcachemanager_admin_variables($args)
     }
 
     // Get all variable caching configurations
-    $data['variables'] = xarModAPIfunc('xarcachemanager', 'admin', 'getvariables');
+    $data['variables'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getvariables');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

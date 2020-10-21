@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * @author jsb
  *
@@ -18,21 +20,24 @@
 function xarcachemanager_adminapi_getcachetypes()
 {
     static $cachetypes;
-    if (!empty($cachetypes)) return $cachetypes;
+    if (!empty($cachetypes)) {
+        return $cachetypes;
+    }
 
     // list of currently supported cache types
     $typelist = array('page', 'block', 'module', 'object');
 
     // get the caching config settings from the config file
-    $settings = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                              array('from' => 'file'));
+    $settings = xarCache_Manager::get_config(
+        array('from' => 'file')
+    );
 
     // map the settings to the right cache type
     $cachetypes = array();
     foreach ($typelist as $type) {
         $cachetypes[$type] = array();
         foreach (array_keys($settings) as $setting) {
-            if (preg_match("/^$type\.(.+)$/i",$setting,$matches)) {
+            if (preg_match("/^$type\.(.+)$/i", $setting, $matches)) {
                 $info = $matches[1];
                 $cachetypes[$type][$info] = $settings[$setting];
             }
@@ -46,4 +51,3 @@ function xarcachemanager_adminapi_getcachetypes()
     // return the cache types and their settings
     return $cachetypes;
 }
-?>

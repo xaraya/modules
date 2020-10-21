@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * get configuration of block caching for all blocks
  *
@@ -29,17 +31,19 @@ function xarcachemanager_adminapi_getblocks($args)
              expire
              FROM $blocksettings";
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Get all block instances
-    $blocks = xarModAPIfunc('blocks', 'user', 'getall');
+    $blocks = xarMod::apiFunc('blocks', 'user', 'getall');
     $bid2key = array();
     foreach ($blocks as $key => $block) {
         $bid2key[$block['bid']] = $key;
     }
 
     while (!$result->EOF) {
-        list ($bid, $nocache, $pageshared, $usershared, $cacheexpire) = $result->fields;
+        list($bid, $nocache, $pageshared, $usershared, $cacheexpire) = $result->fields;
         $result->MoveNext();
         if (!isset($bid2key[$bid])) {
             continue;
@@ -56,10 +60,14 @@ function xarcachemanager_adminapi_getblocks($args)
         /*if (empty($cacheexpire)) {
             $cacheexpire = 0;
         }*/
-        if ($cacheexpire > 0 ) {
-            $cacheexpire = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
-                                          array('starttime' => $cacheexpire,
-                                                'direction' => 'from'));
+        if ($cacheexpire > 0) {
+            $cacheexpire = xarMod::apiFunc(
+                'xarcachemanager',
+                'admin',
+                'convertseconds',
+                array('starttime' => $cacheexpire,
+                                                'direction' => 'from')
+            );
         }
 
         $key = $bid2key[$bid];
@@ -72,9 +80,13 @@ function xarcachemanager_adminapi_getblocks($args)
         if (!isset($block['nocache'])) {
             // Try loading some defaults from the block init array (cfr. articles/random)
             if (!empty($block['module']) && !empty($block['type'])) {
-                $initresult = xarModAPIfunc('blocks', 'user', 'read_type_init',
-                                            array('module' => $block['module'],
-                                                  'type' => $block['type']));
+                $initresult = xarMod::apiFunc(
+                    'blocks',
+                    'user',
+                    'read_type_init',
+                    array('module' => $block['module'],
+                                                  'type' => $block['type'])
+                );
                 if (!empty($initresult) && is_array($initresult)) {
                     if (isset($initresult['nocache'])) {
                         $block['nocache'] = $initresult['nocache'];
@@ -110,5 +122,3 @@ function xarcachemanager_adminapi_getblocks($args)
     }
     return $blocks;
 }
-
-?>

@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * get configuration of object caching for all objects
  *
@@ -21,7 +23,7 @@ function xarcachemanager_adminapi_getobjects($args)
 
     // Get all object cache settings
     $objectsettings = array();
-    $serialsettings = xarModVars::get('dynamicdata','objectcache_settings');
+    $serialsettings = xarModVars::get('dynamicdata', 'objectcache_settings');
     if (!empty($serialsettings)) {
         $objectsettings = unserialize($serialsettings);
     }
@@ -30,13 +32,13 @@ function xarcachemanager_adminapi_getobjects($args)
     $objects = xarMod::apiFunc('dynamicdata', 'user', 'getobjects');
 
     // Get default object methods to cache
-    $defaultobjectmethods = unserialize(xarModVars::get('xarcachemanager','DefaultObjectCacheMethods'));
+    $defaultobjectmethods = unserialize(xarModVars::get('xarcachemanager', 'DefaultObjectCacheMethods'));
 
-// CHECKME: do we want to support settings for non-objects (like tables) ?
+    // CHECKME: do we want to support settings for non-objects (like tables) ?
 
     $objectconfig = array();
     foreach (array_keys($objects) as $id) {
-// TODO: filter on visibility, dummy datastores etc. ?
+        // TODO: filter on visibility, dummy datastores etc. ?
         if ($objects[$id]['objectid'] < 4 ||
             $objects[$id]['moduleid'] == xarMod::getRegId('roles') ||
             $objects[$id]['moduleid'] == xarMod::getRegId('privileges')) {
@@ -49,16 +51,22 @@ function xarcachemanager_adminapi_getobjects($args)
         if (isset($objectsettings[$name])) {
             foreach ($objectsettings[$name] as $method => $settings) {
                 if ($settings['cacheexpire'] > 0) {
-                    $settings['cacheexpire'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                                               array('starttime' => $settings['cacheexpire'],
-                                                                     'direction' => 'from'));
+                    $settings['cacheexpire'] = xarMod::apiFunc(
+                        'xarcachemanager',
+                        'admin',
+                        'convertseconds',
+                        array('starttime' => $settings['cacheexpire'],
+                                                                     'direction' => 'from')
+                    );
                 }
                 $objectconfig[$name]['cachesettings'][$method] = $settings;
             }
         }
         // TODO: Try loading some defaults from the object config ?
         foreach ($defaultobjectmethods as $method => $docache) {
-            if (isset($objectconfig[$name]['cachesettings'][$method])) continue;
+            if (isset($objectconfig[$name]['cachesettings'][$method])) {
+                continue;
+            }
             $settings = array();
             // flip from docache in config to nocache in settings
             if (!empty($docache)) {
@@ -73,5 +81,3 @@ function xarcachemanager_adminapi_getobjects($args)
     }
     return $objectconfig;
 }
-
-?>

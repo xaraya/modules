@@ -18,16 +18,20 @@ function xarcachemanager_admin_queries($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) return;
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     $data = array();
 
-    xarVarFetch('submit','str',$submit,'');
+    xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
-        xarVarFetch('expire','isset',$expire,array());
+        xarVar::fetch('expire', 'isset', $expire, array());
         foreach ($expire as $module => $querylist) {
             if ($module == 'core') {
                 // define some way to store configuration options for the core
@@ -37,22 +41,20 @@ function xarcachemanager_admin_queries($args)
                 // stored in module variables (for now ?)
                 foreach ($querylist as $query => $time) {
                     if (empty($time) || !is_numeric($time)) {
-                        xarModVars::set($module,'cache.'.$query, 0);
+                        xarModVars::set($module, 'cache.'.$query, 0);
                     } else {
-                        xarModVars::set($module,'cache.'.$query, $time);
+                        xarModVars::set($module, 'cache.'.$query, $time);
                     }
                 }
             }
         }
-        xarResponse::Redirect(xarModURL('xarcachemanager','admin','queries'));
+        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'queries'));
         return true;
     }
 
     // Get some query caching configurations
-    $data['queries'] = xarModAPIfunc('xarcachemanager', 'admin', 'getqueries');
+    $data['queries'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getqueries');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

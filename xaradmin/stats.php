@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * Show cache statistics
  * @param array $args with optional arguments:
@@ -23,22 +25,34 @@
  */
 function xarcachemanager_admin_stats($args)
 {
-    if (!xarSecurityCheck('AdminXarCache')) return;
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     extract($args);
-    if (!xarVarFetch('tab',      'str',      $tab, 'overview', XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('sort',     'str',     $sort,         '', XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('reset',    'str',    $reset,         '', XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('startnum', 'int', $startnum,          1, XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('withlog',  'int',  $withlog,          0, XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVar::fetch('tab', 'str', $tab, 'overview', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('sort', 'str', $sort, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('reset', 'str', $reset, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('startnum', 'int', $startnum, 1, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('withlog', 'int', $withlog, 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     // Get the output cache directory so you can view stats even if output caching is disabled
     $outputCacheDir = xarCache::getOutputCacheDir();
 
-    $numitems = xarModVars::get('xarcachemanager','itemsperpage');
+    $numitems = xarModVars::get('xarcachemanager', 'itemsperpage');
     if (empty($numitems)) {
         $numitems = 100;
-        xarModVars::set('xarcachemanager','itemsperpage',$numitems);
+        xarModVars::set('xarcachemanager', 'itemsperpage', $numitems);
     }
 
     $data = array();
@@ -46,8 +60,9 @@ function xarcachemanager_admin_stats($args)
     $data['itemsperpage'] = $numitems;
 
     // get the caching config settings from the config file
-    $data['settings'] = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                      array('from' => 'file', 'tpl_prep' => TRUE));
+    $data['settings'] = xarCache_Manager::get_config(
+        array('from' => 'file', 'tpl_prep' => true)
+    );
 
     $data['PageCachingEnabled'] = 0;
     $data['BlockCachingEnabled'] = 0;
@@ -91,15 +106,23 @@ function xarcachemanager_admin_stats($args)
 
             if (!empty($reset)) {
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return;
+                }
 
                 if (!empty($data['settings'][$logfile]) && file_exists($data['settings'][$logfile])) {
                     $fh = fopen($data['settings'][$logfile], 'w');
-                    if (!empty($fh)) fclose($fh);
+                    if (!empty($fh)) {
+                        fclose($fh);
+                    }
                 }
 
-                xarResponse::Redirect(xarModURL('xarcachemanager','admin','stats',
-                                              array('tab' => $tab)));
+                xarResponse::Redirect(xarModURL(
+                    'xarcachemanager',
+                    'admin',
+                    'stats',
+                    array('tab' => $tab)
+                ));
                 return true;
             }
             if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
@@ -116,7 +139,7 @@ function xarcachemanager_admin_stats($args)
                 $data['cacheinfo'] = $cachestorage->getCacheInfo();
                 $data['cacheinfo']['total'] = $data['cacheinfo']['hits'] + $data['cacheinfo']['misses'];
                 if (!empty($data['cacheinfo']['total'])) {
-                    $data['cacheinfo']['ratio'] = sprintf("%.1f",100.0 * $data['cacheinfo']['hits'] / $data['cacheinfo']['total']);
+                    $data['cacheinfo']['ratio'] = sprintf("%.1f", 100.0 * $data['cacheinfo']['hits'] / $data['cacheinfo']['total']);
                 } else {
                     $data['cacheinfo']['ratio'] = 0.0;
                 }
@@ -164,7 +187,7 @@ function xarcachemanager_admin_stats($args)
                 // get pager
                 $count = count($data['items']);
                 if ($count > $numitems) {
-                    $keys = array_slice(array_keys($data['items']),$startnum - 1,$numitems);
+                    $keys = array_slice(array_keys($data['items']), $startnum - 1, $numitems);
                     $items = array();
                     foreach ($keys as $key) {
                         $items[$key] = $data['items'][$key];
@@ -173,14 +196,20 @@ function xarcachemanager_admin_stats($args)
                     unset($keys);
                     unset($items);
                     sys::import('xaraya.pager');
-                    $data['pager'] = xarTplGetPager($startnum,
-                                                    $count,
-                                                    xarModURL('xarcachemanager','admin','stats',
-                                                              array('tab' => $tab,
+                    $data['pager'] = xarTplGetPager(
+                        $startnum,
+                        $count,
+                        xarModURL(
+                                                        'xarcachemanager',
+                                                        'admin',
+                                                        'stats',
+                                                        array('tab' => $tab,
                                                                     'withlog' => empty($data['withlog']) ? null : 1,
                                                                     'sort' => $sort,
-                                                                    'startnum' => '%%')),
-                                                    $numitems);
+                                                                    'startnum' => '%%')
+                                                    ),
+                        $numitems
+                    );
                 }
             } else {
                 $data['items'] = array();
@@ -195,20 +224,30 @@ function xarcachemanager_admin_stats($args)
         case 'autocache':
             if (!empty($reset)) {
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return;
+                }
 
                 if (!empty($withlog)) {
                     if (file_exists($outputCacheDir . '/autocache.log')) {
                         $fh = fopen($outputCacheDir . '/autocache.log', 'w');
-                        if (!empty($fh)) fclose($fh);
+                        if (!empty($fh)) {
+                            fclose($fh);
+                        }
                     }
                 } elseif (file_exists($outputCacheDir . '/autocache.stats')) {
                     $fh = fopen($outputCacheDir . '/autocache.stats', 'w');
-                    if (!empty($fh)) fclose($fh);
+                    if (!empty($fh)) {
+                        fclose($fh);
+                    }
                 }
 
-                xarResponse::Redirect(xarModURL('xarcachemanager','admin','stats',
-                                              array('tab' => 'autocache')));
+                xarResponse::Redirect(xarModURL(
+                    'xarcachemanager',
+                    'admin',
+                    'stats',
+                    array('tab' => 'autocache')
+                ));
                 return true;
             }
 
@@ -228,7 +267,6 @@ function xarcachemanager_admin_stats($args)
             }
             if (!empty($withlog) && file_exists($outputCacheDir . '/autocache.log') &&
                 filesize($outputCacheDir . '/autocache.log') > 0) {
-
                 $data['withlog'] = 1;
                 // analyze logfile and merge with stats items
                 xarcachemanager_stats_autolog($data['items'], $data['totals'], $outputCacheDir . '/autocache.log');
@@ -244,7 +282,7 @@ function xarcachemanager_admin_stats($args)
                 // get pager
                 $count = count($data['items']);
                 if ($count > $numitems) {
-                    $keys = array_slice(array_keys($data['items']),$startnum - 1,$numitems);
+                    $keys = array_slice(array_keys($data['items']), $startnum - 1, $numitems);
                     $items = array();
                     foreach ($keys as $key) {
                         $items[$key] = $data['items'][$key];
@@ -252,13 +290,19 @@ function xarcachemanager_admin_stats($args)
                     $data['items'] = $items;
                     unset($keys);
                     unset($items);
-                    $data['pager'] = xarTplGetPager($startnum,
-                                                    $count,
-                                                    xarModURL('xarcachemanager','admin','stats',
-                                                              array('tab' => 'autocache',
+                    $data['pager'] = xarTplGetPager(
+                        $startnum,
+                        $count,
+                        xarModURL(
+                                                        'xarcachemanager',
+                                                        'admin',
+                                                        'stats',
+                                                        array('tab' => 'autocache',
                                                                     'sort' => $sort,
-                                                                    'startnum' => '%%')),
-                                                    $numitems);
+                                                                    'startnum' => '%%')
+                                                    ),
+                        $numitems
+                    );
                 }
             }
             break;
@@ -266,9 +310,11 @@ function xarcachemanager_admin_stats($args)
         case 'overview':
         default:
             // set items per page
-            if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 0, XARVAR_NOT_REQUIRED)) { return; }
+            if (!xarVar::fetch('itemsperpage', 'int', $itemsperpage, 0, xarVar::NOT_REQUIRED)) {
+                return;
+            }
             if (!empty($itemsperpage)) {
-                xarModVars::set('xarcachemanager','itemsperpage',$itemsperpage);
+                xarModVars::set('xarcachemanager', 'itemsperpage', $itemsperpage);
                 $data['itemsperpage'] = $itemsperpage;
             }
             // list of cache types to check
@@ -306,7 +352,7 @@ function xarcachemanager_admin_stats($args)
                 }
                 $data[$cachevar]['total'] = $data[$cachevar]['hits'] + $data[$cachevar]['misses'];
                 if (!empty($data[$cachevar]['total'])) {
-                    $data[$cachevar]['ratio'] = sprintf("%.1f",100.0 * $data[$cachevar]['hits'] / $data[$cachevar]['total']);
+                    $data[$cachevar]['ratio'] = sprintf("%.1f", 100.0 * $data[$cachevar]['hits'] / $data[$cachevar]['total']);
                 } else {
                     $data[$cachevar]['ratio'] = 0.0;
                 }
@@ -380,24 +426,34 @@ function xarcachemanager_stats_filestats(&$totals, $logfile, $hitfield = null, $
 
     $totals['size'] = filesize($logfile);
 
-    $fp = fopen($logfile,'r');
-    if (empty($fp)) return;
+    $fp = fopen($logfile, 'r');
+    if (empty($fp)) {
+        return;
+    }
 
     while (!feof($fp)) {
-        $entry = fgets($fp,1024);
+        $entry = fgets($fp, 1024);
         $entry = trim($entry);
-        if (empty($entry)) continue;
+        if (empty($entry)) {
+            continue;
+        }
         $totals['lines']++;
-        if (!isset($hitfield) || !isset($missfield)) continue;
-        $fields = explode(' ',$entry);
+        if (!isset($hitfield) || !isset($missfield)) {
+            continue;
+        }
+        $fields = explode(' ', $entry);
         // we're dealing with a status field in a logfile
         if ($hitfield == $missfield) {
-            if (!isset($fields[$hitfield])) continue;
+            if (!isset($fields[$hitfield])) {
+                continue;
+            }
             $status = strtolower($fields[$hitfield]);
             $totals[$status]++;
         // we're dealing with separate fields in a stats file
         } else {
-            if (!isset($fields[$hitfield]) || !isset($fields[$missfield])) continue;
+            if (!isset($fields[$hitfield]) || !isset($fields[$missfield])) {
+                continue;
+            }
             $totals['hit'] += $fields[$hitfield];
             $totals['miss'] += $fields[$missfield];
         }
@@ -405,7 +461,7 @@ function xarcachemanager_stats_filestats(&$totals, $logfile, $hitfield = null, $
     fclose($fp);
     $totals['total'] = $totals['hit'] + $totals['miss'];
     if (!empty($totals['total'])) {
-        $totals['ratio'] = sprintf("%.1f",100.0 * $totals['hit'] / $totals['total']);
+        $totals['ratio'] = sprintf("%.1f", 100.0 * $totals['hit'] / $totals['total']);
     } else {
         $totals['ratio'] = 0.0;
     }
@@ -423,14 +479,20 @@ function xarcachemanager_stats_logfile(&$items, &$totals, $logfile, $checktype)
     $stats = array();
     $pages = array();
     $fh = fopen($logfile, 'r');
-    if (empty($fh)) return;
+    if (empty($fh)) {
+        return;
+    }
 
     while (!feof($fh)) {
         $entry = fgets($fh, 1024);
         $entry = trim($entry);
-        if (empty($entry)) continue;
-        list($time,$status,$type,$key,$code,$addr,$url) = explode(' ',$entry);
-        if ($type != $checktype) continue;
+        if (empty($entry)) {
+            continue;
+        }
+        list($time, $status, $type, $key, $code, $addr, $url) = explode(' ', $entry);
+        if ($type != $checktype) {
+            continue;
+        }
         $status = strtolower($status);
         if (!isset($stats[$key])) {
             $stats[$key] = array();
@@ -478,7 +540,7 @@ function xarcachemanager_stats_logfile(&$items, &$totals, $logfile, $checktype)
                 $items[$id]['miss'] = $stats[$key][$code]['miss'];
                 $items[$id]['total'] = $stats[$key][$code]['hit'] + $stats[$key][$code]['miss'];
                 if (!empty($items[$id]['total'])) {
-                    $items[$id]['ratio'] = sprintf("%.1f",100.0 * $items[$id]['hit'] / $items[$id]['total']);
+                    $items[$id]['ratio'] = sprintf("%.1f", 100.0 * $items[$id]['hit'] / $items[$id]['total']);
                 } else {
                     $items[$id]['ratio'] = 0.0;
                 }
@@ -495,7 +557,7 @@ function xarcachemanager_stats_logfile(&$items, &$totals, $logfile, $checktype)
                 $item['miss'] = $stats[$key][$code]['miss'];
                 $item['total'] = $stats[$key][$code]['hit'] + $stats[$key][$code]['miss'];
                 if (!empty($item['total'])) {
-                    $item['ratio'] = sprintf("%.1f",100.0 * $item['hit'] / $item['total']);
+                    $item['ratio'] = sprintf("%.1f", 100.0 * $item['hit'] / $item['total']);
                 } else {
                     $item['ratio'] = 0.0;
                 }
@@ -518,7 +580,7 @@ function xarcachemanager_stats_logfile(&$items, &$totals, $logfile, $checktype)
     }
     $totals['total'] = $totals['hit'] + $totals['miss'];
     if (!empty($totals['total'])) {
-        $totals['ratio'] = sprintf("%.1f",100.0 * $totals['hit'] / $totals['total']);
+        $totals['ratio'] = sprintf("%.1f", 100.0 * $totals['hit'] / $totals['total']);
     } else {
         $totals['ratio'] = 0.0;
     }
@@ -547,23 +609,27 @@ function xarcachemanager_stats_autostats(&$items, &$totals, $logfile)
     }
 
     $fh = fopen($logfile, 'r');
-    if (empty($fh)) return;
+    if (empty($fh)) {
+        return;
+    }
 
     while (!feof($fh)) {
         $entry = fgets($fh, 1024);
         $entry = trim($entry);
-        if (empty($entry)) continue;
-        list($url,$hit,$miss,$first,$last) = explode(' ',$entry);
+        if (empty($entry)) {
+            continue;
+        }
+        list($url, $hit, $miss, $first, $last) = explode(' ', $entry);
         $page = $url;
         if (strlen($page) > 105) {
-            $page = wordwrap($page,105,"\n",1);
+            $page = wordwrap($page, 105, "\n", 1);
         }
         $page = xarVarPrepForDisplay($page);
         $items[$url] = array('page' => $page,
                              'hit' => $hit,
                              'miss' => $miss,
                              'total' => ($hit + $miss),
-                             'ratio' => sprintf("%.1f",100.0 * $hit / ($hit + $miss)),
+                             'ratio' => sprintf("%.1f", 100.0 * $hit / ($hit + $miss)),
                              'first' => $first,
                              'last' => $last);
         $totals['hit'] += $hit;
@@ -580,11 +646,10 @@ function xarcachemanager_stats_autostats(&$items, &$totals, $logfile)
     fclose($fh);
     $totals['total'] = $totals['hit'] + $totals['miss'];
     if (!empty($totals['total'])) {
-        $totals['ratio'] = sprintf("%.1f",100.0 * $totals['hit'] / $totals['total']);
+        $totals['ratio'] = sprintf("%.1f", 100.0 * $totals['hit'] / $totals['total']);
     } else {
         $totals['ratio'] = 0.0;
     }
-
 }
 
 /**
@@ -597,13 +662,17 @@ function xarcachemanager_stats_autolog(&$items, &$totals, $logfile)
     }
 
     $fh = fopen($logfile, 'r');
-    if (empty($fh)) return;
+    if (empty($fh)) {
+        return;
+    }
 
     while (!feof($fh)) {
         $entry = fgets($fh, 1024);
         $entry = trim($entry);
-        if (empty($entry)) continue;
-        list($time,$status,$addr,$url) = explode(' ',$entry);
+        if (empty($entry)) {
+            continue;
+        }
+        list($time, $status, $addr, $url) = explode(' ', $entry);
         $status = strtolower($status);
         if (!isset($items[$url])) {
             $items[$url] =  array('hit'   => 0,
@@ -633,12 +702,12 @@ function xarcachemanager_stats_autolog(&$items, &$totals, $logfile)
     foreach (array_keys($items) as $url) {
         $page = $url;
         if (strlen($page) > 105) {
-            $page = wordwrap($page,105,"\n",1);
+            $page = wordwrap($page, 105, "\n", 1);
         }
         $items[$url]['page'] = xarVarPrepForDisplay($page);
         $items[$url]['total'] = $items[$url]['hit'] + $items[$url]['miss'];
         if (!empty($items[$url]['total'])) {
-            $items[$url]['ratio'] = sprintf("%.1f",100.0 * $items[$url]['hit'] / $items[$url]['total']);
+            $items[$url]['ratio'] = sprintf("%.1f", 100.0 * $items[$url]['hit'] / $items[$url]['total']);
         } else {
             $items[$url]['ratio'] = 0.0;
         }
@@ -655,7 +724,7 @@ function xarcachemanager_stats_autolog(&$items, &$totals, $logfile)
     }
     $totals['total'] = $totals['hit'] + $totals['miss'];
     if (!empty($totals['total'])) {
-        $totals['ratio'] = sprintf("%.1f",100.0 * $totals['hit'] / $totals['total']);
+        $totals['ratio'] = sprintf("%.1f", 100.0 * $totals['hit'] / $totals['total']);
     } else {
         $totals['ratio'] = 0.0;
     }
@@ -668,8 +737,7 @@ function xarcachemanager_stats_sortitems(&$items, $sort)
 {
     $sort = strtolower($sort);
 
-    switch($sort)
-    {
+    switch ($sort) {
         case 'key':
         case 'code':
             $sortcode = 'return strcmp($a["' . $sort . '"],$b["' . $sort . '"]);';
@@ -694,5 +762,3 @@ function xarcachemanager_stats_sortitems(&$items, $sort)
     $sortfunc = create_function('$a, $b', $sortcode);
     uasort($items, $sortfunc);
 }
-
-?>

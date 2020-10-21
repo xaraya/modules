@@ -11,6 +11,8 @@
  * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * construct an array of output cache subdirectories
  *
@@ -18,14 +20,16 @@
  * @return array sorted array of cache sub directories, with key set to directory name and value set to path
  * @todo do not include empty directories in the array
  */
-function xarcachemanager_adminapi_getcachedirs($dir = FALSE)
+function xarcachemanager_adminapi_getcachedirs($dir = false)
 {
     $cachedirs = array();
 
     if ($dir && is_dir($dir)) {
-        if (substr($dir,-1) != "/") $dir .= "/";
+        if (substr($dir, -1) != "/") {
+            $dir .= "/";
+        }
         if ($dirId = opendir($dir)) {
-            while (($item = readdir($dirId)) !== FALSE) {
+            while (($item = readdir($dirId)) !== false) {
                 if ($item[0] != '.') {
                     if (is_dir($dir . $item)) {
                         $cachedirs[$item] = $dir . $item;
@@ -39,4 +43,3 @@ function xarcachemanager_adminapi_getcachedirs($dir = FALSE)
     asort($cachedirs);
     return $cachedirs;
 }
-?>

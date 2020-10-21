@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * configure page caching (TODO)
  * @return array
@@ -18,7 +20,9 @@ function xarcachemanager_admin_pages($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) return;
+    if (!xarSecurityCheck('AdminXarCache')) {
+        return;
+    }
 
     $data = array();
     if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$pageCacheIsEnabled) {
@@ -29,25 +33,35 @@ function xarcachemanager_admin_pages($args)
     // Get the output cache directory
     $outputCacheDir = xarCache::getOutputCacheDir();
 
-    $cachingConfiguration = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                          array('from' => 'file'));
+    $cachingConfiguration = xarCache_Manager::get_config(
+        array('from' => 'file')
+    );
 
-    $data['settings'] = xarMod::apiFunc('xarcachemanager', 'admin', 'config_tpl_prep',
-                                      $cachingConfiguration);
+    $data['settings'] = xarMod::apiFunc(
+        'xarcachemanager',
+        'admin',
+        'config_tpl_prep',
+        $cachingConfiguration
+    );
 
     $filter = array('Class' => 2);
-    $data['themes'] = xarMod::apiFunc('themes',
-                                    'admin',
-                                    'getlist', $filter);
+    $data['themes'] = xarMod::apiFunc(
+        'themes',
+        'admin',
+        'getlist',
+        $filter
+    );
 
-    $data['groups'] = xarMod::apiFunc('roles','user','getallgroups');
+    $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
 
-    xarVarFetch('submit','str',$submit,'');
+    xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
-        xarVarFetch('groups','isset',$groups,array(),XARVAR_NOT_REQUIRED);
+        xarVar::fetch('groups', 'isset', $groups, array(), xarVar::NOT_REQUIRED);
         $grouplist = array();
         foreach ($data['groups'] as $idx => $group) {
             if (!empty($groups[$group['id']])) {
@@ -57,35 +71,38 @@ function xarcachemanager_admin_pages($args)
         }
         $cachegroups = join(';', $grouplist);
 
-        xarVarFetch('sessionless','isset',$sessionless,'',XARVAR_NOT_REQUIRED);
+        xarVar::fetch('sessionless', 'isset', $sessionless, '', xarVar::NOT_REQUIRED);
         $sessionlesslist = array();
         if (!empty($sessionless)) {
-            $urls = preg_split('/\s+/',$sessionless,-1,PREG_SPLIT_NO_EMPTY);
+            $urls = preg_split('/\s+/', $sessionless, -1, PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServer::getBaseURL();
             foreach ($urls as $url) {
                 // jsb: hmmm, do we really want to limit the seesionless url list
                 // to those that are under the current baseurl?  I run my sites with
                 // one base url, but many people use alternates.
-                if (empty($url) || !strstr($url,$baseurl)) continue;
+                if (empty($url) || !strstr($url, $baseurl)) {
+                    continue;
+                }
                 $sessionlesslist[] = $url;
             }
         }
 
         // set option for auto regeneration of session-less url list cache on event invalidation
-        xarVarFetch('autoregenerate', 'isset', $autoregenerate, '', XARVAR_NOT_REQUIRED);
+        xarVar::fetch('autoregenerate', 'isset', $autoregenerate, '', xarVar::NOT_REQUIRED);
         if ($autoregenerate) {
-            xarModVars::set('xarcachemanager','AutoRegenSessionless', 1);
+            xarModVars::set('xarcachemanager', 'AutoRegenSessionless', 1);
         } else {
-            xarModVars::set('xarcachemanager','AutoRegenSessionless', 0);
+            xarModVars::set('xarcachemanager', 'AutoRegenSessionless', 0);
         }
 
-        xarVarFetch('autocache','isset',$autocache,'',XARVAR_NOT_REQUIRED);
+        xarVar::fetch('autocache', 'isset', $autocache, '', xarVar::NOT_REQUIRED);
         if (empty($autocache['period'])) {
             $autocache['period'] = 0;
         }
-        $autocache['period'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                             array('starttime' => $autocache['period'],
-                                                   'direction' => 'to'));
+        $autocache['period'] = xarCache_Manager::convertseconds(
+            array('starttime' => $autocache['period'],
+                                                   'direction' => 'to')
+        );
         if (empty($autocache['threshold'])) {
             $autocache['threshold'] = 0;
         }
@@ -94,21 +111,25 @@ function xarcachemanager_admin_pages($args)
         }
         $includelist = array();
         if (!empty($autocache['include'])) {
-            $urls = preg_split('/\s+/',$autocache['include'],-1,PREG_SPLIT_NO_EMPTY);
+            $urls = preg_split('/\s+/', $autocache['include'], -1, PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServer::getBaseURL();
             foreach ($urls as $url) {
                 // jsb: cfr. above note on sessionless url check
-                if (empty($url) || !strstr($url,$baseurl)) continue;
+                if (empty($url) || !strstr($url, $baseurl)) {
+                    continue;
+                }
                 $includelist[] = $url;
             }
         }
         $excludelist = array();
         if (!empty($autocache['exclude'])) {
-            $urls = preg_split('/\s+/',$autocache['exclude'],-1,PREG_SPLIT_NO_EMPTY);
+            $urls = preg_split('/\s+/', $autocache['exclude'], -1, PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServer::getBaseURL();
             foreach ($urls as $url) {
                 // jsb: cfr. above note on sessionless url check
-                if (empty($url) || !strstr($url,$baseurl)) continue;
+                if (empty($url) || !strstr($url, $baseurl)) {
+                    continue;
+                }
                 $excludelist[] = $url;
             }
         }
@@ -129,8 +150,9 @@ function xarcachemanager_admin_pages($args)
         $configSettings['AutoCache.Exclude']   = $excludelist;
         $configSettings['AutoCache.KeepStats'] = $autocache['keepstats'];
 
-        xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig',
-                      array('configSettings' => $configSettings));
+        xarCache_Manager::save_config(
+            array('configSettings' => $configSettings)
+        );
 
         if (empty($autocache['period'])) {
             // remove autocache.start and autocache.log files
@@ -150,7 +172,9 @@ function xarcachemanager_admin_pages($args)
             fclose($fp);
 
             // make sure the xarcachemanager event handler is known to the event system
-            if (!xarMod::apiFunc('modules','admin','geteventhandlers')) return;
+            if (!xarMod::apiFunc('modules', 'admin', 'geteventhandlers')) {
+                return;
+            }
         }
 
         if (empty($autocache['keepstats'])) {
@@ -160,23 +184,24 @@ function xarcachemanager_admin_pages($args)
             }
         }
 
-        xarResponse::Redirect(xarModURL('xarcachemanager','admin','pages'));
+        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'pages'));
         return true;
-
     } elseif (!empty($data['settings']['PageCacheGroups'])) {
-        $grouplist = explode(';',$data['settings']['PageCacheGroups']);
+        $grouplist = explode(';', $data['settings']['PageCacheGroups']);
         foreach ($data['groups'] as $idx => $group) {
-            if (in_array($group['id'],$grouplist)) {
+            if (in_array($group['id'], $grouplist)) {
                 $data['groups'][$idx]['checked'] = 1;
             }
         }
     }
 
     if (!isset($data['settings']['PageSessionLess'])) {
-        $data['sessionless'] = xarML("Please add the following line to your config.caching.php file :\n#(1)",
-                                     '$cachingConfiguration[\'Page.SessionLess\'] = array();');
+        $data['sessionless'] = xarML(
+            "Please add the following line to your config.caching.php file :\n#(1)",
+            '$cachingConfiguration[\'Page.SessionLess\'] = array();'
+        );
     } elseif (!empty($data['settings']['PageSessionLess']) && count($data['settings']['PageSessionLess']) > 0) {
-        $data['sessionless'] = join("\n",$data['settings']['PageSessionLess']);
+        $data['sessionless'] = join("\n", $data['settings']['PageSessionLess']);
     } else {
         $data['sessionless'] = '';
     }
@@ -184,9 +209,10 @@ function xarcachemanager_admin_pages($args)
     if (!isset($data['settings']['AutoCachePeriod'])) {
         $data['settings']['AutoCachePeriod'] = 0;
     }
-    $data['settings']['AutoCachePeriod'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                               array('starttime' => $data['settings']['AutoCachePeriod'],
-                                                     'direction' => 'from'));
+    $data['settings']['AutoCachePeriod'] = xarCache_Manager::convertseconds(
+        array('starttime' => $data['settings']['AutoCachePeriod'],
+                                                     'direction' => 'from')
+    );
 
     if (!isset($data['settings']['AutoCacheThreshold'])) {
         $data['settings']['AutoCacheThreshold'] = 10;
@@ -197,12 +223,12 @@ function xarcachemanager_admin_pages($args)
     if (!isset($data['settings']['AutoCacheInclude'])) {
         $data['settings']['AutoCacheInclude'] = xarServer::getBaseURL() . "\n" . xarServer::getBaseURL() . 'index.php';
     } elseif (is_array($data['settings']['AutoCacheInclude'])) {
-        $data['settings']['AutoCacheInclude'] = join("\n",$data['settings']['AutoCacheInclude']);
+        $data['settings']['AutoCacheInclude'] = join("\n", $data['settings']['AutoCacheInclude']);
     }
     if (!isset($data['settings']['AutoCacheExclude'])) {
         $data['settings']['AutoCacheExclude'] = '';
     } elseif (is_array($data['settings']['AutoCacheExclude'])) {
-        $data['settings']['AutoCacheExclude'] = join("\n",$data['settings']['AutoCacheExclude']);
+        $data['settings']['AutoCacheExclude'] = join("\n", $data['settings']['AutoCacheExclude']);
     }
     if (!isset($data['settings']['AutoCacheKeepStats'])) {
         $data['settings']['AutoCacheKeepStats'] = 0;
@@ -217,10 +243,14 @@ function xarcachemanager_admin_pages($args)
                                        'MISS' => 0);
         $autocacheproposed = array();
         foreach ($logs as $entry) {
-            if (empty($entry)) continue;
-            list($time,$status,$addr,$url) = explode(' ',$entry);
+            if (empty($entry)) {
+                continue;
+            }
+            list($time, $status, $addr, $url) = explode(' ', $entry);
             $url = trim($url);
-            if (!isset($start)) $start = $time;
+            if (!isset($start)) {
+                $start = $time;
+            }
             $end = $time;
             if (!isset($data['autocachepages'][$url])) {
                 $data['autocachepages'][$url] = array();
@@ -243,14 +273,17 @@ function xarcachemanager_admin_pages($args)
         if (!empty($cachingConfiguration['AutoCache.Include'])) {
             foreach ($cachingConfiguration['AutoCache.Include'] as $url) {
                 if (!isset($autocacheproposed[$url]) ||
-                    $autocacheproposed[$url] < $cachingConfiguration['AutoCache.Threshold'])
+                    $autocacheproposed[$url] < $cachingConfiguration['AutoCache.Threshold']) {
                     $autocacheproposed[$url] = 99999999;
+                }
             }
         }
         // check that all forbidden URLs are excluded
         if (!empty($cachingConfiguration['AutoCache.Exclude'])) {
             foreach ($cachingConfiguration['AutoCache.Exclude'] as $url) {
-                if (isset($autocacheproposed[$url])) unset($autocacheproposed[$url]);
+                if (isset($autocacheproposed[$url])) {
+                    unset($autocacheproposed[$url]);
+                }
             }
         }
         // sort descending by count
@@ -267,11 +300,9 @@ function xarcachemanager_admin_pages($args)
     }
 
     // Get some page caching configurations
-    //$data['pages'] = xarModAPIfunc('xarcachemanager', 'admin', 'getpages');
+    //$data['pages'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getpages');
     $data['pages'] = array('todo' => 'something ?');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

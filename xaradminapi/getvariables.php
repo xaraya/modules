@@ -10,6 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
+sys::import('modules.xarcachemanager.class.cache_manager');
+
 /**
  * get configuration of variable caching for all variables
  *
@@ -21,7 +23,7 @@ function xarcachemanager_adminapi_getvariables($args)
 
     // Get all variable cache settings
     $variablesettings = array();
-    $serialsettings = xarModVars::get('dynamicdata','variablecache_settings');
+    $serialsettings = xarModVars::get('dynamicdata', 'variablecache_settings');
     if (!empty($serialsettings)) {
         $variablesettings = unserialize($serialsettings);
     }
@@ -37,9 +39,13 @@ function xarcachemanager_adminapi_getvariables($args)
         if (isset($variablesettings[$name])) {
             $settings = $variablesettings[$name];
             if ($settings['cacheexpire'] > 0) {
-                $settings['cacheexpire'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                                           array('starttime' => $settings['cacheexpire'],
-                                                                 'direction' => 'from'));
+                $settings['cacheexpire'] = xarMod::apiFunc(
+                    'xarcachemanager',
+                    'admin',
+                    'convertseconds',
+                    array('starttime' => $settings['cacheexpire'],
+                                                                 'direction' => 'from')
+                );
             } else {
                 $settings['cacheexpire'] = '';
             }
@@ -53,5 +59,3 @@ function xarcachemanager_adminapi_getvariables($args)
     }
     return $variableconfig;
 }
-
-?>

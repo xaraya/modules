@@ -47,13 +47,23 @@ function xarcachemanager_schedulerapi_prefetch($args)
             $seen[$url] = 1;
 
             // get the current page
-            $page = xarMod::apiFunc('base','user','getfile',
-                                  array('url' => $url));
-            if (empty($page)) continue;
+            $page = xarMod::apiFunc(
+                'base',
+                'user',
+                'getfile',
+                array('url' => $url)
+            );
+            if (empty($page)) {
+                continue;
+            }
 
             // extract local links only (= default)
-            $links = xarMod::apiFunc('base','user','extractlinks',
-                                   array('content' => $page));
+            $links = xarMod::apiFunc(
+                'base',
+                'user',
+                'extractlinks',
+                array('content' => $page)
+            );
             foreach ($links as $link) {
                 $found[$link] = 1;
             }
@@ -74,5 +84,3 @@ function xarcachemanager_schedulerapi_prefetch($args)
 
     return true;
 }
-
-?>
