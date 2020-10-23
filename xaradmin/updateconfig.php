@@ -120,7 +120,7 @@ function xarcachemanager_admin_updateconfig()
         return;
     }
     // Security Check
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 

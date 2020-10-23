@@ -115,7 +115,7 @@ class xarCache_Manager extends xarObject
                 if (!file_exists($cachingConfigFile)) {
                     // try to restore the missing file
                     if (!self::restore_config()) {
-                        $msg=xarML('The #(1) file is missing.  Please restore #(1)
+                        $msg=xarMLS::translate('The #(1) file is missing.  Please restore #(1)
                                     from backup, or the xarcachemanager/config.caching.php.dist
                                     file.', $cachingConfigFile);
                         throw new Exception($msg);
@@ -169,7 +169,7 @@ class xarCache_Manager extends xarObject
         }
 
         if (!is_writable($cachingConfigFile)) {
-            $msg=xarML('The caching configuration file is not writable by the web server.
+            $msg=xarMLS::translate('The caching configuration file is not writable by the web server.
                    #(1) must be writable by the web server for
                    the output caching to be managed by xarCacheManager.', $cachingConfigFile);
             throw new Exception($msg);
@@ -237,7 +237,7 @@ class xarCache_Manager extends xarObject
 
         // Confirm the cache directory is writable
         if (!is_writable($varCacheDir)) {
-            $msg=xarML('The #(1) directory is not writable by the web
+            $msg=xarMLS::translate('The #(1) directory is not writable by the web
                    web server. The #(1) directory must be writable by the web
                    server process owner for output caching to work.
                    Please change the permission on the #(1) directory
@@ -248,7 +248,7 @@ class xarCache_Manager extends xarObject
 
         // Confirm the config file is writable
         if (file_exists($cachingConfigFile) && !is_writable($cachingConfigFile)) {
-            $msg=xarML('The #(1) file is not writable by the web
+            $msg=xarMLS::translate('The #(1) file is not writable by the web
                    web server. The #(1) file must be writable by the web
                    server process owner for output caching to be configured
                    via the xarCacheManager module.

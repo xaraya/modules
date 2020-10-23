@@ -21,7 +21,7 @@ function xarcachemanager_adminapi_getmenulinks()
     $menulinks = array();
 
     // Security Check
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return $menulinks;
     }
 
@@ -30,8 +30,8 @@ function xarcachemanager_adminapi_getmenulinks()
         'admin',
         'flushcache'
     ),
-                         'title' => xarML('Flush the output cache of xarCache'),
-                         'label' => xarML('Flush Cache'));
+                         'title' => xarMLS::translate('Flush the output cache of xarCache'),
+                         'label' => xarMLS::translate('Flush Cache'));
 
     if (xarCache::$outputCacheIsEnabled) {
         if (xarOutputCache::$pageCacheIsEnabled) {
@@ -40,8 +40,8 @@ function xarcachemanager_adminapi_getmenulinks()
                 'admin',
                 'pages'
             ),
-                                 'title' => xarML('Configure the caching options for pages'),
-                                 'label' => xarML('Page Caching'));
+                                 'title' => xarMLS::translate('Configure the caching options for pages'),
+                                 'label' => xarMLS::translate('Page Caching'));
         }
         if (xarOutputCache::$blockCacheIsEnabled) {
             $menulinks[] = array('url'   => xarModURL(
@@ -49,8 +49,8 @@ function xarcachemanager_adminapi_getmenulinks()
                 'admin',
                 'blocks'
             ),
-                                 'title' => xarML('Configure the caching options for each block'),
-                                 'label' => xarML('Block Caching'));
+                                 'title' => xarMLS::translate('Configure the caching options for each block'),
+                                 'label' => xarMLS::translate('Block Caching'));
         }
         if (xarOutputCache::$moduleCacheIsEnabled) {
             $menulinks[] = array('url'   => xarModURL(
@@ -58,8 +58,8 @@ function xarcachemanager_adminapi_getmenulinks()
                 'admin',
                 'modules'
             ),
-                                 'title' => xarML('Configure the caching options for modules'),
-                                 'label' => xarML('Module Caching'));
+                                 'title' => xarMLS::translate('Configure the caching options for modules'),
+                                 'label' => xarMLS::translate('Module Caching'));
         }
         if (xarOutputCache::$objectCacheIsEnabled) {
             $menulinks[] = array('url'   => xarModURL(
@@ -67,8 +67,8 @@ function xarcachemanager_adminapi_getmenulinks()
                 'admin',
                 'objects'
             ),
-                                 'title' => xarML('Configure the caching options for objects'),
-                                 'label' => xarML('Object Caching'));
+                                 'title' => xarMLS::translate('Configure the caching options for objects'),
+                                 'label' => xarMLS::translate('Object Caching'));
         }
     }
     /*
@@ -76,15 +76,15 @@ function xarcachemanager_adminapi_getmenulinks()
             $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                       'admin',
                                                       'queries'),
-                                 'title' => xarML('Configure the caching options for queries'),
-                                 'label' => xarML('Query Caching'));
+                                 'title' => xarMLS::translate('Configure the caching options for queries'),
+                                 'label' => xarMLS::translate('Query Caching'));
         }
         if (xarCache::$variableCacheIsEnabled) {
             $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                       'admin',
                                                       'variables'),
-                                 'title' => xarML('Configure the caching options for variables'),
-                                 'label' => xarML('Variable Caching'));
+                                 'title' => xarMLS::translate('Configure the caching options for variables'),
+                                 'label' => xarMLS::translate('Variable Caching'));
         }
     */
     $menulinks[] = array('url'   => xarModURL(
@@ -92,15 +92,15 @@ function xarcachemanager_adminapi_getmenulinks()
         'admin',
         'stats'
     ),
-                         'title' => xarML('View cache statistics'),
-                         'label' => xarML('View Statistics'));
+                         'title' => xarMLS::translate('View cache statistics'),
+                         'label' => xarMLS::translate('View Statistics'));
     $menulinks[] = array('url'   => xarModURL(
         'xarcachemanager',
         'admin',
         'modifyconfig'
     ),
-                         'title' => xarML('Modify the xarCache configuration'),
-                         'label' => xarML('Modify Config'));
+                         'title' => xarMLS::translate('Modify the xarCache configuration'),
+                         'label' => xarMLS::translate('Modify Config'));
 
     return $menulinks;
 }

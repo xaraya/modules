@@ -42,7 +42,7 @@ function xarcachemanager_admin_view($args)
         return;
     }
 
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 

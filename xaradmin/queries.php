@@ -18,7 +18,7 @@ function xarcachemanager_admin_queries($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 

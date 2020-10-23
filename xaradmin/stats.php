@@ -25,7 +25,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
  */
 function xarcachemanager_admin_stats($args)
 {
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 

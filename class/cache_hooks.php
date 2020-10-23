@@ -84,7 +84,7 @@ class xarCache_Hooks extends xarObject
         extract($args);
 
         if (!isset($objectid) || !is_numeric($objectid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'object ID',
                 'admin',
@@ -114,7 +114,7 @@ class xarCache_Hooks extends xarObject
         }
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module name',
                 'admin',
@@ -257,7 +257,7 @@ class xarCache_Hooks extends xarObject
         }
 
         if (!isset($extrainfo)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'extrainfo',
                 'admin',
@@ -269,7 +269,7 @@ class xarCache_Hooks extends xarObject
         }
 
         if (!isset($objectid) || !is_numeric($objectid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'object ID',
                 'admin',
@@ -295,7 +295,7 @@ class xarCache_Hooks extends xarObject
 
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module name',
                 'admin',
@@ -367,7 +367,7 @@ class xarCache_Hooks extends xarObject
                                                          'direction' => 'from')
             );
         }
-        return xarTplModule(
+        return xarTpl::module(
             'xarcachemanager',
             'admin',
             'modifyhook',
@@ -394,7 +394,7 @@ class xarCache_Hooks extends xarObject
         extract($args);
 
         if (!isset($objectid) || !is_numeric($objectid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'object ID',
                 'admin',
@@ -419,7 +419,7 @@ class xarCache_Hooks extends xarObject
         }
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module name',
                 'admin',
@@ -599,7 +599,7 @@ class xarCache_Hooks extends xarObject
         extract($args);
 
         if (!isset($objectid) || !is_numeric($objectid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'object ID',
                 'admin',
@@ -624,7 +624,7 @@ class xarCache_Hooks extends xarObject
         }
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module name',
                 'admin',
@@ -791,7 +791,7 @@ class xarCache_Hooks extends xarObject
         }
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = xarMLS::translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module name',
                 'admin',

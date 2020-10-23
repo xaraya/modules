@@ -20,7 +20,7 @@ function xarcachemanager_admin_blocks($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 

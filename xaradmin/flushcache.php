@@ -24,7 +24,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
 function xarcachemanager_admin_flushcache($args)
 {
     // Security Check
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 
@@ -49,8 +49,8 @@ function xarcachemanager_admin_flushcache($args)
             $data['cachekeys'][$type] = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachekeys', $type);
         }
 
-        $data['instructions'] = xarML("Please select a cache key to be flushed.");
-        $data['instructionhelp'] = xarML("All cached files of output associated with this key will be deleted.");
+        $data['instructions'] = xarMLS::translate("Please select a cache key to be flushed.");
+        $data['instructionhelp'] = xarMLS::translate("All cached files of output associated with this key will be deleted.");
 
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
@@ -63,7 +63,7 @@ function xarcachemanager_admin_flushcache($args)
 
         //Make sure their is an authkey selected
         if (empty($flushkey) || !is_array($flushkey)) {
-            $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
+            $data['notice'] = xarMLS::translate("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
 
             // Get the output cache directory so you can flush items even if output caching is disabled
@@ -110,9 +110,9 @@ function xarcachemanager_admin_flushcache($args)
                 $found++;
             }
             if (empty($found)) {
-                $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
+                $data['notice'] = xarMLS::translate("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
             } else {
-                $data['notice'] = xarML("The cached output for this key has been flushed.");
+                $data['notice'] = xarMLS::translate("The cached output for this key has been flushed.");
             }
         }
 
@@ -126,8 +126,8 @@ function xarcachemanager_admin_flushcache($args)
 
         $return_url = xarModURL('xarcachemanager', 'admin', 'flushcache');
         $data['returnlink'] = array('url'   => $return_url,
-                                    'title' => xarML('Return to the cache key selector'),
-                                    'label' => xarML('Back'));
+                                    'title' => xarMLS::translate('Return to the cache key selector'),
+                                    'label' => xarMLS::translate('Back'));
 
         $data['message'] = true;
     }

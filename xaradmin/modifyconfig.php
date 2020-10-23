@@ -23,7 +23,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
 function xarcachemanager_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 

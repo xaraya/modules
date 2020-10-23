@@ -20,7 +20,7 @@ function xarcachemanager_admin_pages($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) {
+    if (!xarSecurity::check('AdminXarCache')) {
         return;
     }
 
@@ -196,7 +196,7 @@ function xarcachemanager_admin_pages($args)
     }
 
     if (!isset($data['settings']['PageSessionLess'])) {
-        $data['sessionless'] = xarML(
+        $data['sessionless'] = xarMLS::translate(
             "Please add the following line to your config.caching.php file :\n#(1)",
             '$cachingConfiguration[\'Page.SessionLess\'] = array();'
         );
