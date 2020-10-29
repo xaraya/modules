@@ -30,25 +30,33 @@ function publications_userapi_getitemlinks($args)
     $q->addfield('description');
     $q->addfield('pubtype_id');
     $q->addfield('modify_date AS modified');
-    $q->in('state',array(3,4));
+    $q->in('state', array(3,4));
     if (!empty($args['itemids'])) {
         if (is_array($args['itemids'])) {
             $itemids = $args['itemids'];
         } else {
-            $itemids = explode(',',$args['itemids']);
+            $itemids = explode(',', $args['itemids']);
         }
-        $q->in('id',$itemids);
+        $q->in('id', $itemids);
     }
     $q->addorder('title');
     $q->run();
     $result = $q->output();
     
-    if (empty($result)) return $itemlinks;
+    if (empty($result)) {
+        return $itemlinks;
+    }
 
     foreach ($result as $item) {
-        if (empty($item['title'])) $item['title'] = xarML('Display Publication');
-        $itemlinks[$item['id']] = array('url'   => xarModURL('publications', 'user', 'display',
-                                                         array('itemid' => $item['id'])),
+        if (empty($item['title'])) {
+            $item['title'] = xarML('Display Publication');
+        }
+        $itemlinks[$item['id']] = array('url'   => xarModURL(
+            'publications',
+            'user',
+            'display',
+            array('itemid' => $item['id'])
+        ),
                                     'title' => $item['title'],
                                     'label' => $item['description'],
                                     'modified' => $item['modified'],
@@ -56,5 +64,3 @@ function publications_userapi_getitemlinks($args)
     }
     return $itemlinks;
 }
-
-?>

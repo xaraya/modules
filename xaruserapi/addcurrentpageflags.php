@@ -19,7 +19,9 @@ function publications_userapi_addcurrentpageflags($args)
 {
     extract($args);
 
-    if (empty($pagedata) || empty($id)) {return array();}
+    if (empty($pagedata) || empty($id)) {
+        return array();
+    }
     
     $targetpagekey = false;
     foreach ($pagedata['pages'] as $key => $page) {
@@ -28,7 +30,9 @@ function publications_userapi_addcurrentpageflags($args)
             break;
         }
     }
-    if (!$targetpagekey) return array();
+    if (!$targetpagekey) {
+        return array();
+    }
     
     if (empty($root_ids) || !is_array($root_ids)) {
         $root_ids = array();
@@ -85,7 +89,7 @@ function publications_userapi_addcurrentpageflags($args)
         // Reference the page. Note we are working back down the tree
         // towards the root page, so will unshift each page to the front
         // of the ancestors array.
-        array_unshift($pagedata['ancestors'], NULL);
+        array_unshift($pagedata['ancestors'], null);
         $pagedata['ancestors'][0] =& $pagedata['pages'][$this_id];
 
         // Get the parent page.
@@ -148,9 +152,9 @@ function publications_userapi_addcurrentpageflags($args)
     // Go through each ancestor and flag up the siblings of those ancestors.
     // They will be all pages that are children of the ancestors, assuming the
     // root ancestor does not have any siblings.
-    foreach($pagedata['ancestors'] as $key => $value) {
+    foreach ($pagedata['ancestors'] as $key => $value) {
         if (isset($value['child_keys']) && is_array($value['child_keys'])) {
-            foreach($value['child_keys'] as $value2) {
+            foreach ($value['child_keys'] as $value2) {
                 $pagedata['pages'][$value2]['is_ancestor_sibling'] = true;
             }
         }
@@ -161,5 +165,3 @@ function publications_userapi_addcurrentpageflags($args)
 
     return $pagedata;
 }
-
-?>

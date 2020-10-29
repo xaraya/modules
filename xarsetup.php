@@ -532,5 +532,3 @@
 
     // default publication type is news publications
     $defaultpubtype = 1;
-
-?>

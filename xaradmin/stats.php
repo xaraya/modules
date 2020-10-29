@@ -14,15 +14,21 @@
  */
 function publications_admin_stats($args = array())
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
     
-    if (!xarVarFetch('group','isset',$group,array(),XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('group', 'isset', $group, array(), XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     extract($args);
 
     if (!empty($group)) {
         $newgroup = array();
         foreach ($group as $field) {
-            if (empty($field)) continue;
+            if (empty($field)) {
+                continue;
+            }
             $newgroup[] = $field;
         }
         $group = $newgroup;
@@ -33,10 +39,14 @@ function publications_admin_stats($args = array())
 
     $data = array();
     $data['group'] = $group;
-    $data['stats'] = xarMod::apiFunc('publications','admin','getstats',
-                                   array('group' => $group));
-    $data['pubtypes'] = xarMod::apiFunc('publications','user','get_pubtypes');
-    $data['statelist'] = xarMod::apiFunc('publications','user','getstates');
+    $data['stats'] = xarMod::apiFunc(
+        'publications',
+        'admin',
+        'getstats',
+        array('group' => $group)
+    );
+    $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
+    $data['statelist'] = xarMod::apiFunc('publications', 'user', 'getstates');
     $data['fields'] = array('pubtype_id'     => xarML('Publication Type'),
                             'state'        => xarML('Status'),
                             'owner'      => xarML('Author'),
@@ -46,5 +56,3 @@ function publications_admin_stats($args = array())
                             'locale'      => xarML('Language'));
     return $data;
 }
-
-?>

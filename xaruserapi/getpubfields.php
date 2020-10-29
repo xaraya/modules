@@ -46,5 +46,3 @@ function publications_userapi_getpubfields($args)
                             'input'  => 0),
     );
 }
-
-?>

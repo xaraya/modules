@@ -20,7 +20,9 @@ function publications_userapi_getpages($args)
 {
     extract($args);
 
-    if (!xarVarValidate('enum:id:index:name:left:right', $key, true)) {$key = 'index';}
+    if (!xarVar::validate('enum:id:index:name:left:right', $key, true)) {
+        $key = 'index';
+    }
 
     // Define if we are looking for the number of pages or the pages themselves
     $count = (empty($count)) ? false : true;
@@ -52,8 +54,12 @@ function publications_userapi_getpages($args)
         $q->addfield('pt.description AS pubtype_name');
     }
     
-    if (isset($baseonly)) $q->eq('tpages.parent_id', 0);
-    if (isset($name)) $q->eq('tpages.name', (string)$name);
+    if (isset($baseonly)) {
+        $q->eq('tpages.parent_id', 0);
+    }
+    if (isset($name)) {
+        $q->eq('tpages.name', (string)$name);
+    }
     if (isset($status)) {
         // If a list of statuses have been provided, then select for any of them.
         if (strpos($status, ',') === false) {
@@ -62,7 +68,9 @@ function publications_userapi_getpages($args)
         } else {
             $statuses = explode(',', strtoupper($status));
             $numeric_statuses = array();
-            foreach ($statuses as $stat) $numeric_statuses[] = convert_status($stat);
+            foreach ($statuses as $stat) {
+                $numeric_statuses[] = convert_status($stat);
+            }
             $q->in('tpages.state', $numeric_statuses);
         }
     }
@@ -79,8 +87,12 @@ function publications_userapi_getpages($args)
         }
         $q->in('tpages.state', $addwhere);
     }
-    if (isset($itemtype)) $q->eq('tpages.pubtype_id', (int)$itemtype);
-    if (isset($parent)) $q->eq('tpages.parentpage_id', (int)$parent);
+    if (isset($itemtype)) {
+        $q->eq('tpages.pubtype_id', (int)$itemtype);
+    }
+    if (isset($parent)) {
+        $q->eq('tpages.parentpage_id', (int)$parent);
+    }
     // Used to retrieve descendants.
     if (isset($left_range) && is_array($left_range)) {
         $q->between('tpages.leftpage_id', $left_range);
@@ -88,26 +100,30 @@ function publications_userapi_getpages($args)
     // Used to prune a single branch of the tree.
     if (isset($left_exclude) && is_array($left_exclude)) {
         //'tpages.leftpage_id NOT between ? AND ?' - does not work on some databases
-        $c[] = $q->plt('tpages.leftpage_id',(int)$left_exclude[0]);
-        $c[] = $q->pgt('tpages.leftpage_id',(int)$left_exclude[1]);
+        $c[] = $q->plt('tpages.leftpage_id', (int)$left_exclude[0]);
+        $c[] = $q->pgt('tpages.leftpage_id', (int)$left_exclude[1]);
         $q->qor($c);
         unset($c);
     }
     // Used to retrieve ancestors.
     if (isset($wrap_range) && is_numeric($wrap_range)) {
-        $c[] = $q->ple('tpages.leftpage_id',(int)$wrap_range[0]);
-        $c[] = $q->pge('tpages.leftpage_id',(int)$left_range[1]);   // can't be right: this is an array
+        $c[] = $q->ple('tpages.leftpage_id', (int)$wrap_range[0]);
+        $c[] = $q->pge('tpages.leftpage_id', (int)$left_range[1]);   // can't be right: this is an array
         $q->qand($c);
         unset($c);
-    }    
+    }
 
     // If the request is to fetch a tree that *contains* a particular
     // page, then add the extra sub-queries in here.
     if (!empty($tree_contains_id) || !empty($tree_contains_name)) {
         $q->addtable($xartable['publications'], 'tpages_member');
         
-        if (!empty($tree_contains_id)) $q->eq('tpages_member.id', (int)$tree_contains_id);
-        if (!empty($tree_contains_name)) $q->eq('tpages_member.name', (int)$tree_contains_name);
+        if (!empty($tree_contains_id)) {
+            $q->eq('tpages_member.id', (int)$tree_contains_id);
+        }
+        if (!empty($tree_contains_name)) {
+            $q->eq('tpages_member.name', (int)$tree_contains_name);
+        }
         if (!empty($tree_ancestors)) {
             // We don't want the complete tree for the matching pages - just
             // their ancestors. This is useful for checking paths, without
@@ -126,7 +142,9 @@ function publications_userapi_getpages($args)
 
     // This ordering cannot be changed
     // We want the pages in the order of the hierarchy.
-    if(empty($count)) $q->setorder('tpages.leftpage_id', 'ASC');
+    if (empty($count)) {
+        $q->setorder('tpages.leftpage_id', 'ASC');
+    }
 
 //    $q->qecho();
     $q->run();
@@ -139,12 +157,14 @@ function publications_userapi_getpages($args)
         $pages = array();
 
         // Get all the page type details.
-        $pagetypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes',
+        $pagetypes = xarMod::apiFunc(
+            'publications',
+            'user',
+            'get_pubtypes',
             array('key' => 'id')
         );
 
         foreach ($q->output() as $row) {
-
             $id = (int)$row['id'];
 
             // At this point check the privileges of the page fetched.
@@ -198,7 +218,9 @@ function publications_userapi_getpages($args)
                     // will be contiguous and will immediately follow this page.
                     $prune_left = $rightpage_id;
                     // Don't get this unless you are an admin
-                    if (!$adminaccess) continue;
+                    if (!$adminaccess) {
+                        continue;
+                    }
                 }
             }
 
@@ -220,11 +242,13 @@ function publications_userapi_getpages($args)
                     // Flag all pages with the restricted view until we get past this page.
                     $overview_only_left = $row['rightpage_id'];
                     // Don't get this unless you are an admin
-                    if (!$adminaccess) continue;
+                    if (!$adminaccess) {
+                        continue;
+                    }
                 }
             }
 
-            if (!xarSecurityCheck('ReadPublications', 0, 'Page', $row['name'] . ':' . $typename, 'publications')) {
+            if (!xarSecurity::check('ReadPublications', 0, 'Page', $row['name'] . ':' . $typename, 'publications')) {
                 // We have reached a page that allows only overview access.
                 // Flag all pages with the restricted view until we get past this page.
                 $overview_only_left = $row['rightpage_id'];
@@ -259,8 +283,7 @@ function publications_userapi_getpages($args)
 
 function convert_status($status)
 {
-    switch ($status)
-    {
+    switch ($status) {
         case 'DELETED': return 0;
         case 'INACTIVE': return 1;
         case 'DRAFT': return 2;
@@ -269,5 +292,3 @@ function convert_status($status)
         case 'PLACEHOLDER': return 5;
     }
 }
-
-?>

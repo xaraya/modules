@@ -15,15 +15,19 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_adminapi_getpubtypeaccess($args)
 {
-    if (!isset($args['ptid'])) throw new Exception(xarML('Missing ptid param in publications_adminapi_getpubtypeaccess'));
+    if (!isset($args['ptid'])) {
+        throw new Exception(xarML('Missing ptid param in publications_adminapi_getpubtypeaccess'));
+    }
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    if (null == $pubtypeobject) return false;
+    if (null == $pubtypeobject) {
+        return false;
+    }
     
     $pubtypeobject->getItem(array('itemid' => $args['ptid']));
-    if (empty($pubtypeobject->properties['access']->value)) return "a:0:{}";
+    if (empty($pubtypeobject->properties['access']->value)) {
+        return "a:0:{}";
+    }
 
     return $pubtypeobject->properties['access']->value;
 }
-
-?>

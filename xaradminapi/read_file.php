@@ -13,7 +13,9 @@
 
 function publications_adminapi_read_file($args)
 {
-    if (empty($args['file'])) return false;
+    if (empty($args['file'])) {
+        return false;
+    }
     try {
         $data = "";
         if (file_exists($args['file'])) {
@@ -22,12 +24,10 @@ function publications_adminapi_read_file($args)
                 $filestring = fread($fp, 4096);
                 $data .=  $filestring;
             }
-            fclose ($fp);
+            fclose($fp);
         }
         return $data ;
     } catch (Exception $e) {
         return '';
     }
 }
-
-?>

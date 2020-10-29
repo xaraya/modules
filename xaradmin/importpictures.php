@@ -14,26 +14,54 @@
  */
 function publications_admin_importpictures()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
 
     // Get parameters
-    if(!xarVarFetch('basedir',      'isset', $basedir,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('baseurl',      'isset', $baseurl,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('thumbnail',    'isset', $thumbnail,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filelist',     'isset', $filelist,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('refresh',      'isset', $refresh,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',         'int',   $data['ptid'], 5,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('title',        'isset', $title,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('summary',      'isset', $summary,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('content',      'isset', $content,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('usefilemtime', 'isset', $usefilemtime, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('test',         'isset', $test,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('import',       'isset', $import,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('basedir', 'isset', $basedir, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('baseurl', 'isset', $baseurl, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('thumbnail', 'isset', $thumbnail, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('filelist', 'isset', $filelist, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('refresh', 'isset', $refresh, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'int', $data['ptid'], 5, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('title', 'isset', $title, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('summary', 'isset', $summary, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('content', 'isset', $content, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('usefilemtime', 'isset', $usefilemtime, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('cids', 'isset', $cids, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('test', 'isset', $test, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the base directory where the html files to be imported are located
+    # Get the base directory where the html files to be imported are located
 #
     if (!isset($baseurl)) {
         $data['baseurl'] = sys::code() . 'modules/publications/xarimages/';
@@ -52,9 +80,13 @@ function publications_admin_importpictures()
         $data['thumbnail'] = $thumbnail;
     }
 
-    $data['filelist'] = xarMod::apiFunc('publications','admin','browse',
-                                      array('basedir' => $data['basedir'],
-                                            'filetype' => '(gif|jpg|jpeg|png)'));
+    $data['filelist'] = xarMod::apiFunc(
+        'publications',
+        'admin',
+        'browse',
+        array('basedir' => $data['basedir'],
+                                            'filetype' => '(gif|jpg|jpeg|png)')
+    );
 
     // try to match the thumbnails with the pictures
     $data['thumblist'] = array();
@@ -68,24 +100,23 @@ function publications_admin_importpictures()
             $dirname = $fileparts['dirname'];
             // myfile
             $basename = $fileparts['basename'];
-            $basename = preg_replace("/\.$extension/",'',$basename);
+            $basename = preg_replace("/\.$extension/", '', $basename);
             if (!empty($dirname) && $dirname != '.') {
                 $thumb = $dirname . '/' . $data['thumbnail'] . $basename;
             } else {
                 $thumb = $data['thumbnail'] . $basename;
             }
             // subdir/tn_file.jpg
-            if (in_array($thumb.'.'.$extension,$data['filelist'])) {
+            if (in_array($thumb.'.'.$extension, $data['filelist'])) {
                 $data['thumblist'][$file] = $thumb.'.'.$extension;
 
             // subdir/tn_file_jpg.jpg
-            } elseif (in_array($thumb.'_'.$extension.'.'.$extension,$data['filelist'])) {
+            } elseif (in_array($thumb.'_'.$extension.'.'.$extension, $data['filelist'])) {
                 $data['thumblist'][$file] = $thumb.'_'.$extension.'.'.$extension;
 
             // subdir/tn_file.jpg.jpg
-            } elseif (in_array($thumb.'.'.$extension.'.'.$extension,$data['filelist'])) {
+            } elseif (in_array($thumb.'.'.$extension.'.'.$extension, $data['filelist'])) {
                 $data['thumblist'][$file] = $thumb.'.'.$extension.'.'.$extension;
-
             }
         }
         if (count($data['thumblist']) > 0) {
@@ -96,13 +127,15 @@ function publications_admin_importpictures()
 
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
     }
 
     $data['authid'] = xarSecGenAuthKey();
 
     // Get current publication types
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     $data['pubtypes'] = array();
     foreach ($pubtypes as $pubtype) {
@@ -110,9 +143,9 @@ function publications_admin_importpictures()
     }
 
     // Set default pubtype to Pictures (if it exists)
-        $data['titlefield'] = 'title';
-        $data['summaryfield'] = 'summary';
-        $data['contentfield'] = 'body';
+    $data['titlefield'] = 'title';
+    $data['summaryfield'] = 'summary';
+    $data['contentfield'] = 'body';
 
     $data['fields'] = array();
     $data['cats'] = array();
@@ -120,7 +153,7 @@ function publications_admin_importpictures()
 
 # --------------------------------------------------------
 #
-# Get the fields of hte chosen pubtype
+        # Get the fields of hte chosen pubtype
 #
         sys::import('modules.dynamicdata.class.objects.master');
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -134,45 +167,51 @@ function publications_admin_importpictures()
             }
         }
 
-/*
-        $catlist = array();
-        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
-        foreach ($rootcats as $catid) {
-            $catlist[$catid['category_id']] = 1;
-        }
-        $seencid = array();
-        if (isset($cids) && is_array($cids)) {
-            foreach ($cids as $catid) {
-                if (!empty($catid)) {
-                    $seencid[$catid] = 1;
+        /*
+                $catlist = array();
+                $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
+                foreach ($rootcats as $catid) {
+                    $catlist[$catid['category_id']] = 1;
                 }
-            }
-        }
-        $cids = array_keys($seencid);
-        foreach (array_keys($catlist) as $catid) {
-            $data['cats'][] = xarMod::apiFunc('categories',
-                                            'visual',
-                                            'makeselect',
-                                            Array('cid' => $catid,
-                                                  'return_itself' => true,
-                                                  'select_itself' => true,
-                                                  'values' => &$seencid,
-                                                  'multiple' => 1));
-        }*/
+                $seencid = array();
+                if (isset($cids) && is_array($cids)) {
+                    foreach ($cids as $catid) {
+                        if (!empty($catid)) {
+                            $seencid[$catid] = 1;
+                        }
+                    }
+                }
+                $cids = array_keys($seencid);
+                foreach (array_keys($catlist) as $catid) {
+                    $data['cats'][] = xarMod::apiFunc('categories',
+                                                    'visual',
+                                                    'makeselect',
+                                                    Array('cid' => $catid,
+                                                          'return_itself' => true,
+                                                          'select_itself' => true,
+                                                          'values' => &$seencid,
+                                                          'multiple' => 1));
+                }*/
     }
 
     $data['selected'] = array();
     if (!isset($refresh) && isset($filelist) && is_array($filelist) && count($filelist) > 0) {
         foreach ($filelist as $file) {
-            if (!empty($file) && in_array($file,$data['filelist'])) {
+            if (!empty($file) && in_array($file, $data['filelist'])) {
                 $data['selected'][$file] = 1;
             }
         }
     }
 
-    if (isset($title) && isset($data['fields'][$titlefield])) $data['title'] = $title;
-    if (isset($summary) && isset($data['fields'][$summaryfield])) $data['summary'] = $summary;
-    if (isset($content) && isset($data['fields'][$contentfield])) $data['content'] = $content;
+    if (isset($title) && isset($data['fields'][$titlefield])) {
+        $data['title'] = $title;
+    }
+    if (isset($summary) && isset($data['fields'][$summaryfield])) {
+        $data['summary'] = $summary;
+    }
+    if (isset($content) && isset($data['fields'][$contentfield])) {
+        $data['content'] = $content;
+    }
 
     if (empty($usefilemtime)) {
         $data['usefilemtime'] = 0;
@@ -195,7 +234,7 @@ function publications_admin_importpictures()
             $filename = $file;
             if (empty($baseurl)) {
                 $imageurl = $file;
-            } elseif (substr($baseurl,-1) == '/') {
+            } elseif (substr($baseurl, -1) == '/') {
                 $imageurl = $baseurl . $file;
             } else {
                 $imageurl = $baseurl . '/' . $file;
@@ -203,7 +242,7 @@ function publications_admin_importpictures()
             if (!empty($data['thumblist'][$file])) {
                 if (empty($baseurl)) {
                     $thumburl = $data['thumblist'][$file];
-                } elseif (substr($baseurl,-1) == '/') {
+                } elseif (substr($baseurl, -1) == '/') {
                     $thumburl = $baseurl . $data['thumblist'][$file];
                 } else {
                     $thumburl = $baseurl . '/' . $data['thumblist'][$file];
@@ -222,7 +261,7 @@ function publications_admin_importpictures()
                              'cids' => $cids,
                           // for preview
                              'pubtype_id' => $data['ptid'],
-                             'owner' => xarUserGetVar('id'),
+                             'owner' => xarUser::getVar('id'),
                              'id' => 0);
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;
@@ -235,15 +274,19 @@ function publications_admin_importpictures()
             }
             if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('publications','user','display',
-                                              array('article' => $article, 'preview' => true));
+                $data['preview'] = xarMod::guiFunc(
+                    'publications',
+                    'user',
+                    'display',
+                    array('article' => $article, 'preview' => true)
+                );
                 break;
             } else {
                 $id = xarMod::apiFunc('publications', 'admin', 'create', $article);
                 if (empty($id)) {
                     return; // throw back
                 } else {
-                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['description'],$id);
+                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)', $curfile, $pubtypes[$data['ptid']]['description'], $id);
                     $data['logfile'] .= '<br />';
                 }
             }
@@ -253,5 +296,3 @@ function publications_admin_importpictures()
     // Return the template variables defined in this function
     return $data;
 }
-
-?>

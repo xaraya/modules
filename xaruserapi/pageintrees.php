@@ -36,7 +36,9 @@ function publications_userapi_pageintrees($args)
     $tree_roots[] = $pid;
     $result = $dbconn->execute($query, $tree_roots);
 
-    if (!$result || $result->EOF) {return false;}
+    if (!$result || $result->EOF) {
+        return false;
+    }
 
     list($count) = $result->fields;
 
@@ -46,5 +48,3 @@ function publications_userapi_pageintrees($args)
         return false;
     }
 }
-
-?>

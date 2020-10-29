@@ -25,28 +25,32 @@ function publications_treeapi_moveitem($args)
 
     // Run the query (reference item).
     $result = $dbconn->execute($query, array($refid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     if ($result->EOF) {
         $msg = xarML('Reference item "#(1)" does not exist', $refid);
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
     list($ref_left, $ref_right, $ref_parent) = $result->fields;
 
     // Run the query (item to be moved).
     $result = $dbconn->execute($query, array((int)$itemid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     if ($result->EOF) {
         $msg = xarML('Moving item "#(1)" does not exist', $itemid);
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
     list($item_left, $item_right, $item_parent) = $result->fields;
 
     // Checking if the reference ID is of a child or itself
     if ($ref_left >= $item_left && $ref_left <= $item_right) {
         $msg = xarML('Group references siblings');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // Find the point of insertion.
@@ -65,7 +69,7 @@ function publications_treeapi_moveitem($args)
             break;
         default:
             $msg = xarML('Offset not "#(1)" valid', $offset);
-            throw new BadParameterException(null,$msg);
+            throw new BadParameterException(null, $msg);
     };
 
     $size = $item_right - $item_left + 1;
@@ -73,8 +77,7 @@ function publications_treeapi_moveitem($args)
 
     // If necessary to move then evaluate
     if ($distance != 0) {
-        if ($distance > 0)
-        { // moving forward
+        if ($distance > 0) { // moving forward
             $distance = $insertion_point - $item_right - 1;
             $deslocation_outside = -$size;
             $between_string = ($item_right + 1) . ' AND ' . ($insertion_point - 1);
@@ -103,7 +106,9 @@ function publications_treeapi_moveitem($args)
             . ' END';
 
         $result = $dbconn->execute($query);
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
         // Find the right parent for this item.
         if (strtolower($offset) == 'lastchild' || strtolower($offset) == 'firstchild') {
@@ -118,10 +123,10 @@ function publications_treeapi_moveitem($args)
             . ' WHERE ' .$idname. ' = ?';
 
         $result = $dbconn->execute($query, array((int)$parent_id, (int)$itemid));
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
     }
 
     return true;
 }
-
-?>

@@ -26,4 +26,3 @@ function publications_userapi_getstates()
                  5 => xarML('Empty')
                  );
 }
-?>

@@ -29,13 +29,19 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
         $data = $this->getContent();
 
         // Defaults
-        if (!isset($data['include_root'])) {$data['include_root'] = false;}
-        if (!isset($data['root_ids'])) {$data['root_ids'] = array();}
+        if (!isset($data['include_root'])) {
+            $data['include_root'] = false;
+        }
+        if (!isset($data['root_ids'])) {
+            $data['root_ids'] = array();
+        }
 
         // Get a list of all pages for the drop-downs.
         // Get the tree of all pages, without the DD for speed.
         $data['all_pages'] = xarMod::apiFunc(
-            'publications', 'user', 'getpagestree',
+            'publications',
+            'user',
+            'getpagestree',
             array('dd_flag' => false, 'key' => 'id')
         );
 
@@ -51,7 +57,7 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
         // the pages which are not yet under one of the selected root pages.
         // That would just be an extra little usability touch.
         $data['root_ids'] = array_flip($data['root_ids']);
-        foreach($data['root_ids'] as $key => $value) {
+        foreach ($data['root_ids'] as $key => $value) {
             if (isset($data['options'][$key])) {
                 $data['root_ids'][$key] = $data['options'][$key]['name'];
             } else {
@@ -61,16 +67,16 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
 
         return $data;
     }
-/**
- * Updates the Block config from the Blocks Admin
- * @param none
- * @return bool true on success
- */
+    /**
+     * Updates the Block config from the Blocks Admin
+     * @param none
+     * @return bool true on success
+     */
     public function update()
     {
         $vars = $this->getContent();
 
-        if (xarVarFetch('include_root', 'checkbox', $include_root, 0, XARVAR_NOT_REQUIRED)) {
+        if (xarVar::fetch('include_root', 'checkbox', $include_root, 0, XARVAR_NOT_REQUIRED)) {
             $vars['include_root'] = $include_root;
         }
 
@@ -78,13 +84,13 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
         if (!isset($vars['root_ids'])) {
             $vars['root_ids'] = array();
         }
-        if (xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
+        if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
             $vars['root_ids'][] = $new_root_pid;
         }
-        if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
+        if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
             // Easier to check with the keys and values flipped.
             $vars['root_ids'] = array_flip($vars['root_ids']);
-            foreach($remove_root_pid as $remove) {
+            foreach ($remove_root_pid as $remove) {
                 if (isset($vars['root_ids'][$remove])) {
                     unset($vars['root_ids'][$remove]);
                 }
@@ -96,7 +102,5 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
         }
         $this->setContent($vars);
         return true;
-
     }
 }
-?>

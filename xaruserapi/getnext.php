@@ -26,14 +26,20 @@
 function publications_userapi_getnext($args)
 {
     // Security check
-    if (!xarSecurityCheck('ViewPublications')) return;
+    if (!xarSecurity::check('ViewPublications')) {
+        return;
+    }
 
     // Get arguments from argument array
     extract($args);
 
     // Optional argument
-    if (empty($ptid)) $ptid = xarModVars::get('publications', 'defaultpubtype');
-    if (empty($sort)) $sort = 'date';
+    if (empty($ptid)) {
+        $ptid = xarModVars::get('publications', 'defaultpubtype');
+    }
+    if (empty($sort)) {
+        $sort = 'date';
+    }
     if (!isset($state)) {
         // frontpage or approved or placeholder
         xarMod::load('publications');
@@ -54,10 +60,10 @@ function publications_userapi_getnext($args)
     $q->in('state', $state);
     
     // Get the current article
-    $current = xarMod::apiFunc('publications','user','get',array('id' => $id));
+    $current = xarMod::apiFunc('publications', 'user', 'get', array('id' => $id));
 
     // Add the ordering
-    switch($sort) {
+    switch ($sort) {
     case 'tree':
         $q->gt('leftpage_id', (int)$current['rightpage_id']);
         $q->setorder('leftpage_id', 'ASC');
@@ -91,5 +97,3 @@ function publications_userapi_getnext($args)
     $q->run();
     return $q->row();
 }
-
-?>

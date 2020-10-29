@@ -18,15 +18,15 @@ function publications_userapi_getpubcount($args)
 {
     if (!empty($args['state'])) {
         $statestring = 'all';
-    } else if (is_array($args['state'])) {
+    } elseif (is_array($args['state'])) {
         sort($args['state']);
-        $statestring = join('+',$args['state']);
+        $statestring = join('+', $args['state']);
     } else {
         $statestring = $args['state'];
     }
     
-    if (xarVarIsCached('Publications.PubCount',$statestring)) {
-        return xarCoreCache::getCached('Publications.PubCount',$statestring);
+    if (xarVar::isCached('Publications.PubCount', $statestring)) {
+        return xarCoreCache::getCached('Publications.PubCount', $statestring);
     }
 
     $pubcount = array();
@@ -38,17 +38,19 @@ function publications_userapi_getpubcount($args)
     $q->addfield('COUNT(state) AS count');
     $q->addgroup('pubtype_id');
     if (!empty($args['state'])) {
-    } else if (is_array($args['state'])) {
+    } elseif (is_array($args['state'])) {
         $q->in('state', $args['state']);
     } else {
         $q->eq('state', $args['state']);
     }
 //    $q->qecho();
-    if (!$q->run()) return;
+    if (!$q->run()) {
+        return;
+    }
     $pubcount = array();
-    foreach ($q->output() as $key => $value) $pubcount[$value['pubtype_id']] = $value['count'];
-    xarCoreCache::setCached('Publications.PubCount',$statestring,$pubcount);
+    foreach ($q->output() as $key => $value) {
+        $pubcount[$value['pubtype_id']] = $value['count'];
+    }
+    xarCoreCache::setCached('Publications.PubCount', $statestring, $pubcount);
     return $pubcount;
 }
-
-?>

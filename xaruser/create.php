@@ -16,12 +16,22 @@ sys::import('modules.dynamicdata.class.objects.master');
 function publications_user_create()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) {
+        return;
+    }
 
-    if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}
-    if (!xarVarFetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid', 'id', $data['ptid'])) {
+        return;
+    }
+    if (!xarVar::fetch('new_cids', 'array', $cids, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('preview', 'str', $data['preview'], null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('save', 'str', $save, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // Confirm authorisation code
     // This has been disabled for now
@@ -34,18 +44,21 @@ function publications_user_create()
     
     $isvalid = $data['object']->checkInput();
     
-    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
     
     if ($data['preview'] || !$isvalid) {
         // Show debug info if called for
-        if (!$isvalid && 
-            xarModVars::get('publications','debugmode') && 
-            in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            var_dump($data['object']->getInvalids());}
+        if (!$isvalid &&
+            xarModVars::get('publications', 'debugmode') &&
+            in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            var_dump($data['object']->getInvalids());
+        }
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
-        if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','user','new', $data);    
+        if ($data['preview']) {
+            $data['tab'] = 'preview';
+        }
+        return xarTpl::module('publications', 'user', 'new', $data);
     }
     
     // Create the object
@@ -56,7 +69,9 @@ function publications_user_create()
     xarHooks::notify('ItemCreate', $item);
 
     // Redirect if needed
-    if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('return_url', 'str', $return_url, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     if (!empty($return_url)) {
         // FIXME: this is a hack for short URLS
         $delimiter = (strpos($return_url, '&')) ? '&' : '?';
@@ -65,11 +80,15 @@ function publications_user_create()
     
     // Redirect if we came from somewhere else
     $current_listview = xarSession::getVar('publications_current_listview');
-    if (!empty($current_listview)) xarController::redirect($current_listview);
+    if (!empty($current_listview)) {
+        xarController::redirect($current_listview);
+    }
 
-    xarController::redirect(xarModURL('publications', 'user', 'view',
-                                  array('ptid' => $data['ptid'])));
+    xarController::redirect(xarModURL(
+        'publications',
+        'user',
+        'view',
+        array('ptid' => $data['ptid'])
+    ));
     return true;
 }
-
-?>

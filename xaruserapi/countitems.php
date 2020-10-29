@@ -33,11 +33,11 @@ function publications_userapi_countitems($args)
     // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the publications-specific columns too now
-    $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
+    $publicationsdef = xarMod::apiFunc('publications', 'user', 'leftjoin', $args);
 
-// TODO: make sure this is SQL standard
+    // TODO: make sure this is SQL standard
     // Start building the query
-    if($dbconn->databaseType == 'sqlite') {
+    if ($dbconn->databaseType == 'sqlite') {
         $query = 'SELECT COUNT(*)
                   FROM ( SELECT DISTINCT '. $publicationsdef['field'].'
                          FROM '. $publicationsdef['table']; // WATCH OUT, UNBALANCED
@@ -54,14 +54,16 @@ function publications_userapi_countitems($args)
     }
     if (count($args['cids']) > 0 || !empty($args['catid'])) {
         // Load API
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) {
+            return;
+        }
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $args['modid'] = xarModGetIDFromName('publications');
+        $args['modid'] = xarMod::getRegID('publications');
         if (isset($args['ptid']) && !isset($args['itemtype'])) {
             $args['itemtype'] = $args['ptid'];
         }
-        $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',$args);
+        $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin', $args);
 
         $query .= ' LEFT JOIN ' . $categoriesdef['table'];
         $query .= ' ON ' . $categoriesdef['field'] . ' = '
@@ -85,10 +87,14 @@ function publications_userapi_countitems($args)
     }
 
     // Balance parentheses
-    if($dbconn->databaseType == 'sqlite') $query .=')';
+    if ($dbconn->databaseType == 'sqlite') {
+        $query .=')';
+    }
     // Run the query - finally :-)
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     if ($result->EOF) {
         return;
@@ -99,5 +105,3 @@ function publications_userapi_countitems($args)
 
     return $num;
 }
-
-?>

@@ -58,7 +58,9 @@ function publications_userapi_getall($args)
     if (!isset($andcids)) {
         $andcids = false;
     }
-    if (empty($ptid)) $ptid = null;
+    if (empty($ptid)) {
+        $ptid = null;
+    }
 
     // Default fields in publications (for now)
     $columns = array('id','name','title','description','summary','body1','owner','pubtype_id',
@@ -72,15 +74,17 @@ function publications_userapi_getall($args)
     // + 'dynamicdata' = dynamic data fields for this article (dynamicdata)
     // + 'relevance' = relevance for this article (MySQL full-text search only)
     // $optional = array('cids','author','counter','rating','dynamicdata','relevance');
-    if (!isset($fields)) $fields = $columns;
+    if (!isset($fields)) {
+        $fields = $columns;
+    }
 
     if (isset($extra) && is_array($extra) && count($extra) > 0) {
-        $fields = array_merge($fields,$extra);
+        $fields = array_merge($fields, $extra);
     }
 
     if (empty($sort)) {
-        if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
-            if ($searchtype == 'fulltext boolean' && !in_array('relevance',$fields)) {
+        if (!empty($search) && !empty($searchtype) && substr($searchtype, 0, 8) == 'fulltext') {
+            if ($searchtype == 'fulltext boolean' && !in_array('relevance', $fields)) {
                 // add the relevance to the field list for sorting
                 $fields[] = 'relevance';
             }
@@ -93,13 +97,15 @@ function publications_userapi_getall($args)
     } elseif (is_array($sort)) {
         $sortlist = $sort;
     } else {
-        $sortlist = explode(',',$sort);
+        $sortlist = explode(',', $sort);
     }
 
     $publications = array();
 
     // Security check
-    if (!xarSecurityCheck('ViewPublications')) return;
+    if (!xarSecurity::check('ViewPublications')) {
+        return;
+    }
 
     // Fields requested by the calling function
     $required = array();
@@ -120,7 +126,7 @@ function publications_userapi_getall($args)
         $required['cids'] = 1;
     }
 
-// TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
+    // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -128,52 +134,76 @@ function publications_userapi_getall($args)
     // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the publications-specific columns too now
-    $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
+    $publicationsdef = xarMod::apiFunc('publications', 'user', 'leftjoin', $args);
 
-// TODO : how to handle the case where name is empty, but uname isn't
+    // TODO : how to handle the case where name is empty, but uname isn't
 
     if (!empty($required['owner'])) {
         // Load API
-        if (!xarModAPILoad('roles', 'user')) return;
+        if (!xarMod::apiLoad('roles', 'user')) {
+            return;
+        }
 
         // Get the field names and LEFT JOIN ... ON ... parts from users
-        $usersdef = xarMod::apiFunc('roles','user','leftjoin');
-        if (empty($usersdef)) return;
+        $usersdef = xarMod::apiFunc('roles', 'user', 'leftjoin');
+        if (empty($usersdef)) {
+            return;
+        }
     }
 
     $regid = xarMod::getRegID('publications');
 
     if (!empty($required['cids'])) {
         // Load API
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) {
+            return;
+        }
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',
-                                      array('cids' => $cids,
+        $categoriesdef = xarMod::apiFunc(
+            'categories',
+            'user',
+            'leftjoin',
+            array('cids' => $cids,
                                             'andcids' => $andcids,
                                             'itemtype' => isset($ptid) ? $ptid : null,
-                                            'modid' => $regid));
-        if (empty($categoriesdef)) return;
+                                            'modid' => $regid)
+        );
+        if (empty($categoriesdef)) {
+            return;
+        }
     }
 
-    if (!empty($required['counter']) && xarModIsHooked('hitcount','publications',$ptid)) {
+    if (!empty($required['counter']) && xarModIsHooked('hitcount', 'publications', $ptid)) {
         // Load API
-        if (!xarModAPILoad('hitcount', 'user')) return;
+        if (!xarMod::apiLoad('hitcount', 'user')) {
+            return;
+        }
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
-        $hitcountdef = xarMod::apiFunc('hitcount','user','leftjoin',
-                                    array('modid' => $regid,
-                                          'itemtype' => isset($ptid) ? $ptid : null));
+        $hitcountdef = xarMod::apiFunc(
+            'hitcount',
+            'user',
+            'leftjoin',
+            array('modid' => $regid,
+                                          'itemtype' => isset($ptid) ? $ptid : null)
+        );
     }
 
-    if (!empty($required['rating']) && xarModIsHooked('ratings','publications',$ptid)) {
+    if (!empty($required['rating']) && xarModIsHooked('ratings', 'publications', $ptid)) {
         // Load API
-        if (!xarModAPILoad('ratings', 'user')) return;
+        if (!xarMod::apiLoad('ratings', 'user')) {
+            return;
+        }
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
-        $ratingsdef = xarMod::apiFunc('ratings','user','leftjoin',
-                                    array('modid' => $regid,
-                                          'itemtype' => isset($ptid) ? $ptid : null));
+        $ratingsdef = xarMod::apiFunc(
+            'ratings',
+            'user',
+            'leftjoin',
+            array('modid' => $regid,
+                                          'itemtype' => isset($ptid) ? $ptid : null)
+        );
     }
 
     // Create the SELECT part
@@ -262,7 +292,7 @@ function publications_userapi_getall($args)
     }
     $query .= ' FROM ' . $from;
 
-// TODO: check the order of the conditions for brain-dead databases ?
+    // TODO: check the order of the conditions for brain-dead databases ?
     // Create the WHERE part
     $where = array();
     // we rely on leftjoin() to create the necessary publications clauses now
@@ -283,16 +313,18 @@ function publications_userapi_getall($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-// TODO: support other non-publications fields too someday ?
+    // TODO: support other non-publications fields too someday ?
     // Create the ORDER BY part
     if (count($sortlist) > 0) {
         $sortparts = array();
         $seenid = 0;
         foreach ($sortlist as $criteria) {
             // ignore empty sort criteria
-            if (empty($criteria)) continue;
+            if (empty($criteria)) {
+                continue;
+            }
             // split off trailing ASC or DESC
-            if (preg_match('/^(.+)\s+(ASC|DESC)\s*$/i',$criteria,$matches)) {
+            if (preg_match('/^(.+)\s+(ASC|DESC)\s*$/i', $criteria, $matches)) {
                 $criteria = trim($matches[1]);
                 $sortorder = strtoupper($matches[2]);
             } else {
@@ -324,27 +356,27 @@ function publications_userapi_getall($args)
         if (count($sortparts) < 2 && empty($seenid)) {
             $sortparts[] = $publicationsdef['id'] . ' DESC';
         }
-        $query .= ' ORDER BY ' . join(', ',$sortparts);
-
-    } elseif (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
+        $query .= ' ORDER BY ' . join(', ', $sortparts);
+    } elseif (!empty($search) && !empty($searchtype) && substr($searchtype, 0, 8) == 'fulltext') {
         // For fulltext, let the database return the publications by relevance here (= default)
 
         // For fulltext in boolean mode, add MATCH () ... AS relevance ... ORDER BY relevance DESC (cfr. leftjoin)
         if (!empty($required['relevance']) && $searchtype == 'fulltext boolean') {
             $query .= ' ORDER BY relevance DESC, ' . $publicationsdef['create_date'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
         }
-
     } else { // default is 'create_date'
         $query .= ' ORDER BY ' . $publicationsdef['create_date'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
     }
-//echo $query;
+    //echo $query;
     // Run the query - finally :-)
     if (isset($numitems) && is_numeric($numitems)) {
         $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     } else {
         $result = $dbconn->Execute($query);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $itemids_per_type = array();
     // Put publications into result array
@@ -363,7 +395,7 @@ function publications_userapi_getall($args)
             $item[$field] = $value;
         }
         // check security - don't generate an exception here
-        if (empty($required['cids']) && !xarSecurityCheck('ViewPublications',0,'Publication',"$item[pubtype_id]:All:$item[owner]:$item[id]")) {
+        if (empty($required['cids']) && !xarSecurity::check('ViewPublications', 0, 'Publication', "$item[pubtype_id]:All:$item[owner]:$item[id]")) {
             continue;
         }
         $publications[] = $item;
@@ -385,16 +417,20 @@ function publications_userapi_getall($args)
         }
 
         // Load API
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) {
+            return;
+        }
 
         // Get the links for the Array of iids we have
-        $cids = xarMod::apiFunc('categories',
-                             'user',
-                             'getlinks',
-                             array('iids' => $ids,
+        $cids = xarMod::apiFunc(
+            'categories',
+            'user',
+            'getlinks',
+            array('iids' => $ids,
                                    'reverse' => 1,
                                // Note : we don't need to specify the item type here for publications, since we use unique ids anyway
-                                   'modid' => $regid));
+                                   'modid' => $regid)
+        );
 
         // Inserting the corresponding Category ID in the Publication Description
         $delete = array();
@@ -403,14 +439,14 @@ function publications_userapi_getall($args)
             if (isset($cids[$article['id']]) && count($cids[$article['id']]) > 0) {
                 $publications[$key]['cids'] = $cids[$article['id']];
                 foreach ($cids[$article['id']] as $cid) {
-                    if (!xarSecurityCheck('ViewPublications',0,'Publication',"$article[pubtype_id]:$cid:$article[owner]:$article[id]")) {
+                    if (!xarSecurity::check('ViewPublications', 0, 'Publication', "$article[pubtype_id]:$cid:$article[owner]:$article[id]")) {
                         $delete[$key] = 1;
                         break;
                     }
                     if (!isset($cachesec[$cid])) {
-                    // TODO: combine with ViewCategoryLink check when we can combine module-specific
-                    // security checks with "parent" security checks transparently ?
-                        $cachesec[$cid] = xarSecurityCheck('ReadCategories',0,'Category',"All:$cid");
+                        // TODO: combine with ViewCategoryLink check when we can combine module-specific
+                        // security checks with "parent" security checks transparently ?
+                        $cachesec[$cid] = xarSecurity::check('ReadCategories', 0, 'Category', "All:$cid");
                     }
                     if (!$cachesec[$cid]) {
                         $delete[$key] = 1;
@@ -418,7 +454,7 @@ function publications_userapi_getall($args)
                     }
                 }
             } else {
-                if (!xarSecurityCheck('ViewPublications',0,'Publication',"$article[pubtype_id]:All:$article[owner]:$article[id]")) {
+                if (!xarSecurity::check('ViewPublications', 0, 'Publication', "$article[pubtype_id]:All:$article[owner]:$article[id]")) {
                     $delete[$key] = 1;
                     continue;
                 }
@@ -433,22 +469,30 @@ function publications_userapi_getall($args)
 
     if (!empty($required['dynamicdata']) && count($publications) > 0) {
         foreach ($itemids_per_type as $pubtype => $itemids) {
-            if (!xarModIsHooked('dynamicdata','publications',$pubtype)) {
+            if (!xarModIsHooked('dynamicdata', 'publications', $pubtype)) {
                 continue;
             }
-            list($properties,$items) = xarMod::apiFunc('dynamicdata','user','getitemsforview',
-                                                     array('module'   => 'publications',
+            list($properties, $items) = xarMod::apiFunc(
+                'dynamicdata',
+                'user',
+                'getitemsforview',
+                array('module'   => 'publications',
                                                            'itemtype' => $pubtype,
                                                            'itemids'  => $itemids,
                                                            // ignore the display-only properties
-                                                           'state'   => 1));
+                                                           'state'   => 1)
+            );
 
-            if (empty($properties) || count($properties) == 0) continue;
+            if (empty($properties) || count($properties) == 0) {
+                continue;
+            }
             foreach ($publications as $key => $article) {
 
                 // otherwise publications (of different pub types) with dd properties having the same
                 // names reset previously set values to empty string for each iteration based on the pubtype
-                if ($article['pubtype_id'] != $pubtype) continue;
+                if ($article['pubtype_id'] != $pubtype) {
+                    continue;
+                }
 
                 foreach (array_keys($properties) as $name) {
                     if (isset($items[$article['id']]) && isset($items[$article['id']][$name])) {
@@ -470,5 +514,3 @@ function publications_userapi_getall($args)
 
     return $publications;
 }
-
-?>

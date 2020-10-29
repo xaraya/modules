@@ -15,21 +15,35 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_templates_page($args)
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) {
+        return;
+    }
 
     extract($args);
 
-    if (!xarVarFetch('confirm',       'int',    $confirm,            0,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',           'id',    $data['ptid'],       0,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemid',         'id',    $data['itemid'],     0,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('file',          'str',    $data['file'],       'summary',  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('source_data',   'str',    $data['source_data'],       '',  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('confirm', 'int', $confirm, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'id', $data['ptid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'id', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('file', 'str', $data['file'], 'summary', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('source_data', 'str', $data['source_data'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    if (empty($data['itemid']) || empty($data['ptid'])) return xarResponse::NotFound();
+    if (empty($data['itemid']) || empty($data['ptid'])) {
+        return xarResponse::NotFound();
+    }
     
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $pubtype = explode('_',$pubtypeobject->properties['name']->value);
+    $pubtype = explode('_', $pubtypeobject->properties['name']->value);
     $pubtype = isset($pubtype[1]) ? $pubtype[1] : $pubtype[0];
     
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
@@ -73,15 +87,17 @@ function publications_admin_templates_page($args)
 
 function is_writeable_dir($path)
 {
-    $patharray = explode("/",$path);
+    $patharray = explode("/", $path);
     array_shift($patharray);
     $path = "themes";
     foreach ($patharray as $child) {
-        if (!file_exists($path . "/" . $child)) break;
+        if (!file_exists($path . "/" . $child)) {
+            break;
+        }
         $path = $path . "/" . $child;
     }
     return check_dir($path);
-} 
+}
 
 /**
  * Check whether directory permissions allow to write and read files inside it
@@ -105,4 +121,3 @@ function check_dir($dirname)
     }
     return true;
 }
-?>

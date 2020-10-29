@@ -21,6 +21,8 @@ function publications_userapi_getsetting($data)
 {
     $settings = xarMod::apiFunc('publications', 'user', 'getsettings', $data);
 
-    if (isset($settings[$data['setting']])) return $settings[$data['setting']];
+    if (isset($settings[$data['setting']])) {
+        return $settings[$data['setting']];
+    }
     return null;
 }

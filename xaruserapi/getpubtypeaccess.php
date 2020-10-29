@@ -16,18 +16,21 @@
  */
 function publications_userapi_getpubtypeaccess($args)
 {
-    if (empty($args['name']))
+    if (empty($args['name'])) {
         throw new BadParameterException('name');
+    }
         
     sys::import('xaraya.structures.query');
     $xartables =& xarDB::getTables();
-    $q = new Query('SELECT',$xartables['publications_types']);
+    $q = new Query('SELECT', $xartables['publications_types']);
     $q->addfield('access');
-    $q->eq('name',$args['name']);
-    if (!$q->run()) return;
+    $q->eq('name', $args['name']);
+    if (!$q->run()) {
+        return;
+    }
     $result = $q->row();
-    if (empty($result)) return "a:0:{}";
+    if (empty($result)) {
+        return "a:0:{}";
+    }
     return $result['access'];
 }
-
-?>

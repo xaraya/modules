@@ -24,8 +24,8 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     protected $module           = 'publications'; // module block type belongs to, if any
     protected $text_type        = 'Featured Items';  // Block type display name
     protected $text_type_long   = 'Show featured publications'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = '';
     protected $contact          = '';
     protected $credits          = '';
@@ -33,7 +33,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
-    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $numitems            = 5;
@@ -55,7 +55,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     // chris: state is a reserved property name used by blocks
     //public $state               = '2,3';
     public $pubstate            = '2,3';
-    public $toptype             = 'ratings'; 
+    public $toptype             = 'ratings';
 
     public function display()
     {
@@ -81,8 +81,8 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         $pubtypeobject = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
         $types = $pubtypeobject->getItems();
 
-# ------------------------------------------------------------
-# Set up the featured item
+        # ------------------------------------------------------------
+        # Set up the featured item
 #
         if ($data['featuredid'] > 0) {
         
@@ -96,14 +96,17 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
             $featuredtype = $types[$result['pubtype_id']]['name'];
             $data['featured'] = DataObjectMaster::getObject(array('name' => $featuredtype));
             $data['featured']->getItem(array('itemid' => $data['featuredid']));
-            $feature = $data['featured']->getFieldValues(array(),1);
+            $feature = $data['featured']->getFieldValues(array(), 1);
             $data['properties'] =& $data['featured']->properties;
 
-            $feature['link'] = xarModURL('publications', 'user', 'display',
-                                        array(
+            $feature['link'] = xarModURL(
+                'publications',
+                'user',
+                'display',
+                array(
                                             'itemid' => $data['properties']['id']->value,
                                         )
-                                    );
+            );
             $feature['alttitle']   = $data['alttitle'];
             $feature['altsummary'] = $data['altsummary'];
             $feature['showfeaturedsum'] = $data['showfeaturedsum'];
@@ -111,11 +114,10 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
             $data['feature'] = $feature;
         }
 
-# ------------------------------------------------------------
-# Set up additional items
+        # ------------------------------------------------------------
+        # Set up additional items
 #
         if (!empty($data['moreitems'])) {
-
             if ($data['toptype'] == 'rating') {
                 $fields[] = 'rating';
                 $sort = 'rating';
@@ -126,10 +128,13 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                 $fields[] = 'pubdate';
                 $sort = 'date';
             } else {
-               $sort = $data['toptype'];
+                $sort = $data['toptype'];
             }
 
-            $publications = xarMod::apiFunc('publications', 'user', 'getall',
+            $publications = xarMod::apiFunc(
+                'publications',
+                'user',
+                'getall',
                 array(
                     'ids' => $data['moreitems'],
                     'enddate' => time(),
@@ -140,8 +145,8 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     
             // See if we're currently displaying a publication
             // We do this to remove a link form a featured item if that item is already being displayed
-            if (xarVarIsCached('Blocks.publications', 'id')) {
-                $curid = xarVarGetCached('Blocks.publications', 'id');
+            if (xarVar::isCached('Blocks.publications', 'id')) {
+                $curid = xarVar::getCached('Blocks.publications', 'id');
             } else {
                 $curid = -1;
             }
@@ -156,8 +161,11 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                 $itemvalues = $object->getFieldValues(array(), 1);
 
                 if ($publication['id'] != $curid) {
-                    $link = xarModURL('publications', 'user', 'display',
-                        array (
+                    $link = xarModURL(
+                        'publications',
+                        'user',
+                        'display',
+                        array(
                             'itemid' => $publication['id'],
                         )
                     );
@@ -165,19 +173,19 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                     $link = '';
                 }
                 $itemvalues['featured_link'] = $link;
-                if(empty($data['showsummary'])) $itemvalue['description'] = '';
+                if (empty($data['showsummary'])) {
+                    $itemvalue['description'] = '';
+                }
                 $data['items'][$publication['id']] = $itemvalues;
             }
         }
         
-# ------------------------------------------------------------
-# Suppress the block and its title if there is nothing to display
+        # ------------------------------------------------------------
+        # Suppress the block and its title if there is nothing to display
 #
         if (empty($data['featuredid']) && empty($data['items'])) {
-                return;
+            return;
         }
         return $data;
     }
 }
-
-?>

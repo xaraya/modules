@@ -44,13 +44,17 @@ function publications_userapi_getchildcats($args)
         $filter = '';
     }
 
-    if (!xarModAPILoad('categories', 'visual')) return;
+    if (!xarMod::apiLoad('categories', 'visual')) {
+        return;
+    }
 
-// TODO: make sure permissions are taken into account here !
-    $list = xarMod::apiFunc('categories',
-                         'visual',
-                         'listarray',
-                         array('cid' => $cid));
+    // TODO: make sure permissions are taken into account here !
+    $list = xarMod::apiFunc(
+        'categories',
+        'visual',
+        'listarray',
+        array('cid' => $cid)
+    );
     // get the counts for all child categories
     if ($count) {
         if (empty($filter)) {
@@ -66,15 +70,17 @@ function publications_userapi_getchildcats($args)
             $andcids = true;
         }
 
-        $pubcatcount = xarMod::apiFunc('publications',
-                                    'user',
-                                    'getpubcatcount',
+        $pubcatcount = xarMod::apiFunc(
+            'publications',
+            'user',
+            'getpubcatcount',
                                     // frontpage or approved
                                     array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                           'cids' => $childlist,
                                           'andcids' => $andcids,
                                           'ptid' => $ptid,
-                                          'reverse' => 1));
+                                          'reverse' => 1)
+        );
         if (!empty($ptid)) {
             $curptid = $ptid;
         } else {
@@ -92,11 +98,15 @@ function publications_userapi_getchildcats($args)
         } else {
             $catid = $info['id'];
         }
-// TODO: show icons instead of (or in addition to) a link if available ?
-        $info['link'] = xarModURL('publications','user','view',
-                                 array('ptid' => $ptid,
-                                       'catid' => $catid));
-        $info['name'] = xarVarPrepForDisplay($info['name']);
+        // TODO: show icons instead of (or in addition to) a link if available ?
+        $info['link'] = xarModURL(
+            'publications',
+            'user',
+            'view',
+            array('ptid' => $ptid,
+                                       'catid' => $catid)
+        );
+        $info['name'] = xarVar::prepForDisplay($info['name']);
         if ($count) {
             if (isset($pubcatcount[$info['id']][$curptid])) {
                 $info['count'] = $pubcatcount[$info['id']][$curptid];
@@ -114,5 +124,3 @@ function publications_userapi_getchildcats($args)
     }
     return $cats;
 }
-
-?>

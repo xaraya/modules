@@ -14,15 +14,20 @@
  */
 function publications_admin_waitingcontent()
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) {
+        return;
+    }
 
     // Get publication types
     unset($publinks);
-    $publinks = xarMod::apiFunc('publications', 'user', 'getpublinks',
-                          array('state' => array(0),
-                                'typemod' => 'admin'));
+    $publinks = xarMod::apiFunc(
+        'publications',
+        'user',
+        'getpublinks',
+        array('state' => array(0),
+                                'typemod' => 'admin')
+    );
 
-     $data['loop'] = $publinks;
-     return $data;
+    $data['loop'] = $publinks;
+    return $data;
 }
-?>

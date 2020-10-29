@@ -16,45 +16,85 @@
  */
 function publications_admin_privileges($args)
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) {
+        return;
+    }
 
     extract($args);
 
     // fixed params
-    if (!xarVarFetch('ptid',         'isset', $ptid,         NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('id',           'isset', $id,           NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('cid', 'isset', $cid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('uid', 'isset', $uid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('id', 'isset', $id, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('apply', 'isset', $apply, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extpid', 'isset', $extpid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extname', 'isset', $extname, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extrealm', 'isset', $extrealm, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extmodule', 'isset', $extmodule, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extcomponent', 'isset', $extcomponent, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extinstance', 'isset', $extinstance, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('extlevel', 'isset', $extlevel, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
     $cids = $categories->returnInput('privcategories');
 
     if (!empty($extinstance)) {
-        $parts = explode(':',$extinstance);
-        if (count($parts) > 0 && !empty($parts[0])) $ptid = $parts[0];
-        if (count($parts) > 1 && !empty($parts[1])) $cid = $parts[1];
-        if (count($parts) > 2 && !empty($parts[2])) $uid = $parts[2];
-        if (count($parts) > 3 && !empty($parts[3])) $id = $parts[3];
+        $parts = explode(':', $extinstance);
+        if (count($parts) > 0 && !empty($parts[0])) {
+            $ptid = $parts[0];
+        }
+        if (count($parts) > 1 && !empty($parts[1])) {
+            $cid = $parts[1];
+        }
+        if (count($parts) > 2 && !empty($parts[2])) {
+            $uid = $parts[2];
+        }
+        if (count($parts) > 3 && !empty($parts[3])) {
+            $id = $parts[3];
+        }
     }
 
     if (empty($ptid) || $ptid == 'All' || !is_numeric($ptid)) {
         $ptid = 0;
-        if (!xarSecurityCheck('AdminPublications')) return;
+        if (!xarSecurity::check('AdminPublications')) {
+            return;
+        }
     } else {
-        if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
+        if (!xarSecurity::check('AdminPublications', 1, 'Publication', "$ptid:All:All:All")) {
+            return;
+        }
     }
 
-// TODO: do something with cid for security check
+    // TODO: do something with cid for security check
 
     // TODO: figure out how to handle more than 1 category in instances
     if (empty($cid) || $cid == 'All' || !is_numeric($cid)) {
@@ -75,15 +115,19 @@ function publications_admin_privileges($args)
     }
     $title = '';
     if (!empty($id)) {
-        $article = xarMod::apiFunc('publications','user','get',
-                                 array('id'      => $id,
-                                       'withcids' => true));
+        $article = xarMod::apiFunc(
+            'publications',
+            'user',
+            'get',
+            array('id'      => $id,
+                                       'withcids' => true)
+        );
         if (empty($article)) {
             $id = 0;
         } else {
             // override whatever other params we might have here
             $ptid = $article['pubtype_id'];
-        // TODO: review when we can handle multiple categories and/or subtrees in privilege instances
+            // TODO: review when we can handle multiple categories and/or subtrees in privilege instances
             if (!empty($article['cids']) && count($article['cids']) == 1) {
                 // if we don't have a category, or if we have one but this article doesn't belong to it
                 if (empty($cid) || !in_array($cid, $article['cids'])) {
@@ -99,31 +143,38 @@ function publications_admin_privileges($args)
         }
     }
 
-// TODO: figure out how to handle groups of users and/or the current user (later)
+    // TODO: figure out how to handle groups of users and/or the current user (later)
     if (strtolower($uid) == 'myself') {
         $uid = 'Myself';
         $author = 'Myself';
     } elseif (empty($uid) || $uid == 'All' || (!is_numeric($uid) && (strtolower($uid) != 'myself'))) {
         $uid = 0;
         if (!empty($author)) {
-            $user = xarMod::apiFunc('roles', 'user', 'get',
-                                  array('name' => $author));
+            $user = xarMod::apiFunc(
+                'roles',
+                'user',
+                'get',
+                array('name' => $author)
+            );
             if (!empty($user) && !empty($user['uid'])) {
-                if (strtolower($author) == 'myself') $uid = 'Myself';
-                else $uid = $user['uid'];
+                if (strtolower($author) == 'myself') {
+                    $uid = 'Myself';
+                } else {
+                    $uid = $user['uid'];
+                }
             } else {
                 $author = '';
             }
         }
     } else {
         $author = '';
-/*
-        $user = xarMod::apiFunc('roles', 'user', 'get',
-                              array('uid' => $uid));
-        if (!empty($user) && !empty($user['name'])) {
-            $author = $user['name'];
-        }
-*/
+        /*
+                $user = xarMod::apiFunc('roles', 'user', 'get',
+                                      array('uid' => $uid));
+                if (!empty($user) && !empty($user['name'])) {
+                    $author = $user['name'];
+                }
+        */
     }
 
     // define the new instance
@@ -135,28 +186,42 @@ function publications_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $id = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
-        if (empty($id)) return; // throw back
+        $id = xarReturnPrivilege($extpid, $extname, $extrealm, $extmodule, $extcomponent, $newinstance, $extlevel);
+        if (empty($id)) {
+            return;
+        } // throw back
 
         // redirect to the privilege
-        xarController::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
-                                      array('id' => $id)));
+        xarController::redirect(xarModURL(
+            'privileges',
+            'admin',
+            'modifyprivilege',
+            array('id' => $id)
+        ));
         return true;
     }
 
     // get the list of current authors
-    $authorlist =  xarMod::apiFunc('publications','user','getauthors',
-                                 array('ptid' => $ptid,
-                                       'cids' => empty($cid) ? array() : array($cid)));
+    $authorlist =  xarMod::apiFunc(
+        'publications',
+        'user',
+        'getauthors',
+        array('ptid' => $ptid,
+                                       'cids' => empty($cid) ? array() : array($cid))
+    );
     if (!empty($author) && isset($authorlist[$uid])) {
         $author = '';
     }
 
     if (empty($id)) {
-        $numitems = xarMod::apiFunc('publications','user','countitems',
-                                  array('ptid' => $ptid,
+        $numitems = xarMod::apiFunc(
+            'publications',
+            'user',
+            'countitems',
+            array('ptid' => $ptid,
                                         'cids' => empty($cid) ? array() : array($cid),
-                                        'owner' => $uid));
+                                        'owner' => $uid)
+        );
     } else {
         $numitems = 1;
     }
@@ -164,10 +229,10 @@ function publications_admin_privileges($args)
                   'ptid'         => $ptid,
                   'cid'          => $cid,
                   'uid'          => $uid,
-                  'author'       => xarVarPrepForDisplay($author),
+                  'author'       => xarVar::prepForDisplay($author),
                   'authorlist'   => $authorlist,
                   'id'          => $id,
-                  'title'        => xarVarPrepForDisplay($title),
+                  'title'        => xarVar::prepForDisplay($title),
                   'numitems'     => $numitems,
                   'extpid'       => $extpid,
                   'extname'      => $extname,
@@ -175,16 +240,18 @@ function publications_admin_privileges($args)
                   'extmodule'    => $extmodule,
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
-                  'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                  'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
                  );
 
     // Get publication types
-    $data['pubtypes'] = xarMod::apiFunc('publications','user','get_pubtypes');
+    $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     $catlist = array();
     if (!empty($ptid)) {
-        $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications', 'itemtype' => $ptid));
-        foreach ($basecats as $catid) $catlist[$catid['id']] = 1;
+        $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications', 'itemtype' => $ptid));
+        foreach ($basecats as $catid) {
+            $catlist[$catid['id']] = 1;
+        }
         if (empty($data['pubtypes'][$ptid]['config']['owner']['label'])) {
             $data['showauthor'] = 0;
         } else {
@@ -192,7 +259,7 @@ function publications_admin_privileges($args)
         }
     } else {
         foreach (array_keys($data['pubtypes']) as $pubid) {
-            $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications', 'itemtype' => $pubid));
+            $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications', 'itemtype' => $pubid));
             foreach ($basecats as $catid) {
                 $catlist[$catid['id']] = 1;
             }
@@ -211,5 +278,3 @@ function publications_admin_privileges($args)
     $data['applylabel'] = xarML('Finish and Apply to Privilege');
     return $data;
 }
-
-?>

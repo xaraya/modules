@@ -38,7 +38,7 @@
                     <xar:if condition="$writable">
                         This stylesheet can be saved.
                     <xar:else/>
-                        <img src="#xarTplGetImage('exception.png','base')#" width="20px" height="20px"/>&#160;
+                        <img src="#xarTpl::getImage('exception.png','base')#" width="20px" height="20px"/>&#160;
                         <span class="warning">                            
                             <xar:if condition="$filetype eq 'module'">
                                 This stylesheet cannot be saved: check the directory permissions

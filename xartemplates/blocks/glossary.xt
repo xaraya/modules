@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
         <xar:if condition="!empty($definition)">
-            #xarVarPrepForDisplay($definition)#
+            #xarVar::prepForDisplay($definition)#
             <xar:if condition="!empty($detailavailable)">
                 <br/><a href="#$detailurl#" title="#xarML('Expanded glossary definition')#">Further details...</a>
             </xar:if>

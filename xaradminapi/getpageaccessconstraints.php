@@ -15,7 +15,9 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_adminapi_getpageaccessconstraints($args)
 {
-    if (!isset($args['property'])) throw new Exception(xarML('Missing property param in publications_adminapi_getpageaccessconstraints'));
+    if (!isset($args['property'])) {
+        throw new Exception(xarML('Missing property param in publications_adminapi_getpageaccessconstraints'));
+    }
 
     $constraints = array(
         'display' => array('level' => 800, 'group' => 0, 'failure' => 1),
@@ -25,13 +27,16 @@ function publications_adminapi_getpageaccessconstraints($args)
     );
 
     $unpacked_constraints = $args['property']->getValue();
-    if (empty($unpacked_constraints)) return $constraints;
+    if (empty($unpacked_constraints)) {
+        return $constraints;
+    }
     try {
         // Check the array structure
-        if (isset($unpacked_constraints['display'])) $constraints = $unpacked_constraints;
-    } catch (Exception $e) {}
+        if (isset($unpacked_constraints['display'])) {
+            $constraints = $unpacked_constraints;
+        }
+    } catch (Exception $e) {
+    }
 
     return $constraints;
 }
-
-?>

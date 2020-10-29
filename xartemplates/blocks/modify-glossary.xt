@@ -38,6 +38,6 @@
     <span class="help" title="#xarML('The name of the glossary parameter to trigger the block.')#"><label for="paramname_#$bid#">Parameter Name</label>:</span>
 </div>
 <div>
-    <input type="text" name="paramname" id="paramname_block_#$bid#" size="20" maxlength="20" value="#xarVarPrepForDisplay($paramname)#"/>
+    <input type="text" name="paramname" id="paramname_block_#$bid#" size="20" maxlength="20" value="#xarVar::prepForDisplay($paramname)#"/>
 </div>
 </xar:template>

@@ -22,5 +22,3 @@ function publications_xartables()
     // Return table information
     return $xartable;
 }
-
-?>

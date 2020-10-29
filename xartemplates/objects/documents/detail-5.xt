@@ -12,7 +12,7 @@
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="($publication_state lt PUBLICATIONS_STATE_ACTIVE) AND (!xarSecurityCheck('ManagePublications',0))">
+    <xar:if condition="($publication_state lt PUBLICATIONS_STATE_ACTIVE) AND (!xarSecurity::check('ManagePublications',0))">
         This item cannot be viewed
     <xar:else />
 
@@ -67,13 +67,13 @@
                                         </xar:if>
                                     </xar:if>
                                     <xar:if condition="$source_flag eq 2">
-                                        #xarVarPrepForDisplay($loop:item.title)#
+                                        #xarVar::prepForDisplay($loop:item.title)#
                                     <xar:elseif condition="$source_flag eq 3"/>
-                                        #xarVarPrepForDisplay($loop:item.description)#
+                                        #xarVar::prepForDisplay($loop:item.description)#
                                     <xar:elseif condition="$source_flag eq 4"/>
-                                        #xarVarPrepForDisplay($loop:item.sitemap_alias)#
+                                        #xarVar::prepForDisplay($loop:item.sitemap_alias)#
                                     <xar:else/>
-                                        #xarVarPrepForDisplay($loop:item.title)#
+                                        #xarVar::prepForDisplay($loop:item.title)#
                                     </xar:if>
                                 <xar:else/>
                                     <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
@@ -86,13 +86,13 @@
                                             </xar:if>
                                         </xar:if>
                                         <xar:if condition="$source_flag eq 2">
-                                            #xarVarPrepForDisplay($loop:item.title)#
+                                            #xarVar::prepForDisplay($loop:item.title)#
                                         <xar:elseif condition="$source_flag eq 3"/>
-                                            #xarVarPrepForDisplay($loop:item.description)#
+                                            #xarVar::prepForDisplay($loop:item.description)#
                                         <xar:elseif condition="$source_flag eq 4"/>
-                                            #xarVarPrepForDisplay($loop:item.sitemap_alias)#
+                                            #xarVar::prepForDisplay($loop:item.sitemap_alias)#
                                         <xar:else/>
-                                            #xarVarPrepForDisplay($loop:item.title)#
+                                            #xarVar::prepForDisplay($loop:item.title)#
                                         </xar:if>
                                     </a>
                                 </xar:if>

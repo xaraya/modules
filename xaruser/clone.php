@@ -14,14 +14,26 @@
 function publications_user_clone()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) {
+        return;
+    }
 
-    if(!xarVarFetch('name',     'isset', $objectname,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',     'isset', $ptid,            NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $data['itemid'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm',  'int',   $confirm,         0, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('name', 'isset', $objectname, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'int', $confirm, 0, XARVAR_DONT_SET)) {
+        return;
+    }
 
-    if (empty($data['itemid'])) return xarResponse::NotFound();
+    if (empty($data['itemid'])) {
+        return xarResponse::NotFound();
+    }
 
     // If a pubtype ID was passed, get the name of the pub object
     if (isset($ptid)) {
@@ -29,26 +41,38 @@ function publications_user_clone()
         $pubtypeobject->getItem(array('itemid' => $ptid));
         $objectname = $pubtypeobject->properties['name']->value;
     }
-    if (empty($objectname)) return xarResponse::NotFound();
+    if (empty($objectname)) {
+        return xarResponse::NotFound();
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $objectname));
-    if (empty($data['object'])) return xarResponse::NotFound();
+    if (empty($data['object'])) {
+        return xarResponse::NotFound();
+    }
 
     $data['object']->getItem(array('itemid' => $data['itemid']));
     
-    $data['authid'] = xarSecGenAuthKey();            
+    $data['authid'] = xarSecGenAuthKey();
     $data['name'] = $data['object']->properties['name']->value;
     $data['label'] = $data['object']->label;
-    xarTplSetPageTitle(xarML('Clone Publication #(1) in #(2)', $data['itemid'], $data['label']));
+    xarTpl::setPageTitle(xarML('Clone Publication #(1) in #(2)', $data['itemid'], $data['label']));
     
     if ($confirm) {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         
         // Get the name for the clone
-        if(!xarVarFetch('newname',   'str', $newname,   "", XARVAR_NOT_REQUIRED)) {return;}
-        if (empty($newname)) $newname = $data['name'] . "_copy";
-        if ($newname == $data['name']) $newname = $data['name'] . "_copy";
+        if (!xarVar::fetch('newname', 'str', $newname, "", XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (empty($newname)) {
+            $newname = $data['name'] . "_copy";
+        }
+        if ($newname == $data['name']) {
+            $newname = $data['name'] . "_copy";
+        }
         $newname = strtolower(str_ireplace(" ", "_", $newname));
 
         // Create the clone
@@ -57,7 +81,9 @@ function publications_user_clone()
         $cloneid = $data['object']->createItem(array('itemid' => 0));
 
         // Create the clone's translations
-        if(!xarVarFetch('clone_translations',   'int', $clone_translations,   0, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('clone_translations', 'int', $clone_translations, 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
         if ($clone_translations) {
             // Get the info on all the objects to be cloned
             sys::import('xaraya.structures.query');
@@ -66,13 +92,13 @@ function publications_user_clone()
             $q->addtable($tables['publications'], 'p');
             $q->addtable($tables['publications_types'], 'pt');
             $q->join('p.pubtype_id', 'pt.id');
-            $q->eq('parent_id',$data['itemid']);
+            $q->eq('parent_id', $data['itemid']);
             $q->addfield('p.id AS id');
             $q->addfield('pt.name AS name');
             $q->run();
             
             // Clone each one
-            foreach($q->output() as $item) {
+            foreach ($q->output() as $item) {
                 $object = DataObjectMaster::getObject(array('name' => $item['name']));
                 $object->getItem(array('itemid' => $item['id']));
                 $object->properties['parent']->value = $cloneid;
@@ -94,4 +120,3 @@ function publications_user_clone()
     }
     return $data;
 }
-?>

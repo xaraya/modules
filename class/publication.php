@@ -31,10 +31,10 @@ class Publication extends DataObject
         }
     }
     
-    public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
+    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
     {
         // The access property is ignored here
-        $isvalid = parent::checkInput($args,$suppress,$priority);
+        $isvalid = parent::checkInput($args, $suppress, $priority);
 
         // If the rest of the publication is valid, then do the access part
         // Note this is a collection of access properties; hence the complicated process of saving it
@@ -70,7 +70,7 @@ class Publication extends DataObject
         return $isvalid;
     }
 
-    function createItem(Array $args = array())
+    public function createItem(array $args = array())
     {
         // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
@@ -94,7 +94,7 @@ class Publication extends DataObject
         return $id;
     }
 
-    function updateItem(Array $args = array())
+    public function updateItem(array $args = array())
     {
         if (xarModVars::get('publications', 'use_versions')) {
             $temp = $this->getFieldValues(array(), 1);
@@ -117,7 +117,7 @@ class Publication extends DataObject
         $this->fieldlist = array();
         
         // Set the time modified
-            $this->properties['modified']->value = time();
+        $this->properties['modified']->value = time();
         
         // Save the item
         $id = parent::updateItem($args);
@@ -125,4 +125,3 @@ class Publication extends DataObject
         return $id;
     }
 }
-?>

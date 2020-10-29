@@ -32,11 +32,11 @@ function publications_adminapi_updatepubtype($args)
     if (!isset($ptid) || !is_numeric($ptid) || $ptid < 1) {
         $invalid[] = 'publication type ID';
     }
-/*
-    if (!isset($name) || !is_string($name) || empty($name)) {
-        $invalid[] = 'name';
-    }
-*/
+    /*
+        if (!isset($name) || !is_string($name) || empty($name)) {
+            $invalid[] = 'name';
+        }
+    */
     if (!isset($descr) || !is_string($descr) || empty($descr)) {
         $invalid[] = 'description';
     }
@@ -44,28 +44,41 @@ function publications_adminapi_updatepubtype($args)
         $invalid[] = 'configuration';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'updatepubtype','Publications');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'admin',
+            'updatepubtype',
+            'Publications'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
+    if (!xarSecurity::check('AdminPublications', 1, 'Publication', "$ptid:All:All:All")) {
+        return;
+    }
 
     // Load user API to obtain item information function
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) {
+        return;
+    }
 
     // Get current publication types
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
     if (!isset($pubtypes[$ptid])) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'publication type ID', 'admin', 'updatepubtype',
-                    'Publications');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'publication type ID',
+            'admin',
+            'updatepubtype',
+            'Publications'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     // Make sure we have all the configuration fields we need
-    $pubfields = xarMod::apiFunc('publications','user','getpubfields');
+    $pubfields = xarMod::apiFunc('publications', 'user', 'getpubfields');
     foreach ($pubfields as $field => $value) {
         if (!isset($config[$field])) {
             $config[$field] = '';
@@ -83,10 +96,10 @@ function publications_adminapi_updatepubtype($args)
                 pubtypeconfig = ?
             WHERE pubtype_id = ?";
     $bindvars = array($descr, serialize($config), $ptid);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

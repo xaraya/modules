@@ -33,32 +33,38 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_preview($data)
 {
-    if(!xarVarFetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
-    // Override xarVarFetch
-    extract ($data);
+    // Override xarVar::fetch
+    extract($data);
 
-    if (empty($data['object'])) return xarResponse::NotFound();
+    if (empty($data['object'])) {
+        return xarResponse::NotFound();
+    }
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# We have an object, now get the page
+    # We have an object, now get the page
 #
     // Here we get the publication type first, and then from that the page
     // Perhaps more efficient to get the page directly?
     $ptid = $data['object']->properties['itemtype']->value;
 
     // An empty publication type means the page does not exist
-    if (empty($ptid)) return xarResponse::NotFound();
+    if (empty($ptid)) {
+        return xarResponse::NotFound();
+    }
     
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     // Save this as the current pubtype
     xarCoreCache::setCached('Publications', 'current_pubtype_object', $pubtypeobject);
         
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Are we allowed to see this page?
+    # Are we allowed to see this page?
 #
     $accessconstraints = unserialize($data['object']->properties['access']->value);
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
@@ -68,22 +74,31 @@ function publications_user_preview($data)
     // If no access, then bail showing a forbidden or the "no permission" page or an empty page
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow || $nopublish) {
-        if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
-        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-        else return xarTplModule('publications', 'user', 'empty');
+        if ($accessconstraints['display']['failure']) {
+            return xarResponse::Forbidden();
+        } elseif ($nopermissionpage_id) {
+            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+        } else {
+            return xarTpl::module('publications', 'user', 'empty');
+        }
     }
     
     // If we use process states, then also check that
     if (xarModVars::get('publications', 'use_process_states')) {
-        if ($data['object']->properties['process_state']->value < 3)
-            if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
-            elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-            else return xarTplModule('publications', 'user', 'empty');            
+        if ($data['object']->properties['process_state']->value < 3) {
+            if ($accessconstraints['display']['failure']) {
+                return xarResponse::Forbidden();
+            } elseif ($nopermissionpage_id) {
+                xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            } else {
+                return xarTpl::module('publications', 'user', 'empty');
+            }
+        }
     }
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# If this is a blocklayout page, then process it
+    # If this is a blocklayout page, then process it
 #
     if ($data['object']->properties['pagetype']->value == 2) {
         // Get a copy of the compiler
@@ -95,108 +110,112 @@ function publications_user_preview($data)
         $sourcefields = array('title','description','summary','body1','body2','body3','body4','body5','notes');
         $prefix = strlen('publications.')-1;
         foreach ($data['object']->properties as $prop) {
-            if (in_array(substr($prop->source, $prefix), $sourcefields)) $fields[] = $prop->name;
+            if (in_array(substr($prop->source, $prefix), $sourcefields)) {
+                $fields[] = $prop->name;
+            }
         }
 
         // Run each template field through the compiler
         foreach ($fields as $field) {
-            try{        
+            try {
                 $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
-                $tplString .= xarMod::apiFunc('publications','user','prepareforbl',array('string' => $data['object']->properties[$field]->value));
+                $tplString .= xarMod::apiFunc('publications', 'user', 'prepareforbl', array('string' => $data['object']->properties[$field]->value));
 
                 $tplString .= '</xar:template>';
 
                 $tplString = $blCompiler->compilestring($tplString);
                 // We don't allow passing $data to the template for now
                 $tpldata = array();
-                $tplString = xarTplString($tplString, $tpldata);
-            } catch(Exception $e) {
+                $tplString = xarTpl::string($tplString, $tpldata);
+            } catch (Exception $e) {
                 var_dump($tplString);
             }
             $data['object']->properties[$field]->value = $tplString;
         }
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the complete tree for this section of pages. We need this for blocks etc.
+    # Get the complete tree for this section of pages. We need this for blocks etc.
 #
-/*
-    $tree = xarMod::apiFunc(
-        'publications', 'user', 'getpagestree',
-        array(
-            'tree_contains_pid' => $id,
-            'key' => 'id',
-            'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
-        )
-    );
-        
-    // If this page is of type PLACEHOLDER, then look in its descendents
-    if ($data['object']->properties['state']->value == 5) {
-    
-        // Scan for a descendent that is ACTIVE or FRONTPAGE
-        if (!empty($tree['pages'][$id]['child_keys'])) {
-            foreach($tree['pages'][$id]['child_keys'] as $scan_key) {
-                // If the page is displayable, then treat it as the new page.
-                if ($tree['pages'][$scan_key]['status'] == 3 || $tree['pages'][$scan_key]['status'] == 4) {
-                    $id = $tree['pages'][$scan_key]['id'];
-                    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
-                    $itemid = $data['object']->getItem(array('itemid' => $id));
-                    break;
+    /*
+        $tree = xarMod::apiFunc(
+            'publications', 'user', 'getpagestree',
+            array(
+                'tree_contains_pid' => $id,
+                'key' => 'id',
+                'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
+            )
+        );
+
+        // If this page is of type PLACEHOLDER, then look in its descendents
+        if ($data['object']->properties['state']->value == 5) {
+
+            // Scan for a descendent that is ACTIVE or FRONTPAGE
+            if (!empty($tree['pages'][$id]['child_keys'])) {
+                foreach($tree['pages'][$id]['child_keys'] as $scan_key) {
+                    // If the page is displayable, then treat it as the new page.
+                    if ($tree['pages'][$scan_key]['status'] == 3 || $tree['pages'][$scan_key]['status'] == 4) {
+                        $id = $tree['pages'][$scan_key]['id'];
+                        $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+                        $itemid = $data['object']->getItem(array('itemid' => $id));
+                        break;
+                    }
                 }
             }
         }
-    }
-*/    
-# --------------------------------------------------------
+    */
+    # --------------------------------------------------------
 #
-# Additional data
+    # Additional data
 #
     // Pass the layout to the template
     $data['layout'] = $layout;
 
     // Get the settings for this publication type
-    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid));
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $ptid));
     
     // The name of this object
     $data['objectname'] = $data['object']->name;
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set the theme if needed
+    # Set the theme if needed
 #
-    if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
+    if (!empty($data['object']->properties['theme']->value)) {
+        xarTpl::setThemeName($data['object']->properties['theme']->value);
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set the page template from the pubtype if needed
+    # Set the page template from the pubtype if needed
 #
     if (!empty($pubtypeobject->properties['page_template']->value)) {
         $pagename = $pubtypeobject->properties['page_template']->value;
-        $position = strpos($pagename,'.');
+        $position = strpos($pagename, '.');
         if ($position === false) {
             $pagetemplate = $pagename;
         } else {
-            $pagetemplate = substr($pagename,0,$position);
+            $pagetemplate = substr($pagename, 0, $position);
         }
         xarTpl::setPageTemplateName($pagetemplate);
     }
     // It can be overridden by the page itself
     if (!empty($data['object']->properties['page_template']->value)) {
         $pagename = $data['object']->properties['page_template']->value;
-        $position = strpos($pagename,'.');
+        $position = strpos($pagename, '.');
         if ($position === false) {
             $pagetemplate = $pagename;
         } else {
-            $pagetemplate = substr($pagename,0,$position);
+            $pagetemplate = substr($pagename, 0, $position);
         }
         xarTpl::setPageTemplateName($pagetemplate);
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Do the same for page title, page description and keywords
-# The values (if any) are then passed to the meta tag in the template
+    # Do the same for page title, page description and keywords
+    # The values (if any) are then passed to the meta tag in the template
 #
     // Page title
     if (!empty($pubtypeobject->properties['page_title']->value)) {
@@ -224,9 +243,9 @@ function publications_user_preview($data)
     if (!empty($data['object']->properties['keywords']->value)) {
         $data['keywords'] = $data['object']->properties['keywords']->value;
     }
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Cache data for blocks
+    # Cache data for blocks
 #
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
@@ -242,18 +261,16 @@ function publications_user_preview($data)
     xarCoreCache::setCached('Blocks.publications', 'ptid', $ptid);
     xarCoreCache::setCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Make the properties available to the template 
+    # Make the properties available to the template
 #
     $data['properties'] =& $data['object']->properties;
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Tell the template(s) that this is a preview
+    # Tell the template(s) that this is a preview
 #
     $data['preview'] = 1;
 
     return xarTpl::module('publications', 'user', 'display', $data);
 }
-
-?>

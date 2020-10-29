@@ -23,7 +23,7 @@
                 <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
                     <li>
                         <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
-                            <xar:if condition="xarModIsAvailable('images')">
+                            <xar:if condition="xarMod::isAvailable('images')">
                                 <xar:set name="file">$fileInfo</xar:set>
                                 <xar:template file="picture-thumbnail" type="module" />
                             <xar:else />

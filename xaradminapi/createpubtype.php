@@ -35,9 +35,14 @@ function publications_adminapi_createpubtype($args)
         $invalid[] = 'configuration';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'createpubtype','Publications');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'admin',
+            'createpubtype',
+            'Publications'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     if (empty($descr)) {
@@ -48,12 +53,16 @@ function publications_adminapi_createpubtype($args)
     $name = strtolower($name);
 
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
 
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) {
+        return;
+    }
 
     // Make sure we have all the configuration fields we need
-    $pubfields = xarMod::apiFunc('publications','user','getpubfields');
+    $pubfields = xarMod::apiFunc('publications', 'user', 'getpubfields');
     foreach ($pubfields as $field => $value) {
         if (!isset($config[$field])) {
             $config[$field] = '';
@@ -73,8 +82,10 @@ function publications_adminapi_createpubtype($args)
             pubtypedescr, pubtypeconfig)
             VALUES (?,?,?,?)";
     $bindvars = array($nextId, $name, $descr, serialize($config));
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     // Get ptid to return
     $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtype_id');
@@ -84,5 +95,3 @@ function publications_adminapi_createpubtype($args)
 
     return $ptid;
 }
-
-?>

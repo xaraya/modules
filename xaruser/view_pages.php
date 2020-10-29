@@ -16,13 +16,17 @@ function publications_user_view_pages($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) {
+        return;
+    }
 
     // Accept a parameter to allow selection of a single tree.
-    xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
 
     $data = xarMod::apiFunc(
-        'publications', 'user', 'getpagestree',
+        'publications',
+        'user',
+        'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
     );
 
@@ -45,8 +49,7 @@ function publications_user_view_pages($args)
         $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
         $accessproperty->module = 'publications';
         $accessproperty->component = 'Page';
-        foreach($data['pages'] as $key => $page) {
-
+        foreach ($data['pages'] as $key => $page) {
             $thisinstance = $page['name'] . ':' . $page['pubtype_name'];
 
             // Do we have admin access?
@@ -84,5 +87,3 @@ function publications_user_view_pages($args)
 
     return $data;
 }
-
-?>

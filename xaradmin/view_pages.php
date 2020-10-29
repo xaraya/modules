@@ -14,35 +14,40 @@
 
 function publications_admin_view_pages($args)
 {
-
-   if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) {
+        return;
+    }
 
     extract($args);
 
-   // Accept a parameter to allow selection of a single tree.
-    xarVarFetch('root_id', 'int', $root_id, NULL, XARVAR_NOT_REQUIRED);
+    // Accept a parameter to allow selection of a single tree.
+    xarVar::fetch('root_id', 'int', $root_id, null, XARVAR_NOT_REQUIRED);
 
-   if (NULL === $root_id) {
+    if (null === $root_id) {
         $root_id = xarSession::getVar('publications_root_id');
-        if (empty($root_id)) $root_id = 0;
+        if (empty($root_id)) {
+            $root_id = 0;
+        }
     }
     xarSession::setVar('publications_root_id', $root_id);
 
-   $data = xarMod::apiFunc(
-        'publications', 'user', 'getpagestree',
+    $data = xarMod::apiFunc(
+        'publications',
+        'user',
+        'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id)
     );
 
-   if (empty($data['pages'])) {
+    if (empty($data['pages'])) {
         // TODO: pass to template.
         return $data; //xarML('NO PAGES DEFINED');
     } else {
         $data['pages'] = xarMod::apiFunc('publications', 'tree', 'array_maptree', $data['pages']);
     }
 
-   $data['root_id'] = $root_id;
+    $data['root_id'] = $root_id;
 
-   // Check modify and delete privileges on each page.
+    // Check modify and delete privileges on each page.
     // EditPage - allows basic changes, but no moving or renaming (good for sub-editors who manage content)
     // AddPage - new pages can be added (further checks may limit it to certain page types)
     // DeletePage - page can be renamed, moved and deleted
@@ -52,8 +57,7 @@ function publications_admin_view_pages($args)
         $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
         $accessproperty->module = 'publications';
         $accessproperty->component = 'Page';
-        foreach($data['pages'] as $key => $page) {
-
+        foreach ($data['pages'] as $key => $page) {
             $thisinstance = $page['name'] . ':' . $page['pubtype_name'];
 
             // Do we have admin access?
@@ -94,5 +98,3 @@ function publications_admin_view_pages($args)
     
     return $data;
 }
-
-?>

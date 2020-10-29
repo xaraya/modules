@@ -23,30 +23,42 @@ function publications_treeapi_insertprep($args)
 
     // Default operation is 'before' - i.e. put the new item in the place
     // of the insertpoint and move everything to the right one place.
-    if (!xarVarValidate('enum:before:after:firstchild:lastchild', $offset, true)) {
+    if (!xarVar::validate('enum:before:after:firstchild:lastchild', $offset, true)) {
         $offset = 'firstchild';
     }
 
-    if (!isset($insertpoint)) {$insertpoint = 0;}
-    if (!isset($idname)) {$idname = 'xar_id';}
+    if (!isset($insertpoint)) {
+        $insertpoint = 0;
+    }
+    if (!isset($idname)) {
+        $idname = 'xar_id';
+    }
 
     // Cannot insert on the same level as the virtual root.
     if ($insertpoint == 0) {
-        if ($offset == 'before') {$offset = 'firstchild';}
-        if ($offset == 'after') {$offset = 'lastchild';}
+        if ($offset == 'before') {
+            $offset = 'firstchild';
+        }
+        if ($offset == 'after') {
+            $offset = 'lastchild';
+        }
     }
 
     $dbconn = xarDB::getConn();
 
     $result = xarMod::apiFunc(
-        'publications', 'tree', 'getleftright',
+        'publications',
+        'tree',
+        'getleftright',
         array(
             'tablename' => $tablename,
             'idname' => $idname,
             'id' => $insertpoint
         )
     );
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
     extract($result);
 
     // Locate the new insert point.
@@ -72,13 +84,17 @@ function publications_treeapi_insertprep($args)
         . ' SET xar_left = xar_left + 2 '
         . ' WHERE xar_left >= ?';
     $result = $dbconn->execute($query, array($shift));
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
 
     $query = 'UPDATE ' . $tablename
         . ' SET xar_right = xar_right + 2 '
         . ' WHERE xar_right >= ?';
     $result = $dbconn->execute($query, array($shift));
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
 
     // Return the new parent/left/right values
     return array(
@@ -87,5 +103,3 @@ function publications_treeapi_insertprep($args)
         'right' => $shift + 1
     );
 }
-
-?>

@@ -15,18 +15,28 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_new($args)
 {
-    if (!xarSecurityCheck('AddPublications')) return;
+    if (!xarSecurity::check('AddPublications')) {
+        return;
+    }
 
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('ptid',        'id',    $data['ptid'], NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('catid',       'str',   $catid,        NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype',    'id',    $itemtype,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid', 'id', $data['ptid'], null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('catid', 'str', $catid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    if (NULL === $data['ptid']) {
+    if (null === $data['ptid']) {
         $data['ptid'] = xarSession::getVar('publications_current_pubtype');
-        if (empty($data['ptid'])) $data['ptid'] = xarModVars::get('publications', 'defaultpubtype');
+        if (empty($data['ptid'])) {
+            $data['ptid'] = xarModVars::get('publications', 'defaultpubtype');
+        }
     }
     xarSession::setVar('publications_current_pubtype', $data['ptid']);
 
@@ -47,14 +57,12 @@ function publications_admin_new($args)
     if (!empty($data['ptid'])) {
         $template = $pubtypeobject->properties['template']->value;
     } else {
-// TODO: allow templates per category ?
-       $template = null;
+        // TODO: allow templates per category ?
+        $template = null;
     }
 
     // Get the settings of the publication type we are using
-    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
     
-    return xarTplModule('publications', 'admin', 'new', $data, $template);
+    return xarTpl::module('publications', 'admin', 'new', $data, $template);
 }
-
-?>

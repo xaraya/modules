@@ -19,12 +19,14 @@
   
 function publications_userapi_getsettings($data)
 {
-    if (empty($data['ptid']))
+    if (empty($data['ptid'])) {
         throw new Exception('Missing publication type for caching');
+    }
         
     // If already cached, then get that
-    if (xarCore::isCached('publications', 'settings_' . $data['ptid']))
+    if (xarCore::isCached('publications', 'settings_' . $data['ptid'])) {
         return xarCore::getCached('publications', 'settings_' . $data['ptid']);
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -33,7 +35,8 @@ function publications_userapi_getsettings($data)
     $pubtypesettings = array();
     try {
         $pubtypesettings = unserialize($pubtypeobject->properties['configuration']->getValue());
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+    }
 
     $globalsettings = publications_userapi_getglobalsettings();
     if (is_array($pubtypesettings)) {
@@ -78,4 +81,3 @@ function publications_userapi_getglobalsettings()
                     );
     return $settings;
 }
-?>

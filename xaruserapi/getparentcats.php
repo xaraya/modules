@@ -47,13 +47,15 @@ function publications_userapi_getparentcats($args)
 
     // get the counts for all child categories
     if ($count) {
-        $pubcatcount = xarMod::apiFunc('publications',
-                                    'user',
-                                    'getpubcatcount',
-                                    array('state' => $state,
+        $pubcatcount = xarMod::apiFunc(
+            'publications',
+            'user',
+            'getpubcatcount',
+            array('state' => $state,
                                           'cids' => $cids,
                                           'ptid' => $ptid,
-                                          'reverse' => 1));
+                                          'reverse' => 1)
+        );
     }
 
     if (!empty($ptid)) {
@@ -66,13 +68,15 @@ function publications_userapi_getparentcats($args)
     foreach ($cids as $cid) {
         $trailitem = array();
         $trailitem['cid'] = $cid;
-// TODO : retrieve all parents in 1 call ?
-        $trail = xarMod::apiFunc('categories',
-                              'user',
-                              'getcat',
-                              array('cid' => $cid,
+        // TODO : retrieve all parents in 1 call ?
+        $trail = xarMod::apiFunc(
+            'categories',
+            'user',
+            'getcat',
+            array('cid' => $cid,
                                     'return_itself' => true,
-                                    'getparents' => true));
+                                    'getparents' => true)
+        );
 
         if ($count && isset($pubcatcount[$cid][$curptid])) {
             $trailitem['cidcount'] = $pubcatcount[$cid][$curptid];
@@ -82,22 +86,28 @@ function publications_userapi_getparentcats($args)
 
         $trailitem['parentlinks'] = array();
         $item = array();
-        $item['plink'] = xarModURL('publications','user','view',
-                                  array('ptid' => $ptid,
-                                        'sort' => $sort));
+        $item['plink'] = xarModURL(
+            'publications',
+            'user',
+            'view',
+            array('ptid' => $ptid,
+                                        'sort' => $sort)
+        );
         $item['ptitle'] = xarML('All');
         $item['pjoin'] = ' &gt; ';
         $trailitem['parentlinks'][] = $item;
-// TODO: make sure permissions are taken into account here !
+        // TODO: make sure permissions are taken into account here !
         foreach ($trail as $info) {
-            $item['plink'] = xarModURL('publications',
-                                      'user',
-                                      'view',
-                                       array('ptid' => $ptid,
-                                             'catid' => $info['cid']));
-            $item['ptitle'] = xarVarPrepForDisplay($info['name']);
+            $item['plink'] = xarModURL(
+                'publications',
+                'user',
+                'view',
+                array('ptid' => $ptid,
+                                             'catid' => $info['cid'])
+            );
+            $item['ptitle'] = xarVar::prepForDisplay($info['name']);
             if ($info['cid'] == $cid) {
-// TODO: test for neighbourhood
+                // TODO: test for neighbourhood
                 $trailitem['info'] = $info;
 
                 $item['pjoin'] = '';
@@ -105,14 +115,18 @@ function publications_userapi_getparentcats($args)
                 if (!$showcids) {
                     $item['plink'] = '';
                 }
-// TODO: improve the case where we have several icons :)
+                // TODO: improve the case where we have several icons :)
                 if (!empty($info['image'])) {
                     $trailitem['icon'] = array('image' => $info['image'],
                                                'text' => $item['ptitle'],
                                                'link' =>
-                          xarModURL('publications','user','view',
-                                   array('ptid' => $ptid,
-                                         'catid' => $info['cid'])));
+                          xarModURL(
+                              'publications',
+                              'user',
+                              'view',
+                              array('ptid' => $ptid,
+                                         'catid' => $info['cid'])
+                          ));
                 }
             } else {
                 $item['pjoin'] = ' &gt; ';
@@ -123,5 +137,3 @@ function publications_userapi_getparentcats($args)
     }
     return $trails;
 }
-
-?>

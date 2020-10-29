@@ -31,7 +31,7 @@
 function publications_userapi_getrandom($args)
 {
     // 1. count the number of items that apply
-    $count = xarMod::apiFunc('publications','user','countitems',$args);
+    $count = xarMod::apiFunc('publications', 'user', 'countitems', $args);
     if (empty($count)) {
         return array();
     }
@@ -56,7 +56,7 @@ function publications_userapi_getrandom($args)
     if ($count <= $numitems) {
         unset($args['numitems']);
         // retrieve all publications and randomize the order
-        $items = xarMod::apiFunc('publications','user','getall',$args);
+        $items = xarMod::apiFunc('publications', 'user', 'getall', $args);
         $randomkeys = array_rand($items, $count);
         if (!is_array($randomkeys)) {
             $randomkeys = array($randomkeys);
@@ -75,8 +75,10 @@ function publications_userapi_getrandom($args)
                 $i--;
             } else {
                 $idlist[] = $args['startnum'];
-                $items = xarMod::apiFunc('publications','user','getall',$args);
-                if (empty($items)) break;
+                $items = xarMod::apiFunc('publications', 'user', 'getall', $args);
+                if (empty($items)) {
+                    break;
+                }
                 array_push($publications, array_pop($items));
             }
         }
@@ -84,5 +86,3 @@ function publications_userapi_getrandom($args)
 
     return $publications;
 }
-
-?>

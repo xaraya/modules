@@ -6,14 +6,14 @@
         <xar:loop name="$ancestors">
             <xar:if condition="$loop:index ge 1">&#187;</xar:if>
             <xar:if condition="$loop:item.id eq $id">
-                <span title="#xarVarPrepForDisplay($loop:item.title)#"><strong>#xarVarPrepForDisplay($loop:item.title)#</strong></span>
+                <span title="#xarVar::prepForDisplay($loop:item.title)#"><strong>#xarVar::prepForDisplay($loop:item.title)#</strong></span>
             <xar:else />
-                <a href="#xarModURL('publications','user','display',array('id'=&gt;$loop:item.id,'ptid'=>$loop:item.ptid))#" title="#xarVarPrepForDisplay($loop:item.title)#">#xarVarPrepForDisplay($loop:item.title)#</a>
+                <a href="#xarModURL('publications','user','display',array('id'=&gt;$loop:item.id,'ptid'=>$loop:item.ptid))#" title="#xarVar::prepForDisplay($loop:item.title)#">#xarVar::prepForDisplay($loop:item.title)#</a>
             </xar:if>
         </xar:loop>
 
         <!-- Provide an edit link if we have privileges -->
-        <xar:if condition="xarSecurityCheck('EditPublications', 0)">
+        <xar:if condition="xarSecurity::check('EditPublications', 0)">
             [<a href="#xarModURL('publications','admin','modify',array('id'=>$id, 'ptid'=>$current_page.ptid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
         </xar:if>
     </div>

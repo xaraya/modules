@@ -14,28 +14,60 @@
  */
 function publications_admin_importpages()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
 
     // Get parameters
-    if(!xarVarFetch('basedir',    'isset', $basedir,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filelist',   'isset', $filelist,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('refresh',    'isset', $refresh,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',       'int',   $data['ptid'],0,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('contentfield',    'str', $data['contentfield'],     '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('titlefield',      'str', $data['titlefield'],       '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',       'isset', $cids,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filterhead', 'isset', $filterhead,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filtertail', 'isset', $filtertail,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('findtitle',  'isset', $findtitle,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('numrules',   'isset', $numrules,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('search',     'isset', $search,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('replace',    'isset', $replace,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('test',       'isset', $test,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('import',     'isset', $import,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('basedir', 'isset', $basedir, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('filelist', 'isset', $filelist, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('refresh', 'isset', $refresh, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'int', $data['ptid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('contentfield', 'str', $data['contentfield'], '', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('titlefield', 'str', $data['titlefield'], '', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('cids', 'isset', $cids, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('filterhead', 'isset', $filterhead, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('filtertail', 'isset', $filtertail, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('findtitle', 'isset', $findtitle, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('numrules', 'isset', $numrules, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('search', 'isset', $search, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('replace', 'isset', $replace, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('test', 'isset', $test, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the base directory where the html files to be imported are located
+    # Get the base directory where the html files to be imported are located
 #
     if (empty($basedir)) {
         $data['basedir'] = realpath(sys::code() . 'modules/publications');
@@ -43,22 +75,28 @@ function publications_admin_importpages()
         $data['basedir'] = realpath($basedir);
     }
 
-    $data['filelist'] = xarMod::apiFunc('publications','admin','browse',
-                                      array('basedir' => $data['basedir'],
-                                            'filetype' => 'html?'));
+    $data['filelist'] = xarMod::apiFunc(
+        'publications',
+        'admin',
+        'browse',
+        array('basedir' => $data['basedir'],
+                                            'filetype' => 'html?')
+    );
 
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
     }
 
     $data['authid'] = xarSecGenAuthKey();
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the current publication types
+    # Get the current publication types
 #
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     $data['pubtypes'] = array();
     foreach ($pubtypes as $pubtype) {
@@ -70,7 +108,7 @@ function publications_admin_importpages()
 
 # --------------------------------------------------------
 #
-# Get the fields of hte chosen pubtype
+        # Get the fields of hte chosen pubtype
 #
         sys::import('modules.dynamicdata.class.objects.master');
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -83,42 +121,42 @@ function publications_admin_importpages()
                 $data['fields'][] = array('id' => $name, 'name' => $property->label);
             }
         }
-/*
-        $catlist = array();
-        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
-        foreach ($rootcats as $catid) {
-            $catlist[$catid['category_id']] = 1;
-        }
-        $seencid = array();
-        if (isset($cids) && is_array($cids)) {
-            foreach ($cids as $catid) {
-                if (!empty($catid)) {
-                    $seencid[$catid] = 1;
+        /*
+                $catlist = array();
+                $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
+                foreach ($rootcats as $catid) {
+                    $catlist[$catid['category_id']] = 1;
                 }
-            }
-        }
-        $cids = array_keys($seencid);
-        foreach (array_keys($catlist) as $catid) {
-            $data['cats'][] = xarMod::apiFunc('categories',
-                                            'visual',
-                                            'makeselect',
-                                            Array('cid' => $catid,
-                                                  'return_itself' => true,
-                                                  'select_itself' => true,
-                                                  'values' => &$seencid,
-                                                  'multiple' => 1));
-        }
-        */
+                $seencid = array();
+                if (isset($cids) && is_array($cids)) {
+                    foreach ($cids as $catid) {
+                        if (!empty($catid)) {
+                            $seencid[$catid] = 1;
+                        }
+                    }
+                }
+                $cids = array_keys($seencid);
+                foreach (array_keys($catlist) as $catid) {
+                    $data['cats'][] = xarMod::apiFunc('categories',
+                                                    'visual',
+                                                    'makeselect',
+                                                    Array('cid' => $catid,
+                                                          'return_itself' => true,
+                                                          'select_itself' => true,
+                                                          'values' => &$seencid,
+                                                          'multiple' => 1));
+                }
+                */
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the data from the form
+    # Get the data from the form
 #
     $data['selected'] = array();
     if (!isset($refresh) && isset($filelist) && is_array($filelist) && count($filelist) > 0) {
         foreach ($filelist as $file) {
-            if (!empty($file) && in_array($file,$data['filelist'])) {
+            if (!empty($file) && in_array($file, $data['filelist'])) {
                 $data['selected'][$file] = 1;
             }
         }
@@ -159,13 +197,12 @@ function publications_admin_importpages()
         }
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Perform the import
+    # Perform the import
 #
     if (!empty($data['ptid']) && isset($data['contentfield']) && count($data['selected']) > 0
         && (isset($test) || isset($import))) {
-
         $mysearch = array();
         $myreplace = array();
         for ($i = 0; $i < $numrules; $i++) {
@@ -186,19 +223,19 @@ function publications_admin_importpages()
                 continue;
             }
             $page = @join('', file($curfile));
-            if (!empty($data['findtitle']) && preg_match($data['findtitle'],$page,$matches)) {
+            if (!empty($data['findtitle']) && preg_match($data['findtitle'], $page, $matches)) {
                 $title = $matches[1];
             } else {
                 $title = '';
             }
             if (!empty($data['filterhead'])) {
-                $page = preg_replace($filterhead,'',$page);
+                $page = preg_replace($filterhead, '', $page);
             }
             if (!empty($data['filtertail'])) {
-                $page = preg_replace($filtertail,'',$page);
+                $page = preg_replace($filtertail, '', $page);
             }
             if (count($mysearch) > 0) {
-                $page = preg_replace($mysearch,$myreplace,$page);
+                $page = preg_replace($mysearch, $myreplace, $page);
             }
 
             $args[$data['contentfield']] = $page;
@@ -211,34 +248,36 @@ function publications_admin_importpages()
 
             if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('publications','user','preview',
-                                              array('object' => $pageobject));
+                $data['preview'] = xarMod::guiFunc(
+                    'publications',
+                    'user',
+                    'preview',
+                    array('object' => $pageobject)
+                );
                 break;
             } else {
                 $id = $pageobject->createItem();
                 if (empty($id)) {
                     return; // throw back
                 } else {
-                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['description'],$id);
+                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)', $curfile, $pubtypes[$data['ptid']]['description'], $id);
                     $data['logfile'] .= '<br />';
                 }
             }
         }
     }
 
-    $data['filterhead'] = xarVarPrepForDisplay($data['filterhead']);
-    $data['filtertail'] = xarVarPrepForDisplay($data['filtertail']);
-    $data['findtitle'] = xarVarPrepForDisplay($data['findtitle']);
+    $data['filterhead'] = xarVar::prepForDisplay($data['filterhead']);
+    $data['filtertail'] = xarVar::prepForDisplay($data['filtertail']);
+    $data['findtitle'] = xarVar::prepForDisplay($data['findtitle']);
     for ($i = 0; $i < $numrules; $i++) {
         if (!empty($data['search'][$i])) {
-            $data['search'][$i] = xarVarPrepForDisplay($data['search'][$i]);
+            $data['search'][$i] = xarVar::prepForDisplay($data['search'][$i]);
         }
         if (!empty($data['replace'][$i])) {
-            $data['replace'][$i] = xarVarPrepForDisplay($data['replace'][$i]);
+            $data['replace'][$i] = xarVar::prepForDisplay($data['replace'][$i]);
         }
     }
 
     return $data;
 }
-
-?>

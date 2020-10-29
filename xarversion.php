@@ -59,4 +59,3 @@ $modversion['propertyinfo'] = array(
                                         'name' => 'icondropown',
                                         ),
                                     );
-?>

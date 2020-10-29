@@ -23,30 +23,32 @@
  */
 function publications_userapi_getpubcatcount($args)
 {
-/*
-    static $pubcatcount = array();
+    /*
+        static $pubcatcount = array();
 
-    if (count($pubcatcount) > 0) {
-        return $pubcatcount;
-    }
-*/
+        if (count($pubcatcount) > 0) {
+            return $pubcatcount;
+        }
+    */
     $pubcatcount = array();
 
     // Get database setup
     $dbconn = xarDB::getConn();
 
     // Get the LEFT JOIN ... ON ...  and WHERE parts from publications
-    $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
+    $publicationsdef = xarMod::apiFunc('publications', 'user', 'leftjoin', $args);
 
     // Load API
-    if (!xarModAPILoad('categories', 'user')) return;
+    if (!xarMod::apiLoad('categories', 'user')) {
+        return;
+    }
 
     $args['modid'] = xarMod::getRegID('publications');
     if (isset($args['ptid']) && !isset($args['itemtype'])) {
         $args['itemtype'] = $args['ptid'];
     }
     // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
-    $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',$args);
+    $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin', $args);
 
     // Get count
     $query = 'SELECT '. $publicationsdef['pubtype_id'] .', '. $categoriesdef['category_id']
@@ -59,7 +61,9 @@ function publications_userapi_getpubcatcount($args)
             GROUP BY '. $publicationsdef['pubtype_id'] .', '. $categoriesdef['category_id'];
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     if ($result->EOF) {
         if (!empty($args['ptid']) && empty($args['reverse'])) {
             $pubcatcount[$args['ptid']] = array();
@@ -72,8 +76,8 @@ function publications_userapi_getpubcatcount($args)
         $fields = $result->fields;
         $ptid = array_shift($fields);
         $count = array_pop($fields);
-// TODO: use multi-level array for multi-category grouping ?
-        $cid = join('+',$fields);
+        // TODO: use multi-level array for multi-category grouping ?
+        $cid = join('+', $fields);
         if (empty($args['reverse'])) {
             $pubcatcount[$ptid][$cid] = $count;
         } else {
@@ -91,5 +95,3 @@ function publications_userapi_getpubcatcount($args)
 
     return $pubcatcount;
 }
-
-?>

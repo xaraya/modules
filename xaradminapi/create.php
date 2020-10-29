@@ -32,21 +32,31 @@ function publications_adminapi_create($args)
 
     // Argument check (all the rest is optional, and set to defaults below)
     if (empty($title)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'title', 'admin', 'create', 'Publications');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'title',
+            'admin',
+            'create',
+            'Publications'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
-// Note : we use empty() here because we don't care whether it's set to ''
+    // Note : we use empty() here because we don't care whether it's set to ''
 //        or if it's not set at all - defaults will apply in either case !
 
     // Default publication type is defined in the admin interface
     if (empty($ptid) || !is_numeric($ptid)) {
         $ptid = xarModVars::get('publications', 'defaultpubtype');
         if (empty($ptid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                        'ptid', 'admin', 'create', 'Publications');
-            throw new BadParameterException(null,$msg);
+            $msg = xarML(
+                'Invalid #(1) for #(2) function #(3)() in module #(4)',
+                'ptid',
+                'admin',
+                'create',
+                'Publications'
+            );
+            throw new BadParameterException(null, $msg);
         }
         // for security check below
         $args['ptid'] = $ptid;
@@ -54,7 +64,7 @@ function publications_adminapi_create($args)
 
     // Default author ID is the current user, or Anonymous (1) otherwise
     if (empty($owner) || !is_numeric($owner)) {
-        $owner = xarUserGetVar('id');
+        $owner = xarUser::getVar('id');
         if (empty($owner)) {
             $owner = _XAR_ID_UNREGISTERED;
         }
@@ -65,19 +75,23 @@ function publications_adminapi_create($args)
     // Default categories is none
     if (empty($cids) || !is_array($cids) ||
         // catch common mistake of using array('') instead of array()
-        (count($cids) > 0 && empty($cids[0])) ) {
+        (count($cids) > 0 && empty($cids[0]))) {
         $cids = array();
         // for security check below
         $args['cids'] = $cids;
     }
 
     // Security check
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) {
+        return;
+    }
 
     $args['mask'] = 'SubmitPublications';
-    if (!xarMod::apiFunc('publications','user','checksecurity',$args)) {
-        $msg = xarML('Not authorized to add #(1) items',
-                    'Publication');
+    if (!xarMod::apiFunc('publications', 'user', 'checksecurity', $args)) {
+        $msg = xarML(
+            'Not authorized to add #(1) items',
+            'Publication'
+        );
         throw new ForbiddenOperationException(null, $msg);
     }
 
@@ -93,7 +107,7 @@ function publications_adminapi_create($args)
 
     // Default locale is current locale
     if (empty($locale)) {
-        $locale = xarMLSGetCurrentLocale();
+        $locale = xarMLS::getCurrentLocale();
     }
 
     // Default summary is empty
@@ -146,10 +160,12 @@ function publications_adminapi_create($args)
                       (string)  $notes,
                       (int)     $state,
                       (string)  $locale);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
-// Get id to return
+    // Get id to return
     if (empty($id) || !is_numeric($id) || $id == 0) {
         $id = $dbconn->PO_Insert_ID($publicationstable, 'id');
     }
@@ -158,24 +174,22 @@ function publications_adminapi_create($args)
         $cids = array();
     }
 
-/* ---------------------------- TODO: Remove once publications uses dd objects */
+    /* ---------------------------- TODO: Remove once publications uses dd objects */
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
-    $categories->checkInput('categories',$id);
+    $categories->checkInput('categories', $id);
     $categories->createValue($id);
-/*------------------------------- */
+    /*------------------------------- */
 
     // Call create hooks for categories, hitcount etc.
     $args['id'] = $id;
-// Specify the module, itemtype and itemid so that the right hooks are called
+    // Specify the module, itemtype and itemid so that the right hooks are called
     $args['module'] = 'publications';
     $args['itemtype'] = $ptid;
     $args['itemid'] = $id;
-// TODO: get rid of this
+    // TODO: get rid of this
     $args['cids'] = $cids;
     xarModCallHooks('item', 'create', $id, $args);
 
     return $id;
 }
-
-?>

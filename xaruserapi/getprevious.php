@@ -26,14 +26,20 @@
 function publications_userapi_getprevious($args)
 {
     // Security check
-    if (!xarSecurityCheck('ViewPublications')) return;
+    if (!xarSecurity::check('ViewPublications')) {
+        return;
+    }
 
     // Get arguments from argument array
     extract($args);
 
     // Optional argument
-    if (empty($ptid)) $ptid = xarModVars::get('publications', 'defaultpubtype');
-    if (empty($sort)) $sort = 'date';
+    if (empty($ptid)) {
+        $ptid = xarModVars::get('publications', 'defaultpubtype');
+    }
+    if (empty($sort)) {
+        $sort = 'date';
+    }
     if (!isset($state)) {
         // frontpage or approved or placeholder
         xarMod::load('publications');
@@ -54,10 +60,10 @@ function publications_userapi_getprevious($args)
     $q->in('state', $state);
     
     // Get the current article
-    $current = xarMod::apiFunc('publications','user','get',array('id' => $id));
+    $current = xarMod::apiFunc('publications', 'user', 'get', array('id' => $id));
 
     // Add the ordering
-    switch($sort) {
+    switch ($sort) {
     case 'tree':
         $q->lt('rightpage_id', (int)$current['leftpage_id']);
         $q->setorder('rightpage_id', 'DESC');
@@ -94,11 +100,9 @@ function publications_userapi_getprevious($args)
     // TODO: grab categories & check against them too
 
     // check security - don't generate an exception here
-    if (!xarSecurityCheck('ViewPublications',0,'Publication',"$item[pubtype_id]:All:$item[owner]:$item[id]")) {
+    if (!xarSecurity::check('ViewPublications', 0, 'Publication', "$item[pubtype_id]:All:$item[owner]:$item[id]")) {
         return array();
     }
 
     return $item;
 }
-
-?>

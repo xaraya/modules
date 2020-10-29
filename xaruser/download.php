@@ -16,27 +16,33 @@
  
 function publications_user_download()
 {
-    if(!xarVarFetch('filepath',  'str', $filepath,      '',     XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('filepath', 'str', $filepath, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-# --------------------------------------------------------
-# Check the input
+    # --------------------------------------------------------
+    # Check the input
 #
-    if (empty($filepath)) throw new Exception(xarML('No file path passed'));
+    if (empty($filepath)) {
+        throw new Exception(xarML('No file path passed'));
+    }
     $filepath = urldecode($filepath);
     $filesize = filesize($filepath);
     $filetype = filetype($filepath);
     $filename = basename($filepath);
     
     // Xaraya security
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) {
+        return;
+    }
 
-# --------------------------------------------------------
-# Start buffering for the file
+    # --------------------------------------------------------
+    # Start buffering for the file
 #
     ob_start();
 
     $fp = @fopen($filepath, 'rb');
-    if(is_resource($fp))   {
+    if (is_resource($fp)) {
         do {
             $data = fread($fp, 65536);
             if (strlen($data) == 0) {
@@ -49,8 +55,8 @@ function publications_user_download()
         fclose($fp);
     }
     
-# --------------------------------------------------------
-# Send the header
+    # --------------------------------------------------------
+    # Send the header
 #
     // Headers -can- be sent after the actual data
     // Why do it this way? So we can capture any errors and return if need be :)
@@ -63,10 +69,8 @@ function publications_user_download()
     if (!empty($filesize)) {
         header("Content-length: " . $filesize);
     }
-# --------------------------------------------------------
-# Stop here
+    # --------------------------------------------------------
+    # Stop here
 #
     exit(0);
 }
-
-?>

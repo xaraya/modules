@@ -18,7 +18,7 @@ sys::import('modules.publications.xarblocks.featureditems');
 
 class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlock
 {
-    function modify()
+    public function modify()
     {
         $data = $this->getContent();
     
@@ -30,22 +30,24 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
             $statearray = $data['pubstate'];
         }
     
-        if(!empty($data['catfilter'])) {
+        if (!empty($data['catfilter'])) {
             $cidsarray = array($data['catfilter']);
         } else {
             $cidsarray = array();
         }
 
-# ------------------------------------------------------------
-# Set up the different conditions for getting the items that can be featured
+        # ------------------------------------------------------------
+        # Set up the different conditions for getting the items that can be featured
 #
         $conditions = array();
 
         // Only include pubtype if a specific pubtype is selected
-        if (!empty($data['pubtype_id'])) $conditions['ptid'] = $data['pubtype_id'];
+        if (!empty($data['pubtype_id'])) {
+            $conditions['ptid'] = $data['pubtype_id'];
+        }
 
         // If itemlimit is set to 0, then don't pass to getall
-        if ($data['itemlimit'] != 0 ) {
+        if ($data['itemlimit'] != 0) {
             $conditions['numitems'] = $data['itemlimit'];
         }
     
@@ -56,15 +58,17 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         $conditions['fields'] = $data['fields'];
         $conditions['sort'] = $data['toptype'];
 
-# ------------------------------------------------------------
-# Get the items for the dropdown based on the conditions
+        # ------------------------------------------------------------
+        # Get the items for the dropdown based on the conditions
 #
-        $items = xarMod::apiFunc('publications', 'user', 'getall', $conditions );
+        $items = xarMod::apiFunc('publications', 'user', 'getall', $conditions);
 
         // Limit the titles to less than 50 characters
         $data['filtereditems'] = array();
         foreach ($items as $key => $value) {
-            if (strlen($value['title']) > 50) $value['title'] = substr($value['title'], 0, 47) . '...';
+            if (strlen($value['title']) > 50) {
+                $value['title'] = substr($value['title'], 0, 47) . '...';
+            }
             $value['original_name'] = $value['name'];
             $value['name'] = $value['title'];
             $data['filtereditems'][$value['id']] = $value;
@@ -74,8 +78,8 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         $data['morepublications'] = $data['filtereditems'];
         unset($data['morepublications'][$this->featuredid]);
 
-# ------------------------------------------------------------
-# Get the data for other dropdowns
+        # ------------------------------------------------------------
+        # Get the data for other dropdowns
 #
         $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
         $data['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
@@ -90,24 +94,24 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         return $data;
     }
 
-    function update(Array $data=array())
+    public function update(array $data=array())
     {
         $args = array();
-        xarVarFetch('pubtype_id',       'int',       $args['pubtype_id'],      0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('catfilter',        'id',        $args['catfilter'],       $this->catfilter, XARVAR_NOT_REQUIRED);
-        xarVarFetch('nocatlimit',       'checkbox',  $args['nocatlimit'],      $this->nocatlimit, XARVAR_NOT_REQUIRED);
-        xarVarFetch('pubstate',         'str',       $args['pubstate'],        $this->pubstate, XARVAR_NOT_REQUIRED);
-        xarVarFetch('itemlimit',        'int:1',     $args['itemlimit'],       $this->itemlimit, XARVAR_NOT_REQUIRED);
-        xarVarFetch('toptype',  'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, XARVAR_NOT_REQUIRED);
-        xarVarFetch('featuredid',       'int',        $args['featuredid'],      $this->featuredid, XARVAR_NOT_REQUIRED);
-        xarVarFetch('alttitle',         'str',       $args['alttitle'],        $this->alttitle, XARVAR_NOT_REQUIRED);
-        xarVarFetch('altsummary',       'str',       $args['altsummary'],      $this->altsummary, XARVAR_NOT_REQUIRED);
-        xarVarFetch('showfeaturedbod',  'checkbox',  $args['showfeaturedbod'], 0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('showfeaturedsum',  'checkbox',  $args['showfeaturedsum'], 0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('showsummary',      'checkbox',  $args['showsummary'],     0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('showvalue',        'checkbox',  $args['showvalue'],       0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('linkpubtype',      'checkbox',  $args['linkpubtype'],     0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('linkcat',          'checkbox',  $args['linkcat'],         0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('pubtype_id', 'int', $args['pubtype_id'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('catfilter', 'id', $args['catfilter'], $this->catfilter, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('nocatlimit', 'checkbox', $args['nocatlimit'], $this->nocatlimit, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('pubstate', 'str', $args['pubstate'], $this->pubstate, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('itemlimit', 'int:1', $args['itemlimit'], $this->itemlimit, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('toptype', 'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('featuredid', 'int', $args['featuredid'], $this->featuredid, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('alttitle', 'str', $args['alttitle'], $this->alttitle, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('altsummary', 'str', $args['altsummary'], $this->altsummary, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('showfeaturedbod', 'checkbox', $args['showfeaturedbod'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('showfeaturedsum', 'checkbox', $args['showfeaturedsum'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('showsummary', 'checkbox', $args['showsummary'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('showvalue', 'checkbox', $args['showvalue'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('linkpubtype', 'checkbox', $args['linkpubtype'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('linkcat', 'checkbox', $args['linkcat'], 0, XARVAR_NOT_REQUIRED);
 
         sys::import('modules.dynamicdata.class.properties.master');
         $multiselect = DataPropertyMaster::getProperty(array('name' => 'multiselect'));
@@ -117,7 +121,6 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         $args['moreitems'] = $multiselect->getValue();
         
         $this->setContent($args);
-        return true;        
+        return true;
     }
 }
-?>

@@ -14,16 +14,16 @@
  */
 function publications_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('EditPublications',0)) return;
+    /* Security Check */
+    if (!xarSecurity::check('EditPublications', 0)) {
+        return;
+    }
 
     $data=array();
     
     /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview 
+     * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('publications', 'admin', 'main', $data,'main');
+    return xarTpl::module('publications', 'admin', 'main', $data, 'main');
 }
-
-?>

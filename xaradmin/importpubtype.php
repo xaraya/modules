@@ -14,10 +14,16 @@
  */
 function publications_admin_importpubtype($args)
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
 
-    if(!xarVarFetch('import', 'isset', $import,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('xml', 'isset', $xml,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('xml', 'isset', $xml, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     extract($args);
 
@@ -29,16 +35,22 @@ function publications_admin_importpubtype($args)
 
     $basedir = 'modules/publications';
     $filetype = 'xml';
-    $files = xarMod::apiFunc('dynamicdata','admin','browse',
-                           array('basedir' => $basedir,
-                                 'filetype' => $filetype));
+    $files = xarMod::apiFunc(
+        'dynamicdata',
+        'admin',
+        'browse',
+        array('basedir' => $basedir,
+                                 'filetype' => $filetype)
+    );
     if (!isset($files) || count($files) < 1) {
         $files = array();
-        $data['warning'] = xarML('There are currently no XML files available for import in "#(1)"',$basedir);
+        $data['warning'] = xarML('There are currently no XML files available for import in "#(1)"', $basedir);
     }
 
     if (!empty($import) || !empty($xml)) {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         if (!empty($import)) {
             $found = '';
@@ -50,28 +62,36 @@ function publications_admin_importpubtype($args)
             }
             if (empty($found) || !file_exists($basedir . '/' . $file)) {
                 $msg = xarML('File not found');
-                throw new BadParameterException(null,$msg);
+                throw new BadParameterException(null, $msg);
             }
-            $ptid = xarMod::apiFunc('publications','admin','importpubtype',
-                                  array('file' => $basedir . '/' . $file));
+            $ptid = xarMod::apiFunc(
+                'publications',
+                'admin',
+                'importpubtype',
+                array('file' => $basedir . '/' . $file)
+            );
         } else {
-            $ptid = xarMod::apiFunc('publications','admin','importpubtype',
-                                  array('xml' => $xml));
+            $ptid = xarMod::apiFunc(
+                'publications',
+                'admin',
+                'importpubtype',
+                array('xml' => $xml)
+            );
         }
-        if (empty($ptid)) return;
+        if (empty($ptid)) {
+            return;
+        }
 
-        $data['warning'] = xarML('Publication type #(1) was successfully imported',$ptid);
+        $data['warning'] = xarML('Publication type #(1) was successfully imported', $ptid);
     }
 
     natsort($files);
-    array_unshift($files,'');
+    array_unshift($files, '');
     foreach ($files as $file) {
-         $data['options'][] = array('id' => $file,
+        $data['options'][] = array('id' => $file,
                                     'name' => $file);
     }
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

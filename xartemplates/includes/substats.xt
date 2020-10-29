@@ -28,7 +28,7 @@
                 </xar:set>
                 <xar:elseif condition="$curfield eq 'owner'" />
                 <xar:set name="curlabel">
-                    #xarUserGetVar('name',$subkey)# 
+                    #xarUser::getVar('name',$subkey)# 
                 </xar:set>
                 <xar:set name="owner">
                     #$subkey# 

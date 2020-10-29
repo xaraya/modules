@@ -41,49 +41,64 @@ function publications_userapi_get($args)
 
     // Argument check
     if (isset($id) && (!is_numeric($id) || $id < 1)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'article ID', 'user', 'get',
-                    'Publications');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'article ID',
+            'user',
+            'get',
+            'Publications'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     // allow ptid instead of pubtype_id, like getall and other api's (if both specified, ptid wins)
-    if (!empty($ptid))
+    if (!empty($ptid)) {
         $pubtype_id = $ptid;
+    }
 
     // bypass this function, call getall instead?
     if (isset($fields) || isset($extra)) {
-        if (!empty($id))
+        if (!empty($id)) {
             $args['ids'] = array($id);
-        if (!empty($pubtype_id))
-            $args['ptid'] = $pubtype_id;
-        $wheres = array();
-        if (!empty($title))
-            $wheres[] = "title eq '$title'";
-        if (!empty($summary))
-            $wheres[] = "summary eq '$summary'";
-        if (!empty($body))
-            $wheres[] = "body eq '$body'";
-        if (!empty($notes))
-            $wheres[] = "notes eq '$notes'";
-        if (!empty($withcids))
-            $fields[] = "cids";
-        foreach ($wheres as $w) {
-            if (isset($where))
-                $where .= " || $w";
-            else
-                $where = $w;
         }
-        if (isset($where))
+        if (!empty($pubtype_id)) {
+            $args['ptid'] = $pubtype_id;
+        }
+        $wheres = array();
+        if (!empty($title)) {
+            $wheres[] = "title eq '$title'";
+        }
+        if (!empty($summary)) {
+            $wheres[] = "summary eq '$summary'";
+        }
+        if (!empty($body)) {
+            $wheres[] = "body eq '$body'";
+        }
+        if (!empty($notes)) {
+            $wheres[] = "notes eq '$notes'";
+        }
+        if (!empty($withcids)) {
+            $fields[] = "cids";
+        }
+        foreach ($wheres as $w) {
+            if (isset($where)) {
+                $where .= " || $w";
+            } else {
+                $where = $w;
+            }
+        }
+        if (isset($where)) {
             $args['where'] = $where;
-        $arts = xarMod::apiFunc('publications','user','getall', $args );
-        if (!empty($arts))
+        }
+        $arts = xarMod::apiFunc('publications', 'user', 'getall', $args);
+        if (!empty($arts)) {
             return current($arts);
-        else
+        } else {
             return false;
+        }
     }
 
-// TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
+    // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
     $bindvars = array();
     if (!empty($id)) {
@@ -100,7 +115,7 @@ function publications_userapi_get($args)
             }
         }
         if (count($wherelist) > 0) {
-            $where = "WHERE " . join(' AND ',$wherelist);
+            $where = "WHERE " . join(' AND ', $wherelist);
         } else {
             $where = '';
         }
@@ -127,11 +142,13 @@ function publications_userapi_get($args)
             FROM $publicationstable
             $where";
     if (!empty($id)) {
-        $result = $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     } else {
-        $result = $dbconn->SelectLimit($query,1,0,$bindvars);
+        $result = $dbconn->SelectLimit($query, 1, 0, $bindvars);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     if ($result->EOF) {
         return false;
@@ -155,19 +172,22 @@ function publications_userapi_get($args)
 
     if (!empty($withcids)) {
         $article['cids'] = array();
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) {
+            return;
+        }
 
         $info = xarMod::getBaseInfo('publications');
         $regid = $info['systemid'];
-        $articlecids = xarMod::apiFunc('categories',
-                                    'user',
-                                    'getlinks',
-                                    array('iids' => Array($id),
+        $articlecids = xarMod::apiFunc(
+            'categories',
+            'user',
+            'getlinks',
+            array('iids' => array($id),
                                           'itemtype' => $pubtype_id,
                                           'modid' => $regid,
                                           'reverse' => 0
                                          )
-                                   );
+        );
         if (is_array($articlecids) && count($articlecids) > 0) {
             $article['cids'] = array_keys($articlecids);
         }
@@ -175,30 +195,34 @@ function publications_userapi_get($args)
 
     // Security check
     if (isset($article['cids']) && count($article['cids']) > 0) {
-// TODO: do we want all-or-nothing access here, or is one access enough ?
+        // TODO: do we want all-or-nothing access here, or is one access enough ?
         foreach ($article['cids'] as $cid) {
-            if (!xarSecurityCheck('ReadPublications',0,'Publication',"$pubtype_id:$cid:$owner:$id")) return;
-        // TODO: combine with ViewCategoryLink check when we can combine module-specific
-        // security checks with "parent" security checks transparently ?
-            if (!xarSecurityCheck('ReadCategories',0,'Category',"All:$cid")) return;
+            if (!xarSecurity::check('ReadPublications', 0, 'Publication', "$pubtype_id:$cid:$owner:$id")) {
+                return;
+            }
+            // TODO: combine with ViewCategoryLink check when we can combine module-specific
+            // security checks with "parent" security checks transparently ?
+            if (!xarSecurity::check('ReadCategories', 0, 'Category', "All:$cid")) {
+                return;
+            }
         }
     } else {
-        if (!xarSecurityCheck('ReadPublications',0,'Publication',"$pubtype_id:All:$owner:$id")) return;
-    }
-
-/*
-    if (xarModIsHooked('dynamicdata','publications')) {
-        $values = xarMod::apiFunc('dynamicdata','user','getitem',
-                                 array('module'   => 'publications',
-                                       'itemtype' => $pubtype_id,
-                                       'itemid'   => $id));
-        if (!empty($values) && count($values) > 0) {
-        // TODO: compare with looping over $name => $value pairs
-            $article = array_merge($article,$values);
+        if (!xarSecurity::check('ReadPublications', 0, 'Publication', "$pubtype_id:All:$owner:$id")) {
+            return;
         }
     }
-*/
+
+    /*
+        if (xarModIsHooked('dynamicdata','publications')) {
+            $values = xarMod::apiFunc('dynamicdata','user','getitem',
+                                     array('module'   => 'publications',
+                                           'itemtype' => $pubtype_id,
+                                           'itemid'   => $id));
+            if (!empty($values) && count($values) > 0) {
+            // TODO: compare with looping over $name => $value pairs
+                $article = array_merge($article,$values);
+            }
+        }
+    */
     return $article;
 }
-
-?>

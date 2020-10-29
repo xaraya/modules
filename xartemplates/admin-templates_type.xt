@@ -65,7 +65,7 @@
                     <xar:if condition="$writable">
                         This template can be saved.
                     <xar:else/>
-                        <img src="#xarTplGetImage('exception.png','base')#" width="20px" height="20px"/>&#160;
+                        <img src="#xarTpl::getImage('exception.png','base')#" width="20px" height="20px"/>&#160;
                         <span class="warning">                            
                             <xar:if condition="$filetype eq 'module'">
                                 This template cannot be saved: check the directory permissions

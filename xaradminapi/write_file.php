@@ -13,21 +13,23 @@
 
 function publications_adminapi_write_file($args)
 {
-    if (empty($args['file'])) return false;
+    if (empty($args['file'])) {
+        return false;
+    }
     try {
         $dir = dirname($args['file']);
-        if (!file_exists($dir)) mkdir($dir, 0777, true);
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
         $fp = fopen($args['file'], "wb");
     
         if (get_magic_quotes_gpc()) {
             $data = stripslashes($args['data']);
         }
         fwrite($fp, $args['data']);
-        fclose ($fp);
+        fclose($fp);
         return true;
     } catch (Exception $e) {
         return false;
     }
 }
-
-?>

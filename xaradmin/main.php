@@ -18,12 +18,14 @@
 function publications_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) {
+        return;
+    }
 
-    $redirect = xarModVars::get('publications','backend_page');
+    $redirect = xarModVars::get('publications', 'backend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
         return true;
     } else {
@@ -31,5 +33,3 @@ function publications_admin_main()
     }
     return true;
 }
-
-?>

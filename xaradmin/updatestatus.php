@@ -14,29 +14,41 @@
  */
 function publications_admin_updatestate()
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) {
+        return;
+    }
 
     // Get parameters
-    if(!xarVarFetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('state', 'isset', $state,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',   'isset', $ptid,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('ids', 'isset', $ids, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('state', 'isset', $state, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('catid', 'isset', $catid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     if (!isset($ids) || count($ids) == 0) {
         $msg = xarML('No publications selected');
         throw new DataNotFoundException(null, $msg);
     }
-    $states = xarMod::apiFunc('publications','user','getstates');
+    $states = xarMod::apiFunc('publications', 'user', 'getstates');
     if (!isset($state) || !is_numeric($state) || $state < -1 || ($state != -1 && !isset($states[$state]))) {
         $msg = xarML('Invalid state');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
     if (!empty($ptid)) {
         $descr = $pubtypes[$ptid]['description'];
     } else {
@@ -47,22 +59,27 @@ function publications_admin_updatestate()
     // We need to tell some hooks that we are coming from the update state screen
     // and not the update the actual article screen.  Right now, the keywords vanish
     // into thin air.  Bug 1960 and 3161
-    xarCoreCache::setCached('Hooks.all','noupdate',1);
+    xarCoreCache::setCached('Hooks.all', 'noupdate', 1);
 
     foreach ($ids as $id => $val) {
         if ($val != 1) {
             continue;
         }
         // Get original article information
-        $article = xarMod::apiFunc('publications',
-                                 'user',
-                                 'get',
-                                 array('id' => $id,
-                                       'withcids' => 1));
+        $article = xarMod::apiFunc(
+            'publications',
+            'user',
+            'get',
+            array('id' => $id,
+                                       'withcids' => 1)
+        );
         if (!isset($article) || !is_array($article)) {
-            $msg = xarML('Unable to find #(1) item #(2)',
-                         $descr, xarVarPrepForDisplay($id));
-            throw new BadParameterException(null,$msg);
+            $msg = xarML(
+                'Unable to find #(1) item #(2)',
+                $descr,
+                xarVar::prepForDisplay($id)
+            );
+            throw new BadParameterException(null, $msg);
         }
         $article['ptid'] = $article['pubtype_id'];
         // Security check
@@ -73,9 +90,12 @@ function publications_admin_updatestate()
         } else {
             $input['mask'] = 'EditPublications';
         }
-        if (!xarMod::apiFunc('publications','user','checksecurity',$input)) {
-            $msg = xarML('You have no permission to modify #(1) item #(2)',
-                         $descr, xarVarPrepForDisplay($id));
+        if (!xarMod::apiFunc('publications', 'user', 'checksecurity', $input)) {
+            $msg = xarML(
+                'You have no permission to modify #(1) item #(2)',
+                $descr,
+                xarVar::prepForDisplay($id)
+            );
             throw new ForbiddenOperationException(null, $msg);
         }
 
@@ -102,11 +122,15 @@ function publications_admin_updatestate()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarController::redirect(xarModURL('publications', 'admin', 'view',
-                                          array('ptid' => $ptid,
+            xarController::redirect(xarModURL(
+                'publications',
+                'admin',
+                'view',
+                array('ptid' => $ptid,
                                                 'catid' => $catid,
                                                 'state' => $state,
-                                                'startnum' => $startnum)));
+                                                'startnum' => $startnum)
+            ));
             return true;
         }
     }
@@ -114,10 +138,12 @@ function publications_admin_updatestate()
     if (empty($catid)) {
         $catid = null;
     }
-    xarController::redirect(xarModURL('publications', 'admin', 'view',
-                                  array('ptid' => $ptid, 'catid' => $catid)));
+    xarController::redirect(xarModURL(
+        'publications',
+        'admin',
+        'view',
+        array('ptid' => $ptid, 'catid' => $catid)
+    ));
 
     return true;
 }
-
-?>

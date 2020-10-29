@@ -15,10 +15,10 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class PublicationType extends DataObject
 {
-    public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
+    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
     {
         // The access property is ignored here
-        $isvalid = parent::checkInput($args,$suppress,$priority);
+        $isvalid = parent::checkInput($args, $suppress, $priority);
 
         // If the rest of the publication is valid, then do the access part
         // Note this is a collection of access properties; hence the complicated process of saving it
@@ -49,7 +49,7 @@ class PublicationType extends DataObject
         return $isvalid;
     }
 
-    function createItem(Array $args = array())
+    public function createItem(array $args = array())
     {
         // Make sure we can save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
@@ -59,7 +59,7 @@ class PublicationType extends DataObject
         return $id;
     }
 
-    function updateItem(Array $args = array())
+    public function updateItem(array $args = array())
     {
         // Make sure we can save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
@@ -77,7 +77,5 @@ class PublicationType extends DataObject
         } else {
             return $this->description;
         }
-        
     }
 }
-?>

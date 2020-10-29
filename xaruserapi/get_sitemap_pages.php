@@ -23,21 +23,29 @@
 
 function publications_userapi_get_sitemap_pages($args)
 {
-    if (empty($args['itemid'])) $args['itemid'] = 0;
-    if (empty($args['scope'])) $args['scope'] = 'descendants';
-    if (($args['itemid'] == 0) && ($args['scope'] == 'descendants')) $args['scope'] = 'all';
-    if (empty($args['sort'])) $args['sort'] = 0;
+    if (empty($args['itemid'])) {
+        $args['itemid'] = 0;
+    }
+    if (empty($args['scope'])) {
+        $args['scope'] = 'descendants';
+    }
+    if (($args['itemid'] == 0) && ($args['scope'] == 'descendants')) {
+        $args['scope'] = 'all';
+    }
+    if (empty($args['sort'])) {
+        $args['sort'] = 0;
+    }
 
     // Make sure we have the base translation id
     if (!empty($args['itemid'])) {
-        $args['itemid'] = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')));
+        $args['itemid'] = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')));
     }
 
     // Identify any filters
     $filters = array();
     foreach ($args as $k => $v) {
         if (strpos($k, 'filter_') === 0) {
-            $argname = substr($k,7);
+            $argname = substr($k, 7);
             $filters[$argname] = $v;
         }
     }
@@ -45,28 +53,30 @@ function publications_userapi_get_sitemap_pages($args)
     $xartable =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
-    $q->addtable($xartable['publications'],'p');
+    $q->addtable($xartable['publications'], 'p');
 
     switch ($args['scope']) {
         case 'all':
             $q->gt('p.leftpage_id', 0);
         break;
         case 'descendants':
-            $q->addtable($xartable['publications'],'root');
+            $q->addtable($xartable['publications'], 'root');
             $q->eq('root.id', $args['itemid']);
-            $q->le('root.leftpage_id','expr:p.leftpage_id');
-            $q->ge('root.rightpage_id','expr:p.rightpage_id');
+            $q->le('root.leftpage_id', 'expr:p.leftpage_id');
+            $q->ge('root.rightpage_id', 'expr:p.rightpage_id');
         break;
-        case 'children': 
+        case 'children':
             $q->eq('p.parentpage_id', $args['itemid']);
         break;
         case 'siblings':
-            $q->addtable($xartable['publications'],'p1');
+            $q->addtable($xartable['publications'], 'p1');
             $q->join('p.parentpage_id', 'p1.parentpage_id');
             $q->eq('p1.id', $args['itemid']);
         break;
     }
-    if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $args['itemtype']);
+    if (!empty($args['itemtype'])) {
+        $q->eq('p.pubtype_id', $args['itemtype']);
+    }
     $q->eq('p.sitemap_flag', 1);
     $q->gt('p.state', 2);
     $q->addfield('p.id AS id');
@@ -81,10 +91,12 @@ function publications_userapi_get_sitemap_pages($args)
     $q->addfield('p.state AS state');
     
     // Add any fiters we found
-    foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
+    foreach ($filters as $k => $v) {
+        $q->eq('p.'.$k, $v);
+    }
     
     // We can force alpha sorting, or else sort according to tree position
-    if($args['sort']) {
+    if ($args['sort']) {
         $q->setorder('p.title');
     } else {
         $q->setorder('p.leftpage_id');
@@ -94,7 +106,7 @@ function publications_userapi_get_sitemap_pages($args)
     $pages = $q->output();
     
     $depthstack = array();
-    foreach($pages as $key => $page) {
+    foreach ($pages as $key => $page) {
         // Calculate the relative nesting level.
         // 'depth' is 0-based. Top level (root node) is zero.
         if (!empty($depthstack)) {
@@ -120,9 +132,11 @@ function publications_userapi_get_sitemap_pages($args)
     // CHECKME: is there a better way?
     // If there is no translation the base document remains. Is this desired outcome?
     
-    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
+    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUser::getNavigationLocale()) {
         $indexedpages = array();
-        foreach ($pages as $v) $indexedpages[$v['id']] = $v;
+        foreach ($pages as $v) {
+            $indexedpages[$v['id']] = $v;
+        }
         $ids = array_keys($indexedpages);
         
         $q = new Query();
@@ -135,11 +149,13 @@ function publications_userapi_get_sitemap_pages($args)
         $q->addfield('sitemap_source_flag');
         $q->addfield('sitemap_alias');
         $q->addfield('pubtype_id');
-        $q->in('parent_id',$ids);
-        $q->eq('locale',xarUserGetNavigationLocale());
+        $q->in('parent_id', $ids);
+        $q->eq('locale', xarUser::getNavigationLocale());
 
         // Add any fiters we found
-        foreach ($filters as $k => $v) $q->eq($k, $v);
+        foreach ($filters as $k => $v) {
+            $q->eq($k, $v);
+        }
     
         $q->run();
         foreach ($q->output() as $row) {
@@ -154,4 +170,3 @@ function publications_userapi_get_sitemap_pages($args)
     }
     return $pages;
 }
-?>

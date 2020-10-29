@@ -26,7 +26,7 @@ function publications_adminapi_getstats($args)
     $newfields = array();
     $newgroups = array();
     foreach ($group as $field) {
-        if (empty($field) || !in_array($field,$allowedfields)) {
+        if (empty($field) || !in_array($field, $allowedfields)) {
             continue;
         }
         if ($field == 'pubdate_year') {
@@ -109,21 +109,23 @@ function publications_adminapi_getstats($args)
               ORDER BY ' . join(', ', $newgroups);
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $stats = array();
     while (!$result->EOF) {
         if (count($newfields) > 3) {
-            list($field1,$field2,$field3,$field4,$count) = $result->fields;
+            list($field1, $field2, $field3, $field4, $count) = $result->fields;
             $stats[$field1][$field2][$field3][$field4] = $count;
         } elseif (count($newfields) == 3) {
-            list($field1,$field2,$field3,$count) = $result->fields;
+            list($field1, $field2, $field3, $count) = $result->fields;
             $stats[$field1][$field2][$field3] = $count;
         } elseif (count($newfields) == 2) {
-            list($field1,$field2,$count) = $result->fields;
+            list($field1, $field2, $count) = $result->fields;
             $stats[$field1][$field2] = $count;
         } elseif (count($newfields) == 1) {
-            list($field1,$count) = $result->fields;
+            list($field1, $count) = $result->fields;
             $stats[$field1] = $count;
         }
         $result->MoveNext();
@@ -132,5 +134,3 @@ function publications_adminapi_getstats($args)
 
     return $stats;
 }
-
-?>

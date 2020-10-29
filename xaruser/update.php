@@ -24,24 +24,44 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_update()
 {
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) {
+        return;
+    }
 
     // Get parameters
-    if(!xarVarFetch('itemid',       'isset', $data['itemid'],       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
-	if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('items', 'str', $items, '', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'isset', $data['ptid'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('modify_cids', 'isset', $cids, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('preview', 'isset', $data['preview'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('quit', 'isset', $data['quit'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('front', 'isset', $data['front'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // Confirm authorisation code
     // This has been disabled for now
 //    if (!xarSecConfirmAuthKey()) return;
 
-    $items = explode(',',$items);
+    $items = explode(',', $items);
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
@@ -66,48 +86,65 @@ function publications_user_update()
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
         // Store each item for later processing
-        $itemsdata[$prefix] = $data['object']->getFieldValues(array(),1);
+        $itemsdata[$prefix] = $data['object']->getFieldValues(array(), 1);
     }
    
     if ($data['preview'] || !$isvalid) {
         // Show debug info if called for
-        if (!$isvalid && 
-            xarModVars::get('publications','debugmode') && 
-            in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            echo xarML('The following were invalid fields:');echo "<br/>";
-            var_dump($data['object']->getInvalids());}
+        if (!$isvalid &&
+            xarModVars::get('publications', 'debugmode') &&
+            in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo xarML('The following were invalid fields:');
+            echo "<br/>";
+            var_dump($data['object']->getInvalids());
+        }
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
-        if ($data['preview']) $data['tab'] = 'preview';
+        if ($data['preview']) {
+            $data['tab'] = 'preview';
+        }
         $data['items'] = $itemsdata;
         // Get the settings of the publication type we are using
-        $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+        $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
 
-        return xarTplModule('publications','user','modify', $data);
+        return xarTpl::module('publications', 'user', 'modify', $data);
     }
     
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
-    $article = xarModCallHooks('item', 'transform-input', $data['itemid'], $article,
-                               'publications', $data['ptid']);
+    $article = xarModCallHooks(
+        'item',
+        'transform-input',
+        $data['itemid'],
+        $article,
+        'publications',
+        $data['ptid']
+    );
 
     // Now talk to the database. Loop through all the translation pages
     foreach ($itemsdata as $id => $itemdata) {
         // Get the data for this item
-        $data['object']->setFieldValues($itemdata,1);
+        $data['object']->setFieldValues($itemdata, 1);
 
         // Save or create the item (depends whether this translation is new)
-        if (empty($id)) {$item = $data['object']->createItem();}
-        else {$item = $data['object']->updateItem();}
+        if (empty($id)) {
+            $item = $data['object']->createItem();
+        } else {
+            $item = $data['object']->updateItem();
+        }
         
         // Check if we have an alias and set it as an alias of the publications module
         $alias_flag = $data['object']->properties['alias_flag']->value;
         if ($alias_flag == 1) {
             $alias = $data['object']->properties['alias']->value;
-            if (!empty($alias)) xarModAlias::set($alias, 'publications');
-        } elseif($alias_flag == 2) {
+            if (!empty($alias)) {
+                xarModAlias::set($alias, 'publications');
+            }
+        } elseif ($alias_flag == 2) {
             $alias = $data['object']->properties['name']->value;
-            if (!empty($alias)) xarModAlias::set($alias, 'publications');
+            if (!empty($alias)) {
+                xarModAlias::set($alias, 'publications');
+            }
         }
 
         // Clear the itemid property in preparation for the next round
@@ -123,7 +160,9 @@ function publications_user_update()
 
     if ($data['quit']) {
         // Redirect if needed
-        if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('return_url', 'str', $return_url, '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
         if (!empty($return_url)) {
             // FIXME: this is a hack for short URLS
             $delimiter = (strpos($return_url, '&')) ? '&' : '?';
@@ -132,22 +171,34 @@ function publications_user_update()
     
         // Redirect if we came from somewhere else
         $current_listview = xarSession::getVar('publications_current_listview');
-        if (!empty($current_listview)) xarController::redirect($current_listview);
-        xarController::redirect(xarModURL('publications', 'user', 'view',
-                                      array('ptid' => $data['ptid'])));
+        if (!empty($current_listview)) {
+            xarController::redirect($current_listview);
+        }
+        xarController::redirect(xarModURL(
+            'publications',
+            'user',
+            'view',
+            array('ptid' => $data['ptid'])
+        ));
         return true;
     } elseif ($data['front']) {
-        xarController::redirect(xarModURL('publications', 'user', 'display',
-                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
+        xarController::redirect(xarModURL(
+            'publications',
+            'user',
+            'display',
+            array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])
+        ));
     } else {
-    	if (!empty($data['returnurl'])) {
-    		xarController::redirect($data['returnurl']);
-    	} else {
-    		xarController::redirect(xarModURL('publications', 'user', 'modify',
-                                   array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
-    	}
+        if (!empty($data['returnurl'])) {
+            xarController::redirect($data['returnurl']);
+        } else {
+            xarController::redirect(xarModURL(
+                'publications',
+                'user',
+                'modify',
+                array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])
+            ));
+        }
         return true;
     }
 }
-
-?>

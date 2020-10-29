@@ -52,47 +52,49 @@ function publications_userapi_getpublinks($args)
     }
 
     // Get publication types
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     if ($count) {
         if (isset($state)) {
-            $pubcount = xarMod::apiFunc('publications','user','getpubcount',
-                                     array('state' => $state));
+            $pubcount = xarMod::apiFunc(
+                'publications',
+                'user',
+                'getpubcount',
+                array('state' => $state)
+            );
         } else {
-            $pubcount = xarMod::apiFunc('publications','user','getpubcount');
+            $pubcount = xarMod::apiFunc('publications', 'user', 'getpubcount');
         }
     }
 
     $publinks = array();
     $isfirst = 1;
     foreach ($pubtypes as $id => $pubtype) {
-        if (!xarSecurityCheck('ViewPublications',0,'Publication',$id.':All:All:All')) {
+        if (!xarSecurity::check('ViewPublications', 0, 'Publication', $id.':All:All:All')) {
             continue;
         }
         if ($all || (isset($pubcount[$id]) && $pubcount[$id] > 0)) {
-             $item['pubtitle'] = $pubtype['description'];
-             $item['pubid'] = $id;
-             if (isset($ptid) && $ptid == $id) {
-                 $item['publink'] = '';
-             } else {
-                 $item['publink'] = xarModURL('publications',$typemod,$func,array('ptid' => $id));
-             }
-             if ($count && isset($pubcount[$id])) {
-                 $item['pubcount'] = $pubcount[$id];
-             } else {
-                 $item['pubcount'] = 0;
-             }
-             if ($isfirst) {
-                 $isfirst = 0;
-                 $item['pubjoin'] = '';
-             } else {
-                 $item['pubjoin'] = ' - ';
-             }
-             $publinks[] = $item;
+            $item['pubtitle'] = $pubtype['description'];
+            $item['pubid'] = $id;
+            if (isset($ptid) && $ptid == $id) {
+                $item['publink'] = '';
+            } else {
+                $item['publink'] = xarModURL('publications', $typemod, $func, array('ptid' => $id));
+            }
+            if ($count && isset($pubcount[$id])) {
+                $item['pubcount'] = $pubcount[$id];
+            } else {
+                $item['pubcount'] = 0;
+            }
+            if ($isfirst) {
+                $isfirst = 0;
+                $item['pubjoin'] = '';
+            } else {
+                $item['pubjoin'] = ' - ';
+            }
+            $publinks[] = $item;
         }
     }
 
     return $publinks;
 }
-
-?>

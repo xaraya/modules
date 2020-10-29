@@ -25,9 +25,9 @@
                         <option value="0">-- All --</option>
                         <xar:loop name="$root_pages">
                             <xar:if condition="$loop:item.id eq $contains">
-                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVar::prepForDisplay($loop:item.name)# (#xarVar::prepForDisplay($loop:item.pubtype_name)#)</option>
                             <xar:else />
-                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVar::prepForDisplay($loop:item.name)# (#xarVar::prepForDisplay($loop:item.pubtype_name)#)</option>
                             </xar:if>
                         </xar:loop>
                     </select>
@@ -61,9 +61,9 @@
                         <tr>
                             <td align="left" class="#$row_class#">
                                 #$loop:item.xar_map#
-                                #xarVarPrepForDisplay($loop:item.name)#
+                                #xarVar::prepForDisplay($loop:item.name)#
                             </td>
-                            <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-publications-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span></td>
+                            <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-publications-status-#$loop:item.status#">#xarVar::prepForDisplay($loop:item.pubtype_name)#: #xarVar::prepForDisplay($loop:item.title)#</span></td>
                             <td class="#$row_class#" style="text-align: center;">
                                 <xar:if condition="!empty($loop:item.edit_allowed)">
                                     <xar:set name="link">
@@ -71,7 +71,7 @@
                                     </xar:set>
                                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                         <xar:set name="icon">
-                                            xarTplGetImage('icons/modify.png', 'base')
+                                            xarTpl::getImage('icons/modify.png', 'base')
                                         </xar:set>
                                         <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                     <xar:else />
@@ -88,7 +88,7 @@
                                     </xar:set>
                                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                         <xar:set name="icon">
-                                            xarTplGetImage('icons/delete.png', 'base')
+                                            xarTpl::getImage('icons/delete.png', 'base')
                                         </xar:set>
                                         <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                     <xar:else />
@@ -104,7 +104,7 @@
                                 </xar:set>
                                 <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                     <xar:set name="icon">
-                                        xarTplGetImage('icons/display.png', 'base')
+                                        xarTpl::getImage('icons/display.png', 'base')
                                     </xar:set>
                                     <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                 <xar:else />

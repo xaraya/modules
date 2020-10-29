@@ -16,18 +16,21 @@
  */
 function publications_userapi_getitempubtype($args)
 {
-    if (empty($args['itemid']))
+    if (empty($args['itemid'])) {
         throw new BadParameterException('itemid');
+    }
         
     sys::import('xaraya.structures.query');
     $xartables =& xarDB::getTables();
-    $q = new Query('SELECT',$xartables['publications']);
+    $q = new Query('SELECT', $xartables['publications']);
     $q->addfield('pubtype_id');
-    $q->eq('id',$args['itemid']);
-    if (!$q->run()) return;
+    $q->eq('id', $args['itemid']);
+    if (!$q->run()) {
+        return;
+    }
     $result = $q->row();
-    if (empty($result)) return 0;
+    if (empty($result)) {
+        return 0;
+    }
     return $result['pubtype_id'];
 }
-
-?>

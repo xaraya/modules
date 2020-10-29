@@ -13,28 +13,40 @@
 
 function publications_admin_delete_pubtype()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
 
-    if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'str', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('idlist', 'str', $idlist, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
-    if (!empty($itemid)) $idlist = $itemid;
-    $ids = explode(',',trim($idlist,','));
+    if (!empty($itemid)) {
+        $idlist = $itemid;
+    }
+    $ids = explode(',', trim($idlist, ','));
     
     if (empty($idlist)) {
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin','view_pubtypes'));
+            xarController::redirect(xarModURL('publications', 'admin', 'view_pubtypes'));
         }
     }
 
     $data['message'] = '';
     $data['itemid']  = $itemid;
 
-/*------------- Ask for Confirmation.  If yes, action ----------------------------*/
+    /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
     $pubtype = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -53,10 +65,12 @@ function publications_admin_delete_pubtype()
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarModURL('publications','admin','delete_pubtype',array('idlist' => $idlist));
-        return xarTplModule('publications','admin', 'delete_pubtype',$data);        
+        $data['yes_action'] = xarModURL('publications', 'admin', 'delete_pubtype', array('idlist' => $idlist));
+        return xarTpl::module('publications', 'admin', 'delete_pubtype', $data);
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         foreach ($ids as $id) {
             $itemid = $pubtype->deleteItem(array('itemid' => $id));
             $data['message'] = "Publication Type deleted [ID $id]";
@@ -71,5 +85,3 @@ function publications_admin_delete_pubtype()
 
     return true;
 }
-
-?>

@@ -53,5 +53,3 @@ function publications_treeapi_getancestors($args)
         return array(0);
     }
 }
-
-?>

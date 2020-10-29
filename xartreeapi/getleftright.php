@@ -53,5 +53,3 @@ function publications_treeapi_getleftright($args)
 
     return $return;
 }
-
-?>

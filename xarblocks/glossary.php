@@ -22,8 +22,8 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     protected $module           = 'publications'; // module block type belongs to, if any
     protected $text_type        = 'Glossary';  // Block type display name
     protected $text_type_long   = 'Show a glossary summary in a side block.'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = '';
     protected $contact          = '';
     protected $credits          = '';
@@ -31,7 +31,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
-    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = true; // let the subsystem know if this block type has a help() method
 
     public $paramname = 'glossaryterm';
@@ -42,8 +42,12 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     {
         $vars = $this->getContent();
         
-        if (!xarVarFetch($vars['paramname'], 'str', $glossaryterm, null, XARVAR_NOT_REQUIRED)) return;
-        if (!$glossaryterm) return;
+        if (!xarVar::fetch($vars['paramname'], 'str', $glossaryterm, null, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!$glossaryterm) {
+            return;
+        }
 
         $articlecriteria = array();
         $articlecriteria['title'] = $glossaryterm;
@@ -59,7 +63,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         // Attempt to find an article with this title and optional category/pubtype.
         $article = xarMod::apiFunc('publications', 'user', 'get', $articlecriteria);
 
-        if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
+        if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === null) {
             // Category not assigned to article.
             unset($article);
         }
@@ -69,7 +73,9 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
             $vars['definition'] = $article['summary'];
             $vars['term'] = $glossaryterm;
             $vars['detailurl'] = xarModURL(
-                'publications', 'user', 'display',
+                'publications',
+                'user',
+                'display',
                 array('id' => $article['id'], 'ptid' => $article['pubtype_id'])
             );
             $vars['detailavailable'] = !empty($article['body']);
@@ -80,7 +86,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         // The title of a block does not go through any further tag stripping
         // because it is normally under admin control (the admin may wish to
         // add working tags to the title).
-        $this->setTitle(str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $this->title));
+        $this->setTitle(str_replace('{term}', xarVar::prepForDisplay($glossaryterm), $this->title));
         
         return $vars;
     }
@@ -109,16 +115,15 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
 
         // Return output
         return $vars;
-        
     }
     
     public function update()
     {
-        xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
-        xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
+        xarVar::fetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
         $this->setContent($vars);
-        return true;    
+        return true;
     }
     
     public function help()
@@ -129,8 +134,6 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
             . ' In the block admin, choose the optional pub type and category that will define the glossary terms.'
             . ' The glossary term displayed will be the article summary.'
             . ' A link to the full article will be provided if the body of the article contains text.'
-        );    
+        );
     }
-
 }
-?>

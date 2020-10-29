@@ -20,8 +20,8 @@ class Publications_FillerBlock extends BasicBlock implements iBlock
     protected $module           = 'publications'; // module block type belongs to, if any
     protected $text_type        = 'Featured Items';  // Block type display name
     protected $text_type_long   = 'Show featured publications'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = '';
     protected $contact          = '';
     protected $credits          = '';
@@ -29,7 +29,7 @@ class Publications_FillerBlock extends BasicBlock implements iBlock
     
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
-    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
 
@@ -41,7 +41,7 @@ class Publications_FillerBlock extends BasicBlock implements iBlock
     // chris: state is a reserved property name used by blocks
     //public $state               = '2,3';
     public $pubstate            = '2,3';
-    public $toptype             = 'ratings'; 
+    public $toptype             = 'ratings';
 
     public function display()
     {
@@ -49,18 +49,15 @@ class Publications_FillerBlock extends BasicBlock implements iBlock
 
         // Setup featured item
         if ($data['fillerid'] > 0) {
-        
-            $fillerid = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $data['fillerid']));
-            $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $data['fillerid']));
+            $fillerid = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $data['fillerid']));
+            $ptid = xarMod::apiFunc('publications', 'user', 'getitempubtype', array('itemid' => $data['fillerid']));
             $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
             $pubtypeobject->getItem(array('itemid' => $ptid));
             $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
             $data['object']->getItem(array('itemid' => $data['fillerid']));
 
             return $data;
-
-        } 
+        }
         return;
     }
 }
-?>

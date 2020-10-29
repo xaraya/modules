@@ -22,43 +22,63 @@ sys::import('modules.dynamicdata.class.objects.master');
 function publications_user_modify($args)
 {
     // Xaraya security
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) {
+        return;
+    }
 
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid',     'id',    $data['itemid'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('id',         'id',    $data['id'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid', 'id', $data['itemid'], null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('id', 'id', $data['id'], null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('name', 'str:1', $name, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
    
-    if (empty($data['itemid']) && empty($data['id'])) return xarResponse::NotFound();
+    if (empty($data['itemid']) && empty($data['id'])) {
+        return xarResponse::NotFound();
+    }
     // The itemid var takes precedence if it exiats
-    if (!isset($data['itemid'])) $data['itemid'] = $data['id'];
+    if (!isset($data['itemid'])) {
+        $data['itemid'] = $data['id'];
+    }
 
     if (empty($name) && empty($ptid)) {
         $item = xarMod::apiFunc('publications', 'user', 'get', array('id' => $data['itemid']));
         $ptid = $item['pubtype_id'];
     }
 
-    if(!empty($ptid)) {
+    if (!empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
         $where = 'id = ' . $ptid;
         $items = $publication_type->getItems(array('where' => $where));
         $item = current($items);
         $name = $item['name'];
     }
-    if (empty($name)) return xarResponse::NotFound();
+    if (empty($name)) {
+        return xarResponse::NotFound();
+    }
 
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Are we allowed to modify this page?
+    # Are we allowed to modify this page?
 #
     $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $data['object']->properties['access']));
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
@@ -71,7 +91,7 @@ function publications_user_modify($args)
             case 0:
             break;
             case 1:
-                $allow = xarIsParent('Administrators',xarUser::getVar('uname'));
+                $allow = xarIsParent('Administrators', xarUser::getVar('uname'));
             break;
             case 1:
                 $allow = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
@@ -82,28 +102,32 @@ function publications_user_modify($args)
     // If no access, then bail showing a forbidden or the "no permission" page or an empty page
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow) {
-        if ($accessconstraints['modify']['failure']) return xarResponse::Forbidden();
-        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-        else return xarTplModule('publications', 'user', 'empty');
+        if ($accessconstraints['modify']['failure']) {
+            return xarResponse::Forbidden();
+        } elseif ($nopermissionpage_id) {
+            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+        } else {
+            return xarTpl::module('publications', 'user', 'empty');
+        }
     }
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Good to go. Continue
+    # Good to go. Continue
 #
     $data['ptid'] = $data['object']->properties['itemtype']->value;
 
-    // Send the publication type and the object properties to the template 
+    // Send the publication type and the object properties to the template
     $data['properties'] = $data['object']->getProperties();
     
     // Get the settings of the publication type we are using
-    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
     
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['id']->setValue(0);
         $data['object']->properties['parent']->setValue($data['itemid']);
-        $data['items'][0] = $data['object']->getFieldValues(array(),1);
+        $data['items'][0] = $data['object']->getFieldValues(array(), 1);
         $data['tab'] = '';
     } else {
         $data['items'] = array();
@@ -112,11 +136,11 @@ function publications_user_modify($args)
     // Get the base document. If this itemid is not the base doc,
     // then first find the correct itemid
     $data['object']->getItem(array('itemid' => $data['itemid']));
-    $fieldvalues = $data['object']->getFieldValues(array(),1);
+    $fieldvalues = $data['object']->getFieldValues(array(), 1);
     if (!empty($fieldvalues['parent'])) {
         $data['itemid'] = $fieldvalues['parent'];
         $data['object']->getItem(array('itemid' => $data['itemid']));
-        $fieldvalues = $data['object']->getFieldValues(array(),1);
+        $fieldvalues = $data['object']->getFieldValues(array(), 1);
     }
     $data['items'][$data['itemid']] = $fieldvalues;
 
@@ -128,17 +152,15 @@ function publications_user_modify($args)
         // Clear the previous values before starting the next round
         $data['object']->clearFieldValues();
         $data['object']->getItem(array('itemid' => $key));
-        $data['items'][$key] = $data['object']->getFieldValues(array(),1);
+        $data['items'][$key] = $data['object']->getFieldValues(array(), 1);
     }
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Cache data
+    # Cache data
 #
     // Now we can cache all data away for blocks, subitems etc.
     xarCoreCache::setCached('Publications', 'itemid', $data['itemid']);
 
     return $data;
 }
-
-?>

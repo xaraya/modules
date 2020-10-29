@@ -15,7 +15,9 @@
 function publications_user_redirect($args)
 {
     // Get parameters from user
-    if(!xarVarFetch('id', 'id', $id, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('id', 'id', $id, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // Override if needed from argument array
     extract($args);
@@ -25,13 +27,17 @@ function publications_user_redirect($args)
     }
 
     // Load API
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) {
+        return;
+    }
 
     // Get publication
-    $publication = xarMod::apiFunc('publications',
-                            'user',
-                            'get',
-                            array('id' => $id));
+    $publication = xarMod::apiFunc(
+        'publications',
+        'user',
+        'get',
+        array('id' => $id)
+    );
 
     if (!is_array($publication)) {
         $msg = xarML('Failed to retrieve publication in #(3)_#(1)_#(2).php', 'user', 'get', 'publications');
@@ -41,33 +47,39 @@ function publications_user_redirect($args)
     $ptid = $publication['pubtype_id'];
 
     // Get publication types
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
-// TODO: improve this e.g. when multiple URL fields are present
+    // TODO: improve this e.g. when multiple URL fields are present
     // Find an URL field based on the pubtype configuration
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
         if (empty($value['label'])) {
             continue;
         }
         if ($value['format'] == 'url' && !empty($publication[$field]) && $publication[$field] != 'http://') {
-// TODO: add some verifications here !
-            $hooks = xarModCallHooks('item', 'display', $id,
-                                     array('module'    => 'publications',
+            // TODO: add some verifications here !
+            $hooks = xarModCallHooks(
+                'item',
+                'display',
+                $id,
+                array('module'    => 'publications',
                                            'itemtype'  => $ptid,
                                           ),
-                                     'publications'
-                                    );
+                'publications'
+            );
             xarController::redirect($article[$field]);
             return true;
-        } elseif ($value['format'] == 'urltitle' && !empty($publication[$field]) && substr($publication[$field],0,2) == 'a:') {
+        } elseif ($value['format'] == 'urltitle' && !empty($publication[$field]) && substr($publication[$field], 0, 2) == 'a:') {
             $array = unserialize($publication[$field]);
             if (!empty($array['link']) && $array['link'] != 'http://') {
-                $hooks = xarModCallHooks('item', 'display', $id,
-                                         array('module'    => 'publications',
+                $hooks = xarModCallHooks(
+                    'item',
+                    'display',
+                    $id,
+                    array('module'    => 'publications',
                                                'itemtype'  => $ptid,
                                               ),
-                                         'publications'
-                                        );
+                    'publications'
+                );
                 xarController::redirect($array['link']);
                 return true;
             }
@@ -76,5 +88,3 @@ function publications_user_redirect($args)
 
     return xarML('Unable to find valid redirect field');
 }
-
-?>

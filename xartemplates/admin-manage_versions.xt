@@ -15,7 +15,7 @@
                 <div class="xar-row">
                     <div class="xar-col">
                         <a href="#xarModURL('publications', 'admin', 'modify', array('name' => $objectname, 'itemid' => $page_id))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                            <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                            <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
                         </a>
                         &#160;
                         &#160;

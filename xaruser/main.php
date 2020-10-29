@@ -15,28 +15,30 @@
  */
 function publications_user_main($args)
 {
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Try getting the id of the default page.
+    # Try getting the id of the default page.
 #
     $id = xarModVars::get('publications', 'defaultpage');
 
     if (!empty($id)) {
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
-# Get the ID of the translation if required
+        # Get the ID of the translation if required
 #
-        if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('translate', 'int:1', $translate, 1, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
         return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
     } else {
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
-# No default page, check for a redirect or just show the view page
+        # No default page, check for a redirect or just show the view page
 #
-        $redirect = xarModVars::get('publications','frontend_page');
+        $redirect = xarModVars::get('publications', 'frontend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
             return true;
         } else {
@@ -45,5 +47,3 @@ function publications_user_main($args)
         return true;
     }
 }
-
-?>

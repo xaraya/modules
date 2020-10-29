@@ -29,12 +29,12 @@ function publications_userapi_getrootcats($args)
     // see which root categories we need to handle
     $rootcats = array();
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModUserVars::get('publications','basecids',$ptid));
+        $rootcats = unserialize(xarModUserVars::get('publications', 'basecids', $ptid));
     } elseif (empty($all)) {
-        $rootcats = unserialize(xarModVars::get('publications','basecids'));
+        $rootcats = unserialize(xarModVars::get('publications', 'basecids'));
     } else {
         // Get publication types
-        $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+        $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
         // get base categories for all publication types here
         $publist = array_keys($pubtypes);
         // add the defaults too, in case we have other base categories there
@@ -43,50 +43,62 @@ function publications_userapi_getrootcats($args)
         $catlist = array();
         foreach ($publist as $pubid) {
             if (empty($pubid)) {
-                $cidstring = xarModVars::get('publications','basecids');
+                $cidstring = xarModVars::get('publications', 'basecids');
             } else {
-                $cidstring = xarModUserVars::get('publications','basecids',$pubid);
+                $cidstring = xarModUserVars::get('publications', 'basecids', $pubid);
             }
             if (!empty($cidstring)) {
                 $rootcats = unserialize($cidstring);
             } else {
                 $rootcats = array();
             }
-                foreach ($rootcats as $cid) {
-                    $catlist[$cid] = 1;
-                }
+            foreach ($rootcats as $cid) {
+                $catlist[$cid] = 1;
+            }
         }
         if (count($catlist) > 0) {
             $rootcats = array_keys($catlist);
         }
     }
-    if (empty($rootcats)) $rootcats = array();
+    if (empty($rootcats)) {
+        $rootcats = array();
+    }
 
     if (count($rootcats) < 1) {
         return array();
     }
 
-    if (!xarModAPILoad('categories', 'user')) return;
+    if (!xarMod::apiLoad('categories', 'user')) {
+        return;
+    }
 
     $isfirst = 1;
     $catlinks = array();
-    $catlist = xarMod::apiFunc('categories',
-                            'user',
-                            'getcatinfo',
-                            array('cids' => $rootcats));
+    $catlist = xarMod::apiFunc(
+        'categories',
+        'user',
+        'getcatinfo',
+        array('cids' => $rootcats)
+    );
     if (empty($catlist)) {
         return $catlinks;
     }
     // preserve order of root categories if possible
     foreach ($rootcats as $cid) {
-        if (!isset($catlist[$cid])) continue;
+        if (!isset($catlist[$cid])) {
+            continue;
+        }
         $info = $catlist[$cid];
         $item = array();
         $item['catid'] = $info['cid'];
-        $item['cattitle'] = xarVarPrepForDisplay($info['name']);
-        $item['catlink'] = xarModURL('publications','user','view',
-                                    array('ptid' => $ptid,
-                                          'catid' => $info['cid']));
+        $item['cattitle'] = xarVar::prepForDisplay($info['name']);
+        $item['catlink'] = xarModURL(
+            'publications',
+            'user',
+            'view',
+            array('ptid' => $ptid,
+                                          'catid' => $info['cid'])
+        );
         if ($isfirst) {
             $item['catjoin'] = '';
             $isfirst = 0;
@@ -99,5 +111,3 @@ function publications_userapi_getrootcats($args)
     }
     return $catlinks;
 }
-
-?>

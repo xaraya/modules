@@ -23,9 +23,9 @@
    <!-- Root menu -->
     <ul style="margin-right: 5px">
         <xar:foreach in="$menuarray[0]" value="$node">
-            <xar:if condition="($node['id'] eq 19) AND xarUserIsLoggedIn()">
+            <xar:if condition="($node['id'] eq 19) AND xarUser::isLoggedIn()">
                 <xar:continue/>
-            <xar:elseif condition="($node['id'] eq 22) AND !xarUserIsLoggedIn()"/>
+            <xar:elseif condition="($node['id'] eq 22) AND !xarUser::isLoggedIn()"/>
                 <xar:continue/>
             </xar:if>
             <!-- Check if this is the active node -->

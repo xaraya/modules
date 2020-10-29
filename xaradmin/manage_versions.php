@@ -15,28 +15,43 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_manage_versions($args)
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) {
+        return;
+    }
     
-    if (!xarVarFetch('itemid',  'id',    $data['page_id'],    0,   XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',    'str',   $data['objectname'], '',  XARVAR_NOT_REQUIRED)) {return;}
-    if (empty($data['page_id'])) return xarResponse::NotFound();
+    if (!xarVar::fetch('itemid', 'id', $data['page_id'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('name', 'str', $data['objectname'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (empty($data['page_id'])) {
+        return xarResponse::NotFound();
+    }
     
     sys::import('modules.dynamicdata.class.objects.master');
     $entries = DataObjectMaster::getObjectList(array('name' => 'publications_versions'));
     $entries->dataquery->eq($entries->properties['page_id']->source, $data['page_id']);
     $data['versions'] = $entries->countItems() + 1;
     
-    if ($data['versions'] < 2) return $data;
+    if ($data['versions'] < 2) {
+        return $data;
+    }
     
-    if (!xarVarFetch('version_1',  'int',    $version_1, $data['versions'],  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('version_2',  'int',    $version_2, $data['versions']-1,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('version_1', 'int', $version_1, $data['versions'], XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('version_2', 'int', $version_2, $data['versions']-1, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     $data['version_1'] = $version_1;
     $data['version_2'] = $version_2;
         
     // Assemple options for the version dropdowns
     $data['options'] = array();
-    for ($i=$data['versions'];$i>=1;$i--) 
+    for ($i=$data['versions'];$i>=1;$i--) {
         $data['options'][] = array('id' => $i, 'name' => $i);
+    }
         
     // Get an empty object for the page data
     $page = DataObjectMaster::getObject(array('name' => $data['objectname']));
@@ -50,8 +65,9 @@ function publications_admin_manage_versions($args)
         $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
         $version->dataquery->eq($version->properties['version_number']->source, $version_1);
         $items = $version->getItems();
-        if (count($items) > 1)
+        if (count($items) > 1) {
             throw new Exception(xarML('More than one instance with the version number #(1)', $version_1));
+        }
         $item = current($items);
         $content_array_1 = unserialize($item['content']);
     }
@@ -64,8 +80,9 @@ function publications_admin_manage_versions($args)
         $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
         $version->dataquery->eq($version->properties['version_number']->source, $version_2);
         $items = $version->getItems();
-        if (count($items) > 1)
+        if (count($items) > 1) {
             throw new Exception(xarML('More than one instance with the version number #(1)', $version_2));
+        }
         $item = current($items);
         $content_array_2 = unserialize($item['content']);
     }
@@ -81,18 +98,18 @@ function publications_admin_manage_versions($args)
     
     // Keep a copy to show if the two versions are identical
     $data['content'] = $content_2;
-/*
-	sys::import('modules.publications.class.difflib');
-	sys::import('modules.publications.class.showdiff');
+    /*
+        sys::import('modules.publications.class.difflib');
+        sys::import('modules.publications.class.showdiff');
 
-	$diff = new Diff( explode("\n",$orig_str), explode("\n",$final_str));	
-	$objshowdiff = new showdiff();
-	$data['result'] = $objshowdiff->checkdiff($orig_str,$final_str,$diff,'Line');
-	
-	$string_arr= explode("<br>",$data['result']);
-*/	
-	sys::import('modules.publications.class.lib.Diff');
-	sys::import('modules.publications.class.lib.Diff.Renderer.Html.Inline');
+        $diff = new Diff( explode("\n",$orig_str), explode("\n",$final_str));
+        $objshowdiff = new showdiff();
+        $data['result'] = $objshowdiff->checkdiff($orig_str,$final_str,$diff,'Line');
+
+        $string_arr= explode("<br>",$data['result']);
+    */
+    sys::import('modules.publications.class.lib.Diff');
+    sys::import('modules.publications.class.lib.Diff.Renderer.Html.Inline');
 
     // Explode the content by lines
     $content_1 = explode("\n", $content_1);
@@ -104,16 +121,14 @@ function publications_admin_manage_versions($args)
         //'ignoreCase' => true,
     );
 
-		// Initialize the diff class
-		$diff = new Diff($content_1, $content_2, $options);
-		$renderer = new Diff_Renderer_Html_Inline;
-		$data['diffresult'] = $diff->render($renderer);
+    // Initialize the diff class
+    $diff = new Diff($content_1, $content_2, $options);
+    $renderer = new Diff_Renderer_Html_Inline;
+    $data['diffresult'] = $diff->render($renderer);
 
 
 
-//	$data['content_1'] = nl2br($string_arr[0]);
-//	$data['content_2'] = nl2br($string_arr[1]);
+    //	$data['content_1'] = nl2br($string_arr[0]);
+    //	$data['content_2'] = nl2br($string_arr[1]);
     return $data;
 }
-
-?>

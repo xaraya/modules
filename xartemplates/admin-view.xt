@@ -35,7 +35,7 @@
                             By Author : #(1)
                         </xar:mlstring>
                         <xar:mlvar>
-                            #xarUserGetVar('name',$owner)#
+                            #xarUser::getVar('name',$owner)#
                         </xar:mlvar>
                     </xar:ml>
                 </xar:if>

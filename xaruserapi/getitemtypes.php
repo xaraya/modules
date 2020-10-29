@@ -20,19 +20,19 @@ function publications_userapi_getitemtypes($args)
 
     $itemtypes[300] = array('label' => xarML('Bare Publication'),
                           'title' => xarML('View Bare Publication'),
-                          'url'   => xarModURL('publications','user','view')
+                          'url'   => xarModURL('publications', 'user', 'view')
                          );
     // Get publication types
-    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     foreach ($pubtypes as $id => $pubtype) {
-        $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pubtype['description']),
-                                'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pubtype['description'])),
-                                'url'   => xarModURL('publications','user','view',array('ptid' => $id))
+        $itemtypes[$id] = array('label' => xarVar::prepForDisplay($pubtype['description']),
+                                'title' => xarVar::prepForDisplay(xarML('Display #(1)', $pubtype['description'])),
+                                'url'   => xarModURL('publications', 'user', 'view', array('ptid' => $id))
                                );
     }
 
-    $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30065, 'native' =>false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30065, 'native' =>false));
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
@@ -41,9 +41,11 @@ function publications_userapi_getitemtypes($args)
     */
 
     $types = array();
-    foreach ($itemtypes as $key => $value) $types[$key] = $value;
-    foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
+    foreach ($itemtypes as $key => $value) {
+        $types[$key] = $value;
+    }
+    foreach ($extensionitemtypes as $key => $value) {
+        $types[$key] = $value;
+    }
     return $types;
 }
-
-?>

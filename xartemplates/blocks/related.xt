@@ -4,7 +4,7 @@
         <a href="#$pubtypelink#">
             <xar:ml>
                 <xar:mlstring>More #(1)</xar:mlstring>
-                <xar:mlvar>#xarVarPrepForDisplay($pubtypename)#</xar:mlvar>
+                <xar:mlvar>#xarVar::prepForDisplay($pubtypename)#</xar:mlvar>
             </xar:ml>
         </a>
         <br /><br />
@@ -19,15 +19,15 @@
             <a href="#$authorlink#">
                 <xar:ml>
                     <xar:mlstring>#(1) by #(2)</xar:mlstring>
-                    <xar:mlvar>#xarVarPrepForDisplay($pubtypename)#</xar:mlvar>
-                    <xar:mlvar>#xarVarPrepForDisplay($authorname)#</xar:mlvar>
+                    <xar:mlvar>#xarVar::prepForDisplay($pubtypename)#</xar:mlvar>
+                    <xar:mlvar>#xarVar::prepForDisplay($authorname)#</xar:mlvar>
                 </xar:ml>
             </a>
         <xar:else/>
             <a href="#$authorlink#">
                 <xar:ml>
                     <xar:mlstring>Publications by #(1)</xar:mlstring>
-                    <xar:mlvar>#xarVarPrepForDisplay($authorname)#</xar:mlvar>
+                    <xar:mlvar>#xarVar::prepForDisplay($authorname)#</xar:mlvar>
                 </xar:ml>
             </a>
       </xar:if>

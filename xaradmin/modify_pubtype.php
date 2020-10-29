@@ -15,22 +15,36 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_modify_pubtype($args)
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) {
+        return;
+    }
 
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid',     'isset', $data['itemid'],    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name,              '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab',        'str:1', $data['tab'],       '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('confirm',    'bool',  $data['confirm'],   false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('name', 'str:1', $name, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
-    if (empty($name) && empty($itemid)) return xarResponse::NotFound();
+    if (empty($name) && empty($itemid)) {
+        return xarResponse::NotFound();
+    }
 
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    if(!empty($data['itemid'])) {
+    if (!empty($data['itemid'])) {
         $data['object']->getItem(array('itemid' => $data['itemid']));
     } else {
         $type_list = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
@@ -52,33 +66,33 @@ function publications_admin_modify_pubtype($args)
         $data['object']->properties['access']->value =serialize($data['access']);
     }
     // Get the settings of the publication type we are using
-    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['itemid']));
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['itemid']));
     
-    // Send the publication type and the object properties to the template 
+    // Send the publication type and the object properties to the template
     $data['properties'] = $data['object']->getProperties();
     
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('publications','admin','modify_pubtype', $data);        
+            return xarTpl::module('publications', 'admin', 'modify_pubtype', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('publications','admin','view_pubtypes'));
+            xarController::redirect(xarModURL('publications', 'admin', 'view_pubtypes'));
             return true;
         }
     }
 
     return $data;
 }
-
-?>

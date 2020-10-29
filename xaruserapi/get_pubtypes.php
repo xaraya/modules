@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Publications Module
- 
+
  */
 /**
  * get the name and description of all publication types
@@ -23,12 +23,11 @@
  
 function publications_userapi_get_pubtypes($args)
 {
-    if (xarCoreCache::isCached('Publications.Data', 'producttypes'))
+    if (xarCoreCache::isCached('Publications.Data', 'producttypes')) {
         return xarCoreCache::getCached('Publications.Data', 'producttypes');
+    }
     $object = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
     $items = $object->getItems();
     xarCoreCache::setCached('Publications.Data', 'producttypes', $items);
     return $items;
 }
-
-?>

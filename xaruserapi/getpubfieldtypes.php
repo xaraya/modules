@@ -28,5 +28,3 @@ function publications_userapi_getpubfieldtypes($args)
         'state'   => 'integer',
     );
 }
-
-?>
