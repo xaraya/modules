@@ -83,7 +83,7 @@ function xarcachemanager_init()
     }
 
     // Enable xarcachemanager hooks for articles
-    if (xarModIsAvailable('articles')) {
+    if (xarMod::isAvailable('articles')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -92,7 +92,7 @@ function xarcachemanager_init()
         );
     }
     // Enable xarcachemanager hooks for base
-    if (xarModIsAvailable('base')) {
+    if (xarMod::isAvailable('base')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -101,7 +101,7 @@ function xarcachemanager_init()
         );
     }
     // Enable xarcachemanager hooks for blocks
-    if (xarModIsAvailable('blocks')) {
+    if (xarMod::isAvailable('blocks')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -110,7 +110,7 @@ function xarcachemanager_init()
         );
     }
     // Enable xarcachemanager hooks for categories
-    if (xarModIsAvailable('categories')) {
+    if (xarMod::isAvailable('categories')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -119,7 +119,7 @@ function xarcachemanager_init()
         );
     }
     // Enable xarcachemanager hooks for roles
-    if (xarModIsAvailable('roles')) {
+    if (xarMod::isAvailable('roles')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -128,7 +128,7 @@ function xarcachemanager_init()
         );
     }
     // Enable xarcachemanager hooks for privileges
-    if (xarModIsAvailable('privileges')) {
+    if (xarMod::isAvailable('privileges')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -137,7 +137,7 @@ function xarcachemanager_init()
         );
     }
     // Enable xarcachemanager hooks for dynamicdata
-    if (xarModIsAvailable('dynamicdata')) {
+    if (xarMod::isAvailable('dynamicdata')) {
         xarMod::apiFunc(
             'modules',
             'admin',
@@ -152,11 +152,11 @@ function xarcachemanager_init()
     /*
         if (xarCore_getSystemVar('DB.UseADODBCache')){
             // Enable query caching for categories getcat
-            if (xarModIsAvailable('categories')) {
+            if (xarMod::isAvailable('categories')) {
                 xarModVars::set('categories','cache.userapi.getcat',60);
             }
             // Enable query caching for comments get_author_count
-            if (xarModIsAvailable('comments')) {
+            if (xarMod::isAvailable('comments')) {
                 xarModVars::set('comments','cache.userapi.get_author_count',60);
             }
         }

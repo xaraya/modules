@@ -200,14 +200,14 @@ function xarcachemanager_admin_stats($args)
                         $startnum,
                         $count,
                         xarModURL(
-                                                        'xarcachemanager',
-                                                        'admin',
-                                                        'stats',
-                                                        array('tab' => $tab,
+                            'xarcachemanager',
+                            'admin',
+                            'stats',
+                            array('tab' => $tab,
                                                                     'withlog' => empty($data['withlog']) ? null : 1,
                                                                     'sort' => $sort,
                                                                     'startnum' => '%%')
-                                                    ),
+                        ),
                         $numitems
                     );
                 }
@@ -294,13 +294,13 @@ function xarcachemanager_admin_stats($args)
                         $startnum,
                         $count,
                         xarModURL(
-                                                        'xarcachemanager',
-                                                        'admin',
-                                                        'stats',
-                                                        array('tab' => 'autocache',
+                            'xarcachemanager',
+                            'admin',
+                            'stats',
+                            array('tab' => 'autocache',
                                                                     'sort' => $sort,
                                                                     'startnum' => '%%')
-                                                    ),
+                        ),
                         $numitems
                     );
                 }
@@ -624,7 +624,7 @@ function xarcachemanager_stats_autostats(&$items, &$totals, $logfile)
         if (strlen($page) > 105) {
             $page = wordwrap($page, 105, "\n", 1);
         }
-        $page = xarVarPrepForDisplay($page);
+        $page = xarVar::prepForDisplay($page);
         $items[$url] = array('page' => $page,
                              'hit' => $hit,
                              'miss' => $miss,
@@ -704,7 +704,7 @@ function xarcachemanager_stats_autolog(&$items, &$totals, $logfile)
         if (strlen($page) > 105) {
             $page = wordwrap($page, 105, "\n", 1);
         }
-        $items[$url]['page'] = xarVarPrepForDisplay($page);
+        $items[$url]['page'] = xarVar::prepForDisplay($page);
         $items[$url]['total'] = $items[$url]['hit'] + $items[$url]['miss'];
         if (!empty($items[$url]['total'])) {
             $items[$url]['ratio'] = sprintf("%.1f", 100.0 * $items[$url]['hit'] / $items[$url]['total']);

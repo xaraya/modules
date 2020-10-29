@@ -37,7 +37,7 @@ function xarcachemanager_admin_queries($args)
                 // define some way to store configuration options for the core
                 foreach ($querylist as $query => $time) {
                 }
-            } elseif (xarModIsAvailable($module)) {
+            } elseif (xarMod::isAvailable($module)) {
                 // stored in module variables (for now ?)
                 foreach ($querylist as $query => $time) {
                     if (empty($time) || !is_numeric($time)) {

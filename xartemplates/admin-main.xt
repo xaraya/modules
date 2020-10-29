@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-  <img src="#xarTplGetImage('admin_generic.gif','xarcachemanager')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <img src="#xarTpl::getImage('admin_generic.gif','xarcachemanager')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 

@@ -236,7 +236,7 @@ function xarcachemanager_admin_updateconfig()
     if (empty($configSettings['Output.CookieName'])) {
         $configSettings['Output.CookieName'] = 'XARAYASID';
     }
-    $configSettings['Output.DefaultLocale'] = xarMLSGetSiteLocale();
+    $configSettings['Output.DefaultLocale'] = xarMLS::getSiteLocale();
     $configSettings['Page.TimeExpiration'] = $pageexpiretime;
     $configSettings['Page.DisplayView'] = $pagedisplayview;
     $configSettings['Page.ShowTime'] = $pagetimestamp;

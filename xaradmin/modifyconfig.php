@@ -68,7 +68,7 @@ function xarcachemanager_admin_modifyconfig()
     
     $data['CookieName'] =  (xarConfigVars::get(null, 'Site.Session.CookieName') != '')? xarConfigVars::get(null, 'Site.Session.CookieName'): 'XARAYASID';
     $data['cookieupdatelink'] = xarModURL('base', 'admin', 'modifyconfig', array('tab'=>'security'));
-    $data['defaultlocale'] = xarMLSGetSiteLocale();
+    $data['defaultlocale'] = xarMLS::getSiteLocale();
     $data['localeupdatelink'] = xarModURL('base', 'admin', 'modifyconfig', array('tab'=>'locales'));
 
     // get the caching config settings from the config file

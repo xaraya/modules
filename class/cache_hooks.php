@@ -109,7 +109,7 @@ class xarCache_Hooks extends xarObject
             if (!empty($extrainfo['module'])) {
                 $modname = $extrainfo['module'];
             } else {
-                $modname = xarModGetName();
+                $modname = xarMod::getName();
             }
         }
         $modid = xarMod::getRegId($modname);
@@ -283,7 +283,7 @@ class xarCache_Hooks extends xarObject
         // When called via hooks, the module name may be empty, so we get it from
         // the current module
         if (empty($extrainfo['module'])) {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         } else {
             $modname = $extrainfo['module'];
         }
@@ -414,7 +414,7 @@ class xarCache_Hooks extends xarObject
             if (!empty($extrainfo['module'])) {
                 $modname = $extrainfo['module'];
             } else {
-                $modname = xarModGetName();
+                $modname = xarMod::getName();
             }
         }
         $modid = xarMod::getRegId($modname);
@@ -619,7 +619,7 @@ class xarCache_Hooks extends xarObject
             if (!empty($extrainfo['module'])) {
                 $modname = $extrainfo['module'];
             } else {
-                $modname = xarModGetName();
+                $modname = xarMod::getName();
             }
         }
         $modid = xarMod::getRegId($modname);
@@ -786,7 +786,7 @@ class xarCache_Hooks extends xarObject
             if (!empty($extrainfo['module'])) {
                 $modname = $extrainfo['module'];
             } else {
-                $modname = xarModGetName();
+                $modname = xarMod::getName();
             }
         }
         $modid = xarMod::getRegId($modname);

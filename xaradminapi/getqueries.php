@@ -44,7 +44,7 @@ function xarcachemanager_adminapi_getqueries($args)
                        );
 
     foreach ($candidates as $module => $querylist) {
-        if (!xarModIsAvailable($module)) {
+        if (!xarMod::isAvailable($module)) {
             continue;
         }
         $queries[$module] = array();

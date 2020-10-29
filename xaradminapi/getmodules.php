@@ -78,10 +78,10 @@ function xarcachemanager_adminapi_getmodules($args)
                     // initialize the module settings from the function file if necessary
                     if (empty($modulesettings[$name][$func])) {
                         $settings = array();
-                        // try to find all xarVarFetch() parameters in this function
+                        // try to find all xarVar::fetch() parameters in this function
                         $params = array();
                         $content = implode('', file($thisfile));
-                        if (preg_match_all("/xarVarFetch\(\s*'([^']+)'/", $content, $params)) {
+                        if (preg_match_all("/xarVar::fetch\(\s*'([^']+)'/", $content, $params)) {
                             // add the parameters discovered in the function file
                             $settings['params'] = implode(',', $params[1]);
                         } elseif (preg_match('/\w+hook$/', $func)) {

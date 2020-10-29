@@ -27,7 +27,7 @@
         <xar:if condition="!empty($link)">
             <tr>
                 <td colspan="2">
-                    <strong>Link:</strong>&#160;<a href="#xarVarPrepHTMLDisplay($link)#">#xarVarPrepHTMLDisplay($link)#</a>
+                    <strong>Link:</strong>&#160;<a href="#xarVar::prepHTMLDisplay($link)#">#xarVar::prepHTMLDisplay($link)#</a>
                 </td>
             </tr>
         </xar:if>
@@ -66,7 +66,7 @@
                     #$key#:&#160;&#160;
                 </td>
                 <td class="xar-align-left" valign="top" style="font-size:small">
-                   #xarVarPrepForDisplay($line)#
+                   #xarVar::prepForDisplay($line)#
                 </td>
             </tr>
             </xar:foreach>

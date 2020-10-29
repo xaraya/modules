@@ -72,7 +72,7 @@ class xarCache_Manager extends xarObject
                         $cachingConfiguration[$key] = $value;
                     }
                 } else {
-                    $modBaseInfo = xarMod_getBaseInfo('xarcachemanager');
+                    $modBaseInfo = xarMod::getBaseInfo('xarcachemanager');
                     //if (!isset($modBaseInfo)) return; // throw back
 
                     $dbconn = xarDB::getConn();
