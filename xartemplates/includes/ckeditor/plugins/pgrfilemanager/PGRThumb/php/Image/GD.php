@@ -27,50 +27,59 @@ class PGRThumb_Image_GD extends PGRThumb_Image
 {
     /**
      * GD version
-     * 
+     *
      * @var string
      */
-    static private $_gdVer = null;
+    private static $_gdVer = null;
     
     /**
      * @param string $file
      * @return PGRThumb_Image|false
      */
-    static public function create($file)
+    public static function create($file)
     {
-        if (self::getGDVer() >= 2) return new PGRThumb_Image_GD($file);
-        else return false;
+        if (self::getGDVer() >= 2) {
+            return new PGRThumb_Image_GD($file);
+        } else {
+            return false;
+        }
     }
     
     /**
      * Get GD version
-     * 
+     *
      * @return string|false
      */
-    static public function getGDVer()
+    public static function getGDVer()
     {
-        if (self::$_gdVer != null) return self::$_gdVer; 
+        if (self::$_gdVer != null) {
+            return self::$_gdVer;
+        }
         
         $res = false;
         if (!extension_loaded('gd')) {
             if (dl('gd.so')) {
                 $res = true;
             }
-        } else $res = true;
+        } else {
+            $res = true;
+        }
         
         if ($res) {
             if (function_exists('gd_info')) {
                 $gdInfo = gd_info();
                 preg_match('/\d/', $gdInfo['GD Version'], $match);
                 self::$_gdVer = $match[0];
-                if (self::$_gdVer >= 2) $res = self::$_gdVer;
+                if (self::$_gdVer >= 2) {
+                    $res = self::$_gdVer;
+                }
             } else {
                 $res = false;
             }
         }
     
         return $res;
-    } 
+    }
     
     public function __construct($file)
     {
@@ -80,25 +89,32 @@ class PGRThumb_Image_GD extends PGRThumb_Image
     
     public function destroy()
     {
-        if ($this->_processedImage) imagedestroy($this->_processedImage);
+        if ($this->_processedImage) {
+            imagedestroy($this->_processedImage);
+        }
     }
         
     public function resize($newWidth, $newHeight, $aspectRatio = true)
     {
-        if (!$this->_processedImage) return false;
+        if (!$this->_processedImage) {
+            return false;
+        }
         
-        //Save proportions        
+        //Save proportions
         if ($aspectRatio) {
             $scale = 0;
-            if ($newWidth >= $newHeight) $scale = $newWidth / $this->_width;
-            else $scale = $newHeight / $this->_height;
+            if ($newWidth >= $newHeight) {
+                $scale = $newWidth / $this->_width;
+            } else {
+                $scale = $newHeight / $this->_height;
+            }
             
             $newWidth = $this->_width * $scale;
-            $newHeight = $this->_height * $scale;            
+            $newHeight = $this->_height * $scale;
         }
         
         // Load
-        $source = $this->_processedImage; 
+        $source = $this->_processedImage;
         $this->_processedImage = imagecreatetruecolor($newWidth, $newHeight);
 
         //Resize
@@ -112,22 +128,26 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         
         imagedestroy($source);
         
-        return $res;        
+        return $res;
     }
 
     public function crop($x1, $y1, $x2, $y2)
     {
-        if (!$this->_processedImage) return false;
+        if (!$this->_processedImage) {
+            return false;
+        }
                 
         // Load
-        $source = $this->_processedImage; 
+        $source = $this->_processedImage;
         
         $x = min($x1, $x2);
         $y = min($y1, $y2);
         $width = abs($x2 - $x1);
         $height = abs($y2 - $y1);
         
-        if(($width <= 0) || ($height == 0)) return false;
+        if (($width <= 0) || ($height == 0)) {
+            return false;
+        }
         
         $this->_processedImage = imagecreatetruecolor($width, $height);
 
@@ -139,12 +159,12 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         
         imagedestroy($source);
         
-        return $res;                
+        return $res;
     }
     
     private function _imageCreate()
     {
-        switch(self::$_imageType[$this->_type]) {
+        switch (self::$_imageType[$this->_type]) {
             case 'GIF':
                 return imagecreatefromgif($this->_file);
             case 'JPEG':
@@ -158,9 +178,11 @@ class PGRThumb_Image_GD extends PGRThumb_Image
 
     public function saveImage($file, $quality = 100, $type = null)
     {
-        if (!$type) $type = self::$_imageType[$this->_type];
+        if (!$type) {
+            $type = self::$_imageType[$this->_type];
+        }
         
-        switch($type) {
+        switch ($type) {
             case 'GIF':
                 return imagegif($this->_processedImage, $file);
             case 'JPEG':
@@ -169,33 +191,47 @@ class PGRThumb_Image_GD extends PGRThumb_Image
                 return imagepng($this->_processedImage, $file, $quality/100);
             default:
                 return false;
-        }        
+        }
     }
     
     public function filterGray()
     {
-        if (!$this->_processedImage) return false;
-        if(!imagefilter($this->_processedImage, IMG_FILTER_GRAYSCALE)) return false;
+        if (!$this->_processedImage) {
+            return false;
+        }
+        if (!imagefilter($this->_processedImage, IMG_FILTER_GRAYSCALE)) {
+            return false;
+        }
         
         return true;
     }
 
     public function filterSepia()
     {
-        if (!$this->_processedImage) return false;
-        if(!imagefilter($this->_processedImage, IMG_FILTER_GRAYSCALE)) return false;
-        if(!imagefilter($this->_processedImage, IMG_FILTER_COLORIZE, 100, 50, 0)) return false;
+        if (!$this->_processedImage) {
+            return false;
+        }
+        if (!imagefilter($this->_processedImage, IMG_FILTER_GRAYSCALE)) {
+            return false;
+        }
+        if (!imagefilter($this->_processedImage, IMG_FILTER_COLORIZE, 100, 50, 0)) {
+            return false;
+        }
         
         return true;
     }
     
     public function border($size, $color)
     {
-        if (!$this->_processedImage) return false;
+        if (!$this->_processedImage) {
+            return false;
+        }
         
         if (is_array($color)) {
             list($red, $green, $blue) = $color;
-        } else list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        } else {
+            list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        }
         $width = $this->_width + 2 * $size;
         $height = $this->_height + 2 * $size;
         
@@ -204,7 +240,9 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         imagefilledrectangle($newimage, 0, 0, $width, $height, $border_color);
         $res = imageCopyResized($newimage, $this->_processedImage, $size, $size, 0, 0, $this->_width, $this->_height, $this->_width, $this->_height);
 
-        if ($res) $this->_processedImage = $newimage;
+        if ($res) {
+            $this->_processedImage = $newimage;
+        }
         
         $this->_width = $width;
         $this->_height = $height;
@@ -214,11 +252,15 @@ class PGRThumb_Image_GD extends PGRThumb_Image
     
     public function watermark($text, $font, $size, $color, $transparency, $place)
     {
-        if(strlen($text) == 0) return;
+        if (strlen($text) == 0) {
+            return;
+        }
         
         if (is_array($color)) {
             list($red, $green, $blue) = $color;
-        } else list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        } else {
+            list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        }
         
         $x = 0;
         $y = 0;
@@ -267,7 +309,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
             case 'RB':
                 $y = $this->_height - $padding;
                 $x = $this->_width - $textWidth - $padding;
-                break;              
+                break;
         }
         
         $color = imagecolorallocatealpha($this->_processedImage, $red, $green, $blue, $transparency);
@@ -276,9 +318,10 @@ class PGRThumb_Image_GD extends PGRThumb_Image
 
     public function rotate($angle)
     {
-        if (!$this->_processedImage) return false;
+        if (!$this->_processedImage) {
+            return false;
+        }
         
         $this->_processedImage = imagerotate($this->_processedImage, $angle, 0);
     }
-    
 }

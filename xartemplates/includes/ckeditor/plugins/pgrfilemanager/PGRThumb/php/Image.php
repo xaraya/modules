@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Copyright (c) 2009 Grzegorz Żydek
 
@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 abstract class PGRThumb_Image
 {
-    static protected $_imageType = array(
+    protected static $_imageType = array(
         1  => 'GIF',
         2  => 'JPEG',
         3  => 'PNG',
@@ -58,7 +58,7 @@ abstract class PGRThumb_Image
      * @param string $file
      * @return PGRThumb_Image|false
      */
-    static public function factory($file)
+    public static function factory($file)
     {
         $image = false;
         
@@ -66,7 +66,7 @@ abstract class PGRThumb_Image
             //check if ImageMagick exist;
             include_once dirname(__FILE__) . '/Image/ImageMagick.php';
             $image = PGRThumb_Image_ImageMagick::create($file);
-        }*/       
+        }*/
         if (!$image) {
             //check if GD exist;
             include_once dirname(__FILE__) . '/Image/GD.php';
@@ -74,7 +74,7 @@ abstract class PGRThumb_Image
         }
         
         $type = $image->getType();
-        if ((self::$_imageType[$type] == 'GIF') || 
+        if ((self::$_imageType[$type] == 'GIF') ||
             (self::$_imageType[$type] == 'JPEG') ||
             (self::$_imageType[$type] == 'PNG')) {
             return $image;
@@ -85,24 +85,28 @@ abstract class PGRThumb_Image
     
     public function __construct($file)
     {
-        $this->_file = $file;    
+        $this->_file = $file;
         list($this->_width, $this->_height, $this->_type) = getimagesize($this->_file);
     }
     
-    public abstract function destroy();
+    abstract public function destroy();
     
-    public abstract function resize($newWidth, $newHeight, $aspectRatio = true);
+    abstract public function resize($newWidth, $newHeight, $aspectRatio = true);
     
-    public abstract function crop($x1, $y1, $x2, $y2);
+    abstract public function crop($x1, $y1, $x2, $y2);
     
     public function maxSize($maxWidth, $maxHeight)
     {
-        if ($maxWidth > $this->_width) $maxWidth = $this->_width;
-        if ($maxHeight > $this->_height) $maxHeight = $this->_height;
+        if ($maxWidth > $this->_width) {
+            $maxWidth = $this->_width;
+        }
+        if ($maxHeight > $this->_height) {
+            $maxHeight = $this->_height;
+        }
         
         $ratio = $this->_width / $this->_height;
-        $maxRatio = $maxWidth / $maxHeight; 
-        if($maxRatio <= $ratio) {
+        $maxRatio = $maxWidth / $maxHeight;
+        if ($maxRatio <= $ratio) {
             $maxHeight = round($maxWidth / $ratio);
         } else {
             $maxWidth = round($maxHeight * $ratio);
@@ -110,7 +114,7 @@ abstract class PGRThumb_Image
         return $this->resize($maxWidth, $maxHeight, true);
     }
     
-    public abstract function rotate($angle);
+    abstract public function rotate($angle);
     
     public function getWidth()
     {
@@ -137,14 +141,13 @@ abstract class PGRThumb_Image
         return $this->_scaleY;
     }
     
-    public abstract function filterGray();
+    abstract public function filterGray();
     
-    public abstract function filterSepia();
+    abstract public function filterSepia();
     
-    public abstract function border($size, $color);
+    abstract public function border($size, $color);
     
-    public abstract function watermark($text, $font, $size, $color, $transparency, $place);
+    abstract public function watermark($text, $font, $size, $color, $transparency, $place);
     
-    public abstract function saveImage($file, $quality = 100, $type = null);    
+    abstract public function saveImage($file, $quality = 100, $type = null);
 }
-

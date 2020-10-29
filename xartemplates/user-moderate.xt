@@ -482,7 +482,7 @@
                                         </td>
                                         <td>
                                             <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">
-                                            #xarUserGetVar('name', $post['powner'])#
+                                            #xarUser::getVar('name', $post['powner'])#
                                             </a>
                                         </td>
                                         <td>

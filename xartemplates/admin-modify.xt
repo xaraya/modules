@@ -15,7 +15,7 @@
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+    <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
     <xar:if condition="!empty($statusmsg)">
         <p class="xar-align-center xar-error">#$statusmsg#</p>
     </xar:if>
@@ -175,5 +175,5 @@
         </ul>
     </xar:if>
 </div>
-<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+<xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

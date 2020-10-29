@@ -24,8 +24,12 @@ function crispbb_userapi_getposters($args)
     $sort = !empty($sort) ? $sort : '';
     $showstatus = !empty($showstatus) ? true : false;
 
-    if (empty($numitems) || !is_numeric($numitems)) $numitems = 20;
-    if (empty($startnum) || !is_numeric($startnum)) $startnum = 1;
+    if (empty($numitems) || !is_numeric($numitems)) {
+        $numitems = 20;
+    }
+    if (empty($startnum) || !is_numeric($startnum)) {
+        $startnum = 1;
+    }
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -61,8 +65,8 @@ function crispbb_userapi_getposters($args)
     // get current status for this user (online|offline)
     if ($showstatus) {
         $now = time();
-        if (empty($filter)){
-            $filter = $now - (xarConfigVars::get(null,'Site.Session.InactivityTimeout') * 60);
+        if (empty($filter)) {
+            $filter = $now - (xarConfigVars::get(null, 'Site.Session.InactivityTimeout') * 60);
         }
         $sessioninfoTable = $xartable['session_info'];
         if ($dbconn->databaseType != 'sqlite') {
@@ -115,7 +119,9 @@ function crispbb_userapi_getposters($args)
     if (!empty($uidlist) && is_array($uidlist)) {
         $seenuids = array();
         foreach ($uidlist as $id) {
-            if (empty($id) || !is_numeric($id)) continue;
+            if (empty($id) || !is_numeric($id)) {
+                continue;
+            }
             $seenuids[$id] = 1;
         }
         if (count($seenuids) == 1) {
@@ -141,7 +147,9 @@ function crispbb_userapi_getposters($args)
     }
 
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     $posters = array();
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
@@ -171,6 +179,4 @@ function crispbb_userapi_getposters($args)
         $posters[$poster['uid']] = $poster;
     }
     return $posters;
-
 }
-?>

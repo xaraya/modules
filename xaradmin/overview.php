@@ -11,10 +11,12 @@
  * @author Marc Lutolf <mfl@netspan.ch> and Ryan Walker <ryan@webcommunicate.net>
  */
 
-function ckeditor_admin_overview() {
-	if(!xarSecurityCheck('ReadCKEditor')) return;
+function ckeditor_admin_overview()
+{
+    if (!xarSecurity::check('ReadCKEditor')) {
+        return;
+    }
 
-	// success
-	return xarTplModule('ckeditor','admin','overview');  
+    // success
+    return xarTpl::module('ckeditor', 'admin', 'overview');
 }
-?>

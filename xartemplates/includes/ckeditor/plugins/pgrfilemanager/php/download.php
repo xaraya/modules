@@ -27,38 +27,46 @@ include_once dirname(__FILE__) . '/init.php';
 //get dir from GET
 if (isset($_GET['dir'])) {
     $directory = realpath(PGRFileManagerConfig::$rootDir . $_GET['dir']);
-} else die();
+} else {
+    die();
+}
 
 //check if dir exist
-if (!is_dir($directory)) die();
+if (!is_dir($directory)) {
+    die();
+}
 
 //check if dir is in rootdir
-if (strpos($directory, realpath(PGRFileManagerConfig::$rootDir)) === false) die();
+if (strpos($directory, realpath(PGRFileManagerConfig::$rootDir)) === false) {
+    die();
+}
 
-if (!isset($_GET['filename'])) die();
+if (!isset($_GET['filename'])) {
+    die();
+}
 
 $filename = realpath($directory . '/' . $_GET['filename']);
 //check if file is in dir
-if(dirname($filename) !== $directory) die();
+if (dirname($filename) !== $directory) {
+    die();
+}
 
 // required for IE, otherwise Content-disposition is ignored
-if(ini_get('zlib.output_compression'))
-  ini_set('zlib.output_compression', 'Off');
+if (ini_get('zlib.output_compression')) {
+    ini_set('zlib.output_compression', 'Off');
+}
 
 // addition by Jorg Weske
-$file_extension = strtolower(substr(strrchr($filename,"."),1));
+$file_extension = strtolower(substr(strrchr($filename, "."), 1));
 
-if( $filename == "" ) 
-{
-  echo "<html><title></title><body>ERROR: download file NOT SPECIFIED</body></html>";
-  exit;
-} elseif ( ! file_exists( $filename ) ) 
-{
-  echo "<html><title></title><body>ERROR: File not found</body></html>";
-  exit;
+if ($filename == "") {
+    echo "<html><title></title><body>ERROR: download file NOT SPECIFIED</body></html>";
+    exit;
+} elseif (! file_exists($filename)) {
+    echo "<html><title></title><body>ERROR: File not found</body></html>";
+    exit;
 };
-switch( $file_extension )
-{
+switch ($file_extension) {
   case "pdf": $ctype="application/pdf"; break;
   case "exe": $ctype="application/octet-stream"; break;
   case "zip": $ctype="application/zip"; break;
@@ -74,10 +82,10 @@ switch( $file_extension )
 header("Pragma: public"); // required
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Cache-Control: private",false); // required for certain browsers 
+header("Cache-Control: private", false); // required for certain browsers
 header("Content-Type: $ctype");
 // change, added quotes to allow spaces in filenames, by Rajkumar Singh
-header("Content-Disposition: attachment; filename=\"".basename($filename)."\";" );
+header("Content-Disposition: attachment; filename=\"".basename($filename)."\";");
 header("Content-Transfer-Encoding: binary");
 header("Content-Length: ".filesize($filename));
 readfile("$filename");

@@ -14,7 +14,7 @@
 
     <xar:if condition="!empty($catid) and isset($categories[$catid])">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#xarVarPrepForDisplay($categories[$catid]['description'])#">#xarVarPrepForDisplay($categories[$catid]['name'])#</a>
+        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#xarVar::prepForDisplay($categories[$catid]['description'])#">#xarVar::prepForDisplay($categories[$catid]['name'])#</a>
     </xar:if>
     <xar:if condition="!empty($fid) and !empty($fname)">
         #$pageSeparator#

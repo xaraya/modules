@@ -25,20 +25,29 @@
  */
 function crispbb_admin_newcat($args)
 {
-    if (!xarSecurityCheck('AdminCrispBB') || !xarSecurityCheck('ManageCategories'))
-        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+    if (!xarSecurity::check('AdminCrispBB') || !xarSecurity::check('ManageCategories')) {
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+    }
 
     extract($args);
 
     $data = array();
-    if (!xarVarFetch('phase', 'pre:trim:lower:str:1', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url',  'isset',  $data['return_url'], NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('repeat','int:1:', $data['repeat'], 1, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('reassign', 'checkbox',  $reassign, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('return_url', 'isset', $data['return_url'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('repeat', 'int:1:', $data['repeat'], 1, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('reassign', 'checkbox', $reassign, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     for ($i=1;$i<=$data['repeat'];$i++) {
-        $data['objects'][$i] = DataObjectMaster::getObject(array('name' =>          xarModVars::get('categories','categoriesobject'), 'fieldprefix' => $i));
+        $data['objects'][$i] = DataObjectMaster::getObject(array('name' =>          xarModVars::get('categories', 'categoriesobject'), 'fieldprefix' => $i));
     }
 
     if ($phase == 'update' && !$reassign) {
@@ -49,7 +58,7 @@ function crispbb_admin_newcat($args)
         }
         if (empty($invalid)) {
             if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             for ($i=1;$i<=$data['repeat'];$i++) {
                 $data['objects'][$i]->createItem();
@@ -62,14 +71,18 @@ function crispbb_admin_newcat($args)
         }
     }
 
-    $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
+    $data['menulinks'] = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'getmenulinks',
         array(
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'newcat',
-        ));
+        )
+    );
 
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
+    $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'crispbb'));
     $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
 
     $data['basecid'] = $basecid;
@@ -77,6 +90,4 @@ function crispbb_admin_newcat($args)
     $data['authid'] = xarSecGenAuthKey();
 
     return $data;
-
 }
-?>

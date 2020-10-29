@@ -42,7 +42,7 @@ if (PGRFileManagerConfig::$authorize) {
             die();
         } else {
             include_once dirname(__FILE__) . '/login.php';
-            die();            
+            die();
         }
     }
 }

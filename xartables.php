@@ -23,8 +23,8 @@
 function ckeditor_xartables()
 {
     $tables = array();
-    /**
     $prefix = xarDB::getPrefix();
+    /**
     $tables['crispbb_itemtypes']    = $prefix . '_crispbb_itemtypes';
     $tables['crispbb_forums']       = $prefix . '_crispbb_forums';
     $tables['crispbb_topics']       = $prefix . '_crispbb_topics';
@@ -34,4 +34,3 @@ function ckeditor_xartables()
      */
     return $tables;
 }
-?>

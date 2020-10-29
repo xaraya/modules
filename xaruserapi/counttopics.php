@@ -33,7 +33,7 @@ function crispbb_userapi_counttopics($args)
         $from = $hookstable;
         $from .= ' LEFT JOIN ' . $topicstable;
         $from .= ' ON ' . $topicstable . '.id' . ' = ' . $hookstable . '.tid';
-        // TODO:
+    // TODO:
     } else {
         $from = $topicstable;
     }
@@ -51,7 +51,9 @@ function crispbb_userapi_counttopics($args)
         } elseif (is_array($fid) && count($fid) > 0) {
             $seenfid = array();
             foreach ($fid as $id) {
-                if (empty($id) || !is_numeric($id)) continue;
+                if (empty($id) || !is_numeric($id)) {
+                    continue;
+                }
                 $seenfid[$id] = 1;
             }
             if (count($seenfid) == 1) {
@@ -70,7 +72,9 @@ function crispbb_userapi_counttopics($args)
         } elseif (is_array($tstatus) && count($tstatus) > 0) {
             $seentstatus = array();
             foreach ($tstatus as $id) {
-                if (!is_numeric($id)) continue;
+                if (!is_numeric($id)) {
+                    continue;
+                }
                 $seentstatus[$id] = 1;
             }
             if (count($seentstatus) == 1) {
@@ -89,7 +93,9 @@ function crispbb_userapi_counttopics($args)
         } elseif (is_array($ttype) && count($ttype) > 0) {
             $seenttype = array();
             foreach ($ttype as $id) {
-                if (!is_numeric($id)) continue;
+                if (!is_numeric($id)) {
+                    continue;
+                }
                 $seenttype[$id] = 1;
             }
             if (count($seenttype) == 1) {
@@ -126,7 +132,9 @@ function crispbb_userapi_counttopics($args)
         } elseif (is_array($pstatus) && count($pstatus) > 0) {
             $seenpstatus = array();
             foreach ($pstatus as $id) {
-                if (!is_numeric($id)) continue;
+                if (!is_numeric($id)) {
+                    continue;
+                }
                 $seenpstatus[$id] = 1;
             }
             if (count($seenpstatus) == 1) {
@@ -139,9 +147,10 @@ function crispbb_userapi_counttopics($args)
         }
     }
 
-    if (!empty($q))
-    {
-        if (empty($searchfields)) $searchfields = array();
+    if (!empty($q)) {
+        if (empty($searchfields)) {
+            $searchfields = array();
+        }
         $search = $q;
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
 
@@ -149,8 +158,7 @@ function crispbb_userapi_counttopics($args)
         $find = array();
 
         // 0. Check for "'equal whole string' searchType"
-        if (!empty($searchtype) && $searchtype == 'equal whole string')
-        {
+        if (!empty($searchtype) && $searchtype == 'equal whole string') {
             $normal[] = $search;
             $search   = "";
             $searchtype = 'eq';
@@ -158,31 +166,33 @@ function crispbb_userapi_counttopics($args)
 
         // 0. Check for fulltext or fulltext boolean searchtypes (MySQL only)
         // CHECKME: switch to other search type if $search is less than min. length ?
-        if (!empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
+        if (!empty($searchtype) && substr($searchtype, 0, 8) == 'fulltext') {
             $fulltext = xarModVars::get('articles', 'fulltextsearch');
             if (!empty($fulltext)) {
-                $fulltextfields = explode(',',$fulltext);
+                $fulltextfields = explode(',', $fulltext);
             } else {
                 $fulltextfields = array();
             }
             $matchfields = array();
             foreach ($fulltextfields as $field) {
-                if (empty($leftjoin[$field])) continue;
+                if (empty($leftjoin[$field])) {
+                    continue;
+                }
                 $matchfields[] = $leftjoin[$field];
             }
-        // TODO: switch mode automatically if + - etc. are detected ?
+            // TODO: switch mode automatically if + - etc. are detected ?
             $matchmode = '';
             if ($searchtype == 'fulltext boolean') {
                 $matchmode = ' IN BOOLEAN MODE';
             }
-            $find[] = 'MATCH (' . join(', ',$matchfields) . ') AGAINST (' . $dbconn->qstr($search) . $matchmode . ')';
+            $find[] = 'MATCH (' . join(', ', $matchfields) . ') AGAINST (' . $dbconn->qstr($search) . $matchmode . ')';
             // Add this to field list too when sorting by relevance in boolean mode (cfr. getall() sort)
-            $leftjoin['relevance'] = 'MATCH (' . join(', ',$matchfields) . ') AGAINST (' . $dbconn->qstr($search) . $matchmode . ') AS relevance';
+            $leftjoin['relevance'] = 'MATCH (' . join(', ', $matchfields) . ') AGAINST (' . $dbconn->qstr($search) . $matchmode . ') AS relevance';
 
             // check if we have any other fields to search in
             $morefields = array_diff($searchfields, $fulltextfields);
             if (!empty($morefields)) {
-            // FIXME: sort order may not be by relevance if we mix fulltext with other searches
+                // FIXME: sort order may not be by relevance if we mix fulltext with other searches
                 $searchfields = $morefields;
                 $searchtype = '';
             } else {
@@ -193,30 +203,30 @@ function crispbb_userapi_counttopics($args)
         }
 
         // 1. find quoted text
-        if (preg_match_all('#"(.*?)"#',$search,$matches)) {
+        if (preg_match_all('#"(.*?)"#', $search, $matches)) {
             foreach ($matches[1] as $match) {
                 $normal[] = $match;
                 $match = preg_quote($match);
-                $search = trim(preg_replace("#\"$match\"#",'',$search));
+                $search = trim(preg_replace("#\"$match\"#", '', $search));
             }
         }
-        if (preg_match_all("/'(.*?)'/",$search,$matches)) {
+        if (preg_match_all("/'(.*?)'/", $search, $matches)) {
             foreach ($matches[1] as $match) {
                 $normal[] = $match;
                 $match = preg_quote($match);
-                $search = trim(preg_replace("#'$match'#",'',$search));
+                $search = trim(preg_replace("#'$match'#", '', $search));
             }
         }
 
         // 2. find mandatory +text to include
         // 3. find mandatory -text to exclude
         // 4. find normal text
-        $more = preg_split('/\s+/',$search,-1,PREG_SPLIT_NO_EMPTY);
-        $normal = array_merge($normal,$more);
+        $more = preg_split('/\s+/', $search, -1, PREG_SPLIT_NO_EMPTY);
+        $normal = array_merge($normal, $more);
         foreach ($normal as $text) {
             // TODO: use XARADODB to escape wildcards (and use portable ones) ??
-            $text = str_replace('%','\%',$text);
-            $text = str_replace('_','\_',$text);
+            $text = str_replace('%', '\%', $text);
+            $text = str_replace('_', '\_', $text);
             foreach ($searchfields as $field) {
                 if ($field == 'ttitle') {
                     $searchfield = $topicstable . '.ttitle';
@@ -225,7 +235,9 @@ function crispbb_userapi_counttopics($args)
                 } elseif ($field == 'ptext') {
                     $searchfield = $poststable . '.ptext';
                 }
-                if (empty($searchfield)) continue;
+                if (empty($searchfield)) {
+                    continue;
+                }
                 if (empty($searchtype) || $searchtype == 'like') {
                     $find[] = $searchfield . " LIKE " . $dbconn->qstr('%' . $text . '%');
                 } elseif ($searchtype == 'start') {
@@ -235,14 +247,14 @@ function crispbb_userapi_counttopics($args)
                 } elseif ($searchtype == 'eq') {
                     $find[] = $searchfield . " = " . $dbconn->qstr($text);
                 } else {
-                // TODO: other search types ?
+                    // TODO: other search types ?
                     $find[] = $searchfield . " LIKE " . $dbconn->qstr('%' . $text . '%');
                 }
                 unset($searchfield);
             }
         }
         if (!empty($find)) {
-        $where[] = '(' . join(' OR ',$find) . ')';
+            $where[] = '(' . join(' OR ', $find) . ')';
         }
     }
 
@@ -252,11 +264,12 @@ function crispbb_userapi_counttopics($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    $result = &$dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = &$dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
     list($numitems) = $result->fields;
     $result->Close();
 
     return $numitems;
 }
-?>

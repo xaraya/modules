@@ -20,7 +20,9 @@ function crispbb_userapi_encode_shorturl($args)
 {
     extract($args);
 
-    if (!isset($func)) {return;}
+    if (!isset($func)) {
+        return;
+    }
 
     $path = array();
     $get = $args;
@@ -28,7 +30,7 @@ function crispbb_userapi_encode_shorturl($args)
     // This module name.
     $module = 'crispbb';
     $aliasisset = xarModVars::get($module, 'use_module_alias');
-    $aliasname = xarModVars::get($module,'module_alias_name');
+    $aliasname = xarModVars::get($module, 'module_alias_name');
 
     if (!empty($aliasisset) && !empty($aliasname)) {
         // Check this alias really is a module alias, by mapping
@@ -192,13 +194,13 @@ function crispbb_userapi_encode_shorturl($args)
     } elseif ($func == 'modifytopic') {
         unset($get['func']);
         $path[] = 'modifytopic'; // ../crispbb/redirect
-    }elseif ($func == 'modifyreply') {
+    } elseif ($func == 'modifyreply') {
         unset($get['func']);
         $path[] = 'modifyreply'; // ../crispbb/redirect
     } elseif ($func == 'newreply') {
         unset($get['func']);
         $path[] = 'newreply'; // ../crispbb/redirect
-    }elseif ($func == 'movetopic') {
+    } elseif ($func == 'movetopic') {
         unset($get['func']);
         $path[] = 'movetopic'; // ../crispbb/redirect
     } elseif ($func == 'splittopic') {
@@ -234,4 +236,3 @@ function crispbb_encode_shorturl_cleantitle($string='')
     }
     return $string;
 }
-?>

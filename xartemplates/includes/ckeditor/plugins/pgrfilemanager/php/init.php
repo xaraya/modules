@@ -44,14 +44,14 @@ if (isset($_GET['type'])) {
     if ($type === 'Image') {
         PGRFileManagerConfig::$allowedExtensions = PGRFileManagerConfig::$imagesExtensions;
         $PGRUploaderDescription = 'images';
-    } else if ($type === 'Flash') {
-        PGRFileManagerConfig::$allowedExtensions = 'swf|flv';   
+    } elseif ($type === 'Flash') {
+        PGRFileManagerConfig::$allowedExtensions = 'swf|flv';
         $PGRUploaderDescription = 'flash';
     } else {
-        $PGRUploaderDescription = 'all files';        
+        $PGRUploaderDescription = 'all files';
     }
     
-    $PGRUploaderType = $_GET['type']; 
+    $PGRUploaderType = $_GET['type'];
 } else {
     $PGRUploaderType = 'all files';
 }

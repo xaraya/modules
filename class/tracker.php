@@ -29,7 +29,7 @@ class Tracker extends Object
     public function __destruct()
     {
         if (empty($this->init)) {
-            if (xarUserIsLoggedIn() && $this->id == xarUserGetVar('id')) {
+            if (xarUser::isLoggedIn() && $this->id == xarUser::getVar('id')) {
                 // store the object for this user
                 try {
                     xarModUserVars::set('crispbb', 'tracker_object', serialize($this), $this->id);
@@ -46,29 +46,36 @@ class Tracker extends Object
 
     public function setNow($time=0)
     {
-        if (empty($time) || !is_numeric($time)) $time = time();
+        if (empty($time) || !is_numeric($time)) {
+            $time = time();
+        }
         $this->now = $time;
     }
 
     public function lastUpdate($fid)
     {
-        if (isset($this->ftracker[$fid]))
+        if (isset($this->ftracker[$fid])) {
             return $this->ftracker[$fid];
+        }
         return $this->now;
     }
 
     public function lastRead($fid, $tid=0)
     {
-        if (isset($this->tracker[$fid][$tid]['lastread']))
+        if (isset($this->tracker[$fid][$tid]['lastread'])) {
             return $this->tracker[$fid][$tid]['lastread'];
-        if (isset($this->tracker[$fid][0]['lastread']))
+        }
+        if (isset($this->tracker[$fid][0]['lastread'])) {
             return $this->tracker[$fid][0]['lastread'];
+        }
         return $this->lastvisit;
     }
 
     public function markRead($fid, $tid = 0)
     {
-        if (empty($tid)) $this->tracker[$fid] = array();
+        if (empty($tid)) {
+            $this->tracker[$fid] = array();
+        }
         $this->tracker[$fid][$tid]['lastread'] = $this->now;
     }
 
@@ -77,7 +84,9 @@ class Tracker extends Object
         $tids = array();
         if (!empty($this->tracker[$fid])) {
             foreach (array_keys($this->tracker[$fid]) as $tid) {
-                if (empty($tid)) continue;
+                if (empty($tid)) {
+                    continue;
+                }
                 $tids[] = $tid;
             }
         }
@@ -85,12 +94,18 @@ class Tracker extends Object
     }
     public function setUserData()
     {
-        if (!xarUserIsLoggedIn()) return true;
-        if (empty($this->now)) $this->setNow();
-        if (empty($this->id)) $this->id = xarUserGetVar('id');
-        $this->name = xarUserGetVar('name', $this->id);
-        $this->uname = xarUserGetVar('uname', $this->id);
-        if ($this->id == xarUserGetVar('id')) {
+        if (!xarUser::isLoggedIn()) {
+            return true;
+        }
+        if (empty($this->now)) {
+            $this->setNow();
+        }
+        if (empty($this->id)) {
+            $this->id = xarUser::getVar('id');
+        }
+        $this->name = xarUser::getVar('name', $this->id);
+        $this->uname = xarUser::getVar('uname', $this->id);
+        if ($this->id == xarUser::getVar('id')) {
             // more than 15 minutes since last visit?
             if ($this->now - ($this->filter*60) > $this->visitend) {
                 // set lastvisit to time last visit ended
@@ -100,18 +115,20 @@ class Tracker extends Object
                 // increment visit count
                 $this->numvisits++;
             } else {
-            // current visit
+                // current visit
                 // increment time online
                 $this->timeonline += $this->now - $this->visitend;
             }
-            xarVarSetCached('Blocks.crispbb', 'tracker_object', $this);
+            xarVar::setCached('Blocks.crispbb', 'tracker_object', $this);
         }
         return true;
     }
 
     public function getUserPanelInfo()
     {
-        if (!xarUserIsLoggedIn()) return false;
+        if (!xarUser::isLoggedIn()) {
+            return false;
+        }
         return array(
             'id' => $this->id,
             'name' => $this->name,
@@ -140,4 +157,3 @@ class Tracker extends Object
         return array('id','lastvisit', 'numvisits', 'timeonline', 'tracker', 'visitstart', 'visitend');
     }
 }
-?>

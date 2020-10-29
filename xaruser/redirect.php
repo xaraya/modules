@@ -22,11 +22,21 @@
 function crispbb_user_redirect($args)
 {
     extract($args);
-    if (!xarVarFetch('forumjump', 'int', $forumjump, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('topicjump', 'str:1', $topicjump, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('catid', 'id', $current_catid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('fid', 'id', $current_fid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('tid', 'id', $current_tid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('forumjump', 'int', $forumjump, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('topicjump', 'str:1', $topicjump, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('catid', 'id', $current_catid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('fid', 'id', $current_fid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('tid', 'id', $current_tid, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $return_func = 'main'; // default return action
     $return_args = array();
@@ -52,7 +62,7 @@ function crispbb_user_redirect($args)
             }
             switch ($topicjump) {
                 case 'lastvisit':
-                    if (xarUserIsLoggedIn()) {
+                    if (xarUser::isLoggedIn()) {
                         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
                         $userpanel = $tracker->getUserPanelInfo();
                         if (!empty($userpanel['lastvisit'])) {
@@ -71,7 +81,7 @@ function crispbb_user_redirect($args)
 
                 break;
                 case 'towner':
-                    $return_args['towner'] = xarUserGetVar('id');
+                    $return_args['towner'] = xarUser::getVar('id');
                 break;
             }
         }
@@ -81,4 +91,3 @@ function crispbb_user_redirect($args)
 
     return xarResponse::Redirect($return_url);
 }
-?>

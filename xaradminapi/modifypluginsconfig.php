@@ -11,8 +11,8 @@
  * @author Marc Lutolf <mfl@netspan.ch> and Ryan Walker <ryan@webcommunicate.net>
  */
 
-function ckeditor_adminapi_modifypluginsconfig($args) {
-
+function ckeditor_adminapi_modifypluginsconfig($args)
+{
     extract($args);
 
     $pluginsConfigFile = sys::code() . 'modules/ckeditor/config.plugins.php';
@@ -20,12 +20,9 @@ function ckeditor_adminapi_modifypluginsconfig($args) {
 
     $config_php = preg_replace('/\[\''.$name.'\'\]\s*=\s*(\'|\")(.*)\\1;/', "['".$name."'] = '$value';", $config_php);
 
-    $fp = fopen ($pluginsConfigFile, 'wb');
-    fwrite ($fp, $config_php);
-    fclose ($fp);
+    $fp = fopen($pluginsConfigFile, 'wb');
+    fwrite($fp, $config_php);
+    fclose($fp);
 
     return true;
 }
-
-
-?>

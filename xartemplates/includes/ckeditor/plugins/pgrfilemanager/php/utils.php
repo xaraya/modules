@@ -24,7 +24,7 @@ THE SOFTWARE.
 */
 class PGRFileManagerUtils
 {
-    static private $imageType = array(
+    private static $imageType = array(
         1  => 'GIF',
         2  => 'JPEG',
         3  => 'PNG',
@@ -43,7 +43,7 @@ class PGRFileManagerUtils
         16 => 'XBM'
     );
     
-    static public function formatBytes($bytes, $precision = 2) 
+    public static function formatBytes($bytes, $precision = 2)
     {
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
   
@@ -56,10 +56,12 @@ class PGRFileManagerUtils
         return round($bytes, $precision) . ' ' . $units[$pow];
     }
     
-    static public function getImageInfo($filename)
+    public static function getImageInfo($filename)
     {
-        if ((list($width, $height, $type, $attr) = getimagesize($filename) ) !== false ) {
-            if(($type == 4) || ($type == 13)) return false;
+        if ((list($width, $height, $type, $attr) = getimagesize($filename)) !== false) {
+            if (($type == 4) || ($type == 13)) {
+                return false;
+            }
             return array(
                 'type' => self::$imageType[$type],
                 'width' => $width,
@@ -67,25 +69,33 @@ class PGRFileManagerUtils
             );
         }
         return false;
-    }    
+    }
     
-    static public function getPhpThumb($params)
+    public static function getPhpThumb($params)
     {
         return PGRFileManagerConfig::$pgrThumbPath . '/pgrthumb.php?' . $params . '&hash=' . md5($params . PGRThumb_Config::$pass);
     }
             
-    static public function deleteDirectory($dir) 
+    public static function deleteDirectory($dir)
     {
-        if (!file_exists($dir)) return true;
-        if (!is_dir($dir)) return unlink($dir);
+        if (!file_exists($dir)) {
+            return true;
+        }
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
         foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') continue;
-            if (!self::deleteDirectory($dir.DIRECTORY_SEPARATOR.$item)) return false;
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+            if (!self::deleteDirectory($dir.DIRECTORY_SEPARATOR.$item)) {
+                return false;
+            }
         }
         return rmdir($dir);
     }
     
-    static public function sendError($message)
+    public static function sendError($message)
     {
         echo json_encode(array(
             'res' => 'ERROR',
@@ -95,12 +105,13 @@ class PGRFileManagerUtils
         die();
     }
         
-    static public function curPageURL() {
-        $pageURL = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on'))?'https':'http'; 
+    public static function curPageURL()
+    {
+        $pageURL = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on'))?'https':'http';
         $pageURL .= '://' . $_SERVER['SERVER_NAME'];
         if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80')) {
             $pageURL .= ':' . $_SERVER['SERVER_PORT'];
-        } 
+        }
         $pageURL .= $_SERVER['REQUEST_URI'];
         return $pageURL;
     }

@@ -23,38 +23,58 @@ sys::import('modules.base.class.pager');
 function crispbb_admin_posters($args)
 {
     extract($args);
-    if (!xarSecurityCheck('AdminCrispBB')) return;
+    if (!xarSecurity::check('AdminCrispBB')) {
+        return;
+    }
 
-    if (!xarVarFetch('ip', 'str:1', $ip, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('uid', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('ip', 'str:1', $ip, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('uid', 'id', $uid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('startnum', 'int', $startnum, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $numitems = 20;
     $now = time();
 
     if (!empty($uid)) {
-        $posters = xarMod::apiFunc('crispbb', 'user', 'getipsbyposter',
+        $posters = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getipsbyposter',
             array(
                 'uid' => $uid,
                 'startnum' => $startnum,
                 'numitems' => $numitems,
                 'showstatus' => true
-            ));
+            )
+        );
     } else {
-        $posters = xarMod::apiFunc('crispbb', 'user', 'getposters',
+        $posters = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getposters',
             array(
                 'ip' => $ip,
                 'startnum' => $startnum,
                 'numitems' => $numitems,
                 'showstatus' => true
-            ));
+            )
+        );
     }
 
-    $totalposters = xarMod::apiFunc('crispbb', 'user', 'countposters',
+    $totalposters = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposters',
         array(
             'ip' => $ip,
             'powner' => $uid
-        ));
+        )
+    );
 
     $data['items'] = $posters;
 
@@ -62,23 +82,28 @@ function crispbb_admin_posters($args)
     $data['startnum'] = $startnum;
     $data['uid'] = $uid;
     if (!empty($uid)) {
-        $data['name'] = xarUserGetVar('name', $uid);
+        $data['name'] = xarUser::getVar('name', $uid);
     }
-    $data['pager'] = xarTplGetPager($startnum,
+    $data['pager'] = xarTplGetPager(
+        $startnum,
         $totalposters,
         xarModURL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
-        $numitems);
+        $numitems
+    );
     $pageTitle = xarML('Forum Posters');
     $data['pageTitle'] = $pageTitle;
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
-    $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
+    $data['menulinks'] = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'getmenulinks',
         array(
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'posters',
-            'current_sublink' => NULL
-        ));
+            'current_sublink' => null
+        )
+    );
     return $data;
 }
-?>

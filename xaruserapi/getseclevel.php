@@ -19,8 +19,12 @@
 function crispbb_userapi_getseclevel($args)
 {
     extract($args);
-    if (empty($catid) || !is_numeric($catid)) $catid = 'All';
-    if (empty($fid) || !is_numeric($fid)) $fid = 'All';
+    if (empty($catid) || !is_numeric($catid)) {
+        $catid = 'All';
+    }
+    if (empty($fid) || !is_numeric($fid)) {
+        $fid = 'All';
+    }
 
     static $levels = array();
 
@@ -33,13 +37,13 @@ function crispbb_userapi_getseclevel($args)
     $level = 0;
 
     foreach ($privs as $priv) {
-        if (!xarSecurityCheck($priv.'CrispBB', 0, 'Forum', "$catid:$fid")) break;
+        if (!xarSecurity::check($priv.'CrispBB', 0, 'Forum', "$catid:$fid")) {
+            break;
+        }
         $level += 100;
     }
 
     $levels[$catid][$fid] = $level;
 
     return $level;
-
 }
-?>

@@ -22,15 +22,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-function curPageURL() {
-        $pageURL = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on'))?'https':'http'; 
-        $pageURL .= '://' . $_SERVER['SERVER_NAME'];
-        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80')) {
-            $pageURL .= ':' . $_SERVER['SERVER_PORT'];
-        } 
-        $pageURL .= $_SERVER['REQUEST_URI'];
-        return $pageURL;
+function curPageURL()
+{
+    $pageURL = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on'))?'https':'http';
+    $pageURL .= '://' . $_SERVER['SERVER_NAME'];
+    if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80')) {
+        $pageURL .= ':' . $_SERVER['SERVER_PORT'];
     }
+    $pageURL .= $_SERVER['REQUEST_URI'];
+    return $pageURL;
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">

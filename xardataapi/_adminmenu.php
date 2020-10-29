@@ -12,4 +12,3 @@
             array('mask' => 'AdminCKEditor', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the CKEditor configuration'), 'label' => xarML('Modify Config')),
         );
     }
-?>

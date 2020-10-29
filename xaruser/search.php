@@ -24,30 +24,68 @@ sys::import('modules.base.class.pager');
 function crispbb_user_search()
 {
     // search args from search hook
-    if (!xarVarFetch('q',         'isset',  $q,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('bool',      'isset',  $bool,     NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sort',      'isset',  $sort,     NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('author',    'isset',  $author,   NULL, XARVAR_DONT_SET)) return;
-    if(!xarVarFetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('q', 'isset', $q, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('bool', 'isset', $bool, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('startnum', 'int:0', $startnum, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // crispbb specific args from search form or redirect
-    if (!xarVarFetch('crispbb_component', 'enum:replies:topics', $component, 'topics', XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_fields', 'list', $searchfields, array(), XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_fids', 'list', $fids, array(), XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_start', 'int', $starttime, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('crispbb_end', 'int', $endtime, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('crispbb_component', 'enum:replies:topics', $component, 'topics', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_fields', 'list', $searchfields, array(), XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_fids', 'list', $fids, array(), XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_start', 'int', $starttime, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_end', 'int', $endtime, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     // search args from redirect
-    if (!xarVarFetch('towner', 'id', $towner, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('powner', 'id', $powner, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('noreplies', 'checkbox', $noreplies, false, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('unread', 'checkbox', $unread, false, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('latest', 'checkbox', $latest, false, XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('towner', 'id', $towner, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('powner', 'id', $powner, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('noreplies', 'checkbox', $noreplies, false, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('unread', 'checkbox', $unread, false, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('latest', 'checkbox', $latest, false, XARVAR_DONT_SET)) {
+        return;
+    }
 
-    if (!xarVarFetch('start', 'int', $start, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('end', 'int', $end, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('start', 'int', $start, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('end', 'int', $end, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('fid', 'id', $fid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('catid', 'id', $catid, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $now = time();
     $data = array();
@@ -64,14 +102,14 @@ function crispbb_user_search()
 
     if (!isset($q) && !empty($forums)) { // no search performed, pre-select some options
         if (empty($fids)) {
-        foreach($forums as $fid => $forum) {
-            $fids[$fid] = 1;
-        }
+            foreach ($forums as $fid => $forum) {
+                $fids[$fid] = 1;
+            }
         }
         if (empty($searchfields)) {
-        foreach ($reqfields as $reqfield) {
-            $searchfields[$reqfield] = 1;
-        }
+            foreach ($reqfields as $reqfield) {
+                $searchfields[$reqfield] = 1;
+            }
         }
     }
 
@@ -111,19 +149,19 @@ function crispbb_user_search()
     }
 
     if (isset($start) && is_numeric($start)) {
-        $starttime = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$start);
+        $starttime = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $start);
     }
 
     if (empty($starttime)) {
         $starttime = null;
         $data['crispbb_start'] = 'N/A';
     } else {
-        if (!preg_match('/[a-zA-Z]+/',$starttime)) {
+        if (!preg_match('/[a-zA-Z]+/', $starttime)) {
             $starttime .= ' GMT';
         }
         $starttime = strtotime($starttime);
         // adjust for the user's timezone offset
-        $starttime -= xarMLS_userOffset() * 3600;
+        $starttime -= xarMLS::userOffset() * 3600;
         if ($starttime > $now) {
             $starttime = $now;
         }
@@ -131,19 +169,19 @@ function crispbb_user_search()
     }
 
     if (isset($end) && is_numeric($end)) {
-        $endtime = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$end);
+        $endtime = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $end);
     }
 
     if (empty($endtime)) {
         $endtime = $now;
         $data['crispbb_end'] = $endtime;
     } else {
-        if (!preg_match('/[a-zA-Z]+/',$endtime)) {
+        if (!preg_match('/[a-zA-Z]+/', $endtime)) {
             $endtime .= ' GMT';
         }
         $endtime = strtotime($endtime);
         // adjust for the user's timezone offset
-        $endtime -= xarMLS_userOffset() * 3600;
+        $endtime -= xarMLS::userOffset() * 3600;
         if ($endtime > $now) {
             $endtime = $now;
         }
@@ -151,8 +189,12 @@ function crispbb_user_search()
     }
 
     if (!empty($towner) && is_numeric($towner)) {
-        $user = xarMod::apiFunc('roles','user','get',
-                             array('id' => $towner));
+        $user = xarMod::apiFunc(
+            'roles',
+            'user',
+            'get',
+            array('id' => $towner)
+        );
         if (empty($user['id'])) {
             unset($towner);
         }
@@ -160,8 +202,12 @@ function crispbb_user_search()
     }
 
     if (!empty($powner) && is_numeric($powner)) {
-        $user = xarMod::apiFunc('roles','user','get',
-                             array('id' => $powner));
+        $user = xarMod::apiFunc(
+            'roles',
+            'user',
+            'get',
+            array('id' => $powner)
+        );
         if (empty($user['id'])) {
             unset($powner);
         }
@@ -183,7 +229,9 @@ function crispbb_user_search()
         if (!empty($fids)) {
             $searchfids = array();
             foreach ($fids as $reqfid => $fidval) {
-                if (empty($fidval) || !is_numeric($fidval) || empty($forums[$reqfid])) continue;
+                if (empty($fidval) || !is_numeric($fidval) || empty($forums[$reqfid])) {
+                    continue;
+                }
                 $searchfids[$reqfid] = 1;
             }
             if (!empty($searchfids)) {
@@ -229,11 +277,11 @@ function crispbb_user_search()
             break;
         }
         if (!empty($starttime) && (empty($endtime) || $endtime == $now)) {
-            $condition = 'since ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$starttime);
+            $condition = 'since ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $starttime);
         } elseif (!empty($endtime) && $endtime < $now && (empty($starttime))) {
-            $condition = 'before ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$endtime);
+            $condition = 'before ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $endtime);
         } elseif (!empty($starttime) && !empty($endtime)) {
-            $condition = 'between ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$starttime) . ' and ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$endtime);
+            $condition = 'between ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $starttime) . ' and ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $endtime);
         }
         if (!empty($condition)) {
             if ($component == 'topics') {
@@ -245,9 +293,9 @@ function crispbb_user_search()
             $condition = $component == 'topics' ? $component : 'posts';
         }
         if (!empty($towner)) {
-            $author = xarUserGetVar('name', $towner);
+            $author = xarUser::getVar('name', $towner);
         } elseif (!empty($powner)) {
-            $author = xarUserGetVar('name', $powner);
+            $author = xarUser::getVar('name', $powner);
         }
         if (!empty($author)) {
             $condition .= ' by ' . $author;
@@ -274,8 +322,12 @@ function crispbb_user_search()
                     $item = $topic;
                     $item['modtopicurl'] = '';
                     $item['modforumurl'] = '';
-                    if (!empty($item['towner'])) $seenposters[$item['towner']] = 1;
-                    if (!empty($item['powner'])) $seenposters[$item['powner']] = 1;
+                    if (!empty($item['towner'])) {
+                        $seenposters[$item['towner']] = 1;
+                    }
+                    if (!empty($item['powner'])) {
+                        $seenposters[$item['powner']] = 1;
+                    }
                     // tracking
                     $unread = false;
 
@@ -332,8 +384,12 @@ function crispbb_user_search()
                             $iconlist = $iconlists[$item['fid']];
                         }
                         if (empty($iconlist)) {
-                            $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                                array('iconfolder' => $topic['iconfolder']));
+                            $iconlist = xarMod::apiFunc(
+                                'crispbb',
+                                'user',
+                                'gettopicicons',
+                                array('iconfolder' => $topic['iconfolder'])
+                            );
                             $iconlists[$item['fid']] = $iconlist;
                         }
                         if (!empty($iconlist[$item['topicicon']])) {
@@ -350,11 +406,15 @@ function crispbb_user_search()
                 $data['showforum'] = true;
             } else {
                 $seenposters = array();
-                xarVarSetCached('Hooks.hitcount','save', true);
+                xarVar::setCached('Hooks.hitcount', 'save', true);
                 foreach ($results as $pid => $post) {
                     $item = $post;
-                    if (!empty($post['towner'])) $seenposters[$post['towner']] = 1;
-                    if (!empty($post['powner'])) $seenposters[$post['powner']] = 1;
+                    if (!empty($post['towner'])) {
+                        $seenposters[$post['towner']] = 1;
+                    }
+                    if (!empty($post['powner'])) {
+                        $seenposters[$post['powner']] = 1;
+                    }
                     if ($post['firstpid'] == $pid) {
                         $hookitem = array();
                         $hookitem['module'] = 'crispbb';
@@ -363,7 +423,7 @@ function crispbb_user_search()
                         $hookitem['tid'] = $post['tid'];
                         $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
                         $item['hookoutput'] = xarModCallHooks('item', 'display', $post['tid'], $hookitem);
-                    }   else {
+                    } else {
                         $hookitem = array();
                         $hookitem['module'] = 'crispbb';
                         $hookitem['itemtype'] = $post['poststype'];
@@ -380,8 +440,12 @@ function crispbb_user_search()
                             $iconlist = $iconlists[$item['fid']];
                         }
                         if (empty($iconlist)) {
-                            $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                                array('iconfolder' => $data['iconfolder']));
+                            $iconlist = xarMod::apiFunc(
+                                'crispbb',
+                                'user',
+                                'gettopicicons',
+                                array('iconfolder' => $data['iconfolder'])
+                            );
                             $iconlists[$item['fid']] = $iconlist;
                         }
                         if (!empty($iconlist[$item['topicicon']])) {
@@ -434,10 +498,12 @@ function crispbb_user_search()
         }
         $pageargs['component'] = $component;
         $pageargs['startnum'] = '%%';
-        $data['pager'] = xarTplGetPager($startnum,
+        $data['pager'] = xarTplGetPager(
+            $startnum,
             $totalitems,
             xarModURL('crispbb', 'user', 'search', $pageargs),
-            $search['numitems']);
+            $search['numitems']
+        );
     }
 
     if (empty($forums)) {
@@ -449,15 +515,16 @@ function crispbb_user_search()
     if ($data['searchactive']) {
         return xarTPLModule('crispbb', 'user', 'searchhook', $data);
     } else {
-        xarTPLSetPageTitle(xarVarPrepForDisplay(xarML('Search Forums')));
+        xarTPLSetPageTitle(xarVar::prepForDisplay(xarML('Search Forums')));
         $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('noreplies' => true, 'tstatus' => array(0,1,2,4)));
         $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getmenulinks');
-        $data['condition'] = xarVarPrepForDisplay(xarML($condition));
-        if (!xarVarFetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) return;
+        $data['condition'] = xarVar::prepForDisplay(xarML($condition));
+        if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
         if (!empty($theme)) {
             return xarTPLModule('crispbb', 'user', 'search-' . $theme, $data);
         }
         return $data;
     }
 }
-?>

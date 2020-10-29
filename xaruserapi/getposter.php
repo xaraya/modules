@@ -35,4 +35,3 @@ function crispbb_userapi_getposter($args)
 
     return $poster;
 }
-?>

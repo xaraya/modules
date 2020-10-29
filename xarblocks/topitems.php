@@ -30,15 +30,17 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
     public $sort                = 'ptime';
     public $order               = 'DESC';
 
-/**
- * Display func.
- * @param $data array containing title,content
- */
-    function display(Array $data=array())
+    /**
+     * Display func.
+     * @param $data array containing title,content
+     */
+    public function display(array $data=array())
     {
         $data = parent::display($data);
-        if (empty($data)) return;
-        //if (!xarSecurityCheck('ReadCrispBBBlock', 0, 'Block', $data['name'])) {return;}
+        if (empty($data)) {
+            return;
+        }
+        //if (!xarSecurity::check('ReadCrispBBBlock', 0, 'Block', $data['name'])) {return;}
 
         $vars = isset($data['content']) ? $data['content'] : array();
         // Defaults
@@ -48,33 +50,45 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $sorts = array();
         $sorts['ptime'] = array('id' => 'ptime', 'name' => xarML('Last post time'));
         $sorts['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of hits'));
-        if (xarModIsAvailable('ratings')) {
+        if (xarMod::isAvailable('ratings')) {
             //$sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
 
-        if (empty($vars['fids']) || !is_array($vars['fids'])) $vars['fids'] = $this->fids;
-        if (empty($vars['sort']) || !isset($sorts[$vars['sort']])) $vars['sort'] = $this->sort;
-        if (empty($vars['order'])) $vars['order'] = $this->order;
-        if (empty($vars['numitems'])) $vars['numitems'] = $this->numitems;
+        if (empty($vars['fids']) || !is_array($vars['fids'])) {
+            $vars['fids'] = $this->fids;
+        }
+        if (empty($vars['sort']) || !isset($sorts[$vars['sort']])) {
+            $vars['sort'] = $this->sort;
+        }
+        if (empty($vars['order'])) {
+            $vars['order'] = $this->order;
+        }
+        if (empty($vars['numitems'])) {
+            $vars['numitems'] = $this->numitems;
+        }
 
-        $vars['topics'] = xarMod::apiFunc('crispbb', 'user', 'gettopics',
+        $vars['topics'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'gettopics',
             array(
                 'fid' => $vars['fids'],
                 'sort' => $vars['sort'],
                 'order' => $vars['order'],
                 'tstatus' => array(0,1,2,4),
                 'numitems' => $vars['numitems']
-            ));
+            )
+        );
 
         $data['content'] = $vars;
         return $data;
     }
 
-/**
- * Modify Function to the Blocks Admin
- * @param $data array containing title,content
- */
-    public function modify(Array $data=array())
+    /**
+     * Modify Function to the Blocks Admin
+     * @param $data array containing title,content
+     */
+    public function modify(array $data=array())
     {
         $data = parent::modify($data);
 
@@ -85,17 +99,29 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $sorts = array();
         $sorts['ptime'] = array('id' => 'ptime', 'name' => xarML('Last post time'));
         $sorts['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of hits'));
-        if (xarModIsAvailable('ratings')) {
+        if (xarMod::isAvailable('ratings')) {
             //sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
 
-        if (empty($data['fids']) || !is_array($data['fids'])) $data['fids'] = $this->fids;
-        if (empty($data['sort']) || !isset($sorts[$data['sort']])) $data['sort'] = $this->sort;
-        if (empty($data['order'])) $data['order'] = $this->order;
-        if (empty($data['numitems'])) $data['numitems'] = $this->numitems;
+        if (empty($data['fids']) || !is_array($data['fids'])) {
+            $data['fids'] = $this->fids;
+        }
+        if (empty($data['sort']) || !isset($sorts[$data['sort']])) {
+            $data['sort'] = $this->sort;
+        }
+        if (empty($data['order'])) {
+            $data['order'] = $this->order;
+        }
+        if (empty($data['numitems'])) {
+            $data['numitems'] = $this->numitems;
+        }
 
-        $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-            array('preset' => 'sortorderoptions'));
+        $presets = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getpresets',
+            array('preset' => 'sortorderoptions')
+        );
         $data['sortoptions'] = $sorts;
         $data['orderoptions'] = $presets['sortorderoptions'];
         $data['forumoptions'] = $forums;
@@ -103,11 +129,11 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         return $data;
     }
 
-/**
- * Updates the Block config from the Blocks Admin
- * @param $data array containing title,content
- */
-    public function update(Array $data=array())
+    /**
+     * Updates the Block config from the Blocks Admin
+     * @param $data array containing title,content
+     */
+    public function update(array $data=array())
     {
         $data = parent::update($data);
         $vars = array();
@@ -115,13 +141,20 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
         $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
 
-        if (!xarVarFetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('fids', 'list', $vars['fids'], $this->fids, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('fids', 'list', $vars['fids'], $this->fids, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         $data['content'] = $vars;
         return $data;
     }
 }
-?>

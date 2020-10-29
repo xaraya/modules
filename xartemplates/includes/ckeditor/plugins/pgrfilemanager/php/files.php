@@ -32,14 +32,18 @@ PGRFileManagerConfig::$pgrThumbPath = 'http://' . $_SERVER['SERVER_NAME'] . subs
 if (isset($_POST['dir'])) {
     $directory = realpath(PGRFileManagerConfig::$rootDir . $_POST['dir']);
 } else {
-    $directory = realpath(PGRFileManagerConfig::$rootDir);    
+    $directory = realpath(PGRFileManagerConfig::$rootDir);
 }
 
 //check if dir exist
-if (!is_dir($directory)) die();
+if (!is_dir($directory)) {
+    die();
+}
 
 //check if dir is in rootdir
-if(strpos($directory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) die();
+if (strpos($directory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) {
+    die();
+}
 
 //check for extra function to do
 if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
@@ -52,14 +56,22 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         foreach ($files as $filename) {
             $file = realpath($directory . '/' . $filename);
             //check if file is in dir
-            if(dirname($file) !== $directory) continue;
-            if(file_exists($file)) unlink($file);
+            if (dirname($file) !== $directory) {
+                continue;
+            }
+            if (file_exists($file)) {
+                unlink($file);
+            }
         }
-    } else if (($fun === 'moveFiles') && (isset($_POST['toDir'])) && (isset($_POST['files']))) {
+    } elseif (($fun === 'moveFiles') && (isset($_POST['toDir'])) && (isset($_POST['files']))) {
         $targetDirectory = realpath(PGRFileManagerConfig::$rootDir . $_POST['toDir']);
         //check if dir is in rootdir
-        if(strpos($targetDirectory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) die();
-        if($directory === $targetDirectory) die();
+        if (strpos($targetDirectory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) {
+            die();
+        }
+        if ($directory === $targetDirectory) {
+            die();
+        }
         
         $files = str_replace("\\", "", $_POST['files']);
         $files = json_decode($files, true);
@@ -69,16 +81,22 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
             $file = realpath($directory . '/' . $filename);
             $newFile = $targetDirectory . '/' . $filename;
             //check if file is in dir
-            if(dirname($file) !== $directory) continue;
-            if(file_exists($file) && !file_exists($newFile)) {
+            if (dirname($file) !== $directory) {
+                continue;
+            }
+            if (file_exists($file) && !file_exists($newFile)) {
                 rename($file, $newFile);
             }
-        }        
-    } else if (($fun === 'copyFiles') && (isset($_POST['toDir'])) && (isset($_POST['files']))) {
+        }
+    } elseif (($fun === 'copyFiles') && (isset($_POST['toDir'])) && (isset($_POST['files']))) {
         $targetDirectory = realpath(PGRFileManagerConfig::$rootDir . $_POST['toDir']);
         //check if dir is in rootdir
-        if(strpos($targetDirectory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) die();
-        if($directory === $targetDirectory) die();
+        if (strpos($targetDirectory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) {
+            die();
+        }
+        if ($directory === $targetDirectory) {
+            die();
+        }
         
         $files = str_replace("\\", "", $_POST['files']);
         $files = json_decode($files, true);
@@ -88,32 +106,41 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
             $file = realpath($directory . '/' . $filename);
             $newFile = $targetDirectory . '/' . $filename;
             //check if file is in dir
-            if(dirname($file) !== $directory) continue;
-            if(file_exists($file)) {
+            if (dirname($file) !== $directory) {
+                continue;
+            }
+            if (file_exists($file)) {
                 copy($file, $newFile);
             }
         }
         die();
-    } else if (($fun === 'renameFile') && (isset($_POST['filename'])) && (isset($_POST['newFilename']))) {
-        
+    } elseif (($fun === 'renameFile') && (isset($_POST['filename'])) && (isset($_POST['newFilename']))) {
         $filename = basename($_POST['filename']);
         $newFilename = basename($_POST['newFilename']);
         
         //allowed chars
-        if(preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newFilename) === 0) die();
+        if (preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newFilename) === 0) {
+            die();
+        }
         
         $fileLength = strlen($newFilename);
-        if($fileLength === 0) die();
-        if($fileLength > 200) die();
+        if ($fileLength === 0) {
+            die();
+        }
+        if ($fileLength > 200) {
+            die();
+        }
                 
         $file = realpath($directory . '/' . $filename);
         $newFile = $directory . '/' . $newFilename;
         //check if file is in dir
-        if(dirname($file) !== $directory) die();
-        if(file_exists($file) && !file_exists($newFile)) {
+        if (dirname($file) !== $directory) {
+            die();
+        }
+        if (file_exists($file) && !file_exists($newFile)) {
             rename($file, $newFile);
         }
-    } else if (($fun === 'createThumb') && (isset($_POST['filename'])) && (isset($_POST['thumbWidth'])) && (isset($_POST['thumbHeight']))) {
+    } elseif (($fun === 'createThumb') && (isset($_POST['filename'])) && (isset($_POST['thumbWidth'])) && (isset($_POST['thumbHeight']))) {
         $thumbWidth = intval($_POST['thumbWidth']);
         $thumbHeight = intval($_POST['thumbHeight']);
         if (($thumbWidth >= 10) && ($thumbHeight >= 10)) {
@@ -124,51 +151,58 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
             $image = PGRThumb_Image::factory($file);
             $image->maxSize($thumbWidth, $thumbHeight);
             $image->saveImage($fileInfo['dirname'] . '/' . $fileInfo['filename']  . $thumbWidth . 'x' . $thumbHeight . '.' . $fileInfo['extension']);
-        }    
-    } else if (($fun === 'rotateImage90Clockwise') && (isset($_POST['filename']))) {
+        }
+    } elseif (($fun === 'rotateImage90Clockwise') && (isset($_POST['filename']))) {
         require_once(realpath(dirname(__FILE__) . '/../PGRThumb/php/Image.php'));
         $filename = basename($_POST['filename']);
         $file = realpath($directory . '/' . $filename);
         $image = PGRThumb_Image::factory($file);
         $image->rotate(-90);
-        $image->saveImage($file);        
-    } else if (($fun === 'rotateImage90CounterClockwise') && (isset($_POST['filename']))) {
+        $image->saveImage($file);
+    } elseif (($fun === 'rotateImage90CounterClockwise') && (isset($_POST['filename']))) {
         require_once(realpath(dirname(__FILE__) . '/../PGRThumb/php/Image.php'));
         $filename = basename($_POST['filename']);
         $file = realpath($directory . '/' . $filename);
         $image = PGRThumb_Image::factory($file);
         $image->rotate(90);
-        $image->saveImage($file);        
+        $image->saveImage($file);
     }
 }
 
 $files = array();
 //group files
 foreach (scandir($directory) as $elem) {
-    if (($elem === '.') || ($elem === '..')) continue;
+    if (($elem === '.') || ($elem === '..')) {
+        continue;
+    }
     //check file ext
     if (PGRFileManagerConfig::$allowedExtensions != "") {
-        if(preg_match('/^.*\.(' . PGRFileManagerConfig::$allowedExtensions . ')$/', strtolower($elem)) === 0) {
-            continue;            
+        if (preg_match('/^.*\.(' . PGRFileManagerConfig::$allowedExtensions . ')$/', strtolower($elem)) === 0) {
+            continue;
         }
-    } 
+    }
    
     $filepath = $directory . '/' . $elem;
-    if (is_file($filepath)) {              
+    if (is_file($filepath)) {
         $file = array();
         $file['filename'] = $elem;
         $file['shortname'] = (strlen($elem) > 17) ? substr($elem, 0, 17) . '...' : $elem;
         $file['size'] = PGRFileManagerUtils::formatBytes(filesize($filepath));
         $file['md5'] = md5(filemtime($filepath));
-        if (PGRFileManagerConfig::$ckEditorExtensions != "") $file['ckEdit'] = (preg_match('/^.*\.(' . PGRFileManagerConfig::$ckEditorExtensions . ')$/', strtolower($elem)) > 0);
-        else $file['ckEdit'] = false;
+        if (PGRFileManagerConfig::$ckEditorExtensions != "") {
+            $file['ckEdit'] = (preg_match('/^.*\.(' . PGRFileManagerConfig::$ckEditorExtensions . ')$/', strtolower($elem)) > 0);
+        } else {
+            $file['ckEdit'] = false;
+        }
         $file['date'] = date('Y-m-d H:i:s', filemtime($filepath));
         $file['imageInfo'] = PGRFileManagerUtils::getImageInfo($filepath);
         if ($file['imageInfo'] != false) {
             $file['thumb'] = PGRFileManagerUtils::getPhpThumb("src=" . urlencode(PGRFileManagerConfig::$rootPath . $_POST['dir'] . '/' .$elem) . "&w=64&h=64&md5=" . $file['md5']);
-        } else $file['thumb'] = false;
-        $files[] = $file; 
-    } 
+        } else {
+            $file['thumb'] = false;
+        }
+        $files[] = $file;
+    }
 }
 
 echo json_encode(array(

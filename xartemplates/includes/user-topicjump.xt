@@ -16,7 +16,7 @@
             <xar:if condition="!empty($totalunanswered)">
             <option value="unanswered">Unanswered topics</option>
             </xar:if>
-            <xar:if condition="xarUserIsLoggedIn()">
+            <xar:if condition="xarUser::isLoggedIn()">
             <xar:comment>
                 <option value="unread">Unread topics</option>
             </xar:comment>
@@ -32,7 +32,7 @@
             <xar:if condition="!empty($unanswered)">
             <option value="unanswered#$fid#">Unanswered topics</option>
             </xar:if>
-            <xar:if condition="xarUserIsLoggedIn()">
+            <xar:if condition="xarUser::isLoggedIn()">
             <xar:comment>
                <option value="unread#$fid#">Unread topics</option>
             </xar:comment>

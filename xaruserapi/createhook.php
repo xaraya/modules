@@ -36,7 +36,7 @@ function crispbb_userapi_createhook($args)
             isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
 
@@ -49,11 +49,11 @@ function crispbb_userapi_createhook($args)
     }
 
     if (!isset($itemtype) || !is_numeric($itemtype)) {
-         if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $itemtype = $extrainfo['itemtype'];
-         } else {
-             $itemtype = 0;
-         }
+        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+            $itemtype = $extrainfo['itemtype'];
+        } else {
+            $itemtype = 0;
+        }
     }
 
     $var_to_look_for = $modname;
@@ -68,17 +68,25 @@ function crispbb_userapi_createhook($args)
     $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
 
     $data = array();
-    $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : NULL;
+    $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : null;
     $data['postsperpage'] = !empty($settings['postsperpage']) ? $settings['postsperpage'] : 0;
     $data['quickreply'] = !empty($settings['quickreply']) ? $settings['quickreply'] : false;
     $data['newaction'] = !empty($settings['newaction']) ? $settings['newaction'] : 0;
 
     if (empty($tid) || !is_numeric($tid)) {
-        if (empty($data['fid'])) return $extrainfo;
-        if (empty($data['newaction'])) return $extrainfo;
+        if (empty($data['fid'])) {
+            return $extrainfo;
+        }
+        if (empty($data['newaction'])) {
+            return $extrainfo;
+        }
         $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $data['fid'], 'privcheck' => true));
-        if ($forum == 'BAD_DATA' || $forum == 'NO_PRIVILEGES') return $extrainfo;
-        if (empty($forum['newtopicurl'])) return $extrainfo;
+        if ($forum == 'BAD_DATA' || $forum == 'NO_PRIVILEGES') {
+            return $extrainfo;
+        }
+        if (empty($forum['newtopicurl'])) {
+            return $extrainfo;
+        }
         /*
         if (!$tid = xarMod::apiFunc('crispbb', 'user', 'createtopic',
             array(
@@ -97,7 +105,9 @@ function crispbb_userapi_createhook($args)
         */
     }
 
-    if (empty($tid)) return $extrainfo;
+    if (empty($tid)) {
+        return $extrainfo;
+    }
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -121,8 +131,10 @@ function crispbb_userapi_createhook($args)
     $bindvars[] = $objectid;
     $bindvars[] = $tid;
 
-    $result = &$dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = &$dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     $hid = $dbconn->PO_Insert_ID($hookstable, 'id');
 
@@ -131,4 +143,3 @@ function crispbb_userapi_createhook($args)
 
     return $extrainfo;
 }
-?>

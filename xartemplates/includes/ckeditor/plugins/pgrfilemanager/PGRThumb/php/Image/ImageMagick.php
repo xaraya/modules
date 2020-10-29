@@ -27,12 +27,12 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
 {
     /**
      * ImageMagick Version
-     * 
+     *
      * @var string
      */
-    static private $_imVer = null;
+    private static $_imVer = null;
         
-    static private $_exec = 'exec';
+    private static $_exec = 'exec';
     
     private $_commands = array();
     
@@ -40,13 +40,16 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
      * @param string $file
      * @return PGRThumb_Image|false
      */
-    static public function create($file)
+    public static function create($file)
     {
-        if (self::getIMVer() >= '6.0.0') return new PGRThumb_Image_ImageMagick($file);
-        else return false;
+        if (self::getIMVer() >= '6.0.0') {
+            return new PGRThumb_Image_ImageMagick($file);
+        } else {
+            return false;
+        }
     }
     
-    static private function _exec($command)
+    private static function _exec($command)
     {
         $fun = self::$_exec;
         $fun(PGRThumb_Config::$imageMagickPath . $command, $output);
@@ -61,12 +64,14 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
     
     /**
      * Get GD version
-     * 
+     *
      * @return string|false
      */
-    static public function getIMVer()
+    public static function getIMVer()
     {
-        if (self::$_imVer != null) return self::$_imVer; 
+        if (self::$_imVer != null) {
+            return self::$_imVer;
+        }
                 
         $output = self::_exec('convert --version');
         
@@ -78,26 +83,29 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
         }
         
         return false;
-    } 
+    }
     
-    public function destroy() 
+    public function destroy()
     {
     }
 
-    public function resize($newWidth, $newHeight, $aspectRatio = true) 
+    public function resize($newWidth, $newHeight, $aspectRatio = true)
     {
-        //Save proportions        
+        //Save proportions
         if ($aspectRatio) {
             $scale = 0;
-            if ($newWidth >= $newHeight) $scale = $newWidth / $this->_width;
-            else $scale = $newHeight / $this->_height;
+            if ($newWidth >= $newHeight) {
+                $scale = $newWidth / $this->_width;
+            } else {
+                $scale = $newHeight / $this->_height;
+            }
             
             $newWidth = $this->_width * $scale;
-            $newHeight = $this->_height * $scale;            
+            $newHeight = $this->_height * $scale;
         }
         
         //Resize
-        $this->_commands[] = '-resize ' . $newWidth . 'x' . $newHeight . '!'; 
+        $this->_commands[] = '-resize ' . $newWidth . 'x' . $newHeight . '!';
         
         $this->_scaleX = $newWidth/$this->_width;
         $this->_scaleY = $newHeight/$this->_height;
@@ -105,7 +113,7 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
         $this->_width = $newWidth;
         $this->_height = $newHeight;
                 
-        return true;        
+        return true;
     }
     
     public function crop($x1, $y1, $x2, $y2)
@@ -115,15 +123,17 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
         $width = abs($x2 - $x1);
         $height = abs($y2 - $y1);
         
-        if(($width <= 0) || ($height == 0)) return false;
+        if (($width <= 0) || ($height == 0)) {
+            return false;
+        }
         
         //Crop
-        $this->_commands[] = '-crop ' . $newWidth . 'x' . $newHeight . '!+' . $x . '+' . $y; 
+        $this->_commands[] = '-crop ' . $newWidth . 'x' . $newHeight . '!+' . $x . '+' . $y;
         
         $this->_width = $width;
         $this->_height = $height;
                 
-        return true;                
+        return true;
     }
     
     public function filterGray()
@@ -144,7 +154,9 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
     {
         if (is_array($color)) {
             list($red, $green, $blue) = $color;
-        } else list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        } else {
+            list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        }
         
         $this->_commands[] = '-border-color "rgb(' . $red . ',' . $green . ',' . $blue . ')" -borderwidth ' . $size;
         
@@ -155,7 +167,9 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
     {
         if (is_array($color)) {
             list($red, $green, $blue) = $color;
-        } else list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        } else {
+            list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+        }
         
         switch ($place) {
             case 'LT':
@@ -184,28 +198,30 @@ class PGRThumb_Image_ImageMagick extends PGRThumb_Image
                 break;
             case 'RB':
                 $place = "SouthEast";
-                break;              
+                break;
         }
         
         $this->_commands[] = '-font "' . $font . '"';
         $this->_commands[] = '-draw \'text gravity ' . $place . ' color "rgb(' . $red . ',' . $green . ',' . $blue . ')" "'. $text . '"\'';
-        
-        
     }
     
     public function saveImage($file, $quality = 100, $type = null)
-    {   
-        if (file_exists($file)) unlink($file);
+    {
+        if (file_exists($file)) {
+            unlink($file);
+        }
         $command = 'convert "' . $this->_file . '" ' . implode(' ', $this->_commands) . ' "' . $file . '"';
         self::_exec($command);
         
-        if (file_exists($file)) return true;
-        else return false;
-    }    
+        if (file_exists($file)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function rotate($angle)
     {
         //TODO
     }
-    
 }

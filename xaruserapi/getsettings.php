@@ -25,21 +25,27 @@ function crispbb_userapi_getsettings($args)
 {
     extract($args);
 
-    if (empty($setting) || !is_string($setting)) return;
+    if (empty($setting) || !is_string($setting)) {
+        return;
+    }
 
     $settings = array();
 
     switch ($setting) {
         case 'fsettings':
-            $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'fsettings'));
+            $presets = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getpresets',
+                array('preset' => 'fsettings')
+            );
             $string = xarModVars::get('crispbb', 'forumsettings');
             if (!empty($string) && is_string($string)) {
                 $settings = unserialize($string);
             }
             if (empty($settings)) {
                 $settings = $presets['fsettings'];
-            }  else {
+            } else {
                 // add in any new settings from defaults
                 foreach ($presets['fsettings'] as $k => $v) {
                     if (!isset($settings[$k])) {
@@ -56,8 +62,12 @@ function crispbb_userapi_getsettings($args)
 
         break;
         case 'fprivileges':
-            $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'fprivileges'));
+            $presets = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getpresets',
+                array('preset' => 'fprivileges')
+            );
             $string = xarModVars::get('crispbb', 'privilegesettings');
             if (!empty($string) && is_string($string)) {
                 $settings = unserialize($string);
@@ -89,8 +99,12 @@ function crispbb_userapi_getsettings($args)
                 $settings = unserialize($string);
             }
             if (empty($settings)) {
-                $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                    array('preset' => 'usettings'));
+                $presets = xarMod::apiFunc(
+                    'crispbb',
+                    'user',
+                    'getpresets',
+                    array('preset' => 'usettings')
+                );
                 $settings = $presets['usettings'];
             }
         break;
@@ -105,6 +119,4 @@ function crispbb_userapi_getsettings($args)
     }
 
     return $settings;
-
 }
-?>

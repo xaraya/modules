@@ -21,13 +21,21 @@ function crispbb_userapi_updateposter($args)
     extract($args);
 
     if (empty($uid) || !is_numeric($uid)) {
-        $uid = xarUserGetVar('id');
+        $uid = xarUser::getVar('id');
     }
 
-    $numreplies = xarMod::apiFunc('crispbb', 'user', 'countposts',
-        array('powner' => $uid, 'pstatus' => 0, 'tstatus' => array(0,1)));
-    $numtopics = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-        array('towner' => $uid, 'tstatus' => array(0,1)));
+    $numreplies = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
+        array('powner' => $uid, 'pstatus' => 0, 'tstatus' => array(0,1))
+    );
+    $numtopics = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'counttopics',
+        array('towner' => $uid, 'tstatus' => array(0,1))
+    );
     $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
 
     // TODO : do we want to keep track of deleted and submitted topics and replies?
@@ -38,8 +46,12 @@ function crispbb_userapi_updateposter($args)
     $posterstable = $xartable['crispbb_posters'];
 
     // see if we already created an entry for this user
-    if (!xarMod::apiFunc('crispbb', 'user', 'getposter',
-        array('uid' => $uid))) {
+    if (!xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'getposter',
+        array('uid' => $uid)
+    )) {
         // create poster
         $query = "INSERT INTO $posterstable (
                   id,
@@ -51,8 +63,10 @@ function crispbb_userapi_updateposter($args)
         $bindvars[] = $uid;
         $bindvars[] = $numtopics;
         $bindvars[] = $numreplies;
-        $result = &$dbconn->Execute($query,$bindvars);
-        if (!$result) return;
+        $result = &$dbconn->Execute($query, $bindvars);
+        if (!$result) {
+            return;
+        }
     } else {
         // update poster
         $set = array();
@@ -65,10 +79,11 @@ function crispbb_userapi_updateposter($args)
         $query .= " SET " . join(',', $set);
         $query .= " WHERE id = ?";
         $bindvars[] = $uid;
-        $result = &$dbconn->Execute($query,$bindvars);
-        if (!$result) return;
+        $result = &$dbconn->Execute($query, $bindvars);
+        if (!$result) {
+            return;
+        }
     }
 
     return true;
 }
-?>

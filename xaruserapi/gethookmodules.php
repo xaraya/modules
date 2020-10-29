@@ -35,12 +35,14 @@ function crispbb_userapi_gethookmodules($args)
 
     $query .= " GROUP BY moduleid, itemtype";
 
-    $result = $dbconn->Execute($query,array());
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array());
+    if (!$result) {
+        return;
+    }
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$numlinks,$numitems,$numtopics) = $result->fields;
+        list($modid, $itemtype, $numlinks, $numitems, $numtopics) = $result->fields;
         if (!isset($modlist[$modid])) {
             $modlist[$modid] = array();
         }
@@ -51,5 +53,3 @@ function crispbb_userapi_gethookmodules($args)
 
     return $modlist;
 }
-
-?>

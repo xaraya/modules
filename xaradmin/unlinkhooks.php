@@ -22,12 +22,22 @@
 function crispbb_admin_unlinkhooks()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminCrispBB')) return;
+    if (!xarSecurity::check('AdminCrispBB')) {
+        return;
+    }
 
-    if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $now = time();
 
@@ -47,9 +57,14 @@ function crispbb_admin_unlinkhooks()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
+                $mytypes = xarMod::apiFunc(
+                    $modinfo['name'],
+                    'user',
+                    'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(), 0);
+                                         array(),
+                    0
+                );
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 } else {
@@ -60,29 +75,41 @@ function crispbb_admin_unlinkhooks()
         $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
-        $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
+        $data['menulinks'] = xarMod::apiFunc(
+            'crispbb',
+            'admin',
+            'getmenulinks',
             array(
                 'current_module' => 'crispbb',
                 'current_type' => 'admin',
                 'current_func' => 'unlinkhooks',
                 'current_sublink' => '',
-            ));
-        xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+            )
+        );
+        xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
         // Return the template variables defined in this function
         return $data;
     }
 
-    if (!xarSecConfirmAuthKey()) return;
-    if (!xarMod::apiFunc('crispbb','admin','unlinkhooks',
-                       array('modid' => $modid,
-                             'itemtype' => $itemtype,
-                             'itemid' => $itemid,
-                             'confirm' => $confirm))) {
+    if (!xarSecConfirmAuthKey()) {
         return;
     }
-    xarResponse::Redirect(xarModURL('crispbb', 'admin', 'modifyhooks',
-        array('modid' => $modid, 'itemtype' => $itemtype)));
+    if (!xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'unlinkhooks',
+        array('modid' => $modid,
+                             'itemtype' => $itemtype,
+                             'itemid' => $itemid,
+                             'confirm' => $confirm)
+    )) {
+        return;
+    }
+    xarResponse::Redirect(xarModURL(
+        'crispbb',
+        'admin',
+        'modifyhooks',
+        array('modid' => $modid, 'itemtype' => $itemtype)
+    ));
     return true;
 }
-
-?>

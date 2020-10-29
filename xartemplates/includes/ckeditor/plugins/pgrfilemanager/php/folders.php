@@ -28,10 +28,12 @@ include_once dirname(__FILE__) . '/utils.php';
 //get dir from post
 $directory = realpath(PGRFileManagerConfig::$rootDir);
  
-$relativePath = ''; 
+$relativePath = '';
 
 //check if dir exist
-if (!is_dir($directory)) PGRFileManagerUtils::sendError("Can't find root directory");
+if (!is_dir($directory)) {
+    PGRFileManagerUtils::sendError("Can't find root directory");
+}
 
 //check for extra function to do
 if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
@@ -42,72 +44,115 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         
         $dir = realpath($directory . $dirname);
         
-        //check if dir is not a rootdir        
-        if ($dir === $directory) die();
+        //check if dir is not a rootdir
+        if ($dir === $directory) {
+            die();
+        }
         //check if dir is in rootdir
-        if (strpos($dir, $directory) !== 0) die();        
+        if (strpos($dir, $directory) !== 0) {
+            die();
+        }
         
-        if(is_dir($dir)) PGRFileManagerUtils::deleteDirectory($dir);
+        if (is_dir($dir)) {
+            PGRFileManagerUtils::deleteDirectory($dir);
+        }
         
         echo json_encode(array(
-    		'res'     => 'OK',
+            'res'     => 'OK',
         ));
 
-        exit(0);        
-    } else if (($fun === 'addDir') && isset($_POST['dirname']) && isset($_POST['newDirname'])) {
+        exit(0);
+    } elseif (($fun === 'addDir') && isset($_POST['dirname']) && isset($_POST['newDirname'])) {
         $dirname = $_POST['dirname'];
         $newDirname = $_POST['newDirname'];
         
         //allowed chars
-        if(preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newDirname) === 0) die();
+        if (preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newDirname) === 0) {
+            die();
+        }
         
         $dirnameLength = strlen($newDirname);
-        if($dirnameLength === 0) die();
-        if($dirnameLength > 200) die();
+        if ($dirnameLength === 0) {
+            die();
+        }
+        if ($dirnameLength > 200) {
+            die();
+        }
                 
         $dir = realpath($directory . $dirname);
         
         //check if dir is in rootdir
-        if (strpos($dir, $directory) !== 0) die();        
+        if (strpos($dir, $directory) !== 0) {
+            die();
+        }
         
-        if(is_dir($dir . '/' . basename($newDirname))) die();
-        if(is_dir($dir)) mkdir($dir . '/' . basename($newDirname));
-    } else if (($fun === 'renameDir') && (isset($_POST['dirname'])) && (isset($_POST['newDirname']))) {
-        
+        if (is_dir($dir . '/' . basename($newDirname))) {
+            die();
+        }
+        if (is_dir($dir)) {
+            mkdir($dir . '/' . basename($newDirname));
+        }
+    } elseif (($fun === 'renameDir') && (isset($_POST['dirname'])) && (isset($_POST['newDirname']))) {
         $dirname = $_POST['dirname'];
         $newDirname = basename($_POST['newDirname']);
         
         //allowed chars
-        if(preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newDirname) === 0) die();
+        if (preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newDirname) === 0) {
+            die();
+        }
         
         $dirnameLength = strlen($newDirname);
-        if($dirnameLength === 0) die();
-        if($dirnameLength > 200) die();
+        if ($dirnameLength === 0) {
+            die();
+        }
+        if ($dirnameLength > 200) {
+            die();
+        }
         
         $dir = realpath($directory . $dirname);
         
-        //check if dir is not a rootdir        
-        if ($dir === $directory) die();
+        //check if dir is not a rootdir
+        if ($dir === $directory) {
+            die();
+        }
         //check if dir is in rootdir
-        if (strpos($dir, $directory) !== 0) die();
+        if (strpos($dir, $directory) !== 0) {
+            die();
+        }
         
-        if(is_dir($dir . '/../' . $newDirname)) die();
+        if (is_dir($dir . '/../' . $newDirname)) {
+            die();
+        }
         
-        if(is_dir($dir)) rename($dir, $dir . '/../' . $newDirname);
-    } else if (($fun === 'moveDir') && (isset($_POST['dir'])) && (isset($_POST['dirname'])) && (isset($_POST['toDir']))) {
+        if (is_dir($dir)) {
+            rename($dir, $dir . '/../' . $newDirname);
+        }
+    } elseif (($fun === 'moveDir') && (isset($_POST['dir'])) && (isset($_POST['dirname'])) && (isset($_POST['toDir']))) {
         $dir = realpath(PGRFileManagerConfig::$rootDir . $_POST['dir']);
         $targetDir = realpath(PGRFileManagerConfig::$rootDir . $_POST['toDir']);
         $dirname = basename($_POST['dirname']);
         //check if dir is in rootdir
-        if(strpos($dir, $directory) !== 0) die();
-        if(strpos($targetDir, $directory) !== 0) die();
-        if($dir === $targetDir) die();
-        if(strpos($targetDir . '/', $dir . '/') === 0) die();
+        if (strpos($dir, $directory) !== 0) {
+            die();
+        }
+        if (strpos($targetDir, $directory) !== 0) {
+            die();
+        }
+        if ($dir === $targetDir) {
+            die();
+        }
+        if (strpos($targetDir . '/', $dir . '/') === 0) {
+            die();
+        }
         
-        if(is_dir($targetDir . '/' . $dirname)) die();
+        if (is_dir($targetDir . '/' . $dirname)) {
+            die();
+        }
                 
-        if(is_dir($dir)) rename($dir, $targetDir . '/' . $dirname);
-    }   
+        if (is_dir($dir)) {
+            rename($dir, $targetDir . '/' . $dirname);
+        }
+    }
 }
 
 if (isset($_POST['fetchDir']) && ($_POST['fetchDir'])) {
@@ -115,10 +160,14 @@ if (isset($_POST['fetchDir']) && ($_POST['fetchDir'])) {
         
     $dir = realpath($directory . $dirname);
         
-    //check if dir is not a rootdir        
-    if ($dir === $directory) die();
+    //check if dir is not a rootdir
+    if ($dir === $directory) {
+        die();
+    }
     //check if dir is in rootdir
-    if (strpos($dir, $directory) !== 0) die();        
+    if (strpos($dir, $directory) !== 0) {
+        die();
+    }
         
     $directory = $dir;
     $relativePath = $dirname;
@@ -130,26 +179,30 @@ $depth = 0;
 function getFolders($dir, $relativePath)
 {
     global $folders;
-    global $depth;   
+    global $depth;
     
     foreach (scandir($dir) as $elem) {
-        if (($elem === '.') || ($elem === '..')) continue;
+        if (($elem === '.') || ($elem === '..')) {
+            continue;
+        }
         $dirpath = $dir . '/' . $elem;
         if (is_dir($dirpath)) {
             $folder = array();
             $folder['dirname'] = $elem;
             $folder['shortname'] = (strlen($elem) > 17) ? substr($elem, 0, 17) . '...' : $elem;
             $folder['relativePath'] = $relativePath . '/' . $elem;
-            $folder['depth'] = $depth; 
-            $folders[] = $folder; 
+            $folder['depth'] = $depth;
+            $folders[] = $folder;
             
             if ($depth < 1) {
                 $depth++;
                 getFolders($dirpath, $folder['relativePath']);
                 $depth--;
-            } else break;
+            } else {
+                break;
+            }
         }
-    } 
+    }
 }
 
 getFolders($directory, $relativePath);

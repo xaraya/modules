@@ -20,7 +20,9 @@ function crispbb_userapi_showreplies($args)
 {
     extract($args);
 
-    if (empty($tid) || !is_numeric($tid)) return;
+    if (empty($tid) || !is_numeric($tid)) {
+        return;
+    }
 
     // Allow the template to the over-ridden.
     // This allows different post display formats in different places.
@@ -31,23 +33,38 @@ function crispbb_userapi_showreplies($args)
     $data = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid));
 
 
-    if (!isset($numitems)) $numitems = $data['postsperpage'];
-    if (!isset($sort)) $sort = 'ptime';
-    if (!isset($order)) $order = $data['postsortorder'];
-    if (!isset($startnum)) $startnum = 1;
-    if (!isset($starttime)) $starttime = NULL;
-    if (!isset($endtime)) $endtime = NULL;
+    if (!isset($numitems)) {
+        $numitems = $data['postsperpage'];
+    }
+    if (!isset($sort)) {
+        $sort = 'ptime';
+    }
+    if (!isset($order)) {
+        $order = $data['postsortorder'];
+    }
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($starttime)) {
+        $starttime = null;
+    }
+    if (!isset($endtime)) {
+        $endtime = null;
+    }
     $item = array();
     $item['module'] = 'crispbb';
     $item['itemtype'] = $data['topicstype'];
     $item['itemid'] = $tid;
     $item['tid'] = $tid;
     $item['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
-    xarVarSetCached('Hooks.hitcount','save', true);
+    xarVar::setCached('Hooks.hitcount', 'save', true);
     $hooks = xarModCallHooks('item', 'display', $tid, $item);
 
     $data['hookoutput'] = !empty($hooks) && is_array($hooks) ? $hooks : array();
-    $posts = xarMod::apiFunc('crispbb', 'user', 'getposts',
+    $posts = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'getposts',
         array(
             'tid' => $tid,
             'sort' => $sort,
@@ -57,12 +74,17 @@ function crispbb_userapi_showreplies($args)
             'starttime' => $starttime,
             'endtime' => $endtime,
             'pstatus' => array(0,1)
-       ));
+       )
+    );
 
 
     if (!empty($data['iconfolder'])) {
-        $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-            array('iconfolder' => $data['iconfolder']));
+        $iconlist = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'gettopicicons',
+            array('iconfolder' => $data['iconfolder'])
+        );
         $data['iconlist'] = $iconlist;
     } else {
         $data['iconlist'] = array();
@@ -70,8 +92,12 @@ function crispbb_userapi_showreplies($args)
     $seenposters = array();
     foreach ($posts as $pid => $post) {
         $item = $post;
-        if (!empty($post['towner'])) $seenposters[$post['towner']] = 1;
-        if (!empty($post['powner'])) $seenposters[$post['powner']] = 1;
+        if (!empty($post['towner'])) {
+            $seenposters[$post['towner']] = 1;
+        }
+        if (!empty($post['powner'])) {
+            $seenposters[$post['powner']] = 1;
+        }
         if ($post['firstpid'] == $pid) {
             if (!empty($data['topicicon']) && isset($iconlist[$data['topicicon']])) {
                 $item['topicicon'] = $iconlist[$data['topicicon']]['imagepath'];
@@ -79,7 +105,7 @@ function crispbb_userapi_showreplies($args)
                 $item['topicicon'] = '';
             }
             $item['hookoutput'] = $data['hookoutput'];
-        }   else {
+        } else {
             if (!empty($post['topicicon']) && isset($iconlist[$post['topicicon']])) {
                 $item['topicicon'] = $iconlist[$post['topicicon']]['imagepath'];
             } else {
@@ -117,9 +143,9 @@ function crispbb_userapi_showreplies($args)
     if (!empty($template_override)) {
         $template = $template_override;
     }
-    if (empty($template)) $template = NULL;
+    if (empty($template)) {
+        $template = null;
+    }
 
-    return xarTplModule($tplmodule, 'user', 'showreplies', $data, $template);
-
+    return xarTpl::module($tplmodule, 'user', 'showreplies', $data, $template);
 }
-?>

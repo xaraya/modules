@@ -45,7 +45,7 @@ function crispbb_userapi_createpost($args)
     }
 
     if (!isset($poststype) || empty($poststype) || !is_numeric($poststype)) {
-            $invalid[] = 'poststype';
+        $invalid[] = 'poststype';
     }
 
     if (count($invalid) > 0) {
@@ -67,7 +67,7 @@ function crispbb_userapi_createpost($args)
     }
 
     if (!isset($powner) || empty($powner) || !is_numeric($powner)) {
-        $powner = xarUserGetVar('id');
+        $powner = xarUser::getVar('id');
     }
 
     if (!isset($pstatus) || !is_numeric($pstatus)) {
@@ -114,8 +114,10 @@ function crispbb_userapi_createpost($args)
     $bindvars[] = $ptext;
     $bindvars[] = serialize($psettings);
 
-    $result = &$dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = &$dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     $pid = $dbconn->PO_Insert_ID($poststable, 'id');
 
@@ -131,18 +133,28 @@ function crispbb_userapi_createpost($args)
     xarModCallHooks('item', 'create', $pid, $item);
 
     // if this is a submitted post, we don't update the topic or forum just yet
-    if ($pstatus == 2) return $pid;
+    if ($pstatus == 2) {
+        return $pid;
+    }
 
     // update the topic
-    if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
+    if (!xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'updatetopic',
         array(
             'tid' => $tid,
             'lastpid' => $pid,
             'nohooks' => true
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     // if this is a submitted topic, we don't update the forum just yet
-    if (isset($tstatus) && $tstatus == 2) return $pid;
+    if (isset($tstatus) && $tstatus == 2) {
+        return $pid;
+    }
 
     // update the forum
     if (empty($fid)) {
@@ -150,12 +162,18 @@ function crispbb_userapi_createpost($args)
         $fid = $topic['fid'];
     }
 
-    if (!xarMod::apiFunc('crispbb', 'admin', 'update',
+    if (!xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'update',
         array(
             'fid' => $fid,
             'lasttid' => $tid,
             'nohooks' => true
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     // let the tracker know the forum was updated
     $fstring = xarModVars::get('crispbb', 'ftracking');
@@ -165,4 +183,3 @@ function crispbb_userapi_createpost($args)
     // return the new forum id
     return $pid;
 }
-?>

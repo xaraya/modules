@@ -33,4 +33,3 @@ function crispbb_userapi_gettopic($args)
 
     return $topic;
 }
-?>

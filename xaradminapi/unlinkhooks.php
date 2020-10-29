@@ -24,7 +24,9 @@ function crispbb_adminapi_unlinkhooks($args)
     extract($args);
 
     if (!empty($confirm)) {
-        if (!xarSecurityCheck('AdminCrispBB')) return;
+        if (!xarSecurity::check('AdminCrispBB')) {
+            return;
+        }
     }
 
     // Get datbase setup
@@ -47,17 +49,18 @@ function crispbb_adminapi_unlinkhooks($args)
             $itemtype = 0;
         }
         $query .= " WHERE moduleid = ? AND itemtype = ?";
-        $bindvars[] = $modid; $bindvars[] = $itemtype;
+        $bindvars[] = $modid;
+        $bindvars[] = $itemtype;
         if (!empty($itemid)) {
             $query .= " AND itemid = ?";
             $bindvars[] =  $itemid;
         }
     }
 
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

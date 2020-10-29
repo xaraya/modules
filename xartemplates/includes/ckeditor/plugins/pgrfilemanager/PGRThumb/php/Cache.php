@@ -27,30 +27,30 @@ class PGRThumb_Cache
 {
     /**
      * File mode
-     * 
+     *
      * @var string
      */
-    static public $dirMode = 0755;
+    public static $dirMode = 0755;
     /**
      * Dir depth structure
-     * 
+     *
      * @var int
      */
-    static public $dirDepth = 2;
+    public static $dirDepth = 2;
     /**
      * File mode
-     * 
+     *
      * @var string
      */
-    static public $fileMode = 0600;
+    public static $fileMode = 0600;
     
     /**
      * Generate cached filename
-     * 
+     *
      * @param string $file
      * @return string
      */
-    static public function generateFilename($file, $params)
+    public static function generateFilename($file, $params)
     {
         $dir = dirname($file);
         $filename = basename($file);
@@ -67,51 +67,51 @@ class PGRThumb_Cache
     
     /**
      * Save image to cache file
-     * 
+     *
      * @param PGRThumb_Image $image
      * @return bool
      */
-    static public function saveImage($cachedFile, PGRThumb_Image $image)
+    public static function saveImage($cachedFile, PGRThumb_Image $image)
     {
         $res = true;
         $cachedDir = dirname($cachedFile);
         if (!file_exists($cachedDir)) {
             $res = mkdir($cachedDir, PGRThumb_Cache::$dirMode, true);
-        }          
+        }
         if ($res) {
             return $image->saveImage($cachedFile, 75, 'JPEG'); //jpeg
-        }          
+        }
 
-        return false;        
+        return false;
     }
     
-    static public function outputCache($file)
-    {        
+    public static function outputCache($file)
+    {
         if (headers_sent()) {
-			PGRThumb_UrlThumb::error('headers already sent');
-		}        
-	    				
+            PGRThumb_UrlThumb::error('headers already sent');
+        }
+                        
         $modifiedDate  = filemtime($file);
         
-		if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && 
-		    ($modifiedDate == strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) && 
-		    $_SERVER['SERVER_PROTOCOL']) {
-			header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
-			exit(0);
-		} 
+        if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) &&
+            ($modifiedDate == strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) &&
+            $_SERVER['SERVER_PROTOCOL']) {
+            header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
+            exit(0);
+        }
 
-		return false;
+        return false;
     }
     
-    static public function outputFile($file)
+    public static function outputFile($file)
     {
-    	if (headers_sent()) {
-			PGRThumb_UrlThumb::error('headers already sent');
-		}        
-	    				
-		header('Last-Modified: '.gmdate('D, d M Y H:i:s', @filemtime($file)).' GMT');
-		//header('Location: ' . $file . '?new');
-		header("Content-Type: image/jpg");
+        if (headers_sent()) {
+            PGRThumb_UrlThumb::error('headers already sent');
+        }
+                        
+        header('Last-Modified: '.gmdate('D, d M Y H:i:s', @filemtime($file)).' GMT');
+        //header('Location: ' . $file . '?new');
+        header("Content-Type: image/jpg");
         readfile($file);
         exit;
     }

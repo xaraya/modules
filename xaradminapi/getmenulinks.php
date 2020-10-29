@@ -11,30 +11,30 @@
  * @author Marc Lutolf <mfl@netspan.ch> and Ryan Walker <ryan@webcommunicate.net>
  */
 
-function ckeditor_adminapi_getmenulinks() {
+function ckeditor_adminapi_getmenulinks()
+{
+    $menulinks = array();
 
-	$menulinks = array();
-
-	if (xarSecurityCheck('AdminCKEditor',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('ckeditor',
-                                                   'admin',
-                                                   'modifyconfig'), 
+    if (xarSecurity::check('AdminCKEditor', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'ckeditor',
+            'admin',
+            'modifyconfig'
+        ),
                               'title' => xarML('Modify Configuration'),
                               'label' => xarML('Modify Configuration'));
     }
 
-    if (xarSecurityCheck('AdminCKEditor',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('ckeditor',
-                                                   'admin',
-                                                   'overview'), 
+    if (xarSecurity::check('AdminCKEditor', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'ckeditor',
+            'admin',
+            'overview'
+        ),
                               'title' => xarML('Module Overview'),
                               'label' => xarML('Overview'),
-							  'active' => array('main'));
+                              'active' => array('main'));
     }
 
     return $menulinks;
 }
-
-?>

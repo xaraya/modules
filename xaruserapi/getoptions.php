@@ -23,9 +23,15 @@ function crispbb_userapi_getoptions($args)
 {
     extract($args);
     $data = array();
-    if (empty($options)) return $data;
-    if (is_string($options)) $options = explode(',', $options);
-    if (!is_array($options)) return $data;
+    if (empty($options)) {
+        return $data;
+    }
+    if (is_string($options)) {
+        $options = explode(',', $options);
+    }
+    if (!is_array($options)) {
+        return $data;
+    }
 
     foreach ($options as $option) {
         $items = array();
@@ -71,7 +77,7 @@ function crispbb_userapi_getoptions($args)
                 $items['numreplies'] = xarML('Number of Replies');
                 $items['numviews'] = xarML('Number of Views');
                 $items['towner'] = xarML('Topic Starter');
-                if (xarModIsAvailable('ratings')) {
+                if (xarMod::isAvailable('ratings')) {
                     $items['ratings'] = xarML('Rating');
                 }
             break;
@@ -117,18 +123,18 @@ function crispbb_userapi_getoptions($args)
                 $items['stickies'] = xarML('Post Stickies');
                 $items['announcements'] = xarML('Post Announcmements');
                 $items['faqs'] = xarML('Post FAQs');
-                if (xarModIsAvailable('bbcode')) {
+                if (xarMod::isAvailable('bbcode')) {
                     $items['bbcode'] = xarML('Post BBCode');
                     $items['bbcodedeny'] = xarML('Deny BBCode');
                 }
-                if (xarModIsAvailable('smilies')) {
+                if (xarMod::isAvailable('smilies')) {
                     $items['smilies'] = xarML('Post Smilies');
                     $items['smiliesdeny'] = xarML('Deny Smilies');
                 }
-                if (xarModIsAvailable('changelog')) {
+                if (xarMod::isAvailable('changelog')) {
                     $items['changelog'] = xarML('Remark Changelog');
                 }
-                if (xarModIsAvailable('polls')) {
+                if (xarMod::isAvailable('polls')) {
                     $items['polls'] = xarML('Post Polls');
                 }
                 $items['html'] = xarML('Post HTML');
@@ -158,8 +164,8 @@ function crispbb_userapi_getoptions($args)
         $data[$option] = $items;
     }
 
-    if (count($data) == 1) return reset($data);
+    if (count($data) == 1) {
+        return reset($data);
+    }
     return $data;
-
 }
-?>

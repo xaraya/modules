@@ -21,7 +21,6 @@
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Utility';
     $modversion['securityschema'] = array();
-	$modversion['dependencyinfo'] = array(
-		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
-	);
-?>
+    $modversion['dependencyinfo'] = array(
+        0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.99.99')
+    );

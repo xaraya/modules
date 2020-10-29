@@ -1,11 +1,11 @@
 <?php
-class LinkCache Extends xarServer
+class LinkCache extends xarServer
 {
     private static $hasShortUrls;
     private static $cachedLinks = array();
     private static $cachedParams = array();
 
-    public static function getCachedURL($modName = 'crispbb', $modType = 'user', $funcName = 'main', $args = array(), $generateXMLURL = NULL, $fragment = NULL, $entrypoint = array())
+    public static function getCachedURL($modName = 'crispbb', $modType = 'user', $funcName = 'main', $args = array(), $generateXMLURL = null, $fragment = null, $entrypoint = array())
     {
         // build the key
         $key = $modName.$modType.$funcName;
@@ -22,8 +22,9 @@ class LinkCache Extends xarServer
                     */
                 } else {
                     // cache any new params
-                    if (!isset(self::$cachedParams[$k]))
+                    if (!isset(self::$cachedParams[$k])) {
                         self::$cachedParams[$k] = $k . '=<'. $k . '>';
+                    }
                 }
             }
         }
@@ -33,9 +34,13 @@ class LinkCache Extends xarServer
             // get link via xarServer::getModuleURL()
             $link = self::getModuleURL($modName, $modType, $funcName, $args, $generateXMLURL, $fragment, $entrypoint);
             // bail if shorturls are enabled and this is a user function (for now)
-            if (self::_hasShortUrls() && $modType == 'user') return $link;
+            if (self::_hasShortUrls() && $modType == 'user') {
+                return $link;
+            }
             // bail on functions that have arrays in arguments (for now)
-            if ($funcName == 'search' || $funcName == 'moderate') return $link;
+            if ($funcName == 'search' || $funcName == 'moderate') {
+                return $link;
+            }
             // loop through cached params
             if (count(self::$cachedParams) > 0) {
                 foreach (self::$cachedParams as $k => $v) {
@@ -59,9 +64,13 @@ class LinkCache Extends xarServer
             // Found a cached link
             $link = self::$cachedLinks[$key];
         }
-        if (!isset($generateXMLURL)) $generateXMLURL = self::$generateXMLURLs;
+        if (!isset($generateXMLURL)) {
+            $generateXMLURL = self::$generateXMLURLs;
+        }
         // replace &amp; in xmlurls so we can target joins
-        if ($generateXMLURL) $link = str_replace('&amp;', '&', $link);
+        if ($generateXMLURL) {
+            $link = str_replace('&amp;', '&', $link);
+        }
         if (count(self::$cachedParams) > 0) {
             foreach (self::$cachedParams as $k => $v) {
                 $pos = strpos($link, $v);
@@ -94,7 +103,9 @@ class LinkCache Extends xarServer
             }
         }
         // put the &amp;s back :)
-        if ($generateXMLURL) $link = str_replace('&', '&amp;', $link);
+        if ($generateXMLURL) {
+            $link = str_replace('&', '&amp;', $link);
+        }
         // handle fragments
         if (!empty($fragment)) {
             // look for existing fragment
@@ -119,10 +130,12 @@ class LinkCache Extends xarServer
 
     private static function _hasShortUrls()
     {
-        if (!isset(self::$hasShortUrls))
+        if (!isset(self::$hasShortUrls)) {
             self::$hasShortUrls = (bool)xarModVars::get('crispbb', 'enable_short_urls');
-        if (parent::$allowShortURLs && self::$hasShortUrls) return true;
+        }
+        if (parent::$allowShortURLs && self::$hasShortUrls) {
+            return true;
+        }
         return false;
     }
 }
-?>

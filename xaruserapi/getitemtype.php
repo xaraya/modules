@@ -21,11 +21,19 @@
 function crispbb_userapi_getitemtype($args)
 {
     extract($args);
-    if (!isset($fid)) $fid = NULL;
-    if (!isset($component)) $component = NULL;
+    if (!isset($fid)) {
+        $fid = null;
+    }
+    if (!isset($component)) {
+        $component = null;
+    }
 
-    $itemtypes = xarMod::apiFunc('crispbb', 'user', 'getitemtypes',
-        array('fid' => $fid, 'component' => $component));
+    $itemtypes = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'getitemtypes',
+        array('fid' => $fid, 'component' => $component)
+    );
 
     if (count($itemtypes) <> 1) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -39,4 +47,3 @@ function crispbb_userapi_getitemtype($args)
 
     return $itemtype;
 }
-?>

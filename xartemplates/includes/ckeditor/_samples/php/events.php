@@ -35,9 +35,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 /**
  * Adds global event, will hide "Target" tab in Link dialog in all instances.
  */
-function CKEditorHideLinkTargetTab(&$CKEditor) {
-
-	$function = 'function (ev) {
+function CKEditorHideLinkTargetTab(&$CKEditor)
+{
+    $function = 'function (ev) {
 		// Take the dialog name and its definition from the event data
 		var dialogName = ev.data.name;
 		var dialogDefinition = ev.data.definition;
@@ -47,18 +47,19 @@ function CKEditorHideLinkTargetTab(&$CKEditor) {
 			dialogDefinition.removeContents("target")
 	}';
 
-	$CKEditor->addGlobalEventHandler('dialogDefinition', $function);
+    $CKEditor->addGlobalEventHandler('dialogDefinition', $function);
 }
 
 /**
  * Adds global event, will notify about opened dialog.
  */
-function CKEditorNotifyAboutOpenedDialog(&$CKEditor) {
-	$function = 'function (evt) {
+function CKEditorNotifyAboutOpenedDialog(&$CKEditor)
+{
+    $function = 'function (evt) {
 		alert("Loading dialog: " + evt.data.name);
 	}';
 
-	$CKEditor->addGlobalEventHandler('dialogDefinition', $function);
+    $CKEditor->addGlobalEventHandler('dialogDefinition', $function);
 }
 
 // Include CKEditor class.

@@ -27,8 +27,12 @@ function crispbb_adminapi_createitemtype($args)
     extract($args);
     $invalid = array();
     $components = array('forum', 'topics', 'posts');
-    if (!isset($fid) || !is_numeric($fid)) $invalid[] = 'fid';
-    if (empty($component) || !in_array($component, $components)) $invalid[] = 'component';
+    if (!isset($fid) || !is_numeric($fid)) {
+        $invalid[] = 'fid';
+    }
+    if (empty($component) || !in_array($component, $components)) {
+        $invalid[] = 'component';
+    }
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -48,11 +52,12 @@ function crispbb_adminapi_createitemtype($args)
         )
         VALUES (?,?,?)";
     $bindvars = array($nextId, $fid, $component);
-    $result = &$dbconn->Execute($query,$bindvars);
+    $result = &$dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     $itemtype = $dbconn->PO_Insert_ID($itemtypestable, 'id');
 
     return $itemtype;
 }
-?>

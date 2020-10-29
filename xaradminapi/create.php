@@ -58,16 +58,28 @@ function crispbb_adminapi_create($args)
         $ftype = 0;
     }
 
-    $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-        array('preset' => 'fsettings,fprivileges'));
+    $presets = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'getpresets',
+        array('preset' => 'fsettings,fprivileges')
+    );
     if (empty($fsettings) || !is_array($fsettings)) {
-        $fsettings = xarMod::apiFunc('crispbb', 'user', 'getsettings',
-            array('setting' => 'fsettings'));
+        $fsettings = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getsettings',
+            array('setting' => 'fsettings')
+        );
     }
 
     if (empty($fprivileges) || !is_array($fprivileges)) {
-        $fprivileges = xarMod::apiFunc('crispbb', 'user', 'getsettings',
-            array('setting' => 'fprivileges'));
+        $fprivileges = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getsettings',
+            array('setting' => 'fprivileges')
+        );
     }
 
     if (empty($fowner) || !is_numeric($fowner)) {
@@ -106,27 +118,51 @@ function crispbb_adminapi_create($args)
     $bindvars[] = serialize($fprivileges);
     $bindvars[] = 0;
 
-    $result = &$dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = &$dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     $fid = $dbconn->PO_Insert_ID($forumstable, 'id');
 
     // set the forum order
-    if (!xarMod::apiFunc('crispbb', 'admin', 'update',
-        array('fid' => $fid, 'forder' => $fid, 'nohooks' => true))) return;
+    if (!xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'update',
+        array('fid' => $fid, 'forder' => $fid, 'nohooks' => true)
+    )) {
+        return;
+    }
 
     // create itemtypes for this forum
-    $forumtype = xarMod::apiFunc('crispbb', 'admin', 'createitemtype',
-        array('fid' => $fid, 'component' => 'forum'));
-    $topicstype = xarMod::apiFunc('crispbb', 'admin', 'createitemtype',
-        array('fid' => $fid, 'component' => 'topics'));
-    $poststype = xarMod::apiFunc('crispbb', 'admin', 'createitemtype',
-        array('fid' => $fid, 'component' => 'posts'));
+    $forumtype = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'createitemtype',
+        array('fid' => $fid, 'component' => 'forum')
+    );
+    $topicstype = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'createitemtype',
+        array('fid' => $fid, 'component' => 'topics')
+    );
+    $poststype = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'createitemtype',
+        array('fid' => $fid, 'component' => 'posts')
+    );
 
-    $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-        array('fid' => 0, 'component' => 'forum'));
+    $mastertype = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'getitemtype',
+        array('fid' => 0, 'component' => 'forum')
+    );
 
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
+    $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'crispbb'));
     $numcats = count($basecats);
     $parentcat = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
     if (!empty($numcats)) {
@@ -162,4 +198,3 @@ function crispbb_adminapi_create($args)
     // return the new forum id
     return $fid;
 }
-?>

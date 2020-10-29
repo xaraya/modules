@@ -26,7 +26,7 @@ THE SOFTWARE.
 //Include your own script with authentication if you wish
 //i.e. include($_SERVER['DOCUMENT_ROOT'].'/_files/application/PGRFileManagerConfig.php');
 
-//real absolute path to root directory (directory you want to use with PGRFileManager) on your server  
+//real absolute path to root directory (directory you want to use with PGRFileManager) on your server
 //i.e  PGRFileManagerConfig::$rootPath = '/home/user/htdocs/userfiles'
 //you can check your absoulte path using
 PGRFileManagerConfig::$rootPath = '/var/www/vhosts/beadwareelkgrove.com/httpdocs/drupal-6.19/pgr_files';

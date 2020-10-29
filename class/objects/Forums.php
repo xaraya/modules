@@ -15,12 +15,16 @@ class Forums extends DataObject
     public $userLevel = 0; // maximum level for current user
     public $userAction = 'viewforum'; // minimum requirement
 
-    function __construct(DataObjectDescriptor $descriptor)
+    public function __construct(DataObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->moduleid = xarMod::getRegID('crispbb');
-        $itemtype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-            array('fid' => !isset($this->itemid) ? 0 : $this->itemid, 'component' => 'forum'));
+        $itemtype = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getitemtype',
+            array('fid' => !isset($this->itemid) ? 0 : $this->itemid, 'component' => 'forum')
+        );
         $this->itemtype = !empty($itemtype) ? $itemtype : 0;
         $this->tplmodule = 'crispbb';
     }
@@ -28,10 +32,12 @@ class Forums extends DataObject
     /**
      * Retrieve the values for this item
     **/
-    public function getItem(Array $args = array())
+    public function getItem(array $args = array())
     {
         $itemid = parent::getItem($args);
-        if (empty($itemid)) return;
+        if (empty($itemid)) {
+            return;
+        }
         $fsettings = unserialize($this->properties['fsettings']->value);
         $this->fsettings = $fsettings;
         $fprivileges = unserialize($this->properties['fprivileges']->value);
@@ -39,20 +45,24 @@ class Forums extends DataObject
         $check = $this->getFieldValues();
         $check['fid'] = $this->itemid;
         $check['fprivileges'] = $this->fprivileges;
-        $this->userLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
-            array('check' => $check, 'priv' => $this->userAction));
+        $this->userLevel = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'checkseclevel',
+            array('check' => $check, 'priv' => $this->userAction)
+        );
         return $this->itemid;
     }
     /**
      * Delete this forum (and its topics and posts)
     **/
-    public function deleteItem(Array $args = array())
+    public function deleteItem(array $args = array())
     {
-        if(!empty($args['itemid']))
+        if (!empty($args['itemid'])) {
             $this->itemid = $args['itemid'];
+        }
 
-        if(empty($this->itemid))
-        {
+        if (empty($this->itemid)) {
             $msg = 'Invalid item id in method #(1)() for dynamic object [#(2)] #(3)';
             $vars = array('deleteItem',$this->objectid,$this->name);
             throw new BadParameterException($vars, $msg);
@@ -74,22 +84,22 @@ class Forums extends DataObject
             // remove posts
             if (!empty($pids)) {
                 $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
-                $result = &$dbconn->Execute($query,array());
+                $result = &$dbconn->Execute($query, array());
             }
             // remove topics
             if (!empty($tids)) {
                 // first from topics table
                 $query = "DELETE FROM $topicstable WHERE id IN (" . join(',', $tids) . ")";
-                $result = &$dbconn->Execute($query,array());
+                $result = &$dbconn->Execute($query, array());
                 // then from hooks table
                 $query = "DELETE FROM $hookstable WHERE tid IN (" . join(',', $tids) . ")";
-                $result = &$dbconn->Execute($query,array());
+                $result = &$dbconn->Execute($query, array());
             }
             // remove forum itemtype.
             // @TODO check for existence of topic and post components for this forum
             // in other forums (moved/merged topics and posts) and remove if none found
             $query = "DELETE FROM $itemtypestable WHERE fid = ? AND component = 'Forum'";
-            $result = &$dbconn->Execute($query,array($this->itemid));
+            $result = &$dbconn->Execute($query, array($this->itemid));
             // We're done, commit
             $dbconn->commit();
         } catch (Exception $e) {
@@ -99,7 +109,9 @@ class Forums extends DataObject
         // remove forum from ftracker
         $string = xarModVars::get('crispbb', 'ftracker');
         $ftracker = (!empty($string) && is_string($string)) ? unserialize($string) : array();
-        if (isset($ftracker[$this->itemid])) unset($ftracker[$this->itemid]);
+        if (isset($ftracker[$this->itemid])) {
+            unset($ftracker[$this->itemid]);
+        }
         xarModVars::set('crispbb', 'ftracker', serialize($ftracker));
         // @TODO: Itemtype Delete Hooks
         // and finally, remove the forum itself :)
@@ -108,30 +120,32 @@ class Forums extends DataObject
     /**
      * populate itemlinks for this forum
     **/
-    public function getItemLinks(Array $args = array())
+    public function getItemLinks(array $args = array())
     {
         sys::import('modules.crispbb.class.cache.links');
         extract($args);
         $itemlinks = array();
-        if (empty($this->userLevel)) return;
+        if (empty($this->userLevel)) {
+            return;
+        }
         $check = $this->getFieldValues();
         $check['fid'] = $this->itemid;
         $check['fprivileges'] = $this->fprivileges;
         $privs = $this->fprivileges[$this->userLevel];
         // deleteforum permissions
         if (!empty($privs['deleteforum'])) {
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'delete', array('fid' => $this->itemid));
+            $link = LinkCache::getCachedURL('crispbb', 'admin', 'delete', array('fid' => $this->itemid));
             $itemlinks['delete'] = $link;
         }
         if (!empty($privs['editforum'])) {
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'edit'));
+            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'edit'));
             $itemlinks['modify'] = $link;
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid));
+            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid));
             $itemlinks['overview'] = $link;
         }
         // forum viewers
         if ($check['ftype'] != 1) {
-                $link = LinkCache::getCachedURL('crispbb', 'user', 'view', array('fid' => $this->itemid));
+            $link = LinkCache::getCachedURL('crispbb', 'user', 'view', array('fid' => $this->itemid));
             $itemlinks['view'] = $link;
             // forum readers
             if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $check, 'priv' => 'readforum'))) {
@@ -139,29 +153,37 @@ class Forums extends DataObject
                     //@TODO:
                 }
                 // Logged in users
-                if (xarUserIsLoggedIn()) {
-                        $link = LinkCache::getCachedURL('crispbb', 'user', 'view', array('fid' => $this->itemid, 'action' => 'read'));
+                if (xarUser::isLoggedIn()) {
+                    $link = LinkCache::getCachedURL('crispbb', 'user', 'view', array('fid' => $this->itemid, 'action' => 'read'));
                     $itemlinks['read'] = $link;
                     // forum posters
-                    if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
-                        array('check' => $check, 'priv' => 'newtopic'))) {
-                            $link = LinkCache::getCachedURL('crispbb', 'user', 'newtopic', array('fid' => $this->itemid));
+                    if (xarMod::apiFunc(
+                        'crispbb',
+                        'user',
+                        'checkseclevel',
+                        array('check' => $check, 'priv' => 'newtopic')
+                    )) {
+                        $link = LinkCache::getCachedURL('crispbb', 'user', 'newtopic', array('fid' => $this->itemid));
                         $itemlinks['newtopic'] = $link;
                     }
                     // forum moderators
-                    if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
-                        array('check' => $check, 'priv' => 'ismoderator'))) {
-                            $link = LinkCache::getCachedURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $this->itemid));
+                    if (xarMod::apiFunc(
+                        'crispbb',
+                        'user',
+                        'checkseclevel',
+                        array('check' => $check, 'priv' => 'ismoderator')
+                    )) {
+                        $link = LinkCache::getCachedURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $this->itemid));
                         $itemlinks['moderate'] = $link;
                     }
                     if (!empty($privs['editforum'])) {
-                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'forumhooks'));
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'forumhooks'));
                         $itemlinks['forumhooks'] = $link;
-                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'topichooks'));
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'topichooks'));
                         $itemlinks['topichooks'] = $link;
-                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'posthooks'));
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'posthooks'));
                         $itemlinks['posthooks'] = $link;
-                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'privileges'));
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'privileges'));
                         $itemlinks['privileges'] = $link;
                     }
                 }
@@ -176,38 +198,45 @@ class Forums extends DataObject
     }
 
     // update a forum, we don't call parent here, otherwise nohooks will be ignored
-    public function updateItem(Array $args = array())
+    public function updateItem(array $args = array())
     {
         // updating anything other than forum counts requires elevated privs
         // @TODO: wrap this in a sec check
-        if(count($args) > 0) {
-            if(!empty($args['itemid']))
+        if (count($args) > 0) {
+            if (!empty($args['itemid'])) {
                 $this->itemid = $args['itemid'];
+            }
 
-            foreach($args as $name => $value)
-                if(isset($this->properties[$name]))
+            foreach ($args as $name => $value) {
+                if (isset($this->properties[$name])) {
                     $this->properties[$name]->setValue($value);
+                }
+            }
         }
-        if(empty($this->itemid)) {
+        if (empty($this->itemid)) {
             // Try getting the id value from the item ID property if it exists
-            foreach($this->properties as $property)
-                if ($property->type == 21) $this->itemid = $property->value;
+            foreach ($this->properties as $property) {
+                if ($property->type == 21) {
+                    $this->itemid = $property->value;
+                }
+            }
         }
         // add in forum specific topic and reply counts
         $counts = $this->getForumCounts();
         if (!empty($counts)) {
-            foreach($counts as $name => $value)
-                if(isset($this->properties[$name]))
+            foreach ($counts as $name => $value) {
+                if (isset($this->properties[$name])) {
                     $this->properties[$name]->setValue($value);
+                }
+            }
         }
         $args = $this->getFieldValues();
         $args['itemid'] = $this->itemid;
-        foreach(array_keys($this->datastores) as $store)
-        {
+        foreach (array_keys($this->datastores) as $store) {
             // Execute any property-specific code first
             if ($store != '_dummy_') {
                 foreach ($this->datastores[$store]->fields as $property) {
-                    if (method_exists($property,'updatevalue')) {
+                    if (method_exists($property, 'updatevalue')) {
                         $property->updateValue($this->itemid);
                     }
                 }
@@ -217,9 +246,10 @@ class Forums extends DataObject
             $itemid = $this->datastores[$store]->updateItem($args);
         }
 
-        if ($this->updatehooks == true)
+        if ($this->updatehooks == true) {
             // call update hooks for this item
             $this->callHooks('update');
+        }
 
         return $this->itemid;
     }
@@ -233,22 +263,46 @@ class Forums extends DataObject
     {
         // @TODO: get these from crispbb_topics and crispbb_posts objects
         $counts = array();
-        $counts['numtopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-            array('fid' => $this->itemid,'tstatus' => array(0,1)));
-        $counts['numreplies'] = xarMod::apiFunc('crispbb', 'user', 'countposts',
-            array('fid' => $this->itemid,'tstatus' => array(0,1),'pstatus' => 0));
+        $counts['numtopics'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'counttopics',
+            array('fid' => $this->itemid,'tstatus' => array(0,1))
+        );
+        $counts['numreplies'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'countposts',
+            array('fid' => $this->itemid,'tstatus' => array(0,1),'pstatus' => 0)
+        );
         $counts['numreplies'] = !empty($counts['numreplies']) ? $counts['numreplies'] - $counts['numtopics'] : 0;
-        $counts['numtopicsubs'] = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-            array('fid' => $this->itemid,'tstatus' => 2));
-        $counts['numtopicdels'] = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-            array('fid' => $this->itemid,'tstatus' => 5));
-        $counts['numreplysubs'] = xarMod::apiFunc('crispbb', 'user', 'countposts',
-            array('fid' => $this->itemid,'tstatus' => array(0,1),'pstatus' => 2));
-        $counts['numreplydels'] = xarMod::apiFunc('crispbb', 'user', 'countposts',
-            array('fid' => $this->itemid,'tstatus' => array(0,1),'pstatus' => 5));
+        $counts['numtopicsubs'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'counttopics',
+            array('fid' => $this->itemid,'tstatus' => 2)
+        );
+        $counts['numtopicdels'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'counttopics',
+            array('fid' => $this->itemid,'tstatus' => 5)
+        );
+        $counts['numreplysubs'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'countposts',
+            array('fid' => $this->itemid,'tstatus' => array(0,1),'pstatus' => 2)
+        );
+        $counts['numreplydels'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'countposts',
+            array('fid' => $this->itemid,'tstatus' => array(0,1),'pstatus' => 5)
+        );
         return $counts;
     }
-    public function createItem(Array $args = array())
+    public function createItem(array $args = array())
     {
         // @TODO: sec check
         // The id of the item^to be created is
@@ -257,51 +311,51 @@ class Forums extends DataObject
         //  3. 0
 
         $this->properties[$this->primary]->setValue(0);
-        if(count($args) > 0) {
-            foreach($args as $name => $value) {
-                if(isset($this->properties[$name])) {
+        if (count($args) > 0) {
+            foreach ($args as $name => $value) {
+                if (isset($this->properties[$name])) {
                     $this->properties[$name]->setValue($value);
                 }
             }
-            if(isset($args['itemid'])) {
+            if (isset($args['itemid'])) {
                 $this->itemid = $args['itemid'];
             } else {
                 $this->itemid = $this->properties[$this->primary]->getValue();
             }
         }
         // special case when we try to create a new object handled by dynamicdata
-        if(
+        if (
             $this->objectid == 1 &&
             $this->properties['module_id']->value == xarMod::getRegID('dynamicdata')
             //&& $this->properties['itemtype']->value < 2
-        )
-        {
+        ) {
             $this->properties['itemtype']->setValue($this->getNextItemtype($args));
         }
 
         // check that we have a valid item id, or that we can create one if it's set to 0
-        if(empty($this->itemid)) {
+        if (empty($this->itemid)) {
             // no primary key identified for this object, so we're stuck
-            if(!isset($this->primary)) {
+            if (!isset($this->primary)) {
                 $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
                 $vars = array('primary key', 'Forum DataObject', 'createItem', 'crispBB');
-                throw new BadParameterException($vars,$msg);
+                throw new BadParameterException($vars, $msg);
             }
             $value = $this->properties[$this->primary]->getValue();
 
             // we already have an itemid value in the properties
-            if(!empty($value)) {
+            if (!empty($value)) {
                 $this->itemid = $value;
-            } elseif(!empty($this->properties[$this->primary]->datastore)) {
+            } elseif (!empty($this->properties[$this->primary]->datastore)) {
                 // we'll let the primary datastore create an itemid for us
                 $primarystore = $this->properties[$this->primary]->datastore;
                 // add the primary to the data store fields if necessary
-                if(!empty($this->fieldlist) && !in_array($this->primary,$this->fieldlist))
-                    $this->datastores[$primarystore]->addField($this->properties[$this->primary]); // use reference to original property
+                if (!empty($this->fieldlist) && !in_array($this->primary, $this->fieldlist)) {
+                    $this->datastores[$primarystore]->addField($this->properties[$this->primary]);
+                } // use reference to original property
 
                 // Execute any property-specific code first
                 foreach ($this->datastores[$primarystore]->fields as $property) {
-                    if (method_exists($property,'createvalue')) {
+                    if (method_exists($property, 'createvalue')) {
                         $property->createValue($this->itemid);
                     }
                 }
@@ -310,22 +364,25 @@ class Forums extends DataObject
             } else {
                 $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
                 $vars = array('primary key datastore', 'Forum DataObject', 'createItem', 'crispBB');
-                throw new BadParameterException($vars,$msg);
+                throw new BadParameterException($vars, $msg);
             }
         }
-        if(empty($this->itemid)) return;
+        if (empty($this->itemid)) {
+            return;
+        }
 
         $args = $this->getFieldValues();
         $args['itemid'] = $this->itemid;
-        foreach(array_keys($this->datastores) as $store) {
+        foreach (array_keys($this->datastores) as $store) {
             // skip the primary store
-            if(isset($primarystore) && $store == $primarystore)
+            if (isset($primarystore) && $store == $primarystore) {
                 continue;
+            }
 
             // Execute any property-specific code first
             if ($store != '_dummy_') {
                 foreach ($this->datastores[$store]->fields as $property) {
-                    if (method_exists($property,'createvalue')) {
+                    if (method_exists($property, 'createvalue')) {
                         $property->createValue($this->itemid);
                     }
                 }
@@ -333,8 +390,9 @@ class Forums extends DataObject
 
             // Now run the create routine of the this datastore
             $itemid = $this->datastores[$store]->createItem($args);
-            if(empty($itemid))
+            if (empty($itemid)) {
                 return;
+            }
         }
         // set the forum order, can't do this during create
         $extra = array('forder' => $this->itemid);
@@ -345,7 +403,7 @@ class Forums extends DataObject
         // @TODO: use the crispbb_itemtypes object here
         $components = xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'components'));
         $itemtypes = array();
-        foreach ($components as $component => $label ) {
+        foreach ($components as $component => $label) {
             $itemtypes[$component] = xarMod::apiFunc('crispbb', 'admin', 'createitemtype', array('fid' => $this->itemid, 'component' => $component));
         }
         // set the correct itemtype (for create hooks)
@@ -364,32 +422,32 @@ class Forums extends DataObject
 
         return $this->itemid;
     }
-/*  // join on categories, this module, this forum id,
-    // adds all categories_linkage fields as properties of the object
-    // @TODO: make it just add the category_id as a property
-    public function joinCategories(Array $cids=array()) {
-        $categoriesdef = xarMod::apiFunc(
-            'categories','user','leftjoin',
-            array(
-                'modid' => $this->moduleid,
-                'itemtype' => $this->itemtype,
-                'cids' => $cids
-            )
-        );
-        $cattable = array(
-            'table' => $categoriesdef['table'],
-            'key' => $categoriesdef['field'],
-            'fields' => array(),
-            'where' => $categoriesdef['where'],
-            'andor' => 'and',
+    /*  // join on categories, this module, this forum id,
+        // adds all categories_linkage fields as properties of the object
+        // @TODO: make it just add the category_id as a property
+        public function joinCategories(Array $cids=array()) {
+            $categoriesdef = xarMod::apiFunc(
+                'categories','user','leftjoin',
+                array(
+                    'modid' => $this->moduleid,
+                    'itemtype' => $this->itemtype,
+                    'cids' => $cids
+                )
             );
-        $this->joinTable($cattable);
-    }
-    */
+            $cattable = array(
+                'table' => $categoriesdef['table'],
+                'key' => $categoriesdef['field'],
+                'fields' => array(),
+                'where' => $categoriesdef['where'],
+                'andor' => 'and',
+                );
+            $this->joinTable($cattable);
+        }
+        */
 }
 class ForumsList extends DataObjectList
 {
-    function __construct(DataObjectDescriptor $descriptor)
+    public function __construct(DataObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->moduleid = xarMod::getRegID('crispbb');
@@ -406,7 +464,9 @@ class ForumsList extends DataObjectList
       */
     public function getViewOptions($itemid = null)
     {
-        if (empty($itemid)) return array();
+        if (empty($itemid)) {
+            return array();
+        }
         $data['itemid'] = $itemid;
         // import our own class to handle link cache (less code required)
         sys::import('modules.crispbb.class.cache.links');
@@ -417,8 +477,12 @@ class ForumsList extends DataObjectList
         $check = $this->items[$data['itemid']];
         $check['fid'] = $data['itemid'];
         $check['fprivileges'] = unserialize($this->items[$data['itemid']]['fprivileges']);
-        $userLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
-            array('check' => $check, 'priv' => 'viewforum'));
+        $userLevel = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'checkseclevel',
+            array('check' => $check, 'priv' => 'viewforum')
+        );
         $numforums = count($this->items);
         $fids = !empty($numforums) ? array_keys($this->items) : array();
         $currentindex = 0;
@@ -429,16 +493,18 @@ class ForumsList extends DataObjectList
             }
         }
         $itemlinks = array();
-        if (empty($userLevel)) return $itemlinks;
+        if (empty($userLevel)) {
+            return $itemlinks;
+        }
         $privs = $check['fprivileges'][$userLevel];
         // deleteforum permissions
         if (!empty($privs['deleteforum'])) {
-                 // if $linktype == 'object' use getObjectURL()
-                if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($data['objectname'], 'delete', $urlargs);
-                } else {
-                    $link = LinkCache::getCachedURL('crispbb','admin','delete',$urlargs);
-                }
+            // if $linktype == 'object' use getObjectURL()
+            if ($this->linktype == 'object') {
+                $link = xarServer::getObjectURL($data['objectname'], 'delete', $urlargs);
+            } else {
+                $link = LinkCache::getCachedURL('crispbb', 'admin', 'delete', $urlargs);
+            }
             // make the links a little more friendly than the dd ones
             $itemlinks['delete'] = array(
                 'link' => $link,
@@ -449,12 +515,12 @@ class ForumsList extends DataObjectList
         if (!empty($privs['editforum'])) {
             $itemargs = $urlargs;
             static $authid;
-                // if $linktype == 'object' use getObjectURL()
-                if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
-                } else {
-                    $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
-                }
+            // if $linktype == 'object' use getObjectURL()
+            if ($this->linktype == 'object') {
+                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
+            } else {
+                $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', $itemargs);
+            }
             // make the links a little more friendly than the dd ones
             $itemlinks['overview'] = array(
                 'link' => $link,
@@ -463,30 +529,32 @@ class ForumsList extends DataObjectList
             );
             $itemargs = $urlargs;
             $itemargs['sublink'] = 'edit';
-                // if $linktype == 'object' use getObjectURL()
-                if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
-                } else {
-                    $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
-                }
+            // if $linktype == 'object' use getObjectURL()
+            if ($this->linktype == 'object') {
+                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
+            } else {
+                $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', $itemargs);
+            }
             // make the links a little more friendly than the dd ones
             $itemlinks['modify'] = array(
                 'link' => $link,
                 'title' => xarML('Edit this forum'),
                 'label' => xarML('Modify'),
             );
-            if (empty($authid)) $authid = xarSecGenAuthKey();
+            if (empty($authid)) {
+                $authid = xarSecGenAuthKey();
+            }
             $itemargs = $urlargs;
             $itemargs['catid'] = isset($data['catid']) ? $data['catid'] : null;
             $itemargs['direction'] = 'up';
             $itemargs['authid'] = $authid;
             if ($currentindex > 0) {
-                    // if $linktype == 'object' use getObjectURL()
-                    if ($this->linktype == 'object') {
-                        $link = xarServer::getObjectURL($data['objectname'], 'order', $itemargs);
-                    } else {
-                        $link = LinkCache::getCachedURL('crispbb','admin','order',$itemargs);
-                    }
+                // if $linktype == 'object' use getObjectURL()
+                if ($this->linktype == 'object') {
+                    $link = xarServer::getObjectURL($data['objectname'], 'order', $itemargs);
+                } else {
+                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'order', $itemargs);
+                }
                 // make the links a little more friendly than the dd ones
                 $itemlinks['moveup'] = array(
                     'link' => $link,
@@ -499,12 +567,12 @@ class ForumsList extends DataObjectList
             $itemargs['direction'] = 'down';
             $itemargs['authid'] = $authid;
             if ($currentindex < $numforums-1) {
-                    // if $linktype == 'object' use getObjectURL()
-                    if ($this->linktype == 'object') {
-                        $link = xarServer::getObjectURL($data['objectname'], 'order', $itemargs);
-                    } else {
-                        $link = LinkCache::getCachedURL('crispbb','admin','order',$itemargs);
-                    }
+                // if $linktype == 'object' use getObjectURL()
+                if ($this->linktype == 'object') {
+                    $link = xarServer::getObjectURL($data['objectname'], 'order', $itemargs);
+                } else {
+                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'order', $itemargs);
+                }
                 // make the links a little more friendly than the dd ones
                 $itemlinks['movedown'] = array(
                     'link' => $link,
@@ -515,12 +583,12 @@ class ForumsList extends DataObjectList
         }
         // forum viewers
         if ($check['ftype'] != 1) {
-                // if $linktype == 'object' use getObjectURL()
-                if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($data['objectname'], 'view', $urlargs);
-                } else {
-                    $link = LinkCache::getCachedURL('crispbb','user','view',$urlargs);
-                }
+            // if $linktype == 'object' use getObjectURL()
+            if ($this->linktype == 'object') {
+                $link = xarServer::getObjectURL($data['objectname'], 'view', $urlargs);
+            } else {
+                $link = LinkCache::getCachedURL('crispbb', 'user', 'view', $urlargs);
+            }
             // make the links a little more friendly than the dd ones
             $itemlinks['view'] = array(
                 'link' => $link,
@@ -533,15 +601,15 @@ class ForumsList extends DataObjectList
                     //@TODO:
                 }
                 // Logged in users
-                if (xarUserIsLoggedIn()) {
+                if (xarUser::isLoggedIn()) {
                     $itemargs = $urlargs;
                     $itemargs['action'] = 'read';
-                        // if $linktype == 'object' use getObjectURL()
-                        if ($this->linktype == 'object') {
-                            $link = xarServer::getObjectURL($data['objectname'], 'view', $itemargs);
-                        } else {
-                            $link = LinkCache::getCachedURL('crispbb','user','view',$itemargs);
-                        }
+                    // if $linktype == 'object' use getObjectURL()
+                    if ($this->linktype == 'object') {
+                        $link = xarServer::getObjectURL($data['objectname'], 'view', $itemargs);
+                    } else {
+                        $link = LinkCache::getCachedURL('crispbb', 'user', 'view', $itemargs);
+                    }
                     // make the links a little more friendly than the dd ones
                     $itemlinks['read'] = array(
                         'link' => $link,
@@ -549,14 +617,18 @@ class ForumsList extends DataObjectList
                         'label' => xarML('Mark Read'),
                     );
                     // forum posters
-                    if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
-                        array('check' => $check, 'priv' => 'newtopic'))) {
-                            // if $linktype == 'object' use getObjectURL()
-                            if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($data['objectname'], 'newtopic', $urlargs);
-                            } else {
-                                $link = LinkCache::getCachedURL('crispbb','user','newtopic',$urlargs);
-                            }
+                    if (xarMod::apiFunc(
+                        'crispbb',
+                        'user',
+                        'checkseclevel',
+                        array('check' => $check, 'priv' => 'newtopic')
+                    )) {
+                        // if $linktype == 'object' use getObjectURL()
+                        if ($this->linktype == 'object') {
+                            $link = xarServer::getObjectURL($data['objectname'], 'newtopic', $urlargs);
+                        } else {
+                            $link = LinkCache::getCachedURL('crispbb', 'user', 'newtopic', $urlargs);
+                        }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['newtopic'] = array(
                             'link' => $link,
@@ -565,16 +637,20 @@ class ForumsList extends DataObjectList
                         );
                     }
                     // forum moderators
-                    if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
-                        array('check' => $check, 'priv' => 'ismoderator'))) {
+                    if (xarMod::apiFunc(
+                        'crispbb',
+                        'user',
+                        'checkseclevel',
+                        array('check' => $check, 'priv' => 'ismoderator')
+                    )) {
                         $itemargs = $urlargs;
                         $itemargs['component'] = 'topics';
-                            // if $linktype == 'object' use getObjectURL()
-                            if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($data['objectname'], 'moderate', $itemargs);
-                            } else {
-                                $link = LinkCache::getCachedURL('crispbb','user','moderate',$itemargs);
-                            }
+                        // if $linktype == 'object' use getObjectURL()
+                        if ($this->linktype == 'object') {
+                            $link = xarServer::getObjectURL($data['objectname'], 'moderate', $itemargs);
+                        } else {
+                            $link = LinkCache::getCachedURL('crispbb', 'user', 'moderate', $itemargs);
+                        }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['moderate'] = array(
                             'link' => $link,
@@ -586,12 +662,12 @@ class ForumsList extends DataObjectList
                                 $itemargs = $urlargs;
                                 $itemargs['component'] = 'topics';
                                 $itemargs['tstatus'] = 2;
-                                    // if $linktype == 'object' use getObjectURL()
-                                    if ($this->linktype == 'object') {
-                                        $link = xarServer::getObjectURL($data['objectname'], 'moderate', $urlargs);
-                                    } else {
-                                        $link = LinkCache::getCachedURL('crispbb','user','moderate',$urlargs);
-                                    }
+                                // if $linktype == 'object' use getObjectURL()
+                                if ($this->linktype == 'object') {
+                                    $link = xarServer::getObjectURL($data['objectname'], 'moderate', $urlargs);
+                                } else {
+                                    $link = LinkCache::getCachedURL('crispbb', 'user', 'moderate', $urlargs);
+                                }
                                 // make the links a little more friendly than the dd ones
                                 $itemlinks['submitted'] = array(
                                     'link' => $link,
@@ -605,12 +681,12 @@ class ForumsList extends DataObjectList
                                 $itemargs = $urlargs;
                                 $itemargs['component'] = 'topics';
                                 $itemargs['tstatus'] = 5;
-                                    // if $linktype == 'object' use getObjectURL()
-                                    if ($this->linktype == 'object') {
-                                        $link = xarServer::getObjectURL($data['objectname'], 'moderate', $itemargs);
-                                    } else {
-                                        $link = LinkCache::getCachedURL('crispbb','user','moderate',$itemargs);
-                                    }
+                                // if $linktype == 'object' use getObjectURL()
+                                if ($this->linktype == 'object') {
+                                    $link = xarServer::getObjectURL($data['objectname'], 'moderate', $itemargs);
+                                } else {
+                                    $link = LinkCache::getCachedURL('crispbb', 'user', 'moderate', $itemargs);
+                                }
                                 // make the links a little more friendly than the dd ones
                                 $itemlinks['deleted'] = array(
                                     'link' => $link,
@@ -619,17 +695,16 @@ class ForumsList extends DataObjectList
                                 );
                             }
                         }
-
                     }
                     if (!empty($privs['editforum'])) {
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'forumhooks';
-                            // if $linktype == 'object' use getObjectURL()
-                            if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
-                            } else {
-                                $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
-                            }
+                        // if $linktype == 'object' use getObjectURL()
+                        if ($this->linktype == 'object') {
+                            $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
+                        } else {
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', $itemargs);
+                        }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['forumhooks'] = array(
                             'link' => $link,
@@ -638,12 +713,12 @@ class ForumsList extends DataObjectList
                         );
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'topichooks';
-                            // if $linktype == 'object' use getObjectURL()
-                            if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
-                            } else {
-                                $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
-                            }
+                        // if $linktype == 'object' use getObjectURL()
+                        if ($this->linktype == 'object') {
+                            $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
+                        } else {
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', $itemargs);
+                        }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['topichooks'] = array(
                             'link' => $link,
@@ -652,12 +727,12 @@ class ForumsList extends DataObjectList
                         );
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'posthooks';
-                            // if $linktype == 'object' use getObjectURL()
-                            if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
-                            } else {
-                                $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
-                            }
+                        // if $linktype == 'object' use getObjectURL()
+                        if ($this->linktype == 'object') {
+                            $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
+                        } else {
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', $itemargs);
+                        }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['posthooks'] = array(
                             'link' => $link,
@@ -666,12 +741,12 @@ class ForumsList extends DataObjectList
                         );
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'privileges';
-                            // if $linktype == 'object' use getObjectURL()
-                            if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
-                            } else {
-                                $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
-                            }
+                        // if $linktype == 'object' use getObjectURL()
+                        if ($this->linktype == 'object') {
+                            $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
+                        } else {
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', $itemargs);
+                        }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['privileges'] = array(
                             'link' => $link,
@@ -695,6 +770,4 @@ class ForumsList extends DataObjectList
 
         return $itemlinks;
     }
-
 }
-?>

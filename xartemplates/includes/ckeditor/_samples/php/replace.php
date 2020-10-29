@@ -48,16 +48,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		</p>
 	</div>
 	<?php
-	// Include CKEditor class.
-	include_once "../../ckeditor.php";
-	// Create class instance.
-	$CKEditor = new CKEditor();
-	// Path to CKEditor directory, ideally instead of relative dir, use an absolute path:
-	//   $CKEditor->basePath = '/ckeditor/'
-	// If not set, CKEditor will try to detect the correct path.
-	$CKEditor->basePath = '../../';
-	// Replace textarea with id (or name) "editor1".
-	$CKEditor->replace("editor1");
-	?>
+    // Include CKEditor class.
+    include_once "../../ckeditor.php";
+    // Create class instance.
+    $CKEditor = new CKEditor();
+    // Path to CKEditor directory, ideally instead of relative dir, use an absolute path:
+    //   $CKEditor->basePath = '/ckeditor/'
+    // If not set, CKEditor will try to detect the correct path.
+    $CKEditor->basePath = '../../';
+    // Replace textarea with id (or name) "editor1".
+    $CKEditor->replace("editor1");
+    ?>
 </body>
 </html>

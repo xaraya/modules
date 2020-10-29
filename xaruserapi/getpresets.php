@@ -22,7 +22,7 @@
  */
 function crispbb_userapi_getpresets($args)
 {
-    extract ($args);
+    extract($args);
     $presets = array();
 
     if (!empty($preset) && is_string($preset)) {
@@ -41,7 +41,7 @@ function crispbb_userapi_getpresets($args)
                     $items['numreplies'] = array('id' => 'numreplies', 'name' => xarML('Number of Replies'));
                     $items['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of Views'));
                     $items['towner'] = array('id' => 'towner', 'name' => xarML('Topic Starter'));
-                    if (xarModIsAvailable('ratings')) {
+                    if (xarMod::isAvailable('ratings')) {
                         $items['numratings'] = array('id' => 'numratings', 'name' => xarML('Topic Rating'));
                     }
                 break;
@@ -256,6 +256,4 @@ function crispbb_userapi_getpresets($args)
     }
 
     return $presets;
-
 }
-?>

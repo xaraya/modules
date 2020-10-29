@@ -52,7 +52,7 @@
                 <tr>
                     <td class="#$displayclass#" style="text-align: left; margin-left: 5px">
                         <xar:for start="$i = 1" test="$i le $level" iter="$i++">
-                            <img src="#xarTplGetImage('blank.png','categories')#" />
+                            <img src="#xarTpl::getImage('blank.png','categories')#" />
                         </xar:for>
                        #$name#
                     </td>

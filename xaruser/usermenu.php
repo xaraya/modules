@@ -29,15 +29,17 @@ function example_user_usermenu($args)
        Doing so will block the usermenu appearing and any other tabs they do have privs to
        Just don't display this module's User Menu Tab
      */
-     if (!xarSecurityCheck('ViewExample',0)) {
-         $data='';
-         /* Make sure in this specific case return empty (not null) so hooks continue. */
-         return $data;
-     }
+    if (!xarSecurity::check('ViewExample', 0)) {
+        $data='';
+        /* Make sure in this specific case return empty (not null) so hooks continue. */
+        return $data;
+    }
     /* First, lets find out where we are in our logic. If the phase
      * variable is set, we will load the correct page in the loop.
      */
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     switch (strtolower($phase)) {
         case 'menu':
@@ -45,7 +47,7 @@ function example_user_usermenu($args)
             $icon = 'modules/example/xarimages/preferences.gif';
 
             /* Now lets send the data to the template which name we choose here. */
-            $data = xarTplModule('example', 'user', 'usermenu_icon', array('iconbasic' => $icon));
+            $data = xarTpl::module('example', 'user', 'usermenu_icon', array('iconbasic' => $icon));
 
             return $data;
 
@@ -53,8 +55,8 @@ function example_user_usermenu($args)
             /* Its good practice for the user menu to be personalized. In order to do so, we
              * need to get some information about the user.
              */
-            $name = xarUserGetVar('name');
-            $uid = xarUserGetVar('id');
+            $name = xarUser::getVar('name');
+            $uid = xarUser::getVar('id');
             /* We also need to set the SecAuthKey, in order to stop hackers from setting user
              * vars off site.
              */
@@ -67,7 +69,7 @@ function example_user_usermenu($args)
             $value = xarModUserVars::get('example', 'itemsperpage');
             /* Now lets send the data to the template which name we choose here.
              */
-            $data = xarTplModule('example', 'user', 'usermenu_form', array('authid' => $authid,
+            $data = xarTpl::module('example', 'user', 'usermenu_form', array('authid' => $authid,
                     'name' => $name,
                     'uid' => $uid,
                     'value' => $value));
@@ -79,10 +81,14 @@ function example_user_usermenu($args)
              * The example module is not setting any user vars at this time, but an example
              * might be the number of items to be displayed per page.
              */
-            if (!xarVarFetch('itemsperpage', 'int:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('itemsperpage', 'int:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
 
             /* Confirm authorisation code. */
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
 
             /* Store the value in an UserVar. Calling a non existent UserVar
              * defaults to a ModuleVar with the same name.
@@ -92,10 +98,13 @@ function example_user_usermenu($args)
             /* Redirect back to our form. We could also redirect back to the
              * account page by leaving the array.
              */
-            xarResponse::Redirect(xarModURL('roles', 'user', 'account',
-                                          array ('moduleload' => 'example')));
+            xarResponse::Redirect(xarModURL(
+                'roles',
+                'user',
+                'account',
+                array('moduleload' => 'example')
+            ));
 
             return;
     }
 }
-?>

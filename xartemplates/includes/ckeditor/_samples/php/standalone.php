@@ -33,19 +33,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			</p>
 			<p>
 			<?php
-				// Include CKEditor class.
-				include_once "../../ckeditor.php";
-				// The initial value to be displayed in the editor.
-				$initialValue = '<p>This is some <strong>sample text</strong>.</p>';
-				// Create class instance.
-				$CKEditor = new CKEditor();
-				// Path to CKEditor directory, ideally instead of relative dir, use an absolute path:
-				//   $CKEditor->basePath = '/ckeditor/'
-				// If not set, CKEditor will try to detect the correct path.
-				$CKEditor->basePath = '../../';
-				// Create textarea element and attach CKEditor to it.
-				$CKEditor->editor("editor1", $initialValue);
-			?>
+                // Include CKEditor class.
+                include_once "../../ckeditor.php";
+                // The initial value to be displayed in the editor.
+                $initialValue = '<p>This is some <strong>sample text</strong>.</p>';
+                // Create class instance.
+                $CKEditor = new CKEditor();
+                // Path to CKEditor directory, ideally instead of relative dir, use an absolute path:
+                //   $CKEditor->basePath = '/ckeditor/'
+                // If not set, CKEditor will try to detect the correct path.
+                $CKEditor->basePath = '../../';
+                // Create textarea element and attach CKEditor to it.
+                $CKEditor->editor("editor1", $initialValue);
+            ?>
 				<input type="submit" value="Submit"/>
 			</p>
 		</form>

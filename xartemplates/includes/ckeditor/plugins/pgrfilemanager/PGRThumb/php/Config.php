@@ -27,15 +27,15 @@ class PGRThumb_Config
 {
     /**
      * Password to protect script by hash url
-     * 
+     *
      * @var string
      */
-    static public $pass = null;
+    public static $pass = null;
         
     /**
      * Path to ImageMagic
-     * 
+     *
      * @var string
      */
-    static public $imageMagickPath = null;
+    public static $imageMagickPath = null;
 }

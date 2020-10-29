@@ -29,80 +29,82 @@ class PGRThumb_UrlThumb
 {
     /**
      * Full path to file
-     * 
+     *
      * @var string
      */
-    static private $_file = null;
+    private static $_file = null;
     /**
      * Width
-     * 
+     *
      * @var int
      */
-    static private $_width = null;
+    private static $_width = null;
     /**
      * Height
-     * 
+     *
      * @var int
      */
-    static private $_height = null;
+    private static $_height = null;
     /**
      * Fixed aspect ratio
-     * 
+     *
      * @var bool
      */
-    static private $_aspectRatio = true;
+    private static $_aspectRatio = true;
     
-    static private $_watermarkText = null;
+    private static $_watermarkText = null;
     
-    static private function _getParamsFromUrl()
+    private static function _getParamsFromUrl()
     {
         if (isset($_GET['src'])) {
             $relPath = strip_tags(htmlspecialchars($_GET['src']));
-            self::$_file = realpath($relPath); 
+            self::$_file = realpath($relPath);
         }
         if (isset($_GET['w']) && is_numeric($_GET['w'])) {
-            self::$_width = strip_tags(htmlspecialchars($_GET['w'])); 
+            self::$_width = strip_tags(htmlspecialchars($_GET['w']));
         }
         if (isset($_GET['h']) && is_numeric($_GET['h'])) {
-            self::$_height = strip_tags(htmlspecialchars($_GET['h'])); 
+            self::$_height = strip_tags(htmlspecialchars($_GET['h']));
         }
         if (isset($_GET['iar'])) {
-            self::$_aspectRatio =  !(strtolower($_GET['iar']) == 'true'); 
+            self::$_aspectRatio =  !(strtolower($_GET['iar']) == 'true');
         }
         if (isset($_GET['iar'])) {
-            self::$_aspectRatio =  !(strtolower($_GET['iar']) == 'true'); 
+            self::$_aspectRatio =  !(strtolower($_GET['iar']) == 'true');
         }
         if (isset($_GET['wt'])) {
-            self::$_watermarkText =  strip_tags(htmlspecialchars($_GET['wt'])); 
+            self::$_watermarkText =  strip_tags(htmlspecialchars($_GET['wt']));
         }
     }
     
-    static public function error($msg)
+    public static function error($msg)
     {
         header("HTTP/1.0 404 Not Found");
-            echo '<h1>Not Found</h1>';
-            echo '<p>The image you requested could not be found.</p>';
-            echo "<p>An error was triggered: <b>$msg</b></p>";
-        exit();        
+        echo '<h1>Not Found</h1>';
+        echo '<p>The image you requested could not be found.</p>';
+        echo "<p>An error was triggered: <b>$msg</b></p>";
+        exit();
     }
     
     /**
      * Generate thumb
-     * 
+     *
      * @return false|image
      */
-    static public function generateThumb()
+    public static function generateThumb()
     {
-        //check pass        
-        if (!isset($_GET['hash']) || 
+        //check pass
+        if (!isset($_GET['hash']) ||
             ($_GET['hash'] != md5(str_replace('&hash='.$_GET['hash'], '', $_SERVER['QUERY_STRING']) . PGRThumb_Config::$pass))) {
-            self::error("can't do this");            
+            self::error("can't do this");
         }
         
         self::_getParamsFromUrl();
         
         //check if file is set
-        if (!self::$_file) return false;
+        if (!self::$_file) {
+            return false;
+        }
         
         //generate cached filename
         $cachedFile = realpath(dirname(__FILE__) . '/../cache') . PGRThumb_Cache::generateFilename(self::$_file, $_SERVER['QUERY_STRING']);
@@ -119,7 +121,7 @@ class PGRThumb_UrlThumb
             self::error("can't find file");
         }
         
-        //Get image library 
+        //Get image library
         include_once 'Image.php';
         $image = PGRThumb_Image::factory(self::$_file);
         
@@ -129,10 +131,10 @@ class PGRThumb_UrlThumb
         
         //watermark
         if (self::$_watermarkText) {
-            $image->resize(355, 0, true);                
+            $image->resize(355, 0, true);
             $image->watermark(
                 self::$_watermarkText,
-                realpath(dirname(__FILE__) . '/ttf/Parkvane.ttf'), 
+                realpath(dirname(__FILE__) . '/ttf/Parkvane.ttf'),
                 28,
                 array(210,210,210),
                 80,
@@ -146,17 +148,21 @@ class PGRThumb_UrlThumb
             if (self::$_aspectRatio) {
                 $res = $image->maxSize(self::$_width, self::$_height);
             } else {
-                $res = $image->resize(self::$_width, self::$_height, false);                
+                $res = $image->resize(self::$_width, self::$_height, false);
             }
         }
                 
-        //save thumb 
-        if ($res) $res = PGRThumb_Cache::saveImage($cachedFile, $image);
+        //save thumb
+        if ($res) {
+            $res = PGRThumb_Cache::saveImage($cachedFile, $image);
+        }
         
-        if ($res) PGRThumb_Cache::outputFile($cachedFile);
+        if ($res) {
+            PGRThumb_Cache::outputFile($cachedFile);
+        }
 
         if (!$res) {
             self::error("Can't perform thumb");
-        }        
+        }
     }
 }
