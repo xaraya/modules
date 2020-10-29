@@ -20,9 +20,10 @@
  * @access private
  * @return array
  */
-function crispbb_xartables()
+function ckeditor_xartables()
 {
     $tables = array();
+    /**
     $prefix = xarDB::getPrefix();
     $tables['crispbb_itemtypes']    = $prefix . '_crispbb_itemtypes';
     $tables['crispbb_forums']       = $prefix . '_crispbb_forums';
@@ -30,6 +31,7 @@ function crispbb_xartables()
     $tables['crispbb_posts']        = $prefix . '_crispbb_posts';
     $tables['crispbb_hooks']        = $prefix . '_crispbb_hooks';
     $tables['crispbb_posters']      = $prefix . '_crispbb_posters';
+     */
     return $tables;
 }
 ?>
