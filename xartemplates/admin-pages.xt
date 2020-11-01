@@ -151,7 +151,7 @@
       <td>
         <xar:if condition="!empty($settings['AutoCacheKeepStats'])">
           <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" checked="checked" />
-          [ <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache'))#"><xar:mlstring>view stats</xar:mlstring></a> ]
+          [ <a href="#xarController::URL('xarcachemanager','admin','stats',array('tab' => 'autocache'))#"><xar:mlstring>view stats</xar:mlstring></a> ]
         <xar:else/>
           <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" />
         </xar:if>
@@ -190,8 +190,8 @@
     <xar:if condition="!empty($autocachepages)">
     <p><xar:ml>
       <xar:mlstring>From #(1) to #(2)</xar:mlstring>
-      <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachestart)#</xar:mlvar>
-      <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocacheend)#</xar:mlvar>
+      <xar:mlvar>#xarLocale::formatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachestart)#</xar:mlvar>
+      <xar:mlvar>#xarLocale::formatDate('%a, %d %B %Y %H:%M:%S %Z',$autocacheend)#</xar:mlvar>
     </xar:ml></p>
     <table border="1" cellpadding="4" cellspacing="0">
     <tr>

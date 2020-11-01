@@ -343,7 +343,7 @@
             <xar:if condition="$moduleCachingEnabled eq 1 and empty($checkconfig)">
             <div class="xar-form-input-wrapper">
                 <p>
-                    <strong>Please configure the specific <a href="#xarModURL('xarcachemanager','admin','modules')#">module caching options</a> now.</strong>
+                    <strong>Please configure the specific <a href="#xarController::URL('xarcachemanager','admin','modules')#">module caching options</a> now.</strong>
                 </p>
             </div>
             </xar:if>
@@ -412,7 +412,7 @@
             <xar:if condition="$objectCachingEnabled eq 1 and empty($checkconfig)">
             <div class="xar-form-input-wrapper">
                 <p>
-                    <strong>Please configure the specific <a href="#xarModURL('xarcachemanager','admin','objects')#">object caching options</a> now.</strong>
+                    <strong>Please configure the specific <a href="#xarController::URL('xarcachemanager','admin','objects')#">object caching options</a> now.</strong>
                 </p>
             </div>
             </xar:if>

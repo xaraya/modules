@@ -53,11 +53,11 @@ function xarcachemanager_admin_flushcache($args)
         $data['instructionhelp'] = xarMLS::translate("All cached files of output associated with this key will be deleted.");
 
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
     } else {
 
         // Confirm authorisation code.
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -124,7 +124,7 @@ function xarcachemanager_admin_flushcache($args)
             return;
         }
 
-        $return_url = xarModURL('xarcachemanager', 'admin', 'flushcache');
+        $return_url = xarController::URL('xarcachemanager', 'admin', 'flushcache');
         $data['returnlink'] = array('url'   => $return_url,
                                     'title' => xarMLS::translate('Return to the cache key selector'),
                                     'label' => xarMLS::translate('Back'));

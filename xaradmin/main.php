@@ -24,7 +24,7 @@ function xarcachemanager_admin_main()
         return;
     }
 
-    xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'modifyconfig'));
     // success
     return true;
 }

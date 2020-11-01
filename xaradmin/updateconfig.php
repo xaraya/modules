@@ -116,7 +116,7 @@ function xarcachemanager_admin_updateconfig()
     }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     // Security Check
@@ -331,7 +331,7 @@ function xarcachemanager_admin_updateconfig()
         }
     }
 
-    xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'modifyconfig'));
 
     return true;
 }

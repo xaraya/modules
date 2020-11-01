@@ -33,7 +33,7 @@ function xarcachemanager_admin_variables($args)
     xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -75,6 +75,6 @@ function xarcachemanager_admin_variables($args)
     // Get all variable caching configurations
     $data['variables'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getvariables');
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

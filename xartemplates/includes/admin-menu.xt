@@ -26,7 +26,7 @@
         </xar:if>
 
         <li class="#$tabclass#">
-          <a href="#xarModURL('xarcachemanager','admin','flushcache')#" class="#$linkclass#">
+          <a href="#xarController::URL('xarcachemanager','admin','flushcache')#" class="#$linkclass#">
             Flush Cache
           </a>
         </li>
@@ -40,7 +40,7 @@
 		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 		</xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('xarcachemanager','admin','pages')#" class="#$linkclass#">
+                <a href="#xarController::URL('xarcachemanager','admin','pages')#" class="#$linkclass#">
                     Pages
                 </a>
             </li>
@@ -55,7 +55,7 @@
 		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 		</xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('xarcachemanager','admin','blocks')#" class="#$linkclass#">
+                <a href="#xarController::URL('xarcachemanager','admin','blocks')#" class="#$linkclass#">
                     Blocks
                 </a>
             </li>
@@ -70,7 +70,7 @@
 		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 		</xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('xarcachemanager','admin','modules')#" class="#$linkclass#">
+                <a href="#xarController::URL('xarcachemanager','admin','modules')#" class="#$linkclass#">
                     Modules
                 </a>
             </li>
@@ -85,7 +85,7 @@
 		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 		</xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('xarcachemanager','admin','objects')#" class="#$linkclass#">
+                <a href="#xarController::URL('xarcachemanager','admin','objects')#" class="#$linkclass#">
                     Objects
                 </a>
             </li>
@@ -100,7 +100,7 @@
 		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 		</xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('xarcachemanager','admin','variables')#" class="#$linkclass#">
+                <a href="#xarController::URL('xarcachemanager','admin','variables')#" class="#$linkclass#">
                     Variables
                 </a>
             </li>
@@ -121,7 +121,7 @@
 	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 	</xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('xarcachemanager','admin','stats')#" class="#$linkclass#">
+          <a href="#xarController::URL('xarcachemanager','admin','stats')#" class="#$linkclass#">
             Statistics
           </a>
         </li>
@@ -134,7 +134,7 @@
 	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 	</xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('xarcachemanager','admin','modifyconfig')#" class="#$linkclass#">
+          <a href="#xarController::URL('xarcachemanager','admin','modifyconfig')#" class="#$linkclass#">
             Modify Config
           </a>
         </li>
@@ -147,7 +147,7 @@
 	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
 	</xar:if>
        <li class="#$tabclass#">
-       <a href="#xarModURL('xarcachemanager','admin','overview')#" class="#$linkclass#">
+       <a href="#xarController::URL('xarcachemanager','admin','overview')#" class="#$linkclass#">
             Overview
        </a>
       </li>

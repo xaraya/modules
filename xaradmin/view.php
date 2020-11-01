@@ -35,10 +35,10 @@ function xarcachemanager_admin_view($args)
     }
 
     if (empty($tab)) {
-        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'stats'));
+        xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'stats'));
         return;
     } elseif (empty($key)) {
-        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => $tab)));
+        xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => $tab)));
         return;
     }
 
@@ -127,7 +127,7 @@ function xarcachemanager_admin_view($args)
         }
     }
     // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
-    $data['return_url'] = xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => $tab));
+    $data['authid'] = xarSec::genAuthKey();
+    $data['return_url'] = xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => $tab));
     return $data;
 }

@@ -7,7 +7,7 @@
     <tr>
       <td valign="top">
 
-        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">Page Cache</a></h3>
+        <h3><a href="#xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">Page Cache</a></h3>
 
         <xar:if condition="!empty($PageCachingEnabled)">
         <table class="xar-norm">
@@ -89,7 +89,7 @@
       </td>
       <td valign="top">
 
-        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">Block Cache</a></h3>
+        <h3><a href="#xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">Block Cache</a></h3>
 
         <xar:if condition="!empty($BlockCachingEnabled)">
         <table class="xar-norm">
@@ -173,7 +173,7 @@
     <tr>
       <td valign="top">
 
-        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">Module Cache</a></h3>
+        <h3><a href="#xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">Module Cache</a></h3>
 
         <xar:if condition="!empty($ModuleCachingEnabled)">
         <table class="xar-norm">
@@ -255,7 +255,7 @@
       </td>
       <td valign="top">
 
-        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">Object Cache</a></h3>
+        <h3><a href="#xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">Object Cache</a></h3>
 
         <xar:if condition="!empty($ObjectCachingEnabled)">
         <table class="xar-norm">
@@ -339,7 +339,7 @@
     <tr>
       <td valign="top">
 
-        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">Auto-Cache</a></h3>
+        <h3><a href="#xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">Auto-Cache</a></h3>
 
         <xar:if condition="!empty($AutoCachingEnabled)">
         <table class="xar-norm">
@@ -407,7 +407,7 @@
       </td>
       <td valign="top">
 
-        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'variable'))#">Variable Cache</a></h3>
+        <h3><a href="#xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => 'variable'))#">Variable Cache</a></h3>
 
         <xar:if condition="!empty($VariableCachingEnabled)">
         <table class="xar-norm">
@@ -536,7 +536,7 @@
     <p>
         Note: in-memory cache storage like apc, memcached or xcache shares the same statistics across all caches
     </p>
-    <form method="post" action="#xarModURL('xarcachemanager', 'admin', 'stats')#">
+    <form method="post" action="#xarController::URL('xarcachemanager', 'admin', 'stats')#">
       <input type="hidden" name="tab" id="tab" value="overview" />
       <xar:mlstring>Items per page</xar:mlstring>
       <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="4" />

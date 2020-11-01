@@ -33,7 +33,7 @@ function xarcachemanager_admin_objects($args)
     xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -90,6 +90,6 @@ function xarcachemanager_admin_objects($args)
     // Get all object caching configurations
     $data['objects'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getobjects');
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

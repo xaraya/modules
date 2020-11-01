@@ -38,7 +38,7 @@
               </xar:if>
             </td>
             <td>
-              <a href="#xarModURL($module['name'],'admin','main')#" title="#$module['name']# module (#$module['regid']#)">#$module['displayname']#</a>
+              <a href="#xarController::URL($module['name'],'admin','main')#" title="#$module['name']# module (#$module['regid']#)">#$module['displayname']#</a>
             </td>
             <td>
               #$func#

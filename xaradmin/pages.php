@@ -57,7 +57,7 @@ function xarcachemanager_admin_pages($args)
     xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -184,7 +184,7 @@ function xarcachemanager_admin_pages($args)
             }
         }
 
-        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'pages'));
+        xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'pages'));
         return true;
     } elseif (!empty($data['settings']['PageCacheGroups'])) {
         $grouplist = explode(';', $data['settings']['PageCacheGroups']);
@@ -303,6 +303,6 @@ function xarcachemanager_admin_pages($args)
     //$data['pages'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getpages');
     $data['pages'] = array('todo' => 'something ?');
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

@@ -19,9 +19,9 @@
             <td colspan="2" style="font-weight:bold;">
                 Cache item:&#160;
                 #$key#
-                [ <a href="#xarModURL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">flush key</a> ]
+                [ <a href="#xarController::URL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">flush key</a> ]
                 #$code#
-                [ <a href="#xarModURL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'cachecode['.$tab.']' => $code, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">delete item</a> ]
+                [ <a href="#xarController::URL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'cachecode['.$tab.']' => $code, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">delete item</a> ]
             </td>
         </tr>
         <xar:if condition="!empty($link)">

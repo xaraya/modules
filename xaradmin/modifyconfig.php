@@ -67,9 +67,9 @@ function xarcachemanager_admin_modifyconfig()
     }
     
     $data['CookieName'] =  (xarConfigVars::get(null, 'Site.Session.CookieName') != '')? xarConfigVars::get(null, 'Site.Session.CookieName'): 'XARAYASID';
-    $data['cookieupdatelink'] = xarModURL('base', 'admin', 'modifyconfig', array('tab'=>'security'));
+    $data['cookieupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', array('tab'=>'security'));
     $data['defaultlocale'] = xarMLS::getSiteLocale();
-    $data['localeupdatelink'] = xarModURL('base', 'admin', 'modifyconfig', array('tab'=>'locales'));
+    $data['localeupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', array('tab'=>'locales'));
 
     // get the caching config settings from the config file
     $data['settings'] = xarCache_Manager::get_config(
@@ -194,6 +194,6 @@ function xarcachemanager_admin_modifyconfig()
     // get the storage types supported on this server
     $data['storagetypes'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getstoragetypes');
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

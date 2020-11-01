@@ -106,7 +106,7 @@ function xarcachemanager_admin_stats($args)
 
             if (!empty($reset)) {
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
 
@@ -117,7 +117,7 @@ function xarcachemanager_admin_stats($args)
                     }
                 }
 
-                xarResponse::Redirect(xarModURL(
+                xarResponse::Redirect(xarController::URL(
                     'xarcachemanager',
                     'admin',
                     'stats',
@@ -157,7 +157,7 @@ function xarcachemanager_admin_stats($args)
                 $data['cachekeys'] = array_keys($cachekeys);
                 unset($cachekeys);
                 // Generate a one-time authorisation code for this operation
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                 // analyze logfile
                 if (!empty($withlog) && !empty($data['settings'][$logfile]) && file_exists($data['settings'][$logfile]) && filesize($data['settings'][$logfile]) > 0) {
                     $data['withlog'] = 1;
@@ -196,10 +196,10 @@ function xarcachemanager_admin_stats($args)
                     unset($keys);
                     unset($items);
                     sys::import('xaraya.pager');
-                    $data['pager'] = xarTplGetPager(
+                    $data['pager'] = xarTplPager::getPager(
                         $startnum,
                         $count,
-                        xarModURL(
+                        xarController::URL(
                             'xarcachemanager',
                             'admin',
                             'stats',
@@ -224,7 +224,7 @@ function xarcachemanager_admin_stats($args)
         case 'autocache':
             if (!empty($reset)) {
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
 
@@ -242,7 +242,7 @@ function xarcachemanager_admin_stats($args)
                     }
                 }
 
-                xarResponse::Redirect(xarModURL(
+                xarResponse::Redirect(xarController::URL(
                     'xarcachemanager',
                     'admin',
                     'stats',
@@ -290,10 +290,10 @@ function xarcachemanager_admin_stats($args)
                     $data['items'] = $items;
                     unset($keys);
                     unset($items);
-                    $data['pager'] = xarTplGetPager(
+                    $data['pager'] = xarTplPager::getPager(
                         $startnum,
                         $count,
-                        xarModURL(
+                        xarController::URL(
                             'xarcachemanager',
                             'admin',
                             'stats',

@@ -8,7 +8,7 @@
 
   <xar:if condition="$message eq false">
 
-    <form action="#xarModURL('xarcachemanager', 'admin', 'flushcache')#" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="#xarController::URL('xarcachemanager', 'admin', 'flushcache')#" method="post" enctype="application/x-www-form-urlencoded">
       <fieldset>
             <legend>
                 <xar:mlstring>Select Cache for Flushing</xar:mlstring>
