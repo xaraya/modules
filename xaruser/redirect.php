@@ -15,7 +15,7 @@
 function publications_user_redirect($args)
 {
     // Get parameters from user
-    if (!xarVar::fetch('id', 'id', $id, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'id', $id, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -57,7 +57,7 @@ function publications_user_redirect($args)
         }
         if ($value['format'] == 'url' && !empty($publication[$field]) && $publication[$field] != 'http://') {
             // TODO: add some verifications here !
-            $hooks = xarModCallHooks(
+            $hooks = xarModHooks::call(
                 'item',
                 'display',
                 $id,
@@ -71,7 +71,7 @@ function publications_user_redirect($args)
         } elseif ($value['format'] == 'urltitle' && !empty($publication[$field]) && substr($publication[$field], 0, 2) == 'a:') {
             $array = unserialize($publication[$field]);
             if (!empty($array['link']) && $array['link'] != 'http://') {
-                $hooks = xarModCallHooks(
+                $hooks = xarModHooks::call(
                     'item',
                     'display',
                     $id,

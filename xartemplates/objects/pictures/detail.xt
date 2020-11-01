@@ -42,7 +42,7 @@
                     </p>
                     <!--
                     <div id='photoholder'>
-                        <xar:if condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
+                        <xar:if condition="xarModHooks::isHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
                             <xar:set name="img_output">xarMod::apiFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
                             <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
                                 <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#">
@@ -50,7 +50,7 @@
                                         <xar:set name="file">$fileInfo</xar:set>
                                         <xar:template file="picture-display" type="module" />
                                     <xar:else />
-                                        <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#"  width="100%" alt="#$title#" id="thephoto" />
+                                        <img src="#xarController::URL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#"  width="100%" alt="#$title#" id="thephoto" />
                                     </xar:if>
                                 </a>
                             </xar:foreach>
@@ -64,7 +64,7 @@
                         <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
                         <xar:if condition="!empty($prevpublication)">
                             <xar:var name="prev">Previous</xar:var>
-                            <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
+                            <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
                                 <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
                             </a>
                         </xar:if>
@@ -72,7 +72,7 @@
                         <xar:set name="nextpublication">xarCoreCache::getCached('Publications', 'nextpublication')</xar:set>
                         <xar:if condition="!empty($nextpublication)">
                             <xar:var name="next">Next</xar:var>
-                            <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
+                            <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
                                 <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
                             </a>
                         </xar:if>

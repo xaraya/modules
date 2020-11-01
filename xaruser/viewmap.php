@@ -15,19 +15,19 @@
 function publications_user_viewmap($args)
 {
     // Get parameters
-    if (!xarVar::fetch('ptid', 'id', $ptid, xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, xarModVars::get('publications', 'defaultpubtype'), xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('by', 'enum:pub:cat:grid', $by, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('by', 'enum:pub:cat:grid', $by, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('go', 'str', $go, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('go', 'str', $go, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'str', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'str', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('cids', 'array', $cids, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('cids', 'array', $cids, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -80,7 +80,7 @@ function publications_user_viewmap($args)
         } else {
             $catid = null;
         }
-        $url = xarModURL('publications', 'user', 'view', array('ptid' => $ptid, 'catid' => $catid));
+        $url = xarController::URL('publications', 'user', 'view', array('ptid' => $ptid, 'catid' => $catid));
         xarController::redirect($url);
         return;
     }
@@ -94,7 +94,7 @@ function publications_user_viewmap($args)
     $publinks = array();
 
     if ($by == 'cat') {
-        $data['maplink'] = xarModURL('publications', 'user', 'viewmap', array('by' => 'cat'));
+        $data['maplink'] = xarController::URL('publications', 'user', 'viewmap', array('by' => 'cat'));
 
         // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
@@ -228,7 +228,7 @@ function publications_user_viewmap($args)
             foreach ($pubcatcount as $cids => $counts) {
                 list($ca, $cb) = explode('+', $cids);
                 if (isset($rowcid[$ca]) && isset($colcid[$cb])) {
-                    $link = xarModURL(
+                    $link = xarController::URL(
                         'publications',
                         'user',
                         'view',
@@ -238,7 +238,7 @@ function publications_user_viewmap($args)
                     $data['catgrid'][$rowcid[$ca]][$colcid[$cb]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
                 }
                 if (isset($rowcid[$cb]) && isset($colcid[$ca])) {
-                    $link = xarModURL(
+                    $link = xarController::URL(
                         'publications',
                         'user',
                         'view',
@@ -254,7 +254,7 @@ function publications_user_viewmap($args)
             $descr = $data['pubtypes'][$ptid]['description'];
         }
     } else {
-        $data['maplink'] = xarModURL('publications', 'user', 'viewmap', array('by' => 'pub'));
+        $data['maplink'] = xarController::URL('publications', 'user', 'viewmap', array('by' => 'pub'));
 
         // get the links and counts for all publication types
         $publinks = xarMod::apiFunc(
@@ -347,14 +347,14 @@ function publications_user_viewmap($args)
     $data['publinks'] = $publinks;
     $data['ptid'] = $ptid;
     $data['viewlabel'] = xarML('Back to') . ' ' . $descr;
-    $data['viewlink'] = xarModURL(
+    $data['viewlink'] = xarController::URL(
         'publications',
         'user',
         'view',
         array('ptid' => $ptid)
     );
     $data['archivelabel'] = xarML('View Archives');
-    $data['archivelink'] = xarModURL(
+    $data['archivelink'] = xarController::URL(
         'publications',
         'user',
         'archive',

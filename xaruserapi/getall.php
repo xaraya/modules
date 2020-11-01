@@ -174,7 +174,7 @@ function publications_userapi_getall($args)
         }
     }
 
-    if (!empty($required['counter']) && xarModIsHooked('hitcount', 'publications', $ptid)) {
+    if (!empty($required['counter']) && xarModHooks::isHooked('hitcount', 'publications', $ptid)) {
         // Load API
         if (!xarMod::apiLoad('hitcount', 'user')) {
             return;
@@ -190,7 +190,7 @@ function publications_userapi_getall($args)
         );
     }
 
-    if (!empty($required['rating']) && xarModIsHooked('ratings', 'publications', $ptid)) {
+    if (!empty($required['rating']) && xarModHooks::isHooked('ratings', 'publications', $ptid)) {
         // Load API
         if (!xarMod::apiLoad('ratings', 'user')) {
             return;
@@ -469,7 +469,7 @@ function publications_userapi_getall($args)
 
     if (!empty($required['dynamicdata']) && count($publications) > 0) {
         foreach ($itemids_per_type as $pubtype => $itemids) {
-            if (!xarModIsHooked('dynamicdata', 'publications', $pubtype)) {
+            if (!xarModHooks::isHooked('dynamicdata', 'publications', $pubtype)) {
                 continue;
             }
             list($properties, $items) = xarMod::apiFunc(

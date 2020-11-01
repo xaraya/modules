@@ -10,11 +10,11 @@
     <xar:if condition="$allow_translations AND !empty($properties['id']->value)">
         <div style="float:right" id="newtranslation">
             <xar:if condition="$layout eq 'publications-admin'">
-                <a href="#xarModURL('publications','admin','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                <a href="#xarController::URL('publications','admin','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
                     New Translation
                 </a>
             <xar:else/>
-                <a href="#xarModURL('publications','user','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                <a href="#xarController::URL('publications','user','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
                     New Translation
                 </a>
             </xar:if>

@@ -23,43 +23,43 @@ function publications_admin_privileges($args)
     extract($args);
 
     // fixed params
-    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('cid', 'isset', $cid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('cid', 'isset', $cid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('uid', 'isset', $uid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('uid', 'isset', $uid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('author', 'isset', $author, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('id', 'isset', $id, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('id', 'isset', $id, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('apply', 'isset', $apply, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('apply', 'isset', $apply, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extpid', 'isset', $extpid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extpid', 'isset', $extpid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extname', 'isset', $extname, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extname', 'isset', $extname, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extrealm', 'isset', $extrealm, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extrealm', 'isset', $extrealm, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extmodule', 'isset', $extmodule, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extmodule', 'isset', $extmodule, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extcomponent', 'isset', $extcomponent, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extcomponent', 'isset', $extcomponent, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extinstance', 'isset', $extinstance, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extinstance', 'isset', $extinstance, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('extlevel', 'isset', $extlevel, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('extlevel', 'isset', $extlevel, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -192,7 +192,7 @@ function publications_admin_privileges($args)
         } // throw back
 
         // redirect to the privilege
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'privileges',
             'admin',
             'modifyprivilege',

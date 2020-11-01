@@ -17,13 +17,13 @@ function publications_admin_delete_translation()
         return;
     }
 
-    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'str', $data['itemid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'str', $data['itemid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -31,7 +31,7 @@ function publications_admin_delete_translation()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view'));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view'));
         }
     }
 
@@ -43,13 +43,13 @@ function publications_admin_delete_translation()
     $publication = DataObjectMaster::getObject(array('name' => 'publications_publications'));
     if (!isset($confirmed)) {
         $data['title'] = xarML("Delete Translation");
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $publication->getItem(array('itemid' => $data['itemid']));
         $data['item'] = $publication->getFieldValues();
-        $data['yes_action'] = xarModURL('publications', 'admin', 'delete', array('itemid' => $data['itemid']));
+        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete', array('itemid' => $data['itemid']));
         return xarTpl::module('publications', 'admin', 'delete_translation', $data);
     } else {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         $itemid = $publication->deleteItem(array('itemid' => $data['itemid']));
@@ -57,7 +57,7 @@ function publications_admin_delete_translation()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view', $data));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view', $data));
         }
         return true;
     }

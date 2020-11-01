@@ -10,7 +10,7 @@
         <xar:template type="module" module="base" file="admin-menu-skel"/>
         
         <xar:if condition="$tab eq 'global'">
-           <form class="xar-formwidget" action="#xarModURL('publications', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+           <form class="xar-formwidget" action="#xarController::URL('publications', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>General Settings</legend>
                     <xar:data-form object="$module_settings"/>
@@ -199,7 +199,7 @@
                         <xar:button type="cancel" label="$label" />
                         -->
                         <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" /> 
                     </div>
                 </div>
             </form>
@@ -211,13 +211,13 @@
                     </label>
                 </div>
                 <div class="xar-col">
-                    <form method="post" action="#xarModURL('publications','admin','modifyconfig',array('tab' => 'pubtypes'))#">
+                    <form method="post" action="#xarController::URL('publications','admin','modifyconfig',array('tab' => 'pubtypes'))#">
                         <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
                         <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
                     </form>
                 </div>
             </div>
-           <form class="xar-formwidget" action="#xarModURL('publications','admin','updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+           <form class="xar-formwidget" action="#xarController::URL('publications','admin','updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="ptid" value="#$ptid#" />
                 <fieldset class="xar-norm">
                     <legend>
@@ -525,7 +525,7 @@
                         <xar:button type="cancel" label="$label" />
                         -->
                         <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" /> 
                     </div>
                 </div>
             </form>

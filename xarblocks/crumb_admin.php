@@ -76,7 +76,7 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
     {
         $vars = $this->getContent();
 
-        if (xarVar::fetch('include_root', 'checkbox', $include_root, 0, XARVAR_NOT_REQUIRED)) {
+        if (xarVar::fetch('include_root', 'checkbox', $include_root, 0, xarVar::NOT_REQUIRED)) {
             $vars['include_root'] = $include_root;
         }
 
@@ -84,10 +84,10 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
         if (!isset($vars['root_ids'])) {
             $vars['root_ids'] = array();
         }
-        if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
+        if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_root_pid)) {
             $vars['root_ids'][] = $new_root_pid;
         }
-        if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
+        if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
             // Easier to check with the keys and values flipped.
             $vars['root_ids'] = array_flip($vars['root_ids']);
             foreach ($remove_root_pid as $remove) {

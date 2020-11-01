@@ -81,7 +81,7 @@ function publications_adminapi_deletepubtype($args)
     }
 
     // TODO: call some kind of itemtype delete hooks here, once we have those
-    //xarModCallHooks('itemtype', 'delete', $ptid,
+    //xarModHooks::call('itemtype', 'delete', $ptid,
     //                array('module' => 'publications',
     //                      'itemtype' =>'ptid'));
 

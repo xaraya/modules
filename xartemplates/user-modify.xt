@@ -13,7 +13,7 @@
         </h2>
         <div style="float:right">
             <xar:set name="type">xarController::$request->getInfo()</xar:set>
-            <a href="#xarModURL('publications',$type[1],'view',array('ptid' => $ptid))#">
+            <a href="#xarController::URL('publications',$type[1],'view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </div>
@@ -27,7 +27,7 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" name="post" id="post" action="#xarModURL('publications','user','update')#" enctype="#$enctype#" >
+        <form method="post" name="post" id="post" action="#xarController::URL('publications','user','update')#" enctype="#$enctype#" >
             <xar:set name="layout">'publications-user'</xar:set>
             <xar:set name="itemcount">count($items)</xar:set>
             <xar:set name="tabs">3*$itemcount</xar:set>
@@ -75,7 +75,7 @@
             
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
@@ -97,7 +97,7 @@
                     -->
                     <!--
                         <xar:sec mask="ManagePublications" catch="false">
-                            <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
+                            <a href="#xarController::URL('publications','admin','delete',array('id' => $object.itemid))#">
                                 <img src="#xarTpl::getImage('icons/delete.png','base')#"/>
                             </a>
                         </xar:sec>

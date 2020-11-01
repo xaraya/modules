@@ -99,7 +99,7 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
         }
 
         // check if dynamicdata is hooked for all pubtypes or the current one (= defaults to 0 anyway here)
-        if (!empty($data['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $data['pubtype_id'])) {
+        if (!empty($data['showdynamic']) && xarModHooks::isHooked('dynamicdata', 'publications', $data['pubtype_id'])) {
             array_push($fields, 'dynamicdata');
         }
 

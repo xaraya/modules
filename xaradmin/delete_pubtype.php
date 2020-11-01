@@ -17,16 +17,16 @@ function publications_admin_delete_pubtype()
         return;
     }
 
-    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'str', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'str', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('idlist', 'str', $idlist, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('idlist', 'str', $idlist, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -39,7 +39,7 @@ function publications_admin_delete_pubtype()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view_pubtypes'));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view_pubtypes'));
         }
     }
 
@@ -57,7 +57,7 @@ function publications_admin_delete_pubtype()
         } else {
             $data['title'] = xarML("Delete Publication Type");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $items = array();
         foreach ($ids as $i) {
             $pubtype->getItem(array('itemid' => $i));
@@ -65,10 +65,10 @@ function publications_admin_delete_pubtype()
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarModURL('publications', 'admin', 'delete_pubtype', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete_pubtype', array('idlist' => $idlist));
         return xarTpl::module('publications', 'admin', 'delete_pubtype', $data);
     } else {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         foreach ($ids as $id) {
@@ -78,7 +78,7 @@ function publications_admin_delete_pubtype()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view_pubtypes', $data));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view_pubtypes', $data));
         }
         return true;
     }

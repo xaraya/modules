@@ -213,7 +213,7 @@ function publications_userapi_get($args)
     }
 
     /*
-        if (xarModIsHooked('dynamicdata','publications')) {
+        if (xarModHooks::isHooked('dynamicdata','publications')) {
             $values = xarMod::apiFunc('dynamicdata','user','getitem',
                                      array('module'   => 'publications',
                                            'itemtype' => $pubtype_id,

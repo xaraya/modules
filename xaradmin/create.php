@@ -22,19 +22,19 @@ function publications_admin_create()
     if (!xarVar::fetch('ptid', 'id', $data['ptid'])) {
         return;
     }
-    if (!xarVar::fetch('new_cids', 'array', $cids, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('new_cids', 'array', $cids, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('preview', 'str', $data['preview'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('preview', 'str', $data['preview'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('save', 'str', $save, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('save', 'str', $save, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     
     // Confirm authorisation code
     // This has been disabled for now
-    // if (!xarSecConfirmAuthKey()) return;
+    // if (!xarSec::confirmAuthKey()) return;
 
     $data['items'] = array();
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -73,7 +73,7 @@ function publications_admin_create()
         xarController::redirect($current_listview);
     }
     
-    xarController::redirect(xarModURL(
+    xarController::redirect(xarController::URL(
         'publications',
         'admin',
         'view',

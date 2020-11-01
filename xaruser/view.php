@@ -29,26 +29,26 @@
 function publications_user_view($args)
 {
     // Get parameters
-    if (!xarVar::fetch('ptid', 'id', $ptid, xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, xarModVars::get('publications', 'defaultpubtype'), xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('startnum', 'int:0', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int:0', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('cids', 'array', $cids, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('cids', 'array', $cids, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('andcids', 'str', $andcids, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('andcids', 'str', $andcids, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'str', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'str', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     // TODO: put the query string through a proper parser, so searches on multiple words can be done.
-    if (!xarVar::fetch('q', 'pre:trim:passthru:str:1:200', $q, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('q', 'pre:trim:passthru:str:1:200', $q, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     // can't use list enum here, because we don't know which sorts might be used
@@ -56,25 +56,25 @@ function publications_user_view($args)
     // The original 'regexp:/^[\w,]*$/' lets through *any* non-space character.
     // This validation will accept a list of comma-separated words, and will lower-case, trim
     // and strip out non-alphanumeric characters from each word.
-    if (!xarVar::fetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('numcols', 'int:0', $numcols, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('numcols', 'int:0', $numcols, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('owner', 'id', $owner, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('owner', 'id', $owner, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('pubdate', 'str:1', $pubdate, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('pubdate', 'str:1', $pubdate, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
-    //    if(!xarVar::fetch('startdate','int:0', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    //    if(!xarVar::fetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    //    if(!xarVar::fetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    //    if(!xarVar::fetch('startdate','int:0', $startdate, NULL, xarVar::NOT_REQUIRED)) {return;}
+    //    if(!xarVar::fetch('enddate',  'int:0', $enddate,   NULL, xarVar::NOT_REQUIRED)) {return;}
+    //    if(!xarVar::fetch('where',    'str',   $where,     NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // Added to implement an Alpha Pager
-    if (!xarVar::fetch('letter', 'pre:lower:passthru:str:1:20', $letter, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('letter', 'pre:lower:passthru:str:1:20', $letter, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -345,7 +345,7 @@ function publications_user_view($args)
     if ($ishome) {
         $data['ptid'] = null;
         if (xarSecurity::check('SubmitPublications', 0)) {
-            $data['submitlink'] = xarModURL('publications', 'admin', 'new');
+            $data['submitlink'] = xarController::URL('publications', 'admin', 'new');
         }
     } else {
         $data['ptid'] = $ptid;
@@ -357,12 +357,12 @@ function publications_user_view($args)
         if (count($cids) > 0) {
             foreach ($cids as $cid) {
                 if (xarSecurity::check('SubmitPublications', 0, 'Publication', "$curptid:$cid:All:All")) {
-                    $data['submitlink'] = xarModURL('publications', 'admin', 'new', array('ptid' => $ptid, 'catid' => $catid));
+                    $data['submitlink'] = xarController::URL('publications', 'admin', 'new', array('ptid' => $ptid, 'catid' => $catid));
                     break;
                 }
             }
         } elseif (xarSecurity::check('SubmitPublications', 0, 'Publication', "$curptid:All:All:All")) {
-            $data['submitlink'] = xarModURL('publications', 'admin', 'new', array('ptid' => $ptid));
+            $data['submitlink'] = xarController::URL('publications', 'admin', 'new', array('ptid' => $ptid));
         }
     }
     $data['cids'] = $cids;
@@ -470,7 +470,7 @@ function publications_user_view($args)
             }
             foreach ($catinfo as $cid => $info) {
                 $catinfo[$cid]['name'] = xarVar::prepForDisplay($info['name']);
-                $catinfo[$cid]['link'] = xarModURL('publications', 'user', 'view',
+                $catinfo[$cid]['link'] = xarController::URL('publications', 'user', 'view',
                     array('ptid' => $ptid, 'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) )
                 );
 
@@ -500,7 +500,7 @@ function publications_user_view($args)
         {
             // TODO: don't include ptid and catid if we don't use short URLs
             // link to article
-            $article['link'] = xarModURL('publications', 'user', 'display',
+            $article['link'] = xarController::URL('publications', 'user', 'display',
                 // don't include pubtype id if we're navigating by category
                 array(
                     'ptid' => empty($ptid) ? null : $article['pubtype_id'],
@@ -526,7 +526,7 @@ function publications_user_view($args)
             $curptid = $article['pubtype_id'];
 
             // TODO: make configurable?
-            $article['redirect'] = xarModURL('publications', 'user', 'redirect',
+            $article['redirect'] = xarController::URL('publications', 'user', 'redirect',
                 array('ptid' => $curptid, 'id' => $article['id'])
             );
 
@@ -546,7 +546,7 @@ function publications_user_view($args)
                 //$article['rssdate'] = strtotime($article['date']);
                 $article['rsssummary'] = preg_replace('<br />', "\n", $article['summary']);
                 $article['rsssummary'] = xarVar::prepForDisplay(strip_tags($article['rsssummary']));
-                $article['rsscomment'] = xarModURL('comments', 'user', 'display', array('modid' => $c_modid, 'objectid' => $article['id']));
+                $article['rsscomment'] = xarController::URL('comments', 'user', 'display', array('modid' => $c_modid, 'objectid' => $article['id']));
                 // $article['rsscname'] = htmlspecialchars($item['cname']);
                 // <category>#$rsscname#</category>
             }
@@ -560,7 +560,7 @@ function publications_user_view($args)
                 } else {
                     $article['transform'] = array('summary', 'body', 'notes');
                 }
-                $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'publications');
+                $article = xarModHooks::call('item', 'transform', $article['id'], $article, 'publications');
             }
 
             $data['titles'][$article['id']] = $article['title'];

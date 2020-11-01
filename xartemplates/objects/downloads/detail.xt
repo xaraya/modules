@@ -59,7 +59,7 @@
         <xar:if condition="empty($fields['fileupload'])">
             <!-- Nothing to display -->
 
-        <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+        <xar:elseif condition="xarModHooks::isHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
             <!-- Hook output -->
             <xar:comment>
                 If you hook the uploads module to publications, then file upload fields will contain
@@ -99,7 +99,7 @@
             <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
             <xar:if condition="!empty($prevpublication)">
                 <xar:var name="prev">Previous</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
                     <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
                 </a>
             </xar:if>
@@ -107,7 +107,7 @@
             <xar:set name="nextpublication">xarCoreCache::getCached('Publications', 'nextpublication')</xar:set>
             <xar:if condition="!empty($nextpublication)">
                 <xar:var name="next">Next</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
                     <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
                 </a>
             </xar:if>

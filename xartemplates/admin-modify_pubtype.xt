@@ -7,13 +7,13 @@
             Modify publication type: #$properties['description']->value#
         </h2>
 
-        <form method="post" action="#xarModURL('publications','admin','modify_pubtype')#">
+        <form method="post" action="#xarController::URL('publications','admin','modify_pubtype')#">
             <xar:data-form object="$object" tplmodule="publications"/>
             <div class="xar-row">
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <input type="hidden" name="name" id="name" value="#$object:name#"/>
                     <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
                     <input type="hidden" name="confirm" id="confirm" value="true"/>

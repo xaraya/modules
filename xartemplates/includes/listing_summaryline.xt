@@ -23,7 +23,7 @@
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
             <xar:access level="700">
                 <xar:set name="link">
-                    xarModURL('dynamicdata','util','import')
+                    xarController::URL('dynamicdata','util','import')
                 </xar:set>
                 <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                     <a href="#$link#" title="#xarML('Import a Publication Type from XML ')#" style="margin-right: 5px">
@@ -36,7 +36,7 @@
                 </xar:if>
                 <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => 'publications_types'))</xar:set>
                 <xar:set name="link">
-                    xarModURL('dynamicdata','admin','new',array('objectid' => $args['objectid']))
+                    xarController::URL('dynamicdata','admin','new',array('objectid' => $args['objectid']))
                 </xar:set>
                 <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                     <a href="#$link#" title="#xarML('Add A New Publication Type')#" style="margin-right: 5px">

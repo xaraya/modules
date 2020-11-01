@@ -48,8 +48,8 @@
 
     <!-- For debugging
     <xar:set name="dummy">var_dump($items)</xar:set>
-    <xar:set name="dummy">var_dump(xarLocaleGetFormattedDate('long',$now))</xar:set>
-    <xar:set name="dummy">var_dump(xarLocaleGetFormattedTime('long',$now))</xar:set>
+    <xar:set name="dummy">var_dump(xarLocale::getFormattedDate('long',$now))</xar:set>
+    <xar:set name="dummy">var_dump(xarLocale::getFormattedTime('long',$now))</xar:set>
     -->
 
     <!-- Display the list of objects -->

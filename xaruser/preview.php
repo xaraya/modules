@@ -33,7 +33,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_preview($data)
 {
-    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', xarVar::NOT_REQUIRED)) {
         return;
     }
     
@@ -77,7 +77,7 @@ function publications_user_preview($data)
         if ($accessconstraints['display']['failure']) {
             return xarResponse::Forbidden();
         } elseif ($nopermissionpage_id) {
-            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         } else {
             return xarTpl::module('publications', 'user', 'empty');
         }
@@ -89,7 +89,7 @@ function publications_user_preview($data)
             if ($accessconstraints['display']['failure']) {
                 return xarResponse::Forbidden();
             } elseif ($nopermissionpage_id) {
-                xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
             } else {
                 return xarTpl::module('publications', 'user', 'empty');
             }

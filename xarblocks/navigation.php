@@ -91,9 +91,9 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $itemtype = xarCoreCache::getCached('Blocks.categories', 'itemtype');
             } else {
                 // try to get itemtype from input
-                xarVar::fetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET);
+                xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET);
                 if (empty($itemtype)) {
-                    xarVar::fetch('ptid', 'isset', $itemtype, null, XARVAR_DONT_SET);
+                    xarVar::fetch('ptid', 'isset', $itemtype, null, xarVar::DONT_SET);
                 }// if
             }
         }
@@ -107,9 +107,9 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $itemid = xarCoreCache::getCached('Blocks.categories', 'itemid');
             } else {
                 // try to get itemid from input
-                xarVar::fetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET);
+                xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET);
                 if (empty($itemid)) {
-                    xarVar::fetch('id', 'isset', $itemid, null, XARVAR_DONT_SET);
+                    xarVar::fetch('id', 'isset', $itemid, null, xarVar::DONT_SET);
                 }// if
             }
         }
@@ -215,7 +215,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
         }
     
-        // Specify type=... & func = ... arguments for xarModURL()
+        // Specify type=... & func = ... arguments for xarController::URL()
         if (empty($type)) {
             if (xarVar::isCached('Blocks.categories', 'type')) {
                 $type = xarCoreCache::getCached('Blocks.categories', 'type');
@@ -239,7 +239,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         }
         if (empty($catid)) {
             // try to get catid from input
-            xarVar::fetch('catid', 'isset', $catid, null, XARVAR_DONT_SET);
+            xarVar::fetch('catid', 'isset', $catid, null, xarVar::DONT_SET);
         }
         // turn $catid into $cids array (and set $andcids flag)
         $istree = 0;
@@ -268,8 +268,8 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
             if (empty($cids)) {
                 // try to get cids from input
-                xarVar::fetch('cids', 'isset', $cids, null, XARVAR_DONT_SET);
-                xarVar::fetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED);
+                xarVar::fetch('cids', 'isset', $cids, null, xarVar::DONT_SET);
+                xarVar::fetch('andcids', 'isset', $andcids, false, xarVar::NOT_REQUIRED);
     
                 if (empty($cids)) {
                     $cids = array();
@@ -361,7 +361,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                     $label = xarVar::prepForDisplay($info['name']);
     
                     if (isset($publications[$label])) {
-                        $link = xarModURL(
+                        $link = xarController::URL(
                             $modname,
                             $type,
                             'display',
@@ -370,7 +370,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                                             'id'=>$publications[$label])
                         );
                     } else {
-                        $link = xarModURL(
+                        $link = xarController::URL(
                             $modname,
                             $type,
                             $func,
@@ -380,7 +380,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                     }// if
     
                     if (empty($root)) {
-                        $link = xarModURL('', '', '');
+                        $link = xarController::URL('', '', '');
                         $root = $label;
                     }// if
     
@@ -454,7 +454,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                     } else {
                         $label = xarVar::prepForDisplay($item['title']);
                         $class = ($item['id'] == $itemid) ? 'xar-menu-item-current' : 'xar-menu-item';
-                        $link = xarModURL(
+                        $link = xarController::URL(
                             $modname,
                             $type,
                             'display',
@@ -500,7 +500,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                         $clabel = xarVar::prepForDisplay($child['name']);
     
                         if (isset($publications[$clabel])) {
-                            $clink = xarModURL(
+                            $clink = xarController::URL(
                                 $modname,
                                 $type,
                                 'display',
@@ -509,7 +509,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                                                 'id'=>$publications[$clabel])
                             );
                         } else {
-                            $clink = xarModURL(
+                            $clink = xarController::URL(
                                 $modname,
                                 $type,
                                 $func,

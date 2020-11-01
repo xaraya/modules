@@ -23,13 +23,13 @@ function publications_user_new($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('ptid', 'int', $data['ptid'], xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'int', $data['ptid'], xarModVars::get('publications', 'defaultpubtype'), xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'str', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'str', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     $data['items'] = array();
@@ -52,7 +52,7 @@ function publications_user_new($args)
         if ($accessconstraints['add']['failure']) {
             return xarResponse::Forbidden();
         } elseif ($nopermissionpage_id) {
-            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         } else {
             return xarTpl::module('publications', 'user', 'empty');
         }

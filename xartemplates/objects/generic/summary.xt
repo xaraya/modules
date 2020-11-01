@@ -15,7 +15,7 @@
         <xar:template file="editicons"/>
         
         <span class="xar-title">
-            <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+            <a class="xar-title" href="#xarController::URL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
                 <xar:data-output property="$properties['description']" />

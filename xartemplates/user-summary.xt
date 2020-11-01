@@ -22,8 +22,8 @@
         <p>
             <xar:ml>
                 <xar:mlstring>#(1) #(2)</xar:mlstring>
-                <xar:mlvar>#xarLocaleGetFormattedDate('long',$pubdate)#</xar:mlvar>
-                <xar:mlvar>#xarLocaleGetFormattedTime('long',$pubdate)#</xar:mlvar>
+                <xar:mlvar>#xarLocale::getFormattedDate('long',$pubdate)#</xar:mlvar>
+                <xar:mlvar>#xarLocale::getFormattedTime('long',$pubdate)#</xar:mlvar>
             </xar:ml>
         </p>
         </xar:if>

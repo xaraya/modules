@@ -174,10 +174,10 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
 
         // get cids for security check in getall
         $fields = array('id', 'title', 'pubtype_id', 'cids');
-        if ($data['toptype'] == 'rating' && xarModIsHooked('ratings', 'publications', $ptid)) {
+        if ($data['toptype'] == 'rating' && xarModHooks::isHooked('ratings', 'publications', $ptid)) {
             array_push($fields, 'rating');
             $sort = 'rating';
-        } elseif ($data['toptype'] == 'hits' && xarModIsHooked('hitcount', 'publications', $ptid)) {
+        } elseif ($data['toptype'] == 'hits' && xarModHooks::isHooked('hitcount', 'publications', $ptid)) {
             array_push($fields, 'counter');
             $sort = 'hits';
         } else {
@@ -188,7 +188,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
         if (!empty($data['showsummary'])) {
             array_push($fields, 'summary');
         }
-        if (!empty($data['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $ptid)) {
+        if (!empty($data['showdynamic']) && xarModHooks::isHooked('dynamicdata', 'publications', $ptid)) {
             array_push($fields, 'dynamicdata');
         }
 
@@ -216,7 +216,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
             $article['title'] = xarVar::prepHTMLDisplay($article['title']);
             if ($article['id'] != $curid) {
                 // Use the filtered category if set, and not including children
-                $article['link'] = xarModURL(
+                $article['link'] = xarController::URL(
                     'publications',
                     'user',
                     'display',
@@ -246,7 +246,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                     // TODO: make user-dependent
                     if (!empty($article['create_date'])) {
                         //$article['value'] = strftime("%Y-%m-%d", $article['create_date']);
-                        $article['value'] = xarLocaleGetFormattedDate('short', $article['create_date']);
+                        $article['value'] = xarLocale::getFormattedDate('short', $article['create_date']);
                     } else {
                         $article['value'] = 0;
                     }
@@ -259,7 +259,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
             if (!empty($data['showsummary'])) {
                 $article['summary']  = xarVar::prepHTMLDisplay($article['summary']);
                 $article['transform'] = array('summary', 'title');
-                $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'publications');
+                $article = xarModHooks::call('item', 'transform', $article['id'], $article, 'publications');
             } else {
                 $article['summary'] = '';
             }

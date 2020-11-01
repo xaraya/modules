@@ -19,10 +19,10 @@ function publications_admin_modifyconfig()
     }
 
     // Get parameters
-    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'global', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'global', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'int', $data['ptid'], xarModVars::get('publications', 'defaultpubtype'), XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'int', $data['ptid'], xarModVars::get('publications', 'defaultpubtype'), xarVar::DONT_SET)) {
         return;
     }
 

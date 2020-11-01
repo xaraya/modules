@@ -29,37 +29,37 @@ function publications_user_update()
     }
 
     // Get parameters
-    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('items', 'str', $items, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('items', 'str', $items, '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'isset', $data['ptid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'isset', $data['ptid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('modify_cids', 'isset', $cids, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modify_cids', 'isset', $cids, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('preview', 'isset', $data['preview'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('preview', 'isset', $data['preview'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('quit', 'isset', $data['quit'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('quit', 'isset', $data['quit'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('front', 'isset', $data['front'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('front', 'isset', $data['front'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // Confirm authorisation code
     // This has been disabled for now
-//    if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSec::confirmAuthKey()) return;
 
     $items = explode(',', $items);
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -112,7 +112,7 @@ function publications_user_update()
     
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
-    $article = xarModCallHooks(
+    $article = xarModHooks::call(
         'item',
         'transform-input',
         $data['itemid'],
@@ -160,7 +160,7 @@ function publications_user_update()
 
     if ($data['quit']) {
         // Redirect if needed
-        if (!xarVar::fetch('return_url', 'str', $return_url, '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('return_url', 'str', $return_url, '', xarVar::NOT_REQUIRED)) {
             return;
         }
         if (!empty($return_url)) {
@@ -174,7 +174,7 @@ function publications_user_update()
         if (!empty($current_listview)) {
             xarController::redirect($current_listview);
         }
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'publications',
             'user',
             'view',
@@ -182,7 +182,7 @@ function publications_user_update()
         ));
         return true;
     } elseif ($data['front']) {
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'publications',
             'user',
             'display',
@@ -192,7 +192,7 @@ function publications_user_update()
         if (!empty($data['returnurl'])) {
             xarController::redirect($data['returnurl']);
         } else {
-            xarController::redirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'publications',
                 'user',
                 'modify',

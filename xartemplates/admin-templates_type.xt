@@ -15,7 +15,7 @@
             </div>
             <div class="xar-col">
                 <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
-                <form method="post" action="#xarModURL('publications','admin','templates_type')#">
+                <form method="post" action="#xarController::URL('publications','admin','templates_type')#">
                     <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
                     <input type="hidden" name="file" value="#$file#" />
                 </form>
@@ -28,7 +28,7 @@
                 </label>
             </div>
             <div class="xar-col">
-                <form method="post" action="#xarModURL('publications','admin','templates_type')#">
+                <form method="post" action="#xarController::URL('publications','admin','templates_type')#">
                     <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="$onchange" />
                     <input type="hidden" name="ptid" value="#$ptid#" />
                     &#160;
@@ -48,7 +48,7 @@
             </div>
             <div class="xar-col">
                 #$filepath#&#160;
-                 <a href="#xarModURL('publications','user','download',array('filepath' => urlencode($filepath)))#"
+                 <a href="#xarController::URL('publications','user','download',array('filepath' => urlencode($filepath)))#"
                  title="Download this file">
                     <xar:if condition = "xarModVars::get('grader','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/'.'document-save.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
@@ -76,7 +76,7 @@
                     </xar:if>
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="confirm" id="confirm" value="1" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="file" id="file" value="#$file#" />

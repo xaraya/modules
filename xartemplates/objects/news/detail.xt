@@ -38,8 +38,8 @@
             <xar:ml>
                 <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
                 <xar:mlvar>#$author_string#</xar:mlvar>
-                <xar:mlvar>#xarLocaleGetFormattedDate('long',$properties['created']->value)#</xar:mlvar>
-                <xar:mlvar>#xarLocaleGetFormattedTime('long',$properties['created']->value)#</xar:mlvar>
+                <xar:mlvar>#xarLocale::getFormattedDate('long',$properties['created']->value)#</xar:mlvar>
+                <xar:mlvar>#xarLocale::getFormattedTime('long',$properties['created']->value)#</xar:mlvar>
             </xar:ml>
             <xar:if condition="!empty($counter)">
                 <xar:ml>
@@ -82,7 +82,7 @@
             <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
             <xar:if condition="!empty($prevpublication)">
                 <xar:var name="prev">Previous</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
                     <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
                 </a>
             </xar:if>
@@ -90,7 +90,7 @@
             <xar:set name="nextpublication">xarCoreCache::getCached('Publications', 'nextpublication')</xar:set>
             <xar:if condition="!empty($nextpublication)">
                 <xar:var name="next">Next</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
                     <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
                 </a>
             </xar:if>

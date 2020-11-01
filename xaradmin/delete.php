@@ -17,17 +17,17 @@ function publications_admin_delete()
         return;
     }
 
-    //$return = xarModURL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
-    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, XARVAR_NOT_REQUIRED)) {
+    //$return = xarController::URL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
+    if (!xarVar::fetch('confirmed', 'int', $confirmed, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'int', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'int', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('idlist', 'str', $idlist, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('idlist', 'str', $idlist, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -40,7 +40,7 @@ function publications_admin_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view'));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view'));
         }
     }
 
@@ -58,7 +58,7 @@ function publications_admin_delete()
         } else {
             $data['title'] = xarML("Delete Publication");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $items = array();
         foreach ($ids as $i) {
             $publication->getItem(array('itemid' => $i));
@@ -66,10 +66,10 @@ function publications_admin_delete()
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarModURL('publications', 'admin', 'delete', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete', array('idlist' => $idlist));
         return xarTpl::module('publications', 'admin', 'delete', $data);
     } else {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         foreach ($ids as $id) {
@@ -83,7 +83,7 @@ function publications_admin_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view', $data));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view', $data));
         }
         return true;
     }

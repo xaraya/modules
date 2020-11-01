@@ -21,7 +21,7 @@ function publications_userapi_getmenulinks()
         return $menulinks;
     }
 
-    $menulinks[] = array('url'   => xarModURL(
+    $menulinks[] = array('url'   => xarController::URL(
         'publications',
         'user',
         'main'
@@ -31,12 +31,12 @@ function publications_userapi_getmenulinks()
 
     $items = xarMod::apiFunc('publications', 'user', 'get_menu_pages');
     foreach ($items as $item) {
-        $menulinks[] = array('url'   => xarModURL('publications', 'user', 'display', array('itemid' => $item['id'])),
+        $menulinks[] = array('url'   => xarController::URL('publications', 'user', 'display', array('itemid' => $item['id'])),
                              'title' => xarML('Display #(1)', $item['description']),
                              'label' => $item['title']);
     }
 
-    $menulinks[] = array('url'   => xarModURL(
+    $menulinks[] = array('url'   => xarController::URL(
         'publications',
         'user',
         'viewmap'

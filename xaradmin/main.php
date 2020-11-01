@@ -29,7 +29,7 @@ function publications_admin_main()
         xarController::redirect($urldata['redirecturl']);
         return true;
     } else {
-        xarController::redirect(xarModURL('publications', 'admin', 'view'));
+        xarController::redirect(xarController::URL('publications', 'admin', 'view'));
     }
     return true;
 }

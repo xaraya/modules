@@ -19,22 +19,22 @@ function publications_admin_updatestate()
     }
 
     // Get parameters
-    if (!xarVar::fetch('ids', 'isset', $ids, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ids', 'isset', $ids, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('state', 'isset', $state, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('state', 'isset', $state, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'isset', $catid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('catid', 'isset', $catid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, xarVar::DONT_SET)) {
         return;
     }
 
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -122,7 +122,7 @@ function publications_admin_updatestate()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarController::redirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'publications',
                 'admin',
                 'view',
@@ -138,7 +138,7 @@ function publications_admin_updatestate()
     if (empty($catid)) {
         $catid = null;
     }
-    xarController::redirect(xarModURL(
+    xarController::redirect(xarController::URL(
         'publications',
         'admin',
         'view',

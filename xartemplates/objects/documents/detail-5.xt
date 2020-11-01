@@ -76,7 +76,7 @@
                                         #xarVar::prepForDisplay($loop:item.title)#
                                     </xar:if>
                                 <xar:else/>
-                                    <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
+                                    <a href="#xarController::URL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
                                         <xar:set name="source_flag">$loop->item['sitemap_source_flag']</xar:set>
                                         <xar:if condition="$source_flag eq 1">
                                             <xar:if condition="isset($typeinfo[$loop->item['pubtype_id']]['menu_source_flag'])">
@@ -108,7 +108,7 @@
             <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
             <xar:if condition="!empty($prevpublication)">
                 <xar:var name="prev">Previous</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
                     <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
                 </a>
             </xar:if>
@@ -116,7 +116,7 @@
             <xar:set name="nextpublication">xarCoreCache::getCached('Publications', 'nextpublication')</xar:set>
             <xar:if condition="!empty($nextpublication)">
                 <xar:var name="next">Next</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
                     <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
                 </a>
             </xar:if>

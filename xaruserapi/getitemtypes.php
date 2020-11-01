@@ -20,7 +20,7 @@ function publications_userapi_getitemtypes($args)
 
     $itemtypes[300] = array('label' => xarML('Bare Publication'),
                           'title' => xarML('View Bare Publication'),
-                          'url'   => xarModURL('publications', 'user', 'view')
+                          'url'   => xarController::URL('publications', 'user', 'view')
                          );
     // Get publication types
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
@@ -28,7 +28,7 @@ function publications_userapi_getitemtypes($args)
     foreach ($pubtypes as $id => $pubtype) {
         $itemtypes[$id] = array('label' => xarVar::prepForDisplay($pubtype['description']),
                                 'title' => xarVar::prepForDisplay(xarML('Display #(1)', $pubtype['description'])),
-                                'url'   => xarModURL('publications', 'user', 'view', array('ptid' => $id))
+                                'url'   => xarController::URL('publications', 'user', 'view', array('ptid' => $id))
                                );
     }
 

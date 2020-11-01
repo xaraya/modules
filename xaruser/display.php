@@ -37,25 +37,25 @@ function publications_user_display($args)
     // this is used to determine whether we come from a pubtype-based view or a
     // categories-based navigation
     // Note we support both id and itemid
-    if (!xarVar::fetch('name', 'str', $name, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'id', $ptid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'id', $itemid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'id', $itemid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('id', 'id', $id, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'id', $id, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('page', 'int:1', $page, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('page', 'int:1', $page, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('translate', 'int:1', $translate, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('translate', 'int:1', $translate, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', xarVar::NOT_REQUIRED)) {
         return;
     }
     
@@ -90,7 +90,7 @@ function publications_user_display($args)
             // We do a full redirect rather than just continuing with the new id so that
             // anything working off the itemid of the page to be displayed will automatically
             // use the new one
-            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $newid, 'translate' => 0)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $newid, 'translate' => 0)));
         }
         */
     }
@@ -104,7 +104,7 @@ function publications_user_display($args)
         $id = xarModVars::get('publications', 'notfoundpage');
     } elseif (empty($id)) {
         // We're missing an id but can get a pubtype: jump to the pubtype view
-        xarController::redirect(xarModURL('publications', 'user', 'view'));
+        xarController::redirect(xarController::URL('publications', 'user', 'view'));
     }
     
     # --------------------------------------------------------
@@ -158,7 +158,7 @@ function publications_user_display($args)
         if ($accessconstraints['display']['failure']) {
             return xarResponse::Forbidden();
         } elseif ($nopermissionpage_id) {
-            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         } else {
             return xarTpl::module('publications', 'user', 'empty');
         }
@@ -170,7 +170,7 @@ function publications_user_display($args)
             if ($accessconstraints['display']['failure']) {
                 return xarResponse::Forbidden();
             } elseif ($nopermissionpage_id) {
-                xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
             } else {
                 return xarTpl::module('publications', 'user', 'empty');
             }
@@ -201,7 +201,7 @@ function publications_user_display($args)
     } elseif ($redirect_type == 2) {
         // This displays a page of a different module
         // If this is from a link of a redirect child page, use the child param as new URL
-        if (!xarVar::fetch('child', 'str', $child, null, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('child', 'str', $child, null, xarVar::NOT_REQUIRED)) {
             return;
         }
         if (!empty($child)) {
@@ -257,7 +257,7 @@ function publications_user_display($args)
             }
             
             // Debug
-            // echo xarModURL($info['module'],'user',$info['func'],$other_params);
+            // echo xarController::URL($info['module'],'user',$info['func'],$other_params);
             # --------------------------------------------------------
 #
             # For proxy pages: the transform of the subordinate function's template

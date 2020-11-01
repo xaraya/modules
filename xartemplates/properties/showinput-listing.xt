@@ -28,7 +28,7 @@
                 <xar:template file="listing_body" module="$module" property="listing" />
             </table>
         </xar:if>
-        <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" style="clear: both">
+        <form  action="#xarController::URL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" style="clear: both">
             <xar:template file="listing_footerline" module="$module" property="listing" />
             <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#" />
             <input type="hidden" name="object" id="object" value="#$objectname#" />

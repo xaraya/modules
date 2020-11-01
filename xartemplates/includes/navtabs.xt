@@ -9,12 +9,12 @@
         <dt class="help">
             Select Publication Type             : 
         </dt>
-        <form method="post" action="#xarModURL('publications','admin','modifyconfig')#">
+        <form method="post" action="#xarController::URL('publications','admin','modifyconfig')#">
             <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
             <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
         </form>
         <dd style="float:right">
-            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+            <a href="#xarController::URL('publications','admin','view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </dd>

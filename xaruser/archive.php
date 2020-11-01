@@ -20,19 +20,19 @@ function publications_user_archive($args)
     }
 
     // Get parameters from user
-    if (!xarVar::fetch('ptid', 'id', $ptid, xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, xarModVars::get('publications', 'defaultpubtype'), xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('sort', 'enum:d:t:1:2', $sort, 'd', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'enum:d:t:1:2', $sort, 'd', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('month', 'str', $month, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('month', 'str', $month, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('cids', 'array', $cids, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('cids', 'array', $cids, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'str', $catid, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'str', $catid, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -148,7 +148,7 @@ function publications_user_archive($args)
         if ($thismonth == $month) {
             $mlink = '';
         } else {
-            $mlink = xarModURL(
+            $mlink = xarController::URL(
                 'publications',
                 'user',
                 'archive',
@@ -169,7 +169,7 @@ function publications_user_archive($args)
     if ($month == 'all') {
         $mlink = '';
     } else {
-        $mlink = xarModURL(
+        $mlink = xarController::URL(
             'publications',
             'user',
             'archive',
@@ -222,7 +222,7 @@ function publications_user_archive($args)
             if ($sort == $count) {
                 $link = '';
             } else {
-                $link = xarModURL(
+                $link = xarController::URL(
                     'publications',
                     'user',
                     'archive',
@@ -278,7 +278,7 @@ function publications_user_archive($args)
     // TODO: add print / recommend_us link for each article ?
     // TODO: add view count to table/query/template someday ?
     foreach ($publications as $key => $article) {
-        $publications[$key]['link'] = xarModURL(
+        $publications[$key]['link'] = xarController::URL(
             'publications',
             'user',
             'display',
@@ -290,7 +290,7 @@ function publications_user_archive($args)
         }
         /* TODO: move date formatting to template, delete this code after testing
                 if ($showdate && !empty($publications[$key]['pubdate'])) {
-                    $publications[$key]['date'] = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",
+                    $publications[$key]['date'] = xarLocale::formatDate("%Y-%m-%d %H:%M:%S",
                                                        $publications[$key]['pubdate']);
                 } else {
                     $publications[$key]['date'] = '';
@@ -352,7 +352,7 @@ function publications_user_archive($args)
     if ($sort == 't') {
         $link = '';
     } else {
-        $link = xarModURL(
+        $link = xarController::URL(
             'publications',
             'user',
             'archive',
@@ -371,7 +371,7 @@ function publications_user_archive($args)
         if ($sort == 'd') {
             $link = '';
         } else {
-            $link = xarModURL(
+            $link = xarController::URL(
                 'publications',
                 'user',
                 'archive',
@@ -432,7 +432,7 @@ function publications_user_archive($args)
                  'catsel' => $catsel,
                  'ptid' => $ptid,
                  'month' => $month,
-                 'curlink' => xarModURL(
+                 'curlink' => xarController::URL(
                      'publications',
                      'user',
                      'archive',
@@ -454,14 +454,14 @@ function publications_user_archive($args)
                                                   'func' => 'archive')
                  ),
                  'maplabel' => xarML('View Publication Map'),
-                 'maplink' => xarModURL(
+                 'maplink' => xarController::URL(
                      'publications',
                      'user',
                      'viewmap',
                      array('ptid' => $ptid)
                  ),
                  'viewlabel' => (empty($ptid) ? xarML('Back to Publications') : xarML('Back to') . ' ' . $pubtypes[$ptid]['description']),
-                 'viewlink' => xarModURL(
+                 'viewlink' => xarController::URL(
                      'publications',
                      'user',
                      'view',

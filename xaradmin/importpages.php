@@ -19,49 +19,49 @@ function publications_admin_importpages()
     }
 
     // Get parameters
-    if (!xarVar::fetch('basedir', 'isset', $basedir, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('basedir', 'isset', $basedir, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('filelist', 'isset', $filelist, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('filelist', 'isset', $filelist, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('refresh', 'isset', $refresh, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('refresh', 'isset', $refresh, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'int', $data['ptid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'int', $data['ptid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('contentfield', 'str', $data['contentfield'], '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('contentfield', 'str', $data['contentfield'], '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('titlefield', 'str', $data['titlefield'], '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('titlefield', 'str', $data['titlefield'], '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('cids', 'isset', $cids, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('cids', 'isset', $cids, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('filterhead', 'isset', $filterhead, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('filterhead', 'isset', $filterhead, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('filtertail', 'isset', $filtertail, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('filtertail', 'isset', $filtertail, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('findtitle', 'isset', $findtitle, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('findtitle', 'isset', $findtitle, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('numrules', 'isset', $numrules, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numrules', 'isset', $numrules, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('search', 'isset', $search, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('search', 'isset', $search, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('replace', 'isset', $replace, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('replace', 'isset', $replace, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('test', 'isset', $test, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('test', 'isset', $test, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('import', 'isset', $import, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -85,12 +85,12 @@ function publications_admin_importpages()
 
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     # --------------------------------------------------------
 #

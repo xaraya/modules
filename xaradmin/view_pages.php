@@ -21,7 +21,7 @@ function publications_admin_view_pages($args)
     extract($args);
 
     // Accept a parameter to allow selection of a single tree.
-    xarVar::fetch('root_id', 'int', $root_id, null, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('root_id', 'int', $root_id, null, xarVar::NOT_REQUIRED);
 
     if (null === $root_id) {
         $root_id = xarSession::getVar('publications_root_id');

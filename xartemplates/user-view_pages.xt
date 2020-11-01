@@ -11,7 +11,7 @@
         <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
         <xar:if condition="!empty($root_pages)">
             <xar:set name="method">'get'</xar:set>
-            <form method="$method" action="#xarModURL('publications','admin','view_pages')#">
+            <form method="$method" action="#xarController::URL('publications','admin','view_pages')#">
                 <div>
                     <xar:if condition="$method eq 'get'">
                         <input name="module" type="hidden" value="publications"/>
@@ -41,7 +41,7 @@
              No publications defined
         <xar:else />
             <xar:if condition="!empty($add_allowed)">
-                <div><a href="#xarModURL('publications','admin','new')#">Add Page</a></div>
+                <div><a href="#xarController::URL('publications','admin','new')#">Add Page</a></div>
             </xar:if>
 
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -67,7 +67,7 @@
                             <td class="#$row_class#" style="text-align: center;">
                                 <xar:if condition="!empty($loop:item.edit_allowed)">
                                     <xar:set name="link">
-                                        xarModURL('publications', 'admin', 'modify', array('itemid' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
+                                        xarController::URL('publications', 'admin', 'modify', array('itemid' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
                                     </xar:set>
                                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                         <xar:set name="icon">
@@ -84,7 +84,7 @@
 
                                 <xar:if condition="!empty($loop:item.delete_allowed)">
                                     <xar:set name="link">
-                                        xarModURL('publications', 'admin', 'delete', array('idlist' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
+                                        xarController::URL('publications', 'admin', 'delete', array('idlist' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
                                     </xar:set>
                                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                         <xar:set name="icon">
@@ -100,7 +100,7 @@
                                 </xar:if>
 
                                 <xar:set name="link">
-                                    xarModURL('publications', 'user', 'display', array('id' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
+                                    xarController::URL('publications', 'user', 'display', array('id' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
                                 </xar:set>
                                 <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                     <xar:set name="icon">

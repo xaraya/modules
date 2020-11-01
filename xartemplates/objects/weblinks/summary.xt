@@ -14,7 +14,7 @@
         
         <xar:template file="editicons"/>
         
-        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+        <a class="xar-title" href="#xarController::URL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
         <br />
@@ -33,8 +33,8 @@
         
         <!-- Date added -->
         <xar:if condition="!empty($properties['created']) AND !empty($fields['created'])">            
-            Added on: #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
-            #xarLocaleGetFormattedTime('long',$properties['created']->value)#
+            Added on: #xarLocale::getFormattedDate('long',$properties['created']->value)# 
+            #xarLocale::getFormattedTime('long',$properties['created']->value)#
         </xar:if>
         
         <xar:if condition="!empty($rating)">
@@ -53,7 +53,7 @@
                 )
             </xar:if>
         </xar:if>
-        <xar:if condition="xarModIsHooked('ratings','publications',6)">
+        <xar:if condition="xarModHooks::isHooked('ratings','publications',6)">
             | <a href="#$link#">                
                     Rate / Comment
             </a>

@@ -99,7 +99,7 @@ function publications_userapi_getchildcats($args)
             $catid = $info['id'];
         }
         // TODO: show icons instead of (or in addition to) a link if available ?
-        $info['link'] = xarModURL(
+        $info['link'] = xarController::URL(
             'publications',
             'user',
             'view',

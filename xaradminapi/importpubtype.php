@@ -289,7 +289,7 @@ function publications_adminapi_importpubtype($args)
                     }
 
                     // 7. check if we need to enable DD hooks for this pubtype
-                    if (!xarModIsHooked('dynamicdata', 'publications')) {
+                    if (!xarModHooks::isHooked('dynamicdata', 'publications')) {
                         xarMod::apiFunc(
                             'modules',
                             'admin',

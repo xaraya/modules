@@ -18,10 +18,10 @@ function publications_admin_importpubtype($args)
         return;
     }
 
-    if (!xarVar::fetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('import', 'isset', $import, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('xml', 'isset', $xml, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('xml', 'isset', $xml, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -48,7 +48,7 @@ function publications_admin_importpubtype($args)
     }
 
     if (!empty($import) || !empty($xml)) {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -92,6 +92,6 @@ function publications_admin_importpubtype($args)
                                     'name' => $file);
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

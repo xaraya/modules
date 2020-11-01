@@ -91,7 +91,7 @@ function publications_adminapi_createpubtype($args)
     $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtype_id');
 
     // Don't call creation hooks here...
-    //xarModCallHooks('item', 'create', $ptid, 'ptid');
+    //xarModHooks::call('item', 'create', $ptid, 'ptid');
 
     return $ptid;
 }

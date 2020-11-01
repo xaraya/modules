@@ -2,22 +2,22 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
     <xar:sec mask="ManagePublications" catch="false">
         <xar:var name="label">Create a new publication</xar:var>
-        <a href="#xarModURL('publications', 'admin', 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'admin', 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/document-new.png','base')#"/>
         </a>
         &#160;
         <xar:var name="label">Create a copy of this publication</xar:var>
-        <a href="#xarModURL('publications', 'admin', 'clone',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'admin', 'clone',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/add.png','base')#"/>
         </a>
         &#160;
         <xar:var name="label">Delete this publication</xar:var>
-        <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/delete.png','base')#"/>
         </a>
         &#160;
         <xar:var name="label">Modify this publication</xar:var>
-        <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/modify.png','base')#"/>
         </a>
     </xar:sec> 

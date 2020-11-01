@@ -99,7 +99,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
             $feature = $data['featured']->getFieldValues(array(), 1);
             $data['properties'] =& $data['featured']->properties;
 
-            $feature['link'] = xarModURL(
+            $feature['link'] = xarController::URL(
                 'publications',
                 'user',
                 'display',
@@ -161,7 +161,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                 $itemvalues = $object->getFieldValues(array(), 1);
 
                 if ($publication['id'] != $curid) {
-                    $link = xarModURL(
+                    $link = xarController::URL(
                         'publications',
                         'user',
                         'display',

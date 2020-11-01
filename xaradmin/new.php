@@ -22,13 +22,13 @@ function publications_admin_new($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('ptid', 'id', $data['ptid'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'id', $data['ptid'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'str', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'str', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'id', $itemtype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 

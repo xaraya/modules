@@ -19,10 +19,10 @@ function publications_admin_display_version($args)
         return;
     }
     
-    if (!xarVar::fetch('itemid', 'id', $data['page_id'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'id', $data['page_id'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('name', 'str', $data['objectname'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $data['objectname'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (empty($data['page_id'])) {
@@ -38,10 +38,10 @@ function publications_admin_display_version($args)
         return $data;
     }
     
-    if (!xarVar::fetch('confirm', 'int', $confirm, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'int', $confirm, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('version_1', 'int', $version_1, $data['versions'], XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('version_1', 'int', $version_1, $data['versions'], xarVar::NOT_REQUIRED)) {
         return;
     }
     $data['version_1'] = $version_1;
@@ -79,7 +79,7 @@ function publications_admin_display_version($args)
         $page->properties['version']->value = $data['versions'] + 1;
         $page->updateItem();
         
-        xarController::redirect(xarModURL('publications', 'admin', 'modify', array('name' => $pubtype->properties['name']->value, 'itemid' => $content_array_1['id'])));
+        xarController::redirect(xarController::URL('publications', 'admin', 'modify', array('name' => $pubtype->properties['name']->value, 'itemid' => $content_array_1['id'])));
         return true;
     }
     return $data;

@@ -6,13 +6,13 @@
         Options 
     </dt>
     <dd>
-        <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">            
+        <a href="#xarController::URL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">            
             Publication Map by Publication Type             
         </a>
     </dd>
     <xar:if condition="count($catfilter) eq 2">
         <dd>
-            <a href="#xarModURL('publications','user','viewmap',array('by' => 'grid'))#">                
+            <a href="#xarController::URL('publications','user','viewmap',array('by' => 'grid'))#">                
                 Publication Map by Grid                 
             </a>
         </dd>

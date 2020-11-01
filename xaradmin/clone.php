@@ -17,16 +17,16 @@
             return;
         }
 
-        if (!xarVar::fetch('name', 'isset', $objectname, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('name', 'isset', $objectname, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('ptid', 'isset', $ptid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('confirm', 'int', $confirm, 0, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::DONT_SET)) {
             return;
         }
     
@@ -57,18 +57,18 @@
 
         $data['object']->getItem(array('itemid' => $data['itemid']));
         
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $data['name'] = $data['object']->properties['name']->value;
         $data['label'] = $data['object']->label;
         xarTpl::setPageTitle(xarML('Clone Publication #(1) in #(2)', $data['itemid'], $data['label']));
         
         if ($confirm) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             
             // Get the name for the clone
-            if (!xarVar::fetch('newname', 'str', $newname, "", XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('newname', 'str', $newname, "", xarVar::NOT_REQUIRED)) {
                 return;
             }
             if (empty($newname)) {
@@ -85,7 +85,7 @@
             $cloneid = $data['object']->createItem(array('itemid' => 0));
     
             // Create the clone's translations
-            if (!xarVar::fetch('clone_translations', 'int', $clone_translations, 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('clone_translations', 'int', $clone_translations, 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
             if ($clone_translations) {
@@ -118,7 +118,7 @@
             } elseif (!empty($current_listview)) {
                 xarController::redirect($current_listview);
             } else {
-                xarController::redirect(xarModURL('publications', 'user', 'view'));
+                xarController::redirect(xarController::URL('publications', 'user', 'view'));
             }
             return true;
         }

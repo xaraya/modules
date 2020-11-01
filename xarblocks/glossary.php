@@ -42,7 +42,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     {
         $vars = $this->getContent();
         
-        if (!xarVar::fetch($vars['paramname'], 'str', $glossaryterm, null, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch($vars['paramname'], 'str', $glossaryterm, null, xarVar::NOT_REQUIRED)) {
             return;
         }
         if (!$glossaryterm) {
@@ -72,7 +72,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         if (!empty($article)) {
             $vars['definition'] = $article['summary'];
             $vars['term'] = $glossaryterm;
-            $vars['detailurl'] = xarModURL(
+            $vars['detailurl'] = xarController::URL(
                 'publications',
                 'user',
                 'display',
@@ -119,9 +119,9 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     
     public function update()
     {
-        xarVar::fetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
-        xarVar::fetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', xarVar::NOT_REQUIRED);
+        xarVar::fetch('ptid', 'int:0:', $vars['ptid'], 0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('cid', 'int:0:', $vars['cid'], 0, xarVar::NOT_REQUIRED);
         $this->setContent($vars);
         return true;
     }

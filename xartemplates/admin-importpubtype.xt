@@ -11,7 +11,7 @@
         </h3>
         <strong>#$warning#</strong>
         <br />
-        <form method="post" action="#xarModURL('publications','admin','importpubtype')#">
+        <form method="post" action="#xarController::URL('publications','admin','importpubtype')#">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             Filter:
             <strong>modules/publications/*.xml</strong>

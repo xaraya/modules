@@ -18,7 +18,7 @@ function publications_admin_stats($args = array())
         return;
     }
     
-    if (!xarVar::fetch('group', 'isset', $group, array(), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('group', 'isset', $group, array(), xarVar::NOT_REQUIRED)) {
         return;
     }
     extract($args);

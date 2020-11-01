@@ -41,25 +41,25 @@ function publications_admin_display($args)
     // this is used to determine whether we come from a pubtype-based view or a
     // categories-based navigation
     // Note we support both id and itemid
-    if (!xarVar::fetch('name', 'str', $name, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'id', $ptid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'id', $itemid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'id', $itemid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('id', 'id', $id, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'id', $id, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('page', 'int:1', $page, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('page', 'int:1', $page, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('translate', 'int:1', $translate, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('translate', 'int:1', $translate, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', xarVar::NOT_REQUIRED)) {
         return;
     }
     
@@ -99,7 +99,7 @@ function publications_admin_display($args)
         $id = xarModVars::get('publications', 'notfoundpage');
     } elseif (empty($id)) {
         // We're missing an id but can get a pubtype: jump to the pubtype view
-        xarController::redirect(xarModURL('publications', 'user', 'view'));
+        xarController::redirect(xarController::URL('publications', 'user', 'view'));
     }
     
     # --------------------------------------------------------
@@ -180,7 +180,7 @@ function publications_admin_display($args)
     } elseif ($redirect_type == 2) {
         // This displays a page of a different module
         // If this is from a link of a redirect child page, use the child param as new URL
-        if (!xarVar::fetch('child', 'str', $child, null, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('child', 'str', $child, null, xarVar::NOT_REQUIRED)) {
             return;
         }
         if (!empty($child)) {
@@ -221,7 +221,7 @@ function publications_admin_display($args)
             }
             
             // Debug
-            // echo xarModURL($info['module'],'user',$info['func'],$other_params);
+            // echo xarController::URL($info['module'],'user',$info['func'],$other_params);
             # --------------------------------------------------------
 #
             # For proxy pages: the transform of the subordinate function's template
@@ -430,7 +430,7 @@ function publications_admin_display($args)
 
     /*
         // TEST - highlight search terms
-        if(!xarVar::fetch('q',     'str',  $q,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('q',     'str',  $q,     NULL, xarVar::NOT_REQUIRED)) {return;}
     */
 
     // Override if needed from argument array (e.g. preview)
@@ -530,7 +530,7 @@ function publications_admin_display($args)
                                 'getcatinfo',
                                 array('cids' => $cids));
         foreach ($catlist as $cat) {
-            $link = xarModURL('publications','user','view',
+            $link = xarController::URL('publications','user','view',
                              array(//'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED).
                                    'ptid' => $ptid,
                                    'catid' => $cat['cid']));
@@ -595,13 +595,13 @@ function publications_admin_display($args)
                 // Get the rendered pager.
                 // The pager template (last parameter) could be an
                 // option for the publication type.
-                $urlmask = xarModURL(
+                $urlmask = xarController::URL(
                     'publications',
                     'user',
                     'display',
                     array('ptid' => $ptid, 'id' => $id, 'page' => '%%')
                 );
-                $data['pager'] = xarTplGetPager(
+                $data['pager'] = xarTplPager::getPager(
                     $page,
                     $numpages,
                     $urlmask,
@@ -612,7 +612,7 @@ function publications_admin_display($args)
 
                 // Next two assignments for legacy templates.
                 // TODO: deprecate them?
-                $data['next'] = xarTplGetPager(
+                $data['next'] = xarTplPager::getPager(
                     $page,
                     $numpages,
                     $urlmask,
@@ -620,7 +620,7 @@ function publications_admin_display($args)
                     $pageBlockSize,
                     'multipagenext'
                 );
-                $data['previous'] = xarTplGetPager(
+                $data['previous'] = xarTplPager::getPager(
                     $page,
                     $numpages,
                     $urlmask,
@@ -645,7 +645,7 @@ function publications_admin_display($args)
     unset($publication);
 
     // temp. fix to include dynamic data fields without changing templates
-    if (xarModIsHooked('dynamicdata', 'publications', $pubtype_id)) {
+    if (xarModHooks::isHooked('dynamicdata', 'publications', $pubtype_id)) {
         list($properties) = xarMod::apiFunc(
             'dynamicdata',
             'user',
@@ -694,7 +694,7 @@ function publications_admin_display($args)
             $data['transform'][] = 'notes';
         }
     }
-    $data = xarModCallHooks('item', 'transform', $id, $data, 'publications');
+    $data = xarModHooks::call('item', 'transform', $id, $data, 'publications');
 
     return xarTpl::module('publications', 'user', 'display', $data);
 
@@ -727,7 +727,7 @@ function publications_admin_display($args)
     }
     if (!empty($settings['show_map'])) {
         $data['maplabel'] = xarML('View Publication Map');
-        $data['maplink'] = xarModURL(
+        $data['maplink'] = xarController::URL(
             'publications',
             'user',
             'viewmap',
@@ -739,7 +739,7 @@ function publications_admin_display($args)
     }
     if (!empty($settings['show_archives'])) {
         $data['archivelabel'] = xarML('View Archives');
-        $data['archivelink'] = xarModURL(
+        $data['archivelink'] = xarController::URL(
             'publications',
             'user',
             'archive',
@@ -758,7 +758,7 @@ function publications_admin_display($args)
 
     // Tell the hitcount hook not to display the hitcount, but to save it
     // in the variable cache.
-    if (xarModIsHooked('hitcount', 'publications', $pubtype_id)) {
+    if (xarModHooks::isHooked('hitcount', 'publications', $pubtype_id)) {
         xarCoreCache::setCached('Hooks.hitcount', 'save', 1);
         $data['dohitcount'] = 1;
     } else {
@@ -766,7 +766,7 @@ function publications_admin_display($args)
     }
 
     // Tell the ratings hook to save the rating in the variable cache.
-    if (xarModIsHooked('ratings', 'publications', $pubtype_id)) {
+    if (xarModHooks::isHooked('ratings', 'publications', $pubtype_id)) {
         xarCoreCache::setCached('Hooks.ratings', 'save', 1);
         $data['doratings'] = 1;
     } else {

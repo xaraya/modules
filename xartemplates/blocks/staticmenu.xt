@@ -47,7 +47,7 @@
             <xar:if condition="$node['redirect_flag'] eq 0 AND $node['state'] eq 5">
                 <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}">#$node['label']#</li>
             <xar:else/>
-                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
+                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}"><a href="#xarController::URL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
             </xar:if>
         </xar:foreach>
     </ul>
@@ -69,9 +69,9 @@
                 
                 <!-- Check if we have a submenu -->
                 <xar:if condition="isset($menuarray[$node['id']])">
-                    <a class="{menu: 'menu-#$node['id']#'} sub-menu #$hilite#" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
+                    <a class="{menu: 'menu-#$node['id']#'} sub-menu #$hilite#" href="#xarController::URL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
                 <xar:else/>
-                    <a class="sub-menu #$hilite#" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
+                    <a class="sub-menu #$hilite#" href="#xarController::URL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
                 </xar:if>
             </xar:foreach>
         </div>

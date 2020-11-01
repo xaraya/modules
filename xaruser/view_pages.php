@@ -21,7 +21,7 @@ function publications_user_view_pages($args)
     }
 
     // Accept a parameter to allow selection of a single tree.
-    xarVar::fetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('contains', 'id', $contains, 0, xarVar::NOT_REQUIRED);
 
     $data = xarMod::apiFunc(
         'publications',

@@ -189,7 +189,7 @@ function publications_adminapi_create($args)
     $args['itemid'] = $id;
     // TODO: get rid of this
     $args['cids'] = $cids;
-    xarModCallHooks('item', 'create', $id, $args);
+    xarModHooks::call('item', 'create', $id, $args);
 
     return $id;
 }

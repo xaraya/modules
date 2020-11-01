@@ -29,37 +29,37 @@ function publications_admin_update()
     }
 
     // Get parameters
-    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('items', 'str', $items, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('items', 'str', $items, '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'isset', $data['ptid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'isset', $data['ptid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('modify_cids', 'isset', $cids, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modify_cids', 'isset', $cids, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('preview', 'isset', $data['preview'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('preview', 'isset', $data['preview'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('quit', 'isset', $data['quit'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('quit', 'isset', $data['quit'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('front', 'isset', $data['front'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('front', 'isset', $data['front'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // Confirm authorisation code
     // This has been disabled for now
-//    if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSec::confirmAuthKey()) return;
 
     $items = explode(',', $items);
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -110,7 +110,7 @@ function publications_admin_update()
     
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
-//    $article = xarModCallHooks('item', 'transform-input', $data['itemid'], $article,
+//    $article = xarModHooks::call('item', 'transform-input', $data['itemid'], $article,
 //                               'publications', $data['ptid']);
 
     // Now talk to the database. Loop through all the translation pages
@@ -158,21 +158,21 @@ function publications_admin_update()
             xarController::redirect($current_listview);
         }
 
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'publications',
             'admin',
             'view',
             array('ptid' => $data['ptid'])
         ));
     } elseif ($data['front']) {
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'publications',
             'user',
             'display',
             array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])
         ));
     } else {
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'publications',
             'admin',
             'modify',

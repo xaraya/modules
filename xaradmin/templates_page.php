@@ -21,19 +21,19 @@ function publications_admin_templates_page($args)
 
     extract($args);
 
-    if (!xarVar::fetch('confirm', 'int', $confirm, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'id', $data['ptid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ptid', 'id', $data['ptid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'id', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'id', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('file', 'str', $data['file'], 'summary', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('file', 'str', $data['file'], 'summary', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('source_data', 'str', $data['source_data'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('source_data', 'str', $data['source_data'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
 

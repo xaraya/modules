@@ -15,7 +15,7 @@
         <xar:template file="editicons"/>
 
         <span class="xar-publications-quotes-summary-title">
-            <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+            <a class="xar-title" href="#xarController::URL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
         </span>
@@ -36,7 +36,7 @@
                     (#$counter#&#160;reads)
                 </xar:if>
             </xar:if>
-            <xar:if condition="xarModIsHooked('ratings','publications',6)">
+            <xar:if condition="xarModHooks::isHooked('ratings','publications',6)">
                 | <a href="#$link#">                        
                     Rate / Comment                        
                 </a>

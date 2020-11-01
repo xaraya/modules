@@ -28,19 +28,19 @@ function publications_admin_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $data['itemid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('name', 'str:1', $name, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
     

@@ -48,8 +48,8 @@
                     <xar:ml>
                         <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
                         <xar:mlvar>#$author_string#</xar:mlvar>
-                        <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
-                        <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
+                        <xar:mlvar>#xarLocale::getFormattedDate('long',$fields['created'])#</xar:mlvar>
+                        <xar:mlvar>#xarLocale::getFormattedTime('long',$fields['created'])#</xar:mlvar>
                     </xar:ml>
                     <xar:if condition="!empty($counter)">
                         <xar:ml>
@@ -67,8 +67,8 @@
                 <xar:ml>
                     <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
                     <xar:mlvar>#$author_string#</xar:mlvar>
-                    <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
-                    <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
+                    <xar:mlvar>#xarLocale::getFormattedDate('long',$fields['created'])#</xar:mlvar>
+                    <xar:mlvar>#xarLocale::getFormattedTime('long',$fields['created'])#</xar:mlvar>
                 </xar:ml>
                 <xar:if condition="!empty($counter)">
                     <xar:ml>
@@ -97,7 +97,7 @@
         <xar:if condition="empty($fields['download'])">
             <!-- Nothing to display -->
 
-        <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+        <xar:elseif condition="xarModHooks::isHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
             <!-- Hook output -->
             <xar:comment>
                 If you hook the uploads module to publications, then file upload fields will contain
@@ -155,7 +155,7 @@
             <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
             <xar:if condition="!empty($prevpublication)">
                 <xar:var name="prev">Previous</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
                     <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
                 </a>
             </xar:if>
@@ -163,7 +163,7 @@
             <xar:set name="nextpublication">xarCoreCache::getCached('Publications', 'nextpublication')</xar:set>
             <xar:if condition="!empty($nextpublication)">
                 <xar:var name="next">Next</xar:var>
-                <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
+                <a href="#xarController::URL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
                     <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
                 </a>
             </xar:if>

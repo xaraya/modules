@@ -48,7 +48,7 @@
                     #$subkey# 
                 </xar:set>
             </xar:if>
-            <a href="#xarModURL('publications','admin','view',array('ptid' => $pubtype_id, 'owner' => $owner, 'lang' => $locale, 'state[]' => $state, 'pubdate' => $pubdate))#">#$curlabel# </a> 
+            <a href="#xarController::URL('publications','admin','view',array('ptid' => $pubtype_id, 'owner' => $owner, 'lang' => $locale, 'state[]' => $state, 'pubdate' => $pubdate))#">#$curlabel# </a> 
 <xar:comment>
     Include template recursively here
 </xar:comment>

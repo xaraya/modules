@@ -29,22 +29,22 @@ function publications_user_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('itemid', 'id', $data['itemid'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'id', $data['itemid'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('id', 'id', $data['id'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'id', $data['id'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('ptid', 'isset', $ptid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'isset', $ptid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('returnurl', 'str:1', $data['returnurl'], 'view', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('name', 'str:1', $name, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1', $data['tab'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
    
@@ -105,7 +105,7 @@ function publications_user_modify($args)
         if ($accessconstraints['modify']['failure']) {
             return xarResponse::Forbidden();
         } elseif ($nopermissionpage_id) {
-            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         } else {
             return xarTpl::module('publications', 'user', 'empty');
         }

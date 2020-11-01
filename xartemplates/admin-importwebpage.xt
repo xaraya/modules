@@ -13,7 +13,7 @@
                     <span class="warning">#$logfile#</span>
                 </div>
             </xar:if>
-            <form method="post" action="#xarModURL('publications','admin','importwebpage')#">
+            <form method="post" action="#xarController::URL('publications','admin','importwebpage')#">
                 <fieldset>
                     <div class="xar-row">
                         <div class="xar-col">
