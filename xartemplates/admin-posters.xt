@@ -17,7 +17,7 @@
         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
             <caption class="xar-align-left xar-alt-outline xar-padding-thick">
                 <span class="xar-floatleft">IP Addresses used by
-                    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
+                    <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
                 </span>
                 <xar:if condition="!empty($pager)">
                     <span class="xar-align-right xar-floatright">
@@ -38,7 +38,7 @@
                 <xar:foreach in="$items" value="$item">
                     <tr class="#$rowclass#">
                         <td>#$item['phostname']#</td>
-                        <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('ip' => $item['phostname']))#" title="#xarML('View users posting from this ip address')#">View Users</a></td>
+                        <td><a href="#xarController::URL('crispbb', 'admin', 'posters', array('ip' => $item['phostname']))#" title="#xarML('View users posting from this ip address')#">View Users</a></td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>
@@ -47,7 +47,7 @@
         </table>
         <div class="xar-align-left xar-alt-outline xar-padding-thick">
             <span class="xar-floatleft">IP Addresses used by
-                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
+                <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
             </span>
             <xar:if condition="!empty($pager)">
                 <span class="xar-align-right xar-floatright">
@@ -82,7 +82,7 @@
                 <xar:set name="rowclass">'xar-norm'</xar:set>
                 <xar:foreach in="$items" value="$poster">
                     <tr class="#$rowclass#">
-                        <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
+                        <td><a href="#xarController::URL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
                         <td>#$poster['numtopics']#</td>
                         <td>#$poster['numreplies']#</td>
                         <td><xar:if condition="!empty($poster['online'])">
@@ -90,7 +90,7 @@
                             <xar:else />
                             Offline
                             </xar:if></td>
-                        <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
+                        <td><a href="#xarController::URL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>
@@ -131,7 +131,7 @@
                 <xar:set name="rowclass">'xar-norm'</xar:set>
                 <xar:foreach in="$items" value="$poster">
                     <tr class="#$rowclass#">
-                        <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
+                        <td><a href="#xarController::URL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
                         <td>#$poster['numtopics']#</td>
                         <td>#$poster['numreplies']#</td>
                         <td><xar:if condition="!empty($poster['online'])">
@@ -139,7 +139,7 @@
                             <xar:else />
                             Offline
                             </xar:if></td>
-                        <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
+                        <td><a href="#xarController::URL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>

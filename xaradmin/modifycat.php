@@ -28,13 +28,13 @@ function crispbb_admin_modifycat($args)
     extract($args);
 
     $data = array();
-    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $data['return_url'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $data['return_url'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'int:1', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int:1', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -45,12 +45,12 @@ function crispbb_admin_modifycat($args)
     if ($phase == 'update') {
         $isvalid = $data['object']->checkInput();
         if ($isvalid) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             if (empty($data['return_url'])) {
-                $data['return_url'] = xarModURL('crispbb', 'admin', 'categories');
+                $data['return_url'] = xarController::URL('crispbb', 'admin', 'categories');
             }
             xarResponse::Redirect($data['return_url']);
             return true;

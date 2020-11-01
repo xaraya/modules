@@ -30,7 +30,7 @@ function crispbb_adminapi_deletetopic($args)
 
     if (empty($topic['purgetopicurl'])) {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
+        $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'main');
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
         xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
@@ -59,7 +59,7 @@ function crispbb_adminapi_deletetopic($args)
         foreach ($posts as $pid => $post) {
             $item['itemtype'] = $post['poststype'];
             $item['itemid'] = $post['pid'];
-            xarModCallHooks('item', 'delete', $post['pid'], $item);
+            xarModHooks::call('item', 'delete', $post['pid'], $item);
         }
     }
 
@@ -80,7 +80,7 @@ function crispbb_adminapi_deletetopic($args)
     $item['module'] = 'crispbb';
     $item['itemtype'] = $topic['topicstype'];
     $item['itemid'] = $tid;
-    xarModCallHooks('item', 'delete', $tid, $item);
+    xarModHooks::call('item', 'delete', $tid, $item);
 
     /* Let the calling process know that we have finished successfully */
     return true;

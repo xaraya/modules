@@ -31,7 +31,7 @@ function crispbb_admin_waitingcontent()
             continue;
         }
         $forums[$fid]['subtopics'] = $subtopics;
-        $forums[$fid]['modforumurl'] = xarModURL('crispbb', 'user', 'moderate', array('fid' => $fid, 'component' => 'topics', 'tstatus' => 2));
+        $forums[$fid]['modforumurl'] = xarController::URL('crispbb', 'user', 'moderate', array('fid' => $fid, 'component' => 'topics', 'tstatus' => 2));
         unset($subtopics);
     }
 
@@ -46,7 +46,7 @@ function crispbb_admin_waitingcontent()
             unset($topics[$tid]);
             continue;
         }
-        $topics[$tid]['modtopicurl'] = xarModURL('crispbb', 'user', 'moderate', array('tid' => $tid,
+        $topics[$tid]['modtopicurl'] = xarController::URL('crispbb', 'user', 'moderate', array('tid' => $tid,
             'component' => 'posts', 'pstatus' => 2));
     }
 

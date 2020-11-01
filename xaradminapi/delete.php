@@ -85,10 +85,10 @@ function crispbb_adminapi_delete($args)
     $item['module'] = 'crispbb';
     $item['itemtype'] = $forum['itemtype'];
     $item['itemid'] = $fid;
-    xarModCallHooks('item', 'delete', $fid, $item);
+    xarModHooks::call('item', 'delete', $fid, $item);
 
     // TODO: call some kind of itemtype delete hooks here, once we have those
-    //xarModCallHooks('itemtype', 'delete', $forum['itemtype'],
+    //xarModHooks::call('itemtype', 'delete', $forum['itemtype'],
     //                array('module' => 'crispbb',
     //                      'itemtype' => $forum['itemtype']));
 

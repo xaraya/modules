@@ -26,13 +26,13 @@ function crispbb_admin_categories($args)
     }
 
     extract($args);
-    if (!xarVar::fetch('sublink', 'pre:trim:lower:str:1', $sublink, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sublink', 'pre:trim:lower:str:1', $sublink, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -53,15 +53,15 @@ function crispbb_admin_categories($args)
                 //return $data;
             }
             // Confirm authorisation code.
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             sys::import('modules.dynamicdata.class.properties.master');
             $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
             $isvalid = $picker->checkInput('basecid');
-            xarResponse::Redirect(xarModURL('crispbb', 'admin', 'categories', array('sublink' => 'mastercat')));
+            xarResponse::Redirect(xarController::URL('crispbb', 'admin', 'categories', array('sublink' => 'mastercat')));
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
     }
     $data['menulinks'] = xarMod::apiFunc(
         'crispbb',

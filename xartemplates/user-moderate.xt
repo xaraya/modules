@@ -42,7 +42,7 @@
                     <xar:data-input type="dropdown" name="fid" id="fid" onchange="this.form.submit();" value="$fid" options="$forumoptions" />
                 </form>
             </div>
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <table class="xar-fullwidth xar-alt-outline xar-margin-none">
                     <caption class="xar-fullwidth xar-alt-outline xar-padding-thick">
                         <span class="xar-floatleft">
@@ -72,12 +72,12 @@
                             <xar:if condition="$sort == 'ttitle' and $order == 'ASC'">
                                 <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                             <xar:else />
-                                <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttitle', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttitle', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                             </xar:if>
                             <xar:if condition="$sort == 'ttitle' and $order == 'DESC'">
                                 <img src="#$ondownicon#" alt="down" title="#xarML('Sort DESC')#" />
                             <xar:else />
-                                <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttitle', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttitle', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                             </xar:if>
                         </th>
                         <th>
@@ -85,12 +85,12 @@
                             <xar:if condition="$sort == 'towner' and $order == 'ASC'">
                                 <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                             <xar:else />
-                                <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'towner', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'towner', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                             </xar:if>
                             <xar:if condition="$sort == 'towner' and $order == 'DESC'">
                                 <img src="#$ondownicon#" alt="down" title="#xarML('Sort DESC')#" />
                             <xar:else />
-                                <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'towner', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'towner', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                             </xar:if>
                         </th>
                         <th>
@@ -98,12 +98,12 @@
                             <xar:if condition="$sort == 'ttime' and $order == 'ASC'">
                                 <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                             <xar:else />
-                                <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttime', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttime', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                             </xar:if>
                             <xar:if condition="$sort == 'ttime' and $order == 'DESC'">
                                 <img src="#$ondownicon#" alt="down" title="#xarML('Sort DESC')#" />
                             <xar:else />
-                                <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                             </xar:if>
                         </th>
                         <th class="xar-align-right">Actions</th>
@@ -118,11 +118,11 @@
                                 <a href="#$topic['viewtopicurl']#">#$topic['ttitle']#</a>
                             </td>
                             <td>
-                                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View Profile')#">#$topic['townername']#</a>
+                                <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View Profile')#">#$topic['townername']#</a>
                             </td>
                             <td>
-                                #xarLocaleGetFormattedTime('short', $topic['ttime'])#
-                                #xarLocaleGetFormattedDate('short', $topic['ttime'])#
+                                #xarLocale::getFormattedTime('short', $topic['ttime'])#
+                                #xarLocale::getFormattedDate('short', $topic['ttime'])#
                             </td>
                             <td class="xar-align-right xar-nowrap">
                                 <xar:if condition="!empty($topic['approvetopicurl'])">
@@ -237,13 +237,13 @@
                     <input type="hidden" name="component" id="component" value="topics" />
                     <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                    <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus))#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
+                    <input type="hidden" name="return_url" id="return_url" value="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus))#" />
                     <input type="submit" value="#xarML('Update Topics')#" />
                 </div>
             </form>
         <xar:elseif condition="$modaction eq 'move'" />
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <fieldset>
                     <xar:if condition="!empty($topics)">
                         <div class="xar-form-input-wrapper">
@@ -258,7 +258,7 @@
                     </xar:if>
                     <div class="xar-form-input-wrapper">
                         <label class="xar-form-label">From Forum:</label>
-                        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#">
+                        <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $fid))#">
                         #$fname#
                         </a>
                         <xar:if condition="empty($mergetid)">
@@ -295,7 +295,7 @@
                             <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
                                 <div class="xar-halfwidth xar-floatleft">
                                     Topics In
-                                    <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                                 </div>
                                 <xar:if condition="!empty($pager)">
                                     <div class="xar-align-right xar-floatright xar-halfwidth">
@@ -315,12 +315,12 @@
                                         <xar:if condition="$sort == 'ttitle' and $order == 'ASC'">
                                             <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                                         <xar:else />
-                                            <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                            <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                                         </xar:if>
                                         <xar:if condition="$sort == 'ttitle' and $order == 'DESC'">
                                             <img src="#$ondownicon#" alt="down" title="#xarML('Sort DESC')#" />
                                         <xar:else />
-                                            <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                            <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                         </xar:if>
                                     </th>
                                     <th>
@@ -328,12 +328,12 @@
                                         <xar:if condition="$sort == 'towner' and $order == 'ASC'">
                                             <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                                         <xar:else />
-                                            <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                            <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                                         </xar:if>
                                         <xar:if condition="$sort == 'towner' and $order == 'DESC'">
                                             <img src="#$ondownicon#" alt="down" title="#xarML('Sort DESC')#" />
                                         <xar:else />
-                                            <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                            <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                         </xar:if>
                                     </th>
                                     <th>
@@ -341,12 +341,12 @@
                                         <xar:if condition="$sort == 'ttime' and $order == 'ASC'">
                                             <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                                         <xar:else />
-                                            <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                            <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                                         </xar:if>
                                         <xar:if condition="$sort == 'ttime' and $order == 'DESC'">
                                             <img src="#$ondownicon#" alt="down" title="#xarML('Sort DESC')#" />
                                         <xar:else />
-                                            <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                            <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                         </xar:if>
                                     </th>
                                     <th>Merge</th>
@@ -359,11 +359,11 @@
                                     <tr class="#$rowclass#">
                                         <td><a href="#$ftopic['viewtopicurl']#">#$ftopic['ttitle']#</a></td>
                                         <td>
-                                            <a href="#xarModURL('roles', 'user', 'display', array('uid' => $ftopic['towner']))#" title="#xarML('View Profile')#">#$ftopic['townername']#</a>
+                                            <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $ftopic['towner']))#" title="#xarML('View Profile')#">#$ftopic['townername']#</a>
                                         </td>
                                         <td>
-                                            #xarLocaleGetFormattedTime('short', $ftopic['ttime'])#
-                                            #xarLocaleGetFormattedDate('short', $ftopic['ttime'])#
+                                            #xarLocale::getFormattedTime('short', $ftopic['ttime'])#
+                                            #xarLocale::getFormattedDate('short', $ftopic['ttime'])#
                                         </td>
                                         <td><input type="radio" name="movetid" id="movetid_#$ftopic['tid']#" value="#$ftopic['tid']#" /></td>
                                     </tr>
@@ -379,7 +379,7 @@
                         <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                             <div class="xar-floatleft">
                                 Topics In
-                                <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
+                                <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                             </div>
                             <xar:if condition="!empty($pager)">
                                 <div class="xar-align-right xar-floatright xar-nowrap">
@@ -390,12 +390,12 @@
                         </div>
                     </xar:if>
                     <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="fid" id="fid" value="#$fid#" />
                         <input type="hidden" name="component" id="component" value="topics" />
                         <input type="hidden" name="modaction" id="modaction" value="move" />
-                        <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid))#" />
+                        <input type="hidden" name="return_url" id="return_url" value="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid))#" />
                         <input type="submit" value="#xarML('Move Topic')#" />
                     </div>
                 </fieldset>
@@ -425,11 +425,11 @@
                     </div>
                 </form>
             </div>
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <fieldset>
                     <div class="xar-form-input-wrapper">
                         <label class="xar-form-label">Topic:</label>
-                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
+                        <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid))#">
                         #$ttitle#
                         </a>
                     </div>
@@ -441,7 +441,7 @@
                         </xar:if>
                         <span class="xar-floatleft">
                             #$thisstatus# Replies to
-                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$ttitle#</a>
+                        <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$ttitle#</a>
                         </span>
                         <xar:if condition="!empty($pager)">
                             <span class="xar-align-right xar-floatright xar-nowrap">
@@ -481,13 +481,13 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">
+                                            <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">
                                             #xarUser::getVar('name', $post['powner'])#
                                             </a>
                                         </td>
                                         <td>
-                                            #xarLocaleGetFormattedTime('short', $post['ptime'])#
-                                            #xarLocaleGetFormattedDate('short', $post['ptime'])#
+                                            #xarLocale::getFormattedTime('short', $post['ptime'])#
+                                            #xarLocale::getFormattedDate('short', $post['ptime'])#
                                         </td>
                                         <td class="xar-align-right">
         <xar:if condition="!empty($post['approvetopicurl'])">
@@ -596,7 +596,7 @@
                     <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                         <span class="xar-floatleft">
                             #$thisstatus# Replies to
-                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$ttitle#</a>
+                        <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$ttitle#</a>
                         </span>
                         <xar:if condition="!empty($pager)">
                             <span class="xar-align-right xar-floatright xar-nowrap">
@@ -618,17 +618,17 @@
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="component" id="component" value="posts" />
                         <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                        <input type="hidden" name="return_url" id="return_url" value="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid))#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
+                        <input type="hidden" name="return_url" id="return_url" value="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid))#" />
                         <input type="submit" value="#xarML('Update Posts')#" />
                     </div>
                 </fieldset>
             </form>
         <xar:else />
-        <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+        <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">Topic:</label>
-                <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
+                <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid))#">
                 #$ttitle#
                 </a>
             </div>
@@ -702,7 +702,7 @@
                     <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
                         <div class="xar-halfwidth xar-floatleft">
                             Topics In
-                            <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
+                            <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                         </div>
                         <xar:if condition="!empty($pager)">
                             <div class="xar-align-right xar-floatright xar-halfwidth">
@@ -720,12 +720,12 @@
                                 <xar:if condition="$sort == 'ttitle' and $order == 'ASC'">
                                     <img src="#$upicon#" class="xar-icon-disabled" alt="up" title="#xarML('Sort ASC')#" />
                                 <xar:else />
-                                    <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                                 </xar:if>
                                 <xar:if condition="$sort == 'ttitle' and $order == 'DESC'">
                                     <img src="#$downicon#" class="xar-icon-disabled" alt="down" title="#xarML('Sort DESC')#" />
                                 <xar:else />
-                                    <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttitle', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                 </xar:if>
                             </th>
                             <th>
@@ -733,12 +733,12 @@
                                 <xar:if condition="$sort == 'towner' and $order == 'ASC'">
                                     <img src="#$upicon#" class="xar-icon-disabled" alt="up" title="#xarML('Sort ASC')#" />
                                 <xar:else />
-                                    <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                                 </xar:if>
                                 <xar:if condition="$sort == 'towner' and $order == 'DESC'">
                                     <img src="#$downicon#" class="xar-icon-disabled" alt="down" title="#xarML('Sort DESC')#" />
                                 <xar:else />
-                                    <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'towner', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                 </xar:if>
                             </th>
                             <th>
@@ -746,12 +746,12 @@
                                 <xar:if condition="$sort == 'ttime' and $order == 'ASC'">
                                     <img src="#$upicon#" class="xar-icon-disabled" alt="up" title="#xarML('Sort ASC')#" />
                                 <xar:else />
-                                    <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'ASC'))#"><img src="#$upicon#" alt="up" title="#xarML('Sort ASC')#" /></a>
                                 </xar:if>
                                 <xar:if condition="$sort == 'ttime' and $order == 'DESC'">
                                     <img src="#$downicon#" class="xar-icon-disabled" alt="down" title="#xarML('Sort DESC')#" />
                                 <xar:else />
-                                    <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
+                                    <a href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                 </xar:if>
                             </th>
                             <th>Merge</th>
@@ -764,11 +764,11 @@
                             <tr class="#$rowclass#">
                                 <td><a href="#$ftopic['viewtopicurl']#">#$ftopic['ttitle']#</a></td>
                                 <td>
-                                    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $ftopic['towner']))#" title="#xarML('View Profile')#">#$ftopic['townername']#</a>
+                                    <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $ftopic['towner']))#" title="#xarML('View Profile')#">#$ftopic['townername']#</a>
                                 </td>
                                 <td>
-                                    #xarLocaleGetFormattedTime('short', $ftopic['ttime'])#
-                                    #xarLocaleGetFormattedDate('short', $ftopic['ttime'])#
+                                    #xarLocale::getFormattedTime('short', $ftopic['ttime'])#
+                                    #xarLocale::getFormattedDate('short', $ftopic['ttime'])#
                                 </td>
                                 <td><input type="radio" name="movetid" id="movetid_#$ftopic['tid']#" value="#$ftopic['tid']#" /></td>
                             </tr>
@@ -784,7 +784,7 @@
                 <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                     <div class="xar-floatleft">
                         Topics In
-                        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
+                        <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                     </div>
                     <xar:if condition="!empty($pager)">
                         <div class="xar-align-right xar-floatright xar-nowrap">
@@ -797,7 +797,7 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="component" id="component" value="posts" />
                 <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="modaction" id="modaction" value="split" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />

@@ -37,7 +37,7 @@ function example_user_usermenu($args)
     /* First, lets find out where we are in our logic. If the phase
      * variable is set, we will load the correct page in the loop.
      */
-    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'menu', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -60,7 +60,7 @@ function example_user_usermenu($args)
             /* We also need to set the SecAuthKey, in order to stop hackers from setting user
              * vars off site.
              */
-            $authid = xarSecGenAuthKey('example');
+            $authid = xarSec::genAuthKey('example');
             /* Lets get the value that we want to override from the preferences. Notice that we are
              * xarModUserGetVar and not xarModVars::get so we can grab the overridden value. You do
              * not have to use a user variable for every module var that the module posses, just
@@ -81,12 +81,12 @@ function example_user_usermenu($args)
              * The example module is not setting any user vars at this time, but an example
              * might be the number of items to be displayed per page.
              */
-            if (!xarVar::fetch('itemsperpage', 'int:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('itemsperpage', 'int:1:100', $itemsperpage, '20', xarVar::NOT_REQUIRED)) {
                 return;
             }
 
             /* Confirm authorisation code. */
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -98,7 +98,7 @@ function example_user_usermenu($args)
             /* Redirect back to our form. We could also redirect back to the
              * account page by leaving the array.
              */
-            xarResponse::Redirect(xarModURL(
+            xarResponse::Redirect(xarController::URL(
                 'roles',
                 'user',
                 'account',

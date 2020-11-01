@@ -19,10 +19,10 @@
 function crispbb_admin_view($args)
 {
     extract($args);
-    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'id', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'id', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     $data = array();
@@ -56,7 +56,7 @@ function crispbb_admin_view($args)
     // add links for cats and forums
     $numcats = count($categories);
     $ci = 1;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $userLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');
     $minLevel = 800;
     $secLevels = array();

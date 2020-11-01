@@ -24,21 +24,21 @@
 function crispbb_admin_new($args)
 {
     extract($args);
-    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'enum:form:update', $phase, 'form', xarVar::NOT_REQUIRED)) {
         return;
     }
     // allow return url to be over-ridden
-    if (!xarVar::fetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('returnurl', 'str:1:', $returnurl, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'id', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'id', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     // @CHECKME: is this still needed?
-    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -170,7 +170,7 @@ function crispbb_admin_new($args)
         }
         // only update if both the forum and settings objects are valid
         if ($isvalid && $andvalid) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             $extra = array();
@@ -188,7 +188,7 @@ function crispbb_admin_new($args)
             xarSession::setVar('crispbb_statusmsg', xarML('New forum: fid #(1) created', $fid));
             // if no returnurl specified, return to the modify function for the newly created forum
             if (empty($returnurl)) {
-                $returnurl = xarModURL(
+                $returnurl = xarController::URL(
                     'crispbb',
                     'admin',
                     'modify',
@@ -240,7 +240,7 @@ function crispbb_admin_new($args)
     $item = array();
     $item['module'] = 'crispbb';
     $item['itemtype'] = $itemtype; // All itemtypes
-    $hooks = xarModCallHooks('item', 'new', '', $item);
+    $hooks = xarModHooks::call('item', 'new', '', $item);
 
     // unset category hook (if set)
     if (isset($hooks['categories'])) {
@@ -249,7 +249,7 @@ function crispbb_admin_new($args)
 
     $data['hookoutput'] = !empty($hooks) ? $hooks : '';
     // @CHECKME: what's the correct way to do this?
-    if (xarVar::isCached('Hooks.dynamicdata', 'withupload') || xarModIsHooked('uploads', 'crispbb', $itemtype)) {
+    if (xarVar::isCached('Hooks.dynamicdata', 'withupload') || xarModHooks::isHooked('uploads', 'crispbb', $itemtype)) {
         $data['withupload'] = 1;
     } else {
         $data['withupload'] = 0;

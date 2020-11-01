@@ -198,7 +198,7 @@ function crispbb_userapi_createtopic($args)
         $item['crispsubs_notifycreate'] = false;
     }
 
-    xarModCallHooks('item', 'create', $tid, $item);
+    xarModHooks::call('item', 'create', $tid, $item);
 
     /* create post updated the tracker already
     //let the tracker know this forum was updated

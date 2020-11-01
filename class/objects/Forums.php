@@ -542,7 +542,7 @@ class ForumsList extends DataObjectList
                 'label' => xarML('Modify'),
             );
             if (empty($authid)) {
-                $authid = xarSecGenAuthKey();
+                $authid = xarSec::genAuthKey();
             }
             $itemargs = $urlargs;
             $itemargs['catid'] = isset($data['catid']) ? $data['catid'] : null;

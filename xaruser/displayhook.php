@@ -134,7 +134,7 @@ function crispbb_user_displayhook($args)
             return;
         }
         if (!empty($forum['newtopicurl'])) {
-            $data['newtopicurl'] = xarModURL(
+            $data['newtopicurl'] = xarController::URL(
                 'crispbb',
                 'user',
                 'newtopic',
@@ -144,7 +144,7 @@ function crispbb_user_displayhook($args)
                     'itemtype' => $itemtype,
                     'itemid' => $itemid,
                     //'return_url' => xarServer::getCurrentURL(),
-                    'authid' => xarSecGenAuthKey('crispbb')
+                    'authid' => xarSec::genAuthKey('crispbb')
                 )
             );
         }

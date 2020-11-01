@@ -27,7 +27,7 @@
         <a href="&xar-baseurl;" title="#xarML('Go to site index')#">Home</a>
         </div>
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#">Forum Index</a>
+        <a href="#xarController::URL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#">Forum Index</a>
         </div>
     <xar:else />
         <div class="xar-form-input-wrapper-after">
@@ -37,17 +37,17 @@
 
     <xar:if condition="!empty($catid) and isset($categories[$catid])">
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+        <a href="#xarController::URL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
         </div>
     </xar:if>
     <xar:if condition="!empty($fid) and !empty($fname) and !empty($fdesc)">
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fname#">#$fname#</a>
+        <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fname#">#$fname#</a>
         </div>
     </xar:if>
     <xar:if condition="!empty($tid) and !empty($ttitle)">
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'pid' => $pid))#" title="#$ttitle#">#$ttitle#</a>
+        <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'pid' => $pid))#" title="#$ttitle#">#$ttitle#</a>
         </div>
     </xar:if>
 

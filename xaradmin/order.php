@@ -24,19 +24,19 @@ function crispbb_admin_order($args)
     if (!xarSecurity::check('AdminCrispBB', 0)) {
         return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
     }
-    if (!xarVar::fetch('fid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'int:1', $catid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'int:1', $catid, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -54,7 +54,7 @@ function crispbb_admin_order($args)
         $vars = array(join(', ', $invalid), 'admin', 'order', 'crispBB');
         throw new BadParameterException($vars, $msg);
     }
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
     }
     $forums = DataObjectMaster::getObjectList(array('name' => 'crispbb_forums'));

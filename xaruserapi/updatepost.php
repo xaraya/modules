@@ -170,7 +170,7 @@ function crispbb_userapi_updatepost($args)
     $args['module'] = 'crispbb';
     $args['itemtype'] = $poststype;
     $args['itemid'] = $pid;
-    xarModCallHooks('item', 'update', $pid, $args);
+    xarModHooks::call('item', 'update', $pid, $args);
 
     return true;
 }

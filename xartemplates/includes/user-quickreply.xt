@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="(xarModVars::get('crispbb', 'showquickreply') or !empty($quickreply)) and !empty($newreplyurl)">
-<form method="post" action="#xarModURL('crispbb', 'user', 'newreply')#">
+<form method="post" action="#xarController::URL('crispbb', 'user', 'newreply')#">
     <xar:comment>
     <xar:if condition="!empty($topicdescmax)">
         <div class="xar-form-input-wrapper">
@@ -20,7 +20,7 @@
     <textarea name="ptext" id="ptext" cols="50" rows="8">#$ptext#</textarea>
     </div>
     <div class="xar-form-input-wrapper-after">
-        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
+        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey('crispbb')#" />
         <input type="hidden" name="tid" id="tid" value="#$tid#" />
         <input type="hidden" name="phase" id="phase" value="quickreply" />
         <xar:if condition="!empty($return_url)">

@@ -27,13 +27,13 @@ function crispbb_admin_posters($args)
         return;
     }
 
-    if (!xarVar::fetch('ip', 'str:1', $ip, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ip', 'str:1', $ip, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('uid', 'id', $uid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('uid', 'id', $uid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('startnum', 'int', $startnum, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int', $startnum, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -84,10 +84,10 @@ function crispbb_admin_posters($args)
     if (!empty($uid)) {
         $data['name'] = xarUser::getVar('name', $uid);
     }
-    $data['pager'] = xarTplGetPager(
+    $data['pager'] = xarTplPager::getPager(
         $startnum,
         $totalposters,
-        xarModURL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
+        xarController::URL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
         $numitems
     );
     $pageTitle = xarML('Forum Posters');

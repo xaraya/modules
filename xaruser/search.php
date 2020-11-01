@@ -24,66 +24,66 @@ sys::import('modules.base.class.pager');
 function crispbb_user_search()
 {
     // search args from search hook
-    if (!xarVar::fetch('q', 'isset', $q, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('q', 'isset', $q, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('bool', 'isset', $bool, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('bool', 'isset', $bool, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('author', 'isset', $author, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('startnum', 'int:0', $startnum, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int:0', $startnum, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // crispbb specific args from search form or redirect
-    if (!xarVar::fetch('crispbb_component', 'enum:replies:topics', $component, 'topics', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('crispbb_component', 'enum:replies:topics', $component, 'topics', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_fields', 'list', $searchfields, array(), XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('crispbb_fields', 'list', $searchfields, array(), xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_fids', 'list', $fids, array(), XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('crispbb_fids', 'list', $fids, array(), xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_start', 'int', $starttime, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('crispbb_start', 'int', $starttime, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_end', 'int', $endtime, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('crispbb_end', 'int', $endtime, null, xarVar::DONT_SET)) {
         return;
     }
 
     // search args from redirect
-    if (!xarVar::fetch('towner', 'id', $towner, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('towner', 'id', $towner, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('powner', 'id', $powner, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('powner', 'id', $powner, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('noreplies', 'checkbox', $noreplies, false, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('noreplies', 'checkbox', $noreplies, false, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('unread', 'checkbox', $unread, false, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('unread', 'checkbox', $unread, false, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('latest', 'checkbox', $latest, false, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('latest', 'checkbox', $latest, false, xarVar::DONT_SET)) {
         return;
     }
 
-    if (!xarVar::fetch('start', 'int', $start, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('start', 'int', $start, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('end', 'int', $end, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('end', 'int', $end, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('fid', 'id', $fid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('fid', 'id', $fid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('catid', 'id', $catid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('catid', 'id', $catid, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -149,7 +149,7 @@ function crispbb_user_search()
     }
 
     if (isset($start) && is_numeric($start)) {
-        $starttime = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $start);
+        $starttime = xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $start);
     }
 
     if (empty($starttime)) {
@@ -169,7 +169,7 @@ function crispbb_user_search()
     }
 
     if (isset($end) && is_numeric($end)) {
-        $endtime = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $end);
+        $endtime = xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $end);
     }
 
     if (empty($endtime)) {
@@ -277,11 +277,11 @@ function crispbb_user_search()
             break;
         }
         if (!empty($starttime) && (empty($endtime) || $endtime == $now)) {
-            $condition = 'since ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $starttime);
+            $condition = 'since ' . xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $starttime);
         } elseif (!empty($endtime) && $endtime < $now && (empty($starttime))) {
-            $condition = 'before ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $endtime);
+            $condition = 'before ' . xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $endtime);
         } elseif (!empty($starttime) && !empty($endtime)) {
-            $condition = 'between ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $starttime) . ' and ' . xarLocaleFormatDate("%Y-%m-%d %H:%M:%S", $endtime);
+            $condition = 'between ' . xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $starttime) . ' and ' . xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $endtime);
         }
         if (!empty($condition)) {
             if ($component == 'topics') {
@@ -334,7 +334,7 @@ function crispbb_user_search()
                     if (!empty($tracker)) {
                         $lastreadforum = $tracker->lastRead($item['fid']);
 
-                        $item['unreadurl'] = !empty($item['privs']['readforum']) ? xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
+                        $item['unreadurl'] = !empty($item['privs']['readforum']) ? xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
                         // has topic been updated since this forum was marked read?
                         if ($lastreadforum < $item['ptime']) {
                             // has user read this topic since forum was marked read?
@@ -421,16 +421,16 @@ function crispbb_user_search()
                         $hookitem['itemtype'] = $post['topicstype'];
                         $hookitem['itemid'] = $post['tid'];
                         $hookitem['tid'] = $post['tid'];
-                        $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
-                        $item['hookoutput'] = xarModCallHooks('item', 'display', $post['tid'], $hookitem);
+                        $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
+                        $item['hookoutput'] = xarModHooks::call('item', 'display', $post['tid'], $hookitem);
                     } else {
                         $hookitem = array();
                         $hookitem['module'] = 'crispbb';
                         $hookitem['itemtype'] = $post['poststype'];
                         $hookitem['itemid'] = $post['pid'];
                         $hookitem['pid'] = $post['pid'];
-                        $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
-                        $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
+                        $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
+                        $posthooks = xarModHooks::call('item', 'display', $post['pid'], $hookitem);
                         $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
                         unset($posthooks);
                     }
@@ -498,10 +498,10 @@ function crispbb_user_search()
         }
         $pageargs['component'] = $component;
         $pageargs['startnum'] = '%%';
-        $data['pager'] = xarTplGetPager(
+        $data['pager'] = xarTplPager::getPager(
             $startnum,
             $totalitems,
-            xarModURL('crispbb', 'user', 'search', $pageargs),
+            xarController::URL('crispbb', 'user', 'search', $pageargs),
             $search['numitems']
         );
     }
@@ -519,7 +519,7 @@ function crispbb_user_search()
         $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('noreplies' => true, 'tstatus' => array(0,1,2,4)));
         $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getmenulinks');
         $data['condition'] = xarVar::prepForDisplay(xarML($condition));
-        if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', xarVar::NOT_REQUIRED)) {
             return;
         }
         if (!empty($theme)) {

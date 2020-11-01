@@ -4,7 +4,7 @@
 <xar:if condition="$showusername">
 Welcome back,
 <xar:if condition="$showaccount">
-<a href="#xarModURL('roles', 'user', 'display', array('id' => $id))#">#$name#</a>
+<a href="#xarController::URL('roles', 'user', 'display', array('id' => $id))#">#$name#</a>
 <xar:else />
 <strong>#$name#</strong>
 </xar:if>
@@ -14,8 +14,8 @@ Welcome back,
     <li>
         Last Visit:
         <strong>
-        #xarLocaleGetFormattedTime('short', $lastvisit)#,
-        #xarLocaleGetFormattedDate('medium', $lastvisit)#
+        #xarLocale::getFormattedTime('short', $lastvisit)#,
+        #xarLocale::getFormattedDate('medium', $lastvisit)#
         </strong>
     </li>
     </xar:if>
@@ -23,8 +23,8 @@ Welcome back,
     <li>
         Time Now:
         <strong>
-        #xarLocaleGetFormattedTime('short', time())#,
-        #xarLocaleGetFormattedDate('medium', time())#
+        #xarLocale::getFormattedTime('short', time())#,
+        #xarLocale::getFormattedDate('medium', time())#
         </strong>
     </li>
     </xar:if>
@@ -32,7 +32,7 @@ Welcome back,
     <li>
         Visit Start:
         <strong>
-        #xarLocaleGetFormattedTime('short', $visitstart)#
+        #xarLocale::getFormattedTime('short', $visitstart)#
         </strong>
     </li>
     </xar:if>
@@ -46,12 +46,12 @@ Welcome back,
     </xar:if>
     <xar:if condition="!empty($showwaiting)">
     <li>
-        <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#">Waiting Content</a>
+        <a class="xar-error" href="#xarController::URL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#">Waiting Content</a>
     </li>
     </xar:if>
     <xar:if condition="!empty($showlogout)">
     <li>
-        <a href="#xarModURL('authsystem', 'user', 'logout')#" title="#xarML('Logout')#">Logout</a>
+        <a href="#xarController::URL('authsystem', 'user', 'logout')#" title="#xarML('Logout')#">Logout</a>
     </li>
     </xar:if>
 </ul>

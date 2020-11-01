@@ -55,16 +55,16 @@ function crispbb_adminapi_updateconfighook($args)
 
     $settings = array();
 
-    if (!xarVar::fetch('crispbb_fid', 'id', $settings['fid'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('crispbb_fid', 'id', $settings['fid'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_postsperpage', 'int:0:100', $settings['postsperpage'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('crispbb_postsperpage', 'int:0:100', $settings['postsperpage'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_quickreply', 'checkbox', $settings['quickreply'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('crispbb_quickreply', 'checkbox', $settings['quickreply'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('crispbb_newaction', 'int:0:1', $settings['newaction'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('crispbb_newaction', 'int:0:1', $settings['newaction'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 

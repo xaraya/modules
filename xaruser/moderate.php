@@ -23,28 +23,28 @@
 function crispbb_user_moderate($args)
 {
     extract($args);
-    if (!xarVar::fetch('component', 'enum:topics:posts:waiting', $component, 'topics', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('component', 'enum:topics:posts:waiting', $component, 'topics', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('modaction', 'str', $modaction, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('modaction', 'str', $modaction, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('phase', 'enum:update:form', $phase, 'form', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'enum:update:form', $phase, 'form', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('startnum', 'int', $startnum, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int', $startnum, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('sort', 'enum:ttitle:ttime:towner:ptime:powner:pid', $sort, 'ttime', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'enum:ttitle:ttime:towner:ptime:powner:pid', $sort, 'ttime', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('order', 'enum:ASC:DESC:asc:desc', $order, 'DESC', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('order', 'enum:ASC:DESC:asc:desc', $order, 'DESC', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -80,14 +80,14 @@ function crispbb_user_moderate($args)
             $pageTitle = xarML('Waiting Content');
         break;
         case 'topics':
-            if (!xarVar::fetch('fid', 'id', $fid, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('fid', 'id', $fid, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVar::fetch('tids', 'list', $tids, array(), XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('tids', 'list', $tids, array(), xarVar::NOT_REQUIRED)) {
                 return;
             }
             if ($modaction != 'move') {
-                if (!xarVar::fetch('tstatus', 'int', $tstatus, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('tstatus', 'int', $tstatus, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 $forumoptions = array();
@@ -212,7 +212,7 @@ function crispbb_user_moderate($args)
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         // finally, perform requested action
-                        if (!xarSecConfirmAuthKey()) {
+                        if (!xarSec::confirmAuthKey()) {
                             return;
                         }
                         $seenposters = array();
@@ -296,7 +296,7 @@ function crispbb_user_moderate($args)
                                     }
                                     // ok to let subscribers know about this topic now
                                     if (xarMod::isAvailable('crispsubs')) {
-                                        if (xarModIsHooked('crispsubs', 'crispbb', $topic['topicstype'])) {
+                                        if (xarModHooks::isHooked('crispsubs', 'crispbb', $topic['topicstype'])) {
                                             xarMod::apiFunc(
                                                 'crispsubs',
                                                 'user',
@@ -452,14 +452,14 @@ function crispbb_user_moderate($args)
                         xarSession::setVar('crispbb_return_url', '');
                         if (empty($return_url)) {
                             if (count($seentids) == 1 && $modaction != 'delete' && $modaction != 'purge') {
-                                $return_url = xarModURL(
+                                $return_url = xarController::URL(
                                     'crispbb',
                                     'user',
                                     'display',
                                     array('tid' => $seentids[0])
                                 );
                             } else {
-                                $return_url = xarModURL(
+                                $return_url = xarController::URL(
                                     'crispbb',
                                     'user',
                                     'moderate',
@@ -471,7 +471,7 @@ function crispbb_user_moderate($args)
                     }
                 }
                 if (empty($return_url)) {
-                    xarSession::setVar('crispbb_return_url', xarModURL(
+                    xarSession::setVar('crispbb_return_url', xarController::URL(
                         'crispbb',
                         'user',
                         'moderate',
@@ -496,10 +496,10 @@ function crispbb_user_moderate($args)
                     )
                 );
                 $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'fid' => $fid));
-                $data['pager'] = xarTplGetPager(
+                $data['pager'] = xarTplPager::getPager(
                     $startnum,
                     $data['totaltopics'],
-                    xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems
                 );
                 $modactions = array();
@@ -596,16 +596,16 @@ function crispbb_user_moderate($args)
                 $data['forumoptions'] = $forumoptions;
                 $data['tstatus'] = $tstatus;
             } else {
-                if (!xarVar::fetch('movefid', 'id', $movefid, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('movefid', 'id', $movefid, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVar::fetch('movetid', 'id', $movetid, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('movetid', 'id', $movetid, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVar::fetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('mergetid', 'checkbox', $mergetid, false, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVar::fetch('shadow', 'checkbox', $shadow, false, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('shadow', 'checkbox', $shadow, false, xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 $forumoptions = array();
@@ -725,7 +725,7 @@ function crispbb_user_moderate($args)
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         // finally, perform requested action
-                        if (!xarSecConfirmAuthKey()) {
+                        if (!xarSec::confirmAuthKey()) {
                             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
                         }
 
@@ -849,7 +849,7 @@ function crispbb_user_moderate($args)
                                 return;
                             }
                             if (empty($return_url)) {
-                                $return_url = xarModURL(
+                                $return_url = xarController::URL(
                                     'crispbb',
                                     'user',
                                     'moderate',
@@ -941,7 +941,7 @@ function crispbb_user_moderate($args)
                                 return;
                             }
                             if (empty($return_url)) {
-                                $return_url = xarModURL(
+                                $return_url = xarController::URL(
                                     'crispbb',
                                     'user',
                                     'moderate',
@@ -979,10 +979,10 @@ function crispbb_user_moderate($args)
                             'tstatus' => array(0,1,2,4),
                         )
                     );
-                    $data['pager'] = xarTplGetPager(
+                    $data['pager'] = xarTplPager::getPager(
                         $startnum,
                         $data['fnumtopics'],
-                        xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
+                        xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
                         $numitems
                     );
                 }
@@ -997,16 +997,16 @@ function crispbb_user_moderate($args)
             }
         break;
         case 'posts':
-            if (!xarVar::fetch('tid', 'id', $tid, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('tid', 'id', $tid, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVar::fetch('pids', 'list', $pids, array(), XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('pids', 'list', $pids, array(), xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVar::fetch('pstatus', 'int', $pstatus, 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('pstatus', 'int', $pstatus, 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVar::fetch('layout', 'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('layout', 'enum:list:replies', $layout, 'list', xarVar::NOT_REQUIRED)) {
                 return;
             }
             $data = xarMod::apiFunc(
@@ -1127,7 +1127,7 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
-                        if (!xarSecConfirmAuthKey()) {
+                        if (!xarSec::confirmAuthKey()) {
                             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
                         }
                         $seenposters = array();
@@ -1157,7 +1157,7 @@ function crispbb_user_moderate($args)
                                             'getitemtype',
                                             array('fid' => $post['fid'], 'componenent' => 'topics')
                                         );
-                                        if (xarModIsHooked('crispsubs', 'crispbb', $topicstype)) {
+                                        if (xarModHooks::isHooked('crispsubs', 'crispbb', $topicstype)) {
                                             xarMod::apiFunc(
                                                 'crispsubs',
                                                 'user',
@@ -1270,7 +1270,7 @@ function crispbb_user_moderate($args)
                             return;
                         }
                         if (empty($return_url)) {
-                            $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
+                            $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
                         }
                         return xarResponse::Redirect($return_url);
                     }
@@ -1382,23 +1382,23 @@ function crispbb_user_moderate($args)
                     );
                 $data['sortorders'] = $presets['sortorderoptions'];
                 $data['totalposts'] = xarMod::apiFunc('crispbb', 'user', 'countposts', array('pstatus' => $pstatus, 'tid' => $tid));
-                $data['pager'] = xarTplGetPager(
+                $data['pager'] = xarTplPager::getPager(
                     $startnum,
                     $data['totalposts'],
-                    xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems
                 );
             } else {
-                if (!xarVar::fetch('movefid', 'id', $movefid, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('movefid', 'id', $movefid, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVar::fetch('movetid', 'id', $movetid, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('movetid', 'id', $movetid, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVar::fetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('mergetid', 'checkbox', $mergetid, false, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVar::fetch('ttitle', 'str:1:255', $ttitle, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('ttitle', 'str:1:255', $ttitle, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 $forumoptions = array();
@@ -1522,7 +1522,7 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
-                        if (!xarSecConfirmAuthKey()) {
+                        if (!xarSec::confirmAuthKey()) {
                             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
                         }
 
@@ -1768,9 +1768,9 @@ function crispbb_user_moderate($args)
                         }
                         if (empty($return_url)) {
                             if (!empty($newtid)) {
-                                $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $newtid));
+                                $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $newtid));
                             } else {
-                                $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
+                                $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
                             }
                         }
                         return xarResponse::Redirect($return_url);
@@ -1808,10 +1808,10 @@ function crispbb_user_moderate($args)
                             'tstatus' => array(0,1,2,4),
                         )
                     );
-                    $data['pager'] = xarTplGetPager(
+                    $data['pager'] = xarTplPager::getPager(
                         $startnum,
                         $data['fnumtopics'],
-                        xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
+                        xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
                         $numitems
                     );
                 }

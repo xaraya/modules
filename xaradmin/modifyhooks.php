@@ -23,22 +23,22 @@ function crispbb_admin_modifyhooks($args)
     if (!xarSecurity::check('AdminCrispBB')) {
         return;
     }
-    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'isset', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -72,24 +72,24 @@ function crispbb_admin_modifyhooks($args)
                 $moditem['numlinks'] = $stats['numlinks'];
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
-                //    $moditem['link'] = xarModURL($modinfo['name'],'user','main');
+                //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
                 } else {
                     if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                     //    $moditem['link'] = $mytypes[$itemtype]['url'];
                     } else {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                        //    $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                        //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                     }
                 }
-                $moditem['link'] = xarModURL(
+                $moditem['link'] = xarController::URL(
                     'crispbb',
                     'admin',
                     'modifyhooks',
                     array('modid' => $modid,
                                                    'itemtype' => empty($itemtype) ? null : $itemtype)
                 );
-                $moditem['delete'] = xarModURL(
+                $moditem['delete'] = xarController::URL(
                     'crispbb',
                     'admin',
                     'unlinkhooks',
@@ -101,7 +101,7 @@ function crispbb_admin_modifyhooks($args)
                 $data['numlinks'] += $moditem['numlinks'];
             }
         }
-        $data['delete'] = xarModURL('crispbb', 'admin', 'unlinkhooks');
+        $data['delete'] = xarController::URL('crispbb', 'admin', 'unlinkhooks');
     } else {
         $modinfo = xarMod::getInfo($modid);
         $data['module'] = $modinfo['name'];
@@ -128,7 +128,7 @@ function crispbb_admin_modifyhooks($args)
             //    $data['modlink'] = $mytypes[$itemtype]['url'];
             } else {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
             }
             if (isset($modlist[$modid][$itemtype])) {
                 $stats = $modlist[$modid][$itemtype];
@@ -147,10 +147,10 @@ function crispbb_admin_modifyhooks($args)
         }
 
         if ($numstats < $data['numlinks']) {
-            $data['pager'] = xarTplGetPager(
+            $data['pager'] = xarTplPager::getPager(
                 $startnum,
                 $data['numlinks'],
-                xarModURL(
+                xarController::URL(
                                                 'crispbb',
                                                 'admin',
                                                 'modifyhooks',
@@ -179,7 +179,7 @@ function crispbb_admin_modifyhooks($args)
             )
         );
         $data['topics'] = $topics;
-        $data['unlinkhooksurl'] = xarModURL(
+        $data['unlinkhooksurl'] = xarController::URL(
             'crispbb',
             'admin',
             'unlinkhooks',

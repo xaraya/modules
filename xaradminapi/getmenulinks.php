@@ -16,7 +16,7 @@ function ckeditor_adminapi_getmenulinks()
     $menulinks = array();
 
     if (xarSecurity::check('AdminCKEditor', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+        $menulinks[] = array('url'   => xarController::URL(
             'ckeditor',
             'admin',
             'modifyconfig'
@@ -26,7 +26,7 @@ function ckeditor_adminapi_getmenulinks()
     }
 
     if (xarSecurity::check('AdminCKEditor', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+        $menulinks[] = array('url'   => xarController::URL(
             'ckeditor',
             'admin',
             'overview'

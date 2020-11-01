@@ -17,7 +17,7 @@
             <title>#$announcement['ttitle']#</title>
             <link>#$announcement['viewtopicurl']#</link>
             <author>#$posterlist[$announcement['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$announcement['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$announcement['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
             <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($announcement['tdesc'])# ]]></content:encoded>
             <description>#xarVar::prepForDisplay($announcement['tdesc'])#</description>
@@ -31,7 +31,7 @@
             <title>#$sticky['ttitle']#</title>
             <link>#$sticky['viewtopicurl']#</link>
             <author>#$posterlist[$sticky['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$sticky['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$sticky['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
             <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($sticky['tdesc'])# ]]></content:encoded>
             <description>#xarVar::prepForDisplay($sticky['tdesc'])#</description>
@@ -45,7 +45,7 @@
             <title>#$faq['ttitle']#</title>
             <link>#$faq['viewtopicurl']#</link>
             <author>#$posterlist[$faq['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$faq['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$faq['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
             <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($faq['tdesc'])# ]]></content:encoded>
             <description>#xarVar::prepForDisplay($faq['tdesc'])#</description>
@@ -59,7 +59,7 @@
             <title>#$topic['ttitle']#</title>
             <link>#$topic['viewtopicurl']#</link>
             <author>#$posterlist[$topic['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
             <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($topic['tdesc'])# ]]></content:encoded>
             <description>#xarVar::prepForDisplay($topic['tdesc'])#</description>

@@ -25,13 +25,13 @@ function crispbb_admin_ordercats($args)
         return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
     }
     extract($args);
-    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'crispbb'));
@@ -50,7 +50,7 @@ function crispbb_admin_ordercats($args)
         throw new BadParameterException($vars, $msg);
     }
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
     }
     $cids = array($itemid);
@@ -142,7 +142,7 @@ function crispbb_admin_ordercats($args)
         /*Not working, let's come back to it.
         // TODO allow input transforms
         $description[$cid]['transform'] = array($description);
-        $description[$cid] = xarModCallHooks('item', 'transform-input', 0, $description,
+        $description[$cid] = xarModHooks::call('item', 'transform-input', 0, $description,
                                              'categories', 0);
         */
         // Pass to API

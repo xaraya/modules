@@ -137,7 +137,7 @@ function crispbb_adminapi_update($args)
         }
         if (!$allowed) { // No privs to update forum
             $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-            // $errorMsg['return_url'] = empty($catid) ? xarServer::getBaseURL() : xarModURL('crispbb', 'user', 'main');
+            // $errorMsg['return_url'] = empty($catid) ? xarServer::getBaseURL() : xarController::URL('crispbb', 'user', 'main');
             $errorMsg['type'] = 'NO_PRIVILEGES';
             $errorMsg['pageTitle'] = xarML('No Privileges');
             xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
@@ -296,7 +296,7 @@ function crispbb_adminapi_update($args)
     $args['itemid'] = $fid;
     $args['cids'] = $cids;
     $args['itemtype'] = $itemtype;
-    xarModCallHooks('item', 'update', $fid, $args);
+    xarModHooks::call('item', 'update', $fid, $args);
 
     return true;
 }

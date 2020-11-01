@@ -40,7 +40,7 @@ function crispbb_userapi_dotransforms($args)
         $ignore = array();
     }
 
-    $transhooks = xarModGetHookList('crispbb', 'item', 'transform', $itemtype);
+    $transhooks = xarModHooks::getList('crispbb', 'item', 'transform', $itemtype);
 
     $transformed = array();
 

@@ -18,7 +18,7 @@ function ckeditor_admin_modifyconfig()
     if (!xarSecurity::check('AdminCKEditor')) {
         return;
     }
-    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
 
@@ -29,14 +29,14 @@ function ckeditor_admin_modifyconfig()
         case 'update':
             
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
-            /*if (!xarVar::fetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('ckeditor', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVar::fetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVar::fetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), XARVAR_NOT_REQUIRED)) return;*/
+            /*if (!xarVar::fetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('ckeditor', 'itemsperpage'), xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+            if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), xarVar::NOT_REQUIRED)) return;*/
       
             $pgrconfig = array(
                 'rootPath' => 'str',
@@ -51,7 +51,7 @@ function ckeditor_admin_modifyconfig()
 
             foreach ($pgrconfig as $key => $type) {
                 $setting = 'PGRFileManager_'.$key;
-                if (!xarVar::fetch($setting, $type, ${$setting}, xarModVars::get('ckeditor', $setting), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch($setting, $type, ${$setting}, xarModVars::get('ckeditor', $setting), xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 
@@ -72,12 +72,12 @@ function ckeditor_admin_modifyconfig()
                 ));
             }
     
-            xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
+            xarResponse::Redirect(xarController::URL('ckeditor', 'admin', 'modifyconfig'));
             // Return
             return true;
             break;
 
     }
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

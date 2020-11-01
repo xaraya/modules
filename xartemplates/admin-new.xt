@@ -25,7 +25,7 @@
         <p class="xar-error xar-align-center">You must create a forum category before you can add forums</p>
     <xar:else />
         <h3>Add New Forum</h3>
-        <form method="post" id="crispbb_admin_new" action="#xarModURL('crispbb', 'admin', 'new')#" enctype="#$enctype#">
+        <form method="post" id="crispbb_admin_new" action="#xarController::URL('crispbb', 'admin', 'new')#" enctype="#$enctype#">
             <fieldset>
                 <xar:data-form object="$forum" />
                 <xar:if condition="!empty($hookoutput)">

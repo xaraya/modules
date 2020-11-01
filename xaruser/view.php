@@ -23,29 +23,29 @@ function crispbb_user_view($args)
     if (!xarVar::fetch('fid', 'id', $fid)) {
         return;
     }
-    if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('action', 'enum:read:unread', $action, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'enum:read:unread', $action, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
-    if (!xarVar::fetch('sort', 'str:1', $sortfield, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'str:1', $sortfield, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('order', 'enum:ASC:DESC:asc:desc', $sortorder, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('order', 'enum:ASC:DESC:asc:desc', $sortorder, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('start', 'int:1', $starttime, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('start', 'int:1', $starttime, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('end', 'int:1', $endtime, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('end', 'int:1', $endtime, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('period', 'enum:day:week:month:year:beginning', $period, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('period', 'enum:day:week:month:year:beginning', $period, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -110,7 +110,7 @@ function crispbb_user_view($args)
     );
     $tsortoptions = $presets['topicsortoptions'];
     $topicstype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => $fid, 'component' => 'topics'));
-    if (!xarMod::isAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $topicstype)) {
+    if (!xarMod::isAvailable('ratings') || !xarModHooks::isHooked('ratings', 'crispbb', $topicstype)) {
         unset($tsortoptions['numratings']);
     }
     if (empty($sort) && !empty($sortfield)) {
@@ -319,7 +319,7 @@ function crispbb_user_view($args)
             $unread = false;
 
             if (!empty($tracker)) {
-                $item['unreadurl'] = !empty($privs['readforum']) ? xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
+                $item['unreadurl'] = !empty($privs['readforum']) ? xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
                 // has topic been updated since this forum was marked read?
                 if ($lastreadforum < $item['ptime']) {
                     // has user read this topic since forum was marked read?
@@ -389,8 +389,8 @@ function crispbb_user_view($args)
     $item['module'] = 'crispbb';
     $item['itemtype'] = $data['itemtype'];
     $item['itemid'] = $fid;
-    $item['return_url'] = xarModURL('crispbb', 'user', 'view', array('fid' => $fid, 'startnum' => $startnum));
-    $hooks = xarModCallHooks('item', 'display', $fid, $item);
+    $item['return_url'] = xarController::URL('crispbb', 'user', 'view', array('fid' => $fid, 'startnum' => $startnum));
+    $hooks = xarModHooks::call('item', 'display', $fid, $item);
     $data['hookoutput'] = !empty($hooks) ? $hooks : array();
 
     $data['unanswered'] = xarMod::apiFunc(
@@ -406,10 +406,10 @@ function crispbb_user_view($args)
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
 
     $pagerTpl = $data['numtopics'] > (10*$data['topicsperpage']) ? 'multipage' : 'default';
-    $data['pager'] = xarTplGetPager(
+    $data['pager'] = xarTplPager::getPager(
         $startnum,
         $data['numtopics'] - $numstickies - $numannouncements - $numfaqs,
-        xarModURL('crispbb', 'user', 'view', array('fid' => $fid, 'startnum' => '%%', 'sort' => $sort, 'order' => $order, 'period' => $period)),
+        xarController::URL('crispbb', 'user', 'view', array('fid' => $fid, 'startnum' => '%%', 'sort' => $sort, 'order' => $order, 'period' => $period)),
         $data['topicsperpage'],
         array(),
         $pagerTpl
@@ -420,7 +420,7 @@ function crispbb_user_view($args)
         $pageTitle .= ' - Page '.$pageNumber;
     }
     $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
-    $data['viewstatsurl'] = !empty($privs['readforum']) ? xarModURL('crispbb', 'user', 'stats') : '';
+    $data['viewstatsurl'] = !empty($privs['readforum']) ? xarController::URL('crispbb', 'user', 'stats') : '';
 
     if (!empty($data['modforumurl'])) {
         $modactions = array();
@@ -454,7 +454,7 @@ function crispbb_user_view($args)
             $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
             $unnapproved = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => 2, 'fid' => $fid));
             if (!empty($unnapproved)) {
-                $data['modtopicsurl'] = xarModURL(
+                $data['modtopicsurl'] = xarController::URL(
                     'crispbb',
                     'user',
                     'moderate',
@@ -501,7 +501,7 @@ function crispbb_user_view($args)
             $modactions[] = array('id' => 'delete', 'name' => xarML('Delete'));
             $deleted = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => 5, 'fid' => $fid));
             if (!empty($deleted)) {
-                $data['modtrashcanurl'] = xarModURL(
+                $data['modtrashcanurl'] = xarController::URL(
                     'crispbb',
                     'user',
                     'moderate',
@@ -529,7 +529,7 @@ function crispbb_user_view($args)
     }
 
     xarTPLSetPageTitle(xarVar::prepForDisplay(xarML($pageTitle)));
-    if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($theme)) {

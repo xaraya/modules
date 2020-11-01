@@ -24,9 +24,9 @@ function ckeditor_admin_main()
     $samemodule = $info[0] == $refererinfo[0];
 
     if (xarModVars::get('modules', 'disableoverview') == 0 || $samemodule) {
-        xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'overview'));
+        xarResponse::Redirect(xarController::URL('ckeditor', 'admin', 'overview'));
     } else {
-        xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
+        xarResponse::Redirect(xarController::URL('ckeditor', 'admin', 'modifyconfig'));
     }
     // success
     return true;

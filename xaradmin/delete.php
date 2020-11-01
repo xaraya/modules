@@ -22,17 +22,17 @@ function crispbb_admin_delete($args)
     if (!xarVar::fetch('fid', 'id', $fid)) {
         return;
     }
-    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'enum:form:update', $phase, 'form', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) {
         return;
     }
     // allow return url to be over-ridden
-    if (!xarVar::fetch('return_url', 'str:1:', $data['return_url'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'str:1:', $data['return_url'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -63,12 +63,12 @@ function crispbb_admin_delete($args)
 
     if ($phase == 'update') {
         if ($confirm) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             $data['forum']->deleteItem(array('itemid' => $fid));
             if (empty($data['return_url'])) {
-                $data['return_url'] = xarModURL('crispbb', 'admin', 'view');
+                $data['return_url'] = xarController::URL('crispbb', 'admin', 'view');
             }
             xarResponse::Redirect($data['return_url']);
             return true;

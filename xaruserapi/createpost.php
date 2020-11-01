@@ -130,7 +130,7 @@ function crispbb_userapi_createpost($args)
     $item['itemtype'] = $poststype;
     $item['itemid'] = $pid;
     $item['crispsubs_notifycreate'] = false; // never notify on create post
-    xarModCallHooks('item', 'create', $pid, $item);
+    xarModHooks::call('item', 'create', $pid, $item);
 
     // if this is a submitted post, we don't update the topic or forum just yet
     if ($pstatus == 2) {

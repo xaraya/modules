@@ -20,9 +20,9 @@
 <xar:if condition="empty($timelayout) or $timelayout eq 'default'">
     <xar:if condition="$timestamp ne $now">
         <xar:set name="oneday">60*60*24</xar:set>
-        <xar:set name="today">xarLocaleGetFormattedDate('long', $now)</xar:set>
-        <xar:set name="yesterday">xarLocaleGetFormattedDate('long', $now-$oneday)</xar:set>
-        <xar:set name="compare">xarLocaleGetFormattedDate('long', $timestamp)</xar:set>
+        <xar:set name="today">xarLocale::getFormattedDate('long', $now)</xar:set>
+        <xar:set name="yesterday">xarLocale::getFormattedDate('long', $now-$oneday)</xar:set>
+        <xar:set name="compare">xarLocale::getFormattedDate('long', $timestamp)</xar:set>
         <xar:if condition="$compare eq $today">
             <xar:set name="when">'Today at'</xar:set>
         <xar:elseif condition="$compare eq $yesterday" />
@@ -32,17 +32,17 @@
         </xar:if>
     </xar:if>
     <xar:if condition="!empty($when)">
-        #$when# #xarLocaleGetFormattedTime($timeformat, $timestamp)#
+        #$when# #xarLocale::getFormattedTime($timeformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'timedate'" />
-            #xarLocaleGetFormattedTime($timeformat, $timestamp)#,
-            #xarLocaleGetFormattedDate($dateformat, $timestamp)#
+            #xarLocale::getFormattedTime($timeformat, $timestamp)#,
+            #xarLocale::getFormattedDate($dateformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'datetime'" />
-            #xarLocaleGetFormattedDate($dateformat, $timestamp)#,
-            #xarLocaleGetFormattedTime($timeformat, $timestamp)#
+            #xarLocale::getFormattedDate($dateformat, $timestamp)#,
+            #xarLocale::getFormattedTime($timeformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'timeonly'" />
-        #xarLocaleGetFormattedTime($timeformat, $timestamp)#
+        #xarLocale::getFormattedTime($timeformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'dateonly'" />
-        #xarLocaleGetFormattedDate($dateformat, $timestamp)#
+        #xarLocale::getFormattedDate($dateformat, $timestamp)#
     </xar:if>
 <xar:elseif condition="$timelayout eq 'timesince'" />
     <xar:base-timesince stamp="$timestamp" /> ago

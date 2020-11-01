@@ -26,7 +26,7 @@
             <img src="#xarTPLGetImage('icons/dialog-warning.png', 'base')#" alt="#xarML('dialog-warning')#" />
             Hooks apply to Transform, Display, New, Modify and Delete posts functions
         </p>
-        <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
+        <form method="post" action="#xarController::URL('crispbb', 'admin', 'forumconfig')#">
             <xar:foreach in="$hooksettings" key="$hookmodname" value="$hookconfig">
                 <fieldset>
                     <div class="xar-form-input-wrapper">
@@ -57,7 +57,7 @@
                 <fieldset>
                     <div class="xar-form-input-wrapper-after">
                         <input type="hidden" name="sublink" id="sublink" value="#$sublink#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="submit" value="#xarML('Update Configuration')#" />
                     </div>
@@ -69,7 +69,7 @@
             <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" />
             The following settings will be applied to privileges for new forums added to the system.
         </p>
-        <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
+        <form method="post" action="#xarController::URL('crispbb', 'admin', 'forumconfig')#">
             <fieldset>
                 <table class="xar-fullwidth">
                     <thead>
@@ -128,7 +128,7 @@
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey('crispbb')#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="hidden" name="sublink" id="sublink" value="privileges" />
                     <input type="submit" value="#xarML('Update Configuration')#" />
@@ -141,7 +141,7 @@
         <p>
             <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" /> These settings will be used when a new forum is added to the system.
         </p>
-        <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
+        <form method="post" action="#xarController::URL('crispbb', 'admin', 'forumconfig')#">
             <fieldset>
                 <xar:data-form object="$settings" values="$values" />
                 <!--
@@ -159,7 +159,7 @@
                 </div>
                 -->
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey('crispbb')#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="submit" value="#xarML('Update Configuration')#" />
                 </div>

@@ -102,7 +102,7 @@
         </div>
     <xar:else/>
         <xar:comment>
-        <a href="#xarModURL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
+        <a href="#xarController::URL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
         </xar:comment>
         <div class="xar-form-input-wrapper-before xar-padding-thick">
 

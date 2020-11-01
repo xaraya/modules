@@ -22,16 +22,16 @@
 function crispbb_user_displayreply($args)
 {
     extract($args);
-    if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('action', 'enum:lastreply:unread', $action, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'enum:lastreply:unread', $action, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('pid', 'id', $pid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('pid', 'id', $pid, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -39,7 +39,7 @@ function crispbb_user_displayreply($args)
 
     if ($post == 'NO_PRIVILEGES') {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
+        $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'main');
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
         xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
@@ -145,7 +145,7 @@ function crispbb_user_displayreply($args)
     $item['tid'] = $tid;
     $item['returnurl'] = xarServer::getCurrentURL();
     xarVar::setCached('Hooks.hitcount', 'save', true);
-    $hooks = xarModCallHooks('item', 'display', $tid, $item);
+    $hooks = xarModHooks::call('item', 'display', $tid, $item);
 
     $data['hookoutput'] = !empty($hooks) && is_array($hooks) ? $hooks : array();
 
@@ -183,8 +183,8 @@ function crispbb_user_displayreply($args)
                 $item['topicicon'] = '';
             }
             $item['hookoutput'] = $data['hookoutput'];
-            if (xarModIsHooked('bbcode', 'crispbb', $item['topicstype']) && !empty($data['newreplyurl'])) {
-                $item['quotereplyurl'] = xarModURL('crispbb', 'user', 'newreply', array('tid' => $tid, 'pids' => array($pid => 1)));
+            if (xarModHooks::isHooked('bbcode', 'crispbb', $item['topicstype']) && !empty($data['newreplyurl'])) {
+                $item['quotereplyurl'] = xarController::URL('crispbb', 'user', 'newreply', array('tid' => $tid, 'pids' => array($pid => 1)));
             }
         } else {
             if (!empty($post['topicicon']) && isset($iconlist[$post['topicicon']])) {
@@ -197,16 +197,16 @@ function crispbb_user_displayreply($args)
             $hookitem['itemtype'] = $post['poststype'];
             $hookitem['itemid'] = $post['pid'];
             $hookitem['pid'] = $post['pid'];
-            $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
-            $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
+            $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+            $posthooks = xarModHooks::call('item', 'display', $post['pid'], $hookitem);
             $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
             unset($posthooks);
-            if (xarModIsHooked('bbcode', 'crispbb', $item['poststype']) && !empty($data['newreplyurl'])) {
-                $item['quotereplyurl'] = xarModURL('crispbb', 'user', 'newreply', array('tid' => $tid, 'pids' => array($pid => 1)));
+            if (xarModHooks::isHooked('bbcode', 'crispbb', $item['poststype']) && !empty($data['newreplyurl'])) {
+                $item['quotereplyurl'] = xarController::URL('crispbb', 'user', 'newreply', array('tid' => $tid, 'pids' => array($pid => 1)));
             }
         }
         if ($data['fstatus'] == 0) { // open forum
-            //$item['reporturl'] = xarModURL('crispbb', 'user', 'reportpost', array('pid' => $post['pid']));
+            //$item['reporturl'] = xarController::URL('crispbb', 'user', 'reportpost', array('pid' => $post['pid']));
         }
         $posts[$pid] = $item;
     }
@@ -249,9 +249,9 @@ function crispbb_user_displayreply($args)
     );
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
     /*
-    $data['pager'] = xarTplGetPager($startnum,
+    $data['pager'] = xarTplPager::getPager($startnum,
         $data['totalposts'],
-        xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => '%%')),
+        xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => '%%')),
         $data['postsperpage']);
     */
     if ($data['totalposts'] > $data['postsperpage']) {
@@ -261,7 +261,7 @@ function crispbb_user_displayreply($args)
     $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
     xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
-    $data['viewstatsurl'] = xarModURL('crispbb', 'user', 'stats');
+    $data['viewstatsurl'] = xarController::URL('crispbb', 'user', 'stats');
 
     if (!empty($data['modtopicurl'])) {
         $modactions = array();
@@ -314,7 +314,7 @@ function crispbb_user_displayreply($args)
         $data['modactions'] = $modactions;
         xarSession::setVar('crispbb_return_url', xarServer::getCurrentURL());
     }
-    if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($theme)) {

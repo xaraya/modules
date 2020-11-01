@@ -151,28 +151,28 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
     {
         $data = parent::update($data);
         $vars = array();
-        if (!xarVar::fetch('showusername', 'checkbox', $vars['showusername'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showusername', 'checkbox', $vars['showusername'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showaccount', 'checkbox', $vars['showaccount'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showaccount', 'checkbox', $vars['showaccount'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showtimenow', 'checkbox', $vars['showtimenow'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showtimenow', 'checkbox', $vars['showtimenow'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showwaiting', 'checkbox', $vars['showwaiting'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showwaiting', 'checkbox', $vars['showwaiting'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showlogout', 'checkbox', $vars['showlogout'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('showlogout', 'checkbox', $vars['showlogout'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
         $data['content'] = $vars;

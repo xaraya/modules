@@ -16,7 +16,7 @@ function ckeditor_userapi_getmenulinks()
     $menulinks = array();
 
     if (xarSecurity::check('ViewCKEditor', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+        $menulinks[] = array('url'   => xarController::URL(
             'ckeditor',
             'user',
             'main'

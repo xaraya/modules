@@ -8,7 +8,7 @@
             <title>#$post['ttitle']#</title>
             <link>#$post['viewreplyurl']#</link>
             <author>#$posterlist[$post['powner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$post['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$post['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
             <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($post['ptext'])# ]]></content:encoded>
             <description>#xarVar::prepForDisplay($post['ptext'])#</description>

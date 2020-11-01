@@ -26,16 +26,16 @@ function crispbb_admin_unlinkhooks()
         return;
     }
 
-    if (!xarVar::fetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -74,7 +74,7 @@ function crispbb_admin_unlinkhooks()
         }
         $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $data['menulinks'] = xarMod::apiFunc(
             'crispbb',
             'admin',
@@ -91,7 +91,7 @@ function crispbb_admin_unlinkhooks()
         return $data;
     }
 
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     if (!xarMod::apiFunc(
@@ -105,7 +105,7 @@ function crispbb_admin_unlinkhooks()
     )) {
         return;
     }
-    xarResponse::Redirect(xarModURL(
+    xarResponse::Redirect(xarController::URL(
         'crispbb',
         'admin',
         'modifyhooks',

@@ -28,13 +28,13 @@ function crispbb_admin_deletecat($args)
     extract($args);
 
     $data = array();
-    if (!xarVar::fetch('itemid', 'int:1', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int:1', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $data['return_url'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $data['return_url'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
     // secondary sec check on categories module
@@ -46,12 +46,12 @@ function crispbb_admin_deletecat($args)
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     if ($confirm) {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
         }
         $data['object']->deleteItem(array('itemid' => $data['itemid']));
         if (empty($data['return_url'])) {
-            $data['return_url'] = xarModURL('crispbb', 'admin', 'categories');
+            $data['return_url'] = xarController::URL('crispbb', 'admin', 'categories');
         }
         xarResponse::Redirect($data['return_url']);
         return true;

@@ -141,16 +141,16 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
         $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
 
-        if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('fids', 'list', $vars['fids'], $this->fids, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('fids', 'list', $vars['fids'], $this->fids, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, xarVar::NOT_REQUIRED)) {
             return;
         }
 

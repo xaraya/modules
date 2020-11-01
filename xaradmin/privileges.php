@@ -28,37 +28,37 @@ function crispbb_admin_privileges($args)
         return;
     }
     $now = time();
-    if (!xarVar::fetch('catid', 'str', $catid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'str', $catid, 0, xarVar::NOT_REQUIRED)) {
         return;
     } // empty, 'All', numeric or modulename
-    if (!xarVar::fetch('fid', 'str', $fid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fid', 'str', $fid, 0, xarVar::NOT_REQUIRED)) {
         return;
     } // empty, 'All', numeric
-    if (!xarVar::fetch('apply', 'str', $apply, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('apply', 'str', $apply, false, xarVar::NOT_REQUIRED)) {
         return;
     } // boolean?
-    if (!xarVar::fetch('extpid', 'str', $extpid, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('extpid', 'str', $extpid, '', xarVar::NOT_REQUIRED)) {
         return;
     } // empty, 'All', numeric ?
-    if (!xarVar::fetch('extname', 'str', $extname, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('extname', 'str', $extname, '', xarVar::NOT_REQUIRED)) {
         return;
     } // ?
-    if (!xarVar::fetch('extrealm', 'str', $extrealm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('extrealm', 'str', $extrealm, '', xarVar::NOT_REQUIRED)) {
         return;
     } // ?
-    if (!xarVar::fetch('extmodule', 'str', $extmodule, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('extmodule', 'str', $extmodule, '', xarVar::NOT_REQUIRED)) {
         return;
     } // ?
     if (!xarVar::fetch('extcomponent', 'enum:All:Forum', $extcomponent)) {
         return;
     } // FIXME: is 'Type' needed?
-    if (!xarVar::fetch('extinstance', 'str:1', $extinstance, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('extinstance', 'str:1', $extinstance, '', xarVar::NOT_REQUIRED)) {
         return;
     } // somthing:somthing:somthing or empty
     if (!xarVar::fetch('extlevel', 'str:1', $extlevel)) {
         return;
     }
-    if (!xarVar::fetch('pparentid', 'isset', $pparentid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('pparentid', 'isset', $pparentid, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -105,7 +105,7 @@ function crispbb_admin_privileges($args)
         }
 
         // redirect to the privilege
-        xarResponse::Redirect(xarModURL(
+        xarResponse::Redirect(xarController::URL(
             'privileges',
             'admin',
             'modifyprivilege',
