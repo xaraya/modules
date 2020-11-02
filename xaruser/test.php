@@ -48,13 +48,12 @@ function writeInLog()
 function getUrlContent($url, $loop = 0, $delay = 0)
 {
     $file_contents = "";
-    for($loopCount = 0; $loopCount <= $loop; $loopCount++)
-    {
+    for ($loopCount = 0; $loopCount <= $loop; $loopCount++) {
         $ch = curl_init($url);
         $timeout = 10;
-        curl_setopt ($ch, CURLOPT_URL, $url);
-        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 
         $file_contents = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -69,4 +68,3 @@ function getUrlContent($url, $loop = 0, $delay = 0)
     }
     return $file_contents;
 }
-?>

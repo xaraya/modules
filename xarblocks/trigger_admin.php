@@ -24,26 +24,26 @@ sys::import('modules.scheduler.xarblocks.trigger');
 
 class Scheduler_TriggerBlockAdmin extends Scheduler_TriggerBlock implements iBlock
 {
-/**
- * Modify Function to the Blocks Admin
- * @param $data array containing title,content
- */
+    /**
+     * Modify Function to the Blocks Admin
+     * @param $data array containing title,content
+     */
     public function modify()
     {
         return $this->getContent();
     }
 
-/**
- * Updates the Block config from the Blocks Admin
- * @param $data array containing title,content
- */
+    /**
+     * Updates the Block config from the Blocks Admin
+     * @param $data array containing title,content
+     */
     public function update()
     {
         $vars = array();
-        if(!xarVar::fetch('showstatus',  'checkbox', $vars['showstatus'],  0, xarVar::DONT_SET)) {return;}
+        if (!xarVar::fetch('showstatus', 'checkbox', $vars['showstatus'], 0, xarVar::DONT_SET)) {
+            return;
+        }
         $this->setContent($vars);
         return true;
     }
-
 }
-?>

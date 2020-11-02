@@ -15,14 +15,14 @@
  */
 function scheduler_admin_main()
 {
-    if (!xarSecurity::check('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) {
+        return;
+    }
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
         xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     }
     return true;
 }
-
-?>

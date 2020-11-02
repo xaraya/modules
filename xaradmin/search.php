@@ -15,25 +15,35 @@
  */
 function scheduler_admin_search()
 {
-    if (!xarSecurity::check('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) {
+        return;
+    }
 
     $data = array();
     $data['found'] = array();
 
     $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
     $activemodules = array();
-    foreach ($items as $item) $activemodules[$item['name']] = 1;
+    foreach ($items as $item) {
+        $activemodules[$item['name']] = 1;
+    }
 
     $modules = sys::code().'modules';
     $dh = opendir($modules);
-    if (empty($dh)) return $data;
+    if (empty($dh)) {
+        return $data;
+    }
     while (($dir = readdir($dh)) !== false) {
         if (is_dir($modules . '/' . $dir) && is_dir($modules . '/' . $dir . '/xarschedulerapi')) {
-            if (!isset($activemodules[$dir])) continue;
+            if (!isset($activemodules[$dir])) {
+                continue;
+            }
             $dh2 = opendir($modules . '/' . $dir . '/xarschedulerapi');
-            if (empty($dh2)) continue;
+            if (empty($dh2)) {
+                continue;
+            }
             while (($file = readdir($dh2)) !== false) {
-                if (preg_match('/^(\w+)\.php$/',$file,$matches)) {
+                if (preg_match('/^(\w+)\.php$/', $file, $matches)) {
                     $data['found'][] = array('module' => $dir, // not really, but let's not be difficult
                                              'type' => 'scheduler',
                                              'func' => $matches[1]);
@@ -45,4 +55,3 @@ function scheduler_admin_search()
     closedir($dh);
     return $data;
 }
-?>

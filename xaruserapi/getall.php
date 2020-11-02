@@ -27,13 +27,15 @@ function scheduler_userapi_getall($args)
     
     // We want to get all the fields
     foreach ($object->properties as $key => $value) {
-        if ($value->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) continue;
+        if ($value->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) {
+            continue;
+        }
         $object->properties[$key]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
     }
-    if (isset($args['trigger'])) $object->dataquery->eq('job_trigger', $args['trigger']);
+    if (isset($args['trigger'])) {
+        $object->dataquery->eq('job_trigger', $args['trigger']);
+    }
     $items = $object->getItems();
 
     return $items;
 }
-
-?>

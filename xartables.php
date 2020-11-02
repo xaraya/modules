@@ -25,5 +25,3 @@ function scheduler_xartables()
     $tables['scheduler_jobs'] = xarDB::getPrefix() . '_scheduler_jobs';
     return $tables;
 }
-
-?>

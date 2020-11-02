@@ -19,13 +19,21 @@
 function scheduler_admin_test()
 {
     // Get parameters
-    if (!xarVar::fetch('itemid', 'id', $itemid, 0, xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid', 'id', $itemid, 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
-    if (empty($itemid)) return xarResponse::NotFound();
+    if (empty($itemid)) {
+        return xarResponse::NotFound();
+    }
     
     // Security Check
-    if (!xarSecurity::check('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) {
+        return;
+    }
 
     // Check for confirmation
     if (empty($confirm)) {
@@ -35,7 +43,9 @@ function scheduler_admin_test()
     }
 
     // Confirm Auth Key
-    if (!xarSec::confirmAuthKey()) {return;}
+    if (!xarSec::confirmAuthKey()) {
+        return;
+    }
 
     // Get the job details
     sys::import('modules.dynamicdata.class.objects.master');
@@ -44,14 +54,12 @@ function scheduler_admin_test()
     
     // Run the job
     $result = xarMod::apiFunc(
-                        $job->properties['module']->value,
-                        $job->properties['type']->value,
-                        $job->properties['function']->value
-                            );
+        $job->properties['module']->value,
+        $job->properties['type']->value,
+        $job->properties['function']->value
+    );
                             
     // Go back to the view page
     xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     return true;
 }
-
-?>

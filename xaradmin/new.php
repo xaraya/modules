@@ -16,22 +16,27 @@
  */
 function scheduler_admin_new()
 {
-    if (!xarSecurity::check('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) {
+        return;
+    }
 
-    if (!xarVar::fetch('confirm','isset',$confirm,'',xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('addjob','str',$addjob,'',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm', 'isset', $confirm, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('addjob', 'str', $addjob, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
     
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
 
-    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
+    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/', $addjob, $matches)) {
         $data['object']->properties['module']->value = $matches[1];
         $data['object']->properties['type']->value = $matches[2];
         $data['object']->properties['function']->value = $matches[3];
     }
     
     if (!empty($confirm)) {
-
         $isvalid = $data['object']->checkInput();
 
         /*if ($job_interval == '0c' && !empty($config['crontab'])) {
@@ -40,7 +45,9 @@ function scheduler_admin_new()
         }
         $job['config'] = $config;*/
 
-        if (!$isvalid) {var_dump($data['object']->getInvalids());exit;
+        if (!$isvalid) {
+            var_dump($data['object']->getInvalids());
+            exit;
             xarController::redirect(xarController::URL('scheduler', 'admin', 'new'));
         }
         
@@ -50,4 +57,3 @@ function scheduler_admin_new()
     }
     return $data;
 }
-?>

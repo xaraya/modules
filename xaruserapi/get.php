@@ -38,11 +38,11 @@ function scheduler_userapi_get($args)
         $object->dataquery->eq('type', $type);
         $object->dataquery->eq('function', $func);
         $items = $object->getItems();
-        if (empty($items)) return $items;
+        if (empty($items)) {
+            return $items;
+        }
         $job = current($items);
     }
 
     return $job;
 }
-
-?>

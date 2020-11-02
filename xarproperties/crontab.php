@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Scheduler Module
  *
@@ -20,7 +20,7 @@ class CrontabProperty extends DataProperty
     public $desc = 'Crontab';
     public $reqmodules = array('scheduler');
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->filepath   = 'modules/scheduler/xarproperties';
@@ -55,10 +55,10 @@ class CrontabProperty extends DataProperty
         return $this->validateValue($value);
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = array())
     {
         $value = $this->getValue();
-        if (empty($value)) 
+        if (empty($value)) {
             $this->setValue(array(
                 'minutes' => '',
                 'hours' => '',
@@ -67,7 +67,10 @@ class CrontabProperty extends DataProperty
                 'weekdays' => '',
                 'nextrun' => 0,
             ));
-        if (empty($data['value'])) $data['value'] = $this->getValue();
+        }
+        if (empty($data['value'])) {
+            $data['value'] = $this->getValue();
+        }
         if (!is_array($data['value'])) {
             $this->value = $data['value'];
             $data['value'] = $this->getValue();
@@ -75,10 +78,10 @@ class CrontabProperty extends DataProperty
         return parent::showInput($data);
     }
 
-    public function showOutput(Array $data = array())
+    public function showOutput(array $data = array())
     {
         $value = $this->getValue();
-        if (empty($value)) 
+        if (empty($value)) {
             $this->setValue(array(
                 'minutes' => '',
                 'hours' => '',
@@ -87,7 +90,10 @@ class CrontabProperty extends DataProperty
                 'weekdays' => '',
                 'nextrun' => 0,
             ));
-        if (empty($data['value'])) $data['value'] = $this->getValue();
+        }
+        if (empty($data['value'])) {
+            $data['value'] = $this->getValue();
+        }
         if (!is_array($data['value'])) {
             $this->value = $data['value'];
             $data['value'] = $this->getValue();
@@ -105,14 +111,14 @@ class CrontabProperty extends DataProperty
         $this->value = serialize($value);
     }
     
-    function showHidden(Array $data = array())
+    public function showHidden(array $data = array())
     {
         $data['name']     = !empty($data['name']) ? $data['name'] : $this->propertyprefix . $this->id;
         $data['id']       = !empty($data['id'])   ? $data['id']   : $this->propertyprefix . $this->id;
 
         $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
         $value = $this->getValue();
-        if (empty($value)) 
+        if (empty($value)) {
             $this->setValue(array(
                 'minutes' => '',
                 'hours' => '',
@@ -121,10 +127,11 @@ class CrontabProperty extends DataProperty
                 'weekdays' => '',
                 'nextrun' => 0,
             ));
-        if (empty($data['value'])) $data['value'] = $this->getValue();
+        }
+        if (empty($data['value'])) {
+            $data['value'] = $this->getValue();
+        }
 
         return parent::showHidden($data);
     }
 }
-
-?>

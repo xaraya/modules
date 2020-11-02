@@ -27,24 +27,21 @@ function scheduler_user_main()
 
     $interval = xarModVars::get('scheduler', 'interval');
     if (!empty($interval)) {
-        if (!empty($lastrun) && $lastrun >= $now - $interval )  // Make sure it's been at least five minutes
-        {
+        if (!empty($lastrun) && $lastrun >= $now - $interval) {  // Make sure it's been at least five minutes
             $diff = time() - $lastrun;
             $data['message'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
             return $data;
         }
         // Update the last run time
-        xarModVars::set('scheduler','lastrun',$now);
+        xarModVars::set('scheduler', 'lastrun', $now);
     }
     
-    xarModVars::set('scheduler','running',1);
-    $data['output'] = xarMod::apiFunc('scheduler','user','runjobs');
-    xarModVars::delete('scheduler','running');
+    xarModVars::set('scheduler', 'running', 1);
+    $data['output'] = xarMod::apiFunc('scheduler', 'user', 'runjobs');
+    xarModVars::delete('scheduler', 'running');
     if (xarIsParent('Administrators', xarUser::getVar('uname'))) {
         return $data;
     } else {
         return xarController::$response->NotFound();
     }
 }
-
-?>

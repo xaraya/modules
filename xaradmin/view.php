@@ -16,7 +16,9 @@
  */
 function scheduler_admin_view()
 {
-    if (!xarSecurity::check('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) {
+        return;
+    }
 
     $data = array();
 
@@ -39,7 +41,7 @@ function scheduler_admin_view()
     } else {
         $data['jobs'] = unserialize($jobs);
     }
-    $maxid = xarModVars::get('scheduler','maxjobid');
+    $maxid = xarModVars::get('scheduler', 'maxjobid');
     if (!isset($maxid)) {
         // re-number jobs starting from 1 and save maxid
         $maxid = 0;
@@ -48,16 +50,18 @@ function scheduler_admin_view()
             $maxid++;
             $newjobs[$maxid] = $job;
         }
-        xarModVars::set('scheduler','maxjobid',$maxid);
+        xarModVars::set('scheduler', 'maxjobid', $maxid);
         $serialjobs = serialize($newjobs);
-        xarModVars::set('scheduler','jobs',$serialjobs);
+        xarModVars::set('scheduler', 'jobs', $serialjobs);
         $data['jobs'] = $newjobs;
     }
 
-    if (!xarVar::fetch('addjob','str',$addjob,'',xarVar::NOT_REQUIRED)) return;
-    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
+    if (!xarVar::fetch('addjob', 'str', $addjob, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/', $addjob, $matches)) {
         $maxid++;
-        xarModVars::set('scheduler','maxjobid',$maxid);
+        xarModVars::set('scheduler', 'maxjobid', $maxid);
         $data['jobs'][$maxid] = array(
                                       'module' => $matches[1],
                                       'type' => $matches[2],
@@ -77,10 +81,14 @@ function scheduler_admin_view()
                              'lastrun' => '',
                              'result' => ''
                             );
-    $data['lastrun'] = xarModVars::get('scheduler','lastrun');
+    $data['lastrun'] = xarModVars::get('scheduler', 'lastrun');
 
-    $modules = xarMod::apiFunc('modules', 'admin', 'getlist',
-                             array('filter' => array('AdminCapable' => 1)));
+    $modules = xarMod::apiFunc(
+        'modules',
+        'admin',
+        'getlist',
+        array('filter' => array('AdminCapable' => 1))
+    );
     $data['modules'] = array();
     foreach ($modules as $module) {
         $data['modules'][$module['name']] = $module['displayname'];
@@ -90,10 +98,14 @@ function scheduler_admin_view()
                            'admin' => 'admin',
                            'user' => 'user',
                           );
-    $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
+    $data['intervals'] = xarMod::apiFunc('scheduler', 'user', 'intervals');
 
-    $hooks = xarModHooks::call('module', 'modifyconfig', 'scheduler',
-                             array('module' => 'scheduler'));
+    $hooks = xarModHooks::call(
+        'module',
+        'modifyconfig',
+        'scheduler',
+        array('module' => 'scheduler')
+    );
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -104,4 +116,3 @@ function scheduler_admin_view()
     // Return the template variables defined in this function
     return $data;
 }
-?>

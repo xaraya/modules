@@ -21,74 +21,75 @@ function scheduler_userapi_runjobs($args)
 {
     extract($args);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the IP of the caller
+    # Get the IP of the caller
 #
     $ip = xarServer::getVar('REMOTE_ADDR');
     // Hackish way to convert IPv4 to IPv6
-    if ($ip == "::1") $ip = "127.0.0.1";
+    if ($ip == "::1") {
+        $ip = "127.0.0.1";
+    }
     $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $proxy = $ip;
         $ip = preg_replace('/,.* /', '', $forwarded);
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the current jobs
+    # Get the current jobs
 #
-    if(!empty($itemid)) {
-        $job = xarMod::apiFunc('scheduler','user','get',$args);
+    if (!empty($itemid)) {
+        $job = xarMod::apiFunc('scheduler', 'user', 'get', $args);
 
-        if(empty($job)) {
+        if (empty($job)) {
             return xarML('Invalid job ID');
         }
-        if($job['job_trigger'] != $trigger) {
+        if ($job['job_trigger'] != $trigger) {
             return xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[$job['trigger']], $triggers[$trigger]);
         }
 
         $jobs[$job['id']] = $job;
     } else {
-        $jobs = xarMod::apiFunc('scheduler','user','getall',$args);
+        $jobs = xarMod::apiFunc('scheduler', 'user', 'getall', $args);
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the jobs object for easy updating
+    # Get the jobs object for easy updating
 #
     sys::import('modules.dynamicdata.class.objects.master');
     $jobobject = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# let's run without interruptions for a while :)
+    # let's run without interruptions for a while :)
 #
     @ignore_user_abort(true);
     @set_time_limit(15*60);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Run the jobs: we go through the loop
+    # Run the jobs: we go through the loop
 #
     $log[] = xarML('Starting jobs');
     $hasrun = array();
     foreach ($jobs as $id => $job) {
-
         $jobname = $job['module'] . "_xar" . $job['type'] . "_" . $job['function'];
 
         $log[] = xarML('Starting: ') . $jobname;
         
-        if($job['job_trigger'] == 0) {
+        if ($job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log[] = xarML('Skipped: ') . $jobname;
             continue;
 
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
 # Checks for jobs not called by an external scheduler, such as a scheduler block
 #
-        } elseif($job['job_trigger'] != 1) {
+        } elseif ($job['job_trigger'] != 1) {
             
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
@@ -112,7 +113,7 @@ function scheduler_userapi_runjobs($args)
     
             // if the job already ran, check if we need to run it again
             } else {
-                if (!preg_match('/(\d+)(\w)/',$job['job_interval'],$matches)) {
+                if (!preg_match('/(\d+)(\w)/', $job['job_interval'], $matches)) {
                     $log[] = xarML('invalid interval');
                     continue;
                 }
@@ -168,11 +169,11 @@ function scheduler_userapi_runjobs($args)
                                 $skip = 1; // in fact, this case is already handled above
                             } else {
                                 // run it now, and calculate the next run for this job
-                                $jobs[$id]['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',$job['crontab']);
+                                $jobs[$id]['crontab']['nextrun'] = xarMod::apiFunc('scheduler', 'user', 'nextrun', $job['crontab']);
                             }
                         } else {
                             // run it now, and calculate the next run for this job
-                            $jobs[$id]['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',$job['crontab']);
+                            $jobs[$id]['crontab']['nextrun'] = xarMod::apiFunc('scheduler', 'user', 'nextrun', $job['crontab']);
                         }
                         break;
                 }
@@ -181,12 +182,11 @@ function scheduler_userapi_runjobs($args)
                     continue;
                 }
             }
-# --------------------------------------------------------
+            # --------------------------------------------------------
 #
 # Checks for jobs called by an external scheduler
 #
         } else {
-            
             $sourcetype = $job['source_type'];  // Localhost, IP with or without proxy, host name
             $source = $job['source'];           // IP or host name
 
@@ -249,7 +249,7 @@ function scheduler_userapi_runjobs($args)
             }
         }
 
-        xarModVars::set('scheduler','running.' . $job['id'], 1);
+        xarModVars::set('scheduler', 'running.' . $job['id'], 1);
         if (!xarMod::isAvailable($job['module'])) {
             $log[] = xarML('Skipped: ') . $jobname;
             continue;
@@ -259,7 +259,8 @@ function scheduler_userapi_runjobs($args)
         } else {
             try {
                 $output = xarMod::apiFunc($job['module'], $job['type'], $job['function']);
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+            }
         }
         if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
@@ -273,28 +274,25 @@ function scheduler_userapi_runjobs($args)
         $jobs[$id]['last_run'] = time();
         $hasrun[$id] = $job;
 
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
-# Update this job
+        # Update this job
 #
         $jobobject->setFieldValues($job);
         $jobobject->updateItem(array('itemid' => $job['id']));
         $log[] = xarML('Updated: ') . $jobname;
-
     }
     $log[] = xarML('Done');
 
     // we didn't run anything, so return now
     if (count($hasrun) == 0) {
-        xarModVars::delete('scheduler','running');
+        xarModVars::delete('scheduler', 'running');
         return $log;
     }
 
-// Trick : make sure we're dealing with up-to-date information here,
+    // Trick : make sure we're dealing with up-to-date information here,
 //         because running all those jobs may have taken a while...
 //    xarVar::delCached('Mod.Variables.scheduler', 'jobs');
 
     return $log;
 }
-
-?>

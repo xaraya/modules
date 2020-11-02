@@ -19,8 +19,8 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
     protected $module           = 'scheduler'; // module block type belongs to, if any
     protected $text_type        = 'Scheduler Trigger';  // Block type display name
     protected $text_type_long   = 'Trigger for the scheduler (external trigger is recommended)'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = '';
     protected $contact          = '';
     protected $credits          = '';
@@ -28,26 +28,26 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
     
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
-    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $showstatus          = false;
 
-/**
- * Display func.
- * @param $data array containing title,content
- */
-    function display(Array $data=array())
+    /**
+     * Display func.
+     * @param $data array containing title,content
+     */
+    public function display(array $data=array())
     {
         $vars = $this->getContent();
-/*
-        // check if we have the right trigger
-        $trigger = xarModVars::get('scheduler','trigger');
-        if (empty($trigger) || $trigger != 'block') {
-            $vars['msg'] = xarML('Wrong trigger');
-            return $vars;
-        }
-*/
+        /*
+                // check if we have the right trigger
+                $trigger = xarModVars::get('scheduler','trigger');
+                if (empty($trigger) || $trigger != 'block') {
+                    $vars['msg'] = xarML('Wrong trigger');
+                    return $vars;
+                }
+        */
         // Check when we last ran the scheduler
         $lastrun = xarModVars::get('scheduler', 'lastrun');
         $now = time() + 60; // add some margin here
@@ -66,14 +66,14 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
         @set_time_limit(15*60);
 
         // update the last run time
-        xarModVars::set('scheduler','lastrun',$now - 60); // remove the margin here
-        xarModVars::set('scheduler','running',1);
+        xarModVars::set('scheduler', 'lastrun', $now - 60); // remove the margin here
+        xarModVars::set('scheduler', 'running', 1);
 
-    // TODO: this won't work on NFS-mounted or FAT (Win98) file systems, and ISAPI may do weird things too !
-    //       So we need to find some better way to see if we're really the only ones playing here...
+        // TODO: this won't work on NFS-mounted or FAT (Win98) file systems, and ISAPI may do weird things too !
+        //       So we need to find some better way to see if we're really the only ones playing here...
 
         // let's see if we're the only ones trying to run jobs at this moment
-        $GLOBALS['xarScheduler_LockFileHandle'] = fopen(sys::varpath().'/cache/templates/scheduler.lock','w+');
+        $GLOBALS['xarScheduler_LockFileHandle'] = fopen(sys::varpath().'/cache/templates/scheduler.lock', 'w+');
         if (empty($GLOBALS['xarScheduler_LockFileHandle']) || !flock($GLOBALS['xarScheduler_LockFileHandle'], LOCK_EX | LOCK_NB)) {
             fclose($GLOBALS['xarScheduler_LockFileHandle']);
             if (empty($vars['showstatus'])) {
@@ -110,12 +110,10 @@ function scheduler_triggerblock_runjobs()
     if (!empty($GLOBALS['xarScheduler_BaseDir'])) {
         chdir($GLOBALS['xarScheduler_BaseDir']);
     }
-    $output = xarMod::apiFunc('scheduler','user','runjobs');
+    $output = xarMod::apiFunc('scheduler', 'user', 'runjobs');
 
     // Normally, open files should be closed at the end by PHP anyway, but let's be polite :)
     if (!empty($GLOBALS['xarScheduler_LockFileHandle'])) {
         fclose($GLOBALS['xarScheduler_LockFileHandle']);
     }
 }
-
-?>

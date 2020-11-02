@@ -41,10 +41,8 @@ xarCore::xarInit(xarCore::SYSTEM_ALL);
 $homedir = xarServer::getBaseURL();
 
 // update the last run time
-xarModVars::set('scheduler','lastrun',time());
-xarModVars::set('scheduler','running',1);
+xarModVars::set('scheduler', 'lastrun', time());
+xarModVars::set('scheduler', 'running', 1);
 
 // call the API function to run the jobs
-echo xarMod::apiFunc('scheduler','user','runjobs');
-
-?>
+echo xarMod::apiFunc('scheduler', 'user', 'runjobs');

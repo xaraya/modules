@@ -27,5 +27,3 @@ function scheduler_userapi_triggers()
 
     return $triggers;
 }
-
-?>

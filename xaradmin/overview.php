@@ -17,8 +17,10 @@
  */
 function scheduler_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurity::check('AdminScheduler',0)) return;
+    /* Security Check */
+    if (!xarSecurity::check('AdminScheduler', 0)) {
+        return;
+    }
 
     $data=array();
 
@@ -26,7 +28,5 @@ function scheduler_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTpl::module('scheduler', 'admin', 'main', $data,'main');
+    return xarTpl::module('scheduler', 'admin', 'main', $data, 'main');
 }
-
-?>

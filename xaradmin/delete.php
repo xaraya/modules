@@ -20,11 +20,17 @@
 function scheduler_admin_delete()
 {
     // Get parameters
-    if (!xarVar::fetch('itemid', 'id', $itemid)) return;
-    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid', 'id', $itemid)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     // Security Check
-    if (!xarSecurity::check('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $job = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
@@ -35,13 +41,18 @@ function scheduler_admin_delete()
         $job->getItem(array('itemid' => $itemid));
 
         if (empty($job)) {
-            $msg = xarML('Job #(1) for #(2) function #(3)() in module #(4)',
-                         $itemid, 'admin', 'delete', 'scheduler');
+            $msg = xarML(
+                'Job #(1) for #(2) function #(3)() in module #(4)',
+                $itemid,
+                'admin',
+                'delete',
+                'scheduler'
+            );
             throw new Exception($msg);
         }
 
         $data['authid'] = xarSec::genAuthKey();
-        $data['triggers'] = xarMod::apiFunc('scheduler','user','triggers');
+        $data['triggers'] = xarMod::apiFunc('scheduler', 'user', 'triggers');
         $data['job'] = $job;
         $data['properties'] = $job->properties;
         $data['itemid'] = $itemid;
@@ -49,12 +60,12 @@ function scheduler_admin_delete()
     }
 
     // Confirm Auth Key
-    if (!xarSec::confirmAuthKey()) {return;}
+    if (!xarSec::confirmAuthKey()) {
+        return;
+    }
 
     $job->deleteItem(array('itemid' => $itemid));
     // Pass to API
     xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     return true;
 }
-
-?>

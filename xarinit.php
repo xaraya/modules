@@ -19,9 +19,9 @@ sys::import('xaraya.tableddl');
 
 function scheduler_init()
 {
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Define the table structures
+    # Define the table structures
 #
 
     // Get database information
@@ -33,8 +33,9 @@ function scheduler_init()
         $dbconn->begin();
 
         // *_scheduler_jobs
-        $query = xarDBCreateTable($xartable['scheduler_jobs'],
-                                  array('id' =>          array('type'        => 'integer',
+        $query = xarDBCreateTable(
+            $xartable['scheduler_jobs'],
+            array('id' =>          array('type'        => 'integer',
                                                               'unsigned'    => true,
                                                               'null'        => false,
                                                               'increment'   => true,
@@ -91,7 +92,8 @@ function scheduler_init()
                                                                'default'    => ''),
                                         'crontab' =>      array('type'       => 'text',
                                                                'size'       => 'medium',
-                                                               'null'       => false)));
+                                                               'null'       => false))
+        );
         $dbconn->Execute($query);
 
         $dbconn->commit();
@@ -100,41 +102,43 @@ function scheduler_init()
         throw $e;
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up modvars
+    # Set up modvars
 #
     xarModVars::set('scheduler', 'trigger', 'disabled');
     xarModVars::set('scheduler', 'lastrun', 0);
     xarModVars::set('scheduler', 'items_per_page', 20);
     xarModVars::set('scheduler', 'interval', 5*60);
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Register masks
+    # Register masks
 #
     xarRegisterMask('ManageScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterMask('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Register privileges
+    # Register privileges
 #
-    xarRegisterPrivilege('ManageScheduler','All','scheduler','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminScheduler','All','scheduler','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('ManageScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterPrivilege('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create DD objects
+    # Create DD objects
 #
     // First pull in this module's properties as we use at least one in the objects below
-    PropertyRegistration::importPropertyTypes(false,array('modules/scheduler/xarproperties'));
+    PropertyRegistration::importPropertyTypes(false, array('modules/scheduler/xarproperties'));
 
     $module = 'scheduler';
     $objects = array(
                    'scheduler_jobs',
                      );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
     // Initialisation successful
     return true;
 }
@@ -149,18 +153,25 @@ function scheduler_upgrade($oldversion)
     switch ($oldversion) {
         case '1.0':
             // Code to upgrade from version 1.0 goes here
-            if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
-                               array('modName' => 'scheduler',
-                                     'blockType' => 'trigger'))) return;
+            if (!xarMod::apiFunc(
+                'blocks',
+                'admin',
+                'register_block_type',
+                array('modName' => 'scheduler',
+                                     'blockType' => 'trigger')
+            )) {
+                return;
+            }
             // fall through to the next upgrade
 
+            // no break
         case '1.1.0':
             // fall through to the next upgrade
 
         case '1.2.0':
 
-            $triggers = xarMod::apiFunc('scheduler','user','triggers');
-            $checktypes = xarMod::apiFunc('scheduler','user','sources');
+            $triggers = xarMod::apiFunc('scheduler', 'user', 'triggers');
+            $checktypes = xarMod::apiFunc('scheduler', 'user', 'sources');
 
             // fetch modvars
             $checktype = xarModVars::get('scheduler', 'checktype');
@@ -214,22 +225,22 @@ function scheduler_upgrade($oldversion)
 
                 $query = "INSERT INTO $table
                             VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-                $bindvars = array($id, 
-                                  $trigger, 
-                                  $checktype, 
-                                  $job['lastrun'], 
-                                  $job['interval'], 
-                                  $job['module'], 
-                                  $job['type'], 
-                                  $job['func'], 
-                                  $job['result'], 
+                $bindvars = array($id,
+                                  $trigger,
+                                  $checktype,
+                                  $job['lastrun'],
+                                  $job['interval'],
+                                  $job['module'],
+                                  $job['type'],
+                                  $job['func'],
+                                  $job['result'],
                                   $checkvalue);
-                if(isset($job['config'])) {
+                if (isset($job['config'])) {
                     $bindvars[] = $job['config'];
                 } else {
                     $bindvars[] = '';
                 }
-                $result = $dbconn->Execute($query,$bindvars);
+                $result = $dbconn->Execute($query, $bindvars);
 
                 // create running modvar for each job
                 xarModVars::set('scheduler', 'running.' . $id, 0);
@@ -244,6 +255,7 @@ function scheduler_upgrade($oldversion)
             xarModVars::delete('scheduler', 'running');
             xarModVars::delete('scheduler', 'trigger');
 */
+// no break
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
@@ -259,7 +271,5 @@ function scheduler_upgrade($oldversion)
  */
 function scheduler_delete()
 {
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'scheduler'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'scheduler'));
 }
-
-?>
