@@ -19,8 +19,8 @@ function cacher_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewCacher',0)) {
-        $menulinks[] = array('url'   => xarModURL('cacher',
+    if (xarSecurity::check('ViewCacher',0)) {
+        $menulinks[] = array('url'   => xarController::URL('cacher',
                                                   'user',
                                                   'main'),
                               'title' => xarML(''),

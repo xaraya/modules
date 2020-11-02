@@ -16,9 +16,9 @@
  */
 function cacher_admin_view_files($args)
 {
-    if (!xarSecurityCheck('ManageCacher')) return;
+    if (!xarSecurity::check('ManageCacher')) return;
 
-    if(!xarVarFetch('cache',     'int',  $data['cache'],      0, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('cache',     'int',  $data['cache'],      0, xarVar::NOT_REQUIRED)) {return;}
 
     return $data;
 }
