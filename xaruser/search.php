@@ -555,10 +555,10 @@ function publications_user_search($args)
                 $pager = xarTplPager::getPager(
                     $startnum,
                     xarMod::apiFunc(
-                                            'publications',
-                                            'user',
-                                            'countitems',
-                                            array('cids' => $cids,
+                        'publications',
+                        'user',
+                        'countitems',
+                        array('cids' => $cids,
                                                             'andcids' => $andcids,
                                                             'ptid' => $curptid,
                                                             'owner' => $owner,
@@ -568,7 +568,7 @@ function publications_user_search($args)
                                                             'searchfields' => $fieldlist,
                                                             'searchtype' => $searchtype,
                                                             'search' => $q)
-                                        ),
+                    ),
 
 /* trick : use *this* publications search instead of global search for pager :-)
                                         xarController::URL('search', 'user', 'main',

@@ -729,8 +729,7 @@ class MappedDiff extends Diff
         $to_lines,
         $mapped_from_lines,
         $mapped_to_lines
-    )
-    {
+    ) {
         assert(sizeof($from_lines) == sizeof($mapped_from_lines));
         assert(sizeof($to_lines) == sizeof($mapped_to_lines));
 
