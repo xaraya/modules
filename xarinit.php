@@ -256,12 +256,12 @@ function publications_init()
 
     /*
 
-        if (!xarModRegisterHook('item', 'search', 'GUI',
+        if (!xarModHooks::register('item', 'search', 'GUI',
                                'publications', 'user', 'search')) {
             return false;
         }
 
-        if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
+        if (!xarModHooks::register('item', 'waitingcontent', 'GUI',
                                'publications', 'admin', 'waitingcontent')) {
             return false;
         }
@@ -329,7 +329,7 @@ function publications_init()
     $xartable =& xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
-                             'query'  => xarModURL('publications', 'admin', 'privileges'),
+                             'query'  => xarController::URL('publications', 'admin', 'privileges'),
                              'limit'  => 0
                             )
                     );
