@@ -92,5 +92,3 @@ if (!function_exists('galaxia_execute_activity')) {
         fclose($fp);
     }
 }
-
-?>

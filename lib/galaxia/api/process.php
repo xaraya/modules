@@ -1,5 +1,5 @@
 <?php
-include_once (GALAXIA_LIBRARY.'/common/base.php');
+include_once(GALAXIA_LIBRARY.'/common/base.php');
 /**
  * Workflow process class
  *
@@ -26,7 +26,7 @@ class Process extends Base
      * Construct an object for a process with specified ID
      *
     **/
-    function __construct($id)
+    public function __construct($id)
     {
         parent::__construct();
         $this->getProcess($id);
@@ -44,18 +44,24 @@ class Process extends Base
      * @see Process::SetActiveFlag
      * @todo apply this phpdoc to all three methods.
     **/
-    function activate()   { $this->SetActiveFlag(true);  }
-    function deactivate() { $this->SetActiveFlag(false); }
+    public function activate()
+    {
+        $this->SetActiveFlag(true);
+    }
+    public function deactivate()
+    {
+        $this->SetActiveFlag(false);
+    }
     private function SetActiveFlag($value)
     {
         assert('$value === true or $value===false');
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-        $this->query($query,array($value ? 'y' : 'n',$this->pId));
-        $msg = sprintf(tra('Process %d has been (de)-activated'),$this->pId);
+        $this->query($query, array($value ? 'y' : 'n',$this->pId));
+        $msg = sprintf(tra('Process %d has been (de)-activated'), $this->pId);
         // Object
         $this->active = $value;
-        $this->notify_all(3,$msg);
+        $this->notify_all(3, $msg);
     }
 
     /**
@@ -65,16 +71,19 @@ class Process extends Base
      * the DB and the internal object presentation. Unlike activation, validation
      * is more more complex, as it involves a test against a ruleset.
     **/
-    function invalidate()
+    public function invalidate()
     {
         // Make sure we are inactive
         $this->deactivate();
 
         $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
-        $this->query($query,array('n',$this->pId));
+        $this->query($query, array('n',$this->pId));
         $this->valid = false;
     }
-    function validate() { throw new Exception('Not implemented');}
+    public function validate()
+    {
+        throw new Exception('Not implemented');
+    }
 
     /**
      * Loads a process from the database
@@ -82,8 +91,10 @@ class Process extends Base
     private function getProcess($pId)
     {
         $query = "select * from ".self::tbl('processes')."where `pId`=?";
-        $result = $this->query($query,array($pId));
-        if(!$result->numRows()) return false;
+        $result = $this->query($query, array($pId));
+        if (!$result->numRows()) {
+            return false;
+        }
         $res = $result->fetchRow();
         $this->name = $res['name'];
         $this->description = $res['description'];
@@ -99,23 +110,38 @@ class Process extends Base
      * @todo consider a helper like prepforstore instead of putting it in here.
     **/
     // Process name
-    function getName()    { return $this->name;}
+    public function getName()
+    {
+        return $this->name;
+    }
 
     // Name for filesystem storage
-    function getNormalizedName()
+    public function getNormalizedName()
     {
         return self::normalize($this->getName(), $this->getVersion());
     }
 
     // Version string
-    function getVersion() { return $this->version;}
+    public function getVersion()
+    {
+        return $this->version;
+    }
     // Path to process graph
-    function getGraph()   { return $this->graph;}
+    public function getGraph()
+    {
+        return $this->graph;
+    }
 
     // Process Active?
-    function isActive()   { return $this->active;}
+    public function isActive()
+    {
+        return $this->active;
+    }
     // Process Valid?
-    function isValid ()   { return $this->valid; }
+    public function isValid()
+    {
+        return $this->valid;
+    }
 
     /**
      * Gets information about an activity in this process by name,
@@ -126,12 +152,14 @@ class Process extends Base
      * }
      * @todo not sure why this is here, probably just for the runtime convenience.
     **/
-    function getActivityByName($actname)
+    public function getActivityByName($actname)
     {
         // Get the activity data
         $query = "select * from ".self::tbl('activities')."where `pId`=? and `name`=?";
-        $result = $this->query($query,array($this->pId,$actname));
-        if(!$result->numRows()) return false;
+        $result = $this->query($query, array($this->pId,$actname));
+        if (!$result->numRows()) {
+            return false;
+        }
         $res = $result->fetchRow();
         return $res;
     }
@@ -141,11 +169,11 @@ class Process extends Base
      *
      * @return boolean
     **/
-    function hasActivity($name)
+    public function hasActivity($name)
     {
         $bindvars = array($this->pId, $this->getNormalizedName());
         $query    = "SELECT COUNT(*) FROM ".self::tbl('activities')." WHERE pId=? AND normalized_name=?";
-        return ($this->getOne($query,$bindvars) > 0);
+        return ($this->getOne($query, $bindvars) > 0);
     }
 
     /**
@@ -154,40 +182,40 @@ class Process extends Base
      *
      * @todo consider returning an ActivityList Object
     */
-    function &getActivities()
+    public function &getActivities()
     {
         $query = "select activityId from ".self::tbl('activities')."where pId=?";
         $result = $this->query($query, array($this->pId));
-        $ret = Array();
-        while($res = $result->fetchRow()) {
+        $ret = array();
+        while ($res = $result->fetchRow()) {
             $ret[] = WorkFlowActivity::get($res['activityId']);
         }
         return $ret;
     }
 
-    static function normalize($name, $version = null)
+    public static function normalize($name, $version = null)
     {
-         $name = $name.'_'.$version;
-         return parent::normalize($name);
+        $name = $name.'_'.$version;
+        return parent::normalize($name);
     }
 
-    static function exists($name, $version)
+    public static function exists($name, $version)
     {
         // @todo get rid of this temporary trick to get an object which has a $db
         $dummy = new Base();
-        $name = self::normalize($name,$version);
-        return $dummy->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?",array($name));
+        $name = self::normalize($name, $version);
+        return $dummy->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?", array($name));
     }
 
-    function removeRoles()
+    public function removeRoles()
     {
         $query = "delete from ".self::tbl('roles')." where pId=?";
-        $this->query($query,array($this->pId));
+        $this->query($query, array($this->pId));
         $query = "delete from ".self::tbl('user_roles')." where pId=?";
-        $this->query($query,array($this->pId));
+        $this->query($query, array($this->pId));
     }
 
-    function removeActivity($actId)
+    public function removeActivity($actId)
     {
         $act     = WorkflowActivity::get($actId);
         $actname = $act->getNormalizedName();
@@ -198,11 +226,11 @@ class Process extends Base
 
         // @todo This is activity->removeTransitions
         $query = "select actFromId,actToId from ".self::tbl('transitions')." where actFromId=? or actToId=?";
-        $result = $this->query($query,array($actId, $actId));
-        while($res = $result->fetchRow()) {
+        $result = $this->query($query, array($actId, $actId));
+        while ($res = $result->fetchRow()) {
             // @todo This is activity->removeTransition(from,to)
             $query = "delete from ".self::tbl('transitions')." where actFromId=? and actToId=?";
-            $this->query($query,array($res['actFromId'], $res['actToId']));
+            $this->query($query, array($res['actFromId'], $res['actToId']));
         }
 
         // @todo This is activity->removeRoles
@@ -223,4 +251,3 @@ class Process extends Base
         return true;
     }
 }
-?>

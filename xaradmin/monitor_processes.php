@@ -20,18 +20,26 @@
 function workflow_admin_monitor_processes()
 {
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
 
     // Adapted from tiki-g-monitor_processes.php
     include_once(GALAXIA_LIBRARY.'/processmonitor.php');
 
-    if (!xarVar::fetch('filter_process','int',$data['filter_process'],'',xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('filter_active', 'str',$data['filter_active'], '',xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('filter_valid',  'str',$data['filter_valid'],  '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_process', 'int', $data['filter_process'], '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('filter_active', 'str', $data['filter_active'], '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('filter_valid', 'str', $data['filter_valid'], '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     // Filtering data to be received by request and
     // used to build the where part of a query
@@ -40,9 +48,15 @@ function workflow_admin_monitor_processes()
     $where = '';
     $wheres = array();
 
-    if (!empty($data['filter_active'])) $wheres[] = "isActive='" . $data['filter_active'] . "'";
-    if (!empty($data['filter_valid'])) $wheres[] = "isValid='" . $data['filter_valid'] . "'";
-    if (!empty($data['filter_process'])) $wheres[] = "pId='" . $data['filter_process'] . "'";
+    if (!empty($data['filter_active'])) {
+        $wheres[] = "isActive='" . $data['filter_active'] . "'";
+    }
+    if (!empty($data['filter_valid'])) {
+        $wheres[] = "isValid='" . $data['filter_valid'] . "'";
+    }
+    if (!empty($data['filter_process'])) {
+        $wheres[] = "pId='" . $data['filter_process'] . "'";
+    }
 
     $where = implode(' and ', $wheres);
 
@@ -104,15 +118,15 @@ function workflow_admin_monitor_processes()
     }
     foreach ($items['data'] as $index => $info) {
         if (isset($info['duration'])) {
-            $items['data'][$index]['duration']['min'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']['min']));
-            $items['data'][$index]['duration']['avg'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']['avg']));
-            $items['data'][$index]['duration']['max'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']['max']));
+            $items['data'][$index]['duration']['min'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['min']));
+            $items['data'][$index]['duration']['avg'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['avg']));
+            $items['data'][$index]['duration']['max'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['max']));
             $info['duration']['max'] -= $info['duration']['avg'];
             $info['duration']['avg'] -= $info['duration']['min'];
             $items['data'][$index]['timescale'] = array();
-            $items['data'][$index]['timescale']['max'] = intval( $scale * $info['duration']['max'] );
-            $items['data'][$index]['timescale']['avg'] = intval( $scale * $info['duration']['avg'] );
-            $items['data'][$index]['timescale']['min'] = intval( $scale * $info['duration']['min'] );
+            $items['data'][$index]['timescale']['max'] = intval($scale * $info['duration']['max']);
+            $items['data'][$index]['timescale']['avg'] = intval($scale * $info['duration']['avg']);
+            $items['data'][$index]['timescale']['min'] = intval($scale * $info['duration']['min']);
         }
     }
 
@@ -137,13 +151,11 @@ function workflow_admin_monitor_processes()
 
     $data['mid'] =  'tiki-g-monitor_processes.tpl';
 
-/*        $data['pager'] = xarTplPager::getPager($data['offset'],
-                                           $items['cant'],
-                                           $url,
-                                           $maxRecords);*/
-        $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-        $data['maxRecords'] = $maxRecords;
-        return $data;
+    /*        $data['pager'] = xarTplPager::getPager($data['offset'],
+                                               $items['cant'],
+                                               $url,
+                                               $maxRecords);*/
+    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['maxRecords'] = $maxRecords;
+    return $data;
 }
-
-?>

@@ -20,11 +20,11 @@
 function workflow_userapi_showinstances($args)
 {
     // Security Check
-    if (!xarSecurity::check('ReadWorkflow',0)) {
+    if (!xarSecurity::check('ReadWorkflow', 0)) {
         return '';
     }
 
-// Common setup for Galaxia environment
+    // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
@@ -34,12 +34,12 @@ function workflow_userapi_showinstances($args)
         $user = xarUser::getVar('id');
     }
 
-// TODO: keep track of instances from anonymous visitors via session ?
+    // TODO: keep track of instances from anonymous visitors via session ?
 
     $wheres = array();
     if (!empty($args['status'])) {
         if (strpos($args['status'], ',')) {
-            $statuslist = explode(',',$args['status']);
+            $statuslist = explode(',', $args['status']);
             $wheres[] = "gi.status IN ('" . implode("','", $statuslist) . "')";
         } else {
             $wheres[] = "gi.status='" . $args['status'] . "'";
@@ -47,7 +47,7 @@ function workflow_userapi_showinstances($args)
     }
     if (!empty($args['notstatus'])) {
         if (strpos($args['notstatus'], ',')) {
-            $statuslist = explode(',',$args['notstatus']);
+            $statuslist = explode(',', $args['notstatus']);
             $wheres[] = "gi.status NOT IN ('" . implode("','", $statuslist) . "')";
         } else {
             $wheres[] = "gi.status!='" . $args['notstatus'] . "'";
@@ -89,18 +89,20 @@ function workflow_userapi_showinstances($args)
 
     // filter out instances the user doesn't want to see
     if (xarUser::isLoggedIn()) {
-        $seenlist = xarModUserVars::get('workflow','seenlist');
+        $seenlist = xarModUserVars::get('workflow', 'seenlist');
     } else {
         $seenlist = xarSession::getVar('workflow.seenlist');
     }
     if (!empty($seenlist)) {
-        $seen = explode(';',$seenlist);
+        $seen = explode(';', $seenlist);
     } else {
         $seen = array();
     }
     $tplData['items'] = array();
     foreach ($items['data'] as $index => $info) {
-        if (in_array($info['instanceId'],$seen)) continue;
+        if (in_array($info['instanceId'], $seen)) {
+            continue;
+        }
         $tplData['items'][] = $items['data'][$index];
     }
     if (count($tplData['items']) < 1) {
@@ -126,13 +128,13 @@ function workflow_userapi_showinstances($args)
 
     // field list to show
     if (!empty($args['fieldlist'])) {
-        $tplData['fieldlist'] = explode(',',$args['fieldlist']);
+        $tplData['fieldlist'] = explode(',', $args['fieldlist']);
     }
 
     // action list to show (could be empty here !)
     if (isset($args['actionlist'])) {
         if (!empty($args['actionlist'])) {
-            $tplData['actionlist'] = explode(',',$args['actionlist']);
+            $tplData['actionlist'] = explode(',', $args['actionlist']);
         } else {
             $tplData['actionlist'] = array();
         }
@@ -144,5 +146,3 @@ function workflow_userapi_showinstances($args)
         return xarTpl::module('workflow', 'user', 'showinstances', $tplData);
     }
 }
-
-?>

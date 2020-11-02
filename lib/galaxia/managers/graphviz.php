@@ -86,7 +86,7 @@ class Process_GraphViz
     * @param  array   Attributes of the graph
     * @access public
     */
-    function __construct($directed = true, $attributes = array())
+    public function __construct($directed = true, $attributes = array())
     {
         $this->setDirected($directed);
         $this->setAttributes($attributes);
@@ -96,9 +96,9 @@ class Process_GraphViz
         }
     }
 
-    function set_pid($pid)
+    public function set_pid($pid)
     {
-      $this->pid = $pid;
+        $this->pid = $pid;
     }
 
     /**
@@ -108,7 +108,7 @@ class Process_GraphViz
     *                 This may be one of the formats supported by GraphViz.
     * @access public
     */
-    function image($format = 'png')
+    public function image($format = 'png')
     {
         if ($file = $this->saveParsedGraph()) {
             $outputfile = $file . '.' . $format;
@@ -120,8 +120,8 @@ class Process_GraphViz
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
             @`$command`;
-            $fr = fopen($outputfile2,"r");
-            $map = fread($fr,filesize($outputfile2));
+            $fr = fopen($outputfile2, "r");
+            $map = fread($fr, filesize($outputfile2));
             fclose($fr);
             //@unlink($file);
 
@@ -155,10 +155,9 @@ class Process_GraphViz
         }
     }
 
-    function image_and_map($format = 'png')
+    public function image_and_map($format = 'png')
     {
         if ($file = $this->saveParsedGraph()) {
-
             $outputfile = $file . '.' . $format;
             $outputfile2 = $file . '.' . 'map';
 
@@ -170,7 +169,9 @@ class Process_GraphViz
                 $src = $file;
             }
 
-            if(!isset($this->graph['directed'])) $this->graph['directed']=true;
+            if (!isset($this->graph['directed'])) {
+                $this->graph['directed']=true;
+            }
 
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o $outputfile $src";
@@ -186,7 +187,7 @@ class Process_GraphViz
     }
 
 
-    function map()
+    public function map()
     {
         if ($file = $this->saveParsedGraph()) {
             $outputfile2 = $file . '.' . 'map';
@@ -194,8 +195,8 @@ class Process_GraphViz
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
             @`$command`;
-            $fr = fopen($outputfile2,"r");
-            $map = fread($fr,filesize($outputfile2));
+            $fr = fopen($outputfile2, "r");
+            $map = fread($fr, filesize($outputfile2));
             fclose($fr);
 
             //@unlink($outputfile2);
@@ -211,7 +212,7 @@ class Process_GraphViz
     * @param  array   Title.
     * @access public
     */
-    function addCluster($id, $title)
+    public function addCluster($id, $title)
     {
         $this->graph['clusters'][$id] = $title;
     }
@@ -224,7 +225,7 @@ class Process_GraphViz
     * @param  string  Group of the node.
     * @access public
     */
-    function addNode($name, $attributes = array(), $group = 'default')
+    public function addNode($name, $attributes = array(), $group = 'default')
     {
         $this->graph['nodes'][$group][$name] = $attributes;
     }
@@ -235,7 +236,7 @@ class Process_GraphViz
     * @param  Name of the node to be removed.
     * @access public
     */
-    function removeNode($name, $group = 'default')
+    public function removeNode($name, $group = 'default')
     {
         if (isset($this->graph['nodes'][$group][$name])) {
             unset($this->graph['nodes'][$group][$name]);
@@ -249,7 +250,7 @@ class Process_GraphViz
     * @param  array Attributes of the edge.
     * @access public
     */
-    function addEdge($edge, $attributes = array())
+    public function addEdge($edge, $attributes = array())
     {
         if (is_array($edge)) {
             $from = key($edge);
@@ -260,8 +261,8 @@ class Process_GraphViz
                 $this->graph['edges'][$id] = $edge;
             } else {
                 $this->graph['edges'][$id] = array_merge(
-                  $this->graph['edges'][$id],
-                  $edge
+                    $this->graph['edges'][$id],
+                    $edge
                 );
             }
 
@@ -270,8 +271,8 @@ class Process_GraphViz
                     $this->graph['edgeAttributes'][$id] = $attributes;
                 } else {
                     $this->graph['edgeAttributes'][$id] = array_merge(
-                      $this->graph['edgeAttributes'][$id],
-                      $attributes
+                        $this->graph['edgeAttributes'][$id],
+                        $attributes
                     );
                 }
             }
@@ -284,12 +285,12 @@ class Process_GraphViz
     * @param  array Start and End node of the edge to be removed.
     * @access public
     */
-    function removeEdge($edge)
+    public function removeEdge($edge)
     {
         if (is_array($edge)) {
-              $from = key($edge);
-              $to   = $edge[$from];
-              $id   = $from . '_' . $to;
+            $from = key($edge);
+            $to   = $edge[$from];
+            $id   = $from . '_' . $to;
 
             if (isset($this->graph['edges'][$id])) {
                 unset($this->graph['edges'][$id]);
@@ -307,12 +308,12 @@ class Process_GraphViz
     * @param  array Attributes to be added to the graph.
     * @access public
     */
-    function addAttributes($attributes)
+    public function addAttributes($attributes)
     {
         if (is_array($attributes)) {
             $this->graph['attributes'] = array_merge(
-              $this->graph['attributes'],
-              $attributes
+                $this->graph['attributes'],
+                $attributes
             );
         }
     }
@@ -323,7 +324,7 @@ class Process_GraphViz
     * @param  array Attributes to be set for the graph.
     * @access public
     */
-    function setAttributes($attributes)
+    public function setAttributes($attributes)
     {
         if (is_array($attributes)) {
             $this->graph['attributes'] = $attributes;
@@ -336,7 +337,7 @@ class Process_GraphViz
     * @param  boolean Directed (true) or undirected (false) graph.
     * @access public
     */
-    function setDirected($directed)
+    public function setDirected($directed)
     {
         if (is_bool($directed)) {
             $this->graph['directed'] = $directed;
@@ -349,7 +350,7 @@ class Process_GraphViz
     * @param  string  File to load graph from.
     * @access public
     */
-    function load($file)
+    public function load($file)
     {
         if ($serialized_graph = implode('', @file($file))) {
             $this->graph = unserialize($serialized_graph);
@@ -363,7 +364,7 @@ class Process_GraphViz
     * @return mixed   File the graph was saved to, false on failure.
     * @access public
     */
-    function save($file = '')
+    public function save($file = '')
     {
         $serialized_graph = serialize($this->graph);
 
@@ -387,7 +388,7 @@ class Process_GraphViz
     * @return string  GraphViz markup
     * @access public
     */
-    function parse()
+    public function parse()
     {
         $parsedGraph = "digraph G {\n";
 
@@ -397,64 +398,63 @@ class Process_GraphViz
             }
 
             if (!empty($attributeList)) {
-              $parsedGraph .= implode(',', $attributeList) . ";\n";
+                $parsedGraph .= implode(',', $attributeList) . ";\n";
             }
         }
 
         if (isset($this->graph['nodes'])) {
-            foreach($this->graph['nodes'] as $group => $nodes) {
+            foreach ($this->graph['nodes'] as $group => $nodes) {
                 if ($group != 'default') {
-                  $parsedGraph .= sprintf(
-                    "subgraph \"cluster_%s\" {\nlabel=\"%s\";\n",
-
-                    $group,
-                    isset($this->graph['clusters'][$group]) ? $this->graph['clusters'][$group] : ''
-                  );
+                    $parsedGraph .= sprintf(
+                        "subgraph \"cluster_%s\" {\nlabel=\"%s\";\n",
+                        $group,
+                        isset($this->graph['clusters'][$group]) ? $this->graph['clusters'][$group] : ''
+                    );
                 }
 
-                foreach($nodes as $node => $attributes) {
+                foreach ($nodes as $node => $attributes) {
                     unset($attributeList);
 
-                    foreach($attributes as $key => $value) {
+                    foreach ($attributes as $key => $value) {
                         $attributeList[] = $key . '="' . $value . '"';
                     }
 
                     if (!empty($attributeList)) {
                         $parsedGraph .= sprintf(
-                          "\"%s\" [ %s ];\n",
-                          addslashes(stripslashes($node)),
-                          implode(',', $attributeList)
+                            "\"%s\" [ %s ];\n",
+                            addslashes(stripslashes($node)),
+                            implode(',', $attributeList)
                         );
                     }
                 }
 
                 if ($group != 'default') {
-                  $parsedGraph .= "}\n";
+                    $parsedGraph .= "}\n";
                 }
             }
         }
 
         if (isset($this->graph['edges'])) {
-            foreach($this->graph['edges'] as $label => $node) {
+            foreach ($this->graph['edges'] as $label => $node) {
                 unset($attributeList);
 
                 $from = key($node);
                 $to   = $node[$from];
 
-                foreach($this->graph['edgeAttributes'][$label] as $key => $value) {
+                foreach ($this->graph['edgeAttributes'][$label] as $key => $value) {
                     $attributeList[] = $key . '="' . $value . '"';
                 }
 
                 $parsedGraph .= sprintf(
-                  '"%s" -> "%s"',
-                  addslashes(stripslashes($from)),
-                  addslashes(stripslashes($to))
+                    '"%s" -> "%s"',
+                    addslashes(stripslashes($from)),
+                    addslashes(stripslashes($to))
                 );
 
                 if (!empty($attributeList)) {
                     $parsedGraph .= sprintf(
-                      ' [ %s ]',
-                      implode(',', $attributeList)
+                        ' [ %s ]',
+                        implode(',', $attributeList)
                     );
                 }
 
@@ -473,7 +473,7 @@ class Process_GraphViz
     *                 written, false on failure.
     * @access public
     */
-    function saveParsedGraph($file = '')
+    public function saveParsedGraph($file = '')
     {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
@@ -490,4 +490,3 @@ class Process_GraphViz
         return false;
     }
 }
-?>

@@ -24,32 +24,43 @@
 function workflow_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
     $data = array();
     $data['settings'] = array();
 
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'blocks'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'blocks'));
     $data['module_settings']->getItem();
 
-    $create = xarModVars::get('workflow','default.create');
-    $update = xarModVars::get('workflow','default.update');
-    $delete = xarModVars::get('workflow','default.delete');
+    $create = xarModVars::get('workflow', 'default.create');
+    $update = xarModVars::get('workflow', 'default.update');
+    $delete = xarModVars::get('workflow', 'default.delete');
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
                                          'create' => $create,
                                          'update' => $update,
                                          'delete' => $delete);
 
-    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                   array('hookModName' => 'workflow'));
+    $hookedmodules = xarMod::apiFunc(
+        'modules',
+        'admin',
+        'gethookedmodules',
+        array('hookModName' => 'workflow')
+    );
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
+                $mytypes = xarMod::apiFunc(
+                    $modname,
+                    'user',
+                    'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(), 0);
+                                         array(),
+                    0
+                );
                 foreach ($value as $itemtype => $val) {
                     $create = xarModVars::get('workflow', "$modname.$itemtype.create");
                     if (empty($create)) {
@@ -67,8 +78,8 @@ function workflow_admin_modifyconfig()
                         $type = $mytypes[$itemtype]['label'];
                         $link = $mytypes[$itemtype]['url'];
                     } else {
-                        $type = xarML('type #(1)',$itemtype);
-                        $link = xarController::URL($modname,'user','view',array('itemtype' => $itemtype));
+                        $type = xarML('type #(1)', $itemtype);
+                        $link = xarController::URL($modname, 'user', 'view', array('itemtype' => $itemtype));
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                     'create' => $create,
@@ -88,7 +99,7 @@ function workflow_admin_modifyconfig()
                 if (empty($delete)) {
                     $delete = '';
                 }
-                $link = xarController::URL($modname,'user','main');
+                $link = xarController::URL($modname, 'user', 'main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                     'create' => $create,
                                                     'update' => $update,
@@ -97,9 +108,9 @@ function workflow_admin_modifyconfig()
         }
     }
 
-// Common setup for Galaxia environment
+    // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    include_once (GALAXIA_LIBRARY.'/processmonitor.php');
+    include_once(GALAXIA_LIBRARY.'/processmonitor.php');
 
     // get all start activities that are not interactive
     $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='start' and isInteractive='n'");
@@ -131,11 +142,11 @@ function workflow_admin_modifyconfig()
         }
     }
 
-// We need to keep track of our own set of jobs here, because the scheduler won't know what
-// workflow activities to run when. Other modules will typically have 1 job that corresponds
-// to 1 API function, so they won't need this...
+    // We need to keep track of our own set of jobs here, because the scheduler won't know what
+    // workflow activities to run when. Other modules will typically have 1 job that corresponds
+    // to 1 API function, so they won't need this...
 
-    $serialjobs = xarModVars::get('workflow','jobs');
+    $serialjobs = xarModVars::get('workflow', 'jobs');
     if (!empty($serialjobs)) {
         $data['jobs'] = unserialize($serialjobs);
     } else {
@@ -147,12 +158,16 @@ function workflow_admin_modifyconfig()
                             'result' => '');
 
     if (xarMod::isAvailable('scheduler')) {
-        $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
+        $data['intervals'] = xarMod::apiFunc('scheduler', 'user', 'intervals');
         // see if we have a scheduler job running to execute workflow activities
-        $job = xarMod::apiFunc('scheduler','user','get',
-                             array('module' => 'workflow',
+        $job = xarMod::apiFunc(
+            'scheduler',
+            'user',
+            'get',
+            array('module' => 'workflow',
                                    'type' => 'scheduler',
-                                   'func' => 'activities'));
+                                   'func' => 'activities')
+        );
         if (empty($job) || empty($job['interval'])) {
             $data['interval'] = '';
         } else {
@@ -166,5 +181,3 @@ function workflow_admin_modifyconfig()
     $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
-
-?>

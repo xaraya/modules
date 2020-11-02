@@ -10,27 +10,25 @@ class Logger extends Observer
 {
     private $_filename;
 
-    function __construct($filename)
+    public function __construct($filename)
     {
         $this->_filename = $filename;
-        $fp = fopen($this->_filename,"a");
-        if(!$fp) {
-          trigger_error("Logger cannot append to log file: ".$this->filename,E_USER_WARNING);
+        $fp = fopen($this->_filename, "a");
+        if (!$fp) {
+            trigger_error("Logger cannot append to log file: ".$this->filename, E_USER_WARNING);
         }
-        if($fp) {
-        fclose($fp);
+        if ($fp) {
+            fclose($fp);
         }
-
     }
 
-    function notify($event,$msg)
+    public function notify($event, $msg)
     {
         // Add a line to the log file.
-        $fp = fopen($this->_filename,"a");
+        $fp = fopen($this->_filename, "a");
         $date = date("[d/m/Y h:i:s]");
         $msg=trim($msg);
-        fputs($fp,$date." ".$msg."\n");
+        fputs($fp, $date." ".$msg."\n");
         fclose($fp);
     }
 }
-?>

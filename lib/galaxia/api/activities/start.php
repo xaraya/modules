@@ -12,4 +12,3 @@ class StartActivity extends WorkflowActivity
     protected $type = 'start';
     protected $shape = 'circle';
 }
-?>

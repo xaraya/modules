@@ -1,5 +1,5 @@
 <?php
-include_once (GALAXIA_LIBRARY.'/common/base.php');
+include_once(GALAXIA_LIBRARY.'/common/base.php');
 /**
  * Class modelling a Role within a workflow process
  *
@@ -7,6 +7,4 @@ include_once (GALAXIA_LIBRARY.'/common/base.php');
 **/
 class Role extends Base
 {
-
 }
-?>

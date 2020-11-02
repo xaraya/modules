@@ -9,4 +9,3 @@ class SplitActivity extends WorkflowActivity
     protected $type  = 'split';
     protected $shape = 'triangle';
 }
-?>

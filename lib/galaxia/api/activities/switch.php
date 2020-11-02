@@ -9,4 +9,3 @@ class SwitchActivity extends WorkflowActivity
     protected $type  = 'switch';
     protected $shape = 'diamond';
 }
-?>

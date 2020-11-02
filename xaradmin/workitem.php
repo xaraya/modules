@@ -20,31 +20,33 @@
 function workflow_admin_workitem()
 {
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
-// Common setup for Galaxia environment
+    // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
-// Adapted from tiki-g-view_workitem.php
+    // Adapted from tiki-g-view_workitem.php
 
-include_once (GALAXIA_LIBRARY.'/processmonitor.php');
+    include_once(GALAXIA_LIBRARY.'/processmonitor.php');
 
-if (!isset($_REQUEST['itemId'])) {
-    $tplData['msg'] =  xarML("No item indicated");
+    if (!isset($_REQUEST['itemId'])) {
+        $tplData['msg'] =  xarML("No item indicated");
 
-    return xarTpl::module('workflow', 'admin', 'error', $tplData);
-}
+        return xarTpl::module('workflow', 'admin', 'error', $tplData);
+    }
 
-$wi = $processMonitor->monitor_get_workitem($_REQUEST['itemId']);
-if (is_numeric($wi['user'])) {
-    $wi['user'] = xarUser::getVar('name',$wi['user']);
-}
-$tplData['wi'] =&  $wi;
+    $wi = $processMonitor->monitor_get_workitem($_REQUEST['itemId']);
+    if (is_numeric($wi['user'])) {
+        $wi['user'] = xarUser::getVar('name', $wi['user']);
+    }
+    $tplData['wi'] =&  $wi;
 
-$tplData['stats'] =  $processMonitor->monitor_stats();
+    $tplData['stats'] =  $processMonitor->monitor_stats();
 
-$sameurl_elements = array(
+    $sameurl_elements = array(
     'offset',
     'sort_mode',
     'where',
@@ -52,9 +54,7 @@ $sameurl_elements = array(
     'itemId'
 );
 
-$tplData['mid'] =  'tiki-g-view_workitem.tpl';
+    $tplData['mid'] =  'tiki-g-view_workitem.tpl';
 
     return $tplData;
 }
-
-?>

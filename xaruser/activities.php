@@ -20,18 +20,20 @@
 function workflow_user_activities()
 {
     // Security Check
-    if (!xarSecurity::check('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) {
+        return;
+    }
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
     // Adapted from tiki-g-user_activities.php
-    include_once (GALAXIA_LIBRARY.'/gui.php');
+    include_once(GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
     $user = xarUser::getVar('id');
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
 
     // Filtering data to be received by request and
     // used to build the where part of a query
@@ -44,8 +46,9 @@ function workflow_user_activities()
     if(isset($_REQUEST['filter_active'])&&$_REQUEST['filter_active']) $wheres[]="isActive='".$_REQUEST['filter_active']."'";
     if(isset($_REQUEST['filter_valid'])&&$_REQUEST['filter_valid']) $wheres[]="isValid='".$_REQUEST['filter_valid']."'";
     */
-    if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
+    if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
         $wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";
+    }
 
     $where = implode(' and ', $wheres);
 
@@ -113,24 +116,32 @@ function workflow_user_activities()
                     $maplines = file($mapfile);
                     $map = '';
                     foreach ($maplines as $mapline) {
-                        if (!preg_match('/activityId=(\d+)/',$mapline,$matches)) continue;
+                        if (!preg_match('/activityId=(\d+)/', $mapline, $matches)) {
+                            continue;
+                        }
                         $actid = $matches[1];
-                        if (!isset($actid2item[$actid])) continue;
+                        if (!isset($actid2item[$actid])) {
+                            continue;
+                        }
                         $index = $actid2item[$actid];
                         $item = $tplData['items'][$index];
                         if ($item['instances'] > 0) {
-                            $url = xarController::URL('workflow','user','instances',
-                                             array('filter_process' => $info['pId']));
+                            $url = xarController::URL(
+                                'workflow',
+                                'user',
+                                'instances',
+                                array('filter_process' => $info['pId'])
+                            );
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
                             $map .= $mapline;
                         } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
-                            $url = xarController::URL('workflow','user','run_activity');
+                            $url = xarController::URL('workflow', 'user', 'run_activity');
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $mapline);
                             $map .= $mapline;
                         }
                     }
                     // Darn graphviz does not close the area tags
-                    $map = preg_replace('#<area (.*[^/])>#','<area $1/>',$map);
+                    $map = preg_replace('#<area (.*[^/])>#', '<area $1/>', $map);
 
                     $tplData['graph'] = $graph;
                     $tplData['map'] = $map;
@@ -163,13 +174,11 @@ function workflow_user_activities()
     // Missing variable
     $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
 
-/*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
-                                           $items['cant'],
-                                           $url,
-                                           $maxRecords);*/
-        $tplData['maxRecords'] = $maxRecords;
-        $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-        return $tplData;
+    /*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
+                                               $items['cant'],
+                                               $url,
+                                               $maxRecords);*/
+    $tplData['maxRecords'] = $maxRecords;
+    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    return $tplData;
 }
-
-?>

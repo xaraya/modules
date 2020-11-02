@@ -6,7 +6,6 @@ include_once(GALAXIA_LIBRARY.'/api/activity.php');
  **/
 class StandardActivity extends WorkflowActivity
 {
-      protected $type  = 'activity';
-      protected $shape = 'box';
+    protected $type  = 'activity';
+    protected $shape = 'box';
 }
-?>

@@ -21,26 +21,30 @@ function workflow_userapi_getmenulinks()
 {
     $menulinks = array();
 
-// Security Check
-    if (xarSecurity::check('ReadWorkflow',0)) {
-        $menulinks[] = Array('url'   => xarController::URL('workflow',
-                                                  'user',
-                                                  'processes'),
+    // Security Check
+    if (xarSecurity::check('ReadWorkflow', 0)) {
+        $menulinks[] = array('url'   => xarController::URL(
+            'workflow',
+            'user',
+            'processes'
+        ),
                               'title' => xarML('View your workflow processes'),
                               'label' => xarML('View Processes'));
-        $menulinks[] = Array('url'   => xarController::URL('workflow',
-                                                  'user',
-                                                  'activities'),
+        $menulinks[] = array('url'   => xarController::URL(
+            'workflow',
+            'user',
+            'activities'
+        ),
                               'title' => xarML('View your workflow activities'),
                               'label' => xarML('View Activities'));
-        $menulinks[] = Array('url'   => xarController::URL('workflow',
-                                                  'user',
-                                                  'instances'),
+        $menulinks[] = array('url'   => xarController::URL(
+            'workflow',
+            'user',
+            'instances'
+        ),
                               'title' => xarML('View your workflow instances'),
                               'label' => xarML('View Instances'));
     }
 
     return $menulinks;
 }
-
-?>

@@ -20,7 +20,7 @@
 function workflow_userapi_showactivity($args)
 {
     // Security Check
-    if (!xarSecurity::check('ReadWorkflow',0)) {
+    if (!xarSecurity::check('ReadWorkflow', 0)) {
         return '';
     }
 
@@ -28,7 +28,7 @@ function workflow_userapi_showactivity($args)
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
-    include (GALAXIA_LIBRARY.'/api.php');
+    include(GALAXIA_LIBRARY.'/api.php');
 
     if (empty($args['activityId'])) {
         return xarML("No activity found");
@@ -56,8 +56,11 @@ function workflow_userapi_showactivity($args)
     if ($activity->isInteractive()) {
         // TODO: revisit this when roles/users is clearer
         $canrun = false;
-        foreach ($act_roles as $candidate)
-            if (in_array($candidate["roleId"], $user_roles)) $canrun = true;
+        foreach ($act_roles as $candidate) {
+            if (in_array($candidate["roleId"], $user_roles)) {
+                $canrun = true;
+            }
+        }
         if (!$canrun) {
             return xarML("You can't execute this activity");
         }
@@ -85,10 +88,10 @@ function workflow_userapi_showactivity($args)
     // $process, $activity, $instance (if not standalone)
 
     // Include the shared code
-    include_once ($shared);
+    include_once($shared);
 
     // Now do whatever you have to do in the activity
-    include_once ($source);
+    include_once($source);
 
     // This goes to the end part of all activities
     // If this activity is interactive then we have to display the template
@@ -118,4 +121,3 @@ function workflow_userapi_showactivity($args)
         return '';
     }
 }
-?>

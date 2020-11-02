@@ -24,19 +24,22 @@
 */
 function workflow_userapi_getInstance($args)
 {
-
     sys::import('modules.workflow.lib.galaxia.config');
 
     //make sure this user an access this instance
-    if (!xarSecurity::check('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) {
+        return;
+    }
 
     extract($args);
 
     //if not instance is set send this back we cannon continue
-    if(!isset($instanceId)) return;
+    if (!isset($instanceId)) {
+        return;
+    }
 
     //check to see if this hasn't alredy been done
-    if(!function_exists("getInstance")){
+    if (!function_exists("getInstance")) {
         include_once(GALAXIA_LIBRARY.'/api.php');
     }
 
@@ -45,5 +48,3 @@ function workflow_userapi_getInstance($args)
 
     return $inst;
 }
-
-?>

@@ -47,9 +47,9 @@ function workflow_userapi_findinstances($args)
     if (!empty($max_started)) {
         $wheres[] = "gi.started <= " . $max_started;
     }
-        if (!empty($activityName) && !empty($processName)) {
-                $wheres[] = "ga.name = '" . $activityName . "' AND gp.name = '".$processName."'";
-        }
+    if (!empty($activityName) && !empty($processName)) {
+        $wheres[] = "ga.name = '" . $activityName . "' AND gp.name = '".$processName."'";
+    }
 
     $where = implode(' and ', $wheres);
 
@@ -61,5 +61,3 @@ function workflow_userapi_findinstances($args)
         return array();
     }
 }
-
-?>

@@ -11,4 +11,3 @@ class StandaloneActivity extends WorkflowActivity
     protected $type  = 'standalone';
     protected $shape = 'hexagon';
 }
-?>

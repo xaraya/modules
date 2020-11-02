@@ -12,9 +12,9 @@ class Base extends Observable
     public $num_queries = 0;
 
     // Constructor receiving a ADODB database object.
-    function __construct($db=null)
+    public function __construct($db=null)
     {
-        if(!$db) {
+        if (!$db) {
             // Try to save the day
             global $dbGalaxia;
             if (!isset($dbGalaxia)) {
@@ -28,35 +28,39 @@ class Base extends Observable
     }
 
     // copied from tikilib.php
-    function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true)
+    public function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true)
     {
         $this->convert_query($query);
-        if ($numrows == -1 && $offset == -1)
-            $result = $this->db->Execute($query, $values,GALAXIA_FETCHMODE);
-        else
-            $result = $this->db->SelectLimit($query, $numrows, $offset, $values,GALAXIA_FETCHMODE);
-        if (!$result && $reporterrors)
+        if ($numrows == -1 && $offset == -1) {
+            $result = $this->db->Execute($query, $values, GALAXIA_FETCHMODE);
+        } else {
+            $result = $this->db->SelectLimit($query, $numrows, $offset, $values, GALAXIA_FETCHMODE);
+        }
+        if (!$result && $reporterrors) {
             $this->sql_error($query, $values, $result);
+        }
         $this->num_queries++;
         return $result;
     }
 
-    function getOne($query, $values = null, $reporterrors = true)
+    public function getOne($query, $values = null, $reporterrors = true)
     {
         $this->convert_query($query);
-        $result = $this->db->SelectLimit($query, 1, 0,$values,GALAXIA_FETCHMODE);
-        if (!$result && $reporterrors)
+        $result = $this->db->SelectLimit($query, 1, 0, $values, GALAXIA_FETCHMODE);
+        if (!$result && $reporterrors) {
             $this->sql_error($query, $values, $result);
+        }
 
         $res = $result->fetchRow();
         $this->num_queries++;
-        if ($res === false)
-            return (NULL); //simulate pears behaviour
+        if ($res === false) {
+            return (null);
+        } //simulate pears behaviour
         list($key, $value) = each($res);
         return $value;
     }
 
-    function sql_error($query, $values, $result)
+    public function sql_error($query, $values, $result)
     {
         global $ADODB_LASTDB;
 
@@ -67,7 +71,7 @@ class Base extends Observable
     }
 
     // functions to support DB abstraction
-    function convert_query(&$query)
+    public function convert_query(&$query)
     {
         global $ADODB_LASTDB;
 
@@ -89,7 +93,7 @@ class Base extends Observable
         }
     }
 
-    function convert_sortmode($sort_mode)
+    public function convert_sortmode($sort_mode)
     {
         global $ADODB_LASTDB;
 
@@ -113,7 +117,7 @@ class Base extends Observable
         return $sort_mode;
     }
 
-    function convert_binary()
+    public function convert_binary()
     {
         global $ADODB_LASTDB;
 
@@ -130,25 +134,23 @@ class Base extends Observable
         }
     }
 
-    function qstr($string, $quoted = null)
+    public function qstr($string, $quoted = null)
     {
         if (!isset($quoted)) {
             $quoted = get_magic_quotes_gpc();
         }
-        return $this->db->qstr($string,$quoted);
+        return $this->db->qstr($string, $quoted);
     }
 
-    static function tbl($tbl)
+    public static function tbl($tbl)
     {
         return ' `'.GALAXIA_TABLE_PREFIX.$tbl.'` ';
     }
 
-    static function normalize($name, $version = null)
+    public static function normalize($name, $version = null)
     {
-        $name = str_replace(" ","_",$name);
-        $name = preg_replace("/[^0-9A-Za-z\_]/",'',$name);
+        $name = str_replace(" ", "_", $name);
+        $name = preg_replace("/[^0-9A-Za-z\_]/", '', $name);
         return $name;
     }
 } //end of class
-
-?>

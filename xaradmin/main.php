@@ -23,11 +23,11 @@
 function workflow_admin_main()
 {
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
-        xarResponse::Redirect(xarController::URL('workflow', 'admin', 'processes'));
+    xarResponse::Redirect(xarController::URL('workflow', 'admin', 'processes'));
     // success
     return true;
 }
-
-?>

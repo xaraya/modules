@@ -13,10 +13,8 @@ class BaseManager extends Base
     /**
      * @todo This doesn't belong here
     **/
-    function get_error()
+    public function get_error()
     {
         return $this->error;
     }
 } //end of class
-
-?>

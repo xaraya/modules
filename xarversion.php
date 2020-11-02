@@ -34,4 +34,3 @@ $modversion['dependencyinfo'] = array(
                                             'version_le' => '2.1.99',
                                          ),
                                       );
-?>

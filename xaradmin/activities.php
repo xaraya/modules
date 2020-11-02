@@ -21,7 +21,9 @@ sys::import('modules.workflow.lib.galaxia.api');
 function workflow_admin_activities()
 {
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -45,8 +47,9 @@ function workflow_admin_activities()
 
     // Retrieve activity info if we are editing, assign to
     // default values when creating a new activity
-    if (!isset($_REQUEST['activityId']))
+    if (!isset($_REQUEST['activityId'])) {
         $_REQUEST['activityId'] = 0;
+    }
 
     if ($_REQUEST["activityId"]) {
         $act  = WorkFlowActivity::get($_REQUEST['activityId']);
@@ -57,7 +60,6 @@ function workflow_admin_activities()
                       'isAutoRouted'    => $act->isAutoRouted() ? 'y' :'n',
                       'type'            => $act->getType()
                       );
-
     } else {
         $info = array('name' => '',
                       'description' => '',
@@ -127,8 +129,9 @@ function workflow_admin_activities()
         $act = WorkFlowActivity::get($newaid);
 
         $rid = 0;
-        if (isset($_REQUEST['userole']) && $_REQUEST['userole'])
+        if (isset($_REQUEST['userole']) && $_REQUEST['userole']) {
             $rid = $_REQUEST['userole'];
+        }
 
         if (!empty($_REQUEST['rolename'])) {
             $vars = array('name' => $_REQUEST['rolename'],
@@ -181,9 +184,15 @@ function workflow_admin_activities()
     $where = '';
     if (isset($_REQUEST['filter'])) {
         $wheres = array();
-        if ($_REQUEST['filter_type'])        $wheres[] = " type='" . $_REQUEST['filter_type'] . "'";
-        if ($_REQUEST['filter_interactive']) $wheres[] = " isInteractive='" . $_REQUEST['filter_interactive'] . "'";
-        if ($_REQUEST['filter_autoroute'])   $wheres[] = " isAutoRouted='" . $_REQUEST['filter_autoroute'] . "'";
+        if ($_REQUEST['filter_type']) {
+            $wheres[] = " type='" . $_REQUEST['filter_type'] . "'";
+        }
+        if ($_REQUEST['filter_interactive']) {
+            $wheres[] = " isInteractive='" . $_REQUEST['filter_interactive'] . "'";
+        }
+        if ($_REQUEST['filter_autoroute']) {
+            $wheres[] = " isAutoRouted='" . $_REQUEST['filter_autoroute'] . "'";
+        }
         $where = implode('and', $wheres);
     }
     $data['where'] = isset($_REQUEST['where']) ? $_REQUEST['where'] : $where;
@@ -213,7 +222,7 @@ function workflow_admin_activities()
     $data['filter_tran_name'] = isset($_REQUEST['filter_tran_name']) ? $_REQUEST['filter_tran_name'] : '';
 
     //Now information for activities in this process
-    $activities = $activityManager->list_activities($data['pid'], 0, -1,  $data['sort_mode'], $data['find'], $data['where']);
+    $activities = $activityManager->list_activities($data['pid'], 0, -1, $data['sort_mode'], $data['find'], $data['where']);
 
     //Now check if the activity is or not part of a transition
     if (isset($_REQUEST['activityId'])) {
@@ -266,7 +275,9 @@ function workflow_admin_activities()
     $data['process'] =& $process;
 
     $data['errors'] = array();
-    if (!$valid) $data['errors'] = $activityManager->get_error();
+    if (!$valid) {
+        $data['errors'] = $activityManager->get_error();
+    }
 
     // Build the new process graph based on the changes.
     $activityManager->build_process_graph($data['pid']);
@@ -278,5 +289,3 @@ function workflow_admin_activities()
 
     return $data;
 }
-
-?>

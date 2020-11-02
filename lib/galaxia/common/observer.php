@@ -8,7 +8,7 @@
   Observer objects can be "attached" to Observable objects to listen for
   a specific event.
   Example:
-  
+
   $log = new Logger($logfile); //Logger extends Observer
   $foo = new Foo(); //Foo extends Observable
   $foo->attach('moo',$log); //Now $log observers 'moo' events in $foo class
@@ -16,12 +16,13 @@
   $foo->attach_all($log); // Same but all events are listened
 */
 
-class Observer {
-  ///This will be assigned by an observable object when attaching.
-  public $_observerId='';
+class Observer
+{
+    ///This will be assigned by an observable object when attaching.
+    public $_observerId='';
   
-  function notify($event, $msg) {
-    // do something...
-  }
+    public function notify($event, $msg)
+    {
+        // do something...
+    }
 }
-?>

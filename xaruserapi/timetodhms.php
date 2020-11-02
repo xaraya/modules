@@ -3,7 +3,9 @@
 function workflow_userapi_timetodhms($args)
 {
     extract($args);
-    if(!isset($format)) $format = '';
+    if (!isset($format)) {
+        $format = '';
+    }
 
     if ($time > 24*60*60) {
         $days = intval($time / (24*60*60));
@@ -39,4 +41,3 @@ function workflow_userapi_timetodhms($args)
     }
     return $out;
 }
-?>

@@ -9,4 +9,3 @@ class JoinActivity extends WorkflowActivity
     protected $type  = 'join';
     protected $shape = 'invtriangle';
 }
-?>

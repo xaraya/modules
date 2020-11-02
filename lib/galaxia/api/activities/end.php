@@ -13,4 +13,3 @@ class EndActivity extends WorkflowActivity
     protected $type  = 'end';
     protected $shape = 'doublecircle';
 }
-?>

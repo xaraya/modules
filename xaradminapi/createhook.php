@@ -24,10 +24,18 @@ function workflow_adminapi_createhook($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'createhook', 'workflow');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'object ID',
+            'admin',
+            'createhook',
+            'workflow'
+        );
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
@@ -45,46 +53,56 @@ function workflow_adminapi_createhook($args)
     }
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'createhook', 'workflow');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module name',
+            'admin',
+            'createhook',
+            'workflow'
+        );
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
 
     if (!isset($itemtype) || !is_numeric($itemtype)) {
-         if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $itemtype = $extrainfo['itemtype'];
-         } else {
-             $itemtype = 0;
-         }
+        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+            $itemtype = $extrainfo['itemtype'];
+        } else {
+            $itemtype = 0;
+        }
     }
 
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
-        $activityId = xarModVars::get('workflow',"$modname.$itemtype.create");
+        $activityId = xarModVars::get('workflow', "$modname.$itemtype.create");
     }
     if (empty($activityId)) {
-        $activityId = xarModVars::get('workflow',"$modname.create");
+        $activityId = xarModVars::get('workflow', "$modname.create");
     }
     if (empty($activityId)) {
-        $activityId = xarModVars::get('workflow','default.create');
+        $activityId = xarModVars::get('workflow', 'default.create');
     }
     if (empty($activityId)) {
         return $extrainfo;
     }
 
-    if (!xarMod::apiFunc('workflow','user','run_activity',
-                       array('activityId' => $activityId,
+    if (!xarMod::apiFunc(
+        'workflow',
+        'user',
+        'run_activity',
+        array('activityId' => $activityId,
                              'auto' => 1,
                              // standard arguments for use in activity code
                              'module' => $modname,
                              'itemtype' => $itemtype,
-                             'itemid' => $objectid))) {
+                             'itemid' => $objectid)
+    )) {
         return $extrainfo;
     }
 
     return $extrainfo;
 }
-
-?>

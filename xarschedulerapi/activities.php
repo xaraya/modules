@@ -19,12 +19,12 @@
  */
 function workflow_schedulerapi_activities($args)
 {
-// We need to keep track of our own set of jobs here, because the scheduler won't know what
-// workflow activities to run when. Other modules will typically have 1 job that corresponds
-// to 1 API function, so they won't need this...
+    // We need to keep track of our own set of jobs here, because the scheduler won't know what
+    // workflow activities to run when. Other modules will typically have 1 job that corresponds
+    // to 1 API function, so they won't need this...
 
     $log = xarML('Starting scheduled workflow activities') . "\n";
-    $serialjobs = xarModVars::get('workflow','jobs');
+    $serialjobs = xarModVars::get('workflow', 'jobs');
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
@@ -35,7 +35,7 @@ function workflow_schedulerapi_activities($args)
     foreach ($jobs as $id => $job) {
         $lastrun = $job['lastrun'];
         if (!empty($lastrun)) {
-            if (!preg_match('/(\d+)(\w)/',$job['interval'],$matches)) {
+            if (!preg_match('/(\d+)(\w)/', $job['interval'], $matches)) {
                 continue;
             }
             $count = $matches[1];
@@ -72,9 +72,14 @@ function workflow_schedulerapi_activities($args)
                 continue;
             }
         }
-        $log .= xarML('Workflow activity #(1)',$job['activity']) . ' ';
-        if (!xarMod::apiFunc('workflow','user','run_activity',
-                           array('activityId' => $job['activity']), 0)) {
+        $log .= xarML('Workflow activity #(1)', $job['activity']) . ' ';
+        if (!xarMod::apiFunc(
+            'workflow',
+            'user',
+            'run_activity',
+            array('activityId' => $job['activity']),
+            0
+        )) {
             $jobs[$id]['result'] = xarML('failed');
             $log .= xarML('failed');
         } else {
@@ -92,12 +97,12 @@ function workflow_schedulerapi_activities($args)
         return $log;
     }
 
-// Trick : make sure we're dealing with up-to-date information here,
+    // Trick : make sure we're dealing with up-to-date information here,
 //         because running all those jobs may have taken a while...
     xarVar::delCached('Mod.Variables.workflow', 'jobs');
 
     // get the current list of jobs
-    $serialjobs = xarModVars::get('workflow','jobs');
+    $serialjobs = xarModVars::get('workflow', 'jobs');
     if (!empty($serialjobs)) {
         $newjobs = unserialize($serialjobs);
     } else {
@@ -105,20 +110,19 @@ function workflow_schedulerapi_activities($args)
     }
     // set the job information
     foreach ($hasrun as $id) {
-        if (!isset($newjobs[$id])) continue;
+        if (!isset($newjobs[$id])) {
+            continue;
+        }
         // make sure we're dealing with the same job here :)
         if ($newjobs[$id]['activity'] == $jobs[$id]['activity'] &&
             $newjobs[$id]['lastrun'] < $jobs[$id]['lastrun']) {
-
             $newjobs[$id]['result'] = $jobs[$id]['result'];
             $newjobs[$id]['lastrun'] = $jobs[$id]['lastrun'];
         }
     }
     // update the new jobs
     $serialjobs = serialize($newjobs);
-    xarModVars::set('workflow','jobs',$serialjobs);
+    xarModVars::set('workflow', 'jobs', $serialjobs);
 
     return $log;
 }
-
-?>

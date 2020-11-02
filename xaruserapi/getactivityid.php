@@ -22,24 +22,25 @@
 */
 function workflow_userapi_getActivityId($args)
 {
-  extract($args);
+    extract($args);
 
-  if(!isset($activityName)) return;
+    if (!isset($activityName)) {
+        return;
+    }
 
-  sys::import('modules.workflow.lib.galaxia.config');
-  include(GALAXIA_LIBRARY.'/processmonitor.php');
+    sys::import('modules.workflow.lib.galaxia.config');
+    include(GALAXIA_LIBRARY.'/processmonitor.php');
 
 
-  $items = $processMonitor->monitor_list_activities(0, -1, 'activityId_asc', $activityName, '', array());
-  unset($processMonitor);
-  $activityId = '';
+    $items = $processMonitor->monitor_list_activities(0, -1, 'activityId_asc', $activityName, '', array());
+    unset($processMonitor);
+    $activityId = '';
 
-  if(is_array($items)) {
-    $keyarray = array_keys($items['data']);
-    $key = $keyarray[0];
-    $activityId = $items['data'][$key]['activityId'];
-  }// if
+    if (is_array($items)) {
+        $keyarray = array_keys($items['data']);
+        $key = $keyarray[0];
+        $activityId = $items['data'][$key]['activityId'];
+    }// if
 
-  return $activityId;
+    return $activityId;
 }
-?>

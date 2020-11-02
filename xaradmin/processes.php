@@ -22,12 +22,14 @@ function workflow_admin_processes()
 {
     xarLog::message('WF: workflow_admin_processes ');
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $data = array();
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
 
     // Adapted from tiki-g-admin_processes.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
@@ -42,7 +44,9 @@ function workflow_admin_processes()
 
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.
-    if (!isset($_REQUEST['pid'])) $_REQUEST['pid'] = 0;
+    if (!isset($_REQUEST['pid'])) {
+        $_REQUEST['pid'] = 0;
+    }
     if ($_REQUEST['pid']) {
         $process = new Process($_REQUEST['pid']);
         $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
@@ -61,11 +65,14 @@ function workflow_admin_processes()
             xarLog::message('WF: Temporary upload file found, reading it in.');
             $fp = fopen($tmpfile, "rb");
 
-            $xml = ''; $fhash = '';
+            $xml = '';
+            $fhash = '';
             // Read it in
-            while (!feof($fp)) $xml .= fread($fp, 8192 * 16);
+            while (!feof($fp)) {
+                $xml .= fread($fp, 8192 * 16);
+            }
 
-            fclose ($fp);
+            fclose($fp);
             $size = $_FILES['userfile1']['size'];
             $name = $_FILES['userfile1']['name'];
             $type = $_FILES['userfile1']['type'];
@@ -121,7 +128,9 @@ function workflow_admin_processes()
         $process = new Process($pid);
         // Validate the process and deactivate it if it turns out to be invalid.
         $valid = $activityManager->validate_process_activities($pid);
-        if (!$valid) $process->deactivate();
+        if (!$valid) {
+            $process->deactivate();
+        }
 
         // Reget the process info for the UI
         $process = new Process($pid);
@@ -133,11 +142,17 @@ function workflow_admin_processes()
     $data['where'] = '';
     $wheres = array();
     if (isset($_REQUEST['filter'])) {
-        if ($_REQUEST['filter_name'])   $wheres[]=" name='".$_REQUEST['filter_name']."'";
-        if ($_REQUEST['filter_active']) $wheres[]=" isActive='" . $_REQUEST['filter_active']."'";
+        if ($_REQUEST['filter_name']) {
+            $wheres[]=" name='".$_REQUEST['filter_name']."'";
+        }
+        if ($_REQUEST['filter_active']) {
+            $wheres[]=" isActive='" . $_REQUEST['filter_active']."'";
+        }
         $data['where'] = implode('and', $wheres);
     }
-    if (isset($_REQUEST['where'])) $data['where'] = $_REQUEST['where'];
+    if (isset($_REQUEST['where'])) {
+        $data['where'] = $_REQUEST['where'];
+    }
 
     // Specific sorting specified?
     $data['sort_mode'] = isset($_REQUEST["sort_mode"]) ? $_REQUEST["sort_mode"] : 'lastModif_desc';
@@ -182,5 +197,3 @@ function workflow_admin_processes()
     
     return $data;
 }
-
-?>

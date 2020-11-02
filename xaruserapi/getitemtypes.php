@@ -30,11 +30,13 @@ function workflow_userapi_getitemtypes($args)
     foreach ($processes as $process) {
         $itemtypes[$process['pId']] = array('label' => xarVar::prepForDisplay($process['name'] . ' ' . $process['version']),
                                             'title' => xarVar::prepForDisplay(xarML('View Process')),
-                                            'url'   => xarController::URL('workflow','user','activities',
-                                                                 array('filter_process' => $process['pId']))
+                                            'url'   => xarController::URL(
+                                                'workflow',
+                                                'user',
+                                                'activities',
+                                                array('filter_process' => $process['pId'])
+                                            )
                                            );
     }
     return $itemtypes;
 }
-
-?>

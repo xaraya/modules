@@ -1,6 +1,6 @@
 <?php
 
-include_once (GALAXIA_LIBRARY.'/common/base.php');
+include_once(GALAXIA_LIBRARY.'/common/base.php');
 /**
  * Class representing workitems in a workflow
  *
@@ -11,10 +11,8 @@ include_once (GALAXIA_LIBRARY.'/common/base.php');
 class WorkItem extends Base
 {
     public $instance;
-    public $properties = Array();
+    public $properties = array();
     public $started;
     public $ended;
     public $activity;
-
 }
-?>

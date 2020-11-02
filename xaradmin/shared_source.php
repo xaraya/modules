@@ -21,7 +21,9 @@ sys::import('modules.workflow.lib.galaxia.api');
 function workflow_admin_shared_source()
 {
     // Security Check
-    if (!xarSecurity::check('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -39,10 +41,10 @@ function workflow_admin_shared_source()
     $tplData['pid'] =  $_REQUEST['pid'];
 
     if (isset($_REQUEST['code'])) {
-        unset ($_REQUEST['template']);
+        unset($_REQUEST['template']);
         $_REQUEST['save'] = 'y';
     } elseif (isset($_REQUEST['template'])) {
-        unset ($_REQUEST['code']);
+        unset($_REQUEST['code']);
         $_REQUEST['save'] = 'y';
     }
 
@@ -55,8 +57,9 @@ function workflow_admin_shared_source()
 
     $tplData['warn'] =  '';
 
-    if (!isset($_REQUEST['activityId']))
+    if (!isset($_REQUEST['activityId'])) {
         $_REQUEST['activityId'] = 0;
+    }
 
     $tplData['activityId'] =  $_REQUEST['activityId'];
 
@@ -91,14 +94,14 @@ function workflow_admin_shared_source()
         $basedir = GALAXIA_PROCESSES . "/$procname/code/";
         $basepath = realpath($basedir);
         $sourcepath = realpath($_REQUEST['source_name']);
-        if (substr($sourcepath,0,strlen($basepath)) == $basepath) {
+        if (substr($sourcepath, 0, strlen($basepath)) == $basepath) {
             $fp = fopen($_REQUEST['source_name'], "wb");
 
             if (get_magic_quotes_gpc()) {
                 $_REQUEST['source'] = stripslashes($_REQUEST['source']);
             }
             fwrite($fp, $_REQUEST['source']);
-            fclose ($fp);
+            fclose($fp);
             if ($_REQUEST['activityId']) {
                 $act = WorkflowActivity::get($_REQUEST['activityId']);
                 $act->compile();
@@ -116,7 +119,7 @@ function workflow_admin_shared_source()
         $data = fread($fp, 4096);
         $tplData['data'] .=  htmlspecialchars($data);
     }
-    fclose ($fp);
+    fclose($fp);
 
     // initialize template
     if (empty($tplData['data']) && isset($_REQUEST['template']) && !empty($act)) {
@@ -147,4 +150,3 @@ function workflow_admin_shared_source()
 
     return $tplData;
 }
-?>

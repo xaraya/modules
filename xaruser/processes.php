@@ -20,18 +20,20 @@
 function workflow_user_processes()
 {
     // Security Check
-    if (!xarSecurity::check('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) {
+        return;
+    }
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
     // Adapted from tiki-g-user_processes.php
-    include_once (GALAXIA_LIBRARY.'/gui.php');
+    include_once(GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
     $user = xarUser::getVar('id');
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
 
     // Filtering data to be received by request and
     // used to build the where part of a query
@@ -108,13 +110,11 @@ function workflow_user_processes()
     $tplData['mid'] =  'tiki-g-user_processes.tpl';
 
 
-/*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
-                                           $items['cant'],
-                                           $url,
-                                           $maxRecords);*/
-        $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-        $tplData['maxRecords'] = $maxRecords;
-        return $tplData;
+    /*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
+                                               $items['cant'],
+                                               $url,
+                                               $maxRecords);*/
+    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['maxRecords'] = $maxRecords;
+    return $tplData;
 }
-
-?>

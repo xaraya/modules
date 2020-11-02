@@ -24,19 +24,35 @@ function workflow_adminapi_updatehook($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object id', 'admin', 'updatehook', 'workflow');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'object id',
+            'admin',
+            'updatehook',
+            'workflow'
+        );
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'updatehook', 'workflow');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'extrainfo',
+            'admin',
+            'updatehook',
+            'workflow'
+        );
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
@@ -52,10 +68,18 @@ function workflow_adminapi_updatehook($args)
 
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'updatehook', 'workflow');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module name',
+            'admin',
+            'updatehook',
+            'workflow'
+        );
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
@@ -73,10 +97,18 @@ function workflow_adminapi_updatehook($args)
         $itemid = $objectid;
     }
     if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'admin', 'updatehook', 'workflow');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'item id',
+            'admin',
+            'updatehook',
+            'workflow'
+        );
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
@@ -84,31 +116,32 @@ function workflow_adminapi_updatehook($args)
 
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
-        $activityId = xarModVars::get('workflow',"$modname.$itemtype.update");
+        $activityId = xarModVars::get('workflow', "$modname.$itemtype.update");
     }
     if (empty($activityId)) {
-        $activityId = xarModVars::get('workflow',"$modname.update");
+        $activityId = xarModVars::get('workflow', "$modname.update");
     }
     if (empty($activityId)) {
-        $activityId = xarModVars::get('workflow','default.update');
+        $activityId = xarModVars::get('workflow', 'default.update');
     }
     if (empty($activityId)) {
         return $extrainfo;
     }
 
-    if (!xarMod::apiFunc('workflow','user','run_activity',
-                       array('activityId' => $activityId,
+    if (!xarMod::apiFunc(
+        'workflow',
+        'user',
+        'run_activity',
+        array('activityId' => $activityId,
                              'auto' => 1,
                              // standard arguments for use in activity code
                              'module' => $modname,
                              'itemtype' => $itemtype,
-                             'itemid' => $itemid))) {
+                             'itemid' => $itemid)
+    )) {
         return $extrainfo;
     }
 
     // Return the extra info
     return $extrainfo;
 }
-
-
-?>
