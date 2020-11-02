@@ -107,12 +107,16 @@ function crispbb_userapi_createtopic($args)
     $bindvars[] = $ttitle;
     $bindvars[] = serialize($tsettings);
 
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     $tid = $dbconn->PO_Insert_ID($topicstable, 'id');
 
-    if (!$tid) return;
+    if (!$tid) {
+        return;
+    }
 
 
     if (empty($firstpid)) {
@@ -134,14 +138,21 @@ function crispbb_userapi_createtopic($args)
 
         $ptime = empty($ptime) || !is_numeric($ptime) ? time() : $ptime;
 
-        $poststype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-            array('fid' => $fid, 'component' => 'posts'));
+        $poststype = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getitemtype',
+            array('fid' => $fid, 'component' => 'posts')
+        );
 
         if (!isset($psettings) || !is_array($psettings) || empty($psettings)) {
             $psettings = array();
         }
 
-        if (!$pid = xarMod::apiFunc('crispbb', 'user', 'createpost',
+        if (!$pid = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'createpost',
             array(
                 'tid' => $tid,
                 'powner' => $powner,
@@ -153,17 +164,26 @@ function crispbb_userapi_createtopic($args)
                 'psettings' => $psettings,
                 'fid' => $fid,
                 'tstatus' => $tstatus
-            ))) return;
+            )
+        )) {
+            return;
+        }
     } else {
         $pid = $firstpid;
     }
 
-    if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
+    if (!xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'updatetopic',
         array(
             'tid' => $tid,
             'firstpid' => $pid,
             'nohooks' => true
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     // synch hooks
     $itemtypes = xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
@@ -190,4 +210,3 @@ function crispbb_userapi_createtopic($args)
     // return the new topic id
     return $tid;
 }
-?>

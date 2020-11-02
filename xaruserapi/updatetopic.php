@@ -32,7 +32,7 @@ function crispbb_userapi_updatetopic($args)
     extract($args);
     $invalid = array();
     if (!isset($tid) || empty($tid) || !is_numeric($tid)) {
-      $invalid[] = 'tid';
+        $invalid[] = 'tid';
     }
 
     if (isset($fid)) {
@@ -151,25 +151,37 @@ function crispbb_userapi_updatetopic($args)
         $bindvars[] = serialize($tsettings);
     }
 
-    $numreplies = xarMod::apiFunc('crispbb', 'user', 'countposts',
+    $numreplies = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
         array(
             'tid' => $tid,
             'pstatus' => 0
-        ));
+        )
+    );
     $set[] = 'numreplies = ?';
     $bindvars[] = !empty($numreplies) ? $numreplies-1 : 0;
-    $numsubs = xarMod::apiFunc('crispbb', 'user', 'countposts',
+    $numsubs = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
         array(
             'tid' => $tid,
             'pstatus' => 2
-        ));
+        )
+    );
     $set[] = 'numsubs = ?';
     $bindvars[] = $numsubs;
-    $numdels = xarMod::apiFunc('crispbb', 'user', 'countposts',
+    $numdels = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
         array(
             'tid' => $tid,
             'pstatus' => 5
-        ));
+        )
+    );
     $set[] = 'numdels = ?';
     $bindvars[] = $numdels;
 
@@ -178,15 +190,21 @@ function crispbb_userapi_updatetopic($args)
     $query .= " WHERE id = ?";
     $bindvars[] = $tid;
 
-    $result = $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    if (!empty($nohooks)) return true;
+    if (!empty($nohooks)) {
+        return true;
+    }
 
     if (empty($topicstype)) {
         $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid));
-        if (!$topic) return;
+        if (!$topic) {
+            return;
+        }
         $topicstype = $topic['topicstype'];
     }
 
@@ -197,4 +215,3 @@ function crispbb_userapi_updatetopic($args)
 
     return true;
 }
-?>

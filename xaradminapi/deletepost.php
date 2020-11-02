@@ -18,7 +18,6 @@
  */
 function crispbb_adminapi_deletepost($args)
 {
-
     extract($args);
     if (!isset($pid) || !is_numeric($pid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -44,8 +43,10 @@ function crispbb_adminapi_deletepost($args)
 
     // remove post
     $query = "DELETE FROM $poststable WHERE id = " . $pid;
-    $result = $dbconn->Execute($query,array());
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array());
+    if (!$result) {
+        return;
+    }
 
     $item['module'] = 'crispbb';
     $item['itemtype'] = $post['poststype'];
@@ -55,4 +56,3 @@ function crispbb_adminapi_deletepost($args)
     /* Let the calling process know that we have finished successfully */
     return true;
 }
-?>

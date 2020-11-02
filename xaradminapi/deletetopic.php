@@ -18,7 +18,6 @@
  */
 function crispbb_adminapi_deletetopic($args)
 {
-
     extract($args);
     if (!isset($tid) || !is_numeric($tid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -51,8 +50,10 @@ function crispbb_adminapi_deletetopic($args)
     // remove posts
     if (!empty($pids)) {
         $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
-        $result = $dbconn->Execute($query,array());
-        if (!$result) return;
+        $result = $dbconn->Execute($query, array());
+        if (!$result) {
+            return;
+        }
         $item = array();
         $item['module'] = 'crispbb';
         foreach ($posts as $pid => $post) {
@@ -65,12 +66,16 @@ function crispbb_adminapi_deletetopic($args)
     // remove topic
     // first from topics table
     $query = "DELETE FROM $topicstable WHERE id = " . $tid;
-    $result = $dbconn->Execute($query,array());
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array());
+    if (!$result) {
+        return;
+    }
     // then from hooks table
     $query = "DELETE FROM $hookstable WHERE tid = " . $tid;
-    $result = $dbconn->Execute($query,array());
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array());
+    if (!$result) {
+        return;
+    }
 
     $item['module'] = 'crispbb';
     $item['itemtype'] = $topic['topicstype'];
@@ -80,4 +85,3 @@ function crispbb_adminapi_deletetopic($args)
     /* Let the calling process know that we have finished successfully */
     return true;
 }
-?>

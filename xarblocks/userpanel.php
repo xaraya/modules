@@ -21,8 +21,8 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
     protected $module           = 'crispbb'; // module block type belongs to, if any
     protected $text_type        = 'crispBB User Panel';  // Block type display name
     protected $text_type_long   = 'Display user information to current logged in user'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = 'Chris Powis';
     protected $contact          = 'crisp@crispcreations.co.uk';
     protected $credits          = '';
@@ -41,13 +41,15 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
     public $showwaiting         = false;
     public $showlogout          = true;
 
-/**
- * Display func.
- * @param $data array containing title,content
- */
-    function display()
+    /**
+     * Display func.
+     * @param $data array containing title,content
+     */
+    public function display()
     {
-        if (!xarUser::isLoggedIn()) return;
+        if (!xarUser::isLoggedIn()) {
+            return;
+        }
 
         $vars = $this->getContent();
 
@@ -62,14 +64,14 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
         $vars['id'] = $userpanel['id'];
         $vars['name'] = $userpanel['name'];
         if ($vars['showlastvisit']) {
-        $vars['lastvisit'] = $userpanel['lastvisit'];
+            $vars['lastvisit'] = $userpanel['lastvisit'];
         }
         if ($vars['showthisvisit']) {
-        $vars['visitstart'] = $userpanel['visitstart'];
+            $vars['visitstart'] = $userpanel['visitstart'];
         }
         if ($vars['showtotalvisit']) {
-        $vars['numvisits'] = $userpanel['numvisits'];
-        $vars['totalvisit'] = $userpanel['onlinestamp'];
+            $vars['numvisits'] = $userpanel['numvisits'];
+            $vars['totalvisit'] = $userpanel['onlinestamp'];
         }
         if ($vars['showtimenow']) {
             $vars['timenow'] = $now;
@@ -82,34 +84,49 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
     }
 
 
-/**
- * Modify Function to the Blocks Admin
- * @param $data array containing title,content
- */
-    public function modify(Array $data=array())
+    /**
+     * Modify Function to the Blocks Admin
+     * @param $data array containing title,content
+     */
+    public function modify(array $data=array())
     {
         $data = $this->getContent();
 
         return $data;
     }
 
-/**
- * Updates the Block config from the Blocks Admin
- * @param $data array containing title,content
- */
-    public function update(Array $data=array())
+    /**
+     * Updates the Block config from the Blocks Admin
+     * @param $data array containing title,content
+     */
+    public function update(array $data=array())
     {
         $vars = array();
-        if (!xarVar::fetch('showusername', 'checkbox', $vars['showusername'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showaccount', 'checkbox', $vars['showaccount'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showtimenow', 'checkbox', $vars['showtimenow'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showwaiting', 'checkbox', $vars['showwaiting'], false, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('showlogout', 'checkbox', $vars['showlogout'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showusername', 'checkbox', $vars['showusername'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showaccount', 'checkbox', $vars['showaccount'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showtimenow', 'checkbox', $vars['showtimenow'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showwaiting', 'checkbox', $vars['showwaiting'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('showlogout', 'checkbox', $vars['showlogout'], false, xarVar::NOT_REQUIRED)) {
+            return;
+        }
         $this->setContent($vars);
         return true;
     }
 }
-?>

@@ -24,7 +24,6 @@
  */
 function crispbb_user_displayhook($args)
 {
-
     extract($args);
 
     if (!isset($extrainfo)) {
@@ -62,8 +61,8 @@ function crispbb_user_displayhook($args)
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
         $vars = array('object ID', 'user', 'displayhook', 'crispBB');
         //throw new BadParameterException($vars, $msg);
-     // life goes on in hook modules, so just return false
-       return;
+        // life goes on in hook modules, so just return false
+        return;
     }
 
     $data = array();
@@ -80,8 +79,8 @@ function crispbb_user_displayhook($args)
     $where[] = $hookstable . '.moduleid = ?';
     $bindvars[] = $modid;
     if (!empty($itemtype)) {
-    $where[] = $hookstable . '.itemtype = ?';
-    $bindvars[] = $itemtype;
+        $where[] = $hookstable . '.itemtype = ?';
+        $bindvars[] = $itemtype;
     }
     $where[] = $hookstable . '.itemid = ?';
     $bindvars[] = $itemid;
@@ -92,8 +91,10 @@ function crispbb_user_displayhook($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
     if ($result->EOF) {
     } else {
         list($tid) = $result->fields;
@@ -102,7 +103,9 @@ function crispbb_user_displayhook($args)
 
     if (!empty($tid)) {
         $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'privcheck' => true));
-        if ($topic == 'BAD_DATA' || $topic == 'NO_PRIVILEGES') return;
+        if ($topic == 'BAD_DATA' || $topic == 'NO_PRIVILEGES') {
+            return;
+        }
         $data = $topic;
         $data['newtopicurl'] = '';
     }
@@ -118,16 +121,23 @@ function crispbb_user_displayhook($args)
     }
     $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
 
-    $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : NULL;
+    $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : null;
     $data['postsperpage'] = isset($settings['postsperpage']) ? $settings['postsperpage'] : 0;
     $data['quickreply'] = isset($settings['quickreply']) ? $settings['quickreply'] : false;
 
     if (empty($topic)) {
-        if (empty($data['fid'])) return;
+        if (empty($data['fid'])) {
+            return;
+        }
         $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $data['fid'], 'privcheck' => true));
-        if ($forum == 'NO_PRIVILEGES' || $forum == 'BAD_DATA') return;
+        if ($forum == 'NO_PRIVILEGES' || $forum == 'BAD_DATA') {
+            return;
+        }
         if (!empty($forum['newtopicurl'])) {
-            $data['newtopicurl'] = xarController::URL('crispbb', 'user', 'newtopic',
+            $data['newtopicurl'] = xarController::URL(
+                'crispbb',
+                'user',
+                'newtopic',
                 array(
                     'fid' => $data['fid'],
                     'modname' => $modname,
@@ -135,7 +145,8 @@ function crispbb_user_displayhook($args)
                     'itemid' => $itemid,
                     //'return_url' => xarServer::getCurrentURL(),
                     'authid' => xarSec::genAuthKey('crispbb')
-                ));
+                )
+            );
         }
     }
 
@@ -148,4 +159,3 @@ function crispbb_user_displayhook($args)
     }
     return xarTPLModule('crispbb', 'user', 'displayhook', $data);
 }
-?>

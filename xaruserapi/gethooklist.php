@@ -72,22 +72,28 @@ function crispbb_userapi_gethooklist($args)
 
     // hooklist will hold the available hooks
     $hooklist = array();
-    while($result->next()) {
-        list($itemType, $object,$action,$area,$tmodType,$tmodFunc,$tmodFile,$smodId,$tmodId,$tmodName) = $result->fields;
+    while ($result->next()) {
+        list($itemType, $object, $action, $area, $tmodType, $tmodFunc, $tmodFile, $smodId, $tmodId, $tmodName) = $result->fields;
 
         // Avoid single-space item types e.g. for mssql
-        if (!empty($itemType)) $itemType = trim($itemType);
+        if (!empty($itemType)) {
+            $itemType = trim($itemType);
+        }
 
-        if (!isset($hooklist[$tmodName]))
+        if (!isset($hooklist[$tmodName])) {
             $hooklist[$tmodName] = array();
-        if (!isset($hooklist[$tmodName]["$object:$action:$area"]))
+        }
+        if (!isset($hooklist[$tmodName]["$object:$action:$area"])) {
             $hooklist[$tmodName]["$object:$action:$area"] = array();
+        }
         // if the smodName has a value the hook is active
         if (!empty($smodId)) {
-            if (!isset($hooklist[$tmodName]["$object:$action:$area"][$smodId]))
+            if (!isset($hooklist[$tmodName]["$object:$action:$area"][$smodId])) {
                 $hooklist[$tmodName]["$object:$action:$area"][$smodId] = array();
-            if (empty($itemType))
+            }
+            if (empty($itemType)) {
                 $itemType = 0;
+            }
             $hooklist[$tmodName]["$object:$action:$area"][$smodId][$itemType] = 1;
         }
     }
@@ -95,5 +101,3 @@ function crispbb_userapi_gethooklist($args)
 
     return $hooklist;
 }
-
-?>

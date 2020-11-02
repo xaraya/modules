@@ -33,4 +33,3 @@ function crispbb_userapi_getpost($args)
 
     return $post;
 }
-?>

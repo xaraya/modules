@@ -23,11 +23,19 @@
 function crispbb_admin_modify($args)
 {
     extract($args);
-    if (!xarVar::fetch('sublink',    'str:1:',           $sublink, '', xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('phase',      'enum:form:update', $phase, 'form', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('phase', 'enum:form:update', $phase, 'form', xarVar::NOT_REQUIRED)) {
+        return;
+    }
     // allow return url to be over-ridden
-    if (!xarVar::fetch('return_url', 'str:1:',           $return_url, '', xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('fid',        'id',               $fid, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('return_url', 'str:1:', $return_url, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('fid', 'id', $fid, null, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     // Get the forums object
     sys::import('modules.dynamicdata.class.objects.master');
@@ -41,16 +49,18 @@ function crispbb_admin_modify($args)
     $data['forum']->userAction = 'editforum';
     $itemid = $data['forum']->getItem(array('itemid' => $fid));
     
-    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
 
     // CHECKME: remove this?
-    if ($itemid != $fid)
-        return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
+    if ($itemid != $fid) {
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+    }
 
     // CrispBB security
-    if (empty($data['forum']->userLevel))
-        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
+    if (empty($data['forum']->userLevel)) {
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+    }
 
     $data['forum']->getItemLinks();
 
@@ -61,7 +71,7 @@ function crispbb_admin_modify($args)
     $pageTitle = $data['forum']->properties['fname']->value;
     $now = time();
 
-    switch($sublink) {
+    switch ($sublink) {
         case 'edit':
             $ftype = $data['forum']->properties['ftype']->value;
             if ($ftype == 1) {
@@ -77,8 +87,12 @@ function crispbb_admin_modify($args)
             $data['settings']->layout = $layout;
             $data['values'] = $data['forum']->fsettings;
 
-            $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions'));
+            $presets = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getpresets',
+                array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions')
+            );
 
             // handle update
             if ($phase == 'update') {
@@ -98,8 +112,12 @@ function crispbb_admin_modify($args)
                 if ($data['forum']->properties['ftype']->value == $ftype) {
                     if (in_array('icondefault', $settingsfields)) {
                         $iconfolder = $data['settings']->properties['iconfolder']->value;
-                        $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                            array('iconfolder' => $iconfolder, 'shownone' => true));
+                        $iconlist = xarMod::apiFunc(
+                            'crispbb',
+                            'user',
+                            'gettopicicons',
+                            array('iconfolder' => $iconfolder, 'shownone' => true)
+                        );
                         $data['settings']->properties['icondefault']->options = $iconlist;
                         $andvalid = $data['settings']->checkInput();
                     }
@@ -122,26 +140,35 @@ function crispbb_admin_modify($args)
                 }
                 // @TODO: make these properties somehow
                 foreach ($presets['ftransfields'] as $field => $option) {
-                    if (!isset($settings['ftransforms'][$field]))
+                    if (!isset($settings['ftransforms'][$field])) {
                         $settings['ftransforms'][$field] = array();
+                    }
                 }
                 foreach ($presets['ttransfields'] as $field => $option) {
-                    if (!isset($settings['ttransforms'][$field]))
+                    if (!isset($settings['ttransforms'][$field])) {
                         $settings['ttransforms'][$field] = array();
+                    }
                 }
                 foreach ($presets['ptransfields'] as $field => $option) {
-                    if (!isset($settings['ptransforms'][$field]))
+                    if (!isset($settings['ptransforms'][$field])) {
                         $settings['ptransforms'][$field] = array();
+                    }
                 }
                 if ($isvalid && $andvalid) {
-                    if (!xarSec::confirmAuthKey()) return;
+                    if (!xarSec::confirmAuthKey()) {
+                        return;
+                    }
                     $extra = array('fsettings' => serialize($settings));
                     $data['forum']->updateHooks(true);
                     $data['forum']->updateItem($extra);
                     xarSession::setVar('crispbb_statusmsg', xarML('#(1) settings updated', $pageTitle));
                     if (empty($return_url)) {
-                        $return_url = xarController::URL('crispbb', 'admin', 'modify',
-                            array('fid' => $fid, 'sublink' => 'edit'));
+                        $return_url = xarController::URL(
+                            'crispbb',
+                            'admin',
+                            'modify',
+                            array('fid' => $fid, 'sublink' => 'edit')
+                        );
                     }
                     xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
                     xarController::redirect($return_url);
@@ -154,24 +181,31 @@ function crispbb_admin_modify($args)
             $item['itemtype'] = $data['forum']->itemtype;
             $item['itemid'] = $fid;
             $hooks = xarModHooks::call('item', 'modify', $fid, $item);
-            if (xarVar::isCached('Hooks.dynamicdata','withupload') || xarModHooks::isHooked('uploads', 'crispbb', $item['itemtype'])) {
+            if (xarVar::isCached('Hooks.dynamicdata', 'withupload') || xarModHooks::isHooked('uploads', 'crispbb', $item['itemtype'])) {
                 $data['withupload'] = 1;
             } else {
                 $data['withupload'] = 0;
             }
             // change categories display to a dropdown list
-            if (isset($hooks['categories'])) $hooks['categories'] = '';
+            if (isset($hooks['categories'])) {
+                $hooks['categories'] = '';
+            }
             // propagate any new property values
             // CHANGEME: this is a convenience function, any property updates in new releases
             // should really be dealt with in the upgrade function of xarinit();
             // Leaving it for now, 'cos it sure is 'convenient' :D
             foreach ($data['settings']->properties as $name => $value) {
-                if (!isset($data['values'][$name]) && in_array($name, $settingsfields)) // only add missing property values
+                if (!isset($data['values'][$name]) && in_array($name, $settingsfields)) { // only add missing property values
                     $data['values'][$name] = $data['settings']->properties[$name]->value;
+                }
             }
             if (!empty($data['values']['iconfolder'])) {
-                $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                    array('iconfolder' => $data['values']['iconfolder'], 'shownone' => true));
+                $iconlist = xarMod::apiFunc(
+                    'crispbb',
+                    'user',
+                    'gettopicicons',
+                    array('iconfolder' => $data['values']['iconfolder'], 'shownone' => true)
+                );
                 $data['settings']->properties['icondefault']->options = $iconlist;
                 $data['iconlist'] = $iconlist;
             } else {
@@ -186,9 +220,9 @@ function crispbb_admin_modify($args)
         case 'forumhooks':
         case 'topichooks':
         case 'posthooks':
-            if ( ($sublink == 'forumhooks' && empty($data['forum']->itemlinks['forumhooks'])) ||
+            if (($sublink == 'forumhooks' && empty($data['forum']->itemlinks['forumhooks'])) ||
                 ($sublink == 'topichooks' && empty($data['forum']->itemlinks['topichooks'])) ||
-                ($sublink == 'posthooks' && empty($data['forum']->itemlinks['posthooks'])) ) {
+                ($sublink == 'posthooks' && empty($data['forum']->itemlinks['posthooks']))) {
                 $errorMsg['message'] = xarML('You do not have the privileges required for this action');
                 $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'forum_index');
                 $errorMsg['type'] = 'NO_PRIVILEGES';
@@ -199,19 +233,27 @@ function crispbb_admin_modify($args)
             if ($sublink == 'forumhooks') {
                 $component = 'forum';
                 $label = 'forums';
-                // make sure cats are available and hooked to forums
+            // make sure cats are available and hooked to forums
             } elseif ($sublink == 'topichooks') {
                 $component = 'topics';
                 $label = 'topics';
-                // make sure hitcount is available and hooked to topics
+            // make sure hitcount is available and hooked to topics
             } elseif ($sublink == 'posthooks') {
                 $component = 'posts';
                 $label = 'posts';
             }
-            $itemtype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-                array('fid' => $fid, 'component' => $component));
-            $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-                array('fid' => 0, 'component' => $component));
+            $itemtype = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getitemtype',
+                array('fid' => $fid, 'component' => $component)
+            );
+            $mastertype = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getitemtype',
+                array('fid' => 0, 'component' => $component)
+            );
             // get all the hooks available
             $hooklist = xarMod::apiFunc('modules', 'admin', 'gethooklist');
             // hook modules must have at least one of these hook functions
@@ -229,7 +271,9 @@ function crispbb_admin_modify($args)
                         }
                     }
                 }
-                if (!$hashooktypes) continue;
+                if (!$hashooktypes) {
+                    continue;
+                }
                 if ($hookMod == 'categories') {
                     $ishooked = false;
                     $hookStatus = 2;
@@ -291,34 +335,46 @@ function crispbb_admin_modify($args)
             }
             if ($phase == 'update') {
                 if (empty($invalid)) {
-                    if (!xarSec::confirmAuthKey()) return;
+                    if (!xarSec::confirmAuthKey()) {
+                        return;
+                    }
                     $isupdated = false;
                     foreach ($hooksettings as $checkmod => $checkvals) {
                         // skip hooks that can't be changed from here
-                        if ($checkvals['status'] <> 1) continue;
-                        xarVar::fetch("hooked_" . $checkmod,'isset',$ishooked,'',xarVar::DONT_REUSE);
+                        if ($checkvals['status'] <> 1) {
+                            continue;
+                        }
+                        xarVar::fetch("hooked_" . $checkmod, 'isset', $ishooked, '', xarVar::DONT_REUSE);
                         // Explicit setting to hook module to all items in this component
                         if (!empty($ishooked) && isset($ishooked[1]) && !empty($ishooked[1])) {
                             // only hook if not already hooked
                             if (!$checkvals['ishooked']) {
-                                xarMod::apiFunc('modules','admin','enablehooks',
+                                xarMod::apiFunc(
+                                    'modules',
+                                    'admin',
+                                    'enablehooks',
                                     array(
                                         'callerModName' => 'crispbb',
                                         'callerItemType' => $itemtype,
                                         'hookModName' => $checkmod
-                                    ));
+                                    )
+                                );
                                 $isupdated = true;
                             }
-                        // No setting
+                            // No setting
                         } else {
                             // unhook if currently hooked
                             if ($checkvals['ishooked']) {
-                                xarMod::apiFunc('modules','admin','disablehooks',
+                                xarMod::apiFunc(
+                                    'modules',
+                                    'admin',
+                                    'disablehooks',
                                     array(
                                         'callerModName' => 'crispbb',
                                         'callerItemType' => $itemtype,
                                         'hookModName' => $checkmod
-                                    ));
+                                    )
+                                );
                                 $isupdated = true;
                             }
                         }
@@ -328,21 +384,31 @@ function crispbb_admin_modify($args)
                     // call updateconfig hooks
                     $hookargs['module'] = 'crispbb';
                     $hookargs['itemtype'] = $itemtype;
-                    xarModHooks::call('module','updateconfig','crispbb', $hookargs);
+                    xarModHooks::call('module', 'updateconfig', 'crispbb', $hookargs);
                     // update the status message
                     xarSession::setVar('crispbb_statusmsg', xarML('#(1) hooks for #(2) updated', ucfirst($component), $data['forum']->properties['fname']->value));
                     // if no returnurl specified, return to forumconfig, this sublink
                     if (empty($return_url)) {
-                        $return_url = xarController::URL('crispbb', 'admin', 'modify',
-                            array('fid' => $fid, 'sublink' => $sublink));
+                        $return_url = xarController::URL(
+                            'crispbb',
+                            'admin',
+                            'modify',
+                            array('fid' => $fid, 'sublink' => $sublink)
+                        );
                     }
                     xarController::redirect($return_url);
                     return true;
                 }
             }
-            $hooks = xarModHooks::call('module', 'modifyconfig', 'crispbb',
-                            array('module' => 'crispbb', 'itemtype' => $itemtype));
-            if (isset($hooks['categories'])) unset($hooks['categories']);
+            $hooks = xarModHooks::call(
+                'module',
+                'modifyconfig',
+                'crispbb',
+                array('module' => 'crispbb', 'itemtype' => $itemtype)
+            );
+            if (isset($hooks['categories'])) {
+                unset($hooks['categories']);
+            }
             foreach ($hooks as $hookmodname => $hookvals) {
                 $hooksettings[$hookmodname]['output'] = $hookvals;
             }
@@ -360,9 +426,15 @@ function crispbb_admin_modify($args)
                 xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
                 return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
             }
-            if (!xarVar::fetch('privs', 'list', $privs, array(), xarVar::NOT_REQUIRED)) return;
-            $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'privactionlabels,fprivileges,privleveloptions'));
+            if (!xarVar::fetch('privs', 'list', $privs, array(), xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            $presets = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getpresets',
+                array('preset' => 'privactionlabels,fprivileges,privleveloptions')
+            );
             $defaults = $presets['fprivileges'];
             if (empty($privs)) {
                 $privs = $data['forum']->fprivileges;
@@ -378,7 +450,9 @@ function crispbb_admin_modify($args)
             }
             if ($phase == 'update') {
                 // check for factory reset
-                if (!xarVar::fetch('resetprivs', 'checkbox', $resetprivs, false, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('resetprivs', 'checkbox', $resetprivs, false, xarVar::NOT_REQUIRED)) {
+                    return;
+                }
                 // perform factory reset
                 if ($resetprivs) {
                     $privs = $defaults;
@@ -386,7 +460,9 @@ function crispbb_admin_modify($args)
                 $fieldlist = array('fprivileges');
                 $data['forum']->setFieldList($fieldlist);
                 if (empty($invalid)) {
-                    if (!xarSec::confirmAuthKey()) return;
+                    if (!xarSec::confirmAuthKey()) {
+                        return;
+                    }
                     $extra = array('fprivileges' => serialize($privs));
                     $data['forum']->updateHooks(false);
                     $data['forum']->updateItem($extra);
@@ -424,8 +500,12 @@ function crispbb_admin_modify($args)
             $pageTitle .= ' Privileges';
         break;
         default:
-            $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'privactionlabels,privleveloptions'));
+            $presets = xarMod::apiFunc(
+                'crispbb',
+                'user',
+                'getpresets',
+                array('preset' => 'privactionlabels,privleveloptions')
+            );
             $data['actions'] = $presets['privactionlabels'];
             $data['levels'] = $presets['privleveloptions'];
         break;
@@ -434,7 +514,10 @@ function crispbb_admin_modify($args)
     $data['fid'] = $fid;
     $data['invalid'] = $invalid;
     $data['sublink'] = $sublink;
-    $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
+    $data['menulinks'] = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'getmenulinks',
         array('current_mod' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'modify',
@@ -442,7 +525,8 @@ function crispbb_admin_modify($args)
             'fid' => $fid,
             //'catid' => $data['catid'],
             'secLevels' => $secLevels
-    ));
+    )
+    );
     $data['pageTitle'] = $pageTitle;
     $data['hookoutput'] = !empty($hooks) ? $hooks : '';
 
@@ -450,4 +534,3 @@ function crispbb_admin_modify($args)
 
     return $data;
 }
-?>

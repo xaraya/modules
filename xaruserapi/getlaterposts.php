@@ -20,11 +20,17 @@
 function crispbb_userapi_getlaterposts($args)
 {
     // If we don't have a topic ID, return nothing
-    if (!isset($args['tid'])) return array();
+    if (!isset($args['tid'])) {
+        return array();
+    }
     // Make sure we have a timestamp
-    if (!isset($args['ts'])) $args['ts'] = 0;
+    if (!isset($args['ts'])) {
+        $args['ts'] = 0;
+    }
     // Do we include those posts at the timestamp's time?
-    if (!isset($args['include_ts'])) $args['include_ts'] = 0;
+    if (!isset($args['include_ts'])) {
+        $args['include_ts'] = 0;
+    }
 
     $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['crispbb_posts']);
@@ -51,6 +57,4 @@ function crispbb_userapi_getlaterposts($args)
     
     
     return $q->output();
-
 }
-?>

@@ -20,8 +20,12 @@ function crispbb_admin_waitingcontent()
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
     $subtopics = array();
     foreach ($forums as $fid => $forum) {
-        $subtopics = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-            array('fid' => $fid,'tstatus' => 2));
+        $subtopics = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'counttopics',
+            array('fid' => $fid,'tstatus' => 2)
+        );
         if (empty($subtopics) || empty($forum['privs']['approvetopics'])) {
             unset($forums[$fid]);
             continue;
@@ -30,8 +34,12 @@ function crispbb_admin_waitingcontent()
         $forums[$fid]['modforumurl'] = xarController::URL('crispbb', 'user', 'moderate', array('fid' => $fid, 'component' => 'topics', 'tstatus' => 2));
         unset($subtopics);
     }
-    $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics',
-        array('numsubs' => true, 'submitted' => true));
+    $topics = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'gettopics',
+        array('numsubs' => true, 'submitted' => true)
+    );
 
     foreach ($topics as $tid => $topic) {
         if (empty($topic['privs']['approvereplies'])) {
@@ -63,7 +71,9 @@ function crispbb_admin_waitingcontent()
         }
     }
 
-    if (empty($topics) && empty($forums) && empty($isupdated)) return '';
+    if (empty($topics) && empty($forums) && empty($isupdated)) {
+        return '';
+    }
 
     $data = array();
     $data['topics'] = $topics;
@@ -71,4 +81,3 @@ function crispbb_admin_waitingcontent()
     $data['isupdated'] = $isupdated;
     return $data;
 }
-?>

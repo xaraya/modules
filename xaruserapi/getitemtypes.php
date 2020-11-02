@@ -29,7 +29,9 @@ function crispbb_userapi_getitemtypes($args)
         $select[] = $itemtypestable .'.'. $field;
     }
     $from = $itemtypestable;
-    if (empty($fieldlist)) $fieldlist = array('fname');
+    if (empty($fieldlist)) {
+        $fieldlist = array('fname');
+    }
     $join = '';
     $wheres = array();
     if (!empty($fieldlist)) {
@@ -75,8 +77,10 @@ function crispbb_userapi_getitemtypes($args)
 
     $query .= ' ORDER BY ' . $itemtypestable . '.id ASC, '.$itemtypestable . '.component ASC';
 
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
     $itemtypes = array();
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
@@ -126,17 +130,21 @@ function crispbb_userapi_getitemtypes($args)
         $hookcache = array();
         foreach ($hooklist as $hookmod => $hookdata) {
             // module hooked to all items in crispbb?
-            $hookcache[$hookmod][0] = xarModHooks::isHooked($hookmod,'crispbb', 0);
+            $hookcache[$hookmod][0] = xarModHooks::isHooked($hookmod, 'crispbb', 0);
             // if module is hooked to all items, modules module hook functions did the work
             // we also check on cats and hitcount, they should not be hooked to all items
             if ($hookcache[$hookmod][0]) {
                 if ($hookmod == 'categories' || $hookmod == 'hitcount') {
-                    xarMod::apiFunc('modules','admin','disablehooks',
+                    xarMod::apiFunc(
+                        'modules',
+                        'admin',
+                        'disablehooks',
                         array(
                             'callerModName' => 'crispbb',
                             'callerItemType' => 0,
                             'hookModName' => $hookmod
-                        ));
+                        )
+                    );
                     $isupdated = true;
                 } else {
                     continue;
@@ -147,7 +155,7 @@ function crispbb_userapi_getitemtypes($args)
             // loop through each of our itemtypes
             foreach ($itemtypes as $k => $v) {
                 // module hooked to this itemtype?
-                $hookcache[$hookmod][$k] = xarModHooks::isHooked($hookmod,'crispbb', $k);
+                $hookcache[$hookmod][$k] = xarModHooks::isHooked($hookmod, 'crispbb', $k);
                 // handle the components
                 foreach ($components as $component) {
                     if ($v['component'] == $component) {
@@ -159,62 +167,78 @@ function crispbb_userapi_getitemtypes($args)
                                 // shouldn't be hooked to anything
                                 if ($hookcache[$hookmod][$k]) {
                                     // if it is, unhook it now
-                                    xarMod::apiFunc('modules','admin','disablehooks',
+                                    xarMod::apiFunc(
+                                        'modules',
+                                        'admin',
+                                        'disablehooks',
                                         array(
                                             'callerModName' => 'crispbb',
                                             'callerItemType' => $k,
                                             'hookModName' => $hookmod
-                                        ));
+                                        )
+                                    );
                                     $hookcache[$hookmod][$k] = false;
                                     $isupdated = true;
                                 }
-                            // else if module is hitcount
+                                // else if module is hitcount
                             } elseif ($hookmod == 'hitcount') {
                                 // should be hooked to topics component (all topics)
                                 if ($component == 'topics') {
                                     // if not hooked
                                     if (!$hookcache[$hookmod][$k]) {
                                         // hook it now
-                                        $hookcache[$hookmod][$k] = xarMod::apiFunc('modules','admin','enablehooks',
+                                        $hookcache[$hookmod][$k] = xarMod::apiFunc(
+                                            'modules',
+                                            'admin',
+                                            'enablehooks',
                                             array(
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
                                                 'hookModName' => $hookmod
-                                            ));
+                                            )
+                                        );
                                         $isupdated = true;
                                     }
-                                // should not be hooked to all items other components
+                                    // should not be hooked to all items other components
                                 } else {
                                     if ($hookcache[$hookmod][$k]) {
                                         // if it is, unhook it now
-                                        xarMod::apiFunc('modules','admin','disablehooks',
+                                        xarMod::apiFunc(
+                                            'modules',
+                                            'admin',
+                                            'disablehooks',
                                             array(
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
                                                 'hookModName' => $hookmod
-                                            ));
+                                            )
+                                        );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
                                     }
                                 }
-                            // else if module is crispsubs
+                                // else if module is crispsubs
                             } elseif ($hookmod == 'crispsubs') {
                                 // can only be hooked to topics component
                                 if ($component != 'topics') {
                                     if ($hookcache[$hookmod][$k]) {
                                         // if it is, unhook it now
-                                        xarMod::apiFunc('modules','admin','disablehooks',
+                                        xarMod::apiFunc(
+                                            'modules',
+                                            'admin',
+                                            'disablehooks',
                                             array(
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
                                                 'hookModName' => $hookmod
-                                            ));
+                                            )
+                                        );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
                                     }
                                 }
                             }
-                        // any other id is a regular forum itemtype
+                            // any other id is a regular forum itemtype
                         } else {
                             // check if this module is hooked to all items of this component
                             if ($hookcache[$hookmod][$types[$component]]) {
@@ -222,12 +246,16 @@ function crispbb_userapi_getitemtypes($args)
                                 if ($hookmod == 'crispsubs' && $component != 'topics') {
                                     if ($hookcache[$hookmod][$k]) {
                                         // if it is, unhook it now
-                                        xarMod::apiFunc('modules','admin','disablehooks',
+                                        xarMod::apiFunc(
+                                            'modules',
+                                            'admin',
+                                            'disablehooks',
                                             array(
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
                                                 'hookModName' => $hookmod
-                                            ));
+                                            )
+                                        );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
                                     }
@@ -235,26 +263,34 @@ function crispbb_userapi_getitemtypes($args)
                                     // if it is, check the module is hooked to this itemtype
                                     if (!$hookcache[$hookmod][$k]) {
                                         // if not, hook it now
-                                        $hookcache[$hookmod][$k] = xarMod::apiFunc('modules','admin','enablehooks',
+                                        $hookcache[$hookmod][$k] = xarMod::apiFunc(
+                                            'modules',
+                                            'admin',
+                                            'enablehooks',
                                             array(
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
                                                 'hookModName' => $hookmod
-                                            ));
+                                            )
+                                        );
                                         $isupdated = true;
                                     }
                                 }
-                            // if it isn't hooked to all items, we need to know if it changed
+                                // if it isn't hooked to all items, we need to know if it changed
                             } elseif (isset($cachedhooks[$hookmod][$types[$component]]) && $cachedhooks[$hookmod][$types[$component]]) {
                                 // it was previously hooked to all items
                                 if ($hookcache[$hookmod][$k] || ($hookmod == 'crispsubs' && $component != 'topics')) {
                                     // unhook it if it's currently hooked
-                                    xarMod::apiFunc('modules','admin','disablehooks',
+                                    xarMod::apiFunc(
+                                        'modules',
+                                        'admin',
+                                        'disablehooks',
                                         array(
                                             'callerModName' => 'crispbb',
                                             'callerItemType' => $k,
                                             'hookModName' => $hookmod
-                                        ));
+                                        )
+                                    );
                                     $hookcache[$hookmod][$k] = false;
                                     $isupdated = true;
                                 }
@@ -263,12 +299,16 @@ function crispbb_userapi_getitemtypes($args)
                                 if ($hookmod == 'crispsubs' && $component != 'topics') {
                                     if ($hookcache[$hookmod][$k]) {
                                         // if it is, unhook it now
-                                        xarMod::apiFunc('modules','admin','disablehooks',
+                                        xarMod::apiFunc(
+                                            'modules',
+                                            'admin',
+                                            'disablehooks',
                                             array(
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
                                                 'hookModName' => $hookmod
-                                            ));
+                                            )
+                                        );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
                                     }
@@ -284,16 +324,20 @@ function crispbb_userapi_getitemtypes($args)
         // we need to check if the hooks are currently being updated by the modules module
         // if any changes were made, the admin hooks display will be out of synch
         // first we check if the current request module, type and func is modules admin hooks
-        list ($modname, $modtype, $modfunc) = xarController::$request->getInfo();
+        list($modname, $modtype, $modfunc) = xarController::$request->getInfo();
         if ($modtype == 'admin' && $modfunc == 'hooks') {
             // we tag a flag onto the redirected url, so we can keep track on redirects
-            if (!xarVar::fetch('hookupdate', 'isset', $hookupdate, 0, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('hookupdate', 'isset', $hookupdate, 0, xarVar::NOT_REQUIRED)) {
+                return;
+            }
             // 2 is the maximum redirects it should take to get back in synch
             // we also only redirect if something actually changed
             if ($hookupdate < 2 && $isupdated) {
                 // modules admin hooks function expects a hook param
                 // indicating the hook module to list, so we fetch that for the return url
-                if (!xarVar::fetch('hook', 'isset', $hookarg, NULL, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('hook', 'isset', $hookarg, null, xarVar::NOT_REQUIRED)) {
+                    return;
+                }
                 // and finally we redirect to the function
                 xarController::redirect(xarController::URL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
                 return;
@@ -302,4 +346,3 @@ function crispbb_userapi_getitemtypes($args)
     }
     return $itemtypes;
 }
-?>

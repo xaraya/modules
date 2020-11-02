@@ -50,10 +50,11 @@ function crispbb_adminapi_removehook($args)
     $query = "DELETE FROM $hookstable WHERE xar_moduleid = ?";
     $bindvars[] = $modid;
 
-    $result = $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     return $extrainfo;
 }
-?>

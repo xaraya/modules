@@ -20,15 +20,21 @@
 function crispbb_admin_overview()
 {
     // Admin only function
-    if (!xarSecurity::check('AdminCrispBB')) return;
+    if (!xarSecurity::check('AdminCrispBB')) {
+        return;
+    }
 
     $data = array();
-    $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
+    $data['menulinks'] = xarMod::apiFunc(
+        'crispbb',
+        'admin',
+        'getmenulinks',
         array(
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'overview'
-        ));
+        )
+    );
     $modid = xarMod::getRegID('crispbb');
     $modinfo = xarMod::getInfo($modid);
     $data['version'] = $modinfo['version'];
@@ -40,5 +46,3 @@ function crispbb_admin_overview()
     xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
     return $data;
 }
-
-?>

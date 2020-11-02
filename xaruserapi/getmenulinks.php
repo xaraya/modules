@@ -19,9 +19,10 @@
  */
 function crispbb_userapi_getmenulinks()
 {
-
     $secLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');
-    if (empty($secLevel)) return array();
+    if (empty($secLevel)) {
+        return array();
+    }
     static $menulinks = array();
 
     if (empty($menulinks)) {
@@ -29,4 +30,3 @@ function crispbb_userapi_getmenulinks()
     }
     return $menulinks;
 }
-?>

@@ -32,7 +32,7 @@ function crispbb_userapi_updatepost($args)
     extract($args);
     $invalid = array();
     if (!isset($pid) || empty($pid) || !is_numeric($pid)) {
-      $invalid[] = 'pid';
+        $invalid[] = 'pid';
     }
 
     if (isset($tid)) {
@@ -147,15 +147,23 @@ function crispbb_userapi_updatepost($args)
     $query .= " WHERE id = ?";
     $bindvars[] = $pid;
 
-    $result = $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    if (!empty($nohooks)) return true;
+    if (!empty($nohooks)) {
+        return true;
+    }
 
     if (empty($poststype)) {
-        $post = xarMod::apiFunc('crispbb', 'user', 'getpost',
-            array('pid' => $pid));
+        $post = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getpost',
+            array('pid' => $pid)
+        );
         $poststype = $post['poststype'];
     }
 
@@ -166,4 +174,3 @@ function crispbb_userapi_updatepost($args)
 
     return true;
 }
-?>

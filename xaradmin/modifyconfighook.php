@@ -22,7 +22,9 @@ function crispbb_admin_modifyconfighook($args)
 {
     // only forum admins see the modifyconfighook
     // don't throw an error here, life in hooks goes on...
-    if (!xarSecurity::check('AdminCrispBB', 0)) return;
+    if (!xarSecurity::check('AdminCrispBB', 0)) {
+        return;
+    }
 
     extract($args);
 
@@ -66,14 +68,16 @@ function crispbb_admin_modifyconfighook($args)
     $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
 
     $data = array();
-    $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : NULL;
+    $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : null;
     $data['postsperpage'] = isset($settings['postsperpage']) ? $settings['postsperpage'] : 0;
     $data['quickreply'] = isset($settings['quickreply']) ? $settings['quickreply'] : false;
 
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', array('privcheck' => true, 'ftype' => 0));
 
     // no privs (shouldn't happen), or no forums (might)
-    if (isset($forums['NO_PRIVILEGES']) || isset($forums['BAD_DATA'])) return;
+    if (isset($forums['NO_PRIVILEGES']) || isset($forums['BAD_DATA'])) {
+        return;
+    }
 
     $foptions = array();
     foreach ($forums as $forum) {
@@ -82,4 +86,3 @@ function crispbb_admin_modifyconfighook($args)
     $data['foptions'] = $foptions;
     return xarTPLModule('crispbb', 'admin', 'modifyconfighook', $data);
 }
-?>

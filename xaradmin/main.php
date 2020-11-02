@@ -41,4 +41,3 @@ function crispbb_admin_main()
     xarController::redirect(xarController::URL('crispbb', 'admin', $defaultfunc));
     return true;
 }
-?>

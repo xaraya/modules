@@ -23,18 +23,28 @@ function crispbb_admin_ordercats($args)
 {
     // Xaraya security
     if (!xarSecurity::check('AdminCrispBB', 0) || !xarSecurity::check('ManageCategories', 0)) {
-         return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
     }
     extract($args);
-    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', xarVar::NOT_REQUIRED)) return;
-    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
     $categories = xarMod::apiFunc('categories', 'user', 'getchildren', array('cids' => array($basecid)));
     $cids = array_keys($categories);
-    if (empty($itemid) || !in_array($itemid, $cids)) $invalid[] = 'itemid';
-    if (empty($direction)) $invalid[] = 'direction';
+    if (empty($itemid) || !in_array($itemid, $cids)) {
+        $invalid[] = 'itemid';
+    }
+    if (empty($direction)) {
+        $invalid[] = 'direction';
+    }
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) function #(3) in module #(4)';
         $vars = array(join(', ', $invalid), 'admin', 'ordercats', 'crispBB');
@@ -42,7 +52,7 @@ function crispbb_admin_ordercats($args)
     }
     // Confirm authorisation code.
     if (!xarSec::confirmAuthKey()) {
-        return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
     }
     $cids = array($itemid);
     $refs = array();
@@ -76,8 +86,12 @@ function crispbb_admin_ordercats($args)
     $catexists[$itemid] = true;
     $repeat = 1;
     $creating = false;
-    if (!xarVar::fetch('refcid', 'list:int:0', $refcid)) return;
-    if (!xarVar::fetch('position', 'list:enum:1:2:3:4', $position)) return;
+    if (!xarVar::fetch('refcid', 'list:int:0', $refcid)) {
+        return;
+    }
+    if (!xarVar::fetch('position', 'list:enum:1:2:3:4', $position)) {
+        return;
+    }
 
     //Reverses the order of cids with the 'last children' option:
     //Look at bug #997
@@ -92,14 +106,14 @@ function crispbb_admin_ordercats($args)
         }
 
         if (intval($position[$cid]) == 3 ||
-            intval($position[$cid]) == 2 ) {
-            array_unshift ($cids, $cid);
+            intval($position[$cid]) == 2) {
+            array_unshift($cids, $cid);
         } else {
-            array_push ($cids, $cid);
+            array_push($cids, $cid);
         }
     }
     if (count($cids) > $repeat) {
-        $cids = array_slice($cids,0,$repeat);
+        $cids = array_slice($cids, 0, $repeat);
     }
     foreach ($cids as $cid) {
         if (empty($name[$cid])) {
@@ -135,8 +149,13 @@ function crispbb_admin_ordercats($args)
         // Pass to API
         if (!$creating) {
             // Updating a category. Check we have privilage to do so.
-            if (!xarSecurity::check('EditCategories', 1, 'Category', "All:$cid")) return;
-            if (!xarMod::apiFunc('categories', 'admin', 'updatecat',
+            if (!xarSecurity::check('EditCategories', 1, 'Category', "All:$cid")) {
+                return;
+            }
+            if (!xarMod::apiFunc(
+                'categories',
+                'admin',
+                'updatecat',
                 array(
                     'cid'         => $cid,
                     'name'        => $name[$cid],
@@ -147,7 +166,9 @@ function crispbb_admin_ordercats($args)
                     'inorout'     => $inorout,
                     'rightorleft' => $rightorleft
                 )
-            )) return;
+            )) {
+                return;
+            }
         }
     }
     if (empty($return_url)) {
@@ -156,4 +177,3 @@ function crispbb_admin_ordercats($args)
     xarController::redirect($return_url);
     return true;
 }
-?>

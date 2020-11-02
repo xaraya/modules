@@ -26,9 +26,9 @@ function crispbb_init()
 {
     $module = 'crispbb';
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create tables
+    # Create tables
 #
     $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
@@ -53,7 +53,9 @@ function crispbb_init()
         $q = new Query();
         // forums table
         $query = "DROP TABLE IF EXISTS " . $forumstable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'fstatus' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
@@ -72,7 +74,7 @@ function crispbb_init()
             'fsettings' => array('type' => 'text', 'charset' => $charset),
             'fprivileges' => array('type' => 'text', 'charset' => $charset)
         );
-        $query = xarDBCreateTable($forumstable,$fields);
+        $query = xarDBCreateTable($forumstable, $fields);
         $dbconn->Execute($query);
 
         // fstatus
@@ -98,13 +100,15 @@ function crispbb_init()
 
         // itemtypes table
         $query = "DROP TABLE IF EXISTS " . $itemtypestable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
             'component' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset),
         );
-        $query = xarDBCreateTable($itemtypestable,$fields);
+        $query = xarDBCreateTable($itemtypestable, $fields);
         $dbconn->Execute($query);
 
         // itemtypes, every entry must be unique
@@ -117,7 +121,9 @@ function crispbb_init()
 
         // topics table
         $query = "DROP TABLE IF EXISTS " . $topicstable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
@@ -133,7 +139,7 @@ function crispbb_init()
             'ttitle' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
             'tsettings' => array('type' => 'text', 'charset' => $charset),
         );
-        $query = xarDBCreateTable($topicstable,$fields);
+        $query = xarDBCreateTable($topicstable, $fields);
         $dbconn->Execute($query);
 
         // fid
@@ -174,7 +180,9 @@ function crispbb_init()
 
         // posts table
         $query = "DROP TABLE IF EXISTS " . $poststable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'tid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
@@ -187,7 +195,7 @@ function crispbb_init()
             'ptext' => array('type' => 'text', 'charset' => $charset),
             'psettings' => array('type' => 'text', 'charset' => $charset),
         );
-        $query = xarDBCreateTable($poststable,$fields);
+        $query = xarDBCreateTable($poststable, $fields);
         $dbconn->Execute($query);
 
         // tid
@@ -220,7 +228,9 @@ function crispbb_init()
 
         // hooks table
         $query = "DROP TABLE IF EXISTS " . $hookstable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'moduleid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
@@ -228,7 +238,7 @@ function crispbb_init()
             'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
             'tid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
         );
-        $query = xarDBCreateTable($hookstable,$fields);
+        $query = xarDBCreateTable($hookstable, $fields);
         $dbconn->Execute($query);
 
         // moduleid
@@ -261,14 +271,16 @@ function crispbb_init()
 
         // posters table
         $query = "DROP TABLE IF EXISTS " . $posterstable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         // @TODO: this could be waaaaay more useful (ranking, karma, etc)
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
             'numtopics' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
             'numreplies' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
         );
-        $query = xarDBCreateTable($posterstable,$fields);
+        $query = xarDBCreateTable($posterstable, $fields);
         $dbconn->Execute($query);
         $index = array('name' => $prefix . '_crispbb_posters_id',
                        'fields' => array('id')
@@ -284,9 +296,9 @@ function crispbb_init()
         throw $e;
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create DD objects
+    # Create DD objects
 #
     $objects = array(
                 'crispbb_forums',
@@ -299,11 +311,13 @@ function crispbb_init()
                 'crispbb_posters',
                 );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create Base Itemtypes
+    # Create Base Itemtypes
 #
 
     $itemtypes = DataObjectMaster::getObject(array('name' => 'crispbb_itemtypes'));
@@ -312,9 +326,9 @@ function crispbb_init()
         $itemtypes->properties['id']->value = 0;
         $basetypes[$component] = $itemtypes->createItem(array('fid' => 0, 'component' => $component));
     }
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create Base (Root) Category
+    # Create Base (Root) Category
 #
     $catName = 'crispBB Forums';
     try {
@@ -322,7 +336,7 @@ function crispbb_init()
         $worker = new CategoryWorker();
         $basecid = $worker->name2id($catName);
     } catch (Exception $e) {
-        $basecid = 0;        
+        $basecid = 0;
     }
     if (empty($basecid)) {
         sys::import('modules.dynamicdata.class.objects.master');
@@ -338,9 +352,9 @@ function crispbb_init()
     // Save the base category in a modvar
     xarModVars::set('crispbb', 'base_categories', serialize(array($basecid)));
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up configuration modvars (module specific)
+    # Set up configuration modvars (module specific)
 #
 
     // Module settings (storage for forums and module default settings)
@@ -365,33 +379,41 @@ function crispbb_init()
     xarModVars::set($module, 'showsortbox', true);
     xarModVars::set($module, 'editor', 'textarea');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up configuration modvars (common)
+    # Set up configuration modvars (common)
 #
-    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => $module));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => $module));
     $module_settings->initialize();
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Register blocks
+    # Register blocks
 #
     // register topitems block
-    if (!xarMod::apiFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => $module,
-                'blockType' => 'topitems'))) return;
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'register_block_type',
+        array('modName' => $module,
+                'blockType' => 'topitems')
+    )) {
+        return;
+    }
 
     // register userpanel block
-    if (!xarMod::apiFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => $module,
-                'blockType' => 'userpanel'))) return;
-# --------------------------------------------------------
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'register_block_type',
+        array('modName' => $module,
+                'blockType' => 'userpanel')
+    )) {
+        return;
+    }
+    # --------------------------------------------------------
 #
-# Create privilege instances
+    # Create privilege instances
 #
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
@@ -410,78 +432,109 @@ function crispbb_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance($module,'Block',$instances);
+    xarDefineInstance($module, 'Block', $instances);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Register masks
+    # Register masks
 #
-    xarRegisterMask('ViewCrispBB','All',$module,'Item','All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCrispBB','All',$module,'Item','All:All','ACCESS_READ');
-    xarRegisterMask('PostCrispBB','All',$module,'Item','All:All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateCrispBB','All',$module,'Item','All:All','ACCESS_MODERATE');
-    xarRegisterMask('EditCrispBB','All',$module,'Item','All:All','ACCESS_EDIT');
-    xarRegisterMask('AddCrispBB','All',$module,'Item','All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteCrispBB','All',$module,'Item','All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminCrispBB','All',$module,'Item','All:All','ACCESS_ADMIN');
+    xarRegisterMask('ViewCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_READ');
+    xarRegisterMask('PostCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_COMMENT');
+    xarRegisterMask('ModerateCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_MODERATE');
+    xarRegisterMask('EditCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_ADMIN');
 
-    xarRegisterMask('ReadCrispBBBlock','All',$module,'Block','All:All:All','ACCESS_READ');
+    xarRegisterMask('ReadCrispBBBlock', 'All', $module, 'Block', 'All:All:All', 'ACCESS_READ');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Register module hooks
+    # Register module hooks
 #
     // register search hook
     if (!xarModHooks::register('item', 'search', 'GUI', $module, 'user', 'search')) {
-       return false;
+        return false;
     }
 
     // register waiting content hook
     if (!xarModHooks::register('item', 'waitingcontent', 'GUI', $module, 'admin', 'waitingcontent')) {
-       return false;
+        return false;
     }
 
     // Module Modify Config
-    if (!xarModHooks::register('module', 'modifyconfig', 'GUI', $module, 'admin',
-        'modifyconfighook')) return false;
+    if (!xarModHooks::register(
+        'module',
+        'modifyconfig',
+        'GUI',
+        $module,
+        'admin',
+        'modifyconfighook'
+    )) {
+        return false;
+    }
 
     // Module Update Config
-    if (!xarModHooks::register('module', 'updateconfig', 'API', $module, 'admin',
-        'updateconfighook')) return false;
+    if (!xarModHooks::register(
+        'module',
+        'updateconfig',
+        'API',
+        $module,
+        'admin',
+        'updateconfighook'
+    )) {
+        return false;
+    }
 
     // Module Remove
-    if (!xarModHooks::register('module', 'remove', 'API', $module, 'admin', 'removehook'))
+    if (!xarModHooks::register('module', 'remove', 'API', $module, 'admin', 'removehook')) {
         return false;
+    }
 
     // Display item
-    if (!xarModHooks::register('item', 'display', 'GUI', $module, 'user', 'displayhook'))
+    if (!xarModHooks::register('item', 'display', 'GUI', $module, 'user', 'displayhook')) {
         return false;
+    }
 
     // Delete item
-    if (!xarModHooks::register('item', 'delete', 'API', $module, 'user', 'deletehook'))
+    if (!xarModHooks::register('item', 'delete', 'API', $module, 'user', 'deletehook')) {
         return false;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Register hooks from other modules
+    # Register hooks from other modules
 #
 
     // hook hitcount to all topics
-    xarMod::apiFunc('modules','admin','enablehooks',
+    xarMod::apiFunc(
+        'modules',
+        'admin',
+        'enablehooks',
         array(
             'callerModName' => $module,
             'callerItemType' => $basetypes['topics'],
             'hookModName' => 'hitcount'
-        ));
+        )
+    );
 
     // enable waiting content hook for base module
-    xarMod::apiFunc('modules','admin','enablehooks',
-                  array('callerModName' => 'base', 'hookModName' => $module));
+    xarMod::apiFunc(
+        'modules',
+        'admin',
+        'enablehooks',
+        array('callerModName' => 'base', 'hookModName' => $module)
+    );
 
     // hook search
     if (xarMod::isAvailable('search')) {
-        xarMod::apiFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'search', 'hookModName' => $module));
+        xarMod::apiFunc(
+            'modules',
+            'admin',
+            'enablehooks',
+            array('callerModName' => 'search', 'hookModName' => $module)
+        );
     }
 
     return crispbb_upgrade('2.0.0');
@@ -550,52 +603,102 @@ function crispbb_delete()
 
 
 
-    if (!xarModHooks::unregister('item', 'search', 'GUI',
-                              $module, 'user', 'search')) {
+    if (!xarModHooks::unregister(
+        'item',
+        'search',
+        'GUI',
+        $module,
+        'user',
+        'search'
+    )) {
         return false;
     }
 
-    if (!xarModHooks::unregister('item', 'waitingcontent', 'GUI',
-                              $module, 'admin', 'waitingcontent')) {
+    if (!xarModHooks::unregister(
+        'item',
+        'waitingcontent',
+        'GUI',
+        $module,
+        'admin',
+        'waitingcontent'
+    )) {
         return false;
     }
 
-    if (!xarModHooks::unregister('module', 'modifyconfig', 'GUI',
-                              $module, 'admin', 'modifyconfighook')) {
+    if (!xarModHooks::unregister(
+        'module',
+        'modifyconfig',
+        'GUI',
+        $module,
+        'admin',
+        'modifyconfighook'
+    )) {
         return false;
     }
-    if (!xarModHooks::unregister('module', 'updateconfig', 'API',
-                              $module, 'admin', 'updateconfighook')) {
+    if (!xarModHooks::unregister(
+        'module',
+        'updateconfig',
+        'API',
+        $module,
+        'admin',
+        'updateconfighook'
+    )) {
         return false;
     }
-    if (!xarModHooks::unregister('module', 'remove', 'API',
-                              $module, 'admin', 'removehook')) {
+    if (!xarModHooks::unregister(
+        'module',
+        'remove',
+        'API',
+        $module,
+        'admin',
+        'removehook'
+    )) {
         return false;
     }
-    if (!xarModHooks::unregister('item', 'display', 'GUI',
-                              $module, 'user', 'displayhook')) {
+    if (!xarModHooks::unregister(
+        'item',
+        'display',
+        'GUI',
+        $module,
+        'user',
+        'displayhook'
+    )) {
         return false;
     }
-    if (!xarModHooks::unregister('item', 'delete', 'API',
-                              $module, 'user', 'deletehook')) {
+    if (!xarModHooks::unregister(
+        'item',
+        'delete',
+        'API',
+        $module,
+        'user',
+        'deletehook'
+    )) {
         return false;
     }
-    if (!xarMod::apiFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => $module,
-                'blockType' => 'topitems'))) return;
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'unregister_block_type',
+        array('modName' => $module,
+                'blockType' => 'topitems')
+    )) {
+        return;
+    }
 
-    if (!xarMod::apiFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => $module,
-                'blockType' => 'userpanel'))) return;
-# --------------------------------------------------------
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'unregister_block_type',
+        array('modName' => $module,
+                'blockType' => 'userpanel')
+    )) {
+        return;
+    }
+    # --------------------------------------------------------
 #
-# Uninstall the module
+    # Uninstall the module
 #
-# The function below pretty much takes care of everything else that needs to be removed
+    # The function below pretty much takes care of everything else that needs to be removed
 #
     // Remove the crispbb categories
     sys::import('modules.categories.class.worker');
@@ -608,9 +711,8 @@ function crispbb_delete()
     // Remove the crispbb category links
     xarMod::apiFunc('categories', 'admin', 'unlinkcids', array('modid' => xarMod::getRegID('crispbb'), 'itemtype' => 1));
     
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
 
     /* Deletion successful*/
     return true;
 }
-?>

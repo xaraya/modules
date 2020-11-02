@@ -22,11 +22,17 @@ function crispbb_userapi_getitemlinks($args)
     $itemlinks = array();
 
     $secLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');
-    if (empty($secLevel)) return $itemlinks;
+    if (empty($secLevel)) {
+        return $itemlinks;
+    }
 
     if (isset($args['itemtype'])) {
-        $itemtypes = xarMod::apiFunc('crispbb', 'user', 'getitemtypes',
-            array('itemtype' => $args['itemtype']));
+        $itemtypes = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getitemtypes',
+            array('itemtype' => $args['itemtype'])
+        );
         if (!empty($itemtypes)) {
             $thistype = reset($itemtypes);
             $fid = $thistype['fid'];
@@ -46,13 +52,17 @@ function crispbb_userapi_getitemlinks($args)
     switch ($component) {
         case 'forum':
             default:
-            $bycat = empty($args['itemids']) ? true : NULL;
+            $bycat = empty($args['itemids']) ? true : null;
             $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', array('fid' => $args['itemids'], 'bycat' => $bycat));
             if (!empty($forums)) {
                 if (empty($bycat)) {
-                    foreach($forums as $foundfid => $forum) {
-                        if ($forum['ftype'] == 1) continue;
-                        if (empty($forum['forumviewurl'])) continue;
+                    foreach ($forums as $foundfid => $forum) {
+                        if ($forum['ftype'] == 1) {
+                            continue;
+                        }
+                        if (empty($forum['forumviewurl'])) {
+                            continue;
+                        }
                         $itemlinks[$foundfid] = array(
                             'url' => $forum['forumviewurl'],
                             'title' => $forum['fdesc'],
@@ -63,28 +73,46 @@ function crispbb_userapi_getitemlinks($args)
                     }
                 } else {
                     // get forum categories
-                    $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-                        array('fid' => 0, 'component' => 'forum'));
-                    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+                    $mastertype = xarMod::apiFunc(
+                        'crispbb',
+                        'user',
+                        'getitemtype',
+                        array('fid' => 0, 'component' => 'forum')
+                    );
+                    $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
                     $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
-                    $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
-                        array('cid' => $parentcat));
+                    $categories = xarMod::apiFunc(
+                        'categories',
+                        'user',
+                        'getchildren',
+                        array('cid' => $parentcat)
+                    );
                     foreach ($categories as $cid => $cat) {
-                        $secLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel',
-                            array('catid' => $cid));
-                        if (empty($secLevel)) continue;
+                        $secLevel = xarMod::apiFunc(
+                            'crispbb',
+                            'user',
+                            'getseclevel',
+                            array('catid' => $cid)
+                        );
+                        if (empty($secLevel)) {
+                            continue;
+                        }
                         if (!empty($forums[$cid])) {
-                        foreach($forums[$cid] as $foundfid => $forum) {
-                            if ($forum['ftype'] == 1) continue;
-                            if (empty($forum['forumviewurl'])) continue;
-                            $itemlinks[$foundfid] = array(
+                            foreach ($forums[$cid] as $foundfid => $forum) {
+                                if ($forum['ftype'] == 1) {
+                                    continue;
+                                }
+                                if (empty($forum['forumviewurl'])) {
+                                    continue;
+                                }
+                                $itemlinks[$foundfid] = array(
                                 'url' => $forum['forumviewurl'],
                                 'title' => $forum['fdesc'],
                                 'label' => xarVar::prepForDisplay($forum['fname']),
                                 'id' => $foundfid,
                                 'name' => $forum['fname']
                             );
-                        }
+                            }
                         }
                     }
                 }
@@ -93,7 +121,7 @@ function crispbb_userapi_getitemlinks($args)
         case 'topics':
             $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics', array('tid' => $args['itemids']));
             if (!empty($topics)) {
-                foreach($topics as $foundtid => $topic) {
+                foreach ($topics as $foundtid => $topic) {
                     if (empty($topic['viewtopicurl'])) {
                         $url = '';
                     } else {
@@ -112,7 +140,7 @@ function crispbb_userapi_getitemlinks($args)
         case 'posts':
             $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', array('pid' => $args['itemids']));
             if (!empty($posts)) {
-                foreach($posts as $foundpid => $post) {
+                foreach ($posts as $foundpid => $post) {
                     if (empty($post['viewreplyurl'])) {
                         $url = '';
                     } else {
@@ -131,4 +159,3 @@ function crispbb_userapi_getitemlinks($args)
     }
     return $itemlinks;
 }
-?>

@@ -24,4 +24,3 @@ function crispbb_userapi_getcatbases($args)
     $basecats = unserialize(xarModVars::get('crispbb', 'base_categories'));
     return $basecats;
 }
-?>

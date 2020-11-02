@@ -22,7 +22,7 @@
  */
 function crispbb_userapi_getpresets($args)
 {
-    extract ($args);
+    extract($args);
     $presets = array();
 
     if (!empty($preset) && is_string($preset)) {
@@ -256,6 +256,4 @@ function crispbb_userapi_getpresets($args)
     }
 
     return $presets;
-
 }
-?>

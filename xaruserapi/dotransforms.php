@@ -25,12 +25,20 @@ function crispbb_userapi_dotransforms($args)
 {
     extract($args);
     $invalid = array();
-    if (empty($itemtype) || !is_numeric($itemtype)) $invalid[] = 'itemtype';
-    if (!isset($transforms) || empty($transforms) || !is_array($transforms)) $invalid[] = 'transforms';
+    if (empty($itemtype) || !is_numeric($itemtype)) {
+        $invalid[] = 'itemtype';
+    }
+    if (!isset($transforms) || empty($transforms) || !is_array($transforms)) {
+        $invalid[] = 'transforms';
+    }
 
-    if (!empty($invalid)) return array();
+    if (!empty($invalid)) {
+        return array();
+    }
 
-    if (!isset($ignore) || empty($ignore) || !is_array($ignore)) $ignore = array();
+    if (!isset($ignore) || empty($ignore) || !is_array($ignore)) {
+        $ignore = array();
+    }
 
     $transhooks = xarModHooks::getList('crispbb', 'item', 'transform', $itemtype);
 
@@ -43,11 +51,17 @@ function crispbb_userapi_dotransforms($args)
             if (!empty($transhooks)) {
                 foreach ($transhooks as $transform) {
                     // skip ignored hook module
-                    if (!empty($ignore[$transform['module']])) continue;
+                    if (!empty($ignore[$transform['module']])) {
+                        continue;
+                    }
                     // skip transforms for this field, this hook module
-                    if (empty($transforms[$field][$transform['module']])) continue;
+                    if (empty($transforms[$field][$transform['module']])) {
+                        continue;
+                    }
                     // do transform
-                    if (!xarMod::apiLoad($transform['module'], $transform['type']))  return; //return;
+                    if (!xarMod::apiLoad($transform['module'], $transform['type'])) {
+                        return;
+                    } //return;
                     $extrainfo = array(
                         'module' => 'crispbb',
                         'itemtype' => $itemtype,
@@ -55,12 +69,16 @@ function crispbb_userapi_dotransforms($args)
                         'transform' => array($field),
                         $field => $text
                     );
-                    $res = xarMod::apiFunc($transform['module'],
-                                         $transform['type'],
-                                         $transform['func'],
-                                         array('objectid' => 0,
-                                               'extrainfo' => $extrainfo));
-                    if (!isset($res))  return; //return;
+                    $res = xarMod::apiFunc(
+                        $transform['module'],
+                        $transform['type'],
+                        $transform['func'],
+                        array('objectid' => 0,
+                                               'extrainfo' => $extrainfo)
+                    );
+                    if (!isset($res)) {
+                        return;
+                    } //return;
                     $text = $res[$field];
                 }
             }
@@ -70,13 +88,13 @@ function crispbb_userapi_dotransforms($args)
 
     $cleanup = array('ttitle', 'tdesc', 'pdesc', 'fname');
     foreach ($transformed as $field => $text) {
-        if (!in_array($field, $cleanup)) continue;
+        if (!in_array($field, $cleanup)) {
+            continue;
+        }
         $text = str_replace("<p>", "", $text);
         $text = str_replace("</p>", "", $text);
         $transformed[$field] = $text;
     }
 
     return $transformed;
-
 }
-?>

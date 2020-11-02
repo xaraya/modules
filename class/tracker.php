@@ -46,29 +46,36 @@ class Tracker extends xarObject
 
     public function setNow($time=0)
     {
-        if (empty($time) || !is_numeric($time)) $time = time();
+        if (empty($time) || !is_numeric($time)) {
+            $time = time();
+        }
         $this->now = $time;
     }
 
     public function lastUpdate($fid)
     {
-        if (isset($this->ftracker[$fid]))
+        if (isset($this->ftracker[$fid])) {
             return $this->ftracker[$fid];
+        }
         return $this->now;
     }
 
     public function lastRead($fid, $tid=0)
     {
-        if (isset($this->tracker[$fid][$tid]['lastread']))
+        if (isset($this->tracker[$fid][$tid]['lastread'])) {
             return $this->tracker[$fid][$tid]['lastread'];
-        if (isset($this->tracker[$fid][0]['lastread']))
+        }
+        if (isset($this->tracker[$fid][0]['lastread'])) {
             return $this->tracker[$fid][0]['lastread'];
+        }
         return $this->lastvisit;
     }
 
     public function markRead($fid, $tid = 0)
     {
-        if (empty($tid)) $this->tracker[$fid] = array();
+        if (empty($tid)) {
+            $this->tracker[$fid] = array();
+        }
         $this->tracker[$fid][$tid]['lastread'] = $this->now;
     }
 
@@ -77,7 +84,9 @@ class Tracker extends xarObject
         $tids = array();
         if (!empty($this->tracker[$fid])) {
             foreach (array_keys($this->tracker[$fid]) as $tid) {
-                if (empty($tid)) continue;
+                if (empty($tid)) {
+                    continue;
+                }
                 $tids[] = $tid;
             }
         }
@@ -85,9 +94,15 @@ class Tracker extends xarObject
     }
     public function setUserData()
     {
-        if (!xarUser::isLoggedIn()) return true;
-        if (empty($this->now)) $this->setNow();
-        if (empty($this->id)) $this->id = xarUser::getVar('id');
+        if (!xarUser::isLoggedIn()) {
+            return true;
+        }
+        if (empty($this->now)) {
+            $this->setNow();
+        }
+        if (empty($this->id)) {
+            $this->id = xarUser::getVar('id');
+        }
         $this->name = xarUser::getVar('name', $this->id);
         $this->uname = xarUser::getVar('uname', $this->id);
         if ($this->id == xarUser::getVar('id')) {
@@ -100,7 +115,7 @@ class Tracker extends xarObject
                 // increment visit count
                 $this->numvisits++;
             } else {
-            // current visit
+                // current visit
                 // increment time online
                 $this->timeonline += $this->now - $this->visitend;
             }
@@ -111,7 +126,9 @@ class Tracker extends xarObject
 
     public function getUserPanelInfo()
     {
-        if (!xarUser::isLoggedIn()) return false;
+        if (!xarUser::isLoggedIn()) {
+            return false;
+        }
         return array(
             'id' => $this->id,
             'name' => $this->name,
@@ -140,4 +157,3 @@ class Tracker extends xarObject
         return array('id','lastvisit', 'numvisits', 'timeonline', 'tracker', 'visitstart', 'visitend');
     }
 }
-?>

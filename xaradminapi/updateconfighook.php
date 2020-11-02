@@ -19,7 +19,6 @@
  */
 function crispbb_adminapi_updateconfighook($args)
 {
-
     extract($args);
 
     if (!isset($extrainfo)) {
@@ -27,7 +26,9 @@ function crispbb_adminapi_updateconfighook($args)
     }
     // only forum admins see the modifyconfighook
     // don't throw an error here, life in hooks goes on...
-    if (!xarSecurity::check('AdminCrispBB', 0)) return $extrainfo;
+    if (!xarSecurity::check('AdminCrispBB', 0)) {
+        return $extrainfo;
+    }
 
     if (empty($extrainfo['module'])) {
         $modname = xarMod::getName();
@@ -44,20 +45,28 @@ function crispbb_adminapi_updateconfighook($args)
     }
 
     if (!isset($itemtype) || !is_numeric($itemtype)) {
-         if (isset($extrainfo) && is_array($extrainfo) &&
+        if (isset($extrainfo) && is_array($extrainfo) &&
              isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $itemtype = $extrainfo['itemtype'];
-         } else {
-             $itemtype = 0;
-         }
+            $itemtype = $extrainfo['itemtype'];
+        } else {
+            $itemtype = 0;
+        }
     }
 
     $settings = array();
 
-    if (!xarVar::fetch('crispbb_fid', 'id', $settings['fid'], NULL, xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('crispbb_postsperpage', 'int:0:100', $settings['postsperpage'], 0, xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('crispbb_quickreply', 'checkbox', $settings['quickreply'], false, xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('crispbb_newaction', 'int:0:1', $settings['newaction'], 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('crispbb_fid', 'id', $settings['fid'], null, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_postsperpage', 'int:0:100', $settings['postsperpage'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_quickreply', 'checkbox', $settings['quickreply'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('crispbb_newaction', 'int:0:1', $settings['newaction'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     $var_to_look_for = $modname;
     if (!empty($itemtype)) {
@@ -69,4 +78,3 @@ function crispbb_adminapi_updateconfighook($args)
 
     return $extrainfo;
 }
-?>

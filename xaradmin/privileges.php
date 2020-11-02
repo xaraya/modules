@@ -24,26 +24,54 @@ function crispbb_admin_privileges($args)
     extract($args);
 
     // Security Check
-    if (!xarSecurity::check('AdminCrispBB')) return;
+    if (!xarSecurity::check('AdminCrispBB')) {
+        return;
+    }
     $now = time();
-    if (!xarVar::fetch('catid', 'str', $catid, 0, xarVar::NOT_REQUIRED)) return; // empty, 'All', numeric or modulename
-    if (!xarVar::fetch('fid', 'str', $fid, 0, xarVar::NOT_REQUIRED)) return; // empty, 'All', numeric
-    if (!xarVar::fetch('apply', 'str' , $apply , false, xarVar::NOT_REQUIRED)) return; // boolean?
-    if (!xarVar::fetch('extpid', 'str', $extpid, '', xarVar::NOT_REQUIRED)) return; // empty, 'All', numeric ?
-    if (!xarVar::fetch('extname', 'str', $extname, '', xarVar::NOT_REQUIRED)) return; // ?
-    if (!xarVar::fetch('extrealm', 'str', $extrealm, '', xarVar::NOT_REQUIRED)) return; // ?
-    if (!xarVar::fetch('extmodule','str', $extmodule, '', xarVar::NOT_REQUIRED)) return; // ?
-    if (!xarVar::fetch('extcomponent', 'enum:All:Forum', $extcomponent)) return; // FIXME: is 'Type' needed?
-    if (!xarVar::fetch('extinstance', 'str:1', $extinstance, '', xarVar::NOT_REQUIRED)) return; // somthing:somthing:somthing or empty
-    if (!xarVar::fetch('extlevel', 'str:1', $extlevel)) return;
-    if (!xarVar::fetch('pparentid',    'isset', $pparentid,    NULL, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('catid', 'str', $catid, 0, xarVar::NOT_REQUIRED)) {
+        return;
+    } // empty, 'All', numeric or modulename
+    if (!xarVar::fetch('fid', 'str', $fid, 0, xarVar::NOT_REQUIRED)) {
+        return;
+    } // empty, 'All', numeric
+    if (!xarVar::fetch('apply', 'str', $apply, false, xarVar::NOT_REQUIRED)) {
+        return;
+    } // boolean?
+    if (!xarVar::fetch('extpid', 'str', $extpid, '', xarVar::NOT_REQUIRED)) {
+        return;
+    } // empty, 'All', numeric ?
+    if (!xarVar::fetch('extname', 'str', $extname, '', xarVar::NOT_REQUIRED)) {
+        return;
+    } // ?
+    if (!xarVar::fetch('extrealm', 'str', $extrealm, '', xarVar::NOT_REQUIRED)) {
+        return;
+    } // ?
+    if (!xarVar::fetch('extmodule', 'str', $extmodule, '', xarVar::NOT_REQUIRED)) {
+        return;
+    } // ?
+    if (!xarVar::fetch('extcomponent', 'enum:All:Forum', $extcomponent)) {
+        return;
+    } // FIXME: is 'Type' needed?
+    if (!xarVar::fetch('extinstance', 'str:1', $extinstance, '', xarVar::NOT_REQUIRED)) {
+        return;
+    } // somthing:somthing:somthing or empty
+    if (!xarVar::fetch('extlevel', 'str:1', $extlevel)) {
+        return;
+    }
+    if (!xarVar::fetch('pparentid', 'isset', $pparentid, null, xarVar::DONT_SET)) {
+        return;
+    }
 
-// TODO: combine 'Item' and 'Type' instances someday ?
+    // TODO: combine 'Item' and 'Type' instances someday ?
 
     if (!empty($extinstance)) {
-        $parts = explode(':',$extinstance);
-            if (count($parts) > 0 && !empty($parts[0])) $catid = $parts[0];
-            if (count($parts) > 1 && !empty($parts[1])) $fid = $parts[1];
+        $parts = explode(':', $extinstance);
+        if (count($parts) > 0 && !empty($parts[0])) {
+            $catid = $parts[0];
+        }
+        if (count($parts) > 1 && !empty($parts[1])) {
+            $fid = $parts[1];
+        }
     }
 
 
@@ -62,27 +90,47 @@ function crispbb_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,
-                                  $newinstance,$extlevel,$pparentid);
+        $pid = xarReturnPrivilege(
+            $extpid,
+            $extname,
+            $extrealm,
+            $extmodule,
+            $extcomponent,
+            $newinstance,
+            $extlevel,
+            $pparentid
+        );
         if (empty($pid)) {
             return; // throw back
         }
 
         // redirect to the privilege
-        xarController::redirect(xarController::URL('privileges', 'admin', 'modifyprivilege',
-                                      array('id' => $pid)));
+        xarController::redirect(xarController::URL(
+            'privileges',
+            'admin',
+            'modifyprivilege',
+            array('id' => $pid)
+        ));
         return true;
     }
 
 
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
     // get forum categories
-    $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-        array('fid' => 0, 'component' => 'forum'));
-    $basecats = xarMod::apiFunc('crispbb','user','getcatbases');
+    $mastertype = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'getitemtype',
+        array('fid' => 0, 'component' => 'forum')
+    );
+    $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
-    $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
-        array('cid' => $parentcat));
+    $categories = xarMod::apiFunc(
+        'categories',
+        'user',
+        'getchildren',
+        array('cid' => $parentcat)
+    );
     $numitems = xarML('probably');
 
 
@@ -99,11 +147,9 @@ function crispbb_admin_privileges($args)
                   'extmodule'    => $extmodule,
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
-                  'extinstance'  => xarVar::prepForDisplay(join(':',$newinstance)),
+                  'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
                   'pparentid'    => $pparentid,
                  );
 
     return $data;
 }
-
-?>

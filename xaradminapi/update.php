@@ -34,7 +34,7 @@ function crispbb_adminapi_update($args)
     $invalid = array();
 
     if (!isset($fid) || empty($fid) || !is_numeric($fid)) {
-      $invalid[] = 'fid';
+        $invalid[] = 'fid';
     }
 
     if (isset($fname)) {
@@ -99,7 +99,7 @@ function crispbb_adminapi_update($args)
     }
 
     if (!empty($cids) && count($cids) > 0) {
-        $cids = array_values(preg_grep('/\d+/',$cids));
+        $cids = array_values(preg_grep('/\d+/', $cids));
     } elseif (!empty($catid) && is_numeric($catid)) {
         $cids = array($catid);
     } else {
@@ -114,7 +114,9 @@ function crispbb_adminapi_update($args)
         // we only accept cids from admin modify function
         // so we make sure user has admin privileges to update the forum
         foreach ($cids as $cid) {
-            if (empty($cid)) continue;
+            if (empty($cid)) {
+                continue;
+            }
             $foundcid = $cid;
             break;
         }
@@ -190,55 +192,79 @@ function crispbb_adminapi_update($args)
     }
 
     // keep counts in synch when updating the forum
-    $numtopics = xarMod::apiFunc('crispbb', 'user', 'counttopics',
+    $numtopics = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'counttopics',
         array(
             'fid' => $fid,
             'tstatus' => array(0,1)
-        ));
+        )
+    );
     $set[] = 'numtopics = ?';
     $bindvars[] = $numtopics;
 
-    $numreplies = xarMod::apiFunc('crispbb', 'user', 'countposts',
+    $numreplies = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
         array(
             'fid' => $fid,
             'tstatus' => array(0,1),
             'pstatus' => 0
-        ));
+        )
+    );
     $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
     $set[] = 'numreplies = ?';
     $bindvars[] = $numreplies;
 
-    $numtopicsubs = xarMod::apiFunc('crispbb', 'user', 'counttopics',
+    $numtopicsubs = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'counttopics',
         array(
             'fid' => $fid,
             'tstatus' => 2
-        ));
+        )
+    );
     $set[] = 'numtopicsubs = ?';
     $bindvars[] = $numtopicsubs;
 
-    $numtopicdels = xarMod::apiFunc('crispbb', 'user', 'counttopics',
+    $numtopicdels = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'counttopics',
         array(
             'fid' => $fid,
             'tstatus' => 5
-        ));
+        )
+    );
     $set[] = 'numtopicdels = ?';
     $bindvars[] = $numtopicdels;
 
-    $numreplysubs = xarMod::apiFunc('crispbb', 'user', 'countposts',
+    $numreplysubs = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
         array(
             'fid' => $fid,
             'tstatus' => array(0,1),
             'pstatus' => 2
-        ));
+        )
+    );
     $set[] = 'numreplysubs = ?';
     $bindvars[] = $numreplysubs;
 
-    $numreplydels = xarMod::apiFunc('crispbb', 'user', 'countposts',
+    $numreplydels = xarMod::apiFunc(
+        'crispbb',
+        'user',
+        'countposts',
         array(
             'fid' => $fid,
             'tstatus' => array(0,1),
             'pstatus' => 5
-        ));
+        )
+    );
     $set[] = 'numreplydels = ?';
     $bindvars[] = $numreplydels;
 
@@ -247,15 +273,23 @@ function crispbb_adminapi_update($args)
     $query .= " WHERE id = ?";
     $bindvars[] = $fid;
 
-    $result = $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    if (!empty($nohooks)) return true;
+    if (!empty($nohooks)) {
+        return true;
+    }
 
     if (empty($itemtype)) {
-        $itemtype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-            array('fid' => $fid, 'component' => 'forum'));
+        $itemtype = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getitemtype',
+            array('fid' => $fid, 'component' => 'forum')
+        );
     }
 
     $args['module'] = 'crispbb';
@@ -266,4 +300,3 @@ function crispbb_adminapi_update($args)
 
     return true;
 }
-?>

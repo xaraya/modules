@@ -18,7 +18,6 @@
  */
 function crispbb_adminapi_delete($args)
 {
-
     extract($args);
     if (!isset($fid) || !is_numeric($fid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -46,31 +45,41 @@ function crispbb_adminapi_delete($args)
     // remove posts
     if (!empty($pids)) {
         $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
-        $result = $dbconn->Execute($query,array());
-        if (!$result) return;
+        $result = $dbconn->Execute($query, array());
+        if (!$result) {
+            return;
+        }
     }
 
     // remove topics
     if (!empty($tids)) {
         // first from topics table
         $query = "DELETE FROM $topicstable WHERE id IN (" . join(',', $tids) . ")";
-        $result = $dbconn->Execute($query,array());
-        if (!$result) return;
+        $result = $dbconn->Execute($query, array());
+        if (!$result) {
+            return;
+        }
         // then from hooks table
         $query = "DELETE FROM $hookstable WHERE tid IN (" . join(',', $tids) . ")";
-        $result = $dbconn->Execute($query,array());
-        if (!$result) return;
+        $result = $dbconn->Execute($query, array());
+        if (!$result) {
+            return;
+        }
     }
 
     // remove forum itemtype
     $query = "DELETE FROM $itemtypestable WHERE fid = ? AND component = 'Forum'";
-    $result = $dbconn->Execute($query,array($fid));
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array($fid));
+    if (!$result) {
+        return;
+    }
 
     // finally, remove the forum itself
     $query = "DELETE FROM $forumstable WHERE id = ?";
-    $result = $dbconn->Execute($query,array($fid));
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array($fid));
+    if (!$result) {
+        return;
+    }
 
 
     $item['module'] = 'crispbb';
@@ -86,4 +95,3 @@ function crispbb_adminapi_delete($args)
     /* Let the calling process know that we have finished successfully */
     return true;
 }
-?>

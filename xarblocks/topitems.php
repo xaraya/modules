@@ -21,8 +21,8 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
     protected $module           = 'crispbb'; // module block type belongs to, if any
     protected $text_type        = 'Forums top items';  // Block type display name
     protected $text_type_long   = 'Show forum topics'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = 'Chris Powis';
     protected $contact          = 'crisp@crispcreations.co.uk';
     protected $credits          = '';
@@ -37,11 +37,11 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
     public $sort                = 'ptime';
     public $order               = 'DESC';
 
-/**
- * Display func.
- * @param $data array containing title,content
- */
-    function display()
+    /**
+     * Display func.
+     * @param $data array containing title,content
+     */
+    public function display()
     {
         $vars = $this->getContent();
         // Defaults
@@ -55,28 +55,40 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
             //$sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
 
-        if (empty($vars['fids']) || !is_array($vars['fids'])) $vars['fids'] = $this->fids;
-        if (empty($vars['sort']) || !isset($sorts[$vars['sort']])) $vars['sort'] = $this->sort;
-        if (empty($vars['order'])) $vars['order'] = $this->order;
-        if (empty($vars['numitems'])) $vars['numitems'] = $this->numitems;
+        if (empty($vars['fids']) || !is_array($vars['fids'])) {
+            $vars['fids'] = $this->fids;
+        }
+        if (empty($vars['sort']) || !isset($sorts[$vars['sort']])) {
+            $vars['sort'] = $this->sort;
+        }
+        if (empty($vars['order'])) {
+            $vars['order'] = $this->order;
+        }
+        if (empty($vars['numitems'])) {
+            $vars['numitems'] = $this->numitems;
+        }
 
-        $vars['topics'] = xarMod::apiFunc('crispbb', 'user', 'gettopics',
+        $vars['topics'] = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'gettopics',
             array(
                 'fid' => $vars['fids'],
                 'sort' => $vars['sort'],
                 'order' => $vars['order'],
                 'tstatus' => array(0,1,2,4),
                 'numitems' => $vars['numitems']
-            ));
+            )
+        );
 
         return $vars;
     }
 
-/**
- * Modify Function to the Blocks Admin
- * @param $data array containing title,content
- */
-    public function modify(Array $data=array())
+    /**
+     * Modify Function to the Blocks Admin
+     * @param $data array containing title,content
+     */
+    public function modify(array $data=array())
     {
         $data = $this->getContent();
 
@@ -91,13 +103,25 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
             //sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
 
-        if (empty($data['fids']) || !is_array($data['fids'])) $data['fids'] = $this->fids;
-        if (empty($data['sort']) || !isset($sorts[$data['sort']])) $data['sort'] = $this->sort;
-        if (empty($data['order'])) $data['order'] = $this->order;
-        if (empty($data['numitems'])) $data['numitems'] = $this->numitems;
+        if (empty($data['fids']) || !is_array($data['fids'])) {
+            $data['fids'] = $this->fids;
+        }
+        if (empty($data['sort']) || !isset($sorts[$data['sort']])) {
+            $data['sort'] = $this->sort;
+        }
+        if (empty($data['order'])) {
+            $data['order'] = $this->order;
+        }
+        if (empty($data['numitems'])) {
+            $data['numitems'] = $this->numitems;
+        }
 
-        $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-            array('preset' => 'sortorderoptions'));
+        $presets = xarMod::apiFunc(
+            'crispbb',
+            'user',
+            'getpresets',
+            array('preset' => 'sortorderoptions')
+        );
         $data['sortoptions'] = $sorts;
         $data['orderoptions'] = $presets['sortorderoptions'];
         $data['forumoptions'] = $forums;
@@ -105,24 +129,30 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         return $data;
     }
 
-/**
- * Updates the Block config from the Blocks Admin
- * @param $data array containing title,content
- */
-    public function update(Array $data=array())
+    /**
+     * Updates the Block config from the Blocks Admin
+     * @param $data array containing title,content
+     */
+    public function update(array $data=array())
     {
         $vars = array();
 
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
         $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
 
-        if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, xarVar::NOT_REQUIRED)) {return;}
-        if (!xarVar::fetch('fids', 'list', $vars['fids'], $this->fids, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, xarVar::NOT_REQUIRED)) return;
-        if (!xarVar::fetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('fids', 'list', $vars['fids'], $this->fids, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, xarVar::NOT_REQUIRED)) {
+            return;
+        }
         $this->setContent($vars);
         return true;
-
     }
 }
-?>

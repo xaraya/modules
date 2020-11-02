@@ -32,4 +32,3 @@ function crispbb_xartables()
     $tables['crispbb_posters']      = $prefix . '_crispbb_posters';
     return $tables;
 }
-?>

@@ -23,22 +23,22 @@ function crispbb_userapi_decode_shorturl($params)
     $module = 'crispbb';
     /* Check and see if we have a module alias */
     $aliasisset = xarModVars::get($module, 'useModuleAlias');
-    $aliasname = xarModVars::get($module,'aliasname');
+    $aliasname = xarModVars::get($module, 'aliasname');
     if (($aliasisset) && isset($aliasname)) {
         $usealias   = true;
-    } else{
+    } else {
         $usealias = false;
     }
 
     if ($params[0] != $module) { /* it's possibly some type of alias */
-        $aliasname = xarModVars::get($module,'aliasname');
+        $aliasname = xarModVars::get($module, 'aliasname');
     }
 
     // forum index
     if (empty($params[1]) || (preg_match('/^index/i', $params[1]))) {
         return array('forum_index', $args);
     // forum category
-    } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[1],$matches)) {
+    } elseif (preg_match('/^c(_?[0-9 +-]+)/', $params[1], $matches)) {
         $catid = $matches[1];
         $args['catid'] = $catid;
         return array('forum_index', $args);
@@ -68,13 +68,13 @@ function crispbb_userapi_decode_shorturl($params)
     } elseif (preg_match('/^moderate/i', $params[1]) && empty($params[2])) {
         return array('moderate', $args);
     } elseif (preg_match('/^read/i', $params[1]) && !empty($params[3])) {
-        if (preg_match('/^f(_?[0-9 +-]+)/',$params[3],$matches)) {
+        if (preg_match('/^f(_?[0-9 +-]+)/', $params[3], $matches)) {
             $fid = $matches[1];
             $args['action'] = 'read';
             $args['fid'] = $fid;
         }
         return array('forum_index', $args);
-    }  elseif (preg_match('/^f(_?[0-9 +-]+)/',$params[1],$matches1)) {
+    } elseif (preg_match('/^f(_?[0-9 +-]+)/', $params[1], $matches1)) {
         $fid = $matches1[1];
         $args['fid'] = $fid;
         if (!empty($params[2])) {
@@ -86,11 +86,11 @@ function crispbb_userapi_decode_shorturl($params)
         }
         return array('view', $args);
     // topic id
-    } elseif (preg_match('/^t(_?[0-9 +-]+)/',$params[1],$matches1)) {
+    } elseif (preg_match('/^t(_?[0-9 +-]+)/', $params[1], $matches1)) {
         $tid = $matches1[1];
         $args['tid'] = $tid;
         if (!empty($params[3])) {
-            if (preg_match('/^p(_?[0-9 +-]+)/',$params[2],$matches2)) {
+            if (preg_match('/^p(_?[0-9 +-]+)/', $params[2], $matches2)) {
                 $pid = $matches2[1];
                 $args['pid'] = $pid;
                 if (!empty($params[3])) {
@@ -108,7 +108,6 @@ function crispbb_userapi_decode_shorturl($params)
             // topic id
             } elseif (preg_match('/^edit/i', $params[2])) {
                 return array('modifytopic', $args);
-
             } elseif (preg_match('/^newreply/i', $params[2])) {
                 return array('newreply', $args);
             } elseif (preg_match('/^move/i', $params[2])) {
@@ -132,7 +131,7 @@ function crispbb_userapi_decode_shorturl($params)
         return array('display', $args);
     } elseif (preg_match('/^(\w+)/', $params[1], $matches) && !empty($params[2])) {
         // look for a param identifying component
-        if (preg_match('/^f(_?[0-9 +-]+)/',$params[2],$matches1)) {
+        if (preg_match('/^f(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $fid = $matches1[1];
             $args['fid'] = $fid;
             if (!empty($params[3])) {
@@ -144,11 +143,11 @@ function crispbb_userapi_decode_shorturl($params)
             }
             return array('view', $args);
         // topic id
-        } elseif (preg_match('/^t(_?[0-9 +-]+)/',$params[2],$matches1)) {
+        } elseif (preg_match('/^t(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $tid = $matches1[1];
             $args['tid'] = $tid;
             if (!empty($params[3])) {
-                if (preg_match('/^p(_?[0-9 +-]+)/',$params[3],$matches2)) {
+                if (preg_match('/^p(_?[0-9 +-]+)/', $params[3], $matches2)) {
                     $pid = $matches2[1];
                     $args['pid'] = $pid;
                     if (!empty($params[4])) {
@@ -166,7 +165,6 @@ function crispbb_userapi_decode_shorturl($params)
                 // topic id
                 } elseif (preg_match('/^edit/i', $params[3])) {
                     return array('modifytopic', $args);
-
                 } elseif (preg_match('/^newreply/i', $params[3])) {
                     return array('newreply', $args);
                 } elseif (preg_match('/^move/i', $params[3])) {
@@ -190,17 +188,16 @@ function crispbb_userapi_decode_shorturl($params)
                 }
             }
             return array('display', $args);
-        } elseif (preg_match('/^p(_?[0-9 +-]+)/',$params[2],$matches1)) {
+        } elseif (preg_match('/^p(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $pid = $matches1[1];
             $args['pid'] = $pid;
             return array('displayreply', $args);
-        } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches1)) {
+        } elseif (preg_match('/^c(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $catid = $matches1[1];
             $args['catid'] = $catid;
             return array('forum_index', $args);
-        // search forums
+            // search forums
         }
     }
     /* default : return nothing -> no short URL decoded */
 }
-?>

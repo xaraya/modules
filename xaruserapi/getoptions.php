@@ -23,9 +23,15 @@ function crispbb_userapi_getoptions($args)
 {
     extract($args);
     $data = array();
-    if (empty($options)) return $data;
-    if (is_string($options)) $options = explode(',', $options);
-    if (!is_array($options)) return $data;
+    if (empty($options)) {
+        return $data;
+    }
+    if (is_string($options)) {
+        $options = explode(',', $options);
+    }
+    if (!is_array($options)) {
+        return $data;
+    }
 
     foreach ($options as $option) {
         $items = array();
@@ -158,8 +164,8 @@ function crispbb_userapi_getoptions($args)
         $data[$option] = $items;
     }
 
-    if (count($data) == 1) return reset($data);
+    if (count($data) == 1) {
+        return reset($data);
+    }
     return $data;
-
 }
-?>
