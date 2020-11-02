@@ -17,10 +17,16 @@
 
 function cacher_admin_new()
 {
-    if (!xarSecurity::check('AddCacher')) return;
+    if (!xarSecurity::check('AddCacher')) {
+        return;
+    }
 
-    if (!xarVar::fetch('name',       'str',    $name,            'cacher_cacher', xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,     xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name', 'str', $name, 'cacher_cacher', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -30,26 +36,29 @@ function cacher_admin_new()
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if(!xarVar::fetch('preview', 'str', $preview,  NULL, xarVar::DONT_SET)) {return;}
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
+            return;
+        }
 
         // Check for a valid confirmation key
-        if(!xarSec::confirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
         
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTpl::module('cacher','admin','new', $data);        
+            return xarTpl::module('cacher', 'admin', 'new', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarController::URL('cacher','admin','view'));
+            xarController::redirect(xarController::URL('cacher', 'admin', 'view'));
             return true;
         }
     }
     return $data;
 }
-?>

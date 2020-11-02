@@ -18,11 +18,17 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function cacher_user_display()
 {
-    if (!xarSecurity::check('ReadCacher')) return;
+    if (!xarSecurity::check('ReadCacher')) {
+        return;
+    }
     xarTpl::setPageTitle('Display Cacher');
 
-    if (!xarVar::fetch('name',       'str',    $name,            'cacher_cacher', xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('itemid' ,    'int',    $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name', 'str', $name, 'cacher_cacher', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
@@ -31,4 +37,3 @@ function cacher_user_display()
 
     return $data;
 }
-?>

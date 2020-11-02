@@ -24,4 +24,3 @@ function cacher_dataapi_adminmenu()
         array('mask' => 'AdminCacher', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Cacher configuration'), 'label' => xarML('Modify Config')),
     );
 }
-?>

@@ -26,4 +26,3 @@ function cacher_xartables()
     // Return the table information
     return $xartable;
 }
-?>

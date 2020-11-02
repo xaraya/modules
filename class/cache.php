@@ -17,17 +17,15 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
 {
     public $ext = 'xc';                 // Extension for the cached files
 
-    public function __construct(Array $args = array())
+    public function __construct(array $args = array())
     {
         parent::__construct($args);
 
         if ($this->type == 'template') {
             // CHECKME: this assumes that we create this instance after loading xarTemplate.php
             $this->dir = sys::varpath() . xarConst::TPL_CACHEDIR;
-
         } elseif ($this->type == 'variable') {
             $this->dir = realpath($this->cachedir);
-
         } else {
             $this->dir = realpath($this->cachedir . '/' . $this->type);
         }
@@ -39,80 +37,80 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
         $this->storage = 'filesystem';
     }
 
-/*
-    public function setNamespace($namespace = '')
-    {
-        $this->namespace = $namespace;
-        // the default prefix for the cache keys will be 'type/namespace', except in filesystem (for now)
-        $this->prefix = $this->namespace;
-    }
-
-    public function getCacheKey($key = '')
-    {
-        $cache_key = parent::getCacheKey($key);
-        // cfr. variable caching
-        $cache_key = str_replace(':', '.', $cache_key);
-        return $cache_key;
-    }
-    public function isCached($key = '', $expire = 0, $log = 1)
-    {
-        if (empty($expire)) {
-            $expire = $this->expire;
+    /*
+        public function setNamespace($namespace = '')
+        {
+            $this->namespace = $namespace;
+            // the default prefix for the cache keys will be 'type/namespace', except in filesystem (for now)
+            $this->prefix = $this->namespace;
         }
-        $cache_key = $this->getCacheKey($key);
 
-        $cache_file = $this->dir . '/' . $cache_key . $this->ext;
-
-        if (// the file is present AND
-            file_exists($cache_file) &&
-            // the file has something in it AND
-            filesize($cache_file) > 0 &&
-            // (cached files don't expire OR this file hasn't expired yet) AND
-            ($expire == 0 ||
-             filemtime($cache_file) > time() - $expire)) {
-
-            $this->modtime = filemtime($cache_file);
-            if ($log) $this->logStatus('HIT', $key);
-            return true;
-
-        } else {
-            if ($log) $this->logStatus('MISS', $key);
-            return false;
+        public function getCacheKey($key = '')
+        {
+            $cache_key = parent::getCacheKey($key);
+            // cfr. variable caching
+            $cache_key = str_replace(':', '.', $cache_key);
+            return $cache_key;
         }
-    }
+        public function isCached($key = '', $expire = 0, $log = 1)
+        {
+            if (empty($expire)) {
+                $expire = $this->expire;
+            }
+            $cache_key = $this->getCacheKey($key);
 
-    public function getCached($key = '', $output = 0, $expire = 0)
-    {
-        if (empty($expire)) {
-            $expire = $this->expire;
-        }
-        $cache_key = $this->getCacheKey($key);
+            $cache_file = $this->dir . '/' . $cache_key . $this->ext;
 
-        $cache_file = $this->dir . '/' . $cache_key . $this->ext;
+            if (// the file is present AND
+                file_exists($cache_file) &&
+                // the file has something in it AND
+                filesize($cache_file) > 0 &&
+                // (cached files don't expire OR this file hasn't expired yet) AND
+                ($expire == 0 ||
+                 filemtime($cache_file) > time() - $expire)) {
 
-        if ($this->type == 'template') {
-            // CHECKME: the file will be included in xarTemplate.php ?
-            $data = '';
+                $this->modtime = filemtime($cache_file);
+                if ($log) $this->logStatus('HIT', $key);
+                return true;
 
-        } elseif ($output) {
-            // output the file directly to the browser
-            @readfile($cache_file);
-            return true;
-
-        } elseif (function_exists('file_get_contents')) {
-            $data = file_get_contents($cache_file);
-
-        } else {
-            $data = '';
-            $file = @fopen($cache_file, "rb");
-            if ($file) {
-                while (!feof($file)) $data .= fread($file, 1024);
-                fclose($file);
+            } else {
+                if ($log) $this->logStatus('MISS', $key);
+                return false;
             }
         }
-        return $data;
-    }
-*/
+
+        public function getCached($key = '', $output = 0, $expire = 0)
+        {
+            if (empty($expire)) {
+                $expire = $this->expire;
+            }
+            $cache_key = $this->getCacheKey($key);
+
+            $cache_file = $this->dir . '/' . $cache_key . $this->ext;
+
+            if ($this->type == 'template') {
+                // CHECKME: the file will be included in xarTemplate.php ?
+                $data = '';
+
+            } elseif ($output) {
+                // output the file directly to the browser
+                @readfile($cache_file);
+                return true;
+
+            } elseif (function_exists('file_get_contents')) {
+                $data = file_get_contents($cache_file);
+
+            } else {
+                $data = '';
+                $file = @fopen($cache_file, "rb");
+                if ($file) {
+                    while (!feof($file)) $data .= fread($file, 1024);
+                    fclose($file);
+                }
+            }
+            return $data;
+        }
+    */
 
     public function setCached($key = '', $value = '', $expire = 0)
     {
@@ -149,23 +147,23 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
         }
     }
 
-/*
-    public function flushCached($key = '')
-    {
-        // add namespace prefix (not the type here)
-        if (!empty($this->namespace)) {
-            $key = $this->namespace . $key;
-        }
+    /*
+        public function flushCached($key = '')
+        {
+            // add namespace prefix (not the type here)
+            if (!empty($this->namespace)) {
+                $key = $this->namespace . $key;
+            }
 
-        $this->_flushDirCached($key, $this->dir);
+            $this->_flushDirCached($key, $this->dir);
 
-        // check the cache size and clear the lockfile set by sizeLimitReached()
-        $lockfile = $this->cachedir . '/cache.' . $this->type . 'full';
-        if ($this->getCacheSize() < $this->sizelimit && file_exists($lockfile)) {
-            @unlink($lockfile);
+            // check the cache size and clear the lockfile set by sizeLimitReached()
+            $lockfile = $this->cachedir . '/cache.' . $this->type . 'full';
+            if ($this->getCacheSize() < $this->sizelimit && file_exists($lockfile)) {
+                @unlink($lockfile);
+            }
         }
-    }
-*/
+    */
     public function doGarbageCollection($expire = 0)
     {
         $time = time() - ($expire + 60); // take some margin here
@@ -210,7 +208,9 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
 
     public function saveFile($key = '', $filename = '')
     {
-        if (empty($filename)) return;
+        if (empty($filename)) {
+            return;
+        }
 
         $cache_key = $this->getCacheKey($key);
 
@@ -231,7 +231,9 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
             return;
         }
 
-        if (substr($dir,-1) != "/") $dir .= "/";
+        if (substr($dir, -1) != "/") {
+            $dir .= "/";
+        }
         if ($dirId = opendir($dir)) {
             while (($item = readdir($dirId)) !== false) {
                 if ($item[0] != '.') {
@@ -259,7 +261,9 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
 
         if ($this->bsknown) {
             if ($dir && is_dir($dir)) {
-                if (substr($dir,-1) != "/") $dir .= "/";
+                if (substr($dir, -1) != "/") {
+                    $dir .= "/";
+                }
                 if ($dirId = opendir($dir)) {
                     while (($item = readdir($dirId)) !== false) {
                         if ($item != "." && $item != "..") {
@@ -280,7 +284,9 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
             }
         } else {
             if ($dir && is_dir($dir)) {
-                if (substr($dir,-1) != "/") $dir .= "/";
+                if (substr($dir, -1) != "/") {
+                    $dir .= "/";
+                }
                 if ($dirId = opendir($dir)) {
                     while (($item = readdir($dirId)) !== false) {
                         if ($item != "." && $item != "..") {
@@ -314,9 +320,11 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
         if ($handle = @opendir($this->dir)) {
             while (($file = readdir($handle)) !== false) {
                 // filter out the keys that don't start with the right type/namespace prefix
-                if (!empty($this->prefix) && strpos($file, $this->prefix) !== 0) continue;
-            // CHECKME: this assumes the code is always hashed
-                if (!preg_match('/^(.*)-(\w*)\.php$/',$file,$matches)) {
+                if (!empty($this->prefix) && strpos($file, $this->prefix) !== 0) {
+                    continue;
+                }
+                // CHECKME: this assumes the code is always hashed
+                if (!preg_match('/^(.*)-(\w*)\.php$/', $file, $matches)) {
                     continue;
                 }
                 $key = $matches[1];
@@ -326,7 +334,9 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
                 $size = filesize($cache_file);
                 $check = '';
                 // remove the prefix from the key
-                if (!empty($this->prefix)) $key = str_replace($this->prefix,'',$key);
+                if (!empty($this->prefix)) {
+                    $key = str_replace($this->prefix, '', $key);
+                }
                 $list[] = array('key'   => $key,
                                 'code'  => $code,
                                 'time'  => $time,
@@ -338,10 +348,20 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
         return $list;
     }
     
-     public function setExtension($x) {$this->ext = $x;}
-     public function getExtension()   {return $this->ext;}
-     public function setDirectory($x) {$this->dir = $x;}
-     public function getDirectory()   {return $this->dir;}
-
+    public function setExtension($x)
+    {
+        $this->ext = $x;
+    }
+    public function getExtension()
+    {
+        return $this->ext;
+    }
+    public function setDirectory($x)
+    {
+        $this->dir = $x;
+    }
+    public function getDirectory()
+    {
+        return $this->dir;
+    }
 }
-?>

@@ -13,11 +13,19 @@
 
 function cacher_admin_delete()
 {
-    if (!xarSecurity::check('ManageCacher')) return;
+    if (!xarSecurity::check('ManageCacher')) {
+        return;
+    }
 
-    if (!xarVar::fetch('name',       'str:1',     $name,            'cacher_cacher',     xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('itemid' ,    'int',       $data['itemid'] , '' ,          xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('confirm',    'checkbox',  $data['confirm'], false,     xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name', 'str:1', $name, 'cacher_cacher', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -29,16 +37,16 @@ function cacher_admin_delete()
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSec::confirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
 
         // Delete the item
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarController::URL('cacher','admin','view'));
+        xarController::redirect(xarController::URL('cacher', 'admin', 'view'));
         return true;
     }
     return $data;
 }
-
-?>

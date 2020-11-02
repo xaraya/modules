@@ -20,10 +20,10 @@ function cacher_userapi_getitemtypes($args)
 
     $itemtypes[1] = array('label' => xarML('Native Cacher'),
                           'title' => xarML('View Cacher'),
-                          'url'   => xarController::URL('cacher','user','view')
+                          'url'   => xarController::URL('cacher', 'user', 'view')
                          );
 
-    $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30224, 'native' => false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30224, 'native' => false));
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
@@ -32,8 +32,11 @@ function cacher_userapi_getitemtypes($args)
     */
 
     $types = array();
-    foreach ($itemtypes as $key => $value) $types[$key] = $value;
-    foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
+    foreach ($itemtypes as $key => $value) {
+        $types[$key] = $value;
+    }
+    foreach ($extensionitemtypes as $key => $value) {
+        $types[$key] = $value;
+    }
     return $types;
 }
-?>

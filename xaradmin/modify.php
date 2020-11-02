@@ -17,11 +17,19 @@
     
 function cacher_admin_modify()
 {
-    if (!xarSecurity::check('EditCacher')) return;
+    if (!xarSecurity::check('EditCacher')) {
+        return;
+    }
 
-    if (!xarVar::fetch('name',       'str',      $name,            'cacher_cacher', xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('itemid' ,    'int',      $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
-    if (!xarVar::fetch('confirm',    'checkbox', $data['confirm'], false,       xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name', 'str', $name, 'cacher_cacher', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -33,23 +41,24 @@ function cacher_admin_modify()
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSec::confirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTpl::module('cacher','admin','modify', $data);        
+            return xarTpl::module('cacher', 'admin', 'modify', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarController::URL('cacher','admin','view'));
+            xarController::redirect(xarController::URL('cacher', 'admin', 'view'));
             return true;
         }
     }
     return $data;
 }
-?>

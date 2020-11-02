@@ -23,13 +23,15 @@ function cacher_init()
 
 # --------------------------------------------------------
 #
-# Set tables
+    # Set tables
 #
     $q = new Query();
     $prefix = xarDB::getPrefix();
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_cacher_caches";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_cacher_caches (
         id                integer unsigned NOT NULL auto_increment,
         name              varchar(254) NOT NULL default '', 
@@ -41,50 +43,54 @@ function cacher_init()
         PRIMARY KEY  (id), 
         KEY i_tag_name (name)
     )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up masks
+    # Set up masks
 #
-    xarRegisterMask('ViewCacher',    'All','cacher','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCacher',    'All','cacher','All','All','ACCESS_READ');
-    xarRegisterMask('CommentCacher', 'All','cacher','All','All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateCacher','All','cacher','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditCacher',    'All','cacher','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddCacher',     'All','cacher','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageCacher',  'All','cacher','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminCacher',   'All','cacher','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('CommentCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterMask('ModerateCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_MODERATE');
+    xarRegisterMask('EditCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('ManageCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADMIN');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up privileges
+    # Set up privileges
 #
-    xarRegisterPrivilege('ViewCacher',    'All','cacher','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadCacher',    'All','cacher','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommentCacher', 'All','cacher','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateCacher','All','cacher','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditCacher',    'All','cacher','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddCacher',     'All','cacher','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('ManageCacher',  'All','cacher','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminCacher',   'All','cacher','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('ViewCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_READ');
+    xarRegisterPrivilege('CommentCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_MODERATE');
+    xarRegisterPrivilege('EditCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterPrivilege('AddCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterPrivilege('ManageCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterPrivilege('AdminCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADMIN');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create DD objects
+    # Create DD objects
 #
     $module = 'cacher';
     $objects = array(
                     'cacher_caches'
                      );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up modvars
+    # Set up modvars
 #
-    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'cacher'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'cacher'));
     $module_settings->initialize();
 
     // Add variables like this next one when creating utility modules
@@ -92,9 +98,9 @@ function cacher_init()
     // This variable is referenced in the xartemplates/includes/defaults.xd file
     xarModVars::set('cacher', 'debugmode', false);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up hooks
+    # Set up hooks
 #
 
     return true;
@@ -108,7 +114,5 @@ function cacher_upgrade()
 function cacher_delete()
 {
     $this_module = 'cacher';
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
 }
-
-?>

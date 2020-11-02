@@ -19,15 +19,15 @@ function cacher_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurity::check('ViewCacher',0)) {
-        $menulinks[] = array('url'   => xarController::URL('cacher',
-                                                  'user',
-                                                  'main'),
+    if (xarSecurity::check('ViewCacher', 0)) {
+        $menulinks[] = array('url'   => xarController::URL(
+            'cacher',
+            'user',
+            'main'
+        ),
                               'title' => xarML(''),
                               'label' => xarML(''));
     }
 
     return $menulinks;
 }
-
-?>
