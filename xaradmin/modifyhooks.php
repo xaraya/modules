@@ -151,14 +151,14 @@ function crispbb_admin_modifyhooks($args)
                 $startnum,
                 $data['numlinks'],
                 xarController::URL(
-                                                'crispbb',
-                                                'admin',
-                                                'modifyhooks',
-                                                array('modid' => $modid,
+                    'crispbb',
+                    'admin',
+                    'modifyhooks',
+                    array('modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'sort' => $sort,
                                                             'startnum' => '%%')
-                                            ),
+                ),
                 $numstats
             );
         } else {
