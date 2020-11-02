@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
         <h2>Create Scheduler Job</h2>
 
-        <form method="post" action="#xarModURL('scheduler','admin','new')#">
+        <form method="post" action="#xarController::URL('scheduler','admin','new')#">
             <xar:data-form object="$object" tplmodule="scheduler"/>
 <!--
             <fieldset>
@@ -53,7 +53,7 @@
                     &#160;
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <xar:var name="label">Create Job</xar:var>
                     <xar:button type="submit" name="confirm" label="$label"/>
                 </div>

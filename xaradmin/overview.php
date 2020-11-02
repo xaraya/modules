@@ -18,7 +18,7 @@
 function scheduler_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('AdminScheduler',0)) return;
+    if (!xarSecurity::check('AdminScheduler',0)) return;
 
     $data=array();
 

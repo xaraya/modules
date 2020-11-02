@@ -16,10 +16,10 @@
  */
 function scheduler_admin_new()
 {
-    if (!xarSecurityCheck('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) return;
 
-    if (!xarVarFetch('confirm','isset',$confirm,'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('addjob','str',$addjob,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm','isset',$confirm,'',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('addjob','str',$addjob,'',xarVar::NOT_REQUIRED)) return;
     
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
@@ -41,11 +41,11 @@ function scheduler_admin_new()
         $job['config'] = $config;*/
 
         if (!$isvalid) {var_dump($data['object']->getInvalids());exit;
-            xarController::redirect(xarModURL('scheduler', 'admin', 'new'));
+            xarController::redirect(xarController::URL('scheduler', 'admin', 'new'));
         }
         
         $itemid = $data['object']->createItem();
-        xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+        xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
         return true;
     }
     return $data;

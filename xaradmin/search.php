@@ -15,12 +15,12 @@
  */
 function scheduler_admin_search()
 {
-    if (!xarSecurityCheck('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) return;
 
     $data = array();
     $data['found'] = array();
 
-    $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
+    $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
     $activemodules = array();
     foreach ($items as $item) $activemodules[$item['name']] = 1;
 

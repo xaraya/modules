@@ -7,7 +7,7 @@
             <xar:ml><xar:mlstring>Modify Scheduler Job #(1)</xar:mlstring><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
         </h2>
 
-        <form method="post" action="#xarModURL('scheduler','admin','modify',array('itemid' => $itemid))#">
+        <form method="post" action="#xarController::URL('scheduler','admin','modify',array('itemid' => $itemid))#">
             <xar:data-form object="$object" tplmodule="scheduler"/>
             <!--
                 <div class="xar-form-input-wrapper">
@@ -112,7 +112,7 @@
                     If using an external trigger, point it at the following web page:
                 </p>
                 <blockquote>
-                    #xarModURL('scheduler','user','main',array('itemid' => $itemid))#
+                    #xarController::URL('scheduler','user','main',array('itemid' => $itemid))#
                 </blockquote>
 
                 <p>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="xar-col">
                     <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <xar:var name="label">Update Job</xar:var>
                     <xar:button type="submit" name="confirm" label="$label"/>
                 </div>

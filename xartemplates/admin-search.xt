@@ -8,7 +8,7 @@
             <ul>
                 <xar:foreach in="$found" value="$api">
                     <xar:set name="args">array('addjob' => "$api[module];$api[type];$api[func]")</xar:set>
-                    <li>[<a href="#xarModURL('scheduler','admin','new',$args)#">add job</a>] #$api['module']# - #$api['type']# - #$api['func']#</li>
+                    <li>[<a href="#xarController::URL('scheduler','admin','new',$args)#">add job</a>] #$api['module']# - #$api['type']# - #$api['func']#</li>
                 </xar:foreach>
             </ul>
         <xar:else/>

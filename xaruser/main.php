@@ -17,7 +17,7 @@
 function scheduler_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminScheduler')) {
+    if (!xarSecurity::check('AdminScheduler')) {
         return xarResponse::Forbidden(xarML('No access to this page'));
     }
 

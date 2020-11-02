@@ -10,16 +10,16 @@
             </p>
         </fieldset>
 
-        <form method="post" action="#xarModURL('scheduler','admin','test')#">
+        <form method="post" action="#xarController::URL('scheduler','admin','test')#">
             <div class="xar-row">
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <input type="hidden" name="confirm" id="confirm" value="true"/>
                     <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
                     <xar:set name="returnurl">
-                        #xarModURL('scheduler', 'admin', 'view')#
+                        #xarController::URL('scheduler', 'admin', 'view')#
                     </xar:set>
                     <xar:var name="label">Cancel</xar:var>
                     <xar:button type="cancel" label="$label" onclick="window.location='#$returnurl#';"/>

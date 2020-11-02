@@ -292,7 +292,7 @@ function scheduler_userapi_runjobs($args)
 
 // Trick : make sure we're dealing with up-to-date information here,
 //         because running all those jobs may have taken a while...
-//    xarVarDelCached('Mod.Variables.scheduler', 'jobs');
+//    xarVar::delCached('Mod.Variables.scheduler', 'jobs');
 
     return $log;
 }

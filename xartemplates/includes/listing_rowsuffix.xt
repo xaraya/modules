@@ -3,16 +3,16 @@
     <td style="text-align: center;" nowrap="nowrap">
          <xar:if condition="$objectname eq 'scheduler_jobs'">
             <xar:access level="500">
-                <a href="#xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                    <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                <a href="#xarController::URL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                    <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
                 </a>
-                <a href="#xarModURL($module, 'admin', 'test', array('itemid' => $loopitem[$primaryalias]))#" title="#xarML('Test run this item')#" style="margin-right: 5px">
-                    <img src="#xarTplGetImage('icons/'.'test.png', 'base')#" width="16" height="16" alt="#xarML('Test')#"/>
+                <a href="#xarController::URL($module, 'admin', 'test', array('itemid' => $loopitem[$primaryalias]))#" title="#xarML('Test run this item')#" style="margin-right: 5px">
+                    <img src="#xarTpl::getImage('icons/'.'test.png', 'base')#" width="16" height="16" alt="#xarML('Test')#"/>
                 </a>
             </xar:access>
             <xar:access level="700">
-                <a href="#xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
-                    <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                <a href="#xarController::URL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                    <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
                 </a>
             </xar:access>
             <!--

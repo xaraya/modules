@@ -16,7 +16,7 @@
  */
 function scheduler_admin_view()
 {
-    if (!xarSecurityCheck('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) return;
 
     $data = array();
 
@@ -30,7 +30,7 @@ function scheduler_admin_view()
     if (!empty($forwarded)) {
         $data['proxy'] = $data['ip'];
         $data['ip'] = preg_replace('/,.*/', '', $forwarded);
-        $data['ip'] = xarVarPrepForDisplay($data['ip']);
+        $data['ip'] = xarVar::prepForDisplay($data['ip']);
     }
 
     $jobs = xarModVars::get('scheduler', 'jobs');
@@ -54,7 +54,7 @@ function scheduler_admin_view()
         $data['jobs'] = $newjobs;
     }
 
-    if (!xarVarFetch('addjob','str',$addjob,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('addjob','str',$addjob,'',xarVar::NOT_REQUIRED)) return;
     if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
         $maxid++;
         xarModVars::set('scheduler','maxjobid',$maxid);
@@ -92,7 +92,7 @@ function scheduler_admin_view()
                           );
     $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
 
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'scheduler',
+    $hooks = xarModHooks::call('module', 'modifyconfig', 'scheduler',
                              array('module' => 'scheduler'));
     if (empty($hooks)) {
         $data['hooks'] = '';

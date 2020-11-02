@@ -16,13 +16,13 @@
  */
 function scheduler_admin_modify()
 {
-    if (!xarSecurityCheck('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) return;
 
-    if (!xarVarFetch('confirm','isset', $confirm,'', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,'id'   , $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('confirm','isset', $confirm,'', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid' ,'id'   , $data['itemid'], 0, xarVar::NOT_REQUIRED)) {return;}
     
     if (empty($data['itemid'])) {
-        xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+        xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
         return true;
     }
 
@@ -31,20 +31,20 @@ function scheduler_admin_modify()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     if (!empty($confirm)) {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
 
         $isvalid = $data['object']->checkInput();
 
         if (!$isvalid) {var_dump($data['object']->getInvalids());exit;
-            xarController::redirect(xarModURL('scheduler', 'admin', 'modify',array('itemid' => $itemid)));
+            xarController::redirect(xarController::URL('scheduler', 'admin', 'modify',array('itemid' => $itemid)));
         }
         
         $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
 
-        xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+        xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
         return true;
         
-        if (!xarVarFetch('config','isset',$config,array(),XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('config','isset',$config,array(),xarVar::NOT_REQUIRED)) return;
         if (empty($config)) {
             $config = array();
         }

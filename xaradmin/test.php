@@ -19,13 +19,13 @@
 function scheduler_admin_test()
 {
     // Get parameters
-    if (!xarVarFetch('itemid', 'id', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid', 'id', $itemid, 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {return;}
 
     if (empty($itemid)) return xarResponse::NotFound();
     
     // Security Check
-    if (!xarSecurityCheck('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) return;
 
     // Check for confirmation
     if (empty($confirm)) {
@@ -35,7 +35,7 @@ function scheduler_admin_test()
     }
 
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {return;}
+    if (!xarSec::confirmAuthKey()) {return;}
 
     // Get the job details
     sys::import('modules.dynamicdata.class.objects.master');
@@ -50,7 +50,7 @@ function scheduler_admin_test()
                             );
                             
     // Go back to the view page
-    xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+    xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     return true;
 }
 

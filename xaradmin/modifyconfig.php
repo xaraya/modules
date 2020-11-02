@@ -17,10 +17,10 @@
 function scheduler_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminScheduler')) return;
+    if (!xarSecurity::check('AdminScheduler')) return;
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab','str:1', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+    if (!xarVar::fetch('tab','str:1', $data['tab'], 'general', xarVar::NOT_REQUIRED)) return;
 
     switch (strtolower($data['tab'])) {
         case 'general':
@@ -36,7 +36,7 @@ function scheduler_admin_modifyconfig()
             break;
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
             }
 
@@ -49,7 +49,7 @@ function scheduler_admin_modifyconfig()
                         $itemid = $data['module_settings']->updateItem();
                     }
                     
-                    if (!xarVarFetch('interval', 'str', $interval, '5t', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVar::fetch('interval', 'str', $interval, '5t', xarVar::NOT_REQUIRED)) return;
                     xarModVars::set('scheduler', 'interval', $interval);
                 break;
             }

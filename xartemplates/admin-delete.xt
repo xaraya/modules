@@ -31,10 +31,10 @@
         <xar:if condition="$running ne 0 AND $properties['job_trigger']->value ne 0">
             <p class="xar-alt-outline xar-padding-thick">
                 This job must be disabled and not running to allow deletion. 
-                <a href="#xarModURL('scheduler','admin','modify',array('itemid'=>$itemid))#">Please set its trigger to disabled</a>.
+                <a href="#xarController::URL('scheduler','admin','modify',array('itemid'=>$itemid))#">Please set its trigger to disabled</a>.
             </p>
         <xar:else />
-            <form method="post" action="#xarModURL('scheduler','admin','delete')#">
+            <form method="post" action="#xarController::URL('scheduler','admin','delete')#">
                 <div class="xar-row">
                     <div class="xar-col">
                         &#160;
@@ -46,7 +46,7 @@
                         <xar:var name="label">Delete Job</xar:var>
                         <xar:button type="submit" label="$label" />
                         <xar:set name="returnurl">
-                            #xarModURL('scheduler', 'admin', 'view')#
+                            #xarController::URL('scheduler', 'admin', 'view')#
                         </xar:set>
                         <xar:var name="label">Cancel</xar:var>
                         <xar:button type="cancel" label="$label" onclick="window.location='#$returnurl#';"/>

@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
         <h2>Modify Configuration</h2>
 
-        <form action="#xarModURL('scheduler', 'admin', 'modifyconfig', array('tab' => $tab))#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form action="#xarController::URL('scheduler', 'admin', 'modifyconfig', array('tab' => $tab))#" method="post" enctype="application/x-www-form-urlencoded" >
             <xar:if condition="$tab eq 'general'">
                 <fieldset>
                     <legend>        
