@@ -355,7 +355,7 @@ class ForumsList extends DataObjectList
                 'title' => xarML('Edit this forum'),
                 'label' => xarML('Modify'),
             );
-            if (empty($authid)) $authid = xarSecGenAuthKey();
+            if (empty($authid)) $authid = xarSec::genAuthKey();
             $itemargs = $urlargs;
             $itemargs['catid'] = isset($data['catid']) ? $data['catid'] : null;
             $itemargs['direction'] = 'up';

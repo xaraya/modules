@@ -33,7 +33,7 @@ function crispbb_userapi_getseclevel($args)
     $level = 0;
 
     foreach ($privs as $priv) {
-        if (!xarSecurityCheck($priv.'CrispBB', 0, 'Forum', "$catid:$fid")) break;
+        if (!xarSecurity::check($priv.'CrispBB', 0, 'Forum', "$catid:$fid")) break;
         $level += 100;
     }
 

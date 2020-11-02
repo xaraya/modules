@@ -21,14 +21,14 @@
  */
 function crispbb_admin_order($args)
 {
-    if (!xarSecurityCheck('AdminCrispBB', 0)) {
-         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+    if (!xarSecurity::check('AdminCrispBB', 0)) {
+         return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
     }
-    if (!xarVarFetch('fid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid', 'int:1', $catid, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url', 'pre:trim:lower:str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('fid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('catid', 'int:1', $catid, 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('return_url', 'pre:trim:lower:str:1', $return_url, '', xarVar::NOT_REQUIRED)) return;
 
     if (empty($itemid)) $invalid[] = 'itemid';
     if (empty($catid)) $invalid[] = 'catid';
@@ -38,8 +38,8 @@ function crispbb_admin_order($args)
         $vars = array(join(', ', $invalid), 'admin', 'order', 'crispBB');
         throw new BadParameterException($vars, $msg);
     }
-    if (!xarSecConfirmAuthKey()) {
-        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    if (!xarSec::confirmAuthKey()) {
+        return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
     }
     $forums = DataObjectMaster::getObjectList(array('name' => 'crispbb_forums'));
     $forums->setCategories($catid);

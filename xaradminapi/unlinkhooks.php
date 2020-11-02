@@ -24,7 +24,7 @@ function crispbb_adminapi_unlinkhooks($args)
     extract($args);
 
     if (!empty($confirm)) {
-        if (!xarSecurityCheck('AdminCrispBB')) return;
+        if (!xarSecurity::check('AdminCrispBB')) return;
     }
 
     // Get datbase setup

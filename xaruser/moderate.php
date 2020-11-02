@@ -37,22 +37,22 @@ function crispbb_user_moderate($args)
 #
 # Check for good data
 #
-    if (!xarVarFetch('component', 'enum:topics:posts:waiting', $component, 'topics', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('modaction', 'str', $modaction, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'enum:update:form', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sort', 'enum:ttitle:ttime:towner:ptime:powner:pid', $sort, 'ttime', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('order', 'enum:ASC:DESC:asc:desc', $order, 'DESC', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('component', 'enum:topics:posts:waiting', $component, 'topics', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('modaction', 'str', $modaction, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'enum:update:form', $phase, 'form', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('startnum', 'int', $startnum, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('sort', 'enum:ttitle:ttime:towner:ptime:powner:pid', $sort, 'ttime', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('order', 'enum:ASC:DESC:asc:desc', $order, 'DESC', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('return_url', 'str:1', $return_url, '', xarVar::NOT_REQUIRED)) return;
 
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums',
         array('tstatus' => array(1,2,3,4,5), 'privcheck' => true));
     if (isset($forums['error'])) {
         if ($forums['error'] == 'BAD_DATA') {
-            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+            return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
         } else {
-            return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+            return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
         }
     }
 
@@ -73,8 +73,8 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # We are performing an action on one or more topics
 #
-            if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tids', 'str', $tidkeys, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('fid', 'id', $fid, NULL, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('tids', 'str', $tidkeys, '', xarVar::NOT_REQUIRED)) return;
             
             // The tids are a comma separated list, turn them into an array
             $tidkeyarray = explode(',', $tidkeys);
@@ -85,7 +85,7 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # We are performing an action on a topic that is not a move
 #
-                if (!xarVarFetch('tstatus', 'int', $tstatus, 0, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVar::fetch('tstatus', 'int', $tstatus, 0, xarVar::NOT_REQUIRED)) return;
                 $forumoptions = array();
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
@@ -94,7 +94,7 @@ function crispbb_user_moderate($args)
                     $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
                 }
                 if (empty($forumoptions[$fid])) {
-                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
                 $data = $forums[$fid];
 
@@ -160,7 +160,7 @@ function crispbb_user_moderate($args)
 
                     // A failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
 
                     if (empty($invalid)) {
@@ -180,7 +180,7 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # Finally, perform the requested action
 #
-                        if (!xarSecConfirmAuthKey()) return;
+                        if (!xarSec::confirmAuthKey()) return;
                         $seenposters = array();
                         // Perform the action on each topic in turn
                         foreach ($topics as $tid => $topic) {
@@ -233,8 +233,8 @@ function crispbb_user_moderate($args)
                                         xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
                                     }
                                     // OK to let subscribers know about this topic now
-                                    if (xarModIsAvailable('crispsubs')) {
-                                        if (xarModIsHooked('crispsubs', 'crispbb', $topic['topicstype'])) {
+                                    if (xarMod::isAvailable('crispsubs')) {
+                                        if (xarModHooks::isHooked('crispsubs', 'crispbb', $topic['topicstype'])) {
                                             xarMod::apiFunc('crispsubs', 'user', 'createhook',
                                                 array(
                                                     'modname' => 'crispbb',
@@ -336,15 +336,15 @@ function crispbb_user_moderate($args)
                                 'nohooks' => true
                             ))) return;
                         if (empty($return_url) && $modaction != 'delete' && $modaction != 'purge') {
-                            $return_url = xarSessionGetVar('crispbb_return_url');
+                            $return_url = xarSession::getVar('crispbb_return_url');
                         }
-                        xarSessionSetVar('crispbb_return_url', '');
+                        xarSession::setVar('crispbb_return_url', '');
                         if (empty($return_url)) {
                             if (count($seentids) == 1 && $modaction != 'delete' && $modaction != 'purge') {
-                                $return_url = xarModURL('crispbb', 'user', 'display',
+                                $return_url = xarController::URL('crispbb', 'user', 'display',
                                     array('tid' => $seentids[0]));
                             } else {
-                                $return_url = xarModURL('crispbb', 'user', 'moderate',
+                                $return_url = xarController::URL('crispbb', 'user', 'moderate',
                                     array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus));
                             }
                         }
@@ -353,7 +353,7 @@ function crispbb_user_moderate($args)
                     }
                 }
                 if (empty($return_url)) {
-                    xarSessionSetVar('crispbb_return_url', xarModURL('crispbb', 'user', 'moderate',
+                    xarSession::setVar('crispbb_return_url', xarController::URL('crispbb', 'user', 'moderate',
                        array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus)));
                 }
                 // Pass the data to the form template
@@ -372,7 +372,7 @@ function crispbb_user_moderate($args)
                 $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'fid' => $fid));
                 $data['pager'] = xarTplPager::getPager($startnum,
                     $data['totaltopics'],
-                    xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems);
                 $modactions = array();
                 $check = array();
@@ -448,10 +448,10 @@ function crispbb_user_moderate($args)
 # We are moving a topic
 #
             } else {
-                if (!xarVarFetch('movefid', 'id', $movefid, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('shadow', 'checkbox', $shadow, false, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVar::fetch('movefid', 'id', $movefid, NULL, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('movetid', 'id', $movetid, NULL, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('mergetid', 'checkbox', $mergetid, false, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('shadow', 'checkbox', $shadow, false, xarVar::NOT_REQUIRED)) return;
                 $forumoptions = array();
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
@@ -460,7 +460,7 @@ function crispbb_user_moderate($args)
                     $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
                 }
                 if (empty($forumoptions[$fid]) || (!empty($movefid) && empty($forumoptions[$movefid]))) {
-                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
                 $data = $forums[$fid];
 
@@ -478,7 +478,7 @@ function crispbb_user_moderate($args)
                     $errorMsg['return_url'] = xarServer::getBaseURL();
                     $errorMsg['type'] = $ertype;
                     $errorMsg['pageTitle'] = $pageTitle;
-                    xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+                    xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
                 if ($phase == 'update') {
@@ -525,7 +525,7 @@ function crispbb_user_moderate($args)
 
                     // A failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
 
                     if (empty($invalid)) {
@@ -552,8 +552,8 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # Finally, perform the requested action
 #
-                        if (!xarSecConfirmAuthKey())
-                            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                        if (!xarSec::confirmAuthKey())
+                            return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
 
                         if ($mergetid) {
                             // The topic we're merging into
@@ -641,7 +641,7 @@ function crispbb_user_moderate($args)
                                     'nohooks' => true
                                 ))) return;
                             if (empty($return_url)) {
-                                $return_url = xarModURL('crispbb', 'user', 'moderate',
+                                $return_url = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'topics',
                                         'fid' => $fid,
@@ -711,7 +711,7 @@ function crispbb_user_moderate($args)
                                     'nohooks' => true
                                 ))) return;
                             if (empty($return_url)) {
-                                $return_url = xarModURL('crispbb', 'user', 'moderate',
+                                $return_url = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'topics',
                                         'fid' => $fid,
@@ -739,7 +739,7 @@ function crispbb_user_moderate($args)
                         ));
                     $data['pager'] = xarTplPager::getPager($startnum,
                         $data['fnumtopics'],
-                        xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
+                        xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
                         $numitems);
                 }
                 $pageTitle = xarML('Move Topic(s)');
@@ -756,10 +756,10 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # We are performing an action on one or more posts
 #
-            if (!xarVarFetch('tid',     'int', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pids',    'str', $pidkeys, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pstatus', 'int', $pstatus, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('layout',  'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('tid',     'int', $tid, NULL, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('pids',    'str', $pidkeys, '', xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('pstatus', 'int', $pstatus, 0, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('layout',  'enum:list:replies', $layout, 'list', xarVar::NOT_REQUIRED)) return;
 
             // The pids are a comma separated list, turn them into an array
             $pidkeyarray = explode(',', $pidkeys);
@@ -776,9 +776,9 @@ function crispbb_user_moderate($args)
             if (empty($data['modtopicurl'])) $data = 'NO_PRIVILEGES';
             if (!is_array($data)) {
                 if ($data == 'BAD_DATA') {
-                    return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                    return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
                 } else {
-                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
             }
             $forumoptions = array();
@@ -788,7 +788,7 @@ function crispbb_user_moderate($args)
                 $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
             }
             if (empty($forumoptions[$data['fid']])) {
-                return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
             }
 
             if (empty($pids)) $modaction = '';
@@ -849,7 +849,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
 
                     if (empty($invalid)) {
@@ -868,8 +868,8 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # Finally, perform the requested action
 #
-                        if (!xarSecConfirmAuthKey())
-                            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                        if (!xarSec::confirmAuthKey())
+                            return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
                         $seenposters = array();
                         // perform action on each post in turn
                         foreach ($posts as $pid => $post) {
@@ -884,10 +884,10 @@ function crispbb_user_moderate($args)
                                     ))) return;
 
                                     // ok to let subscribers know about this reply now
-                                    if (xarModIsAvailable('crispsubs') && $modaction == 'approve') {
+                                    if (xarMod::isAvailable('crispsubs') && $modaction == 'approve') {
                                         $topicstype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
                                             array('fid' => $post['fid'], 'componenent' => 'topics'));
-                                        if (xarModIsHooked('crispsubs', 'crispbb', $topicstype)) {
+                                        if (xarModHooks::isHooked('crispsubs', 'crispbb', $topicstype)) {
                                             xarMod::apiFunc('crispsubs', 'user', 'updatehook',
                                                 array(
                                                     'modname' => 'crispbb',
@@ -958,7 +958,7 @@ function crispbb_user_moderate($args)
                                 'nohooks' => true
                             ))) return;
                         if (empty($return_url)) {
-                            $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
+                            $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
                         }
                         xarController::redirect($return_url);
                         return true;
@@ -1049,17 +1049,17 @@ function crispbb_user_moderate($args)
                 $data['totalposts'] = xarMod::apiFunc('crispbb', 'user', 'countposts', array('pstatus' => $pstatus, 'tid' => $tid));
                 $data['pager'] = xarTplPager::getPager($startnum,
                     $data['totalposts'],
-                    xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems);
 # --------------------------------------------------------
 # We are splitting or merging one or more posts
 #
             } else {
-                if (!xarVarFetch('movefid', 'id', $movefid, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('mergetid', 'checkbox', $mergetid, false, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('ttitle', 'str:1:255', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('pdesc', 'str:1:255', $pdesc, '', XARVAR_NOT_REQUIRED)) return;
+                if (!xarVar::fetch('movefid', 'id', $movefid, NULL, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('movetid', 'id', $movetid, NULL, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('mergetid', 'checkbox', $mergetid, false, xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('ttitle', 'str:1:255', $ttitle, '', xarVar::NOT_REQUIRED)) return;
+                if (!xarVar::fetch('pdesc', 'str:1:255', $pdesc, '', xarVar::NOT_REQUIRED)) return;
 
                 $forumoptions = array();
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
@@ -1072,7 +1072,7 @@ function crispbb_user_moderate($args)
                     $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
                 }
                 if (empty($forumoptions[$data['fid']]) || (!empty($movefid) && empty($forumoptions[$movefid]))) {
-                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
 
                 $seenpids = array();
@@ -1097,7 +1097,7 @@ function crispbb_user_moderate($args)
                     $errorMsg['return_url'] = xarServer::getBaseURL();
                     $errorMsg['type'] = $ertype;
                     $errorMsg['pageTitle'] = $pageTitle;
-                    xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+                    xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
 
@@ -1148,7 +1148,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
                     if (empty($invalid)) {
                         if (!$confirm) {
@@ -1174,8 +1174,8 @@ function crispbb_user_moderate($args)
 # --------------------------------------------------------
 # Finally, perform the requested action
 #
-                        if (!xarSecConfirmAuthKey())
-                            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                        if (!xarSec::confirmAuthKey())
+                            return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
 
                         if ($mergetid) {
 # --------------------------------------------------------
@@ -1403,9 +1403,9 @@ function crispbb_user_moderate($args)
                         // For all actions get the next page and jump to it
                         if (empty($return_url)) {
                             if (!empty($newtid)) {
-                                $return_url = xarModURL('crispbb','user', 'display', array('tid' => $newtid));
+                                $return_url = xarController::URL('crispbb','user', 'display', array('tid' => $newtid));
                             } else {
-                                $return_url = xarModURL('crispbb','user', 'display', array('tid' => $tid));
+                                $return_url = xarController::URL('crispbb','user', 'display', array('tid' => $tid));
                             }
                         }
                         xarController::redirect($return_url);
@@ -1439,7 +1439,7 @@ function crispbb_user_moderate($args)
                         ));
                     $data['pager'] = xarTplPager::getPager($startnum,
                         $data['fnumtopics'],
-                        xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pidkeys, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
+                        xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pidkeys, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
                         $numitems);
                 }
             }
@@ -1461,7 +1461,7 @@ function crispbb_user_moderate($args)
     $data['return_url'] = $return_url;
 
     // Set the title of the page to be displayed
-    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
     return $data;
 }

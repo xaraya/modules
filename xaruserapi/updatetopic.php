@@ -193,7 +193,7 @@ function crispbb_userapi_updatetopic($args)
     $args['module'] = 'crispbb';
     $args['itemid'] = $tid;
     $args['itemtype'] = $topicstype;
-    xarModCallHooks('item', 'update', $tid, $args);
+    xarModHooks::call('item', 'update', $tid, $args);
 
     return true;
 }

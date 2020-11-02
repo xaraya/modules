@@ -57,7 +57,7 @@
         <hr />
         <xar:if condition="$component eq 'topics'">
             <xar:if condition="$modaction ne 'move'">
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <xar:if condition="!empty($topics)">
                     <div class="xar-row">
                         <div class="xar-col">
@@ -77,7 +77,7 @@
                     <div class="xar-col">
                         <input type="hidden" name="component" id="component" value="topics" />
                         <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                         <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
@@ -91,7 +91,7 @@
                 </div>
             </form>
             <xar:elseif condition="$modaction eq 'move'" />
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <xar:if condition="!empty($topics)">
                     <div class="xar-row">
                         <div class="xar-col">
@@ -145,7 +145,7 @@
                     <div class="xar-col">
                         <input type="hidden" name="component" id="component" value="topics" />
                         <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                         <input type="hidden" name="movefid" id="movefid" value="#$movefid#" />
@@ -164,13 +164,13 @@
             </xar:if>
         <xar:elseif condition="$component eq 'posts'" />
             <xar:if condition="$modaction ne 'split'">
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <div class="xar-row">
                     <div class="xar-col">
                         <label class="xar-form-label">From Topic:</label>
                     </div>
                     <div class="xar-col">
-                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
+                        <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid))#">
                         #$ttitle#
                         </a>
                     </div>
@@ -194,7 +194,7 @@
                     <div class="xar-col">
                         <input type="hidden" name="component" id="component" value="posts" />
                         <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
@@ -207,13 +207,13 @@
                 </div>
             </form>
         <xar:else />
-            <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+            <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
                 <div class="xar-row">
                     <div class="xar-col">
                         <label class="xar-form-label">From Topic:</label>
                     </div>
                     <div class="xar-col">
-                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
+                        <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $fromtid))#">
                         #$fromttitle#
                         </a>
                     </div>
@@ -279,7 +279,7 @@
                         <input type="hidden" name="component" id="component" value="posts" />
                         <input type="hidden" name="tid" id="tid" value="#$tid#" />
                         <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="modaction" id="modaction" value="split" />
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />

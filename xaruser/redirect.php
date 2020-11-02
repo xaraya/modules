@@ -22,11 +22,11 @@
 function crispbb_user_redirect($args)
 {
     extract($args);
-    if (!xarVarFetch('forumjump', 'int', $forumjump, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('topicjump', 'str:1', $topicjump, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('catid', 'id', $current_catid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('fid', 'id', $current_fid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('tid', 'id', $current_tid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('forumjump', 'int', $forumjump, NULL, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('topicjump', 'str:1', $topicjump, NULL, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('catid', 'id', $current_catid, NULL, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('fid', 'id', $current_fid, NULL, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('tid', 'id', $current_tid, NULL, xarVar::DONT_SET)) return;
 
     $return_func = 'forum_index'; // default return action
     $return_args = array();
@@ -77,7 +77,7 @@ function crispbb_user_redirect($args)
         }
     }
 
-    $return_url = xarModURL('crispbb', 'user', $return_func, $return_args);
+    $return_url = xarController::URL('crispbb', 'user', $return_func, $return_args);
 
     return xarController::redirect($return_url);
 }

@@ -4,7 +4,7 @@
 <xar:if condition="xarModVars::get('crispbb', 'showuserpanel')">
 <div class="xar-alt">
     <xar:if condition="!empty($userpanel['id'])">
-    Welcome back, <a href="#xarModURL('roles', 'user', 'display', array('id' => $userpanel['id']))#">#$userpanel['name']#</a>
+    Welcome back, <a href="#xarController::URL('roles', 'user', 'display', array('id' => $userpanel['id']))#">#$userpanel['name']#</a>
     <xar:else />
     Welcome, Guest
     </xar:if>
@@ -13,23 +13,23 @@
         <li>
             Last Visit:
             <strong>
-            #xarLocaleGetFormattedTime('short', $userpanel['lastvisit'])#,
-            #xarLocaleGetFormattedDate('medium', $userpanel['lastvisit'])#
+            #xarLocale::getFormattedTime('short', $userpanel['lastvisit'])#,
+            #xarLocale::getFormattedDate('medium', $userpanel['lastvisit'])#
             </strong>
         </li>
         </xar:if>
         <li>
             Time Now:
             <strong>
-            #xarLocaleGetFormattedTime('short')#,
-            #xarLocaleGetFormattedDate('medium')#
+            #xarLocale::getFormattedTime('short')#,
+            #xarLocale::getFormattedDate('medium')#
             </strong>
         </li>
         <xar:if condition="!empty($userpanel['visitstart'])">
         <li>
             Visit Start:
             <strong>
-            #xarLocaleGetFormattedTime('short', $userpanel['visitstart'])#
+            #xarLocale::getFormattedTime('short', $userpanel['visitstart'])#
             </strong>
         </li>
         </xar:if>

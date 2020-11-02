@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <xar:style scope="module" module="crispbb" />
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+        <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">#$statusmsg#</p>
         </xar:if>
@@ -31,7 +31,7 @@
                 <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
                     <caption class="xar-padding-thick xar-alt-outline xar-align-left">
                         <span class="xar-floatleft">
-                        <a href="#xarModURL('crispbb', 'admin', 'view', array('catid' => $cid))#" title="#$catinfo['description']#">
+                        <a href="#xarController::URL('crispbb', 'admin', 'view', array('catid' => $cid))#" title="#$catinfo['description']#">
                             All forums in #$catinfo['name']#
                         </a>
                         </span>
@@ -112,5 +112,5 @@
             </span>
         </div>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

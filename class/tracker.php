@@ -104,7 +104,7 @@ class Tracker extends xarObject
                 // increment time online
                 $this->timeonline += $this->now - $this->visitend;
             }
-            xarVarSetCached('Blocks.crispbb', 'tracker_object', $this);
+            xarVar::setCached('Blocks.crispbb', 'tracker_object', $this);
         }
         return true;
     }

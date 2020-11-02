@@ -119,5 +119,5 @@
             &#160;Version - #$version#
         </p>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

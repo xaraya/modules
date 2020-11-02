@@ -509,11 +509,11 @@ function crispbb_userapi_getposts($args)
         $post['privs'] = $post['fprivileges'][$secLevel];
         if (empty($nolinks)) { // skip links (when called by shorturl encode this is necessary)
             // topic readers
-            $post['viewtopicurl'] = xarModURL('crispbb', 'user', 'display',
+            $post['viewtopicurl'] = xarController::URL('crispbb', 'user', 'display',
                 array('tid' => $post['tid']));
-            $post['viewreplyurl'] = xarModURL('crispbb', 'user', 'display',
+            $post['viewreplyurl'] = xarController::URL('crispbb', 'user', 'display',
                 array('tid' => $post['tid'], 'pid' => $post['pid']));
-            $post['displayreplyurl'] = xarModURL('crispbb', 'user', 'displayreply',
+            $post['displayreplyurl'] = xarController::URL('crispbb', 'user', 'displayreply',
                 array('pid' => $post['pid']));
             // logged in users
             if ($loggedin) {
@@ -524,14 +524,14 @@ function crispbb_userapi_getposts($args)
                     // topic editors
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'edittopics'))) {
-                        $post['edittopicurl'] = xarModURL('crispbb', 'user', 'modifytopic',
+                        $post['edittopicurl'] = xarController::URL('crispbb', 'user', 'modifytopic',
                             array('tid' => $post['tid']));
                     }
                     // topic closers
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'closetopics'))) {
                         if ($post['tstatus'] == 1) {
-                            $post['opentopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['opentopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -541,7 +541,7 @@ function crispbb_userapi_getposts($args)
                                     'tids' => implode(',', array_keys($tids)),
                             ));
                         } else {
-                            $post['closetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['closetopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -556,7 +556,7 @@ function crispbb_userapi_getposts($args)
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'approvetopics'))) {
                         if ($post['tstatus'] == 2) {
-                            $post['approvetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['approvetopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -570,7 +570,7 @@ function crispbb_userapi_getposts($args)
                     // topic movers
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'movetopics'))) {
-                            $post['movetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['movetopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'topics',
                                         'fid' => $post['fid'],
@@ -581,7 +581,7 @@ function crispbb_userapi_getposts($args)
                     // topic splitters
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'splittopics'))) {
-                            $post['splittopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['splittopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'posts',
                                         'tid' => $post['tid'],
@@ -594,7 +594,7 @@ function crispbb_userapi_getposts($args)
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'locktopics'))) {
                         if ($post['tstatus'] == 4) {
-                            $post['unlocktopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['unlocktopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -604,7 +604,7 @@ function crispbb_userapi_getposts($args)
                                     'tids' => implode(',', array_keys($tids)),
                             ));
                         } else {
-                            $post['locktopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['locktopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -619,7 +619,7 @@ function crispbb_userapi_getposts($args)
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'deletetopics'))) {
                         if ($post['tstatus'] == 5) {
-                            $post['undeletetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['undeletetopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -629,7 +629,7 @@ function crispbb_userapi_getposts($args)
                                     'tids' => implode(',', array_keys($tids)),
                             ));
                         } else {
-                            $post['deletetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['deletetopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -643,15 +643,15 @@ function crispbb_userapi_getposts($args)
                     // forum moderators
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'ismoderator'))) {
-                        $post['modforumurl'] = xarModURL('crispbb', 'user', 'moderate',
+                        $post['modforumurl'] = xarController::URL('crispbb', 'user', 'moderate',
                             array('component' => 'topics', 'fid' => $post['fid']));
-                        $post['modtopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                        $post['modtopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                             array('component' => 'posts', 'tid' => $post['tid']));
                     }
                     // forum editors
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'editforum'))) {
-                        $post['purgetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                        $post['purgetopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
@@ -665,13 +665,13 @@ function crispbb_userapi_getposts($args)
                     // post editors
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'editreplies'))) {
-                            $post['editreplyurl'] = xarModURL('crispbb', 'user', 'modifyreply',
+                            $post['editreplyurl'] = xarController::URL('crispbb', 'user', 'modifyreply',
                                 array('pid' => $post['pid']));
                     }
                     // post approvers
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'approvereplies')) && $post['pstatus'] == 2) {
-                            $post['approvereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['approvereplyurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'posts',
                                     'tid' => $post['tid'],
@@ -684,7 +684,7 @@ function crispbb_userapi_getposts($args)
                     // topic splitters
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'splittopics'))) {
-                            $post['splitreplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['splitreplyurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'posts',
                                         'tid' => $post['tid'],
@@ -698,7 +698,7 @@ function crispbb_userapi_getposts($args)
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'deletereplies'))) {
                             if ($post['pstatus'] == 5) {
-                            $post['undeletereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['undeletereplyurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'posts',
                                         'tid' => $post['tid'],
@@ -708,7 +708,7 @@ function crispbb_userapi_getposts($args)
                                         'pids' => $post['pid'],
                                 ));
                             } else {
-                            $post['deletereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['deletereplyurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'posts',
                                         'tid' => $post['tid'],
@@ -722,13 +722,13 @@ function crispbb_userapi_getposts($args)
                     // forum moderators
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'ismoderator'))) {
-                        $post['modtopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                        $post['modtopicurl'] = xarController::URL('crispbb', 'user', 'moderate',
                             array('component' => 'posts', 'tid' => $post['tid']));
                     }
                     // forum editors
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'editforum'))) {
-                            $post['purgereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $post['purgereplyurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'posts',
                                         'tid' => $post['tid'],

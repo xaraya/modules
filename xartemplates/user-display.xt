@@ -59,7 +59,7 @@
     </xar:if>
     <xar:comment>If you hooked dynamic data to topics, you may want to retrieve it, below is an example of how. NOTE: this is the same data that will be shown in the first topic post, but, like the other hooks, you may have occasion to show some dd here instead of in the post itself (eg, when not displaying the first page).</xar:comment>
     <!--
-    <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$topicstype)">
+    <xar:if condition="xarModHooks::isHooked('dynamicdata','crispbb',$topicstype)">
         <xar:data-getitem name="topicprops" module="crispbb" itemtype="$topicstype" itemid="$tid" />
         <xar:if condition="!empty($topicprops)">
             <div>
@@ -141,7 +141,7 @@
     </span>
     <br class="xar-clearboth" />
     </div>
-    <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+    <form method="post" action="#xarController::URL('crispbb', 'user', 'moderate')#">
     <table class="xar-fullwidth xar-alt-outline xar-margin-none">
         <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
             <span class="xar-halfwidth xar-floatleft">
@@ -231,7 +231,7 @@
         <ul>
             <li>
                 Started by
-                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $towner))#" title="#xarML('View Profile')#">#$posterlist[$towner]['name']#</a>
+                <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $towner))#" title="#xarML('View Profile')#">#$posterlist[$towner]['name']#</a>
             </li>
             <li>
             <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $ttime)" />

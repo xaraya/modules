@@ -23,11 +23,11 @@ sys::import('modules.base.class.pager');
 function crispbb_admin_posters($args)
 {
     extract($args);
-    if (!xarSecurityCheck('AdminCrispBB')) return;
+    if (!xarSecurity::check('AdminCrispBB')) return;
 
-    if (!xarVarFetch('ip', 'str:1', $ip, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('uid', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('ip', 'str:1', $ip, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('uid', 'id', $uid, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('startnum', 'int', $startnum, NULL, xarVar::NOT_REQUIRED)) return;
 
     $numitems = 20;
     $now = time();
@@ -67,11 +67,11 @@ function crispbb_admin_posters($args)
     sys::import('modules.base.class.pager');
     $data['pager'] = xarTplPager::getPager($startnum,
         $totalposters,
-        xarModURL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
+        xarController::URL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
         $numitems);
     $pageTitle = xarML('Forum Posters');
     $data['pageTitle'] = $pageTitle;
-    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
         array(

@@ -10,10 +10,10 @@
                     <title>#$forum['ttitle']#</title>
                     <link>#$forum['lasttopicurl']#</link>
                     <author>#$posterlist[$forum['towner']]['name']#</author>
-                    <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$forum['ptime'])#</pubDate>
+                    <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$forum['ptime'])#</pubDate>
                     <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-                    <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($forum['tdesc'])# ]]></content:encoded>
-                    <description>#xarVarPrepForDisplay($forum['tdesc'])#</description>
+                    <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($forum['tdesc'])# ]]></content:encoded>
+                    <description>#xarVar::prepForDisplay($forum['tdesc'])#</description>
                     <guid isPermaLink="true">#$forum['lasttopicurl']#</guid>
                 </item>
                 </xar:if>

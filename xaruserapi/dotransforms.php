@@ -32,14 +32,14 @@ function crispbb_userapi_dotransforms($args)
 
     if (!isset($ignore) || empty($ignore) || !is_array($ignore)) $ignore = array();
 
-    $transhooks = xarModGetHookList('crispbb', 'item', 'transform', $itemtype);
+    $transhooks = xarModHooks::getList('crispbb', 'item', 'transform', $itemtype);
 
     $transformed = array();
 
     foreach ($transforms as $field => $hooks) {
         if (isset($args[$field])) {
             $text = $args[$field];
-            $text = empty($ignore['html']) ? xarVarPrepHTMLDisplay($text) : xarVarPrepForDisplay($text);
+            $text = empty($ignore['html']) ? xarVar::prepHTMLDisplay($text) : xarVar::prepForDisplay($text);
             if (!empty($transhooks)) {
                 foreach ($transhooks as $transform) {
                     // skip ignored hook module
@@ -47,7 +47,7 @@ function crispbb_userapi_dotransforms($args)
                     // skip transforms for this field, this hook module
                     if (empty($transforms[$field][$transform['module']])) continue;
                     // do transform
-                    if (!xarModAPILoad($transform['module'], $transform['type']))  return; //return;
+                    if (!xarMod::apiLoad($transform['module'], $transform['type']))  return; //return;
                     $extrainfo = array(
                         'module' => 'crispbb',
                         'itemtype' => $itemtype,

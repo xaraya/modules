@@ -35,7 +35,7 @@ function crispbb_userapi_getforums($args)
     $unkeyed = isset($unkeyed) ? true : false;
     /* TODO
     if (!isset($systheme)) {
-        if (!xarVarFetch('theme', 'enum:RSS:rss:atom:xml:json', $systheme, '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('theme', 'enum:RSS:rss:atom:xml:json', $systheme, '', xarVar::NOT_REQUIRED)) return;
     }
     */
     
@@ -382,9 +382,9 @@ function crispbb_userapi_getforums($args)
         if (empty($nolinks)) { // allow turn off links (shorturls throws a loop without it)
             // forum viewers
             if ($forum['ftype'] != 1) {
-                $forum['viewforumurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+                $forum['viewforumurl'] = xarController::URL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
                 // TODO: deprecate this, use viewforumurl instead
-                $forum['forumviewurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+                $forum['forumviewurl'] = xarController::URL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
             } else {
                 $redirecturl = !empty($forum['redirected']) ? $forum['redirected'] : '';
                 if (!empty($redirecturl)) {
@@ -450,74 +450,74 @@ function crispbb_userapi_getforums($args)
                     // we have a last topic
                     if (!empty($forum['lasttid'])) {
                         // add in the topic urls
-                        $forum['lasttopicurl'] = xarModURL('crispbb', 'user', 'display',
+                        $forum['lasttopicurl'] = xarController::URL('crispbb', 'user', 'display',
                             array('tid' => $forum['lasttid']));
-                        $forum['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
+                        $forum['lastreplyurl'] = xarController::URL('crispbb', 'user', 'display',
                             array('tid' => $forum['lasttid'], 'action' => 'lastreply'));
-                        $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                        $forum['townerurl'] = xarController::URL('roles', 'user', 'display',
                             array('uid' => $forum['towner']));
-                        $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                        $forum['pownerurl'] = xarController::URL('roles', 'user', 'display',
                             array('uid' => $forum['powner']));
                         if ($loggedin) {
-                            $forum['lastunreadurl'] = xarModURL('crispbb', 'user', 'display',
+                            $forum['lastunreadurl'] = xarController::URL('crispbb', 'user', 'display',
                                 array('tid' => $forum['lasttid'], 'action' => 'unread'));
                         }
-                        $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                        $forum['townerurl'] = xarController::URL('roles', 'user', 'display',
                             array('uid' => $forum['towner']));
-                        $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                        $forum['pownerurl'] = xarController::URL('roles', 'user', 'display',
                             array('uid' => $forum['powner']));
                     }
                 }
                 if ($loggedin) {
                     if ($forum['ftype'] != 1) {
                         // logged in users
-                        $forum['readforumurl'] = xarModURL('crispbb', 'user', 'view',
+                        $forum['readforumurl'] = xarController::URL('crispbb', 'user', 'view',
                             array('fid' => $forum['fid'], 'action' => 'read'));
                         // TODO: deprecate this, use readforumurl instead
-                        $forum['forumreadurl'] = xarModURL('crispbb', 'user', 'view',
+                        $forum['forumreadurl'] = xarController::URL('crispbb', 'user', 'view',
                             array('fid' => $forum['fid'], 'action' => 'read'));
                         // forum posters
                         if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $forum, 'priv' => 'newtopic'))) {
-                            $forum['newtopicurl'] = xarModURL('crispbb', 'user', 'newtopic',
+                            $forum['newtopicurl'] = xarController::URL('crispbb', 'user', 'newtopic',
                                 array('fid' => $forum['fid']));
                         }
                         // forum moderators
                         if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $forum, 'priv' => 'ismoderator'))) {
-                            $forum['modforumurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $forum['modforumurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array('component' => 'topics', 'fid' => $forum['fid']));
                             // TODO: deprecate this, use modforumurl instead
-                            $forum['admintopicsurl'] = xarModURL('crispbb', 'admin', 'topics',
+                            $forum['admintopicsurl'] = xarController::URL('crispbb', 'admin', 'topics',
                                 array('fid' => $forum['fid']));
                         }
                     }
                     // forum owners
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $forum, 'priv' => 'addforum'))) {
-                        $forum['addforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                        $forum['addforumurl'] = xarController::URL('crispbb', 'admin', 'modify',
                             array('fid' => $forum['fid']));
                     }
                     // forum config editors
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $forum, 'priv' => 'editforum'))) {
-                        $forum['editforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                        $forum['editforumurl'] = xarController::URL('crispbb', 'admin', 'modify',
                             array('fid' => $forum['fid'], 'sublink' => 'edit'));
                         if ($forum['ftype'] != 1) {
-                            $forum['hooksforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            $forum['hooksforumurl'] = xarController::URL('crispbb', 'admin', 'modify',
                                 array('fid' => $forum['fid'], 'sublink' => 'forumhooks'));
-                            $forum['hookstopicsurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            $forum['hookstopicsurl'] = xarController::URL('crispbb', 'admin', 'modify',
                                 array('fid' => $forum['fid'], 'sublink' => 'topichooks'));
-                            $forum['hookspostsurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            $forum['hookspostsurl'] = xarController::URL('crispbb', 'admin', 'modify',
                                 array('fid' => $forum['fid'], 'sublink' => 'posthooks'));
-                            $forum['privsforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            $forum['privsforumurl'] = xarController::URL('crispbb', 'admin', 'modify',
                                 array('fid' => $forum['fid'], 'sublink' => 'privileges'));
                         }
                     }
                     // forum delete
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $forum, 'priv' => 'deleteforum'))) {
-                        $forum['deleteforumurl'] = xarModURL('crispbb', 'admin', 'delete',
+                        $forum['deleteforumurl'] = xarController::URL('crispbb', 'admin', 'delete',
                             array('fid' => $forum['fid']));
                     }
                 }
@@ -525,9 +525,9 @@ function crispbb_userapi_getforums($args)
             }
             // we have a last topic
             if (!empty($forum['lasttid'])) {
-                $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                $forum['townerurl'] = xarController::URL('roles', 'user', 'display',
                     array('uid' => $forum['towner']));
-                $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                $forum['pownerurl'] = xarController::URL('roles', 'user', 'display',
                     array('uid' => $forum['powner']));
             }
             // end links

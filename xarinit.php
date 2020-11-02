@@ -395,7 +395,7 @@ function crispbb_init()
 #
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
-                             'query'  => xarModURL($module, 'admin', 'privileges'),
+                             'query'  => xarController::URL($module, 'admin', 'privileges'),
                              'limit'  => 0
                             )
                     );
@@ -432,33 +432,33 @@ function crispbb_init()
 # Register module hooks
 #
     // register search hook
-    if (!xarModRegisterHook('item', 'search', 'GUI', $module, 'user', 'search')) {
+    if (!xarModHooks::register('item', 'search', 'GUI', $module, 'user', 'search')) {
        return false;
     }
 
     // register waiting content hook
-    if (!xarModRegisterHook('item', 'waitingcontent', 'GUI', $module, 'admin', 'waitingcontent')) {
+    if (!xarModHooks::register('item', 'waitingcontent', 'GUI', $module, 'admin', 'waitingcontent')) {
        return false;
     }
 
     // Module Modify Config
-    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI', $module, 'admin',
+    if (!xarModHooks::register('module', 'modifyconfig', 'GUI', $module, 'admin',
         'modifyconfighook')) return false;
 
     // Module Update Config
-    if (!xarModRegisterHook('module', 'updateconfig', 'API', $module, 'admin',
+    if (!xarModHooks::register('module', 'updateconfig', 'API', $module, 'admin',
         'updateconfighook')) return false;
 
     // Module Remove
-    if (!xarModRegisterHook('module', 'remove', 'API', $module, 'admin', 'removehook'))
+    if (!xarModHooks::register('module', 'remove', 'API', $module, 'admin', 'removehook'))
         return false;
 
     // Display item
-    if (!xarModRegisterHook('item', 'display', 'GUI', $module, 'user', 'displayhook'))
+    if (!xarModHooks::register('item', 'display', 'GUI', $module, 'user', 'displayhook'))
         return false;
 
     // Delete item
-    if (!xarModRegisterHook('item', 'delete', 'API', $module, 'user', 'deletehook'))
+    if (!xarModHooks::register('item', 'delete', 'API', $module, 'user', 'deletehook'))
         return false;
 
 # --------------------------------------------------------
@@ -550,33 +550,33 @@ function crispbb_delete()
 
 
 
-    if (!xarModUnregisterHook('item', 'search', 'GUI',
+    if (!xarModHooks::unregister('item', 'search', 'GUI',
                               $module, 'user', 'search')) {
         return false;
     }
 
-    if (!xarModUnregisterHook('item', 'waitingcontent', 'GUI',
+    if (!xarModHooks::unregister('item', 'waitingcontent', 'GUI',
                               $module, 'admin', 'waitingcontent')) {
         return false;
     }
 
-    if (!xarModUnregisterHook('module', 'modifyconfig', 'GUI',
+    if (!xarModHooks::unregister('module', 'modifyconfig', 'GUI',
                               $module, 'admin', 'modifyconfighook')) {
         return false;
     }
-    if (!xarModUnregisterHook('module', 'updateconfig', 'API',
+    if (!xarModHooks::unregister('module', 'updateconfig', 'API',
                               $module, 'admin', 'updateconfighook')) {
         return false;
     }
-    if (!xarModUnregisterHook('module', 'remove', 'API',
+    if (!xarModHooks::unregister('module', 'remove', 'API',
                               $module, 'admin', 'removehook')) {
         return false;
     }
-    if (!xarModUnregisterHook('item', 'display', 'GUI',
+    if (!xarModHooks::unregister('item', 'display', 'GUI',
                               $module, 'user', 'displayhook')) {
         return false;
     }
-    if (!xarModUnregisterHook('item', 'delete', 'API',
+    if (!xarModHooks::unregister('item', 'delete', 'API',
                               $module, 'user', 'deletehook')) {
         return false;
     }

@@ -174,11 +174,11 @@ function crispbb_userapi_createtopic($args)
     $item['itemtype'] = $topicstype;
     $item['itemid'] = $tid;
     // don't let subscribers know about this topic if its status is submitted
-    if (xarModIsAvailable('crispsubs') && $tstatus == 2) {
+    if (xarMod::isAvailable('crispsubs') && $tstatus == 2) {
         $item['crispsubs_notifycreate'] = false;
     }
 
-    xarModCallHooks('item', 'create', $tid, $item);
+    xarModHooks::call('item', 'create', $tid, $item);
 
     /* create post updated the tracker already
     //let the tracker know this forum was updated

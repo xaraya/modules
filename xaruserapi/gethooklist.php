@@ -33,7 +33,7 @@
 function crispbb_userapi_gethooklist($args)
 {
     // Security Check
-    //if(!xarSecurityCheck('AdminModules')) return;
+    //if(!xarSecurity::check('AdminModules')) return;
 
     // Get arguments from argument array
     extract($args);

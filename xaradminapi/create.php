@@ -151,7 +151,7 @@ function crispbb_adminapi_create($args)
     $item['itemtype'] = $forumtype;
     $item['itemid'] = $fid;
     $item['cids'] = $cids;
-    xarModCallHooks('item', 'create', $fid, $item);
+    xarModHooks::call('item', 'create', $fid, $item);
 
     // let the tracker know this forum was created
     $fstring = xarModVars::get('crispbb', 'ftracking');

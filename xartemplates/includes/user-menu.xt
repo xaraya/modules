@@ -8,22 +8,22 @@
             <a href="&xar-baseurl;" title="#xarML('Go to site index')#">Home</a>
             #$pageSeparator#
         </xar:if>
-        <a href="#xarModURL('crispbb', 'user', 'forum_index')#" title="#xarML('Go to main forum index')#">Forum Index</a>
+        <a href="#xarController::URL('crispbb', 'user', 'forum_index')#" title="#xarML('Go to main forum index')#">Forum Index</a>
         <xar:if condition="!empty($catid) and isset($categories[$catid])">
             #$pageSeparator#
-            <a href="#xarModURL('crispbb', 'user', 'forum_index', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+            <a href="#xarController::URL('crispbb', 'user', 'forum_index', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
         </xar:if>
         <xar:if condition="!empty($fid) and !empty($fname) and !empty($fdesc)">
             #$pageSeparator#
-            <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fdesc#">#$fname#</a>
+            <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fdesc#">#$fname#</a>
         </xar:if>
         <xar:if condition="!empty($tid) and !empty($ttitle)">
             #$pageSeparator#
-            <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$ttitle#">#$ttitle#</a>
+            <a href="#xarController::URL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$ttitle#">#$ttitle#</a>
         </xar:if>
         <xar:if condition="!empty($q) and !empty($searchtitle)">
             #$pageSeparator#
-            <a href="#xarModURL('crispbb', 'user', 'search', array('q' => $q))#" title="#$ttitle#">#$searchtitle#</a>
+            <a href="#xarController::URL('crispbb', 'user', 'search', array('q' => $q))#" title="#$ttitle#">#$searchtitle#</a>
         </xar:if>
     </div>
 </xar:template>

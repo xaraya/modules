@@ -6,7 +6,7 @@
         <h2>
             Modify Forum Category
         </h2>
-        <form action="#xarModURL('crispbb','admin','modifycat')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('crispbb','admin','modifycat')#" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset class="xar-norm">
                 <legend>
                     Category
@@ -18,7 +18,7 @@
                     <div class="xar-col">
                     </div>
                     <div class="xar-col">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                         <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                         <input type="hidden" name="phase" id="phase" value="update" />

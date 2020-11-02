@@ -3,14 +3,14 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">xarSessionGetVar('crispbb_statusmsg')</xar:set>
+        <xar:set name="statusmsg">xarSession::getVar('crispbb_statusmsg')</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">
-                #xarVarPrepForDisplay($statusmsg)#
+                #xarVar::prepForDisplay($statusmsg)#
             </p>
         </xar:if>
         <h3>Modify Module Configuration</h3>
-        <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
+        <form method="post" action="#xarController::URL('crispbb', 'admin', 'modifyconfig')#">
             <!--
             <fieldset>
                 <div class="xar-form-input-wrapper">
@@ -84,5 +84,5 @@
             <xar:template file="update-button" module="base" />
         </form>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

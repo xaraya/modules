@@ -25,7 +25,7 @@ function crispbb_adminapi_removehook($args)
     }
 
     if (empty($extrainfo['module'])) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     } else {
         $modname = $extrainfo['module'];
     }

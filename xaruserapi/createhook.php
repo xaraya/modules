@@ -36,7 +36,7 @@ function crispbb_userapi_createhook($args)
             isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
 

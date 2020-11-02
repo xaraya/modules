@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <xar:style scope="module" module="crispbb" />
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+        <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">#$statusmsg#</p>
         </xar:if>
@@ -99,7 +99,7 @@
             </div>
         <xar:else/>
             <xar:comment>
-            <a href="#xarModURL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
+            <a href="#xarController::URL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
             </xar:comment>
             <div class="xar-form-input-wrapper-before xar-padding-thick">
 
@@ -201,5 +201,5 @@
             </span>
         </div>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

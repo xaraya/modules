@@ -42,9 +42,9 @@ function crispbb_userapi_showreplies($args)
     $item['itemtype'] = $data['topicstype'];
     $item['itemid'] = $tid;
     $item['tid'] = $tid;
-    $item['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
-    xarVarSetCached('Hooks.hitcount','save', true);
-    $hooks = xarModCallHooks('item', 'display', $tid, $item);
+    $item['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+    xarVar::setCached('Hooks.hitcount','save', true);
+    $hooks = xarModHooks::call('item', 'display', $tid, $item);
 
     $data['hookoutput'] = !empty($hooks) && is_array($hooks) ? $hooks : array();
     $posts = xarMod::apiFunc('crispbb', 'user', 'getposts',
@@ -90,13 +90,13 @@ function crispbb_userapi_showreplies($args)
             $hookitem['itemtype'] = $post['poststype'];
             $hookitem['itemid'] = $post['pid'];
             $hookitem['pid'] = $post['pid'];
-            $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
-            $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
+            $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+            $posthooks = xarModHooks::call('item', 'display', $post['pid'], $hookitem);
             $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
             unset($posthooks);
         }
         if ($data['fstatus'] == 0) { // open forum
-            //$item['reporturl'] = xarModURL('crispbb', 'user', 'reportpost', array('pid' => $post['pid']));
+            //$item['reporturl'] = xarController::URL('crispbb', 'user', 'reportpost', array('pid' => $post['pid']));
         }
         $posts[$pid] = $item;
     }
@@ -119,7 +119,7 @@ function crispbb_userapi_showreplies($args)
     }
     if (empty($template)) $template = NULL;
 
-    return xarTplModule($tplmodule, 'user', 'showreplies', $data, $template);
+    return xarTpl::module($tplmodule, 'user', 'showreplies', $data, $template);
 
 }
 ?>

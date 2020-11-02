@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+        <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">#$statusmsg#</p>
         </xar:if>
@@ -18,7 +18,7 @@
                     'application/x-www-form-urlencoded'
                 </xar:set>
             </xar:if>
-            <form method="post" id="crispbb_admin_modify" action="#xarModURL('crispbb', 'admin', 'modify')#" enctype="#$enctype#">
+            <form method="post" id="crispbb_admin_modify" action="#xarController::URL('crispbb', 'admin', 'modify')#" enctype="#$enctype#">
                 <fieldset>
                     <xar:data-form object="$forum" />
                     <xar:if condition="!empty($hookoutput)">
@@ -38,7 +38,7 @@
                 </fieldset>
             </form>
         <xar:elseif condition="!empty($hooksettings)" />
-            <form method="post" action="#xarModURL('crispbb', 'admin', 'modify')#">
+            <form method="post" action="#xarController::URL('crispbb', 'admin', 'modify')#">
                 <xar:foreach in="$hooksettings" key="$hookmodname" value="$hookconfig">
                     <fieldset>
                         <div class="xar-form-input-wrapper">
@@ -70,7 +70,7 @@
                         <div class="xar-form-input-wrapper-after">
                             <input type="hidden" name="sublink" id="sublink" value="#$sublink#" />
                             <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                             <input type="hidden" name="phase" id="phase" value="update" />
                             <xar:var name="label">Update Configuration</xar:var>
                             <xar:button type="submit" label="$label" />
@@ -83,7 +83,7 @@
                 <img src="#xarTpl::getImage('icons/info.png', 'base')#" alt="#xarML('info')#" />
                 These settings apply to privileges for this forum.
             </p>
-            <form method="post" action="#xarModURL('crispbb', 'admin', 'modify')#">
+            <form method="post" action="#xarController::URL('crispbb', 'admin', 'modify')#">
                 <fieldset>
                     <table class="xar-fullwidth">
                         <thead>
@@ -127,7 +127,7 @@
                         </tbody>
                     </table>
                     <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="fid" id="fid" value="#$fid#" />
                         <input type="hidden" name="sublink" id="sublink" value="privileges" />
                         <input type="hidden" name="phase" id="phase" value="update" />
@@ -175,5 +175,5 @@
             </ul>
         </xar:if>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

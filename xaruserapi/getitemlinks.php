@@ -56,7 +56,7 @@ function crispbb_userapi_getitemlinks($args)
                         $itemlinks[$foundfid] = array(
                             'url' => $forum['forumviewurl'],
                             'title' => $forum['fdesc'],
-                            'label' => xarVarPrepForDisplay($forum['fname']),
+                            'label' => xarVar::prepForDisplay($forum['fname']),
                             'id' => $foundfid,
                             'name' => $forum['fname']
                             );
@@ -80,7 +80,7 @@ function crispbb_userapi_getitemlinks($args)
                             $itemlinks[$foundfid] = array(
                                 'url' => $forum['forumviewurl'],
                                 'title' => $forum['fdesc'],
-                                'label' => xarVarPrepForDisplay($forum['fname']),
+                                'label' => xarVar::prepForDisplay($forum['fname']),
                                 'id' => $foundfid,
                                 'name' => $forum['fname']
                             );
@@ -102,7 +102,7 @@ function crispbb_userapi_getitemlinks($args)
                     $itemlinks[$foundtid] = array(
                         'url' => $url,
                         'title' => $topic['ttitle'],
-                        'label' => xarVarPrepForDisplay($topic['ttitle']),
+                        'label' => xarVar::prepForDisplay($topic['ttitle']),
                         'id' => $foundtid,
                         'name' => $topic['ttitle']
                         );
@@ -121,7 +121,7 @@ function crispbb_userapi_getitemlinks($args)
                     $itemlinks[$foundpid] = array(
                         'url' => $url,
                         'title' => $post['ttitle'],
-                        'label' => xarVarPrepForDisplay($post['ttitle']),
+                        'label' => xarVar::prepForDisplay($post['ttitle']),
                         'id' => $post['tid'],
                         'name' => $topic['ttitle']
                     );

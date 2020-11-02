@@ -33,7 +33,7 @@ function crispbb_adminapi_delete($args)
     $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $fid));
     $pids = !empty($posts) ? array_keys($posts) : array();
 
-    //if (!xarSecurityCheck('DeleteExample', 1, 'Item', "$item[name]:All:$exid")) return;
+    //if (!xarSecurity::check('DeleteExample', 1, 'Item', "$item[name]:All:$exid")) return;
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -76,10 +76,10 @@ function crispbb_adminapi_delete($args)
     $item['module'] = 'crispbb';
     $item['itemtype'] = $forum['itemtype'];
     $item['itemid'] = $fid;
-    xarModCallHooks('item', 'delete', $fid, $item);
+    xarModHooks::call('item', 'delete', $fid, $item);
 
     // TODO: call some kind of itemtype delete hooks here, once we have those
-    //xarModCallHooks('itemtype', 'delete', $forum['itemtype'],
+    //xarModHooks::call('itemtype', 'delete', $forum['itemtype'],
     //                array('module' => 'crispbb',
     //                      'itemtype' => $forum['itemtype']));
 

@@ -20,7 +20,7 @@
 function crispbb_admin_overview()
 {
     // Admin only function
-    if (!xarSecurityCheck('AdminCrispBB')) return;
+    if (!xarSecurity::check('AdminCrispBB')) return;
 
     $data = array();
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
@@ -36,8 +36,8 @@ function crispbb_admin_overview()
     $now = time();
 
     // store function name for use by admin-main as an entry point
-    xarSessionSetVar('crispbb_adminstartpage', 'overview');
-    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarSession::setVar('crispbb_adminstartpage', 'overview');
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
     return $data;
 }
 

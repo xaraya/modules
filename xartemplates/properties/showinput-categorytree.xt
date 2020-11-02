@@ -62,8 +62,8 @@
                     -->
                     <td class="#$displayclass#"><xar:if condition="empty($template)">&#160;<xar:else />#$template#</xar:if></td>
                     <td class="#$displayclass# xar-align-right">
-                        <a href="#xarModURL('crispbb', 'admin', 'modifycat', array('itemid' => $cid))#" class="xar-icon" title="#$modcattitle#"><img class="xar-icon" src="#$modifyicon#" alt="Modify" /></a>
-                        <a href="#xarModURL('crispbb', 'admin', 'deletecat', array('itemid' => $cid))#" class="xar-icon" title="#$delcattitle#"><img class="xar-icon" src="#$deleteicon#" alt="Delete" /></a>
+                        <a href="#xarController::URL('crispbb', 'admin', 'modifycat', array('itemid' => $cid))#" class="xar-icon" title="#$modcattitle#"><img class="xar-icon" src="#$modifyicon#" alt="Modify" /></a>
+                        <a href="#xarController::URL('crispbb', 'admin', 'deletecat', array('itemid' => $cid))#" class="xar-icon" title="#$delcattitle#"><img class="xar-icon" src="#$deleteicon#" alt="Delete" /></a>
                         <!--
                         <xar:if condition="$level gt 0">
                             <xar:if condition="!empty($catinfo['moveup'])">
@@ -97,7 +97,7 @@
                             <xar:if condition="$i le $startnum  AND ($i + $items_per_page) gt $startnum">
                                 #$i#-#$endrow#
                             <xar:else />
-                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
+                                <a href="#xarController::URL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
                                     #$i#-#$endrow#
                                 </a>
                             </xar:if>
@@ -111,7 +111,7 @@
                             <xar:if condition="$i le $startnum  AND ($i + $items_per_page) gt $startnum">
                                 #$i#
                             <xar:else />
-                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
+                                <a href="#xarController::URL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
                                     #$i#
                                 </a>
                             </xar:if>
@@ -120,7 +120,7 @@
                             <xar:if condition="$i le $startnum  AND ($i + $items_per_page) gt $startnum">
                                 #$i#-#$pagertotal#
                             <xar:else />
-                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
+                                <a href="#xarController::URL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
                                     #$i#-#$pagertotal#
                                 </a>
                             </xar:if>
@@ -129,7 +129,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
+                        <form action="#xarController::URL('categories','admin','viewcats',array())#" method="post">
                             Categories per page:&#160;
                             <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
                             <input type="text" name="items_per_page" id="items_per_page" value="#$items_per_page#" size="5" />&#160;&#160;
