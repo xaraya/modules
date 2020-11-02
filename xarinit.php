@@ -31,7 +31,7 @@ function xarcachemanager_init()
     xarModVars::set('xarcachemanager', 'FlushOnNewPollvote', 0);
     xarModVars::set('xarcachemanager', 'AutoRegenSessionless', 0);
 
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'create',
         'API',
@@ -41,7 +41,7 @@ function xarcachemanager_init()
     )) {
         return false;
     }
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'update',
         'API',
@@ -51,7 +51,7 @@ function xarcachemanager_init()
     )) {
         return false;
     }
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'delete',
         'API',
@@ -61,7 +61,7 @@ function xarcachemanager_init()
     )) {
         return false;
     }
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'modify',
         'GUI',
@@ -71,7 +71,7 @@ function xarcachemanager_init()
     )) {
         return false;
     }
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'module',
         'updateconfig',
         'API',
@@ -150,7 +150,7 @@ function xarcachemanager_init()
     xarRegisterMask('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     /*
-        if (xarCore_getSystemVar('DB.UseADODBCache')){
+        if (xarSystemVars::get('DB.UseADODBCache')){
             // Enable query caching for categories getcat
             if (xarMod::isAvailable('categories')) {
                 xarModVars::set('categories','cache.userapi.getcat',60);
@@ -228,7 +228,7 @@ function xarcachemanager_upgrade($oldversion)
                 copy($defaultConfigFile, $cachingConfigFile);
             }
             // Register new Admin Modify GUI Hook
-            if (!xarModRegisterHook(
+            if (!xarModHooks::register(
                 'item',
                 'modify',
                 'GUI',
@@ -391,7 +391,7 @@ function xarcachemanager_delete()
     */
 
     // Remove module hooks
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'item',
         'create',
         'API',
@@ -401,7 +401,7 @@ function xarcachemanager_delete()
     )) {
         return false;
     }
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'item',
         'update',
         'API',
@@ -411,7 +411,7 @@ function xarcachemanager_delete()
     )) {
         return false;
     }
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'item',
         'delete',
         'API',
@@ -421,7 +421,7 @@ function xarcachemanager_delete()
     )) {
         return false;
     }
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'item',
         'modify',
         'GUI',
@@ -431,7 +431,7 @@ function xarcachemanager_delete()
     )) {
         return false;
     }
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'module',
         'updateconfig',
         'API',
