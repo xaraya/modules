@@ -20,9 +20,9 @@ sys::import('modules.workflow.lib.galaxia.api');
  */
 function workflow_admin_processes()
 {
-    xarLogMessage('WF: workflow_admin_processes ');
+    xarLog::message('WF: workflow_admin_processes ');
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -51,14 +51,14 @@ function workflow_admin_processes()
     $data['pid'] =  $_REQUEST['pid'];
 
     //Check here for an uploaded process
-    xarLogMessage('WF: checking for uploaded process');
+    xarLog::message('WF: checking for uploaded process');
     if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-        xarLogMessage('WF: Found upload file');
+        xarLog::message('WF: Found upload file');
         // move the uploaded file to some temporary wf* file in cache/templates
         $tmpdir = sys::varpath() . '/cache/templates';
         $tmpfile = tempnam($tmpdir, 'wf');
         if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
-            xarLogMessage('WF: Temporary upload file found, reading it in.');
+            xarLog::message('WF: Temporary upload file found, reading it in.');
             $fp = fopen($tmpfile, "rb");
 
             $xml = ''; $fhash = '';
@@ -74,14 +74,14 @@ function workflow_admin_processes()
 
             if (Process::exists($process_data['name'], $process_data['version'])) {
                 $data['msg'] =  xarML("The process name already exists");
-                return xarTplModule('workflow', 'admin', 'error', $data);
+                return xarTpl::module('workflow', 'admin', 'error', $data);
             } else {
                 $_REQUEST['pid'] = $processManager->import_process($process_data);
             }
             unlink($tmpfile);
         }
     }
-    xarLogMessage('WF: done with the uploading');
+    xarLog::message('WF: done with the uploading');
 
     if (isset($_REQUEST["delete"])) {
         foreach (array_keys($_REQUEST["process"])as $item) {
@@ -110,7 +110,7 @@ function workflow_admin_processes()
         // If process is known and we're not updating, error out.
         if (Process::Exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
             $data['msg'] =  xarML("Process already exists");
-            return xarTplModule('workflow', 'admin', 'error', $data);
+            return xarTpl::module('workflow', 'admin', 'error', $data);
         }
 
         if (isset($_REQUEST['isActive']) && $_REQUEST['isActive'] == 'on') {
@@ -176,7 +176,7 @@ function workflow_admin_processes()
 
     $data['all_procs'] =  $items['data'];
 
-//    $data['pager'] = xarTplGetPager($data['offset'], $items['cant'], $url, $maxRecords);
+//    $data['pager'] = xarTplPager::getPager($data['offset'], $items['cant'], $url, $maxRecords);
     $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
     $data['maxRecords'] = $maxRecords;
     

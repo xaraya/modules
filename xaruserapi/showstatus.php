@@ -21,7 +21,7 @@
 function workflow_userapi_showstatus($args)
 {
     // Security Check
-    if (!xarSecurityCheck('ReadWorkflow',0)) {
+    if (!xarSecurity::check('ReadWorkflow',0)) {
         return '';
     }
 
@@ -32,7 +32,7 @@ function workflow_userapi_showstatus($args)
     include (GALAXIA_LIBRARY.'/processmonitor.php');
 
     if (empty($user)) {
-        $user = xarUserGetVar('id');
+        $user = xarUser::getVar('id');
     }
 
 // TODO: keep track of instances from anonymous visitors via session ?
@@ -85,7 +85,7 @@ function workflow_userapi_showstatus($args)
     $items = $processMonitor->monitor_list_instances($startnum - 1, $numitems, $sort_mode, '', $where, array());
 
     // filter out instances the user doesn't want to see
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
         $seenlist = xarModUserVars::get('workflow','seenlist');
     } else {
         $seenlist = xarSession::getVar('workflow.seenlist');
@@ -136,9 +136,9 @@ function workflow_userapi_showstatus($args)
     }
 
     if (!empty($args['template'])) {
-        return xarTplModule('workflow', 'user', 'showstatus', $tplData, $args['template']);
+        return xarTpl::module('workflow', 'user', 'showstatus', $tplData, $args['template']);
     } else {
-        return xarTplModule('workflow', 'user', 'showstatus', $tplData);
+        return xarTpl::module('workflow', 'user', 'showstatus', $tplData);
     }
 }
 

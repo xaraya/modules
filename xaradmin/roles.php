@@ -21,7 +21,7 @@ sys::import('modules.workflow.lib.galaxia.api');
 function workflow_admin_roles()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -31,10 +31,10 @@ function workflow_admin_roles()
     // Adapted from tiki-g-admin_roles.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
-    if (!xarVarFetch('pid','id',$pid)) return;
+    if (!xarVar::fetch('pid','id',$pid)) return;
     if (empty($pid)) {
         $data['msg'] =  xarML("No process indicated");
-        return xarTplModule('workflow', 'admin', 'error', $data);
+        return xarTpl::module('workflow', 'admin', 'error', $data);
     }
     $data['pid'] =  $pid;
 
@@ -44,7 +44,7 @@ function workflow_admin_roles()
     $proc_info['graph']=$process->getGraph();
 
     // Role ID set?
-    if (!xarVarFetch('roleId','id',$roleId,0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('roleId','id',$roleId,0,xarVar::NOT_REQUIRED)) return;
     if ($roleId) {
         // Get it
         $data['info'] = $roleManager->get_role($pid, $roleId);
@@ -73,7 +73,7 @@ function workflow_admin_roles()
     // MAPPING
     $data['find_users'] =isset($_REQUEST['find_users']) ? $_REQUEST['find_users'] : '';
 
-    $numusers = xarModAPIFunc('roles','user','countall');
+    $numusers = xarMod::apiFunc('roles','user','countall');
     // don't show thousands of users here without filtering
     if ($numusers > 1000 && empty($data['find_users'])) {
         $data['users'] = array();
@@ -83,12 +83,12 @@ function workflow_admin_roles()
             $dbconn = xarDB::getConn();
             $selection = " AND name LIKE " . $dbconn->qstr('%'.$data['find_users'].'%');
         }
-        $data['users'] = xarModAPIFunc('roles','user','getall',
+        $data['users'] = xarMod::apiFunc('roles','user','getall',
                                        array('selection' => $selection,
                                              'order' => 'name'));
     }
 
-    $data['groups'] = xarModAPIFunc('roles','user','getallgroups');
+    $data['groups'] = xarMod::apiFunc('roles','user','getallgroups');
 
     $roles = $roleManager->list_roles($pid, 0, -1, 'name_asc', '');
     $data['roles'] =&  $roles['data'];
@@ -102,13 +102,13 @@ function workflow_admin_roles()
 
     if (isset($_REQUEST['mapg'])) {
         if ($_REQUEST['op'] == 'add') {
-            $users = xarModAPIFunc('roles','user','getusers',
+            $users = xarMod::apiFunc('roles','user','getusers',
                                    array('id' => $_REQUEST['group']));
             foreach ($users as $a_user) {
                 $roleManager->map_user_to_role($pid, $a_user['id'], $_REQUEST['role']);
             }
         } else {
-            $users = xarModAPIFunc('roles','user','getusers',
+            $users = xarMod::apiFunc('roles','user','getusers',
                                    array('id' => $_REQUEST['group']));
             foreach ($users as $a_user) {
                 $roleManager->remove_mapping($a_user['id'], $_REQUEST['role']);
@@ -137,7 +137,7 @@ function workflow_admin_roles()
 
     // trick : replace userid by user here !
     foreach (array_keys($mapitems['data']) as $index) {
-        $role = xarModAPIFunc('roles','user','get',
+        $role = xarMod::apiFunc('roles','user','get',
                               array('id' => $mapitems['data'][$index]['user']));
         if (!empty($role)) {
             $mapitems['data'][$index]['userId'] = $role['id'];
@@ -181,8 +181,8 @@ function workflow_admin_roles()
     $data['errors'] =  $errors;
     $data['proc_info'] =  $proc_info;
 
-    // $data['pager'] = xarTplGetPager($data['offset'],$mapitems['cant'],$url,$maxRecords);
-    $data['url'] = xarModURL('workflow','admin','roles',array('pid' => $data['pid'],'offset' => '%%'));
+    // $data['pager'] = xarTplPager::getPager($data['offset'],$mapitems['cant'],$url,$maxRecords);
+    $data['url'] = xarController::URL('workflow','admin','roles',array('pid' => $data['pid'],'offset' => '%%'));
     $data['maxRecords'] = $maxRecords;
     return $data;
 }

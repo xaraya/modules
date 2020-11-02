@@ -20,7 +20,7 @@
 function workflow_admin_monitor_activities()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -29,11 +29,11 @@ function workflow_admin_monitor_activities()
 // Adapted from tiki-g-monitor_activities.php
 include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
-    if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_activity', 'str',$data['filter_activity'], '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_type',  'str',$data['filter_type'],  '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_isInteractive',  'str',$data['filter_isInteractive'],  '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_isAutoRouted',  'str',$data['filter_isAutoRouted'],  '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_process','int',$data['filter_process'],'',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_activity', 'str',$data['filter_activity'], '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_type',  'str',$data['filter_type'],  '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_isInteractive',  'str',$data['filter_isInteractive'],  '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_isAutoRouted',  'str',$data['filter_isAutoRouted'],  '',xarVar::NOT_REQUIRED)) return;
 
 // Filtering data to be received by request and
 // used to build the where part of a query
@@ -168,7 +168,7 @@ $sameurl_elements = array(
 
 $data['mid'] =  'tiki-g-monitor_activities.tpl';
 
-/*    $data['pager'] = xarTplGetPager($data['offset'],
+/*    $data['pager'] = xarTplPager::getPager($data['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);*/

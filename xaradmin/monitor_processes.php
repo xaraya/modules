@@ -20,7 +20,7 @@
 function workflow_admin_monitor_processes()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -29,9 +29,9 @@ function workflow_admin_monitor_processes()
     // Adapted from tiki-g-monitor_processes.php
     include_once(GALAXIA_LIBRARY.'/processmonitor.php');
 
-    if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_active', 'str',$data['filter_active'], '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_valid',  'str',$data['filter_valid'],  '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_process','int',$data['filter_process'],'',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_active', 'str',$data['filter_active'], '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_valid',  'str',$data['filter_valid'],  '',xarVar::NOT_REQUIRED)) return;
 
     // Filtering data to be received by request and
     // used to build the where part of a query
@@ -137,7 +137,7 @@ function workflow_admin_monitor_processes()
 
     $data['mid'] =  'tiki-g-monitor_processes.tpl';
 
-/*        $data['pager'] = xarTplGetPager($data['offset'],
+/*        $data['pager'] = xarTplPager::getPager($data['offset'],
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/

@@ -17,14 +17,14 @@
 function workflow_admin_updateconfig()
 {
     // Get parameters
-    xarVarFetch('settings', 'isset',    $settings, '', XARVAR_DONT_SET);
+    xarVar::fetch('settings', 'isset',    $settings, '', xarVar::DONT_SET);
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
-    if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('jobs','isset',$jobs,array(),xarVar::NOT_REQUIRED)) return;
     if (empty($jobs)) {
         $jobs = array();
     }
@@ -37,17 +37,17 @@ function workflow_admin_updateconfig()
     $serialjobs = serialize($savejobs);
     xarModVars::set('workflow','jobs',$serialjobs);
 
-    if (xarModIsAvailable('scheduler')) {
-        if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
+    if (xarMod::isAvailable('scheduler')) {
+        if (!xarVar::fetch('interval', 'str:1', $interval, '', xarVar::NOT_REQUIRED)) return;
         // see if we have a scheduler job running to execute workflow activities
-        $job = xarModAPIFunc('scheduler','user','get',
+        $job = xarMod::apiFunc('scheduler','user','get',
                              array('module' => 'workflow',
                                    'type' => 'scheduler',
                                    'func' => 'activities'));
         if (empty($job) || empty($job['interval'])) {
             if (!empty($interval)) {
                 // create a scheduler job
-                xarModAPIFunc('scheduler','admin','create',
+                xarMod::apiFunc('scheduler','admin','create',
                               array('module' => 'workflow',
                                     'type' => 'scheduler',
                                     'func' => 'activities',
@@ -55,13 +55,13 @@ function workflow_admin_updateconfig()
             }
         } elseif (empty($interval)) {
             // delete the scheduler job
-            xarModAPIFunc('scheduler','admin','delete',
+            xarMod::apiFunc('scheduler','admin','delete',
                           array('module' => 'workflow',
                                 'type' => 'scheduler',
                                 'func' => 'activities'));
         } elseif ($interval != $job['interval']) {
             // update the scheduler job
-            xarModAPIFunc('scheduler','admin','update',
+            xarMod::apiFunc('scheduler','admin','update',
                           array('module' => 'workflow',
                                 'type' => 'scheduler',
                                 'func' => 'activities',
@@ -73,12 +73,12 @@ function workflow_admin_updateconfig()
     $data['module_settings']->getItem();
     $isvalid = $data['module_settings']->checkInput();
     if (!$isvalid) {
-        return xarTplModule('workflow','admin','modifyconfig', $data);        
+        return xarTpl::module('workflow','admin','modifyconfig', $data);        
     } else {
         $itemid = $data['module_settings']->updateItem();
     }
     
-    xarResponse::redirect(xarModURL('workflow', 'admin', 'modifyconfig'));
+    xarResponse::redirect(xarController::URL('workflow', 'admin', 'modifyconfig'));
 
     return true;
 }

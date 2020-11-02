@@ -20,7 +20,7 @@
 function workflow_userapi_showactivity($args)
 {
     // Security Check
-    if (!xarSecurityCheck('ReadWorkflow',0)) {
+    if (!xarSecurity::check('ReadWorkflow',0)) {
         return '';
     }
 
@@ -38,7 +38,7 @@ function workflow_userapi_showactivity($args)
     $process = new Process($activity->getProcessId());
 
     if (empty($user)) {
-        $user = xarUserGetVar('id');
+        $user = xarUser::getVar('id');
     }
     if (!empty($args['instanceId'])) {
         $instance->getInstance($args['instanceId']);
@@ -110,7 +110,7 @@ function workflow_userapi_showactivity($args)
     if ($activity->isInteractive()) {
         $template = $activity->getNormalizedName(). '.tpl';
         // not very clean way, but it works :)
-        $output = xarTpl__executeFromFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
+        $output = xarTpl::executeFromFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
         return $output;
     } else {
         $instance->getInstance($instance->instanceId);

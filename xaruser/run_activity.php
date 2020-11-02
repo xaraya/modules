@@ -19,17 +19,17 @@
  */
 function workflow_user_run_activity()
 {
-    xarLogMessage("Running activity");
+    xarLog::message("Running activity");
     // Security Check
     // CHECKME: what if an activity is Auto? (probably nothing different)
-    if (!xarSecurityCheck('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
     // global $user variable used by instance
     global $user;
-    $user = xarUserGetVar('id');
+    $user = xarUser::getVar('id');
     // Adapted from tiki-g-run_activity.php
     include (GALAXIA_LIBRARY.'/api.php');
 
@@ -43,13 +43,13 @@ function workflow_user_run_activity()
     // load then the compiled version of the activity
     if (!isset($_REQUEST['activityId'])) {
         $tplData['msg'] =  xarML("No workflow activity indicated");
-        return xarTplModule('workflow', 'user', 'error', $tplData);
+        return xarTpl::module('workflow', 'user', 'error', $tplData);
     }
 
     $activity = WorkFlowActivity::get($_REQUEST['activityId']);
     if (empty($activity)) {
         $tplData['msg'] = xarML("Invalid workflow activity specified");
-        return xarTplModule('workflow', 'user', 'error', $tplData);
+        return xarTpl::module('workflow', 'user', 'error', $tplData);
     }
     $process = new Process($activity->getProcessId());
 
@@ -68,7 +68,7 @@ function workflow_user_run_activity()
             if (in_array($candidate["roleId"], $user_roles)) $canrun = true;
         if (!$canrun) {
             $tplData['msg'] =  xarML("You can't execute this activity");
-            return xarTplModule('workflow', 'user', 'error', $tplData);
+            return xarTpl::module('workflow', 'user', 'error', $tplData);
         }
     }
 
@@ -104,7 +104,7 @@ function workflow_user_run_activity()
     if (isset($_REQUEST['__removecomment'])) {
         $__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
 
-        if ($__comment['user'] == $user or xarSecurityCheck('AdminWorkflow',0)) {
+        if ($__comment['user'] == $user or xarSecurity::check('AdminWorkflow',0)) {
             $instance->remove_instance_comment($_REQUEST['__removecomment']);
         }
     }
@@ -146,9 +146,9 @@ function workflow_user_run_activity()
         if (!empty($_REQUEST['return_url'])) {
             xarResponse::Redirect($_REQUEST['return_url']);
         } elseif (empty($instance->instanceId)) {
-            xarResponse::Redirect(xarModURL('workflow', 'user', 'activities'));
+            xarResponse::Redirect(xarController::URL('workflow', 'user', 'activities'));
         } else {
-            xarResponse::Redirect(xarModURL('workflow', 'user', 'instances'));
+            xarResponse::Redirect(xarController::URL('workflow', 'user', 'instances'));
         }
         return true;
     } elseif (!isset($_REQUEST['auto']) && $activity->isInteractive() && $activity->getType() == 'standalone' && !empty($_REQUEST['return_url'])) {
@@ -161,7 +161,7 @@ function workflow_user_run_activity()
             $template = $activity->getNormalizedName(). '.tpl';
             $tplData['mid'] =  $process->getNormalizedName(). '/' . $template;
             // not very clean way, but it works :)
-            $output = xarTplFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
+            $output = xarTpl::file(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
             $tplData['mid'] = $output;
             $template = 'running';
 
@@ -177,16 +177,16 @@ function workflow_user_run_activity()
                 $item['module'] = 'workflow';
                 $item['itemtype'] = $activity->getProcessId();
                 $item['itemid'] = $instance->getInstanceId();
-                $item['returnurl'] = xarModURL('workflow','user','run_activity',
+                $item['returnurl'] = xarController::URL('workflow','user','run_activity',
                                                array('activityId' => $activity->getActivityId(),
                                                      'iid' => $instance->getInstanceId()));
-                $tplData['hooks'] = xarModCallHooks('item','display',$instance->instanceId,$item);
+                $tplData['hooks'] = xarModHooks::call('item','display',$instance->instanceId,$item);
             }
         } else {
             $template = 'completed';
         }
     }
-    return xarTplModule('workflow','user','activity',$tplData,$template);
+    return xarTpl::module('workflow','user','activity',$tplData,$template);
 }
 
 ?>

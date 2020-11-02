@@ -21,7 +21,7 @@ sys::import('modules.workflow.lib.galaxia.api');
 function workflow_admin_graph()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -37,7 +37,7 @@ $maxRecords = xarModVars::get('workflow','itemsperpage');
         $_REQUEST['pid'] = 0;
 
     if ($_REQUEST["pid"]) {
-        xarLogMessage("WORKFLOW: Getting process");
+        xarLog::message("WORKFLOW: Getting process");
         $process = new Process($_REQUEST['pid']);
         $procNName = $process->getNormalizedName();
 
@@ -48,15 +48,15 @@ $maxRecords = xarModVars::get('workflow','itemsperpage');
 
         if(!file_exists($process->getGraph()) or !file_exists($mapfile)) {
             // Try to build it
-            xarLogMessage("WF: need to build graph files");
+            xarLog::message("WF: need to build graph files");
             $activityManager->build_process_graph($_REQUEST['pid']);
         }
 
         if (file_exists($process->getGraph()) && file_exists($mapfile)) {
-            xarLogMessage("WF: graph files exist");
+            xarLog::message("WF: graph files exist");
             $map = join('',file($mapfile));
 
-            $url = xarModURL('workflow','admin','activities',
+            $url = xarController::URL('workflow','admin','activities',
                              array('pid' => $info['pId']));
             $map = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $map);
             // Darn graphviz does not close the area tags
@@ -171,7 +171,7 @@ $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     $tplData['mid'] =  'tiki-g-admin_processes.tpl';
 
-/*    $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*    $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);*/

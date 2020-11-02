@@ -21,7 +21,7 @@ sys::import('modules.workflow.lib.galaxia.api');
 function workflow_admin_activities()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -33,7 +33,7 @@ function workflow_admin_activities()
 
     if (!isset($_REQUEST['pid'])) {
         $data['msg'] =  xarML("No process indicated");
-        return xarTplModule('workflow', 'admin', 'error', $data);
+        return xarTpl::module('workflow', 'admin', 'error', $data);
     }
     $data['pid'] =  $_REQUEST['pid'];
     // Create a process object
@@ -120,7 +120,7 @@ function workflow_admin_activities()
 
         if ($process->hasActivity($_REQUEST['name']) && $_REQUEST['activityId'] == 0) {
             $data['msg'] =  xarML("Activity name already exists");
-            return xarTplModule('workflow', 'admin', 'error', $data);
+            return xarTpl::module('workflow', 'admin', 'error', $data);
         }
 
         $newaid = $activityManager->replace_activity($data['pid'], $_REQUEST['activityId'], $vars);

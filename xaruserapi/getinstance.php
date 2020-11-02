@@ -28,7 +28,7 @@ function workflow_userapi_getInstance($args)
     sys::import('modules.workflow.lib.galaxia.config');
 
     //make sure this user an access this instance
-    if (!xarSecurityCheck('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) return;
 
     extract($args);
 

@@ -7,7 +7,7 @@
     <!-- Process navigation bar -->
     <xar:template file="proc_bar"/>
 
-  <form id='editsource' action="#xarModURL('workflow','admin','shared_source')#" method="post">
+  <form id='editsource' action="#xarController::URL('workflow','admin','shared_source')#" method="post">
 
     <fieldset>
        <xar:if condition="$template != 'y'">

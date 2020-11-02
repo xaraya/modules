@@ -56,7 +56,7 @@
                 <td style="text-align: center;">#$item[$field]#</td>
               <xar:elseif condition="$field eq 'user' or $field eq 'owner'"/>
                 <xar:if condition="!empty($item[$field]) and is_numeric($item[$field])">
-                  <td>#xarUserGetVar('name',$item[$field])#</td>
+                  <td>#xarUser::getVar('name',$item[$field])#</td>
                 <xar:else/>
                   <td>#$item[$field]#</td>
                 </xar:if>
@@ -65,9 +65,9 @@
                   <!-- you can choose how to display the date and time here, e.g. show
                        the time for the last 12 hours and the date for anything older -->
                   <xar:if condition="$item[$field] > time() - 12*60*60">
-                    <td>#xarLocaleGetFormattedTime('short',$item[$field])#</td>
+                    <td>#xarLocale::getFormattedTime('short',$item[$field])#</td>
                   <xar:else/>
-                    <td>#xarLocaleGetFormattedDate('medium',$item[$field])#</td>
+                    <td>#xarLocale::getFormattedDate('medium',$item[$field])#</td>
                   </xar:if>
                 <xar:else/>
                   <td>#$item[$field]#</td>

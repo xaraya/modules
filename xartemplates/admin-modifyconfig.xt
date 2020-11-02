@@ -71,7 +71,7 @@
 
         <fieldset>
           <legend>Configuration of Scheduled Activities</legend>
-          <xar:if condition="xarModIsAvailable('scheduler')">
+          <xar:if condition="xarMod::isAvailable('scheduler')">
             <xar:template file="scheduler"/>
           <xar:else />
             The scheduler module is not installed

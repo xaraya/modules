@@ -63,7 +63,7 @@ foreach (array_keys($items) as $index) {
     if (empty($items[$index]['user'])) {
         $items[$index]['user'] = '-';
     } elseif (is_numeric($items[$index]['user'])) {
-        $items[$index]['user'] = xarUserGetVar('name', $items[$index]['user']);
+        $items[$index]['user'] = xarUser::getVar('name', $items[$index]['user']);
     }
 }
 
@@ -202,7 +202,7 @@ $instance->set('title',$cdinfo['title']);
 
 // Put the CD information in a template variable
 $tplData['info'] = $cdinfo;
-$tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
+$tplData['requestedby'] = xarUser::getVar('name',$instance->get('user'));
 
 // Approve the CD request
 if(isset($_REQUEST['approved'])) {
@@ -339,7 +339,7 @@ $tplData['escalated'] = $instance->get('escalated');
     <p>Reason: #$reason#</p>
   </xar:if>
   <xar:if condition="!empty($escalated)">
-    <p>Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)#</p>
+    <p>Escalated: #xarLocale::formatDate('%x %X %z', $escalated)#</p>
   </xar:if>
   <form method="post" action="&xar-modurl-workflow-user-run_activity;">
     <input type="hidden" name="activityId" value="#$activityId#"/>
@@ -376,7 +376,7 @@ $instance->set('title',$cdinfo['title']);
 
 // Put the CD information in a template variable
 $tplData['info'] = $cdinfo;
-$tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
+$tplData['requestedby'] = xarUser::getVar('name',$instance->get('user'));
 
 // Approve the CD request
 if(isset($_REQUEST['approved'])) {
@@ -406,7 +406,7 @@ if(isset($_REQUEST['rejected'])) {
 CD: #$info['title']# <br/>
 Requested by: #$requestedby# <br/>
 Status: #$info['status']# <br/>
-Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
+Escalated: #xarLocale::formatDate('%x %X %z', $escalated)# <br/>
 <form method="post" action="&xar-modurl-workflow-user-run_activity;">
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="iid" value="#$iid#"/>
@@ -446,7 +446,7 @@ if (empty($actinfo) || empty($actinfo['activityId'])) {
 $checkId = $actinfo['activityId'];
 
 // Find all instances that have been waiting for approval for a certain time
-$findinstances = xarModAPIFunc('workflow','user','findinstances',
+$findinstances = xarMod::apiFunc('workflow','user','findinstances',
                                array('activityId' => $checkId,
                                      'max_started' => $now - $deadline));
 if (empty($findinstances) || count($findinstances) < 1) {

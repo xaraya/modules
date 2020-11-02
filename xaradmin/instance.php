@@ -21,7 +21,7 @@
 function workflow_admin_instance()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -34,7 +34,7 @@ function workflow_admin_instance()
 
     if (!isset($_REQUEST['iid'])) {
         $tplData['msg'] =  xarML("No instance indicated");
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
+        return xarTpl::module('workflow', 'admin', 'error', $tplData);
     }
     $tplData['iid'] =  $_REQUEST['iid'];
 
@@ -59,8 +59,8 @@ function workflow_admin_instance()
     // Get the instance and set instance information
     $ins_info = $instanceManager->get_instance($_REQUEST['iid']);
     if (!empty($ins_info['started'])) {
-        $date = xarLocaleGetFormattedDate('medium',$ins_info['started']) . ' '
-                . xarLocaleGetFormattedTime('short',$ins_info['started']);
+        $date = xarLocale::getFormattedDate('medium',$ins_info['started']) . ' '
+                . xarLocale::getFormattedTime('short',$ins_info['started']);
         $ins_info['started'] = $date;
     }
     $tplData['ins_info'] =&  $ins_info;
@@ -78,7 +78,7 @@ function workflow_admin_instance()
     $mapitems = $roleManager->list_mappings($ins_info['pId'], 0, -1, 'name_asc', '');
     // trick : replace userid by user here !
     foreach (array_keys($mapitems['data']) as $index) {
-        $role = xarModAPIFunc('roles','user','get',
+        $role = xarMod::apiFunc('roles','user','get',
                               array('id' => $mapitems['data'][$index]['user']));
         if (!empty($role)) {
             $mapitems['data'][$index]['userId'] = $role['id'];

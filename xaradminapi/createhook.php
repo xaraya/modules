@@ -40,7 +40,7 @@ function workflow_adminapi_createhook($args)
         if (!empty($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
     $modid = xarMod::getRegID($modname);
@@ -74,7 +74,7 @@ function workflow_adminapi_createhook($args)
         return $extrainfo;
     }
 
-    if (!xarModAPIFunc('workflow','user','run_activity',
+    if (!xarMod::apiFunc('workflow','user','run_activity',
                        array('activityId' => $activityId,
                              'auto' => 1,
                              // standard arguments for use in activity code

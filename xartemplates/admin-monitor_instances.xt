@@ -16,7 +16,7 @@
           List of instances (#$cant#)
         </legend>
 
-        <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_instances')#" method="post">
+        <form style="margin-left: 1em;" action="#xarController::URL('workflow','admin','monitor_instances')#" method="post">
           <input type="hidden" name="offset" value="#$offset#"/>
           <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
           <table>
@@ -122,7 +122,7 @@
           </table>
         </form>
 
-        <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
+        <form style="margin-left: 1em;" action="#xarController::URL('workflow','admin','monitor_activities')#" method="post">
           <input type="hidden" name="offset" value="#$offset#"/>
           <input type="hidden" name="find" value="#$find#"/>
           <input type="hidden" name="where" value="#$where#"/>
@@ -182,7 +182,7 @@
                   <td style="text-align:left;">
                     <xar:if condition="!empty($items[$ix]['duration'])">
                       <xar:if condition="!empty($items[$ix]['timescale'])">
-                        <img src="#xarTplGetImage('bluepixel.gif')#" width="#$items[$ix]['timescale']#" height="10" alt="duration" title="duration = #$items[$ix]['duration']#"/>
+                        <img src="#xarTpl::getImage('bluepixel.gif')#" width="#$items[$ix]['timescale']#" height="10" alt="duration" title="duration = #$items[$ix]['duration']#"/>
                       </xar:if>
                       #$items[$ix]['duration']#
                     </xar:if>

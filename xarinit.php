@@ -18,7 +18,7 @@
  */
 function workflow_init()
 {
-    if (!xarVarFetch('loadexample', 'checkbox', $loadexample, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('loadexample', 'checkbox', $loadexample, 1, xarVar::NOT_REQUIRED)) return;
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
@@ -387,25 +387,25 @@ function workflow_init()
     xarModVars::set('workflow','itemsperpage',20);
     xarModVars::set('workflow','seenlist','');
 
-    if (!xarModRegisterHook('item', 'create', 'API',
+    if (!xarModHooks::register('item', 'create', 'API',
                            'workflow', 'admin', 'createhook')) {
         return false;
     }
-    if (!xarModRegisterHook('item', 'update', 'API',
+    if (!xarModHooks::register('item', 'update', 'API',
                            'workflow', 'admin', 'updatehook')) {
         return false;
     }
-    if (!xarModRegisterHook('item', 'delete', 'API',
+    if (!xarModHooks::register('item', 'delete', 'API',
                            'workflow', 'admin', 'deletehook')) {
         return false;
     }
-    if (!xarModRegisterHook('module', 'remove', 'API',
+    if (!xarModHooks::register('module', 'remove', 'API',
                            'workflow', 'admin', 'removehook')) {
         return false;
     }
 
 /* // TODO: show pending instances someday ?
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+    if (!xarModHooks::register('item', 'usermenu', 'GUI',
             'workflow', 'user', 'usermenu')) {
         return false;
     }
@@ -414,7 +414,7 @@ function workflow_init()
     // define privilege instances and masks
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
-                             'query'  => xarModURL('workflow', 'admin', 'privileges'),
+                             'query'  => xarController::URL('workflow', 'admin', 'privileges'),
                              'limit'  => 0
                             )
                     );
@@ -483,26 +483,26 @@ function workflow_delete()
     }
 
     // Remove module hooks
-    if (!xarModUnregisterHook('item', 'create', 'API',
+    if (!xarModHooks::unregister('item', 'create', 'API',
                            'workflow', 'admin', 'createhook')) {
         return false;
     }
-    if (!xarModUnregisterHook('item', 'update', 'API',
+    if (!xarModHooks::unregister('item', 'update', 'API',
                            'workflow', 'admin', 'updatehook')) {
         return false;
     }
-    if (!xarModUnregisterHook('item', 'delete', 'API',
+    if (!xarModHooks::unregister('item', 'delete', 'API',
                            'workflow', 'admin', 'deletehook')) {
         return false;
     }
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
-    if (!xarModUnregisterHook('module', 'remove', 'API',
+    if (!xarModHooks::unregister('module', 'remove', 'API',
                            'workflow', 'admin', 'removehook')) {
         return false;
     }
 /* // TODO: show pending instances someday ?
-    if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
+    if (!xarModHooks::unregister('item', 'usermenu', 'GUI',
             'workflow', 'user', 'usermenu')) {
         return false;
     }

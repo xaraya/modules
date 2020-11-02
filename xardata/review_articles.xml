@@ -19,14 +19,14 @@
       </roles>
       <code><![CDATA[<?php
 // save the module, itemtype and itemid for which the hook was called
-    if (empty($args['module'])) $args['module'] = xarModGetName();
+    if (empty($args['module'])) $args['module'] = xarMod::getName();
     $instance->set('module',$args['module']);
     if (empty($args['itemtype'])) $args['itemtype'] = 0;
     $instance->set('itemtype',$args['itemtype']);
     if (empty($args['itemid'])) $args['itemid'] = 0;
     $instance->set('itemid',$args['itemid']);
 // save the current user
-    $instance->set('user',xarUserGetVar('id'));
+    $instance->set('user',xarUser::getVar('id'));
 ?>      ]]></code>    </activity>
     <activity>
       <name>Review Article</name>
@@ -44,16 +44,16 @@ $module = $instance->get('module');
 $itemtype = $instance->get('itemtype');
 $itemid = $instance->get('itemid');
 if (empty($itemid) || !is_numeric($itemid)) {
-    $msg = xarML('Invalid article #(1)', xarVarPrepForDisplay($itemid));
+    $msg = xarML('Invalid article #(1)', xarVar::prepForDisplay($itemid));
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                    new SystemException($msg));
     return;
 }
 
 // Retrieve the item
-$article = xarModAPIFunc('articles','user','get', array('aid' => $itemid));
+$article = xarMod::apiFunc('articles','user','get', array('aid' => $itemid));
 if (empty($article)) {
-    $msg = xarML('Unable to find article #(1)', xarVarPrepForDisplay($itemid));
+    $msg = xarML('Unable to find article #(1)', xarVar::prepForDisplay($itemid));
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                    new SystemException($msg));
     return;
@@ -63,9 +63,9 @@ if (empty($article)) {
 $input = array();
 $input['article'] = $article;
 $input['mask'] = 'EditArticles';
-if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
+if (!xarMod::apiFunc('articles','user','checksecurity',$input)) {
     $msg = xarML('You have no permission to modify article #(1)',
-                 xarVarPrepForDisplay($itemid));
+                 xarVar::prepForDisplay($itemid));
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                    new SystemException($msg));
     return;
@@ -73,21 +73,21 @@ if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
 unset($input);
 
 // Get parameters
-if (!xarVarFetch('edit','isset', $edit, NULL, XARVAR_DONT_SET)) {return;}
-if (!xarVarFetch('approve','isset', $approve, NULL, XARVAR_DONT_SET)) {return;}
-if (!xarVarFetch('reject','isset', $reject, NULL, XARVAR_DONT_SET)) {return;}
-if (!xarVarFetch('frontpage','isset', $frontpage, NULL, XARVAR_DONT_SET)) {return;}
-if (!xarVarFetch('reason','isset', $reason, NULL, XARVAR_DONT_SET)) {return;}
+if (!xarVar::fetch('edit','isset', $edit, NULL, xarVar::DONT_SET)) {return;}
+if (!xarVar::fetch('approve','isset', $approve, NULL, xarVar::DONT_SET)) {return;}
+if (!xarVar::fetch('reject','isset', $reject, NULL, xarVar::DONT_SET)) {return;}
+if (!xarVar::fetch('frontpage','isset', $frontpage, NULL, xarVar::DONT_SET)) {return;}
+if (!xarVar::fetch('reason','isset', $reason, NULL, xarVar::DONT_SET)) {return;}
 if (empty($reason)) $reason = '';
 
 if (!empty($edit)) {
     // Go to the articles modify page
-    xarResponse::Redirect(xarModURL('articles', 'admin', 'modify',
+    xarResponse::Redirect(xarController::URL('articles', 'admin', 'modify',
                                   array('aid' => $itemid)));
     return true;
 } elseif (!empty($approve)) {
     // Save the reviewer information
-    $instance->set('reviewer', xarUserGetVar('id'));
+    $instance->set('reviewer', xarUser::getVar('id'));
     $instance->set('reviewed', time());
     // Save the new status
     $instance->set('status', 'approved');
@@ -96,7 +96,7 @@ if (!empty($edit)) {
     $instance->complete();
 } elseif (!empty($reject)) {
     // Save the reviewer information
-    $instance->set('reviewer', xarUserGetVar('id'));
+    $instance->set('reviewer', xarUser::getVar('id'));
     $instance->set('reviewed', time());
     // Save the new status
     $instance->set('status', 'rejected');
@@ -105,7 +105,7 @@ if (!empty($edit)) {
     $instance->complete();
 } elseif (!empty($frontpage)) {
     // Save the reviewer information
-    $instance->set('reviewer', xarUserGetVar('id'));
+    $instance->set('reviewer', xarUser::getVar('id'));
     $instance->set('reviewed', time());
     // Save the new status
     $instance->set('status', 'frontpage');
@@ -115,14 +115,14 @@ if (!empty($edit)) {
 } else {
     // Get the name of the user who initiated the process
     $user = $instance->get('user');
-    $tplData['user'] = xarUserGetVar('name', $user);
+    $tplData['user'] = xarUser::getVar('name', $user);
 
     // Get the time when the process was started
     $started = $instance->started;
-    $tplData['date'] = xarLocaleGetFormattedDate('long', $started);
+    $tplData['date'] = xarLocale::getFormattedDate('long', $started);
 
     // Get a preview of the item
-    $tplData['preview'] = xarModFunc('articles', 'user', 'display',
+    $tplData['preview'] = xarMod::guiFunc('articles', 'user', 'display',
                                   array('preview' => true, 'article' => $article));
 }
 ?>      ]]></code>      <template><![CDATA[
@@ -181,16 +181,16 @@ $module = $instance->get('module');
 $itemtype = $instance->get('itemtype');
 $itemid = $instance->get('itemid');
 if (empty($itemid) || !is_numeric($itemid)) {
-    $msg = xarML('Invalid article #(1)', xarVarPrepForDisplay($itemid));
+    $msg = xarML('Invalid article #(1)', xarVar::prepForDisplay($itemid));
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                    new SystemException($msg));
     return;
 }
 
 // Retrieve the module item
-$article = xarModAPIFunc('articles','user','get', array('aid' => $itemid));
+$article = xarMod::apiFunc('articles','user','get', array('aid' => $itemid));
 if (empty($article)) {
-    $msg = xarML('Unable to find article #(1)', xarVarPrepForDisplay($itemid));
+    $msg = xarML('Unable to find article #(1)', xarVar::prepForDisplay($itemid));
 
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                    new SystemException($msg));
@@ -218,7 +218,7 @@ switch ($status) {
 }
 
 // Pass to API - watch out, this will call update hooks again :-)
-if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
+if (!xarMod::apiFunc('articles', 'admin', 'update', $article)) {
     return; // throw back
 }
 
@@ -261,7 +261,7 @@ if (empty($actinfo) || empty($actinfo['activityId'])) {
 $checkId = $actinfo['activityId'];
 
 // Find all instances that have been waiting for a review for a certain time
-$findinstances = xarModAPIFunc('workflow','user','findinstances',
+$findinstances = xarMod::apiFunc('workflow','user','findinstances',
                                     array('activityId' => $checkId,
                                              'max_started' => $now - $deadline));
 if (empty($findinstances) || count($findinstances) < 1) {
@@ -296,7 +296,7 @@ foreach ($findinstances as $info) {
     }
 
     // Retrieve the article
-    $article = xarModAPIFunc('articles','user','get', array('aid' => $itemid));
+    $article = xarMod::apiFunc('articles','user','get', array('aid' => $itemid));
     if (empty($article)) {
         // the article is already gone
         $reason = xarML('Article cannot be found');

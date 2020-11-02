@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <h3>#$title#</h3>
   <!-- show something -->
-  <form method="post" action="#xarModURL('workflow','user','run_activity')#">
+  <form method="post" action="#xarController::URL('workflow','user','run_activity')#">
     <!-- update something -->
     <textarea name="info" cols="40" rows="4">&#160;</textarea>
     <br/>

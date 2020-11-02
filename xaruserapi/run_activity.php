@@ -20,7 +20,7 @@
 function workflow_userapi_run_activity($args)
 {
     // Security Check
-    if (!xarSecurityCheck('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) return;
 
     // Common setup for Galaxia environment (possibly include more than once here !)
     sys::import('modules.workflow.lib.galaxia.config');

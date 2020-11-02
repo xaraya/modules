@@ -20,7 +20,7 @@
 function workflow_admin_workitem()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -33,12 +33,12 @@ include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 if (!isset($_REQUEST['itemId'])) {
     $tplData['msg'] =  xarML("No item indicated");
 
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    return xarTpl::module('workflow', 'admin', 'error', $tplData);
 }
 
 $wi = $processMonitor->monitor_get_workitem($_REQUEST['itemId']);
 if (is_numeric($wi['user'])) {
-    $wi['user'] = xarUserGetVar('name',$wi['user']);
+    $wi['user'] = xarUser::getVar('name',$wi['user']);
 }
 $tplData['wi'] =&  $wi;
 

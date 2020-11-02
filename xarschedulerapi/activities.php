@@ -73,7 +73,7 @@ function workflow_schedulerapi_activities($args)
             }
         }
         $log .= xarML('Workflow activity #(1)',$job['activity']) . ' ';
-        if (!xarModAPIFunc('workflow','user','run_activity',
+        if (!xarMod::apiFunc('workflow','user','run_activity',
                            array('activityId' => $job['activity']), 0)) {
             $jobs[$id]['result'] = xarML('failed');
             $log .= xarML('failed');
@@ -94,7 +94,7 @@ function workflow_schedulerapi_activities($args)
 
 // Trick : make sure we're dealing with up-to-date information here,
 //         because running all those jobs may have taken a while...
-    xarVarDelCached('Mod.Variables.workflow', 'jobs');
+    xarVar::delCached('Mod.Variables.workflow', 'jobs');
 
     // get the current list of jobs
     $serialjobs = xarModVars::get('workflow','jobs');

@@ -24,7 +24,7 @@
 function workflow_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     $data = array();
     $data['settings'] = array();
@@ -40,14 +40,14 @@ function workflow_admin_modifyconfig()
                                          'update' => $update,
                                          'delete' => $delete);
 
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'workflow'));
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
@@ -68,7 +68,7 @@ function workflow_admin_modifyconfig()
                         $link = $mytypes[$itemtype]['url'];
                     } else {
                         $type = xarML('type #(1)',$itemtype);
-                        $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
+                        $link = xarController::URL($modname,'user','view',array('itemtype' => $itemtype));
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                     'create' => $create,
@@ -88,7 +88,7 @@ function workflow_admin_modifyconfig()
                 if (empty($delete)) {
                     $delete = '';
                 }
-                $link = xarModURL($modname,'user','main');
+                $link = xarController::URL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                     'create' => $create,
                                                     'update' => $update,
@@ -146,10 +146,10 @@ function workflow_admin_modifyconfig()
                             'lastrun' => '',
                             'result' => '');
 
-    if (xarModIsAvailable('scheduler')) {
-        $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+    if (xarMod::isAvailable('scheduler')) {
+        $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
         // see if we have a scheduler job running to execute workflow activities
-        $job = xarModAPIFunc('scheduler','user','get',
+        $job = xarMod::apiFunc('scheduler','user','get',
                              array('module' => 'workflow',
                                    'type' => 'scheduler',
                                    'func' => 'activities'));
@@ -163,7 +163,7 @@ function workflow_admin_modifyconfig()
         $data['interval'] = '';
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
 

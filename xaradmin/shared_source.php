@@ -21,7 +21,7 @@ sys::import('modules.workflow.lib.galaxia.api');
 function workflow_admin_shared_source()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -33,7 +33,7 @@ function workflow_admin_shared_source()
 
     if (!isset($_REQUEST['pid'])) {
         $tplData['msg'] =  xarML("No process indicated");
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
+        return xarTpl::module('workflow', 'admin', 'error', $tplData);
     }
 
     $tplData['pid'] =  $_REQUEST['pid'];

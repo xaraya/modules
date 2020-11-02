@@ -11,7 +11,7 @@
     <div style="margin: auto;">
       <fieldset>
         <legend>List of activities (#$cant#)</legend>
-          <form style="margin-left: 1em;" id="filterf" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
+          <form style="margin-left: 1em;" id="filterf" action="#xarController::URL('workflow','admin','monitor_activities')#" method="post">
             <input type="hidden" name="offset" value="#$offset#"/>
             <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
             <table>
@@ -109,7 +109,7 @@
           </table>
         </form>
 
-        <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
+        <form style="margin-left: 1em;" action="#xarController::URL('workflow','admin','monitor_activities')#" method="post">
           <input type="hidden" name="offset" value="#$offset#"/>
           <input type="hidden" name="find" value="#$find#"/>
           <input type="hidden" name="where" value="#$where#"/>
@@ -136,12 +136,12 @@
                     <xar:template file="activity_image" subdata="$items[$ix]"/>
                     <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                     <xar:if condition="$items[$ix]['type'] eq 'standalone'">
-                      <a href="#xarModURL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId']))#">
+                      <a href="#xarController::URL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId']))#">
                         <img alt="#xarML('run')#" title="#xarML('run activity')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" border="0"/>
                       </a>
                     </xar:if>
                     <xar:if condition="$items[$ix]['type'] eq 'start'">
-                      <a href="#xarModURL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId'], 'createInstance' => 1))#">
+                      <a href="#xarController::URL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId'], 'createInstance' => 1))#">
                         <img alt="#xarML('run')#" title="#xarML('run activity')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" border="0"/>
                       </a>
                     </xar:if>
@@ -152,16 +152,16 @@
                   <td style="text-align:right;">
                     <table >
                       <tr>
-                        <td style="text-align:right;"><a style="color:green;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['active_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:black;" href="#xarModURL('workflow','admin','monitor_workitems',array('filter_process' => $items[$ix]['pId'], 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['act_completed_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:grey;" href="#xarModURL('workflow','admin','monitor_workitems',array('filter_process' => $items[$ix]['pId'], 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['aborted_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:red;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception','filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['exception_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:green;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['active_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:black;" href="#xarController::URL('workflow','admin','monitor_workitems',array('filter_process' => $items[$ix]['pId'], 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['act_completed_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:grey;" href="#xarController::URL('workflow','admin','monitor_workitems',array('filter_process' => $items[$ix]['pId'], 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['aborted_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:red;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception','filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['exception_instances']#</a></td>
                       </tr>
                       <!--
-                        <td style="text-align:right;"><a style="color:green;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['active_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:black;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'completed', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['completed_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:grey;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'aborted', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['aborted_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:red;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception','filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['exception_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:green;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['active_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:black;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'completed', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['completed_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:grey;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'aborted', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['aborted_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:red;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception','filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['exception_instances']#</a></td>
                         -->
                     </table>
                   </td>
@@ -169,13 +169,13 @@
                   <td style="text-align:left;">
                     <xar:if condition="!empty($items[$ix]['duration'])">
                       <xar:if condition="!empty($items[$ix]['timescale']['min'])">
-                        <img src="#xarTplGetImage('bluepixel.gif')#" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#"/>
+                        <img src="#xarTpl::getImage('bluepixel.gif')#" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#"/>
                       </xar:if>
                       <xar:if condition="!empty($items[$ix]['timescale']['avg'])">
-                        <img src="#xarTplGetImage('greenpixel.gif')#" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#"/>
+                        <img src="#xarTpl::getImage('greenpixel.gif')#" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#"/>
                       </xar:if>
                       <xar:if condition="!empty($items[$ix]['timescale']['max'])">
-                        <img src="#xarTplGetImage('redpixel.gif')#" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#"/>
+                        <img src="#xarTpl::getImage('redpixel.gif')#" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#"/>
                       </xar:if>
                       #$items[$ix]['duration']['avg']#
                     </xar:if>

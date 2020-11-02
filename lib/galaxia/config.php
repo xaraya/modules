@@ -77,7 +77,7 @@ assert('isset($GLOBALS[\'dbGalaxia\'])');
 if (!function_exists('galaxia_execute_activity')) {
     function galaxia_execute_activity($activityId = 0, $iid = 0, $auto = 1)
     {
-        $result = xarModAPIFunc('workflow','user','run_activity',
+        $result = xarMod::apiFunc('workflow','user','run_activity',
                                 array('activityId' => $activityId,
                                       'iid' => $iid,
                                       'auto' => $auto));

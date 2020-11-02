@@ -20,7 +20,7 @@
 function workflow_user_processes()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -30,7 +30,7 @@ function workflow_user_processes()
     include_once (GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
-    $user = xarUserGetVar('id');
+    $user = xarUser::getVar('id');
     $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     // Filtering data to be received by request and
@@ -108,7 +108,7 @@ function workflow_user_processes()
     $tplData['mid'] =  'tiki-g-user_processes.tpl';
 
 
-/*        $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/

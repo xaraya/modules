@@ -20,7 +20,7 @@
 function workflow_user_activities()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadWorkflow')) return;
+    if (!xarSecurity::check('ReadWorkflow')) return;
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -30,7 +30,7 @@ function workflow_user_activities()
     include_once (GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
-    $user = xarUserGetVar('id');
+    $user = xarUser::getVar('id');
     $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     // Filtering data to be received by request and
@@ -119,12 +119,12 @@ function workflow_user_activities()
                         $index = $actid2item[$actid];
                         $item = $tplData['items'][$index];
                         if ($item['instances'] > 0) {
-                            $url = xarModURL('workflow','user','instances',
+                            $url = xarController::URL('workflow','user','instances',
                                              array('filter_process' => $info['pId']));
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
                             $map .= $mapline;
                         } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
-                            $url = xarModURL('workflow','user','run_activity');
+                            $url = xarController::URL('workflow','user','run_activity');
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $mapline);
                             $map .= $mapline;
                         }
@@ -163,7 +163,7 @@ function workflow_user_activities()
     // Missing variable
     $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
 
-/*        $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/

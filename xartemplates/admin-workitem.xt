@@ -23,7 +23,7 @@
           <td>#$wi['procname']#&#xA0;#$wi['version']#</td>
           <td>#$wi['type']#&#xA0;#$wi['name']#</td>
           <td>#$wi['user']#</td>
-          <td>#xarLocaleGetFormattedDate('long',$wi['started'])#&#xA0;#xarLocaleGetFormattedTime('long',$wi['started'])#</td>
+          <td>#xarLocale::getFormattedDate('long',$wi['started'])#&#xA0;#xarLocale::getFormattedTime('long',$wi['started'])#</td>
           <td>#$wi['duration']#</td>
         </tr>
       </table>

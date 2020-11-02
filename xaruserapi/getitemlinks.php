@@ -50,10 +50,10 @@ function workflow_userapi_getitemlinks($args)
     foreach ($itemids as $itemid) {
         if (!isset($itemid2key[$itemid])) continue;
         $item = $items['data'][$itemid2key[$itemid]];
-        $itemlinks[$itemid] = array('url'   => xarModURL('workflow', 'user', 'instances',
+        $itemlinks[$itemid] = array('url'   => xarController::URL('workflow', 'user', 'instances',
                                                          array('filter_process' => $itemtype)),
                                     'title' => xarML('Display Instance'),
-                                    'label' => xarVarPrepForDisplay($item['procname'] . ' ' . $item['version'] . ' # ' . $item['instanceId']));
+                                    'label' => xarVar::prepForDisplay($item['procname'] . ' ' . $item['version'] . ' # ' . $item['instanceId']));
     }
     return $itemlinks;
 }

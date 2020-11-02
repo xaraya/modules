@@ -20,7 +20,7 @@
 function workflow_admin_monitor_workitems()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -28,10 +28,10 @@ $maxRecords = xarModVars::get('workflow','itemsperpage');
 // Adapted from tiki-g-monitor_workitems.php
 include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
-    if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_activity', 'str',$data['filter_activity'], '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_user',  'str',$data['filter_user'],  '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_instance',  'str',$data['filter_instance'],  '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_process','int',$data['filter_process'],'',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_activity', 'str',$data['filter_activity'], '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_user',  'str',$data['filter_user'],  '',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('filter_instance',  'str',$data['filter_instance'],  '',xarVar::NOT_REQUIRED)) return;
 
 // Filtering data to be received by request and
 // used to build the where part of a query
@@ -105,11 +105,11 @@ foreach ($items['data'] as $index => $info) {
     $items['data'][$index]['timescale'] = intval( $scale * $info['duration'] );
     $items['data'][$index]['duration'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']));
     if (!empty($info['started'])) {
-        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
-                                            . xarLocaleGetFormattedTime('short',$info['started']);
+        $items['data'][$index]['started'] = xarLocale::getFormattedDate('medium',$info['started']) . ' '
+                                            . xarLocale::getFormattedTime('short',$info['started']);
     }
     if (!is_numeric($info['user'])) continue;
-    $items['data'][$index]['user'] = xarUserGetVar('name',$info['user']);
+    $items['data'][$index]['user'] = xarUser::getVar('name',$info['user']);
 }
 $data['items'] =&  $items["data"];
 
@@ -153,7 +153,7 @@ foreach (array_keys($users) as $index) {
         $data['users'][$index]['user'] = $users[$index];
         $data['users'][$index]['userId'] = $users[$index];
     } else {
-        $data['users'][$index]['user'] = xarUserGetVar('name',$users[$index]);
+        $data['users'][$index]['user'] = xarUser::getVar('name',$users[$index]);
         $data['users'][$index]['userId'] = $users[$index];
     }
 }
@@ -163,7 +163,7 @@ $data['mid'] =  'tiki-g-monitor_workitems.tpl';
 
 
     $url = xarServer::getCurrentURL(array('offset' => '%%'));
-/*    $data['pager'] = xarTplGetPager($data['offset'],
+/*    $data['pager'] = xarTplPager::getPager($data['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);*/

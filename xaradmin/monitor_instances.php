@@ -20,7 +20,7 @@
 function workflow_admin_monitor_instances()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -159,14 +159,14 @@ foreach ($items['data'] as $index => $info) {
     $items['data'][$index]['timescale'] = intval( $scale * $info['duration'] );
     $items['data'][$index]['duration'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']));
     if (!empty($info['started'])) {
-        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
-                                            . xarLocaleGetFormattedTime('short',$info['started']);
+        $items['data'][$index]['started'] = xarLocale::getFormattedDate('medium',$info['started']) . ' '
+                                            . xarLocale::getFormattedTime('short',$info['started']);
     }
     if (is_numeric($info['user'])) {
-        $items['data'][$index]['user'] = xarUserGetVar('name',$info['user']);
+        $items['data'][$index]['user'] = xarUser::getVar('name',$info['user']);
     }
     if (is_numeric($info['owner'])) {
-        $items['data'][$index]['owner'] = xarUserGetVar('name',$info['owner']);
+        $items['data'][$index]['owner'] = xarUser::getVar('name',$info['owner']);
     }
 }
 $tplData['items'] =&  $items["data"];
@@ -220,7 +220,7 @@ foreach (array_keys($users) as $index) {
         $tplData['users'][$index]['user'] = $users[$index];
         $tplData['users'][$index]['userId'] = $users[$index];
     } else {
-        $tplData['users'][$index]['user'] = xarUserGetVar('name',$users[$index]);
+        $tplData['users'][$index]['user'] = xarUser::getVar('name',$users[$index]);
         $tplData['users'][$index]['userId'] = $users[$index];
     }
 }
@@ -231,7 +231,7 @@ foreach (array_keys($owners) as $index) {
         $tplData['owners'][$index]['user'] = $owners[$index];
         $tplData['owners'][$index]['userId'] = $owners[$index];
     } else {
-        $tplData['owners'][$index]['user'] = xarUserGetVar('name',$owners[$index]);
+        $tplData['owners'][$index]['user'] = xarUser::getVar('name',$owners[$index]);
         $tplData['owners'][$index]['userId'] = $owners[$index];
     }
 }
@@ -245,7 +245,7 @@ $tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUES
 $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
 $tplData['filter_owner'] = isset($_REQUEST['filter_owner']) ? $_REQUEST['filter_owner'] : '';
 
-    /*$tplData['pager'] = xarTplGetPager($tplData['offset'],
+    /*$tplData['pager'] = xarTplPager::getPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);*/

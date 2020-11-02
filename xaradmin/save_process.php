@@ -20,7 +20,7 @@
 function workflow_admin_save_process()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminWorkflow')) return;
+    if (!xarSecurity::check('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');

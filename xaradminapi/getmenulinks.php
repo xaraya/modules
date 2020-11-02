@@ -22,18 +22,18 @@ function workflow_adminapi_getmenulinks()
     $menulinks = array();
 
 // Security Check
-    if (xarSecurityCheck('AdminWorkflow',0)) {
-        $menulinks[] = Array('url'   => xarModURL('workflow',
+    if (xarSecurity::check('AdminWorkflow',0)) {
+        $menulinks[] = Array('url'   => xarController::URL('workflow',
                                                   'admin',
                                                   'monitor_processes'),
                               'title' => xarML('Monitor the workflow processes'),
                               'label' => xarML('Monitoring'));
-        $menulinks[] = Array('url'   => xarModURL('workflow',
+        $menulinks[] = Array('url'   => xarController::URL('workflow',
                                                   'admin',
                                                   'processes'),
                               'title' => xarML('Edit the workflow processes'),
                               'label' => xarML('Admin Processes'));
-        $menulinks[] = Array('url'   => xarModURL('workflow',
+        $menulinks[] = Array('url'   => xarController::URL('workflow',
                                                   'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the workflow configuration'),

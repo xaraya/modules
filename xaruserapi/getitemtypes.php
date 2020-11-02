@@ -28,9 +28,9 @@ function workflow_userapi_getitemtypes($args)
     $processes = $processMonitor->monitor_list_all_processes('name_asc', "isActive = 'y'");
 
     foreach ($processes as $process) {
-        $itemtypes[$process['pId']] = array('label' => xarVarPrepForDisplay($process['name'] . ' ' . $process['version']),
-                                            'title' => xarVarPrepForDisplay(xarML('View Process')),
-                                            'url'   => xarModURL('workflow','user','activities',
+        $itemtypes[$process['pId']] = array('label' => xarVar::prepForDisplay($process['name'] . ' ' . $process['version']),
+                                            'title' => xarVar::prepForDisplay(xarML('View Process')),
+                                            'url'   => xarController::URL('workflow','user','activities',
                                                                  array('filter_process' => $process['pId']))
                                            );
     }
