@@ -75,7 +75,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -103,7 +103,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -140,7 +140,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -183,7 +183,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -227,7 +227,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -268,7 +268,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -303,7 +303,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -335,7 +335,7 @@ function workflow_init()
 
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -367,7 +367,7 @@ function workflow_init()
 
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -409,7 +409,7 @@ function workflow_init()
     );
 
     // Create the table DDL
-    $query = xarDBCreateTable($table, $fields);
+    $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
@@ -484,11 +484,11 @@ function workflow_init()
                              'limit'  => 0
                             )
                     );
-    xarDefineInstance('workflow', 'Item', $instances);
+    xarPrivileges::defineInstance('workflow', 'Item', $instances);
 
     // TODO: tweak this - allow viewing workflow of "your own items" someday ?
-    xarRegisterMask('ReadWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('AdminWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarMasks::register('AdminWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -540,7 +540,7 @@ function workflow_delete()
 
     foreach ($mytables as $mytable) {
         // Generate the SQL to drop the table using the API
-        $query = xarDBDropTable($xartable[$mytable]);
+        $query = xarTableDDL::dropTable($xartable[$mytable]);
         if (empty($query)) {
             return false;
         } // throw back
@@ -606,8 +606,8 @@ function workflow_delete()
     workflow_remove_processes();
 
     // Remove Masks and Instances
-    xarRemoveMasks('workflow');
-    xarRemoveInstances('workflow');
+    xarMasks::removemasks('workflow');
+    xarPrivileges::removeInstances('workflow');
 
     // Deletion successful
     return true;
