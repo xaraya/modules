@@ -322,7 +322,7 @@ function publications_init()
     /*********************************************************************
     * Define instances for the core modules
     * Format is
-    * xarDefineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+    * xarPrivileges::defineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
     $info = xarMod::getBaseInfo('publications');
     $sysid = $info['systemid'];
@@ -333,7 +333,7 @@ function publications_init()
                              'limit'  => 0
                             )
                     );
-    xarDefineInstance('publications', 'Publication', $instances);
+    xarPrivileges::defineInstance('publications', 'Publication', $instances);
 
     $query = "SELECT DISTINCT instances.title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.id = instances.type_id WHERE modid = $sysid";
     $instances = array(
@@ -342,35 +342,35 @@ function publications_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('publications', 'Block', $instances);
+    xarPrivileges::defineInstance('publications', 'Block', $instances);
 
     # --------------------------------------------------------
 #
     # Set up masks
 #
-    xarRegisterMask('ViewPublications', 'All', 'publications', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadPublications', 'All', 'publications', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('SubmitPublications', 'All', 'publications', 'All', 'All', 'ACCESS_COMMENT');
-    xarRegisterMask('ModeratePublications', 'All', 'publications', 'All', 'All', 'ACCESS_MODERATE');
-    xarRegisterMask('EditPublications', 'All', 'publications', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManagePublications', 'All', 'publications', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ViewPublications', 'All', 'publications', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadPublications', 'All', 'publications', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('SubmitPublications', 'All', 'publications', 'All', 'All', 'ACCESS_COMMENT');
+    xarMasks::register('ModeratePublications', 'All', 'publications', 'All', 'All', 'ACCESS_MODERATE');
+    xarMasks::register('EditPublications', 'All', 'publications', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManagePublications', 'All', 'publications', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #
     # Set up privileges
 #
-    xarRegisterPrivilege('ViewPublications', 'All', 'publications', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadPublications', 'All', 'publications', 'All', 'All', 'ACCESS_READ');
-    xarRegisterPrivilege('SubmitPublications', 'All', 'publications', 'All', 'All', 'ACCESS_COMMENT');
-    xarRegisterPrivilege('ModeratePublications', 'All', 'publications', 'All', 'All', 'ACCESS_MODERATE');
-    xarRegisterPrivilege('EditPublications', 'All', 'publications', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterPrivilege('AddPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterPrivilege('ManagePublications', 'All', 'publications', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterPrivilege('AdminPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADMIN');
+    xarPrivileges::register('ViewPublications', 'All', 'publications', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadPublications', 'All', 'publications', 'All', 'All', 'ACCESS_READ');
+    xarPrivileges::register('SubmitPublications', 'All', 'publications', 'All', 'All', 'ACCESS_COMMENT');
+    xarPrivileges::register('ModeratePublications', 'All', 'publications', 'All', 'All', 'ACCESS_MODERATE');
+    xarPrivileges::register('EditPublications', 'All', 'publications', 'All', 'All', 'ACCESS_EDIT');
+    xarPrivileges::register('AddPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADD');
+    xarPrivileges::register('ManagePublications', 'All', 'publications', 'All', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminPublications', 'All', 'publications', 'All', 'All', 'ACCESS_ADMIN');
 
-    xarRegisterMask('ReadPublicationsBlock', 'All', 'publications', 'Block', 'All', 'ACCESS_READ');
+    xarMasks::register('ReadPublicationsBlock', 'All', 'publications', 'Block', 'All', 'ACCESS_READ');
 
     // Initialisation successful
     return true;

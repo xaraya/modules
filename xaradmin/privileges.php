@@ -186,7 +186,7 @@ function publications_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $id = xarReturnPrivilege($extpid, $extname, $extrealm, $extmodule, $extcomponent, $newinstance, $extlevel);
+        $id = xarPrivileges::external($extpid, $extname, $extrealm, $extmodule, $extcomponent, $newinstance, $extlevel);
         if (empty($id)) {
             return;
         } // throw back
