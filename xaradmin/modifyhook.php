@@ -15,6 +15,7 @@ sys::import('modules.xarcachemanager.class.cache_hooks');
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')
  *
+ * @uses xarCache_Hooks::modifyhook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information

@@ -15,6 +15,7 @@ sys::import('modules.xarcachemanager.class.cache_hooks');
 /**
  * flush the appropriate cache when a module item is created- hook for ('item','create','API')
  *
+ * @uses xarCache_Hooks::createhook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information

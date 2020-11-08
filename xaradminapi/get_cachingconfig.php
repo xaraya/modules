@@ -17,6 +17,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
  *
  * @author jsb <jsb@xaraya.com>
  * @access public
+ * @uses xarCache_Manager::get_config()
  * @param string $args['from'] source of configuration to get - file or db
  * @param array $args['keys'] array of config labels and values
  * @param boolean $args['tpl_prep'] prep the config for use in templates

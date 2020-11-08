@@ -16,6 +16,7 @@ sys::import('modules.xarcachemanager.class.cache_hooks');
  * regenerate the page output cache of URLs in the session-less list
  * @author jsb
  *
+ * @uses xarCache_Hooks::regenstatic()
  * @return void
  */
 function xarcachemanager_adminapi_regenstatic($nolimit = null)

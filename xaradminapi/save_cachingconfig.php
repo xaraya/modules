@@ -17,6 +17,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
  *
  * @author jsb <jsb@xaraya.com>
  * @access public
+ * @uses xarCache_Manager::save_config()
  * @param $args['config'] array of config labels and values
  * @throws FUNCTION_FAILED
  */

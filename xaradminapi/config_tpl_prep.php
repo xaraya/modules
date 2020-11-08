@@ -17,6 +17,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
  *
  * @author jsb <jsb@xaraya.com>
  * @access public
+ * @uses xarCache_Manager::config_tpl_prep()
  * @param array $cachingConfiguration cachingConfiguration to be prep for a template
  * @return array of cachingConfiguration with '.' removed from keys or void
  */

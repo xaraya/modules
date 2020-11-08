@@ -147,8 +147,8 @@ function xarcachemanager_init()
     }
 
     // set up permissions masks.
-    xarRegisterMask('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('AdminXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarMasks::register('AdminXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     /*
         if (xarSystemVars::get('DB.UseADODBCache')){
             // Enable query caching for categories getcat
@@ -446,7 +446,7 @@ function xarcachemanager_delete()
     xarModVars::delete_all('xarcachemanager');
 
     // Remove Masks and Instances
-    xarRemoveMasks('xarcachemanager');
+    xarMasks::removemasks('xarcachemanager');
 
     // Deletion successful
     return true;
@@ -595,7 +595,7 @@ function xarcachemanager_create_cache_data()
         // Load Table Maintenance API (still some issues with xarDataDict)
         sys::import('xaraya.tableddl');
 
-        $query = xarDBCreateTable(
+        $query = xarTableDDL::createTable(
             $cachedatatable,
             array('xar_id'   => array('type'        => 'integer',
                                                             'null'        => false,
@@ -644,7 +644,7 @@ function xarcachemanager_create_cache_data()
         }
 
         // TODO: verify if separate indexes work better here or not (varchar)
-        $query = xarDBCreateIndex(
+        $query = xarTableDDL::createIndex(
             $cachedatatable,
             array('name'   => 'i_' . xarDB::getPrefix() . '_cachedata_combo',
                                         'fields' => array('xar_type',

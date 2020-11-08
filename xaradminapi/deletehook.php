@@ -15,6 +15,7 @@ sys::import('modules.xarcachemanager.class.cache_hooks');
 /**
  * delete entry for a module item - hook for ('item','delete','API')
  *
+ * @uses xarCache_Hooks::deletehook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information

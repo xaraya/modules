@@ -16,6 +16,7 @@ sys::import('modules.xarcachemanager.class.cache_hooks');
  * update entry for a module item - hook for ('item','update','API')
  * Optional $extrainfo['xarcachemanager_remark'] from arguments, or 'xarcachemanager_remark' from input
  *
+ * @uses xarCache_Hooks::updatehook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information
