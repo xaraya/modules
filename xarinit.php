@@ -51,27 +51,27 @@ function cacher_init()
 #
     # Set up masks
 #
-    xarRegisterMask('ViewCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('CommentCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_COMMENT');
-    xarRegisterMask('ModerateCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_MODERATE');
-    xarRegisterMask('EditCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManageCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ViewCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('CommentCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_COMMENT');
+    xarMasks::register('ModerateCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_MODERATE');
+    xarMasks::register('EditCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #
     # Set up privileges
 #
-    xarRegisterPrivilege('ViewCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_READ');
-    xarRegisterPrivilege('CommentCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_MODERATE');
-    xarRegisterPrivilege('EditCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterPrivilege('AddCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterPrivilege('ManageCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterPrivilege('AdminCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADMIN');
+    xarPrivileges::register('ViewCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_READ');
+    xarPrivileges::register('CommentCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_COMMENT');
+    xarPrivileges::register('ModerateCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_MODERATE');
+    xarPrivileges::register('EditCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_EDIT');
+    xarPrivileges::register('AddCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADD');
+    xarPrivileges::register('ManageCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminCacher', 'All', 'cacher', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #
