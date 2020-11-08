@@ -39,7 +39,7 @@ function scheduler_user_main()
     xarModVars::set('scheduler', 'running', 1);
     $data['output'] = xarMod::apiFunc('scheduler', 'user', 'runjobs');
     xarModVars::delete('scheduler', 'running');
-    if (xarIsParent('Administrators', xarUser::getVar('uname'))) {
+    if (xarRoles::isParent('Administrators', xarUser::getVar('uname'))) {
         return $data;
     } else {
         return xarController::$response->NotFound();

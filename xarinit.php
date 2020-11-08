@@ -33,7 +33,7 @@ function scheduler_init()
         $dbconn->begin();
 
         // *_scheduler_jobs
-        $query = xarDBCreateTable(
+        $query = xarTableDDL::createTable(
             $xartable['scheduler_jobs'],
             array('id' =>          array('type'        => 'integer',
                                                               'unsigned'    => true,
@@ -114,15 +114,15 @@ function scheduler_init()
 #
     # Register masks
 #
-    xarRegisterMask('ManageScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ManageScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #
     # Register privileges
 #
-    xarRegisterPrivilege('ManageScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterPrivilege('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
+    xarPrivileges::register('ManageScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #
