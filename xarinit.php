@@ -74,28 +74,28 @@ function crispbb_init()
             'fsettings' => array('type' => 'text', 'charset' => $charset),
             'fprivileges' => array('type' => 'text', 'charset' => $charset)
         );
-        $query = xarDBCreateTable($forumstable, $fields);
+        $query = xarTableDDL::createTable($forumstable, $fields);
         $dbconn->Execute($query);
 
         // fstatus
         $index = array('name' => $prefix . '_crispbb_forums_fstatus',
                        'fields' => array('fstatus')
                        );
-        $query = xarDBCreateIndex($forumstable, $index);
+        $query = xarTableDDL::createIndex($forumstable, $index);
         $dbconn->Execute($query);
 
         // forder
         $index = array('name' => $prefix . '_crispbb_forums_forder',
                        'fields' => array('forder')
                        );
-        $query = xarDBCreateIndex($forumstable, $index);
+        $query = xarTableDDL::createIndex($forumstable, $index);
         $dbconn->Execute($query);
 
         // fname
         $index = array('name' => $prefix . '_crispbb_forums_fname',
                        'fields' => array('fname')
                        );
-        $query = xarDBCreateIndex($forumstable, $index);
+        $query = xarTableDDL::createIndex($forumstable, $index);
         $dbconn->Execute($query);
 
         // itemtypes table
@@ -108,7 +108,7 @@ function crispbb_init()
             'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
             'component' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset),
         );
-        $query = xarDBCreateTable($itemtypestable, $fields);
+        $query = xarTableDDL::createTable($itemtypestable, $fields);
         $dbconn->Execute($query);
 
         // itemtypes, every entry must be unique
@@ -116,7 +116,7 @@ function crispbb_init()
                        'fields' => array('fid', 'component'),
                        'unique' => true,
                        );
-        $query = xarDBCreateIndex($itemtypestable, $index);
+        $query = xarTableDDL::createIndex($itemtypestable, $index);
         $dbconn->Execute($query);
 
         // topics table
@@ -139,28 +139,28 @@ function crispbb_init()
             'ttitle' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
             'tsettings' => array('type' => 'text', 'charset' => $charset),
         );
-        $query = xarDBCreateTable($topicstable, $fields);
+        $query = xarTableDDL::createTable($topicstable, $fields);
         $dbconn->Execute($query);
 
         // fid
         $index = array('name' => $prefix . '_crispbb_topics_fid',
                        'fields' => array('fid')
                        );
-        $query = xarDBCreateIndex($topicstable, $index);
+        $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
         // ttype
         $index = array('name' => $prefix . '_crispbb_topics_ttype',
                        'fields' => array('ttype')
                        );
-        $query = xarDBCreateIndex($topicstable, $index);
+        $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
         // tstatus
         $index = array('name' => $prefix . '_crispbb_topics_tstatus',
                        'fields' => array('tstatus')
                        );
-        $query = xarDBCreateIndex($topicstable, $index);
+        $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
         // towner
@@ -168,14 +168,14 @@ function crispbb_init()
         $index = array('name' => $prefix . '_crispbb_topics_towner',
                        'fields' => array('towner')
                        );
-        $query = xarDBCreateIndex($topicstable, $index);
+        $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
         */
         // ttitle
         $index = array('name' => $prefix . '_crispbb_topics_ttitle',
                        'fields' => array('ttitle')
                        );
-        $query = xarDBCreateIndex($topicstable, $index);
+        $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
         // posts table
@@ -195,35 +195,35 @@ function crispbb_init()
             'ptext' => array('type' => 'text', 'charset' => $charset),
             'psettings' => array('type' => 'text', 'charset' => $charset),
         );
-        $query = xarDBCreateTable($poststable, $fields);
+        $query = xarTableDDL::createTable($poststable, $fields);
         $dbconn->Execute($query);
 
         // tid
         $index = array('name' => $prefix . '_crispbb_posts_tid',
                        'fields' => array('tid')
                        );
-        $query = xarDBCreateIndex($poststable, $index);
+        $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // ptime
         $index = array('name' => $prefix . '_crispbb_posts_ptime',
                        'fields' => array('ptime')
                        );
-        $query = xarDBCreateIndex($poststable, $index);
+        $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // pstatus
         $index = array('name' => $prefix . '_crispbb_posts_pstatus',
                        'fields' => array('pstatus')
                        );
-        $query = xarDBCreateIndex($poststable, $index);
+        $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // powner
         $index = array('name' => $prefix . '_crispbb_posts_powner',
                        'fields' => array('powner')
                        );
-        $query = xarDBCreateIndex($poststable, $index);
+        $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // hooks table
@@ -238,35 +238,35 @@ function crispbb_init()
             'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
             'tid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
         );
-        $query = xarDBCreateTable($hookstable, $fields);
+        $query = xarTableDDL::createTable($hookstable, $fields);
         $dbconn->Execute($query);
 
         // moduleid
         $index = array('name' => $prefix . '_crispbb_hooks_moduleid',
                        'fields' => array('moduleid')
                        );
-        $query = xarDBCreateIndex($hookstable, $index);
+        $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // itemtype
         $index = array('name' => $prefix . '_crispbb_hooks_itemtype',
                        'fields' => array('itemtype')
                        );
-        $query = xarDBCreateIndex($hookstable, $index);
+        $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // itemid
         $index = array('name' => $prefix . '_crispbb_hooks_itemid',
                        'fields' => array('itemid')
                        );
-        $query = xarDBCreateIndex($hookstable, $index);
+        $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // tid
         $index = array('name' => $prefix . '_crispbb_hooks_tid',
                        'fields' => array('tid')
                        );
-        $query = xarDBCreateIndex($hookstable, $index);
+        $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // posters table
@@ -280,12 +280,12 @@ function crispbb_init()
             'numtopics' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
             'numreplies' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
         );
-        $query = xarDBCreateTable($posterstable, $fields);
+        $query = xarTableDDL::createTable($posterstable, $fields);
         $dbconn->Execute($query);
         $index = array('name' => $prefix . '_crispbb_posters_id',
                        'fields' => array('id')
                        );
-        $query = xarDBCreateIndex($posterstable, $index);
+        $query = xarTableDDL::createIndex($posterstable, $index);
         $dbconn->Execute($query);
 
 
@@ -421,7 +421,7 @@ function crispbb_init()
                              'limit'  => 0
                             )
                     );
-    xarDefineInstance($module, 'Forum', $instances);
+    xarPrivileges::defineInstance($module, 'Forum', $instances);
 
     $info = xarMod::getBaseInfo($module);
     $sysid = $info['systemid'];
@@ -432,22 +432,22 @@ function crispbb_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance($module, 'Block', $instances);
+    xarPrivileges::defineInstance($module, 'Block', $instances);
 
     # --------------------------------------------------------
 #
     # Register masks
 #
-    xarRegisterMask('ViewCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_READ');
-    xarRegisterMask('PostCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_COMMENT');
-    xarRegisterMask('ModerateCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_MODERATE');
-    xarRegisterMask('EditCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_ADMIN');
+    xarMasks::register('ViewCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_READ');
+    xarMasks::register('PostCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_COMMENT');
+    xarMasks::register('ModerateCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_MODERATE');
+    xarMasks::register('EditCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_EDIT');
+    xarMasks::register('AddCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_ADD');
+    xarMasks::register('DeleteCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_DELETE');
+    xarMasks::register('AdminCrispBB', 'All', $module, 'Item', 'All:All', 'ACCESS_ADMIN');
 
-    xarRegisterMask('ReadCrispBBBlock', 'All', $module, 'Block', 'All:All:All', 'ACCESS_READ');
+    xarMasks::register('ReadCrispBBBlock', 'All', $module, 'Block', 'All:All:All', 'ACCESS_READ');
 
     # --------------------------------------------------------
 #
