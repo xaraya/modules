@@ -12,27 +12,27 @@
         #
         # Set up masks
         #
-        xarRegisterMask('ViewCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('CommentCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterMask('ModerateCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterMask('EditCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterMask('AddCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterMask('ManageCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('CommentCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_COMMENT');
+        xarMasks::register('ModerateCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_MODERATE');
+        xarMasks::register('EditCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_EDIT');
+        xarMasks::register('AddCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADD');
+        xarMasks::register('ManageCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('ViewCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_READ');
-        xarRegisterPrivilege('CommentCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterPrivilege('EditCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterPrivilege('AddCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterPrivilege('ManageCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('ViewCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarPrivileges::register('ReadCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_READ');
+        xarPrivileges::register('CommentCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_COMMENT');
+        xarPrivileges::register('ModerateCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_MODERATE');
+        xarPrivileges::register('EditCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_EDIT');
+        xarPrivileges::register('AddCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADD');
+        xarPrivileges::register('ManageCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminCKEditor', 'All', 'ckeditor', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #

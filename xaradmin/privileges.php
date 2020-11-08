@@ -90,7 +90,7 @@ function crispbb_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege(
+        $pid = xarPrivileges::external(
             $extpid,
             $extname,
             $extrealm,
