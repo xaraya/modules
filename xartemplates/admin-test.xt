@@ -10,7 +10,7 @@
 			<p class="alert alert-warning" style="text-align: left; padding:20px;">
 				No emails were chosen
 			</p>
-		<xar:elseif condition="isset($result['exception'])/">
+		<xar:elseif condition="isset($result['exception'])"/>
 			<xar:set name="isdebug">
 				xarModVars::get('reminders','debugmode')
 			</xar:set>
