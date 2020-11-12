@@ -63,9 +63,10 @@ function reminders_adminapi_process($args)
         if ($current_id != $previous_id) {
             for ($i=1;$i<=10;$i++) {
                 $this_id = 'reminder_' . $i;
-                $next_id = 'reminder_' . $i+1;
                 $this_done_id = 'reminder_done_' . $i;
-                $next_done_id = 'reminder_done_' . $i+1;
+                $i++;
+                $next_id = 'reminder_' . $i;
+                $next_done_id = 'reminder_done_' . $i;
                 $this_reminder = $row[$this_id];
                 $this_reminder_done = $row[$this_done_id];
                 // If we already sent an email for this date, then move on
