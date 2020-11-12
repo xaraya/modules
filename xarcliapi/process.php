@@ -23,7 +23,7 @@ function reminders_cliapi_process(Array $args=array())
 {
     xarLog::message("Reminders: processing the reminders queue", xarLog::LEVEL_DEBUG);
     extract($args);
-    assert('$argc > 0 && $argv[1] == "reminders"; /* Wrong call to reminders_cli_process handler */');
+    assert($argc > 0 && $argv[1] == "reminders");
 
     // TODO: Guess ;-)
     if(isset($argv[2]) && $argv[2]=='-u') $user = $argv[3];

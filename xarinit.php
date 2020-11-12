@@ -37,6 +37,7 @@ function reminders_init()
         template_id         integer unsigned NOT NULL default 0, 
         due_date            integer unsigned NOT NULL default 0, 
         recurring           tinyint unsigned NOT NULL default 0, 
+        recur_period        tinyint unsigned NOT NULL default 0, 
         reminder_warning_1  integer unsigned NOT NULL default 0, 
         reminder_done_1     tinyint unsigned NOT NULL default 0, 
         reminder_warning_2  integer unsigned NOT NULL default 0, 
@@ -58,6 +59,7 @@ function reminders_init()
         reminder_warning_10 integer unsigned NOT NULL default 0, 
         reminder_done_10    tinyint unsigned NOT NULL default 0, 
         timecreated         integer unsigned NOT NULL default 0, 
+        timemodified        integer unsigned NOT NULL default 0, 
         state               tinyint(3) NOT NULL default 3, 
         PRIMARY KEY  (id) 
     )";
@@ -70,6 +72,7 @@ function reminders_init()
         name              varchar(255) NOT NULL default '', 
         address           varchar(255) NOT NULL default '', 
         timecreated       integer unsigned NOT NULL default 0, 
+        timemodified      integer unsigned NOT NULL default 0, 
         state             tinyint(3) NOT NULL default 3, 
         PRIMARY KEY  (id)
     )";
@@ -162,6 +165,7 @@ function reminders_delete()
     $q->eq('module_id', xarMod::getRegid($this_module));
     $q->run();
 
+    // Remove everything else concerning the module
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
 }
 

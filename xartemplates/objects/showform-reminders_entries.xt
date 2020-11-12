@@ -49,6 +49,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Recur Period</xar:var>
+            <xar:data-label property="$properties['recur_period']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['recur_period']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">Reminder 1</xar:var>
             <xar:data-label property="$properties['reminder_1']" label="$value"/>                    
         </div>
@@ -207,5 +216,7 @@
                 <xar:data-input property="$properties['time_created']" hidden="hidden"/>
             </div>        
         </div>
+    <xar:else/>
+        <xar:data-input property="$properties['time_created']" hidden="hidden"/>
     </xar:if>
 </xar:template>

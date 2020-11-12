@@ -11,10 +11,10 @@
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
-  <sources>a:1:{s:7:&quot;entries&quot;;a:2:{i:0;s:21:&quot;xar_reminders_entries&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
-  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <sources>a:2:{s:7:&quot;entries&quot;;a:2:{i:0;s:21:&quot;xar_reminders_entries&quot;;i:1;s:8:&quot;internal&quot;;}s:6:&quot;emails&quot;;a:2:{i:0;s:20:&quot;xar_reminders_emails&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:16:&quot;entries.email_id&quot;;i:1;s:9:&quot;emails.id&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
-  <category>a:0:{}</category>
+  <category>a:1:{i:0;a:19:{s:2:&quot;id&quot;;s:1:&quot;5&quot;;s:4:&quot;name&quot;;s:11:&quot;DynamicData&quot;;s:11:&quot;description&quot;;s:44:&quot;Categories related to the DynamicData module&quot;;s:5:&quot;image&quot;;s:0:&quot;&quot;;s:8:&quot;template&quot;;s:0:&quot;&quot;;s:9:&quot;parent_id&quot;;s:1:&quot;4&quot;;s:7:&quot;left_id&quot;;s:1:&quot;9&quot;;s:8:&quot;right_id&quot;;s:2:&quot;16&quot;;s:12:&quot;child_object&quot;;s:0:&quot;&quot;;s:5:&quot;links&quot;;s:1:&quot;0&quot;;s:5:&quot;state&quot;;s:1:&quot;3&quot;;s:11:&quot;category_id&quot;;s:2:&quot;80&quot;;s:17:&quot;child_category_id&quot;;s:1:&quot;5&quot;;s:7:&quot;item_id&quot;;s:1:&quot;0&quot;;s:9:&quot;module_id&quot;;s:4:&quot;2438&quot;;s:8:&quot;itemtype&quot;;s:3:&quot;182&quot;;s:11:&quot;property_id&quot;;s:1:&quot;0&quot;;s:12:&quot;basecategory&quot;;s:4:&quot;1845&quot;;i:0;s:1:&quot;5&quot;;}}</category>
   <properties>
     <property name="id">
       <id>32696</id>
@@ -36,14 +36,24 @@
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="name">
+      <id>32724</id>
+      <label>Name</label>
+      <type>name</type>
+      <defaultvalue></defaultvalue>
+      <source>emails.name</source>
+      <status>161</status>
+      <seq>3</seq>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
+    </property>
     <property name="address">
       <id>32698</id>
       <label>Address</label>
-      <type>objectref</type>
-      <defaultvalue>0</defaultvalue>
-      <source>entries.email_id</source>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>emails.address</source>
       <status>33</status>
-      <seq>3</seq>
+      <seq>4</seq>
       <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:7:"address";s:24:"initialization_firstline";s:25:"0,Choose an email address";}</configuration>
     </property>
     <property name="template">
@@ -53,17 +63,17 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.template_id</source>
       <status>33</status>
-      <seq>4</seq>
+      <seq>5</seq>
       <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:19:"0,Choose a template";s:23:"initialization_function";s:94:"xarMod::apiFunc('mailer','user','getall_mails',array('module'=>xarMod::getRegID('reminders')))";}</configuration>
     </property>
     <property name="due_date">
       <id>32699</id>
       <label>Due Date</label>
-      <type>datetime</type>
+      <type>date</type>
       <defaultvalue>time() + 84600</defaultvalue>
       <source>entries.due_date</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="recurring">
@@ -73,8 +83,18 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.recurring</source>
       <status>33</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration>a:0:{}</configuration>
+    </property>
+    <property name="recur_period">
+      <id>33032</id>
+      <label>Recur Period</label>
+      <type>radio</type>
+      <defaultvalue>8</defaultvalue>
+      <source>entries.recur_period</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:87:"1,Daily;2,Weekly;3,Bi-Weekly;4,Monthly;5,Bi-monthly,6,Quarterly;7,Half Yearly;8,Yearly;";}</configuration>
     </property>
     <property name="reminder_1">
       <id>32701</id>
@@ -83,7 +103,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_1</source>
       <status>34</status>
-      <seq>7</seq>
+      <seq>9</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_1">
@@ -93,7 +113,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_1</source>
       <status>34</status>
-      <seq>8</seq>
+      <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_2">
@@ -103,7 +123,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_2</source>
       <status>34</status>
-      <seq>9</seq>
+      <seq>11</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_2">
@@ -113,7 +133,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_2</source>
       <status>34</status>
-      <seq>10</seq>
+      <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_3">
@@ -123,7 +143,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_3</source>
       <status>34</status>
-      <seq>11</seq>
+      <seq>13</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_3">
@@ -133,7 +153,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_3</source>
       <status>34</status>
-      <seq>12</seq>
+      <seq>14</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_4">
@@ -143,7 +163,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_4</source>
       <status>34</status>
-      <seq>13</seq>
+      <seq>15</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_4">
@@ -153,7 +173,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_4</source>
       <status>34</status>
-      <seq>14</seq>
+      <seq>16</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_5">
@@ -163,7 +183,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_5</source>
       <status>34</status>
-      <seq>15</seq>
+      <seq>17</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_5">
@@ -173,7 +193,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_5</source>
       <status>34</status>
-      <seq>16</seq>
+      <seq>18</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_6">
@@ -183,7 +203,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_6</source>
       <status>34</status>
-      <seq>17</seq>
+      <seq>19</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_6">
@@ -193,7 +213,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_6</source>
       <status>34</status>
-      <seq>18</seq>
+      <seq>20</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_7">
@@ -203,7 +223,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_7</source>
       <status>34</status>
-      <seq>19</seq>
+      <seq>21</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_7">
@@ -213,7 +233,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_7</source>
       <status>34</status>
-      <seq>20</seq>
+      <seq>22</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_8">
@@ -223,7 +243,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_8</source>
       <status>34</status>
-      <seq>21</seq>
+      <seq>23</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_8">
@@ -233,7 +253,7 @@
       <defaultvalue></defaultvalue>
       <source>entries.reminder_done_8</source>
       <status>34</status>
-      <seq>22</seq>
+      <seq>24</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_9">
@@ -243,7 +263,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_9</source>
       <status>34</status>
-      <seq>23</seq>
+      <seq>25</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_9">
@@ -253,7 +273,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_9</source>
       <status>34</status>
-      <seq>24</seq>
+      <seq>26</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="reminder_10">
@@ -263,7 +283,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_warning_10</source>
       <status>34</status>
-      <seq>25</seq>
+      <seq>27</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:58:"xarMod::apiFunc('reminders','admin','get_warning_periods')";}</configuration>
     </property>
     <property name="reminder_done_10">
@@ -273,7 +293,7 @@
       <defaultvalue>0</defaultvalue>
       <source>entries.reminder_done_10</source>
       <status>34</status>
-      <seq>26</seq>
+      <seq>28</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
@@ -283,7 +303,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>entries.timecreated</source>
       <status>66</status>
-      <seq>27</seq>
+      <seq>29</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
@@ -293,7 +313,7 @@
       <defaultvalue>3</defaultvalue>
       <source>entries.state</source>
       <status>33</status>
-      <seq>28</seq>
+      <seq>30</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>
