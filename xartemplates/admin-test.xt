@@ -4,6 +4,52 @@
     <div class="xar-mod-body">
         <h2>Test Reminders</h2>
     </div>
+
+	<xar:if condition="$confirm">
+		<xar:if condition="isset($result['exception'])">
+			<xar:set name="isdebug">
+				xarModVars::get('reminders','debugmode')
+			</xar:set>
+			<xar:set name="isadmin">
+				in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))
+			</xar:set>
+			<xar:if condition="$isdebug AND $isadmin">
+				<p class="alert alert-danger" style="text-align: left; padding:20px;">
+					#$result['exception']#
+				</p>
+			<xar:else/>
+				<p class="alert alert-danger" style="text-align: left; padding:20px;">
+					The email failed. Please contact the site administrator
+				</p>
+			</xar:if>
+		<xar:elseif condition="$result['code'] eq 0"/>
+			<p class="alert alert-success" style="text-align: left; padding:20px;">
+				<xar:if condition="$test">
+					A test email was sent successfully to<br/>
+					#$result['test_name']# (#$result['test_email']#)<br/>
+					<xar:if condition="!empty($result['email'])">
+						The actual recipient would be:<br/>
+						#$result['name']# (#$result['email']#)
+					<xar:else/>
+						No actual recipient was chosen
+					</xar:if>
+				<xar:else/>
+					A course email was sent successfully to<br/>
+					#$result['name']# (#$result['email']#)
+				</xar:if>
+			</p>
+		<xar:elseif condition="$result['code'] eq -1"/>
+			<p class="alert-success" style="text-align: left; padding:20px;">
+				Thank you for your submission
+			</p>
+		<xar:else />
+			<p class="alert alert-danger" style="text-align: left; padding:20px;">
+				The email failed. The result code was 
+				#$result['code']#
+			</p>
+		</xar:if>
+	</xar:if>
+
     <xar:data-input type="listing" object="$object" tplmodule="reminders"/>
     <form method="post" action="#xarServer::getCurrentURL()#">
         <div class="xar-row">

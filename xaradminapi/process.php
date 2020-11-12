@@ -57,6 +57,7 @@ function reminders_adminapi_process($args)
     * For each item we need to find the latest reminder that has not yet been sent
     *
     */
+    $data['results'] = array();
     foreach ($items as $key => $row) {
         $current_id = $row['id'];
         $found = false;
@@ -102,6 +103,6 @@ function reminders_adminapi_process($args)
         $previous_id = $current_id;
     }
     
-    return true;
+    return $data['results'];
 }
 ?>
