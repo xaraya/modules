@@ -110,8 +110,8 @@ function reminders_init()
 #
     $module = 'reminders';
     $objects = array(
-                     'reminders_emails',
-                     'reminders_entries',
+//                     'reminders_emails',
+//                     'reminders_entries',
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
