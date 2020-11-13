@@ -32,13 +32,17 @@ function reminders_adminapi_process($args)
     $q = $entries->dataquery;
     // Only active reminders
     $q->eq('entries.state', 3);
-    $items = $entries->getItems();
 
     if ($args['test']) {
     	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
     	$data['entry_list'] = explode(',', $data['entry_list']);
+    	$q->in('entries.id', $data['entry_list']);
+//    	$q->qecho();
+    	$items = $entries->getItems();
+    	}
     }
     
+    $items = $entries->getItems();
     /*
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
@@ -68,42 +72,52 @@ function reminders_adminapi_process($args)
         $found = false;
         if ($current_id != $previous_id) {
             for ($i=1;$i<=10;$i++) {
+            
+                // Get the data for this period
                 $this_id = 'reminder_' . $i;
                 $this_done_id = 'reminder_done_' . $i;
-                $i++;
-                $next_id = 'reminder_' . $i;
-                $next_done_id = 'reminder_done_' . $i;
                 $this_reminder = $row[$this_id];
                 $this_reminder_done = $row[$this_done_id];
-                // If we already sent an email for this date, then move on
-                if ($this_reminder_done) continue;
-                // If the reminder period is 0, then consider it done and move on
+                
+                // Get the data for the next period
+                $j = $i + 1;
+                $next_id = 'reminder_' . $j;
+                $next_done_id = 'reminder_done_' . $j;
+                
+                // If the reminder period is 0 (was not defined), then consider it done and move on
                 if (empty($this_reminder)) {
                     $items[$key][$this_reminder_done] = 1;
-                    continue;
                 }
+                
+                // If we already sent an email for this date, then move on
+                if ($this_reminder_done) {
+	                continue;
+                }
+                
+				// The email for this period is net sent: do it
+				// Get the template information for this message
+				$this_template_id = $row['template'];
+				if (isset($templates[$this_template_id])) {
+					// We already have the information.
+				} else {
+					// Get the information
+					$mailer_template->getItem(array('itemid' => $this_template_id));
+					$values = $mailer_template->getFieldValues();
+					$templates[$this_template_id]['message_id']   = $values['id'];
+					$templates[$this_template_id]['message_body'] = $values['body'];
+					$templates[$this_template_id]['subject']      = $values['subject'];
+				}
+				// Assemble the parameters for the email
+				$params['message_id']   = $templates[$this_template_id]['message_id'];
+				$params['message_body'] = $templates[$this_template_id]['message_body'];
+				$params['subject']      = $templates[$this_template_id]['subject'];
+				// Send the email
+				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+				$data['results'] = array_merge($data['results'], array($data['result']));
+               
+    			// If this is not a test, then set this period reminder as done
+    			if (!$args['test']) $items[$key][$this_reminder_done] = 1;
             }
-        }
-        if ($found) {
-            // Get the template information for this message
-            $this_template_id = $row['template'];
-            if (isset($templates[$this_template_id])) {
-                // We already have the information.
-            } else {
-                // Get the information
-                $mailer_template->getItem(array('itemid' => $this_template_id));
-                $values = $mailer_template->getFieldValues();
-                $templates[$this_template_id]['message_id']   = $values['id'];
-                $templates[$this_template_id]['message_body'] = $values['body'];
-                $templates[$this_template_id]['subject']      = $values['subject'];
-            }
-            // Assemble the parameters for the email
-            $params['message_id']   = $templates[$this_template_id]['message_id'];
-            $params['message_body'] = $templates[$this_template_id]['message_body'];
-            $params['subject']      = $templates[$this_template_id]['subject'];
-            // Send the email
-            $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
-            $data['results'] = array_merge($data['results'], array($data['result']));
         }
         $previous_id = $current_id;
     }
