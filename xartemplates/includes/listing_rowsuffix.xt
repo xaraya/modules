@@ -27,7 +27,7 @@
             </a>
         </xar:access>
         <xar:if condition="isset($show_bulk) AND $show_bulk">
-            <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" />
+            <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" onchange="listing_getchecked('idlist')"/>
         </xar:if>
     <xar:else/>
     </xar:if>
