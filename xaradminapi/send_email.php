@@ -35,6 +35,10 @@ function reminders_adminapi_send_email($data)
     $result = array();
     $attachments = array();
     $data['name']->value = $data['info']['name'];
+    
+    // Set a placeholder name if we don't have one
+    if (empty($data['name']->value)) $data['name']->setValue('Occupant');
+    
     if ($data['test']) {
         // If we are testing, then send to this user
         $recipientname    = xarUser::getVar('name');
