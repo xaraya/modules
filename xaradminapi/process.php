@@ -114,7 +114,7 @@ function reminders_adminapi_process($args)
 				$data['results'] = array_merge($data['results'], array($data['result']));
                
     			// If this is a test, exit now
-    			if ($args['test']) continue;
+    			if ($args['test']) break;
     			
     			// This is not a test, so set this period reminder as done
     			$items[$key][$this_reminder_done] = 1;
