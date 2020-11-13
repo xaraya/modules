@@ -38,8 +38,6 @@ function reminders_adminapi_process($args)
     	$data['entry_list'] = explode(',', $data['entry_list']);
     	$q->in('entries.id', $data['entry_list']);
 //    	$q->qecho();
-    	$items = $entries->getItems();
-    	}
     }
     
     $items = $entries->getItems();
