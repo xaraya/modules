@@ -105,6 +105,14 @@ function reminders_adminapi_send_email($data)
     }
     $result['name'] = $recipientname;
     $result['email'] = $recipientaddress;
+    
+    // if we are testing, then add the test name and email
+	if ($data['test']) {
+		// If we are testing, then send to this user
+		$result['test_name']    = xarUser::getVar('name');
+		$result['test_email']   = xarUser::getVar('email');
+	}
+
     return $result;
 }
 ?>
