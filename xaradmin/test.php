@@ -32,6 +32,7 @@ function reminders_admin_test()
         $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
    
         $data['results'] = xarMod::apiFunc('reminders', 'admin', 'process', array('test' => true, 'copy_emails' => $bccaddress));
+        $data['test'] = true;
     }
     
     sys::import('modules.dynamicdata.class.objects.master');
