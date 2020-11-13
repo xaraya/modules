@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:access level="700">
+        <xar:if condition="$layout eq 'test'">
+            <xar:if condition="$total gt 0">
+                <div style="text-align:right;">
+                    <input type="hidden" name="idlist" id="idlist"/>
+                    <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+    
+                    <xar:javascript filename="checkall.js" property="listing" position="body"/>
+                    <a href="javascript:listing_checkall(true)">Check All</a>&#160;|&#160;
+                    <a href="javascript:listing_checkall(false)">Uncheck All</a>
+                </div>
+            </xar:if>
+        <xar:else/>
+        </xar:if>
+    </xar:access>
+</xar:template>

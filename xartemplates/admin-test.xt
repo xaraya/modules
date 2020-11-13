@@ -54,8 +54,8 @@
 		</xar:if>
 	</xar:if>
 
+    <xar:data-input type="listing" object="$object" tplmodule="reminders" layout="test"/>
     <form method="post" action="#xarServer::getCurrentURL()#">
-    	<xar:data-input type="listing" object="$object" tplmodule="reminders"/>
         <div class="xar-row">
             <div class="xar-col">
             </div>
