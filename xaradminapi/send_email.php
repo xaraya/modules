@@ -34,15 +34,14 @@ function reminders_adminapi_send_email($data)
 
     $result = array();
     $attachments = array();
+    $data['name']->value = $data['info']['name'];
     if ($data['test']) {
         // If we are testing, then send to this user
         $recipientname    = xarUser::getVar('name');
         $recipientaddress = xarUser::getVar('email');
         $bccaddress = array();
-        $data['name']->value = $data['info']['name'];
     } else {
         // If we are not testing, then send to the chosen participant
-        $data['name']->value = $data['info']['name'];
         $recipientname    = $data['name']->getValue();
         $recipientaddress = $data['info']['email'];
     }
