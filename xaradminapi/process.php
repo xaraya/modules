@@ -113,8 +113,11 @@ function reminders_adminapi_process($args)
 				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 				$data['results'] = array_merge($data['results'], array($data['result']));
                
-    			// If this is not a test, then set this period reminder as done
-    			if (!$args['test']) $items[$key][$this_reminder_done] = 1;
+    			// If this is a test, exit now
+    			if ($args['test']) continue;
+    			
+    			// This is not a test, so set this period reminder as done
+    			$items[$key][$this_reminder_done] = 1;
             }
         }
         $previous_id = $current_id;
