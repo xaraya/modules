@@ -37,7 +37,7 @@ function reminders_adminapi_send_email($data)
     $data['name']->value = $data['info']['name'];
     
     // Set a placeholder name if we don't have one
-    if (empty($data['name']->value)) $data['name']->setValue('Occupant');
+	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => 'Occupant')));
     
     if ($data['test']) {
         // If we are testing, then send to this user
