@@ -34,6 +34,11 @@ function reminders_adminapi_process($args)
     $q->eq('entries.state', 3);
     $items = $entries->getItems();
 
+    if ($args['test']) {
+    	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
+    	$data['entry_list'] = explode(',', $data['entry_list']);
+    }
+    
     /*
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
