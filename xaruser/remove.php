@@ -32,6 +32,7 @@ function reminders_user_remove()
     $q->eq('entries.code', $data['code']);
 
     $items = $entries->getItems();
+    $data['item'] = reset($items);
 
     $data['authid'] = xarSecGenAuthKey('reminders');
 

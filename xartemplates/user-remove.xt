@@ -6,8 +6,20 @@
         <xar:if condition="!empty($code)">
 	        <h3>Remove Reminder</h3>
 			<div>
-				<xar:data-output type="date" value="$due_date"/>
+				<xar:data-output type="date" value="$item['due_date']"/>
 			</div>
+			<xar:if condition="$item['due_date']">
+				<div>
+					This is a recurring reminder. Please choose:
+					<xar:set name="options">
+						array(
+							array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
+							array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
+						)
+					</xar:set>
+					<xar:data-input type="dropdown" options="$options"/>
+				</div>
+			</xar:if>
 			<form method="post" action="#xarServer::getCurrentURL()#">
 				<div class="xar-row">
 					<div class="xar-col">
