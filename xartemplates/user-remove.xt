@@ -20,7 +20,10 @@
 				<xar:if condition="$remaining eq 0">
 					This was the last email of this reminder.
 				<xar:else/>
-					You will be sent #$remaining# more emails.
+					<xar:ml>
+						You will receive #(1) more reminders before this due date.
+						<xar:mlvar>#$remaining#</xar:mlvar>
+					</xar:ml>
 				</xar:if>
 			<div>
 			</div>
