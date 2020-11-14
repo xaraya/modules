@@ -57,7 +57,11 @@
 		</xar:foreach>
 	</xar:if>
 
-    <xar:data-input type="listing" object="$object" tplmodule="reminders" layout="test"/>
+    <xar:data-input type="listing" 
+                    object="$object" 
+                    fields="message,code,address,template,due_date_recurring,recur_period"
+                    tplmodule="reminders" 
+                    layout="test"/>
     <form method="post" action="#xarServer::getCurrentURL()#">
         <div class="xar-row">
             <div class="xar-col">
