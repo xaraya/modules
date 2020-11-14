@@ -17,8 +17,12 @@
 					</tr>
 				</table>
 			</div>
+				<xar:if condition="$remaining eq 0">
+					This was the last email of this reminder.
+				<xar:else/>
+					You will be sent #$remaining# more emails.
+				</xar:if>
 			<div>
-				You will be sent #$remaining# more emails.
 			</div>
 			<xar:if condition="$item['recurring']">
 				<div>
