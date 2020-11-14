@@ -20,7 +20,7 @@ function reminders_userapi_get_email_dates($args)
     	// We have an array of item values ("an item") from a dataobject
     	$dates = array();
     	for ($i=1;$i<=10;$i++) {
-    		if ($args['array'])['reminder_done_' . $i] == 1) $dates[] = ['reminder_' . $i];
+    		if ($args['array']['reminder_done_' . $i] == 1) $dates[] = $args['array']['reminder_' . $i];
     	}
     } else {
     	// Need to add support for objects
