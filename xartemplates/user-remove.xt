@@ -17,6 +17,9 @@
 					</tr>
 				</table>
 			</div>
+			<div>
+				You will be sent #$remaining# more emails.
+			</div>
 			<xar:if condition="$item['recurring']">
 				<div>
 					This is a recurring reminder. Please choose:&#160;
@@ -28,7 +31,7 @@
 							array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
 						)
 					</xar:set>
-					<xar:data-input type="dropdown" options="$options"/>
+					<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
 				</div>
 			<xar:else/>
 				<div>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Reminders Module
+ *
+ * @package modules
+ * @subpackage reminders
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2019 Luetolf-Carroll GmbH
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
+ */
+/**
+ * Get all email dates yet to be sent
+ *
+ */
+function reminders_userapi_get_email_dates($args)
+{
+    if (isset($args['array'])) {
+    	// We have an array of item values ("an item") from a dataobject
+    	$dates = array();
+    	for ($i=1;$i<=10,$i++) {
+    		if ($args['array'])['reminder_done_' . $i] == 1) $dates[] = ['reminder_' . $i];
+    	}
+    } else {
+    	// Need to add support for objects
+    }
+	var_dump($dates);
+    return $dates;
+}
+?>

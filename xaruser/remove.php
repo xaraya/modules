@@ -34,6 +34,9 @@ function reminders_user_remove()
     $items = $entries->getItems();
     $data['item'] = reset($items);
 
+    $email_dates = xarMod::apiFunc('reminders', 'admin', 'get_email_dates', array('array' => $data['item']));
+	$data['remaining'] = count($email_dates);
+	
     $data['authid'] = xarSecGenAuthKey('reminders');
 
     if ($data['confirm']) {
