@@ -4,5 +4,14 @@
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
         <h2>Remove Reminder</h2>
+        <xar:if condition="!empty($code)">
+			<div>
+				<xar:data-output type="date" value="$due_date"/>
+			</div>
+        <xar:else/>
+        	<div>
+        		The reminder you are looking for does not exist.
+        	</div>
+        </xar:if>
     </div>
 </xar:template>
