@@ -4,5 +4,9 @@
     <h2>View Entries</h2>
     <div class="xar-mod-body">
         <xar:data-input type="listing" objectname="$objectname" tplmodule="reminders"/>
+	    <xar:data-input type="listing" 
+                    	objectname="$objectname" 
+                    	fieldlist="message,code,address,template,due_date,recurring,recur_period"
+                    	tplmodule="reminders"/>
     </div>
 </xar:template>
