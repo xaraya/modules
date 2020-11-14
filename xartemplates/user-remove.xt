@@ -3,12 +3,13 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Remove Reminder</h2>
         <xar:if condition="!empty($code)">
+	        <h3>Remove Reminder</h3>
 			<div>
 				<xar:data-output type="date" value="$due_date"/>
 			</div>
         <xar:else/>
+	        <h3>Sorry</h3>
         	<div>
         		The reminder you are looking for does not exist.
         	</div>
