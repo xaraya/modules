@@ -16,7 +16,10 @@
  */
 function reminders_user_remove()
 {
-    if (!xarVarFetch('code',    'str', $data['code'],    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarSecurityCheck('ReadReminders')) return;
+
+    if (!xarVarFetch('code',    'str',      $data['code'],       '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'],    false, XARVAR_NOT_REQUIRED)) return;
 
     $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
 	xarTpl::setPageTemplateName('user_full');
