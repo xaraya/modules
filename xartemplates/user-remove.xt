@@ -20,6 +20,8 @@
 			<xar:if condition="$item['recurring']">
 				<div>
 					This is a recurring reminder. Please choose:&#160;
+				</div>
+				<div>
 					<xar:set name="options">
 						array(
 							array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
