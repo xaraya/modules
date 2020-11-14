@@ -24,12 +24,13 @@ function reminders_userapi_get_email_dates($args)
     		if ($args['array']['reminder_' . $i] == 0) continue;
     		// Ignore dates we have already done
     		if ($args['array']['reminder_done_' . $i] == 1) continue;
-    		$dates[] = $args['array']['reminder_' . $i];
+    		$dates[] = (int)$args['array']['reminder_' . $i];
     	}
     } else {
     	// Need to add support for objects
     }
-	var_dump($dates);
+    // Sort the dates DESC (earliest first)
+	rsort($dates);
     return $dates;
 }
 ?>
