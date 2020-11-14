@@ -32,6 +32,7 @@ function reminders_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_reminders_entries (
         id                  integer unsigned NOT NULL auto_increment,
+        name                varchar(255) NOT NULL default '', 
         message             text, 
         email_id            integer unsigned NOT NULL default 0, 
         template_id         integer unsigned NOT NULL default 0, 
