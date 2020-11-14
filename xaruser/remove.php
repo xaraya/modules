@@ -11,11 +11,13 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Call a generic test page
+ * Suppress the reminders of an entry
  *
  */
-function reminders_user_test()
+function reminders_user_remove()
 {
-    return array();
+    $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
+	xarTpl::setPageTemplateName('user_full');
+	return $data;
 }
 ?>
