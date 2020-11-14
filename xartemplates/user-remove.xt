@@ -17,7 +17,7 @@
 					</tr>
 				</table>
 			</div>
-			<xar:if condition="$item['due_date']">
+			<xar:if condition="$item['recurring']">
 				<div>
 					This is a recurring reminder. Please choose:&#160;
 					<xar:set name="options">
@@ -27,6 +27,10 @@
 						)
 					</xar:set>
 					<xar:data-input type="dropdown" options="$options"/>
+				</div>
+			<xar:else/>
+				<div>
+					This is a one-time event.
 				</div>
 			</xar:if>
 			<form method="post" action="#xarServer::getCurrentURL()#">
