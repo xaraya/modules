@@ -33,6 +33,8 @@ function reminders_user_remove()
 
     $items = $entries->getItems();
 
+    $data['authid'] = xarSecGenAuthKey('reminders');
+
     if ($data['confirm']) {
     }
 
