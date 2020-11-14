@@ -42,7 +42,13 @@ function reminders_admin_new_entry()
             // Bad data: redisplay the form with error messages
             return xarTplModule('reminders','admin','new_entry', $data);        
         } else {
-            // Good data: create the item
+            // Good data: proceed
+            // First generate the code for this item
+            // CHECKME: think of something better here
+            $code = MD5(xarUserVars::get('id') . time());
+            // Add it to the object
+            $data['object']->properties['code']->value = $code;
+            // Now create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page

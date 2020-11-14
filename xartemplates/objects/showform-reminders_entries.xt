@@ -2,6 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:set name="warning_periods">xarMod::apiFunc('reminders', 'admin', 'get_warning_periods')</xar:set>
     <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['code']" hidden="hidden"/>
     <div class="xar-row">
         <div class="xar-col-condensed">
             <xar:var name="value">Message</xar:var>
@@ -216,7 +217,18 @@
                 <xar:data-input property="$properties['time_created']" hidden="hidden"/>
             </div>        
         </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                <xar:var name="value">Modified</xar:var>
+                <xar:data-label property="$properties['time_modified']" label="$value"/>                    
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['time_modified']"/>                    
+                <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
+            </div>        
+        </div>
     <xar:else/>
         <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+        <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
     </xar:if>
 </xar:template>
