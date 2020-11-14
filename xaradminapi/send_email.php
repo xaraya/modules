@@ -49,7 +49,7 @@ function reminders_adminapi_send_email($data)
         $recipientname    = $data['name']->getValue();
         $recipientaddress = $data['info']['email'];
     }
-    $data['reminder_text'] = $data['info']['message'];
+    $data['reminder_text'] = trim($data['info']['message']);
     $data['due_date'] = $data['info']['due_date'];
     unset($data['info']);
 
