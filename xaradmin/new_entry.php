@@ -45,7 +45,7 @@ function reminders_admin_new_entry()
             // Good data: proceed
             // First generate the code for this item
             // CHECKME: think of something better here
-            $code = MD5(xarUserVars::get('id') . time());
+            $code = MD5(xarUser::getVar('id') . time());
             // Add it to the object
             $data['object']->properties['code']->value = $code;
             // Now create the item
