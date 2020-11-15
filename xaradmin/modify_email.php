@@ -42,7 +42,10 @@ function reminders_admin_modify_email()
             // Bad data: redisplay the form with error messages
             return xarTplModule('reminders','admin','modify_email', $data);        
         } else {
-            // Good data: create the item
+            // Good data: proceed
+            // Update the time_modified field
+            $data['object']->properties['time_modified']->value = time();
+            // Save the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page

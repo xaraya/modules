@@ -43,6 +43,9 @@ function reminders_admin_modify_entry()
             return xarTplModule('reminders','admin','modify_entry', $data);        
         } else {
             // Good data: create the item
+            // Update the time_modified field
+            $data['object']->properties['time_modified']->value = time();
+            // Save the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
