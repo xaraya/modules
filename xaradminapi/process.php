@@ -92,7 +92,7 @@ function reminders_adminapi_process($args)
 	                continue;
                 }
                 
-				// The email for this period is net sent: do it
+				// The email for this period is not sent: do it
 				// Get the template information for this message
 				$this_template_id = $row['template'];
 				if (isset($templates[$this_template_id])) {
@@ -122,7 +122,6 @@ function reminders_adminapi_process($args)
         }
         $previous_id = $current_id;
     }
-    
     return $data['results'];
 }
 ?>
