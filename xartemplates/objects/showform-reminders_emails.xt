@@ -32,7 +32,7 @@
     </div>
     <xar:if condition="!empty($properties['id']->value)">
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 <xar:var name="value">Created</xar:var>
                 <xar:data-label property="$properties['time_created']" value="$value"/>                    
             </div>
@@ -41,7 +41,7 @@
             </div>        
         </div>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col-condensed">
                 <xar:var name="value">Modified</xar:var>
                 <xar:data-label property="$properties['time_modified']" value="$value"/>                    
             </div>
