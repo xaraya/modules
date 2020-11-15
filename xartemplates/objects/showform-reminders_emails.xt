@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:data-input property="$properties['id']" hidden="hidden"/>
-    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
-    <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
     <div class="xar-row">
         <div class="xar-col-condensed">
             <xar:var name="value">Name</xar:var>
@@ -38,6 +36,7 @@
             </div>
             <div class="xar-col">
                 <xar:data-output property="$properties['time_created']"/>                    
+    			<xar:data-input property="$properties['time_created']" hidden="hidden"/>
             </div>        
         </div>
         <div class="xar-row">
@@ -47,6 +46,7 @@
             </div>
             <div class="xar-col">
                 <xar:data-output property="$properties['time_modified']"/>                    
+			    <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
             </div>        
         </div>
     </xar:if>
