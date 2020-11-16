@@ -43,7 +43,7 @@ function crispbb_userapi_gethooklist($args)
         $smodId = null;
         $modName = '';
     } else {
-        $smodInfo = xarMod_GetBaseInfo($modName);
+        $smodInfo = xarMod::getBaseInfo($modName);
         $smodId = $smodInfo['systemid'];
     }
 

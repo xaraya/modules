@@ -417,7 +417,7 @@ function crispbb_user_display($args)
         return;
     }
     if (!empty($theme)) {
-        return xarTPLModule('crispbb', 'user', 'display-' . $theme, $data);
+        return xarTpl::module('crispbb', 'user', 'display-' . $theme, $data);
     }
     return $data;
 }

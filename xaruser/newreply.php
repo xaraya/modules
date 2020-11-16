@@ -76,7 +76,7 @@ function crispbb_user_newreply($args)
                 $errorMsg['type'] = 'FLOOD_CONTROL';
                 $errorMsg['pageTitle'] = xarML('Flood Control');
                 xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-                return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
             }
         }
     }
@@ -444,7 +444,7 @@ function crispbb_user_newreply($args)
                 xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
                 $data['message'] = $message;
-                return xarTPLModule('crispbb', 'user', 'return', $data);
+                return xarTpl::module('crispbb', 'user', 'return', $data);
             }
             if (empty($return_url)) {
                 $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid,  'action' => 'lastreply'));

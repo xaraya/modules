@@ -211,7 +211,7 @@ function crispbb_admin_forumconfig($args)
                         $hookMessage = xarML('Hook this module to all #(1) in crispBB', $label);
                     }
                 }
-                $hookModid = xarModGetIdFromName($hookMod);
+                $hookModid = xarMod::getRegId($hookMod);
                 $hookModinfo = xarMod::getInfo($hookModid);
                 $hooksettings[$hookMod] = array(
                     'status' => $hookStatus,

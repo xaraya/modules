@@ -43,7 +43,7 @@ function crispbb_user_displayreply($args)
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
         xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+        return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
     }
 
     $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $post['tid'], 'privcheck' => true));
@@ -319,7 +319,7 @@ function crispbb_user_displayreply($args)
         return;
     }
     if (!empty($theme)) {
-        return xarTPLModule('crispbb', 'user', 'display-' . $theme, $data);
+        return xarTpl::module('crispbb', 'user', 'display-' . $theme, $data);
     }
-    return xarTPLModule('crispbb', 'user', 'display', $data);
+    return xarTpl::module('crispbb', 'user', 'display', $data);
 }

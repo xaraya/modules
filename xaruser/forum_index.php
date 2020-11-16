@@ -212,7 +212,7 @@ function crispbb_user_forum_index()
         return;
     }
     if (!empty($theme)) {
-        return xarTPLModule('crispbb', 'user', 'forum_index-' . $theme, $data);
+        return xarTpl::module('crispbb', 'user', 'forum_index-' . $theme, $data);
     }
     return $data;
 }

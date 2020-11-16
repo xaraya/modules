@@ -339,7 +339,7 @@ function crispbb_user_modifytopic($args)
                 $data['ttitle'] = $ttitle;
                 $data['pid'] = null;
                 $data['message'] = xarML('Topic #(1) was updated successfully', $ttitle);
-                return xarTPLModule('crispbb', 'user', 'return', $data);
+                return xarTpl::module('crispbb', 'user', 'return', $data);
             }
 
             return xarController::redirect($return_url);

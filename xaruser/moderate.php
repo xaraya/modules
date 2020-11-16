@@ -233,7 +233,7 @@ function crispbb_user_moderate($args)
                             $data['tstatus'] = $tstatus;
                             $data['pageTitle'] = xarML('Confirm Action');
                             $data['return_url'] = $return_url;
-                            return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
+                            return xarTpl::module('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         # --------------------------------------------------------
                         # Finally, perform the requested action
@@ -674,7 +674,7 @@ function crispbb_user_moderate($args)
                     $errorMsg['type'] = $ertype;
                     $errorMsg['pageTitle'] = $pageTitle;
                     xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-                    return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                    return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
                 }
                 if ($phase == 'update') {
                     # --------------------------------------------------------
@@ -750,7 +750,7 @@ function crispbb_user_moderate($args)
                             $data['component'] = $component;
                             $data['pageTitle'] = xarML('Confirm Action');
                             $data['return_url'] = $return_url;
-                            return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
+                            return xarTpl::module('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         # --------------------------------------------------------
                         # Finally, perform the requested action
@@ -1179,7 +1179,7 @@ function crispbb_user_moderate($args)
                             $data['component'] = $component;
                             $data['pageTitle'] = xarML('Confirm Action');
                             $data['return_url'] = $return_url;
-                            return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
+                            return xarTpl::module('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         # --------------------------------------------------------
                         # Finally, perform the requested action
@@ -1513,7 +1513,7 @@ function crispbb_user_moderate($args)
                     $errorMsg['type'] = $ertype;
                     $errorMsg['pageTitle'] = $pageTitle;
                     xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-                    return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                    return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
                 }
 
                 if ($phase == 'update') {
@@ -1592,7 +1592,7 @@ function crispbb_user_moderate($args)
                             $data['component'] = $component;
                             $data['pageTitle'] = xarML('Confirm Action');
                             $data['return_url'] = $return_url;
-                            return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
+                            return xarTpl::module('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         # --------------------------------------------------------
                         # Finally, perform the requested action

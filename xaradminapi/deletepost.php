@@ -34,7 +34,7 @@ function crispbb_adminapi_deletepost($args)
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
         xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+        return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
     }
 
     $dbconn = xarDB::getConn();
