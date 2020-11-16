@@ -20,10 +20,9 @@
  * @returns  array an array containing the left and right values or an
  *           empty array if the modid specified doesn't exist
  */
-function comments_userapi_get_module_lrvalues( $args )
+function comments_userapi_get_module_lrvalues($args)
 {
-
-    extract ($args);
+    extract($args);
 
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing or Invalid parameter \'modid\'!!');
@@ -47,8 +46,9 @@ function comments_userapi_get_module_lrvalues( $args )
 
     $result =& $dbconn->Execute($sql);
 
-    if(!$result)
+    if (!$result) {
         return;
+    }
 
     if (!$result->EOF) {
         while (!$result->EOF) {
@@ -64,5 +64,3 @@ function comments_userapi_get_module_lrvalues( $args )
 
     return $lrvalues;
 }
-
-?>

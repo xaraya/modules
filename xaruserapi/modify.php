@@ -20,55 +20,54 @@
  */
 function comments_userapi_modify($args)
 {
-
     extract($args);
 
     $msg = xarML('Missing or Invalid Parameters: ');
-    $error = FALSE;
+    $error = false;
 
     if (!isset($title)) {
         $msg .= xarMLbykey('title ');
-        $error = TRUE;
+        $error = true;
     }
 
     if (!isset($id)) {
         $msg .= xarMLbykey('id ');
-        $error = TRUE;
+        $error = true;
     }
 
     if (!isset($text)) {
         $msg .= xarMLbykey('text ');
-        $error = TRUE;
+        $error = true;
     }
 
     if (!isset($postanon)) {
         $msg .= xarMLbykey('postanon ');
-        $error = TRUE;
+        $error = true;
     }
 
-    if(isset($itemtype) && !xarVarValidate('int:0:', $itemtype)) {
-            $msg .= xarMLbykey('itemtype');
-            $error = TRUE;
+    if (isset($itemtype) && !xarVarValidate('int:0:', $itemtype)) {
+        $msg .= xarMLbykey('itemtype');
+        $error = true;
     }
 
-    if(isset($objectid) && !xarVarValidate('int:1:', $objectid)) {
-            $msg .= xarMLbykey('objectid');
-            $error = TRUE;
+    if (isset($objectid) && !xarVarValidate('int:1:', $objectid)) {
+        $msg .= xarMLbykey('objectid');
+        $error = true;
     }
 
-    if(isset($date) && !xarVarValidate('int:1:', $date)) {
-            $msg .= xarMLbykey('date');
-            $error = TRUE;
+    if (isset($date) && !xarVarValidate('int:1:', $date)) {
+        $msg .= xarMLbykey('date');
+        $error = true;
     }
 
-    if(isset($status) && !xarVarValidate('enum:1:2:3', $status)) {
-            $msg .= xarMLbykey('status');
-            $error = TRUE;
+    if (isset($status) && !xarVarValidate('enum:1:2:3', $status)) {
+        $msg .= xarMLbykey('status');
+        $error = true;
     }
 
-    if(isset($useeditstamp) && !xarVarValidate('enum:0:1:2', $useeditstamp)) {
-            $msg .= xarMLbykey('useeditstamp');
-            $error = TRUE;
+    if (isset($useeditstamp) && !xarVarValidate('enum:0:1:2', $useeditstamp)) {
+        $msg .= xarMLbykey('useeditstamp');
+        $error = true;
     }
 
     if ($error) {
@@ -81,8 +80,8 @@ function comments_userapi_modify($args)
     } else {
         $hostname = xarServer::getVar('REMOTE_ADDR');
     }
-    $useeditstamp=xarModVars::get('comments','editstamp');
-    $adminid = xarModVars::get('roles','admin');
+    $useeditstamp=xarModVars::get('comments', 'editstamp');
+    $adminid = xarModVars::get('roles', 'admin');
 
     /*$dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();*/
@@ -99,10 +98,10 @@ function comments_userapi_modify($args)
     }
     */
 
-    if  (($useeditstamp ==1 ) ||
-                     (($useeditstamp == 2 ) && (xarUserGetVar('id')<>$adminid))) {
+    if (($useeditstamp ==1) ||
+                     (($useeditstamp == 2) && (xarUserGetVar('id')<>$adminid))) {
         $text .= "\n";
-        $text .= xarTplModule('comments','user','modifiedby', array(
+        $text .= xarTplModule('comments', 'user', 'modifiedby', array(
                               'isauthor' => (xarUserGetVar('id') == $authorid),
                               'postanon'=>$postanon));
         $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
@@ -113,23 +112,25 @@ function comments_userapi_modify($args)
                             'name' => 'comments_comments'
         ));
 
-    if (!is_object($object)) return;
+    if (!is_object($object)) {
+        return;
+    }
     $object->getItem(array('itemid' => $id));
 
     $object->properties['title']->setValue($title);
     $object->properties['text']->setValue($text);
     $bpostanon = isset($postanon) ? 0 : 1;
     $object->properties['anonpost']->setValue($bpostanon);
-    if(isset($itemtype)) {
+    if (isset($itemtype)) {
         $object->properties['itemtype']->setValue($itemtype);
     }
-    if(isset($objectid)) {
+    if (isset($objectid)) {
         $object->properties['objectid']->setValue($objectid);
     }
-    if(isset($date)) {
+    if (isset($date)) {
         $object->properties['date']->setValue($date);
     }
-    if(isset($status)) {
+    if (isset($status)) {
         $object->properties['status']->setValue($status);
     }
 
@@ -178,5 +179,3 @@ function comments_userapi_modify($args)
 
     return true;
 }
-
-?>

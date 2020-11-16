@@ -25,7 +25,7 @@ sys::import('modules.comments.xarincludes.defines');
  * @param   integer objectid ObjectId to gather info on (only used with type == object)
  * @returns integer total comments
  */
-function comments_adminapi_count_comments( $args )
+function comments_adminapi_count_comments($args)
 {
     extract($args);
     $dbconn         = xarDB::getConn();
@@ -36,11 +36,10 @@ function comments_adminapi_count_comments( $args )
     $where_type     = '';
     $where_status   = '';
 
-    if (empty($type) || !eregi('^(all|module|object)$',$type)) {
+    if (empty($type) || !eregi('^(all|module|object)$', $type)) {
         $msg = xarML('Invalid Parameter \'type\' to function count_comments(). \'type\' must be: all, module, or object.');
         throw new BadParameterException($msg);
     } else {
-
         switch ($type) {
             case 'object':
                 if (empty($objectid)) {
@@ -54,6 +53,7 @@ function comments_adminapi_count_comments( $args )
                 // we need modid for object in addition to objectid
                 // hence, no break statement here :-)
 
+                // no break
             case 'module':
                 if (empty($modid)) {
                     $msg = xarML('Missing or Invalid Parameter \'modid\'');
@@ -72,7 +72,7 @@ function comments_adminapi_count_comments( $args )
                 $where_type = "1";
         }
     }
-    if (empty($status) || !eregi('^(all|inactive|active)$',$status)) {
+    if (empty($status) || !eregi('^(all|inactive|active)$', $status)) {
         $msg = xarML('Invalid Parameter \'status\' to function count_module_comments(). \'status\' must be: all, active, or inactive.');
         throw new BadParameterException($msg);
     } else {
@@ -93,8 +93,9 @@ function comments_adminapi_count_comments( $args )
                WHERE $where_type
                  AND $where_status";
     $result =& $dbconn->Execute($query);
-    if (!$result)
+    if (!$result) {
         return;
+    }
 
     if ($result->EOF) {
         return 0;
@@ -103,4 +104,3 @@ function comments_adminapi_count_comments( $args )
     $result->Close();
     return $numitems;
 }
-?>

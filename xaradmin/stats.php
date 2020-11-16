@@ -19,17 +19,22 @@ function comments_admin_stats()
 {
 
     // Security Check
-    if(!xarSecurityCheck('AdminComments'))
+    if (!xarSecurityCheck('AdminComments')) {
         return;
+    }
 
     $data['gt_items']     = 0;
     $data['gt_total']     = 0;
     $data['gt_inactive']  = 0;
 
-    $modlist = xarMod::apiFunc('comments','user','modcounts');
+    $modlist = xarMod::apiFunc('comments', 'user', 'modcounts');
 
-    $inactive = xarMod::apiFunc('comments','user','modcounts',
-                              array('status' => 'inactive'));
+    $inactive = xarMod::apiFunc(
+        'comments',
+        'user',
+        'modcounts',
+        array('status' => 'inactive')
+    );
 
     $moditems = array();
     foreach ($modlist as $modid => $itemtypes) {
@@ -37,8 +42,8 @@ function comments_admin_stats()
         // Get the list of all item types for this module (if any)
         //Psspl:Commneted codew for resolving error.
         //$mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
-                                 // don't throw an exception if this function doesn't exist
-          //                       array(), 0);
+        // don't throw an exception if this function doesn't exist
+        //                       array(), 0);
         foreach ($itemtypes as $itemtype => $stats) {
             $moditem = array();
             $moditem['modid'] = $modid;
@@ -58,18 +63,26 @@ function comments_admin_stats()
                 //    $moditem['modlink'] = $mytypes[$itemtype]['url'];
                 } else {
                     $moditem['modname'] = ucwords($modinfo['displayname']) . ': itemtype ' . $itemtype;
-                //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                    //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                 }
             }
-            $moditem['module_url'] = xarModURL('comments','admin','module_stats',
-                                               array('modid' => $modid,
-                                                     'itemtype' => $itemtype));
+            $moditem['module_url'] = xarModURL(
+                'comments',
+                'admin',
+                'module_stats',
+                array('modid' => $modid,
+                                                     'itemtype' => $itemtype)
+            );
 
-            $moditem['delete_url'] = xarModURL('comments','admin','delete',
-                                               array('dtype' => 'itemtype',
+            $moditem['delete_url'] = xarModURL(
+                'comments',
+                'admin',
+                'delete',
+                array('dtype' => 'itemtype',
                                                      'modid' => $modid,
                                                     'redirect' => 'stats',
-                                                    'itemtype' => $itemtype));
+                                                    'itemtype' => $itemtype)
+            );
             $moditems[] = $moditem;
             $data['gt_items'] += $moditem['items'];
             $data['gt_total'] += $moditem['total'];
@@ -77,12 +90,12 @@ function comments_admin_stats()
         }
     }
     $data['moditems']             = $moditems;
-    $data['delete_all_url']   = xarModURL('comments',
-                                            'admin',
-                                            'delete',
-                                            array('dtype' => 'all', 'redirect' => 'stats'));
+    $data['delete_all_url']   = xarModURL(
+        'comments',
+        'admin',
+        'delete',
+        array('dtype' => 'all', 'redirect' => 'stats')
+    );
 
     return $data;
-
 }
-?>

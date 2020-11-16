@@ -27,10 +27,10 @@ class CommentsNumberOfProperty extends DataProperty
      * @returns array
      * @return base information for this property
      **/
-     function getBasePropertyInfo()
-     {
-         $args = array();
-         $baseInfo = array(
+    public function getBasePropertyInfo()
+    {
+        $args = array();
+        $baseInfo = array(
                             'id'         => 104,
                             'name'       => 'numcomments',
                             'label'      => '# of Comments',
@@ -44,7 +44,5 @@ class CommentsNumberOfProperty extends DataProperty
                             // ...
                            );
         return $baseInfo;
-     }
+    }
 }
-
-?>

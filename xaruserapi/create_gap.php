@@ -24,9 +24,8 @@
  * @param    string     $objectid      the item id
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_create_gap( $args )
+function comments_userapi_create_gap($args)
 {
-
     extract($args);
 
     if (!isset($startpoint)) {
@@ -35,7 +34,7 @@ function comments_userapi_create_gap( $args )
     }
 
     if (!isset($endpoint) || !is_numeric($endpoint)) {
-        $endpoint = NULL;
+        $endpoint = null;
     }
 
     if (!isset($gapsize) || $gapsize <= 1) {
@@ -54,7 +53,7 @@ function comments_userapi_create_gap( $args )
                    WHERE right_id >= $startpoint";
 
     // if we have an endpoint, use it :)
-    if (!empty($endpoint) && $endpoint !== NULL) {
+    if (!empty($endpoint) && $endpoint !== null) {
         $sql_left   .= " AND left_id <= $endpoint";
         $sql_right  .= " AND right_id <= $endpoint";
     }
@@ -80,7 +79,7 @@ function comments_userapi_create_gap( $args )
         for ($i = 0; $i < 3; $i++) {
             if ($i > 0) {
                 // sleep 10 msec the second time, 100 msec the third time
-                $delay = 1000 * pow(10,$i);
+                $delay = 1000 * pow(10, $i);
                 usleep($delay);
             }
             // start the transaction
@@ -118,5 +117,3 @@ function comments_userapi_create_gap( $args )
         return $affected;
     }
 }
-
-?>

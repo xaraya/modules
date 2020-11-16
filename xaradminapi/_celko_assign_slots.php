@@ -21,9 +21,8 @@
  *  @returns array  the modified array is passed back, or zero if it is empty
  */
 
-function comments_adminapi_celko_assign_slots( $data )
+function comments_adminapi_celko_assign_slots($data)
 {
-
     static $total = 0;
     static $depth = 0;
 
@@ -34,13 +33,15 @@ function comments_adminapi_celko_assign_slots( $data )
     foreach ($data as $node_id => $node_data) {
         $node_data['depth'] = $depth++;
         $node_data['left_id']  = $total++;
-    if (isset($node_data['children'])) {
-            $node_data['children'] = xarMod::apiFunc('comments',
-                                                   'admin',
-                                                   'celko_assign_slots',
-                                                    $node_data['children']);
+        if (isset($node_data['children'])) {
+            $node_data['children'] = xarMod::apiFunc(
+                'comments',
+                'admin',
+                'celko_assign_slots',
+                $node_data['children']
+            );
         } else {
-            $node_data['children'] = FALSE;
+            $node_data['children'] = false;
         }
         $node_data['right_id'] = $total++;
         $depth--;
@@ -49,5 +50,3 @@ function comments_adminapi_celko_assign_slots( $data )
 
     return $tree;
 }
-
-?>

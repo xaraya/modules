@@ -19,7 +19,7 @@
  *  @access public
  *  @returns true on success
  */
-function comments_adminapi_import_blacklist( $args )
+function comments_adminapi_import_blacklist($args)
 {
     extract($args);
     sys::import('xaraya.tableddl');
@@ -30,12 +30,16 @@ function comments_adminapi_import_blacklist( $args )
     $feedfile = 'http://www.jayallen.org/comment_spam/blacklist.txt';
 
     // Get the feed file (from cache or from the remote site)
-    $filegrab = xarMod::apiFunc('base', 'user', 'getfile',
-                           array('url' => $feedfile,
+    $filegrab = xarMod::apiFunc(
+        'base',
+        'user',
+        'getfile',
+        array('url' => $feedfile,
                                  'cached' => true,
                                  'cachedir' => 'cache/rss',
                                  'refresh' => 604800,
-                                 'extension' => '.txt'));
+                                 'extension' => '.txt')
+    );
     if (!$filegrab) {
         $msg = xarML('Could not get new blacklist file.');
         throw new BadParameterException($msg);
@@ -46,27 +50,29 @@ function comments_adminapi_import_blacklist( $args )
     $query = xarDBDropTable($xartable['blacklist']);
     $result =& $dbconn->Execute($query);
 
-    if(!$result)
+    if (!$result) {
         return;
+    }
 
 
     // Create blacklist tables
     $fields = array(
         'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
 //        'id'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=> TRUE, 'primary_key'=>TRUE),
-        'domain'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255)
+        'domain'   => array('type'=>'varchar',  'null'=>false,  'size'=>255)
     );
 
     $query = xarDBCreateTable($xartable['blacklist'], $fields);
     $file = file('var/cache/rss/'.md5($feedfile).'.txt');
     $result =& $dbconn->Execute($query);
-    if (!$result)
+    if (!$result) {
         return;
+    }
     for ($i=0; $i<count($file); $i++) {
         $data = $file[$i];
         $domain = "";
-        for ($j=0; $j<strlen($data); $j++)  {
-            if ($data[$j]==" " || $data[$j] == "#"){
+        for ($j=0; $j<strlen($data); $j++) {
+            if ($data[$j]==" " || $data[$j] == "#") {
                 break;
             } else {
                 $domain .= $data[$j];
@@ -74,28 +80,29 @@ function comments_adminapi_import_blacklist( $args )
             }
         }
         if (strpos($domain, '[\w\-_.]')) {
-            $domaim = str_replace('[\w\-_.]','[-\w\_.]', $domain);
+            $domaim = str_replace('[\w\-_.]', '[-\w\_.]', $domain);
         }
         $ps = strpos($domain, '/');
         while ($ps !== false) {
             if ($ps == 0) {
                 $domain = '\\' + $domain;
-            } else if (substr($domain, $ps-1, 1) != '\\') {
+            } elseif (substr($domain, $ps-1, 1) != '\\') {
                 $domain = substr_replace($domain, '\/', $ps, 1);
             }
             $ps = strpos($domain, '/', $ps+2);
         }
         $domain = trim($domain);
-        if ($domain != ""){
+        if ($domain != "") {
             $nextId = $dbconn->GenId($btable);
             $query = "INSERT INTO $btable(id,
                                           domain)
                       VALUES (?,?)";
             $bindvars = array($nextId, $domain);
-            $result =& $dbconn->Execute($query,$bindvars);
-            if (!$result) return;
+            $result =& $dbconn->Execute($query, $bindvars);
+            if (!$result) {
+                return;
+            }
         }
     }
     return true;
 }
-?>

@@ -34,38 +34,54 @@
  */
 function comments_userapi_get_multiple($args)
 {
-
     extract($args);
 
-    if ( !isset($moduleid) || empty($moduleid) ) {
-        $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'moduleid', $moduleid, 'userapi', 'get_multiple', 'comments');
+    if (!isset($moduleid) || empty($moduleid)) {
+        $msg = xarML(
+            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
+            'moduleid',
+            $moduleid,
+            'userapi',
+            'get_multiple',
+            'comments'
+        );
         throw new Exception($msg);
     }
 
-    if ( (!isset($itemid) || empty($itemid)) && !isset($author) ) {
-        $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'itemid', $itemid, 'userapi', 'get_multiple', 'comments');
+    if ((!isset($itemid) || empty($itemid)) && !isset($author)) {
+        $msg = xarML(
+            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
+            'itemid',
+            $itemid,
+            'userapi',
+            'get_multiple',
+            'comments'
+        );
         throw new Exception($msg);
-    } else
-        if (!isset($objectid) && isset($author)) {
-            $objectid = 0;
+    } elseif (!isset($objectid) && isset($author)) {
+        $objectid = 0;
     }
 
     // is $id ever set in get_multiple?
     if (!isset($id) || !is_numeric($id)) {
         $id = 0;
     } else {
-        $nodelr = xarMod::apiFunc('comments',
-                                'user',
-                                'get_node_lrvalues',
-                                 array('id' => $id));
+        $nodelr = xarMod::apiFunc(
+            'comments',
+            'user',
+            'get_node_lrvalues',
+            array('id' => $id)
+        );
     }
 
     // Optional argument for Pager -
     // for those modules that use comments and require this
-    if (!isset($startnum)) $startnum = 1;
-    if (!isset($numitems)) $numitems = -1;
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
 
     if (!isset($status) || !is_numeric($status)) {
         $status = _COM_STATUS_ON;
@@ -87,7 +103,7 @@ function comments_userapi_get_multiple($args)
         $args['right_id'] = (int) $nodelr['right_id'];
     }
 
-    $commentlist = xarMod::apiFunc('comments','user','getitems',$args);
+    $commentlist = xarMod::apiFunc('comments', 'user', 'getitems', $args);
 
     $arr = array();
 
@@ -95,7 +111,7 @@ function comments_userapi_get_multiple($args)
         $row['postanon'] = $row['anonpost'];
         $row['datetime'] = $row['date'];
         $row['role_id'] = $row['author'];
-        $row['author'] = xarUserGetVar('name',$row['author']);
+        $row['author'] = xarUserGetVar('name', $row['author']);
         $arr[] = $row;
     }
 
@@ -154,7 +170,7 @@ function comments_userapi_get_multiple($args)
             $sql .= " ORDER BY left_id";
         }
     }*/
-// cfr. xarcachemanager - this approach might change later
+    // cfr. xarcachemanager - this approach might change later
     //$expire = xarModVars::get('comments','cache.userapi.get_multiple');
 
     //Add select limit for modules that call this function and need Pager
@@ -171,15 +187,15 @@ function comments_userapi_get_multiple($args)
             $result =& $dbconn->Execute($sql,$bindvars);
         }
     }*/
-   /* if (!$result) return;
+    /* if (!$result) return;
 
-    // if we have nothing return empty
-    if ($result->EOF) return array();
+     // if we have nothing return empty
+     if ($result->EOF) return array();
 
-    if (!xarModLoad('comments','renderer')) {
-        $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
-        throw new Exception($msg);
-    }*/
+     if (!xarModLoad('comments','renderer')) {
+         $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
+         throw new Exception($msg);
+     }*/
 
     // zip through the list of results and
     // add it to the array we will return
@@ -203,5 +219,3 @@ function comments_userapi_get_multiple($args)
 
     return $commentlist;
 }
-
-?>

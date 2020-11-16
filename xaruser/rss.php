@@ -21,12 +21,17 @@
 function comments_user_rss($args)
 {
     extract($args);
-    if (!xarSecurityCheck('ReadComments',0))
+    if (!xarSecurityCheck('ReadComments', 0)) {
         return;
+    }
 
     // get the list of modules+itemtypes that comments is hooked to
-    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                   array('hookModName' => 'comments'));
+    $hookedmodules = xarMod::apiFunc(
+        'modules',
+        'admin',
+        'gethookedmodules',
+        array('hookModName' => 'comments')
+    );
 
     // initialize list of module and pubtype names
     $items   = array();
@@ -39,19 +44,28 @@ function comments_user_rss($args)
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $module => $value) {
             $modid = xarMod::getRegID($module);
-            if (!isset($modname[$modid])) $modname[$modid] = array();
-            if (!isset($modview[$modid])) $modview[$modid] = array();
+            if (!isset($modname[$modid])) {
+                $modname[$modid] = array();
+            }
+            if (!isset($modview[$modid])) {
+                $modview[$modid] = array();
+            }
             $modname[$modid][0] = ucwords($module);
-            $modview[$modid][0] = xarModURL($module,'user','view');
+            $modview[$modid][0] = xarModURL($module, 'user', 'view');
             // Get the list of all item types for this module (if any)
-            $mytypes = xarMod::apiFunc($module,'user','getitemtypes',
+            $mytypes = xarMod::apiFunc(
+                $module,
+                'user',
+                'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(), 0);
+                                     array(),
+                0
+            );
             if (!empty($mytypes) && count($mytypes) > 0) {
-                 foreach (array_keys($mytypes) as $itemtype) {
-                     $modname[$modid][$itemtype] = $mytypes[$itemtype]['label'];
-                     $modview[$modid][$itemtype] = $mytypes[$itemtype]['url'];
-                 }
+                foreach (array_keys($mytypes) as $itemtype) {
+                    $modname[$modid][$itemtype] = $mytypes[$itemtype]['label'];
+                    $modview[$modid][$itemtype] = $mytypes[$itemtype]['url'];
+                }
             }
             // we have hooks for individual item types here
             if (!isset($value[0])) {
@@ -60,7 +74,7 @@ function comments_user_rss($args)
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
                     } else {
-                        $type = xarML('type #(1)',$itemtype);
+                        $type = xarML('type #(1)', $itemtype);
                     }
                     $modlist["$module.$itemtype"] = ucwords($module) . ' - ' . $type;
                 }
@@ -70,7 +84,9 @@ function comments_user_rss($args)
                 // allow selecting individual item types here too (if available)
                 if (!empty($mytypes) && count($mytypes) > 0) {
                     foreach ($mytypes as $itemtype => $mytype) {
-                        if (!isset($mytype['label'])) continue;
+                        if (!isset($mytype['label'])) {
+                            continue;
+                        }
                         $modlist["$module.$itemtype"] = ucwords($module) . ' - ' . $mytype['label'];
                     }
                 }
@@ -79,19 +95,24 @@ function comments_user_rss($args)
     }
     $args['modarray']   = $todolist;
     $args['howmany']    = xarModVars::get('comments', 'rssnumitems');
-    $items = xarMod::apiFunc('comments','user','get_multipleall', $args);
+    $items = xarMod::apiFunc('comments', 'user', 'get_multipleall', $args);
 
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $modinfo = xarMod::getInfo($item['modid']);
         $items[$i]['rsstitle']      = htmlspecialchars($item['subject']);
         try {
-            $linkarray                  = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
-                                                        array('itemtype' => $item['itemtype'],
-                                                              'itemids'  => array($item['objectid'])));
-        } catch (Exception $e) {}
-        if (!empty($linkarray)){
-            foreach($linkarray as $url){
+            $linkarray                  = xarMod::apiFunc(
+                $modinfo['name'],
+                'user',
+                'getitemlinks',
+                array('itemtype' => $item['itemtype'],
+                                                              'itemids'  => array($item['objectid']))
+            );
+        } catch (Exception $e) {
+        }
+        if (!empty($linkarray)) {
+            foreach ($linkarray as $url) {
                 $items[$i]['link'] = $url['url'];
             }
         } else {
@@ -99,7 +120,7 @@ function comments_user_rss($args)
             $items[$i]['link'] = xarModUrl('comments', 'user', 'display', array('id' => $item['id']));
         }
 
-        $items[$i]['rsssummary'] = preg_replace('<br />',"\n",$item['text']);
+        $items[$i]['rsssummary'] = preg_replace('<br />', "\n", $item['text']);
         $items[$i]['rsssummary'] = xarVarPrepForDisplay(strip_tags($item['text']));
     }
 
@@ -107,4 +128,3 @@ function comments_user_rss($args)
     $data['items'] = $items;
     return $data;
 }
-?>

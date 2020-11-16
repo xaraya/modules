@@ -21,7 +21,7 @@ class CommentTreeProperty extends DataProperty
     public $desc       = 'CommentTree';
     public $reqmodules = array('comments');
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
 
@@ -29,38 +29,55 @@ class CommentTreeProperty extends DataProperty
         $this->filepath   = 'modules/comments/xarproperties';
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = array())
     {
-
         if (isset($data['configuration'])) {
             $this->parseConfiguration($data['configuration']);
             unset($data['configuration']);
         }
         extract($data);
-        if (!isset($module)) $module = xarMod::getName();
-        if (!isset($itemtype)) throw new BadParameterException('itemtype');
-        if (!isset($itemid)) throw new BadParameterException('itemid');
+        if (!isset($module)) {
+            $module = xarMod::getName();
+        }
+        if (!isset($itemtype)) {
+            throw new BadParameterException('itemtype');
+        }
+        if (!isset($itemid)) {
+            throw new BadParameterException('itemid');
+        }
 
-        $root = xarMod::apiFunc('comments','user','get_node_root',
-                        array('modid' => xarMod::getID($module),
+        $root = xarMod::apiFunc(
+            'comments',
+            'user',
+            'get_node_root',
+            array('modid' => xarMod::getID($module),
                               'objectid' => $itemid,
-                              'itemtype' => $itemtype));
+                              'itemtype' => $itemtype)
+        );
 
         // If we don't have one, make one
         if (!count($root)) {
-            $cid = xarMod::apiFunc('comments','user','add_rootnode',
-                                  array('modid'    => xarMod::getID($module),
+            $cid = xarMod::apiFunc(
+                'comments',
+                'user',
+                'add_rootnode',
+                array('modid'    => xarMod::getID($module),
                                         'objectid' => $itemid,
-                                        'itemtype' => $itemtype));
+                                        'itemtype' => $itemtype)
+            );
             if (empty($cid)) {
                 throw new Exception('Unable to create root node');
             }
         }
-        return xarMod::guiFunc('comments', 'user', 'display',
-                                 array('objectid' => $itemid,
+        return xarMod::guiFunc(
+            'comments',
+            'user',
+            'display',
+            array('objectid' => $itemid,
                                        'module' => $module,
                                        'itemtype' => $itemtype,
-                                       'returnurl' => xarServer::getCurrentURL()));
+                                       'returnurl' => xarServer::getCurrentURL())
+        );
         /*if (isset($data['options'])) {
             $this->options = $data['options'];
         } else {
@@ -98,5 +115,3 @@ class CommentTreeProperty extends DataProperty
         return parent::showInput($data);
     }
 }
-
-?>

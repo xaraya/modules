@@ -21,7 +21,7 @@
  * @param   integer     $objectid   the id of the object within the specified module that the comments are attached to
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_object_nodes( $args )
+function comments_adminapi_delete_object_nodes($args)
 {
     extract($args);
 
@@ -53,9 +53,8 @@ function comments_adminapi_delete_object_nodes( $args )
     if (!isset($result)) {
         return;
     } elseif (!$dbconn->Affected_Rows()) {
-        return FALSE;
+        return false;
     } else {
-        return TRUE;
+        return true;
     }
 }
-?>

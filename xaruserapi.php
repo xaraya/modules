@@ -16,6 +16,3 @@
  */
 
 sys::import('modules.comments.xarincludes.defines');
-
-
-?>

@@ -18,14 +18,26 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_user_search( $args )
+function comments_user_search($args)
 {
-    if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('startnum', 'isset', $startnum, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('header', 'isset', $header, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('q', 'isset', $q, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('bool', 'isset', $bool, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
@@ -87,7 +99,6 @@ function comments_user_search( $args )
     $package['comments'] = xarMod::apiFunc('comments', 'user', 'search', $search);
 
     if (!empty($package['comments'])) {
-
         foreach ($package['comments'] as $key => $comment) {
             if ($header['text']) {
                 // say which pieces of text (array keys) you want to be transformed
@@ -111,16 +122,12 @@ function comments_user_search( $args )
 
         $data['package'] = $package;
         $data['receipt'] = $receipt;
-
-
     }
 
-    if (!isset($data['package'])){
+    if (!isset($data['package'])) {
         $data['receipt']['status'] = xarML('No Comments Found Matching Search');
     }
 
     $data['header'] = $header;
     return $data;
 }
-
-?>

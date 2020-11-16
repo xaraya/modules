@@ -35,57 +35,55 @@ function comments_userapi_decode_shorturl($params)
     if (empty($params[1])) {
         // nothing specified -> we'll go to the main function
         return array('main', $args);
-
-    } elseif (preg_match('/^(\d+)/',$params[1],$matches)) {
+    } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
         $id = $matches[1];
         $args['id'] = $id;
         return array('display', $args);
 
-/* to be reviewed - probably better to redirect to the module item itself if we know all this
-    } elseif (preg_match('/^(\w+)/',$params[1],$matches)) {
-        // something that starts with a name might be for the display function
-        // Note : make sure your encoding/decoding is consistent ! :-)
-        $modname = $matches[1];
-        $alias = xarModGetAlias($modname);
-        if ($modname != $alias) {
-            $itemtype = 0;
-            // try to figure out which itemtype we're dealing with
-            $itemtypes = xarMod::apiFunc($alias,'user','getitemtypes',
-                                       array(),0);
-            if (!empty($itemtypes) && count($itemtypes) > 0) {
-                foreach ($itemtypes as $id => $info) {
-                    if (!empty($info['name']) && $modname == $info['name']) {
-                        $itemtype = $id;
-                        break;
+    /* to be reviewed - probably better to redirect to the module item itself if we know all this
+        } elseif (preg_match('/^(\w+)/',$params[1],$matches)) {
+            // something that starts with a name might be for the display function
+            // Note : make sure your encoding/decoding is consistent ! :-)
+            $modname = $matches[1];
+            $alias = xarModGetAlias($modname);
+            if ($modname != $alias) {
+                $itemtype = 0;
+                // try to figure out which itemtype we're dealing with
+                $itemtypes = xarMod::apiFunc($alias,'user','getitemtypes',
+                                           array(),0);
+                if (!empty($itemtypes) && count($itemtypes) > 0) {
+                    foreach ($itemtypes as $id => $info) {
+                        if (!empty($info['name']) && $modname == $info['name']) {
+                            $itemtype = $id;
+                            break;
+                        }
+                    }
+                }
+                $modname = $alias;
+            } else {
+                $itemtype = 0;
+            }
+            if (xarModIsAvailable($modname)) {
+                $modid = xarMod::getRegID($modname);
+                if (!empty($modid)) {
+                    $args['modid'] = $modid;
+                    if (preg_match('/^(\d+)/',$params[2],$matches)) {
+                        $temp = $matches[1];
+                        if (empty($params[3])) {
+                            $args['itemtype'] = $itemtype;
+                            $args['objectid'] = $temp;
+                            return array('display', $args);
+                        } elseif (preg_match('/^(\d+)/',$params[3],$matches)) {
+                            $args['itemtype'] = $temp;
+                            $args['objectid'] = $matches[1];
+                            return array('display', $args);
+                        }
                     }
                 }
             }
-            $modname = $alias;
-        } else {
-            $itemtype = 0;
-        }
-        if (xarModIsAvailable($modname)) {
-            $modid = xarMod::getRegID($modname);
-            if (!empty($modid)) {
-                $args['modid'] = $modid;
-                if (preg_match('/^(\d+)/',$params[2],$matches)) {
-                    $temp = $matches[1];
-                    if (empty($params[3])) {
-                        $args['itemtype'] = $itemtype;
-                        $args['objectid'] = $temp;
-                        return array('display', $args);
-                    } elseif (preg_match('/^(\d+)/',$params[3],$matches)) {
-                        $args['itemtype'] = $temp;
-                        $args['objectid'] = $matches[1];
-                        return array('display', $args);
-                    }
-                }
-            }
-        }
-*/
-
+    */
     } else {
         // we have no idea what this virtual path could be, so we'll just
         // forget about trying to decode this thing
@@ -96,5 +94,3 @@ function comments_userapi_decode_shorturl($params)
 
     // default : return nothing -> no short URL decoded
 }
-
-?>

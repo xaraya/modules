@@ -21,10 +21,9 @@
  * @returns  array an array containing the left and right values or an
  *           empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_lrvalues( $args )
+function comments_userapi_get_node_lrvalues($args)
 {
-
-    extract( $args );
+    extract($args);
 
     if (empty($id)) {
         $msg = xarML('Missing or Invalid parameter \'id\'!!');
@@ -40,8 +39,9 @@ function comments_userapi_get_node_lrvalues( $args )
 
     $result =& $dbconn->Execute($sql);
 
-    if(!$result)
+    if (!$result) {
         return;
+    }
 
     if (!$result->EOF) {
         $lrvalues = $result->GetRowAssoc(false);
@@ -53,5 +53,3 @@ function comments_userapi_get_node_lrvalues( $args )
 
     return $lrvalues;
 }
-
-?>

@@ -19,9 +19,8 @@
  * @param   integer     $node   the id of the node to delete
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_branch( $args )
+function comments_adminapi_delete_branch($args)
 {
-
     extract($args);
 
     if (empty($node)) {
@@ -30,8 +29,12 @@ function comments_adminapi_delete_branch( $args )
     }
 
     // Grab the deletion node's left and right values
-    $comments = xarMod::apiFunc('comments','user','get_one',
-                              array('id' => $node));
+    $comments = xarMod::apiFunc(
+        'comments',
+        'user',
+        'get_one',
+        array('id' => $node)
+    );
     $left = $comments[0]['left_id'];
     $right = $comments[0]['right_id'];
     $modid = $comments[0]['modid'];
@@ -52,7 +55,7 @@ function comments_adminapi_delete_branch( $args )
     $result =& $dbconn->Execute($sql);
 
     if (!$dbconn->Affected_Rows()) {
-        return FALSE;
+        return false;
     }
 
     // figure out the adjustment value for realigning the left and right
@@ -61,14 +64,11 @@ function comments_adminapi_delete_branch( $args )
 
 
     // Go through and fix all the l/r values for the comments
-    if (xarMod::apiFunc('comments','user','remove_gap', array('startpoint' => $left,
+    if (xarMod::apiFunc('comments', 'user', 'remove_gap', array('startpoint' => $left,
                                                             'modid'      => $modid,
                                                             'objectid'   => $objectid,
                                                             'itemtype'   => $itemtype,
-                                                            'gapsize'    => $adjust_value)))
-    {
+                                                            'gapsize'    => $adjust_value))) {
         return $dbconn->Affected_Rows();
     }
-
 }
-?>

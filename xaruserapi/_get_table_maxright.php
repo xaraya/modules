@@ -23,7 +23,6 @@
  */
 function comments_userapi_get_table_maxright(/* VOID */)
 {
-
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
@@ -35,8 +34,9 @@ function comments_userapi_get_table_maxright(/* VOID */)
 
     $result =& $dbconn->Execute($sql);
 
-    if (!$result)
+    if (!$result) {
         return;
+    }
 
     if (!$result->EOF) {
         $node = $result->GetRowAssoc(false);
@@ -47,5 +47,3 @@ function comments_userapi_get_table_maxright(/* VOID */)
 
     return $node['max_right'];
 }
-
-?>

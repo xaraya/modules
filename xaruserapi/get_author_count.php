@@ -29,20 +29,32 @@ function comments_userapi_get_author_count($args)
 
     $exception = false;
 
-    if ( !isset($moduleid) || empty($moduleid) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'moduleid', 'userapi', 'get_author_count', 'comments');
+    if (!isset($moduleid) || empty($moduleid)) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'moduleid',
+            'userapi',
+            'get_author_count',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
 
-    if ( !isset($author) || empty($author) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'author', 'userapi', 'get_author_count', 'comments');
+    if (!isset($author) || empty($author)) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'author',
+            'userapi',
+            'get_author_count',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
-    if (!isset($status) || !is_numeric($status)) $status = _COM_STATUS_ON;
+    if (!isset($status) || !is_numeric($status)) {
+        $status = _COM_STATUS_ON;
+    }
 
     $tables =& xarDB::getTables();
     $q = new Query('SELECT', $tables['comments']);
@@ -58,5 +70,3 @@ function comments_userapi_get_author_count($args)
     
     return $result['numitems'];
 }
-
-?>

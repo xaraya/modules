@@ -22,10 +22,9 @@
  * @returns  integer     the id of the node that was created so it can be used as a parent id
  * @todo get rid of this notion of root node ?
  */
-function comments_userapi_add_rootnode( $args )
+function comments_userapi_add_rootnode($args)
 {
-
-    extract ($args);
+    extract($args);
 
     $exception = false;
 
@@ -90,15 +89,14 @@ function comments_userapi_add_rootnode( $args )
                        $cdate
                        );
 
-    $result =& $dbconn->Execute($sql,$bindvars);
+    $result =& $dbconn->Execute($sql, $bindvars);
 
-    if(!$result)
+    if (!$result) {
         return;
+    }
 
     // Return the id of the created record just now.
     $id = $dbconn->PO_Insert_ID($xartable['comments'], 'id');
 
     return $id;
 }
-
-?>

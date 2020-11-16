@@ -24,9 +24,8 @@
  * @param    string     $objectid      the item id
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_remove_gap( $args )
+function comments_userapi_remove_gap($args)
 {
-
     extract($args);
 
     if (!isset($startpoint)) {
@@ -40,7 +39,7 @@ function comments_userapi_remove_gap( $args )
     }
 
     if (!isset($endpoint) || !is_numeric($endpoint)) {
-        $endpoint = NULL;
+        $endpoint = null;
     }
 
     $dbconn = xarDB::getConn();
@@ -55,7 +54,7 @@ function comments_userapi_remove_gap( $args )
                    WHERE right_id >= $startpoint";
 
     // if we have an endpoint, use it :)
-    if (!empty($endpoint) && $endpoint !== NULL) {
+    if (!empty($endpoint) && $endpoint !== null) {
         $sql_left   .= " AND left_id <= $endpoint";
         $sql_right  .= " AND right_id <= $endpoint";
     }
@@ -78,11 +77,9 @@ function comments_userapi_remove_gap( $args )
     $result1 =& $dbconn->Execute($sql_left);
     $result2 =& $dbconn->Execute($sql_right);
 
-    if(!$result1 || !$result2) {
+    if (!$result1 || !$result2) {
         return;
     }
 
     return $dbconn->Affected_Rows();
 }
-
-?>

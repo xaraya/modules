@@ -37,7 +37,9 @@
 
 function comments_user_display($args)
 {
-    if (!xarSecurityCheck('ReadComments', 0)) return;
+    if (!xarSecurityCheck('ReadComments', 0)) {
+        return;
+    }
 
     // Check if an object was passed
     if (isset($args['object'])) {
@@ -60,60 +62,67 @@ function comments_user_display($args)
         }
     }
     
-# --------------------------------------------------------
-# Bail if the proper args were not passed
+    # --------------------------------------------------------
+    # Bail if the proper args were not passed
 #
-    if (empty($fields))    
-        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
+    if (empty($fields)) {
+        return xarTpl::module('comments', 'user', 'errors', array('layout' => 'no_direct_access'));
+    }
         
-# --------------------------------------------------------
-# Try and get a selectee ID if we don't have one yet
+    # --------------------------------------------------------
+    # Try and get a selectee ID if we don't have one yet
 #
     if (empty($data['selected_id'])) {
         xarVarFetch('selected_id', 'int', $data['selected_id'], 0, XARVAR_NOT_REQUIRED);
     }
 
-# --------------------------------------------------------
-# Get the current comment
+    # --------------------------------------------------------
+    # Get the current comment
 #
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-    if (!empty($data['selected_id'])) $data['object']->getItem(array('itemid' => $data['selected_id']));
+    if (!empty($data['selected_id'])) {
+        $data['object']->getItem(array('itemid' => $data['selected_id']));
+    }
     $data['selected_id'] = $data['object']->properties['id']->value;
 
-# --------------------------------------------------------
-# Add any attributes passed
+    # --------------------------------------------------------
+    # Add any attributes passed
 #
-    if (isset($args['tplmodule'])) $data['object']->tplmodule = $args['tplmodule'];
-
-# --------------------------------------------------------
-# Load the comment object with what we know about the environment
-#
-    $data['object']->setFieldValues($fields,1);
-    $fields = $data['object']->getFieldValues(array(), 1);
-
-# --------------------------------------------------------
-# Create an empty object for display and add any attributes passed
-#
-    $data['emptyobject'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-    if (isset($args['tplmodule'])) $data['object']->tplmodule = $args['tplmodule'];
-
-# --------------------------------------------------------
-# Get the viewing options: depth, render style, order, and sortby
-#
-    $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
-
-    if (!isset($args['thread'])) {
-        xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
+    if (isset($args['tplmodule'])) {
+        $data['object']->tplmodule = $args['tplmodule'];
     }
 
-    if (!xarModLoad('comments','renderer')) {
+    # --------------------------------------------------------
+    # Load the comment object with what we know about the environment
+#
+    $data['object']->setFieldValues($fields, 1);
+    $fields = $data['object']->getFieldValues(array(), 1);
+
+    # --------------------------------------------------------
+    # Create an empty object for display and add any attributes passed
+#
+    $data['emptyobject'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    if (isset($args['tplmodule'])) {
+        $data['object']->tplmodule = $args['tplmodule'];
+    }
+
+    # --------------------------------------------------------
+    # Get the viewing options: depth, render style, order, and sortby
+#
+    $package['settings'] = xarMod::apiFunc('comments', 'user', 'getoptions');
+
+    if (!isset($args['thread'])) {
+        xarVarFetch('thread', 'isset', $thread, null, XARVAR_NOT_REQUIRED);
+    }
+
+    if (!xarModLoad('comments', 'renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
         throw new BadParameterException($msg);
     }
 
     if (empty($data['selected_id']) || isset($thread)) {
-        $data['comments'] = xarMod::apiFunc('comments','user','get_multiple',$fields);
+        $data['comments'] = xarMod::apiFunc('comments', 'user', 'get_multiple', $fields);
         if (count($data['comments']) > 1) {
             $data['comments'] = comments_renderer_array_sort(
                 $data['comments'],
@@ -123,7 +132,7 @@ function comments_user_display($args)
         }
     } else {
         $package['settings']['render'] = _COM_VIEW_FLAT;
-        $data['comments'] = xarMod::apiFunc('comments','user','get_one', $fields);
+        $data['comments'] = xarMod::apiFunc('comments', 'user', 'get_one', $fields);
     }
 
     $data['comments'] = comments_renderer_array_prune_excessdepth(
@@ -158,14 +167,16 @@ function comments_user_display($args)
     // does this *but* maybe needs fixing in articles instead?
     $package['new_title']             = xarVarGetCached('Comments.title', 'title');
 
-    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    $hooks = xarMod::apiFunc('comments','user','formhooks');
+    $hooks = xarMod::apiFunc('comments', 'user', 'formhooks');
 
     if (!empty($data['comments'])) {
         $baseurl = xarServer::getCurrentURL();
-        foreach($data['comments'] as $key => $val) {
-            $data['comments'][$key]['parent_url'] = str_replace($baseurl, '',$data['comments'][$key]['parent_url']);
+        foreach ($data['comments'] as $key => $val) {
+            $data['comments'][$key]['parent_url'] = str_replace($baseurl, '', $data['comments'][$key]['parent_url']);
         }
     }
 
@@ -175,9 +186,11 @@ function comments_user_display($args)
     $data['comment_id'] = $data['selected_id'];
 
     // Pass posting parameter to the template
-    if (isset($args['noposting'])) $data['noposting'] = $args['noposting'];
-    else $data['noposting'] = false;
+    if (isset($args['noposting'])) {
+        $data['noposting'] = $args['noposting'];
+    } else {
+        $data['noposting'] = false;
+    }
 
     return $data;
 }
-?>

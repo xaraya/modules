@@ -19,7 +19,7 @@
  * @param    integer     $id     id of the comment to lookup
  * @returns  bool      returns true on success, throws an exception and returns false otherwise
  */
-function comments_userapi_deactivate( $args )
+function comments_userapi_deactivate($args)
 {
     extract($args);
 
@@ -38,10 +38,9 @@ function comments_userapi_deactivate( $args )
             WHERE id=?";
     $bindvars = array((int) $id);
 
-    $result =& $dbconn->Execute($sql,$bindvars);
+    $result =& $dbconn->Execute($sql, $bindvars);
 
-    if (!$result)
+    if (!$result) {
         return;
+    }
 }
-
-?>

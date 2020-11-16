@@ -19,22 +19,28 @@
  */
 function comments_admin_view()
 {
-    if (!xarSecurityCheck('ManageComments')) return;
+    if (!xarSecurityCheck('ManageComments')) {
+        return;
+    }
 
     // Only show top level documents, not translations
     sys::import('xaraya.structures.query');
     $q = new Query();
-    $q->ne('status',_COM_STATUS_ROOT_NODE);
+    $q->ne('status', _COM_STATUS_ROOT_NODE);
     
     // Suppress deleted items if not an admin
     // Remove this once listing property works with dataobject access
-    if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('status',0);
+    if (!xarIsParent('Administrators', xarUserGetVar('uname'))) {
+        $q->ne('status', 0);
+    }
     $data['conditions'] = $q;
     return $data;
 
-    if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    $sort = xarMod::apiFunc('comments','admin','sort', array(
+    $sort = xarMod::apiFunc('comments', 'admin', 'sort', array(
         //how to sort if the URL or config say otherwise...
         'sortfield_fallback' => 'date',
         'ascdesc_fallback' => 'DESC'
@@ -44,35 +50,37 @@ function comments_admin_view()
     $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
     $config = $object->configuration;
     $adminfields = reset($config['adminfields']);
-    $numitems = xarModVars::get('comments','items_per_page');
+    $numitems = xarModVars::get('comments', 'items_per_page');
 
     $filters = array();
 
     // Total number of comments for use in the pager
     $total = DataObjectMaster::getObjectList(array(
                             'name' => 'comments_comments',
-                            'numitems' => NULL,
+                            'numitems' => null,
                             'where' => 'status ne ' . _COM_STATUS_ROOT_NODE
                             ));
     $data['total'] = $total->countItems();
 
-    $filters_min_items = xarModVars::get('comments','filters_min_item_count');
+    $filters_min_items = xarModVars::get('comments', 'filters_min_item_count');
 
     $data['makefilters'] = array();
     $data['showfilters'] = false;
 
-    if(xarModIsAvailable('filters') && xarModVars::get('comments','enable_filters') && $data['total'] >= $filters_min_items) {
+    if (xarModIsAvailable('filters') && xarModVars::get('comments', 'enable_filters') && $data['total'] >= $filters_min_items) {
         $data['showfilters'] = true;
         $filterfields = $config['filterfields'];
-        $get_results = xarMod::apiFunc('filters','user','dd_get_results', array(
+        $get_results = xarMod::apiFunc('filters', 'user', 'dd_get_results', array(
                             'filterfields' => $filterfields,
                             'object' => 'comments'
                             ));
         $data = array_merge($data, $get_results);
-        if (isset($data['filters'])) $filters = $data['filters'];
+        if (isset($data['filters'])) {
+            $filters = $data['filters'];
+        }
     }
 
-    if(isset($filters['where'])) {
+    if (isset($filters['where'])) {
         $filters['where'] .=  ' and ';
     } else {
         $filters['where'] = '';
@@ -88,13 +96,13 @@ function comments_admin_view()
                             'fieldlist' => $adminfields
         ));
 
-    if (!is_object($list)) return;
+    if (!is_object($list)) {
+        return;
+    }
 
     $list->getItems($filters);
 
     $data['list'] = $list;
 
     return $data;
-
 }
-?>

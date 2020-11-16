@@ -29,9 +29,14 @@ function comments_userapi_get_count($args)
 
     $exception = false;
 
-    if ( !isset($modid) || empty($modid) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'modid', 'userapi', 'get_count', 'comments');
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'modid',
+            'userapi',
+            'get_count',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
@@ -39,9 +44,14 @@ function comments_userapi_get_count($args)
         $status = _COM_STATUS_ON;
     }
 
-    if ( !isset($objectid) || empty($objectid) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'objectid', 'userapi', 'get_count', 'comments');
+    if (!isset($objectid) || empty($objectid)) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'objectid',
+            'userapi',
+            'get_count',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
@@ -52,7 +62,7 @@ function comments_userapi_get_count($args)
               FROM  $xartable[comments]
              WHERE  objectid = ? AND modid = ?
                AND  status = ?";
-// Note: objectid is not an integer here (yet ?)
+    // Note: objectid is not an integer here (yet ?)
     $bindvars = array((string) $objectid, (int) $modid, (int) $status);
 
     if (isset($itemtype) && is_numeric($itemtype)) {
@@ -60,9 +70,10 @@ function comments_userapi_get_count($args)
         $bindvars[] = (int) $itemtype;
     }
 
-    $result =& $dbconn->Execute($sql,$bindvars);
-    if (!$result)
+    $result =& $dbconn->Execute($sql, $bindvars);
+    if (!$result) {
         return;
+    }
 
     if ($result->EOF) {
         return 0;
@@ -74,5 +85,3 @@ function comments_userapi_get_count($args)
 
     return $numitems;
 }
-
-?>

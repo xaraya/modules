@@ -20,9 +20,8 @@
  * @param   integer     $parent_id    the deletion node's parent id (used to reassign the children)
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_node( $args )
+function comments_adminapi_delete_node($args)
 {
-
     extract($args);
 
     if (empty($node)) {
@@ -36,8 +35,12 @@ function comments_adminapi_delete_node( $args )
     }
 
     // Grab the deletion node's left and right values
-    $comments = xarMod::apiFunc('comments','user','get_one',
-                              array('id' => $node));
+    $comments = xarMod::apiFunc(
+        'comments',
+        'user',
+        'get_one',
+        array('id' => $node)
+    );
     $left = $comments[0]['left_id'];
     $right = $comments[0]['right_id'];
     $modid = $comments[0]['modid'];
@@ -58,32 +61,34 @@ function comments_adminapi_delete_node( $args )
     $sql = "DELETE
               FROM  $xartable[comments]
              WHERE  id = ?";
-             $bindvars1 = array($node);
+    $bindvars1 = array($node);
     // reset all parent id's == deletion node's id to that of
     // the deletion node's parent id
     $sql2 = "UPDATE $xartable[comments]
                 SET parent_id = ?
               WHERE parent_id = ?";
-              $bindvars2 = array($parent_id, $node);
-    if (!$dbconn->Execute($sql,$bindvars1))
+    $bindvars2 = array($parent_id, $node);
+    if (!$dbconn->Execute($sql, $bindvars1)) {
         return;
+    }
 
-    if (!$dbconn->Execute($sql2,$bindvars2))
+    if (!$dbconn->Execute($sql2, $bindvars2)) {
         return;
+    }
 
     // Go through and fix all the l/r values for the comments
     // First we subtract 1 from all the deletion node's children's left and right values
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
     if ($right > $left + 1) {
-        xarMod::apiFunc('comments','user','remove_gap',array('startpoint' => $left,
+        xarMod::apiFunc('comments', 'user', 'remove_gap', array('startpoint' => $left,
                                                            'endpoint'   => $right,
                                                            'modid'      => $modid,
                                                            'objectid'   => $objectid,
                                                            'itemtype'   => $itemtype,
                                                            'gapsize'    => 1));
     }
-    xarMod::apiFunc('comments','user','remove_gap',array('startpoint' => $right,
+    xarMod::apiFunc('comments', 'user', 'remove_gap', array('startpoint' => $right,
                                                        'modid'      => $modid,
                                                        'objectid'   => $objectid,
                                                        'itemtype'   => $itemtype,
@@ -93,4 +98,3 @@ function comments_adminapi_delete_node( $args )
 
     return $dbconn->Affected_Rows();
 }
-?>

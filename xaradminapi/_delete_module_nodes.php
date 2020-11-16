@@ -20,7 +20,7 @@
  * @param   integer     $itemtype   the item type that the comments are associated with
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_module_nodes( $args )
+function comments_adminapi_delete_module_nodes($args)
 {
     extract($args);
 
@@ -32,22 +32,29 @@ function comments_adminapi_delete_module_nodes( $args )
         $itemtype = 0;
     }
 
-    $return_value = TRUE;
+    $return_value = true;
 
-    $pages = xarMod::apiFunc('comments','user','get_object_list',
-                            array('modid' => $modid,
-                                  'itemtype' => $itemtype ));
+    $pages = xarMod::apiFunc(
+        'comments',
+        'user',
+        'get_object_list',
+        array('modid' => $modid,
+                                  'itemtype' => $itemtype )
+    );
 
     if (count($pages) <= 0 || empty($pages)) {
         return $return_value;
     } else {
         foreach ($pages as $object) {
-            xarMod::apiFunc('comments','admin','delete_object_nodes',
-                          array('modid'     => $modid,
+            xarMod::apiFunc(
+                'comments',
+                'admin',
+                'delete_object_nodes',
+                array('modid'     => $modid,
                                 'itemtype'  => $itemtype,
-                                'objectid'  => $object['pageid']));
+                                'objectid'  => $object['pageid'])
+            );
         }
     }
     return $return_value;
 }
-?>

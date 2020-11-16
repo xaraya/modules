@@ -30,17 +30,27 @@ function comments_userapi_get_countlist($args)
 
     $exception = false;
 
-    if ( !isset($modid) || empty($modid) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'modid', 'userapi', 'get_countlist', 'comments');
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'modid',
+            'userapi',
+            'get_countlist',
+            'comments'
+        );
         throw new BadParameterException($msg);
         $exception |= true;
     }
 
 
-    if ( !isset($objectids) || !is_array($objectids) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'objectids', 'userapi', 'get_countlist', 'comments');
+    if (!isset($objectids) || !is_array($objectids)) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'objectids',
+            'userapi',
+            'get_countlist',
+            'comments'
+        );
         throw new BadParameterException($msg);
         $exception |= true;
     }
@@ -61,8 +71,8 @@ function comments_userapi_get_countlist($args)
         $sql .= " AND itemtype=$itemtype";
     }
 
-    if ( isset($objectids) && is_array($objectids) ) {
-        $sql .= " AND  objectid IN ('" . join("', '",$objectids) . "')";
+    if (isset($objectids) && is_array($objectids)) {
+        $sql .= " AND  objectid IN ('" . join("', '", $objectids) . "')";
     }
 
     if (!empty($startdate) && is_numeric($startdate)) {
@@ -72,12 +82,13 @@ function comments_userapi_get_countlist($args)
     $sql .= " GROUP BY  objectid";
 
     $result =& $dbconn->Execute($sql);
-    if (!$result)
+    if (!$result) {
         return;
+    }
 
     $count = array();
     while (!$result->EOF) {
-        list($id,$numitems) = $result->fields;
+        list($id, $numitems) = $result->fields;
         $count[$id] = $numitems;
         $result->MoveNext();
     }
@@ -85,5 +96,3 @@ function comments_userapi_get_countlist($args)
 
     return $count;
 }
-
-?>

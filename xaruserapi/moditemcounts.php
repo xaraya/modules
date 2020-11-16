@@ -14,20 +14,18 @@
 /**
 
  */
-function comments_userapi_moditemcounts($args) 
+function comments_userapi_moditemcounts($args)
 {
-
     $moditemcounts = array();
 
-    $items = xarMod::apiFunc('comments','user','getitems',$args);
+    $items = xarMod::apiFunc('comments', 'user', 'getitems', $args);
 
     extract($args);
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-    foreach($items as $item) {
-        if(!isset($itemid) || $itemid != $item['itemid']) {
-
+    foreach ($items as $item) {
+        if (!isset($itemid) || $itemid != $item['itemid']) {
             $filters['where'] = 'itemid eq ' . $item['itemid'];
             if (isset($itemtype)) {
                 $filters['where'] .= ' and itemtype eq ' . $itemtype;
@@ -47,13 +45,10 @@ function comments_userapi_moditemcounts($args)
             $itemtype = $item['itemtype'];
 
             $moditemcounts[$id] = array('count' => $count, 'itemtype' => $itemtype);
-
         }
         $objectid = $item['objectid'];
     }
 
 
     return $moditemcounts;
-
 }
-?>

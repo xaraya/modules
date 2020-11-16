@@ -18,9 +18,11 @@
  */
 function comments_adminapi_getmenulinks()
 {
-    $menulinks[] = Array('url'   => xarModURL('comments',
-                                              'admin',
-                                              'stats'),
+    $menulinks[] = array('url'   => xarModURL(
+        'comments',
+        'admin',
+        'stats'
+    ),
                          'title' => xarML('View comments per module statistics'),
                          'label' => xarML('View Statistics'));
     /* Comment blacklist unavailable at 2005-10-12
@@ -33,16 +35,17 @@ function comments_adminapi_getmenulinks()
     }
     */
 
-    $menulinks[] = Array('url'   => xarModURL('comments',
-                                              'admin',
-                                              'modifyconfig'),
+    $menulinks[] = array('url'   => xarModURL(
+        'comments',
+        'admin',
+        'modifyconfig'
+    ),
                          'title' => xarML('Modify the comments module configuration'),
                          'label' => xarML('Modify Config'));
 
-    if (empty($menulinks)){
+    if (empty($menulinks)) {
         $menulinks = '';
     }
 
     return $menulinks;
 }
-?>

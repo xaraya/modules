@@ -20,14 +20,18 @@
  * @returns  array   an array containing the sole comment that was requested
                      or an empty array if no comment found
  */
-function comments_userapi_get_one( $args )
+function comments_userapi_get_one($args)
 {
-
     extract($args);
 
-    if(!isset($id) || empty($id)) {
-        $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
-                                 'id','userapi','get_one','comments');
+    if (!isset($id) || empty($id)) {
+        $msg = xarML(
+            'Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
+            'id',
+            'userapi',
+            'get_one',
+            'comments'
+        );
         throw new Exception($msg);
     }
 
@@ -43,7 +47,9 @@ function comments_userapi_get_one( $args )
     $values = $object->getFieldValues();
     $values['position_atomic'] = $object->properties['position']->atomic_value;
 
-    if ($values['status'] != _COM_STATUS_ON) return array();
+    if ($values['status'] != _COM_STATUS_ON) {
+        return array();
+    }
 
     $values['postanon'] = $values['anonpost'];
     $values['datetime'] = $values['date'];
@@ -56,36 +62,36 @@ function comments_userapi_get_one( $args )
 
     // if the depth is zero then we
     // only want one comment
-   /* $sql = "SELECT  title AS title,
-                    date AS datetime,
-                    hostname AS hostname,
-                    text AS text,
-                    author AS author,
-                    author AS role_id,
-                    id AS id,
-                    parent_id AS parent_id,
-                    status AS status,
-                    left_id AS left_id,
-                    right_id AS right_id,
-                    anonpost AS postanon,
-                    moduleid AS moduleid,
-                    itemtype AS itemtype,
-                    objectid AS objectid
-              FROM  $xartable[comments]
-             WHERE  id=$id
-               AND  status="._COM_STATUS_ON;
+    /* $sql = "SELECT  title AS title,
+                     date AS datetime,
+                     hostname AS hostname,
+                     text AS text,
+                     author AS author,
+                     author AS role_id,
+                     id AS id,
+                     parent_id AS parent_id,
+                     status AS status,
+                     left_id AS left_id,
+                     right_id AS right_id,
+                     anonpost AS postanon,
+                     moduleid AS moduleid,
+                     itemtype AS itemtype,
+                     objectid AS objectid
+               FROM  $xartable[comments]
+              WHERE  id=$id
+                AND  status="._COM_STATUS_ON;
 
-    $result =& $dbconn->Execute($sql);
-    if(!$result) return;
+     $result =& $dbconn->Execute($sql);
+     if(!$result) return;
 
-    // if we have nothing to return
-    // we return nothing ;) duh? lol
-    if ($result->EOF) {
-        return array();
-    }*/
+     // if we have nothing to return
+     // we return nothing ;) duh? lol
+     if ($result->EOF) {
+         return array();
+     }*/
 
-    if (!xarModLoad('comments','renderer')) {
-        $msg = xarML('Unable to load #(1) #(2) - unable to trim excess depth','comments','renderer');
+    if (!xarModLoad('comments', 'renderer')) {
+        $msg = xarML('Unable to load #(1) #(2) - unable to trim excess depth', 'comments', 'renderer');
         throw new Exception($msg);
     }
 
@@ -114,5 +120,3 @@ function comments_userapi_get_one( $args )
 
     return $values;
 }
-
-?>

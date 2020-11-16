@@ -58,24 +58,33 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
         $vars = $this->getContent();
 
         // get the list of modules+itemtypes that comments is hooked to
-        $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                   array('hookModName' => 'comments'));
+        $hookedmodules = xarMod::apiFunc(
+            'modules',
+            'admin',
+            'gethookedmodules',
+            array('hookModName' => 'comments')
+        );
 
         $modlist = array();
         $modlist['all'] = xarML('All');
         if (isset($hookedmodules) && is_array($hookedmodules)) {
             foreach ($hookedmodules as $modname => $value) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
+                $mytypes = xarMod::apiFunc(
+                    $modname,
+                    'user',
+                    'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(), 0);
+                                     array(),
+                    0
+                );
                 // we have hooks for individual item types here
                 if (!isset($value[0])) {
                     foreach ($value as $itemtype => $val) {
                         if (isset($mytypes[$itemtype])) {
                             $type = $mytypes[$itemtype]['label'];
                         } else {
-                            $type = xarML('type #(1)',$itemtype);
+                            $type = xarML('type #(1)', $itemtype);
                         }
                         $modlist["$modname.$itemtype"] = ucwords($modname) . ' - ' . $type;
                     }
@@ -84,7 +93,9 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
                     // allow selecting individual item types here too (if available)
                     if (!empty($mytypes) && count($mytypes) > 0) {
                         foreach ($mytypes as $itemtype => $mytype) {
-                            if (!isset($mytype['label'])) continue;
+                            if (!isset($mytype['label'])) {
+                                continue;
+                            }
                             $modlist["$modname.$itemtype"] = ucwords($modname) . ' - ' . $mytype['label'];
                         }
                     }
@@ -99,21 +110,41 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
     public function update()
     {
         $vars = array();
-        if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('modid', 'isset', $vars['modid'],  array(), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('pubtypeid', 'isset', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addauthor', 'isset', $vars['addauthor'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addmodule', 'isset', $vars['addmodule'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addcomment', 'isset', $vars['addcomment'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addobject', 'isset', $vars['addobject'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('adddaysep', 'checkbox', $vars['adddaysep'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addprevious', 'checkbox', $vars['addprevious'], 0, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('modid', 'isset', $vars['modid'], array(), XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('pubtypeid', 'isset', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('addauthor', 'isset', $vars['addauthor'], '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('addmodule', 'isset', $vars['addmodule'], '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('addcomment', 'isset', $vars['addcomment'], '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('addobject', 'isset', $vars['addobject'], '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('adddaysep', 'checkbox', $vars['adddaysep'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('addprevious', 'checkbox', $vars['addprevious'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         $this->setContent($vars);
         return true;
     }
-
 }
-?>

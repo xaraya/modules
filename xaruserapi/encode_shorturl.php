@@ -57,5 +57,3 @@ function comments_userapi_encode_shorturl($args)
 
     return $path;
 }
-
-?>

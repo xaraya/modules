@@ -23,7 +23,6 @@
  */
 function comments_userapi_get_childcountlist($args)
 {
-
     extract($args);
 
     if (!isset($left) || !is_numeric($left) || !isset($right) || !is_numeric($right)) {
@@ -46,9 +45,13 @@ function comments_userapi_get_childcountlist($args)
         . " GROUP BY P1.id";
 
     $result = $dbconn->Execute($sql, $bind);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    if ($result->EOF) return array();
+    if ($result->EOF) {
+        return array();
+    }
 
     $count = array();
     while (!$result->EOF) {
@@ -61,5 +64,3 @@ function comments_userapi_get_childcountlist($args)
 
     return $count;
 }
-
-?>

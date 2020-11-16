@@ -22,7 +22,6 @@
  */
 function comments_adminapi_celko_reconstruct()
 {
-
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
@@ -39,12 +38,14 @@ function comments_adminapi_celko_reconstruct()
           ORDER BY  parent_id DESC";
 
     $result =& $dbconn->Execute($sql);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // if we have nothing to return
     // we return nothing ;) duh? lol
     if ($result->EOF) {
-        return TRUE;
+        return true;
     }
 
     // add it to the array we will return
@@ -69,14 +70,11 @@ function comments_adminapi_celko_reconstruct()
     krsort($tree);
 
     // reassign the each node a celko left/right value
-    $tree = xarMod::apiFunc('comments','admin','celko_assign_slots', $tree);
+    $tree = xarMod::apiFunc('comments', 'admin', 'celko_assign_slots', $tree);
 
     // run through each node and update it's entry in the db
-    if (!xarMod::apiFunc('comments','admin','celko_update', $newtree)) {
+    if (!xarMod::apiFunc('comments', 'admin', 'celko_update', $newtree)) {
         $msg = xarML('Unable to reconstruct the comments table!');
         throw new BadParameterException($msg);
     }
-
 }
-
-?>

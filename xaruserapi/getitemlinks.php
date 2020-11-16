@@ -23,24 +23,33 @@ function comments_userapi_getitemlinks($args)
 {
     extract($args);
     $itemlinks = array();
-    if (!xarSecurityCheck('ReadComments', 0)) return $itemlinks;
+    if (!xarSecurityCheck('ReadComments', 0)) {
+        return $itemlinks;
+    }
 
-    if (empty($itemids)) $itemids = array();
+    if (empty($itemids)) {
+        $itemids = array();
+    }
 
-// FIXME: support retrieving several comments at once
+    // FIXME: support retrieving several comments at once
     foreach ($itemids as $itemid) {
         $item = xarMod::apiFunc('comments', 'user', 'get_one', array('id' => $itemid));
-        if (!isset($item)) return;
+        if (!isset($item)) {
+            return;
+        }
         if (!empty($item) && !empty($item[0]['title'])) {
             $title = $item[0]['title'];
         } else {
-            $title = xarML('Comment #(1)',$itemid);
+            $title = xarML('Comment #(1)', $itemid);
         }
-        $itemlinks[$itemid] = array('url'   => xarModURL('comments', 'user', 'display',
-                                                         array('id' => $itemid)),
+        $itemlinks[$itemid] = array('url'   => xarModURL(
+            'comments',
+            'user',
+            'display',
+            array('id' => $itemid)
+        ),
                                     'title' => xarML('Display Comment'),
                                     'label' => xarVarPrepForDisplay($title));
     }
     return $itemlinks;
 }
-?>

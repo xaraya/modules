@@ -32,4 +32,3 @@ function comments_xartables()
     // Return table information
     return $xartable;
 }
-?>

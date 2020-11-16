@@ -55,11 +55,11 @@ function comments_userapi_get_multipleall($args)
                 FROM  $xartable[comments]
                WHERE  status="._COM_STATUS_ON." ";
 
-    if (count($modarray) > 0 && $modarray[0] != 'all' ) {
+    if (count($modarray) > 0 && $modarray[0] != 'all') {
         $where = array();
         foreach ($modarray as $modname) {
-            if (strstr($modname,'.')) {
-                list($module,$itemtype) = explode('.',$modname);
+            if (strstr($modname, '.')) {
+                list($module, $itemtype) = explode('.', $modname);
                 $modid = xarMod::getRegID($module);
                 if (empty($itemtype)) {
                     $itemtype = 0;
@@ -85,14 +85,16 @@ function comments_userapi_get_multipleall($args)
     }
 
     $result = $dbconn->SelectLimit($query, $howmany, $first - 1);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         // FIXME delete after date output testing
         // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
-        $row['author'] = xarUserGetVar('name',$row['author']);
+        $row['author'] = xarUserGetVar('name', $row['author']);
         $commentlist[] = $row;
         $result->MoveNext();
     }
@@ -100,5 +102,3 @@ function comments_userapi_get_multipleall($args)
 
     return $commentlist;
 }
-
-?>

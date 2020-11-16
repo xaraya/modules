@@ -34,35 +34,63 @@ function comments_userapi_add($args)
     extract($args);
 
     if (!isset($moduleid) || empty($moduleid)) {
-        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                 'moduleid', 'userapi', 'add', 'comments');
+        $msg = xarML(
+            'Missing #(1) for #(2) function #(3)() in module #(4)',
+            'moduleid',
+            'userapi',
+            'add',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
-    if (empty($itemtype) || !is_numeric($itemtype)) $itemtype = 0;
+    if (empty($itemtype) || !is_numeric($itemtype)) {
+        $itemtype = 0;
+    }
 
     if (!isset($itemid) || empty($itemid)) {
-        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                 'itemid', 'userapi', 'add', 'comments');
+        $msg = xarML(
+            'Missing #(1) for #(2) function #(3)() in module #(4)',
+            'itemid',
+            'userapi',
+            'add',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
-    if (!isset($parent_id) || empty($parent_id)) $parent_id = 0;
+    if (!isset($parent_id) || empty($parent_id)) {
+        $parent_id = 0;
+    }
 
     if (!isset($title) || empty($title)) {
-        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                 'title', 'userapi', 'add', 'comments');
+        $msg = xarML(
+            'Missing #(1) for #(2) function #(3)() in module #(4)',
+            'title',
+            'userapi',
+            'add',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
     if (!isset($comment) || empty($comment)) {
-        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                 'comment text', 'userapi', 'add', 'comments');
+        $msg = xarML(
+            'Missing #(1) for #(2) function #(3)() in module #(4)',
+            'comment text',
+            'userapi',
+            'add',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
-    if (!isset($postanon) || empty($postanon)) $postanon = 0;
-    if (!isset($author)) $author = xarUserGetVar('id');
+    if (!isset($postanon) || empty($postanon)) {
+        $postanon = 0;
+    }
+    if (!isset($author)) {
+        $author = xarUserGetVar('id');
+    }
 
     if (!isset($hostname)) {
         $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
@@ -77,10 +105,10 @@ function comments_userapi_add($args)
     // If the comment does not pass, we will return an exception
     // Perhaps in the future we can store the comment for later
     // review, but screw it for now...
-    if (xarModVars::get('comments', 'useblacklist') == true){
+    if (xarModVars::get('comments', 'useblacklist') == true) {
         $items = xarMod::apiFunc('comments', 'user', 'get_blacklist');
         foreach ($items as $item) {
-            if (preg_match("/$item[domain]/i", $comment)){
+            if (preg_match("/$item[domain]/i", $comment)) {
                 $msg = xarML('Your entry has triggered comments moderation due to suspicious URL entry');
                 throw new BadParameterException($msg);
             }
@@ -94,20 +122,28 @@ function comments_userapi_add($args)
     // left and right values cuz we're adding the new comment
     // as a top level comment
     if ($parent_id == 0) {
-        $root_lnr = xarMod::apiFunc('comments','user','get_node_root',
-                                   array('moduleid' => $moduleid,
+        $root_lnr = xarMod::apiFunc(
+            'comments',
+            'user',
+            'get_node_root',
+            array('moduleid' => $moduleid,
                                          'itemid'   => $itemid,
-                                         'itemtype' => $itemtype));
+                                         'itemtype' => $itemtype)
+        );
 
         // ok, if the there was no root left and right values then
         // that means this is the first comment for this particular
         // moduleid/itemid combo -- so we need to create a dummy (root)
         // comment from which every other comment will branch from
         if (!count($root_lnr)) {
-            $parent_id = xarMod::apiFunc('comments','user','add_rootnode',
-                                  array('moduleid' => $moduleid,
+            $parent_id = xarMod::apiFunc(
+                'comments',
+                'user',
+                'add_rootnode',
+                array('moduleid' => $moduleid,
                                         'itemid'   => $itemid,
-                                        'itemtype' => $itemtype));
+                                        'itemtype' => $itemtype)
+            );
         } else {
             $parent_id = $root_lnr['id'];
         }
@@ -117,32 +153,35 @@ function comments_userapi_add($args)
     assert($parent_id!=0 && !empty($parent_id));
 
     // grab the left and right values from the parent
-    $parent_lnr = xarMod::apiFunc('comments',
-                                'user',
-                                'get_node_lrvalues',
-                                 array('id' => $parent_id));
+    $parent_lnr = xarMod::apiFunc(
+        'comments',
+        'user',
+        'get_node_lrvalues',
+        array('id' => $parent_id)
+    );
 
     // there should be -at-least- one affected row -- if not
     // then raise an exception. btw, at the very least,
     // the 'right' value of the parent node would have been affected.
-    if (!xarMod::apiFunc('comments',
-                       'user',
-                       'create_gap',
-                        array('startpoint' => $parent_lnr['right_id'],
+    if (!xarMod::apiFunc(
+        'comments',
+        'user',
+        'create_gap',
+        array('startpoint' => $parent_lnr['right_id'],
                               'moduleid'   => $moduleid,
                               'itemid'     => $itemid,
-                              'itemtype'   => $itemtype))) {
-
-            $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
-            $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');
-            throw new Exception($msg);
+                              'itemtype'   => $itemtype)
+    )) {
+        $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
+        $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');
+        throw new Exception($msg);
     }
 
     $cdate    = time();
     $left     = $parent_lnr['right_id'];
     $right    = $left + 1;
-    if($moduleid == xarMod::getID('comments')) {
-        $status   = xarModVars::get('comments','AuthorizeComments') ? _COM_STATUS_OFF : _COM_STATUS_ON;
+    if ($moduleid == xarMod::getID('comments')) {
+        $status   = xarModVars::get('comments', 'AuthorizeComments') ? _COM_STATUS_OFF : _COM_STATUS_ON;
     } elseif (!isset($status) || !is_numeric($status)) {
         // no reasonable default for this, so we'll throw an error
         $msg = xarML('Missing or invalid status parameter');
@@ -159,7 +198,9 @@ function comments_userapi_add($args)
                             'name' => 'comments_comments'
         ));
 
-    if (!is_object($object)) return;
+    if (!is_object($object)) {
+        return;
+    }
 
     $fields = array(
                  'text',
@@ -217,7 +258,7 @@ function comments_userapi_add($args)
         //$id = $dbconn->PO_Insert_ID($xartable['comments'], 'id');
         // CHECKME: find some cleaner way to update the page cache if necessary
         if (function_exists('xarOutputFlushCached') &&
-            xarModVars::get('xarcachemanager','FlushOnNewComment')) {
+            xarModVars::get('xarcachemanager', 'FlushOnNewComment')) {
             $modinfo = xarMod::getInfo($moduleid);
             xarOutputFlushCached("$modinfo[name]-");
             xarOutputFlushCached("comments-block");
@@ -237,4 +278,3 @@ function comments_userapi_add($args)
         return $id;
     }
 }
-?>

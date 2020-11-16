@@ -17,15 +17,14 @@
  */
 function comments_admin_main()
 {
-    if(!xarSecurityCheck('AdminComments')) {
+    if (!xarSecurityCheck('AdminComments')) {
         return;
     }
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
         xarController::redirect(xarModURL('comments', 'admin', 'view'));
     }
     return true;
 }
-?>

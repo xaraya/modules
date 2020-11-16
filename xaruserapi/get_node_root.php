@@ -23,10 +23,9 @@
  * @returns  array an array containing the left and right values or an
  *                 empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_root( $args )
+function comments_userapi_get_node_root($args)
 {
-
-    extract ($args);
+    extract($args);
 
     $exception = false;
 
@@ -64,10 +63,11 @@ function comments_userapi_get_node_root( $args )
     // objectid is still a string for now
     $bindvars = array((int) $modid, (int) $itemtype, (string) $objectid, (int) _COM_STATUS_ROOT_NODE);
 
-    $result =& $dbconn->Execute($sql,$bindvars);
+    $result =& $dbconn->Execute($sql, $bindvars);
 
-    if(!$result)
+    if (!$result) {
         return;
+    }
 
     $count=$result->RecordCount();
 
@@ -82,5 +82,3 @@ function comments_userapi_get_node_root( $args )
 
     return $node;
 }
-
-?>

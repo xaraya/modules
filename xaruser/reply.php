@@ -31,18 +31,22 @@
 
 function comments_user_reply()
 {
-    if (!xarSecurityCheck('PostComments')) return;
+    if (!xarSecurityCheck('PostComments')) {
+        return;
+    }
 
 
-# --------------------------------------------------------
-# Get all the relevant info from the submitted comments form
+    # --------------------------------------------------------
+    # Get all the relevant info from the submitted comments form
 #
 
 
-# --------------------------------------------------------
-# Take appropriate action
+    # --------------------------------------------------------
+    # Take appropriate action
 #
-    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'reply', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'reply', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     switch (strtolower($data['comment_action'])) {
         case 'submit':
 # --------------------------------------------------------
@@ -55,10 +59,16 @@ function comments_user_reply()
             // should we look at the title as well?
             $package['transform'] = array('text');
 
-            $package = xarModCallHooks('item', 'transform-input', 0, $package,
-                                       'comments', 0);
+            $package = xarModCallHooks(
+                'item',
+                'transform-input',
+                0,
+                $package,
+                'comments',
+                0
+            );
 
-            if (xarModVars::get('comments','AuthorizeComments') || xarSecurityCheck('AddComments')) {
+            if (xarModVars::get('comments', 'AuthorizeComments') || xarSecurityCheck('AddComments')) {
                 $status = _COM_STATUS_ON;
             } else {
                 $status = _COM_STATUS_OFF;
@@ -68,7 +78,7 @@ function comments_user_reply()
 # If something is wrong, represent the form
 #
             if (!$valid) {
-                return xarTpl::module('comments','user','reply',$data);
+                return xarTpl::module('comments', 'user', 'reply', $data);
             }
 
 # --------------------------------------------------------
@@ -86,8 +96,12 @@ function comments_user_reply()
 # --------------------------------------------------------
 # Bail if the proper args were not passed
 #
-            if (!xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED)) return;
-            if (empty($data['comment_id'])) return xarResponse::NotFound();    
+            if (!xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (empty($data['comment_id'])) {
+                return xarResponse::NotFound();
+            }
 
 # --------------------------------------------------------
 # Create the comment object
@@ -99,22 +113,27 @@ function comments_user_reply()
             // replace the deprecated eregi stuff below
             $title =& $data['object']->properties['title']->value;
             $text  =& $data['object']->properties['text']->value;
-            $title = preg_replace('/^re:/i','',$title);
+            $title = preg_replace('/^re:/i', '', $title);
             $new_title = 'Re: ' . $title;
 
             // get the title and link of the original object
             $modinfo = xarMod::getInfo($data['object']->properties['moduleid']->value);
-            try{
-                $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
-                                           array('itemtype' => $data['object']->properties['itemtype']->value,
-                                                 'itemids' => array($data['object']->properties['itemid']->value)));
-            } catch (Exception $e) {}
+            try {
+                $itemlinks = xarMod::apiFunc(
+                    $modinfo['name'],
+                    'user',
+                    'getitemlinks',
+                    array('itemtype' => $data['object']->properties['itemtype']->value,
+                                                 'itemids' => array($data['object']->properties['itemid']->value))
+                );
+            } catch (Exception $e) {
+            }
             if (!empty($itemlinks) && !empty($itemlinks[$data['object']->properties['itemid']->value])) {
                 $url = $itemlinks[$header['itemid']]['url'];
                 $header['objectlink'] = $itemlinks[$data['object']->properties['itemid']->value]['url'];
                 $header['objecttitle'] = $itemlinks[$data['object']->properties['itemid']->value]['label'];
             } else {
-                $url = xarModURL($modinfo['name'],'user','main');
+                $url = xarModURL($modinfo['name'], 'user', 'main');
             }
 /*
             list($text,
@@ -144,11 +163,13 @@ function comments_user_reply()
         case 'preview':
         default:
             list($package['transformed-text'],
-                 $package['transformed-title']) = xarModCallHooks('item',
-                                                      'transform',
-                                                      $header['parent_id'],
-                                                      array($package['text'],
-                                                            $package['title']));
+                 $package['transformed-title']) = xarModCallHooks(
+                     'item',
+                     'transform',
+                     $header['parent_id'],
+                     array($package['text'],
+                                                            $package['title'])
+                 );
 
             $package['transformed-text']  = xarVarPrepHTMLDisplay($package['transformed-text']);
             $package['transformed-title'] = xarVarPrepForDisplay($package['transformed-title']);
@@ -177,26 +198,26 @@ function comments_user_reply()
 
     }
 
-    $hooks = xarMod::apiFunc('comments','user','formhooks');
-/*
-    // Call new hooks for categories, dynamicdata etc.
-    $args['module'] = 'comments';
-    $args['itemtype'] = 0;
-    $args['itemid'] = 0;
-    // pass along the current module & itemtype for pubsub (urgh)
-// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
-    $args['id'] = 0; // dummy category
-    $modinfo = xarMod::getInfo($header['moduleid']);
-    $args['current_module'] = $modinfo['name'];
-    $args['current_itemtype'] = $header['itemtype'];
-    $args['current_itemid'] = $header['itemid'];
-    $hooks['iteminput'] = xarModCallHooks('item', 'new', 0, $args);
-*/
+    $hooks = xarMod::apiFunc('comments', 'user', 'formhooks');
+    /*
+        // Call new hooks for categories, dynamicdata etc.
+        $args['module'] = 'comments';
+        $args['itemtype'] = 0;
+        $args['itemid'] = 0;
+        // pass along the current module & itemtype for pubsub (urgh)
+    // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+        $args['id'] = 0; // dummy category
+        $modinfo = xarMod::getInfo($header['moduleid']);
+        $args['current_module'] = $modinfo['name'];
+        $args['current_itemtype'] = $header['itemtype'];
+        $args['current_itemid'] = $header['itemid'];
+        $hooks['iteminput'] = xarModCallHooks('item', 'new', 0, $args);
+    */
 
-# --------------------------------------------------------
-# Pass args to the form template
+    # --------------------------------------------------------
+    # Pass args to the form template
 #
-    $anonuid = xarConfigVars::get(null,'Site.User.AnonymousUID');
+    $anonuid = xarConfigVars::get(null, 'Site.User.AnonymousUID');
     $data['hooks']              = $hooks;
     $data['package']            = $package;
     $data['package']['date']    = time();
@@ -206,5 +227,3 @@ function comments_user_reply()
 
     return $data;
 }
-
-?>

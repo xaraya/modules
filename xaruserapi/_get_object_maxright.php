@@ -21,10 +21,9 @@
  * @param    integer     itemtype   The itemtype of that object
  * @returns   integer   the highest 'right' value for the specified modid/objectid pair or zero if it couldn't find one
  */
-function comments_userapi_get_object_maxright( $args )
+function comments_userapi_get_object_maxright($args)
 {
-
-    extract ($args);
+    extract($args);
 
     $exception = false;
 
@@ -61,8 +60,9 @@ function comments_userapi_get_object_maxright( $args )
 
     $result =& $dbconn->Execute($sql);
 
-    if (!$result)
+    if (!$result) {
         return;
+    }
 
     if (!$result->EOF) {
         $node = $result->GetRowAssoc(false);
@@ -73,5 +73,3 @@ function comments_userapi_get_object_maxright( $args )
 
     return $node['max_right'];
 }
-
-?>

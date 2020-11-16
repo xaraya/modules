@@ -20,7 +20,9 @@
  */
 function comments_userapi_search($args)
 {
-    if (empty($args) || count($args) < 1) return;
+    if (empty($args) || count($args) < 1) {
+        return;
+    }
 
     extract($args);
 
@@ -80,11 +82,15 @@ function comments_userapi_search($args)
     $sql .= ") ORDER BY left_id";
 
     $result =& $dbconn->Execute($sql, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // if we have nothing to return
     // we return nothing ;) duh? lol
-    if ($result->EOF) return array();
+    if ($result->EOF) {
+        return array();
+    }
 
     // zip through the list of results and
     // add it to the array we will return
@@ -119,7 +125,4 @@ function comments_userapi_search($args)
     comments_renderer_array_maptree($commentlist);
 
     return $commentlist;
-
 }
-
-?>

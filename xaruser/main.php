@@ -18,7 +18,5 @@
  */
 function comments_user_main($args)
 {
-    return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
+    return xarTpl::module('comments', 'user', 'errors', array('layout' => 'no_direct_access'));
 }
-
-?>

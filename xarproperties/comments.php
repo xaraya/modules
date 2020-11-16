@@ -25,7 +25,7 @@ class CommentsProperty extends DataProperty
     public $desc       = 'Comments';
     public $reqmodules = array('comments');
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
 
@@ -33,13 +33,18 @@ class CommentsProperty extends DataProperty
         $this->filepath   = 'modules/comments/xarproperties';
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = array())
     {
-        if (!xarSecurityCheck('ReadComments', 0)) return;
+        if (!xarSecurityCheck('ReadComments', 0)) {
+            return;
+        }
 
         // Check for a 'id' parameter
-        if (!empty($data['id'])) $id = $data['id'];
-        else xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+        if (!empty($data['id'])) {
+            $id = $data['id'];
+        } else {
+            xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+        }
 
         // and set the selected id to this one
         if (!empty($id) && !isset($data['selected_id'])) {
@@ -58,7 +63,7 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['modid'])) {
             $data['modid'] = $header['modid'];
         } else {
-            xarVarFetch('modid', 'isset', $modid, NULL, XARVAR_NOT_REQUIRED);
+            xarVarFetch('modid', 'isset', $modid, null, XARVAR_NOT_REQUIRED);
             if (empty($modid)) {
                 $modid = xarMod::getRegID(xarModGetName());
             }
@@ -73,13 +78,13 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['itemtype'])) {
             $data['itemtype'] = $header['itemtype'];
         } else {
-            xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_NOT_REQUIRED);
+            xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_NOT_REQUIRED);
             $data['itemtype'] = $itemtype;
             $header['itemtype'] = $itemtype;
         }
 
 
-        $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
+        $package['settings'] = xarMod::apiFunc('comments', 'user', 'getoptions', $header);
 
         // FIXME: clean up return url handling
 
@@ -94,7 +99,7 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['objectid'])) {
             $data['objectid'] = $header['objectid'];
         } else {
-            xarVarFetch('objectid','isset', $objectid, NULL, XARVAR_NOT_REQUIRED);
+            xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_NOT_REQUIRED);
             $data['objectid'] = $objectid;
             $header['objectid'] = $objectid;
         }
@@ -104,25 +109,25 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['selected_id'])) {
             $data['selected_id'] = $header['selected_id'];
         } else {
-            xarVarFetch('selected_id', 'isset', $selected_id, NULL, XARVAR_NOT_REQUIRED);
+            xarVarFetch('selected_id', 'isset', $selected_id, null, XARVAR_NOT_REQUIRED);
             $data['selected_id'] = $selected_id;
             $header['selected_id'] = $selected_id;
         }
         if (!isset($data['thread'])) {
-            xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
+            xarVarFetch('thread', 'isset', $thread, null, XARVAR_NOT_REQUIRED);
         }
         if (isset($thread) && $thread == 1) {
             $header['cid'] = $cid;
         }
 
-        if (!xarModLoad('comments','renderer')) {
+        if (!xarModLoad('comments', 'renderer')) {
             $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
             throw new BadParameterException($msg);
         }
 
 
         if (!isset($header['selected_id']) || isset($thread)) {
-            $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$header);
+            $package['comments'] = xarMod::apiFunc('comments', 'user', 'get_multiple', $header);
             if (count($package['comments']) > 1) {
                 $package['comments'] = comments_renderer_array_sort(
                     $package['comments'],
@@ -133,7 +138,7 @@ class CommentsProperty extends DataProperty
         } else {
             $header['id'] = $header['selected_id'];
             $package['settings']['render'] = _COM_VIEW_FLAT;
-            $package['comments'] = xarMod::apiFunc('comments','user','get_one', $header);
+            $package['comments'] = xarMod::apiFunc('comments', 'user', 'get_one', $header);
             if (!empty($package['comments'][0])) {
                 $header['modid'] = $package['comments'][0]['modid'];
                 $header['itemtype'] = $package['comments'][0]['itemtype'];
@@ -185,10 +190,15 @@ class CommentsProperty extends DataProperty
 
         // get the title and link of the original object
         $modinfo = xarMod::getInfo($header['modid']);
-        try{
-            $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
-                array('itemtype' => $header['itemtype'], 'itemids' => array($header['objectid'])));
-        } catch (Exception $e) {}
+        try {
+            $itemlinks = xarMod::apiFunc(
+                $modinfo['name'],
+                'user',
+                'getitemlinks',
+                array('itemtype' => $header['itemtype'], 'itemids' => array($header['objectid']))
+            );
+        } catch (Exception $e) {
+        }
 
         if (!empty($itemlinks) && !empty($itemlinks[$header['objectid']])) {
             $url = $itemlinks[$header['objectid']]['url'];
@@ -206,7 +216,7 @@ class CommentsProperty extends DataProperty
         $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
         $receipt['action']                = 'display';
 
-        $hooks = xarMod::apiFunc('comments','user','formhooks');
+        $hooks = xarMod::apiFunc('comments', 'user', 'formhooks');
 
         //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {
         //}
@@ -217,7 +227,4 @@ class CommentsProperty extends DataProperty
 
         return parent::showInput($data);
     }
-
 }
-
-?>

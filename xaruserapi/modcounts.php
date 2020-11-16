@@ -26,7 +26,9 @@ function comments_userapi_modcounts($args)
     extract($args);
 
     // Security check
-    if (!xarSecurityCheck('ReadComments')) return;
+    if (!xarSecurityCheck('ReadComments')) {
+        return;
+    }
 
     if (empty($status)) {
         $status = 'all';
@@ -65,11 +67,13 @@ function comments_userapi_modcounts($args)
             GROUP BY module_id, itemtype";
 
     $result = $dbconn->Execute($sql);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$numcomments,$numitems) = $result->fields;
+        list($modid, $itemtype, $numcomments, $numitems) = $result->fields;
         if (!isset($modlist[$modid])) {
             $modlist[$modid] = array();
         }
@@ -80,5 +84,3 @@ function comments_userapi_modcounts($args)
 
     return $modlist;
 }
-
-?>

@@ -21,10 +21,14 @@ function comments_admin_modifyconfig()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('Admincomments')) return;
+    if (!xarSecurityCheck('Admincomments')) {
+        return;
+    }
 
     // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        return;
+    }
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -35,7 +39,7 @@ function comments_admin_modifyconfig()
     $data['object'] = $object;
 
     // Get the object we'll be working with for common configuration settings
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'comments'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'comments'));
     // Decide which fields are configurable in this module
     $data['module_settings']->setFieldList('items_per_page, enable_user_menu, user_menu_link');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
@@ -73,7 +77,7 @@ function comments_admin_modifyconfig()
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('comments','admin','modifyconfig', $data);
+                return xarTplModule('comments', 'admin', 'modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
@@ -125,7 +129,7 @@ function comments_admin_modifyconfig()
 
                 $item = $object->updateItem(array('itemid' => 0));
 
-                xarController::redirect(xarModURL('comments','admin','modifyconfig'));
+                xarController::redirect(xarModURL('comments', 'admin', 'modifyconfig'));
 
             # --------------------------------------------------------
             #
@@ -140,7 +144,9 @@ function comments_admin_modifyconfig()
             # This needs to be the last thing happening on this page because it redirects. Code below
             # this point will not execute
 
-                if (!xarMod::guiFunc('comments','admin','update')) return;
+                if (!xarMod::guiFunc('comments', 'admin', 'update')) {
+                    return;
+                }
 
             break;
     }
@@ -148,5 +154,3 @@ function comments_admin_modifyconfig()
     // Return the template variables defined in this function
     return $data;
 }
-
-?>

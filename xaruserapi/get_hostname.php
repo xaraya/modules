@@ -25,4 +25,3 @@ function comments_userapi_get_hostname()
     }
     return $hostname;
 }
-?>

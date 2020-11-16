@@ -20,7 +20,6 @@
  */
 function comments_userapi_setoptions($args)
 {
-
     extract($args);
 
     if (isset($depth)) {
@@ -31,31 +30,28 @@ function comments_userapi_setoptions($args)
             $depth = (_COM_MAX_DEPTH - 1);
         }
     } else {
-        $depth = xarModVars::get('comments','depth');
+        $depth = xarModVars::get('comments', 'depth');
     }
 
     if (empty($render)) {
-        $render = xarModVars::get('comments','render');
+        $render = xarModVars::get('comments', 'render');
     }
 
     if (empty($order)) {
-        $order = xarModVars::get('comments','order');
+        $order = xarModVars::get('comments', 'order');
     }
 
     if (empty($sortby)) {
-        $sortby = xarModVars::get('comments','sortby');
+        $sortby = xarModVars::get('comments', 'sortby');
     }
 
     if (xarUserIsLoggedIn()) {
-            // Grab user's depth setting.
-            xarModUserVars::set('comments','depth',$depth);
-            xarModUserVars::set('comments','render',$render);
-            xarModUserVars::set('comments','sortby',$sortby);
-            xarModUserVars::set('comments','order',$order);
+        // Grab user's depth setting.
+        xarModUserVars::set('comments', 'depth', $depth);
+        xarModUserVars::set('comments', 'render', $render);
+        xarModUserVars::set('comments', 'sortby', $sortby);
+        xarModUserVars::set('comments', 'order', $order);
     }
 
     return true;
-
 }
-
-?>

@@ -39,7 +39,9 @@ function comments_userapi_getitems($args)
         $itemtype = 0;
     }*/
 
-    if (empty($status)) $status = _COM_STATUS_ROOT_NODE;
+    if (empty($status)) {
+        $status = _COM_STATUS_ROOT_NODE;
+    }
 
     switch ($status) {
         case 'active':
@@ -57,10 +59,12 @@ function comments_userapi_getitems($args)
     }
 
     // Security check
-    if (!isset($mask)){
+    if (!isset($mask)) {
         $mask = 'ReadComments';
     }
-    if (!xarSecurityCheck($mask)) return;
+    if (!xarSecurityCheck($mask)) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -129,7 +133,9 @@ function comments_userapi_getitems($args)
 //    $q->setgroup('itemid');
     $q->setorder('itemid', 'ASC');
     if (!empty($numitems)) {
-        if (empty($startnum)) $startnum = 1;
+        if (empty($startnum)) {
+            $startnum = 1;
+        }
         $q->setstartat($startnum);
         $q->setrowstodo($numitems);
     }
@@ -143,7 +149,8 @@ function comments_userapi_getitems($args)
                WHERE module_id = ?
                  AND itemtype = ?
                  AND $where_status ";
-    $bindvars[] = (int) $moduleid; $bindvars[] = (int) $itemtype;
+    $bindvars[] = (int) $moduleid;
+    $bindvars[] = (int) $itemtype;
     if (isset($itemids) && count($itemids) > 0) {
         $bindmarkers = '?' . str_repeat(',?', count($itemids)-1);
         $bindvars = array_merge($bindvars, $itemids);
@@ -153,43 +160,43 @@ function comments_userapi_getitems($args)
                 ORDER BY itemid";
 //                ORDER BY (1 + objectid";
 //
-// CHECKME: dirty trick to try & force integer ordering (CAST and CONVERT are for MySQL 4.0.2 and higher
-// <rabbitt> commented that line out because it won't work with PostgreSQL - not sure about others.
+    // CHECKME: dirty trick to try & force integer ordering (CAST and CONVERT are for MySQL 4.0.2 and higher
+    // <rabbitt> commented that line out because it won't work with PostgreSQL - not sure about others.
 
     if (!empty($numitems)) {
         if (empty($startnum)) {
             $startnum = 1;
         }
-        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1,$bindvars);
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
     } else {
-        $result = $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     }
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-/*    $items = array();
-    while (!$result->EOF) {
-        list($id,$parent_id,$parent_url,$title,$text,$left_id,$right_id,$moduleid,$itemtype,$itemid,$date,$author,$anonpost,$numcomments) = $result->fields;
-        $items[$id] = array(
-                            'id' => $id,
-                            'parent_id' => $parent_id,
-                            'parent_url' => $parent_url,
-                            'title' => $title,
-                            'text' => $text,
-                            'left_id' => $left_id,
-                            'right_id' => $right_id,
-                            'moduleid' => $moduleid,
-                            'itemtype' => $itemtype,
-                            'itemid' => $itemid,
-                            'date' => $date,
-                            'author' => $author,
-                            'anonpost' => $anonpost,
-                            'number_comments' => $numcomments,
-        );
-        $result->MoveNext();
-    }*/
+    /*    $items = array();
+        while (!$result->EOF) {
+            list($id,$parent_id,$parent_url,$title,$text,$left_id,$right_id,$moduleid,$itemtype,$itemid,$date,$author,$anonpost,$numcomments) = $result->fields;
+            $items[$id] = array(
+                                'id' => $id,
+                                'parent_id' => $parent_id,
+                                'parent_url' => $parent_url,
+                                'title' => $title,
+                                'text' => $text,
+                                'left_id' => $left_id,
+                                'right_id' => $right_id,
+                                'moduleid' => $moduleid,
+                                'itemtype' => $itemtype,
+                                'itemid' => $itemid,
+                                'date' => $date,
+                                'author' => $author,
+                                'anonpost' => $anonpost,
+                                'number_comments' => $numcomments,
+            );
+            $result->MoveNext();
+        }*/
     $result->close();
     return $items;
-
 }
-?>

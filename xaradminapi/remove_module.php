@@ -16,7 +16,7 @@
  *
  * Delete the appertain comments when the module is hooked.
  */
-function comments_adminapi_remove_module( $args )
+function comments_adminapi_remove_module($args)
 {
     extract($args);
 
@@ -30,7 +30,8 @@ function comments_adminapi_remove_module( $args )
     $modid = xarMod::getRegID($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid Parameter');
-        throw new BadParameterException($msg);        return false;
+        throw new BadParameterException($msg);
+        return false;
     }
 
     // TODO: re-evaluate this for hook calls !!
@@ -38,10 +39,8 @@ function comments_adminapi_remove_module( $args )
     // avoid potential security holes or just too much wasted processing
     // if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
 
-// FIXME: we need to remove the comments for items of all types here, so a direct DB call
+    // FIXME: we need to remove the comments for items of all types here, so a direct DB call
 //        would be better than this "delete recursively" trick
-    xarMod::apiFunc('comments','admin','delete_module_nodes',array('modid'=>$modid));
+    xarMod::apiFunc('comments', 'admin', 'delete_module_nodes', array('modid'=>$modid));
     return $extrainfo;
-
 }
-?>

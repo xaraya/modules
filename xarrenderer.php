@@ -22,10 +22,10 @@ sys::import('modules.comments.xarincludes.defines');
 
 // These defines are threaded view specific and should be here
 // Used for creation of the visual (threaded) tree
-define('_COM_NO_CONNECTOR',0);
+define('_COM_NO_CONNECTOR', 0);
 define('_COM_O_CONNECTOR', 1);
 define('_COM_P_CONNECTOR', 2);
-define('_COM_DASH_CONNECTOR',3);
+define('_COM_DASH_CONNECTOR', 3);
 define('_COM_T_CONNECTOR', 4);
 define('_COM_L_CONNECTOR', 5);
 define('_COM_I_CONNECTOR', 6);
@@ -83,7 +83,9 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
 {
     // check to make sure we got passed an array,
     // return false if we got no array or it has no items in it
-    if (!is_array($comments_list) || !count($comments_list)) return false;
+    if (!is_array($comments_list) || !count($comments_list)) {
+        return false;
+    }
 
     // figure out how man total nodes are in this array,
     $total_nodes = count($comments_list);
@@ -151,7 +153,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
 
     // setup the keys for each comment so that we can
     // easily reference them further down
-    foreach($comments_list as $node) {
+    foreach ($comments_list as $node) {
         $new_list[$node['id']] = $node;
     }
     $comments_list = $new_list;
@@ -169,7 +171,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
         // if the current node's parent isn't yet
         // defined, then add it to the list of parents
         // and give it a depth equal to it's parent's depth + 1
-        if (!array_key_exists("PID_".$node['parent_id'],$parents)) {
+        if (!array_key_exists("PID_".$node['parent_id'], $parents)) {
             if (!array_key_exists($node['parent_id'], $comments_list)) {
                 $comments_list[$node['parent_id']]['parent_id'] = 0;
                 $comments_list[$node['parent_id']]['id'] = 0;
@@ -241,17 +243,30 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
 function comments_renderer_array_prune_excessdepth($args)
 {
     extract($args);
-    if (!is_array($array_list) || !count($array_list)) return;
+    if (!is_array($array_list) || !count($array_list)) {
+        return;
+    }
 
     // TODO: find better way to get min. left & max. right for this list
     foreach ($array_list as $node) {
-        if (!isset($left)) $left = $node['left_id'];
-        if (!isset($right)) $right = $node['right_id'];
-        if ($node['left_id'] < $left) $left = $node['left_id'];
-        if ($node['right_id'] > $right) $right = $node['right_id'];
+        if (!isset($left)) {
+            $left = $node['left_id'];
+        }
+        if (!isset($right)) {
+            $right = $node['right_id'];
+        }
+        if ($node['left_id'] < $left) {
+            $left = $node['left_id'];
+        }
+        if ($node['right_id'] > $right) {
+            $right = $node['right_id'];
+        }
     }
 
-    $countlist = xarMod::apiFunc('comments', 'user', 'get_childcountlist',
+    $countlist = xarMod::apiFunc(
+        'comments',
+        'user',
+        'get_childcountlist',
         array(
             'left' => $left,
             'right' => $right,
@@ -350,7 +365,7 @@ function comments_renderer_array_depthbuoy($action, $depth, $value=true)
  *                  that's contains the visual representation for that particular node
  */
 
-function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
+function comments_renderer_array_maptree(&$CommentList, $modName = null)
 {
 
     // if $CommentList isn't an array or it is empty,
@@ -408,25 +423,24 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
         // soooo if the current depth is -not- zero then we have other connectors so
         // below we figure out what the other connectors are...
         if (0 != $current_depth) {
-            if ( ($current_depth != $prev_depth) ) {
+            if (($current_depth != $prev_depth)) {
                 $matrix[$current_depth - 1] = _COM_L_CONNECTOR;
             }
 
             // in order to have a T connector the current depth -must-
             // be less then or equal to the previous depth
-            if ( $current_depth <= $prev_depth) {
+            if ($current_depth <= $prev_depth) {
                 // if there is a DepthBuoy set for (current depth -1)
                 // then
-                if (comments_renderer_array_depthbuoy('get',($current_depth - 1)) === true ) {
+                if (comments_renderer_array_depthbuoy('get', ($current_depth - 1)) === true) {
                     // the DepthBuoy for this depth can now be turned off.
-                    comments_renderer_array_depthbuoy('set',($current_depth - 1),false);
+                    comments_renderer_array_depthbuoy('set', ($current_depth - 1), false);
                     $matrix[($current_depth - 1)] = _COM_T_CONNECTOR;
                 }
 
                 if ($current_depth == $prev_depth) {
                     $matrix[($current_depth - 1)] = _COM_T_CONNECTOR;
                 }
-
             }
 
             // Once we've got the T and L connectors done, we need to go through
@@ -459,7 +473,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 
         // if modName == NULL or empty then we default to using the comments api's
         //  thread images otherwise, we use images from the calling module
-        if (empty($modName) || $nodName == NULL) {
+        if (empty($modName) || $nodName == null) {
             $CommentList[$counter]['map'] = comments_renderer_array_image_substitution($matrix, 'comments');
         } else {
             $CommentList[$counter]['map'] = comments_renderer_array_image_substitution($matrix);
@@ -480,7 +494,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
  * @return  array   a list of the images needed for displaying this particular node in the tree
  */
 
-function comments_renderer_array_image_substitution($matrix, $modName = NULL)
+function comments_renderer_array_image_substitution($matrix, $modName = null)
 {
     $map = array();
 
@@ -531,7 +545,7 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL)
  * @return integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function comments_renderer_array_fieldrelation_compare ($a, $b)
+function comments_renderer_array_fieldrelation_compare($a, $b)
 {
     // get the sort value
     $sort = comments_renderer_array_sortvalue();
@@ -615,11 +629,11 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
  * @return  string  The current sort value
  *
  */
-function comments_renderer_array_sortvalue($value=NULL)
+function comments_renderer_array_sortvalue($value=null)
 {
     static $sort;
 
-    if ($value != NULL) {
+    if ($value != null) {
         switch (strtolower($value)) {
         case _COM_SORT_DESC:
             $sort = _COM_SORT_DESC;
@@ -643,11 +657,16 @@ function comments_renderer_array_sortvalue($value=NULL)
  * @returns   void    nothing
  */
 
-function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
+function comments_renderer_array_sort(&$comment_list, $sortby, $direction)
 {
     if (!isset($comment_list) || !is_array($comment_list)) {
-        $msg = xarML('Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
-                                 'comment_list','renderer','array_sort',$modName);
+        $msg = xarML(
+            'Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
+            'comment_list',
+            'renderer',
+            'array_sort',
+            $modName
+        );
         throw new Exception($msg);
     }
 
@@ -658,7 +677,6 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
 
     if ($sortby == _COM_SORTBY_THREAD) {
         foreach ($comment_list as $node) {
-
             if ($node['depth'] == 0) {
                 $key = $node['id'];
                 $index[$node['id']] = $key;
@@ -675,7 +693,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
         // (further below) there will  be a chance that some will be
         // out of order and mess up the rendering
         foreach ($comment_list as $node) {
-            switch($sortby) {
+            switch ($sortby) {
                 case _COM_SORTBY_TOPIC:
                     $key = eregi_replace("\:", " ", $node['title']);
                     break;
@@ -698,9 +716,9 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
         // End of PreSORT
 
         foreach ($comment_list as $node) {
-            switch($sortby) {
+            switch ($sortby) {
                 case _COM_SORTBY_TOPIC:
-                    $key = eregi_replace("\:"," ",$node['title']);
+                    $key = eregi_replace("\:", " ", $node['title']);
                     break;
                 case _COM_SORTBY_DATE:
                     $key = 'a' . $node['datetime'];
@@ -757,15 +775,14 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
 
 function comments_renderer_wrap_words(&$str, $chars)
 {
-    if (xarModVars::get('comments','wrap')){
+    if (xarModVars::get('comments', 'wrap')) {
         // Added for bug 4210 wrapping on multibyte words
         $before_lt="[\\x21-\\x3B]"; //"space" is x20 and "<" is x3C
         $equal="[\\x3D]";           //"=" is x3D
         $after_gt="[\\x3F-\\x7F]";  //">" is x3E
         $single = $before_lt."|".$equal."|".$after_gt;
         $pattern = "/(".$single."){".$chars.",".$chars."}/";
-        $str = preg_replace($pattern, '\0 ',$str);
+        $str = preg_replace($pattern, '\0 ', $str);
     }
     //$str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
-?>

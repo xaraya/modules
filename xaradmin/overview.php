@@ -20,8 +20,10 @@
  */
 function comments_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminComments',0)) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminComments', 0)) {
+        return;
+    }
 
     $data = array();
 
@@ -31,5 +33,3 @@ function comments_admin_overview()
 
     return xarTplModule('comments', 'admin', 'main', $data, 'main');
 }
-
-?>

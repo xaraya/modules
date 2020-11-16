@@ -30,7 +30,9 @@ function comments_userapi_get_blacklist($args)
                             'startnum' => $startnum
         ));
 
-    if (!is_object($list)) return;
+    if (!is_object($list)) {
+        return;
+    }
 
     $items = $list->getItems();
 
@@ -45,22 +47,21 @@ function comments_userapi_get_blacklist($args)
     $items = $arr;
 
 
-   /* // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $btable = $xartable['blacklist'];
-    $query = "SELECT id,
-                     domain
-              FROM $btable";
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
-    if (!$result) return;
-    // Put items into result array.
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $domain) = $result->fields;
-            $items[] = array('id'       => $id,
-                             'domain'   => $domain);
-    }
-    $result->Close();*/
+    /* // Get database setup
+     $dbconn = xarDB::getConn();
+     $xartable =& xarDB::getTables();
+     $btable = $xartable['blacklist'];
+     $query = "SELECT id,
+                      domain
+               FROM $btable";
+     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+     if (!$result) return;
+     // Put items into result array.
+     for (; !$result->EOF; $result->MoveNext()) {
+         list($id, $domain) = $result->fields;
+             $items[] = array('id'       => $id,
+                              'domain'   => $domain);
+     }
+     $result->Close();*/
     return $items;
 }
-?>

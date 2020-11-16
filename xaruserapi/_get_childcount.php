@@ -25,10 +25,15 @@ Not used anywhere?
  */
 function comments_userapi_get_childcount($id)
 {
-
-    if ( !isset($id) || empty($id) ) {
-        $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'id', $id, 'userapi', 'get_childcount', 'comments');
+    if (!isset($id) || empty($id)) {
+        $msg = xarML(
+            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
+            'id',
+            $id,
+            'userapi',
+            'get_childcount',
+            'comments'
+        );
         throw new BadParameterException($msg);
     }
 
@@ -36,10 +41,12 @@ function comments_userapi_get_childcount($id)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
-    $nodelr = xarMod::apiFunc('comments',
-                            'user',
-                            'get_node_lrvalues',
-                             array('id' => $id));
+    $nodelr = xarMod::apiFunc(
+        'comments',
+        'user',
+        'get_node_lrvalues',
+        array('id' => $id)
+    );
 
     $sql = "SELECT  COUNT(id) as numitems
               FROM  $xartable[comments]
@@ -47,8 +54,9 @@ function comments_userapi_get_childcount($id)
                AND  (left_id >= $nodelr[left_id] AND right_id <= $nodelr[right_id]";
 
     $result =& $dbconn->Execute($sql);
-    if (!$result)
+    if (!$result) {
         return;
+    }
 
     if ($result->EOF) {
         return 0;
@@ -61,5 +69,3 @@ function comments_userapi_get_childcount($id)
     // return total count - 1 ... the -1 is so we don't count the comment root.
     return ($numitems - 1);
 }
-
-?>

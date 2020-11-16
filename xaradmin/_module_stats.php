@@ -11,13 +11,19 @@
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
-function comments_admin_module_stats( )
+function comments_admin_module_stats()
 {
 
     // Security Check
-    if(!xarSecurityCheck('AdminComments')) return;
-    if (!xarVarFetch('modid','int:1',$modid)) return;
-    if (!xarVarFetch('itemtype','int:0',$itemtype,0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarSecurityCheck('AdminComments')) {
+        return;
+    }
+    if (!xarVarFetch('modid', 'int:1', $modid)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'int:0', $itemtype, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Invalid or Missing Parameter \'modid\'');
@@ -30,53 +36,73 @@ function comments_admin_module_stats( )
         $itemtype = 0;
     } else {
         // Get the list of all item types for this module (if any)
-        $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
+        $mytypes = xarMod::apiFunc(
+            $modinfo['name'],
+            'user',
+            'getitemtypes',
                                  // don't throw an exception if this function doesn't exist
-                                 array(), 0);
+                                 array(),
+            0
+        );
         if (isset($mytypes) && !empty($mytypes[$itemtype])) {
             $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
         //    $data['modlink'] = $mytypes[$itemtype]['url'];
         } else {
             $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-        //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+            //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
         }
     }
 
-    $numstats = xarModVars::get('comments','numstats');
+    $numstats = xarModVars::get('comments', 'numstats');
     if (empty($numstats)) {
         $numstats = 100;
     }
-    if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('startnum', 'id', $startnum, null, XARVAR_DONT_SET)) {
+        return;
+    }
     if (empty($startnum)) {
         $startnum = 1;
     }
 
     // get all items and their number of comments (excluding root nodes) for this module
-    $moditems = xarMod::apiFunc('comments','user','getitems',
-                              array('moditemscommentcount' => true,
+    $moditems = xarMod::apiFunc(
+        'comments',
+        'user',
+        'getitems',
+        array('moditemscommentcount' => true,
                                     'modid' => $modid,
                                     'itemtype' => $itemtype,
                                     'numitems' => $numstats,
-                                    'startnum' => $startnum));
+                                    'startnum' => $startnum)
+    );
 
     // get the number of inactive comments for these items
-    $inactive = xarMod::apiFunc('comments','user','getitems',
-                              array('modid' => $modid,
+    $inactive = xarMod::apiFunc(
+        'comments',
+        'user',
+        'getitems',
+        array('modid' => $modid,
                                     'itemtype' => $itemtype,
                                     'itemids' => array_keys($moditems),
-                                    'status' => 'inactive'));
+                                    'status' => 'inactive')
+    );
 
     // get the title and url for the items
-    $showtitle = xarModVars::get('comments','showtitle');
+    $showtitle = xarModVars::get('comments', 'showtitle');
     if (!empty($showtitle)) {
-       $itemids = array_keys($moditems);
-       try{
-           $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
-                                      array('itemtype' => $itemtype,
-                                            'itemids' => $itemids)); // don't throw an exception here
-        } catch (Exception $e) {}
+        $itemids = array_keys($moditems);
+        try {
+            $itemlinks = xarMod::apiFunc(
+                $modinfo['name'],
+                'user',
+                'getitemlinks',
+                array('itemtype' => $itemtype,
+                                            'itemids' => $itemids)
+            ); // don't throw an exception here
+        } catch (Exception $e) {
+        }
     } else {
-       $itemlinks = array();
+        $itemlinks = array();
     }
 
     $pages = array();
@@ -88,11 +114,15 @@ function comments_admin_module_stats( )
         $pages[$itemid] = array();
         $pages[$itemid]['pageid'] = $itemid;
         $pages[$itemid]['total'] = $numcomments;
-        $pages[$itemid]['delete_url'] = xarModURL('comments','admin', 'delete',
-                                                  array('dtype' => 'object',
+        $pages[$itemid]['delete_url'] = xarModURL(
+            'comments',
+            'admin',
+            'delete',
+            array('dtype' => 'object',
                                                         'modid' => $modid,
                                                         'itemtype' => $itemtype,
-                                                        'objectid' => $itemid));
+                                                        'objectid' => $itemid)
+        );
         $data['gt_total'] .= $numcomments;
         if (isset($inactive[$itemid])) {
             $pages[$itemid]['inactive'] = $inactive[$itemid];
@@ -107,34 +137,45 @@ function comments_admin_module_stats( )
     }
 
     $data['data']             = $pages;
-    $data['delete_all_url']   = xarModURL('comments','admin','delete',
-                                            array('dtype' => 'module',
+    $data['delete_all_url']   = xarModURL(
+        'comments',
+        'admin',
+        'delete',
+        array('dtype' => 'module',
                                                   'modid' => $modid,
-                                                  'itemtype' => $itemtype));
+                                                  'itemtype' => $itemtype)
+    );
 
     // get statistics for all comments (excluding root nodes)
-    $modlist = xarMod::apiFunc('comments','user','getmodules',
-                             array('modid' => $modid,
-                                   'itemtype' => $itemtype));
+    $modlist = xarMod::apiFunc(
+        'comments',
+        'user',
+        'getmodules',
+        array('modid' => $modid,
+                                   'itemtype' => $itemtype)
+    );
     if (isset($modlist[$modid]) && isset($modlist[$modid][$itemtype])) {
         $numitems = $modlist[$modid][$itemtype]['items'];
     } else {
         $numitems = 0;
     }
     if ($numstats < $numitems) {
-        $data['pager'] = xarTplPager::getPager($startnum,
-                                          $numitems,
-                                          xarModURL('comments','admin','module_stats',
-                                                    array('modid' => $modid,
+        $data['pager'] = xarTplPager::getPager(
+            $startnum,
+            $numitems,
+            xarModURL(
+                                              'comments',
+                                              'admin',
+                                              'module_stats',
+                                              array('modid' => $modid,
                                                           'itemtype' => $itemtype,
-                                                          'startnum' => '%%')),
-                                          $numstats);
+                                                          'startnum' => '%%')
+                                          ),
+            $numstats
+        );
     } else {
         $data['pager'] = '';
     }
 
     return $data;
-
 }
-
-?>
