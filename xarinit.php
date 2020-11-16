@@ -17,16 +17,18 @@
 
     function sitemapper_init()
     {
-    # --------------------------------------------------------
-    #
-    # Set up tables
-    #
+        # --------------------------------------------------------
+        #
+        # Set up tables
+        #
         sys::import('xaraya.structures.query');
         $q = new Query();
         $prefix = xarDB::getPrefix();
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_links";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_sitemapper_links (
           id                   integer unsigned NOT NULL auto_increment,
           type                 varchar(64) NULL,
@@ -41,10 +43,14 @@
           state                tinyint unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_maps";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_sitemapper_maps (
           id                   integer unsigned NOT NULL auto_increment,
           context_hash         varchar(64) NULL,
@@ -56,10 +62,14 @@
           modified             integer unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_engines";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_sitemapper_engines (
           id                   integer unsigned NOT NULL auto_increment,
           name                 varchar(64) NULL,
@@ -69,10 +79,14 @@
           modified             integer unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_sources";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_sitemapper_sources (
           id                   integer unsigned NOT NULL auto_increment,
           module               varchar(64) NULL,
@@ -86,36 +100,38 @@
           modified             integer unsigned default 0 NOT NULL,
         PRIMARY KEY  (id)
         )";
-        if (!$q->run($query)) return;
-    # --------------------------------------------------------
-    #
-    # Set up masks
-    #
-        xarRegisterMask('ViewSitemapper','All','sitemapper','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadSitemapper','All','sitemapper','All','All','ACCESS_READ');
-        xarRegisterMask('EditSitemapper','All','sitemapper','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddSitemapper','All','sitemapper','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageSitemapper','All','sitemapper','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminSitemapper','All','sitemapper','All','All','ACCESS_ADMIN');
+        if (!$q->run($query)) {
+            return;
+        }
+        # --------------------------------------------------------
+        #
+        # Set up masks
+        #
+        xarRegisterMask('ViewSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarRegisterMask('ReadSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_READ');
+        xarRegisterMask('EditSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_EDIT');
+        xarRegisterMask('AddSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADD');
+        xarRegisterMask('ManageSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_DELETE');
+        xarRegisterMask('AdminSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADMIN');
 
-    # --------------------------------------------------------
-    #
-    # Set up privileges
-    #
-        xarRegisterPrivilege('ManageSitemapper','All','sitemapper','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminSitemapper','All','sitemapper','All','All','ACCESS_ADMIN');
+        # --------------------------------------------------------
+        #
+        # Set up privileges
+        #
+        xarRegisterPrivilege('ManageSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_DELETE');
+        xarRegisterPrivilege('AdminSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADMIN');
 
-    # --------------------------------------------------------
-    #
-    # Set up configuration modvars (general)
-    #
-            $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'sitemapper'));
-            $module_settings->initialize();
+        # --------------------------------------------------------
+        #
+        # Set up configuration modvars (general)
+        #
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'sitemapper'));
+        $module_settings->initialize();
 
-    # --------------------------------------------------------
-    #
-    # Set up modvars
-    #
+        # --------------------------------------------------------
+        #
+        # Set up modvars
+        #
         xarModVars::set('sitemapper', 'defaultmastertable', 'sitemapper_engines');
         xarModVars::set('sitemapper', 'submit_engines', '');
         xarModVars::set('sitemapper', 'file_create_xml', true);
@@ -135,19 +151,19 @@
     </url>
   </xar:foreach>
 </urlset>');
-    # --------------------------------------------------------
-    #
-    # Set up hooks
-    #
+        # --------------------------------------------------------
+        #
+        # Set up hooks
+        #
 //        sys::import('xaraya.structures.hooks.observer');
 //        $observer = new BasicObserver('sitemapper');
 //        $subject = new HookSubject('comments');
 //        $subject->attach($observer);
 
-    # --------------------------------------------------------
-    #
-    # Create DD objects
-    #
+        # --------------------------------------------------------
+        #
+        # Create DD objects
+        #
         $module = 'sitemapper';
         $objects = array(
 //                       'sitemapper_maps',
@@ -156,7 +172,9 @@
                        'sitemapper_links',
                          );
 
-        if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+            return;
+        }
 
         return true;
     }
@@ -171,9 +189,9 @@
         // Only change the next line. No need for anything else
         $module = 'sitemapper';
 
-        if(!xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module))) return false;
+        if (!xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module))) {
+            return false;
+        }
 
         return true;
     }
-
-?>

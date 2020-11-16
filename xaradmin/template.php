@@ -12,17 +12,22 @@
 
     function sitemapper_admin_template()
     {
-        if (!xarSecurityCheck('EditSitemapper')) return;
+        if (!xarSecurityCheck('EditSitemapper')) {
+            return;
+        }
 
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         if ($data['confirm']) {
             // Get the data from the form
-            if (!xarVarFetch('template',       'str',    $data['template'], '', XARVAR_NOT_REQUIRED)) return;
-            xarModVars::set('sitemapper','template', $data['template']);
+            if (!xarVarFetch('template', 'str', $data['template'], '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            xarModVars::set('sitemapper', 'template', $data['template']);
         } else {
-            $data['template'] = xarModVars::get('sitemapper','template');
+            $data['template'] = xarModVars::get('sitemapper', 'template');
         }
         return $data;
     }
-?>

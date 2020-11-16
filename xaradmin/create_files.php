@@ -15,7 +15,9 @@
     function sitemapper_admin_create_files()
     {
         // Security Check
-        if (!xarSecurityCheck('ManageSitemapper')) return;
+        if (!xarSecurityCheck('ManageSitemapper')) {
+            return;
+        }
         
         // Get the link data
         $object = DataObjectMaster::getObjectList(array('name' => 'sitemapper_links'));
@@ -29,38 +31,42 @@
             $blCompiler = XarayaCompiler::instance();
             $tplInputString  = '<?xml version="1.0" encoding="utf-8"?>';
             $tplInputString .= '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
-            $tplInputString .= xarModVars::get('sitemapper','template');
+            $tplInputString .= xarModVars::get('sitemapper', 'template');
             $tplInputString .= '</xar:template>';
             
             // Run the template and its data through the compiler
-            try{        
+            try {
                 $tplString = $blCompiler->compilestring($tplInputString);
-                $tplString = xarTplString($tplString,$data);   
-            } catch(Exception $e) {
-                var_dump($e->getMessage());exit;
+                $tplString = xarTplString($tplString, $data);
+            } catch (Exception $e) {
+                var_dump($e->getMessage());
+                exit;
             }
         }
 
         // Now create files
-        if (xarModVars::get('sitemapper','file_create_xml')) {
-            $filename = xarModVars::get('sitemapper','xml_filename');
-            if (empty($filename)) throw new Exception(xarML("Missing file name"));
+        if (xarModVars::get('sitemapper', 'file_create_xml')) {
+            $filename = xarModVars::get('sitemapper', 'xml_filename');
+            if (empty($filename)) {
+                throw new Exception(xarML("Missing file name"));
+            }
             try {
                 file_put_contents($filename . ".xml", $tplString);
             } catch (Exception $e) {
-                return xarTpl::module('sitemapper','user','errors',array('layout' => 'no_permission'));
+                return xarTpl::module('sitemapper', 'user', 'errors', array('layout' => 'no_permission'));
             }
         }
-        if (xarModVars::get('sitemapper','file_create_zip')) {
-            $filename = xarModVars::get('sitemapper','zip_filename');
-            if (empty($filename)) throw new Exception(xarML("Missing file name"));
+        if (xarModVars::get('sitemapper', 'file_create_zip')) {
+            $filename = xarModVars::get('sitemapper', 'zip_filename');
+            if (empty($filename)) {
+                throw new Exception(xarML("Missing file name"));
+            }
             try {
                 file_put_contents($filename . ".gz", gzencode($tplString));
             } catch (Exception $e) {
-                return xarTpl::module('sitemapper','user','errors',array('layout' => 'no_permission'));
+                return xarTpl::module('sitemapper', 'user', 'errors', array('layout' => 'no_permission'));
             }
         }
         
         return $data;
     }
-?>

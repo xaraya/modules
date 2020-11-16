@@ -26,4 +26,3 @@
             array('mask' => 'AdminSitemapper', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Sitemapper configuration'), 'label' => xarML('Modify Config')),
         );
     }
-?>

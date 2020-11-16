@@ -12,9 +12,11 @@
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-    function sitemapper_admin_view_links() 
+    function sitemapper_admin_view_links()
     {
-        if (!xarVarFetch('regenerate', 'int', $data['regenerate'], 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+        if (!xarVarFetch('regenerate', 'int', $data['regenerate'], 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+            return;
+        }
         if ($data['regenerate']) {
             $object = DataObjectMaster::getObjectList(array('name' => 'sitemapper_sources'));
             $where = 'state = 3';
@@ -22,22 +24,28 @@
             // Run through all the sources entries and get the locations to be included in the file
             $data['locations'] = array();
             
-            foreach ($data['items'] as $key => $source){
+            foreach ($data['items'] as $key => $source) {
             
                 // Ignore modules that are not active
-                if (!xarModIsAvailable($source['module'])) continue;
+                if (!xarModIsAvailable($source['module'])) {
+                    continue;
+                }
                 
                 // Get the links of this source
                 switch ($source['source_type']) {
                 
                     // Single page
                     case 1:
-                        $linkdata = xarModURL($source['module'],$source['display_type'],$source['display_function']);
+                        $linkdata = xarModURL($source['module'], $source['display_type'], $source['display_function']);
                         if (is_array($linkdata)) {
                             // Need a special function here for each module
                             $locationdata = array();
-                            if (isset($linkdata['url'])) $locationdata['url'] = $linkdata['url'];
-                            if (isset($linkdata['modified'])) $locationdata['modified'] = $linkdata['modified'];
+                            if (isset($linkdata['url'])) {
+                                $locationdata['url'] = $linkdata['url'];
+                            }
+                            if (isset($linkdata['modified'])) {
+                                $locationdata['modified'] = $linkdata['modified'];
+                            }
                             $data['locations'][] = $locationdata;
                         } else {
                             // This is a "normal" display function
@@ -48,11 +56,15 @@
                     
                     // Multiple pages
                     case 2:
-                        $linkdata = xarMod::apiFunc($source['module'],$source['gen_type'],$source['gen_function']);
+                        $linkdata = xarMod::apiFunc($source['module'], $source['gen_type'], $source['gen_function']);
                         foreach ($linkdata as $link) {
                             $locationdata = array();
-                            if (isset($link['url'])) $locationdata['url'] = $link['url'];
-                            if (isset($link['modified'])) $locationdata['modified'] = $link['modified'];
+                            if (isset($link['url'])) {
+                                $locationdata['url'] = $link['url'];
+                            }
+                            if (isset($link['modified'])) {
+                                $locationdata['modified'] = $link['modified'];
+                            }
                             $data['locations'][] = $locationdata;
                         }
                     break;
@@ -67,14 +79,17 @@
             
             $object = DataObjectMaster::getObject(array('name' => 'sitemapper_links'));
             $defaultfields = $object->getFieldValues();
-            foreach ($data['locations'] as $location) {    
-                if (isset($location['url'])) $defaultfields['location'] = $location['url'];
-                if (isset($location['modified'])) $defaultfields['last_modified'] = (int)$location['modified'];
+            foreach ($data['locations'] as $location) {
+                if (isset($location['url'])) {
+                    $defaultfields['location'] = $location['url'];
+                }
+                if (isset($location['modified'])) {
+                    $defaultfields['last_modified'] = (int)$location['modified'];
+                }
                 $object->setFieldValues($defaultfields);
-                $object->createItem(array('itemid' => 0));                
+                $object->createItem(array('itemid' => 0));
             }
         } else {
         }
         return $data;
     }
-?>

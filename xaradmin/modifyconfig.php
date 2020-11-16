@@ -17,11 +17,17 @@
 function sitemapper_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminSitemapper')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarSecurityCheck('AdminSitemapper')) {
+        return;
+    }
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        return;
+    }
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'sitemapper'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'sitemapper'));
     $data['module_settings']->setFieldList('items_per_page,, use_module_alias, use_module_icons');
     $data['module_settings']->getItem();
 
@@ -32,7 +38,9 @@ function sitemapper_admin_modifyconfig()
     
     // Resort so that we get the regids in the checkboxlist
     $data['modules_available'] = array();
-    foreach ($modules_available as $row) $data['modules_available'][] = array('id' => $row['regid'], 'name' => $row['name']);
+    foreach ($modules_available as $row) {
+        $data['modules_available'][] = array('id' => $row['regid'], 'name' => $row['name']);
+    }
     
     switch (strtolower($phase)) {
         case 'modify':
@@ -53,21 +61,29 @@ function sitemapper_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-            }        
+                return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            }
             switch ($data['tab']) {
                 case 'general':
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTplModule('dynamicdata','admin','modifyconfig', $data);        
+                        return xarTplModule('dynamicdata', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
 
-                    if (!xarVarFetch('file_create_xml', 'int', $file_create_xml, 0, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('file_create_zip', 'int', $file_create_zip, 0, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('file_xml_filename', 'str:1:', $xml_filename, 0, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('file_zip_filename', 'str:1:', $zip_filename, 0, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('file_create_xml', 'int', $file_create_xml, 0, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('file_create_zip', 'int', $file_create_zip, 0, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('file_xml_filename', 'str:1:', $xml_filename, 0, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('file_zip_filename', 'str:1:', $zip_filename, 0, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
 
                     xarModVars::set('sitemapper', 'file_create_xml', $file_create_xml);
                     xarModVars::set('sitemapper', 'file_create_zip', $file_create_zip);
@@ -97,4 +113,3 @@ function sitemapper_admin_modifyconfig()
     $data['submit_engines'] = xarModVars::get('sitemapper', 'submit_engines');
     return $data;
 }
-?>
