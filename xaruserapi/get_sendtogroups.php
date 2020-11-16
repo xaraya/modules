@@ -23,7 +23,7 @@ sys::import('modules.messages.xarincludes.defines');
         extract($args);
 
         if (!isset($currentuser)) {
-            $currentuser = xarUserGetVar('id');
+            $currentuser = xarUser::getVar('id');
         }
     
         // First we get all the parents of the current user

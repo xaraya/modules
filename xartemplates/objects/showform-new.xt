@@ -15,7 +15,7 @@
             <xar:elseif condition="!isset($to) or $opt" />
                 <xar:data-input property="$properties['to']" value="$to" />
 	    <xar:else />
-		#xarUserGetVar('name',$to)#
+		#xarUser::getVar('name',$to)#
                 <xar:data-input property="$properties['to']" value="$to" hidden="hidden" />
             </xar:if>
         </xar:if>

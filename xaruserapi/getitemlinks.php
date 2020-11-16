@@ -25,7 +25,7 @@ sys::import('modules.messages.xarincludes.defines');
 function messages_userapi_getitemlinks($args)
 {
     $itemlinks = array();
-    if (!xarSecurityCheck('ViewMessages', 0)) {
+    if (!xarSecurity::check('ViewMessages', 0)) {
         return $itemlinks;
     }
 
@@ -39,14 +39,14 @@ function messages_userapi_getitemlinks($args)
         if (!isset($item)) {
             return;
         }
-        $itemlinks[$itemid] = array('url' => xarModURL(
+        $itemlinks[$itemid] = array('url' => xarController::URL(
             'roles',
             'user',
             'display',
             array('id' => $itemid)
         ),
             'title' => xarML('Display User'),
-            'label' => xarVarPrepForDisplay($item['name']));
+            'label' => xarVar::prepForDisplay($item['name']));
     }
     return $itemlinks;
 }

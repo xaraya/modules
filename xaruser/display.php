@@ -18,21 +18,21 @@ function messages_user_display($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('ReadMessages')) {
+    if (!xarSecurity::check('ReadMessages')) {
         return;
     }
    
-    //if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('id', 'int', $id, 0, XARVAR_NOT_REQUIRED)) {
+    //if (!xarVar::fetch('object', 'str', $object, 'messages_messages', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('id', 'int', $id, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     $data['id'] = $id;
 
-    xarTplSetPageTitle(xarML('Read Message'));
+    xarTpl::setPageTitle(xarML('Read Message'));
     $data['input_title']    = xarML('Read Message');
     
     //Psspl:Added the code for configuring the user-menu
@@ -48,7 +48,7 @@ function messages_user_display($args)
     // Check that the current user is either author or recipient
     if (($object->properties['to']->value != $current_user) &&
         ($object->properties['from']->value != $current_user)) {
-        return xarTplModule('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+        return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
     }
 
 //    $data['message'] = $messages[0];
@@ -56,7 +56,7 @@ function messages_user_display($args)
 
     // added call to transform text srg 09/22/03
     $body = $object->properties['body']->getValue();
-    list($body) = xarModCallHooks(
+    list($body) = xarModHooks::call(
         'item',
         'transform',
         $id,

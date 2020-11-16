@@ -22,14 +22,14 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_markunread()
 {
-    if (!xarSecurityCheck('ManageMessages')) {
+    if (!xarSecurity::check('ManageMessages')) {
         return;
     }
 
-    if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'int:1', $id, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -42,14 +42,14 @@ function messages_user_markunread()
     switch ($folder) {
         case 'inbox':
             if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {
-                return xarTplModule('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
             } else {
                 $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
             }
             break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
-                return xarTplModule('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
             } else {
                 $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
             }
@@ -60,7 +60,7 @@ function messages_user_markunread()
 
     $data['object']->updateItem();
 
-    xarResponse::redirect(xarModURL('messages', 'user', 'view', array('folder' => $folder)));
+    xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder' => $folder)));
          
     return true;
 }

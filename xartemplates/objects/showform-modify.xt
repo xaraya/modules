@@ -22,7 +22,7 @@
 <!--     <div class="xar-form-input-wrapper">
         <xar:var name="title">The author of the message</xar:var>
         <xar:data-label property="$properties['from']" title="$title" for="id"/>
-        #xarUserGetVar('name')#
+        #xarUser::getVar('name')#
         <xar:data-input property="$properties['from']" hidden="$hidden"/>
 
          

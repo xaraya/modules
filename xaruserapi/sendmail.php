@@ -23,20 +23,20 @@ function messages_userapi_sendmail($args)
 {
     extract($args);
 
-    $msgurl = xarModURL('messages', 'user', 'display', array('id' => $id));
-    $from = xarUserGetVar('name');
-    $msgdata['info'] = xarUserGetVar('email', $to);
-    $msgdata['name'] = xarUserGetVar('name', $to);
+    $msgurl = xarController::URL('messages', 'user', 'display', array('id' => $id));
+    $from = xarUser::getVar('name');
+    $msgdata['info'] = xarUser::getVar('email', $to);
+    $msgdata['name'] = xarUser::getVar('name', $to);
 
     $data['msgurl'] = $msgurl;
     $data['id'] = $id; // message id
-    $data['from_id'] = xarUserGetVar('id');
+    $data['from_id'] = xarUser::getVar('id');
     $data['from_name'] = $from;
     $data['to_id'] = $to;
     $data['to_name'] = $msgdata['name'];
     $data['to_email'] = $msgdata['info'];
-    $subject = xarTplModule('messages', 'user', 'email-subject', $data);
-    $body = xarTplModule('messages', 'user', 'email-body', $data);
+    $subject = xarTpl::module('messages', 'user', 'email-subject', $data);
+    $body = xarTpl::module('messages', 'user', 'email-body', $data);
     $msgdata['subject'] = $subject;
     $msgdata['message']  = $body;
 

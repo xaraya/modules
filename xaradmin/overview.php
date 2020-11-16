@@ -17,11 +17,11 @@
 function messages_admin_overview()
 {
     /* Security Check */
-    if (!xarSecurityCheck('AdminMessages')) {
+    if (!xarSecurity::check('AdminMessages')) {
         return;
     }
 
     $data=array();
 
-    return xarTplModule('messages', 'admin', 'overview', $data);
+    return xarTpl::module('messages', 'admin', 'overview', $data);
 }

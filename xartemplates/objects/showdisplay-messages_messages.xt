@@ -44,7 +44,7 @@
         <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
         <xar:if condition="!$postanon">
             <a href="#xarmodurl('roles','user','display',array('id' => $author))#" title="#xarML('View user info')#">
-                #xarUserGetVar('name',$author)#
+                #xarUser::getVar('name',$author)#
             </a>
         <xar:else/>
             Anonymous
@@ -58,7 +58,7 @@
 	<xar:if condition="is_numeric($replyto) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $replyto))">
 	Anonymous
 	<xar:else />
-         #xarUserGetVar('name',$recipient)# 
+         #xarUser::getVar('name',$recipient)# 
 	 </xar:if>
     </div>
 

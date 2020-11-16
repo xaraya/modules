@@ -29,7 +29,7 @@
                 <xar:set name="arrow">'desc'</xar:set>
             </xar:if>
 
-            <a href="#xarModURL('messages','user','view', array('sortfield' => $name, 'ascdesc' => strtoupper($arrow), 'folder' => $folder))#"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
+            <a href="#xarController::URL('messages','user','view', array('sortfield' => $name, 'ascdesc' => strtoupper($arrow), 'folder' => $folder))#"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
 
         <xar:elseif condition="$name eq 'to' or $name eq 'from'" />
 		<xar:comment>these fields are saved as integers but displayed as strings, so sorting would be confusing</xar:comment>
@@ -38,7 +38,7 @@
 	<xar:else />
 
         <xar:comment>we're not sorting on this column, so we should make the column head a link</xar:comment>
-            <a href="#xarModURL('messages','user','view', array('folder' => $folder, 'sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
+            <a href="#xarController::URL('messages','user','view', array('folder' => $folder, 'sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
 
         </xar:if>
 
@@ -70,17 +70,17 @@
                         <td valign="top">
 
 	<xar:if condition="$folder eq 'drafts'">
-		<a href="#xarModURL('messages','user','modify', array('id' => $id, 'folder' => 'drafts'))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Edit" /></a>  
+		<a href="#xarController::URL('messages','user','modify', array('id' => $id, 'folder' => 'drafts'))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Edit" /></a>  
 	</xar:if> 
 
-	&amp;nbsp;  <a href="#xarModURL('messages','user','delete', array('id' => $id, 'folder' => $folder))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+	&amp;nbsp;  <a href="#xarController::URL('messages','user','delete', array('id' => $id, 'folder' => $folder))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 
 	&amp;nbsp; 
 
 	<xar:if condition="$folder eq 'sent'">
-		<a href="#xarModURL('messages','user','display', array('id' => $id, 'folder' => 'sent'))#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>  
+		<a href="#xarController::URL('messages','user','display', array('id' => $id, 'folder' => 'sent'))#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>  
 	<xar:elseif condition="$folder eq 'inbox'" /> 
-		<a href="#xarModURL('messages','user','display', array('id' => $id, 'folder' => 'inbox'))#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>  
+		<a href="#xarController::URL('messages','user','display', array('id' => $id, 'folder' => 'inbox'))#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>  
 	</xar:if>
 	
                         </td>

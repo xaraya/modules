@@ -16,33 +16,33 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_new()
 {
-    if (!xarSecurityCheck('AddMessages')) {
+    if (!xarSecurity::check('AddMessages')) {
         return;
     }
  
-    if (!xarVarFetch('replyto', 'int', $replyto, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('replyto', 'int', $replyto, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
     $reply = ($replyto > 0) ? true : false;
     $data['reply'] = $reply;
     $data['replyto'] = $replyto;
 
-    if (!xarVarFetch('send', 'str', $send, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('send', 'str', $send, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('draft', 'str', $draft, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('draft', 'str', $draft, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('saveandedit', 'str', $saveandedit, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('saveandedit', 'str', $saveandedit, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('to', 'id', $data['to'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('to', 'id', $data['to'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('opt', 'bool', $data['opt'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('opt', 'bool', $data['opt'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('id', 'id', $id, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'id', $id, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -53,9 +53,9 @@ function messages_user_new()
     $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
     $data['object'] = $object;
 
-    $data['post_url']       = xarModURL('messages', 'user', 'new');
+    $data['post_url']       = xarController::URL('messages', 'user', 'new');
 
-    xarTplSetPageTitle(xarML('Post Message'));
+    xarTpl::setPageTitle(xarML('Post Message'));
     $data['input_title']    = xarML('Compose Message');
 
     if ($draft) { // where to send people next
@@ -77,15 +77,15 @@ function messages_user_new()
         $reply->getItem(array('itemid' => $replyto)); // get the message we're replying to
         $data['to'] = $reply->properties['from']->value; // get the user we're replying to
         $data['display'] = $reply;
-        xarTplSetPageTitle(xarML('Reply to Message'));
+        xarTpl::setPageTitle(xarML('Reply to Message'));
         $data['input_title']    = xarML('Reply to Message');
     }
 
     if ($send || $draft || $saveandedit) {
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
-            return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        if (!xarSec::confirmAuthKey()) {
+            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
         }
 
         $isvalid = $object->checkInput();
@@ -96,10 +96,10 @@ function messages_user_new()
             $object->properties['replyto']->setValue(0);
         }
         
-        $object->properties['from']->setValue(xarUserGetVar('uname'));
+        $object->properties['from']->setValue(xarUser::getVar('uname'));
 
         if (!$isvalid) {
-            return xarTplModule('messages', 'user', 'new', $data);
+            return xarTpl::module('messages', 'user', 'new', $data);
         }
 
         $object->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
@@ -122,7 +122,7 @@ function messages_user_new()
             }
         }
 
-        $uid = xarUserGetVar('id');
+        $uid = xarUser::getVar('id');
 
         // Send the autoreply if one is enabled by the admin and by the recipient
         if ($send && xarModVars::get('messages', 'allowautoreply')) {
@@ -133,12 +133,12 @@ function messages_user_new()
             if (!empty($autoreply)) {
                 $autoreplyobj = DataObjectMaster::getObject(array('name' => 'messages_messages'));
                 $autoreplyobj->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
-                $autoreplyobj->properties['from']->setValue(xarUserGetVar('uname', $to));
+                $autoreplyobj->properties['from']->setValue(xarUser::getVar('uname', $to));
                 $autoreplyobj->properties['to']->setValue($uid);
-                $data['from_name'] = xarUserGetVar('name', $to);
-                $subject = xarTplModule('messages', 'user', 'autoreply-subject', $data);
+                $data['from_name'] = xarUser::getVar('name', $to);
+                $subject = xarTpl::module('messages', 'user', 'autoreply-subject', $data);
                 $data['autoreply'] = $autoreply;
-                $autoreply = xarTplModule('messages', 'user', 'autoreply-body', $data);
+                $autoreply = xarTpl::module('messages', 'user', 'autoreply-body', $data);
                 // useful for eliminating html template comments
                 if (xarModVars::get('messages', 'strip_tags')) {
                     $subject = strip_tags($subject);
@@ -151,7 +151,7 @@ function messages_user_new()
         }
 
         if ($saveandedit) {
-            xarResponse::redirect(xarModURL('messages', 'user', 'modify', array('id' => $id)));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'modify', array('id' => $id)));
             return true;
         }
 
@@ -164,9 +164,9 @@ function messages_user_new()
         $redirect = $tabs[$redirect];
         
         if ($redirect == 'new') {
-            xarResponse::redirect(xarModURL('messages', 'user', 'new'));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'new'));
         } else {
-            xarResponse::redirect(xarModURL('messages', 'user', 'view', array('folder' => $redirect)));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder' => $redirect)));
         }
         return true;
     }

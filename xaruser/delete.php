@@ -22,23 +22,23 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_delete()
 {
-    if (!xarSecurityCheck('ManageMessages')) {
+    if (!xarSecurity::check('ManageMessages')) {
         return;
     }
 
-    if (!xarVarFetch('action', 'enum:confirmed:check', $data['action'], 'check', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'enum:confirmed:check', $data['action'], 'check', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('object', 'str', $object, 'messages_messages', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('replyto', 'int', $data['replyto'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('replyto', 'int', $data['replyto'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'int:1', $id, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -51,17 +51,17 @@ function messages_user_delete()
     switch ($folder) {
         case 'inbox':
             if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {
-                return xarTplModule('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
             }
             break;
         case 'drafts':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
-                return xarTplModule('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
             }
             break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
-                return xarTplModule('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
             }
             break;
     }
@@ -86,7 +86,7 @@ function messages_user_delete()
 
             $data['object']->updateItem();
 
-            xarResponse::redirect(xarModURL('messages', 'user', 'view', array('folder' => $folder)));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder' => $folder)));
             break;
 
         case "check":

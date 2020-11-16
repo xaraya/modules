@@ -25,16 +25,16 @@
 function messages_userapi_usermenu($args)
 {
     // not logged in?
-    if (!xarUserIsLoggedIn()) {
+    if (!xarUser::isLoggedIn()) {
         // redirect user to their account page after login
-        $redirecturl = xarModURL('roles', 'user', 'account');
-        xarResponse::redirect(xarModURL($defaultloginmodname, 'user', 'showloginform', array('redirecturl' => $redirecturl)));
+        $redirecturl = xarController::URL('roles', 'user', 'account');
+        xarResponse::redirect(xarController::URL($defaultloginmodname, 'user', 'showloginform', array('redirecturl' => $redirecturl)));
     }
 
     // edit account is disabled?
     if ((bool)xarModVars::get('messages', 'enable_user_menu') == false) {
         // show the user their profile display
-        xarResponse::redirect(xarModURL('roles', 'user', 'account'));
+        xarResponse::redirect(xarController::URL('roles', 'user', 'account'));
     }
 
     // Get arguments from argument array
@@ -47,7 +47,7 @@ function messages_userapi_usermenu($args)
     }
 
     if (empty($id) || !is_numeric($id)) {
-        $id = xarUserGetVar('id');
+        $id = xarUser::getVar('id');
     }
 
     if (!isset($object)) {
@@ -90,14 +90,14 @@ function messages_userapi_usermenu($args)
             // if you want to provide your own update function, you can specify
             // the form action url to be used. When the form is POSTed your function
             // will be used. (see roles user usermenu for an example).
-            $data['formaction'] = xarModURL('roles', 'user', 'usermenu');
+            $data['formaction'] = xarController::URL('roles', 'user', 'usermenu');
             // not necessary, but for completeness pass back any fields you changed
             $data['tplmodule'] = 'messages';
             $data['template'] = 'usermenu';
             //$data['layout'] = 'roles_user_settings';
             // pass the module name in when setting the authkey, this avoids clashes
             // when the output contained within another modules display (eg in xarpages)
-            $data['authid'] = xarSecGenAuthKey('messages');
+            $data['authid'] = xarSec::genAuthKey('messages');
             // finally return data to the calling function
             return $data;
         break;
@@ -143,7 +143,7 @@ function messages_userapi_usermenu($args)
         case 'updateitem':
             // if you added the module name when you generated the authkey,
             // be sure to use it here when confirming :)
-            if (!xarSecConfirmAuthKey('messages')) {
+            if (!xarSec::confirmAuthKey('messages')) {
                 return;
             }
             // data is already validated, go ahead and update the item
@@ -151,10 +151,10 @@ function messages_userapi_usermenu($args)
             // you could just return directly from here...
             /*
             // be sure to check for a returnurl
-            if (!xarVarFetch('returnurl', 'pre:trim:str:1', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('returnurl', 'pre:trim:str:1', $returnurl, '', xarVar::NOT_REQUIRED)) return;
             // the default returnurl should be roles user account with a moduleload of current module
             if (empty($returnurl))
-                $returnurl = xarModURL('roles', 'user', 'account', array('moduleload' => 'roles'));
+                $returnurl = xarController::URL('roles', 'user', 'account', array('moduleload' => 'roles'));
             return xarResponse::redirect($returnurl);
             */
             // let the calling function know the update was a success

@@ -156,8 +156,8 @@ function messages_init()
     # Create privilege instances
 #
 
-    xarDefineInstance('messages', 'Block', array());
-    xarDefineInstance('messages', 'Item', array());
+    xarPrivileges::defineInstance('messages', 'Block', array());
+    xarPrivileges::defineInstance('messages', 'Item', array());
 
     /*
      * REGISTER MASKS
@@ -165,29 +165,29 @@ function messages_init()
 
     // Register Block types (this *should* happen at activation/deactivation)
     //xarBlockTypeRegister('messages', 'incomming');
-    xarRegisterMask('ReadMessagesBlock', 'All', 'messages', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_ADD');
-    xarRegisterMask('DenyReadMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_NONE');
-    xarRegisterMask('ManageMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadMessagesBlock', 'All', 'messages', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ViewMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_READ');
+    xarMasks::register('EditMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_ADD');
+    xarMasks::register('DenyReadMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_NONE');
+    xarMasks::register('ManageMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_ADMIN');
     /*********************************************************************
     * Enter some default privileges
     * Format is
     * register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterPrivilege('ManageMessages', 'All', 'messages', 'All', 'All', 'ACCESS_DELETE', xarML('Delete access to messages'));
-    xarRegisterPrivilege('DenyReadMessages', 'All', 'messages', 'All', 'All', 'ACCESS_NONE', xarML('Deny access to messages'));
+    xarPrivileges::register('ManageMessages', 'All', 'messages', 'All', 'All', 'ACCESS_DELETE', xarML('Delete access to messages'));
+    xarPrivileges::register('DenyReadMessages', 'All', 'messages', 'All', 'All', 'ACCESS_NONE', xarML('Deny access to messages'));
     /*********************************************************************
     * Assign the default privileges to groups/users
     * Format is
     * assign(Privilege,Role)
     *********************************************************************/
 
-    xarAssignPrivilege('ManageMessages', 'Users');
-    xarAssignPrivilege('DenyReadMessages', 'Everybody');
+    xarPrivileges::assign('ManageMessages', 'Users');
+    xarPrivileges::assign('DenyReadMessages', 'Everybody');
 
     // Initialisation successful
     return true;
@@ -266,7 +266,7 @@ function messages_delete()
         return;
     }
 
-    //	xarRemovePrivileges('messages');
+    //	xarPrivileges::removeModule('messages');
 
     return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'messages'));
 }

@@ -55,7 +55,7 @@
                 'user',
                 'get_count',
                 array(
-                                          'recipient' => xarUserGetVar('id'),
+                                          'recipient' => xarUser::getVar('id'),
                                           'unread'=>true
                         )
             );

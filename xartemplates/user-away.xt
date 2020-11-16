@@ -8,12 +8,12 @@
     </div>
     <!--Psspl:Modifided the code for adding return action -->
     <div class="xar-mod-body">
-        <form action="#xarModURL('messages','user','view')#" method="post">    
+        <form action="#xarController::URL('messages','user','view')#" method="post">    
             <span class="xar-accent">
-                <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUserGetVar('name',$recipient)#</xar:mlvar></xar:ml>
+                <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUser::getVar('name',$recipient)#</xar:mlvar></xar:ml>
             </span>
             <span class="xar-norm">
-                <p>#xarVarPrepHTMLDisplay($away_message)#</p>
+                <p>#xarVar::prepHTMLDisplay($away_message)#</p>
             </span>
             <input type="submit" value="#xarML('Return')#" class="xar-margin-thickleft"/>
         </form>

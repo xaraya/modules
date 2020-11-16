@@ -19,7 +19,7 @@
             <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('messages','admin','modifyconfig')#" class="#$linkclass#">
+          <a href="#xarController::URL('messages','admin','modifyconfig')#" class="#$linkclass#">
             Modify Config
           </a>
         </li>
@@ -33,7 +33,7 @@
             <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('messages','admin','overview')#" class="#$linkclass#">
+          <a href="#xarController::URL('messages','admin','overview')#" class="#$linkclass#">
             Overview
           </a>
         </li>

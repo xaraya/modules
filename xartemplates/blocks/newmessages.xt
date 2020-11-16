@@ -8,15 +8,15 @@
         </div>
     <xar:else />
         <!-- <div id="newmessages_total">
-		You have <a href="#xarModURL('messages','user','view')#">#$totalin#</a>
+		You have <a href="#xarController::URL('messages','user','view')#">#$totalin#</a>
 		total message<xar:if condition="$totalin ne 1">s</xar:if>
         </div> -->
         <div id="newmessages_unread">
-		You have <a href="#xarModURL('messages','user','view')#">#$unread#</a>
+		You have <a href="#xarController::URL('messages','user','view')#">#$unread#</a>
 		new message<xar:if condition="$unread ne 1">s</xar:if>
         </div> 
         <div id="newmessages_view">
-		<a href="#xarModURL('messages','user','view')#">
+		<a href="#xarController::URL('messages','user','view')#">
 		    View messages
 		</a>
         </div>

@@ -20,14 +20,14 @@ function messages_admin_modifyconfig()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminMessages')) {
+    if (!xarSecurity::check('AdminMessages')) {
         return;
     }
 
     $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
 
     // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
 
@@ -59,7 +59,7 @@ function messages_admin_modifyconfig()
             # the dynamicdata module, where the same check is done. Since both checks cannot simultaneously
             # be passed, (the act of checking resets the check) the one below is disabled in this example.
             #
-            //if (!xarSecConfirmAuthKey()) return;
+            //if (!xarSec::confirmAuthKey()) return;
 
             # --------------------------------------------------------
             #
@@ -74,7 +74,7 @@ function messages_admin_modifyconfig()
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('messages', 'admin', 'modifyconfig', $data);
+                return xarTpl::module('messages', 'admin', 'modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
@@ -83,7 +83,7 @@ function messages_admin_modifyconfig()
                 //$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key));
                 //$property->checkInput('roleid_'.$key);
                 $the_key = $value['id'];
-                if (!xarVarFetch('roleid_'.$the_key, 'array', $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('roleid_'.$the_key, 'array', $roleid_{$the_key}, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}), $the_key);
@@ -102,16 +102,16 @@ function messages_admin_modifyconfig()
             #
             /*
                 // Get parameters from whatever input we need.  All arguments to this
-                // function should be obtained from xarVarFetch(), getting them
+                // function should be obtained from xarVar::fetch(), getting them
                 // from other places such as the environment is not allowed, as that makes
                 // assumptions that will not hold in future versions of Xaraya
-                if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVar::fetch('bold', 'checkbox', $bold, false, xarVar::NOT_REQUIRED)) return;
 
                 // Confirm authorisation code.  This checks that the form had a valid
                 // authorisation code attached to it.  If it did not then the function will
                 // proceed no further as it is possible that this is an attempt at sending
                 // in false data to the system
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSec::confirmAuthKey()) return;
 
                 xarModVars::set('content', 'bold', $bold);
             */
@@ -136,7 +136,7 @@ function messages_admin_modifyconfig()
                 
                 $item = $object->updateItem(array('itemid' => 0));
 
-                xarResponse::redirect(xarModURL('messages', 'admin', 'modifyconfig'));
+                xarResponse::redirect(xarController::URL('messages', 'admin', 'modifyconfig'));
 
             # --------------------------------------------------------
             #

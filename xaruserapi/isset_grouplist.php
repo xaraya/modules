@@ -33,7 +33,7 @@ function messages_userapi_isset_grouplist($args)
                                     'include_anonymous' => false,
                                     'include_myself' => false)
     );
-    $userid = xarUserGetVar('id');
+    $userid = xarUser::getVar('id');
 
     sys::import('xaraya.structures.query');
 

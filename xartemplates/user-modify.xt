@@ -25,7 +25,7 @@
                 <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" to="$to" />
 		
            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                 <!-- <input type="hidden" name="id" id="id" value="#$id#" /> -->
               
 		<input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright" />
