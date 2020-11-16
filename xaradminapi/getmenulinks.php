@@ -17,5 +17,5 @@
 
     function payments_adminapi_getmenulinks()
     {
-        return xarModAPIFunc('base', 'admin', 'menuarray', array('module' => 'payments'));
+        return xarMod::apiFunc('base', 'admin', 'menuarray', array('module' => 'payments'));
     }

@@ -17,17 +17,17 @@
     
 function payments_user_modify_transaction()
 {
-    if (!xarSecurityCheck('EditPayments')) {
+    if (!xarSecurity::check('EditPayments')) {
         return;
     }
 
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('debit_account', 'int', $data['debit_account'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('debit_account', 'int', $data['debit_account'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -42,7 +42,7 @@ function payments_user_modify_transaction()
 
     // Allow overiding the payment type from the form
     $payment_type = $data['object']->properties['payment_type']->value;
-    if (!xarVarFetch('payment_type', 'str', $data['payment_type'], $payment_type, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('payment_type', 'str', $data['payment_type'], $payment_type, xarVar::NOT_REQUIRED)) {
         return;
     }
     $data['object']->properties['payment_type']->value = $data['payment_type'];
@@ -51,7 +51,7 @@ function payments_user_modify_transaction()
 #
     # Check if we are passing an api item
 #
-    if (!xarVarFetch('api', 'str', $api, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('api', 'str', $api, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -127,7 +127,7 @@ function payments_user_modify_transaction()
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -159,7 +159,7 @@ function payments_user_modify_transaction()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('payments', 'user', 'modify_transaction', $data);
+            return xarTpl::module('payments', 'user', 'modify_transaction', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
@@ -172,7 +172,7 @@ function payments_user_modify_transaction()
             $q->run();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments', 'user', 'view_transactions'));
+            xarController::redirect(xarController::URL('payments', 'user', 'view_transactions'));
             return true;
         }
     }

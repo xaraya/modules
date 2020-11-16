@@ -19,22 +19,22 @@ function payments_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewPayments', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+    if (xarSecurity::check('ViewPayments', 0)) {
+        $menulinks[] = array('url'   => xarController::URL(
             'payments',
             'user',
             'main'
         ),
                               'title' => xarML('Show an overview of this module'),
                               'label' => xarML('Overview'));
-        $menulinks[] = array('url'   => xarModURL(
+        $menulinks[] = array('url'   => xarController::URL(
             'payments',
             'user',
             'main'
         ),
                               'title' => xarML('Execute a payment'),
                               'label' => xarML('Run Order'));
-        $menulinks[] = array('url'   => xarModURL(
+        $menulinks[] = array('url'   => xarController::URL(
             'payments',
             'user',
             'view'

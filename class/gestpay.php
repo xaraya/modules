@@ -195,10 +195,10 @@ class GestPay extends BasicPayment
             
             //Send OTP Exhausted email to admin
             try {
-                $send_mail = xarModAPIFunc('mailer', 'user', 'send', array('name'             => 'OTP Exhausted Email',
-                                                                         'locale'           => xarModUserVars::get('roles', 'locale', xarUserGetVar('id')),
-                                                                         'sendername'       => xarUserGetVar('name'),
-                                                                         'senderaddress'    => xarUserGetVar('email'),
+                $send_mail = xarMod::apiFunc('mailer', 'user', 'send', array('name'             => 'OTP Exhausted Email',
+                                                                         'locale'           => xarModUserVars::get('roles', 'locale', xarUser::getVar('id')),
+                                                                         'sendername'       => xarUser::getVar('name'),
+                                                                         'senderaddress'    => xarUser::getVar('email'),
                                                                          'recipientname'    => $recipient_name,
                                                                          'recipientaddress' => $recipient_email));
             } catch (exception $e) {
@@ -222,10 +222,10 @@ class GestPay extends BasicPayment
         if ($OTP_count <= $this->OTP_reorder) {
             //Send OTP Re-Order email to admin
             try {
-                $send_mail = xarModAPIFunc('mailer', 'user', 'send', array('name'             => 'OTP Re-order Email',
-                                                                         'locale'           => xarModUserVars::get('roles', 'locale', xarUserGetVar('id')),
-                                                                         'sendername'       => xarUserGetVar('name'),
-                                                                         'senderaddress'    => xarUserGetVar('email'),
+                $send_mail = xarMod::apiFunc('mailer', 'user', 'send', array('name'             => 'OTP Re-order Email',
+                                                                         'locale'           => xarModUserVars::get('roles', 'locale', xarUser::getVar('id')),
+                                                                         'sendername'       => xarUser::getVar('name'),
+                                                                         'senderaddress'    => xarUser::getVar('email'),
                                                                          'recipientname'    => $recipient_name,
                                                                          'recipientaddress' => $recipient_email,
                                                                          'data'             => array('OTP_count' => $OTP_count)));

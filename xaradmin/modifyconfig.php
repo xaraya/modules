@@ -18,16 +18,16 @@
     function payments_admin_modifyconfig()
     {
         // Security Check
-        if (!xarSecurityCheck('AdminPayments')) {
+        if (!xarSecurity::check('AdminPayments')) {
             return;
         }
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
             return;
         }
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'payments_general', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'payments_general', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'payments', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('tabmodule', 'str:1:100', $tabmodule, 'payments', xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -68,49 +68,49 @@
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
-                if (!xarVarFetch('customerobject', 'str', $customerobject, xarModVars::get('payments', 'customerobject'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('customerobject', 'str', $customerobject, xarModVars::get('payments', 'customerobject'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('orderobject', 'str', $orderobject, xarModVars::get('payments', 'orderobject'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('orderobject', 'str', $orderobject, xarModVars::get('payments', 'orderobject'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('gateway', 'int', $gateway, xarModVars::get('payments', 'gateway'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('gateway', 'int', $gateway, xarModVars::get('payments', 'gateway'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('runpayments', 'checkbox', $runpayments, xarModVars::get('payments', 'runpayments'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('runpayments', 'checkbox', $runpayments, xarModVars::get('payments', 'runpayments'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('savetodb', 'checkbox', $savetodb, xarModVars::get('payments', 'savetodb'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('savetodb', 'checkbox', $savetodb, xarModVars::get('payments', 'savetodb'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('alertemail', 'checkbox', $alertemail, xarModVars::get('payments', 'alertemail'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('alertemail', 'checkbox', $alertemail, xarModVars::get('payments', 'alertemail'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('alertemailaddr', 'str', $alertemailaddr, xarModVars::get('payments', 'alertemailaddr'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('alertemailaddr', 'str', $alertemailaddr, xarModVars::get('payments', 'alertemailaddr'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('defaultcurrency', 'str', $defaultcurrency, xarModVars::get('payments', 'defaultcurrency'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('defaultcurrency', 'str', $defaultcurrency, xarModVars::get('payments', 'defaultcurrency'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('defaultamount', 'float', $defaultamount, xarModVars::get('payments', 'defaultamount'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('defaultamount', 'float', $defaultamount, xarModVars::get('payments', 'defaultamount'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('process', 'int', $process, xarModVars::get('payments', 'process'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('process', 'int', $process, xarModVars::get('payments', 'process'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('allowanonpay', 'checkbox', $allowanonpay, xarModVars::get('payments', 'allowanonpay'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('allowanonpay', 'checkbox', $allowanonpay, xarModVars::get('payments', 'allowanonpay'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('payments_active', 'checkbox', $payments_active, xarModVars::get('payments', 'payments_active'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('payments_active', 'checkbox', $payments_active, xarModVars::get('payments', 'payments_active'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('message_id', 'int', $message_id, xarModVars::get('payments', 'message_id'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('message_id', 'int', $message_id, xarModVars::get('payments', 'message_id'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('message_prefix', 'str', $message_prefix, xarModVars::get('payments', 'message_prefix'), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('message_prefix', 'str', $message_prefix, xarModVars::get('payments', 'message_prefix'), xarVar::NOT_REQUIRED)) {
                     return;
                 }
 
@@ -134,7 +134,7 @@
                 if ($data['tab'] == 'payments_general') {
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTplModule('payments', 'admin', 'modifyconfig', $data);
+                        return xarTpl::module('payments', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
@@ -151,10 +151,10 @@
                     }
                 }
 
-                if (!xarVarFetch('enable_demomode', 'int', $enable_demomode, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('enable_demomode', 'int', $enable_demomode, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('demousers', 'str', $demousers, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('demousers', 'str', $demousers, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 $demousers = explode(',', $demousers);
@@ -171,7 +171,7 @@
                 xarModVars::set('payments', 'enable_demomode', $enable_demomode);
                 xarModVars::set('payments', 'demousers', serialize($validdemousers));
 
-                xarController::redirect(xarModURL('payments', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
@@ -179,6 +179,6 @@
         }
 //        $data['hooks'] = $hooks;
         $data['tabmodule'] = $tabmodule;
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         return $data;
     }

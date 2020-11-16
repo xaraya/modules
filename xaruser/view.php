@@ -17,7 +17,7 @@
     function payments_user_view($args)
     {
         // Data Managers have access
-        if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) {
+        if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) {
             return;
         }
 

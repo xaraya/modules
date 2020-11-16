@@ -17,14 +17,14 @@
     
 function payments_user_display_transaction()
 {
-    if (!xarSecurityCheck('EditPayments')) {
+    if (!xarSecurity::check('EditPayments')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'payments_transactions', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'payments_transactions', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 

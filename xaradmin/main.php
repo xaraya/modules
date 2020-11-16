@@ -17,14 +17,14 @@
 
     function payments_admin_main()
     {
-        if (!xarSecurityCheck('AdminPayments')) {
+        if (!xarSecurity::check('AdminPayments')) {
             return;
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarController::redirect(xarModURL('payments', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig'));
         }
         // success
         return true;

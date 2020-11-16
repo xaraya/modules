@@ -17,10 +17,10 @@
 function payments_user_view_debit_accounts($args)
 {
     // Data Managers have access
-    if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) {
+    if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) {
         return;
     }
-    xarTplSetPageTitle('View Debit Accounts');
+    xarTpl::setPageTitle('View Debit Accounts');
 
     // Load the user's daemon
     $daemon = xarMod::apiFunc('payments', 'admin', 'get_daemon');

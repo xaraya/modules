@@ -9,7 +9,7 @@
             </title> 
             <base href="&xar-baseurl;index.php"/>
             <style type="text/css">
-                @import url(&xar-baseurl;#xarTplGetThemeDir()#/style/style.css); 
+                @import url(&xar-baseurl;#xarTpl::getThemeDir()#/style/style.css); 
             </style> 
         </head>
         <body>
@@ -20,12 +20,12 @@
                 For your safety and security, you are required to enter your card's security code. The security code is a 3-digit number printed on the back of your card. It appears after and to the right of your card number
             </div>
             <div style="padding: 10">
-                <a href="#xarModURL('payments','user','amex_info_pop')#" onclick="PropertiesDialog('#xarModURL('payments','user','amex_info_pop')#'); return false;">
+                <a href="#xarController::URL('payments','user','amex_info_pop')#" onclick="PropertiesDialog('#xarController::URL('payments','user','amex_info_pop')#'); return false;">
                     <b>Using American Express?</b>
                 </a>
             </div>
             <div style="text-align: center;">
-                <img src="#xarTplGetImage('cv_card.gif')#" alt="cvc number information"/>
+                <img src="#xarTpl::getImage('cv_card.gif')#" alt="cvc number information"/>
             </div>
             <form action="" style="text-align: right">
                 <input type="button" name="" align="right" value="Close Window" onClick="window.close(); return(false);"/>

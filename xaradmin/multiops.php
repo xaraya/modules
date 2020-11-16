@@ -17,27 +17,27 @@ sys::import('modules.dynamicdata.class.objects.master');
 function payments_admin_multiops()
 {
     // Get parameters
-    if (!xarVarFetch('idlist', 'isset', $idlist, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('idlist', 'isset', $idlist, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('operation', 'isset', $operation, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('operation', 'isset', $operation, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('redirecttarget', 'isset', $redirecttarget, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('redirecttarget', 'isset', $redirecttarget, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('returnurl', 'str', $returnurl, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('object', 'str', $object, 'listings_listing', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('object', 'str', $object, 'listings_listing', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('localmodule', 'str', $module, 'listings', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('localmodule', 'str', $module, 'listings', xarVar::DONT_SET)) {
         return;
     }
 
     // Confirm authorisation code
-    //if (!xarSecConfirmAuthKey()) return;
+    //if (!xarSec::confirmAuthKey()) return;
 
     if (!isset($idlist) || count($idlist) == 0) {
         $msg = xarML('No items selected');

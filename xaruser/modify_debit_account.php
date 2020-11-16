@@ -17,17 +17,17 @@
     
 function payments_user_modify_debit_account()
 {
-    if (!xarSecurityCheck('EditPayments')) {
+    if (!xarSecurity::check('EditPayments')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'payments_debit_account', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'payments_debit_account', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function payments_user_modify_debit_account()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'payments';
-    $data['authid'] = xarSecGenAuthKey('payments');
+    $data['authid'] = xarSec::genAuthKey('payments');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -50,13 +50,13 @@ function payments_user_modify_debit_account()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('payments', 'user', 'modify_debit_account', $data);
+            return xarTpl::module('payments', 'user', 'modify_debit_account', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments', 'user', 'view_debit_accounts'));
+            xarController::redirect(xarController::URL('payments', 'user', 'view_debit_accounts'));
             return true;
         }
     }

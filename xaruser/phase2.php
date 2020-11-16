@@ -12,8 +12,8 @@
  */
     function payments_user_phase2()
     {
-        //      if (!xarSecConfirmAuthKey()) return;
-        if (!xarSecurityCheck('SubmitPayments')) {
+        //      if (!xarSec::confirmAuthKey()) return;
+        if (!xarSecurity::check('SubmitPayments')) {
             return;
         }
         //Psspl:Set the error_message to null string.
@@ -21,13 +21,13 @@
         
         // Check for demo mode
         $demousers = unserialize(xarModVars::get('payments', 'demousers'));
-        if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUserGetVar('uname'), $demousers)) {
-            return xarTplModule('payments', 'user', 'demomode2', array('returnurl' => ''));
+        if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUser::getVar('uname'), $demousers)) {
+            return xarTpl::module('payments', 'user', 'demomode2', array('returnurl' => ''));
         }
 
         //Psspl:Implemented the code for return url.
-        //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, XARVAR_DONT_SET)) {
+        //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
+        if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, xarVar::DONT_SET)) {
             return;
         }
         
@@ -58,7 +58,7 @@
         $data['payment_object'] = $paymentobject;
         $data['payment_properties'] = $paymentobject->getProperties();
 
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
         // If the input is not good repropose the previous page
         if (!$isvalidorder || !$isvalidpayment) {
@@ -67,13 +67,13 @@
             switch ($process) {
                 case 0:
                 default:
-                    return xarTplModule('payments', 'user', 'errors', array('layout' => 'no_process'));
+                    return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_process'));
                 case 1:
-                    return xarTplModule('payments', 'user', 'phase1', $data);
+                    return xarTpl::module('payments', 'user', 'phase1', $data);
                 case 2:
-                    return xarTplModule('payments', 'user', 'phase1', $data);
+                    return xarTpl::module('payments', 'user', 'phase1', $data);
                 case 3:
-                    return xarTplModule('payments', 'user', 'onestep', $data);
+                    return xarTpl::module('payments', 'user', 'onestep', $data);
             }
         }
 

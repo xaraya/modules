@@ -2,13 +2,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
         <xar:if condition="$objectname eq 'payments_transactions'">
             <xar:access level="600">
-                <xar:set name="link">xarModURL($module,'user','new_transaction',array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+                <xar:set name="link">xarController::URL($module,'user','new_transaction',array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
                 <xar:var name="label">New Payment</xar:var>
                 <xar:button type="link" target="$link" label="$label"/>
             </xar:access>
         <xar:elseif condition="$objectname eq 'payments_debit_account'"/>
             <xar:access level="600">
-                <xar:set name="link">xarModURL($module,'user','new_debit_account',array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+                <xar:set name="link">xarController::URL($module,'user','new_debit_account',array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
                 <xar:var name="label">New Debit Account</xar:var>
                 <xar:button type="link" target="$link" label="$label"/>
             </xar:access>

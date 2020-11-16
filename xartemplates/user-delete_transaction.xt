@@ -12,7 +12,7 @@
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="confirmed" id="confirmed" value="true" />
                     <input type="hidden" name="itemid" id="itemid" value="#$object->properties['id']->value#" />
                     <xar:var name="label">Cancel</xar:var>

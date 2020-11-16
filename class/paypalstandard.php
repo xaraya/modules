@@ -79,17 +79,17 @@ class paypalstandard extends BasicPayment
         $aryParams['invoice'] = xarSession::getVar('AUTHID');
         
         //Psspl: modified the code for allowEdit_payment.
-        if (!xarVarFetch('allowEdit_Payment', 'int', $allowEdit_Payment, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('allowEdit_Payment', 'int', $allowEdit_Payment, null, xarVar::DONT_SET)) {
             return;
         }
         
-        $aryParams['return'] = xarModURL('payments', 'user', 'phase3');
+        $aryParams['return'] = xarController::URL('payments', 'user', 'phase3');
         $aryParams["return"] = str_replace('&amp;', '%26', $aryParams["return"]);
          
-        $aryParams['notify_url'] = xarModURL('payments', 'user', 'phase3');
+        $aryParams['notify_url'] = xarController::URL('payments', 'user', 'phase3');
         $aryParams["notify_url"] = str_replace('&amp;', '%26', $aryParams["notify_url"]);
         
-        $aryParams['cancel_return'] = xarModURL('payments', 'user', 'amount', array('MakeChanges' => 1, 'allowEdit_Payment' => $allowEdit_Payment));
+        $aryParams['cancel_return'] = xarController::URL('payments', 'user', 'amount', array('MakeChanges' => 1, 'allowEdit_Payment' => $allowEdit_Payment));
         $aryParams["cancel_return"] = str_replace('&amp;', '%26', $aryParams["cancel_return"]);
 
         return $aryParams;

@@ -17,13 +17,13 @@
     function payments_user_export()
     {
         // need export mod
-        if (!xarModIsAvailable('export')) {
+        if (!xarMod::isAvailable('export')) {
             $msg = xarML('The Export module is not available');
             throw new Exception($msg);
         }
 
         // Data Managers have access
-        if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) {
+        if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) {
             return;
         }
         
@@ -63,7 +63,7 @@
 
         $refresh = xarSession::getVar('ddcontext.payments');
 
-        xarModAPIFunc('export', 'user', 'export', array(
+        xarMod::apiFunc('export', 'user', 'export', array(
                 'filetype'=>'excel',
                 'filename' => 'payments',
                 'dir' => true,

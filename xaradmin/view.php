@@ -17,12 +17,12 @@
     function payments_admin_view($args)
     {
         // Data Managers have access
-        if (!xarSecurityCheck('ManagePayments')) {
+        if (!xarSecurity::check('ManagePayments')) {
             return;
         }
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
             return;
         }
         if (!empty($objectname)) {

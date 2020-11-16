@@ -18,20 +18,20 @@
 function payments_user_clone_transaction()
 {
     // Xaraya security
-    if (!xarSecurityCheck('AddPayments')) {
+    if (!xarSecurity::check('AddPayments')) {
         return;
     }
-    xarTplSetPageTitle('Clone Transaction');
+    xarTpl::setPageTitle('Clone Transaction');
 
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'int', $confirm, 0, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::DONT_SET)) {
         return;
     }
     
     if (empty($itemid)) {
-        xarController::redirect(xarModURL('payment', 'user', 'view_transactions'));
+        xarController::redirect(xarController::URL('payment', 'user', 'view_transactions'));
         return true;
     }
 
@@ -61,7 +61,7 @@ function payments_user_clone_transaction()
         if (!empty($return_url)) {
             xarController::redirect($return_url);
         } else {
-            xarController::redirect(xarModURL('payments', 'user', 'modify_transaction', array('itemid' => $cloneid)));
+            xarController::redirect(xarController::URL('payments', 'user', 'modify_transaction', array('itemid' => $cloneid)));
         }
         return true;
     }

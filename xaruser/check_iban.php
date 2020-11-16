@@ -18,13 +18,13 @@
 function payments_user_check_iban()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadPayments')) {
+    if (!xarSecurity::check('ReadPayments')) {
         return;
     }
-    if (!xarVarFetch('iban', 'str', $data['iban'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('iban', 'str', $data['iban'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
     

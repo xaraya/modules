@@ -11,7 +11,7 @@
             <xar:var name="label">System Message</xar:var>
             <xar:img scope="theme" file="user-error.png" alt="$label" width="96" height="96" class="xar-module-icon"/>
                 <div style="margin-top: 20px; margin-left: 20px">
-                <xar:set name="name">xarUserGetVar('name')</xar:set>
+                <xar:set name="name">xarUser::getVar('name')</xar:set>
                     The user <xar:data-output type="name" value="$name"/> is set for payments demo mode.
                     <br/>
                     This page simulates the Payment module's check on payment data. No actual payment will be executed.
@@ -21,7 +21,7 @@
         </fieldset>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
-                <form method="post" action="#xarModURL('payments','user','phase3')#">
+                <form method="post" action="#xarController::URL('payments','user','phase3')#">
                     <xar:var name="label">Go back</xar:var>
                     <xar:button type="cancel" label="$label"/>
                     &#160;

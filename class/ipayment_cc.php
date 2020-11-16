@@ -97,18 +97,18 @@
           }
 
           //Psspl: modified the code for allowEdit_payment.
-          if (!xarVarFetch('allowEdit_Payment', 'int', $allowEdit_Payment, null, XARVAR_DONT_SET)) {
+          if (!xarVar::fetch('allowEdit_Payment', 'int', $allowEdit_Payment, null, xarVar::DONT_SET)) {
               return;
           }
         
-          $redirect_url = xarModURL('payments', 'user', 'phase4');
+          $redirect_url = xarController::URL('payments', 'user', 'phase4');
           //$aryParams["redirect_url"] = "http://" . $_ENV['HTTP_HOST'] . $_ENV['ORIG_PATH_INFO'] . "?module=payments&func=phase4&allowEdit_Payment=$allowEdit_Payment";
-          $aryParams["redirect_url"] = xarModURL('payments', 'user', 'phase4', array('allowEdit_Payment' => $allowEdit_Payment));
+          $aryParams["redirect_url"] = xarController::URL('payments', 'user', 'phase4', array('allowEdit_Payment' => $allowEdit_Payment));
           $aryParams["redirect_url"] = str_replace('&', '%26', $aryParams["redirect_url"]);
         
           //Psspl:Added the Silent error URL.
           //$aryParams["silent_error_url"] = "http://" . $_ENV['HTTP_HOST'] . $_ENV['ORIG_PATH_INFO'] . "?module=payments&func=phase4&allowEdit_Payment=$allowEdit_Payment";
-          $aryParams["silent_error_url"] = xarModURL('payments', 'user', 'phase4', array('allowEdit_Payment' => $allowEdit_Payment));
+          $aryParams["silent_error_url"] = xarController::URL('payments', 'user', 'phase4', array('allowEdit_Payment' => $allowEdit_Payment));
           $aryParams["redirect_url"] = str_replace('&', '%26', $aryParams["redirect_url"]);
 
           return $aryParams;

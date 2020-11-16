@@ -17,10 +17,10 @@
 function payments_user_view_transactions($args)
 {
     // Data Managers have access
-    if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) {
+    if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) {
         return;
     }
-    xarTplSetPageTitle('View ISO20022 Payments');
+    xarTpl::setPageTitle('View ISO20022 Payments');
 
     // Load the user's daemon
     $daemon = xarMod::apiFunc('payments', 'admin', 'get_daemon');
@@ -33,7 +33,7 @@ function payments_user_view_transactions($args)
     $timeframe = DataPropertyMaster::getProperty(array('name' => 'timeframe'));
     
     // The period gets saved for user convenience
-    if (!xarVarFetch('refresh', 'int', $data['refresh'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('refresh', 'int', $data['refresh'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
     $data['period'] = $daemon->getCurrentPeriod('gl');

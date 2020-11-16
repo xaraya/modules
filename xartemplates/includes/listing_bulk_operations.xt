@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:access level="700">
-        <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
+        <form  action="#xarController::URL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
             <div style="text-align:center; padding-top:10px;">
                 <!-- URL for custom function 15 -->
                 <input type="hidden" name="funcurl_15" id="funcurl_15" value="payments_adminapi_listing_transactions"/>

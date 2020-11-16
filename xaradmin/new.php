@@ -16,7 +16,7 @@
  */
     function payments_admin_new()
     {
-        if (!xarSecurityCheck('AddPayments')) {
+        if (!xarSecurity::check('AddPayments')) {
             return;
         }
 

@@ -17,11 +17,11 @@
 
 function payments_user_new_debit_account()
 {
-    if (!xarSecurityCheck('AddPayments')) {
+    if (!xarSecurity::check('AddPayments')) {
         return;
     }
 
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -29,7 +29,7 @@ function payments_user_new_debit_account()
 #
     # Get the debit account object
 #
-    if (!xarVarFetch('name', 'str', $name, 'payments_debit_account', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'payments_debit_account', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -41,10 +41,10 @@ function payments_user_new_debit_account()
 #
     # Check if we are passing an object item that identifies the entity using this module
 #
-    if (!xarVarFetch('obj', 'str', $objectname, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('obj', 'str', $objectname, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $itemid, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $itemid, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -76,12 +76,12 @@ function payments_user_new_debit_account()
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -90,13 +90,13 @@ function payments_user_new_debit_account()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('payments', 'user', 'new_debit_account', $data);
+            return xarTpl::module('payments', 'user', 'new_debit_account', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments', 'user', 'view_debit_accounts'));
+            xarController::redirect(xarController::URL('payments', 'user', 'view_debit_accounts'));
             return true;
         }
     }

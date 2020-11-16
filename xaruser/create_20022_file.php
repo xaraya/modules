@@ -17,7 +17,7 @@
 
 function payments_user_create_20022_file()
 {
-    if (!xarSecurityCheck('AddPayments')) {
+    if (!xarSecurity::check('AddPayments')) {
         return;
     }
 
@@ -27,13 +27,13 @@ function payments_user_create_20022_file()
         return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_comments'));
     }
 
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('idlist', 'str', $data['idlist'], array(), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('idlist', 'str', $data['idlist'], array(), xarVar::NOT_REQUIRED)) {
         return;
     }
 

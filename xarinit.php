@@ -291,23 +291,23 @@
         #
         # Set up masks
         #
-        xarRegisterMask('ViewPayments', 'All', 'payments', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadPayments', 'All', 'payments', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('SubmitPayments', 'All', 'payments', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterMask('ProcessPayments', 'All', 'payments', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterMask('EditPayments', 'All', 'payments', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterMask('AddPayments', 'All', 'payments', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterMask('ManagePayments', 'All', 'payments', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminPayments', 'All', 'payments', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewPayments', 'All', 'payments', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadPayments', 'All', 'payments', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('SubmitPayments', 'All', 'payments', 'All', 'All', 'ACCESS_COMMENT');
+        xarMasks::register('ProcessPayments', 'All', 'payments', 'All', 'All', 'ACCESS_MODERATE');
+        xarMasks::register('EditPayments', 'All', 'payments', 'All', 'All', 'ACCESS_EDIT');
+        xarMasks::register('AddPayments', 'All', 'payments', 'All', 'All', 'ACCESS_MODERATE');
+        xarMasks::register('ManagePayments', 'All', 'payments', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminPayments', 'All', 'payments', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('SubmitPayments', 'All', 'payments', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterPrivilege('ProcessPayments', 'All', 'payments', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterPrivilege('ManagePayments', 'All', 'payments', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminPayments', 'All', 'payments', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('SubmitPayments', 'All', 'payments', 'All', 'All', 'ACCESS_COMMENT');
+        xarPrivileges::register('ProcessPayments', 'All', 'payments', 'All', 'All', 'ACCESS_MODERATE');
+        xarPrivileges::register('ManagePayments', 'All', 'payments', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminPayments', 'All', 'payments', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
@@ -355,7 +355,7 @@
                          'payments_dta',
                          'payments_debit_account',
                          );
-        if (!xarModAPIFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
             return;
         }
 
@@ -364,7 +364,7 @@
         # Set up hooks
         #
 
-//        xarModAPIFunc('modules', 'admin', 'enablehooks',
+//        xarMod::apiFunc('modules', 'admin', 'enablehooks',
 //            array('callerModName' => 'payments', 'hookModName' => 'payments'));
 
         return true;
@@ -390,7 +390,7 @@
         // Generate the SQL to drop the table using the API
         $prefix = xarDB::getPrefix();
         $table = $prefix . "_" . $this_module;
-        $query = xarDBDropTable($table);
+        $query = xarTableDDL::dropTable($table);
         if (empty($query)) {
             return;
         } // throw back
@@ -402,7 +402,7 @@
         try {
             $dd_objects = unserialize(xarModVars::get($this_module, $this_module . '_objects'));
             foreach ($dd_objects as $key => $value) {
-                $result = xarModAPIFunc('dynamicdata', 'admin', 'deleteobject', array('objectid' => $value));
+                $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', array('objectid' => $value));
             }
         } catch (Exception $e) {
         }
@@ -412,7 +412,7 @@
         # Remove the categories
         #
         try {
-            xarModAPIFunc(
+            xarMod::apiFunc(
                 'categories',
                 'admin',
                 'deletecat',
@@ -425,8 +425,8 @@
         #
         # Remove modvars, masks and privilege instances
         #
-        xarRemoveMasks($this_module);
-        xarRemoveInstances($this_module);
+        xarMasks::removemasks($this_module);
+        xarPrivileges::removeInstances($this_module);
         xarModVars::delete_all($this_module);
 
         return true;

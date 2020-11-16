@@ -63,7 +63,7 @@ class PaymentsDaemon extends xarObject
                                 );
         
         // First time for an admin, then set the company to the default company
-        if (xarIsParent('Administrators', xarUser::getVar('uname'))) {
+        if (xarRoles::isParent('Administrators', xarUser::getVar('uname'))) {
             $this->setMandant((int)xarModVars::get('ledgerba', 'default_mandant'));
         } else {
             // For other users get the allowed companies
@@ -349,13 +349,13 @@ class PaymentsDaemon extends xarObject
             if (!isset($this->items_per_page[xarMod::getName()])) {
                 $this->items_per_page[xarMod::getName()] = xarModVars::get(xarMod::getName(), 'items_per_page');
             }
-            if (!xarVarFetch('items_per_page', 'int', $data['items_per_page'], $this->items_per_page[xarMod::getName()], XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('items_per_page', 'int', $data['items_per_page'], $this->items_per_page[xarMod::getName()], xarVar::NOT_REQUIRED)) {
                 return;
             }
             $this->items_per_page[xarMod::getName()] = $data['items_per_page'];
 
             // The current mandant of this user
-            if (!xarVarFetch('current_mandant', 'int', $data['current_mandant'], 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('current_mandant', 'int', $data['current_mandant'], 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
             if (!empty($data['current_mandant'])) {
@@ -365,7 +365,7 @@ class PaymentsDaemon extends xarObject
             }
 
             // The mandant this user is configuring
-            if (!xarVarFetch('config_mandant', 'int', $data['config_mandant'], 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('config_mandant', 'int', $data['config_mandant'], 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
             if (!empty($data['config_mandant'])) {

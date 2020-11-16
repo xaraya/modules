@@ -17,26 +17,26 @@
         //Psspl:Create the Query object
         $q = new Query();
         $prefix = xarDB::getPrefix();
-        //if (!xarSecConfirmAuthKey()) return;
-        if (!xarSecurityCheck('SubmitPayments')) {
+        //if (!xarSec::confirmAuthKey()) return;
+        if (!xarSecurity::check('SubmitPayments')) {
             return;
         }
         
         //Psspl:Implemented the code for return url.
-        //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, XARVAR_DONT_SET)) {
+        //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
+        if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, xarVar::DONT_SET)) {
             return;
         }
         /*Psspl:Removed the condition for checking paymentmethod selected.
-        if (!xarVarFetch('paymentmethod',      'int:0:', $paymentmethod,   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('paymentmethod',      'int:0:', $paymentmethod,   null,    xarVar::DONT_SET)) {return;}
         */
         //Psspl:check if user select 'MakeChanges'.
-        if (!xarVarFetch('MakeChanges', 'int:0:', $MakeChanges, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('MakeChanges', 'int:0:', $MakeChanges, null, xarVar::DONT_SET)) {
             return;
         }
         //Psspl:Checked the condition for Makechanges.
         if ($MakeChanges) {
-            if (!xarVarFetch('paymentmethod', 'int:0:', $paymentmethod, null, XARVAR_DONT_SET)) {
+            if (!xarVar::fetch('paymentmethod', 'int:0:', $paymentmethod, null, xarVar::DONT_SET)) {
                 return;
             }
         }
@@ -48,7 +48,7 @@
         $return_url_property->checkInput('return_url');
         $data['return_url'] = $return_url_property->value;
         */
-        //if(!xarVarFetch('return_url', 'str:1:', $return_url,  "a:0:{}", XARVAR_DONT_SET)) {return;}
+        //if(!xarVar::fetch('return_url', 'str:1:', $return_url,  "a:0:{}", xarVar::DONT_SET)) {return;}
         $return_url = xarSession::getVar('return_url');
         try {
             $data['return_url'] = unserialize($return_url);
@@ -56,7 +56,7 @@
             $data['return_url'] = array();
         }
         
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         
         $authid=$data['authid'];
         
@@ -139,10 +139,10 @@
                     
                     xarSession::setVar('error_message', "");
                     
-                    return xarTplModule('payments', 'user', 'amount', $data);
+                    return xarTpl::module('payments', 'user', 'amount', $data);
                 }
                 $data['order_properties'] = $orderobject->getProperties();
-                return xarTplModule('payments', 'user', 'onestep', $data);
+                return xarTpl::module('payments', 'user', 'onestep', $data);
             }
             $itemid = $orderobject->createItem();
             xarSession::setVar('orderfields', serialize(xarSession::getVar('orderfields')));
@@ -171,16 +171,16 @@
         
         // Check for demo mode
         $demousers = unserialize(xarModVars::get('payments', 'demousers'));
-        if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUserGetVar('uname'), $demousers)) {
-            return xarTplModule('payments', 'user', 'demomode1', array('returnurl' => ''));
+        if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUser::getVar('uname'), $demousers)) {
+            return xarTpl::module('payments', 'user', 'demomode1', array('returnurl' => ''));
         }
 
         //Psspl:Added the code for paypal gateway.
         if ($gatewayid == PAYMENT_GATEWAY_PAYPAL or $gatewayid == PAYMENT_GATEWAY_SAFERPAY or $gatewayid == PAYMENT_GATEWAY_GESTPAY) {
             //Psspl:Commented the repeated code.
             //Psspl : Commented the security check statement for resolving error.
-            //if (!xarSecConfirmAuthKey()) return;
-            //$data['authid'] = xarSecGenAuthKey();
+            //if (!xarSec::confirmAuthKey()) return;
+            //$data['authid'] = xarSec::genAuthKey();
 
             $paymentfields = $paymentobject->getFieldValues();
             xarSession::SetVar('paymentfields', serialize($paymentfields));
@@ -204,7 +204,7 @@
                     $data['properties'] = $data['order_properties'];
                     $data['errorFlag'] = 1;
                     $data['MakeChanges'] = null;
-                    return xarTplModule('payments', 'user', 'amount', $data);
+                    return xarTpl::module('payments', 'user', 'amount', $data);
                 }
             }
             
@@ -251,11 +251,11 @@
                             $data['properties'] = $data['order_properties'];
                             $data['errorFlag'] = 1;
                             $data['MakeChanges'] = null;
-                            return xarTplModule('payments', 'user', 'amount', $data);
+                            return xarTpl::module('payments', 'user', 'amount', $data);
                         }
                     }
                     if (xarSession::getVar('error_message')) {
-                        xarController::redirect(xarModURL('payments', 'user', 'phase1', array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1,'errorFlag'=>1)));
+                        xarController::redirect(xarController::URL('payments', 'user', 'phase1', array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1,'errorFlag'=>1)));
                         return true;
                     }
                 } else {
