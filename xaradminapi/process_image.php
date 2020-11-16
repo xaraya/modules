@@ -106,7 +106,7 @@ function images_adminapi_process_image($args)
                 // Use MD5 hash of file location here
                 $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
-                $add = xarVarPrepForOs($setting);
+                $add = xarVar::prepForOS($setting);
                 $add = strtr($add, array(' ' => ''));
                 $save .= "-$add.$ext";
                 break;
@@ -151,7 +151,7 @@ function images_adminapi_process_image($args)
                 // Use file id here
                 $save = realpath($thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
-                $add = xarVarPrepForOs($setting);
+                $add = xarVar::prepForOS($setting);
                 $add = strtr($add, array(' ' => ''));
                 $save .= "-$add.$ext";
                 break;

@@ -444,7 +444,7 @@ function images_admin_phpthumb($args)
             xarMod::apiFunc('images', 'admin', 'setsettings', $data['settings']);
 
             // Note: processed images are named md5(filelocation)-[setting].[ext] - see process_image() function
-            $add = xarVarPrepForOs($setting);
+            $add = xarVar::prepForOS($setting);
             $add = strtr($add, array(' ' => ''));
             $affected = xarMod::apiFunc(
                 'images',
