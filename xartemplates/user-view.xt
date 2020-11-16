@@ -8,7 +8,7 @@
 
         <xar:if condition="xarMod::isAvailable('export')">
         <div class="export-button">
-            <a href="#xarmodurl('payments','user','export')#" title="Download / process active transactions">
+            <a href="#xarController::URL('payments','user','export')#" title="Download / process active transactions">
                 Download / Process
             </a>
         </div>
