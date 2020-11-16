@@ -47,7 +47,7 @@ function sitetools_adminapi_getall($args)
         );
         return;
     }
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
     $items = array();
@@ -68,7 +68,7 @@ function sitetools_adminapi_getall($args)
     }
     for (; !$result->EOF; $result->MoveNext()) {
         list($stid, $stgain) = $result->fields;
-        if (xarSecurityCheck('AdminSiteTools')) {
+        if (xarSecurity::check('AdminSiteTools')) {
             $items[] = array('stid' => $stid,
                              'stgain' => $stgain);
         }

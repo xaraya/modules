@@ -20,14 +20,14 @@
 function sitetools_admin_main()
 {
     /* Security check */
-    if (!xarSecurityCheck('EditSiteTools')) {
+    if (!xarSecurity::check('EditSiteTools')) {
         return;
     }
 
-    $data = xarModAPIFunc('sitetools', 'admin', 'menu');
+    $data = xarMod::apiFunc('sitetools', 'admin', 'menu');
     $data['welcome'] = '';
   
-    xarResponse::Redirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarController::URL('sitetools', 'admin', 'modifyconfig'));
 
     return true;
 }

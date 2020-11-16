@@ -24,7 +24,7 @@ function sitetools_adminapi_optimizedb($dbname, $dbtype='')
     }
 
     // Security check  - allow scheduler api funcs to run as anon bug #2802
-    // if (!xarSecurityCheck('AdminSiteTools')) return;
+    // if (!xarSecurity::check('AdminSiteTools')) return;
     $items=array();
 
     if (($dbname='') || (empty($dbname))) {

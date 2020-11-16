@@ -32,7 +32,7 @@ function sitetools_schedulerapi_optimize($args)
     /*   It may return true (or some logging text) if it succeeds, and null if it fails
      *   return
      */
-    $tabledata=xarModAPIFunc(
+    $tabledata=xarMod::apiFunc(
         'sitetools',
         'admin',
         'optimizedb',
@@ -42,7 +42,7 @@ function sitetools_schedulerapi_optimize($args)
     $total_gain= $tabledata['total_gain'];
     $total_gain = round($total_gain, 3);
     //Add this new optimization record to the database
-    return xarModAPIFunc(
+    return xarMod::apiFunc(
         'sitetools',
         'admin',
         'create',

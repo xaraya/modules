@@ -21,13 +21,13 @@ function sitetools_admin_modifyconfig()
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration
      */
-    $data = xarModAPIFunc('sitetools', 'admin', 'menu');
+    $data = xarMod::apiFunc('sitetools', 'admin', 'menu');
     /* Security check - important to do this as early as possible */
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
     /* Generate a one-time authorisation code for this operation */
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     /* Specify some labels and values for display */
     $data['adopath']     = xarModVars::get('sitetools', 'adocachepath');
     $data['rsspath']     = xarModVars::get('sitetools', 'rsscachepath');
@@ -50,12 +50,12 @@ function sitetools_admin_modifyconfig()
     $data['schedule']['optimize']=xarML('Run Optimize Job');
     $data['schedule']['backup']=xarML('Run Backup Job');
 
-    if (xarModIsAvailable('scheduler')) {
-        $data['intervals'] = xarModAPIFunc('scheduler', 'user', 'intervals');
+    if (xarMod::isAvailable('scheduler')) {
+        $data['intervals'] = xarMod::apiFunc('scheduler', 'user', 'intervals');
         $data['interval'] = array();
         foreach ($schedulerapi as $func) {
             // see if we have a scheduler job running to execute this function
-            $job = xarModAPIFunc(
+            $job = xarMod::apiFunc(
                 'scheduler',
                 'user',
                 'get',
@@ -74,7 +74,7 @@ function sitetools_admin_modifyconfig()
         $data['interval'] = array();
     }
 
-    $hooks = xarModCallHooks(
+    $hooks = xarModHooks::call(
         'module',
         'modifyconfig',
         'sitetools',

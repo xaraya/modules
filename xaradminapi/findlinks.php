@@ -27,10 +27,10 @@ function sitetools_adminapi_findlinks($args)
     }
 
     // load APIs for table names etc.
-    xarModAPILoad('roles', 'user');
-    xarModAPILoad('dynamicdata', 'user');
-    if (xarModIsAvailable('articles')) {
-        xarModAPILoad('articles', 'user');
+    xarMod::apiLoad('roles', 'user');
+    xarMod::apiLoad('dynamicdata', 'user');
+    if (xarMod::isAvailable('articles')) {
+        xarMod::apiLoad('articles', 'user');
     }
 
     $dbconn = xarDB::getConn();
@@ -50,10 +50,10 @@ function sitetools_adminapi_findlinks($args)
     $server = xarServer::getHost();
 
     // find links for articles
-    if (!empty($fields['articles']) && xarModIsAvailable('articles')) {
+    if (!empty($fields['articles']) && xarMod::isAvailable('articles')) {
         $modid = xarMod::getRegID('articles');
         $articlestable = $xartable['articles'];
-        $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+        $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
         foreach ($fields['articles'] as $ptid => $fieldlist) {
             $descr = $pubtypes[$ptid]['descr'];
@@ -82,7 +82,7 @@ function sitetools_adminapi_findlinks($args)
                 if (!in_array('title', $getfields)) {
                     $getfields[] = 'title';
                 }
-                $items = xarModAPIFunc(
+                $items = xarMod::apiFunc(
                     'articles',
                     'user',
                     'getall',
@@ -97,7 +97,7 @@ function sitetools_adminapi_findlinks($args)
                     }
                 }
                 foreach ($items as $item) {
-                    $url = xarModURL(
+                    $url = xarController::URL(
                         'articles',
                         'user',
                         'display',
@@ -152,7 +152,7 @@ function sitetools_adminapi_findlinks($args)
                     }
                 }
                 foreach ($items as $item) {
-                    $url = xarModURL(
+                    $url = xarController::URL(
                         'articles',
                         'user',
                         'display',
@@ -218,7 +218,7 @@ function sitetools_adminapi_findlinks($args)
             }
             $count[$descr[$itemtype]] = 0;
             foreach ($items as $itemid => $item) {
-                $url = xarModURL(
+                $url = xarController::URL(
                     'roles',
                     'user',
                     'display',

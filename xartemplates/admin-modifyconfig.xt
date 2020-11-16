@@ -139,7 +139,7 @@
         </fieldset>
         <fieldset>
             <legend>#$schedulingoptions#</legend>
-            <xar:if condition="xarModIsAvailable('scheduler')">
+            <xar:if condition="xarMod::isAvailable('scheduler')">
             <div class="xar-form-input-wrapper">
                 <label for="defaultbktype" class="xar-form-label" title="#$bkdefaulthelp#">
                         #$defaultbktypel#

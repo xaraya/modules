@@ -18,42 +18,42 @@
  */
 function sitetools_admin_updateconfig()
 {
-    if (!xarVarFetch('adopath', 'str:4:128', $adopath, '')) {
+    if (!xarVar::fetch('adopath', 'str:4:128', $adopath, '')) {
         return;
     }
-    if (!xarVarFetch('rsspath', 'str:4:128', $rsspath, '')) {
+    if (!xarVar::fetch('rsspath', 'str:4:128', $rsspath, '')) {
         return;
     }
-    if (!xarVarFetch('templpath', 'str:4:128', $templpath, '')) {
+    if (!xarVar::fetch('templpath', 'str:4:128', $templpath, '')) {
         return;
     }
-    if (!xarVarFetch('backuppath', 'str:4:128', $backuppath, '')) {
+    if (!xarVar::fetch('backuppath', 'str:4:128', $backuppath, '')) {
         return;
     }
-    if (!xarVarFetch('defaultbktype', 'str:4', $defaultbktype, '')) {
+    if (!xarVar::fetch('defaultbktype', 'str:4', $defaultbktype, '')) {
         return;
     }
-    if (!xarVarFetch('lineterm', 'str:2:4', $lineterm, '')) {
+    if (!xarVar::fetch('lineterm', 'str:2:4', $lineterm, '')) {
         return;
     }
-    if (!xarVarFetch('usetimestamp', 'int:1:', $usetimestamp, true)) {
+    if (!xarVar::fetch('usetimestamp', 'int:1:', $usetimestamp, true)) {
         return;
     }
-    if (!xarVarFetch('usedbprefix', 'int:1:', $usedbprefix, false)) {
+    if (!xarVar::fetch('usedbprefix', 'int:1:', $usedbprefix, false)) {
         return;
     }
-    if (!xarVarFetch('colnumber', 'int:1:', $colnumber, 3)) {
+    if (!xarVar::fetch('colnumber', 'int:1:', $colnumber, 3)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:4:128', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:4:128', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     /* Update module variables.  Note that the default values are set in
-     * xarVarFetch when recieving the incoming values, so no extra processing
+     * xarVar::fetch when recieving the incoming values, so no extra processing
      * is needed when setting the variables here.
      */
     xarModVars::set('sitetools', 'adocachepath', $adopath);
@@ -66,14 +66,14 @@ function sitetools_admin_updateconfig()
     xarModVars::set('sitetools', 'colnumber', $colnumber);
     xarModVars::set('sitetools', 'defaultbktype', $defaultbktype);
 
-    if (xarModIsAvailable('scheduler')) {
-        if (!xarVarFetch('interval', 'isset', $interval, array(), XARVAR_NOT_REQUIRED)) {
+    if (xarMod::isAvailable('scheduler')) {
+        if (!xarVar::fetch('interval', 'isset', $interval, array(), xarVar::NOT_REQUIRED)) {
             return;
         }
         /* for each of the functions specified in the template */
         foreach ($interval as $func => $howoften) {
             /* see if we have a scheduler job running to execute this function */
-            $job = xarModAPIFunc(
+            $job = xarMod::apiFunc(
                 'scheduler',
                 'user',
                 'get',
@@ -84,7 +84,7 @@ function sitetools_admin_updateconfig()
             if (empty($job) || empty($job['interval'])) {
                 if (!empty($howoften)) {
                     /* create a scheduler job */
-                    xarModAPIFunc(
+                    xarMod::apiFunc(
                         'scheduler',
                         'admin',
                         'create',
@@ -96,7 +96,7 @@ function sitetools_admin_updateconfig()
                 }
             } elseif (empty($howoften)) {
                 /* delete the scheduler job */
-                xarModAPIFunc(
+                xarMod::apiFunc(
                     'scheduler',
                     'admin',
                     'delete',
@@ -106,7 +106,7 @@ function sitetools_admin_updateconfig()
                 );
             } elseif ($howoften != $job['interval']) {
                 /* update the scheduler job */
-                xarModAPIFunc(
+                xarMod::apiFunc(
                     'scheduler',
                     'admin',
                     'update',
@@ -119,7 +119,7 @@ function sitetools_admin_updateconfig()
         }
     }
 
-    xarModCallHooks(
+    xarModHooks::call(
         'module',
         'updateconfig',
         'sitetools',
@@ -129,7 +129,7 @@ function sitetools_admin_updateconfig()
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponse::Redirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarController::URL('sitetools', 'admin', 'modifyconfig'));
 
     /* Return */
     return true;

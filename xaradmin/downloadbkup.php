@@ -18,11 +18,11 @@
 */
 function sitetools_admin_downloadbkup($args)
 {
-    if (!xarVarFetch('savefile', 'str:1', $savefile, '')) {
+    if (!xarVar::fetch('savefile', 'str:1', $savefile, '')) {
         return;
     }
     // Security check
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 

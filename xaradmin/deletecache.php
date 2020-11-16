@@ -20,21 +20,21 @@
 function sitetools_admin_deletecache($args)
 {
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('delrss', 'checkbox', $delrss, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('delrss', 'checkbox', $delrss, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('delado', 'checkbox', $delado, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('delado', 'checkbox', $delado, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('deltempl', 'checkbox', $deltempl, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('deltempl', 'checkbox', $deltempl, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     /* Security check - important to do this as early as possible */
-    if (!xarSecurityCheck('DeleteSiteTools')) {
+    if (!xarSecurity::check('DeleteSiteTools')) {
         return;
     }
     $data[]=array();
@@ -44,7 +44,7 @@ function sitetools_admin_deletecache($args)
          * of this action from the user
          */
 
-        $data = xarModAPIFunc('sitetools', 'admin', 'menu');
+        $data = xarMod::apiFunc('sitetools', 'admin', 'menu');
         $data['adopath']   = xarModVars::get('sitetools', 'adocachepath');
         $data['rsspath']   = xarModVars::get('sitetools', 'rsscachepath');
         $data['templpath'] = xarModVars::get('sitetools', 'templcachepath');
@@ -53,14 +53,14 @@ function sitetools_admin_deletecache($args)
         $data['deltempl']  = 0;
         $data['delfin']    = false;
         /* Generate a one-time authorisation code for this operation */
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         /*Return the template variables defined in this function */
         return $data;
     }
     /* If we get here it means that the user has confirmed the action */
 
     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     if ($delado || $delrss || $deltempl) {
@@ -159,7 +159,7 @@ function sitetools_admin_deletecache($args)
     }
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work */
-    xarResponse::Redirect(xarModURL('sitetools', 'admin', 'deletecache'));
+    xarResponse::Redirect(xarController::URL('sitetools', 'admin', 'deletecache'));
 
     return true;
 }

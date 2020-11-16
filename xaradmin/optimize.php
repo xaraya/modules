@@ -19,12 +19,12 @@
  */
 function sitetools_admin_optimize()
 {
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     /* Security check */
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
     /* Check for confirmation. */
@@ -34,14 +34,14 @@ function sitetools_admin_optimize()
          */
         $data['optimized']=false;
         /* Generate a one-time authorisation code for this operation */
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         /* Return the template variables defined in this function */
         return $data;
     }
     /* If we get here it means that the user has confirmed the action */
     $data=array();
     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -51,7 +51,7 @@ function sitetools_admin_optimize()
     $total_gain=0;
     $total_kbs=0;
     //optimize and get data for each table's result
-    $tabledata= xarModAPIFunc('sitetools', 'admin', 'optimizedb');
+    $tabledata= xarMod::apiFunc('sitetools', 'admin', 'optimizedb');
 
     if ($tabledata == false) {
         /* Throw back any system exceptions (e.g. database failure) */
@@ -77,7 +77,7 @@ function sitetools_admin_optimize()
     $data['totalkbs']  = round($total_kbs, 3);
     $data['dbname']    = $tabledata['dbname'];
     //Add this new optimization record to the database
-    $optid = xarModAPIFunc(
+    $optid = xarMod::apiFunc(
         'sitetools',
         'admin',
         'create',
@@ -89,7 +89,7 @@ function sitetools_admin_optimize()
     } // throw back
 
     /*get total number of times this script has run and total kbs */
-    $items = xarModAPIFunc('sitetools', 'admin', 'getall');
+    $items = xarMod::apiFunc('sitetools', 'admin', 'getall');
     $gaintd=0;
     $runtimes=0;
     foreach ($items as $item) {

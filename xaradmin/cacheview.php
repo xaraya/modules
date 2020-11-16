@@ -20,21 +20,21 @@
 function sitetools_admin_cacheview($args)
 {
     /* Get parameters from whatever input we need. */
-    if (!xarVarFetch('action', 'str:1', $action, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'str:1', $action, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('hashn', 'str:1:', $hashn, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('hashn', 'str:1:', $hashn, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('templn', 'str:1:', $templn, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('templn', 'str:1:', $templn, false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     /* Security check - important to do this as early as possible */
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 
@@ -44,7 +44,7 @@ function sitetools_admin_cacheview($args)
     $data=array();
     $data['popup']=false;
     /* Check for confirmation. */
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     if (empty($action)) {
         /* No action set yet - display cache file list and await action */
         $data['showfiles']=false;
@@ -70,7 +70,7 @@ function sitetools_admin_cacheview($args)
             foreach ($hashname as $filen) {
                 $hashn=htmlspecialchars($filen[0]);
                 $templn=htmlspecialchars($filen[1]);
-                $fullnurl=xarModURL(
+                $fullnurl=xarController::URL(
                     'sitetools',
                     'admin',
                     'cacheview',
@@ -107,7 +107,7 @@ function sitetools_admin_cacheview($args)
         return $data;
     }
 
-    xarResponse::Redirect(xarModURL('sitetools', 'admin', 'cacheview'));
+    xarResponse::Redirect(xarController::URL('sitetools', 'admin', 'cacheview'));
     /*  Return */
     return true;
 }

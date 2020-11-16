@@ -43,7 +43,7 @@ function sitetools_adminapi_create($args)
         return;
     }
     // Security check - important to do this as early on as possible
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
     // Get database setup
@@ -73,7 +73,7 @@ function sitetools_adminapi_create($args)
     $item = $args;
     $item['module'] = 'sitetools';
     $item['itemid'] = $stid;
-    xarModCallHooks('item', 'create', $stid, $item);
+    xarModHooks::call('item', 'create', $stid, $item);
     // Return the id of the newly created item to the calling process
     return $stid;
 }

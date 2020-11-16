@@ -17,7 +17,7 @@
 function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
 {
     // Security check
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 

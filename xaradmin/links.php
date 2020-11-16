@@ -18,31 +18,31 @@
  */
 function sitetools_admin_links()
 {
-    if (!xarVarFetch('find', 'str:1:', $find, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('find', 'str:1:', $find, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('check', 'str:1:', $check, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('check', 'str:1:', $check, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     /* Security check */
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 
     $data = array();
 
     $data['checked'] = xarModVars::get('sitetools', 'links_checked');
-    if (!xarVarFetch('startnum', 'str:1:', $data['startnum'], '1', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'str:1:', $data['startnum'], '1', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('sort', 'str:1:', $data['sort'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'str:1:', $data['sort'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('filter', 'str:1:', $filter, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('status', 'str:1:', $status, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('status', 'str:1:', $status, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($filter)) {
@@ -54,7 +54,7 @@ function sitetools_admin_links()
     }
 
     /* get the list of relevant link fields per module/itemtype */
-    $data['modules'] = xarModAPIFunc('sitetools', 'admin', 'getlinkfields');
+    $data['modules'] = xarMod::apiFunc('sitetools', 'admin', 'getlinkfields');
     if (!isset($data['modules'])) {
         return;
     }
@@ -76,7 +76,7 @@ function sitetools_admin_links()
         /* nothing more to do here... */
         if (empty($check)) {
             /* Generate a one-time authorisation code for this operation */
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
 
             /* Return the template variables defined in this function */
             return $data;
@@ -84,7 +84,7 @@ function sitetools_admin_links()
     }
 
     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -94,7 +94,7 @@ function sitetools_admin_links()
         @set_time_limit(30*60);
 
         /* For some reason, PHP thinks it's in the Apache root during shutdown functions,
-         * so we save the current base dir here - otherwise xarModAPIFunc() will fail
+         * so we save the current base dir here - otherwise xarMod::apiFunc() will fail
          */
         $GLOBALS['xarSitetools_BaseDir'] = realpath('.');
 
@@ -102,14 +102,14 @@ function sitetools_admin_links()
         register_shutdown_function('sitetools_admin_startcheck');
 
         /* try to force a reload (still doesn't work for Windows servers) */
-        $url = xarModURL('sitetools', 'admin', 'links');
+        $url = xarController::URL('sitetools', 'admin', 'links');
         $url = preg_replace('/&amp;/', '&', $url);
         header("Refresh: 0; URL=$url");
 
         $data['checked'] = xarML('Link check started');
 
         /* Generate a one-time authorisation code for this operation *?
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
         /* Return the template variables defined in this function */
         return $data;
@@ -117,16 +117,16 @@ function sitetools_admin_links()
 
     @set_time_limit(120);
 
-    if (!xarVarFetch('todo', 'isset', $todo, array(), XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('todo', 'isset', $todo, array(), xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('skiplocal', 'isset', $skiplocal, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('skiplocal', 'isset', $skiplocal, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('method', 'isset', $method, 'GET', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('method', 'isset', $method, 'GET', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('follow', 'isset', $follow, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('follow', 'isset', $follow, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -148,7 +148,7 @@ function sitetools_admin_links()
         $fields[$matches[1]][$matches[2]][] = $matches[3];
     }
     /* find the links in the different fields and save them to the database */
-    $data['count'] = xarModAPIFunc(
+    $data['count'] = xarMod::apiFunc(
         'sitetools',
         'admin',
         'findlinks',
@@ -175,11 +175,11 @@ function sitetools_admin_links()
     /* some clean-up of previous link checks */
     if (!empty($data['checked'])) {
         $data['checked'] = '';
-        xarModDelVar('sitetools', 'links_checked');
+        xarModVars::delete('sitetools', 'links_checked');
     }
 
     /* Generate a one-time authorisation code for this operation */
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     /*return */
     return $data;
@@ -191,7 +191,7 @@ function sitetools_admin_links()
 function sitetools_admin_startcheck()
 {
     /* For some reason, PHP thinks it's in the Apache root during shutdown functions,
-     * so we move back to our own base dir first - otherwise xarModAPIFunc() will fail
+     * so we move back to our own base dir first - otherwise xarMod::apiFunc() will fail
      */
     if (!empty($GLOBALS['xarSitetools_BaseDir'])) {
         chdir($GLOBALS['xarSitetools_BaseDir']);
@@ -200,7 +200,7 @@ function sitetools_admin_startcheck()
     $skiplocal = xarModVars::get('sitetools', 'links_skiplocal');
     $method = xarModVars::get('sitetools', 'links_method');
     $follow = xarModVars::get('sitetools', 'links_follow');
-    xarModAPIFunc(
+    xarMod::apiFunc(
         'sitetools',
         'admin',
         'checklinks',

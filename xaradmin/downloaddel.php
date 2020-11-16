@@ -18,12 +18,12 @@
 */
 function sitetools_admin_downloaddel($args)
 {
-    if (!xarVarFetch('savefile', 'str:1', $savefile, '')) {
+    if (!xarVar::fetch('savefile', 'str:1', $savefile, '')) {
         return;
     }
 
     /* Security checkn*/
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 

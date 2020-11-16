@@ -91,13 +91,13 @@ function sitetools_adminapi_checklinks($args)
     }
 
     $count = 0;
-    $date = xarLocaleFormatDate('%x %X %z', time());
+    $date = xarLocale::formatDate('%x %X %z', time());
     $msg = xarML('#(1) : #(2)/#(3) links checked', $date, $count, $numitems);
     xarModVars::set('sitetools', 'links_checked', $msg);
     $update = "UPDATE $linkstable SET xar_status=? WHERE xar_link=?";
     for (; !$result->EOF; $result->MoveNext()) {
         list($link) = $result->fields;
-        $status = xarModAPIFunc(
+        $status = xarMod::apiFunc(
             'base',
             'user',
             'checklink',
@@ -107,7 +107,7 @@ function sitetools_adminapi_checklinks($args)
                                       'follow' => $follow)
         );
         if (!is_numeric($status)) {
-            $date = xarLocaleFormatDate('%x %X %z', time());
+            $date = xarLocale::formatDate('%x %X %z', time());
             $msg = xarML('#(1) : #(2)/#(3) links checked - #(4)', $date, $count, $numitems, $status);
             xarModVars::set('sitetools', 'links_checked', $msg);
             $status = -1;
@@ -115,14 +115,14 @@ function sitetools_adminapi_checklinks($args)
         $dbconn->Execute($update, array($status,$link));
         $count++;
         if ($status > 0 && $count % 10 == 0) {
-            $date = xarLocaleFormatDate('%x %X %z', time());
+            $date = xarLocale::formatDate('%x %X %z', time());
             $msg = xarML('#(1) : #(2)/#(3) links checked', $date, $count, $numitems);
             xarModVars::set('sitetools', 'links_checked', $msg);
         }
     }
     $result->Close();
 
-    xarModDelVar('sitetools', 'links_checked');
+    xarModVars::delete('sitetools', 'links_checked');
     // Return the number of items
     return $numitems;
 }

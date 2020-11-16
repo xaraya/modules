@@ -17,14 +17,14 @@
  * Used to call the template that provides display of the overview
  *
  * @author jojodee
- * @returns array xarTplModule with $data containing template data
+ * @returns array xarTpl::module with $data containing template data
  * @return array containing the menulinks for the overview item on the main manu
  * @since 2 Nov 2005
  */
 function sitetools_admin_overview()
 {
     /* Security Check */
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 
@@ -34,5 +34,5 @@ function sitetools_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('sitetools', 'admin', 'main', $data, 'main');
+    return xarTpl::module('sitetools', 'admin', 'main', $data, 'main');
 }

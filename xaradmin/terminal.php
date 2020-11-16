@@ -18,11 +18,11 @@
   */
 function sitetools_admin_terminal()
 {
-    if (!xarVarFetch('term_input', 'str::', $term_input, '')) {
+    if (!xarVar::fetch('term_input', 'str::', $term_input, '')) {
         return;
     }
 
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
     $output = array();

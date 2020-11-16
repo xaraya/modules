@@ -42,7 +42,7 @@ function sitetools_schedulerapi_backup($args)
 
     $screen=0; //TODO: Fix this when configurable in main backup util
     $data=array();
-    $data= xarModAPIFunc(
+    $data= xarMod::apiFunc(
         'sitetools',
         'admin',
         'backupdb',

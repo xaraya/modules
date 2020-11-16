@@ -21,10 +21,10 @@ function sitetools_adminapi_getmenulinks()
     $menulinks = array();
 
     /* Security Check */
-    if (xarSecurityCheck('AdminSiteTools', 0)) {
+    if (xarSecurity::check('AdminSiteTools', 0)) {
         /* The main menu will look for this array and return it for a tree view of the module*/
 
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'optimize'
@@ -32,21 +32,21 @@ function sitetools_adminapi_getmenulinks()
             'title' => xarML('Optimize a database'),
             'label' => xarML('Optimize database'));
 
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'backup'
         ),
             'title' => xarML('Backup a database'),
             'label' => xarML('Backup database'));
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'terminal'
         ),
             'title' => xarML('Access Database SQL via a simple web terminal'),
             'label' => xarML('SQL Terminal'));
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'cacheview'
@@ -54,7 +54,7 @@ function sitetools_adminapi_getmenulinks()
             'title' => xarML('Browse template cache files'),
             'label' => xarML('Browse template cache'));
 
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'deletecache'
@@ -62,7 +62,7 @@ function sitetools_adminapi_getmenulinks()
             'title' => xarML('Clear template, rss and adodb cache files'),
             'label' => xarML('Flush template cache'));
 
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'links'
@@ -70,7 +70,7 @@ function sitetools_adminapi_getmenulinks()
             'title' => xarML('Check URLs and images in articles, roles, ...'),
             'label' => xarML('Check links'));
 
-        $menulinks[] = array('url' => xarModURL(
+        $menulinks[] = array('url' => xarController::URL(
             'sitetools',
             'admin',
             'modifyconfig'

@@ -26,9 +26,9 @@ function sitetools_adminapi_getlinkfields($args)
     $proptypes = DataPropertyMaster::getPropertyTypes();
 
     // find relevant fields for articles
-    if (xarModIsAvailable('articles')) {
-        $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
-        $fieldformats = xarModAPIFunc('articles', 'user', 'getpubfieldformats');
+    if (xarMod::isAvailable('articles')) {
+        $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+        $fieldformats = xarMod::apiFunc('articles', 'user', 'getpubfieldformats');
         foreach ($pubtypes as $pubid => $pubtype) {
             $fields = array();
             foreach ($pubtype['config'] as $field => $info) {
@@ -54,7 +54,7 @@ function sitetools_adminapi_getlinkfields($args)
                         break;
                 }
             }
-            $object = xarModAPIFunc(
+            $object = xarMod::apiFunc(
                 'dynamicdata',
                 'user',
                 'getobject',
@@ -87,7 +87,7 @@ function sitetools_adminapi_getlinkfields($args)
 
     // find relevant fields for roles
     // only 1 itemtype for now, but groups might have separate DD fields later on
-    $rolesobject = xarModAPIFunc(
+    $rolesobject = xarMod::apiFunc(
         'dynamicdata',
         'user',
         'getobject',

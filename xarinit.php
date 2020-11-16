@@ -19,7 +19,7 @@
  */
 function sitetools_init()
 {
-    /* Get datbase setup - note that both xarDB::getConn() and xarDBGetTables()
+    /* Get datbase setup - note that both xarDB::getConn() and xarDB::getTables()
      * return arrays but we handle them differently.
      */
     $dbconn = xarDB::getConn();
@@ -37,7 +37,7 @@ function sitetools_init()
                     'xar_stgained' => array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2)
                 );
 
-    $query = xarDBCreateTable($sitetoolstable, $fields);
+    $query = xarTableDDL::createTable($sitetoolstable, $fields);
     if (empty($query)) {
         return;
     } // throw back
@@ -49,7 +49,7 @@ function sitetools_init()
     }
 
     $linkstable = $xartable['sitetools_links'];
-    $query = xarDBCreateTable(
+    $query = xarTableDDL::createTable(
         $linkstable,
         array('xar_id'         => array('type'        => 'integer',
                                                             'null'       => false,
@@ -101,7 +101,7 @@ function sitetools_init()
         'fields'    => array('xar_link'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($linkstable, $index);
+    $query = xarTableDDL::createIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
@@ -113,7 +113,7 @@ function sitetools_init()
         'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($linkstable, $index);
+    $query = xarTableDDL::createIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
@@ -125,14 +125,14 @@ function sitetools_init()
         'fields'    => array('xar_status'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($linkstable, $index);
+    $query = xarTableDDL::createIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
     }
 
     /* create the dynamic object that will represent our items */
-    $objectid = xarModAPIFunc(
+    $objectid = xarMod::apiFunc(
         'dynamicdata',
         'util',
         'import',
@@ -173,13 +173,13 @@ function sitetools_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-    xarRegisterMask('ReadSiteToolsBlock', 'All', 'sitetools', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadSiteToolsBlock', 'All', 'sitetools', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ViewSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarMasks::register('EditSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarMasks::register('AddSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarMasks::register('DeleteSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarMasks::register('AdminSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -200,7 +200,7 @@ function sitetools_upgrade($oldversion)
             sys::import('xaraya.tableddl');
 
             $linkstable = $xartable['sitetools_links'];
-            $query = xarDBCreateTable(
+            $query = xarTableDDL::createTable(
                 $linkstable,
                 array('xar_id'         => array('type'        => 'integer',
                                                                     'null'       => false,
@@ -253,7 +253,7 @@ function sitetools_upgrade($oldversion)
                 'fields'    => array('xar_link'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($linkstable, $index);
+            $query = xarTableDDL::createIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -265,7 +265,7 @@ function sitetools_upgrade($oldversion)
                 'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($linkstable, $index);
+            $query = xarTableDDL::createIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -277,14 +277,14 @@ function sitetools_upgrade($oldversion)
                 'fields'    => array('xar_status'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($linkstable, $index);
+            $query = xarTableDDL::createIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
                 return;
             }
 
             /* create the dynamic object that will represent our items */
-            $objectid = xarModAPIFunc(
+            $objectid = xarMod::apiFunc(
                 'dynamicdata',
                 'util',
                 'import',
@@ -321,7 +321,7 @@ function sitetools_delete()
 
     sys::import('xaraya.tableddl');
     /* Generate the SQL to drop the table using the API */
-    $query = xarDBDropTable($xartable['sitetools']);
+    $query = xarTableDDL::dropTable($xartable['sitetools']);
     if (empty($query)) {
         return;
     }
@@ -335,7 +335,7 @@ function sitetools_delete()
     /* delete the dynamic object and its properties */
     $objectid = xarModVars::get('sitetools', 'objectid_links');
     if (!empty($objectid)) {
-        xarModAPIFunc(
+        xarMod::apiFunc(
             'dynamicdata',
             'admin',
             'deleteobject',
@@ -345,7 +345,7 @@ function sitetools_delete()
     }
 
     /* Generate the SQL to drop the table using the API */
-    $query = xarDBDropTable($xartable['sitetools_links']);
+    $query = xarTableDDL::dropTable($xartable['sitetools_links']);
     if (empty($query)) {
         return;
     }
@@ -359,7 +359,7 @@ function sitetools_delete()
     xarModVars::delete_all('sitetools');
 
     /* Remove Masks and Instances */
-    xarRemoveMasks('sitetools');
+    xarMasks::removemasks('sitetools');
 
     /* Deletion successful */
     return true;

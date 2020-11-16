@@ -133,12 +133,12 @@
     </tr>
   <xar:foreach in="$items" key="$itemid">
     <tr>
-      <td><a href="#$items[$itemid]['link']#">#xarVarPrepForDisplay($items[$itemid]['link'])# </a></td>
+      <td><a href="#$items[$itemid]['link']#">#xarVar::prepForDisplay($items[$itemid]['link'])# </a></td>
       <td>#$items[$itemid]['status']#</td>
       <td>#$items[$itemid]['moduleid']#</td>
       <td>#$items[$itemid]['itemtype']#</td>
       <td>#$items[$itemid]['itemid']#</td>
-      <td><a href="#$items[$itemid]['itemlink']#">#xarVarPrepForDisplay($items[$itemid]['itemtitle'])# </a></td>
+      <td><a href="#$items[$itemid]['itemlink']#">#xarVar::prepForDisplay($items[$itemid]['itemtitle'])# </a></td>
     </tr>
   </xar:foreach>
   </table>

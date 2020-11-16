@@ -19,7 +19,7 @@ function sitetools_adminapi_backupdb($args)
 {
     extract($args);
     // Security check - allow scheduler api funcs to run as anon bug #2802
-    //if (!xarSecurityCheck('AdminSiteTools')) return;
+    //if (!xarSecurity::check('AdminSiteTools')) return;
 
     $items=array();
     $items['startbackup']=$startbackup;
@@ -78,7 +78,7 @@ function sitetools_adminapi_backupdb($args)
         $items['warning']=1;
         return $items;
     }
-    $items['authid']     = xarSecGenAuthKey();
+    $items['authid']     = xarSec::genAuthKey();
     $backuptimestamp    = $items['backuptimestamp'];
     $fullbackupfilename = $dbname.'xar_backup'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
     $partbackupfilename = $dbname.'.xar_backup_partial'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');

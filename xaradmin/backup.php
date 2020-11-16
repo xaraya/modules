@@ -20,26 +20,26 @@
  */
 function sitetools_admin_backup($args)
 {
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('startbackup', 'str:2:', $startbackup, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startbackup', 'str:2:', $startbackup, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('usegz', 'int:1', $usegz, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('usegz', 'int:1', $usegz, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('screen', 'int:1', $screen, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('dbname', 'str:1', $dbname, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('dbname', 'str:1', $dbname, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('SelectedTables', 'array:', $SelectedTables, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('SelectedTables', 'array:', $SelectedTables, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     /* Security check */
-    if (!xarSecurityCheck('AdminSiteTools')) {
+    if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
 
@@ -61,7 +61,7 @@ function sitetools_admin_backup($args)
         $data['warning']=1;
         return $data;
     }
-    $data['authid']     = xarSecGenAuthKey();
+    $data['authid']     = xarSec::genAuthKey();
     /* Setup the current database for backup - until there is option to choose it TODO */
     if (($dbname='') || (empty($dbname))) {
         $dbconn = xarDB::getConn();
@@ -92,7 +92,7 @@ function sitetools_admin_backup($args)
         $confirm='';
         if ($startbackup =='partial') {
             $tabledata=array();
-            $tabledata=xarModAPIFunc('sitetools', 'admin', 'gettabledata');
+            $tabledata=xarMod::apiFunc('sitetools', 'admin', 'gettabledata');
             if ($tabledata == false) {
                 /* Throw back any system exceptions (e.g. database failure) */
                 if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
@@ -120,13 +120,13 @@ function sitetools_admin_backup($args)
             return $data;
         }
 
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         @set_time_limit(600);
 
         $bkupdata=array();
-        $bkupdata= xarModAPIFunc(
+        $bkupdata= xarMod::apiFunc(
             'sitetools',
             'admin',
             'backupdb',
@@ -176,13 +176,13 @@ function sitetools_admin_backup($args)
 
         /*Generate download, view and delete URLS */
 
-        $data['downloadurl']= xarModURL(
+        $data['downloadurl']= xarController::URL(
             'sitetools',
             'admin',
             'downloadbkup',
             array('savefile' => $data['bkname'])
         );
-        $data['deleteurl']= xarModURL(
+        $data['deleteurl']= xarController::URL(
             'sitetools',
             'admin',
             'downloaddel',
