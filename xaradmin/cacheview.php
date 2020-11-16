@@ -13,7 +13,7 @@
  */
 /**
  *
- * @ View Cache Files
+ * View Cache Files
  * @param  $ 'action' action taken on cache file
  * @param $ 'confirm' confirm action on delete
  */
