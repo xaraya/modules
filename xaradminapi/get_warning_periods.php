@@ -33,4 +33,3 @@ function reminders_adminapi_get_warning_periods()
                     );
     return $warning_periods;
 }
-?>

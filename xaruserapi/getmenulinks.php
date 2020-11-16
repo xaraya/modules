@@ -19,15 +19,15 @@ function reminders_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewReminders',0)) {
-        $menulinks[] = array('url'   => xarModURL('reminders',
-                                                  'user',
-                                                  'main'),
+    if (xarSecurityCheck('ViewReminders', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'reminders',
+            'user',
+            'main'
+        ),
                               'title' => xarML(''),
                               'label' => xarML(''));
     }
 
     return $menulinks;
 }
-
-?>

@@ -13,9 +13,9 @@
  
 function reminders_adminapi_send_email($data)
 {
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get some properties for use in the template
+    # Get some properties for use in the template
 #
     $data['name'] = DataPropertyMaster::getProperty(array('name' => 'name'));
     $data['checkbox'] = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
@@ -26,9 +26,9 @@ function reminders_adminapi_send_email($data)
     $data['textbox'] = DataPropertyMaster::getProperty(array('name' => 'textbox'));
     $data['textarea'] = DataPropertyMaster::getProperty(array('name' => 'textarea'));
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Send the participant an email with the attachments
+    # Send the participant an email with the attachments
 #
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
@@ -37,7 +37,9 @@ function reminders_adminapi_send_email($data)
     $data['name']->value = $data['info']['name'];
     
     // Set a placeholder name if we don't have one
-	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
+    if (empty($data['name']->value)) {
+        $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
+    }
     
     if ($data['test']) {
         // If we are testing, then send to this user
@@ -66,18 +68,19 @@ function reminders_adminapi_send_email($data)
                       'recipientaddress' => $recipientaddress,
                       'bccaddresses'     => $bccaddress,
                       'attachments'      => $attachments,
-                      'data'             => $data, 
+                      'data'             => $data,
                     );
 
         // Check if we have a subject/message or a message ID
         if (empty($data['params']['subject']) && empty($data['params']['message_body'])) {
             // Bail if no message ID available
-            if (empty($data['params']['message_id']))
-            $result['code'] = 2;
+            if (empty($data['params']['message_id'])) {
+                $result['code'] = 2;
+            }
             return $result;
         }
 
-        if (!empty($data['params']['message_id']))  {
+        if (!empty($data['params']['message_id'])) {
             // We have a message ID
             $args['id'] = (int)$data['params']['message_id'];
             // Get the message template
@@ -85,29 +88,36 @@ function reminders_adminapi_send_email($data)
             $object->getItem(array('itemid' => $args['id']));
             // The subject can be overwritten
             $args['subject'] = $object->properties['subject']->value;
-            if (!empty($data['params']['subject'])) $args['subject'] = $data['params']['subject'];
+            if (!empty($data['params']['subject'])) {
+                $args['subject'] = $data['params']['subject'];
+            }
             if (!empty($data['params']['message_body'])) {
-            // We have a message ID (which indicates a template) and also a message body
-            // In this case we insert the latter into the former
+                // We have a message ID (which indicates a template) and also a message body
+                // In this case we insert the latter into the former
                 $message = $object->properties['body']->value;
                 $args['message'] = str_replace('#$message#', $data['params']['message_body'], $message);
                 $args['mail_type'] = $object->properties['mail_type']->value;
                 $sendername = $object->properties['sender_name']->value;
-                if (!empty($sendername)) $args['sendername'] = $sendername;
+                if (!empty($sendername)) {
+                    $args['sendername'] = $sendername;
+                }
                 $senderaddress = $object->properties['sender_address']->value;
-                if (!empty($senderaddress)) $args['senderaddress'] = $senderaddress;
+                if (!empty($senderaddress)) {
+                    $args['senderaddress'] = $senderaddress;
+                }
                 unset($args['id']);
             }
         } elseif (!empty($data['params']['message_body'])) {
             // We have only a message body
-            if (isset($data['params']['subject'])) $args['subject'] = $data['params']['subject'];
+            if (isset($data['params']['subject'])) {
+                $args['subject'] = $data['params']['subject'];
+            }
             $args['message'] = $data['params']['message_body'];
             // In this case we set the mail type to "text to html"
             $args['mail_type'] = 2;
         }
         // Send the email
-        $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
-      
+        $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $args);
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
     }
@@ -115,12 +125,11 @@ function reminders_adminapi_send_email($data)
     $result['email'] = $recipientaddress;
     
     // if we are testing, then add the test name and email
-	if ($data['test']) {
-		// If we are testing, then send to this user
-		$result['test_name']    = xarUser::getVar('name');
-		$result['test_email']   = xarUser::getVar('email');
-	}
+    if ($data['test']) {
+        // If we are testing, then send to this user
+        $result['test_name']    = xarUser::getVar('name');
+        $result['test_email']   = xarUser::getVar('email');
+    }
 
     return $result;
 }
-?>

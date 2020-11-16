@@ -16,13 +16,16 @@
  */
 function reminders_admin_view_entries($args)
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurityCheck('ManageReminders')) {
+        return;
+    }
 
     $modulename = 'reminders';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_entries', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_entries', XARVAR_DONT_SET)) {
+        return;
+    }
 
     return $data;
 }
-?>

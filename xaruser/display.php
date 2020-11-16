@@ -18,11 +18,17 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function reminders_user_display()
 {
-    if (!xarSecurityCheck('ReadReminders')) return;
+    if (!xarSecurityCheck('ReadReminders')) {
+        return;
+    }
     xarTpl::setPageTitle('Display Reminders');
 
-    if (!xarVarFetch('name',       'str',    $name,            'reminders_reminders', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str', $name, 'reminders_reminders', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
@@ -31,4 +37,3 @@ function reminders_user_display()
 
     return $data;
 }
-?>

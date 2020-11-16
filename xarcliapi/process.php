@@ -13,27 +13,30 @@
  * Process a raw email supplied to use by some gateway (ws.php for example)
  *
  * This function is now simple, but not smart. Ideally we want to do what we
- * do below very quickly to prevent real-time lock-ups. 
+ * do below very quickly to prevent real-time lock-ups.
  * In other words, the current code assumes we dont get many mails :-)
  *
  * @return integer exitcode to gateway script
  * @todo what do we do with security here?
  */
-function reminders_cliapi_process(Array $args=array())
+function reminders_cliapi_process(array $args=array())
 {
     xarLog::message("Reminders: processing the reminders queue", xarLog::LEVEL_DEBUG);
     extract($args);
     assert($argc > 0 && $argv[1] == "reminders");
 
     // TODO: Guess ;-)
-    if(isset($argv[2]) && $argv[2]=='-u') $user = $argv[3];
-    if(isset($argv[4]) && $argv[4]=='-p') $pass = $argv[5];
-    if(!isset($user) or !isset($pass)) 
-    {
+    if (isset($argv[2]) && $argv[2]=='-u') {
+        $user = $argv[3];
+    }
+    if (isset($argv[4]) && $argv[4]=='-p') {
+        $pass = $argv[5];
+    }
+    if (!isset($user) or !isset($pass)) {
         echo "Usage: reminders -u <user> -p <pass> [reminderscontent]\n";
         return 1;
     }
-    if(!xarUser::login($user,$pass)) {
+    if (!xarUser::login($user, $pass)) {
         echo "Authentication failed\n";
         return 1;
     }
@@ -43,4 +46,3 @@ function reminders_cliapi_process(Array $args=array())
     
     return true;
 }
-?>

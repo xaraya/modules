@@ -23,13 +23,15 @@ function reminders_init()
 
 # --------------------------------------------------------
 #
-# Set tables
+    # Set tables
 #
     $q = new Query();
     $prefix = xarDB::getPrefix();
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_entries";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_reminders_entries (
         id                  integer unsigned NOT NULL auto_increment,
         name                varchar(255) NOT NULL default '', 
@@ -65,10 +67,14 @@ function reminders_init()
         state               tinyint(3) NOT NULL default 3, 
         PRIMARY KEY  (id) 
     )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_emails";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_reminders_emails (
         id                integer unsigned NOT NULL auto_increment,
         name              varchar(255) NOT NULL default '', 
@@ -78,37 +84,39 @@ function reminders_init()
         state             tinyint(3) NOT NULL default 3, 
         PRIMARY KEY  (id)
     )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up masks
+    # Set up masks
 #
-    xarRegisterMask('ViewReminders',    'All','reminders','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadReminders',    'All','reminders','All','All','ACCESS_READ');
-    xarRegisterMask('CommentReminders', 'All','reminders','All','All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateReminders','All','reminders','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditReminders',    'All','reminders','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddReminders',     'All','reminders','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageReminders',  'All','reminders','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminReminders',   'All','reminders','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('CommentReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterMask('ModerateReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_MODERATE');
+    xarRegisterMask('EditReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('ManageReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_ADMIN');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up privileges
+    # Set up privileges
 #
-    xarRegisterPrivilege('ViewReminders',    'All','reminders','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadReminders',    'All','reminders','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommentReminders', 'All','reminders','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateReminders','All','reminders','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditReminders',    'All','reminders','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddReminders',     'All','reminders','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('ManageReminders',  'All','reminders','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminReminders',   'All','reminders','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('ViewReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_READ');
+    xarRegisterPrivilege('CommentReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_MODERATE');
+    xarRegisterPrivilege('EditReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterPrivilege('AddReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterPrivilege('ManageReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterPrivilege('AdminReminders', 'All', 'reminders', 'All', 'All', 'ACCESS_ADMIN');
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create DD objects
+    # Create DD objects
 #
     $module = 'reminders';
     $objects = array(
@@ -116,36 +124,38 @@ function reminders_init()
                      'reminders_entries',
                      );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up modvars
+    # Set up modvars
 #
-    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'reminders'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'reminders'));
     $module_settings->initialize();
 
     // Add variables like this next one when creating utility modules
     // This variable is referenced in the xaradmin/modifyconfig-utility.php file
     // This variable is referenced in the xartemplates/includes/defaults.xd file
-    xarModVars::set('reminders', 'defaultmastertable','reminders_reminders');
+    xarModVars::set('reminders', 'defaultmastertable', 'reminders_reminders');
     xarModVars::set('reminders', 'debugmode', false);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Default data for other modules
+    # Default data for other modules
 #
     // Add basic mailer templates
     if (xarMod::isAvailable('mailer')) {
         $dat_file = sys::code() . 'modules/' . $module . '/xardata/'.'mailer_templates-dat.xml';
-        if(file_exists($dat_file)) {
+        if (file_exists($dat_file)) {
             $data['file'] = $dat_file;
-            $objectid = xarMod::apiFunc('dynamicdata','util','import', $data);
+            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
         }
     }
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up hooks
+    # Set up hooks
 #
 
     return true;
@@ -168,7 +178,5 @@ function reminders_delete()
     $q->run();
 
     // Remove everything else concerning the module
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
 }
-
-?>

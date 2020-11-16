@@ -32,8 +32,9 @@ function reminders_adminapi_get_warning_period_time($args)
             A1_year     => 365,
             );
     if ($args['timeframe'] = 'seconds') {
-        foreach ($days as $k => $v) $days[$k] = $v * 86400;
+        foreach ($days as $k => $v) {
+            $days[$k] = $v * 86400;
+        }
     }
     return $days;
 }
-?>

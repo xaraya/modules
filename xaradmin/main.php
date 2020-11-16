@@ -17,15 +17,17 @@
 
 function reminders_admin_main()
 {
-    if(!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurityCheck('ManageReminders')) {
+        return;
+    }
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        $redirect = xarModVars::get('reminders','backend_page');
+        $redirect = xarModVars::get('reminders', 'backend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
             xarController::redirect(xarModURL('reminders', 'admin', 'modifyconfig'));
@@ -33,4 +35,3 @@ function reminders_admin_main()
     }
     return true;
 }
-?>

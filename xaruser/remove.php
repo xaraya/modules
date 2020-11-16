@@ -16,10 +16,16 @@
  */
 function reminders_user_remove()
 {
-    if (!xarSecurityCheck('ReadReminders')) return;
+    if (!xarSecurityCheck('ReadReminders')) {
+        return;
+    }
 
-    if (!xarVarFetch('code',    'str',      $data['code'],       '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'],    false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('code', 'str', $data['code'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
@@ -35,15 +41,14 @@ function reminders_user_remove()
     $data['item'] = reset($items);
 
     $email_dates = xarMod::apiFunc('reminders', 'user', 'get_email_dates', array('array' => $data['item']));
-	$data['remaining'] = count($email_dates);
-	
+    $data['remaining'] = count($email_dates);
+    
     $data['authid'] = xarSecGenAuthKey('reminders');
 
     if ($data['confirm']) {
     }
 
     $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
-	xarTpl::setPageTemplateName('user_full');
-	return $data;
+    xarTpl::setPageTemplateName('user_full');
+    return $data;
 }
-?>

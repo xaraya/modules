@@ -17,14 +17,20 @@
 
 function reminders_admin_test()
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurityCheck('ManageReminders')) {
+        return;
+    }
     
-    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'],    false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
     if ($data['confirm']) {
         
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         // Check if we get a copy of the email(s)
         $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
@@ -41,4 +47,3 @@ function reminders_admin_test()
 
     return $data;
 }
-?>

@@ -18,4 +18,3 @@ function reminders_user_test()
 {
     return array();
 }
-?>

@@ -24,4 +24,3 @@ function reminders_dataapi_adminmenu()
         array('mask' => 'AdminReminders', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Reminders configuration'), 'label' => xarML('Modify Config')),
     );
 }
-?>
