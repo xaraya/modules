@@ -43,9 +43,9 @@ function reminders_adminapi_process($args)
     $q = new Query('SELECT');
     $q->addtable($tables['reminders_entries'], 'entries');
     $q->addtable($tables['reminders_emails'], 'email_1');
-    $q->leftjoin('entries.email_1', 'email_1.id');
+    $q->leftjoin('entries.email_id_1', 'email_1.id');
     $q->addtable($tables['reminders_emails'], 'email_2');
-    $q->leftjoin('entries.email_2', 'email_2.id');
+    $q->leftjoin('entries.email_id_2', 'email_2.id');
     
     // Only active reminders
     $q->eq('entries.state', 3);
