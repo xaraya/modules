@@ -18,7 +18,9 @@
 function ratings_userapi_getmodules($args)
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRatings')) return;
+    if (!xarSecurityCheck('OverviewRatings')) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -32,11 +34,13 @@ function ratings_userapi_getmodules($args)
             ORDER BY module_id, itemtype";
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$numitems,$numratings) = $result->fields;
+        list($modid, $itemtype, $numitems, $numratings) = $result->fields;
         $modlist[$modid][$itemtype] = array('items' => $numitems, 'ratings' => $numratings);
         $result->MoveNext();
     }
@@ -44,5 +48,3 @@ function ratings_userapi_getmodules($args)
 
     return $modlist;
 }
-
-?>

@@ -25,14 +25,24 @@ function ratings_userapi_get($args)
     // Argument check
     if ((!isset($modname)) ||
         (!isset($itemid))) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    xarML('module name or item id'), 'user', 'get', 'ratings');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            xarML('module name or item id'),
+            'user',
+            'get',
+            'ratings'
+        );
         throw new Exception($msg);
     }
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    xarML('module id'), 'user', 'get', 'ratings');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            xarML('module id'),
+            'user',
+            'get',
+            'ratings'
+        );
         throw new Exception($msg);
     }
 
@@ -41,7 +51,9 @@ function ratings_userapi_get($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadRatings')) return;
+    if (!xarSecurityCheck('ReadRatings')) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -55,11 +67,12 @@ function ratings_userapi_get($args)
               AND itemtype = ?";
     $bindvars = array($modid, $itemid, $itemtype);
     $result =& $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     $rating = $result->fields[0];
     $result->close();
     // Return the rating as a single number.
     // Bug 6160 requests an array with the rating and the numrating, solved by using getitems function
     return $rating;
 }
-?>

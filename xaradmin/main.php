@@ -13,7 +13,9 @@
 function ratings_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ManageRatings')) return;
+    if (!xarSecurityCheck('ManageRatings')) {
+        return;
+    }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
@@ -23,5 +25,3 @@ function ratings_admin_main()
     // success
     return true;
 }
-
-?>

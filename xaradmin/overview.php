@@ -15,8 +15,10 @@
  */
 function ratings_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminRatings',0)) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminRatings', 0)) {
+        return;
+    }
 
     $data=array();
 
@@ -24,7 +26,5 @@ function ratings_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTplModule('ratings', 'admin', 'main', $data,'main');
+    return xarTplModule('ratings', 'admin', 'main', $data, 'main');
 }
-
-?>

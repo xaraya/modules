@@ -25,4 +25,3 @@ function ratings_userapi_getstyles($args)
     );
     return $ratingstyles;
 }
-?>

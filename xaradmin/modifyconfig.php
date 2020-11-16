@@ -23,12 +23,18 @@
 function ratings_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminRatings')) return;
+    if (!xarSecurityCheck('AdminRatings')) {
+        return;
+    }
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase,       'modify',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tab',   'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'ratings'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'ratings'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
 
@@ -48,17 +54,26 @@ function ratings_admin_modifyconfig()
                                                      'seclevel' => $defaultseclevel,
                                                      'shownum' => $defaultshownum);
 
-                $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                               array('hookModName' => 'ratings'));
+                $hookedmodules = xarMod::apiFunc(
+                    'modules',
+                    'admin',
+                    'gethookedmodules',
+                    array('hookModName' => 'ratings')
+                );
 
                 if (isset($hookedmodules) && is_array($hookedmodules)) {
                     foreach ($hookedmodules as $modname => $value) {
                         // we have hooks for individual item types here
                         if (!isset($value[0])) {
                             // Get the list of all item types for this module (if any)
-                            $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
+                            $mytypes = xarMod::apiFunc(
+                                $modname,
+                                'user',
+                                'getitemtypes',
                                                      // don't throw an exception if this function doesn't exist
-                                                     array(), 0);
+                                                     array(),
+                                0
+                            );
                             foreach ($value as $itemtype => $val) {
                                 $ratingsstyle = xarModVars::get('ratings', "ratingsstyle.$modname.$itemtype");
                                 if (empty($ratingsstyle)) {
@@ -71,14 +86,14 @@ function ratings_admin_modifyconfig()
                                 $shownum = xarModVars::get('ratings', "shownum.$modname.$itemtype");
                                 if (empty($shownum)) {
                                     $shownum = $defaultshownum;
-                                    xarModVars::set('ratings',"shownum.$modname.$itemtype", $defaultshownum);
+                                    xarModVars::set('ratings', "shownum.$modname.$itemtype", $defaultshownum);
                                 }
                                 if (isset($mytypes[$itemtype])) {
                                     $type = $mytypes[$itemtype]['label'];
                                     $link = $mytypes[$itemtype]['url'];
                                 } else {
-                                    $type = xarML('type #(1)',$itemtype);
-                                    $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
+                                    $type = xarML('type #(1)', $itemtype);
+                                    $link = xarModURL($modname, 'user', 'view', array('itemtype' => $itemtype));
                                 }
                                 $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                                 'ratingsstyle' => $ratingsstyle,
@@ -97,9 +112,9 @@ function ratings_admin_modifyconfig()
                             $shownum = xarModVars::get('ratings', 'shownum.' . $modname);
                             if (empty($shownum)) {
                                 $shownum = $defaultshownum;
-                                xarModVars::set('ratings',"shownum.$modname", $defaultshownum);
+                                xarModVars::set('ratings', "shownum.$modname", $defaultshownum);
                             }
-                            $link = xarModURL($modname,'user','main');
+                            $link = xarModURL($modname, 'user', 'main');
                             $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                                 'ratingsstyle' => $ratingsstyle,
                                                                 'seclevel' => $seclevel,
@@ -127,14 +142,14 @@ function ratings_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-            }        
+                return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            }
             switch ($data['tab']) {
                 case 'general':
 
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTplModule('eventhub','admin','modifyconfig', $data);
+                        return xarTplModule('eventhub', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
@@ -154,5 +169,3 @@ function ratings_admin_modifyconfig()
     }
     return $data;
 }
-
-?>

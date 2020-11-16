@@ -27,16 +27,26 @@ function ratings_userapi_getitems($args)
 
     // Argument check
     if (!isset($modname) && !isset($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    xarML('module name'), 'user', 'getitems', 'ratings');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            xarML('module name'),
+            'user',
+            'getitems',
+            'ratings'
+        );
         throw new Exception($msg);
     }
     if (!empty($modname)) {
         $modid = xarMod::getRegID($modname);
     }
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    xarML('module id'), 'user', 'getitems', 'ratings');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            xarML('module id'),
+            'user',
+            'getitems',
+            'ratings'
+        );
         throw new Exception($msg);
     }
     // Bug 5856: is this needed?
@@ -48,7 +58,9 @@ function ratings_userapi_getitems($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadRatings')) return;
+    if (!xarSecurityCheck('ReadRatings')) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -65,7 +77,7 @@ function ratings_userapi_getitems($args)
     $bindvars[] = (int) $itemtype;
 
     if (isset($itemids) && count($itemids) > 0) {
-        $allids = join(', ',$itemids);
+        $allids = join(', ', $itemids);
         $query .= " AND itemid IN (?)";
         $bindvars[] = $allids;
     }
@@ -78,11 +90,13 @@ function ratings_userapi_getitems($args)
     }
 
     $result =& $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $getitems = array();
     while (!$result->EOF) {
-        list($id,$rating,$numratings) = $result->fields;
+        list($id, $rating, $numratings) = $result->fields;
         $getitems[$id] = array('numratings' => $numratings, 'rating' => $rating);
         $result->MoveNext();
     }
@@ -90,5 +104,3 @@ function ratings_userapi_getitems($args)
 
     return $getitems;
 }
-
-?>

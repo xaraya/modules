@@ -52,11 +52,15 @@ function ratings_userapi_leftjoin($args)
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
             // Security Check
-// FIXME: add some instances here
-            if(!xarSecurityCheck('OverviewRatings')) return;
+            // FIXME: add some instances here
+            if (!xarSecurityCheck('OverviewRatings')) {
+                return;
+            }
         }
     } else {
-        if(!xarSecurityCheck('OverviewRatings')) return;
+        if (!xarSecurityCheck('OverviewRatings')) {
+            return;
+        }
     }
 
     // Table definition
@@ -79,7 +83,9 @@ function ratings_userapi_leftjoin($args)
         } elseif (is_array($itemtype) && count($itemtype) > 0) {
             $seentype = array();
             foreach ($itemtype as $id) {
-                if (empty($id) || !is_numeric($id)) continue;
+                if (empty($id) || !is_numeric($id)) {
+                    continue;
+                }
                 $seentype[$id] = 1;
             }
             if (count($seentype) == 1) {
@@ -109,4 +115,3 @@ function ratings_userapi_leftjoin($args)
     }
     return $leftjoin;
 }
-?>

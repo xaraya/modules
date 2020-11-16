@@ -30,5 +30,3 @@ function ratings_xartables()
     // Return table information
     return $xartable;
 }
-
-?>

@@ -16,33 +16,47 @@
 function ratings_user_rate($args)
 {
     // Get parameters
-    if (!xarVarFetch('modname',   'isset', $modname,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('itemtype',  'isset', $itemtype,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('itemid',    'isset', $itemid,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl', 'isset', $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('rating',    'isset', $rating,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('modname', 'isset', $modname, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('returnurl', 'isset', $returnurl, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('rating', 'isset', $rating, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     // Pass to API
-    $newrating = xarMod::apiFunc('ratings',
-                              'user',
-                              'rate',
-                              array('modname'    => $modname,
+    $newrating = xarMod::apiFunc(
+        'ratings',
+        'user',
+        'rate',
+        array('modname'    => $modname,
                                     'itemtype'   => $itemtype,
                                     'itemid'     => $itemid,
-                                    'rating'     => $rating));
+                                    'rating'     => $rating)
+    );
 
     if (isset($newrating)) {
         // Success
-            xarSession::setVar('ratings_statusmsg', xarML('Thank you for rating this item.',
-                    'ratings'));
+        xarSession::setVar('ratings_statusmsg', xarML(
+            'Thank you for rating this item.',
+            'ratings'
+        ));
     }
 
     xarController::redirect($returnurl);
 
     return true;
 }
-
-?>

@@ -40,7 +40,7 @@ function ratings_user_display($args)
             $data['returnurl'] = $extrainfo['returnurl'];
         }
         if (isset($extrainfo['ratingsstyle']) && is_string($extrainfo['ratingsstyle'])) {
-            if(in_array($ratingsstyle, array('outoffive','outoffivestars','outoften','outoftenstars','customised'))) {
+            if (in_array($ratingsstyle, array('outoffive','outoffivestars','outoften','outoftenstars','customised'))) {
                 $ratingsstyle = $extrainfo['ratingsstyle'];
             }
         }
@@ -86,19 +86,19 @@ function ratings_user_display($args)
         }
     }
 
-    if(isset($showdisplay) && $showdisplay != true) {
+    if (isset($showdisplay) && $showdisplay != true) {
         $showdisplay = false;
     } else {
         $showdisplay = true;
     }
-    if(isset($showinput) && $showinput != true) {
+    if (isset($showinput) && $showinput != true) {
         $showinput = false;
     } else {
         $showinput = true;
     }
 
     // if we're not showing anything, bail out early
-    if($shownum == false && $showdisplay == false && $showinput == false) {
+    if ($shownum == false && $showdisplay == false && $showinput == false) {
         return;
     }
 
@@ -116,10 +116,12 @@ function ratings_user_display($args)
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
-    $rating = xarMod::apiFunc('ratings',
-                           'user',
-                           'getitems',
-                           $args);
+    $rating = xarMod::apiFunc(
+        'ratings',
+        'user',
+        'getitems',
+        $args
+    );
     // Select the way to get the rating
     if (!empty($rating[$itemid])) {
 //        $key_id = array_keys($rating);
@@ -127,23 +129,25 @@ function ratings_user_display($args)
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
     } else {
         // Use old fashioned way
-        $data['rawrating'] = xarMod::apiFunc('ratings',
-                           'user',
-                           'get',
-                           $args);
+        $data['rawrating'] = xarMod::apiFunc(
+            'ratings',
+            'user',
+            'get',
+            $args
+        );
         $data['numratings'] = 0;
     }
     if (isset($data['rawrating'])) {
         // Set the cached variable if requested
-        if (xarVarIsCached('Hooks.ratings','save') &&
-            xarVarGetCached('Hooks.ratings','save') == true) {
-            xarVarSetCached('Hooks.ratings','value',$data['rawrating']);
+        if (xarVarIsCached('Hooks.ratings', 'save') &&
+            xarVarGetCached('Hooks.ratings', 'save') == true) {
+            xarVarSetCached('Hooks.ratings', 'value', $data['rawrating']);
         }
 
         // Display current rating
-        switch($data['ratingsstyle']) {
+        switch ($data['ratingsstyle']) {
             case 'percentage':
-                $data['rating'] = sprintf("%.1f",$data['rawrating']);
+                $data['rating'] = sprintf("%.1f", $data['rawrating']);
                 break;
             case 'outoffive':
                 $data['rating'] = round($data['rawrating']/20);
@@ -157,13 +161,13 @@ function ratings_user_display($args)
                 $data['rating'] = (int)($data['rawrating']/10);
                 break;
             case 'outoftenstars':
-                $data['rating'] = sprintf("%.1f",$data['rawrating']);
+                $data['rating'] = sprintf("%.1f", $data['rawrating']);
                 $data['intrating'] = (int)($data['rawrating']/10);
                 $data['fracrating'] = $data['rawrating'] - (10 * $data['intrating']);
                 break;
             case 'customised':
             default:
-                $data['rating'] = sprintf("%.1f",$data['rawrating']);
+                $data['rating'] = sprintf("%.1f", $data['rawrating']);
                 break;
         }
     } else {
@@ -187,10 +191,10 @@ function ratings_user_display($args)
     if ($seclevel == 'high') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$itemid)) {
-                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$itemid,1);
+            if (!xarModVars::get('ratings', $modname.':'.$itemtype.':'.$itemid)) {
+                xarModVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, 1);
             }
-            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$itemid);
+            $rated = xarModUserVars::get('ratings', $modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > 1) {
                 $data['rated'] = true;
             }
@@ -203,10 +207,10 @@ function ratings_user_display($args)
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$itemid)) {
-                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$itemid,1);
+            if (!xarModVars::get('ratings', $modname.':'.$itemtype.':'.$itemid)) {
+                xarModVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, 1);
             }
-            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$itemid);
+            $rated = xarModUserVars::get('ratings', $modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 $data['rated'] = true;
             }
@@ -225,5 +229,3 @@ function ratings_user_display($args)
     }
     return $data;
 }
-
-?>

@@ -35,30 +35,43 @@ function ratings_init()
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($xartable['ratings'], $fields);
-    if (empty($query)) return; // throw back
+    if (empty($query)) {
+        return;
+    } // throw back
 
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     // TODO: compare with having 2 indexes (cfr. hitcount)
-    $query = xarDBCreateIndex($xartable['ratings'],
+    $query = xarDBCreateIndex(
+        $xartable['ratings'],
         array('name' => 'i_' . xarDB::getPrefix() . '_ratingcombo',
             'fields' => array('module_id', 'itemtype', 'itemid'),
-            'unique' => true));
+            'unique' => true)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateIndex($xartable['ratings'],
+    $query = xarDBCreateIndex(
+        $xartable['ratings'],
         array('name' => 'i_' . xarDB::getPrefix() . '_rating',
             'fields' => array('rating'),
-            'unique' => false));
+            'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateTable($xartable['ratings_likes'],
-                             array('id'         => array('type'        => 'integer',
+    $query = xarDBCreateTable(
+        $xartable['ratings_likes'],
+        array('id'         => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'increment'   => true,
@@ -78,34 +91,49 @@ function ratings_init()
                                    'udid'       => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0')));
+                                                            'default'     => '0'))
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateIndex($xartable['ratings_likes'],
-                             array('name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
+    $query = xarDBCreateIndex(
+        $xartable['ratings_likes'],
+        array('name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
                                    'fields' => array('object_id', 'itemid'),
-                                   'unique' => false));
+                                   'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateIndex($xartable['ratings_likes'],
-                             array('name'   => 'i_' . xarDB::getPrefix() . '_role_id',
+    $query = xarDBCreateIndex(
+        $xartable['ratings_likes'],
+        array('name'   => 'i_' . xarDB::getPrefix() . '_role_id',
                                    'fields' => array('role_id'),
-                                   'unique' => false));
+                                   'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     
-    $query = xarDBCreateIndex($xartable['ratings_likes'],
-                             array('name'   => 'i_' . xarDB::getPrefix() . '_udid',
+    $query = xarDBCreateIndex(
+        $xartable['ratings_likes'],
+        array('name'   => 'i_' . xarDB::getPrefix() . '_udid',
                                    'fields' => array('udid'),
-                                   'unique' => false));
+                                   'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     
     # --------------------------------------------------------
     #
@@ -119,19 +147,27 @@ function ratings_init()
     #
     # Set up hooks
     #
-    if (!xarModRegisterHook('item',
-            'display',
-            'GUI',
-            'ratings',
-            'user',
-            'display')) {
+    if (!xarModRegisterHook(
+        'item',
+        'display',
+        'GUI',
+        'ratings',
+        'user',
+        'display'
+    )) {
         return false;
     }
 
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
-    if (!xarModRegisterHook('module', 'remove', 'API',
-                           'ratings', 'admin', 'deleteall')) {
+    if (!xarModRegisterHook(
+        'module',
+        'remove',
+        'API',
+        'ratings',
+        'admin',
+        'deleteall'
+    )) {
         return false;
     }
 
@@ -215,38 +251,57 @@ function ratings_upgrade($oldversion)
             // delete/initialize the whole thing again
             ratings_delete();
             ratings_init();
+            // no break
         case '1.2.0':
             // clean up double hook registrations
             xarModUnregisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
             xarModRegisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
-            $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                           array('hookModName' => 'ratings'));
+            $hookedmodules = xarMod::apiFunc(
+                'modules',
+                'admin',
+                'gethookedmodules',
+                array('hookModName' => 'ratings')
+            );
             if (isset($hookedmodules) && is_array($hookedmodules)) {
                 foreach ($hookedmodules as $modname => $value) {
                     foreach ($value as $itemtype => $val) {
-                        xarMod::apiFunc('modules','admin','enablehooks',
-                                      array('hookModName' => 'ratings',
+                        xarMod::apiFunc(
+                            'modules',
+                            'admin',
+                            'enablehooks',
+                            array('hookModName' => 'ratings',
                                             'callerModName' => $modname,
-                                            'callerItemType' => $itemtype));
+                                            'callerItemType' => $itemtype)
+                        );
                     }
                 }
             }
 
+            // no break
         case '1.2.1':
             // Set up shownum modvar, including for existing hooked modules
             xarModVars::set('ratings', 'shownum', 1);
-            $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                   array('hookModName' => 'ratings'));
+            $hookedmodules = xarMod::apiFunc(
+                'modules',
+                'admin',
+                'gethookedmodules',
+                array('hookModName' => 'ratings')
+            );
             if (isset($hookedmodules) && is_array($hookedmodules)) {
                 foreach ($hookedmodules as $modname => $value) {
                     // we have hooks for individual item types here
                     if (!isset($value[0])) {
                         // Get the list of all item types for this module (if any)
-                        $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
+                        $mytypes = xarMod::apiFunc(
+                            $modname,
+                            'user',
+                            'getitemtypes',
                                                  // don't throw an exception if this function doesn't exist
-                                                 array(), 0);
+                                                 array(),
+                            0
+                        );
                         foreach ($value as $itemtype => $val) {
-                            xarModVars::set('ratings',"shownum.$modname.$itemtype", 1);
+                            xarModVars::set('ratings', "shownum.$modname.$itemtype", 1);
                         }
                     } else {
                         xarModVars::set('ratings', 'shownum.' . $modname, 1);
@@ -261,7 +316,9 @@ function ratings_upgrade($oldversion)
             $query= "ALTER TABLE " . $xartable['ratings'] . "
                            MODIFY COLUMN rating double(8,5) NOT NULL default '0.00000'";
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
     }
     return true;
 }
@@ -273,17 +330,26 @@ function ratings_upgrade($oldversion)
 function ratings_delete()
 {
     // Remove module hooks
-    if (!xarModUnregisterHook('item',
-            'display',
-            'GUI',
-            'ratings',
-            'user',
-            'display')) return;
-
-    if (!xarModUnregisterHook('module', 'remove', 'API',
-                             'ratings', 'admin', 'deleteall')) {
+    if (!xarModUnregisterHook(
+        'item',
+        'display',
+        'GUI',
+        'ratings',
+        'user',
+        'display'
+    )) {
         return;
     }
-        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'ratings'));
+
+    if (!xarModUnregisterHook(
+        'module',
+        'remove',
+        'API',
+        'ratings',
+        'admin',
+        'deleteall'
+    )) {
+        return;
+    }
+    return xarModAPIFunc('modules', 'admin', 'standarddeinstall', array('module' => 'ratings'));
 }
-?>
