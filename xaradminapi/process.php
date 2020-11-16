@@ -54,6 +54,7 @@ function reminders_adminapi_process($args)
     			  	'email_1.address AS address_1',
     			  	'email_2.name AS name_2',
     			  	'email_2.address AS address_2',
+    			  	'code',
     			  	'message',
     			  	'template_id',
     			  	'due_date',
