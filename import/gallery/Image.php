@@ -2,39 +2,39 @@
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2003 Bharat Mediratta
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 ?>
 <?php
-class Image 
+class Image
 {
-    var $name;
-    var $type;
-    var $width;
-    var $height;
-    var $resizedName;
-    var $thumb_x;
-    var $thumb_y;
-    var $thumb_width;
-    var $thumb_height;
-    var $raw_width;
-    var $raw_height;
-    var $version;
+    public $name;
+    public $type;
+    public $width;
+    public $height;
+    public $resizedName;
+    public $thumb_x;
+    public $thumb_y;
+    public $thumb_width;
+    public $thumb_height;
+    public $raw_width;
+    public $raw_height;
+    public $version;
 
-    function Image() 
+    public function Image()
     {
         global $gallery;
 
@@ -42,7 +42,7 @@ class Image
         $this->version = $gallery->album_version;
     }
 
-    function setFile($dir, $name, $type) 
+    public function setFile($dir, $name, $type)
     {
         $this->name = $name;
         $this->type = $type;
@@ -56,7 +56,7 @@ class Image
         }
     }
 
-    function integrityCheck($dir) 
+    public function integrityCheck($dir)
     {
         global $gallery;
 
@@ -68,7 +68,7 @@ class Image
 
         /*
          * Fix a specific bug where the width/height are reversed
-         * for sized images 
+         * for sized images
          */
         if ($this->version < 3) {
             if ($this->resizedName) {
@@ -97,7 +97,7 @@ class Image
         return $changed;
     }
 
-    function resize($dir, $target, $pathToResized="") 
+    public function resize($dir, $target, $pathToResized="")
     {
         global $gallery;
 
@@ -116,11 +116,13 @@ class Image
             $type = $this->type;
             
             if ($pathToResized) {
-                $ret = copy($pathToResized,"$dir/$name.sized.$this->type");    
+                $ret = copy($pathToResized, "$dir/$name.sized.$this->type");
             } else {
-                $ret = resize_image("$dir/$name.$type",
-                         "$dir/$name.sized.$this->type",
-                         $target);
+                $ret = resize_image(
+                    "$dir/$name.$type",
+                    "$dir/$name.sized.$this->type",
+                    $target
+                );
             }
             
             #-- resized image is not always a jpeg ---
@@ -130,10 +132,10 @@ class Image
                 $this->width = $w;
                 $this->height = $h;
             }
-        }    
+        }
     }
 
-    function delete($dir) 
+    public function delete($dir)
     {
         if (fs_file_exists("$dir/$this->resizedName.$this->type")) {
             fs_unlink("$dir/$this->resizedName.$this->type");
@@ -144,7 +146,7 @@ class Image
         fs_unlink("$dir/$this->name.$this->type");
     }
 
-    function getTag($dir, $full=0, $size=0, $attrs="") 
+    public function getTag($dir, $full=0, $size=0, $attrs="")
     {
         global $gallery;
 
@@ -160,7 +162,7 @@ class Image
                 $height = $size;
             }
             $size_val = "width=\"$width\" height=\"$height\"";
-        } else if ($full || !$this->resizedName) {
+        } elseif ($full || !$this->resizedName) {
             $size_val = "width=\"$this->raw_width\" height=\"$this->raw_height\"";
         } else {
             $size_val = "width=\"$this->width\" height=\"$this->height\"";
@@ -180,7 +182,7 @@ class Image
         }
     }
 
-    function getName($dir, $full=0) 
+    public function getName($dir, $full=0)
     {
         if ((!$full) && (fs_file_exists("$dir/$this->resizedName.$this->type"))) {
             return $this->resizedName;
@@ -189,12 +191,12 @@ class Image
         }
     }
 
-    function getId($dir) 
+    public function getId($dir)
     {
         return $this->name;
     }
     
-    function getPath($dir, $full=0) 
+    public function getPath($dir, $full=0)
     {
         if ($full || !$this->resizedName) {
             $name = $this->name;
@@ -204,7 +206,7 @@ class Image
         return "$dir/$name.$this->type";
     }
 
-    function isResized() 
+    public function isResized()
     {
         if ($this->resizedName) {
             return 1;
@@ -213,37 +215,37 @@ class Image
         }
     }
 
-    function setDimensions($w, $h) 
+    public function setDimensions($w, $h)
     {
         $this->width = $w;
         $this->height = $h;
     }
 
-    function setRawDimensions($w, $h) 
+    public function setRawDimensions($w, $h)
     {
         $this->raw_width = $w;
         $this->raw_height = $h;
     }
 
-    function getDimensions($size=0) 
+    public function getDimensions($size=0)
     {
         if ($size) {
-                if ($this->width > $this->height) {
-                    $width = $size;
-                    $height = round($size * ($this->height / $this->width));
-                } else {
-                    $width = round($size * ($this->width / $this->height));
-                    $height = $size;
-                }
+            if ($this->width > $this->height) {
+                $width = $size;
+                $height = round($size * ($this->height / $this->width));
             } else {
-        $width = $this->width;
-        $height = $this->height;
+                $width = round($size * ($this->width / $this->height));
+                $height = $size;
             }
+        } else {
+            $width = $this->width;
+            $height = $this->height;
+        }
             
         return array($width, $height);
     }
 
-    function setThumbRectangle($x, $y, $w, $h) 
+    public function setThumbRectangle($x, $y, $w, $h)
     {
         $this->thumb_x = $x;
         $this->thumb_y = $y;
@@ -251,16 +253,16 @@ class Image
         $this->thumb_height = $h;
     }
 
-    function getThumbRectangle() 
+    public function getThumbRectangle()
     {
         return array($this->thumb_x, $this->thumb_y,
                      $this->thumb_width, $this->thumb_height);
     }
 
-    function getRawDimensions() 
+    public function getRawDimensions()
     {
         return array($this->raw_width, $this->raw_height);
     }
-}    
+}
 
 ?>

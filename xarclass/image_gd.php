@@ -2,38 +2,37 @@
 
 include_once('modules/images/xarclass/image_properties.php');
 
-class Image_GD extends Image_Properties 
+class Image_GD extends Image_Properties
 {
-
-    function __constructor($fileLocation, $thumbsdir=NULL) 
+    public function __constructor($fileLocation, $thumbsdir=null)
     {
         parent::__constructor($fileLocation, $thumbsdir);
     }
 
-    function Image_GD($fileLocation, $thumbsdir=NULL) 
+    public function Image_GD($fileLocation, $thumbsdir=null)
     {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
     
     /**
-     * Concept borrowed from: 
+     * Concept borrowed from:
      *    http://nyphp.org/content/presentations/GDintro/gd20.php
-     * by: 
+     * by:
      *    Jeff Knight of New York PHP
      **
      */
-    function resize($forceResize = false) 
+    public function resize($forceResize = false)
     {
         
         // If the original height and widht are the same
         // as the new height and width, return true
-        if ($this->_owidth == $this->width && 
+        if ($this->_owidth == $this->width &&
             $this->_oheight == $this->height) {
-                return TRUE;
-        } 
+            return true;
+        }
         
         if (empty($forceResize) && $this->getDerivative()) {
-            return TRUE;
+            return true;
         }
         
         $origImage = $this->_open();
@@ -42,7 +41,7 @@ class Image_GD extends Image_Properties
             if (is_dir($this->_thumbsdir) && is_writable($this->_thumbsdir)) {
                 $this->_tmpFile = tempnam($this->_thumbsdir, 'xarimage-');
             } else {
-                $this->_tmpFile = tempnam(NULL, 'xarimage-');
+                $this->_tmpFile = tempnam(null, 'xarimage-');
             }
             $newImage = imageCreateTrueColor($this->width, $this->height);
             imageCopyResampled($newImage, $origImage, 0, 0, 0, 0, $this->width, $this->height, $this->_owidth, $this->_oheight);
@@ -50,15 +49,14 @@ class Image_GD extends Image_Properties
             imageDestroy($newImage);
             imageDestroy($origImage);
         } else {
-            return FALSE;
-        } 
-        return TRUE;
+            return false;
+        }
+        return true;
     }
     
-    function &_open() 
-    { 
-        
-        $origImage = NULL;
+    public function &_open()
+    {
+        $origImage = null;
 
         if (!file_exists($this->fileLocation) && !empty($this->_fileId)) {
             // get the image data from the database
@@ -77,45 +75,38 @@ class Image_GD extends Image_Properties
                 //if (imagetypes() & IMG_GIF)  {
                 if (function_exists('imageCreateFromGIF')) {
                     $origImage = @imageCreateFromGIF($this->fileLocation) ;
-                } 
+                }
                 break;
             case 'image/jpeg':
             case 'image/jpg':
-                if (imagetypes() & IMG_JPG)  {
+                if (imagetypes() & IMG_JPG) {
                     $origImage = imageCreateFromJPEG($this->fileLocation) ;
-                } 
+                }
                 break;
             case 'image/png':
-                if (imagetypes() & IMG_PNG)  {
+                if (imagetypes() & IMG_PNG) {
                     $origImage = imageCreateFromPNG($this->fileLocation) ;
-                } 
+                }
                 break;
             case 'image/wbmp':
-                if (imagetypes() & IMG_WBMP)  {
+                if (imagetypes() & IMG_WBMP) {
                     $origImage = imageCreateFromWBMP($this->fileLocation) ;
-                } 
+                }
                 break;
         }
 
         return $origImage;
-    
     }
     
-    function rotate() 
+    public function rotate()
     {
-    
     }
     
-    function scale() 
+    public function scale()
     {
-    
     }
     
-    function crop() 
+    public function crop()
     {
-    
     }
-
 }
-
-?>

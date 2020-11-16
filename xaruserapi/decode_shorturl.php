@@ -33,7 +33,6 @@ function images_userapi_decode_shorturl($params)
     if (empty($params[1])) {
         // nothing specified -> we'll go to the main function
         return array('display', $args);
-
     } elseif (preg_match('/^(\d+)\.(.*)/', $params[1], $matches)) {
 
         // something that starts with a number must be for the display function
@@ -45,7 +44,4 @@ function images_userapi_decode_shorturl($params)
         $args['fileId'] = $fileId;
         return array('display', $args);
     }
-
 }
-
-?>

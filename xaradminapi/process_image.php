@@ -27,7 +27,7 @@ function images_adminapi_process_image($args)
 {
     extract($args);
 
-    $settings = xarModAPIFunc('images','user','getsettings');
+    $settings = xarModAPIFunc('images', 'user', 'getsettings');
     if (!empty($setting) && !empty($settings[$setting])) {
         $params = $settings[$setting];
     } elseif (!empty($params)) {
@@ -42,8 +42,12 @@ function images_adminapi_process_image($args)
     }
 
     if (empty($image) || empty($params)) {
-        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                     '', 'process_image', 'images');
+        $msg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            '',
+            'process_image',
+            'images'
+        );
         if ($saveas == 3) {
             $phpThumb =& images_get_thumb();
             // Generate an error image
@@ -51,8 +55,11 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
+            xarErrorSet(
+                XAR_SYSTEM_EXCEPTION,
+                'BAD_PARAM',
+                new SystemException($msg)
+            );
             // Throw back the error
             return;
         }
@@ -64,12 +71,12 @@ function images_adminapi_process_image($args)
     }
     // Determine new file extension based on format
     switch ($params['f']) {
-        case 'jpeg';
+        case 'jpeg':
             $ext = 'jpg';
             break;
-        case 'png';
-        case 'gif';
-        default;
+        case 'png':
+        case 'gif':
+        default:
             $ext = $params['f'];
             break;
     }
@@ -80,7 +87,7 @@ function images_adminapi_process_image($args)
             case 1: // [image]_new.[ext]
                 $save = realpath($image['fileLocation']);
                 if ($save) {
-                    $save = preg_replace('/\.\w+$/',"_new.$ext",$save);
+                    $save = preg_replace('/\.\w+$/', "_new.$ext", $save);
                 }
                 break;
 
@@ -116,21 +123,20 @@ function images_adminapi_process_image($args)
     // If the image is stored in the database (uploads module)
         // NOTE: the next line is the *only* place i could find which suppresses exceptions through the 0 parameter at the end
         // NOTE: in the 2.x branch that parameter does not exist anymore, so the next code needs to be changed.
-    } elseif (is_numeric($image['fileId']) && xarModIsAvailable('uploads') && xarModAPILoad('uploads','user',0) &&
+    } elseif (is_numeric($image['fileId']) && xarModIsAvailable('uploads') && xarModAPILoad('uploads', 'user', 0) &&
               defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
-
         $uploadsdir = xarModGetVar('uploads', 'path.uploads-directory');
         switch ($saveas) {
             case 1: // [image]_new.[ext] // CHECKME: not in the database ?
                 $save = realpath($uploadsdir) . '/' . $image['fileName'];
-                $save = preg_replace('/\.\w+$/',"_new.$ext",$save);
+                $save = preg_replace('/\.\w+$/', "_new.$ext", $save);
                 break;
 
             case 2: // replace in the database here
                 if (is_dir($uploadsdir) && is_writable($uploadsdir)) {
                     $save = tempnam($uploadsdir, 'xarimage-');
                 } else {
-                    $save = tempnam(NULL, 'xarimage-');
+                    $save = tempnam(null, 'xarimage-');
                 }
                 $dbfile = 1;
                 break;
@@ -158,8 +164,12 @@ function images_adminapi_process_image($args)
         // get the image data from the database
         $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
         if (empty($data)) {
-            $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                          'image', 'process_image', 'images');
+            $msg = xarML(
+                "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+                'image',
+                'process_image',
+                'images'
+            );
             if ($saveas == 3) {
                 $phpThumb =& images_get_thumb();
                 // Generate an error image
@@ -167,8 +177,11 @@ function images_adminapi_process_image($args)
                 // The calling GUI needs to stop processing here
                 return true;
             } else {
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
+                xarErrorSet(
+                    XAR_SYSTEM_EXCEPTION,
+                    'BAD_PARAM',
+                    new SystemException($msg)
+                );
                 // Throw back the error
                 return;
             }
@@ -178,10 +191,13 @@ function images_adminapi_process_image($args)
         unset($data);
         $phpThumb =& images_get_thumb();
         $phpThumb->setSourceData($src);
-
     } else {
-        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'image', 'process_image', 'images');
+        $msg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'image',
+            'process_image',
+            'images'
+        );
         if ($saveas == 3) {
             $phpThumb =& images_get_thumb();
             // Generate an error image
@@ -189,14 +205,17 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
+            xarErrorSet(
+                XAR_SYSTEM_EXCEPTION,
+                'BAD_PARAM',
+                new SystemException($msg)
+            );
             // Throw back the error
             return;
         }
     }
 
-// or $phpThumb->setSourceImageResource($gd_image_resource);
+    // or $phpThumb->setSourceImageResource($gd_image_resource);
 
     foreach ($params as $name => $value) {
         if (isset($value) && $value !== false) {
@@ -215,8 +234,11 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
+            xarErrorSet(
+                XAR_SYSTEM_EXCEPTION,
+                'BAD_PARAM',
+                new SystemException($msg)
+            );
             // Throw back the error
             return;
         }
@@ -227,15 +249,21 @@ function images_adminapi_process_image($args)
         $phpThumb->OutputThumbnail();
         // The calling GUI needs to stop processing here
         return true;
-
     }
 
     // Save it to file
     if (empty($save)) {
-        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'save', 'process_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
+        $msg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'save',
+            'process_image',
+            'images'
+        );
+        xarErrorSet(
+            XAR_SYSTEM_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         // Throw back the error
         return;
     }
@@ -244,36 +272,46 @@ function images_adminapi_process_image($args)
 
     if (empty($result)) {
         $msg = implode("\n\n", $phpThumb->debugmessages);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
+        xarErrorSet(
+            XAR_SYSTEM_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         // Throw back the error
         return;
     }
 
-// TODO: add file entry to uploads when saveas == 1 ?
+    // TODO: add file entry to uploads when saveas == 1 ?
 
     // update the uploads file entry if we overwrite a file !
     if (is_numeric($image['fileId']) && $saveas == 2) {
-        if (!xarModAPIFunc('uploads','user','db_modify_file',
-                           array('fileId'    => $image['fileId'],
+        if (!xarModAPIFunc(
+            'uploads',
+            'user',
+            'db_modify_file',
+            array('fileId'    => $image['fileId'],
                                  'fileType'  => 'image/' . $params['f'],
                                  'fileSize'  => filesize($save),
                                  // reset the extrainfo
-                                 'extrainfo' => ''))) {
+                                 'extrainfo' => '')
+        )) {
             return;
         }
         if (!empty($dbfile)) {
             // store the image in the database
-            if (!xarModAPIFunc('uploads','user','file_dump',
-                               array('fileSrc' => $save,
-                                     'fileId'  => $image['fileId']))) {
+            if (!xarModAPIFunc(
+                'uploads',
+                'user',
+                'file_dump',
+                array('fileSrc' => $save,
+                                     'fileId'  => $image['fileId'])
+            )) {
                 return;
             }
         }
     }
 
     return $save;
-
 }
 
 function &images_get_thumb()
@@ -286,9 +324,7 @@ function &images_get_thumb()
         $phpThumb->config_imagemagick_path = realpath($imagemagick);
     }
 
-// CHECKME: document root may be incorrect in some cases
+    // CHECKME: document root may be incorrect in some cases
 
     return $phpThumb;
 }
-
-?>

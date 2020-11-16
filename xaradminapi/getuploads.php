@@ -24,22 +24,23 @@ function images_adminapi_getuploads($args)
 
     if (!empty($fileId)) {
         $filter = array('fileId' => $fileId);
-
     } else {
         if (empty($typeName)) {
             $typeName = 'image';
         }
         // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
-        $typeinfo = xarModAPIFunc('mime','user','get_type', array('typeName' => $typeName));
-        if (empty($typeinfo)) return;
+        $typeinfo = xarModAPIFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
+        if (empty($typeinfo)) {
+            return;
+        }
 
         $filters = array();
         $filters['mimetype'] = $typeinfo['typeId'];
-        $filters['subtype']  = NULL;
-        $filters['status']   = NULL;
-        $filters['inverse']  = NULL;
+        $filters['subtype']  = null;
+        $filters['status']   = null;
+        $filters['inverse']  = null;
 
-        $options  = xarModAPIFunc('uploads','user','process_filters', $filters);
+        $options  = xarModAPIFunc('uploads', 'user', 'process_filters', $filters);
         $filter   = $options['filter'];
 
         if (!empty($getnext)) {
@@ -65,7 +66,7 @@ function images_adminapi_getuploads($args)
 
     foreach ($imagelist as $id => $image) {
         if (!empty($image['fileLocation'])) {
-            $imageInfo = xarModAPIFunc('images','user','getimagesize', $image);
+            $imageInfo = xarModAPIFunc('images', 'user', 'getimagesize', $image);
             if (!empty($imageInfo)) {
                 $imagelist[$id]['width']  = $imageInfo[0];
                 $imagelist[$id]['height'] = $imageInfo[1];
@@ -112,10 +113,10 @@ function images_adminapi_getuploads($args)
             break;
     }
     if (!empty($numsort)) {
-        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
+        $sortfunc = create_function('$a,$b', 'if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
         usort($imagelist, $sortfunc);
     } elseif (!empty($strsort)) {
-        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
+        $sortfunc = create_function('$a,$b', 'return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
         usort($imagelist, $sortfunc);
     }
 
@@ -125,7 +126,7 @@ function images_adminapi_getuploads($args)
         }
         if (count($imagelist) > $numitems) {
             // use array slice on the keys here (at least until PHP 5.0.2)
-            $idlist = array_slice(array_keys($imagelist),$startnum-1,$numitems);
+            $idlist = array_slice(array_keys($imagelist), $startnum-1, $numitems);
             $newlist = array();
             foreach ($idlist as $id) {
                 $newlist[$id] = $imagelist[$id];
@@ -137,5 +138,3 @@ function images_adminapi_getuploads($args)
 
     return $imagelist;
 }
-
-?>

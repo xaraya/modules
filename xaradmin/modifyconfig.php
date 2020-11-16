@@ -15,7 +15,9 @@ function images_admin_modifyconfig()
 {
 
     // Security check
-    if (!xarSecurityCheck('AdminImages')) return;
+    if (!xarSecurityCheck('AdminImages')) {
+        return;
+    }
 
     xarModAPILoad('images');
     // Generate a one-time authorisation code for this operation
@@ -23,7 +25,7 @@ function images_admin_modifyconfig()
     // get the current module variables for display
     // *********************************************
     // Global
-    $data['gdextension'] = extension_loaded ('gd'); // True or false
+    $data['gdextension'] = extension_loaded('gd'); // True or false
     $data['libtype']['graphics-library']    = xarModGetVar('images', 'type.graphics-library'); // return gd
     $data['path']['derivative-store']       = xarModGetVar('images', 'path.derivative-store');
     $data['file']['cache-expire']           = xarModGetVar('images', 'file.cache-expire');
@@ -43,7 +45,7 @@ function images_admin_modifyconfig()
 
     $data['shortURLs'] = empty($shortURLs) ? 0 : 1;
 
-    $data['basedirs'] = xarModAPIFunc('images','user','getbasedirs');
+    $data['basedirs'] = xarModAPIFunc('images', 'user', 'getbasedirs');
     $data['basedirs'][] = array('basedir' => '',
                                 'baseurl' => '',
                                 'filetypes' => '',
@@ -54,11 +56,10 @@ function images_admin_modifyconfig()
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
+        $data['hooks'] = join('', $hooks);
     } else {
         $data['hooks'] = $hooks;
     }
     // Return the template variables defined in this function
     return $data;
 }
-?>

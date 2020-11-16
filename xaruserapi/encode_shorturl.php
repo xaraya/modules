@@ -38,8 +38,8 @@ function images_userapi_encode_shorturl($args)
             $type = explode('/', $fileType);
 
         // get the mime type from cache for resize()
-        } elseif (xarVarIsCached('Module.Images','imagemime.'.$fileId)) {
-            $fileType = xarVarGetCached('Module.Images','imagemime.'.$fileId);
+        } elseif (xarVarIsCached('Module.Images', 'imagemime.'.$fileId)) {
+            $fileType = xarVarGetCached('Module.Images', 'imagemime.'.$fileId);
             $type = explode('/', $fileType);
 
         // get the mime type from the database (urgh)
@@ -56,8 +56,9 @@ function images_userapi_encode_shorturl($args)
             $type = explode('/', $image['fileType']);
         }
 
-        if ($type[1] == 'jpeg')
+        if ($type[1] == 'jpeg') {
             $type[1] = 'jpg';
+        }
 
         $fileName = $fileId . '.' . $type[1];
     }
@@ -74,7 +75,6 @@ function images_userapi_encode_shorturl($args)
     unset($args['fileId']);
 
     if (!empty($args)) {
-
         foreach ($args as $name => $value) {
             $extra[] = "$name=$value";
         }
@@ -95,5 +95,3 @@ function images_userapi_encode_shorturl($args)
 
     return $path;
 }
-
-?>

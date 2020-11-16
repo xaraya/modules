@@ -20,8 +20,10 @@
  */
 function images_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminImages',0)) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminImages', 0)) {
+        return;
+    }
 
     $data=array();
 
@@ -29,7 +31,5 @@ function images_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('images', 'admin', 'main', $data,'main');
+    return xarTplModule('images', 'admin', 'main', $data, 'main');
 }
-
-?>

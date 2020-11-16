@@ -16,18 +16,17 @@ function images_userapi_gd_info()
 {
     if (function_exists('gd_info')) {
         $gd_info = gd_info();
-
     } else {
         $gd_info = array(
             'GD Version'          => 'not supported',
-            'FreeType Support'    => FALSE,
-            'T1Lib Support'       => FALSE,
-            'GIF Read Support'    => FALSE,
-            'GIF Create Support'  => FALSE,
-            'JPG Support'         => FALSE,
-            'PNG Support'         => FALSE,
-            'WBMP Support'        => FALSE,
-            'XBM Support'         => FALSE);
+            'FreeType Support'    => false,
+            'T1Lib Support'       => false,
+            'GIF Read Support'    => false,
+            'GIF Create Support'  => false,
+            'JPG Support'         => false,
+            'PNG Support'         => false,
+            'WBMP Support'        => false,
+            'XBM Support'         => false);
 
         ob_start();
         phpinfo(INFO_MODULES);
@@ -36,7 +35,6 @@ function images_userapi_gd_info()
 
         $pieces = explode('<h2>', $string);
         foreach ($pieces as $key => $piece) {
-
             if (!stristr($piece, 'module_gd')) {
                 unset($pieces[$key]);
             } else {
@@ -49,9 +47,9 @@ function images_userapi_gd_info()
         if (isset($gd_pre)) {
             $gd_multi = explode("\n", $gd_pre);
 
-            foreach($gd_multi as $key => $line) {
+            foreach ($gd_multi as $key => $line) {
                 // skip the first & second key key cuz they're just garbage
-                if ($key <= 1)  {
+                if ($key <= 1) {
                     continue;
                 }
 
@@ -60,12 +58,12 @@ function images_userapi_gd_info()
                 $key   = trim($matches[1]);
                 $value = trim($matches[2]);
 
-                switch($value) {
+                switch ($value) {
                     case 'enabled':
-                        $value = TRUE;
+                        $value = true;
                         break;
                     case 'disabled':
-                        $value = FALSE;
+                        $value = false;
                         break;
                 }
                 $gd_info[$key] = $value;
@@ -81,6 +79,3 @@ function images_userapi_gd_info()
 
     return $gd_info;
 }
-
-
-?>

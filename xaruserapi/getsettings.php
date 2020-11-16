@@ -18,7 +18,7 @@
  */
 function images_userapi_getsettings()
 {
-    $settings = xarModGetVar('images','phpthumb-settings');
+    $settings = xarModGetVar('images', 'phpthumb-settings');
     if (empty($settings)) {
         $settings = array();
         $settings['JPEG 800 x 600'] = array('w' => 800,
@@ -31,4 +31,3 @@ function images_userapi_getsettings()
 
     return $settings;
 }
-?>

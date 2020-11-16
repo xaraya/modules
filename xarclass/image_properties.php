@@ -16,20 +16,19 @@
  */
 class Image_Properties
 {
+    public $fileName;
+    public $fileLocation;
+    public $_thumbsdir;
+    public $height;
+    public $width;
+    public $_oheight;
+    public $_owidth;
+    public $_percent;
+    public $mime = null;
+    public $_tmpFile;
+    public $_fileId;
 
-    var $fileName;
-    var $fileLocation;
-    var $_thumbsdir;
-    var $height;
-    var $width;
-    var $_oheight;
-    var $_owidth;
-    var $_percent;
-    var $mime = null;
-    var $_tmpFile;
-    var $_fileId;
-
-    function __constructor($fileInfo, $thumbsdir = NULL)
+    public function __constructor($fileInfo, $thumbsdir = null)
     {
         if (empty($thumbsdir)) {
             $this->_thumbsdir = './';
@@ -48,16 +47,14 @@ class Image_Properties
                 $this->setMime($this->_getMimeType($fileInfo['imageType']));
                 return $this;
             }
-            $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
-
+            $imageInfo = xarModAPIFunc('images', 'user', 'getimagesize', $fileInfo);
         } elseif (file_exists($fileInfo)) {
             $this->fileLocation = $fileInfo;
             $this->fileName = basename($fileInfo);
             $imageInfo = @getimagesize($fileInfo);
-
         } else {
             trigger_error("File [$this->fileLocation] does not exist.");
-            return NULL;
+            return null;
         }
 
         if (!empty($imageInfo) && is_array($imageInfo)) {
@@ -68,17 +65,16 @@ class Image_Properties
             return $this;
         } else {
             trigger_error("File [$this->fileLocation] is not an image.");
-            return NULL;
+            return null;
         }
-
     }
 
-    function Image_Properties($fileLocation, $thumbsdir = NULL)
+    public function Image_Properties($fileLocation, $thumbsdir = null)
     {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
 
-    function _getMimeType($mimeType)
+    public function _getMimeType($mimeType)
     {
         if (is_numeric($mimeType)) {
             switch ($mimeType) {
@@ -105,24 +101,24 @@ class Image_Properties
         }
     }
 
-    function getMime()
+    public function getMime()
     {
         return $this->mime;
     }
 
-    function setMime($mimeType)
+    public function setMime($mimeType)
     {
         $old_mime = $this->mime;
         $this->mime = $mimeType;
         return $old_mime;
     }
 
-    function Constrain($toSide = NULL)
+    public function Constrain($toSide = null)
     {
-        if ($toSide == NULL) {
-            return FALSE;
+        if ($toSide == null) {
+            return false;
         } else {
-            switch(strtolower($toSide)) {
+            switch (strtolower($toSide)) {
                 case 'height':
                     $this->setWidth($this->getWidth2HeightRatio() * $this->height);
                     break;
@@ -139,8 +135,8 @@ class Image_Properties
                     $ratios[1]['height'] = $this->getHeight2WidthRatio() * $this->width;
                     $ratios[1]['width']  = $this->getWidth2HeightRatio() * $ratios[1]['height'];
 
-                    foreach($ratios as $ratio) {
-                        if($ratio['width'] <= $this->width && $ratio['height'] <= $this->height) {
+                    foreach ($ratios as $ratio) {
+                        if ($ratio['width'] <= $this->width && $ratio['height'] <= $this->height) {
                             $this->setWidth($ratio['width']);
                             $this->setHeight($ratio['height']);
                             break;
@@ -154,12 +150,12 @@ class Image_Properties
         return true;
     }
 
-    function getHeight( )
+    public function getHeight()
     {
         return $this->height;
     }
 
-    function setHeight($height)
+    public function setHeight($height)
     {
         $new_hpercent = @($height / $this->_oheight);
         $this->_percent['height'] = $new_hpercent * 100;
@@ -167,12 +163,12 @@ class Image_Properties
         return $this->height;
     }
 
-    function getWidth( )
+    public function getWidth()
     {
         return $this->width;
     }
 
-    function setWidth($width)
+    public function setWidth($width)
     {
         $new_wpercent = @($width / $this->_owidth);
         $this->_percent['width'] = $new_wpercent * 100;
@@ -180,30 +176,30 @@ class Image_Properties
         return $this->width;
     }
 
-    function getWidth2HeightRatio()
+    public function getWidth2HeightRatio()
     {
         return $this->_owidth / $this->_oheight;
     }
 
-    function getHeight2WidthRatio()
+    public function getHeight2WidthRatio()
     {
         return @($this->_oheight / $this->_owidth);
     }
 
-    function getPercent()
+    public function getPercent()
     {
         return $this->_percent;
     }
 
-    function setPercent( $args )
+    public function setPercent($args)
     {
         if (!is_array($args) && is_numeric($args)) {
             return $this->_setPercent($args);
         }
 
-        switch(count($args)) {
+        switch (count($args)) {
             case 1:
-                switch(strtolower(key($args))) {
+                switch (strtolower(key($args))) {
                     case 'percent':
                         return $this->_setPercent($args['percent']);
                         break;
@@ -214,68 +210,69 @@ class Image_Properties
                         return $this->_setHPercent($args['hpercent']);
                         break;
                     default:
-                        return FALSE;
+                        return false;
                 }
                 break;
             case 2:
-                if (isset($args['wpercent']) && isset($args['hpercent']))
+                if (isset($args['wpercent']) && isset($args['hpercent'])) {
                     return $this->_setWxHPercent($args['wpercent'], $args['hpercent']);
-                else
-                    return FALSE;
+                } else {
+                    return false;
+                }
                 break;
             default:
-                return FALSE;
+                return false;
                 break;
         }
     }
 
-    function _setPercent($percent)
+    public function _setPercent($percent)
     {
         $this->setHeight($this->_oheight * ($percent / 100));
         $this->_percent['height'] = $percent;
 
         $this->setWidth($this->_owidth * ($percent / 100));
         $this->_percent['width']  = $percent;
-        return TRUE;
+        return true;
     }
 
-    function _setWxHPercent($wpercent, $hpercent)
+    public function _setWxHPercent($wpercent, $hpercent)
     {
         $this->setHeight($this->_oheight * ($hpercent / 100));
         $this->_percent['height'] = $hpercent;
 
         $this->setWidth($this->_owidth * ($wpercent / 100));
         $this->_percent['width']  = $wpercent;
-        return TRUE;
+        return true;
     }
 
-    function _setWPercent($wpercent)
+    public function _setWPercent($wpercent)
     {
         $this->_percent['width'] = $wpercent;
         return $this->setWidth($this->_owidth * ($wpercent / 100));
     }
 
-    function _setHPercent($hpercent)
+    public function _setHPercent($hpercent)
     {
         $this->_percent['height'] = $hpercent;
         return $this->setHeight($this->_oheight * ($hpercent / 100));
     }
 
-    function save()
+    public function save()
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (@copy($this->_tmpFile, $this->fileLocation)) {
                 @unlink($this->_tmpFile);
-                return TRUE;
+                return true;
             } else {
                 @unlink($this->_tmpFile);
-                return FALSE;
+                return false;
             }
         }
-        return TRUE;
+        return true;
     }
 
-    function saveDerivative($fileName = '')
+    public function saveDerivative($fileName = '')
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (empty($fileName)) {
@@ -297,14 +294,14 @@ class Image_Properties
                 return $derivName;
             } else {
                 @unlink($this->_tmpFile);
-                return NULL;
+                return null;
             }
         } else {
-            return NULL;
+            return null;
         }
     }
 
-    function getDerivative($fileName = '')
+    public function getDerivative($fileName = '')
     {
         if (empty($fileName)) {
             if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
@@ -327,10 +324,7 @@ class Image_Properties
         if (file_exists($derivName)) {
             return $derivName;
         } else {
-            return NULL;
+            return null;
         }
     }
-
 }
-
-?>

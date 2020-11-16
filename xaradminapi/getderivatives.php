@@ -66,7 +66,7 @@ function images_adminapi_getderivatives($args)
     } else {
         $cachekey = md5(serialize($params));
         if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
-            $cacheinfo = xarModGetVar('images','file.cachederiv.'.$cachekey);
+            $cacheinfo = xarModGetVar('images', 'file.cachederiv.'.$cachekey);
             if (!empty($cacheinfo)) {
                 $cacheinfo = @unserialize($cacheinfo);
                 if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
@@ -78,23 +78,35 @@ function images_adminapi_getderivatives($args)
     }
 
     if (!isset($imagelist)) {
-        $files = xarModAPIFunc('dynamicdata','admin','browse',
-                               $params);
-        if (!isset($files)) return;
+        $files = xarModAPIFunc(
+            'dynamicdata',
+            'admin',
+            'browse',
+            $params
+        );
+        if (!isset($files)) {
+            return;
+        }
 
         $imagelist = array();
         $filenames = array();
         foreach ($files as $file) {
             // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
-            if (preg_match('/^(.+?)-(\d+)x(\d+)\.jpg$/',$file,$matches)) {
+            if (preg_match('/^(.+?)-(\d+)x(\d+)\.jpg$/', $file, $matches)) {
                 $id = md5($thumbsdir . '/' . $file);
                 if (!empty($fileId)) {
-                    if (!in_array($id,$fileId)) continue;
+                    if (!in_array($id, $fileId)) {
+                        continue;
+                    }
                 }
                 $info = stat($thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
-                                     'fileDownload' => xarModURL('images','user','display',
-                                                                 array('fileId' => base64_encode($thumbsdir . '/' . $file))),
+                                     'fileDownload' => xarModURL(
+                                         'images',
+                                         'user',
+                                         'display',
+                                         array('fileId' => base64_encode($thumbsdir . '/' . $file))
+                                     ),
                                      'fileName'     => $matches[1],
                                      'fileType'     => 'image/jpeg',
                                      'fileSize'     => $info['size'],
@@ -105,16 +117,22 @@ function images_adminapi_getderivatives($args)
                 $filenames[$matches[1]] = 1;
 
             // Note: processed images are named [filename]-[setting].[ext] - see process_image() function
-            } elseif (preg_match('/^(.+?)-(.+?)\.\w+$/',$file,$matches)) {
+            } elseif (preg_match('/^(.+?)-(.+?)\.\w+$/', $file, $matches)) {
                 $id = md5($thumbsdir . '/' . $file);
                 if (!empty($fileId)) {
-                    if (!in_array($id,$fileId)) continue;
+                    if (!in_array($id, $fileId)) {
+                        continue;
+                    }
                 }
                 $statinfo = stat($thumbsdir . '/' . $file);
                 $sizeinfo = getimagesize($thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
-                                     'fileDownload' => xarModURL('images','user','display',
-                                                                 array('fileId' => base64_encode($thumbsdir . '/' . $file))),
+                                     'fileDownload' => xarModURL(
+                                         'images',
+                                         'user',
+                                         'display',
+                                         array('fileId' => base64_encode($thumbsdir . '/' . $file))
+                                     ),
                                      'fileName'     => $matches[1],
                                      'fileType'     => $sizeinfo['mime'],
                                      'fileSize'     => $statinfo['size'],
@@ -127,25 +145,31 @@ function images_adminapi_getderivatives($args)
             }
         }
 
-    // CHECKME: keep track of originals for server images too ?
+        // CHECKME: keep track of originals for server images too ?
 
         if (empty($fileName) && xarModIsAvailable('uploads')) {
-
             $fileinfo = array();
             foreach (array_keys($filenames) as $file) {
-            // CHECKME: verify this once derivatives can be created in sub-directories of thumbsdir
+                // CHECKME: verify this once derivatives can be created in sub-directories of thumbsdir
                 // this is probably the file id for some uploaded/imported file stored in the database
-                if (preg_match('/^(.*\/)?(\d+)$/',$file,$matches)) {
-
-                    $fileinfo[$file] = xarModAPIFunc('uploads','user','db_get_file',
-                                                     array('fileId' => $matches[2]));
+                if (preg_match('/^(.*\/)?(\d+)$/', $file, $matches)) {
+                    $fileinfo[$file] = xarModAPIFunc(
+                        'uploads',
+                        'user',
+                        'db_get_file',
+                        array('fileId' => $matches[2])
+                    );
 
                 // this may be the md5 hash of the file location for some uploaded/imported file
-                } elseif (preg_match('/^(.*\/)?([0-9a-f]{32})$/i',$file,$matches)) {
+                } elseif (preg_match('/^(.*\/)?([0-9a-f]{32})$/i', $file, $matches)) {
 
                 // CHECKME: watch out for duplicates here too
-                    $fileinfo[$file] = xarModAPIFunc('uploads','user','db_get_file',
-                                                     array('fileLocationMD5' => $matches[2]));
+                    $fileinfo[$file] = xarModAPIFunc(
+                        'uploads',
+                        'user',
+                        'db_get_file',
+                        array('fileLocationMD5' => $matches[2])
+                    );
                 }
             }
             if (count($fileinfo) > 0) {
@@ -153,7 +177,7 @@ function images_adminapi_getderivatives($args)
                     $fileHash = $imagelist[$id]['fileName'];
                     if (!empty($fileinfo[$fileHash])) {
                         $info = $fileinfo[$fileHash];
-                    // CHECKME: assume only one match here ?
+                        // CHECKME: assume only one match here ?
                         $imagelist[$id]['original'] = array_pop($info);
                     }
                 }
@@ -169,13 +193,13 @@ function images_adminapi_getderivatives($args)
             $cacheinfo = array('time' => time(),
                                'list' => $imagelist);
             $cacheinfo = serialize($cacheinfo);
-            xarModSetVar('images','file.cachederiv.'.$cachekey,$cacheinfo);
+            xarModSetVar('images', 'file.cachederiv.'.$cachekey, $cacheinfo);
             unset($cacheinfo);
         }
     }
 
     // save the number of images in temporary cache for countderivatives()
-    xarVarSetCached('Modules.Images','countderivatives.'.$cachekey, count($imagelist));
+    xarVarSetCached('Modules.Images', 'countderivatives.'.$cachekey, count($imagelist));
 
     if (empty($sort)) {
         $sort = '';
@@ -202,10 +226,10 @@ function images_adminapi_getderivatives($args)
             break;
     }
     if (!empty($numsort)) {
-        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
+        $sortfunc = create_function('$a,$b', 'if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
         usort($imagelist, $sortfunc);
     } elseif (!empty($strsort)) {
-        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
+        $sortfunc = create_function('$a,$b', 'return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
         usort($imagelist, $sortfunc);
     }
 
@@ -215,7 +239,7 @@ function images_adminapi_getderivatives($args)
         }
         if (count($imagelist) > $numitems) {
             // use array slice on the keys here (at least until PHP 5.0.2)
-            $idlist = array_slice(array_keys($imagelist),$startnum-1,$numitems);
+            $idlist = array_slice(array_keys($imagelist), $startnum-1, $numitems);
             $newlist = array();
             foreach ($idlist as $id) {
                 $newlist[$id] = $imagelist[$id];
@@ -227,5 +251,3 @@ function images_adminapi_getderivatives($args)
 
     return $imagelist;
 }
-
-?>

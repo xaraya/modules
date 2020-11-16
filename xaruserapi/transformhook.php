@@ -17,7 +17,7 @@
  * @param  $args ['extrainfo']
  * @return
  */
-function & images_userapi_transformhook ( $args )
+function & images_userapi_transformhook($args)
 {
     extract($args);
 
@@ -39,10 +39,9 @@ function & images_userapi_transformhook ( $args )
     return $result;
 }
 
-function & images_userapi_transform ( $body )
+function & images_userapi_transform($body)
 {
-
-    while(preg_match('/#(image-resize):([0-9]+):([^#]*)#/i', $body, $parts)) {
+    while (preg_match('/#(image-resize):([0-9]+):([^#]*)#/i', $body, $parts)) {
         // first argument is always the complete haystack
         // get rid of it
         array_shift($parts);
@@ -57,7 +56,7 @@ function & images_userapi_transform ( $body )
         assert('count($parts) == 1');
         $parts = $parts[0];
 
-        switch ( $type )  {
+        switch ($type) {
             case 'image-resize':
                 $parts = explode(':', $parts);
                 // with image-resize, all we want to pass back to the content is the url
@@ -97,9 +96,7 @@ function & images_userapi_transform ( $body )
         }
         $parts = implode(':', $parts);
         $body = preg_replace("/#$type:$id:$parts#/", $replacement, $body);
-
     }
 
     return $body;
 }
-?>

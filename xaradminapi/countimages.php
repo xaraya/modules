@@ -47,7 +47,6 @@ function images_adminapi_countimages($args)
             }
         }
         return count($files);
-
     } else {
         if (empty($filematch)) {
             $filematch = '';
@@ -58,7 +57,7 @@ function images_adminapi_countimages($args)
         if (empty($filetypes)) {
             $filetype = '(gif|jpg|png)';
         } elseif (is_array($filetypes)) {
-            $filetype = '(' . join('|',$filetypes) . ')';
+            $filetype = '(' . join('|', $filetypes) . ')';
         } else {
             $filetype = '(' . $filetypes . ')';
         }
@@ -73,12 +72,18 @@ function images_adminapi_countimages($args)
 
         $cachekey = md5(serialize($params));
         // get the number of images from temporary cache - see getimages()
-        if (xarVarIsCached('Modules.Images','countimages.'.$cachekey)) {
-            return xarVarGetCached('Modules.Images','countimages.'.$cachekey);
+        if (xarVarIsCached('Modules.Images', 'countimages.'.$cachekey)) {
+            return xarVarGetCached('Modules.Images', 'countimages.'.$cachekey);
         } else {
-            $files = xarModAPIFunc('dynamicdata','admin','browse',
-                                   $params);
-            if (!isset($files)) return;
+            $files = xarModAPIFunc(
+                'dynamicdata',
+                'admin',
+                'browse',
+                $params
+            );
+            if (!isset($files)) {
+                return;
+            }
 
             return count($files);
         }
@@ -86,5 +91,3 @@ function images_adminapi_countimages($args)
 
     return 0;
 }
-
-?>

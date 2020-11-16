@@ -21,23 +21,41 @@ function images_admin_uploads($args)
     extract($args);
 
     // Security check for images
-    if (!xarSecurityCheck('AdminImages')) return;
+    if (!xarSecurityCheck('AdminImages')) {
+        return;
+    }
 
     // Security check for uploads
-    if (!xarModIsAvailable('uploads') || !xarSecurityCheck('AdminUploads')) return;
+    if (!xarModIsAvailable('uploads') || !xarSecurityCheck('AdminUploads')) {
+        return;
+    }
 
     // Note: fileId is the uploads fileId here, or an array of uploads fileId's
-    if (!xarVarFetch('fileId','isset',$fileId,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fileId', 'isset', $fileId, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     if (!empty($fileId) && is_array($fileId)) {
         $fileId = array_keys($fileId);
     }
 
-    if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sort','enum:name:type:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('action',      'str:1:',     $action,           '',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('getnext',     'str:1:',     $getnext,          NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('getprev',     'str:1:',     $getprev,          NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('startnum', 'int:0:', $startnum, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('numitems', 'int:0:', $numitems, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('sort', 'enum:name:type:width:height:size:time', $sort, 'name', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('action', 'str:1:', $action, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('getnext', 'str:1:', $getnext, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('getprev', 'str:1:', $getprev, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $data = array();
     $data['startnum'] = $startnum;
@@ -45,58 +63,92 @@ function images_admin_uploads($args)
     $data['sort'] = ($sort != 'name') ? $sort : null;
 
     if (!isset($numitems)) {
-        $numitems = xarModGetVar('images','view.itemsperpage');
+        $numitems = xarModGetVar('images', 'view.itemsperpage');
     }
 
     $data['pager'] = '';
     if (!empty($fileId)) {
-        $data['images'] = xarModAPIFunc('images','admin','getuploads',
-                                        array('fileId'   => $fileId));
+        $data['images'] = xarModAPIFunc(
+            'images',
+            'admin',
+            'getuploads',
+            array('fileId'   => $fileId)
+        );
     } elseif (!empty($getnext)) {
-        $data['images'] = xarModAPIFunc('images','admin','getuploads',
-                                        array('getnext'  => $getnext));
+        $data['images'] = xarModAPIFunc(
+            'images',
+            'admin',
+            'getuploads',
+            array('getnext'  => $getnext)
+        );
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL('images','admin','uploads',
-                                          array('action' => empty($action) ? 'view' : $action,
-                                                'fileId' => $image['fileId'])));
+            xarResponseRedirect(xarModURL(
+                'images',
+                'admin',
+                'uploads',
+                array('action' => empty($action) ? 'view' : $action,
+                                                'fileId' => $image['fileId'])
+            ));
             return true;
         }
     } elseif (!empty($getprev)) {
-        $data['images'] = xarModAPIFunc('images','admin','getuploads',
-                                        array('getprev'  => $getprev));
+        $data['images'] = xarModAPIFunc(
+            'images',
+            'admin',
+            'getuploads',
+            array('getprev'  => $getprev)
+        );
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL('images','admin','uploads',
-                                          array('action' => empty($action) ? 'view' : $action,
-                                                'fileId' => $image['fileId'])));
+            xarResponseRedirect(xarModURL(
+                'images',
+                'admin',
+                'uploads',
+                array('action' => empty($action) ? 'view' : $action,
+                                                'fileId' => $image['fileId'])
+            ));
             return true;
         }
     } else {
-        $data['images'] = xarModAPIFunc('images','admin','getuploads',
-                                        array('startnum' => $startnum,
+        $data['images'] = xarModAPIFunc(
+            'images',
+            'admin',
+            'getuploads',
+            array('startnum' => $startnum,
                                               'numitems' => $numitems,
-                                              'sort'     => $sort));
-        $countitems = xarModAPIFunc('images','admin','countuploads');
+                                              'sort'     => $sort)
+        );
+        $countitems = xarModAPIFunc('images', 'admin', 'countuploads');
 
         // Add pager
         if (!empty($numitems) && $countitems > $numitems) {
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $countitems,
-                                            xarModURL('images', 'admin', 'uploads',
-                                                      array('startnum' => '%%',
+            $data['pager'] = xarTplGetPager(
+                $startnum,
+                $countitems,
+                xarModURL(
+                                                'images',
+                                                'admin',
+                                                'uploads',
+                                                array('startnum' => '%%',
                                                             'numitems' => $data['numitems'],
-                                                            'sort'     => $data['sort'])),
-                                            $numitems);
+                                                            'sort'     => $data['sort'])
+                                            ),
+                $numitems
+            );
         }
     }
 
     // Get the pre-defined settings for phpThumb
-    $data['settings'] = xarModAPIFunc('images','user','getsettings');
+    $data['settings'] = xarModAPIFunc('images', 'user', 'getsettings');
 
     // Check if we need to do anything special here
-    if (!xarVarFetch('processlist','str:1:',$processlist,'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('resizelist', 'str:1:',$resizelist, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('processlist', 'str:1:', $processlist, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('resizelist', 'str:1:', $resizelist, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     if (!empty($processlist)) {
         $action = 'processlist';
     } elseif (!empty($resizelist)) {
@@ -119,23 +171,35 @@ function images_admin_uploads($args)
                 $action = '';
             }
 
-        // if we're dealing with an individual fileId, get some additional information
+            // if we're dealing with an individual fileId, get some additional information
         } elseif (is_numeric($fileId) && !empty($data['images'][$fileId])) {
             $found = $data['images'][$fileId];
             // Get derivative images for this image
             if (!empty($found['fileHash'])) {
                 if (file_exists($found['fileLocation'])) {
-                    $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
-                                                          array('fileLocation' => $found['fileLocation']));
+                    $found['derivatives'] = xarModAPIFunc(
+                        'images',
+                        'admin',
+                        'getderivatives',
+                        array('fileLocation' => $found['fileLocation'])
+                    );
                 } else {
                     // the file is probably stored in the database, so we pass the fileId here
-                    $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
-                                                          array('fileLocation' => $found['fileId']));
+                    $found['derivatives'] = xarModAPIFunc(
+                        'images',
+                        'admin',
+                        'getderivatives',
+                        array('fileLocation' => $found['fileId'])
+                    );
                 }
             }
             // Get known associations for this image (currently unused)
-            $found['associations'] = xarModAPIFunc('uploads','user','db_get_associations',
-                                                   array('fileId' => $found['fileId']));
+            $found['associations'] = xarModAPIFunc(
+                'uploads',
+                'user',
+                'db_get_associations',
+                array('fileId' => $found['fileId'])
+            );
             $found['moditems'] = array();
             if (!empty($found['associations'])) {
                 $modlist = array();
@@ -164,9 +228,14 @@ function images_admin_uploads($args)
                 foreach ($modlist as $modid => $itemtypes) {
                     $modinfo = xarModGetInfo($modid);
                     // Get the list of all item types for this module (if any)
-                    $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+                    $mytypes = xarModAPIFunc(
+                        $modinfo['name'],
+                        'user',
+                        'getitemtypes',
                                              // don't throw an exception if this function doesn't exist
-                                             array(), 0);
+                                             array(),
+                        0
+                    );
                     foreach ($itemtypes as $itemtype => $items) {
                         $moditem = array();
                         $moditem['module'] = $modinfo['name'];
@@ -181,14 +250,18 @@ function images_admin_uploads($args)
                             //    $moditem['modlink'] = $mytypes[$itemtype]['url'];
                             } else {
                                 $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                            //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                                //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                             }
                         }
                         $itemids = array_keys($items);
-                        $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
-                                                   array('itemtype' => $itemtype,
+                        $itemlinks = xarModAPIFunc(
+                            $modinfo['name'],
+                            'user',
+                            'getitemlinks',
+                            array('itemtype' => $itemtype,
                                                          'itemids' => $itemids),
-                                                   0); // don't throw an exception here
+                            0
+                        ); // don't throw an exception here
                         $moditem['items'] = array();
                         foreach ($itemids as $itemid) {
                             if (isset($itemlinks[$itemid])) {
@@ -214,32 +287,62 @@ function images_admin_uploads($args)
                 return $data;
 
             case 'resize':
-                if (!xarVarFetch('width', 'int:1:',$width, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('height','int:1:',$height,NULL,XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('replace','int:0:1',$replace,0,XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('width', 'int:1:', $width, null, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('height', 'int:1:', $height, null, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('replace', 'int:0:1', $replace, 0, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
                 if (!empty($confirm) && (!empty($width) || !empty($height))) {
-                    if (!xarSecConfirmAuthKey()) return;
+                    if (!xarSecConfirmAuthKey()) {
+                        return;
+                    }
                     if (!empty($replace) && !empty($found['fileLocation'])) {
-                        $location = xarModAPIFunc('images','admin','replace_image',
-                                                  array('fileId' => $found['fileId'],
-                                                        'width'  => (!empty($width) ? $width . 'px' : NULL),
-                                                        'height' => (!empty($height) ? $height . 'px' : NULL)));
-                        if (!$location) return;
+                        $location = xarModAPIFunc(
+                            'images',
+                            'admin',
+                            'replace_image',
+                            array('fileId' => $found['fileId'],
+                                                        'width'  => (!empty($width) ? $width . 'px' : null),
+                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                        );
+                        if (!$location) {
+                            return;
+                        }
                         // Redirect to viewing the original image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
-                                                      array('action' => 'view',
-                                                            'fileId' => $found['fileId'])));
+                        xarResponseRedirect(xarModURL(
+                            'images',
+                            'admin',
+                            'uploads',
+                            array('action' => 'view',
+                                                            'fileId' => $found['fileId'])
+                        ));
                     } else {
-                        $location = xarModAPIFunc('images','admin','resize_image',
-                                                  array('fileId' => $found['fileId'],
-                                                        'width'  => (!empty($width) ? $width . 'px' : NULL),
-                                                        'height' => (!empty($height) ? $height . 'px' : NULL)));
-                        if (!$location) return;
+                        $location = xarModAPIFunc(
+                            'images',
+                            'admin',
+                            'resize_image',
+                            array('fileId' => $found['fileId'],
+                                                        'width'  => (!empty($width) ? $width . 'px' : null),
+                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                        );
+                        if (!$location) {
+                            return;
+                        }
                         // Redirect to viewing the derivative image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
-                                                      array('action' => 'view',
-                                                            'fileId' => md5($location))));
+                        xarResponseRedirect(xarModURL(
+                            'images',
+                            'admin',
+                            'derivatives',
+                            array('action' => 'view',
+                                                            'fileId' => md5($location))
+                        ));
                     }
                     return true;
                 }
@@ -261,13 +364,19 @@ function images_admin_uploads($args)
                 return $data;
 
             case 'delete':
-                if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
                 if (!empty($confirm)) {
-                    if (!xarSecConfirmAuthKey()) return;
+                    if (!xarSecConfirmAuthKey()) {
+                        return;
+                    }
                     // delete the uploaded image now
                     $fileList = array($fileId => $found);
                     $result = xarModAPIFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
-                    if (!$result) return;
+                    if (!$result) {
+                        return;
+                    }
                     xarResponseRedirect(xarModURL('images', 'admin', 'uploads'));
                     return true;
                 }
@@ -277,10 +386,18 @@ function images_admin_uploads($args)
                 return $data;
 
             case 'resizelist':
-                if (!xarVarFetch('width', 'int:1:',$width, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('height','int:1:',$height,NULL,XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('replace','int:0:1',$replace,0,XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('width', 'int:1:', $width, null, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('height', 'int:1:', $height, null, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('replace', 'int:0:1', $replace, 0, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
                 if (empty($confirm) || (empty($width) && empty($height))) {
                     $data['selected'] = $found;
                     if (empty($width) && empty($height)) {
@@ -301,38 +418,66 @@ function images_admin_uploads($args)
                     return $data;
                 }
 
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return;
+                }
                 if (!empty($replace)) {
                     foreach ($found as $id) {
-                        $location = xarModAPIFunc('images','admin','replace_image',
-                                                  array('fileId' => $id,
-                                                        'width'  => (!empty($width) ? $width . 'px' : NULL),
-                                                        'height' => (!empty($height) ? $height . 'px' : NULL)));
-                        if (!$location) return;
+                        $location = xarModAPIFunc(
+                            'images',
+                            'admin',
+                            'replace_image',
+                            array('fileId' => $id,
+                                                        'width'  => (!empty($width) ? $width . 'px' : null),
+                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                        );
+                        if (!$location) {
+                            return;
+                        }
                     }
                     // Redirect to viewing the uploaded images here (for now)
-                    xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
-                                                  array('sort' => 'time')));
+                    xarResponseRedirect(xarModURL(
+                        'images',
+                        'admin',
+                        'uploads',
+                        array('sort' => 'time')
+                    ));
                 } else {
                     foreach ($found as $id) {
-                        $location = xarModAPIFunc('images','admin','resize_image',
-                                                  array('fileId' => $id,
-                                                        'width'  => (!empty($width) ? $width . 'px' : NULL),
-                                                        'height' => (!empty($height) ? $height . 'px' : NULL)));
-                        if (!$location) return;
+                        $location = xarModAPIFunc(
+                            'images',
+                            'admin',
+                            'resize_image',
+                            array('fileId' => $id,
+                                                        'width'  => (!empty($width) ? $width . 'px' : null),
+                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                        );
+                        if (!$location) {
+                            return;
+                        }
                     }
                     // Redirect to viewing the derivative images here (for now)
-                    xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
-                                                  array('sort'    => 'time',
+                    xarResponseRedirect(xarModURL(
+                        'images',
+                        'admin',
+                        'derivatives',
+                        array('sort'    => 'time',
                                                         // we need to refresh the cache here
-                                                        'refresh' => 1)));
+                                                        'refresh' => 1)
+                    ));
                 }
                 return true;
 
             case 'processlist':
-                if (!xarVarFetch('saveas', 'int:0:2',$saveas, 0, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('setting', 'str:1:',$setting, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('saveas', 'int:0:2', $saveas, 0, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('setting', 'str:1:', $setting, null, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
                 if (empty($confirm) || empty($setting) || empty($data['settings'][$setting])) {
                     $data['selected'] = $found;
                     if (empty($setting) || empty($data['settings'][$setting])) {
@@ -351,38 +496,60 @@ function images_admin_uploads($args)
                     return $data;
                 }
 
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return;
+                }
 
                 // Process images
                 foreach ($found as $id) {
-                    if (empty($data['images'][$id])) continue;
-                    $location = xarModAPIFunc('images','admin','process_image',
-                                              array('image'   => $data['images'][$id],
+                    if (empty($data['images'][$id])) {
+                        continue;
+                    }
+                    $location = xarModAPIFunc(
+                        'images',
+                        'admin',
+                        'process_image',
+                        array('image'   => $data['images'][$id],
                                                     'saveas'  => $saveas,
-                                                    'setting' => $setting));
-                    if (!$location) return;
+                                                    'setting' => $setting)
+                    );
+                    if (!$location) {
+                        return;
+                    }
                 }
 
                 switch ($saveas) {
                     case 1: // [image]_new.[ext]
                         // Redirect to viewing the uploaded images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
-                                                      array('sort' => 'time')));
+                        xarResponseRedirect(xarModURL(
+                            'images',
+                            'admin',
+                            'uploads',
+                            array('sort' => 'time')
+                        ));
                         break;
 
                     case 2: // replace
                         // Redirect to viewing the uploaded images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
-                                                      array('sort' => 'time')));
+                        xarResponseRedirect(xarModURL(
+                            'images',
+                            'admin',
+                            'uploads',
+                            array('sort' => 'time')
+                        ));
                         break;
 
                     case 0: // derivative
                     default:
                         // Redirect to viewing the derivative images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
-                                                      array('sort'    => 'time',
+                        xarResponseRedirect(xarModURL(
+                            'images',
+                            'admin',
+                            'derivatives',
+                            array('sort'    => 'time',
                                                             // we need to refresh the cache here
-                                                            'refresh' => 1)));
+                                                            'refresh' => 1)
+                        ));
                         break;
                 }
                 return true;
@@ -395,4 +562,3 @@ function images_admin_uploads($args)
     // Return the template variables defined in this function
     return $data;
 }
-?>

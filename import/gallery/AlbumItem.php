@@ -2,50 +2,50 @@
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2003 Bharat Mediratta
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 ?>
 <?php
-class AlbumItem 
+class AlbumItem
 {
-    var $image;
-    var $thumbnail;
-    var $caption;
-    var $hidden;
-    var $highlight;
-    var $highlightImage;
-    var $isAlbumName;
-    var $clicks;
-    var $keywords;
-    var $comments;      // array of comment objects
-    var $uploadDate;    // date the item was uploaded
-    var $itemCaptureDate;    // associative array of date the item was captured 
+    public $image;
+    public $thumbnail;
+    public $caption;
+    public $hidden;
+    public $highlight;
+    public $highlightImage;
+    public $isAlbumName;
+    public $clicks;
+    public $keywords;
+    public $comments;      // array of comment objects
+    public $uploadDate;    // date the item was uploaded
+    public $itemCaptureDate;    // associative array of date the item was captured
                 // not in EPOCH so we can support dates < 1970
-    var $exifData;
-    var $extraFields;
-    var $version;
+    public $exifData;
+    public $extraFields;
+    public $version;
 
-    function AlbumItem() 
+    public function AlbumItem()
     {
-            global $gallery;
+        global $gallery;
         $this->version = $gallery->album_version;
         $this->extraFields = array();
     }
     
-    function setUploadDate($uploadDate="") 
+    public function setUploadDate($uploadDate="")
     { //upload date should only be set at file upload time.
         global $gallery;
 
@@ -60,7 +60,7 @@ class AlbumItem
         }
     }
 
-    function getUploadDate() 
+    public function getUploadDate()
     {
         if (!$this->uploadDate) {
             return 0;
@@ -69,7 +69,7 @@ class AlbumItem
         }
     }
 
-    function setItemCaptureDate($itemCaptureDate="") 
+    public function setItemCaptureDate($itemCaptureDate="")
     {
         global $gallery;
         /*$itemCaptureDate should be passed in as an associative array with the following elements:
@@ -79,8 +79,8 @@ class AlbumItem
         $itemCaptureDate["mon"]
         $itemCaptureDate["mday"]
         $itemCaptureDate["year"]
-        */ 
-        if (!$itemCaptureDate) {    
+        */
+        if (!$itemCaptureDate) {
             // we want to attempt to set the $itemCaptureDate from the information that
             // is available to us.  First, look in the exif data if it is a jpeg file.  If that
             // doesn't help us, then use the file creation date.
@@ -94,7 +94,7 @@ class AlbumItem
         $this->itemCaptureDate = $itemCaptureDate;
     }
 
-    function getItemCaptureDate() 
+    public function getItemCaptureDate()
     {
         // need to set this value for old photos that don't yet contain it.
         if (!$this->itemCaptureDate) {
@@ -104,7 +104,7 @@ class AlbumItem
         }
     }
 
-    function getExif($dir, $forceRefresh=0) 
+    public function getExif($dir, $forceRefresh=0)
     {
         global $gallery;
         $file = $dir . "/" . $this->image->name . "." . $this->image->type;
@@ -119,28 +119,28 @@ class AlbumItem
         } else {
             list($status, $exifData) = getExif($file);
             if ($status == 0) {
-            $this->exifData = $exifData;
-            if (!strcmp($gallery->app->cacheExif, "yes")) {
-                $needToSave = 1;
-            } else {
-                $needToSave = 0;
-            }
+                $this->exifData = $exifData;
+                if (!strcmp($gallery->app->cacheExif, "yes")) {
+                    $needToSave = 1;
+                } else {
+                    $needToSave = 0;
+                }
             }
         }
         return array($status, $this->exifData, $needToSave);
     }
 
-    function numComments() 
+    public function numComments()
     {
         return sizeof($this->comments);
     }
 
-    function getComment($commentIndex) 
+    public function getComment($commentIndex)
     {
         return $this->comments[$commentIndex-1];
     }
 
-    function integrityCheck($dir) 
+    public function integrityCheck($dir)
     {
         global $gallery;
         $changed = 0;
@@ -164,20 +164,20 @@ class AlbumItem
                 }
             }
 
-            if ($this->highlight && $this->highlightImage)  {
+            if ($this->highlight && $this->highlightImage) {
                 if ($this->highlightImage->integrityCheck($dir)) {
                     $changed = 1;
                 }
             }
         }
-                if (strcmp($this->version, $gallery->album_version)) {
-                        $this->version = $gallery->album_version;
-                        $changed = 1;
-                }
+        if (strcmp($this->version, $gallery->album_version)) {
+            $this->version = $gallery->album_version;
+            $changed = 1;
+        }
         return $changed;
     }
 
-    function addComment($comment, $IPNumber, $name) 
+    public function addComment($comment, $IPNumber, $name)
     {
         global $gallery;
 
@@ -194,27 +194,27 @@ class AlbumItem
         return 0;
     }
 
-    function deleteComment($comment_index) 
+    public function deleteComment($comment_index)
     {
         array_splice($this->comments, $comment_index-1, 1);
     }
 
-    function setKeyWords($kw) 
+    public function setKeyWords($kw)
     {
         $this->keywords = $kw;
     }
 
-    function getKeyWords() 
+    public function getKeyWords()
     {
         return $this->keywords;
-        }
+    }
 
-    function resetItemClicks() 
+    public function resetItemClicks()
     {
         $this->clicks = 0;
     }
 
-    function getItemClicks() 
+    public function getItemClicks()
     {
         if (!isset($this->clicks)) {
             $this->resetItemClicks();
@@ -222,7 +222,7 @@ class AlbumItem
         return $this->clicks;
     }
 
-    function incrementItemClicks() 
+    public function incrementItemClicks()
     {
         if (!isset($this->clicks)) {
             $this->resetItemClicks();
@@ -230,22 +230,22 @@ class AlbumItem
         $this->clicks++;
     }
 
-    function hide() 
+    public function hide()
     {
         $this->hidden = 1;
     }
 
-    function unhide() 
+    public function unhide()
     {
         $this->hidden = 0;
     }
 
-    function isHidden() 
+    public function isHidden()
     {
         return $this->hidden;
     }
 
-    function setHighlight($dir, $bool) 
+    public function setHighlight($dir, $bool)
     {
         global $gallery;
         
@@ -274,36 +274,43 @@ class AlbumItem
                 $tag  = $nestedHighlight->image->type;
                 $ret = 1;
             } else {
-
                 if (($this->image->thumb_width > 0) || ($nestedHighlight->image->thumb_width > 0)) {
                     // Crop it first
                     if ($this->isAlbumName) {
-                        $ret = cut_image("$dir/$name.$tag",
-                                                         "$dir/$name.tmp.$tag",
-                                                         $nestedHighlight->image->thumb_x,
-                                                         $nestedHighlight->image->thumb_y,
-                                                         $nestedHighlight->image->thumb_width,
-                                                         $nestedHighlight->image->thumb_height);
+                        $ret = cut_image(
+                            "$dir/$name.$tag",
+                            "$dir/$name.tmp.$tag",
+                            $nestedHighlight->image->thumb_x,
+                            $nestedHighlight->image->thumb_y,
+                            $nestedHighlight->image->thumb_width,
+                            $nestedHighlight->image->thumb_height
+                        );
                     } else {
-                        $ret = cut_image("$dir/$name.$tag", 
-                                 "$dir/$name.tmp.$tag", 
-                                 $this->image->thumb_x, 
-                                 $this->image->thumb_y,
-                                 $this->image->thumb_width, 
-                                 $this->image->thumb_height);
+                        $ret = cut_image(
+                            "$dir/$name.$tag",
+                            "$dir/$name.tmp.$tag",
+                            $this->image->thumb_x,
+                            $this->image->thumb_y,
+                            $this->image->thumb_width,
+                            $this->image->thumb_height
+                        );
                     }
     
                     // Then resize it down
                     if ($ret) {
-                        $ret = resize_image("$dir/$name.tmp.$tag", 
-                                    "$dir/$name.highlight.$tag",
-                                    $gallery->app->highlight_size);
+                        $ret = resize_image(
+                            "$dir/$name.tmp.$tag",
+                            "$dir/$name.highlight.$tag",
+                            $gallery->app->highlight_size
+                        );
                     }
                     fs_unlink("$dir/$name.tmp.$tag");
                 } else {
-                    $ret = resize_image("$dir/$name.$tag", 
-                                "$dir/$name.highlight.$tag",
-                                $gallery->app->highlight_size);
+                    $ret = resize_image(
+                        "$dir/$name.$tag",
+                        "$dir/$name.highlight.$tag",
+                        $gallery->app->highlight_size
+                    );
                 }
             }
 
@@ -319,15 +326,15 @@ class AlbumItem
             if (fs_file_exists("$dir/$name.highlight.$tag")) {
                 fs_unlink("$dir/$name.highlight.$tag");
             }
-        }    
+        }
     }
 
-    function isHighlight() 
+    public function isHighlight()
     {
         return $this->highlight;
     }
 
-    function getThumbDimensions($size=0) 
+    public function getThumbDimensions($size=0)
     {
         if ($this->thumbnail) {
             return $this->thumbnail->getDimensions($size);
@@ -336,7 +343,7 @@ class AlbumItem
         }
     }
 
-    function getDimensions() 
+    public function getDimensions()
     {
         if ($this->image) {
             return $this->image->getDimensions();
@@ -345,13 +352,13 @@ class AlbumItem
         }
     }
 
-    function isResized() 
+    public function isResized()
     {
         $im = $this->image;
         return $im->isResized();
     }
 
-    function rotate($dir, $direction, $thumb_size) 
+    public function rotate($dir, $direction, $thumb_size)
     {
         global $gallery;
 
@@ -362,12 +369,12 @@ class AlbumItem
             return $retval;
         }
         list($w, $h) = getDimensions("$dir/$name.$type");
-        $this->image->setRawDimensions($w, $h);    
+        $this->image->setRawDimensions($w, $h);
 
         if ($this->isResized()) {
             rotate_image("$dir/$name.sized.$type", "$dir/$name.sized.$type", $direction);
             list($w, $h) = getDimensions("$dir/$name.sized.$type");
-            $this->image->setDimensions($w, $h);    
+            $this->image->setDimensions($w, $h);
         }
 
         /* Reset the thumbnail to the default before regenerating thumb */
@@ -375,7 +382,7 @@ class AlbumItem
         $this->makeThumbnail($dir, $thumb_size);
     }
 
-    function setPhoto($dir, $name, $tag, $thumb_size, $pathToThumb="") 
+    public function setPhoto($dir, $name, $tag, $thumb_size, $pathToThumb="")
     {
         global $gallery;
 
@@ -395,7 +402,7 @@ class AlbumItem
         return $ret;
     }
 
-    function makeThumbnail($dir, $thumb_size, $pathToThumb="")
+    public function makeThumbnail($dir, $thumb_size, $pathToThumb="")
     {
         global $gallery;
         $name = $this->image->name;
@@ -412,25 +419,32 @@ class AlbumItem
         } else {
             /* Make thumbnail (first crop it spec) */
             if ($pathToThumb) {
-                $ret = copy ($pathToThumb,"$dir/$name.thumb.$tag");
-            } else if ($this->image->thumb_width > 0)
-            {
-                $ret = cut_image("$dir/$name.$tag", 
-                                 "$dir/$name.thumb.$tag", 
-                                 $this->image->thumb_x, 
-                                 $this->image->thumb_y,
-                                 $this->image->thumb_width, 
-                                 $this->image->thumb_height);
+                $ret = copy($pathToThumb, "$dir/$name.thumb.$tag");
+            } elseif ($this->image->thumb_width > 0) {
+                $ret = cut_image(
+                    "$dir/$name.$tag",
+                    "$dir/$name.thumb.$tag",
+                    $this->image->thumb_x,
+                    $this->image->thumb_y,
+                    $this->image->thumb_width,
+                    $this->image->thumb_height
+                );
                 if ($ret) {
-                    $ret = resize_image("$dir/$name.thumb.$tag", 
-                                        "$dir/$name.thumb.$tag", $thumb_size);
+                    $ret = resize_image(
+                        "$dir/$name.thumb.$tag",
+                        "$dir/$name.thumb.$tag",
+                        $thumb_size
+                    );
                 }
             } else {
-                $ret = resize_image("$dir/$name.$tag", "$dir/$name.thumb.$tag",
-                         $thumb_size);
+                $ret = resize_image(
+                    "$dir/$name.$tag",
+                    "$dir/$name.thumb.$tag",
+                    $thumb_size
+                );
             }
 
-            if ($ret) { 
+            if ($ret) {
                 $this->thumbnail = new Image;
                 $this->thumbnail->setFile($dir, "$name.thumb", $tag);
     
@@ -450,7 +464,7 @@ class AlbumItem
     }
 
 
-    function getThumbnailTag($dir, $size=0, $attrs="") 
+    public function getThumbnailTag($dir, $size=0, $attrs="")
     {
         if ($this->thumbnail) {
             return $this->thumbnail->getTag($dir, 0, $size, $attrs);
@@ -459,7 +473,7 @@ class AlbumItem
         }
     }
 
-    function getHighlightTag($dir, $size=0, $attrs) 
+    public function getHighlightTag($dir, $size=0, $attrs)
     {
         if (is_object($this->highlightImage)) {
             return $this->highlightImage->getTag($dir, 0, $size, $attrs);
@@ -468,7 +482,7 @@ class AlbumItem
         }
     }
 
-    function getPhotoTag($dir, $full=0) 
+    public function getPhotoTag($dir, $full=0)
     {
         if ($this->image) {
             return $this->image->getTag($dir, $full);
@@ -477,7 +491,7 @@ class AlbumItem
         }
     }
 
-    function getPhotoPath($dir, $full=0) 
+    public function getPhotoPath($dir, $full=0)
     {
         if ($this->image) {
             return $this->image->getPath($dir, $full);
@@ -486,7 +500,7 @@ class AlbumItem
         }
     }
 
-    function getPhotoId($dir) 
+    public function getPhotoId($dir)
     {
         if ($this->image) {
             return $this->image->getId($dir);
@@ -495,7 +509,7 @@ class AlbumItem
         }
     }
 
-    function delete($dir) 
+    public function delete($dir)
     {
         if ($this->image) {
             $this->image->delete($dir);
@@ -506,42 +520,42 @@ class AlbumItem
         }
     }
 
-    function setCaption($cap) 
+    public function setCaption($cap)
     {
         $this->caption = $cap;
     }
 
-    function getCaption() 
+    public function getCaption()
     {
         return $this->caption;
     }
 
-    function setIsAlbumName($name) 
+    public function setIsAlbumName($name)
     {
         $this->isAlbumName = $name;
     }
 
-    function getIsAlbumName() 
+    public function getIsAlbumName()
     {
         return $this->isAlbumName;
     }
 
-    function isMovie() 
+    public function isMovie()
     {
         return isMovie($this->image->type);
     }
 
-    function resize($dir, $target, $pathToResized="") 
+    public function resize($dir, $target, $pathToResized="")
     {
         if ($this->image) {
             $this->image->resize($dir, $target, $pathToResized);
         }
     }
-    function setExtraField($name, $value)
+    public function setExtraField($name, $value)
     {
         $this->extraFields[$name]=$value;
     }
-    function getExtraField($name)
+    public function getExtraField($name)
     {
         if (isset($this->extraFields[$name])) {
             return $this->extraFields[$name];

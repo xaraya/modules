@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/152.html
  * @author Images Module Development Team
  */
-function uploads_admin_importpictures( $args )
+function uploads_admin_importpictures($args)
 {
     //global $dd_26;
     //$dd_26 = 'http://epicsaga.com/what_do_you_know?';
@@ -31,17 +31,17 @@ function uploads_admin_importpictures( $args )
     // Kick mod available
     echo "Checking mod avaliable (dynamicdata): ";
     $avail = xarModIsAvailable("dynamicdata");
-    if ( $avail ) {
+    if ($avail) {
         echo "yes<br/>";
     } else {
         echo "no<br/>";
     }
 
     // Get files to import
-    $FilesInDir = getFileList( $image_import_dir );
+    $FilesInDir = getFileList($image_import_dir);
 
     // Prune out dupes, and ones already in the system
-    $prunedFiles = pruneFiles( $FilesInDir, $image_import_dir );
+    $prunedFiles = pruneFiles($FilesInDir, $image_import_dir);
 
 
     // Setup Article Defaults
@@ -72,21 +72,18 @@ function uploads_admin_importpictures( $args )
                      );
 
     // Loop through files and import
-    foreach ($prunedFiles as $filename)
-    {
+    foreach ($prunedFiles as $filename) {
+        $lastSlash = strlen($filename) - strpos(strrev($filename), '/');
+        $title = ucwords(str_replace("_", " ", substr($filename, $lastSlash, strpos($filename, '.')-1)));
 
-        $lastSlash = strlen($filename) - strpos( strrev( $filename ), '/' );
-        $title = ucwords(str_replace( "_", " ", substr ($filename, $lastSlash, strpos( $filename, '.')-1 ) ));
-
-        $shortname = substr ($filename, $lastSlash, strlen( $filename));
+        $shortname = substr($filename, $lastSlash, strlen($filename));
         echo "File: ".$filename."<br/>";
 
 
         // import file into Uploads
         $filepath = $image_import_dir.$filename;
 
-        if (is_file($filepath))
-        {
+        if (is_file($filepath)) {
             $data = array('ulfile'   => $shortname
                          ,'filepath' => $filepath
                          ,'utype'    => 'file'
@@ -96,12 +93,11 @@ function uploads_admin_importpictures( $args )
                          ,'type'     => '');
 
             echo "About to store<br/>";
-            $info = xarModAPIFunc('uploads','user','store',$data);
+            $info = xarModAPIFunc('uploads', 'user', 'store', $data);
             echo '<pre>';
-            print_r( $info );
+            print_r($info);
             echo '</pre>';
             echo "Stored<br/>";
-
         }
 
         // Setup file specific title
@@ -113,7 +109,7 @@ function uploads_admin_importpictures( $args )
 
         // Create Picture Article
         echo "Creating Article<br/>";
-        $aid = xarModAPIFunc('articles','admin','create',$article);
+        $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
 
 
         echo "Article Created :: ID :: $aid<br/>";
@@ -123,42 +119,40 @@ function uploads_admin_importpictures( $args )
 
 
 
-function getFileList( $import_directory )
+function getFileList($import_directory)
 {
     // Recurse through import directories, getting files
     $DirectoriesToScan = array($import_directory);
     $DirectoriesScanned = array();
-    while (count($DirectoriesToScan) > 0)
-    {
-     foreach ($DirectoriesToScan as $DirectoryKey => $startingdir) {
-       if ($dir = @opendir($startingdir)) {
-         while (($file = readdir($dir)) !== false) {
-           if (($file != '.') && ($file != '..')) {
-           $RealPathName = realpath($startingdir.'/'.$file);
-             if (is_dir($RealPathName)) {
-               if (!in_array($RealPathName, $DirectoriesScanned) && !in_array($RealPathName, $DirectoriesToScan)) {
-                 $DirectoriesToScan[] = $RealPathName;
-               }
-             } elseif (is_file($RealPathName)) {
-               $FilesInDir[] = substr($RealPathName,strlen($import_directory));
-             }
-           }
-         }
-        closedir($dir);
-       }
-       $DirectoriesScanned[] = $startingdir;
-      unset($DirectoriesToScan[$DirectoryKey]);
-     }
+    while (count($DirectoriesToScan) > 0) {
+        foreach ($DirectoriesToScan as $DirectoryKey => $startingdir) {
+            if ($dir = @opendir($startingdir)) {
+                while (($file = readdir($dir)) !== false) {
+                    if (($file != '.') && ($file != '..')) {
+                        $RealPathName = realpath($startingdir.'/'.$file);
+                        if (is_dir($RealPathName)) {
+                            if (!in_array($RealPathName, $DirectoriesScanned) && !in_array($RealPathName, $DirectoriesToScan)) {
+                                $DirectoriesToScan[] = $RealPathName;
+                            }
+                        } elseif (is_file($RealPathName)) {
+                            $FilesInDir[] = substr($RealPathName, strlen($import_directory));
+                        }
+                    }
+                }
+                closedir($dir);
+            }
+            $DirectoriesScanned[] = $startingdir;
+            unset($DirectoriesToScan[$DirectoryKey]);
+        }
     }
 
     return $FilesInDir;
 }
 
-function pruneFiles( $FilesInDir, $image_import_dir )
+function pruneFiles($FilesInDir, $image_import_dir)
 {
     // Now check to see if any of those files are already in the system
-    if( isset($FilesInDir) )
-    {
+    if (isset($FilesInDir)) {
 
         // Get database setup
         $dbconn =& xarDBGetConn();
@@ -172,8 +166,7 @@ function pruneFiles( $FilesInDir, $image_import_dir )
         sort($FilesInDir);
 
         $prunedFiles = array();
-        foreach ($FilesInDir as $filename)
-        {
+        foreach ($FilesInDir as $filename) {
             // Get items
             $sql = "SELECT  xar_ulid,
                             xar_ulfile,
@@ -182,21 +175,18 @@ function pruneFiles( $FilesInDir, $image_import_dir )
                     FROM $uploadstable
                     WHERE xar_ulfile = '$filename' OR xar_ulhash = '$filename' OR xar_ulhash = '$image_import_dir$filename';";
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Check for no rows found, and if so, add file to pruned list
-            if ($result->EOF)
-            {
+            if ($result->EOF) {
                 $insystem = 'No';
                 $prunedFiles[] = $filename;
-
             }
             //close the result set
             $result->Close();
-
         }
     }
     return $prunedFiles;
 }
-
-?>

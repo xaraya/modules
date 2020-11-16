@@ -21,23 +21,35 @@
  * @return  array   An array containing the image information if available or false if not available
  * @throws BAD_PARAM
  */
-function images_userapi_getimageinfo( $args )
+function images_userapi_getimageinfo($args)
 {
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      '', 'getimageinfo', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            '',
+            'getimageinfo',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'fileId', 'getimageinfo', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'fileId',
+            'getimageinfo',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'fileLocation', 'getimageinfo', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'fileLocation',
+            'getimageinfo',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     }
@@ -45,7 +57,7 @@ function images_userapi_getimageinfo( $args )
     if (!empty($fileId) && is_numeric($fileId)) {
         // Get file information from the uploads module
         $imageInfoArray = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
-        $imageInfo = end($imageInfoArray );
+        $imageInfo = end($imageInfoArray);
         if (!empty($imageInfo)) {
             // Check the modified and writable
             if (file_exists($imageInfo['fileLocation'])) {
@@ -56,7 +68,7 @@ function images_userapi_getimageinfo( $args )
                 $imageInfo['isWritable']   = false;
             }
             // Get image size and type information
-            $sizeinfo = xarModAPIFunc('images','user','getimagesize',$imageInfo);
+            $sizeinfo = xarModAPIFunc('images', 'user', 'getimagesize', $imageInfo);
             if (!empty($sizeinfo)) {
                 $imageInfo['imageWidth']  = $sizeinfo[0];
                 $imageInfo['imageHeight'] = $sizeinfo[1];
@@ -65,7 +77,6 @@ function images_userapi_getimageinfo( $args )
             }
         }
         return $imageInfo;
-
     } elseif (!empty($fileLocation)) {
         // Check if the file exists
         $fileName = $fileLocation;
@@ -80,7 +91,9 @@ function images_userapi_getimageinfo( $args )
         $statinfo = @stat($fileLocation);
         // Get image size and type information
         $sizeinfo = @getimagesize($fileLocation);
-        if (empty($statinfo) || empty($sizeinfo)) return;
+        if (empty($statinfo) || empty($sizeinfo)) {
+            return;
+        }
 
         // Note: we're using base 64 encoded fileId's here
         $id = base64_encode($fileName);
@@ -102,4 +115,3 @@ function images_userapi_getimageinfo( $args )
 
     return false;
 }
-?>

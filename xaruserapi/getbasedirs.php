@@ -18,7 +18,7 @@
  */
 function images_userapi_getbasedirs()
 {
-    $basedirs = xarModGetVar('images','basedirs');
+    $basedirs = xarModGetVar('images', 'basedirs');
     if (!empty($basedirs)) {
         $basedirs = unserialize($basedirs);
     }
@@ -28,9 +28,8 @@ function images_userapi_getbasedirs()
                              'baseurl'   => 'themes',
                              'filetypes' => 'gif|jpg|png',
                              'recursive' => true);
-        xarModSetVar('images','basedirs',serialize($basedirs));
+        xarModSetVar('images', 'basedirs', serialize($basedirs));
     }
 
     return $basedirs;
 }
-?>

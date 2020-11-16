@@ -34,25 +34,25 @@ function images_init()
     xarModSetVar('images', 'file.cache-expire', 60);
     xarModSetVar('images', 'file.imagemagick', '');
 
-/*
-    xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
-    xarRegisterMask('AddUploads',   'All','images','Image','All','ACCESS_ADD');
-    xarRegisterMask('EditUploads',  'All','images','Image','All','ACCESS_EDIT');
-    xarRegisterMask('DeleteUploads','All','images','Image','All','ACCESS_DELETE');
-*/
-    xarRegisterMask('AdminImages', 'All','images','Image','All','ACCESS_ADMIN');
+    /*
+        xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
+        xarRegisterMask('AddUploads',   'All','images','Image','All','ACCESS_ADD');
+        xarRegisterMask('EditUploads',  'All','images','Image','All','ACCESS_EDIT');
+        xarRegisterMask('DeleteUploads','All','images','Image','All','ACCESS_DELETE');
+    */
+    xarRegisterMask('AdminImages', 'All', 'images', 'Image', 'All', 'ACCESS_ADMIN');
 
     if (!xarModRegisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
-         $msg = xarML('Could not register hook.');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
+        $msg = xarML('Could not register hook.');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
     // Register the tag
-    $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
-                             new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
-                             new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),
-                             new xarTemplateAttribute('constrain',   XAR_TPL_OPTIONAL | XAR_TPL_STRING),
-                             new xarTemplateAttribute('label',       XAR_TPL_REQUIRED | XAR_TPL_STRING));
+    $imageAttributes = array(new xarTemplateAttribute('src', XAR_TPL_REQUIRED | XAR_TPL_STRING),
+                             new xarTemplateAttribute('height', XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+                             new xarTemplateAttribute('width', XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+                             new xarTemplateAttribute('constrain', XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+                             new xarTemplateAttribute('label', XAR_TPL_REQUIRED | XAR_TPL_STRING));
     xarTplRegisterTag('images', 'image-resize', $imageAttributes, 'images_userapi_handle_image_tag');
 
     // Initialisation successful
@@ -67,12 +67,12 @@ function images_init()
 function images_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
-    switch($oldversion) {
+    switch ($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
             $thumbsdir = xarModGetVar('images', 'path.derivative-store');
             if (!empty($thumbsdir) && is_dir($thumbsdir)) {
-                xarModSetVar('images','upgrade-1.0.0',1);
+                xarModSetVar('images', 'upgrade-1.0.0', 1);
                 // remove all old-style derivatives
             /* skip this - too risky depending on site config
                 $images = xarModAPIFunc('images','admin','getderivatives');
@@ -85,9 +85,10 @@ function images_upgrade($oldversion)
             }
             // Fall through to next upgrade
 
+            // no break
         case '1.1.0':
         
-        case '1.1.1' : //current version
+        case '1.1.1': //current version
             break;
     }
 
@@ -112,4 +113,3 @@ function images_delete()
     // Deletion successful
     return true;
 }
-?>

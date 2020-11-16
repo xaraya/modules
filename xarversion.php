@@ -28,5 +28,3 @@ $modversion['class']        = 'Utility';
 $modversion['category']     = 'Global';
 // this module requires the gd extension (for now)
 $modversion['extensions']   = array('gd');
-
-?>

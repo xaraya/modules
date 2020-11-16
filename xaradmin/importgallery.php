@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/152.html
  * @author Images Module Development Team
  */
-function uploads_admin_importgallery( $args )
+function uploads_admin_importgallery($args)
 {
     global $outputStuff;
     $outputStuff = '';
@@ -59,16 +59,14 @@ function uploads_admin_importgallery( $args )
     // Kick mod available
     $outputStuff .= "Checking mod avaliable (dynamicdata): ";
     $avail = xarModIsAvailable("dynamicdata");
-    if( $avail )
-    {
+    if ($avail) {
         $outputStuff .= "yes<br/>";
     } else {
         $outputStuff .= "no<br/>";
     }
     $outputStuff .= "Checking mod avaliable (categories): ";
     $avail = xarModIsAvailable("categories");
-    if( $avail )
-    {
+    if ($avail) {
         $outputStuff .= "yes<br/>";
     } else {
         $outputStuff .= "no<br/>";
@@ -83,26 +81,23 @@ function uploads_admin_importgallery( $args )
     // Main Album Database file -- lists all albums
     $albumdb = $image_import_dir."/albumdb.dat";
 
-    if( !file_exists( $albumdb ) )
-    {
+    if (!file_exists($albumdb)) {
         $outputStuff .= "Can't find albumdb.dat file at $albumdb<br/>";
 
         return array('outputStuff'=>$outputStuff);
     }
 
-    $x = getSerializedData( $albumdb );
+    $x = getSerializedData($albumdb);
 
     // Iterate over albums
-    foreach( $x as $album )
-    {
+    foreach ($x as $album) {
         //Check for individual album data files
         $albumdir = $image_import_dir."/".$album;
-        if( is_dir( $albumdir ) )
-        {
+        if (is_dir($albumdir)) {
             $outputStuff .= "<b>Found album: ".$album."</b><br/>";
 
             $albumdat = $albumdir."/album.dat";
-            $x = getSerializedData( $albumdat );
+            $x = getSerializedData($albumdat);
 
             // Get Current Album's information
             $album_title = $x->fields['title'];
@@ -110,12 +105,10 @@ function uploads_admin_importgallery( $args )
 
             // Determine ancestery
             $album_parent = $x->fields['parentAlbumName'];
-            if( !$album_parent )
-            {
+            if (!$album_parent) {
                 $album_parent = '';
             } else {
-                if( $alumbs_lookup[$album_parent]['parent'] )
-                {
+                if ($alumbs_lookup[$album_parent]['parent']) {
                     $album_parent = $alumbs_lookup[$album_parent]['parent'].'/'.$alumbs_lookup[$album_parent]['title'];
                 } else {
                     $album_parent = '/'.$alumbs_lookup[$album_parent]['title'];
@@ -123,7 +116,7 @@ function uploads_admin_importgallery( $args )
             }
 
             // Build Album's Category, if nessesary -- then retrieve Category ID.
-            $album_cid = createCat( $Root_Cat_Name, $album_parent.'/'.$album_title, $album_desc);
+            $album_cid = createCat($Root_Cat_Name, $album_parent.'/'.$album_title, $album_desc);
 
 
             // Store Current Album's information in general album lookup, for child albums to lookup.
@@ -135,23 +128,21 @@ function uploads_admin_importgallery( $args )
                                           );
 
             // Get files to import
-            $FilesInDir = galleryTraverse( $image_import_dir.'/'.$album );
+            $FilesInDir = galleryTraverse($image_import_dir.'/'.$album);
 
             // Prune out dupes, and ones already in the system
-            $prunedFiles = pruneFiles( $FilesInDir, $image_import_dir.'/'.$album,$album );
+            $prunedFiles = pruneFiles($FilesInDir, $image_import_dir.'/'.$album, $album);
 
 
             // Loop through files and import
-            foreach ($prunedFiles as $file)
-            {
+            foreach ($prunedFiles as $file) {
 //                $outputStuff .= "<i>Storing File: - </i> ".$file['filename'].' - ';
-                $filetitle = ucwords(str_replace( "_", " ", substr ($file['filename'], 1, strpos( $file['filename'], '.')-1 ) ));
+                $filetitle = ucwords(str_replace("_", " ", substr($file['filename'], 1, strpos($file['filename'], '.')-1)));
 
                 // import file into Uploads
                 $filepath = $image_import_dir.'/'.$album.$file['filename'];
 
-                if (is_file($filepath))
-                {
+                if (is_file($filepath)) {
                     $data = array('ulfile'   => $album.$file['filename']
                                  ,'filepath' => $filepath
                                  ,'utype'    => 'file'
@@ -160,30 +151,26 @@ function uploads_admin_importgallery( $args )
                                  ,'filesize' => filesize($filepath)
                                  ,'type'     => '');
 
-                    if( $actuallyImport )
-                    {
-                        $info = xarModAPIFunc('uploads','user','store',$data);
+                    if ($actuallyImport) {
+                        $info = xarModAPIFunc('uploads', 'user', 'store', $data);
                     } else {
                         $info = array('link'=>''); //dummy for when not importing
                     }
 //                    $outputStuff .= "Stored<br/>";
                 }
 
-            //Setup Article with file specific values
-            //***************************************
+                //Setup Article with file specific values
+                //***************************************
                 // Setup file specific title, Retreive caption from Gallery Photos Dat if available
-                if( isset($file['fileinfo']['caption']) )
-                {
+                if (isset($file['fileinfo']['caption'])) {
                     $article['title'] = $file['fileinfo']['caption'];
                 } else {
                     $article['title'] = $filetitle;
                 }
-                if( isset($file['fileinfo']['date']) )
-                {
+                if (isset($file['fileinfo']['date'])) {
                     $article['pubdate'] = $file['fileinfo']['date'];
                 }
-                if( isset($file['fileinfo']['comments']) )
-                {
+                if (isset($file['fileinfo']['comments'])) {
                     $article['summary'] = $file['fileinfo']['comments'];
                 }
 
@@ -196,15 +183,13 @@ function uploads_admin_importgallery( $args )
 
 //                $outputStuff .= "<i>Creating Article: - </i> ".$article['title']."<br/>";
 
-                if( $actuallyImport )
-                {
-                    $aid = xarModAPIFunc('articles','admin','create',$article);
+                if ($actuallyImport) {
+                    $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
                 } else {
                     $aid = "Mock run, Article not actually created.";
                 }
 
                 echo 'Article Created :: '.$aid.' :: '.$article['title'].' <br/>';
-
             }
 
             $outputStuff .= "<br/><br/>";
@@ -214,16 +199,16 @@ function uploads_admin_importgallery( $args )
     return array('outputStuff'=>$outputStuff);
 }
 
-function getSerializedData( $filename )
+function getSerializedData($filename)
 {
-    $handle = fopen ($filename, "r");
-    $contents = fread ($handle, filesize ($filename));
-    fclose ($handle);
+    $handle = fopen($filename, "r");
+    $contents = fread($handle, filesize($filename));
+    fclose($handle);
 
     return unserialize($contents) ;
 }
 
-function createCat( $Root_Cat_Name,$catpath,$description )
+function createCat($Root_Cat_Name, $catpath, $description)
 {
     global $outputStuff;
 
@@ -234,26 +219,23 @@ function createCat( $Root_Cat_Name,$catpath,$description )
     $path = '';
     $lastCID = 0;
     $path_array = explode("/", $catpath);
-    foreach ($path_array as $cat_name)
-    {
-        if( $path != '' )
-        {
+    foreach ($path_array as $cat_name) {
+        if ($path != '') {
             $path = $path.'/'.$cat_name;
         } else {
             $path = $cat_name;
         }
 
-        $cid  = xarModAPIFunc('categories','user','categoryexists',array('path'=>$path));
+        $cid  = xarModAPIFunc('categories', 'user', 'categoryexists', array('path'=>$path));
 //        $outputStuff .= "path: $path [$lastCID/$cid]<br/>";
-        if( !$cid )
-        {
+        if (!$cid) {
             //This one is missing, create it.
             $args = array();
             $args['name'] = $cat_name;
             $args['description'] = $description;
             $args['image'] = '';
             $args['parent_id'] = $lastCID;
-            $cid = xarModAPIFunc('categories','admin','create',$args);
+            $cid = xarModAPIFunc('categories', 'admin', 'create', $args);
             $outputStuff .= "Created: $cat_name ($cid)<br/>";
         }
         $lastCID = $cid;
@@ -262,28 +244,27 @@ function createCat( $Root_Cat_Name,$catpath,$description )
 }
 
 
-function getGalleryInfo( $photodat )
+function getGalleryInfo($photodat)
 {
 //    $outputStuff .= "<i>Processing dat file :: $photodat <br/></i>";
 
     // get contents of a file into a string
     $filename = $photodat;
-    $handle = fopen ($filename, "r");
-    $contents = fread ($handle, filesize ($filename));
-    fclose ($handle);
+    $handle = fopen($filename, "r");
+    $contents = fread($handle, filesize($filename));
+    fclose($handle);
 
     $x = unserialize($contents) ;
 
-/*
+    /*
 
-    $outputStuff .= "<pre>||";
-    print_r( $x );
-    $outputStuff .= "||</pre>";
-*/
+        $outputStuff .= "<pre>||";
+        print_r( $x );
+        $outputStuff .= "||</pre>";
+    */
 //    echo $contents."<pre>";
     $fileinfo = array();
-    foreach( $x as $item )
-    {
+    foreach ($x as $item) {
         $filename = $item->image->name.'.'.$item->image->type;
         $fileinfo[$filename] = array( 'date'    => $item->uploadDate
                                      ,'caption' => $item->caption
@@ -293,44 +274,39 @@ function getGalleryInfo( $photodat )
     return $fileinfo;
 }
 
-function galleryTraverse( $import_directory )
+function galleryTraverse($import_directory)
 {
     global $outputStuff;
 
     $FilesInDir = array();
-    if ($dir = @opendir($import_directory))
-    {
+    if ($dir = @opendir($import_directory)) {
         // Check for Gallery data file.
         $photodat = $import_directory.'/photos.dat';
-        if( file_exists($photodat) )
-        {
+        if (file_exists($photodat)) {
 //            $outputStuff .= "Found photo.dat<br/>";
-            $fileinfo = getGalleryInfo( $photodat );
+            $fileinfo = getGalleryInfo($photodat);
         }
-        while (($file = readdir($dir)) !== false)
-        {
+        while (($file = readdir($dir)) !== false) {
             if (
                 ($file != '.') && ($file != '..')
-                && (!strpos($file,'.dat'))             // Ignore dat files
-                && (!strpos($file,'.html'))         // Ignore empty directory html file
-                && (!strpos($file,'.sized.'))         // Ignore thumbs
-                && (!strpos($file,'.thumb.'))         // Ignore thumbs
-                && (!strpos($file,'.highlight.'))     // Ignore thumbs
+                && (!strpos($file, '.dat'))             // Ignore dat files
+                && (!strpos($file, '.html'))         // Ignore empty directory html file
+                && (!strpos($file, '.sized.'))         // Ignore thumbs
+                && (!strpos($file, '.thumb.'))         // Ignore thumbs
+                && (!strpos($file, '.highlight.'))     // Ignore thumbs
 
-               )
-            {
+               ) {
                 $RealPathName = realpath($import_directory.'/'.$file);
-                if (is_file($RealPathName))
-                {
-                    $FilesInDir[] = array( 'filename' => substr($RealPathName,strlen($import_directory))
+                if (is_file($RealPathName)) {
+                    $FilesInDir[] = array( 'filename' => substr($RealPathName, strlen($import_directory))
                                           ,'filepath' => $RealPathName
                                           ,'fileinfo' => $fileinfo[$file]
                                          );
                 }
-            } else if (strpos($file,'.sized.') || strpos($file,'.thumb.') || strpos($file,'.highlight.')) {
+            } elseif (strpos($file, '.sized.') || strpos($file, '.thumb.') || strpos($file, '.highlight.')) {
                 $RealPathName = realpath($import_directory.'/'.$file);
                 $outputStuff .= "Removing unnessary thumbnail: $file<br/>";
-                unlink( $RealPathName );
+                unlink($RealPathName);
             }
         }
     }
@@ -339,13 +315,12 @@ function galleryTraverse( $import_directory )
 }
 
 
-function pruneFiles( $FilesInDir, $image_import_dir, $album )
+function pruneFiles($FilesInDir, $image_import_dir, $album)
 {
     global $outputStuff;
 
     // Now check to see if any of those files are already in the system
-    if( isset($FilesInDir) )
-    {
+    if (isset($FilesInDir)) {
 
         // Get database setup
         $dbconn =& xarDBGetConn();
@@ -359,8 +334,7 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
         sort($FilesInDir);
 
         $prunedFiles = array();
-        foreach ($FilesInDir as $file)
-        {
+        foreach ($FilesInDir as $file) {
             $filename = $file['filename'];
 //            $outputStuff .= "Checking $filename - ";
 
@@ -377,11 +351,12 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
 //            $outputStuff .= "</pre></hr>";
 
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Check for no rows found, and if so, add file to pruned list
-            if ($result->EOF)
-            {
+            if ($result->EOF) {
                 $insystem = 'No';
                 $prunedFiles[] = $file;
 
@@ -391,10 +366,7 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
             }
             //close the result set
             $result->Close();
-
         }
     }
     return $prunedFiles;
 }
-
-?>

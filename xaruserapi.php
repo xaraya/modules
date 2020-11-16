@@ -13,11 +13,9 @@
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
 */
 
-define('_IMAGES_LIBRARY_GD',            1);
-define('_IMAGES_LIBRARY_IMAGEMAGICK',   2);
-define('_IMAGES_LIBRARY_NETPBM',        3);
+define('_IMAGES_LIBRARY_GD', 1);
+define('_IMAGES_LIBRARY_IMAGEMAGICK', 2);
+define('_IMAGES_LIBRARY_NETPBM', 3);
 
-define('_IMAGES_UNIT_TYPE_PERCENT',    1);
-define('_IMAGES_UNIT_TYPE_PIXELS',     2);
-
-?>
+define('_IMAGES_UNIT_TYPE_PERCENT', 1);
+define('_IMAGES_UNIT_TYPE_PIXELS', 2);

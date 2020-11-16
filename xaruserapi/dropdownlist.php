@@ -31,18 +31,20 @@ function images_userapi_dropdownlist($args = array())
     }
     if (!isset($args['bid'])) {
         // Get the uploads images
-        $images = xarModAPIFunc('images','admin','getuploads',$args);
+        $images = xarModAPIFunc('images', 'admin', 'getuploads', $args);
     } else {
         // Get the base directories configured for server images
-        $basedirs = xarModAPIFunc('images','user','getbasedirs');
+        $basedirs = xarModAPIFunc('images', 'user', 'getbasedirs');
         if (empty($args['bid']) || empty($basedirs[$args['bid']])) {
             $args['bid'] = 0; // themes directory
         }
         $args = array_merge($basedirs[$args['bid']], $args);
         // Get the server images
-        $images = xarModAPIFunc('images','admin','getimages',$args);
+        $images = xarModAPIFunc('images', 'admin', 'getimages', $args);
     }
-    if (!$images) return;
+    if (!$images) {
+        return;
+    }
 
     if (!isset($args['field'])) {
         $args['field'] = 'fileName';
@@ -53,12 +55,12 @@ function images_userapi_dropdownlist($args = array())
     $list[0] = '';
     $field = $args['field'];
     foreach ($images as $image) {
-        if (!isset($image[$field])) continue;
-    // TODO: support other formatting options here depending on the field type ?
+        if (!isset($image[$field])) {
+            continue;
+        }
+        // TODO: support other formatting options here depending on the field type ?
         $list[$image['fileId']] = xarVarPrepForDisplay($image[$field]);
     }
 
     return $list;
 }
-
-?>

@@ -24,6 +24,5 @@ function images_adminapi_setsettings($args)
         $args = array();
     }
 
-    xarModSetVar('images','phpthumb-settings',serialize($args));
+    xarModSetVar('images', 'phpthumb-settings', serialize($args));
 }
-?>

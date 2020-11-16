@@ -60,17 +60,21 @@ function images_adminapi_countderivatives($args)
 
     $cachekey = md5(serialize($params));
     // get the number of images from temporary cache - see getderivatives()
-    if (xarVarIsCached('Modules.Images','countderivatives.'.$cachekey)) {
-        return xarVarGetCached('Modules.Images','countderivatives.'.$cachekey);
+    if (xarVarIsCached('Modules.Images', 'countderivatives.'.$cachekey)) {
+        return xarVarGetCached('Modules.Images', 'countderivatives.'.$cachekey);
     } else {
-        $files = xarModAPIFunc('dynamicdata','admin','browse',
-                               $params);
-        if (!isset($files)) return;
+        $files = xarModAPIFunc(
+            'dynamicdata',
+            'admin',
+            'browse',
+            $params
+        );
+        if (!isset($files)) {
+            return;
+        }
 
         return count($files);
     }
 
     return 0;
 }
-
-?>

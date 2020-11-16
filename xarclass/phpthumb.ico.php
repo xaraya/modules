@@ -9,19 +9,17 @@
 //////////////////////////////////////////////////////////////
 
 
-class phpthumb_ico 
+class phpthumb_ico
 {
-
-    function phpthumb_ico()
+    public function phpthumb_ico()
     {
         return true;
     }
 
 
-    function GD2ICOstring(&$gd_image_array) 
+    public function GD2ICOstring(&$gd_image_array)
     {
         foreach ($gd_image_array as $key => $gd_image) {
-
             $ImageWidths[$key]  = ImageSX($gd_image);
             $ImageHeights[$key] = ImageSY($gd_image);
             $bpp[$key]          = ImageIsTrueColor($gd_image) ? 32 : 24;
@@ -59,7 +57,6 @@ class phpthumb_ico
                     $icAND[$key] .= chr(bindec(str_pad(substr($scanlinemaskbits, $i, 8), 8, '0', STR_PAD_LEFT)));
                 }
             }
-
         }
 
         foreach ($gd_image_array as $key => $gd_image) {
@@ -116,7 +113,4 @@ class phpthumb_ico
 
         return $icondata;
     }
-
 }
-
-?>

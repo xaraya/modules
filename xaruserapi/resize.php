@@ -34,37 +34,44 @@ function images_userapi_resize($args)
     if (!isset($src) || empty($src)) {
         $msg = xarML("Required parameter '#(1)' is missing or empty.", 'src');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        return false;
     }
 
     if (!isset($label) || empty($label)) {
         $msg = xarML("Required parameter '#(1)' is missing or empty.", 'label');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        return false;
     }
 
     if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
-        $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.",
-                     'width', 'height', 'setting', 'params');
+        $msg = xarML(
+            "Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.",
+            'width',
+            'height',
+            'setting',
+            'params'
+        );
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Parameters'), new DefaultUserException($msg));
-        return FALSE;
+        return false;
     } elseif (isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
         $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'height');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        return false;
     } elseif (isset($width) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $width)) {
         $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'width');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        return false;
     }
 
-    if( !isset($returnpath) ){ $returnpath = false; }
+    if (!isset($returnpath)) {
+        $returnpath = false;
+    }
 
-    $notSupported = FALSE;
+    $notSupported = false;
 
     // allow passing single DD Uploads values "as is" to xar:image-resize
-    if (substr($src,0,1) == ';') {
-        $src = substr($src,1);
+    if (substr($src, 0, 1) == ';') {
+        $src = substr($src, 1);
     }
 
     if (is_numeric($src)) {
@@ -73,17 +80,21 @@ function images_userapi_resize($args)
         if (isset($basedir)) {
             $src = $basedir . '/' . $src;
         }
-        $imageInfo = xarModAPIFunc('images', 'user', 'getimageinfo',
-                                   array('fileLocation' => $src));
+        $imageInfo = xarModAPIFunc(
+            'images',
+            'user',
+            'getimageinfo',
+            array('fileLocation' => $src)
+        );
     }
     if (!empty($imageInfo)) {
         // TODO: refactor to support other libraries (ImageMagick/NetPBM)
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
         if (empty($imageInfo['imageType']) || (!$imageInfo['imageType'] & $gd_info['typesBitmask'])) {
-            $notSupported = TRUE;
+            $notSupported = true;
         }
     } else {
-        $notSupported = TRUE;
+        $notSupported = true;
     }
     if ($notSupported) {
         $errorMsg = xarML('Image type for file: #(1) is not supported for resizing', $src);
@@ -102,14 +113,18 @@ function images_userapi_resize($args)
 
     // use predefined setting for processing
     if (!empty($setting)) {
-        $settings = xarModAPIFunc('images','user','getsettings');
+        $settings = xarModAPIFunc('images', 'user', 'getsettings');
         if (!empty($settings[$setting])) {
-            $location = xarModAPIFunc('images','admin','process_image',
-                                      array('image'    => $imageInfo,
+            $location = xarModAPIFunc(
+                'images',
+                'admin',
+                'process_image',
+                array('image'    => $imageInfo,
                                             'saveas'   => 0, // derivative
                                             'setting'  => $setting,
                                             // don't process the image again if it already exists
-                                            'iscached' => TRUE));
+                                            'iscached' => true)
+            );
             if (empty($location)) {
                 $errorstack = xarErrorGet();
                 $errorstack = array_shift($errorstack);
@@ -129,7 +144,7 @@ function images_userapi_resize($args)
                     $url = $baseurl . '/' . basename($location);
 
                 // or if it's an absolute URL, try to get rid of it
-                } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
+                } elseif (substr($location, 0, 1) == '/' || substr($location, 1, 1) == ':') {
                     $thumbsdir = xarModGetVar('images', 'path.derivative-store');
                     $url = $thumbsdir . '/' . basename($location);
                 }
@@ -137,28 +152,35 @@ function images_userapi_resize($args)
                 if (empty($url)) {
                     $url = $location;
                 }
-
             } else {
                 // use the location of the processed image here
-                $url = xarModURL('images', 'user', 'display',
-                                 array('fileId' => base64_encode($location)));
+                $url = xarModURL(
+                    'images',
+                    'user',
+                    'display',
+                    array('fileId' => base64_encode($location))
+                );
             }
 
-            if( $returnpath == true ){
+            if ($returnpath == true) {
                 return $url;
             }
 
             return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
         }
 
-    // use parameters for processing
+        // use parameters for processing
     } elseif (!empty($params)) {
-        $location = xarModAPIFunc('images','admin','process_image',
-                                  array('image'    => $imageInfo,
+        $location = xarModAPIFunc(
+            'images',
+            'admin',
+            'process_image',
+            array('image'    => $imageInfo,
                                         'saveas'   => 0, // derivative
                                         'params'   => $params,
                                         // don't process the image again if it already exists
-                                        'iscached' => TRUE));
+                                        'iscached' => true)
+        );
         if (empty($location)) {
             $errorstack = xarErrorGet();
             $errorstack = array_shift($errorstack);
@@ -178,21 +200,24 @@ function images_userapi_resize($args)
                 $url = $baseurl . '/' . basename($location);
 
             // or if it's an absolute URL, try to get rid of it
-            } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
+            } elseif (substr($location, 0, 1) == '/' || substr($location, 1, 1) == ':') {
                 $thumbsdir = xarModGetVar('images', 'path.derivative-store');
                 $url = $thumbsdir . '/' . basename($location);
-
             }
             if (empty($url)) {
                 $url = $location;
             }
         } else {
             // use the location of the processed image here
-            $url = xarModURL('images', 'user', 'display',
-                             array('fileId' => base64_encode($location)));
+            $url = xarModURL(
+                'images',
+                'user',
+                'display',
+                array('fileId' => base64_encode($location))
+            );
         }
 
-        if( $returnpath == true ){
+        if ($returnpath == true) {
             return $url;
         }
 
@@ -200,13 +225,13 @@ function images_userapi_resize($args)
     }
 
     // just a flag for later
-    $constrain_both = FALSE;
+    $constrain_both = false;
 
     if (!isset($constrain)) {
-        if (isset($width) XOR isset($height)) {
-            $constrain = TRUE;
+        if (isset($width) xor isset($height)) {
+            $constrain = true;
         } elseif (isset($width) && isset($height)) {
-            $constrain = FALSE;
+            $constrain = false;
         }
     } else {
         // we still want to constrain here, but we might need to be a little bit smarter about it
@@ -214,11 +239,10 @@ function images_userapi_resize($args)
         // any pf the supplied values, so we have to provide some logic to handle this
         if (isset($width) && isset($height)) {
             //$constrain = FALSE;
-            $constrain_both = TRUE;
+            $constrain_both = true;
         } //else {
-            $constrain = (bool) $constrain;
+        $constrain = (bool) $constrain;
         //}
-
     }
 
     // Load Image Properties based on $imageInfo
@@ -286,10 +310,9 @@ function images_userapi_resize($args)
             $url = $baseurl . '/' . basename($location);
 
         // or if it's an absolute URL, try to get rid of it
-        } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
+        } elseif (substr($location, 0, 1) == '/' || substr($location, 1, 1) == ':') {
             $thumbsdir = xarModGetVar('images', 'path.derivative-store');
             $url = $thumbsdir . '/' . basename($location);
-
         }
         if (empty($url)) {
             $url = $location;
@@ -298,17 +321,21 @@ function images_userapi_resize($args)
         // put the mime type in cache for encode_shorturl()
         $mime = $image->getMime();
         if (is_array($mime) && isset($mime['text'])) {
-            xarVarSetCached('Module.Images','imagemime.'.$src, $mime['text']);
+            xarVarSetCached('Module.Images', 'imagemime.'.$src, $mime['text']);
         } else {
-            xarVarSetCached('Module.Images','imagemime.'.$src, $mime);
+            xarVarSetCached('Module.Images', 'imagemime.'.$src, $mime);
         }
-        $url = xarModURL('images', 'user', 'display',
-                         array('fileId' => is_numeric($src) ? $src : base64_encode($src),
+        $url = xarModURL(
+            'images',
+            'user',
+            'display',
+            array('fileId' => is_numeric($src) ? $src : base64_encode($src),
                                'height' => $image->getHeight(),
-                               'width'  => $image->getWidth()));
+                               'width'  => $image->getWidth())
+        );
     }
 
-    if( $returnpath == true ){
+    if ($returnpath == true) {
         return $url;
     }
 
@@ -316,5 +343,3 @@ function images_userapi_resize($args)
 
     return $imgTag;
 }
-
-?>

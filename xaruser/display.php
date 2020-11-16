@@ -20,21 +20,26 @@
  *  @return   boolean                   This function will exit upon succes and, returns False and throws an exception otherwise
  *  @throws   BAD_PARAM                 missing or invalid parameter
  */
-function images_user_display( $args )
+function images_user_display($args)
 {
+    extract($args);
 
-    extract ($args);
-
-    if (!xarVarFetch('fileId', 'str:1:', $fileId)) return;
-    if (!xarVarFetch('width',  'str:1:', $width,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fileId', 'str:1:', $fileId)) {
+        return;
+    }
+    if (!xarVarFetch('width', 'str:1:', $width, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     if (is_numeric($fileId)) {
         $data = array('fileId' => $fileId);
     } else {
         $fileLocation = base64_decode($fileId);
         if (empty($fileLocation) || !file_exists($fileLocation)) {
-            return FALSE;
+            return false;
         }
         $data = array('fileLocation' => $fileLocation);
     }
@@ -43,8 +48,8 @@ function images_user_display( $args )
 
     if (!is_object($image)) {
         xarResponseRedirect('modules/images/xarimages/admin.gif');
-        return TRUE;
-    //    $msg = xarML('Unable to find file: [#(1)]', $fileId);
+        return true;
+        //    $msg = xarML('Unable to find file: [#(1)]', $fileId);
     //    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
     //    return FALSE;
     }
@@ -95,7 +100,7 @@ function images_user_display( $args )
     if (is_null($fileLocation)) {
         $msg = xarML('Unable to find file: [#(1)]', $fileId);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
-        return FALSE;
+        return false;
     }
 
     // Close the buffer, saving it's current contents for possible future use
@@ -111,8 +116,7 @@ function images_user_display( $args )
         }
 
         $fp = @fopen($fileLocation, 'rb');
-        if(is_resource($fp))   {
-
+        if (is_resource($fp)) {
             do {
                 $data = fread($fp, 65536);
                 if (strlen($data) == 0) {
@@ -120,12 +124,12 @@ function images_user_display( $args )
                 } else {
                     echo "$data";
                 }
-            } while (TRUE);
+            } while (true);
 
             fclose($fp);
         }
 
-// FIXME: make sure the file is indeed supposed to be stored in the database :-)
+        // FIXME: make sure the file is indeed supposed to be stored in the database :-)
     } elseif (is_numeric($fileId) && xarModIsAvailable('uploads')) {
         $fileSize = 0;
 
@@ -138,10 +142,9 @@ function images_user_display( $args )
             }
             unset($data);
         }
-
     } else {
         xarResponseRedirect('modules/images/xarimages/admin.gif');
-        return TRUE;
+        return true;
     }
 
     // Headers -can- be sent after the actual data
@@ -168,5 +171,3 @@ function images_user_display( $args )
     //       ending Xaraya in a safe manner
     exit();
 }
-
-?>

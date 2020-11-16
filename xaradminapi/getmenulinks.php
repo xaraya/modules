@@ -19,37 +19,46 @@
 function images_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminImages')) {
-        if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads',0)) {
-            $menulinks[] = Array('url'   => xarModURL('images',
-                                                      'admin',
-                                                      'uploads'),
+        if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads', 0)) {
+            $menulinks[] = array('url'   => xarModURL(
+                'images',
+                'admin',
+                'uploads'
+            ),
                                  'title' => xarML('View Uploaded Images'),
                                  'label' => xarML('View Uploaded Images'));
         }
-        $menulinks[] = Array('url'   => xarModURL('images',
-                                                  'admin',
-                                                  'derivatives'),
+        $menulinks[] = array('url'   => xarModURL(
+            'images',
+            'admin',
+            'derivatives'
+        ),
                              'title' => xarML('View Derivative Images'),
                              'label' => xarML('View Derivative Images'));
-        $menulinks[] = Array('url'   => xarModURL('images',
-                                                  'admin',
-                                                  'browse'),
+        $menulinks[] = array('url'   => xarModURL(
+            'images',
+            'admin',
+            'browse'
+        ),
                              'title' => xarML('Browse Server Images'),
                              'label' => xarML('Browse Server Images'));
-        $menulinks[] = Array('url'   => xarModURL('images',
-                                                  'admin',
-                                                  'phpthumb'),
+        $menulinks[] = array('url'   => xarModURL(
+            'images',
+            'admin',
+            'phpthumb'
+        ),
                              'title' => xarML('Define Settings for Image Processing'),
                              'label' => xarML('Image Processing'));
-        $menulinks[] = Array('url'   => xarModURL('images',
-                                                  'admin',
-                                                  'modifyconfig'),
+        $menulinks[] = array('url'   => xarModURL(
+            'images',
+            'admin',
+            'modifyconfig'
+        ),
                              'title' => xarML('Edit the Images Configuration'),
                              'label' => xarML('Modify Config'));
     }
-    if (empty($menulinks)){
+    if (empty($menulinks)) {
         $menulinks = '';
     }
     return $menulinks;
 }
-?>

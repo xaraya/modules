@@ -21,30 +21,41 @@
  * @return  array Array containing the width, height and gd_info if available
  * @throws  BAD_PARAM
  */
-function images_userapi_getimagesize( $args )
+function images_userapi_getimagesize($args)
 {
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      '', 'getimagesize', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            '',
+            'getimagesize',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'fileId', 'getimagesize', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'fileId',
+            'getimagesize',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'fileLocation', 'getimagesize', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'fileLocation',
+            'getimagesize',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     }
 
     if (!empty($fileLocation) && file_exists($fileLocation)) {
         return @getimagesize($fileLocation);
-
     } elseif (!empty($extrainfo['width']) && !empty($extrainfo['height'])) {
         // Simulate the type returned by getimagesize()
         switch ($fileType) {
@@ -63,8 +74,7 @@ function images_userapi_getimagesize( $args )
         }
         $string = 'width="' . $extrainfo['width'] . '" height="' . $extrainfo['height'] . '"';
         return array($extrainfo['width'],$extrainfo['height'],$type,$string);
-
-    } elseif (extension_loaded('gd') && xarModAPILoad('uploads','user') &&
+    } elseif (extension_loaded('gd') && xarModAPILoad('uploads', 'user') &&
               defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {
         // get the image data from the database
         $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
@@ -82,9 +92,13 @@ function images_userapi_getimagesize( $args )
                 }
                 $extrainfo['width'] = $width;
                 $extrainfo['height'] = $height;
-                xarModAPIFunc('uploads', 'user', 'db_modify_file',
-                              array('fileId' => $fileId,
-                                    'extrainfo' => $extrainfo));
+                xarModAPIFunc(
+                    'uploads',
+                    'user',
+                    'db_modify_file',
+                    array('fileId' => $fileId,
+                                    'extrainfo' => $extrainfo)
+                );
                 // Simulate the type returned by getimagesize()
                 switch ($fileType) {
                     case 'image/gif':
@@ -105,7 +119,4 @@ function images_userapi_getimagesize( $args )
             }
         }
     }
-
 }
-
-?>

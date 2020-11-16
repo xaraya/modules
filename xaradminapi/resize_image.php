@@ -31,18 +31,30 @@ function images_adminapi_resize_image($args)
     extract($args);
     // Check the conditions
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      '', 'resize_image', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            '',
+            'resize_image',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'fileId', 'resize_image', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'fileId',
+            'resize_image',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
-                      'fileLocation', 'resize_image', 'images');
+        $mesg = xarML(
+            "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
+            'fileLocation',
+            'resize_image',
+            'images'
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     }
@@ -62,13 +74,13 @@ function images_adminapi_resize_image($args)
     }
 
     // just a flag for later
-    $constrain_both = FALSE;
+    $constrain_both = false;
 
     if (!isset($constrain)) {
-        if (isset($width) XOR isset($height)) {
-            $constrain = TRUE;
+        if (isset($width) xor isset($height)) {
+            $constrain = true;
         } elseif (isset($width) && isset($height)) {
-            $constrain = FALSE;
+            $constrain = false;
         }
     } else {
         // we still want to constrain here, but we might need to be a little bit smarter about it
@@ -76,14 +88,13 @@ function images_adminapi_resize_image($args)
         // any pf the supplied values, so we have to provide some logic to handle this
         if (isset($width) && isset($height)) {
             //$constrain = FALSE;
-            $constrain_both = TRUE;
+            $constrain_both = true;
         } //else {
-            $constrain = (bool) $constrain;
+        $constrain = (bool) $constrain;
         //}
-
     }
 
-    $notSupported = FALSE;
+    $notSupported = false;
 
     // if both arguments are specified, give priority to fileId
     if (!empty($fileId)) {
@@ -100,19 +111,19 @@ function images_adminapi_resize_image($args)
 
     // TODO: refactor to support other libraries (ImageMagick/NetPBM)
     if (!empty($fileInfo['fileLocation'])) {
-        $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
+        $imageInfo = xarModAPIFunc('images', 'user', 'getimagesize', $fileInfo);
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
-            $notSupported = TRUE;
+            $notSupported = true;
         }
     } elseif (!empty($fileLocation) && file_exists($fileLocation)) {
         $imageInfo = @getimagesize($fileLocation);
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
-            $notSupported = TRUE;
+            $notSupported = true;
         }
     } else {
-        $notSupported = TRUE;
+        $notSupported = true;
     }
     // Raise a user error when the format is not supported
     if ($notSupported) {
@@ -199,5 +210,3 @@ function images_adminapi_resize_image($args)
 
     return $location;
 }
-
-?>

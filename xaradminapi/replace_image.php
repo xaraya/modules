@@ -43,21 +43,29 @@ function images_adminapi_replace_image($args)
         $checkwrite = dirname($fileLocation);
     }
     if (!is_writable($checkwrite)) {
-        $mesg = xarML('Unable to replace #(1) - please check your file permissions',
-                      $fileLocation);
+        $mesg = xarML(
+            'Unable to replace #(1) - please check your file permissions',
+            $fileLocation
+        );
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     }
 
-// TODO: replace files stored in xar_file_data too
+    // TODO: replace files stored in xar_file_data too
 
-    $location = xarModAPIFunc('images','admin','resize_image',
-                              array('fileLocation' => $fileLocation,
-                                    'width'  => (!empty($width) ? $width : NULL),
-                                    'height' => (!empty($height) ? $height : NULL),
+    $location = xarModAPIFunc(
+        'images',
+        'admin',
+        'resize_image',
+        array('fileLocation' => $fileLocation,
+                                    'width'  => (!empty($width) ? $width : null),
+                                    'height' => (!empty($height) ? $height : null),
                                     'derivName'   => $fileLocation,
-                                    'forceResize' => true));
-    if (!$location) return;
+                                    'forceResize' => true)
+    );
+    if (!$location) {
+        return;
+    }
 
     if (empty($fileId)) {
         // We're done here
@@ -65,15 +73,17 @@ function images_adminapi_replace_image($args)
     }
 
     // Update the uploads database information
-    if (!xarModAPIFunc('uploads','user','db_modify_file',
-                       array('fileId'   => $fileId,
+    if (!xarModAPIFunc(
+        'uploads',
+        'user',
+        'db_modify_file',
+        array('fileId'   => $fileId,
     // FIXME: resize() always uses JPEG format for now
                              'fileType' => 'image/jpeg',
-                             'fileSize' => filesize($fileLocation)))) {
+                             'fileSize' => filesize($fileLocation))
+    )) {
         return;
     }
 
     return $location;
 }
-
-?>
