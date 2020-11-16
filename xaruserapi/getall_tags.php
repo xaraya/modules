@@ -18,7 +18,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function karma_userapi_getall_tags($args)
 {
-    $tag = DataObjectMaster::getObjectList(array('name' => 'karma_tags');
+    $tag = DataObjectMaster::getObjectList(array('name' => 'karma_tags'));
     $items = $tag->getItems();
     return $items;
 }
