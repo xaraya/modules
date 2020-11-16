@@ -57,7 +57,7 @@ function pubsub_userapi_adduser($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$eventid')) {
+    if (!xarSecurity::check('ReadPubSub', 1, 'item', 'All::$eventid')) {
         return;
     }
 

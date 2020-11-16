@@ -21,18 +21,18 @@
 function pubsub_admin_delete_event()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePubSub')) {
+    if (!xarSecurity::check('ManagePubSub')) {
         return;
     }
-    xarTplSetPageTitle('Delete event');
+    xarTpl::setPageTitle('Delete event');
 
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'str', $data['itemid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'str', $data['itemid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('idlist', 'str', $idlist, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('idlist', 'str', $idlist, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -58,7 +58,7 @@ function pubsub_admin_delete_event()
             $ids = array($ids);
             $data['lang_title'] = xarML("Delete Event");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         if (count($ids) == 1) {
             $event->getItem(array('itemid' => current($ids)));
             $data['object'] = $event;
@@ -72,11 +72,11 @@ function pubsub_admin_delete_event()
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarModURL('pubsub', 'admin', 'delete_event', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('pubsub', 'admin', 'delete_event', array('idlist' => $idlist));
 
         return $data;
     } else {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         $script = implode('_', xarController::$request->getInfo());
@@ -87,7 +87,7 @@ function pubsub_admin_delete_event()
         }
 
         // Jump to the next page
-        xarController::redirect(xarModURL('pubsub', 'admin', 'view_events'));
+        xarController::redirect(xarController::URL('pubsub', 'admin', 'view_events'));
         return true;
     }
 }

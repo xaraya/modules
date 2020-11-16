@@ -28,16 +28,16 @@ function pubsub_user_subscribe()
         return;
     }
 
-    if (!xarVarFetch('modid', 'isset', $modid, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('cid', 'isset', $cid, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('cid', 'isset', $cid, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('returnurl', 'isset', $returnurl, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('returnurl', 'isset', $returnurl, false, xarVar::NOT_REQUIRED)) {
         return;
     }
 

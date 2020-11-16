@@ -56,7 +56,7 @@ function pubsub_adminapi_updateevent($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:$eventid:All:All")) {
+    if (!xarSecurity::check('EditPubSub', 1, 'item', "All:$eventid:All:All")) {
         return;
     }
 

@@ -22,18 +22,18 @@ sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_admin_display_job()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePubSub')) {
+    if (!xarSecurity::check('ManagePubSub')) {
         return;
     }
     xarTpl::setPageTitle('Display Subscription');
 
-    if (!xarVarFetch('name', 'str', $name, 'pubsub_process', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'pubsub_process', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 

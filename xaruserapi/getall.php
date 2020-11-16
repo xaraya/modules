@@ -23,12 +23,12 @@ function pubsub_userapi_getall($args)
 {
     extract($args);
     $events = array();
-    if (!xarSecurityCheck('AdminPubSub', 0)) {
+    if (!xarSecurity::check('AdminPubSub', 0)) {
         return $events;
     }
 
     // Load categories API
-    if (!xarModAPILoad('categories', 'user')) {
+    if (!xarMod::apiLoad('categories', 'user')) {
         $msg = xarML('Unable to load #(1) #(2) API', 'categories', 'user');
         throw new Exception($msg);
     }
@@ -66,7 +66,7 @@ function pubsub_userapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $modname, $itemtype, $catname, $cid, $numsubscriptions) = $result->fields;
-        if (xarSecurityCheck('AdminPubSub', 0)) {
+        if (xarSecurity::check('AdminPubSub', 0)) {
             $events[] = array('id'        => $id
                              ,'modname'        => $modname
                              ,'itemtype'       => $itemtype

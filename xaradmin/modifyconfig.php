@@ -25,13 +25,13 @@
 function pubsub_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminPubSub')) {
+    if (!xarSecurity::check('AdminPubSub')) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -50,10 +50,10 @@ function pubsub_admin_modifyconfig()
 
     $data['settings'] = array();
 
-    if (!xarVarFetch('phase', 'pre:trim:lower:str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
-    if (!xarVarFetch('tab', 'pre:trim:lower:str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'pre:trim:lower:str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -102,7 +102,7 @@ function pubsub_admin_modifyconfig()
                                         $link = $mytypes[$itemtype]['url'];
                                     } else {
                                         $type = xarML('type #(1)',$itemtype);
-                                        $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
+                                        $link = xarController::URL($modname,'user','view',array('itemtype' => $itemtype));
                                     }
                                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                                     'createwithstatus' => $createwithstatus,
@@ -127,7 +127,7 @@ function pubsub_admin_modifyconfig()
                                 if (empty($delete)) {
                                     $delete = 0;
                                 }
-                                $link = xarModURL($modname,'user','main');
+                                $link = xarController::URL($modname,'user','main');
                                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                                     'createwithstatus' => $createwithstatus,
                                                                     'create' => $create,
@@ -170,7 +170,7 @@ function pubsub_admin_modifyconfig()
         break;
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -184,24 +184,24 @@ function pubsub_admin_modifyconfig()
                     }
                     
                     // Get parameters
-                    xarVarFetch('settings', 'isset', $settings, '', XARVAR_DONT_SET);
-                    xarVarFetch('subjecttitle', 'checkbox', $subjecttitle, false, XARVAR_DONT_SET);
-                    xarVarFetch('includechildren', 'checkbox', $includechildren, false, XARVAR_DONT_SET);
-                    xarVarFetch('allindigest', 'checkbox', $allindigest, false, XARVAR_DONT_SET);
-                    xarVarFetch('usetemplateids', 'checkbox', $usetemplateids, false, XARVAR_DONT_SET);
-                    if (!xarVarFetch('sendnotice_subscription', 'checkbox', $sendnotice_subscription, false, XARVAR_NOT_REQUIRED)) {
+                    xarVar::fetch('settings', 'isset', $settings, '', xarVar::DONT_SET);
+                    xarVar::fetch('subjecttitle', 'checkbox', $subjecttitle, false, xarVar::DONT_SET);
+                    xarVar::fetch('includechildren', 'checkbox', $includechildren, false, xarVar::DONT_SET);
+                    xarVar::fetch('allindigest', 'checkbox', $allindigest, false, xarVar::DONT_SET);
+                    xarVar::fetch('usetemplateids', 'checkbox', $usetemplateids, false, xarVar::DONT_SET);
+                    if (!xarVar::fetch('sendnotice_subscription', 'checkbox', $sendnotice_subscription, false, xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('sendnotice_queue', 'checkbox', $sendnotice_queue, false, XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('sendnotice_queue', 'checkbox', $sendnotice_queue, false, xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('enable_default_template', 'checkbox', $enable_default_template, false, XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('enable_default_template', 'checkbox', $enable_default_template, false, xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('recognized_events', 'str', $recognized_events, '', XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('recognized_events', 'str', $recognized_events, '', xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('debugmode', 'checkbox', $debugmode, xarModVars::get('pubsub', 'debugmode'), XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('debugmode', 'checkbox', $debugmode, xarModVars::get('pubsub', 'debugmode'), xarVar::NOT_REQUIRED)) {
                         return;
                     }
 
@@ -227,7 +227,7 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub', 'debugmode', $debugmode);
 
                     if (xarMod::isAvailable('scheduler')) {
-                        if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) {
+                        if (!xarVar::fetch('interval', 'str:1', $interval, '', xarVar::NOT_REQUIRED)) {
                             return;
                         }
                         // see if we have a scheduler job running to process the pubsub queue
@@ -276,7 +276,7 @@ function pubsub_admin_modifyconfig()
                         }
                     }
 
-                    xarController::redirect(xarModURL('pubsub', 'admin', 'modifyconfig'));
+                    xarController::redirect(xarController::URL('pubsub', 'admin', 'modifyconfig'));
 
                     return true;
                     break;
@@ -306,6 +306,6 @@ function pubsub_admin_modifyconfig()
         $data['intervals'] = array();
         $data['interval'] = '';
     }
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

@@ -22,18 +22,18 @@ sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_admin_modify_event()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePubSub')) {
+    if (!xarSecurity::check('ManagePubSub')) {
         return;
     }
     xarTpl::setPageTitle('Modify Event');
     
-    if (!xarVarFetch('name', 'str', $name, 'pubsub_events', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'pubsub_events', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -41,12 +41,12 @@ function pubsub_admin_modify_event()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'pubsub';
-    $data['authid'] = xarSecGenAuthKey('pubsub');
+    $data['authid'] = xarSec::genAuthKey('pubsub');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -61,7 +61,7 @@ function pubsub_admin_modify_event()
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('pubsub', 'admin', 'view_events'));
+            xarController::redirect(xarController::URL('pubsub', 'admin', 'view_events'));
             return true;
         }
     }

@@ -160,7 +160,7 @@ function pubsub_init()
     <xar:mlvar>#$title#</xar:mlvar>
     </xar:ml>';
         // compile the template now
-        $compiled = xarTplCompileString($template);
+        $compiled = xarTpl::compileString($template);
 
 
         $query = "INSERT INTO $pubsubtemplatestable (id, name, template, compiled)
@@ -170,7 +170,7 @@ function pubsub_init()
         if (!$result) return; */
     /*
     // used by categories only (for now)
-        if (!xarModRegisterHook('item',
+        if (!xarModHooks::register('item',
                                'display',
                                'GUI',
                                'pubsub',
@@ -180,7 +180,7 @@ function pubsub_init()
         }
 
     // used by roles only
-        if (!xarModRegisterHook('item',
+        if (!xarModHooks::register('item',
                                'usermenu',
                                'GUI',
                                'pubsub',
@@ -210,15 +210,15 @@ function pubsub_init()
                                     'limit' => 20
                                 )
                         );
-        xarDefineInstance('pubsub','Item',$instances);*/
+        xarPrivileges::defineInstance('pubsub','Item',$instances);*/
 
     // Define mask definitions for security checks
-    xarRegisterMask('OverviewPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManagePubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('OverviewPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('EditPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManagePubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
@@ -274,45 +274,45 @@ function pubsub_upgrade($oldversion)
 function pubsub_delete()
 {/*
     // Remove module hooks
-    if (!xarModUnregisterHook('item',
+    if (!xarModHooks::unregister('item',
                            'create',
                            'API',
                            'pubsub',
                            'admin',
                            'createhook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
-    if (!xarModUnregisterHook('item',
+    if (!xarModHooks::unregister('item',
                            'update',
                            'API',
                            'pubsub',
                            'admin',
                            'updatehook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
-    if (!xarModUnregisterHook('item',
+    if (!xarModHooks::unregister('item',
                            'delete',
                            'API',
                            'pubsub',
                            'admin',
                            'deletehook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
-    if (!xarModUnregisterHook('item',
+    if (!xarModHooks::unregister('item',
                            'display',
                            'GUI',
                            'pubsub',
                            'user',
                            'displayicon')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
-    if (!xarModUnregisterHook('item',
+    if (!xarModHooks::unregister('item',
                            'usermenu',
                            'GUI',
                            'pubsub',
                            'user',
                            'usermenu')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
 */
     $module = 'pubsub';

@@ -4,9 +4,9 @@
     <xar:if condition="!isset($donotdisplay)">
         <xar:if condition="empty($layout) or $layout eq 'icon'">
             <xar:if condition="!empty($subscribe)">
-            &#160;<a href="#$subURL#"><img src="#xarTplGetImage('subscribe.gif', 'pubsub')#" alt="#$subTEXT#" /></a>
+            &#160;<a href="#$subURL#"><img src="#xarTpl::getImage('subscribe.gif', 'pubsub')#" alt="#$subTEXT#" /></a>
             <xar:else />
-            &#160;<a href="#$unsubURL#"><img src="#xarTplGetImage('unsubscribe.gif', 'pubsub')#" alt="#$unsubTEXT#" /></a>
+            &#160;<a href="#$unsubURL#"><img src="#xarTpl::getImage('unsubscribe.gif', 'pubsub')#" alt="#$unsubTEXT#" /></a>
             </xar:if>
         <xar:elseif condition="$layout eq 'text'"/>
             <xar:if condition="!empty($subscribe)">

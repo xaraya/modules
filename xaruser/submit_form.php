@@ -3,19 +3,19 @@ sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_user_submit_form($args)
 {
     extract($args);
-    if (!xarVarFetch('name', 'str', $name, 'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'pubsub_subscriptions', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('userid', 'int', $userid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('userid', 'int', $userid, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('event_id', 'int', $event_id, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('event_id', 'int', $event_id, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('email', 'email', $email, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('email', 'email', $email, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('returnurl', 'str', $returnurl, false)) {
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, false)) {
         return;
     }
     

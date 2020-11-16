@@ -49,7 +49,7 @@ function pubsub_adminapi_updatetemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$id")) {
+    if (!xarSecurity::check('EditPubSub', 1, 'item', "All:All:All:$id")) {
         return;
     }
 
@@ -59,7 +59,7 @@ function pubsub_adminapi_updatetemplate($args)
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // compile the template now
-    $compiled = xarTplCompileString($template);
+    $compiled = xarTpl::compileString($template);
 
     // Update the item
     $query = "UPDATE $pubsubtemplatestable

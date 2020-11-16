@@ -36,7 +36,7 @@ function pubsub_userapi_getevent($args)
         throw new Exception($msg);
     }
 
-    if (!xarModAPILoad('categories', 'user')) {
+    if (!xarMod::apiLoad('categories', 'user')) {
         return;
     }
 

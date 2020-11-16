@@ -25,7 +25,7 @@
 function pubsub_admin_view_templates()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminPubSub')) {
+    if (!xarSecurity::check('AdminPubSub')) {
         return;
     }
 
@@ -37,21 +37,21 @@ function pubsub_admin_view_templates()
     $templates = xarMod::apiFunc('pubsub', 'user', 'getalltemplates');
     foreach ($templates as $id => $templatename) {
         $data['templates'][$id] = array('name' => $templatename,
-                                        'view' => xarModURL(
+                                        'view' => xarController::URL(
                                             'pubsub',
                                             'admin',
                                             'view_templates',
                                             array('action' => 'display',
                                                                   'id' => $id)
                                         ),
-                                        'edit' => xarModURL(
+                                        'edit' => xarController::URL(
                                             'pubsub',
                                             'admin',
                                             'view_templates',
                                             array('action' => 'modify',
                                                                   'id' => $id)
                                         ),
-                                        'delete' => xarModURL(
+                                        'delete' => xarController::URL(
                                             'pubsub',
                                             'admin',
                                             'view_templates',
@@ -60,15 +60,15 @@ function pubsub_admin_view_templates()
                                         )
                                        );
     }
-    $data['new'] = xarModURL(
+    $data['new'] = xarController::URL(
         'pubsub',
         'admin',
         'view_templates',
         array('action' => 'new')
     );
 
-    xarVarFetch('id', 'int', $id, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('action', 'str:1:', $action, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('id', 'int', $id, 0, xarVar::NOT_REQUIRED);
+    xarVar::fetch('action', 'str:1:', $action, '', xarVar::NOT_REQUIRED);
     if (!empty($id) && !empty($action)) {
         $info = xarMod::apiFunc(
             'pubsub',
@@ -81,7 +81,7 @@ function pubsub_admin_view_templates()
         }
         $data['id'] = $id;
         $data['name'] = $info['name'];
-        $data['template'] = xarVarPrepForDisplay($info['template']);
+        $data['template'] = xarVar::prepForDisplay($info['template']);
     }
     switch ($action) {
         case 'display':
@@ -92,14 +92,14 @@ function pubsub_admin_view_templates()
                              'itemtype' => 0,
                              'itemid' => 123,
                              'title' => xarML('This is an item title'),
-                             'link' => xarModURL(
+                             'link' => xarController::URL(
                                  'example',
                                  'user',
                                  'display',
                                  array('exid' => 123)
                              ));
-            $preview = xarTplString($info['compiled'], $tplData);
-            $data['preview'] = xarVarPrepHTMLDisplay($preview);
+            $preview = xarTpl::string($info['compiled'], $tplData);
+            $data['preview'] = xarVar::prepHTMLDisplay($preview);
             $data['action'] = 'display';
             break;
 
@@ -114,13 +114,13 @@ function pubsub_admin_view_templates()
             break;
 
         case 'create':
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
-            if (!xarVarFetch('name', 'str:1:', $name)) {
+            if (!xarVar::fetch('name', 'str:1:', $name)) {
                 return;
             }
-            if (!xarVarFetch('template', 'str:1:', $template)) {
+            if (!xarVar::fetch('template', 'str:1:', $template)) {
                 return;
             }
             if (!xarMod::apiFunc(
@@ -132,7 +132,7 @@ function pubsub_admin_view_templates()
             )) {
                 return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
+            xarController::redirect(xarController::URL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
@@ -142,13 +142,13 @@ function pubsub_admin_view_templates()
             break;
 
         case 'update':
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
-            if (!xarVarFetch('name', 'str:1:', $name)) {
+            if (!xarVar::fetch('name', 'str:1:', $name)) {
                 return;
             }
-            if (!xarVarFetch('template', 'str:1:', $template)) {
+            if (!xarVar::fetch('template', 'str:1:', $template)) {
                 return;
             }
             if (!xarMod::apiFunc(
@@ -161,7 +161,7 @@ function pubsub_admin_view_templates()
             )) {
                 return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
+            xarController::redirect(xarController::URL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
@@ -171,7 +171,7 @@ function pubsub_admin_view_templates()
             break;
 
         case 'confirm':
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             if (!xarMod::apiFunc(
@@ -182,12 +182,12 @@ function pubsub_admin_view_templates()
             )) {
                 return;
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
+            xarController::redirect(xarController::URL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
         case 'recompile':
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             foreach ($templates as $id => $templatename) {
@@ -204,7 +204,7 @@ function pubsub_admin_view_templates()
                     return;
                 }
             }
-            xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
+            xarController::redirect(xarController::URL('pubsub', 'admin', 'view_templates'));
             return true;
             break;
 
@@ -212,8 +212,8 @@ function pubsub_admin_view_templates()
             break;
     }
 
-    $data['authid'] = xarSecGenAuthKey();
-    $data['recompile'] = xarModURL(
+    $data['authid'] = xarSec::genAuthKey();
+    $data['recompile'] = xarController::URL(
         'pubsub',
         'admin',
         'view_templates',

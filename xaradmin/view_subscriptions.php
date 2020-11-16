@@ -19,18 +19,18 @@
  */
 function pubsub_admin_view_subscriptions()
 {
-    if (!xarSecurityCheck('ManagePubSub')) {
+    if (!xarSecurity::check('ManagePubSub')) {
         return;
     }
-    xarTplSetPageTitle('View Subscribers');
+    xarTpl::setPageTitle('View Subscribers');
 
-    if (!xarVarFetch('eventid', 'int::', $eventid, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('eventid', 'int::', $eventid, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('pubsubid', 'int::', $pubsubid, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('pubsubid', 'int::', $pubsubid, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('unsub', 'int::', $unsub, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('unsub', 'int::', $unsub, false, xarVar::NOT_REQUIRED)) {
         return;
     }
     /*
@@ -55,7 +55,7 @@ function pubsub_admin_view_subscriptions()
     return $data;
 
     $data['items'] = array();
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     if ($unsub && $pubsubid) {
         if (!xarMod::apiFunc('pubsub', 'user', 'deluser', array('pubsubid' => $pubsubid))) {
@@ -81,8 +81,8 @@ function pubsub_admin_view_subscriptions()
     }
 
     $data['items'] = array();
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Publish / Subscribe Administration'));
-    $data['catname'] = xarVarPrepForDisplay($info['catname']);
+    $data['namelabel'] = xarVar::prepForDisplay(xarML('Publish / Subscribe Administration'));
+    $data['catname'] = xarVar::prepForDisplay($info['catname']);
     $data['cid'] = $info['cid'];
     $data['modname'] = $info['modname'];
     if (!empty($info['itemtype'])) {
@@ -90,10 +90,10 @@ function pubsub_admin_view_subscriptions()
     }
     $data['itemtype'] = $info['itemtype'];
     $data['eventid'] = $eventid;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['pager'] = '';
 
-    if (!xarSecurityCheck('AdminPubSub')) {
+    if (!xarSecurity::check('AdminPubSub')) {
         return;
     }
 
@@ -102,7 +102,7 @@ function pubsub_admin_view_subscriptions()
 
     $data['items'] = $subscriptions;
 
-    $data['returnurl'] = xarModURL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
+    $data['returnurl'] = xarController::URL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
 
     // TODO: add a pager (once it exists in BL)
     $data['pager'] = '';

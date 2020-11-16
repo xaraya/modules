@@ -99,7 +99,7 @@ function pubsub_adminapi_process_queue_digest($args)
         $tplData = array();
         $tplData['contents'] = $content;
 
-        $html = xarTplString($compiled, $tplData);
+        $html = xarTpl::string($compiled, $tplData);
         $plaintext = strip_tags($html);
         if (!xarMod::apiFunc(
             'mail',

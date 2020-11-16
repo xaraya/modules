@@ -40,7 +40,7 @@ function pubsub_adminapi_deltemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('DeletePubSub')) {
+    if (!xarSecurity::check('DeletePubSub')) {
         return;
     }
 

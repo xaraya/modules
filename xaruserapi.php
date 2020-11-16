@@ -45,7 +45,7 @@ function pubsub_userapi_updatesubscription($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All:$pubsubid')) {
+    if (!xarSecurity::check('EditPubSub', 1, 'item', 'All:$pubsubid')) {
         return;
     }
 

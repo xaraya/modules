@@ -17,17 +17,17 @@
 
 function pubsub_admin_delete_template()
 {
-    if (!xarSecurityCheck('ManageBiller')) {
+    if (!xarSecurity::check('ManageBiller')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str:1', $name, 'pubsub_templates', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, 'pubsub_templates', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function pubsub_admin_delete_template()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'pubsub';
-    $data['authid'] = xarSecGenAuthKey('pubsub');
+    $data['authid'] = xarSec::genAuthKey('pubsub');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -49,7 +49,7 @@ function pubsub_admin_delete_template()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('pubsub', 'admin', 'view_templates'));
+        xarController::redirect(xarController::URL('pubsub', 'admin', 'view_templates'));
         return true;
     }
     return $data;

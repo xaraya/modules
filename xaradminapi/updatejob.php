@@ -57,7 +57,7 @@ function pubsub_adminapi_updatejob($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:$id:All")) {
+    if (!xarSecurity::check('EditPubSub', 1, 'item', "All:All:$id:All")) {
         return;
     }
 

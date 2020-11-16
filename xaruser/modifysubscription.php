@@ -25,25 +25,25 @@
  */
 function pubsub_user_modifysubscription()
 {
-    if (!xarVarFetch('modid', 'int', $modid, false)) {
+    if (!xarVar::fetch('modid', 'int', $modid, false)) {
         return;
     }
-    if (!xarVarFetch('cid', 'int', $cid, false)) {
+    if (!xarVar::fetch('cid', 'int', $cid, false)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'int', $itemtype, false)) {
+    if (!xarVar::fetch('itemtype', 'int', $itemtype, false)) {
         return;
     }
-    if (!xarVarFetch('returnurl', 'str', $returnurl, false)) {
+    if (!xarVar::fetch('returnurl', 'str', $returnurl, false)) {
         return;
     }
-    if (!xarVarFetch('subaction', 'int', $subaction, false)) {
+    if (!xarVar::fetch('subaction', 'int', $subaction, false)) {
         return;
     }
-    if (!xarVarFetch('extra', 'str', $extra, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('extra', 'str', $extra, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('groupdescr', 'str', $groupdescr, 'Subscribe', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('groupdescr', 'str', $groupdescr, 'Subscribe', xarVar::NOT_REQUIRED)) {
         return;
     }
 

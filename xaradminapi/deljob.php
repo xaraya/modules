@@ -44,7 +44,7 @@ function pubsub_adminapi_deljob($args)
     // TODO: Check this.  It doesn't make sense to me.  The schedular is probably being activated by an anonymous
     // process via CRON (or similiar) and won't be logged in.  Therefor, you would have to grant anonymous
     // delete access for these jobs.  That's just silly.
-//    if (!xarSecurityCheck('DeletePubSub', 1, 'item', "All:All:$id:All")) return;
+//    if (!xarSecurity::check('DeletePubSub', 1, 'item', "All:All:$id:All")) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();

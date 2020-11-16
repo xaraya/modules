@@ -17,22 +17,22 @@ function pubsub_user_usermenu($args)
 {
     extract($args);
     // old usermenu approach
-    xarVarFetch('action', 'str:1:', $action, 'menu', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('action', 'str:1:', $action, 'menu', xarVar::NOT_REQUIRED);
 
     // set by user-account template in roles
-    xarVarFetch('phase', 'notempty', $phase, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('phase', 'notempty', $phase, '', xarVar::NOT_REQUIRED);
     if (!empty($phase)) {
         $action = $phase;
     }
 
     switch ($action) {
         case 'menu':
-            return xarTplModule('pubsub', 'user', 'usermenu');
+            return xarTpl::module('pubsub', 'user', 'usermenu');
             break;
 
         case 'form':
         case 'list':
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your Subscriptions')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Your Subscriptions')));
             $items = xarMod::apiFunc(
                 'pubsub',
                 'user',
@@ -73,7 +73,7 @@ function pubsub_user_usermenu($args)
                     }
                 }
             }
-            return xarTplModule(
+            return xarTpl::module(
                 'pubsub',
                 'user',
                 'usermenu',
@@ -83,7 +83,7 @@ function pubsub_user_usermenu($args)
             break;
 
         case 'unsub':
-            if (!xarVarFetch('pubsubid', 'int:1:', $pubsubid)) {
+            if (!xarVar::fetch('pubsubid', 'int:1:', $pubsubid)) {
                 return;
             }
             $items = xarMod::apiFunc(
@@ -118,7 +118,7 @@ function pubsub_user_usermenu($args)
                 );
                 throw new Exception($msg);
             }
-             xarController::redirect(xarModURL(
+             xarController::redirect(xarController::URL(
                  'pubsub',
                  'user',
                  'usermenu',

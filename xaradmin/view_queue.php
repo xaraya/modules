@@ -18,15 +18,15 @@
  */
 function pubsub_admin_view_queue($args)
 {
-    if (!xarSecurityCheck('ManagePubSub')) {
+    if (!xarSecurity::check('ManagePubSub')) {
         return;
     }
     
     extract($args);
-    if (!xarVarFetch('action', 'str', $action, '')) {
+    if (!xarVar::fetch('action', 'str', $action, '')) {
         return;
     }
-    if (!xarVarFetch('id', 'int', $id, 0)) {
+    if (!xarVar::fetch('id', 'int', $id, 0)) {
         return;
     }
 
@@ -35,7 +35,7 @@ function pubsub_admin_view_queue($args)
 
     if (!empty($action) && ($action == 'process')) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -65,7 +65,7 @@ function pubsub_admin_view_queue($args)
             $data['result'] = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
         }
 
-        xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
+        xarController::redirect(xarController::URL('pubsub', 'admin', 'view_queue'));
         return true;
     }
     return $data;

@@ -2,5 +2,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <p>#xarML('You are already subscribed to this event.')#</p>
     <p>#xarML('If you wish you can use the link below to unsubscribe from this event.')#</p>
-    <p><a href="#xarModURL('pubsub','user','remove',array('eventid' => $eventid))#">#xarML('Unsubscribe')#</a></p>
+    <p><a href="#xarController::URL('pubsub','user','remove',array('eventid' => $eventid))#">#xarML('Unsubscribe')#</a></p>
 </xar:template>

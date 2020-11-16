@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>New Template</h2>
-        <form method="post" id="post" action="#xarModURL('pubsub','admin','new_template')#">
+        <form method="post" id="post" action="#xarController::URL('pubsub','admin','new_template')#">
             <fieldset>
                 <xar:data-form object="$object" tplmodule="$tplmodule"/>
             </fieldset>
@@ -12,7 +12,7 @@
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <input type="hidden" name="name" id="name" value="#$object:name#"/>
                     <input type="hidden" name="confirm" id="confirm" value="true"/>
                     <xar:var name="label">Cancel</xar:var>

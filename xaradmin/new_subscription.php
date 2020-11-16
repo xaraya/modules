@@ -21,14 +21,14 @@
     
     function pubsub_admin_new_subscription()
     {
-        if (!xarSecurityCheck('AddPubSub')) {
+        if (!xarSecurity::check('AddPubSub')) {
             return;
         }
 
-        if (!xarVarFetch('name', 'str', $name, 'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('name', 'str', $name, 'pubsub_subscriptions', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -38,7 +38,7 @@
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             
@@ -47,13 +47,13 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('pubsub', 'admin', 'new_subscription', $data);
+                return xarTpl::module('pubsub', 'admin', 'new_subscription', $data);
             } else {
                 // Good data: create the item
                 $item = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('pubsub', 'admin', 'view_subscriptions'));
+                xarController::redirect(xarController::URL('pubsub', 'admin', 'view_subscriptions'));
                 return true;
             }
         }
