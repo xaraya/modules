@@ -32,10 +32,9 @@
  */
 
 
-function uploads_userapi_prepare_uploads( $args )
+function uploads_userapi_prepare_uploads($args)
 {
-
-    extract ( $args );
+    extract($args);
 
     // if there are no files, return an empty array.
     if (!isset($fileInfo)) {
@@ -52,28 +51,27 @@ function uploads_userapi_prepare_uploads( $args )
      *  Initial variable checking / setup
      */
     if (isset($obfuscate) && $obfuscate) {
-        $obfuscate_fileName = TRUE;
+        $obfuscate_fileName = true;
     } else {
-        $obfuscate_fileName = xarModVars::get('uploads','file.obfuscate-on-upload');
+        $obfuscate_fileName = xarModVars::get('uploads', 'file.obfuscate-on-upload');
     }
 
     if (!isset($savePath)) {
-        $savePath = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
+        $savePath = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
     }
 
     // If we don't have the right data structure, then we can't do much
     // here, so return immediately with an exception set
     if ((!isset($fileInfo)          || !is_array($fileInfo))      ||
          !isset($fileInfo['name'])  || !isset($fileInfo['type'])  ||
-         !isset($fileInfo['size'])  || !isset($fileInfo['tmp_name']))  {
-
-            $fileInfo['fileType']   = 'unknown';
-            $fileInfo['fileSrc']    = 'missing';
-            $fileInfo['fileSize']   = 0;
-            $fileInfo['fileName']   = xarML('Missing File!');
-            $fileInfo['errors'][0]['errorMesg'] = xarML('Invalid data format for upload ID: [#(1)]', 'upload');
-            $fileInfo['errors'][0]['errorId']  = _UPLOADS_ERROR_BAD_FORMAT;
-            return array("$fileInfo[fileName]" => $fileInfo);
+         !isset($fileInfo['size'])  || !isset($fileInfo['tmp_name'])) {
+        $fileInfo['fileType']   = 'unknown';
+        $fileInfo['fileSrc']    = 'missing';
+        $fileInfo['fileSize']   = 0;
+        $fileInfo['fileName']   = xarML('Missing File!');
+        $fileInfo['errors'][0]['errorMesg'] = xarML('Invalid data format for upload ID: [#(1)]', 'upload');
+        $fileInfo['errors'][0]['errorId']  = _UPLOADS_ERROR_BAD_FORMAT;
+        return array("$fileInfo[fileName]" => $fileInfo);
     }
 
     $fileInfo['fileType']   = $fileInfo['type'];
@@ -89,7 +87,7 @@ function uploads_userapi_prepare_uploads( $args )
     // Check to see if we're importing and, if not, check the file and ensure that it
     // meets any requirements we might have for it. If it doesn't pass the tests,
     // then return FALSE
-    if (!xarModAPIFunc('uploads','user','validate_upload', array('fileInfo' => $fileInfo))) {
+    if (!xarModAPIFunc('uploads', 'user', 'validate_upload', array('fileInfo' => $fileInfo))) {
         $errorObj = xarCurrentError();
 
         if (is_object($errorObj)) {
@@ -118,9 +116,13 @@ function uploads_userapi_prepare_uploads( $args )
     unset($fileInfo['type']);
     unset($fileInfo['error']);
 
-// FIXME: do this after the file has been moved
-    $fileInfo['fileType']   = xarModAPIFunc('mime','user','analyze_file',
-                                            array('fileName' => $fileInfo['fileSrc'], 'altFileName'=>$fileInfo['fileName']));
+    // FIXME: do this after the file has been moved
+    $fileInfo['fileType']   = xarModAPIFunc(
+        'mime',
+        'user',
+        'analyze_file',
+        array('fileName' => $fileInfo['fileSrc'], 'altFileName'=>$fileInfo['fileName'])
+    );
 
 
     // If duplicate and we have a file location, overwrite existing file here (cfr. process_files)
@@ -136,10 +138,14 @@ function uploads_userapi_prepare_uploads( $args )
 
     // Check to see if we need to obfuscate the filename
     } elseif ($obfuscate_fileName) {
-        $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name',
-                                    array('fileName' => $fileInfo['fileName']));
+        $obf_fileName = xarModAPIFunc(
+            'uploads',
+            'user',
+            'file_obfuscate_name',
+            array('fileName' => $fileInfo['fileName'])
+        );
 
-        if (empty($obf_fileName) || FALSE === $obf_fileName) {
+        if (empty($obf_fileName) || false === $obf_fileName) {
             // If the filename was unable to be obfuscated,
             // set an error, but don't die - let the caller
             // do what they want with this.
@@ -149,7 +155,6 @@ function uploads_userapi_prepare_uploads( $args )
         } else {
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         }
-
     } else {
         // if we're not obfuscating it,
         // just use the name of the uploaded file
@@ -157,7 +162,7 @@ function uploads_userapi_prepare_uploads( $args )
         $fileInfo['fileDest'] = $savePath . '/' . $filename;
         // But first make sure we don't already have a file by that name
         $i = 0;
-        while(file_exists($fileInfo['fileDest'])){
+        while (file_exists($fileInfo['fileDest'])) {
             $i++;
             $fileInfo['fileDest'] = $savePath. '/' .$filename. '_' . $i;
         }
@@ -165,10 +170,8 @@ function uploads_userapi_prepare_uploads( $args )
 
     if (isset($fileInfo['fileDest'])) {
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
-        $fileInfo['isUpload'] = TRUE;
+        $fileInfo['isUpload'] = true;
     }
 
     return array("$fileInfo[fileName]" => $fileInfo);
 }
-
-?>

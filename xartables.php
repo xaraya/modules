@@ -36,5 +36,3 @@ function uploads_xartables()
     // Return the table information
     return $xartable;
 }
-
-?>

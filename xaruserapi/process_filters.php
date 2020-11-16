@@ -12,16 +12,15 @@
  * @author Uploads Module Development Team
  */
 
-function uploads_userapi_process_filters( $args )
+function uploads_userapi_process_filters($args)
 {
-
-    extract ( $args );
+    extract($args);
     /**
      *  Set up the filter data for the template to use
      */
 
     if (!isset($storeOptions)) {
-        $storeOptions = TRUE;
+        $storeOptions = true;
     }
 
     $options   =  unserialize(xarModVars::get('uploads', 'view.filter'));
@@ -32,23 +31,23 @@ function uploads_userapi_process_filters( $args )
     $subtypes  =& $data['filters']['subtypes'];
     $statuses  =& $data['filters']['status'];
 
-    $data['filters']['inverse'] = isset($inverse) ? $inverse : FALSE;
-    $filter['inverse']  = isset($inverse) ? $inverse : FALSE;
+    $data['filters']['inverse'] = isset($inverse) ? $inverse : false;
+    $filter['inverse']  = isset($inverse) ? $inverse : false;
 
     unset($options);
     /**
      *  Grab the mimetypes and setup the selected one
      */
     if (isset($mimetype) && $mimetype > 0) {
-        $selected_mimetype = xarModAPIFunc('mime','user','get_type', array('typeId' => $mimetype));
+        $selected_mimetype = xarModAPIFunc('mime', 'user', 'get_type', array('typeId' => $mimetype));
     }
 
     // if selected mimetype isn't set, empty or has an array count of
     // zero, then we set
     if (isset($selected_mimetype) && count($selected_mimetype)) {
-        $mimetypes[$mimetype]['selected'] = TRUE;
+        $mimetypes[$mimetype]['selected'] = true;
     } else {
-        $mimetypes[0]['selected'] = TRUE;
+        $mimetypes[0]['selected'] = true;
     }
 
     /**
@@ -56,22 +55,22 @@ function uploads_userapi_process_filters( $args )
      */
     if (isset($selected_mimetype)) {
         if (isset($subtype) && $subtype > 0) {
-            $selected_subtype = xarModAPIFunc('mime','user','get_subtype', array('subtypeId' => $subtype));
+            $selected_subtype = xarModAPIFunc('mime', 'user', 'get_subtype', array('subtypeId' => $subtype));
         }
 
         // add the rest of the types to the array
         // array returns is in form of: array[typeId]{[subtypeId], [subtypeName]}
-        $subtypes = $subtypes + xarModAPIFunc('mime','user','getall_subtypes', array('typeId' => $selected_mimetype['typeId']));
+        $subtypes = $subtypes + xarModAPIFunc('mime', 'user', 'getall_subtypes', array('typeId' => $selected_mimetype['typeId']));
 
         // if selected subtype isn't set, empty or has an array count of
         // zero, then we set
         if (isset($selected_subtype['typeId']) && $selected_subtype['typeId'] == $selected_mimetype['typeId']) {
-                $subtypes[$subtype]['selected'] = TRUE;
+            $subtypes[$subtype]['selected'] = true;
         } else {
-            $subtypes[0]['selected'] = TRUE;
+            $subtypes[0]['selected'] = true;
         }
     } else {
-        $subtypes[0]['selected'] = TRUE;
+        $subtypes[0]['selected'] = true;
     }
     unset($subtypes);
     unset($mimetypes);
@@ -86,7 +85,6 @@ function uploads_userapi_process_filters( $args )
         } else {
             $filter['fileType'] = strtolower($selected_mimetype['typeName']) . '/%';
         }
-
     } else {
         $filter['fileType'] = '%';
     }
@@ -98,26 +96,26 @@ function uploads_userapi_process_filters( $args )
      *  Set up the MIME subtype filter
      */
 
-    switch($status) {
+    switch ($status) {
         case _UPLOADS_STATUS_REJECTED:
             $filter['fileStatus'] = _UPLOADS_STATUS_REJECTED;
-            $statuses[_UPLOADS_STATUS_REJECTED]['selected'] = TRUE;
+            $statuses[_UPLOADS_STATUS_REJECTED]['selected'] = true;
             break;
         case _UPLOADS_STATUS_SUBMITTED:
             $filter['fileStatus'] = _UPLOADS_STATUS_SUBMITTED;
-            $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = TRUE;
+            $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = true;
             break;
         case _UPLOADS_STATUS_APPROVED:
             $filter['fileStatus'] = _UPLOADS_STATUS_APPROVED;
-            $statuses[_UPLOADS_STATUS_APPROVED]['selected'] = TRUE;
+            $statuses[_UPLOADS_STATUS_APPROVED]['selected'] = true;
             break;
         case 0:
             $filter['fileStatus'] = '';
-            $statuses[0]['selected'] = TRUE;
+            $statuses[0]['selected'] = true;
             break;
         default:
             $filter['fileStatus'] = _UPLOADS_STATUS_SUBMITTED;
-            $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = TRUE;
+            $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = true;
             break;
     }
     unset($statuses);
@@ -128,10 +126,8 @@ function uploads_userapi_process_filters( $args )
 
     if ($storeOptions) {
         // Save the filter settings for later use
-        xarModUserVars::set('uploads','view.filter', serialize($filterInfo));
+        xarModUserVars::set('uploads', 'view.filter', serialize($filterInfo));
     }
 
     return $filterInfo;
 }
-
-?>

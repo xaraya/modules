@@ -21,24 +21,31 @@
  *  @return integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_change_status( $args )
+function uploads_userapi_db_change_status($args)
 {
     extract($args);
 
     if (!isset($inverse)) {
-        $inverse = FALSE;
+        $inverse = false;
     }
 
     if (!isset($fileId) && !isset($fileType)) {
-        $msg = xarML('Missing identifying parameter function [#(1)] in module [#(2)]',
-                     'db_change_status','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing identifying parameter function [#(1)] in module [#(2)]',
+            'db_change_status',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($newStatus)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'newStatus','db_change_status','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'newStatus',
+            'db_change_status',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (isset($fileId)) {
@@ -49,7 +56,7 @@ function uploads_userapi_db_change_status( $args )
         } else {
             $where = " WHERE xar_fileEntry_id = $fileId";
         }
-    // Otherwise, we're changing based on MIME type
+        // Otherwise, we're changing based on MIME type
     } else {
         if (!$inverse) {
             $where = " WHERE xar_mime_type LIKE '$fileType'";
@@ -76,11 +83,10 @@ function uploads_userapi_db_change_status( $args )
     $result          = &$dbconn->Execute($sql);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $dbconn->Affected_Rows();
     }
-
 }
 
 ?>

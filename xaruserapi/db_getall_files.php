@@ -26,7 +26,7 @@
  * @return array   All of the metadata stored for all files
  */
 
-function uploads_userapi_db_getall_files( $args )
+function uploads_userapi_db_getall_files($args)
 {
     extract($args);
 
@@ -48,13 +48,19 @@ function uploads_userapi_db_getall_files( $args )
                    xar_extrainfo
               FROM $fileEntry_table ";
 
-    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
+    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories', 'uploads', 1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                      array('modid' => xarMod::getRegID('uploads'),
+        $categoriesdef = xarModAPIFunc(
+            'categories',
+            'user',
+            'leftjoin',
+            array('modid' => xarMod::getRegID('uploads'),
                                             'itemtype' => 1,
-                                            'catid' => $catid));
-        if (empty($categoriesdef)) return;
+                                            'catid' => $catid)
+        );
+        if (empty($categoriesdef)) {
+            return;
+        }
 
         // Add LEFT JOIN ... ON ... from categories_linkage
         $sql .= ' LEFT JOIN ' . $categoriesdef['table'];
@@ -68,7 +74,7 @@ function uploads_userapi_db_getall_files( $args )
         }
     }
 
-// FIXME: we need some indexes on xar_file_entry to make this more efficient
+    // FIXME: we need some indexes on xar_file_entry to make this more efficient
     if (empty($sort)) {
         $sort = '';
     }
@@ -116,7 +122,7 @@ function uploads_userapi_db_getall_files( $args )
         $result =& $dbconn->Execute($sql);
     }
 
-    if (!$result)  {
+    if (!$result) {
         return;
     }
 
@@ -125,16 +131,16 @@ function uploads_userapi_db_getall_files( $args )
         return array();
     }
 
-    $importDir = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
-    $uploadDir = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
+    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
+    $uploadDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
 
     // remove the '/' at the end of the path
     $importDir = str_replace('/$', '', $importDir);
     $uploadDir = str_replace('/$', '', $uploadDir);
 
-    if(xarServer::getVar('PATH_TRANSLATED')) {
+    if (xarServer::getVar('PATH_TRANSLATED')) {
         $base_directory = dirname(realpath(xarServer::getVar('PATH_TRANSLATED')));
-    } elseif(xarServer::getVar('SCRIPT_FILENAME')) {
+    } elseif (xarServer::getVar('SCRIPT_FILENAME')) {
         $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
     } else {
         $base_directory = './';
@@ -150,7 +156,7 @@ function uploads_userapi_db_getall_files( $args )
         $fileInfo['fileId']        = $row['xar_fileEntry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
         if (!isset($usercache[$fileInfo['userId']])) {
-            $usercache[$fileInfo['userId']] = xarUserGetVar('name',$fileInfo['userId']);
+            $usercache[$fileInfo['userId']] = xarUserGetVar('name', $fileInfo['userId']);
         }
         $fileInfo['userName']      = $usercache[$fileInfo['userId']];
         $fileInfo['fileName']      = $row['xar_filename'];
@@ -188,7 +194,7 @@ function uploads_userapi_db_getall_files( $args )
         $fileInfo['fileHashName']     = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
         $fileInfo['fileHashRealName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileName'];
 
-        switch($fileInfo['fileStatus']) {
+        switch ($fileInfo['fileStatus']) {
             case _UPLOADS_STATUS_REJECTED:
                 $fileInfo['fileStatusName'] = xarML('Rejected');
                 break;
@@ -226,5 +232,3 @@ function uploads_userapi_db_getall_files( $args )
 
     return $fileList;
 }
-
-?>

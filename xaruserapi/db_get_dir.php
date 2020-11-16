@@ -25,7 +25,7 @@ function uploads_userapi_db_get_dir($args)
 
     if (!isset($directory)) {
         $msg = xarML('Missing [#(1)] parameter for function [#(2)] in module [#(3)]', 'directory', 'db_get_dir', 'uploads');
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     $root = sys::root();
@@ -36,5 +36,3 @@ function uploads_userapi_db_get_dir($args)
     }
     return $directory;
 }
-
-?>

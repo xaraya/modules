@@ -25,11 +25,14 @@ function uploads_user_display_attachments($args)
 {
     extract($args);
 
-    if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $data = array();
 
-    $objectid = (isset($objectid)) ? $objectid : 0;;
+    $objectid = (isset($objectid)) ? $objectid : 0;
+    ;
     $itemtype = 0;
 
     if (isset($extrainfo)) {
@@ -82,5 +85,3 @@ function uploads_user_display_attachments($args)
     $data['authid'] = xarSecGenAuthKey('uploads');
     return $data;
 }
-
-?>

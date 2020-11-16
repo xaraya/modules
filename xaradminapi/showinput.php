@@ -64,25 +64,25 @@ function uploads_adminapi_showinput($args)
 
     $data = array();
 
-    xarModAPILoad('uploads','user');
+    xarModAPILoad('uploads', 'user');
 
     if (isset($methods) && count($methods) == 4) {
         $data['methods'] = array(
-            'trusted'  => $methods['trusted']  ? TRUE : FALSE,
-            'external' => $methods['external'] ? TRUE : FALSE,
-            'upload'   => $methods['upload']   ? TRUE : FALSE,
-            'stored'   => $methods['stored']   ? TRUE : FALSE
+            'trusted'  => $methods['trusted']  ? true : false,
+            'external' => $methods['external'] ? true : false,
+            'upload'   => $methods['upload']   ? true : false,
+            'stored'   => $methods['stored']   ? true : false
         );
     } else {
         $data['methods'] = array(
-            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
-            'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
-            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
+            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? true : false,
+            'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? true : false,
+            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? true : false,
+            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? true : false
         );
     }
 
-    $descend = TRUE;
+    $descend = true;
 
     $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
     $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
@@ -96,24 +96,28 @@ function uploads_adminapi_showinput($args)
         if (!empty($override['import']['path'])) {
             $trusted_dir = $override['import']['path'];
             if (!file_exists($trusted_dir)) {
-            // CHECKME: fall back to common trusted directory, or fail here ?
+                // CHECKME: fall back to common trusted directory, or fail here ?
                 $trusted_dir = sys::root() . "/" . xarModVars::get('uploads', 'imports_directory');
-            //  return xarML('Unable to find trusted directory #(1)', $trusted_dir);
+                //  return xarML('Unable to find trusted directory #(1)', $trusted_dir);
             }
         } else {
             $trusted_dir = sys::root() . "/" . xarModVars::get('uploads', 'imports_directory');
         }
-        $cacheExpire = xarModVars::get('uploads','file.cache-expire');
+        $cacheExpire = xarModVars::get('uploads', 'file.cache-expire');
 
-    // CHECKME: use 'imports' name like in db_get_file() ?
+        // CHECKME: use 'imports' name like in db_get_file() ?
         // Note: for relativePath, the (main) import directory is replaced by /trusted in file_get_metadata()
-        $data['fileList']     = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
-                                              array('fileLocation' => $trusted_dir,
+        $data['fileList']     = xarModAPIFunc(
+            'uploads',
+            'user',
+            'import_get_filelist',
+            array('fileLocation' => $trusted_dir,
                                                     'descend'      => $descend,
                                                     // no need to analyze the mime type here
-                                                    'analyze'      => FALSE,
+                                                    'analyze'      => false,
                                                     // cache the results if configured
-                                                    'cacheExpire'  => $cacheExpire));
+                                                    'cacheExpire'  => $cacheExpire)
+        );
     } else {
         $data['fileList']     = array();
     }
@@ -122,9 +126,13 @@ function uploads_adminapi_showinput($args)
         if (!empty($override['upload']['path'])) {
             $upload_directory = $override['upload']['path'];
             if (file_exists($upload_directory)) {
-                $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_get_file',
+                $data['storedList']   = xarModAPIFunc(
+                    'uploads',
+                    'user',
+                    'db_get_file',
                     // find all files located under that upload directory
-                    array('fileLocation' => $upload_directory . '/%'));
+                    array('fileLocation' => $upload_directory . '/%')
+                );
             } else {
                 // Note: the parent directory must already exist
                 $result = @mkdir($upload_directory);
@@ -134,8 +142,8 @@ function uploads_adminapi_showinput($args)
                     // the upload directory is still empty for the moment
                     $data['storedList']   = array();
                 } else {
-                // CHECKME: fall back to common uploads directory, or fail here ?
-                //  $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+                    // CHECKME: fall back to common uploads directory, or fail here ?
+                    //  $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
                     return xarML('Unable to create upload directory #(1)', $upload_directory);
                 }
             }
@@ -157,18 +165,26 @@ function uploads_adminapi_showinput($args)
         if (is_array($aList) && count($aList)) {
             $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
             $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
-            $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file',
-                                                  array('fileId' => $aList));
-            $list = xarModAPIFunc('uploads','user','showoutput',
-                                  array('value' => $value, 'style' => 'icon', 'multiple' => $multiple));
+            $data['Attachments'] = xarModAPIFunc(
+                'uploads',
+                'user',
+                'db_get_file',
+                array('fileId' => $aList)
+            );
+            $list = xarModAPIFunc(
+                'uploads',
+                'user',
+                'showoutput',
+                array('value' => $value, 'style' => 'icon', 'multiple' => $multiple)
+            );
 
             foreach ($aList as $fileId) {
                 if (!empty($data['storedList'][$fileId])) {
-                    $data['storedList'][$fileId]['selected'] = TRUE;
+                    $data['storedList'][$fileId]['selected'] = true;
                 } elseif (!empty($data['Attachments'][$fileId])) {
                     // add it to the list (e.g. from another user's upload directory - we need this when editing)
                     $data['storedList'][$fileId] = $data['Attachments'][$fileId];
-                    $data['storedList'][$fileId]['selected'] = TRUE;
+                    $data['storedList'][$fileId]['selected'] = true;
                 } else {
                     // missing data for $fileId
                 }
@@ -177,10 +193,8 @@ function uploads_adminapi_showinput($args)
     }
 
     if (!empty($invalid)) {
-       $data['invalid'] = $invalid;
+        $data['invalid'] = $invalid;
     }
-// TODO: different formats ?
-    return (isset($list) ? $list : '') . xarTplModule('uploads', 'user', 'attach_files', $data, NULL);
+    // TODO: different formats ?
+    return (isset($list) ? $list : '') . xarTplModule('uploads', 'user', 'attach_files', $data, null);
 }
-
-?>

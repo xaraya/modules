@@ -23,9 +23,8 @@
  * @return array   All of the metadata stored for the particular file
  */
 
-function uploads_userapi_db_get_users( $args )
+function uploads_userapi_db_get_users($args)
 {
-
     extract($args);
 
     if (isset($mimeType) && !empty($mimeType)) {
@@ -38,7 +37,7 @@ function uploads_userapi_db_get_users( $args )
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
-        // table and column definitions
+    // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
 
     $sql = "SELECT DISTINCT xar_user_id
@@ -47,8 +46,8 @@ function uploads_userapi_db_get_users( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result)  {
-        return FALSE;
+    if (!$result) {
+        return false;
     }
 
 
@@ -71,5 +70,3 @@ function uploads_userapi_db_get_users( $args )
 
     return $userList;
 }
-
-?>

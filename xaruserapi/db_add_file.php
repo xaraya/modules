@@ -29,21 +29,28 @@
  *  @return integer The id of the fileEntry that was added, or FALSE on error
  */
 
-function uploads_userapi_db_add_file( $args )
+function uploads_userapi_db_add_file($args)
 {
-
     extract($args);
 
     if (!isset($fileName)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'filename','db_add_file','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'filename',
+            'db_add_file',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($fileLocation)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileLocation','db_add_file','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileLocation',
+            'db_add_file',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($userId)) {
@@ -55,7 +62,7 @@ function uploads_userapi_db_add_file( $args )
 
         if ($autoApprove == _UPLOADS_APPROVE_EVERYONE ||
            ($autoApprove == _UPLOADS_APPROVE_ADMIN && xarSecurityCheck('AdminUploads', 0))) {
-                $fileStatus = _UPLOADS_STATUS_APPROVED;
+            $fileStatus = _UPLOADS_STATUS_APPROVED;
         } else {
             $fileStatus = _UPLOADS_STATUS_SUBMITTED;
         }
@@ -80,7 +87,7 @@ function uploads_userapi_db_add_file( $args )
     }
 
     if (!isset($fileType)) {
-        $fileType = xarModAPIFunc('mime','user','analyze_file', array('fileName' => $fileLocation, 'altFileName'=>$fileName));
+        $fileType = xarModAPIFunc('mime', 'user', 'analyze_file', array('fileName' => $fileLocation, 'altFileName'=>$fileName));
         if (empty($fileType)) {
             $fileType = 'application/octet-stream';
         }
@@ -130,7 +137,7 @@ function uploads_userapi_db_add_file( $args )
     $result = &$dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     }
 
     $fileId = $dbconn->PO_Insert_ID($xartable['file_entry'], 'xar_fileEntry_id');
@@ -142,5 +149,3 @@ function uploads_userapi_db_add_file( $args )
 
     return $fileId;
 }
-
-?>

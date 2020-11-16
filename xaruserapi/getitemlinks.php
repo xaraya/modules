@@ -27,10 +27,10 @@ function uploads_userapi_getitemlinks($args)
     $itemlinks = array();
 
     // get cids for security check in getall
-    $fileList = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $itemids));
+    $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $itemids));
 
     if (!isset($fileList) || empty($fileList)) {
-       return $itemlinks;
+        return $itemlinks;
     }
 
     foreach ($itemids as $itemid) {
@@ -46,5 +46,3 @@ function uploads_userapi_getitemlinks($args)
     }
     return $itemlinks;
 }
-
-?>

@@ -76,11 +76,9 @@ function uploads_userapi_showoutput($args)
         }
 
         $data['format'] = $format;
-        return xarTplModule('uploads', 'user', 'attachment-list', $data, NULL);
+        return xarTplModule('uploads', 'user', 'attachment-list', $data, null);
     } else {
         // return a raw array for now
         return xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
     }
 }
-
-?>

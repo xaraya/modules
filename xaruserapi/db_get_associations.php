@@ -25,9 +25,8 @@
  * @return array   A list of associations, including the fileId -> (fileId + modid + itemtype + itemid)
  */
 
-function uploads_userapi_db_get_associations( $args )
+function uploads_userapi_db_get_associations($args)
 {
-
     extract($args);
 
     $whereList = array();
@@ -76,7 +75,7 @@ function uploads_userapi_db_get_associations( $args )
 
     $result = $dbconn->Execute($sql, $bindvars);
 
-    if (!$result)  {
+    if (!$result) {
         return array();
     }
 
@@ -100,5 +99,3 @@ function uploads_userapi_db_get_associations( $args )
     }
     return $fileList;
 }
-
-?>

@@ -21,9 +21,8 @@
  *  @return array          FALSE on error, otherwise an array containing the fileInformation
  */
 
-function uploads_userapi_import_external_file( $args )
+function uploads_userapi_import_external_file($args)
 {
-
     extract($args);
 
     if (!isset($uri) || !isset($uri['path'])) {
@@ -34,14 +33,18 @@ function uploads_userapi_import_external_file( $args )
     $fileURI = "$uri[scheme]://$uri[path]";
 
     if (is_dir($uri['path']) || @is_dir(readlink($uri['path']))) {
-        $descend = TRUE;
+        $descend = true;
     } else {
-        $descend = FALSE;
+        $descend = false;
     }
 
-    $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
-                               array('fileLocation' => $uri['path'],
-                                     'descend' => $descend));
+    $fileList = xarModAPIFunc(
+        'uploads',
+        'user',
+        'import_get_filelist',
+        array('fileLocation' => $uri['path'],
+                                     'descend' => $descend)
+    );
 
     if (empty($fileList) || (is_array($fileList) && !count($fileList))) {
         return array();
@@ -50,8 +53,12 @@ function uploads_userapi_import_external_file( $args )
     $list = array();
     foreach ($fileList as $location => $fileInfo) {
         if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
-            $list += xarModAPIFunc('uploads', 'user', 'import_get_filelist',
-                                    array('fileLocation' => $location, 'descend' => TRUE));
+            $list += xarModAPIFunc(
+                'uploads',
+                'user',
+                'import_get_filelist',
+                array('fileLocation' => $location, 'descend' => true)
+            );
             unset($fileList[$location]);
         }
     }
@@ -61,7 +68,4 @@ function uploads_userapi_import_external_file( $args )
 
 
     return $fileList;
-
- }
-
- ?>
+}

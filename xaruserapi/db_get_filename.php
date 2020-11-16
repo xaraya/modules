@@ -22,14 +22,13 @@
  * @return array   All of the metadata stored for the particular file
  */
 
-function uploads_userapi_db_get_filename( $args )
+function uploads_userapi_db_get_filename($args)
 {
-
     extract($args);
 
     if (!isset($fileId)) {
         $msg = xarML('Missing [#(1)] parameter for function [#(2)] in module [#(3)]', 'fileId', 'db_get_filename', 'uploads');
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     if (isset($fileId)) {
@@ -44,7 +43,7 @@ function uploads_userapi_db_get_filename( $args )
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
-        // table and column definitions
+    // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
 
     $sql = "SELECT xar_filename
@@ -53,7 +52,7 @@ function uploads_userapi_db_get_filename( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result)  {
+    if (!$result) {
         return;
     }
 
@@ -69,5 +68,3 @@ function uploads_userapi_db_get_filename( $args )
     }
     return $fileName;
 }
-
-?>

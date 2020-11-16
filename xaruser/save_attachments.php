@@ -19,27 +19,39 @@
 function uploads_user_save_attachments($args)
 {
     // Get parameters
-    if (!xarVarFetch('modname',   'isset', $modname,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('itemtype',  'isset', $itemtype,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('objectid',  'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl', 'isset', $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('rating',    'isset', $rating,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('modname', 'isset', $modname, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('returnurl', 'isset', $returnurl, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('rating', 'isset', $rating, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     // Pass to API
-    $newrating = xarModAPIFunc('ratings',
-                              'user',
-                              'rate',
-                              array('modname'    => $modname,
+    $newrating = xarModAPIFunc(
+        'ratings',
+        'user',
+        'rate',
+        array('modname'    => $modname,
                                     'itemtype'   => $itemtype,
                                     'objectid'   => $objectid,
-                                    'rating'     => $rating));
+                                    'rating'     => $rating)
+    );
 
     xarController::redirect($returnurl);
 
     return true;
 }
-
-?>

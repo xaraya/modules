@@ -53,4 +53,3 @@ $modversion['dependencyinfo'] = array(
                                       999 => 'mime',
                                       934 => 'jquery'
                                       );
-?>

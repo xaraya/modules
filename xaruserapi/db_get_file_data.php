@@ -27,14 +27,18 @@
  * @throws BAD_PARAM
  */
 
-function uploads_userapi_db_get_file_data( $args )
+function uploads_userapi_db_get_file_data($args)
 {
     extract($args);
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileId','db_get_file_data','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileId',
+            'db_get_file_data',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     // Get database setup
@@ -69,6 +73,5 @@ function uploads_userapi_db_get_file_data( $args )
     }
     $result->Close();
 
-   return $fileData;
+    return $fileData;
 }
-?>

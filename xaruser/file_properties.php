@@ -19,23 +19,33 @@
  * @param string fileName
  * @return array
  */
-xarModAPILoad('uploads','user');
+xarModAPILoad('uploads', 'user');
 
-function uploads_user_file_properties( $args )
+function uploads_user_file_properties($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('ViewUploads')) return;
-    if (!xarVarFetch('fileId',   'int:1', $fileId)) return;
-    if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) return;
-
-    if (!isset($fileId)) {
-        $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
-                     'fileId', 'file_properties', 'uploads');
-        throw new Exception($msg);             
+    if (!xarSecurityCheck('ViewUploads')) {
+        return;
+    }
+    if (!xarVarFetch('fileId', 'int:1', $fileId)) {
+        return;
+    }
+    if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) {
+        return;
     }
 
-    $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
+    if (!isset($fileId)) {
+        $msg = xarML(
+            'Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
+            'fileId',
+            'file_properties',
+            'uploads'
+        );
+        throw new Exception($msg);
+    }
+
+    $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
     if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
         $data['error']      = xarML('File not found!');
@@ -51,30 +61,36 @@ function uploads_user_file_properties( $args )
         $instance = implode(':', $instance);
         if (xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
             $data['allowedit'] = 1;
-            $data['hooks'] = xarModCallHooks('item', 'modify', $fileId,
-                                             array('module'    => 'uploads',
-                                                   'itemtype'  => 1));
+            $data['hooks'] = xarModCallHooks(
+                'item',
+                'modify',
+                $fileId,
+                array('module'    => 'uploads',
+                                                   'itemtype'  => 1)
+            );
         } else {
             $data['allowedit'] = 0;
         }
 
         if (isset($fileName) && !empty($fileName)) {
-
             if ($data['allowedit']) {
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
 
                 if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
-                    $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)',
-                                  $fileInfo['fileName'], $fileInfo['fileId']);
-                    throw new Exception($msg);             
+                    $msg = xarML(
+                        'Unable to change filename for file: #(1) with file Id #(2)',
+                        $fileInfo['fileName'],
+                        $fileInfo['fileId']
+                    );
+                    throw new Exception($msg);
                 }
                 xarController::redirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
                 xarErrorHandled();
                 $msg = xarML('You do not have the necessary permissions for this object.');
-                throw new Exception($msg);             
+                throw new Exception($msg);
             }
         }
 
@@ -108,7 +124,7 @@ function uploads_user_file_properties( $args )
             if (mb_ereg('^image', $fileInfo['fileType'])) {
                 // let the images module handle it
                 if (xarModIsAvailable('images')) {
-                    $fileInfo['image'] = TRUE;
+                    $fileInfo['image'] = true;
 
                 // try to get the image size
                 } elseif (file_exists($fileInfo['fileLocation'])) {
@@ -132,7 +148,7 @@ function uploads_user_file_properties( $args )
                         }
                     }
 
-                // check if someone else already stored this information
+                    // check if someone else already stored this information
                 } elseif (!empty($fileInfo['extrainfo']) && !empty($fileInfo['extrainfo']['width'])) {
                     $fileInfo['image']['height'] = $fileInfo['extrainfo']['height'];
                     $fileInfo['image']['width']  = $fileInfo['extrainfo']['width'];
@@ -144,21 +160,23 @@ function uploads_user_file_properties( $args )
                 }
             }
 
-            $fileInfo['numassoc'] = xarModAPIFunc('uploads','user','db_count_associations',
-                                                   array('fileId' => $fileId));
+            $fileInfo['numassoc'] = xarModAPIFunc(
+                'uploads',
+                'user',
+                'db_count_associations',
+                array('fileId' => $fileId)
+            );
 
             $data['fileInfo'] = $fileInfo;
 
-            echo xarTplModule('uploads','user','file_properties', $data, NULL);
+            echo xarTplModule('uploads', 'user', 'file_properties', $data, null);
             exit();
         } else {
             xarErrorHandled();
             $msg = xarML('You do not have the necessary permissions for this object.');
-            throw new Exception($msg);             
+            throw new Exception($msg);
         }
     }
 
     return $data;
-
 }
-?>

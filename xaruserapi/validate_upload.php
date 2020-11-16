@@ -27,35 +27,38 @@
  *  @return boolean                      TRUE if checks pass, FALSE otherwise
  */
 
-function uploads_userapi_validate_upload( $args )
+function uploads_userapi_validate_upload($args)
 {
-
-    extract ($args);
+    extract($args);
 
     if (!isset($fileInfo)) {
-        $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileInfo','validate_upload','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
+            'fileInfo',
+            'validate_upload',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
-    switch ($fileInfo['error'])  {
+    switch ($fileInfo['error']) {
 
         case 1: // The uploaded file exceeds the upload_max_filesize directive in php.ini
             $msg = xarML('File size exceeds the maximum allowable based on the server\'s settings.');
-            return xarController::redirect(xarModUrl('uploads','user','errors', array('layout' => 'maxfilesize','maxallowed' => ini_get('upload_max_filesize'))));
-            //throw new Exception($msg);             
+            return xarController::redirect(xarModUrl('uploads', 'user', 'errors', array('layout' => 'maxfilesize','maxallowed' => ini_get('upload_max_filesize'))));
+            //throw new Exception($msg);
 
         case 2: // The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form
             $msg = xarML('File size exceeds the maximum allowable defined by the website administrator.');
-            throw new Exception($msg);             
+            throw new Exception($msg);
 
         case 3: // The uploaded file was only partially uploaded
             $msg = xarML('The file was only partially uploaded.');
-            throw new Exception($msg);             
+            throw new Exception($msg);
 
         case 4: // No file was uploaded
             $msg = xarML('No file was uploaded..');
-            throw new Exception($msg);             
+            throw new Exception($msg);
         default:
         case 0:  // no error
             break;
@@ -66,12 +69,12 @@ function uploads_userapi_validate_upload( $args )
 
     if ($fileInfo['size'] > $maxsize) {
         $msg = xarML('File size exceeds the maximum allowable defined by the website administrator.');
-            throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     if (!is_uploaded_file($fileInfo['fileSrc'])) {
         $msg = xarML('Possible attempted malicious file upload.');
-            throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     // future functionality - ...
@@ -80,5 +83,3 @@ function uploads_userapi_validate_upload( $args )
     // }
     return true;
 }
-
-?>

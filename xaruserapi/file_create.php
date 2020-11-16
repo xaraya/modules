@@ -29,9 +29,6 @@
  *  @return integer The fileId of the newly created file, or ZERO (FALSE) on error
  */
 
-function uploads_userapi_file_create( $args )
+function uploads_userapi_file_create($args)
 {
-
 }
-
-?>

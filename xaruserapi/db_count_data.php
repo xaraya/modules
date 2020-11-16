@@ -22,24 +22,27 @@
  * @return integer             The total number of DATA Blocks stored for a particular file
  */
 
-function uploads_userapi_db_count_data( $args )
+function uploads_userapi_db_count_data($args)
 {
-
     extract($args);
 
     $where = array();
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)]',
-                     'fileId','db_count_data','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for API function [#(2)] in module [#(3)]',
+            'fileId',
+            'db_count_data',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     // Get database setup
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
-        // table and column definitions
+    // table and column definitions
     $fileEntry_table = $xartable['file_data'];
 
     $sql = "SELECT COUNT(xar_fileData_id) AS total
@@ -48,8 +51,8 @@ function uploads_userapi_db_count_data( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result)  {
-        return FALSE;
+    if (!$result) {
+        return false;
     }
 
     // if no record found, return an empty array
@@ -61,5 +64,3 @@ function uploads_userapi_db_count_data( $args )
 
     return $row['total'];
 }
-
-?>

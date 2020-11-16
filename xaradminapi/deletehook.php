@@ -58,10 +58,14 @@ function uploads_adminapi_deletehook($args)
         $itemtype = 0;
     }
 
-    if (!xarModAPIFunc('uploads', 'admin', 'db_delete_association',
-                      array('itemid' => $objectid,
+    if (!xarModAPIFunc(
+        'uploads',
+        'admin',
+        'db_delete_association',
+        array('itemid' => $objectid,
                             'itemtype' => $itemtype,
-                            'modid' => $modid))) {
+                            'modid' => $modid)
+    )) {
         // Return the extra info
         return $extrainfo;
     }
@@ -69,5 +73,3 @@ function uploads_adminapi_deletehook($args)
     // Return the extra info
     return $extrainfo;
 }
-
-?>

@@ -12,9 +12,8 @@
  * @author Uploads Module Development Team
  */
 
-function uploads_userapi_normalize_filesize( $args )
+function uploads_userapi_normalize_filesize($args)
 {
-
     if (is_array($args)) {
         extract($args);
     } elseif (is_numeric($args)) {
@@ -35,4 +34,3 @@ function uploads_userapi_normalize_filesize( $args )
 
     return array('long' => number_format($fileSize), 'short' => $short);
 }
-?>

@@ -12,16 +12,16 @@
  * @author Uploads Module Development Team
  */
 
-function uploads_adminapi_dd_configure($confString = NULL)
+function uploads_adminapi_dd_configure($confString = null)
 {
     // Default to multiple selection
-    $multiple = TRUE;
+    $multiple = true;
     // Grab the sitewide defaults for the methods
     $methods = array(
-            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
-            'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
-            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
+            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? true : false,
+            'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? true : false,
+            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? true : false,
+            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? true : false
             );
     $basedir = null;
     $importdir = null;
@@ -72,9 +72,9 @@ function uploads_adminapi_dd_configure($confString = NULL)
                         // turning off this file import method,
                         // otherwise, leave it as on
                         if (!empty($modifier) && $modifier == '-') {
-                            $modifier = (int) FALSE;
+                            $modifier = (int) false;
                         } else {
-                            $modifier = (int) TRUE;
+                            $modifier = (int) true;
                         }
 
                         switch ($method) {
@@ -99,12 +99,11 @@ function uploads_adminapi_dd_configure($confString = NULL)
                         }
                     }
                 }
-
             }
         }
     }
 
-// FIXME: clean up weird return format
+    // FIXME: clean up weird return format
     // return the settings
     $options[0] = $multiple;
     $options[1] = $methods;
@@ -116,7 +115,4 @@ function uploads_adminapi_dd_configure($confString = NULL)
     $options['importdir'] = $importdir;
 
     return $options;
-
 }
-
-?>

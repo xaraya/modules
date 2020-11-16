@@ -19,7 +19,9 @@
  */
 function uploads_admin_main()
 {
-    if(!xarSecurityCheck('EditUploads')) return;
+    if (!xarSecurityCheck('EditUploads')) {
+        return;
+    }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
@@ -29,5 +31,3 @@ function uploads_admin_main()
     // success
     return true;
 }
-
-?>

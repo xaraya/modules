@@ -23,37 +23,75 @@ function uploads_admin_privileges($args)
     extract($args);
 
     // fixed params
-    if (!xarVarFetch('mimetype',    'int:0:', $mimetype,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('subtype',     'int:0:', $subtype,      NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('userId',      'int:0:', $userId,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('fileId',      'int:0:', $fileId,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('userName',    'isset',  $userName,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('apply',       'isset',  $apply,        NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extpid',      'isset',  $extpid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extname',     'isset',  $extname,      NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extrealm',    'isset',  $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extmodule',   'isset',  $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extcomponent','isset',  $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extinstance', 'isset',  $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extlevel',    'isset',  $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('mimetype', 'int:0:', $mimetype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('subtype', 'int:0:', $subtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('userId', 'int:0:', $userId, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('fileId', 'int:0:', $fileId, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('userName', 'isset', $userName, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('apply', 'isset', $apply, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extpid', 'isset', $extpid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extname', 'isset', $extname, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extrealm', 'isset', $extrealm, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extmodule', 'isset', $extmodule, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extinstance', 'isset', $extinstance, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extlevel', 'isset', $extlevel, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $userNameList = array();
 
     if (!empty($extinstance)) {
-        $parts = explode(':',$extinstance);
-        if (count($parts) > 0 && !empty($parts[0])) $mimetype = $parts[0];
-        if (count($parts) > 1 && !empty($parts[1])) $subtype = $parts[1];
-        if (count($parts) > 2 && !empty($parts[2])) $userId = $parts[2];
-        if (count($parts) > 3 && !empty($parts[3])) $fileId = $parts[3];
+        $parts = explode(':', $extinstance);
+        if (count($parts) > 0 && !empty($parts[0])) {
+            $mimetype = $parts[0];
+        }
+        if (count($parts) > 1 && !empty($parts[1])) {
+            $subtype = $parts[1];
+        }
+        if (count($parts) > 2 && !empty($parts[2])) {
+            $userId = $parts[2];
+        }
+        if (count($parts) > 3 && !empty($parts[3])) {
+            $fileId = $parts[3];
+        }
     }
 
     // Check the mimetype to see if it's set and, if not assume 'All'
     // Otherwise do a quick check to make sure this user has access
     if (empty($mimetype) || !is_numeric($mimetype)) {
         $mimetype = 0;
-        if (!xarSecurityCheck('AdminUploads')) return;
+        if (!xarSecurityCheck('AdminUploads')) {
+            return;
+        }
     } else {
-        if (!xarSecurityCheck('AdminUploads',1,'Upload',"$mimetype:All:All:All")) return;
+        if (!xarSecurityCheck('AdminUploads', 1, 'Upload', "$mimetype:All:All:All")) {
+            return;
+        }
     }
 
     // Check to see if subtype is set, if not assume 'All'
@@ -77,8 +115,12 @@ function uploads_admin_privileges($args)
         if (!strcasecmp('myself', $userName)) {
             $userId = 'myself';
         } else {
-            $user = xarModAPIFunc('roles', 'user', 'get',
-                            array('uname' => $userName));
+            $user = xarModAPIFunc(
+                'roles',
+                'user',
+                'get',
+                array('uname' => $userName)
+            );
             if (!empty($user)) {
                 $userNameList[$user['uid']]['userId'] = $user['uid'];
                 $userNameList[$user['uid']]['userName'] = $user['uname'];
@@ -97,8 +139,12 @@ function uploads_admin_privileges($args)
             $userId = 0;
         }
     } else {
-        $user = xarModAPIFunc('roles', 'user', 'get',
-                            array('uid' => $userId));
+        $user = xarModAPIFunc(
+            'roles',
+            'user',
+            'get',
+            array('uid' => $userId)
+        );
         if (!empty($user)) {
             $userNameList[$user['uid']]['userId'] = $user['uid'];
             $userNameList[$user['uid']]['userName'] = $user['uname'];
@@ -118,7 +164,6 @@ function uploads_admin_privileges($args)
         $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
 
         if (isset($fileInfo[$fileId])) {
-
             $fileTypeInfo =& $fileInfo[$fileId]['fileTypeInfo'];
 
             // If the mimetype is the same and the subtype is either
@@ -126,11 +171,10 @@ function uploads_admin_privileges($args)
             // otherwise reset the fileId to ALL (0)
             if (($fileTypeInfo['typeId'] == $mimetype || $mimetype == 0) &&
                 ($fileTypeInfo['subtypeId'] == $subtype || $subtype == 0)) {
-                    $fileList = $fileInfo;
+                $fileList = $fileInfo;
             } else {
                 $fileId = 0;
             }
-
         } else {
             $fileId = 0;
         }
@@ -150,18 +194,22 @@ function uploads_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        $pid = xarReturnPrivilege($extpid, $extname, $extrealm, $extmodule, $extcomponent, $newinstance, $extlevel);
         if (empty($pid)) {
             return; // throw back
         }
 
         // redirect to the privilege
-        xarController::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
-                                      array('pid' => $pid)));
+        xarController::redirect(xarModURL(
+            'privileges',
+            'admin',
+            'modifyprivilege',
+            array('pid' => $pid)
+        ));
         return true;
     }
 
-    $filters['storeOptions'] = FALSE;
+    $filters['storeOptions'] = false;
     $options            = xarModAPIFunc('uploads', 'user', 'process_filters', $filters);
     unset($filters);
 
@@ -175,15 +223,19 @@ function uploads_admin_privileges($args)
     // the currently selected privilege settings
     $numitems = xarModAPIFunc('uploads', 'user', 'db_count', $filter);
 
-    $userNameList += xarModAPIFunc('uploads','user','db_get_users',
-                                    array('mimeType' => $filter['fileType']));
+    $userNameList += xarModAPIFunc(
+        'uploads',
+        'user',
+        'db_get_users',
+        array('mimeType' => $filter['fileType'])
+    );
 
     // Set up default 'All' option for users
     $userNameList[0]['userId'] = 0;
     $userNameList[0]['userName'] = xarML('All');
 
     if (isset($userNameList[$userId])) {
-        $userNameList[$userId]['selected'] = TRUE;
+        $userNameList[$userId]['selected'] = true;
     }
 
     // We don't need the userid nor the fileid for
@@ -198,7 +250,7 @@ function uploads_admin_privileges($args)
     $fileList[0]['fileLocation'] = $fileList[0]['fileName'];
 
     if (isset($fileList[$fileId])) {
-        $fileList[$fileId]['selected'] = TRUE;
+        $fileList[$fileId]['selected'] = true;
     }
 
 
@@ -225,11 +277,8 @@ function uploads_admin_privileges($args)
     $data['extmodule']      = $extmodule;
     $data['extcomponent']   = $extcomponent;
     $data['extlevel']       = $extlevel;
-    $data['extinstance']    = xarVarPrepForDisplay(join(':',$newinstance));
+    $data['extinstance']    = xarVarPrepForDisplay(join(':', $newinstance));
     $data['applylabel']     = xarML('Finish and Apply to Privilege');
 
     return $data;
-
 }
-
-?>

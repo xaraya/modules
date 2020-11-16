@@ -29,7 +29,7 @@
  *  @return bool TRUE on success, FALSE with exception on error
  */
 
-function uploads_userapi_db_delete_association( $args )
+function uploads_userapi_db_delete_association($args)
 {
     extract($args);
 
@@ -37,10 +37,8 @@ function uploads_userapi_db_delete_association( $args )
     $bindvars = array();
 
     if (!isset($fileId)) {
-
     } elseif (is_array($fileId)) {
         $whereList[] = ' (xar_fileEntry_id IN (' . implode(',', $fileId) . ') ) ';
-
     } else {
         $whereList[] = ' (xar_fileEntry_id = ?) ';
         $bindvars[] = (int) $fileId;
@@ -83,10 +81,8 @@ function uploads_userapi_db_delete_association( $args )
     $result = &$dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
-        return TRUE;
+        return true;
     }
 }
-
-?>

@@ -25,26 +25,33 @@
  *  @return integer The id of the fileData that was added, or FALSE on error
  */
 
-function uploads_userapi_db_add_file_data( $args )
+function uploads_userapi_db_add_file_data($args)
 {
-
     extract($args);
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileId','db_add_file_data','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileId',
+            'db_add_file_data',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($fileData)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module (#3)]',
-                     'location','db_add_file_data','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module (#3)]',
+            'location',
+            'db_add_file_data',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (sizeof($fileData) >= (1024 * 64)) {
         $msg = xarML('#(1) exceeds maximum storage limit of 64KB per data chunk.', 'fileData');
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     $fileData = base64_encode($fileData);
@@ -75,11 +82,9 @@ function uploads_userapi_db_add_file_data( $args )
     $result = &$dbconn->Execute($sql);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         $id = $dbconn->PO_Insert_ID($xartable['file_data'], 'id');
         return $id;
     }
 }
-
-?>

@@ -25,20 +25,28 @@
  *  @return integer The id of the file that was associated, FALSE with exception on error
  */
 
-function uploads_userapi_db_add_association( $args )
+function uploads_userapi_db_add_association($args)
 {
     extract($args);
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileId','db_add_assocation','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileId',
+            'db_add_assocation',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($modid)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'modid','db_add_assocation','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'modid',
+            'db_add_assocation',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($itemtype)) {
@@ -72,10 +80,8 @@ function uploads_userapi_db_add_association( $args )
     $result = &$dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $fileId  ;
     }
 }
-
-?>

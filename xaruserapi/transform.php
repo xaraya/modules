@@ -11,5 +11,3 @@
  * @link http://www.xaraya.com/index.php/release/eid/666
  * @author Uploads Module Development Team
  */
-
-?>

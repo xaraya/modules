@@ -30,16 +30,20 @@
  *  @return integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_modify_file( $args )
+function uploads_userapi_db_modify_file($args)
 {
     extract($args);
 
     $update_fields = array();
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module (#3)]',
-                     'fileId','db_modify_file','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for API function [#(2)] in module (#3)]',
+            'fileId',
+            'db_modify_file',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (isset($fileName)) {
@@ -90,7 +94,7 @@ function uploads_userapi_db_modify_file( $args )
     }
 
     if (!count($update_fields)) {
-        return TRUE;
+        return true;
     } else {
         $update_args[] = $fileId;
     }
@@ -111,7 +115,7 @@ function uploads_userapi_db_modify_file( $args )
     $result          = &$dbconn->Execute($sql, $update_args);
 
     if (!$result) {
-        return FALSE;
+        return false;
     }
 
     // Pass the arguments to the hook modules too
@@ -119,8 +123,5 @@ function uploads_userapi_db_modify_file( $args )
     $args['itemtype'] = 1; // Files
     xarModCallHooks('item', 'update', $fileId, $args);
 
-    return TRUE;
-
+    return true;
 }
-
-?>

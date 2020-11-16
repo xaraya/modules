@@ -20,6 +20,5 @@
  */
 function uploads_adminapi_getmenulinks()
 {
-    return xarMod::apiFunc('base','admin','loadmenuarray',array('modname' => 'uploads', 'modtype' => 'admin'));
+    return xarMod::apiFunc('base', 'admin', 'loadmenuarray', array('modname' => 'uploads', 'modtype' => 'admin'));
 }
-?>

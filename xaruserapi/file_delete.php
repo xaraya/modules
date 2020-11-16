@@ -22,29 +22,30 @@
  *  @return TRUE on success, FALSE on error
  */
 
-function uploads_userapi_file_delete( $args )
+function uploads_userapi_file_delete($args)
 {
-
-    extract ($args);
+    extract($args);
 
     if (!isset($fileName)) {
-        $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileName','file_move','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
+            'fileName',
+            'file_move',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!file_exists($fileName)) {
         // if the file doesn't exist, then we don't need
         // to worry about deleting it - so return true :)
-        return TRUE;
+        return true;
     }
 
     if (!unlink($fileName)) {
         $msg = xarML('Unable to remove file: [#(1)].', $fileName);
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
-    return TRUE;
+    return true;
 }
-
-?>

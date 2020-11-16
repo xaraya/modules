@@ -29,15 +29,14 @@
  * @return integer             The total amount of diskspace used by the current set of selected files
  */
 
-function uploads_userapi_db_diskusage( $args )
+function uploads_userapi_db_diskusage($args)
 {
-
     extract($args);
 
     $where = array();
 
     if (!isset($inverse)) {
-        $inverse = FALSE;
+        $inverse = false;
     }
 
     if (isset($fileId)) {
@@ -64,7 +63,7 @@ function uploads_userapi_db_diskusage( $args )
         $where[] = "(xar_store_type = $store_type)";
     }
 
-    if (isseT($fileType) && !empty($fileType)) {
+    if (isset($fileType) && !empty($fileType)) {
         $where[] = "(xar_mime_type LIKE '$fileType')";
     }
 
@@ -94,13 +93,19 @@ function uploads_userapi_db_diskusage( $args )
     $sql = "SELECT SUM(xar_filesize) AS disk_usage
               FROM $fileEntry_table ";
 
-    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
+    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories', 'uploads', 1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                      array('modid' => xarMod::getRegID('uploads'),
+        $categoriesdef = xarModAPIFunc(
+            'categories',
+            'user',
+            'leftjoin',
+            array('modid' => xarMod::getRegID('uploads'),
                                             'itemtype' => 1,
-                                            'catid' => $catid));
-        if (empty($categoriesdef)) return;
+                                            'catid' => $catid)
+        );
+        if (empty($categoriesdef)) {
+            return;
+        }
 
         // Add LEFT JOIN ... ON ... from categories_linkage
         $sql .= ' LEFT JOIN ' . $categoriesdef['table'];
@@ -110,7 +115,7 @@ function uploads_userapi_db_diskusage( $args )
             $sql .= $categoriesdef['more'];
         }
         if (!empty($categoriesdef['where'])) {
-            if (!empty($where) && strpos($where,'WHERE') !== FALSE) {
+            if (!empty($where) && strpos($where, 'WHERE') !== false) {
                 $where .= ' AND ' . $categoriesdef['where'];
             } else {
                 $where .= ' WHERE ' . $categoriesdef['where'];
@@ -122,8 +127,8 @@ function uploads_userapi_db_diskusage( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result)  {
-        return FALSE;
+    if (!$result) {
+        return false;
     }
 
     // if no record found, return an empty array
@@ -135,5 +140,3 @@ function uploads_userapi_db_diskusage( $args )
 
     return $row['disk_usage'];
 }
-
-?>

@@ -21,7 +21,7 @@
  *  @return mixed list of associations with missing files on success, void with exception on error
  */
 
-function uploads_adminapi_check_associations( $args )
+function uploads_adminapi_check_associations($args)
 {
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -31,7 +31,7 @@ function uploads_adminapi_check_associations( $args )
     $file_assoc_table = $xartable['file_associations'];
     $file_entry_table = $xartable['file_entry'];
 
-// CHECKME: verify this for different databases
+    // CHECKME: verify this for different databases
     // find file associations without corresponding file entry
     $sql = "SELECT
                    $file_assoc_table.xar_fileEntry_id,
@@ -51,7 +51,7 @@ function uploads_adminapi_check_associations( $args )
 
     $list = array();
     while (!$result->EOF) {
-        list($fileId,$modid,$itemtype,$itemid) = $result->fields;
+        list($fileId, $modid, $itemtype, $itemid) = $result->fields;
         // simple item - file array
         if (!isset($list[$fileId])) {
             $list[$fileId] = 0;
@@ -61,5 +61,3 @@ function uploads_adminapi_check_associations( $args )
     }
     return $list;
 }
-
-?>

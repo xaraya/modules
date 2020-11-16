@@ -21,12 +21,12 @@
  *  @return string           The complete path to the new Current Working Directory within the sandbox
  */
 
-function uploads_userapi_import_chdir( $args )
+function uploads_userapi_import_chdir($args)
 {
-    extract ( $args );
+    extract($args);
 
     if (!isset($dirName) || empty($dirName)) {
-        $dirName = NULL;
+        $dirName = null;
     }
 
     $root = sys::root();
@@ -35,7 +35,7 @@ function uploads_userapi_import_chdir( $args )
     } else {
         $cwd = sys::root() . "/" . xarModUserVars::get('uploads', 'path.imports-cwd');
     }
-    $importDir = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
+    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
 
     if (!empty($dirName)) {
         if ($dirName == '...') {
@@ -62,4 +62,3 @@ function uploads_userapi_import_chdir( $args )
 
     return $cwd;
 }
-?>

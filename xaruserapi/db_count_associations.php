@@ -26,9 +26,8 @@
  *                            or an array of fileId's and their number of associations
  */
 
-function uploads_userapi_db_count_associations( $args )
+function uploads_userapi_db_count_associations($args)
 {
-
     extract($args);
 
     $whereList = array();
@@ -79,8 +78,8 @@ function uploads_userapi_db_count_associations( $args )
 
         $result = $dbconn->Execute($sql, $bindvars);
 
-        if (!$result)  {
-            return FALSE;
+        if (!$result) {
+            return false;
         }
 
         // if no record found, return zero
@@ -91,7 +90,6 @@ function uploads_userapi_db_count_associations( $args )
         $row = $result->GetRowAssoc(false);
 
         return $row['total'];
-
     } else {
         $sql = "SELECT xar_fileEntry_id, COUNT(*) AS total
                 FROM $file_assoc_table
@@ -100,13 +98,13 @@ function uploads_userapi_db_count_associations( $args )
 
         $result = $dbconn->Execute($sql, $bindvars);
 
-        if (!$result)  {
-            return FALSE;
+        if (!$result) {
+            return false;
         }
 
         $count = array();
         while (!$result->EOF) {
-            list($file,$total) = $result->fields;
+            list($file, $total) = $result->fields;
             $count[$file] = $total;
 
             $result->MoveNext();
@@ -115,5 +113,3 @@ function uploads_userapi_db_count_associations( $args )
         return $count;
     }
 }
-
-?>

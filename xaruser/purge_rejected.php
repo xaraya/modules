@@ -25,12 +25,13 @@
 
 xarModAPILoad('uploads', 'user');
 
-function uploads_user_purge_rejected( $args )
+function uploads_user_purge_rejected($args)
 {
+    extract($args);
 
-    extract ($args);
-
-    if (!xarSecurityCheck('ManageUploads')) return;
+    if (!xarSecurityCheck('ManageUploads')) {
+        return;
+    }
 
     if (isset($authid)) {
         $_GET['authid'] = $authid;
@@ -40,28 +41,41 @@ function uploads_user_purge_rejected( $args )
         xarVarFetch('confirmation', 'int:1:', $confirmation, '', XARVAR_NOT_REQUIRED);
     }
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey())
+    if (!xarSecConfirmAuthKey()) {
         return;
+    }
 
 
     if ((isset($confirmation) && $confirmation) || !xarModVars::get('uploads', 'file.delete-confirmation')) {
-        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file',
-                                   array('fileStatus' => _UPLOADS_STATUS_REJECTED));
+        $fileList = xarModAPIFunc(
+            'uploads',
+            'user',
+            'db_get_file',
+            array('fileStatus' => _UPLOADS_STATUS_REJECTED)
+        );
 
         if (empty($fileList)) {
             xarController::redirect(xarModURL('uploads', 'admin', 'view'));
             return;
         } else {
-            $result = xarModAPIFunc('uploads', 'user', 'purge_files',
-                                     array('fileList'   => $fileList));
+            $result = xarModAPIFunc(
+                'uploads',
+                'user',
+                'purge_files',
+                array('fileList'   => $fileList)
+            );
             if (!$result) {
                 $msg = xarML('Unable to purge rejected files!');
-                throw new Exception($msg);             
+                throw new Exception($msg);
             }
         }
     } else {
-        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file',
-                                   array('fileStatus' => _UPLOADS_STATUS_REJECTED));
+        $fileList = xarModAPIFunc(
+            'uploads',
+            'user',
+            'db_get_file',
+            array('fileStatus' => _UPLOADS_STATUS_REJECTED)
+        );
         if (empty($fileList)) {
             $data['fileList']   = array();
         } else {
@@ -74,4 +88,3 @@ function uploads_user_purge_rejected( $args )
 
     xarController::redirect(xarModURL('uploads', 'admin', 'view'));
 }
-?>

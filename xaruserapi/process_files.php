@@ -29,7 +29,7 @@
 
 xarModAPILoad('uploads', 'user');
 
-function uploads_userapi_process_files( $args )
+function uploads_userapi_process_files($args)
 {
     extract($args);
 
@@ -37,7 +37,7 @@ function uploads_userapi_process_files( $args )
 
     if (!isset($action)) {
         $msg = xarML("Missing parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     // If not store type defined, default to DB ENTRY AND FILESYSTEM STORE
@@ -56,19 +56,19 @@ function uploads_userapi_process_files( $args )
                 // create dummy index.html in case it's web-accessible
                 @touch($upload_directory . '/index.html');
             } else {
-            // CHECKME: fall back to common uploads directory, or fail ?
-                $upload_directory = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
+                // CHECKME: fall back to common uploads directory, or fail ?
+                $upload_directory = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
             }
         }
     } else {
-        $upload_directory = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
+        $upload_directory = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
     }
 
     // Check for override of upload obfuscation and set accordingly
     if (isset($override['upload']['obfuscate']) && $override['upload']['obfuscate']) {
-        $upload_obfuscate = TRUE;
+        $upload_obfuscate = true;
     } else {
-        $upload_obfuscate = FALSE;
+        $upload_obfuscate = false;
     }
 
     switch ($action) {
@@ -76,7 +76,7 @@ function uploads_userapi_process_files( $args )
         case _UPLOADS_GET_UPLOAD:
             if (!isset($upload) || empty($upload)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'upload', 'process_files', 'uploads');
-                throw new Exception($msg);             
+                throw new Exception($msg);
             }
 
         // Set in the uploads method
@@ -84,11 +84,21 @@ function uploads_userapi_process_files( $args )
 
             // Rearange the uploads array so we can pass the uploads one by one
             $uploadarray = array();
-            foreach ($upload['name'] as $key => $value) $uploadarray[$key]['name'] = $value;
-            foreach ($upload['type'] as $key => $value) $uploadarray[$key]['type'] = $value;
-            foreach ($upload['tmp_name'] as $key => $value) $uploadarray[$key]['tmp_name'] = $value;
-            foreach ($upload['error'] as $key => $value) $uploadarray[$key]['error'] = $value;
-            foreach ($upload['size'] as $key => $value) $uploadarray[$key]['size'] = $value;
+            foreach ($upload['name'] as $key => $value) {
+                $uploadarray[$key]['name'] = $value;
+            }
+            foreach ($upload['type'] as $key => $value) {
+                $uploadarray[$key]['type'] = $value;
+            }
+            foreach ($upload['tmp_name'] as $key => $value) {
+                $uploadarray[$key]['tmp_name'] = $value;
+            }
+            foreach ($upload['error'] as $key => $value) {
+                $uploadarray[$key]['error'] = $value;
+            }
+            foreach ($upload['size'] as $key => $value) {
+                $uploadarray[$key]['size'] = $value;
+            }
             
             $fileList = array();
             foreach ($uploadarray as $upload) {
@@ -124,17 +134,20 @@ function uploads_userapi_process_files( $args )
                             $upload['fileId'] = $file['fileId'];
                             $upload['fileLocation'] = $file['fileLocation'];
                             $upload['isDuplicate'] = 2;
-
                         } else {
                             // new version for duplicate files - continue as usual
                             $upload['isDuplicate'] = 1;
                         }
                     }
 
-                $fileList = array_merge($fileList,xarModAPIFunc('uploads','user','prepare_uploads',
-                                           array('savePath'  => $upload_directory,
+                    $fileList = array_merge($fileList, xarModAPIFunc(
+                        'uploads',
+                        'user',
+                        'prepare_uploads',
+                        array('savePath'  => $upload_directory,
                                                  'obfuscate' => $upload_obfuscate,
-                                                 'fileInfo'  => $upload)));
+                                                 'fileInfo'  => $upload)
+                    ));
                 }
             }
             break;
@@ -146,15 +159,18 @@ function uploads_userapi_process_files( $args )
                 // current working directory for the user, set by import_chdir() when using the get_files() GUI
                 $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
 
-                $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => TRUE));
-
+                $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => true));
             } else {
                 $list = array();
                 // file list coming from validatevalue() or the get_files() GUI
                 foreach ($fileList as $location => $fileInfo) {
                     if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
-                        $list += xarModAPIFunc('uploads', 'user', 'import_get_filelist',
-                                                array('fileLocation' => $location, 'descend' => TRUE));
+                        $list += xarModAPIFunc(
+                            'uploads',
+                            'user',
+                            'import_get_filelist',
+                            array('fileLocation' => $location, 'descend' => true)
+                        );
                         unset($fileList[$location]);
                     }
                 }
@@ -172,7 +188,7 @@ function uploads_userapi_process_files( $args )
 
             if (!isset($import)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'import', 'process_files', 'uploads');
-                throw new Exception($msg);             
+                throw new Exception($msg);
             }
 
             // Setup the uri structure so we have defaults if parse_url() doesn't create them
@@ -184,24 +200,36 @@ function uploads_userapi_process_files( $args )
 
             switch ($uri['scheme']) {
                 case 'ftp':
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp',
-                                              array('savePath'  => $upload_directory,
+                    $fileList = xarModAPIFunc(
+                        'uploads',
+                        'user',
+                        'import_external_ftp',
+                        array('savePath'  => $upload_directory,
                                                     'obfuscate' => $upload_obfuscate,
-                                                    'uri'       => $uri));
+                                                    'uri'       => $uri)
+                    );
                     break;
                 case 'https':
                 case 'http':
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http',
-                                              array('savePath'  => $upload_directory,
+                    $fileList = xarModAPIFunc(
+                        'uploads',
+                        'user',
+                        'import_external_http',
+                        array('savePath'  => $upload_directory,
                                                     'obfuscate' => $upload_obfuscate,
-                                                    'uri'       => $uri));
+                                                    'uri'       => $uri)
+                    );
                     break;
                 case 'file':
                     // If we'ere using the file scheme then just store a db entry only
                     // as there is really no sense in moving the file around
                     $storeType = _UPLOADS_STORE_DB_ENTRY;
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_file',
-                                              array('uri'       => $uri));
+                    $fileList = xarModAPIFunc(
+                        'uploads',
+                        'user',
+                        'import_external_file',
+                        array('uri'       => $uri)
+                    );
                     break;
                 case 'gopher':
                 case 'wais':
@@ -211,12 +239,12 @@ function uploads_userapi_process_files( $args )
                 default:
                     // ERROR
                     $msg = xarML('Import via scheme \'#(1)\' is not currently supported', $uri['scheme']);
-                    throw new Exception($msg);             
+                    throw new Exception($msg);
             }
             break;
         default:
             $msg = xarML("Invalid parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
-            throw new Exception($msg);             
+            throw new Exception($msg);
 
     }
     foreach ($fileList as $fileInfo) {
@@ -228,11 +256,13 @@ function uploads_userapi_process_files( $args )
             $storeList[] = $fileInfo;
             continue;
         }
-        $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
-                                      array('fileInfo'  => $fileInfo,
-                                            'storeType' => $storeType));
+        $storeList[] = xarModAPIFunc(
+            'uploads',
+            'user',
+            'file_store',
+            array('fileInfo'  => $fileInfo,
+                                            'storeType' => $storeType)
+        );
     }
     return $storeList;
 }
-
-?>

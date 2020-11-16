@@ -29,49 +29,72 @@
  *  @throws   UPLOADS_ERR_NO_READ       couldn't read from the specified file
  */
 
-function uploads_userapi_file_push( $args )
+function uploads_userapi_file_push($args)
 {
-
-    extract ( $args );
+    extract($args);
 
     if (!isset($fileName)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileName','file_push','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileName',
+            'file_push',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($fileLocation)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileLocation','file_push','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileLocation',
+            'file_push',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($fileType)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileType','file_push','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileType',
+            'file_push',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($storeType)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'storeType','file_push','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'storeType',
+            'file_push',
+            'uploads'
+        );
+        throw new Exception($msg);
     } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
         if (!isset($fileId)) {
-            $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                        'fileId','file_push','uploads');
-        throw new Exception($msg);             
+            $msg = xarML(
+                'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+                'fileId',
+                'file_push',
+                'uploads'
+            );
+            throw new Exception($msg);
         }
     }
 
     if (!isset($fileSize)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileSize','file_push','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileSize',
+            'file_push',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    $finished = FALSE;
+    $finished = false;
 
     $pageBuffer = xarModAPIFunc('uploads', 'user', 'flush_page_buffer');
 
@@ -82,7 +105,7 @@ function uploads_userapi_file_push( $args )
         ob_start();
 
         $fp = @fopen($fileLocation, 'rb');
-        if(is_resource($fp))   {
+        if (is_resource($fp)) {
             do {
                 $data = fread($fp, 65536);
                 if (strlen($data) == 0) {
@@ -90,7 +113,7 @@ function uploads_userapi_file_push( $args )
                 } else {
                     print("$data");
                 }
-            } while (TRUE);
+            } while (true);
 
             fclose($fp);
         }
@@ -109,8 +132,7 @@ function uploads_userapi_file_push( $args )
 
         // TODO: evaluate registering shutdown functions to take care of
         //       ending Xaraya in a safe manner
-        $finished = TRUE;
-
+        $finished = true;
     } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
 
         // Start buffering for the file
@@ -136,11 +158,11 @@ function uploads_userapi_file_push( $args )
 
         // TODO: evaluate registering shutdown functions to take care of
         //       ending Xaraya in a safe manner
-        $finished = TRUE;
+        $finished = true;
     }
 
     if ($finished) {
-        return TRUE;
+        return true;
     }
 
     // rebuffer the old page data
@@ -152,8 +174,5 @@ function uploads_userapi_file_push( $args )
 
     $msg = xarML('Could not open file [#(1)] for reading', $fileName);
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READ', new SystemException($msg));
-    return FALSE;
-
+    return false;
 }
-
-?>

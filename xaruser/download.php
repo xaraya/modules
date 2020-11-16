@@ -14,12 +14,18 @@
 
 function uploads_user_download()
 {
-    if (!xarSecurityCheck('ViewUploads')) return;
+    if (!xarSecurityCheck('ViewUploads')) {
+        return;
+    }
 
-    if (!xarVarFetch('file', 'str:1:', $fileName, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fileId', 'int:1:', $fileId, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('file', 'str:1:', $fileName, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('fileId', 'int:1:', $fileId, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
 
     if (empty($fileName) && (empty($fileInfo) || !count($fileInfo))) {
         xarController::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
@@ -27,23 +33,21 @@ function uploads_user_download()
     }
     
     if (!empty($fileName)) {
-    
         $fileInfo = xarSession::getVar($fileName);
         
         try {
             $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
         } catch (Exception $e) {
-            return xarTplModule('uploads','user','errors',array('layout' => 'not_accessible'));
+            return xarTplModule('uploads', 'user', 'errors', array('layout' => 'not_accessible'));
         }
 
         // Let any hooked modules know that we've just pushed a file
         // the hitcount module in particular needs to know to save the fact
         // that we just pushed a file and not display the count
-        xarVarSetCached('Hooks.hitcount','save', 1);
+        xarVarSetCached('Hooks.hitcount', 'save', 1);
 
         // File has been pushed to the client, now shut down.
         exit();
-    
     } else {
     
         // the file should be the first indice in the array
@@ -62,10 +66,12 @@ function uploads_user_download()
             // Group files only
             case 2:
                 $rawfunction = xarModVars::get('uploads', 'permit_download_function');
-                if (empty($rawfunction)) $permitted = false;
-                $funcparts = explode(',',$rawfunction);
+                if (empty($rawfunction)) {
+                    $permitted = false;
+                }
+                $funcparts = explode(',', $rawfunction);
                 try {
-                    $permitted = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2],array('fileInfo' => $fileInfo));
+                    $permitted = xarMod::apiFunc($funcparts[0], $funcparts[1], $funcparts[2], array('fileInfo' => $fileInfo));
                 } catch (Exception $e) {
                     $permitted = false;
                 }
@@ -88,17 +94,17 @@ function uploads_user_download()
     
         // If you are an administrator OR the file is approved, continue
         if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
-            return xarTplModule('uploads','user','errors',array('layout' => 'no_permission'));
+            return xarTplModule('uploads', 'user', 'errors', array('layout' => 'no_permission'));
         }
 
         if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
             if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
                 if (!file_exists($fileInfo['fileLocation'])) {
-                    return xarTplModule('uploads','user','errors',array('layout' => 'not_accessible'));
+                    return xarTplModule('uploads', 'user', 'errors', array('layout' => 'not_accessible'));
                 }
             } elseif ($fileInfo['storeType'] & _UPLOADS_STORE_DB_FULL) {
                 if (!xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileInfo['fileId']))) {
-                    return xarTplModule('uploads','user','errors',array('layout' => 'not_accessible'));
+                    return xarTplModule('uploads', 'user', 'errors', array('layout' => 'not_accessible'));
                 }
             }
     
@@ -114,20 +120,22 @@ function uploads_user_download()
             // Let any hooked modules know that we've just pushed a file
             // the hitcount module in particular needs to know to save the fact
             // that we just pushed a file and not display the count
-            xarVarSetCached('Hooks.hitcount','save', 1);
+            xarVarSetCached('Hooks.hitcount', 'save', 1);
     
             // Note: we're ignoring the output from the display hooks here
-            xarModCallHooks('item', 'display', $fileId,
-                             array('module'    => 'uploads',
+            xarModCallHooks(
+                'item',
+                'display',
+                $fileId,
+                array('module'    => 'uploads',
                                    'itemtype'  => 1, // Files
-                                   'returnurl' => xarModURL('uploads', 'user', 'download', array('fileId' => $fileId))));
+                                   'returnurl' => xarModURL('uploads', 'user', 'download', array('fileId' => $fileId)))
+            );
     
             // File has been pushed to the client, now shut down.
             exit();
-    
         } else {
             return false;
         }
     }
 }
-?>

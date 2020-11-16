@@ -48,7 +48,7 @@ function uploads_adminapi_updatehook($args)
 
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'createhook', 'uploads');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'admin', 'createhook', 'uploads');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         // Return the extra info
         return $extrainfo;
@@ -60,10 +60,8 @@ function uploads_adminapi_updatehook($args)
         $itemtype = 0;
     }
 
-// TODO: rescan ?
+    // TODO: rescan ?
 
     // Return the extra info
     return $extrainfo;
 }
-
-?>

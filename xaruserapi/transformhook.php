@@ -19,7 +19,7 @@
  * @return
  * @return
  */
-function & uploads_userapi_transformhook ( $args )
+function & uploads_userapi_transformhook($args)
 {
     extract($args);
 
@@ -44,33 +44,45 @@ function & uploads_userapi_transformhook ( $args )
  * Transform the $body parameter
  * @param $body
  */
-function & uploads_userapi_transform ( $body )
+function & uploads_userapi_transform($body)
 {
-    while(preg_match('/#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#/i', $body, $matches)) {
-        $replacement=NULL;
+    while (preg_match('/#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#/i', $body, $matches)) {
+        $replacement=null;
         array_shift($matches);
         list($type, $id) = $matches;
-        switch ( $type )  {
+        switch ($type) {
             case 'ulid':
                 // DEPRECATED
             case 'file':
                 //$replacement = "index.php?module=uploads&func=download&fileId=$id";
                 $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
-                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
-                                             array('Attachments' => $list,
-                                                   'style' => 'transform'));
+                $replacement = xarTplModule(
+                    'uploads',
+                    'user',
+                    'attachment-list',
+                    array('Attachments' => $list,
+                                                   'style' => 'transform')
+                );
                 break;
             case 'ulidd':
                 // DEPRECATED
                 //$replacement = "index.php?module=uploads&func=download&fileId=$id";
-                $replacement = xarModAPIFunc('uploads','user','showoutput',
-                                             array('value' => $id));
+                $replacement = xarModAPIFunc(
+                    'uploads',
+                    'user',
+                    'showoutput',
+                    array('value' => $id)
+                );
                 break;
             case 'ulfn': // ULFN is DEPRECATED
             case 'fileLinkedIcon':
                 $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
-                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
-                                             array('Attachments' => $list));
+                $replacement = xarTplModule(
+                    'uploads',
+                    'user',
+                    'attachment-list',
+                    array('Attachments' => $list)
+                );
                 break;
             case 'fileIcon':
                 $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
@@ -88,7 +100,7 @@ function & uploads_userapi_transform ( $body )
                 $replacement = $file['fileName'];
                 break;
             default:
-                $body = xarML("The text '#(1)' is not a valid replacement placeholder","#$type:$id#");
+                $body = xarML("The text '#(1)' is not a valid replacement placeholder", "#$type:$id#");
                 return $body;
         }
 
@@ -97,4 +109,3 @@ function & uploads_userapi_transform ( $body )
 
     return $body;
 }
-?>

@@ -24,21 +24,19 @@
  *
  */
 
-function uploads_userapi_file_get_metadata( $args )
+function uploads_userapi_file_get_metadata($args)
 {
-
     extract($args);
 
     if (!isset($normalize)) {
-        $normalize = FALSE;
+        $normalize = false;
     }
 
     if (!isset($analyze)) {
-        $analyze = TRUE;
+        $analyze = true;
     }
 
     if (isset($fileLocation) && !empty($fileLocation) && file_exists($fileLocation)) {
-
         $file =& $fileLocation;
         if (is_dir($file)) {
             $type = _INODE_TYPE_DIRECTORY;
@@ -64,7 +62,7 @@ function uploads_userapi_file_get_metadata( $args )
             $size = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $size);
         }
 
-    // CHECKME: use 'imports' name like in db_get_file() ?
+        // CHECKME: use 'imports' name like in db_get_file() ?
         $relative_path = str_replace(xarModVars::get('uploads', 'imports_directory'), '/trusted', $file);
 
         $fileInfo = array('inodeType'    => $type,
@@ -77,8 +75,6 @@ function uploads_userapi_file_get_metadata( $args )
         return $fileInfo;
     } else {
         // TODO: exception
-        return FALSE;
+        return false;
     }
 }
-
-?>

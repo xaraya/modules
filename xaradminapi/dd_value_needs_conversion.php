@@ -18,11 +18,9 @@ function uploads_adminapi_dd_value_needs_conversion($value)
     // Then it doesn't need to be converted - so return false.
     if (empty($value) || (strlen($value) && ';' == $value{0})) {
         // conversion not needed
-        return FALSE;
+        return false;
     } else {
         // conversion needed
-        return TRUE;
+        return true;
     }
 }
-
-?>

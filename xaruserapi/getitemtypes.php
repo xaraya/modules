@@ -26,12 +26,10 @@ function uploads_userapi_getitemtypes($args)
     $id = 1;
     $itemtypes[$id] = array('label' => xarML('Files'),
                             'title' => xarML('View All Files'),
-                            'url'   => xarModURL('uploads','admin','view')
+                            'url'   => xarModURL('uploads', 'admin', 'view')
                            );
 
     // TODO: Assoc, VDir and other future tables ?
 
     return $itemtypes;
 }
-
-?>

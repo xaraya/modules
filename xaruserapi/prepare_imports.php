@@ -12,19 +12,22 @@
  * @author Uploads Module Development Team
  */
 
-function uploads_userapi_prepare_imports( $args )
+function uploads_userapi_prepare_imports($args)
 {
-
-    extract ($args);
+    extract($args);
 
     if (!isset($importFrom)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'importFrom','prepare_imports','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'importFrom',
+            'prepare_imports',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($import_directory)) {
-        $import = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
+        $import = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
     }
 
     if (!isset($import_obfuscate)) {
@@ -37,20 +40,28 @@ function uploads_userapi_prepare_imports( $args )
     */
     if (!isset($descend)) {
         if (preg_match('%^(http[s]?|ftp)?\:\/\/%i', $importFrom)) {
-            $descend = FALSE;
+            $descend = false;
         } else {
-            $descend = TRUE;
+            $descend = true;
         }
     }
 
-    $imports = xarModAPIFunc('uploads','user','import_get_filelist',
-                              array('fileLocation'  => $importFrom,
-                                    'descend'       => $descend));
+    $imports = xarModAPIFunc(
+        'uploads',
+        'user',
+        'import_get_filelist',
+        array('fileLocation'  => $importFrom,
+                                    'descend'       => $descend)
+    );
     if ($imports) {
-        $imports = xarModAPIFunc('uploads','user','import_prepare_files',
-                                  array('fileList'  => $imports,
+        $imports = xarModAPIFunc(
+            'uploads',
+            'user',
+            'import_prepare_files',
+            array('fileList'  => $imports,
                                         'savePath'  => $import_directory,
-                                        'obfuscate' => $import_obfuscate));
+                                        'obfuscate' => $import_obfuscate)
+        );
     }
 
     if (!$imports) {
@@ -61,9 +72,7 @@ function uploads_userapi_prepare_imports( $args )
         $fileInfo['fileSize'] = 0;
 
         if (xarCurrentError() !== XAR_NO_EXCEPTION) {
-
             while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
-
                 $errorObj = xarCurrentError();
 
                 if (is_object($errorObj)) {
@@ -89,7 +98,4 @@ function uploads_userapi_prepare_imports( $args )
     } else {
         return $imports;
     }
-
 }
-
-?>

@@ -24,14 +24,18 @@
  *  @return integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_file_data( $args )
+function uploads_userapi_db_delete_file_data($args)
 {
     extract($args);
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileId','db_delete_file_data','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileId',
+            'db_delete_file_data',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     //add to uploads table
@@ -51,11 +55,8 @@ function uploads_userapi_db_delete_file_data( $args )
     $result = &$dbconn->Execute($sql);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $dbconn->Affected_Rows();
     }
-
 }
-
-?>

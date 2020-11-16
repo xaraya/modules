@@ -21,19 +21,15 @@
  *  @return <type>
  */
 
-function uploads_userapi_file_obfuscate_name( $args )
+function uploads_userapi_file_obfuscate_name($args)
 {
-
-    extract ($args);
+    extract($args);
 
     if (!isset($fileName) || empty($fileName)) {
-        return FALSE;
+        return false;
     }
     $hash = crypt($fileName, substr(md5(time() . $fileName . getmypid()), 0, 2));
     $hash = substr(md5($hash), 0, 8) . time() . getmypid();
 
     return $hash;
-
 }
-
-?>

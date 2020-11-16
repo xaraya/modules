@@ -22,19 +22,21 @@
  * @return boolean             true if successful, false otherwise
  */
 
-function uploads_userapi_purge_files( $args )
+function uploads_userapi_purge_files($args)
 {
-
-    extract ( $args );
+    extract($args);
 
     if (!isset($fileList)) {
-        $msg = xarML('Missing required parameter [#(1)] for API function [#(2)] in module [#(3)]',
-                     'fileList', 'purge_files', 'uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing required parameter [#(1)] for API function [#(2)] in module [#(3)]',
+            'fileList',
+            'purge_files',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     foreach ($fileList as $fileName => $fileInfo) {
-
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM) {
             xarModAPIFunc('uploads', 'user', 'file_delete', array('fileName' => $fileInfo['fileLocation']));
         }
@@ -45,10 +47,7 @@ function uploads_userapi_purge_files( $args )
 
         // go ahead and delete the file from the database.
         xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileInfo['fileId']));
-
     }
 
-    return TRUE;
+    return true;
 }
-
-?>

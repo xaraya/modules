@@ -24,7 +24,9 @@ function uploads_userapi_db_group_associations($args)
     extract($args);
 
     // Security check
-    if (!xarSecurityCheck('ViewUploads')) return;
+    if (!xarSecurityCheck('ViewUploads')) {
+        return;
+    }
 
     if (empty($fileId) || !is_numeric($fileId)) {
         $fileId = 0;
@@ -35,7 +37,7 @@ function uploads_userapi_db_group_associations($args)
     $xartable = xarDB::getTables();
     $fileassoctable = $xartable['file_associations'];
 
-    if($dbconn->databaseType == 'sqlite') {
+    if ($dbconn->databaseType == 'sqlite') {
 
     // TODO: see if we can't do this some other way in SQLite
 
@@ -49,12 +51,14 @@ function uploads_userapi_db_group_associations($args)
         }
         $sql .= " GROUP BY xar_modid, xar_itemtype";
 
-        $result = $dbconn->Execute($sql,$bindvars);
-        if (!$result) return;
+        $result = $dbconn->Execute($sql, $bindvars);
+        if (!$result) {
+            return;
+        }
 
         $modlist = array();
         while (!$result->EOF) {
-            list($modid,$itemtype,$numlinks) = $result->fields;
+            list($modid, $itemtype, $numlinks) = $result->fields;
             if (!isset($modlist[$modid])) {
                 $modlist[$modid] = array();
             }
@@ -73,11 +77,13 @@ function uploads_userapi_db_group_associations($args)
         }
         $sql .= ") GROUP BY xar_modid, xar_itemtype";
 
-        $result = $dbconn->Execute($sql,$bindvars);
-        if (!$result) return;
+        $result = $dbconn->Execute($sql, $bindvars);
+        if (!$result) {
+            return;
+        }
 
         while (!$result->EOF) {
-            list($modid,$itemtype,$numitems) = $result->fields;
+            list($modid, $itemtype, $numitems) = $result->fields;
             $modlist[$modid][$itemtype]['items'] = $numitems;
             $result->MoveNext();
         }
@@ -93,16 +99,17 @@ function uploads_userapi_db_group_associations($args)
         }
         $sql .= ") GROUP BY xar_modid, xar_itemtype";
 
-        $result = $dbconn->Execute($sql,$bindvars);
-        if (!$result) return;
+        $result = $dbconn->Execute($sql, $bindvars);
+        if (!$result) {
+            return;
+        }
 
         while (!$result->EOF) {
-            list($modid,$itemtype,$numfiles) = $result->fields;
+            list($modid, $itemtype, $numfiles) = $result->fields;
             $modlist[$modid][$itemtype]['files'] = $numfiles;
             $result->MoveNext();
         }
         $result->close();
-
     } else {
         $bindvars = array();
         // Get items
@@ -114,12 +121,14 @@ function uploads_userapi_db_group_associations($args)
         }
         $sql .= " GROUP BY xar_modid, xar_itemtype";
 
-        $result = $dbconn->Execute($sql,$bindvars);
-        if (!$result) return;
+        $result = $dbconn->Execute($sql, $bindvars);
+        if (!$result) {
+            return;
+        }
 
         $modlist = array();
         while (!$result->EOF) {
-            list($modid,$itemtype,$numlinks,$numitems,$numfiles) = $result->fields;
+            list($modid, $itemtype, $numlinks, $numitems, $numfiles) = $result->fields;
             if (!isset($modlist[$modid])) {
                 $modlist[$modid] = array();
             }
@@ -131,5 +140,3 @@ function uploads_userapi_db_group_associations($args)
 
     return $modlist;
 }
-
-?>

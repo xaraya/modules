@@ -25,7 +25,7 @@
  * @return array   A list of associations, including the itemid -> fileId
  */
 
-function uploads_userapi_db_list_associations( $args )
+function uploads_userapi_db_list_associations($args)
 {
     extract($args);
 
@@ -87,7 +87,7 @@ function uploads_userapi_db_list_associations( $args )
         $result = $dbconn->Execute($sql, $bindvars);
     }
 
-    if (!$result)  {
+    if (!$result) {
         return array();
     }
 
@@ -98,7 +98,7 @@ function uploads_userapi_db_list_associations( $args )
 
     $list = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$itemid,$fileId) = $result->fields;
+        list($modid, $itemtype, $itemid, $fileId) = $result->fields;
         // simple item - file array
         if (!isset($list[$itemid])) {
             $list[$itemid] = array();
@@ -108,5 +108,3 @@ function uploads_userapi_db_list_associations( $args )
     }
     return $list;
 }
-
-?>

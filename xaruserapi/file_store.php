@@ -30,15 +30,18 @@
 
 xarModAPILoad('uploads', 'user');
 
-function uploads_userapi_file_store( $args )
+function uploads_userapi_file_store($args)
 {
-
-    extract ( $args );
+    extract($args);
 
     if (!isset($fileInfo)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileInfo','file_store','uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+            'fileInfo',
+            'file_store',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     $typeInfo = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
@@ -52,20 +55,22 @@ function uploads_userapi_file_store( $args )
 
     if ((isset($fileInfo['fileStatus']) && $fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED) ||
          xarSecurityCheck('AddUploads', 1, 'File', $instance)) {
-
         if (!isset($storeType)) {
-                $storeType = _UPLOADS_STORE_FSDB;
+            $storeType = _UPLOADS_STORE_FSDB;
         }
 
         if (!empty($fileInfo['isDuplicate']) && $fileInfo['isDuplicate'] == 2) {
             // we *want* to overwrite a duplicate here
-
         } else {
             // first, make sure the file isn't already stored in the db/filesystem
             // if it is, then don't add it.
-            $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file',
-                                   array('fileLocation' => $fileInfo['fileLocation'],
-                                         'fileSize' => $fileInfo['fileSize']));
+            $fInfo = xarModAPIFunc(
+                'uploads',
+                'user',
+                'db_get_file',
+                array('fileLocation' => $fileInfo['fileLocation'],
+                                         'fileSize' => $fileInfo['fileSize'])
+            );
 
             // If we already have the file, then return the info we have on it
             if (is_array($fInfo) && count($fInfo)) {
@@ -78,23 +83,21 @@ function uploads_userapi_file_store( $args )
 
         // If this is just a file dump, return the dump
         if ($storeType & _UPLOADS_STORE_TEXT) {
-            $fileInfo['fileData'] = xarModAPIFunc('uploads','user','file_dump', $fileInfo);
+            $fileInfo['fileData'] = xarModAPIFunc('uploads', 'user', 'file_dump', $fileInfo);
         }
         // If the store db_entry bit is set, then go ahead
         // and set up the database meta information for the file
         if ($storeType & _UPLOADS_STORE_DB_ENTRY) {
-
             $fileInfo['store_type'] = $storeType;
 
             if (!empty($fileInfo['isDuplicate']) && $fileInfo['isDuplicate'] == 2 &&
                 !empty($fileInfo['fileId'])) {
                 // we *want* to overwrite a duplicate here
-                xarModAPIFunc('uploads','user','db_modify_file', $fileInfo);
+                xarModAPIFunc('uploads', 'user', 'db_modify_file', $fileInfo);
 
                 $fileId = $fileInfo['fileId'];
-
             } else {
-                $fileId = xarModAPIFunc('uploads','user','db_add_file', $fileInfo);
+                $fileId = xarModAPIFunc('uploads', 'user', 'db_add_file', $fileInfo);
 
                 if ($fileId) {
                     $fileInfo['fileId'] = $fileId;
@@ -103,11 +106,10 @@ function uploads_userapi_file_store( $args )
         }
 
         if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
-
             if ($fileInfo['fileSrc'] != $fileInfo['fileDest']) {
-                $result = xarModAPIFunc('uploads','user','file_move', $fileInfo);
+                $result = xarModAPIFunc('uploads', 'user', 'file_move', $fileInfo);
             } else {
-                $result = TRUE;
+                $result = true;
             }
 
             if ($result) {
@@ -134,8 +136,8 @@ function uploads_userapi_file_store( $args )
             if (!xarModAPIFunc('uploads', 'user', 'file_dump', $fileInfo)) {
                 // If we couldn't add the files contents to the database,
                 // then remove the file metadata as well
-                if (isset($fileId) && !empty($fileId))  {
-                    xarModAPIFunc('uploads', 'user' ,'db_delete_file', array('fileId' => $fileId));
+                if (isset($fileId) && !empty($fileId)) {
+                    xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileId));
                 }
             } else {
                 // if it was successfully added, then change the stored fileLocation
@@ -146,29 +148,28 @@ function uploads_userapi_file_store( $args )
     }
     // If there were any errors generated while attempting to add this file,
     // we run through and grab them, adding them to this file
-/*    while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+    /*    while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
-        $errorObj = xarCurrentError();
+            $errorObj = xarCurrentError();
 
-        if (is_object($errorObj)) {
-            $fileError = array('errorMesg'   => $errorObj->getShort(),
-                               'errorId'    => $errorObj->getID());
-        } else {
-            $fileError = array('errorMesg'   => 'Unknown Error!',
-                               'errorId'    => _UPLOADS_ERROR_UNKNOWN);
+            if (is_object($errorObj)) {
+                $fileError = array('errorMesg'   => $errorObj->getShort(),
+                                   'errorId'    => $errorObj->getID());
+            } else {
+                $fileError = array('errorMesg'   => 'Unknown Error!',
+                                   'errorId'    => _UPLOADS_ERROR_UNKNOWN);
+            }
+
+            if (!isset($fileInfo['errors'])) {
+                $fileInfo['errors'] = array();
+            }
+
+            $fileInfo['errors'][] = $fileError;
+
+            // Clear the exception because we've handled it already
+            xarErrorHandled();
+
         }
-
-        if (!isset($fileInfo['errors'])) {
-            $fileInfo['errors'] = array();
-        }
-
-        $fileInfo['errors'][] = $fileError;
-
-        // Clear the exception because we've handled it already
-        xarErrorHandled();
-
-    }
-*/
+    */
     return $fileInfo;
 }
-?>

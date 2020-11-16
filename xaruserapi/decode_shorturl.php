@@ -35,7 +35,6 @@ function uploads_userapi_decode_shorturl($params)
     if (empty($params[1])) {
         // nothing specified -> we'll go to the main function
         return array('download', $args);
-
     } elseif (preg_match('/^(\d+)\.(.*)/', $params[1], $matches)) {
 
         // something that starts with a number must be for the display function
@@ -44,14 +43,11 @@ function uploads_userapi_decode_shorturl($params)
         $fileExists = xarModAPIFunc('uploads', 'user', 'db_count', array('fileId' => $fileId));
 
         if (!$fileExists) {
-            $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1] );
-            throw new Exception($msg);             
+            $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1]);
+            throw new Exception($msg);
         } else {
             $args['fileId'] = $fileId;
             return array('download', $args);
         }
     }
-
 }
-
-?>

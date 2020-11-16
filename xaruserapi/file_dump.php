@@ -22,43 +22,53 @@
  *  returns  integer           The total bytes stored or boolean FALSE on error
  */
 
-function uploads_userapi_file_dump( $args )
+function uploads_userapi_file_dump($args)
 {
-
     extract($args);
 
     if (!isset($unlink)) {
-        $unlink = TRUE;
+        $unlink = true;
     }
     if (!isset($fileSrc)) {
-        $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
-                      'fileSrc', 'file_dump', 'uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
+            'fileSrc',
+            'file_dump',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
-                      'fileId', 'file_dump', 'uploads');
-        throw new Exception($msg);             
+        $msg = xarML(
+            'Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
+            'fileId',
+            'file_dump',
+            'uploads'
+        );
+        throw new Exception($msg);
     }
 
     if (!file_exists($fileSrc)) {
         $msg = xarML('Unable to locate file [#(1)]. Are you sure it\'s there??', $fileSrc);
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     if (!is_readable($fileSrc) || !is_writable($fileSrc)) {
         $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $fileSrc);
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
     $fileInfo = end($fileInfo);
 
     if (!count($fileInfo) || empty($fileInfo)) {
-        $msg = xarML('FileId [#(1)] does not exist. File [#(2)] does not have a corresponding metadata entry in the databsae.',
-                     $fileId, $fileSrc);
-        throw new Exception($msg);             
+        $msg = xarML(
+            'FileId [#(1)] does not exist. File [#(2)] does not have a corresponding metadata entry in the databsae.',
+            $fileId,
+            $fileSrc
+        );
+        throw new Exception($msg);
     } else {
         $dataBlocks = xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileId));
 
@@ -67,13 +77,12 @@ function uploads_userapi_file_dump( $args )
             // so truncate the file and then save it
             if (!xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId))) {
                 $msg = xarML('Unable to truncate file [#(1)] in database.', $fileInfo['fileName']);
-                throw new Exception($msg);             
+                throw new Exception($msg);
             }
         }
 
         // Now we copy the contents of the file into the database
-        if (($srcId = fopen($fileSrc, 'rb')) !== FALSE) {
-
+        if (($srcId = fopen($fileSrc, 'rb')) !== false) {
             do {
                 // Read 16K in at a time
                 $data = fread($srcId, (64 * 1024));
@@ -90,19 +99,17 @@ function uploads_userapi_file_dump( $args )
                     }
                     xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId));
                     $msg = xarML('Unable to save file contents to database.');
-                    throw new Exception($msg);             
+                    throw new Exception($msg);
                 }
-            } while (TRUE);
-       } else {
+            } while (true);
+        } else {
             $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $fileSrc);
-            throw new Exception($msg);             
-       }
+            throw new Exception($msg);
+        }
     }
 
     if ($unlink) {
         @unlink($fileSrc);
     }
-    return TRUE;
+    return true;
 }
-
-?>

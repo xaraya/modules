@@ -14,11 +14,10 @@
 
 function uploads_adminapi_dd_convert_value($args)
 {
-
     extract($args);
 
     if (!isset($value)) {
-        return NULL;
+        return null;
     }
 
     if (!isset($basedir)) {
@@ -32,8 +31,7 @@ function uploads_adminapi_dd_convert_value($args)
     }
 
     if (!isset($basePath)) {
-
-        if(xarServer::getVar('SCRIPT_FILENAME')) {
+        if (xarServer::getVar('SCRIPT_FILENAME')) {
             $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
         } else {
             $base_directory = './';
@@ -47,14 +45,14 @@ function uploads_adminapi_dd_convert_value($args)
 
         $args['import'] = 'file://' . $basePath . '/' . $basedir . $value;
         $args['action'] = _UPLOADS_GET_EXTERNAL;
-        $list = xarModAPIFunc('uploads','user','process_files', $args);
+        $list = xarModAPIFunc('uploads', 'user', 'process_files', $args);
         $storeList = array();
         foreach ($list as $file => $fileInfo) {
             if (!isset($fileInfo['errors'])) {
                 $storeList[] = $fileInfo['fileId'];
             } else {
                 $msg = xarML('Error Found: #(1)', $fileInfo['errors'][0]['errorMesg']);
-                throw new Exception($msg);             
+                throw new Exception($msg);
             }
         }
 
@@ -74,7 +72,4 @@ function uploads_adminapi_dd_convert_value($args)
         // if we've managed to get here, then just return the original value
         return $value;
     }
-
 }
-
-?>

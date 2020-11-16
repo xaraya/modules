@@ -23,9 +23,8 @@
  *  @return array          FALSE on error, otherwise an array containing the fileInformation
  */
 
-function uploads_userapi_import_external_ftp( $args )
+function uploads_userapi_import_external_ftp($args)
 {
-
     extract($args);
 
     if (!isset($uri)) {
@@ -36,13 +35,13 @@ function uploads_userapi_import_external_ftp( $args )
      *  Initial variable checking / setup
      */
     if (isset($obfuscate) && $obfuscate) {
-        $obfuscate_fileName = TRUE;
+        $obfuscate_fileName = true;
     } else {
-        $obfuscate_fileName = xarModVars::get('uploads','file.obfuscate-on-upload');
+        $obfuscate_fileName = xarModVars::get('uploads', 'file.obfuscate-on-upload');
     }
 
     if (!isset($savePath)) {
-        $savePath = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
+        $savePath = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
     }
 
     // if no port, use the default port (21)
@@ -66,7 +65,7 @@ function uploads_userapi_import_external_ftp( $args )
         }
     }
 
-// TODO: handle duplicates - cfr. prepare_uploads()
+    // TODO: handle duplicates - cfr. prepare_uploads()
 
     // Attempt to 'best guess' the mimeType
     $mimeType = xarModAPIFunc('mime', 'user', 'extension_to_mime', array('fileName' => basename($uri['path'])));
@@ -76,11 +75,11 @@ function uploads_userapi_import_external_ftp( $args )
 
     // Set the connection up to not terminate
     // the script if the user aborts
-    ignore_user_abort(TRUE);
+    ignore_user_abort(true);
 
     // Create a temporary file for storing
     // the contents of this new file
-    $tmpName = tempnam(NULL, 'xarul');
+    $tmpName = tempnam(null, 'xarul');
 
     // Set up the fileInfo array
     $fileInfo['fileName']     = basename($uri['path']);
@@ -90,17 +89,17 @@ function uploads_userapi_import_external_ftp( $args )
 
 
     if (!extension_loaded('ftp')) {
-        if (strtoupper(substr(PHP_OS, 0,3) == 'WIN')) {
+        if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) {
             if (!@dl('php_ftp.dll')) {
-                $ftpLoaded = FALSE;
+                $ftpLoaded = false;
             }
         } else {
             if (!@dl('ftp.so')) {
-                $ftpLoaded = FALSE;
+                $ftpLoaded = false;
             }
         }
     } else {
-        $ftpLoaded = TRUE;
+        $ftpLoaded = true;
     }
 
     // TODO: <rabbitt> Add fileSize checking for imported files. For those using the ftp extension
@@ -115,17 +114,24 @@ function uploads_userapi_import_external_ftp( $args )
         if (!$ftpId || !$result) {
             // if the connection failed unlink
             // the temporary file and log and return an exception
-            $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
-                          $uri['host'], $uri['port'], basename($uri['path']));
-            throw new Exception($msg);             
+            $msg = xarML(
+                'Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
+                $uri['host'],
+                $uri['port'],
+                basename($uri['path'])
+            );
+            throw new Exception($msg);
         } else {
-            if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
-                $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
-                            $uri['host'], $uri['port'], basename($uri['path']));
-                throw new Exception($msg);             
+            if (($tmpId = fopen($tmpName, 'wb')) === false) {
+                $msg = xarML(
+                    'Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
+                    $uri['host'],
+                    $uri['port'],
+                    basename($uri['path'])
+                );
+                throw new Exception($msg);
             } else {
-
-                if (!empty($mimeType) && substr($mimeType,0,4) == 'text') {
+                if (!empty($mimeType) && substr($mimeType, 0, 4) == 'text') {
                     $ftpMode = FTP_ASCII;
                 } else {
                     $ftpMode = FTP_BINARY;
@@ -135,30 +141,46 @@ function uploads_userapi_import_external_ftp( $args )
                 // until the file transfer has finished - hence, the
                 // much needed 'ignore_user_abort()' up above
                 if (!ftp_fget($ftpId, $tmpId, $uri['path'], $ftpMode)) {
-                    $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
-                                $uri['host'], $uri['port'], basename($uri['path']));
-                    throw new Exception($msg);             
+                    $msg = xarML(
+                        'Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
+                        $uri['host'],
+                        $uri['port'],
+                        basename($uri['path'])
+                    );
+                    throw new Exception($msg);
                 } else {
                     if (is_resource($tmpId)) {
                         @fclose($tmpId);
                     }
-                    $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file',
-                                                           array('fileName' => $fileInfo['fileLocation']));
+                    $fileInfo['fileType'] = xarModAPIFunc(
+                        'mime',
+                        'user',
+                        'analyze_file',
+                        array('fileName' => $fileInfo['fileLocation'])
+                    );
                     $fileInfo['size'] = filesize($tmpName);
                 }
             }
         }
-    // Otherwise we have to do it the "hard" way ;-)
+        // Otherwise we have to do it the "hard" way ;-)
     } else {
-        if (($ftpId = fopen($ftpURI, 'rb')) === FALSE) {
-            $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
-                          $uri['host'], $uri['port'], basename($uri['path']));
-            throw new Exception($msg);             
+        if (($ftpId = fopen($ftpURI, 'rb')) === false) {
+            $msg = xarML(
+                'Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
+                $uri['host'],
+                $uri['port'],
+                basename($uri['path'])
+            );
+            throw new Exception($msg);
         } else {
-            if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
-                $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
-                            $uri['host'], $uri['port'], basename($uri['path']));
-                throw new Exception($msg);             
+            if (($tmpId = fopen($tmpName, 'wb')) === false) {
+                $msg = xarML(
+                    'Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
+                    $uri['host'],
+                    $uri['port'],
+                    basename($uri['path'])
+                );
+                throw new Exception($msg);
             } else {
 
                 // Note that this is a -blocking- process - the connection will
@@ -171,24 +193,27 @@ function uploads_userapi_import_external_ftp( $args )
                     } else {
                         if (fwrite($tmpId, $data, strlen($data)) !== strlen($data)) {
                             $msg = xarML('Unable to write to temp file!');
-                            throw new Exception($msg);             
+                            throw new Exception($msg);
                             break;
                         }
                     }
-                } while (TRUE);
+                } while (true);
 
                 // if we haven't hit an exception, then go ahead and close everything up
                 if (xarCurrentErrorType() === XAR_NO_EXCEPTION) {
                     if (is_resource($tmpId)) {
                         @fclose($tmpId);
                     }
-                    $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file',
-                                                           array('fileName' => $fileInfo['fileLocation']));
+                    $fileInfo['fileType'] = xarModAPIFunc(
+                        'mime',
+                        'user',
+                        'analyze_file',
+                        array('fileName' => $fileInfo['fileLocation'])
+                    );
                     $fileInfo['fileSize'] = filesize($tmpName);
                 }
             }
         }
-
     }
 
     if (is_resource($tmpId)) {
@@ -204,11 +229,9 @@ function uploads_userapi_import_external_ftp( $args )
     }
 
     if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
-
         unlink($tmpName);
 
         while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
-
             $errorObj = xarCurrentError();
 
             if (is_object($errorObj)) {
@@ -227,7 +250,6 @@ function uploads_userapi_import_external_ftp( $args )
 
             // Clear the exception because we've handled it already
             xarErrorHandled();
-
         }
     } else {
         $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
@@ -236,8 +258,12 @@ function uploads_userapi_import_external_ftp( $args )
         $savePath = preg_replace('/\/$/', '', $savePath);
 
         if ($obfuscate_fileName) {
-            $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name',
-                                        array('fileName' => $fileInfo['fileName']));
+            $obf_fileName = xarModAPIFunc(
+                'uploads',
+                'user',
+                'file_obfuscate_name',
+                array('fileName' => $fileInfo['fileName'])
+            );
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         } else {
             // if we're not obfuscating it,
@@ -245,9 +271,6 @@ function uploads_userapi_import_external_ftp( $args )
             $fileInfo['fileDest'] = $savePath . '/' . xarVarPrepForOS($fileInfo['fileName']);
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
-
     }
     return array($fileInfo['fileLocation'] => $fileInfo);
 }
-
-?>

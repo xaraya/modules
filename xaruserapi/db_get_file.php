@@ -39,7 +39,7 @@
  * @throws BAD_PARAM
  */
 
-function uploads_userapi_db_get_file( $args )
+function uploads_userapi_db_get_file($args)
 {
     extract($args);
 
@@ -47,21 +47,27 @@ function uploads_userapi_db_get_file( $args )
         !isset($userId)  && !isset($fileType) && !isset($store_type) && !isset($fileHash) &&
         !isset($fileLocationMD5) && empty($getnext) && empty($getprev)) {
         $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'uploads');
-        throw new Exception($msg);             
+        throw new Exception($msg);
     }
 
     $where = array();
 
     if (!isset($inverse)) {
-        $inverse = FALSE;
+        $inverse = false;
     }
 
     if (isset($fileId)) {
         if (is_array($fileId)) {
             // ignore IDs which are not numbers, like filenames
             $ids = array();
-            foreach ($fileId as $id) if (is_numeric($id)) $ids[] = $id;
-            if (empty($ids)) return array();
+            foreach ($fileId as $id) {
+                if (is_numeric($id)) {
+                    $ids[] = $id;
+                }
+            }
+            if (empty($ids)) {
+                return array();
+            }
             $where[] = 'xar_fileEntry_id IN (' . implode(',', $ids) . ')';
         } elseif (!empty($fileId) && is_numeric($fileId)) {
             $where[] = "xar_fileEntry_id = $fileId";
@@ -103,7 +109,7 @@ function uploads_userapi_db_get_file( $args )
     }
 
     if (isset($fileLocation) && !empty($fileLocation)) {
-        if (strpos($fileLocation,'%') === FALSE) {
+        if (strpos($fileLocation, '%') === false) {
             $where[] = '(xar_location = ' . $dbconn->qstr($fileLocation) . ')';
         } else {
             $where[] = '(xar_location LIKE ' . $dbconn->qstr($fileLocation) . ')';
@@ -118,7 +124,7 @@ function uploads_userapi_db_get_file( $args )
     // Note: the MD5 hash of the file location is used by derivatives in the images module
     if (isset($fileLocationMD5) && !empty($fileLocationMD5)) {
         if ($dbconn->databaseType == 'sqlite') {
-        // CHECKME: verify this syntax for SQLite !
+            // CHECKME: verify this syntax for SQLite !
             $where[] = "(php('md5',xar_location) = " . $dbconn->qstr($fileLocationMD5) . ')';
         } else {
             $where[] = '(md5(xar_location) = ' . $dbconn->qstr($fileLocationMD5) . ')';
@@ -154,7 +160,7 @@ function uploads_userapi_db_get_file( $args )
     }
 
     if (count($where) > 1) {
-        if ($inverse)  {
+        if ($inverse) {
             $where = implode(' OR ', $where);
         } else {
             $where = implode(' AND ', $where);
@@ -178,13 +184,19 @@ function uploads_userapi_db_get_file( $args )
                    xar_extrainfo
               FROM $fileEntry_table ";
     // Put the category id to work
-    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
+    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories', 'uploads', 1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                      array('modid' => xarMod::getRegID('uploads'),
+        $categoriesdef = xarModAPIFunc(
+            'categories',
+            'user',
+            'leftjoin',
+            array('modid' => xarMod::getRegID('uploads'),
                                             'itemtype' => 1,
-                                            'catid' => $catid));
-        if (empty($categoriesdef)) return;
+                                            'catid' => $catid)
+        );
+        if (empty($categoriesdef)) {
+            return;
+        }
 
         // Add LEFT JOIN ... ON ... from categories_linkage
         $sql .= ' LEFT JOIN ' . $categoriesdef['table'];
@@ -200,7 +212,7 @@ function uploads_userapi_db_get_file( $args )
 
     $sql .= " WHERE $where";
 
-// FIXME: we need some indexes on xar_file_entry to make this more efficient
+    // FIXME: we need some indexes on xar_file_entry to make this more efficient
     if (empty($sort)) {
         $sort = '';
     }
@@ -258,7 +270,7 @@ function uploads_userapi_db_get_file( $args )
         $result =& $dbconn->Execute($sql);
     }
 
-    if (!$result)  {
+    if (!$result) {
         return;
     }
 
@@ -267,16 +279,16 @@ function uploads_userapi_db_get_file( $args )
         return array();
     }
 
-    $importDir = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
-    $uploadDir = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
+    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
+    $uploadDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
 
     // remove the '/' from the path
     $importDir = str_replace('/$', '', $importDir);
     $uploadDir = str_replace('/$', '', $uploadDir);
 
-    if(xarServer::getVar('PATH_TRANSLATED')) {
+    if (xarServer::getVar('PATH_TRANSLATED')) {
         $base_directory = dirname(realpath(xarServer::getVar('PATH_TRANSLATED')));
-    } elseif(xarServer::getVar('SCRIPT_FILENAME')) {
+    } elseif (xarServer::getVar('SCRIPT_FILENAME')) {
         $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
     } else {
         $base_directory = './';
@@ -293,7 +305,7 @@ function uploads_userapi_db_get_file( $args )
         $fileInfo['fileId']        = $row['xar_fileentry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
         if (!isset($usercache[$fileInfo['userId']])) {
-            $usercache[$fileInfo['userId']] = xarUserGetVar('name',$fileInfo['userId']);
+            $usercache[$fileInfo['userId']] = xarUserGetVar('name', $fileInfo['userId']);
         }
         $fileInfo['userName']      = $usercache[$fileInfo['userId']];
         $fileInfo['fileName']      = $row['xar_filename'];
@@ -331,7 +343,7 @@ function uploads_userapi_db_get_file( $args )
         $fileInfo['fileHashName']     = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
         $fileInfo['fileHashRealName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileName'];
 
-        switch($fileInfo['fileStatus']) {
+        switch ($fileInfo['fileStatus']) {
             case _UPLOADS_STATUS_REJECTED:
                 $fileInfo['fileStatusName'] = xarML('Rejected');
                 break;
@@ -367,5 +379,3 @@ function uploads_userapi_db_get_file( $args )
 
     return $fileList;
 }
-
-?>
