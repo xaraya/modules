@@ -4,7 +4,5 @@
     {
         $data['items'] = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_MISSING_FROM_ACTIVE)));
         xarTpl::setPageTemplateName('admin');
-        return $data; 
+        return $data;
     }
-
-?>

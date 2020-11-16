@@ -16,4 +16,3 @@
             array('mask' => 'AdminXarayatesting', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Xarayatesting configuration'), 'label' => xarML('Modify Config')),
         );
     }
-?>

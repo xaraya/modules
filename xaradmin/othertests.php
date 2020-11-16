@@ -5,14 +5,14 @@
  *
  * Runner for the unit testing framework
  *
- * It is assumed that this file runs with the 
+ * It is assumed that this file runs with the
  * current directory set to the directory which
  * contains the 'xartests' subdirectory
  *
  * @package quality
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage testing
  * @author Marcel van der Boom <marcel@xaraya.com>
  * @author Jan Schrage <jan@xaraya.com>
@@ -28,5 +28,3 @@
         $data['tests'] = $picker->getOptions();
         return $data;
     }
-
-?>

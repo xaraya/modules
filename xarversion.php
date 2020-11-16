@@ -34,4 +34,3 @@ $modversion['dependencyinfo'] = array(
 //                                      14  => 'comments',
 //                                      30046  => 'listings',
                                       );
-?>

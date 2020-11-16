@@ -3,23 +3,20 @@
     $suite = new xarTestSuite('MLS system tests');
     $suites[] = $suite;
 
-    class testMLFunction extends xarTestCase 
+    class testMLFunction extends xarTestCase
     {
-
-        function testEmptyMLString() 
+        public function testEmptyMLString()
         {
             $out = xarML('');
             $expected='';
-            return $this->AssertSame($out,$expected,'Return empty string on empty input for xarML');
+            return $this->AssertSame($out, $expected, 'Return empty string on empty input for xarML');
         }
-
     }
-    $suite->AddTestCase('testMLFunction','xarML function tests');
+    $suite->AddTestCase('testMLFunction', 'xarML function tests');
 
-    class testMLSSystemTags extends xarTestCase 
+    class testMLSSystemTags extends xarTestCase
     {
-
-        function setup() 
+        public function setup()
         {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
@@ -27,7 +24,7 @@
             $this->myBLC = XarayaCompiler::instance();
         }
 
-        function testGeneralTagClosedForm() 
+        public function testGeneralTagClosedForm()
         {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:mlstring>foo</xar:mlstring>";
@@ -36,11 +33,9 @@
             $out = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($expected);
             $this->actual   = "Hex ".bin2hex($out);
-    //        echo "Expected: " . $expected;
-    //        echo "Actual: " . $out;
-            return $this->assertSame($out,$expected,"Text content inside the mlstring tag is translatable");
+            //        echo "Expected: " . $expected;
+            //        echo "Actual: " . $out;
+            return $this->assertSame($out, $expected, "Text content inside the mlstring tag is translatable");
         }
     }
-    $suite->AddTestCase('testMLSSystemTags','ML tag tests');
-
-?>
+    $suite->AddTestCase('testMLSSystemTags', 'ML tag tests');

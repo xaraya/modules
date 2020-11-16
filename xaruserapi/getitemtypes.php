@@ -9,10 +9,10 @@
 
         $itemtypes[1] = array('label' => xarML('Native Xarayatesting'),
                               'title' => xarML('View Xarayatesting'),
-                              'url'   => xarModURL('xarayatesting','user','view')
+                              'url'   => xarModURL('xarayatesting', 'user', 'view')
                              );
 
-        $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30073, 'native' => false));
+        $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30073, 'native' => false));
 
         /* TODO: activate this code when we move to php5
         $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
@@ -21,8 +21,11 @@
         */
 
         $types = array();
-        foreach ($itemtypes as $key => $value) $types[$key] = $value;
-        foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
+        foreach ($itemtypes as $key => $value) {
+            $types[$key] = $value;
+        }
+        foreach ($extensionitemtypes as $key => $value) {
+            $types[$key] = $value;
+        }
         return $types;
     }
-?>

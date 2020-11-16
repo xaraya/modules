@@ -5,11 +5,11 @@
  */
     function xarayatesting_admin_new()
     {
-        if (!xarSecurityCheck('AddXarayatesting')) return;
+        if (!xarSecurityCheck('AddXarayatesting')) {
+            return;
+        }
 
-        $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'xarayatesting'));
+        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'xarayatesting'));
         $data['tplmodule'] = 'xarayatesting';
         return $data;
     }
-
-?>

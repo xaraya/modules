@@ -3,148 +3,137 @@
     $suite = new xarTestSuite('Themes module tests');
     $suites[] = $suite;
 
-    class testThemesAdminActivate extends xarTestCase 
+    class testThemesAdminActivate extends xarTestCase
     {
-
-        function testActivateNoParams() 
+        public function testActivateNoParams()
         {
-            try{
+            try {
                 $this->expected = '[exception]';
-                $this->actual   = xarMod::apiFunc('themes','admin','activate');
-                $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
+                $this->actual   = xarMod::apiFunc('themes', 'admin', 'activate');
+                $res = $this->assertSame($this->actual, $this->expected, "Call with no params throws an exception");
                 return $res;
-            } catch(Exception $e) {
-                return $this->assertTrue(true,"Call with no params throws an exception");
+            } catch (Exception $e) {
+                return $this->assertTrue(true, "Call with no params throws an exception");
             }
         }
 
-        function testActivate() 
+        public function testActivate()
         {
             $this->expected = true;
-            $this->actual = xarMod::apiFunc('themes','admin','activate',array('regid' => 21));
-            return $this->AssertTrue($this->actual,'Call with a valid theme id param returns true');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'activate', array('regid' => 21));
+            return $this->AssertTrue($this->actual, 'Call with a valid theme id param returns true');
         }
 
-        function testActivateBadParam() 
+        public function testActivateBadParam()
         {
-            try{
+            try {
                 $this->expected = '[exception]';
-                $this->actual   = xarMod::apiFunc('themes','admin','activate',array('regid' => 30073));
-                $res = $this->assertSame($this->actual,$this->expected,"Call with an invalid theme id param throws an exception");
+                $this->actual   = xarMod::apiFunc('themes', 'admin', 'activate', array('regid' => 30073));
+                $res = $this->assertSame($this->actual, $this->expected, "Call with an invalid theme id param throws an exception");
                 return $res;
-            } catch(Exception $e) {
-                return $this->assertTrue(true,"Call with an invalid theme id param throws an exception");
+            } catch (Exception $e) {
+                return $this->assertTrue(true, "Call with an invalid theme id param throws an exception");
             }
         }
-
     }
-    $suite->AddTestCase('testThemesAdminActivate','activate (admin) function tests');
+    $suite->AddTestCase('testThemesAdminActivate', 'activate (admin) function tests');
 
-    class testThemesAdminGetmenulinks extends xarTestCase 
+    class testThemesAdminGetmenulinks extends xarTestCase
     {
-
-        function testGetmenulnks() 
+        public function testGetmenulnks()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getmenulinks');
-            return $this->AssertTrue(is_array($this->actual),'Call with no params returns an array');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getmenulinks');
+            return $this->AssertTrue(is_array($this->actual), 'Call with no params returns an array');
         }
 
-        function testGetmenulnksWithParams() 
+        public function testGetmenulnksWithParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarMod::apiFunc('themes','admin','getmenulinks');
-            $this->actual = xarMod::apiFunc('themes','admin','getmenulinks', $args);
-            return $this->AssertSame($this->actual,$this->expected,'Call with params returns the same array as without');
+            $this->expected = xarMod::apiFunc('themes', 'admin', 'getmenulinks');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getmenulinks', $args);
+            return $this->AssertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
         }
-
     }
-    $suite->AddTestCase('testThemesAdminGetmenulinks','getMenuLinks (admin) function tests');
+    $suite->AddTestCase('testThemesAdminGetmenulinks', 'getMenuLinks (admin) function tests');
 
-    class testThemesAdminCheckMissing extends xarTestCase 
+    class testThemesAdminCheckMissing extends xarTestCase
     {
-
-        function testCheckMissing() 
+        public function testCheckMissing()
         {
             $this->expected = true;
-            $this->actual = xarMod::apiFunc('themes','admin','checkmissing');
-            return $this->AssertTrue($this->actual,'Call with no params returns true');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'checkmissing');
+            return $this->AssertTrue($this->actual, 'Call with no params returns true');
         }
         
         // More tests needed here
-
     }
-    $suite->AddTestCase('testThemesAdminCheckMissing','checkmissing (admin) function tests');
+    $suite->AddTestCase('testThemesAdminCheckMissing', 'checkmissing (admin) function tests');
 
     class testThemesAdminGetDBThemes extends xarTestCase
     {
-
-        function testGetDBThemes() 
+        public function testGetDBThemes()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getdbthemes');
-            return $this->AssertTrue(is_array($this->actual),'Call with no params returns an array');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getdbthemes');
+            return $this->AssertTrue(is_array($this->actual), 'Call with no params returns an array');
         }
     }
-    $suite->AddTestCase('testThemesAdminGetDBThemes','getdbthemes (admin) function tests');
+    $suite->AddTestCase('testThemesAdminGetDBThemes', 'getdbthemes (admin) function tests');
 
-    class testThemesAdminGetFileThemes extends xarTestCase 
+    class testThemesAdminGetFileThemes extends xarTestCase
     {
-
-        function testGetFileThemes() 
+        public function testGetFileThemes()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getfilethemes');
-            return $this->AssertTrue(is_array($this->actual),'Call with no params returns an array');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getfilethemes');
+            return $this->AssertTrue(is_array($this->actual), 'Call with no params returns an array');
         }
     }
-    $suite->AddTestCase('testThemesAdminGetFileThemes','getfilethemes (admin) function tests');
+    $suite->AddTestCase('testThemesAdminGetFileThemes', 'getfilethemes (admin) function tests');
 
-    class testThemesAdminGetList extends xarTestCase 
+    class testThemesAdminGetList extends xarTestCase
     {
-
-        function testGetList() 
+        public function testGetList()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getlist');
-            return $this->AssertTrue(is_array($this->actual),'Call with no params returns an array');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getlist');
+            return $this->AssertTrue(is_array($this->actual), 'Call with no params returns an array');
         }
-        function testGetListWithParams() 
+        public function testGetListWithParams()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getlist',array(array(),2,3,'class'));
-            return $this->AssertTrue(is_array($this->actual),'Call with valid params returns an array');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getlist', array(array(),2,3,'class'));
+            return $this->AssertTrue(is_array($this->actual), 'Call with valid params returns an array');
         }
-        function testGetListWithBadFilterParam() 
+        public function testGetListWithBadFilterParam()
         {
-            try{
+            try {
                 $this->expected = '[exception]';
-                $this->actual   = xarMod::apiFunc('themes','admin','activate',array('filter' => 'bar'));
-                $res = $this->assertSame($this->actual,$this->expected,"Call with an invalid filter  param throws an exception");
+                $this->actual   = xarMod::apiFunc('themes', 'admin', 'activate', array('filter' => 'bar'));
+                $res = $this->assertSame($this->actual, $this->expected, "Call with an invalid filter  param throws an exception");
                 return $res;
-            } catch(Exception $e) {
-                return $this->assertTrue(true,"Call with an invalid filter param throws an exception");
+            } catch (Exception $e) {
+                return $this->assertTrue(true, "Call with an invalid filter param throws an exception");
             }
         }
-        function testGetListWithBadStartnumParam()
+        public function testGetListWithBadStartnumParam()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getlist',array(array(),'bar',3,'class'));
-            return $this->AssertTrue(is_array($this->actual),'Call with a bad startnum param returns an array?');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getlist', array(array(),'bar',3,'class'));
+            return $this->AssertTrue(is_array($this->actual), 'Call with a bad startnum param returns an array?');
         }
-        function testGetListWithBadNumitemsParam() 
+        public function testGetListWithBadNumitemsParam()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getlist',array(array(),1,'bar','class'));
-            return $this->AssertTrue(is_array($this->actual),'Call with a bad numitems param returns an array?');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getlist', array(array(),1,'bar','class'));
+            return $this->AssertTrue(is_array($this->actual), 'Call with a bad numitems param returns an array?');
         }
-        function testGetListWithBadOrderParam() 
+        public function testGetListWithBadOrderParam()
         {
             $this->expected = '[array]';
-            $this->actual = xarMod::apiFunc('themes','admin','getlist',array(array(),2,3,'foobar'));
-            return $this->AssertTrue(is_array($this->actual),'Call with a bad order param returns an array?');
+            $this->actual = xarMod::apiFunc('themes', 'admin', 'getlist', array(array(),2,3,'foobar'));
+            return $this->AssertTrue(is_array($this->actual), 'Call with a bad order param returns an array?');
         }
     }
-    $suite->AddTestCase('testThemesAdminGetList','getlist (admin) function tests');
-
-?>
+    $suite->AddTestCase('testThemesAdminGetList', 'getlist (admin) function tests');

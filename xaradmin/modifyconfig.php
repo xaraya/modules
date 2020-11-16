@@ -9,11 +9,17 @@
     function xarayatesting_admin_modifyconfig()
     {
         // Security Check
-        if (!xarSecurityCheck('AdminXarayatesting')) return;
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarSecurityCheck('AdminXarayatesting')) {
+            return;
+        }
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+            return;
+        }
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
-        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'xarayatesting'));
         $data['module_settings']->setFieldList('items_per_page,');
         $data['module_settings']->getItem();
 
@@ -36,13 +42,13 @@
             case 'update':
                 // Confirm authorisation code
                 if (!xarSecConfirmAuthKey()) {
-                    return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-                }        
+                    return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                }
                 switch ($data['tab']) {
                     case 'general':
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {
-                            return xarTplModule('dynamicdata','admin','modifyconfig', $data);        
+                            return xarTplModule('dynamicdata', 'admin', 'modifyconfig', $data);
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
@@ -59,4 +65,3 @@
         }
         return $data;
     }
-?>

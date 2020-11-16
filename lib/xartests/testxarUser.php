@@ -2,10 +2,12 @@
 
 sys::import('modules.xarayatesting.class.xarUnitTest');
 
-class testxarUser extends xarTestCase {
-    var $myBLC;
+class testxarUser extends xarTestCase
+{
+    public $myBLC;
     
-    function setup() {
+    public function setup()
+    {
         include_once 'xarCore.php';
         include_once 'xarVar.php';
         include_once 'xarMLS.php';
@@ -16,14 +18,12 @@ class testxarUser extends xarTestCase {
         include_once 'xarServer.php';
     }
     
-    function testEmptyUserVar() {
-        return $this->assertNull(xarUserGetVar(''),"Passing empty user var should return null");
+    public function testEmptyUserVar()
+    {
+        return $this->assertNull(xarUserGetVar(''), "Passing empty user var should return null");
     }
-
 }
 
 $tmp = new xarTestSuite('User system tests');
-$tmp->AddTestCase('testxarUser','Testing xarUser.php');
+$tmp->AddTestCase('testxarUser', 'Testing xarUser.php');
 $suites[] = $tmp;
-
-?>
