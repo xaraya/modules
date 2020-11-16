@@ -32,7 +32,7 @@ function html_adminapi_deletetype($args)
     }
 
     // The user API function is called
-    $type = xarModAPIFunc(
+    $type = xarMod::apiFunc(
         'html',
         'user',
         'gettype',
@@ -45,7 +45,7 @@ function html_adminapi_deletetype($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ManageHTML')) {
+    if (!xarSecurity::check('ManageHTML')) {
         return;
     }
 
@@ -80,7 +80,7 @@ function html_adminapi_deletetype($args)
         xarConfigVars::set(null, 'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a tag type
-    xarModCallHooks('item', 'deletetype', $id, '');
+    xarModHooks::call('item', 'deletetype', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

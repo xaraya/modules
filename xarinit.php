@@ -54,7 +54,7 @@ function html_init()
     );
 
     // Create table
-    $query = xarDBCreateTable($htmltable, $fields);
+    $query = xarTableDDL::createTable($htmltable, $fields);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
@@ -66,7 +66,7 @@ function html_init()
                    'unique'    => true);
 
     // Create index
-    $query = xarDBCreateIndex($htmltable, $index);
+    $query = xarTableDDL::createIndex($htmltable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
@@ -89,7 +89,7 @@ function html_init()
     );
 
     // Create table
-    $query = xarDBCreateTable($htmltypestable, $fields);
+    $query = xarTableDDL::createTable($htmltypestable, $fields);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
@@ -100,7 +100,7 @@ function html_init()
                    'fields'    => array('type'),
                    'unique'    => true);
 
-    $query = xarDBCreateIndex($htmltypestable, $index);
+    $query = xarTableDDL::createIndex($htmltypestable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
         return;
@@ -247,14 +247,14 @@ function html_init()
     }
 
     // Register Masks
-    xarRegisterMask('ReadHTML', 'All', 'html', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditHTML', 'All', 'html', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddHTML', 'All', 'html', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManageHTML', 'All', 'html', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminHTML', 'All', 'html', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadHTML', 'All', 'html', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('EditHTML', 'All', 'html', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddHTML', 'All', 'html', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageHTML', 'All', 'html', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminHTML', 'All', 'html', 'All', 'All', 'ACCESS_ADMIN');
 
     // Set up module hooks
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'transform-input',
         'API',
@@ -265,7 +265,7 @@ function html_init()
         return;
     }
 
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'transform',
         'API',
@@ -307,7 +307,7 @@ function html_upgrade($oldversion)
         case '1.0.0':
             // Code to upgrade from version 1.0 goes here
             // Set up module hooks
-            if (!xarModRegisterHook(
+            if (!xarModHooks::register(
                 'item',
                 'transform-input',
                 'API',
@@ -318,7 +318,7 @@ function html_upgrade($oldversion)
                 return;
             }
 
-            if (!xarModRegisterHook(
+            if (!xarModHooks::register(
                 'item',
                 'transform',
                 'API',
@@ -375,7 +375,7 @@ function html_upgrade($oldversion)
             );
 
             // Create table
-            $query = xarDBCreateTable($htmltypestable, $fields);
+            $query = xarTableDDL::createTable($htmltypestable, $fields);
             $result =& $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -386,7 +386,7 @@ function html_upgrade($oldversion)
                            'fields'    => array('type'),
                            'unique'    => true);
 
-            $query = xarDBCreateIndex($htmltypestable, $index);
+            $query = xarTableDDL::createIndex($htmltypestable, $index);
             $result =& $dbconn->Execute($query);
 
             // Insert HTML types into xar_htmltypes table
@@ -412,7 +412,7 @@ function html_upgrade($oldversion)
             $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'id');
 
             // Add the column 'tid' to the xar_html table
-             $query = xarDBAlterTable(
+             $query = xarTableDDL::alterTable(
                  $htmltable,
                  array('command' => 'add',
                                            'field' => 'tid',
@@ -428,7 +428,7 @@ function html_upgrade($oldversion)
             // Drop current index
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_1',
                            'fields'    => array('tag'));
-            $query = xarDBDropIndex($htmltable, $index);
+            $query = xarTableDDL::dropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -449,7 +449,7 @@ function html_upgrade($oldversion)
                            'unique'    => true);
 
             // Create index
-            $query = xarDBCreateIndex($htmltable, $index);
+            $query = xarTableDDL::createIndex($htmltable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -489,8 +489,8 @@ function html_delete()
 
     // Remove module variables
     xarModVars::delete('html', 'itemsperpage');
-    xarRemoveMasks('html');
-    xarRemoveInstances('html');
+    xarMasks::removemasks('html');
+    xarPrivileges::removeInstances('html');
 
     // Get the database information
     $dbconn = xarDB::getConn();
@@ -498,7 +498,7 @@ function html_delete()
     sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['html']);
+    $query = xarTableDDL::dropTable($xartable['html']);
     if (empty($query)) {
         return;
     } // throw back
@@ -510,7 +510,7 @@ function html_delete()
     }
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['htmltypes']);
+    $query = xarTableDDL::dropTable($xartable['htmltypes']);
     if (empty($query)) {
         return;
     } // throw back

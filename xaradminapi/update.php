@@ -41,7 +41,7 @@ function html_adminapi_update($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('EditHTML')) {
+    if (!xarSecurity::check('EditHTML')) {
         return;
     }
     // Get datbase setup
@@ -58,7 +58,7 @@ function html_adminapi_update($args)
         return;
     }
     // Let any hooks know that we have deleted a html tag
-    xarModCallHooks('item', 'update', $id, '');
+    xarModHooks::call('item', 'update', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

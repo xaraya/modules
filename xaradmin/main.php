@@ -21,10 +21,10 @@
 function html_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditHTML')) {
+    if (!xarSecurity::check('EditHTML')) {
         return;
     }
-    xarController::redirect(xarModURL('html', 'admin', 'set'));
+    xarController::redirect(xarController::URL('html', 'admin', 'set'));
     // Return the template variables defined in this function
     return true;
 }

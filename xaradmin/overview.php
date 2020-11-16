@@ -17,14 +17,14 @@
  * Only used if you actually supply an overview link in your adminapi menulink function
  * and used to call the template that provides display of the overview
  *
- * @returns array xarTplModule with $data containing template data
+ * @returns array xarTpl::module with $data containing template data
  * @return array containing the menulinks for the overview item on the main manu
  * @since 2 Oct 2005
  */
 function html_admin_overview()
 {
     /* Security Check */
-    if (!xarSecurityCheck('AdminHTML')) {
+    if (!xarSecurity::check('AdminHTML')) {
         return;
     }
 
@@ -34,5 +34,5 @@ function html_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('html', 'admin', 'main', $data, 'main');
+    return xarTpl::module('html', 'admin', 'main', $data, 'main');
 }

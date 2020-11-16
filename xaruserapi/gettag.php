@@ -33,7 +33,7 @@ function html_userapi_gettag($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ReadHTML')) {
+    if (!xarSecurity::check('ReadHTML')) {
         return;
     }
 

@@ -32,7 +32,7 @@ function html_userapi_getalltags($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ReadHTML')) {
+    if (!xarSecurity::check('ReadHTML')) {
         return;
     }
 

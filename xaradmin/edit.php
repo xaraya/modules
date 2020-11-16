@@ -22,23 +22,23 @@
 function html_admin_edit()
 {
     // Security Check
-    if (!xarSecurityCheck('EditHTML')) {
+    if (!xarSecurity::check('EditHTML')) {
         return;
     }
 
     // Get parameters from input
-    if (!xarVarFetch('id', 'int:0:', $id)) {
+    if (!xarVar::fetch('id', 'int:0:', $id)) {
         return;
     }
-    if (!xarVarFetch('tag', 'str:1:', $tag, '')) {
+    if (!xarVar::fetch('tag', 'str:1:', $tag, '')) {
         return;
     }
-    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) {
+    if (!xarVar::fetch('confirm', 'int:0:1', $confirm, 0)) {
         return;
     }
 
     // Get the current html tag
-    $html = xarModAPIFunc(
+    $html = xarMod::apiFunc(
         'html',
         'user',
         'gettag',
@@ -57,12 +57,12 @@ function html_admin_edit()
         $data['id'] = $id;
 
         // Data to display in the template
-        $data['tag'] = xarVarPrepForDisplay($html['tag']);
+        $data['tag'] = xarVar::prepForDisplay($html['tag']);
         $data['allowed'] = $html['allowed'];
         $data['editbutton'] = xarML('Submit');
 
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
         // Return the template variables defined in this function
         return $data;
@@ -71,17 +71,17 @@ function html_admin_edit()
     // If we get here it means that the user has confirmed the action
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         $msg = xarML(
             'Invalid authorization key for editing #(1) HTML tag #(2)',
             'HTML',
-            xarVarPrepForDisplay($id)
+            xarVar::prepForDisplay($id)
         );
         return xarResponse::notFound();
     }
 
     // Modify the html tag
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'html',
         'admin',
         'edit',
@@ -94,7 +94,7 @@ function html_admin_edit()
     xarSession::setVar('statusmsg', xarML('HTML Tag Updated'));
 
     // Redirect
-    xarController::redirect(xarModURL('html', 'admin', 'set'));
+    xarController::redirect(xarController::URL('html', 'admin', 'set'));
 
     // Return
     return true;

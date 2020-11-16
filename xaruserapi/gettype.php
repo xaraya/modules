@@ -35,7 +35,7 @@ function html_userapi_gettype($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ReadHTML')) {
+    if (!xarSecurity::check('ReadHTML')) {
         return;
     }
 

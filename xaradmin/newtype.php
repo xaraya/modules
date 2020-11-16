@@ -20,11 +20,11 @@
 function html_admin_newtype()
 {
     // Security Check
-    if (!xarSecurityCheck('AddHTML')) {
+    if (!xarSecurity::check('AddHTML')) {
         return;
     }
     
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['createbutton'] = xarML('Create Tag Type');
 
     // Include 'formcheck' JavaScript.

@@ -43,7 +43,7 @@ function html_adminapi_createtype($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('AddHTML')) {
+    if (!xarSecurity::check('AddHTML')) {
         return;
     }
 
@@ -87,7 +87,7 @@ function html_adminapi_createtype($args)
     // Let any hooks know that we have created a new tag type
     $item['module'] = 'html';
     $item['itemid'] = $id;
-    xarModCallHooks('item', 'createtype', $id, $item);
+    xarModHooks::call('item', 'createtype', $id, $item);
     // Return the id of the newly created tag to the calling process
     return $id;
 }

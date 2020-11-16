@@ -25,23 +25,23 @@
 function html_admin_create($args)
 {
     // Get parameters from input
-    if (!xarVarFetch('tag', 'str:1:', $tag, '')) {
+    if (!xarVar::fetch('tag', 'str:1:', $tag, '')) {
         return;
     }
-    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) {
+    if (!xarVar::fetch('tagtype', 'str:1:', $tagtype, '')) {
         return;
     }
-    if (!xarVarFetch('allowed', 'int:0:', $allowed, 0)) {
+    if (!xarVar::fetch('allowed', 'int:0:', $allowed, 0)) {
         return;
     }
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
     // Security Check
-    if (!xarSecurityCheck('AddHTML')) {
+    if (!xarSecurity::check('AddHTML')) {
         return;
     }
 
@@ -52,7 +52,7 @@ function html_admin_create($args)
     }
 
     // The API function is called
-    $id = xarModAPIFunc(
+    $id = xarMod::apiFunc(
         'html',
         'admin',
         'create',
@@ -61,7 +61,7 @@ function html_admin_create($args)
                                'allowed' => $allowed)
     );
 
-    xarController::redirect(xarModURL('html', 'admin', 'set'));
+    xarController::redirect(xarController::URL('html', 'admin', 'set'));
 
     // Return
     return true;

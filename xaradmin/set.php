@@ -25,15 +25,15 @@ function html_admin_set()
 
     // Specify some labels for display
     $data['submitlabel'] = xarML('Submit');
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     // Security Check
-    if (!xarSecurityCheck('AdminHTML')) {
+    if (!xarSecurity::check('AdminHTML')) {
         return;
     }
 
     // The user API function is called.
-    $allowed = xarModAPIFunc(
+    $allowed = xarMod::apiFunc(
         'html',
         'user',
         'getalltags'
@@ -46,8 +46,8 @@ function html_admin_set()
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($allowed); $idx++) {
-        if (xarSecurityCheck('EditHTML')) {
-            $allowed[$idx]['editurl'] = xarModURL(
+        if (xarSecurity::check('EditHTML')) {
+            $allowed[$idx]['editurl'] = xarController::URL(
                 'html',
                 'admin',
                 'edit',
@@ -57,8 +57,8 @@ function html_admin_set()
             $allowed[$idx]['editurl'] = '';
         }
 
-        if (xarSecurityCheck('ManageHTML')) {
-            $allowed[$idx]['deleteurl'] = xarModURL(
+        if (xarSecurity::check('ManageHTML')) {
+            $allowed[$idx]['deleteurl'] = xarController::URL(
                 'html',
                 'admin',
                 'delete',

@@ -21,15 +21,15 @@
 function html_admin_new()
 {
     // Security Check
-    if (!xarSecurityCheck('AddHTML')) {
+    if (!xarSecurity::check('AddHTML')) {
         return;
     }
     
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['createbutton'] = xarML('Create Tag');
 
     // Get tag types
-    $types = xarModAPIFunc(
+    $types = xarMod::apiFunc(
         'html',
         'user',
         'getalltypes'
