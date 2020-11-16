@@ -17,7 +17,9 @@
  */
     function realms_admin_view_realms($args)
     {
-        if (!xarSecurityCheck('ManageRealms')) return;
+        if (!xarSecurityCheck('ManageRealms')) {
+            return;
+        }
 
         // Get the object containing the members
         $data['realms'] = DataObjectMaster::getObjectList(array('name' => 'realms_realms'));
@@ -25,8 +27,7 @@
         // Kludge
         sys::import('xaraya.structures.query');
         $q = new Query('SELECT');
-        $q->eq('realms.state',3);
+        $q->eq('realms.state', 3);
         $data['conditions'] = $q;
         return $data;
     }
-?>

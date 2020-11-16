@@ -16,7 +16,7 @@
     $infoid = 'realm_ids';
     
     // We already have the realm ids, bail
-    if(!xarCoreCache::isCached($cacheKey,$infoid)) {
+    if (!xarCoreCache::isCached($cacheKey, $infoid)) {
 
         // Get all the realms we've registered
         sys::import('modules.realms.xartables');
@@ -24,17 +24,18 @@
         $xartable =& xarDB::getTables();
         sys::import('xaraya.structures.query');
         $q = new Query('SELECT');
-        $q->addtable($xartable['realms_members'],'rm');
-        $q->addtable($xartable['roles'],'r');
-        $q->join('r.id','rm.role_id');
+        $q->addtable($xartable['realms_members'], 'rm');
+        $q->addtable($xartable['roles'], 'r');
+        $q->join('r.id', 'rm.role_id');
         $q->eq('r.id', xarUserGetVar('id'));
         $q->addfield('rm.realm_id AS realm_id');
         
         // CHECKME: is returning false on no success a good idea?
-        if (!$q->run()) return false;
+        if (!$q->run()) {
+            return false;
+        }
         $result = $q->output();
         
         // Check whether one of the parent roles is a realm
-        xarCoreCache::setCached($cacheKey,$infoid,$result);
+        xarCoreCache::setCached($cacheKey, $infoid, $result);
     }
-?>

@@ -16,17 +16,17 @@ class Member extends DataObject
 {
 
 #---------------------------------------------------------
-# Constructor
+    # Constructor
 #
-    function __construct(DataObjectDescriptor $descriptor)
+    public function __construct(DataObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
     }
 
-#---------------------------------------------------------
-# Create, update, delete, purge
+    #---------------------------------------------------------
+    # Create, update, delete, purge
 #
-    function createItem(Array $args = array())
+    public function createItem(array $args = array())
     {
         // If the flag is set not to link, remove the roles source from this object
         if ($this->properties['role_link']->value) {
@@ -45,14 +45,14 @@ class Member extends DataObject
             $roleid = $roleobject->createItem($fields);
             $this->properties['role_id']->value = $roleid;
         }
-        // Create the member item 
+        // Create the member item
 //        echo $this->properties['name']->value;exit;
         $itemid = parent::createItem($args);
 
         return $itemid;
     }
 
-    function updateItem(Array $args = array())
+    public function updateItem(array $args = array())
     {
         /* For now do not let the member update a role
         if ($this->properties['role_link']->value) {
@@ -70,15 +70,17 @@ class Member extends DataObject
         */
         $this->properties['role_link']->value = !empty($this->properties['role_id']->value);
         
-        // Update the member item 
+        // Update the member item
         $itemid = parent::updateItem($args);
 
         return $itemid;
     }
 
-    function deleteItem(Array $args = array())
+    public function deleteItem(array $args = array())
     {
-        if(!empty($args['itemid'])) $this->itemid = $args['itemid'];
+        if (!empty($args['itemid'])) {
+            $this->itemid = $args['itemid'];
+        }
 
         /* For now do not let the member update a role
         if ($this->properties['role_link']->value) {
@@ -96,5 +98,3 @@ class Member extends DataObject
         return $itemid;
     }
 }
-
-?>

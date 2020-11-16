@@ -20,11 +20,17 @@
     function realms_admin_modifyconfig()
     {
         // Security Check
-        if (!xarSecurityCheck('AdminRealms')) return;
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarSecurityCheck('AdminRealms')) {
+            return;
+        }
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+            return;
+        }
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
-        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'realms'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'realms'));
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
         $data['module_settings']->getItem();
 
@@ -46,21 +52,27 @@
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return;
+                }
                 switch ($data['tab']) {
                     case 'general':
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {
-                            return xarTplModule('realms','admin','modifyconfig', $data);        
+                            return xarTplModule('realms', 'admin', 'modifyconfig', $data);
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
                         
-                        if (!xarVarFetch('link_role','checkbox',$link_role,false,XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('default_realm','int',$default_realm,0,XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('link_role', 'checkbox', $link_role, false, XARVAR_NOT_REQUIRED)) {
+                            return;
+                        }
+                        if (!xarVarFetch('default_realm', 'int', $default_realm, 0, XARVAR_NOT_REQUIRED)) {
+                            return;
+                        }
 
-                        xarModVars::set('realms', 'link_role',$link_role);
-                        xarModVars::set('realms', 'default_realm',$default_realm);
+                        xarModVars::set('realms', 'link_role', $link_role);
+                        xarModVars::set('realms', 'default_realm', $default_realm);
                         break;
                     case 'tab2':
                         break;
@@ -70,7 +82,7 @@
                         break;
                 }
 
-                xarController::redirect(xarModURL('realms', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarController::redirect(xarModURL('realms', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
@@ -79,4 +91,3 @@
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-?>

@@ -18,7 +18,9 @@
 
     function realms_admin_main()
     {
-        if(!xarSecurityCheck('AdminRealms')) return;
+        if (!xarSecurityCheck('AdminRealms')) {
+            return;
+        }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
@@ -28,4 +30,3 @@
         // success
         return true;
     }
-?>

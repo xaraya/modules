@@ -28,7 +28,7 @@ class RealmProperty extends ObjectRefProperty
     public $initialization_refobject    = 'realms_realms';    // Name of the object we want to reference
     public $initialization_store_prop   = 'id';               // Name of the property we want to use for storage
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'realms';
@@ -36,30 +36,49 @@ class RealmProperty extends ObjectRefProperty
         $this->template = 'realm';
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = array())
     {
-        if (!isset($data['value'])) $data['value'] = $this->value;
+        if (!isset($data['value'])) {
+            $data['value'] = $this->value;
+        }
         $cacheKey ='Roles.User.' . xarSessionGetVar('role_id');
         $infoid = 'realm';
-        if (!empty($data['firstline'])) $this->initialization_firstline = $data['firstline'];
-        if (!empty($data['refobject'])) $this->initialization_refobject = $data['refobject'];
-        if (!empty($data['store_prop'])) $this->initialization_store_prop = $data['store_prop'];
-        $data['isrealmed'] = xarCoreCache::getCached($cacheKey,$infoid);
-        if ($data['isrealmed']) $data['value'] = $data['isrealmed']['id'];
+        if (!empty($data['firstline'])) {
+            $this->initialization_firstline = $data['firstline'];
+        }
+        if (!empty($data['refobject'])) {
+            $this->initialization_refobject = $data['refobject'];
+        }
+        if (!empty($data['store_prop'])) {
+            $this->initialization_store_prop = $data['store_prop'];
+        }
+        $data['isrealmed'] = xarCoreCache::getCached($cacheKey, $infoid);
+        if ($data['isrealmed']) {
+            $data['value'] = $data['isrealmed']['id'];
+        }
         return parent::showInput($data);
     }
 
-    public function showOutput(Array $args = array())
+    public function showOutput(array $args = array())
     {
-        if (!isset($data['value'])) $data['value'] = $this->value;
+        if (!isset($data['value'])) {
+            $data['value'] = $this->value;
+        }
         $cacheKey ='Roles.User.' . xarSessionGetVar('role_id');
         $infoid = 'realm';
-        if (!empty($data['firstline'])) $this->initialization_firstline = $data['firstline'];
-        if (!empty($data['refobject'])) $this->initialization_refobject = $data['refobject'];
-        if (!empty($data['store_prop'])) $this->initialization_store_prop = $data['store_prop'];
-        $data['isrealmed'] = xarCoreCache::getCached($cacheKey,$infoid);
-        if ($data['isrealmed']) $data['value'] = $data['isrealmed']['id'];
+        if (!empty($data['firstline'])) {
+            $this->initialization_firstline = $data['firstline'];
+        }
+        if (!empty($data['refobject'])) {
+            $this->initialization_refobject = $data['refobject'];
+        }
+        if (!empty($data['store_prop'])) {
+            $this->initialization_store_prop = $data['store_prop'];
+        }
+        $data['isrealmed'] = xarCoreCache::getCached($cacheKey, $infoid);
+        if ($data['isrealmed']) {
+            $data['value'] = $data['isrealmed']['id'];
+        }
         return parent::showOutput($data);
     }
 }
-?>

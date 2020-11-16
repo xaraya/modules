@@ -19,11 +19,11 @@
     function realms_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadRealms')) return;
+        if (!xarSecurityCheck('ReadRealms')) {
+            return;
+        }
 
 //        xarController::redirect(xarModURL('realms', 'user', 'view'));
         // success
         return array(); //true;
     }
-
-?>

@@ -17,16 +17,22 @@
  */
     function realms_admin_view_members($args)
     {
-        if (!xarSecurityCheck('ManageRealms')) return;
+        if (!xarSecurityCheck('ManageRealms')) {
+            return;
+        }
 
         // Define which object will be shown
-        if (!xarVarFetch('realm_id', 'int', $data['realm_id'], 0, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('realm_id', 'int', $data['realm_id'], 0, XARVAR_DONT_SET)) {
+            return;
+        }
 
         // Get the available dropdown options
         $realms = DataObjectMaster::getObjectList(array('name' => 'realms_realms'));
         $items = $realms->getItems();
         $options = array();
-        foreach ($items as $item) $options[] = array('id' => $item['id'], 'name' => $item['name']);
+        foreach ($items as $item) {
+            $options[] = array('id' => $item['id'], 'name' => $item['name']);
+        }
         $data['options'] = $options;
 
         // Get the object containing the members
@@ -35,9 +41,8 @@
         // Kludge
         sys::import('xaraya.structures.query');
         $q = new Query('SELECT');
-        $q->eq('members.state',3);
-        $q->eq('members.realm_id',$data['realm_id']);
+        $q->eq('members.state', 3);
+        $q->eq('members.realm_id', $data['realm_id']);
         $data['conditions'] = $q;
         return $data;
     }
-?>

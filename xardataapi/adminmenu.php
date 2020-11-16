@@ -14,4 +14,3 @@
             array('mask' => 'AdminRealms', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Realms configuration'), 'label' => xarML('Modify Config')),
         );
     }
-?>

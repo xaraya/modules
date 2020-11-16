@@ -23,18 +23,20 @@
     {
 
     # --------------------------------------------------------
-    #
-    # Set up tables
-    #
+        #
+        # Set up tables
+        #
         $q = new Query();
         $prefix = xarDB::getPrefix();
         
-    # --------------------------------------------------------
-    #
-    # Table structure for users
-    #
+        # --------------------------------------------------------
+        #
+        # Table structure for users
+        #
         $query = "DROP TABLE IF EXISTS " . $prefix . "_realms_realms";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_realms_realms (
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(254) NOT NULL default '', 
@@ -50,10 +52,14 @@
             PRIMARY KEY  (id), 
             KEY i_name (name) 
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_realms_members";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_realms_members (
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(254) NOT NULL default '', 
@@ -72,81 +78,85 @@
             KEY `email` (`email`),
             KEY `state` (`state`)
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
-    # --------------------------------------------------------
-    #
-    # Set up masks
-    #
-        xarRegisterMask('ViewRealms','All','realms','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadRealms','All','realms','All','All','ACCESS_READ');
-        xarRegisterMask('CommentRealms','All','realms','All','All','ACCESS_COMMENT');
-        xarRegisterMask('ModerateRealms','All','realms','All','All','ACCESS_MODERATE');
-        xarRegisterMask('EditRealms','All','realms','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddRealms','All','realms','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageRealms','All','realms','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminRealms','All','realms','All','All','ACCESS_ADMIN');
+        # --------------------------------------------------------
+        #
+        # Set up masks
+        #
+        xarRegisterMask('ViewRealms', 'All', 'realms', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarRegisterMask('ReadRealms', 'All', 'realms', 'All', 'All', 'ACCESS_READ');
+        xarRegisterMask('CommentRealms', 'All', 'realms', 'All', 'All', 'ACCESS_COMMENT');
+        xarRegisterMask('ModerateRealms', 'All', 'realms', 'All', 'All', 'ACCESS_MODERATE');
+        xarRegisterMask('EditRealms', 'All', 'realms', 'All', 'All', 'ACCESS_EDIT');
+        xarRegisterMask('AddRealms', 'All', 'realms', 'All', 'All', 'ACCESS_ADD');
+        xarRegisterMask('ManageRealms', 'All', 'realms', 'All', 'All', 'ACCESS_DELETE');
+        xarRegisterMask('AdminRealms', 'All', 'realms', 'All', 'All', 'ACCESS_ADMIN');
 
-    # --------------------------------------------------------
-    #
-    # Set up privileges
-    #
-        xarRegisterPrivilege('ViewRealms','All','realms','All','All','ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadRealms','All','realms','All','All','ACCESS_READ');
-        xarRegisterPrivilege('CommentRealms','All','realms','All','All','ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateRealms','All','realms','All','All','ACCESS_MODERATE');
-        xarRegisterPrivilege('EditRealms','All','realms','All','All','ACCESS_EDIT');
-        xarRegisterPrivilege('AddRealms','All','realms','All','All','ACCESS_ADD');
-        xarRegisterPrivilege('ManageRealms','All','realms','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminRealms','All','realms','All','All','ACCESS_ADMIN');
+        # --------------------------------------------------------
+        #
+        # Set up privileges
+        #
+        xarRegisterPrivilege('ViewRealms', 'All', 'realms', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarRegisterPrivilege('ReadRealms', 'All', 'realms', 'All', 'All', 'ACCESS_READ');
+        xarRegisterPrivilege('CommentRealms', 'All', 'realms', 'All', 'All', 'ACCESS_COMMENT');
+        xarRegisterPrivilege('ModerateRealms', 'All', 'realms', 'All', 'All', 'ACCESS_MODERATE');
+        xarRegisterPrivilege('EditRealms', 'All', 'realms', 'All', 'All', 'ACCESS_EDIT');
+        xarRegisterPrivilege('AddRealms', 'All', 'realms', 'All', 'All', 'ACCESS_ADD');
+        xarRegisterPrivilege('ManageRealms', 'All', 'realms', 'All', 'All', 'ACCESS_DELETE');
+        xarRegisterPrivilege('AdminRealms', 'All', 'realms', 'All', 'All', 'ACCESS_ADMIN');
 
-    # --------------------------------------------------------
-    #
-    # Create DD objects
-    #
+        # --------------------------------------------------------
+        #
+        # Create DD objects
+        #
         $module = 'realms';
         $objects = array(
                     'realms_realms',
                     'realms_members',
                          );
 
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
-    # --------------------------------------------------------
-    #
-    # Set up modvars
-    #
-        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'realms'));
+        if (!xarModAPIFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+            return;
+        }
+        # --------------------------------------------------------
+        #
+        # Set up modvars
+        #
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'realms'));
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file
         // This variable is referenced in the xartemplates/includes/defaults.xd file
-        xarModVars::set('realms', 'defaultmastertable','realms_realms');
-        xarModVars::set('realms', 'link_role',0);
-        xarModVars::set('realms', 'default_realm',0);
+        xarModVars::set('realms', 'defaultmastertable', 'realms_realms');
+        xarModVars::set('realms', 'link_role', 0);
+        xarModVars::set('realms', 'default_realm', 0);
 
-    # --------------------------------------------------------
-    #
-    # Add a user for the default realm
-    #
-/*
-    $realm = DataObjectMaster::getObject(array('name' => 'realms_realms'));
-    $realm->getItem(array('itemid' => 1));
-    $groupid = $realm->properties['usergroup']->value;
-    $user = xarRoles::ufindRole('realm1user');
-    if (empty($user)) {
-        $user = DataObjectMaster::getObject(array('name' => 'roles_users'));
-        $rolefields['role_type'] = xarRoles::ROLES_USERTYPE;
-        $rolefields['name'] = 'Realm 1 User';
-        $rolefields['uname'] = 'realm1user';
-        $rolefields['uname'] = 'realm1user';
-        $rolefields['password'] = 'realm1';
-        $rolefields['parentid'] = $groupid;
-        $userid = $user->createItem($rolefields);
-    } else {
-        $userid = $user->updateItem(array('parentid' => $groupid));
-    }
-*/
+        # --------------------------------------------------------
+        #
+        # Add a user for the default realm
+        #
+        /*
+            $realm = DataObjectMaster::getObject(array('name' => 'realms_realms'));
+            $realm->getItem(array('itemid' => 1));
+            $groupid = $realm->properties['usergroup']->value;
+            $user = xarRoles::ufindRole('realm1user');
+            if (empty($user)) {
+                $user = DataObjectMaster::getObject(array('name' => 'roles_users'));
+                $rolefields['role_type'] = xarRoles::ROLES_USERTYPE;
+                $rolefields['name'] = 'Realm 1 User';
+                $rolefields['uname'] = 'realm1user';
+                $rolefields['uname'] = 'realm1user';
+                $rolefields['password'] = 'realm1';
+                $rolefields['parentid'] = $groupid;
+                $userid = $user->createItem($rolefields);
+            } else {
+                $userid = $user->updateItem(array('parentid' => $groupid));
+            }
+        */
         return true;
     }
 
@@ -160,10 +170,10 @@
         $groupobject = DataObject::getObjectList(array('name' => 'realms_realms'));
         $items = $groupobject->getItems();
         $groupobject = DataObject::getObject(array('name' => 'realms_realms'));
-        foreach ($items as $item) $groupobject->deleteItem(array('itemid' =>$item['id']));
+        foreach ($items as $item) {
+            $groupobject->deleteItem(array('itemid' =>$item['id']));
+        }
 
         $this_module = 'realms';
-        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+        return xarModAPIFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
     }
-
-?>

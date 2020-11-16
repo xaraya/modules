@@ -19,10 +19,16 @@
     
     function realms_admin_new_member()
     {
-        if (!xarSecurityCheck('AddRealms')) return;
+        if (!xarSecurityCheck('AddRealms')) {
+            return;
+        }
 
-        if (!xarVarFetch('name',       'str',    $name,            'realms_members', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('name', 'str', $name, 'realms_members', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'realms';
@@ -30,26 +36,29 @@
         if ($data['confirm']) {
         
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
+            if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+                return;
+            }
 
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
             
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('realms','admin','new_member', $data);        
+                return xarTplModule('realms', 'admin', 'new_member', $data);
             } else {
                 // Good data: create the item
                 $itemid = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('realms','admin','view_members'));
+                xarController::redirect(xarModURL('realms', 'admin', 'view_members'));
                 return true;
             }
         }
         return $data;
     }
-?>

@@ -20,15 +20,15 @@ function realms_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewRealms',0)) {
-        $menulinks[] = array('url'   => xarModURL('realms',
-                                                  'user',
-                                                  'main'),
+    if (xarSecurityCheck('ViewRealms', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'realms',
+            'user',
+            'main'
+        ),
                               'title' => xarML(''),
                               'label' => xarML(''));
     }
 
     return $menulinks;
 }
-
-?>

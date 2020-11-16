@@ -19,7 +19,9 @@
     function realms_adminapi_getconfighook($args)
     {
         extract($args);
-        if (!isset($extrainfo['tabs'])) $extrainfo['tabs'] = array();
+        if (!isset($extrainfo['tabs'])) {
+            $extrainfo['tabs'] = array();
+        }
         $module = 'realms';
         $tabinfo = array(
                 'module'  => $module,
@@ -30,4 +32,3 @@
         $extrainfo['tabs'][] = $tabinfo;
         return $extrainfo;
     }
-?>
