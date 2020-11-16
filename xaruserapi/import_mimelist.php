@@ -21,7 +21,7 @@
  *  @returns boolean    true if successful importing into database, false otherwise.
  */
 
-xarModAPILoad('mime', 'user');
+xarMod::apiLoad('mime', 'user');
  
 function mime_userapi_import_mimelist($args)
 {
@@ -36,16 +36,16 @@ function mime_userapi_import_mimelist($args)
         */
         $mimeType = explode('/', $mimeTypeText);
         
-        $typeInfo = xarModAPIFunc('mime', 'user', 'get_type', array('typeName' => $mimeType[0]));
+        $typeInfo = xarMod::apiFunc('mime', 'user', 'get_type', array('typeName' => $mimeType[0]));
         if (!isset($typeInfo['typeId'])) {
-            $typeId = xarModAPIFunc('mime', 'user', 'add_type', array('typeName' => $mimeType[0]));
+            $typeId = xarMod::apiFunc('mime', 'user', 'add_type', array('typeName' => $mimeType[0]));
         } else {
             $typeId =& $typeInfo['typeId'];
         }
         
-        $subtypeInfo = xarModAPIFunc('mime', 'user', 'get_subtype', array('subtypeName' => $mimeType[1]));
+        $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', array('subtypeName' => $mimeType[1]));
         if (!isset($subtypeInfo['subtypeId'])) {
-            $subtypeId = xarModAPIFunc(
+            $subtypeId = xarMod::apiFunc(
                 'mime',
                 'user',
                 'add_subtype',
@@ -61,14 +61,14 @@ function mime_userapi_import_mimelist($args)
         
         if (isset($mimeInfo['extensions']) && count($mimeInfo['extensions'])) {
             foreach ($mimeInfo['extensions'] as $extension) {
-                $extensionInfo = xarModAPIFunc(
+                $extensionInfo = xarMod::apiFunc(
                     'mime',
                     'user',
                     'get_extension',
                     array('extensionName' => $extension)
                 );
                 if (!isset($extensionInfo['extensionId'])) {
-                    $extensionId = xarModAPIFunc(
+                    $extensionId = xarMod::apiFunc(
                         'mime',
                         'user',
                         'add_extension',
@@ -83,14 +83,14 @@ function mime_userapi_import_mimelist($args)
         
         if (isset($mimeInfo['needles']) && count($mimeInfo['needles'])) {
             foreach ($mimeInfo['needles'] as $magicNumber => $magicInfo) {
-                $info = xarModAPIFunc(
+                $info = xarMod::apiFunc(
                     'mime',
                     'user',
                     'get_magic',
                     array('magicValue' => $magicNumber)
                 );
                 if (!isset($info['magicId'])) {
-                    $magicId = xarModAPIFunc(
+                    $magicId = xarMod::apiFunc(
                         'mime',
                         'user',
                         'add_magic',

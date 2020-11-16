@@ -17,14 +17,14 @@
  */
     function mime_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageMime')) {
+        if (!xarSecurity::check('ManageMime')) {
             return;
         }
 
         $modulename = 'mime';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
             return;
         }
         if (!empty($objectname)) {

@@ -45,14 +45,14 @@ function mime_userapi_extension_to_mime($args)
         // to analyze_file()
         if (count($parts) > 1) {
             $extension = $parts[count($parts) - 1];
-            $extensionInfo = xarModAPIFunc(
+            $extensionInfo = xarMod::apiFunc(
                 'mime',
                 'user',
                 'get_extension',
                 array('extensionName' => $extension)
             );
             if (!empty($extensionInfo)) {
-                $mimeType = xarModAPIFunc(
+                $mimeType = xarMod::apiFunc(
                     'mime',
                     'user',
                     'get_mimetype',
