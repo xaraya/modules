@@ -15,7 +15,7 @@
  * Update configuration
  *
  * @param string
- * @return void?
+ * @return mixed
  * @todo move in timezone var when we support them
  * @todo decide whether a site admin can set allowed locales for users
  * @todo add decent validation
