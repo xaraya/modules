@@ -28,7 +28,7 @@ function html_adminapi_delete($args)
 
     // Argument check
     if (!isset($id) || !is_numeric($id)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', , 'adminapi', 'delete', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', $id, 'adminapi', 'delete', 'html');
         throw new BadParameterException(null,$msg);
     }
 
