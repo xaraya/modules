@@ -13,14 +13,14 @@
 function ratings_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ManageRatings')) {
+    if (!xarSecurity::check('ManageRatings')) {
         return;
     }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        xarController::redirect(xarModURL('ratings', 'admin', 'view'));
+        xarController::redirect(xarController::URL('ratings', 'admin', 'view'));
     }
     // success
     return true;

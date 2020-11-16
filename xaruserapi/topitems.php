@@ -52,7 +52,7 @@ function ratings_userapi_topitems($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ReadRatings')) {
+    if (!xarSecurity::check('ReadRatings')) {
         return;
     }
 

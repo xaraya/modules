@@ -11,11 +11,11 @@
             <xar:elseif condition="$ratingsstyle eq 'outoffivestars'" />
                 <xar:for start="$i = 1" test="$i le 5" iter="$i++">
                     <xar:if condition="$i le $intrating">
-                        <img src="#xarTplGetImage('star.gif','ratings')#" alt="#xarML('star')#" />
+                        <img src="#xarTpl::getImage('star.gif','ratings')#" alt="#xarML('star')#" />
                     <xar:elseif condition="(($i - 1) eq $intrating) and $fracrating ge 10" />
-                        <img src="#xarTplGetImage('halfstar.gif','ratings')#" alt="#xarML('half star')#" />
+                        <img src="#xarTpl::getImage('halfstar.gif','ratings')#" alt="#xarML('half star')#" />
                     <xar:else />
-                        <img src="#xarTplGetImage('nostar.gif','ratings')#" alt="#xarML('no star')#" />
+                        <img src="#xarTpl::getImage('nostar.gif','ratings')#" alt="#xarML('no star')#" />
                     </xar:if>
                 </xar:for>
             <xar:elseif condition="$ratingsstyle eq 'outoften'" />
@@ -23,11 +23,11 @@
             <xar:elseif condition="$ratingsstyle eq 'outoftenstars'" />
                 <xar:for start="$i = 1" test="$i le 10" iter="$i++">
                     <xar:if condition="$i le $intrating">
-                        <img src="#xarTplGetImage('star.gif','ratings')#" alt="#xarML('star')#" />
+                        <img src="#xarTpl::getImage('star.gif','ratings')#" alt="#xarML('star')#" />
                     <xar:elseif condition="(($i - 1) eq $intrating) and $fracrating ge 5" />
-                        <img src="#xarTplGetImage('halfstar.gif','ratings')#" alt="#xarML('half star')#" />
+                        <img src="#xarTpl::getImage('halfstar.gif','ratings')#" alt="#xarML('half star')#" />
                     <xar:else />
-                        <img src="#xarTplGetImage('nostar.gif','ratings')#" alt="#xarML('no star')#" />
+                        <img src="#xarTpl::getImage('nostar.gif','ratings')#" alt="#xarML('no star')#" />
                     </xar:if>
                 </xar:for>
             <xar:elseif condition="$ratingsstyle eq 'customised'" />
@@ -53,7 +53,7 @@
             </div>
         </xar:if>
         <xar:if condition="(!isset($rated)) and $showinput eq 1">
-            <xar:if condition="xarSecurityCheck('CommentRatings',0)">
+            <xar:if condition="xarSecurity::check('CommentRatings',0)">
                 <form method="post" action="&xar-modurl-ratings-user-rate;" id="post" enctype="application/x-www-form-urlencoded" >
                     <div>
                         <xar:var name="label">Rate this Item</xar:var>

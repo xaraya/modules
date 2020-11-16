@@ -16,24 +16,24 @@
 function ratings_user_rate($args)
 {
     // Get parameters
-    if (!xarVarFetch('modname', 'isset', $modname, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modname', 'isset', $modname, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('returnurl', 'isset', $returnurl, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('returnurl', 'isset', $returnurl, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('rating', 'isset', $rating, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('rating', 'isset', $rating, null, xarVar::DONT_SET)) {
         return;
     }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 

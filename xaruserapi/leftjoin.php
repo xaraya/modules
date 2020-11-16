@@ -53,12 +53,12 @@ function ratings_userapi_leftjoin($args)
         foreach ($itemids as $itemid) {
             // Security Check
             // FIXME: add some instances here
-            if (!xarSecurityCheck('OverviewRatings')) {
+            if (!xarSecurity::check('OverviewRatings')) {
                 return;
             }
         }
     } else {
-        if (!xarSecurityCheck('OverviewRatings')) {
+        if (!xarSecurity::check('OverviewRatings')) {
             return;
         }
     }

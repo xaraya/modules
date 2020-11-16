@@ -54,7 +54,7 @@ function ratings_userapi_rate($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('CommentRatings', 1, 'Item', "$modname:$itemtype:$itemid")) {
+    if (!xarSecurity::check('CommentRatings', 1, 'Item', "$modname:$itemtype:$itemid")) {
         return;
     }
 
@@ -77,7 +77,7 @@ function ratings_userapi_rate($args)
         $seclevel = xarModVars::get('ratings', 'seclevel');
     }
     if ($seclevel == 'high') {
-        if (xarUserIsLoggedIn()) {
+        if (xarUser::isLoggedIn()) {
             $rated = xarModUserVars::get('ratings', $modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > 1) {
                 return;
@@ -87,7 +87,7 @@ function ratings_userapi_rate($args)
         }
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
-        if (xarUserIsLoggedIn()) {
+        if (xarUser::isLoggedIn()) {
             $rated = xarModUserVars::get('ratings', $modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 return;
@@ -162,13 +162,13 @@ function ratings_userapi_rate($args)
 
     // Set note that user has rated this item if required
     if ($seclevel == 'high') {
-        if (xarUserIsLoggedIn()) {
+        if (xarUser::isLoggedIn()) {
             xarModUserVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, time());
         } else {
             // nope
         }
     } elseif ($seclevel == 'medium') {
-        if (xarUserIsLoggedIn()) {
+        if (xarUser::isLoggedIn()) {
             xarModUserVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, time());
         } else {
             xarSession::setVar('ratings:'.$modname.':'.$itemtype.':'.$itemid, time());

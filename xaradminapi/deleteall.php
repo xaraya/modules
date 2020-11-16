@@ -50,7 +50,7 @@ function ratings_adminapi_deleteall($args)
     // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('DeleteRatings')) {
+    if (!xarSecurity::check('DeleteRatings')) {
         return;
     }
 
@@ -66,7 +66,7 @@ function ratings_adminapi_deleteall($args)
     }
 
     // hmmm, I think we'll skip calling more hooks here... :-)
-    //xarModCallHooks('item', 'delete', '', '');
+    //xarModHooks::call('item', 'delete', '', '');
 
     // TODO: delete user votes with xarModVars::delete('ratings',"$modname:$itemtype:$itemid");
 

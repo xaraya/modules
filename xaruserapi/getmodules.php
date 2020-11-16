@@ -18,7 +18,7 @@
 function ratings_userapi_getmodules($args)
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRatings')) {
+    if (!xarSecurity::check('OverviewRatings')) {
         return;
     }
 

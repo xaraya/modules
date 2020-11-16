@@ -51,7 +51,7 @@ function ratings_userapi_get($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ReadRatings')) {
+    if (!xarSecurity::check('ReadRatings')) {
         return;
     }
 

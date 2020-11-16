@@ -16,22 +16,22 @@
 function ratings_admin_updateconfig()
 {
     // Get parameters
-    if (!xarVarFetch('ratingsstyle', 'array', $ratingsstyle, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ratingsstyle', 'array', $ratingsstyle, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('seclevel', 'array', $seclevel, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('seclevel', 'array', $seclevel, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('shownum', 'array', $shownum, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('shownum', 'array', $shownum, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     // Security Check
-    if (!xarSecurityCheck('AdminRatings')) {
+    if (!xarSecurity::check('AdminRatings')) {
         return;
     }
 
@@ -94,7 +94,7 @@ function ratings_admin_updateconfig()
         }
     }
 
-    xarController::redirect(xarModURL('ratings', 'admin', 'modifyconfig'));
+    xarController::redirect(xarController::URL('ratings', 'admin', 'modifyconfig'));
 
     return true;
 }

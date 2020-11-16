@@ -23,14 +23,14 @@
 function ratings_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminRatings')) {
+    if (!xarSecurity::check('AdminRatings')) {
         return;
     }
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -93,7 +93,7 @@ function ratings_admin_modifyconfig()
                                     $link = $mytypes[$itemtype]['url'];
                                 } else {
                                     $type = xarML('type #(1)', $itemtype);
-                                    $link = xarModURL($modname, 'user', 'view', array('itemtype' => $itemtype));
+                                    $link = xarController::URL($modname, 'user', 'view', array('itemtype' => $itemtype));
                                 }
                                 $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                                 'ratingsstyle' => $ratingsstyle,
@@ -114,7 +114,7 @@ function ratings_admin_modifyconfig()
                                 $shownum = $defaultshownum;
                                 xarModVars::set('ratings', "shownum.$modname", $defaultshownum);
                             }
-                            $link = xarModURL($modname, 'user', 'main');
+                            $link = xarController::URL($modname, 'user', 'main');
                             $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                                 'ratingsstyle' => $ratingsstyle,
                                                                 'seclevel' => $seclevel,
@@ -129,7 +129,7 @@ function ratings_admin_modifyconfig()
                     array('id' => 'high', 'name' => xarML('High : users must be logged in and can only vote once')),
                     );
 
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                     break;
                 case 'tab2':
                     break;
@@ -141,15 +141,15 @@ function ratings_admin_modifyconfig()
         break;
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            if (!xarSec::confirmAuthKey()) {
+                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             switch ($data['tab']) {
                 case 'general':
 
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTplModule('eventhub', 'admin', 'modifyconfig', $data);
+                        return xarTpl::module('eventhub', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }

@@ -139,9 +139,9 @@ function ratings_user_display($args)
     }
     if (isset($data['rawrating'])) {
         // Set the cached variable if requested
-        if (xarVarIsCached('Hooks.ratings', 'save') &&
-            xarVarGetCached('Hooks.ratings', 'save') == true) {
-            xarVarSetCached('Hooks.ratings', 'value', $data['rawrating']);
+        if (xarVar::isCached('Hooks.ratings', 'save') &&
+            xarVar::getCached('Hooks.ratings', 'save') == true) {
+            xarVar::setCached('Hooks.ratings', 'value', $data['rawrating']);
         }
 
         // Display current rating
@@ -190,7 +190,7 @@ function ratings_user_display($args)
     }
     if ($seclevel == 'high') {
         // Check to see if user has already voted
-        if (xarUserIsLoggedIn()) {
+        if (xarUser::isLoggedIn()) {
             if (!xarModVars::get('ratings', $modname.':'.$itemtype.':'.$itemid)) {
                 xarModVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, 1);
             }
@@ -206,7 +206,7 @@ function ratings_user_display($args)
         }
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
-        if (xarUserIsLoggedIn()) {
+        if (xarUser::isLoggedIn()) {
             if (!xarModVars::get('ratings', $modname.':'.$itemtype.':'.$itemid)) {
                 xarModVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, 1);
             }
@@ -224,8 +224,8 @@ function ratings_user_display($args)
 
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
     // set an authid, but only if the current user can rate the item
-    if (xarSecurityCheck('CommentRatings', 0, 'Item', "$modname:$itemtype:$itemid")) {
-        $data['authid'] = xarSecGenAuthKey('ratings');
+    if (xarSecurity::check('CommentRatings', 0, 'Item', "$modname:$itemtype:$itemid")) {
+        $data['authid'] = xarSec::genAuthKey('ratings');
     }
     return $data;
 }

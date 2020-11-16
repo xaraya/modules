@@ -16,20 +16,20 @@
 function ratings_admin_view()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminRatings')) {
+    if (!xarSecurity::check('AdminRatings')) {
         return;
     }
 
-    if (!xarVarFetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -58,24 +58,24 @@ function ratings_admin_view()
                 $moditem['numratings'] = $stats['ratings'];
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
-                //    $moditem['link'] = xarModURL($modinfo['name'],'user','main');
+                //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
                 } else {
                     if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                     //    $moditem['link'] = $mytypes[$itemtype]['url'];
                     } else {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                        //    $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                        //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                     }
                 }
-                $moditem['link'] = xarModURL(
+                $moditem['link'] = xarController::URL(
                     'ratings',
                     'admin',
                     'view',
                     array('modid' => $modid,
                                                    'itemtype' => empty($itemtype) ? null : $itemtype)
                 );
-                $moditem['delete'] = xarModURL(
+                $moditem['delete'] = xarController::URL(
                     'ratings',
                     'admin',
                     'delete',
@@ -87,7 +87,7 @@ function ratings_admin_view()
                 $data['numratings'] += $moditem['numratings'];
             }
         }
-        $data['delete'] = xarModURL('ratings', 'admin', 'delete');
+        $data['delete'] = xarController::URL('ratings', 'admin', 'delete');
     } else {
         $modinfo = xarMod::getInfo($modid);
         if (empty($itemtype)) {
@@ -108,7 +108,7 @@ function ratings_admin_view()
             //    $data['modlink'] = $mytypes[$itemtype]['url'];
             } else {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
             }
         }
 
@@ -124,7 +124,7 @@ function ratings_admin_view()
         $data['numratings'] = 0;
         foreach ($data['moditems'] as $itemid => $moditem) {
             $data['numratings'] += $moditem['numratings'];
-            $data['moditems'][$itemid]['delete'] = xarModURL(
+            $data['moditems'][$itemid]['delete'] = xarController::URL(
                 'ratings',
                 'admin',
                 'delete',
@@ -133,7 +133,7 @@ function ratings_admin_view()
                                                                    'itemid' => $itemid)
             );
         }
-        $data['delete'] = xarModURL(
+        $data['delete'] = xarController::URL(
             'ratings',
             'admin',
             'delete',
@@ -144,7 +144,7 @@ function ratings_admin_view()
         if (empty($sort) || $sort == 'itemid') {
             $data['sortlink']['itemid'] = '';
         } else {
-            $data['sortlink']['itemid'] = xarModURL(
+            $data['sortlink']['itemid'] = xarController::URL(
                 'ratings',
                 'admin',
                 'view',
@@ -155,7 +155,7 @@ function ratings_admin_view()
         if (!empty($sort) && $sort == 'numratings') {
             $data['sortlink']['numratings'] = '';
         } else {
-            $data['sortlink']['numratings'] = xarModURL(
+            $data['sortlink']['numratings'] = xarController::URL(
                 'ratings',
                 'admin',
                 'view',
@@ -167,7 +167,7 @@ function ratings_admin_view()
         if (!empty($sort) && $sort == 'rating') {
             $data['sortlink']['rating'] = '';
         } else {
-            $data['sortlink']['rating'] = xarModURL(
+            $data['sortlink']['rating'] = xarController::URL(
                 'ratings',
                 'admin',
                 'view',

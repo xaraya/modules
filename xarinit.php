@@ -34,7 +34,7 @@ function ratings_init()
         );
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
-    $query = xarDBCreateTable($xartable['ratings'], $fields);
+    $query = xarTableDDL::createTable($xartable['ratings'], $fields);
     if (empty($query)) {
         return;
     } // throw back
@@ -45,7 +45,7 @@ function ratings_init()
         return;
     }
     // TODO: compare with having 2 indexes (cfr. hitcount)
-    $query = xarDBCreateIndex(
+    $query = xarTableDDL::createIndex(
         $xartable['ratings'],
         array('name' => 'i_' . xarDB::getPrefix() . '_ratingcombo',
             'fields' => array('module_id', 'itemtype', 'itemid'),
@@ -57,7 +57,7 @@ function ratings_init()
         return;
     }
 
-    $query = xarDBCreateIndex(
+    $query = xarTableDDL::createIndex(
         $xartable['ratings'],
         array('name' => 'i_' . xarDB::getPrefix() . '_rating',
             'fields' => array('rating'),
@@ -69,7 +69,7 @@ function ratings_init()
         return;
     }
 
-    $query = xarDBCreateTable(
+    $query = xarTableDDL::createTable(
         $xartable['ratings_likes'],
         array('id'         => array('type'        => 'integer',
                                                             'unsigned'    => true,
@@ -99,7 +99,7 @@ function ratings_init()
         return;
     }
 
-    $query = xarDBCreateIndex(
+    $query = xarTableDDL::createIndex(
         $xartable['ratings_likes'],
         array('name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
                                    'fields' => array('object_id', 'itemid'),
@@ -111,7 +111,7 @@ function ratings_init()
         return;
     }
 
-    $query = xarDBCreateIndex(
+    $query = xarTableDDL::createIndex(
         $xartable['ratings_likes'],
         array('name'   => 'i_' . xarDB::getPrefix() . '_role_id',
                                    'fields' => array('role_id'),
@@ -123,7 +123,7 @@ function ratings_init()
         return;
     }
     
-    $query = xarDBCreateIndex(
+    $query = xarTableDDL::createIndex(
         $xartable['ratings_likes'],
         array('name'   => 'i_' . xarDB::getPrefix() . '_udid',
                                    'fields' => array('udid'),
@@ -147,7 +147,7 @@ function ratings_init()
     #
     # Set up hooks
     #
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'display',
         'GUI',
@@ -160,7 +160,7 @@ function ratings_init()
 
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'module',
         'remove',
         'API',
@@ -194,7 +194,7 @@ function ratings_init()
             'limit' => 20
             )
         );
-    xarDefineInstance('ratings', 'Item', $instances);
+    xarPrivileges::defineInstance('ratings', 'Item', $instances);
     $ratingstable=$xartable['ratings'];
 
     $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[ratings] LEFT JOIN $xartable[modules] ON $xartable[ratings].module_id = $xartable[modules].regid";
@@ -215,7 +215,7 @@ function ratings_init()
             )
         );
     // FIXME: this seems to be some left-over from the old template module
-    xarDefineInstance('ratings', 'Template', $instances);
+    xarPrivileges::defineInstance('ratings', 'Template', $instances);
 
     /**
      * Register the module components that are privileges objects
@@ -223,14 +223,14 @@ function ratings_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-    xarRegisterMask('OverviewRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('AddRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManageRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('OverviewRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('AddRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_ADMIN');
 
-    xarRegisterMask('CommentRatings', 'All', 'ratings', 'Item', 'All:All:All', 'ACCESS_COMMENT');
-    xarRegisterMask('EditRatingsTemplate', 'All', 'ratings', 'Template', 'All:All:All', 'ACCESS_ADMIN');
+    xarMasks::register('CommentRatings', 'All', 'ratings', 'Item', 'All:All:All', 'ACCESS_COMMENT');
+    xarMasks::register('EditRatingsTemplate', 'All', 'ratings', 'Template', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -254,8 +254,8 @@ function ratings_upgrade($oldversion)
             // no break
         case '1.2.0':
             // clean up double hook registrations
-            xarModUnregisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
-            xarModRegisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
+            xarModHooks::unregister('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
+            xarModHooks::register('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
             $hookedmodules = xarMod::apiFunc(
                 'modules',
                 'admin',
@@ -330,7 +330,7 @@ function ratings_upgrade($oldversion)
 function ratings_delete()
 {
     // Remove module hooks
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'item',
         'display',
         'GUI',
@@ -341,7 +341,7 @@ function ratings_delete()
         return;
     }
 
-    if (!xarModUnregisterHook(
+    if (!xarModHooks::unregister(
         'module',
         'remove',
         'API',
@@ -351,5 +351,5 @@ function ratings_delete()
     )) {
         return;
     }
-    return xarModAPIFunc('modules', 'admin', 'standarddeinstall', array('module' => 'ratings'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'ratings'));
 }

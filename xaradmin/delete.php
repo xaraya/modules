@@ -16,20 +16,20 @@
 function ratings_admin_delete()
 {
     // Security Check
-    if (!xarSecurityCheck('DeleteRatings')) {
+    if (!xarSecurity::check('DeleteRatings')) {
         return;
     }
 
-    if (!xarVarFetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -63,12 +63,12 @@ function ratings_admin_delete()
             }
         }
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         // Return the template variables defined in this function
         return $data;
     }
 
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     if (!xarMod::apiFunc(
@@ -82,6 +82,6 @@ function ratings_admin_delete()
     )) {
         return;
     }
-    xarController::redirect(xarModURL('ratings', 'admin', 'view'));
+    xarController::redirect(xarController::URL('ratings', 'admin', 'view'));
     return true;
 }
