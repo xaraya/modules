@@ -43,7 +43,7 @@
         </span>
         <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
         <xar:if condition="!$postanon">
-            <a href="#xarmodurl('roles','user','display',array('id' => $author))#" title="#xarML('View user info')#">
+            <a href="#xarController::URL('roles','user','display',array('id' => $author))#" title="#xarML('View user info')#">
                 #xarUser::getVar('name',$author)#
             </a>
         <xar:else/>

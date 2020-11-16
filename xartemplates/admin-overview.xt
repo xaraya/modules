@@ -3,7 +3,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
     
-          <div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
+          <div style="float: right;"><a href="#xarController::URL('messages','user','view')#">View Inbox</a> | <a href="#xarController::URL('messages','user','new')#">New Message</a></div>
     
           <h2>Messages Overview</h2>  
     
@@ -14,7 +14,7 @@
     
         <h3>Enable User Settings</h3>
     
-        <p>To enable User Settings, check the box for "Enable User Settings" in the <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify Config tab</a> and choose the specific settings to enable in the <strong>User Settings</strong> fieldset.  Depending on which settings you enable, the following may be configurable by users in their Roles account:</p>
+        <p>To enable User Settings, check the box for "Enable User Settings" in the <a href="#xarController::URL('messages','admin','modifyconfig')#">Modify Config tab</a> and choose the specific settings to enable in the <strong>User Settings</strong> fieldset.  Depending on which settings you enable, the following may be configurable by users in their Roles account:</p>
     
         <ul><li><em>Tab to open after sending message</em> -- Redirect to this tab after sending a message.</li>
         <li><em>Email me when I receive a new message</em> -- Enable email delivery to the user's email address.</li>

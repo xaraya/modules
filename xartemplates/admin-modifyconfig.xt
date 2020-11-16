@@ -7,7 +7,7 @@
 
     <div class="xar-mod-body">
      
-	    <div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
+	    <div style="float: right;"><a href="#xarController::URL('messages','user','view')#">View Inbox</a> | <a href="#xarController::URL('messages','user','new')#">New Message</a></div>
 
         <h2>Modify Default Configuration</h2>
 

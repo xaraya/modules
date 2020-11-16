@@ -34,7 +34,7 @@
             No recipients are configured for your group.
     
             <xar:sec mask="AdminMessages" catch="false">
-                <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.			
+                <a href="#xarController::URL('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.			
             </xar:sec>
     
         </xar:if>
