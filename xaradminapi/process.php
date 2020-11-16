@@ -40,9 +40,9 @@ function reminders_adminapi_process($args)
     
     $tables = xarDB::getTables();
     $q->addtable($tables['reminders_emails'], 'email_1');
-    $q->join('entries.email_1', 'email_1.id');
+    $q->leftjoin('entries.email_1', 'email_1.id');
     $q->addtable($tables['reminders_emails'], 'email_2');
-    $q->join('entries.email_2', 'email_2.id');
+    $q->leftjoin('entries.email_2', 'email_2.id');
     
     // Only active reminders
     $q->eq('entries.state', 3);
@@ -54,6 +54,7 @@ function reminders_adminapi_process($args)
     }
     $q->qecho();
     $items = $entries->getItems();
+    var_dump($items);exit;
     /*
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
