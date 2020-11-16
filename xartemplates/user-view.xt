@@ -179,9 +179,9 @@
             <span style="float: left; width: 100%; margin-top:10px;text-align: left;">
                 <h3>Syndicate this list</h3>
                 <ol>
-                <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#">Entire List</a></li>
-                <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#">Modules</a></li>
-                <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#">Themes</a></li>
+                <li><a href="#xarController::URL('release', 'user', 'rssviewids', array('theme' => 'rss'))#">Entire List</a></li>
+                <li><a href="#xarController::URL('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#">Modules</a></li>
+                <li><a href="#xarController::URL('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#">Themes</a></li>
                 </ol>
             </span>
         </div>

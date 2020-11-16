@@ -114,7 +114,7 @@ function release_user_displaynote($args)
     $item['exttype'] = $id['exttype'];
     $item['exttypes'] = $exttypes;
     $item['class'] = $id['class'];
-    $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
+    $item['contacturl'] = xarController::URL('roles', 'user', 'email', array('uid' => $id['uid']));
     $item['extensionpage']= xarController::URL(
         'release',
         'user',

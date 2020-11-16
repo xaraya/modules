@@ -26,7 +26,7 @@
             </dd>
         <xar:set name="tabclass">($activetab=='display')?'active':''</xar:set>
             <dd class="#$tabclass#">
-                <a href="#xarModUrl('release', 'user', 'display', array('eid' => $eid, 'phase' => 'version', 'tab'=>'versions'))#" title="#xarML('Get a registered ID for your extension project')#">
+                <a href="#xarController::URL('release', 'user', 'display', array('eid' => $eid, 'phase' => 'version', 'tab'=>'versions'))#" title="#xarML('Get a registered ID for your extension project')#">
                     File Releases
                 </a>
             </dd>

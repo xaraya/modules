@@ -5,7 +5,7 @@
 
     <div class="xar-mod-body">
         <h2>Add General Documentation</h2>
-        <a href="#xarModUrl('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#">Back to Documentation Types</a><br /><br />
+        <a href="#xarController::URL('release', 'user', 'adddocs', array('phase' => 'start', 'eid' => $eid))#">Back to Documentation Types</a><br /><br />
         <xar:if condition="!empty($message)">
             <p>
                 #$message#

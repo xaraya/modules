@@ -503,7 +503,7 @@ function release_user_display($args)
     $data['class'] = $id['class'];
     $data['modified'] = $id['modified'];
     $data['memberstring']= $memberstring;
-    $data['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
+    $data['contacturl'] = xarController::URL('roles', 'user', 'email', array('uid' => $id['uid']));
     $data['realname'] = $realname;
     $data['startnum']=$startnum;
 
