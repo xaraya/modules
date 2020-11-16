@@ -28,7 +28,7 @@
  *                      process. If the file wasn't added successfully, fileInfo.errors is set appropriately
  */
 
-xarModAPILoad('uploads', 'user');
+xarMod::apiLoad('uploads', 'user');
 
 function uploads_userapi_file_store($args)
 {
@@ -44,7 +44,7 @@ function uploads_userapi_file_store($args)
         throw new Exception($msg);
     }
 
-    $typeInfo = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
+    $typeInfo = xarMod::apiFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
     $instance = array();
     $instance[0] = $typeInfo['typeId'];
     $instance[1] = $typeInfo['subtypeId'];
@@ -54,7 +54,7 @@ function uploads_userapi_file_store($args)
     $instance = implode(':', $instance);
 
     if ((isset($fileInfo['fileStatus']) && $fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED) ||
-         xarSecurityCheck('AddUploads', 1, 'File', $instance)) {
+         xarSecurity::check('AddUploads', 1, 'File', $instance)) {
         if (!isset($storeType)) {
             $storeType = _UPLOADS_STORE_FSDB;
         }
@@ -64,7 +64,7 @@ function uploads_userapi_file_store($args)
         } else {
             // first, make sure the file isn't already stored in the db/filesystem
             // if it is, then don't add it.
-            $fInfo = xarModAPIFunc(
+            $fInfo = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_get_file',
@@ -83,7 +83,7 @@ function uploads_userapi_file_store($args)
 
         // If this is just a file dump, return the dump
         if ($storeType & _UPLOADS_STORE_TEXT) {
-            $fileInfo['fileData'] = xarModAPIFunc('uploads', 'user', 'file_dump', $fileInfo);
+            $fileInfo['fileData'] = xarMod::apiFunc('uploads', 'user', 'file_dump', $fileInfo);
         }
         // If the store db_entry bit is set, then go ahead
         // and set up the database meta information for the file
@@ -93,11 +93,11 @@ function uploads_userapi_file_store($args)
             if (!empty($fileInfo['isDuplicate']) && $fileInfo['isDuplicate'] == 2 &&
                 !empty($fileInfo['fileId'])) {
                 // we *want* to overwrite a duplicate here
-                xarModAPIFunc('uploads', 'user', 'db_modify_file', $fileInfo);
+                xarMod::apiFunc('uploads', 'user', 'db_modify_file', $fileInfo);
 
                 $fileId = $fileInfo['fileId'];
             } else {
-                $fileId = xarModAPIFunc('uploads', 'user', 'db_add_file', $fileInfo);
+                $fileId = xarMod::apiFunc('uploads', 'user', 'db_add_file', $fileInfo);
 
                 if ($fileId) {
                     $fileInfo['fileId'] = $fileId;
@@ -107,7 +107,7 @@ function uploads_userapi_file_store($args)
 
         if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
             if ($fileInfo['fileSrc'] != $fileInfo['fileDest']) {
-                $result = xarModAPIFunc('uploads', 'user', 'file_move', $fileInfo);
+                $result = xarMod::apiFunc('uploads', 'user', 'file_move', $fileInfo);
             } else {
                 $result = true;
             }
@@ -119,7 +119,7 @@ function uploads_userapi_file_store($args)
                 // the database entry (if there is one) so that we don't have
                 // a corrupted file entry
                 if (isset($fileId) && !empty($fileId)) {
-                    xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileId));
+                    xarMod::apiFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileId));
 
                     // Don't forget to remove the fileId from fileInfo
                     // because it's non existant now ;-)
@@ -133,16 +133,16 @@ function uploads_userapi_file_store($args)
         }
 
         if ($storeType & _UPLOADS_STORE_DB_DATA) {
-            if (!xarModAPIFunc('uploads', 'user', 'file_dump', $fileInfo)) {
+            if (!xarMod::apiFunc('uploads', 'user', 'file_dump', $fileInfo)) {
                 // If we couldn't add the files contents to the database,
                 // then remove the file metadata as well
                 if (isset($fileId) && !empty($fileId)) {
-                    xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileId));
+                    xarMod::apiFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileId));
                 }
             } else {
                 // if it was successfully added, then change the stored fileLocation
                 // to DATABASE instead of uploads/blahblahblah
-                xarModAPIFunc('uploads', 'user', 'db_modify_file', array('fileId' => $fileId, 'fileLocation' => xarML('DATABASE')));
+                xarMod::apiFunc('uploads', 'user', 'db_modify_file', array('fileId' => $fileId, 'fileLocation' => xarML('DATABASE')));
             }
         }
     }

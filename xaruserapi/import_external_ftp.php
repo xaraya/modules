@@ -53,7 +53,7 @@ function uploads_userapi_import_external_ftp($args)
     // at the password based on the user's email address
     if (!isset($uri['user'])) {
         $uri['user'] = 'anonymous';
-        $uri['pass'] = xarUserGetVar('email');
+        $uri['pass'] = xarUser::getVar('email');
         if (empty($uri['pass'])) {
             $uri['pass'] = xarModVars::get('mail', 'adminmail');
         }
@@ -61,14 +61,14 @@ function uploads_userapi_import_external_ftp($args)
         // otherwise, if the uname is there but the
         // pass isn't, try to use the user's email address
         if (!isset($uri['pass'])) {
-            xarUserGetVar('email');
+            xarUser::getVar('email');
         }
     }
 
     // TODO: handle duplicates - cfr. prepare_uploads()
 
     // Attempt to 'best guess' the mimeType
-    $mimeType = xarModAPIFunc('mime', 'user', 'extension_to_mime', array('fileName' => basename($uri['path'])));
+    $mimeType = xarMod::apiFunc('mime', 'user', 'extension_to_mime', array('fileName' => basename($uri['path'])));
 
     // create the URI in the event we don't have the FTP library
     $ftpURI = "$uri[scheme]://$uri[user]:".urlencode($uri['pass'])."@$uri[host]:$uri[port]$uri[path]";
@@ -152,7 +152,7 @@ function uploads_userapi_import_external_ftp($args)
                     if (is_resource($tmpId)) {
                         @fclose($tmpId);
                     }
-                    $fileInfo['fileType'] = xarModAPIFunc(
+                    $fileInfo['fileType'] = xarMod::apiFunc(
                         'mime',
                         'user',
                         'analyze_file',
@@ -204,7 +204,7 @@ function uploads_userapi_import_external_ftp($args)
                     if (is_resource($tmpId)) {
                         @fclose($tmpId);
                     }
-                    $fileInfo['fileType'] = xarModAPIFunc(
+                    $fileInfo['fileType'] = xarMod::apiFunc(
                         'mime',
                         'user',
                         'analyze_file',
@@ -258,7 +258,7 @@ function uploads_userapi_import_external_ftp($args)
         $savePath = preg_replace('/\/$/', '', $savePath);
 
         if ($obfuscate_fileName) {
-            $obf_fileName = xarModAPIFunc(
+            $obf_fileName = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'file_obfuscate_name',
@@ -268,7 +268,7 @@ function uploads_userapi_import_external_ftp($args)
         } else {
             // if we're not obfuscating it,
             // just use the name of the uploaded file
-            $fileInfo['fileDest'] = $savePath . '/' . xarVarPrepForOS($fileInfo['fileName']);
+            $fileInfo['fileDest'] = $savePath . '/' . xarVar::prepForOS($fileInfo['fileName']);
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
     }

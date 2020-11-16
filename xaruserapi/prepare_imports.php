@@ -46,7 +46,7 @@ function uploads_userapi_prepare_imports($args)
         }
     }
 
-    $imports = xarModAPIFunc(
+    $imports = xarMod::apiFunc(
         'uploads',
         'user',
         'import_get_filelist',
@@ -54,7 +54,7 @@ function uploads_userapi_prepare_imports($args)
                                     'descend'       => $descend)
     );
     if ($imports) {
-        $imports = xarModAPIFunc(
+        $imports = xarMod::apiFunc(
             'uploads',
             'user',
             'import_prepare_files',

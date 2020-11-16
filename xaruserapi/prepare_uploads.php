@@ -87,7 +87,7 @@ function uploads_userapi_prepare_uploads($args)
     // Check to see if we're importing and, if not, check the file and ensure that it
     // meets any requirements we might have for it. If it doesn't pass the tests,
     // then return FALSE
-    if (!xarModAPIFunc('uploads', 'user', 'validate_upload', array('fileInfo' => $fileInfo))) {
+    if (!xarMod::apiFunc('uploads', 'user', 'validate_upload', array('fileInfo' => $fileInfo))) {
         $errorObj = xarCurrentError();
 
         if (is_object($errorObj)) {
@@ -117,7 +117,7 @@ function uploads_userapi_prepare_uploads($args)
     unset($fileInfo['error']);
 
     // FIXME: do this after the file has been moved
-    $fileInfo['fileType']   = xarModAPIFunc(
+    $fileInfo['fileType']   = xarMod::apiFunc(
         'mime',
         'user',
         'analyze_file',
@@ -138,7 +138,7 @@ function uploads_userapi_prepare_uploads($args)
 
     // Check to see if we need to obfuscate the filename
     } elseif ($obfuscate_fileName) {
-        $obf_fileName = xarModAPIFunc(
+        $obf_fileName = xarMod::apiFunc(
             'uploads',
             'user',
             'file_obfuscate_name',

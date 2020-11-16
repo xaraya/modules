@@ -48,8 +48,8 @@ function uploads_adminapi_showinput($args)
 
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
-    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarModAPIFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+    if (xarMod::apiFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -64,7 +64,7 @@ function uploads_adminapi_showinput($args)
 
     $data = array();
 
-    xarModAPILoad('uploads', 'user');
+    xarMod::apiLoad('uploads', 'user');
 
     if (isset($methods) && count($methods) == 4) {
         $data['methods'] = array(
@@ -107,7 +107,7 @@ function uploads_adminapi_showinput($args)
 
         // CHECKME: use 'imports' name like in db_get_file() ?
         // Note: for relativePath, the (main) import directory is replaced by /trusted in file_get_metadata()
-        $data['fileList']     = xarModAPIFunc(
+        $data['fileList']     = xarMod::apiFunc(
             'uploads',
             'user',
             'import_get_filelist',
@@ -126,7 +126,7 @@ function uploads_adminapi_showinput($args)
         if (!empty($override['upload']['path'])) {
             $upload_directory = $override['upload']['path'];
             if (file_exists($upload_directory)) {
-                $data['storedList']   = xarModAPIFunc(
+                $data['storedList']   = xarMod::apiFunc(
                     'uploads',
                     'user',
                     'db_get_file',
@@ -143,12 +143,12 @@ function uploads_adminapi_showinput($args)
                     $data['storedList']   = array();
                 } else {
                     // CHECKME: fall back to common uploads directory, or fail here ?
-                    //  $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+                    //  $data['storedList']   = xarMod::apiFunc('uploads', 'user', 'db_getall_files');
                     return xarML('Unable to create upload directory #(1)', $upload_directory);
                 }
             }
         } else {
-            $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+            $data['storedList']   = xarMod::apiFunc('uploads', 'user', 'db_getall_files');
         }
     } else {
         $data['storedList']   = array();
@@ -165,13 +165,13 @@ function uploads_adminapi_showinput($args)
         if (is_array($aList) && count($aList)) {
             $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
             $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
-            $data['Attachments'] = xarModAPIFunc(
+            $data['Attachments'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_get_file',
                 array('fileId' => $aList)
             );
-            $list = xarModAPIFunc(
+            $list = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'showoutput',
@@ -196,5 +196,5 @@ function uploads_adminapi_showinput($args)
         $data['invalid'] = $invalid;
     }
     // TODO: different formats ?
-    return (isset($list) ? $list : '') . xarTplModule('uploads', 'user', 'attach_files', $data, null);
+    return (isset($list) ? $list : '') . xarTpl::module('uploads', 'user', 'attach_files', $data, null);
 }

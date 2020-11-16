@@ -19,13 +19,13 @@
  */
 function uploads_user_upload()
 {
-    if (!xarSecurityCheck('AddUploads')) {
+    if (!xarSecurity::check('AddUploads')) {
         return;
     }
 
-    xarVarFetch('importFrom', 'str:1:', $importFrom, null, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('importFrom', 'str:1:', $importFrom, null, xarVar::NOT_REQUIRED);
 
-    $list = xarModAPIFunc(
+    $list = xarMod::apiFunc(
         'uploads',
         'user',
         'process_files',
@@ -35,6 +35,6 @@ function uploads_user_upload()
     if (is_array($list) && count($list)) {
         return array('fileList' => $list);
     } else {
-        xarController::redirect(xarModURL('uploads', 'user', 'uploadform'));
+        xarController::redirect(xarController::URL('uploads', 'user', 'uploadform'));
     }
 }

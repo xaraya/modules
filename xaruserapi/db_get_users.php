@@ -60,7 +60,7 @@ function uploads_userapi_db_get_users($args)
         $row = $result->GetRowAssoc(false);
 
         $userInfo['userId']   = $row['xar_user_id'];
-        $userInfo['userName'] = xarUserGetVar('name', $row['xar_user_id']);
+        $userInfo['userName'] = xarUser::getVar('name', $row['xar_user_id']);
 
         $userList[$userInfo['userId']] = $userInfo;
 

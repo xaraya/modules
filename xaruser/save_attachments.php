@@ -19,29 +19,29 @@
 function uploads_user_save_attachments($args)
 {
     // Get parameters
-    if (!xarVarFetch('modname', 'isset', $modname, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modname', 'isset', $modname, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectid', 'isset', $objectid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('returnurl', 'isset', $returnurl, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('returnurl', 'isset', $returnurl, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('rating', 'isset', $rating, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('rating', 'isset', $rating, null, xarVar::DONT_SET)) {
         return;
     }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
     // Pass to API
-    $newrating = xarModAPIFunc(
+    $newrating = xarMod::apiFunc(
         'ratings',
         'user',
         'rate',

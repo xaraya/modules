@@ -59,7 +59,7 @@ function uploads_userapi_file_dump($args)
         throw new Exception($msg);
     }
 
-    $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
     $fileInfo = end($fileInfo);
 
     if (!count($fileInfo) || empty($fileInfo)) {
@@ -70,12 +70,12 @@ function uploads_userapi_file_dump($args)
         );
         throw new Exception($msg);
     } else {
-        $dataBlocks = xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileId));
+        $dataBlocks = xarMod::apiFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileId));
 
         if ($dataBlocks > 0) {
             // we don't support non-truncated overwrites nor appends
             // so truncate the file and then save it
-            if (!xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId))) {
+            if (!xarMod::apiFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId))) {
                 $msg = xarML('Unable to truncate file [#(1)] in database.', $fileInfo['fileName']);
                 throw new Exception($msg);
             }
@@ -90,14 +90,14 @@ function uploads_userapi_file_dump($args)
                     fclose($srcId);
                     break;
                 }
-                if (!xarModAPIFunc('uploads', 'user', 'db_add_file_data', array('fileId' => $fileId, 'fileData' => $data))) {
+                if (!xarMod::apiFunc('uploads', 'user', 'db_add_file_data', array('fileId' => $fileId, 'fileData' => $data))) {
                     // there was an error, so close the input file and delete any blocks
                     // we may have written, unlink the file (if specified), and return an exception
                     fclose($srcId);
                     if ($unlink) {
                         @unlink($fileSrc); // fail silently
                     }
-                    xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId));
+                    xarMod::apiFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId));
                     $msg = xarML('Unable to save file contents to database.');
                     throw new Exception($msg);
                 }

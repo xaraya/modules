@@ -3,7 +3,7 @@
     <div class="xar-mod-body">
         <h2>Uploads Module Overview</h2>
 
-            <form action="#xarModURL('uploads','admin','approvefinal')#" method="post">
+            <form action="#xarController::URL('uploads','admin','approvefinal')#" method="post">
             <fieldset>
                 <legend>
                     Approval

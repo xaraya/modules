@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
-        <form id="upload_form" action="#xarModURL('uploads', 'admin', 'get_files')#" method="post" enctype="multipart/form-data">
+        <form id="upload_form" action="#xarController::URL('uploads', 'admin', 'get_files')#" method="post" enctype="multipart/form-data">
             <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
                 <xar:if condition="isset($orientation) and $orientation eq 'vertical'">
                     <tr>

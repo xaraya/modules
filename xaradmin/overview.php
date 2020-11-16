@@ -19,5 +19,5 @@ function uploads_admin_overview()
 {
     $data=array();
     //just return to main function that displays the overview
-    return xarTplModule('uploads', 'admin', 'main', $data, 'main');
+    return xarTpl::module('uploads', 'admin', 'main', $data, 'main');
 }

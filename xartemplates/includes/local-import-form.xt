@@ -29,10 +29,10 @@
               &#160;
             </td>
             <td width="65%" class="xar-norm" align="left">&#160;
-              <a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => '...', 'action' => $getAction['REFRESH']))#"
+              <a href="#xarController::URL('uploads', 'admin', 'get_files', array('inode' => '...', 'action' => $getAction['REFRESH']))#"
                  alt="#xarML('Open Folder')#"
                  title="#xarML('Open Folder')#">
-                <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>
+                <img src="#xarTpl::getImage('folder.png', 'uploads')#" width="16" height="18"/>
                 
                   <strong>Previous Folder</strong>
                 
@@ -50,7 +50,7 @@
             </xar:if>
           </td>
           <td width="65%" align="left">&#160;
-            <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>&#160;
+            <img src="#xarTpl::getImage('folder.png', 'uploads')#" width="16" height="18"/>&#160;
               <strong>Current Folder</strong>
           </td>
           <td width="25%" align="right">
@@ -74,11 +74,11 @@
                   <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                      alt="#xarML('Open Folder')#"
                      title="#xarML('Open Folder')#">
-                    <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>
+                    <img src="#xarTpl::getImage('folder.png', 'uploads')#" width="16" height="18"/>
                       <strong>#$loop:item['fileName']#</strong>
                   </a>
                   <xar:else />
-                  <img src="#xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $loop:item['fileType']))#"
+                  <img src="#xarMod::apiFunc('mime', 'user', 'get_mime_image', array('mimeType' => $loop:item['fileType']))#"
                        width="16" height="18"/>&#160;
                   #$loop:item['fileName']#
                 </xar:if>

@@ -13,11 +13,11 @@
  */
 
 // load defined constants
-xarModAPILoad('uploads', 'user');
+xarMod::apiLoad('uploads', 'user');
 
 function uploads_admin_get_files()
 {
-    if (!xarSecurityCheck('AddUploads')) {
+    if (!xarSecurity::check('AddUploads')) {
         return;
     }
 
@@ -28,13 +28,13 @@ function uploads_admin_get_files()
     $actionList = 'enum:' . implode(':', $actionList);
 
     // What action are we performing?
-    if (!xarVarFetch('action', $actionList, $args['action'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', $actionList, $args['action'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // StoreType can -only- be one of FSDB or DB_FULL
     $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
-    if (!xarVarFetch('storeType', "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('storeType', "enum:$storeTypes", $storeType, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -50,22 +50,22 @@ function uploads_admin_get_files()
             break;
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
-            if (!xarVarFetch('import', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 'NULL', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('import', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 'NULL', xarVar::NOT_REQUIRED)) {
                 return;
             }
             $args['import'] = $import;
             break;
         case _UPLOADS_GET_LOCAL:
-            if (!xarVarFetch('fileList', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) {
+            if (!xarVar::fetch('fileList', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) {
                 return;
             }
-            if (!xarVarFetch('file_all', 'checkbox', $file_all, '', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('file_all', 'checkbox', $file_all, '', xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('addbutton', 'str:1', $addbutton, '', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('addbutton', 'str:1', $addbutton, '', xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('delbutton', 'str:1', $delbutton, '', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('delbutton', 'str:1', $delbutton, '', xarVar::NOT_REQUIRED)) {
                 return;
             }
 
@@ -78,7 +78,7 @@ function uploads_admin_get_files()
 
             $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
             foreach ($fileList as $file) {
-                $args['fileList']["$cwd/$file"] = xarModAPIFunc(
+                $args['fileList']["$cwd/$file"] = xarMod::apiFunc(
                     'uploads',
                     'user',
                     'file_get_metadata',
@@ -90,11 +90,11 @@ function uploads_admin_get_files()
             break;
         default:
         case _UPLOADS_GET_REFRESH_LOCAL:
-            if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', xarVar::NOT_REQUIRED)) {
                 return;
             }
 
-            $cwd = xarModAPIFunc('uploads', 'user', 'import_chdir', array('dirName' => isset($inode) ? $inode : null));
+            $cwd = xarMod::apiFunc('uploads', 'user', 'import_chdir', array('dirName' => isset($inode) ? $inode : null));
 
             $data['storeType']['DB_FULL']     = _UPLOADS_STORE_DB_FULL;
             $data['storeType']['FSDB']        = _UPLOADS_STORE_FSDB;
@@ -104,9 +104,9 @@ function uploads_admin_get_files()
             $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
             $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
             $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
-            $data['local_import_post_url']    = xarModURL('uploads', 'admin', 'get_files');
-            $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
-            $data['fileList'] = xarModAPIFunc(
+            $data['local_import_post_url']    = xarController::URL('uploads', 'admin', 'get_files');
+            $data['external_import_post_url'] = xarController::URL('uploads', 'admin', 'get_files');
+            $data['fileList'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'import_get_filelist',
@@ -117,7 +117,7 @@ function uploads_admin_get_files()
             $data['noPrevDir'] = (xarModVars::get('uploads', 'imports_directory') == $cwd) ? true : false;
             // reset the CWD for the local import
             // then only display the: 'check for new imports' button
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
             $data['file_maxsize'] = $file_maxsize;
             return $data;
             break;
@@ -125,11 +125,11 @@ function uploads_admin_get_files()
     if (isset($storeType)) {
         $args['storeType'] = $storeType;
     }
-    $list = xarModAPIFunc('uploads', 'user', 'process_files', $args);
+    $list = xarMod::apiFunc('uploads', 'user', 'process_files', $args);
     if (is_array($list) && count($list)) {
-        return xarTplModule('uploads', 'admin', 'addfile-status', array('fileList' => $list), null);
+        return xarTpl::module('uploads', 'admin', 'addfile-status', array('fileList' => $list), null);
     } else {
-        xarController::redirect(xarModURL('uploads', 'admin', 'get_files'));
+        xarController::redirect(xarController::URL('uploads', 'admin', 'get_files'));
         return;
     }
 

@@ -45,7 +45,7 @@ function uploads_adminapi_delete_associations($args)
     }
 
     // 2. get the upload-related property types
-    $proptypes = xarModAPIFunc('dynamicdata', 'user', 'getproptypes');
+    $proptypes = xarMod::apiFunc('dynamicdata', 'user', 'getproptypes');
     $proptypelist = array();
     foreach ($proptypes as $typeid => $proptype) {
         if ($proptype['name'] == 'uploads' || $proptype['name'] == 'fileupload' || $proptype['name'] == 'textupload') {
@@ -71,7 +71,7 @@ function uploads_adminapi_delete_associations($args)
         $modid = $objectinfo['moduleid'];
         $itemtype = $objectinfo['itemtype'];
         if (!isset($modnames[$modid])) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             if (empty($modinfo)) {
                 return;
             }
@@ -79,7 +79,7 @@ function uploads_adminapi_delete_associations($args)
         }
 
         // 6. get a dynamic object list
-        $object = xarModAPIFunc('dynamicdata', 'user', 'getobjectlist', $objectinfo);
+        $object = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', $objectinfo);
 
         // 7. build the list of properties we're interested in
         $proplist = array();
@@ -91,7 +91,7 @@ function uploads_adminapi_delete_associations($args)
             }
             // see if uploads is hooked where necessary
             if (($proptypelist[$proptype] == 'fileupload' || $proptypelist[$proptype] == 'textupload') &&
-                !xarModIsHooked('uploads', $modnames[$modid], $itemtype)) {
+                !xarModHooks::isHooked('uploads', $modnames[$modid], $itemtype)) {
                 // skip this property
                 continue;
             }
@@ -147,7 +147,7 @@ function uploads_adminapi_delete_associations($args)
             }
 
             // 10. update the item values if necessary
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'dynamicdata',
                 'admin',
                 'update',
@@ -162,7 +162,7 @@ function uploads_adminapi_delete_associations($args)
     }
 
     // let's try some articles fields too
-    if (!xarModIsAvailable('articles')) {
+    if (!xarMod::isAvailable('articles')) {
         return true;
     }
     $artmodid = xarMod::getRegID('articles');
@@ -170,12 +170,12 @@ function uploads_adminapi_delete_associations($args)
         return true;
     }
 
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
     foreach ($pubtypes as $pubtypeid => $pubtypeinfo) {
         if (!empty($args['itemtype']) && $args['itemtype'] != $pubtypeid) {
             continue;
         }
-        if (!xarModIsHooked('uploads', 'articles', $pubtypeid)) {
+        if (!xarModHooks::isHooked('uploads', 'articles', $pubtypeid)) {
             continue;
         }
         $fieldlist = array();
@@ -187,7 +187,7 @@ function uploads_adminapi_delete_associations($args)
         if (empty($fieldlist)) {
             continue;
         }
-        $articles = xarModAPIFunc(
+        $articles = xarMod::apiFunc(
             'articles',
             'user',
             'getall',
@@ -240,7 +240,7 @@ function uploads_adminapi_delete_associations($args)
                 $values['title'] = $article['title'];
             }
             // update the article fields
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'articles',
                 'admin',
                 'update',
@@ -252,7 +252,7 @@ function uploads_adminapi_delete_associations($args)
     }
 
     // 1. delete any existing associations for these arguments
-    if (!xarModAPIFunc('uploads', 'user', 'db_delete_association', $args)) {
+    if (!xarMod::apiFunc('uploads', 'user', 'db_delete_association', $args)) {
         return;
     }
 

@@ -19,19 +19,19 @@
  * @param string fileName
  * @return array
  */
-xarModAPILoad('uploads', 'user');
+xarMod::apiLoad('uploads', 'user');
 
 function uploads_user_file_properties($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('ViewUploads')) {
+    if (!xarSecurity::check('ViewUploads')) {
         return;
     }
-    if (!xarVarFetch('fileId', 'int:1', $fileId)) {
+    if (!xarVar::fetch('fileId', 'int:1', $fileId)) {
         return;
     }
-    if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fileName', 'str:1:64', $fileName, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -45,7 +45,7 @@ function uploads_user_file_properties($args)
         throw new Exception($msg);
     }
 
-    $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
     if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
         $data['error']      = xarML('File not found!');
@@ -59,9 +59,9 @@ function uploads_user_file_properties($args)
         $instance[3] = $fileId;
 
         $instance = implode(':', $instance);
-        if (xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+        if (xarSecurity::check('EditUploads', 0, 'File', $instance)) {
             $data['allowedit'] = 1;
-            $data['hooks'] = xarModCallHooks(
+            $data['hooks'] = xarModHooks::call(
                 'item',
                 'modify',
                 $fileId,
@@ -77,7 +77,7 @@ function uploads_user_file_properties($args)
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
 
-                if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
+                if (!xarMod::apiFunc('uploads', 'user', 'db_modify_file', $args)) {
                     $msg = xarML(
                         'Unable to change filename for file: #(1) with file Id #(2)',
                         $fileInfo['fileName'],
@@ -85,7 +85,7 @@ function uploads_user_file_properties($args)
                     );
                     throw new Exception($msg);
                 }
-                xarController::redirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
+                xarController::redirect(xarController::URL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
                 xarErrorHandled();
@@ -94,7 +94,7 @@ function uploads_user_file_properties($args)
             }
         }
 
-        if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
+        if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurity::check('ViewUploads', 1, 'File', $instance)) {
 
 
             // we don't want the theme to show up, so
@@ -119,11 +119,11 @@ function uploads_user_file_properties($args)
             $fileInfo['storeType'] = $storeType;
             unset($storeType);
 
-            $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
+            $fileInfo['size'] = xarMod::apiFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
             if (mb_ereg('^image', $fileInfo['fileType'])) {
                 // let the images module handle it
-                if (xarModIsAvailable('images')) {
+                if (xarMod::isAvailable('images')) {
                     $fileInfo['image'] = true;
 
                 // try to get the image size
@@ -160,7 +160,7 @@ function uploads_user_file_properties($args)
                 }
             }
 
-            $fileInfo['numassoc'] = xarModAPIFunc(
+            $fileInfo['numassoc'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_count_associations',
@@ -169,7 +169,7 @@ function uploads_user_file_properties($args)
 
             $data['fileInfo'] = $fileInfo;
 
-            echo xarTplModule('uploads', 'user', 'file_properties', $data, null);
+            echo xarTpl::module('uploads', 'user', 'file_properties', $data, null);
             exit();
         } else {
             xarErrorHandled();

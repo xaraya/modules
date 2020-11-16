@@ -57,8 +57,8 @@ function uploads_adminapi_validatevalue($args)
 
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
-    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarModAPIFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+    if (xarMod::apiFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -71,7 +71,7 @@ function uploads_adminapi_validatevalue($args)
         }
     }
 
-    xarModAPILoad('uploads', 'user');
+    xarMod::apiLoad('uploads', 'user');
 
     if (isset($methods) && count($methods) > 0) {
         $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
@@ -87,7 +87,7 @@ function uploads_adminapi_validatevalue($args)
         $typeCheck .= ':-2'; // clear value
     }
 
-    xarVarFetch($id . '_attach_type', $typeCheck, $action, -3, XARVAR_NOT_REQUIRED);
+    xarVar::fetch($id . '_attach_type', $typeCheck, $action, -3, xarVar::NOT_REQUIRED);
 
     if (!isset($action)) {
         $action = -3;
@@ -100,11 +100,11 @@ function uploads_adminapi_validatevalue($args)
             $file_maxsize = xarModVars::get('uploads', 'file.maxsize');
             $file_maxsize = $file_maxsize > 0 ? $file_maxsize : $maxsize;
 
-            if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) {
+            if (!xarVar::fetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) {
                 return;
             }
 
-            if (!xarVarValidate('array:1:', $_FILES[$id . '_attach_upload'])) {
+            if (!xarVar::validate('array:1:', $_FILES[$id . '_attach_upload'])) {
                 return;
             }
 
@@ -114,7 +114,7 @@ function uploads_adminapi_validatevalue($args)
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
 
-            if (!xarVarFetch($id . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch($id . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
 
@@ -130,7 +130,7 @@ function uploads_adminapi_validatevalue($args)
             break;
         case _UPLOADS_GET_LOCAL:
 
-            if (!xarVarFetch($id . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) {
+            if (!xarVar::fetch($id . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) {
                 return;
             }
 
@@ -139,7 +139,7 @@ function uploads_adminapi_validatevalue($args)
             $importDir = sys::root() . "/" . xarModVars::get('uploads', 'imports_directory');
             foreach ($fileList as $file) {
                 $file = str_replace('/trusted', $importDir, $file);
-                $args['fileList']["$file"] = xarModAPIFunc(
+                $args['fileList']["$file"] = xarMod::apiFunc(
                     'uploads',
                     'user',
                     'file_get_metadata',
@@ -152,7 +152,7 @@ function uploads_adminapi_validatevalue($args)
             break;
         case _UPLOADS_GET_STORED:
 
-            if (!xarVarFetch($id . '_attach_stored', 'list:int:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch($id . '_attach_stored', 'list:int:1:', $fileList, 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
 
@@ -207,7 +207,7 @@ function uploads_adminapi_validatevalue($args)
             $args['storeType'] = $storeType;
         }
 
-        $list = xarModAPIFunc('uploads', 'user', 'process_files', $args);
+        $list = xarMod::apiFunc('uploads', 'user', 'process_files', $args);
         $storeList = array();
         foreach ($list as $file => $fileInfo) {
             if (!isset($fileInfo['errors'])) {
@@ -249,13 +249,13 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
     }
 
     // (try to) check if we're previewing or not
-    xarVarFetch('preview', 'isset', $preview, false, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('preview', 'isset', $preview, false, xarVar::NOT_REQUIRED);
     if (!empty($preview)) {
         return;
     }
 
     // get the current file associations for this module items
-    $assoc = xarModAPIFunc(
+    $assoc = xarMod::apiFunc(
         'uploads',
         'user',
         'db_get_associations',
@@ -277,7 +277,7 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
         if (empty($id)) {
             continue;
         }
-        xarModAPIFunc(
+        xarMod::apiFunc(
             'uploads',
             'user',
             'db_add_association',
@@ -291,7 +291,7 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
         if (empty($id)) {
             continue;
         }
-        xarModAPIFunc(
+        xarMod::apiFunc(
             'uploads',
             'user',
             'db_delete_association',

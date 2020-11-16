@@ -18,29 +18,29 @@
 function uploads_admin_assoc()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminUploads')) {
+    if (!xarSecurity::check('AdminUploads')) {
         return;
     }
 
-    if (!xarVarFetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'isset', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('fileId', 'isset', $fileId, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('fileId', 'isset', $fileId, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('action', 'isset', $action, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('action', 'isset', $action, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -53,7 +53,7 @@ function uploads_admin_assoc()
 
     if (!empty($action)) {
         if ($action == 'rescan') {
-            $result = xarModAPIFunc(
+            $result = xarMod::apiFunc(
                 'uploads',
                 'admin',
                 'rescan_associations',
@@ -66,20 +66,20 @@ function uploads_admin_assoc()
                 return;
             }
         } elseif ($action == 'missing') {
-            $missing = xarModAPIFunc('uploads', 'admin', 'check_associations');
+            $missing = xarMod::apiFunc('uploads', 'admin', 'check_associations');
             if (!isset($missing)) {
                 return;
             }
         } elseif ($action == 'delete' && !empty($modid)) {
-            if (!xarVarFetch('confirm', 'isset', $confirm, null, XARVAR_DONT_SET)) {
+            if (!xarVar::fetch('confirm', 'isset', $confirm, null, xarVar::DONT_SET)) {
                 return;
             }
             if (!empty($confirm)) {
                 // Confirm authorisation code.
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
-                $result = xarModAPIFunc(
+                $result = xarMod::apiFunc(
                     'uploads',
                     'admin',
                     'delete_associations',
@@ -91,7 +91,7 @@ function uploads_admin_assoc()
                 if (!$result) {
                     return;
                 }
-                xarController::redirect(xarModURL('uploads', 'admin', 'assoc'));
+                xarController::redirect(xarController::URL('uploads', 'admin', 'assoc'));
                 return true;
             }
         }
@@ -106,7 +106,7 @@ function uploads_admin_assoc()
         $data['missing'] = $missing;
     }
 
-    $modlist = xarModAPIFunc(
+    $modlist = xarMod::apiFunc(
         'uploads',
         'user',
         'db_group_associations',
@@ -118,9 +118,9 @@ function uploads_admin_assoc()
         $data['numitems'] = 0;
         $data['numlinks'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc(
+            $mytypes = xarMod::apiFunc(
                 $modinfo['name'],
                 'user',
                 'getitemtypes',
@@ -135,17 +135,17 @@ function uploads_admin_assoc()
                 $moditem['numlinks'] = $stats['links'];
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
-                //    $moditem['link'] = xarModURL($modinfo['name'],'user','main');
+                //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
                 } else {
                     if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                     //    $moditem['link'] = $mytypes[$itemtype]['url'];
                     } else {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                        //    $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                        //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                     }
                 }
-                $moditem['link'] = xarModURL(
+                $moditem['link'] = xarController::URL(
                     'uploads',
                     'admin',
                     'assoc',
@@ -153,7 +153,7 @@ function uploads_admin_assoc()
                                                    'itemtype' => empty($itemtype) ? null : $itemtype,
                                                    'fileId' => $fileId)
                 );
-                $moditem['rescan'] = xarModURL(
+                $moditem['rescan'] = xarController::URL(
                     'uploads',
                     'admin',
                     'assoc',
@@ -162,7 +162,7 @@ function uploads_admin_assoc()
                                                      'itemtype' => empty($itemtype) ? null : $itemtype,
                                                      'fileId' => $fileId)
                 );
-                $moditem['delete'] = xarModURL(
+                $moditem['delete'] = xarController::URL(
                     'uploads',
                     'admin',
                     'assoc',
@@ -176,14 +176,14 @@ function uploads_admin_assoc()
                 $data['numlinks'] += $moditem['numlinks'];
             }
         }
-        $data['rescan'] = xarModURL(
+        $data['rescan'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
             array('action' => 'rescan',
                                           'fileId' => $fileId)
         );
-        $data['delete'] = xarModURL(
+        $data['delete'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
@@ -191,7 +191,7 @@ function uploads_admin_assoc()
                                           'fileId' => $fileId)
         );
         if (!empty($fileId)) {
-            $data['fileinfo'] = xarModAPIFunc(
+            $data['fileinfo'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_get_file',
@@ -199,7 +199,7 @@ function uploads_admin_assoc()
             );
         }
     } else {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         $data['module'] = $modinfo['name'];
         if (empty($itemtype)) {
             $data['modname'] = ucwords($modinfo['displayname']);
@@ -209,7 +209,7 @@ function uploads_admin_assoc()
             }
         } else {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc(
+            $mytypes = xarMod::apiFunc(
                 $modinfo['name'],
                 'user',
                 'getitemtypes',
@@ -222,7 +222,7 @@ function uploads_admin_assoc()
             //    $data['modlink'] = $mytypes[$itemtype]['url'];
             } else {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
             }
             if (isset($modlist[$modid][$itemtype])) {
                 $stats = $modlist[$modid][$itemtype];
@@ -241,7 +241,7 @@ function uploads_admin_assoc()
         }
         /*
                 if (!empty($fileId)) {
-                    $data['numlinks'] = xarModAPIFunc('uploads','user','db_count_associations',
+                    $data['numlinks'] = xarMod::apiFunc('uploads','user','db_count_associations',
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'fileId' => $fileId));
@@ -252,7 +252,7 @@ function uploads_admin_assoc()
             $data['pager'] = xarTplPager::getPager(
                 $startnum,
                 $data['numlinks'],
-                xarModURL(
+                xarController::URL(
                                                 'uploads',
                                                 'admin',
                                                 'assoc',
@@ -267,7 +267,7 @@ function uploads_admin_assoc()
         } else {
             $data['pager'] = '';
         }
-        $getitems = xarModAPIFunc(
+        $getitems = xarMod::apiFunc(
             'uploads',
             'user',
             'db_list_associations',
@@ -283,7 +283,7 @@ function uploads_admin_assoc()
         $showtitle = true;
         if (!empty($getitems) && !empty($showtitle)) {
             $itemids = array_keys($getitems);
-            $itemlinks = xarModAPIFunc(
+            $itemlinks = xarMod::apiFunc(
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
@@ -306,7 +306,7 @@ function uploads_admin_assoc()
             foreach ($filelist as $id) {
                 $seenfileid[$id] = 1;
             }
-            $data['moditems'][$itemid]['rescan'] = xarModURL(
+            $data['moditems'][$itemid]['rescan'] = xarController::URL(
                 'uploads',
                 'admin',
                 'assoc',
@@ -316,7 +316,7 @@ function uploads_admin_assoc()
                                                                    'itemid' => $itemid,
                                                                    'fileId' => $fileId)
             );
-            $data['moditems'][$itemid]['delete'] = xarModURL(
+            $data['moditems'][$itemid]['delete'] = xarController::URL(
                 'uploads',
                 'admin',
                 'assoc',
@@ -334,7 +334,7 @@ function uploads_admin_assoc()
         unset($getitems);
         unset($itemlinks);
         if (!empty($seenfileid)) {
-            $data['fileinfo'] = xarModAPIFunc(
+            $data['fileinfo'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_get_file',
@@ -343,7 +343,7 @@ function uploads_admin_assoc()
         } else {
             $data['fileinfo'] = array();
         }
-        $data['rescan'] = xarModURL(
+        $data['rescan'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
@@ -352,7 +352,7 @@ function uploads_admin_assoc()
                                           'itemtype' => $itemtype,
                                           'fileId' => $fileId)
         );
-        $data['delete'] = xarModURL(
+        $data['delete'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
@@ -365,7 +365,7 @@ function uploads_admin_assoc()
         if (empty($sort) || $sort == 'itemid') {
             $data['sortlink']['itemid'] = '';
         } else {
-            $data['sortlink']['itemid'] = xarModURL(
+            $data['sortlink']['itemid'] = xarController::URL(
                 'uploads',
                 'admin',
                 'assoc',
@@ -377,7 +377,7 @@ function uploads_admin_assoc()
         if (!empty($sort) && $sort == 'numlinks') {
             $data['sortlink']['numlinks'] = '';
         } else {
-            $data['sortlink']['numlinks'] = xarModURL(
+            $data['sortlink']['numlinks'] = xarController::URL(
                 'uploads',
                 'admin',
                 'assoc',
@@ -390,7 +390,7 @@ function uploads_admin_assoc()
 
         if (!empty($action) && $action == 'delete') {
             $data['action'] = 'delete';
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
         }
     }
 

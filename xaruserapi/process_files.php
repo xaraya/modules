@@ -27,7 +27,7 @@
  *                      they will have a fileId associated with them if they were added to the DB
  */
 
-xarModAPILoad('uploads', 'user');
+xarMod::apiLoad('uploads', 'user');
 
 function uploads_userapi_process_files($args)
 {
@@ -110,7 +110,7 @@ function uploads_userapi_process_files($args)
                         $dirfilter = null;
                     }
                     // Note: we don't check on fileSize here (it wasn't taken into account before)
-                    $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name'],
+                    $fileTest = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name'],
                                                                                       // make sure we look in the right directory :-)
                                                                                       'fileLocation' => $dirfilter));
                     if (count($fileTest)) {
@@ -140,7 +140,7 @@ function uploads_userapi_process_files($args)
                         }
                     }
 
-                    $fileList = array_merge($fileList, xarModAPIFunc(
+                    $fileList = array_merge($fileList, xarMod::apiFunc(
                         'uploads',
                         'user',
                         'prepare_uploads',
@@ -159,13 +159,13 @@ function uploads_userapi_process_files($args)
                 // current working directory for the user, set by import_chdir() when using the get_files() GUI
                 $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
 
-                $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => true));
+                $fileList = xarMod::apiFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => true));
             } else {
                 $list = array();
                 // file list coming from validatevalue() or the get_files() GUI
                 foreach ($fileList as $location => $fileInfo) {
                     if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
-                        $list += xarModAPIFunc(
+                        $list += xarMod::apiFunc(
                             'uploads',
                             'user',
                             'import_get_filelist',
@@ -200,7 +200,7 @@ function uploads_userapi_process_files($args)
 
             switch ($uri['scheme']) {
                 case 'ftp':
-                    $fileList = xarModAPIFunc(
+                    $fileList = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'import_external_ftp',
@@ -211,7 +211,7 @@ function uploads_userapi_process_files($args)
                     break;
                 case 'https':
                 case 'http':
-                    $fileList = xarModAPIFunc(
+                    $fileList = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'import_external_http',
@@ -224,7 +224,7 @@ function uploads_userapi_process_files($args)
                     // If we'ere using the file scheme then just store a db entry only
                     // as there is really no sense in moving the file around
                     $storeType = _UPLOADS_STORE_DB_ENTRY;
-                    $fileList = xarModAPIFunc(
+                    $fileList = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'import_external_file',
@@ -256,7 +256,7 @@ function uploads_userapi_process_files($args)
             $storeList[] = $fileInfo;
             continue;
         }
-        $storeList[] = xarModAPIFunc(
+        $storeList[] = xarMod::apiFunc(
             'uploads',
             'user',
             'file_store',

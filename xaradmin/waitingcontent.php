@@ -23,7 +23,7 @@ function uploads_admin_waitingcontent()
 {
     // Get count of files in submitted state
     unset($count_submitted);
-    $count_submitted = xarModAPIFunc(
+    $count_submitted = xarMod::apiFunc(
         'uploads',
         'user',
         'db_count',

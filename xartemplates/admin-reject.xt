@@ -23,7 +23,7 @@
                         <td class="xar-norm">#$loop:item['ulfile']#</td>
                         <td class="xar-norm">#$loop:item['ulhash']#</td>
                         <td class="xar-norm">
-                            <a href="#xarModURL('uploads', 'admin', 'confirmdelete', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#">
+                            <a href="#xarController::URL('uploads', 'admin', 'confirmdelete', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#">
                                 Confirm Delete\
                             </a>
                         </td>

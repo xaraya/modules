@@ -61,7 +61,7 @@ function uploads_userapi_db_add_file($args)
         $autoApprove = xarModVars::get('uploads', 'file.auto-approve');
 
         if ($autoApprove == _UPLOADS_APPROVE_EVERYONE ||
-           ($autoApprove == _UPLOADS_APPROVE_ADMIN && xarSecurityCheck('AdminUploads', 0))) {
+           ($autoApprove == _UPLOADS_APPROVE_ADMIN && xarSecurity::check('AdminUploads', 0))) {
             $fileStatus = _UPLOADS_STATUS_APPROVED;
         } else {
             $fileStatus = _UPLOADS_STATUS_SUBMITTED;
@@ -87,7 +87,7 @@ function uploads_userapi_db_add_file($args)
     }
 
     if (!isset($fileType)) {
-        $fileType = xarModAPIFunc('mime', 'user', 'analyze_file', array('fileName' => $fileLocation, 'altFileName'=>$fileName));
+        $fileType = xarMod::apiFunc('mime', 'user', 'analyze_file', array('fileName' => $fileLocation, 'altFileName'=>$fileName));
         if (empty($fileType)) {
             $fileType = 'application/octet-stream';
         }
@@ -145,7 +145,7 @@ function uploads_userapi_db_add_file($args)
     // Pass the arguments to the hook modules too
     $args['module'] = 'uploads';
     $args['itemtype'] = 1; // Files
-    xarModCallHooks('item', 'create', $fileId, $args);
+    xarModHooks::call('item', 'create', $fileId, $args);
 
     return $fileId;
 }

@@ -25,7 +25,7 @@ function uploads_user_display_attachments($args)
 {
     extract($args);
 
-    if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -52,7 +52,7 @@ function uploads_user_display_attachments($args)
     }
 
     if (empty($modname)) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     }
 
     $args['modName']  = $modname;
@@ -65,7 +65,7 @@ function uploads_user_display_attachments($args)
     xarModUserVars::set('uploads', 'save.attachment-info', serialize($args));
 
     // Run API function
-    $associations = xarModAPIFunc('uploads', 'user', 'db_get_associations', $args);
+    $associations = xarMod::apiFunc('uploads', 'user', 'db_get_associations', $args);
 
     if (!empty($associations)) {
         $fileIds = array();
@@ -73,15 +73,15 @@ function uploads_user_display_attachments($args)
             $fileIds[] = $assoc['fileId'];
         }
 
-        $Attachments = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileIds));
+        $Attachments = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileIds));
     } else {
         $Attachments = array();
     }
 
     $data = $args;
     $data['Attachments']              = $Attachments;
-    $data['local_import_post_url']    = xarModURL('uploads', 'user', 'display_attachments');
+    $data['local_import_post_url']    = xarController::URL('uploads', 'user', 'display_attachments');
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
-    $data['authid'] = xarSecGenAuthKey('uploads');
+    $data['authid'] = xarSec::genAuthKey('uploads');
     return $data;
 }

@@ -40,7 +40,7 @@ function uploads_userapi_decode_shorturl($params)
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
         $fileId = $matches[1];
-        $fileExists = xarModAPIFunc('uploads', 'user', 'db_count', array('fileId' => $fileId));
+        $fileExists = xarMod::apiFunc('uploads', 'user', 'db_count', array('fileId' => $fileId));
 
         if (!$fileExists) {
             $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1]);

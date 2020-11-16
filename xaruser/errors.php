@@ -14,17 +14,17 @@
 
 function uploads_user_errors()
 {
-    if (!xarSecurityCheck('ViewUploads')) {
+    if (!xarSecurity::check('ViewUploads')) {
         return;
     }
     
-    if (!xarVarFetch('layout', 'str:1:100', $data['layout'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('layout', 'str:1:100', $data['layout'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('maxallowed', 'str:1:100', $data['maxallowed'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('maxallowed', 'str:1:100', $data['maxallowed'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('location', 'str:1:100', $data['location'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('location', 'str:1:100', $data['location'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
 

@@ -114,7 +114,7 @@
             </td>
             </form>
         </tr>
-        <xar:if condition="xarModIsAvailable('categories') and xarModIsHooked('categories','uploads',1)">
+        <xar:if condition="xarMod::isAvailable('categories') and xarModHooks::isHooked('categories','uploads',1)">
         <tr>
             <td colspan="6">
                 <xar:template file="catnavigation" type="module"/>

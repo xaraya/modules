@@ -14,7 +14,7 @@
         </title> 
         <base href="&xar-baseurl;index.php"/>
         <style type="text/css">
-            @import url(&xar-baseurl;#xarTplGetThemeDir()#/style/style.css); 
+            @import url(&xar-baseurl;#xarTpl::getThemeDir()#/style/style.css); 
         </style> 
     </head>
     <body>
@@ -149,14 +149,14 @@
                                 </td>
                                 <td class="xar-accent" width="80%">&#160;
                                     #$fileInfo['numassoc']# 
-                                    <xar:if condition="!empty($fileInfo['numassoc']) and xarSecurityCheck('AdminUploads',0)">
-                                        [<a target="main" href="#xarModURL('uploads','admin','assoc',array('fileId' => $fileInfo['fileId']))#">
+                                    <xar:if condition="!empty($fileInfo['numassoc']) and xarSecurity::check('AdminUploads',0)">
+                                        [<a target="main" href="#xarController::URL('uploads','admin','assoc',array('fileId' => $fileInfo['fileId']))#">
                                             view
                                         </a>]
                                     </xar:if>
                                 </td>
                             </tr>
-                            <xar:if condition="xarModIsHooked('dynamicdata','uploads',1)">
+                            <xar:if condition="xarModHooks::isHooked('dynamicdata','uploads',1)">
                                 <xar:data-getitem name="ddprops" module="uploads" itemtype="1" itemid="$fileInfo['fileId']"/>
                                 <xar:if condition="!empty($ddprops)">
                                     <xar:foreach in="$ddprops" key="$ddname">
@@ -187,10 +187,10 @@
                                 <tr>
                                     <td align="center">
                                         <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#"> 
-                                            <xar:if condition="xarModIsAvailable('images')">
+                                            <xar:if condition="xarMod::isAvailable('images')">
                                                 <xar:template file="image-thumbnail" type="module"/>
                                             <xar:else />
-                                                <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
+                                                <img src="#xarController::URL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
                                                      height="#$fileInfo['image']['height']#" 
                                                      width="#$fileInfo['image']['width']#" 
                                                      alt="#$fileInfo['fileName']#"/>
@@ -206,7 +206,7 @@
                                         
                                             Download File:
                                         &#160;
-                                        <a href="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
+                                        <a href="#xarController::URL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
                                            alt="#xarMl('Download this file.')#">#$fileInfo['fileName']#
                                         </a>
                                     </td>

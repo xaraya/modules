@@ -73,16 +73,16 @@ class UploadProperty extends FileUploadProperty
             $uid = xarSession::getVar('role_id');
             if (!empty($this->initialization_basedirectory) && preg_match('/\{user\}/', $this->initialization_basedirectory)) {
                 // Note: we add the userid just to make sure it's unique e.g. when filtering
-                // out unwanted characters through xarVarPrepForOS, or if the database makes
+                // out unwanted characters through xarVar::prepForOS, or if the database makes
                 // a difference between upper-case and lower-case and the OS doesn't...
-                $udir = xarVarPrepForOS($this->initialization_directory_name) . $uid;
+                $udir = xarVar::prepForOS($this->initialization_directory_name) . $uid;
                 $this->initialization_basedirectory = preg_replace('/\{user\}/', $udir, $this->initialization_basedirectory);
             }
             if (!empty($this->initialization_import_directory) && preg_match('/\{user\}/', $this->initialization_import_directory)) {
                 // Note: we add the userid just to make sure it's unique e.g. when filtering
-                // out unwanted characters through xarVarPrepForOS, or if the database makes
+                // out unwanted characters through xarVar::prepForOS, or if the database makes
                 // a difference between upper-case and lower-case and the OS doesn't...
-                $udir = xarVarPrepForOS($this->initialization_directory_name) . $uid;
+                $udir = xarVar::prepForOS($this->initialization_directory_name) . $uid;
                 $this->initialization_import_directory = preg_replace('/\{user\}/', $udir, $this->initialization_import_directory);
             }
         }
@@ -101,10 +101,10 @@ class UploadProperty extends FileUploadProperty
             $name = 'dd_' . $this->id;
         }
 
-        if (!xarVarFetch($name . '_dbvalue', 'str', $dbvalue, '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch($name . '_dbvalue', 'str', $dbvalue, '', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch($name . '_clear', 'checkbox', $clear, 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch($name . '_clear', 'checkbox', $clear, 0, xarVar::NOT_REQUIRED)) {
             return;
         }
 //        echo $name . '_dbvalue';
@@ -129,21 +129,21 @@ class UploadProperty extends FileUploadProperty
         }
 
         // retrieve new value for preview + new/modify combinations
-        if (xarVarIsCached('DynamicData.Upload', $name)) {
-            $this->value = xarVarGetCached('DynamicData.Upload', $name);
+        if (xarVar::isCached('DynamicData.Upload', $name)) {
+            $this->value = xarVar::getCached('DynamicData.Upload', $name);
             return true;
         }
 
-        xarModAPILoad('uploads', 'user');
+        xarMod::apiLoad('uploads', 'user');
 
         $data['action'] = $this->getActiveInputMethod($name);
 
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
-                if (!xarVarFetch($name . '_max_file_size', "int::$this->validation_max_file_size", $this->validation_max_file_size)) {
+                if (!xarVar::fetch($name . '_max_file_size', "int::$this->validation_max_file_size", $this->validation_max_file_size)) {
                     return;
                 }
-                if (!xarVarValidate('array', $_FILES[$name . '_attach_upload'])) {
+                if (!xarVar::validate('array', $_FILES[$name . '_attach_upload'])) {
                     return;
                 }
 
@@ -162,7 +162,7 @@ class UploadProperty extends FileUploadProperty
             case _UPLOADS_GET_EXTERNAL:
                 // minimum external import link must be: ftp://a.ws  <-- 10 characters total
 
-                if (!xarVarFetch($name . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch($name . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
 
@@ -172,7 +172,7 @@ class UploadProperty extends FileUploadProperty
                         uploads_sync_associations($moduleid, $itemtype, $itemid);
                     }
                     $this->value = null;
-                    xarVarSetCached('DynamicData.Upload', $name, $this->value);
+                    xarVar::setCached('DynamicData.Upload', $name, $this->value);
                     return true;
                 }
 
@@ -180,7 +180,7 @@ class UploadProperty extends FileUploadProperty
                 break;
             case _UPLOADS_GET_LOCAL:
 
-                if (!xarVarFetch($name . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList, array(), XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch($name . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList, array(), xarVar::NOT_REQUIRED)) {
                     return;
                 }
 
@@ -190,7 +190,7 @@ class UploadProperty extends FileUploadProperty
                 $data['fileList'] = array();
                 foreach ($fileList as $file) {
                     $file = str_replace('/trusted', $importDir, $file);
-                    $data['fileList']["$file"] = xarModAPIFunc(
+                    $data['fileList']["$file"] = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'file_get_metadata',
@@ -203,7 +203,7 @@ class UploadProperty extends FileUploadProperty
                 break;
             case _UPLOADS_GET_STORED:
 
-                if (!xarVarFetch($name . '_attach_stored', 'list:int:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch($name . '_attach_stored', 'list:int:1:', $fileList, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
 
@@ -215,7 +215,7 @@ class UploadProperty extends FileUploadProperty
                         uploads_sync_associations($moduleid, $itemtype, $itemid);
                     }
                     $this->value = null;
-                    xarVarSetCached('DynamicData.Upload', $name, $this->value);
+                    xarVar::setCached('DynamicData.Upload', $name, $this->value);
                     return true;
                 }
 
@@ -237,7 +237,7 @@ class UploadProperty extends FileUploadProperty
             case '-2':
                 // clear stored value
                     $this->value = '';
-                    xarVarSetCached('DynamicData.Upload', $name, $this->value);
+                    xarVar::setCached('DynamicData.Upload', $name, $this->value);
                     return true;
                 break;
             default:
@@ -262,7 +262,7 @@ class UploadProperty extends FileUploadProperty
 
         // Store the particulares so the createValue method can find them
         $this->propertydata = $data;
-        xarVarSetCached('DynamicData.Upload', $name, $this->value);
+        xarVar::setCached('DynamicData.Upload', $name, $this->value);
         return true;
     }
 
@@ -282,7 +282,7 @@ class UploadProperty extends FileUploadProperty
             $data['override']['upload']['path'] = $this->initialization_basedirectory;
             // Check for duplicates. This should actually happen in the validateValue method
             $data['allow_duplicate'] = $this->validation_allow_duplicates;
-            $list = xarModAPIFunc('uploads', 'user', 'process_files', $data);
+            $list = xarMod::apiFunc('uploads', 'user', 'process_files', $data);
             
             $storeList = array();
             $storeListData = array();
@@ -329,7 +329,7 @@ class UploadProperty extends FileUploadProperty
     {
         // inform anyone that we're showing a file upload field, and that they need to use
         // <form ... enctype="multipart/form-data" ... > in their input form
-        xarVarSetCached('Hooks.dynamicdata', 'withupload', 1);
+        xarVar::setCached('Hooks.dynamicdata', 'withupload', 1);
 
         if (!empty($data['name'])) {
             $this->name = $data['name'];
@@ -357,7 +357,7 @@ class UploadProperty extends FileUploadProperty
         }
         $descend = true;
 
-        xarModAPILoad('uploads', 'user');
+        xarMod::apiLoad('uploads', 'user');
         $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
         $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
         $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
@@ -375,7 +375,7 @@ class UploadProperty extends FileUploadProperty
 
             // CHECKME: use 'imports' name like in db_get_file() ?
             // Note: for relativePath, the (main) import directory is replaced by /trusted in file_get_metadata()
-            $data['fileList']     = xarModAPIFunc(
+            $data['fileList']     = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'import_get_filelist',
@@ -395,7 +395,7 @@ class UploadProperty extends FileUploadProperty
             // if there is an override['upload']['path'], try to use that
             if (!empty($this->initialization_basedirectory)) {
                 if (file_exists($this->initialization_basedirectory)) {
-                    $data['storedList']   = xarModAPIFunc(
+                    $data['storedList']   = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'db_get_file',
@@ -412,13 +412,13 @@ class UploadProperty extends FileUploadProperty
                         $data['storedList']   = array();
                     } else {
                         // CHECKME: fall back to common uploads directory, or fail here ?
-                        //  $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+                        //  $data['storedList']   = xarMod::apiFunc('uploads', 'user', 'db_getall_files');
                         $msg = xarML('Unable to create an upload directory #(1)', $this->initialization_basedirectory);
                         throw new Exception($msg);
                     }
                 }
             } else {
-                $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+                $data['storedList']   = xarMod::apiFunc('uploads', 'user', 'db_getall_files');
             }
         } else {
             $data['storedList']   = array();
@@ -453,13 +453,13 @@ class UploadProperty extends FileUploadProperty
                 if (is_array($aList) && count($aList)) {
                     $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
                     $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
-                    $data['attachments'] = xarModAPIFunc(
+                    $data['attachments'] = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'db_get_file',
                         array('fileId' => $aList)
                     );
-                    $list = xarModAPIFunc(
+                    $list = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'showoutput',
@@ -519,7 +519,7 @@ class UploadProperty extends FileUploadProperty
         $data['value'] = array_filter($data['value']);
 
         if (is_array($data['value']) && count($data['value'])) {
-            $data['attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
+            $data['attachments'] = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
             if (empty($data['attachments'])) {
                 // We probably have just a single file name
                 $data['attachments'][] = array('fileDownload' => $this->initialization_basedirectory . "/" . $data['value'][0],
@@ -558,7 +558,7 @@ class UploadProperty extends FileUploadProperty
             $typeCheck .= (in_array(_UPLOADS_GET_UPLOAD, $this->initialization_file_input_methods))    ? ':' . _UPLOADS_GET_UPLOAD : '';
             $typeCheck .= (in_array(_UPLOADS_GET_STORED, $this->initialization_file_input_methods))    ? ':' . _UPLOADS_GET_STORED : '';
             $typeCheck .= ':-2'; // clear value
-            xarVarFetch($name . '_active_method', $typeCheck, $activemethod, current($this->initialization_file_input_methods), XARVAR_NOT_REQUIRED);
+            xarVar::fetch($name . '_active_method', $typeCheck, $activemethod, current($this->initialization_file_input_methods), xarVar::NOT_REQUIRED);
         }
         return $activemethod;
     }
@@ -597,7 +597,7 @@ class UploadProperty extends FileUploadProperty
     /*
         function parseValidation($validation = '')
         {
-            list($multiple, $methods, $basedir, $importdir) = xarModAPIFunc('uploads', 'admin', 'dd_configure', $validation);
+            list($multiple, $methods, $basedir, $importdir) = xarMod::apiFunc('uploads', 'admin', 'dd_configure', $validation);
 
             $this->initialization_multiple_files = $multiple;
             $this->initialization_methods = $methods;
@@ -634,7 +634,7 @@ class UploadProperty extends FileUploadProperty
             if (!isset($template)) {
                 $template = '';
             }
-            return xarTplProperty('uploads', 'upload', 'validation', $data);
+            return xarTpl::property('uploads', 'upload', 'validation', $data);
         }
 
         function updateValidation(Array $args = array())

@@ -11,19 +11,19 @@
                 <xar:else/>
                     <xar:set name="fileName">''</xar:set>
                 </xar:if>
-                <xar:set name="fileLink">'PropertiesDialog(\&#39;' . xarModURL('uploads','user','file_properties', array('fileId' => $fileId)) . '\&#39;); return false;'</xar:set>
+                <xar:set name="fileLink">'PropertiesDialog(\&#39;' . xarController::URL('uploads','user','file_properties', array('fileId' => $fileId)) . '\&#39;); return false;'</xar:set>
                 For File <a style="cursor:pointer;" onclick="#$fileLink#">[#$fileId#] #$fileName#</a>
             </h3>
         </xar:if>
 
         <xar:if condition="empty($missing)">
-            <p><a href="#xarModURL('uploads','admin','assoc',array('action' => 'missing'))#">Check Missing Files</a></p>
+            <p><a href="#xarController::URL('uploads','admin','assoc',array('action' => 'missing'))#">Check Missing Files</a></p>
         <xar:else/>
             <p><strong>Missing Files in Associations</strong></p>
             <ul>
             <xar:foreach in="$missing" key="$id" value="$num">
                 <li>
-                    <a href="#xarModURL('uploads','admin','assoc',array('fileId' => $id))#">
+                    <a href="#xarController::URL('uploads','admin','assoc',array('fileId' => $id))#">
                         <xar:ml>
                             <xar:mlstring>File #(1) - #(2) association(s)</xar:mlstring>
                             <xar:mlvar>#$id#</xar:mlvar>
@@ -207,7 +207,7 @@
                             </xar:if>
                             <td align="center" valign="center" width="25%">
                             <xar:foreach in="$moditem['filelist']" value="$fileId">
-                              <a href="#xarModURL('uploads','admin','assoc', array('fileId' => $fileId))#">
+                              <a href="#xarController::URL('uploads','admin','assoc', array('fileId' => $fileId))#">
                               <xar:if condition="!empty($fileinfo[$fileId])">
                                   #$fileinfo[$fileId]['fileName']#
                               <xar:else/>

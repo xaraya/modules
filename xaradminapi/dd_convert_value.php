@@ -26,7 +26,7 @@ function uploads_adminapi_dd_convert_value($args)
     }
 
     // if conversion isn't needed, then don't do it
-    if (!xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
+    if (!xarMod::apiFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
         return $value;
     }
 
@@ -41,11 +41,11 @@ function uploads_adminapi_dd_convert_value($args)
     }
 
     if (file_exists($basedir . $value) && !is_file($basedir . $value)) {
-        xarModAPILoad('uploads', 'user');
+        xarMod::apiLoad('uploads', 'user');
 
         $args['import'] = 'file://' . $basePath . '/' . $basedir . $value;
         $args['action'] = _UPLOADS_GET_EXTERNAL;
-        $list = xarModAPIFunc('uploads', 'user', 'process_files', $args);
+        $list = xarMod::apiFunc('uploads', 'user', 'process_files', $args);
         $storeList = array();
         foreach ($list as $file => $fileInfo) {
             if (!isset($fileInfo['errors'])) {

@@ -132,13 +132,13 @@
                     </xar:loop>
                 </table>
                 <br />
-                <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
+                <a href="#xarController::URL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
                     
                         Add Files
                     
                 </a>
                 &#160;|&#160;
-                <a href="#xarModURL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
+                <a href="#xarController::URL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
                     
                         View files
                     

@@ -19,30 +19,30 @@
 function uploads_admin_updateconfig()
 {
     // Get parameters
-    if (!xarVarFetch('file', 'list:str:1:', $file, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('file', 'list:str:1:', $file, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('imports_directory', 'str:1:', $imports_directory, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('imports_directory', 'str:1:', $imports_directory, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('uploads_directory', 'str:1:', $uploads_directory, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('uploads_directory', 'str:1:', $uploads_directory, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('view', 'list:str:1:', $view, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('view', 'list:str:1:', $view, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('ddprop', 'array:1:', $ddprop, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('ddprop', 'array:1:', $ddprop, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('permit_download', 'int', $permit_download, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('permit_download', 'int', $permit_download, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('permit_download_function', 'str', $permit_download_function, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('permit_download_function', 'str', $permit_download_function, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -107,7 +107,7 @@ function uploads_admin_updateconfig()
     // xarModVars::delete('uploads', 'path.imports-cwd');
     xarModVars::set('uploads', 'path.imports-cwd', xarModVars::get('uploads', 'imports_directory'));
 
-    xarModCallHooks(
+    xarModHooks::call(
         'module',
         'updateconfig',
         'uploads',
@@ -115,7 +115,7 @@ function uploads_admin_updateconfig()
                           'itemtype' => 1)
     ); // Files
 
-    xarController::redirect(xarModURL('uploads', 'admin', 'modifyconfig'));
+    xarController::redirect(xarController::URL('uploads', 'admin', 'modifyconfig'));
 
     // Return
     return true;

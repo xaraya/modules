@@ -121,7 +121,7 @@ function uploads_userapi_db_modify_file($args)
     // Pass the arguments to the hook modules too
     $args['module'] = 'uploads';
     $args['itemtype'] = 1; // Files
-    xarModCallHooks('item', 'update', $fileId, $args);
+    xarModHooks::call('item', 'update', $fileId, $args);
 
     return true;
 }

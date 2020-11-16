@@ -17,10 +17,10 @@
  */
 function uploads_admin_modifyconfig()
 {
-    xarModAPILoad('uploads', 'user');
+    xarMod::apiLoad('uploads', 'user');
 
     // Security check
-    if (!xarSecurityCheck('AdminUploads')) {
+    if (!xarSecurity::check('AdminUploads')) {
         return;
     }
 
@@ -48,7 +48,7 @@ function uploads_admin_modifyconfig()
     $data['ddprop']['external']             = xarModVars::get('uploads', 'dd.fileupload.external');
     $data['ddprop']['stored']               = xarModVars::get('uploads', 'dd.fileupload.stored');
     $data['ddprop']['upload']               = xarModVars::get('uploads', 'dd.fileupload.upload');
-    $data['authid']                         = xarSecGenAuthKey();
+    $data['authid']                         = xarSec::genAuthKey();
 
     $data['approveList']['noone']      = _UPLOADS_APPROVE_NOONE;
     $data['approveList']['admin']      = _UPLOADS_APPROVE_ADMIN;
@@ -60,7 +60,7 @@ function uploads_admin_modifyconfig()
         $data['file']['auto-approve'] = _UPLOADS_APPROVE_NOONE;
     }
 
-    $hooks = xarModCallHooks(
+    $hooks = xarModHooks::call(
         'module',
         'modifyconfig',
         'uploads',

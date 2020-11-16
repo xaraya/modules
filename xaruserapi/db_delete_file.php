@@ -61,7 +61,7 @@ function uploads_userapi_db_delete_file($args)
     // Pass the arguments to the hook modules too
     $args['module'] = 'uploads';
     $args['itemtype'] = 1; // Files
-    xarModCallHooks('item', 'delete', $fileId, $args);
+    xarModHooks::call('item', 'delete', $fileId, $args);
 
     return true;
 }

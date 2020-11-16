@@ -105,9 +105,9 @@ function uploads_userapi_db_count($args)
     $sql = "SELECT COUNT(xar_fileEntry_id) AS total
               FROM $fileEntry_table ";
 
-    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories', 'uploads', 1)) {
+    if (!empty($catid) && xarMod::isAvailable('categories') && xarModHooks::isHooked('categories', 'uploads', 1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $categoriesdef = xarModAPIFunc(
+        $categoriesdef = xarMod::apiFunc(
             'categories',
             'user',
             'leftjoin',

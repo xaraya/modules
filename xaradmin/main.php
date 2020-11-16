@@ -19,14 +19,14 @@
  */
 function uploads_admin_main()
 {
-    if (!xarSecurityCheck('EditUploads')) {
+    if (!xarSecurity::check('EditUploads')) {
         return;
     }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        xarController::redirect(xarModURL('uploads', 'admin', 'view'));
+        xarController::redirect(xarController::URL('uploads', 'admin', 'view'));
     }
     // success
     return true;

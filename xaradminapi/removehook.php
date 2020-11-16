@@ -48,7 +48,7 @@ function uploads_adminapi_removehook($args)
         return $extrainfo;
     }
 
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'uploads',
         'admin',
         'db_delete_association',

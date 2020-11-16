@@ -39,7 +39,7 @@ function uploads_userapi_process_filters($args)
      *  Grab the mimetypes and setup the selected one
      */
     if (isset($mimetype) && $mimetype > 0) {
-        $selected_mimetype = xarModAPIFunc('mime', 'user', 'get_type', array('typeId' => $mimetype));
+        $selected_mimetype = xarMod::apiFunc('mime', 'user', 'get_type', array('typeId' => $mimetype));
     }
 
     // if selected mimetype isn't set, empty or has an array count of
@@ -55,12 +55,12 @@ function uploads_userapi_process_filters($args)
      */
     if (isset($selected_mimetype)) {
         if (isset($subtype) && $subtype > 0) {
-            $selected_subtype = xarModAPIFunc('mime', 'user', 'get_subtype', array('subtypeId' => $subtype));
+            $selected_subtype = xarMod::apiFunc('mime', 'user', 'get_subtype', array('subtypeId' => $subtype));
         }
 
         // add the rest of the types to the array
         // array returns is in form of: array[typeId]{[subtypeId], [subtypeName]}
-        $subtypes = $subtypes + xarModAPIFunc('mime', 'user', 'getall_subtypes', array('typeId' => $selected_mimetype['typeId']));
+        $subtypes = $subtypes + xarMod::apiFunc('mime', 'user', 'getall_subtypes', array('typeId' => $selected_mimetype['typeId']));
 
         // if selected subtype isn't set, empty or has an array count of
         // zero, then we set

@@ -12,7 +12,7 @@
  * @author Uploads Module Development Team
  */
 
-xarModAPILoad('uploads', 'user');
+xarMod::apiLoad('uploads', 'user');
 /**
  * The view function for the site admin
  *
@@ -32,7 +32,7 @@ xarModAPILoad('uploads', 'user');
 function uploads_admin_view()
 {
     //security check
-    if (!xarSecurityCheck('AdminUploads')) {
+    if (!xarSecurity::check('AdminUploads')) {
         return;
     }
 
@@ -40,37 +40,37 @@ function uploads_admin_view()
      *  Validate variables passed back
      */
 
-    if (!xarVarFetch('mimetype', 'int:0:', $mimetype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('mimetype', 'int:0:', $mimetype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('subtype', 'int:0:', $subtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('subtype', 'int:0:', $subtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('status', 'int:0:', $status, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('status', 'int:0:', $status, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('inverse', 'checkbox', $inverse, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('inverse', 'checkbox', $inverse, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('fileId', 'list:int:1', $fileId, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('fileId', 'list:int:1', $fileId, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('fileDo', 'str:5:', $fileDo, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('fileDo', 'str:5:', $fileDo, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('action', 'int:0:', $action, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('action', 'int:0:', $action, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('startnum', 'int:0:', $startnum, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('startnum', 'int:0:', $startnum, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('numitems', 'int:0:', $numitems, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numitems', 'int:0:', $numitems, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'enum:id:name:size:user:status', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'enum:id:name:size:user:status', $sort, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('catid', 'str:1:', $catid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('catid', 'str:1:', $catid, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -93,7 +93,7 @@ function uploads_admin_view()
         $filters['inverse']  = $inverse;
         $filters['catid']    = $catid;
 
-        $options  =  xarModAPIFunc('uploads', 'user', 'process_filters', $filters);
+        $options  =  xarMod::apiFunc('uploads', 'user', 'process_filters', $filters);
         $data     = $options['data'];
         $filter   = $options['filter'];
         unset($options);
@@ -127,18 +127,18 @@ function uploads_admin_view()
 
         switch ($action) {
             case _UPLOADS_STATUS_APPROVED:
-                    xarModAPIFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_APPROVED));
+                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_APPROVED));
                     break;
             case _UPLOADS_STATUS_SUBMITTED:
-                    xarModAPIFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
+                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
                     break;
             case _UPLOADS_STATUS_REJECTED:
-                xarModAPIFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
+                xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
                 if (xarModVars::get('uploads', 'file.auto-purge')) {
                     if (xarModVars::get('uploads', 'file.delete-confirmation')) {
-                        return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => false, 'authid' => xarSecGenAuthKey('uploads')));
+                        return xarMod::guiFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => false, 'authid' => xarSec::genAuthKey('uploads')));
                     } else {
-                        return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => true, 'authid' => xarSecGenAuthKey('uploads')));
+                        return xarMod::guiFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => true, 'authid' => xarSec::genAuthKey('uploads')));
                     }
                 }
                 break;
@@ -162,17 +162,17 @@ function uploads_admin_view()
         $filter['startnum'] = $startnum;
         $filter['numitems'] = $numitems;
         $filter['sort']     = $sort;
-        $items = xarModAPIFunc('uploads', 'user', 'db_getall_files', $filter);
+        $items = xarMod::apiFunc('uploads', 'user', 'db_getall_files', $filter);
     } else {
         $filter['startnum'] = $startnum;
         $filter['numitems'] = $numitems;
         $filter['sort']     = $sort;
-        $items = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
+        $items = xarMod::apiFunc('uploads', 'user', 'db_get_file', $filter);
     }
     $countitems = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
 
     if (!empty($items)) {
-        $data['numassoc'] = xarModAPIFunc(
+        $data['numassoc'] = xarMod::apiFunc(
             'uploads',
             'user',
             'db_count_associations',
@@ -180,9 +180,9 @@ function uploads_admin_view()
         );
     }
 
-    if (xarSecurityCheck('EditUploads', 0)) {
-        $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
-        $data['diskUsage']['stored_size_total']    = xarModAPIFunc('uploads', 'user', 'db_diskusage');
+    if (xarSecurity::check('EditUploads', 0)) {
+        $data['diskUsage']['stored_size_filtered'] = xarMod::apiFunc('uploads', 'user', 'db_diskusage', $filter);
+        $data['diskUsage']['stored_size_total']    = xarMod::apiFunc('uploads', 'user', 'db_diskusage');
 
         $data['uploadsdir'] = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
         $data['diskUsage']['device_free']  = @disk_free_space($data['uploadsdir']);
@@ -190,11 +190,11 @@ function uploads_admin_view()
         $data['diskUsage']['device_used']  = $data['diskUsage']['device_total'] - $data['diskUsage']['device_free'];
 
         foreach ($data['diskUsage'] as $key => $value) {
-            $data['diskUsage'][$key] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $value);
+            $data['diskUsage'][$key] = xarMod::apiFunc('uploads', 'user', 'normalize_filesize', $value);
         }
 
         $data['diskUsage']['numfiles_filtered']   = $countitems;
-        $data['diskUsage']['numfiles_total']      = xarModAPIFunc('uploads', 'user', 'db_count');
+        $data['diskUsage']['numfiles_total']      = xarMod::apiFunc('uploads', 'user', 'db_count');
     }
     // now we check to see if the user has enough access to view
     // each particular file - if not, we just silently remove it
@@ -209,7 +209,7 @@ function uploads_admin_view()
         if (is_array($instance)) {
             $instance = implode(':', $instance);
         }
-        if (!xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+        if (!xarSecurity::check('EditUploads', 0, 'File', $instance)) {
             unset($items[$key]);
         }
     }
@@ -223,7 +223,7 @@ function uploads_admin_view()
     } // throw back
 
     $data['items'] = $items;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     // Add pager
     if (!empty($numitems) && $countitems > $numitems) {
@@ -231,7 +231,7 @@ function uploads_admin_view()
         $data['pager'] = xarTplPager::getPager(
             $startnum,
             $countitems,
-            xarModURL(
+            xarController::URL(
                                             'uploads',
                                             'admin',
                                             'view',

@@ -23,13 +23,13 @@
  *
  */
 
-xarModAPILoad('uploads', 'user');
+xarMod::apiLoad('uploads', 'user');
 
 function uploads_user_purge_rejected($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('ManageUploads')) {
+    if (!xarSecurity::check('ManageUploads')) {
         return;
     }
 
@@ -38,16 +38,16 @@ function uploads_user_purge_rejected($args)
     }
 
     if (!isset($confirmation)) {
-        xarVarFetch('confirmation', 'int:1:', $confirmation, '', XARVAR_NOT_REQUIRED);
+        xarVar::fetch('confirmation', 'int:1:', $confirmation, '', xarVar::NOT_REQUIRED);
     }
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
 
     if ((isset($confirmation) && $confirmation) || !xarModVars::get('uploads', 'file.delete-confirmation')) {
-        $fileList = xarModAPIFunc(
+        $fileList = xarMod::apiFunc(
             'uploads',
             'user',
             'db_get_file',
@@ -55,10 +55,10 @@ function uploads_user_purge_rejected($args)
         );
 
         if (empty($fileList)) {
-            xarController::redirect(xarModURL('uploads', 'admin', 'view'));
+            xarController::redirect(xarController::URL('uploads', 'admin', 'view'));
             return;
         } else {
-            $result = xarModAPIFunc(
+            $result = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'purge_files',
@@ -70,7 +70,7 @@ function uploads_user_purge_rejected($args)
             }
         }
     } else {
-        $fileList = xarModAPIFunc(
+        $fileList = xarMod::apiFunc(
             'uploads',
             'user',
             'db_get_file',
@@ -81,10 +81,10 @@ function uploads_user_purge_rejected($args)
         } else {
             $data['fileList']   = $fileList;
         }
-        $data['authid']     = xarSecGenAuthKey();
+        $data['authid']     = xarSec::genAuthKey();
 
         return $data;
     }
 
-    xarController::redirect(xarModURL('uploads', 'admin', 'view'));
+    xarController::redirect(xarController::URL('uploads', 'admin', 'view'));
 }

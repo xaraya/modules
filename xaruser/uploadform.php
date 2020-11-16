@@ -18,11 +18,11 @@
  */
 function uploads_user_uploadform()
 {
-    if (!xarSecurityCheck('AddUploads')) {
+    if (!xarSecurity::check('AddUploads')) {
         return;
     }
     // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['file_maxsize'] = xarModVars::get('uploads', 'file.maxsize');
 
     return $data;

@@ -29,7 +29,7 @@
                                 <xar:loop name="$fileList">
                                     <!-- TODO: reformulate this -->
                                <li style="list-type-style:none;">
-                                <a onclick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
+                                <a onclick="MyWindow=window.open('#xarController::URL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
                                                                 '#$loop:item['fileName']#',
                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20');
                                                                 return false;">

@@ -29,13 +29,13 @@
 function uploads_init()
 {
     //Not needed anymore with the dependency checks.
-    if (!xarModIsAvailable('mime')) {
+    if (!xarMod::isAvailable('mime')) {
         $msg = xarML('The mime module should be activated first');
         throw new Exception($msg);
     }
 
     // load the predefined constants
-    xarModAPILoad('uploads', 'user');
+    xarMod::apiLoad('uploads', 'user');
 
     if (xarServer::getVar('SCRIPT_FILENAME')) {
         $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
@@ -73,7 +73,7 @@ function uploads_init()
     $filter['fileStatus']   = '';
 
     $mimetypes =& $data['filters']['mimetypes'];
-    $mimetypes += xarModAPIFunc('mime', 'user', 'getall_types');
+    $mimetypes += xarMod::apiFunc('mime', 'user', 'getall_types');
 
     xarModVars::set('uploads', 'view.filter', serialize(array('data' => $data,'filter' => $filter)));
     unset($mimetypes);
@@ -108,7 +108,7 @@ function uploads_init()
 
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query   =  xarDBCreateTable($file_entry_table, $file_entry_fields);
+    $query   =  xarTableDDL::createTable($file_entry_table, $file_entry_fields);
     $result  =& $dbconn->Execute($query);
 
     $file_data_fields = array(
@@ -119,7 +119,7 @@ function uploads_init()
 
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query  =  xarDBCreateTable($file_data_table, $file_data_fields);
+    $query  =  xarTableDDL::createTable($file_data_table, $file_data_fields);
     $result =& $dbconn->Execute($query);
 
     $file_assoc_fields = array(
@@ -132,52 +132,52 @@ function uploads_init()
 
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query   =  xarDBCreateTable($file_assoc_table, $file_assoc_fields);
+    $query   =  xarTableDDL::createTable($file_assoc_table, $file_assoc_fields);
     $result  =& $dbconn->Execute($query);
 
     $instances[0]['header'] = 'external';
-    $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
+    $instances[0]['query']  = xarController::URL('uploads', 'admin', 'privileges');
     $instances[0]['limit']  = 0;
 
-    xarDefineInstance('uploads', 'File', $instances);
+    xarPrivileges::defineInstance('uploads', 'File', $instances);
 
-    xarRegisterMask('ViewUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManageUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ViewUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_READ');
+    xarMasks::register('EditUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADMIN');
 
-    xarRegisterPrivilege('ViewUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_READ');
-    xarRegisterPrivilege('EditUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_EDIT');
-    xarRegisterPrivilege('AddUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADD');
-    xarRegisterPrivilege('ManageUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_DELETE');
-    xarRegisterPrivilege('AdminUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADMIN');
+    xarPrivileges::register('ViewUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_READ');
+    xarPrivileges::register('EditUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_EDIT');
+    xarPrivileges::register('AddUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADD');
+    xarPrivileges::register('ManageUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminUploads', 'All', 'uploads', 'File', 'All', 'ACCESS_ADMIN');
 
     /**
      * Register hooks
      */
-    if (!xarModRegisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook')) {
+    if (!xarModHooks::register('item', 'transform', 'API', 'uploads', 'user', 'transformhook')) {
         $msg = xarML('Could not register hook');
         throw new Exception($msg);
     }
     /*
-        if (!xarModRegisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook')) {
+        if (!xarModHooks::register('item', 'create', 'API', 'uploads', 'admin', 'createhook')) {
              $msg = xarML('Could not register hook');
             throw new Exception($msg);
         }
-        if (!xarModRegisterHook('item', 'update', 'API', 'uploads', 'admin', 'updatehook')) {
+        if (!xarModHooks::register('item', 'update', 'API', 'uploads', 'admin', 'updatehook')) {
              $msg = xarML('Could not register hook');
             throw new Exception($msg);
         }
-        if (!xarModRegisterHook('item', 'delete', 'API', 'uploads', 'admin', 'deletehook')) {
+        if (!xarModHooks::register('item', 'delete', 'API', 'uploads', 'admin', 'deletehook')) {
              $msg = xarML('Could not register hook');
             throw new Exception($msg);
         }
         // when a whole module is removed, e.g. via the modules admin screen
         // (set object ID to the module name !)
-        if (!xarModRegisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook')) {
+        if (!xarModHooks::register('module', 'remove', 'API', 'uploads', 'admin', 'removehook')) {
              $msg = xarML('Could not register hook');
             throw new Exception($msg);
         }
@@ -214,12 +214,12 @@ function uploads_upgrade($oldversion)
  */
 function uploads_delete()
 {
-    xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
+    xarModHooks::unregister('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
     /*
-        xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
-        xarModUnregisterHook('item', 'update', 'API', 'uploads', 'admin', 'updatehook');
-        xarModUnregisterHook('item', 'delete', 'API', 'uploads', 'admin', 'deletehook');
-        xarModUnregisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook');
+        xarModHooks::unregister('item', 'create', 'API', 'uploads', 'admin', 'createhook');
+        xarModHooks::unregister('item', 'update', 'API', 'uploads', 'admin', 'updatehook');
+        xarModHooks::unregister('item', 'delete', 'API', 'uploads', 'admin', 'deletehook');
+        xarModHooks::unregister('module', 'remove', 'API', 'uploads', 'admin', 'removehook');
     */
 
     $module = 'uploads';

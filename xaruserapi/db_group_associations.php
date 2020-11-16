@@ -24,7 +24,7 @@ function uploads_userapi_db_group_associations($args)
     extract($args);
 
     // Security check
-    if (!xarSecurityCheck('ViewUploads')) {
+    if (!xarSecurity::check('ViewUploads')) {
         return;
     }
 

@@ -13,10 +13,10 @@
  */
 
 /**
- * return the path for a short URL to xarModURL for this module
+ * return the path for a short URL to xarController::URL for this module
  *
  * @author the Example module development team
- * @param $args the function and arguments passed to xarModURL
+ * @param $args the function and arguments passed to xarController::URL
  * @return string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
@@ -36,7 +36,7 @@ function uploads_userapi_encode_shorturl($args)
     if (!isset($fileId) || empty($fileId)) {
         return;
     } else {
-        $fileName = xarModAPIFunc('uploads', 'user', 'db_get_filename', array('fileId' => $fileId));
+        $fileName = xarMod::apiFunc('uploads', 'user', 'db_get_filename', array('fileId' => $fileId));
 
         if (!isset($fileName) || empty($fileName)) {
             // fileId is nonexistant...
@@ -51,7 +51,7 @@ function uploads_userapi_encode_shorturl($args)
     $path = '';
     // if we want to add some common arguments as URL parameters below
     $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
+    // we can't rely on xarMod::getName() here -> you must specify the modname !
     $module = 'uploads';
 
     // specify some short URLs relevant to your module

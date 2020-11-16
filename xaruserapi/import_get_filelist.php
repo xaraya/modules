@@ -127,7 +127,7 @@ function uploads_userapi_import_get_filelist($args)
             if ((isset($search) && preg_match("/$search/", $fileName)) &&
                 (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
                 $fileList["$type:$fileName"] =
-                        xarModAPIFunc(
+                        xarMod::apiFunc(
                             'uploads',
                             'user',
                             'file_get_metadata',
@@ -180,7 +180,7 @@ function uploads_userapi_import_get_filelist($args)
 
                             if ((!isset($search) || preg_match("/$search/", $fileName)) &&
                                 (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
-                                $file = xarModAPIFunc(
+                                $file = xarMod::apiFunc(
                                     'uploads',
                                     'user',
                                     'file_get_metadata',
@@ -193,7 +193,7 @@ function uploads_userapi_import_get_filelist($args)
                         case _INODE_TYPE_DIRECTORY:
                             $dirName = "$fileLocation/$inode";
                             if ($descend) {
-                                $files = xarModAPIFunc(
+                                $files = xarMod::apiFunc(
                                     'uploads',
                                     'user',
                                     'import_get_filelist',
@@ -207,7 +207,7 @@ function uploads_userapi_import_get_filelist($args)
                             } else {
                                 if ((!isset($search) || preg_match("/$search/", $dirName)) &&
                                     (!isset($exclude) || !preg_match("/$exclude/", $dirName))) {
-                                    $files = xarModAPIFunc(
+                                    $files = xarMod::apiFunc(
                                         'uploads',
                                         'user',
                                         'file_get_metadata',

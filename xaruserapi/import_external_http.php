@@ -134,7 +134,7 @@ function uploads_userapi_import_external_http($args)
                 if (is_resource($tmpId)) {
                     @fclose($tmpId);
                 }
-                $fileInfo['fileType'] = xarModAPIFunc(
+                $fileInfo['fileType'] = xarMod::apiFunc(
                     'mime',
                     'user',
                     'analyze_file',
@@ -184,7 +184,7 @@ function uploads_userapi_import_external_http($args)
         $savePath = preg_replace('/\/$/', '', $savePath);
 
         if ($obfuscate_fileName) {
-            $obf_fileName = xarModAPIFunc(
+            $obf_fileName = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'file_obfuscate_name',
@@ -194,7 +194,7 @@ function uploads_userapi_import_external_http($args)
         } else {
             // if we're not obfuscating it,
             // just use the name of the uploaded file
-            $fileInfo['fileDest'] = $savePath . '/' . xarVarPrepForOS($fileInfo['fileName']);
+            $fileInfo['fileDest'] = $savePath . '/' . xarVar::prepForOS($fileInfo['fileName']);
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
     }
