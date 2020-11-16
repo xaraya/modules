@@ -24,6 +24,12 @@ function reminders_user_remove()
     sys::import('modules.dynamicdata.class.objects.master');
     $entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
         
+    // Set all the relevant properties active here
+    foreach($entries->properties as $name => $property) {
+        if ($property->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) continue;
+        $entries->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+    }
+
     $q = $entries->dataquery;
     
     // Only active reminders
