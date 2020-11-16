@@ -4,7 +4,7 @@
         <h2>
             Modify Uploads Configuration
         </h2>
-        <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
+        <form method="post" action="#xarController::URL('uploads', 'admin', 'updateconfig')#">
             <xar:data-form object="$module_settings"/>
             <fieldset>
                 <legend>

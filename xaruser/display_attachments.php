@@ -56,7 +56,7 @@ function uploads_user_display_attachments($args)
     }
 
     $args['modName']  = $modname;
-    $args['modid']    = xarModGetIdFromName($modname);
+    $args['modid']    = xarMod::getRegId($modname);
     $args['itemtype'] = isset($itemtype) ? $itemtype : 0;
     $args['itemid']   = $objectid;
 

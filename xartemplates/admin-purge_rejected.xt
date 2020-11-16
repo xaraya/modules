@@ -9,7 +9,7 @@
                         
                     </p>
                 <xar:else />
-                    <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                    <form action="#xarController::URL('uploads','admin','purge_rejected')#" method="post">
                         <fieldset>
                             <legend>
                                 Delete confirmation

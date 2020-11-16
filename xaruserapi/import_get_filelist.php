@@ -78,11 +78,11 @@ function uploads_userapi_import_get_filelist($args)
     $fileList = array();
 
     if (!isset($fileLocation)) {
-        return xarController::redirect(xarModUrl('uploads', 'user', 'errors', array('layout' => 'dir_not_set')));
+        return xarController::redirect(xarController::URL('uploads', 'user', 'errors', array('layout' => 'dir_not_set')));
     }
 
     if (!file_exists($fileLocation)) {
-        return xarController::redirect(xarModUrl('uploads', 'user', 'errors', array('layout' => 'dir_not_found','location' => $fileLocation)));
+        return xarController::redirect(xarController::URL('uploads', 'user', 'errors', array('layout' => 'dir_not_found','location' => $fileLocation)));
     }
 
     if (is_file($fileLocation)) {
@@ -112,7 +112,7 @@ function uploads_userapi_import_get_filelist($args)
     switch ($type) {
         case _INODE_TYPE_FILE:
             if ($onlyNew) {
-                $file = xarModAPIfunc(
+                $file = xarMod::apiFunc(
                     'uploads',
                     'user',
                     'db_get_file',
@@ -167,7 +167,7 @@ function uploads_userapi_import_get_filelist($args)
                             $fileName = $fileLocation . '/' . $inode;
 
                             if ($onlyNew) {
-                                $file = xarModAPIfunc(
+                                $file = xarMod::apiFunc(
                                     'uploads',
                                     'user',
                                     'db_get_file',

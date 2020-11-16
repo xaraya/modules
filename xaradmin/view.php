@@ -169,7 +169,7 @@ function uploads_admin_view()
         $filter['sort']     = $sort;
         $items = xarMod::apiFunc('uploads', 'user', 'db_get_file', $filter);
     }
-    $countitems = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
+    $countitems = xarMod::apiFunc('uploads', 'user', 'db_count', $filter);
 
     if (!empty($items)) {
         $data['numassoc'] = xarMod::apiFunc(

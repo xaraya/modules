@@ -45,7 +45,7 @@
                         <th><a href="#xarController::URL('uploads','admin','view',array('sort' => 'status'))#">Status</a></th>
                     </tr>
             <xar:if condition="count($items)">
-                <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
+                <form id="viewfiles" action="#xarController::URL('uploads','admin','view')#" method="post">
                     <xar:loop name="$items">
                     <xar:if condition="(($loop:index + 1) % 2)">
                     <tr>    
@@ -115,7 +115,7 @@
                 <tr>
                     <td colspan="7" style="text-align:right;">
                         <xar:if condition="!xarModVars::get('uploads','file.auto-purge')">
-                        <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                        <form action="#xarController::URL('uploads','admin','purge_rejected')#" method="post">
                             <input type="hidden" name="authid" value="#xarSec::genAuthKey()#"/>
                             <xar:var name="label">Purge Rejected Files</xar:var>
                             <xar:button type="submit" name="fileDo" id="fileDo_purge" label="$label"/>
