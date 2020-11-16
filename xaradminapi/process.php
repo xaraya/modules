@@ -90,11 +90,11 @@ function reminders_adminapi_process($args)
     	$data['entry_list'] = explode(',', $data['entry_list']);
     	$q->in('entries.id', $data['entry_list']);
     }
-    $q->qecho();
+//    $q->qecho();
 //    $items = $entries->getItems();
 	$q->run();
     $items = $q->output();
-    var_dump($items);exit;
+//    var_dump($items);exit;
     /*
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
