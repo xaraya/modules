@@ -20,27 +20,28 @@
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	public function normalize($userAgent) {
-		$userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
-		$skip_normalization = array(
-			'Opera Mini',
-			'Opera Mobi',
-			'Opera Tablet',
-			'Fennec',
-			'Firefox',
-			'UCWEB7',
-			'NetFrontLifeBrowser/2.2',
-		);
-		if (!WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, $skip_normalization)) {
-			$model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
-			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
-			if ($model !== null && $version !== null) {
-				$prefix = $version.' '.$model.WURFL_Constants::RIS_DELIMITER;
-				return $prefix.$userAgent;
-			}
-		}
-		return $userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        $userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
+        $skip_normalization = array(
+            'Opera Mini',
+            'Opera Mobi',
+            'Opera Tablet',
+            'Fennec',
+            'Firefox',
+            'UCWEB7',
+            'NetFrontLifeBrowser/2.2',
+        );
+        if (!WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, $skip_normalization)) {
+            $model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
+            $version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+            if ($model !== null && $version !== null) {
+                $prefix = $version.' '.$model.WURFL_Constants::RIS_DELIMITER;
+                return $prefix.$userAgent;
+            }
+        }
+        return $userAgent;
+    }
 }

@@ -19,7 +19,7 @@
 
 /**
  * WindowsPhoneUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package	WURFL_Handlers
@@ -27,30 +27,41 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "WINDOWSPHONE";
-	
-	public static $constantIDs = array(
-		'generic_ms_winmo6_5',
-		'generic_ms_phone_os7',
-		'generic_ms_phone_os7_5',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		// Exact and Recovery match only
-		return WURFL_Constants::NO_MATCH;
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.0')) return 'generic_ms_phone_os7';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.5')) return 'generic_ms_phone_os7_5';
-		return WURFL_Constants::NO_MATCH;
-	}
+class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "WINDOWSPHONE";
+    
+    public static $constantIDs = array(
+        'generic_ms_winmo6_5',
+        'generic_ms_phone_os7',
+        'generic_ms_phone_os7_5',
+    );
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone');
+    }
+    
+    public function applyConclusiveMatch($userAgent)
+    {
+        // Exact and Recovery match only
+        return WURFL_Constants::NO_MATCH;
+    }
+    
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) {
+            return 'generic_ms_winmo6_5';
+        }
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.0')) {
+            return 'generic_ms_phone_os7';
+        }
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.5')) {
+            return 'generic_ms_phone_os7_5';
+        }
+        return WURFL_Constants::NO_MATCH;
+    }
 }

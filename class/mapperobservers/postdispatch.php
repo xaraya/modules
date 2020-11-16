@@ -11,9 +11,11 @@ class WurflPostDispatchObserver extends EventObserver implements ixarEventObserv
     
     public function notify(ixarEventSubject $subject)
     {
-        // post request default page template handling  
+        // post request default page template handling
         $set = false;
-        if (xarTpl::getPageTemplateName() != 'default') return $set;
+        if (xarTpl::getPageTemplateName() != 'default') {
+            return $set;
+        }
         
         $set = true;
         $request = xarController::getRequest();
@@ -32,7 +34,7 @@ class WurflPostDispatchObserver extends EventObserver implements ixarEventObserv
                     xarTpl::setPageTemplateName('user');
                 }
             } elseif (xarUserIsLoggedIn() && $request->getType() == 'admin') {
-                 // Use the admin-$modName.xt page if available when $modType is admin
+                // Use the admin-$modName.xt page if available when $modType is admin
                 // falling back on admin.xt if the former isn't available
                 if (!xarTpl::setPageTemplateName('admin-'.$request->getModule())) {
                     xarTpl::setPageTemplateName('admin');
@@ -41,4 +43,3 @@ class WurflPostDispatchObserver extends EventObserver implements ixarEventObserv
         }
     }
 }
-?>

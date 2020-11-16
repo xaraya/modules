@@ -26,12 +26,15 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_KonquerorHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "KONQUEROR";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Konqueror');
-	}
+class WURFL_Handlers_KonquerorHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "KONQUEROR";
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Konqueror');
+    }
 }

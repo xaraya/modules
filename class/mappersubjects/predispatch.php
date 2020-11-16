@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * PreDispatch Subject
  *
 **/
@@ -8,4 +8,3 @@ class WurflPreDispatchSubject extends EventSubject implements ixarEventSubject
 {
     protected $subject = 'PreDispatch';   // name of this event subject
 }
-?>

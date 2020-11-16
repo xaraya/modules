@@ -9,28 +9,31 @@ require_once 'BaseTest.php';
 /**
  *  test case.
  */
-class WURFL_Request_UserAgentNormalizer_ChromeTest extends WURFL_Request_UserAgentNormalizer_BaseTest  {
-	
-	const CHROME_USERAGENTS_FILE = "chrome.txt";
-	
-	function setUp() {		
-		$this->normalizer = new WURFL_Request_UserAgentNormalizer_Specific_Chrome();
-	}
-	
+class WURFL_Request_UserAgentNormalizer_ChromeTest extends WURFL_Request_UserAgentNormalizer_BaseTest
+{
+    const CHROME_USERAGENTS_FILE = "chrome.txt";
+    
+    public function setUp()
+    {
+        $this->normalizer = new WURFL_Request_UserAgentNormalizer_Specific_Chrome();
+    }
+    
 
-	/**
-	 * @test
-	 * @dataProvider chromeUserAgentsDataProvider
-	 *
-	 */
-	function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected) {
-		$this->assertNormalizeEqualsExpected($userAgent, $expected);
-	}
-		
-	
-	function chromeUserAgentsDataProvider() {
-		return array(
-			    array(
+    /**
+     * @test
+     * @dataProvider chromeUserAgentsDataProvider
+     *
+     */
+    public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
+    {
+        $this->assertNormalizeEqualsExpected($userAgent, $expected);
+    }
+        
+    
+    public function chromeUserAgentsDataProvider()
+    {
+        return array(
+                array(
                         @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13"
                         , "Chrome/0"
                     ),
@@ -38,9 +41,6 @@ class WURFL_Request_UserAgentNormalizer_ChromeTest extends WURFL_Request_UserAge
                 array("Mozilla", "Mozilla"),
                 array("Chrome", "Chrome")
  
-		);
-	}
-		
-		
+        );
+    }
 }
-

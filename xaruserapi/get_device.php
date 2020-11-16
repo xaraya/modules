@@ -32,4 +32,3 @@ function wurfl_userapi_get_device($args)
     }
     return $requestingDevice;
 }
-?>

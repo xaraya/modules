@@ -15,7 +15,9 @@
 
     function wurfl_admin_main()
     {
-        if(!xarSecurityCheck('ManageWurfl')) return;
+        if (!xarSecurityCheck('ManageWurfl')) {
+            return;
+        }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
@@ -25,4 +27,3 @@
         // success
         return true;
     }
-?>

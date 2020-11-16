@@ -27,30 +27,41 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "NOKIA";
-	
-	public static $constantIDs = array(
-		'nokia_generic_series60',
-		'nokia_generic_series80',
-		'nokia_generic_meego',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series60')) return 'nokia_generic_series60';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series80')) return 'nokia_generic_series80';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MeeGo')) return 'nokia_generic_meego';
-		return null;
-	}
+class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "NOKIA";
+    
+    public static $constantIDs = array(
+        'nokia_generic_series60',
+        'nokia_generic_series80',
+        'nokia_generic_meego',
+    );
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
+    }
+    
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series60')) {
+            return 'nokia_generic_series60';
+        }
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series80')) {
+            return 'nokia_generic_series80';
+        }
+        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MeeGo')) {
+            return 'nokia_generic_meego';
+        }
+        return null;
+    }
 }

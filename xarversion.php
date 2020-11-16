@@ -33,4 +33,3 @@
     $modversion['dependency']     = array();
     $modversion['dependencyinfo'] = array(
                                           );
-?>

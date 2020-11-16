@@ -26,12 +26,15 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SAFARI";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari');
-	}
+class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "SAFARI";
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari');
+    }
 }

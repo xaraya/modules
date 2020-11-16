@@ -24,7 +24,7 @@ class Wurfl_RedirectBlock extends BasicBlock
     
     public $redirects              = false;
         
-    public function init() 
+    public function init()
     {
         parent::init();
     }
@@ -41,10 +41,9 @@ class Wurfl_RedirectBlock extends BasicBlock
                 // upgrades from 1.0.0 go here...
             break;
         }
-        // replace content with updated array 
+        // replace content with updated array
         $this->content = $data;
         
         return true;
     }
 }
-?>

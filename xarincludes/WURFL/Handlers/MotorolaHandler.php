@@ -27,31 +27,36 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "MOTOROLA";
-	
-	public static $constantIDs = array(
-		'mot_mib22_generic',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
-			WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));	
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
-			return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
-		}
-		return $this->getDeviceIDFromLD($userAgent, 5);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
-			return "mot_mib22_generic";
-		}
-		return null;
-	}
+class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "MOTOROLA";
+    
+    public static $constantIDs = array(
+        'mot_mib22_generic',
+    );
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
+            WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));
+    }
+    
+    public function applyConclusiveMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
+            return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
+        }
+        return $this->getDeviceIDFromLD($userAgent, 5);
+    }
+    
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
+            return "mot_mib22_generic";
+        }
+        return null;
+    }
 }

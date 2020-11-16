@@ -20,19 +20,19 @@
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_LGUPLUS implements WURFL_Request_UserAgentNormalizer_Interface {
-	const LGPLUS_PATTERN = "/Mozilla.*(Windows (?:NT|CE)).*(POLARIS|WV).*lgtelecom;.*;(.*);.*/";
+class WURFL_Request_UserAgentNormalizer_Specific_LGUPLUS implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    const LGPLUS_PATTERN = "/Mozilla.*(Windows (?:NT|CE)).*(POLARIS|WV).*lgtelecom;.*;(.*);.*/";
 
-	public function normalize($userAgent) {
-		return preg_replace(self::LGPLUS_PATTERN, "$3 $1 $2", $userAgent);
-		/*
-		$matches = array();
-		if (preg_match(self::LGPLUS_PATTERN, $userAgent, $matches) != 0) {
-			return $matches[1];
-		}
-		return $userAgent;
-		*/
-	}
-
+    public function normalize($userAgent)
+    {
+        return preg_replace(self::LGPLUS_PATTERN, "$3 $1 $2", $userAgent);
+        /*
+        $matches = array();
+        if (preg_match(self::LGPLUS_PATTERN, $userAgent, $matches) != 0) {
+            return $matches[1];
+        }
+        return $userAgent;
+        */
+    }
 }
-

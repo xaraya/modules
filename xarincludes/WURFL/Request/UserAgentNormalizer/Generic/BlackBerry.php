@@ -20,15 +20,16 @@
  * User Agent Normalizer - returns the substring starting from "BlackBerry"
  * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
-		// Normalize mixed-case BlackBerry
-		$userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
-		$index = strrpos($userAgent, "BlackBerry");
-		if ($index > 0 && strpos($userAgent, "AppleWebKit") === false) {
-			return substr($userAgent, $index);
-		}
-		return $userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        // Normalize mixed-case BlackBerry
+        $userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
+        $index = strrpos($userAgent, "BlackBerry");
+        if ($index > 0 && strpos($userAgent, "AppleWebKit") === false) {
+            return substr($userAgent, $index);
+        }
+        return $userAgent;
+    }
 }

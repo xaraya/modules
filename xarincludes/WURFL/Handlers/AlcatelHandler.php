@@ -19,7 +19,7 @@
 
 /**
  * AlcatelUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package	WURFL_Handlers
@@ -27,11 +27,15 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler {
-	protected $prefix = "ALCATEL";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Alcatel") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "ALCATEL");
-	}
+class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "ALCATEL";
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Alcatel") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "ALCATEL");
+    }
 }

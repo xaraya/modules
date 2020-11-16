@@ -13,9 +13,11 @@
  *
  */
 
-function wurfl_init($args=array()) 
+function wurfl_init($args=array())
 {
-    if (!isset($args['mode'])) $args['mode'] = 'performance';
+    if (!isset($args['mode'])) {
+        $args['mode'] = 'performance';
+    }
     
     sys::import('modules.wurfl.xarincludes.WURFL.Application');
     $resourcesDir = sys::code() . 'modules/wurfl/xarincludes/resources';
@@ -29,7 +31,7 @@ function wurfl_init($args=array())
     // Set location of the WURFL File
     $wurflConfig->wurflFile($resourcesDir.'/wurfl.xml');
     
-    // Set the match mode for the API ('performance' or 'accuracy')    
+    // Set the match mode for the API ('performance' or 'accuracy')
     $wurflConfig->matchMode($args['mode']);
     
     // Setup WURFL Persistence
@@ -46,4 +48,3 @@ function wurfl_init($args=array())
     $wurflManager = $wurflManagerFactory->create();
     return $wurflManager;
 }
-?>

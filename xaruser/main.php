@@ -16,10 +16,10 @@
     function wurfl_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadWurfl')) return;
+        if (!xarSecurityCheck('ReadWurfl')) {
+            return;
+        }
 
         // success
         return array(); //true;
     }
-
-?>

@@ -27,12 +27,15 @@
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SharpHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SHARP";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sharp', 'SHARP'));
-	}
+class WURFL_Handlers_SharpHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = "SHARP";
+    
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sharp', 'SHARP'));
+    }
 }

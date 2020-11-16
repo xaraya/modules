@@ -2,7 +2,7 @@
 /*
  * The Introspector is used to remotely diagnose issues with
  * the WURFL API.
- * 
+ *
  * To use the Introspector, edit this file with your production
  * configuration and test it in your web browser.
  */
@@ -28,214 +28,240 @@ $wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
 // Do not edit anything below this line
 /////////////////////////////////////////////////////////////
 
-class ScientiaMobileIntrospector_Controller {
+class ScientiaMobileIntrospector_Controller
+{
+    protected $action;
+    protected $http_headers = array();
+    protected $capabilities = array();
+    protected $matcher_history = false;
+    protected $response = array(
+        'success' => false,
+    );
+    /**
+     * @var ScientiaMobileIntrospector_HtmlPageRenderer
+     */
+    protected $page_renderer;
+    /**
+     * @var WURFL_Configuration_Config
+     */
+    protected $config;
+    /**
+     * @var WURFL_WURFLManager
+     */
+    protected $wurfl;
 
-	protected $action;
-	protected $http_headers = array();
-	protected $capabilities = array();
-	protected $matcher_history = false;
-	protected $response = array(
-		'success' => false,
-	);
-	/**
-	 * @var ScientiaMobileIntrospector_HtmlPageRenderer
-	 */
-	protected $page_renderer;
-	/**
-	 * @var WURFL_Configuration_Config
-	 */
-	protected $config;
-	/**
-	 * @var WURFL_WURFLManager
-	 */
-	protected $wurfl;
+    public function __construct(WURFL_Configuration_Config $config)
+    {
+        $this->config = $config;
+    }
 
-	public function __construct(WURFL_Configuration_Config $config) {
-		$this->config = $config;
-	}
+    public function processRequest($request_params, $http_headers)
+    {
+        // Load the HTTP Headers from the actual request first
+        $this->http_headers = $http_headers;
+        $this->processRequestParams($request_params);
+        $this->loadWurfl($this->config);
+        $this->page_renderer = new ScientiaMobileIntrospector_HtmlPageRenderer();
+        $this->page_renderer->api_version = WURFL_Constants::API_VERSION;
+        // Execute action
+        $this->{$this->action}();
+    }
+    
+    public function loadWurfl(WURFL_Configuration_Config $config)
+    {
+        $config->cache("null");
+        $wurfl_factory = new WURFL_WURFLManagerFactory($config);
+        $this->wurfl = $wurfl_factory->create();
+    }
 
-	public function processRequest($request_params, $http_headers) {
-		// Load the HTTP Headers from the actual request first
-		$this->http_headers = $http_headers;
-		$this->processRequestParams($request_params);
-		$this->loadWurfl($this->config);
-		$this->page_renderer = new ScientiaMobileIntrospector_HtmlPageRenderer();
-		$this->page_renderer->api_version = WURFL_Constants::API_VERSION;
-		// Execute action
-		$this->{$this->action}();
-	}
-	
-	public function loadWurfl(WURFL_Configuration_Config $config) {
-		$config->cache("null");
-		$wurfl_factory = new WURFL_WURFLManagerFactory($config);
-		$this->wurfl = $wurfl_factory->create();
-	}
+    public function handleException(Exception $e)
+    {
+        if ($e instanceof ErrorException) {
+            $type = 'PHP Error';
+        } else {
+            $type = 'PHP Exception';
+        }
+        $message = "$type in ".$e->getFile().' on line '.$e->getLine().': '.$e->getMessage();
+        $this->sendFailure($message);
+    }
 
-	public function handleException(Exception $e) {
-		if ($e instanceof ErrorException) {
-			$type = 'PHP Error';
-		} else {
-			$type = 'PHP Exception';
-		}
-		$message = "$type in ".$e->getFile().' on line '.$e->getLine().': '.$e->getMessage();
-		$this->sendFailure($message);
-	}
+    public function handleError($code, $message, $file, $line)
+    {
+        throw new ErrorException($message, 0, $code, $file, $line);
+    }
 
-	public function handleError($code, $message, $file, $line) {
-		throw new ErrorException($message, 0, $code, $file, $line);
-	}
+    protected function sendFailure($message)
+    {
+        $this->response['success'] = false;
+        $this->response['message'] = $message;
+        $this->sendResponse();
+    }
 
-	protected function sendFailure($message) {
-		$this->response['success'] = false;
-		$this->response['message'] = $message;
-		$this->sendResponse();
-	}
+    protected function sendResponse()
+    {
+        header('Content-Type: text/plain');
+        echo self::prettyJSON(json_encode($this->response));
+        exit;
+    }
 
-	protected function sendResponse() {
-		header('Content-Type: text/plain');
-		echo self::prettyJSON(json_encode($this->response));
-		exit;
-	}
+    protected function processRequestParams($request_params)
+    {
+        foreach ($request_params as $param => $value) {
+            $param = strtolower($param);
+            $value = trim($value);
+            if (strlen($value) == 0) {
+                continue;
+            }
+            switch ($param) {
+                case 'action':
+                    $method_name = 'action'.ucfirst(strtolower($value));
+                    if (!method_exists($this, $method_name)) {
+                        throw new Exception("Inalid action specified ".htmlspecialchars($value));
+                    }
+                    $this->action = $method_name;
+                    break;
+                case 'ua':
+                    $this->http_headers['HTTP_USER_AGENT'] = $value;
+                    break;
+                case 'uaprof':
+                    $this->http_headers['HTTP_X_WAP_PROFILE'] = $value;
+                    break;
+                case 'headers':
+                    $this->processHeadersString($value);
+                    break;
+                case 'capabilities':
+                    $this->processCapabilitiesString($value);
+                    break;
+                case 'matcher_history':
+                    $value = strtolower($value);
+                    $this->matcher_history = ($value == 'true')? true: false;
+                    break;
+            }
+        }
+        if ($this->action === null) {
+            $this->action = 'actionIndex';
+        }
+    }
 
-	protected function processRequestParams($request_params) {
-		foreach ($request_params as $param => $value) {
-			$param = strtolower($param);
-			$value = trim($value);
-			if (strlen($value) == 0) continue;
-			switch ($param) {
-				case 'action':
-					$method_name = 'action'.ucfirst(strtolower($value));
-					if (!method_exists($this, $method_name)) {
-						throw new Exception("Inalid action specified ".htmlspecialchars($value));
-					}
-					$this->action = $method_name;
-					break;
-				case 'ua':
-					$this->http_headers['HTTP_USER_AGENT'] = $value;
-					break;
-				case 'uaprof':
-					$this->http_headers['HTTP_X_WAP_PROFILE'] = $value;
-					break;
-				case 'headers':
-					$this->processHeadersString($value);
-					break;
-				case 'capabilities':
-					$this->processCapabilitiesString($value);
-					break;
-				case 'matcher_history':
-					$value = strtolower($value);
-					$this->matcher_history = ($value == 'true')? true: false;
-					break;
-			}
-		}
-		if ($this->action === null) {
-			$this->action = 'actionIndex';
-		}
-	}
+    protected function processHeadersString($http_headers_string)
+    {
+        $http_headers_string = preg_replace('/[\n\r]+/', '|', trim($http_headers_string));
+        $headers = explode('|', $http_headers_string);
+        foreach ($headers as $header) {
+            if (strpos($header, ':') === false) {
+                continue;
+            }
+            list($key, $value) = explode(':', $header, 2);
+            // Convert RFC headers (User-Agent) to PHP format (HTTP_USER_AGENT)
+            $key = 'HTTP_'.strtoupper(str_replace('-', '_', $key));
+            $this->http_headers[$key] = trim($value);
+        }
+    }
 
-	protected function processHeadersString($http_headers_string) {
-		$http_headers_string = preg_replace('/[\n\r]+/', '|', trim($http_headers_string));
-		$headers = explode('|', $http_headers_string);
-		foreach ($headers as $header) {
-			if (strpos($header, ':') === false) continue;
-			list($key, $value) = explode(':', $header, 2);
-			// Convert RFC headers (User-Agent) to PHP format (HTTP_USER_AGENT)
-			$key = 'HTTP_'.strtoupper(str_replace('-', '_', $key));
-			$this->http_headers[$key] = trim($value);
-		}
-	}
+    protected function processCapabilitiesString($capabilities_string)
+    {
+        $capabilities_string = preg_replace('/[\n\r]+/', '|', trim($capabilities_string));
+        if (strlen($capabilities_string) == 0) {
+            return;
+        }
+        $this->capabilities = explode('|', $capabilities_string);
+    }
 
-	protected function processCapabilitiesString($capabilities_string) {
-		$capabilities_string = preg_replace('/[\n\r]+/', '|', trim($capabilities_string));
-		if (strlen($capabilities_string) == 0) return;
-		$this->capabilities = explode('|', $capabilities_string);
-	}
+    protected function actionIndex()
+    {
+        $this->page_renderer->sendIndexPage();
+    }
 
-	protected function actionIndex() {
-		$this->page_renderer->sendIndexPage();
-	}
+    protected function actionRequest()
+    {
+        $request_factory = new WURFL_Request_GenericRequestFactory();
+        $request = $request_factory->createRequest($this->http_headers);
+        $device = $this->wurfl->getDeviceForRequest($request);
+        $this->response['id'] = $device->id;
+        $this->response['user_agent'] = $request->userAgent;
+        if (!empty($this->capabilities)) {
+            $this->response['capabilities'] = array();
+            foreach ($this->capabilities as $capability) {
+                $this->response['capabilities'][$capability] = $device->getCapability($capability);
+            }
+        }
+        if ($this->matcher_history) {
+            $this->response['matcher_history'] = $device->getCapability('matcher_history');
+        }
+        $this->response['success'] = true;
+        $this->sendResponse();
+    }
 
-	protected function actionRequest() {
-		$request_factory = new WURFL_Request_GenericRequestFactory();
-		$request = $request_factory->createRequest($this->http_headers);
-		$device = $this->wurfl->getDeviceForRequest($request);
-		$this->response['id'] = $device->id;
-		$this->response['user_agent'] = $request->userAgent;
-		if (!empty($this->capabilities)) {
-			$this->response['capabilities'] = array();
-			foreach ($this->capabilities as $capability) {
-				$this->response['capabilities'][$capability] = $device->getCapability($capability);
-			}
-		}
-		if ($this->matcher_history) {
-			$this->response['matcher_history'] = $device->getCapability('matcher_history');
-		}
-		$this->response['success'] = true;
-		$this->sendResponse();
-	}
+    protected function actionInfo()
+    {
+        $info = $this->wurfl->getWURFLInfo();
+        $config = WURFL_Configuration_ConfigHolder::getWURFLConfig();
+        $this->response['info'] = array(
+            'api' => 'PHP API',
+            'api_version' => WURFL_Constants::API_VERSION,
+            'mode' => 'high-'.$config->matchMode,
+            'wurfl_version' => $info->version,
+            'loaded_patches' => is_array($config->wurflPatches)? implode(',', $config->wurflPatches): '',
+            'platform' => 'PHP '.PHP_VERSION,
+            'app_server' => $_SERVER['SERVER_SOFTWARE'],
+            'os' => php_uname(),
+        );
+        $this->response['success'] = true;
+        $this->sendResponse();
+    }
 
-	protected function actionInfo() {
-		$info = $this->wurfl->getWURFLInfo();
-		$config = WURFL_Configuration_ConfigHolder::getWURFLConfig();
-		$this->response['info'] = array(
-			'api' => 'PHP API',
-			'api_version' => WURFL_Constants::API_VERSION,
-			'mode' => 'high-'.$config->matchMode,
-			'wurfl_version' => $info->version,
-			'loaded_patches' => is_array($config->wurflPatches)? implode(',', $config->wurflPatches): '',
-			'platform' => 'PHP '.PHP_VERSION,
-			'app_server' => $_SERVER['SERVER_SOFTWARE'],
-			'os' => php_uname(),
-		);
-		$this->response['success'] = true;
-		$this->sendResponse();
-	}
+    protected function actionForm()
+    {
+        $this->page_renderer->sendFormPage();
+    }
 
-	protected function actionForm() {
-		$this->page_renderer->sendFormPage();
-	}
-
-	/**
-	 * Indents a flat JSON string to make it more human-readable.
-	 * @param string $json The original JSON string to process.
-	 * @return string Indented version of the original JSON string.
-	 * @author Unknown: http://recursive-design.com/blog/2008/03/11/format-json-with-php/
-	 */
-	public static function prettyJSON($json) {
-		$result      = '';
-		$pos         = 0;
-		$strLen      = strlen($json);
-		$indentStr   = '  ';
-		$newLine     = "\n";
-		$prevChar    = '';
-		$outOfQuotes = true;
-		for ($i=0; $i<=$strLen; $i++) {
-			$char = substr($json, $i, 1);
-			if ($char == '"' && $prevChar != '\\') {
-				$outOfQuotes = !$outOfQuotes;
-			} else if(($char == '}' || $char == ']') && $outOfQuotes) {
-				$result .= $newLine;
-				$pos --;
-				for ($j=0; $j<$pos; $j++) {
-					$result .= $indentStr;
-				}
-			}
-			$result .= $char;
-			if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
-				$result .= $newLine;
-				if ($char == '{' || $char == '[') $pos ++;
-				for ($j = 0; $j < $pos; $j++) $result .= $indentStr;
-			}
-			$prevChar = $char;
-		}
-		return $result;
-	}
+    /**
+     * Indents a flat JSON string to make it more human-readable.
+     * @param string $json The original JSON string to process.
+     * @return string Indented version of the original JSON string.
+     * @author Unknown: http://recursive-design.com/blog/2008/03/11/format-json-with-php/
+     */
+    public static function prettyJSON($json)
+    {
+        $result      = '';
+        $pos         = 0;
+        $strLen      = strlen($json);
+        $indentStr   = '  ';
+        $newLine     = "\n";
+        $prevChar    = '';
+        $outOfQuotes = true;
+        for ($i=0; $i<=$strLen; $i++) {
+            $char = substr($json, $i, 1);
+            if ($char == '"' && $prevChar != '\\') {
+                $outOfQuotes = !$outOfQuotes;
+            } elseif (($char == '}' || $char == ']') && $outOfQuotes) {
+                $result .= $newLine;
+                $pos --;
+                for ($j=0; $j<$pos; $j++) {
+                    $result .= $indentStr;
+                }
+            }
+            $result .= $char;
+            if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+                $result .= $newLine;
+                if ($char == '{' || $char == '[') {
+                    $pos ++;
+                }
+                for ($j = 0; $j < $pos; $j++) {
+                    $result .= $indentStr;
+                }
+            }
+            $prevChar = $char;
+        }
+        return $result;
+    }
 }
 
-class ScientiaMobileIntrospector_HtmlPageRenderer {
-	public $title = 'WURFL Introspector';
-	public $api_version = '';
-	protected function sendHeader() { ?>
+class ScientiaMobileIntrospector_HtmlPageRenderer
+{
+    public $title = 'WURFL Introspector';
+    public $api_version = '';
+    protected function sendHeader() { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -258,26 +284,26 @@ class ScientiaMobileIntrospector_HtmlPageRenderer {
 		</div>
 		<div>
 		<?php }
-		protected function sendFooter() { ?>
+    protected function sendFooter() { ?>
 		</div>
 	</div>
 </body>
 </html>
 		<?php }
-		public function sendIndexPage() {
-			$this->sendHeader();
-			?>
+    public function sendIndexPage()
+    {
+        $this->sendHeader(); ?>
 <ol>
 	<li><a href="Introspector.php?action=request">Request</a></li>
 	<li><a href="Introspector.php?action=info">Information</a></li>
 	<li><a href="Introspector.php?action=form">Form</a></li>
 </ol>
 			<?php
-			$this->sendFooter();
-		}
-		public function sendFormPage() {
-			$this->sendHeader();
-			?>
+            $this->sendFooter();
+    }
+    public function sendFormPage()
+    {
+        $this->sendHeader(); ?>
 <a href="Introspector.php">&lt; Return to Index</a>
 <form action="Introspector.php" method="get">
 	<input type="hidden" name="action" value="request" />
@@ -319,8 +345,8 @@ marketing_name</textarea></td>
 		value="Submit" />
 </form>
 			<?php
-			$this->sendFooter();
-		}
+            $this->sendFooter();
+    }
 }
 
 $controller = new ScientiaMobileIntrospector_Controller($wurflConfig);
