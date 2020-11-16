@@ -56,7 +56,9 @@ function reminders_adminapi_process($args)
     	$q->in('entries.id', $data['entry_list']);
     }
     $q->qecho();
-    $items = $entries->getItems();
+//    $items = $entries->getItems();
+	$q->run();
+    $items = $q->output();
     var_dump($items);exit;
     /*
     sys::import('xaraya.structures.query');
