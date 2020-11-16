@@ -29,6 +29,7 @@ function reminders_user_remove()
         if ($property->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) continue;
         $entries->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
     }
+    $entries->setFieldList();
 
     $q = $entries->dataquery;
     
