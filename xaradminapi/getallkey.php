@@ -29,7 +29,7 @@ function keywords_adminapi_getallkey($args)
         return;
     }
 
-    if (!xarSecurityCheck('AdminKeywords')) {
+    if (!xarSecurity::check('AdminKeywords')) {
         return;
     }
     $dbconn = xarDB::getConn();

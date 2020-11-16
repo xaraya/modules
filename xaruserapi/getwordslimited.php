@@ -21,7 +21,7 @@
  */
 function keywords_userapi_getwordslimited($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) {
+    if (!xarSecurity::check('ReadKeywords')) {
         return;
     }
 

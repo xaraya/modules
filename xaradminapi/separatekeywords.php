@@ -21,7 +21,7 @@ function keywords_adminapi_separatekeywords($args)
     $delimiters = xarModVars::get('keywords', 'delimiters');
 
     // Colons are the only character we can't use (ATM).
-    // TODO: remove this then xarVarValidate() is able to handle escape
+    // TODO: remove this then xarVar::validate() is able to handle escape
     // sequences for colons as data in the validation rules.
     str_replace(':', '', $delimiters);
 
@@ -34,7 +34,7 @@ function keywords_adminapi_separatekeywords($args)
     $first = substr($delimiters, 0, 1);
 
     // Normalise the delimiters and trim the strings.
-    xarVarValidate("strlist:$delimiters:pre:trim", $keywords);
+    xarVar::validate("strlist:$delimiters:pre:trim", $keywords);
 
     // Explode into an array of words.
     $words = explode($first, $keywords);

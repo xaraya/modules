@@ -38,16 +38,16 @@ class Keywords_KeywordsarticlesBlockAdmin extends Keywords_KeywordsarticlesBlock
 
     public function update()
     {
-        if (!xarVarFetch('ptid', 'id', $vars['ptid'], $this->ptid, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('ptid', 'id', $vars['ptid'], $this->ptid, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('cid', 'int:1:', $vars['cid'], $this->cid, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('cid', 'int:1:', $vars['cid'], $this->cid, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('status', 'str:1:', $vars['status'], $this->status, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('status', 'str:1:', $vars['status'], $this->status, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'], 1, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('refreshtime', 'int:1:', $vars['refreshtime'], 1, xarVar::NOT_REQUIRED)) {
             return;
         }
         $this->setContent($vars);

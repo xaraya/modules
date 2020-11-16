@@ -8,7 +8,7 @@
             <xar:template type="module" module="keywords" file="admin-hook-tabs"/>
         </div>
         <div class="xar-mod-page-body">
-            <form name="post" id="post" action="#xarModURL('keywords', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+            <form name="post" id="post" action="#xarController::URL('keywords', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded">
                 <xar:if condition="!empty($module_settings)">
                     <fieldset>
                         <legend>Module Settings</legend>

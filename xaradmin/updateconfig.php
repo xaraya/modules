@@ -19,20 +19,20 @@
  */
 function keywords_admin_updateconfig()
 {
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
-    if (!xarSecurityCheck('AdminKeywords')) {
+    if (!xarSecurity::check('AdminKeywords')) {
         return;
     }
 
-    xarVarFetch('restricted', 'int:0:1', $restricted, 0);
-    xarVarFetch('useitemtype', 'int:0:1', $useitemtype, 0);
-    xarVarFetch('keywords', 'isset', $keywords, '', XARVAR_DONT_SET);
-    xarVarFetch('isalias', 'isset', $isalias, '', XARVAR_DONT_SET);
-    xarVarFetch('showsort', 'isset', $showsort, '', XARVAR_DONT_SET);
-    xarVarFetch('displaycolumns', 'isset', $displaycolumns, '', XARVAR_DONT_SET);
-    xarVarFetch('delimiters', 'isset', $delimiters, '', XARVAR_DONT_SET);
+    xarVar::fetch('restricted', 'int:0:1', $restricted, 0);
+    xarVar::fetch('useitemtype', 'int:0:1', $useitemtype, 0);
+    xarVar::fetch('keywords', 'isset', $keywords, '', xarVar::DONT_SET);
+    xarVar::fetch('isalias', 'isset', $isalias, '', xarVar::DONT_SET);
+    xarVar::fetch('showsort', 'isset', $showsort, '', xarVar::DONT_SET);
+    xarVar::fetch('displaycolumns', 'isset', $displaycolumns, '', xarVar::DONT_SET);
+    xarVar::fetch('delimiters', 'isset', $delimiters, '', xarVar::DONT_SET);
 
     xarModVars::set('keywords', 'restricted', $restricted);
     xarModVars::set('keywords', 'useitemtype', $useitemtype);
@@ -49,7 +49,7 @@ function keywords_admin_updateconfig()
                 $itemtype = '0';
             } else {
                 $moduleitem = explode(".", $modname);
-                $moduleid = xarModGetIDFromName($moduleitem[0], 'module');
+                $moduleid = xarMod::getRegId($moduleitem[0], 'module');
                 if (isset($moduleitem[1]) && is_numeric($moduleitem[1])) {
                     $itemtype = $moduleitem[1];
                 } else {
@@ -97,6 +97,6 @@ function keywords_admin_updateconfig()
         $itemid = $data['module_settings']->updateItem();
     }
 
-    xarController::redirect(xarModURL('keywords', 'admin', 'modifyconfig'));
+    xarController::redirect(xarController::URL('keywords', 'admin', 'modifyconfig'));
     return true;
 }

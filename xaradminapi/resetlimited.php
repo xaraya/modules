@@ -16,8 +16,8 @@
  */
 function keywords_adminapi_resetlimited($args)
 {
-    //if (!xarSecurityCheck('AdminKeywords')) return;
-    if (!xarSecurityCheck('AddKeywords')) {
+    //if (!xarSecurity::check('AdminKeywords')) return;
+    if (!xarSecurity::check('AddKeywords')) {
         return;
     }
     $dbconn = xarDB::getConn();

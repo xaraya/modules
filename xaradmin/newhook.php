@@ -28,7 +28,7 @@ function keywords_admin_newhook($args)
 
     // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     } else {
         $modname = $extrainfo['module'];
     }
@@ -57,7 +57,7 @@ function keywords_admin_newhook($args)
     }
 
     // @todo: replace this with access prop
-    if (!xarSecurityCheck('AddKeywords', 0, 'Item', "$modid:$itemtype:All")) {
+    if (!xarSecurity::check('AddKeywords', 0, 'Item', "$modid:$itemtype:All")) {
         return '';
     }
 
@@ -77,12 +77,12 @@ function keywords_admin_newhook($args)
         $keywords = $extrainfo['keywords'];
     } else {
         // could be an item preview, try fetch from form input
-        if (!xarVarFetch(
+        if (!xarVar::fetch(
             'keywords',
             'isset',
             $keywords,
             null,
-            XARVAR_DONT_SET
+            xarVar::DONT_SET
         )) {
             return;
         }

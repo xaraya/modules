@@ -24,7 +24,7 @@
  */
 function keywords_userapi_getitems($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) {
+    if (!xarSecurity::check('ReadKeywords')) {
         return;
     }
 

@@ -20,11 +20,11 @@
  */
 function keywords_user_display($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) {
+    if (!xarSecurity::check('ReadKeywords')) {
         return;
     }
 
-    xarVarFetch('itemid', 'id', $itemid, '', XARVAR_DONT_SET);
+    xarVar::fetch('itemid', 'id', $itemid, '', xarVar::DONT_SET);
     extract($args);
 
     if (empty($itemid)) {
@@ -48,7 +48,7 @@ function keywords_user_display($args)
         return array();
     }
 
-    $modinfo = xarModGetInfo($item['moduleid']);
+    $modinfo = xarMod::getInfo($item['moduleid']);
     if (!isset($modinfo) || empty($modinfo['name'])) {
         return array();
     }
@@ -87,7 +87,7 @@ function keywords_user_display($args)
             $item[$field] = $value;
         }
     } else {
-        $item['url'] = xarModURL(
+        $item['url'] = xarController::URL(
             $modinfo['name'],
             'user',
             'display',

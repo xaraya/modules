@@ -13,7 +13,7 @@ function indexer_indexapi_reindex(array $args=array())
         'admin',
         'getitems',
         array(
-            'state' => XARMOD_STATE_ANY,
+            'state' => xarMod::STATE_ANY,
             'name' => !empty($module) ? $module : null,
         )
     );
@@ -30,7 +30,7 @@ function indexer_indexapi_reindex(array $args=array())
                     'item_id' => 0,
                 )
             );
-            if ($module['state'] != XARMOD_STATE_ACTIVE) {
+            if ($module['state'] != xarMod::STATE_ACTIVE) {
                 continue;
             }
             try {

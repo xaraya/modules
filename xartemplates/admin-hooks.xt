@@ -4,7 +4,7 @@
     <xar:template type="module" module="keywords" file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>Configure Keywords Hooks</h2>
-        <xar:set name="url">#xarModURL('keywords','admin','hooks')#</xar:set>
+        <xar:set name="url">#xarController::URL('keywords','admin','hooks')#</xar:set>
         <xar:module main="false" module="modules" type="admin" func="hooks" curhook="keywords" return_url="$url"/>
     </div>
 </xar:template>

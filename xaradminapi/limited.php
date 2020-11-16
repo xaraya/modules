@@ -18,7 +18,7 @@
 function keywords_adminapi_limited($args)
 {
     extract($args);
-    if (!xarSecurityCheck('AdminKeywords')) {
+    if (!xarSecurity::check('AdminKeywords')) {
         return;
     }
     $invalid = array();

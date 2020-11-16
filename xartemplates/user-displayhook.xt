@@ -7,7 +7,7 @@
         Keywords:&#160;
         </xar:if>
         <xar:loop name="$keywords">
-            <a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $loop:item))#">#$loop:item#</a>
+            <a href="#xarController::URL('keywords', 'user', 'main', array('keyword' => $loop:item))#">#$loop:item#</a>
             <xar:if condition="$loop:index lt count($keywords)">,&#160;</xar:if>
         </xar:loop>
     </div>

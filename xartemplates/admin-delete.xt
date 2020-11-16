@@ -9,7 +9,7 @@
         </div>
         <div class="xar-mod-page-body">
             <h3>Delete Item Associations</h3>
-            <form method="post" action="#xarModURL('keywords', 'admin', 'delete')#">
+            <form method="post" action="#xarController::URL('keywords', 'admin', 'delete')#">
                 <fieldset>
                     <legend>Item Info</legend>
                     <div class="xar-row">
@@ -72,7 +72,7 @@
                             <input type="hidden" name="module_id" id="module_id" value="#$module_id#"/>
                             <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#"/>
                             <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                            <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                             <input type="hidden" name="return_url" id="return_url" value="#$return_url#"/>
                             <input type="submit" value="#$submitLabel#"/>
                             &#160;

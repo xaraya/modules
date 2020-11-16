@@ -38,19 +38,19 @@ class Keywords_CloudBlockAdmin extends Keywords_CloudBlock implements iBlock
     public function update()
     {
         // Get the cloud type
-        if (!xarVarFetch('cloudtype', 'int', $vars['cloudtype'], $this->cloudtype, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('cloudtype', 'int', $vars['cloudtype'], $this->cloudtype, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('color', 'str:1:', $vars['color'], $this->color, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('color', 'str:1:', $vars['color'], $this->color, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('background', 'str:1:', $vars['background'], $this->background, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('background', 'str:1:', $vars['background'], $this->background, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('module_id', 'str:1:', $vars['module_id'], $this->module_id, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('module_id', 'str:1:', $vars['module_id'], $this->module_id, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('itemtype', 'str:1:', $vars['itemtype'], $this->itemtype, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemtype', 'str:1:', $vars['itemtype'], $this->itemtype, xarVar::NOT_REQUIRED)) {
             return;
         }
         $this->setContent($vars);

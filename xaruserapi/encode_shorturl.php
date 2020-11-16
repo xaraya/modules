@@ -12,10 +12,10 @@
  */
 
 /**
- * return the path for a short URL to xarModURL for this module
+ * return the path for a short URL to xarController::URL for this module
  *
  * @author the Example module development team
- * @param  $args the function and arguments passed to xarModURL
+ * @param  $args the function and arguments passed to xarController::URL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */

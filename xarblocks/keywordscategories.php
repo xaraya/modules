@@ -42,13 +42,13 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
         $vars = $this->getContent();
 
         // Allow refresh by setting refreshrandom variable
-        if (!xarVarFetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, xarVar::DONT_SET)) {
             return;
         }
 
         // Check cache
         $refresh = (time() - ($vars['refreshtime'] * 60));
-        $varDir = xarCoreGetVarDirPath();
+        $varDir = sys::varpath();
         $cacheKey = md5($blockinfo['bid']);
         $cachedFileName = $varDir . '/cache/templates/' . $cacheKey;
         if ((file_exists($cachedFileName)) &&
@@ -60,9 +60,9 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
             fclose($fp);
         } else {
             //Get the keywords related categories
-            if (xarVarIsCached('Blocks.articles', 'cids')) {
-                $vars['modid'] = xarModGetIDFromName('categories');
-                $vars['cids'] = xarVarGetCached('Blocks.articles', 'cids');
+            if (xarVar::isCached('Blocks.articles', 'cids')) {
+                $vars['modid'] = xarMod::getRegId('categories');
+                $vars['cids'] = xarVar::getCached('Blocks.articles', 'cids');
                 if (empty($vars['cids']) || !is_array($vars['cids']) || count($vars['cids']) == 0) {
                     return '';
                 }
@@ -127,7 +127,7 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
                                 'parent' => $categories['parent'],
                                 'left' => $categories['left'],
                                 'right' => $categories['right'],
-                                'link' => xarModURL('articles', 'user', 'view', array('cids' => array(0 => $item['itemid'])))
+                                'link' => xarController::URL('articles', 'user', 'view', array('cids' => array(0 => $item['itemid'])))
                                 );
                     }
                 }

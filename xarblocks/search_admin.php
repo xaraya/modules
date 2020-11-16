@@ -33,10 +33,10 @@ class Keywords_SearchBlockAdmin extends Keywords_SearchBlock implements iBlock
 
     public function update()
     {
-        if (!xarVarFetch('module_id', 'str:1:', $vars['module_id'], $this->module_id, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('module_id', 'str:1:', $vars['module_id'], $this->module_id, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('itemtype', 'str:1:', $vars['itemtype'], $this->itemtype, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemtype', 'str:1:', $vars['itemtype'], $this->itemtype, xarVar::NOT_REQUIRED)) {
             return;
         }
         $this->setContent($vars);

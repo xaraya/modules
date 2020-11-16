@@ -18,7 +18,7 @@
 function keywords_user_main($args=array())
 {
     // Xaraya security
-    if (!xarSecurityCheck('ReadKeywords')) {
+    if (!xarSecurity::check('ReadKeywords')) {
         return;
     }
 
@@ -28,7 +28,7 @@ function keywords_user_main($args=array())
         $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
-        xarController::redirect(xarModURL('keywords', 'user', 'view', $args));
+        xarController::redirect(xarController::URL('keywords', 'user', 'view', $args));
     }
     return true;
 }

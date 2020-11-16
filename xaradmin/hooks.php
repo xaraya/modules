@@ -21,7 +21,7 @@
 function keywords_admin_hooks(array $args=array())
 {
     // Security
-    if (!xarSecurityCheck('ManageKeywords')) {
+    if (!xarSecurity::check('ManageKeywords')) {
         return;
     }
 

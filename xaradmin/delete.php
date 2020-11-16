@@ -15,51 +15,51 @@
  */
 function keywords_admin_delete($args)
 {
-    if (!xarSecurityCheck('ManageKeywords')) {
+    if (!xarSecurity::check('ManageKeywords')) {
         return;
     }
 
     $data = array();
 
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'module_id',
         'id',
         $module_id,
         null,
-        XARVAR_DONT_SET
+        xarVar::DONT_SET
     )) {
         return;
     }
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'itemtype',
         'id',
         $itemtype,
         null,
-        XARVAR_DONT_SET
+        xarVar::DONT_SET
     )) {
         return;
     }
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'itemid',
         'id',
         $itemid,
         null,
-        XARVAR_DONT_SET
+        xarVar::DONT_SET
     )) {
         return;
     }
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'return_url',
         'pre:trim:str:1:',
         $return_url,
         '',
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
 
     if (empty($return_url)) {
-        $return_url = xarModURL(
+        $return_url = xarController::URL(
             'keywords',
             'admin',
             'stats',
@@ -83,12 +83,12 @@ function keywords_admin_delete($args)
         throw new EmptyParameterException($vars, $msg);
     }
 
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'phase',
         'pre:trim:lower:enum:confirm',
         $phase,
         'form',
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
@@ -96,19 +96,19 @@ function keywords_admin_delete($args)
     $modname = xarMod::getName($module_id);
 
     if ($phase == 'confirm') {
-        if (!xarVarFetch(
+        if (!xarVar::fetch(
             'cancel',
             'checkbox',
             $cancel,
             false,
-            XARVAR_NOT_REQUIRED
+            xarVar::NOT_REQUIRED
         )) {
             return;
         }
         if ($cancel) {
             xarController::redirect($return_url);
         }
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
         }
         // get the index_id for this module/itemtype/item
@@ -152,7 +152,7 @@ function keywords_admin_delete($args)
         $item = array(
             'label' => xarML('Item #(1)', $itemid),
             'title' => xarML('Display Item #(1)', $itemid),
-            'url' => xarModURL(
+            'url' => xarController::URL(
                 $modname,
                 'user',
                 'display',
@@ -189,7 +189,7 @@ function keywords_admin_delete($args)
                 $modtypes[$module][$typeid] = array(
                     'label' => xarML('Itemtype #(1)', $typeid),
                     'title' => xarML('View itemtype #(1) items', $typeid),
-                    'url' => xarModURL($module, 'user', 'view', array('itemtype' => $typeid)),
+                    'url' => xarController::URL($module, 'user', 'view', array('itemtype' => $typeid)),
                 );
             }
             $modules[$module]['itemtypes'][$typeid] += $modtypes[$module][$typeid];

@@ -24,7 +24,7 @@
 function keywords_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditKeywords')) {
+    if (!xarSecurity::check('EditKeywords')) {
         return;
     }
 
@@ -37,7 +37,7 @@ function keywords_admin_main()
             $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('keywords', 'admin', 'view'));
+            xarController::redirect(xarController::URL('keywords', 'admin', 'view'));
         }
     }
     return true;

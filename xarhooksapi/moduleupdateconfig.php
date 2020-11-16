@@ -42,7 +42,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
         $itemtype = 0;
     }
 
-    if (!xarSecurityCheck('AdminKeywords', 0, 'Item', "$modid:$itemtype:All")) {
+    if (!xarSecurity::check('AdminKeywords', 0, 'Item', "$modid:$itemtype:All")) {
         return $extrainfo;
     }
 
@@ -68,56 +68,56 @@ function keywords_hooksapi_moduleupdateconfig($args)
         }
     }
 
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'keywords_settings["global_config"]',
         'checkbox',
         $global_config,
         false,
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'keywords_settings["auto_tag_create"]',
         'pre:trim:str:1:',
         $auto_tag_create,
         '',
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'keywords_settings["auto_tag_persist"]',
         'checkbox',
         $auto_tag_persist,
         false,
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
 
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'keywords_settings["meta_keywords"]',
         'int:0:2',
         $meta_keywords,
         0,
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
 
-    if (!xarVarFetch(
+    if (!xarVar::fetch(
         'keywords_settings["restrict_words"]',
         'checkbox',
         $restrict_words,
         false,
-        XARVAR_NOT_REQUIRED
+        xarVar::NOT_REQUIRED
     )) {
         return;
     }
 
     if (!empty($auto_tag_create)) {
-        $auto_tag_create = xarModAPIFunc(
+        $auto_tag_create = xarMod::apiFunc(
             'keywords',
             'admin',
             'separekeywords',
@@ -128,12 +128,12 @@ function keywords_hooksapi_moduleupdateconfig($args)
     }
 
     if (!empty($meta_keywords)) {
-        if (!xarVarFetch(
+        if (!xarVar::fetch(
             'keywords_settings["meta_lang"]',
             'pre:trim:lower:str:1:',
             $meta_lang,
             $settings['meta_lang'],
-            XARVAR_NOT_REQUIRED
+            xarVar::NOT_REQUIRED
         )) {
             return;
         }
@@ -143,21 +143,21 @@ function keywords_hooksapi_moduleupdateconfig($args)
     // when switching between restricted and unrestricted we want to preserve settings
     $status_quo = $restrict_words == $settings['restrict_words'];
     if ($restrict_words && $status_quo) {
-        if (!xarVarFetch(
+        if (!xarVar::fetch(
             'keywords_settings["restricted_list"]',
             'pre:trim:str:1:',
             $restricted_list,
             '',
-            XARVAR_NOT_REQUIRED
+            xarVar::NOT_REQUIRED
         )) {
             return;
         }
-        if (!xarVarFetch(
+        if (!xarVar::fetch(
             'keywords_settings["allow_manager_add"]',
             'checkbox',
             $allow_manager_add,
             false,
-            XARVAR_NOT_REQUIRED
+            xarVar::NOT_REQUIRED
         )) {
             return;
         }
@@ -170,7 +170,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
                 'index_id' => $settings['index_id'],
             )
         );
-        $new_list = xarModAPIFunc(
+        $new_list = xarMod::apiFunc(
             'keywords',
             'admin',
             'separekeywords',

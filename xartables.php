@@ -14,7 +14,7 @@
  * Return keywords table names to xaraya
  *
  * This function is called internally by the core whenever the module is
- * loaded.  It is loaded by xarMod__loadDbInfo().
+ * loaded.  It is loaded by xarMod::loadDbInfo().
  *
  * @access private
  * @return array

@@ -7,78 +7,78 @@
         </dt>
         <xar:if condition="$tab eq 0">
             <dd class="active">
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '0'))#">
                     All
                 </a>
             </dd>
         <xar:else/>
             <dd>
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '0'))#">
                     All
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 1">
             <dd class="active">
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '1'))#">
                     a - f
                 </a>
             </dd>
         <xar:else/>
             <dd>
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '1'))#">
                     a - f
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 2">
             <dd class="active">
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '2'))#">
                     g - l
                 </a>
             </dd>
         <xar:else/>
             <dd>
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '2'))#">
                     g - l
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 3">
             <dd class="active">
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '3'))#">
                     m - r
                 </a>
             </dd>
         <xar:else/>
             <dd>
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '3'))#">
                     m - r
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 4">
             <dd class="active">
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '4'))#">
                     s - z
                 </a>
             </dd>
         <xar:else/>
             <dd>
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '4'))#">
                     s - z
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 5">
             <dd class="active">
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '5'))#">
                     other
                 </a>
             </dd>
         <xar:else/>
             <dd>
-                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
+                <a href="#xarController::URL('keywords', 'user', 'main', array('tab' => '5'))#">
                      other
                 </a>
             </dd>

@@ -19,7 +19,7 @@
 function keywords_admin_overview()
 {
     /* Security Check */
-    if (!xarSecurityCheck('AdminKeywords', 0)) {
+    if (!xarSecurity::check('AdminKeywords', 0)) {
         return;
     }
 
