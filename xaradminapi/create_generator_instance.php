@@ -22,11 +22,13 @@ function translations_adminapi_create_generator_instance($args)
     assert('isset($locale)');
 
     if ($interface == 'ReferencesGenerator') {
-        $bt = xarMod::apiFunc('translations','admin','work_backend_type');
+        $bt = xarMod::apiFunc('translations', 'admin', 'work_backend_type');
     } elseif ($interface == 'TranslationsGenerator') {
-        $bt = xarMod::apiFunc('translations','admin','release_backend_type');
+        $bt = xarMod::apiFunc('translations', 'admin', 'release_backend_type');
     }
-    if (!$bt) return;
+    if (!$bt) {
+        return;
+    }
     switch ($bt) {
         case 'php':
             sys::import('modules.translations.class.PHPTransGenerator');
@@ -40,5 +42,3 @@ function translations_adminapi_create_generator_instance($args)
     }
     throw new Exception('Unknown');
 }
-
-?>

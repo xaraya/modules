@@ -27,14 +27,16 @@ function translations_adminapi_get_module_phpfiles($args)
     if (file_exists(sys::code() . "modules/$moddir")) {
         $dd = opendir(sys::code() . "modules/$moddir");
         while ($filename = readdir($dd)) {
-            if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) continue;
+            if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) {
+                continue;
+            }
             $phpname = $matches[1];
-            if ($phpname == 'xartables') continue;
-            $names[] = mb_ereg_replace("^xar","",$phpname);
+            if ($phpname == 'xartables') {
+                continue;
+            }
+            $names[] = mb_ereg_replace("^xar", "", $phpname);
         }
         closedir($dd);
     }
     return $names;
 }
-
-?>

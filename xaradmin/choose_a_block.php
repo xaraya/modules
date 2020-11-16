@@ -14,14 +14,16 @@
 function translations_admin_choose_a_block()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!$blocklist = xarMod::apiFunc('blocks','types','getitems',array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE))) return;
+    if (!$blocklist = xarMod::apiFunc('blocks', 'types', 'getitems', array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE))) {
+        return;
+    }
 
     $data = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_BLOCK, '', 0);
     $data['blocklist'] = $blocklist;
     $data['dnType'] = xarMLS::DNTYPE_BLOCK;
     return $data;
 }
-
-?>

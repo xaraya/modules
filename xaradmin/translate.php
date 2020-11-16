@@ -15,11 +15,19 @@
 function translations_admin_translate()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVarFetch('dnType', 'int', $dnType)) {
+        return;
+    }
+    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+        return;
+    }
+    if (!xarVarFetch('extid', 'int', $extid)) {
+        return;
+    }
 
     $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
     $trabar = translations_create_trabar($dnType, $dnName, $extid, '', '');
@@ -32,5 +40,3 @@ function translations_admin_translate()
 
     return $tplData;
 }
-
-?>

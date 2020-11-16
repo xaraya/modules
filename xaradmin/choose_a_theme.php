@@ -15,14 +15,16 @@
 function translations_admin_choose_a_theme()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!($themelist = xarMod::apiFunc('themes','admin','getthemelist',array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
+    if (!($themelist = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) {
+        return;
+    }
 
     $tplData = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_THEME, '', 0);
     $tplData['themelist'] = $themelist;
     $tplData['dnType'] = xarMLS::DNTYPE_THEME;
     return $tplData;
 }
-
-?>

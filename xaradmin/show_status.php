@@ -17,11 +17,11 @@ function &count_entries(&$entries)
     $counts['numEmptyEntries']    = 0;
     $counts['numKeyEntries']      = 0;
     $counts['numEmptyKeyEntries'] = 0;
-    foreach($entries as $entry) {
+    foreach ($entries as $entry) {
         $counts['numEntries']         += $entry['numEntries'];
         $counts['numEmptyEntries']    += $entry['numEmptyEntries'];
         $counts['numKeyEntries']      += $entry['numKeyEntries'];
-        $counts['numEmptyKeyEntries'] += $entry['numEmptyKeyEntries']; 
+        $counts['numEmptyKeyEntries'] += $entry['numEmptyKeyEntries'];
     }
     return $counts;
 }
@@ -29,28 +29,35 @@ function &count_entries(&$entries)
 function translations_admin_show_status()
 {
     // Security Check
-    if(!xarSecurityCheck('ReadTranslations')) return;
+    if (!xarSecurityCheck('ReadTranslations')) {
+        return;
+    }
    
     $data = array();
 
     // core
-    $tmp = translations_create_trabar(xarMLS::DNTYPE_CORE, 'xaraya', 0, 'core','core');
+    $tmp = translations_create_trabar(xarMLS::DNTYPE_CORE, 'xaraya', 0, 'core', 'core');
     $coreentries =& count_entries($tmp['entrydata']);
     unset($tmp);
 
     // Get the modules
-    if (!($mods = xarMod::apiFunc('modules','admin','getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
+    if (!($mods = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) {
+        return;
+    }
     $modentries = array();
-    $mod_totalentries = 0; $mod_untranslated = 0; $mod_keytotalentries = 0; $mod_keyuntranslated =0;
-    foreach($mods as $mod) {
+    $mod_totalentries = 0;
+    $mod_untranslated = 0;
+    $mod_keytotalentries = 0;
+    $mod_keyuntranslated =0;
+    foreach ($mods as $mod) {
         $modname = $mod['name'];
         $modid = $mod['regid'];
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
-        $testbackend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
+        $testbackend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', $args);
         if (isset($testbackend) && $testbackend->bindDomain(xarMLS::DNTYPE_MODULE, $modname)) {
-            $tmp =  translations_create_trabar(xarMLS::DNTYPE_MODULE, $modname, $modid, 'modules',$modname);
+            $tmp =  translations_create_trabar(xarMLS::DNTYPE_MODULE, $modname, $modid, 'modules', $modname);
             $modentries[$modname] =& count_entries($tmp['entrydata']);
             unset($tmp);
             $mod_totalentries += $modentries[$modname]['numEntries'];
@@ -70,20 +77,23 @@ function translations_admin_show_status()
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
-    $q = new Query('SELECT',$tables['dynamic_properties_def']);
+    $q = new Query('SELECT', $tables['dynamic_properties_def']);
     $q->eq('modid', 0);
     $q->run();
     $properties = $q->output();
     
     $propertyentries = array();
-    $property_totalentries = 0; $property_untranslated =0; $property_keytotalentries = 0; $property_keyuntranslated = 0;
-    foreach($properties as $property) {
+    $property_totalentries = 0;
+    $property_untranslated =0;
+    $property_keytotalentries = 0;
+    $property_keyuntranslated = 0;
+    foreach ($properties as $property) {
         $propertyname = $property['name'];
         $propertyid = $property['id'];
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
-        $testbackend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
+        $testbackend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', $args);
         if (isset($testbackend) && $testbackend->bindDomain(xarMLS::DNTYPE_PROPERTY, $propertyname)) {
             $tmp =  translations_create_trabar(xarMLS::DNTYPE_PROPERTY, $propertyname, $propertyid, 'properties', $propertyname);
             $propertyentries[$propertyname] =& count_entries($tmp['entrydata']);
@@ -102,17 +112,20 @@ function translations_admin_show_status()
     }
 
     // Get the blocks
-    $blocks = xarMod::apiFunc('blocks','types','getitems',array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
+    $blocks = xarMod::apiFunc('blocks', 'types', 'getitems', array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
 
     $blockentries = array();
-    $block_totalentries = 0; $block_untranslated =0; $block_keytotalentries = 0; $block_keyuntranslated = 0;
-    foreach($blocks as $block) {
+    $block_totalentries = 0;
+    $block_untranslated =0;
+    $block_keytotalentries = 0;
+    $block_keyuntranslated = 0;
+    foreach ($blocks as $block) {
         $blockname = $block['type'];
         $blockid = $block['type_id'];
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
-        $testbackend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
+        $testbackend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', $args);
         if (isset($testbackend) && $testbackend->bindDomain(xarMLS::DNTYPE_BLOCK, $blockname)) {
             $tmp =  translations_create_trabar(xarMLS::DNTYPE_BLOCK, $blockname, $blockid, 'blocks', $blockname);
             $blockentries[$blockname] =& count_entries($tmp['entrydata']);
@@ -131,17 +144,22 @@ function translations_admin_show_status()
     }
 
     // Get the themes
-    if (!($themes = xarMod::apiFunc('themes','admin','getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
+    if (!($themes = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) {
+        return;
+    }
 
     $themeentries = array();
-    $theme_totalentries = 0; $theme_untranslated =0; $theme_keytotalentries = 0; $theme_keyuntranslated = 0;
-    foreach($themes as $theme) {
+    $theme_totalentries = 0;
+    $theme_untranslated =0;
+    $theme_keytotalentries = 0;
+    $theme_keyuntranslated = 0;
+    foreach ($themes as $theme) {
         $themename = $theme['osdirectory'];
         $themeid = $theme['regid'];
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
-        $testbackend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
+        $testbackend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', $args);
         if (isset($testbackend) && $testbackend->bindDomain(xarMLS::DNTYPE_THEME, $themename)) {
             $tmp =  translations_create_trabar(xarMLS::DNTYPE_THEME, $themename, $themeid, 'themes', $themename);
             $themeentries[$themename] =& count_entries($tmp['entrydata']);
@@ -183,5 +201,3 @@ function translations_admin_show_status()
 
     return $data;
 }
-
-?>

@@ -13,32 +13,32 @@
 
 class PHPParser
 {
-    var $transEntries = array();
-    var $transKeyEntries = array();
-    var $includedFiles = array();
-    var $parsedFiles = array();
-    var $notToParseFiles = array();
+    public $transEntries = array();
+    public $transKeyEntries = array();
+    public $includedFiles = array();
+    public $parsedFiles = array();
+    public $notToParseFiles = array();
 
-    var $_fd;
-    var $_offs;
-    var $_pos;
-    var $_len;
-    var $_buf;
-    var $_line;
-    var $_token;
-    var $_right;
-    var $_string;
-    var $filename;
+    public $_fd;
+    public $_offs;
+    public $_pos;
+    public $_len;
+    public $_buf;
+    public $_line;
+    public $_token;
+    public $_right;
+    public $_string;
+    public $filename;
 
-    var $tokenarray;
-    var $endtokenarray;
-    var $tokenarraytype;
-    var $iskeytokenarray;
-    var $strlentokenarray;
-    var $strlenendtokenarray;
-    var $lasttokenarray;
+    public $tokenarray;
+    public $endtokenarray;
+    public $tokenarraytype;
+    public $iskeytokenarray;
+    public $strlentokenarray;
+    public $strlenendtokenarray;
+    public $lasttokenarray;
 
-    function __construct()
+    public function __construct()
     {
         $this->tokenarray = array("xarML('", "xarMLByKey('", 'xarML("', 'xarMLByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', "include_once '", "include '", "require_once '", "require '", 'include_once "', 'include "', 'require_once "', 'require "', 'include_once(', 'include(', 'require_once(', 'require(');
         $this->endtokenarray = array(array("')","',"), array("')","',"), array('")','",'), array('")','",'), array('}'), array('}'), array('}'), array('}'), array("';"), array("';"), array("';"), array("';"), array('";'), array('";'), array('";'), array('";'), array(');'), array(');'), array(');'), array(');'));
@@ -49,44 +49,50 @@ class PHPParser
         $this->strlenendtokenarray = array(2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
     }
 
-    function getTransEntries()
+    public function getTransEntries()
     {
         return $this->transEntries;
     }
 
-    function getTransKeyEntries()
+    public function getTransKeyEntries()
     {
         return $this->transKeyEntries;
     }
 
-    function _get_token() 
+    public function _get_token()
     {
         $found = false;
         // if (defined('PHPPARSERDEBUG'))
         // printf("Getting line %d\n"."for %s token %d<br />\n", $this->_line, $this->_right?'end':'begin', $this->_token);
         $this->_pos = -1;
-        foreach( $this->lasttokenarray as $n => $v )
-        {
-            $p = strpos( $this->_buf, $v, $this->_offs );
-            if ($p===FALSE)
+        foreach ($this->lasttokenarray as $n => $v) {
+            $p = strpos($this->_buf, $v, $this->_offs);
+            if ($p===false) {
                 continue;
+            }
             if (($p<$this->_pos)||($this->_pos==-1)) {
                 $this->_pos = $p;
-                if ($this->_right != true) $this->_token = $n;
+                if ($this->_right != true) {
+                    $this->_token = $n;
+                }
             }
         }
         if ($this->_pos != -1) {
             // if (defined('PHPPARSERDEBUG'))
-                // printf("Found %s token %s[%d] at pos %d<br />\n", $this->_right?'end':'begin', htmlspecialchars(substr($this->_buf, $this->_pos, strlen($this->tokenarray[$this->_token]))), $this->_token, $this->_pos);
-            if ($this->_right)
+            // printf("Found %s token %s[%d] at pos %d<br />\n", $this->_right?'end':'begin', htmlspecialchars(substr($this->_buf, $this->_pos, strlen($this->tokenarray[$this->_token]))), $this->_token, $this->_pos);
+            if ($this->_right) {
                 $this->_string .= substr($this->_buf, $this->_offs, $this->_pos - $this->_offs);
-            if ($this->_right)
+            }
+            if ($this->_right) {
                 $this->_offs = $this->_pos + $this->strlenendtokenarray[$this->_token];
-            else
+            } else {
                 $this->_offs = $this->_pos + $this->strlentokenarray[$this->_token];
-            if ($this->_offs > $this->_len) $this->_offs = $this->_len;
+            }
+            if ($this->_offs > $this->_len) {
+                $this->_offs = $this->_len;
+            }
             $found = true;
-            if(!$this->_right) {
+            if (!$this->_right) {
                 // ParseClose
                 $this->_string ='';
                 $this->_right = true;
@@ -94,15 +100,15 @@ class PHPParser
                 $token = $this->_token;
                 if ($this->_get_token()) {
                     // if (defined('PHPPARSERDEBUG'))
-                       // printf("Result: %s<br />\n", $this->_string);
+                    // printf("Result: %s<br />\n", $this->_string);
                     switch ($this->tokenarraytype[$token]) {
                     case 'function':
                         // Delete extra whitespaces and spaces around newline
                         $this->_string = trim($this->_string);
-                        $this->_string = preg_replace('/[\t ]+/',' ',$this->_string);
-                        $this->_string = preg_replace('/\s*\n\s*/',"\n",$this->_string);
+                        $this->_string = preg_replace('/[\t ]+/', ' ', $this->_string);
+                        $this->_string = preg_replace('/\s*\n\s*/', "\n", $this->_string);
                         if ($this->strslasharray[$token]) {
-                            $this->_string = str_replace('\\\'','\'',$this->_string);
+                            $this->_string = str_replace('\\\'', '\'', $this->_string);
                         }
                         if ($this->iskeytokenarray[$token]) {
                             if (!isset($this->transKeyEntries[$this->_string])) {
@@ -160,7 +166,9 @@ class PHPParser
                     $this->_len = strlen($this->_buf);
                     $this->_line++;
                     $this->_offs = 0;
-                    if (!$this->_get_token()) continue;
+                    if (!$this->_get_token()) {
+                        continue;
+                    }
                     $found = true;
                     break;
                 }
@@ -170,34 +178,36 @@ class PHPParser
         return $found;
     }
 
-    function parse($filename)
+    public function parse($filename)
     {
-
         $this->parseFile($filename);
 
         $this->parsedFiles[$filename] = true;
         $includedFiles = $this->includedFiles;
         $this->includedFiles = array();
 
-        foreach($includedFiles as $ifilename => $t) {
+        foreach ($includedFiles as $ifilename => $t) {
             if (!isset($this->parsedFiles[$ifilename]) &&
                 !isset($this->notToParseFiles[$ifilename])) {
-
                 $this->parse($ifilename);
             }
         }
     }
 
-    function parseFile($filename)
+    public function parseFile($filename)
     {
-        if (!file_exists($filename)) return;
+        if (!file_exists($filename)) {
+            return;
+        }
         $this->filename = $filename;
         $this->_fd = fopen($filename, 'r');
         if (!$this->_fd) {
-            $msg = xarML('Cannot open the file #(1)',$filename);
+            $msg = xarML('Cannot open the file #(1)', $filename);
             throw new Exception($msg);
         }
-        if (!$filesize = filesize($filename)) return;
+        if (!$filesize = filesize($filename)) {
+            return;
+        }
 
         $this->_offs = 0;
         $this->_len = 0;
@@ -216,4 +226,3 @@ class PHPParser
         fclose($this->_fd);
     }
 }
-?>

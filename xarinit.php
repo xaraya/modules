@@ -36,7 +36,7 @@ function translations_init()
  */
 function translations_upgrade($oldversion)
 {
-    switch($oldversion){
+    switch ($oldversion) {
         case '2.0.0':
     }
     return true;
@@ -55,5 +55,3 @@ function translations_delete()
 
     return true;
 }
-
-?>

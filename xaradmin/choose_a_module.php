@@ -15,18 +15,28 @@
 function translations_admin_choose_a_module()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
-    if (!isset($installed)) return;
+    if (!isset($installed)) {
+        return;
+    }
     $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
-    if (!isset($uninstalled)) return;
+    if (!isset($uninstalled)) {
+        return;
+    }
 
     $modlist1 = array();
-    foreach($uninstalled as $term) $modlist1[$term['name']] = $term;
+    foreach ($uninstalled as $term) {
+        $modlist1[$term['name']] = $term;
+    }
     $modlist2 = array();
-    foreach($installed as $term) $modlist2[$term['name']] = $term;
-    $modlist = array_merge($modlist1,$modlist2);
+    foreach ($installed as $term) {
+        $modlist2[$term['name']] = $term;
+    }
+    $modlist = array_merge($modlist1, $modlist2);
     ksort($modlist);
 
     $tplData = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_MODULE, '', 0);
@@ -34,5 +44,3 @@ function translations_admin_choose_a_module()
     $tplData['dnType'] = xarMLS::DNTYPE_MODULE;
     return $tplData;
 }
-
-?>

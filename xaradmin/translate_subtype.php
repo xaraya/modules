@@ -15,11 +15,19 @@
 function translations_admin_translate_subtype()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVarFetch('dnType', 'int', $dnType)) {
+        return;
+    }
+    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+        return;
+    }
+    if (!xarVarFetch('extid', 'int', $extid)) {
+        return;
+    }
 
     // FIXME voll context validation
     //$contexts = Load all contexts types;
@@ -35,10 +43,14 @@ function translations_admin_translate_subtype()
 
     // FIXME voll do we use subtype,subname really?
     if (!xarVarFetch('defaultcontext', 'str:1:', $defaultcontext)) {
-        if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
-        if (!xarVarFetch('subname', 'str:1:', $subname)) return;
+        if (!xarVarFetch('subtype', 'str:1:', $subtype)) {
+            return;
+        }
+        if (!xarVarFetch('subname', 'str:1:', $subname)) {
+            return;
+        }
     } else {
-        list($subtype1,$subtype2,$subname) = explode(':',$defaultcontext);
+        list($subtype1, $subtype2, $subname) = explode(':', $defaultcontext);
         $subtype = $subtype1.':'.$subtype2;
     }
 
@@ -47,14 +59,14 @@ function translations_admin_translate_subtype()
     $args['dnname'] = $dnName;
     $args['subtype'] = $subtype;
     $args['subname'] = $subname;
-    $entries = xarMod::apiFunc('translations','admin','getcontextentries',$args);
+    $entries = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
 
     $args = array();
     $args['dntype'] = $dnType;
     $args['dnname'] = $dnName;
     $args['subtype'] = 'modules:';
     $args['subname'] = 'fuzzy';
-    $fuzzyEntries = xarMod::apiFunc('translations','admin','getcontextentries',$args);
+    $fuzzyEntries = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
 
     $entries['fuzzyEntries'] = $fuzzyEntries['entries'];
     $entries['fuzzyNumEntries'] = $fuzzyEntries['numEntries'];
@@ -67,7 +79,7 @@ function translations_admin_translate_subtype()
     $data['action'] = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
 
     $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
-    $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype,$subname);
+    $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname);
     $druidbar = translations_create_druidbar(TRAN, $dnType, $dnName, $extid);
     $data = array_merge($data, $opbar, $trabar, $druidbar);
 
@@ -78,5 +90,3 @@ function translations_admin_translate_subtype()
 
     return $data;
 }
-
-?>

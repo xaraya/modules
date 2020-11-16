@@ -15,14 +15,18 @@
 function translations_admin_property_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('extid', 'id', $id)) return;
+    if (!xarVarFetch('extid', 'id', $id)) {
+        return;
+    }
 
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
-    $q = new Query('SELECT',$tables['dynamic_properties_def']);
+    $q = new Query('SELECT', $tables['dynamic_properties_def']);
     $q->eq('id', $id);
     $q->run();
     $data = $q->row();
@@ -37,5 +41,3 @@ function translations_admin_property_overview()
 
     return $data;
 }
-
-?>

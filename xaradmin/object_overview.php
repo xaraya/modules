@@ -15,12 +15,18 @@
 function translations_admin_object_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('extid', 'id', $objectid)) return;
+    if (!xarVarFetch('extid', 'id', $objectid)) {
+        return;
+    }
 
     $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid' => $objectid));
-    if (!is_object($tplData['object'])) return;
+    if (!is_object($tplData['object'])) {
+        return;
+    }
     $tplData['dnType'] = xarMLS::DNTYPE_OBJECT;
 //    $tplData['dnName'] = $tplData['directory'];
     $tplData['objectid'] = $objectid;
@@ -31,5 +37,3 @@ function translations_admin_object_overview()
 
     return $tplData;
 }
-
-?>

@@ -15,11 +15,17 @@
 function translations_admin_module_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('extid', 'id', $modid)) return;
+    if (!xarVarFetch('extid', 'id', $modid)) {
+        return;
+    }
 
-    if (!($tplData = xarMod::getInfo($modid))) return;
+    if (!($tplData = xarMod::getInfo($modid))) {
+        return;
+    }
     $tplData['dnType'] = xarMLS::DNTYPE_MODULE;
     $tplData['dnName'] = $tplData['name'];
     $tplData['modid'] = $modid;
@@ -30,5 +36,3 @@ function translations_admin_module_overview()
 
     return $tplData;
 }
-
-?>

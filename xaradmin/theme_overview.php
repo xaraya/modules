@@ -15,11 +15,17 @@
 function translations_admin_theme_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('extid', 'id', $themeid)) return;
+    if (!xarVarFetch('extid', 'id', $themeid)) {
+        return;
+    }
 
-    if (!($tplData = xarThemeGetInfo($themeid))) return;
+    if (!($tplData = xarThemeGetInfo($themeid))) {
+        return;
+    }
     $tplData['dnType'] = xarMLS::DNTYPE_THEME;
     $tplData['dnName'] = $tplData['directory'];
     $tplData['themeid'] = $themeid;
@@ -30,5 +36,3 @@ function translations_admin_theme_overview()
 
     return $tplData;
 }
-
-?>

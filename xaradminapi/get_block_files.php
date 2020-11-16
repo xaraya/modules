@@ -23,12 +23,12 @@ function translations_adminapi_get_block_files($args)
     if (file_exists($blockdir)) {
         $dd = opendir($blockdir);
         while ($filename = readdir($dd)) {
-            if (!preg_match($pattern, $filename, $matches)) continue;
+            if (!preg_match($pattern, $filename, $matches)) {
+                continue;
+            }
             $names[] = $matches[1];
         }
         closedir($dd);
     }
     return $names;
 }
-
-?>

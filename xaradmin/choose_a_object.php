@@ -16,9 +16,13 @@
 function translations_admin_choose_a_object()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!($objectlist = xarMod::apiFunc('dynamicdata','user','getobjectlist',array('name' => 'objects')))) return;
+    if (!($objectlist = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'objects')))) {
+        return;
+    }
     $items = $objectlist->getItems();
 
     // Sort by object name
@@ -34,5 +38,3 @@ function translations_admin_choose_a_object()
     $tplData['dnType'] = xarMLS::DNTYPE_OBJECT;
     return $tplData;
 }
-
-?>

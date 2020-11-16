@@ -22,5 +22,3 @@ function translations_admin_bulk()
 {
     return array();
 }
-
-?>

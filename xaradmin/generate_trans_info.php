@@ -15,15 +15,23 @@
 function translations_admin_generate_trans_info()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVarFetch('dnType', 'int', $dnType)) {
+        return;
+    }
+    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+        return;
+    }
+    if (!xarVarFetch('extid', 'int', $extid)) {
+        return;
+    }
 
-    $tplData['locales'] = xarConfigVars::get(null,'Site.MLS.AllowedLocales');
+    $tplData['locales'] = xarConfigVars::get(null, 'Site.MLS.AllowedLocales');
     $tplData['release_locale'] = translations_release_locale();
-    $tplData['archiver_path'] = xarMod::apiFunc('translations','admin','archiver_path');
+    $tplData['archiver_path'] = xarMod::apiFunc('translations', 'admin', 'archiver_path');
 
     $druidbar = translations_create_druidbar(GENTRANS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_TRANS, $dnType, $dnName, $extid);
@@ -36,5 +44,3 @@ function translations_admin_generate_trans_info()
 
     return $tplData;
 }
-
-?>

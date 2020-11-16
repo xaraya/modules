@@ -12,15 +12,13 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
  */
 
-function translations_adminapi_work_backend_type($args = NULL)
+function translations_adminapi_work_backend_type($args = null)
 {
-    static $type = NULL;
+    static $type = null;
     if (isset($args['type'])) {
         $type = $args['type'];
-    } elseif ($type == NULL) {
+    } elseif ($type == null) {
         $type = xarModVars::get('translations', 'work_backend_type');
     }
     return $type;
 }
-
-?>

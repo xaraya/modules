@@ -27,14 +27,20 @@ function translations_adminapi_release_theme_trans($args)
     // Argument check
     assert('isset($themeid) && isset($locale)');
 
-    if (!($themeinfo = xarMod::getInfo($themeid, 'theme'))) return;
+    if (!($themeinfo = xarMod::getInfo($themeid, 'theme'))) {
+        return;
+    }
     $themename = $themeinfo['osdirectory'];
     $themeversion = $themeinfo['version'];
 
-    if (!$bt = xarMod::apiFunc('translations','admin','release_backend_type')) return;;
+    if (!$bt = xarMod::apiFunc('translations', 'admin', 'release_backend_type')) {
+        return;
+    };
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     if ($bt != 'php') {
         $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that backend.', $bt);
@@ -52,9 +58,7 @@ function translations_adminapi_release_theme_trans($args)
     $newargs['version'] = $themeversion;
     $newargs['dirpath'] = $dirpath;
     $newargs['locale'] = $locale;
-    $releaseBackend = xarMod::apiFunc('translations','admin','make_package',$newargs);
+    $releaseBackend = xarMod::apiFunc('translations', 'admin', 'make_package', $newargs);
 
     return $releaseBackend;
 }
-
-?>

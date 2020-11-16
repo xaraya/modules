@@ -37,24 +37,32 @@ function translations_adminapi_get_property_dirs($args)
     if (file_exists(sys::code() . "properties/$propertydir")) {
         $dd = opendir(sys::code() . "properties/$propertydir");
         while ($filename = readdir($dd)) {
-            if (!is_dir(sys::code() . "properties/$propertydir/$filename")) continue;
-            if (substr($filename,0,3) != "xar") continue;
-            if (in_array($filename, $dropit)) continue;
-            $names[] = mb_ereg_replace("^xar","",$filename);
+            if (!is_dir(sys::code() . "properties/$propertydir/$filename")) {
+                continue;
+            }
+            if (substr($filename, 0, 3) != "xar") {
+                continue;
+            }
+            if (in_array($filename, $dropit)) {
+                continue;
+            }
+            $names[] = mb_ereg_replace("^xar", "", $filename);
         }
         closedir($dd);
     }
     if (file_exists(sys::code() . "properties/$propertydir/xartemplates")) {
-        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/includes"))
+        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/includes")) {
             $names[] = 'templates/includes';
-        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/blocks"))
+        }
+        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/blocks")) {
             $names[] = 'templates/blocks';
-        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/properties"))
+        }
+        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/properties")) {
             $names[] = 'templates/properties';
-        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/objects"))
+        }
+        if (file_exists(sys::code() . "properties/$propertydir/xartemplates/objects")) {
             $names[] = 'templates/objects';
+        }
     }
     return $names;
 }
-
-?>

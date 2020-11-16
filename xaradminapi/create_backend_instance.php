@@ -22,11 +22,13 @@ function translations_adminapi_create_backend_instance($args)
     assert('isset($locale)');
 
     if ($interface == 'ReferencesBackend') {
-        $bt = xarMod::apiFunc('translations','admin','work_backend_type');
+        $bt = xarMod::apiFunc('translations', 'admin', 'work_backend_type');
     } elseif ($interface == 'TranslationsBackend') {
-        $bt = xarMod::apiFunc('translations','admin','release_backend_type');
+        $bt = xarMod::apiFunc('translations', 'admin', 'release_backend_type');
     }
-    if (!$bt) return;
+    if (!$bt) {
+        return;
+    }
     switch ($bt) {
     case 'php':
         xarLog::message("MLS: Creating PHP backend", xarLog::LEVEL_INFO);
@@ -43,5 +45,3 @@ function translations_adminapi_create_backend_instance($args)
     }
     throw new Exception('Unknown');
 }
-
-?>

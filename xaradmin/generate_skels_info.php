@@ -16,11 +16,19 @@
 function translations_admin_generate_skels_info()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVarFetch('dnType', 'int', $dnType)) {
+        return;
+    }
+    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+        return;
+    }
+    if (!xarVarFetch('extid', 'int', $extid)) {
+        return;
+    }
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
@@ -33,5 +41,3 @@ function translations_admin_generate_skels_info()
 
     return $data;
 }
-
-?>

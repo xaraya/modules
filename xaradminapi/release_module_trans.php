@@ -27,14 +27,20 @@ function translations_adminapi_release_module_trans($args)
     // Argument check
     assert('isset($modid) && isset($locale)');
 
-    if (!($modinfo = xarMod::getInfo($modid))) return;
+    if (!($modinfo = xarMod::getInfo($modid))) {
+        return;
+    }
     $modname = $modinfo['name'];
     $modversion = $modinfo['version'];
 
-    if (!$bt = xarMod::apiFunc('translations','admin','release_backend_type')) return;;
+    if (!$bt = xarMod::apiFunc('translations', 'admin', 'release_backend_type')) {
+        return;
+    };
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     if ($bt != 'php') {
         $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that backend.', $bt);
@@ -52,9 +58,7 @@ function translations_adminapi_release_module_trans($args)
     $newargs['version'] = $modversion;
     $newargs['dirpath'] = $dirpath;
     $newargs['locale'] = $locale;
-    $releaseBackend = xarMod::apiFunc('translations','admin','make_package',$newargs);
+    $releaseBackend = xarMod::apiFunc('translations', 'admin', 'make_package', $newargs);
 
     return $releaseBackend;
 }
-
-?>

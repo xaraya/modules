@@ -19,12 +19,16 @@ function translations_adminapi_make_package($args)
     // Argument check
     assert('isset($basefilename) && isset($version) && isset($dirpath) && isset($locale)');
  
-    if (!$archiver_path = xarMod::apiFunc('translations','admin','archiver_path')) return;
+    if (!$archiver_path = xarMod::apiFunc('translations', 'admin', 'archiver_path')) {
+        return;
+    }
     if (!file_exists($archiver_path) || !is_executable($archiver_path)) {
         $msg = xarML('Cannot execute \'#(1)\'.', $archiver_path);
         throw new Exception($msg);
     }
-    if (!$archiver_flags = xarMod::apiFunc('translations','admin','archiver_flags')) return;
+    if (!$archiver_flags = xarMod::apiFunc('translations', 'admin', 'archiver_flags')) {
+        return;
+    }
 
     if (strpos($archiver_path, 'zip') !== false) {
         $ext = 'zip';
@@ -48,5 +52,3 @@ function translations_adminapi_make_package($args)
 
     return $filename;
 }
-
-?>

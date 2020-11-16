@@ -21,13 +21,17 @@
 function translations_admin_start()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
         $locales = $GLOBALS['xarMLS_allowedLocales'];
         foreach ($locales as $locale) {
             $l = xarMLS__parseLocaleString($locale);
-            if ($l['charset'] != 'utf-8') continue;
+            if ($l['charset'] != 'utf-8') {
+                continue;
+            }
             $list[] = $locale;
         }
         $data['locales'] = $list;
@@ -39,5 +43,3 @@ function translations_admin_start()
     $data['dnType'] = xarMLS::DNTYPE_CORE;
     return $data;
 }
-
-?>

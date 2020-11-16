@@ -28,4 +28,3 @@ $modversion['user'] = true;
 $modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
-?>

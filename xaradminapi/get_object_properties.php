@@ -19,10 +19,10 @@ function translations_adminapi_get_object_properties($args)
     // Disable any properties that re not translatable
     $translatable = array();
     foreach ($object->properties as $name => $property) {
-        if ($property->translatable) $translatable[] = $name;
+        if ($property->translatable) {
+            $translatable[] = $name;
+        }
     }
     sort($translatable);
     return $translatable;
 }
-
-?>

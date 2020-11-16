@@ -29,7 +29,9 @@ function translations_adminapi_generate_core_skels($args)
     // Argument check
     assert('isset($locale)');
 
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
     sys::import('modules.translations.class.PHPParser');
@@ -51,23 +53,35 @@ function translations_adminapi_generate_core_skels($args)
     $transKeyEntries = $parser->getTransKeyEntries();
 
     // Load core translations
-    $core_backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
-    if (!isset($core_backend)) return;
+    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    if (!isset($core_backend)) {
+        return;
+    }
     if ($core_backend->bindDomain(xarMLS::DNTYPE_CORE) &&
-        !$core_backend->loadContext('core:', 'core')) return;
-
-    // Generate translations skels
-    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
-       if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
-       $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
-    } else {
-       $genLocale = $locale;
+        !$core_backend->loadContext('core:', 'core')) {
+        return;
     }
 
-    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
-    if (!isset($gen)) return;
-    if (!$gen->bindDomain(xarMLS::DNTYPE_CORE)) return;
-    if (!$gen->create('core:', 'core')) return;
+    // Generate translations skels
+    if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
+        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) {
+            return false;
+        }
+        $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
+    } else {
+        $genLocale = $locale;
+    }
+
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    if (!isset($gen)) {
+        return;
+    }
+    if (!$gen->bindDomain(xarMLS::DNTYPE_CORE)) {
+        return;
+    }
+    if (!$gen->create('core:', 'core')) {
+        return;
+    }
 
     $statistics['core'] = array('entries'=>0, 'keyEntries'=>0);
 
@@ -94,7 +108,9 @@ function translations_adminapi_generate_core_skels($args)
 
     $gen->close();
 
-    if (!$gen->open('core:','fuzzy')) return;
+    if (!$gen->open('core:', 'fuzzy')) {
+        return;
+    }
     $fuzzyEntries = $core_backend->getFuzzyEntries();
     foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
         // Add entry
@@ -112,5 +128,3 @@ function translations_adminapi_generate_core_skels($args)
 
     return array('time' => $endTime - $startTime, 'statistics' => $statistics);
 }
-
-?>

@@ -11,7 +11,7 @@
  * @author M. Lutolf (mfl@netspan.ch)
  */
 
-function translations_userapi_getmenulinks ($args) 
+function translations_userapi_getmenulinks($args)
 {
     if (xarSecurityCheck('ReadTranslations', 0) == true) {
         $menulinks[] = array(
@@ -24,5 +24,3 @@ function translations_userapi_getmenulinks ($args)
 
     return $menulinks;
 }
-
-?>

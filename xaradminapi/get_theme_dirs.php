@@ -21,7 +21,7 @@ function searchFiles($path, $prefix, $force=0)
 {
     global $staticNames;
 
-    $path2 = mb_ereg_replace($prefix,"",$path);
+    $path2 = mb_ereg_replace($prefix, "", $path);
 
     if ($force) {
         $staticNames[] = $path2;
@@ -29,8 +29,12 @@ function searchFiles($path, $prefix, $force=0)
     }
 
     $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-    $subnames = xarMod::apiFunc('translations','admin','get_theme_files',
-                              array('themedir'=>"$path",'pattern'=>$pattern));
+    $subnames = xarMod::apiFunc(
+        'translations',
+        'admin',
+        'get_theme_files',
+        array('themedir'=>"$path",'pattern'=>$pattern)
+    );
     if (count($subnames) > 0) {
         $staticNames[] = $path2;
         return true;
@@ -58,7 +62,9 @@ function translations_adminapi_get_theme_dirs($args)
                 searchFiles("themes/$themedir/modules", $prefix, 1);
                 $dd2 = opendir("themes/$themedir/modules");
                 while ($moddir = readdir($dd2)) {
-                    if (($moddir == '.') || ($moddir == '..') || ($moddir == 'SCCS')) continue;
+                    if (($moddir == '.') || ($moddir == '..') || ($moddir == 'SCCS')) {
+                        continue;
+                    }
                     if (is_dir("themes/$themedir/modules/$moddir")) {
                         $force = 0;
                         $filesBlock = false;
@@ -75,7 +81,9 @@ function translations_adminapi_get_theme_dirs($args)
                         if (is_dir("themes/$themedir/modules/$moddir/objects")) {
                             $filesIncl = searchFiles("themes/$themedir/modules/$moddir/objects", $prefix);
                         }
-                        if ($filesBlock || $filesIncl) $force = 1;
+                        if ($filesBlock || $filesIncl) {
+                            $force = 1;
+                        }
                         searchFiles("themes/$themedir/modules/$moddir", $prefix, $force);
                     }
                 }
@@ -87,5 +95,3 @@ function translations_adminapi_get_theme_dirs($args)
     sort($staticNames);
     return $staticNames;
 }
-
-?>

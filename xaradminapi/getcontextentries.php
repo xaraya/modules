@@ -25,32 +25,44 @@ function translations_adminapi_getcontextentries($args)
 
     $args['interface'] = 'ReferencesBackend';
     $args['locale'] = $locale;
-    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', $args);
 
-    if (!isset($backend)) return;
+    if (!isset($backend)) {
+        return;
+    }
     if (!$backend->bindDomain($dnType, $dnName)) {
         $dnTypeText = xarMLSContext::getContextTypeText($dnType);
         $msg = xarML('Could not bind translation backend to #(1) \'#(2)\'. Try regenerating skeletons.', $dnTypeText, $dnName);
         throw new Exception($msg);
     }
-    if (!$backend->loadContext($ctxType, $ctxName)) return;
+    if (!$backend->loadContext($ctxType, $ctxName)) {
+        return;
+    }
 
     if ($locale != 'en_US.utf-8') {
         // Load an english backend for original key translations
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = 'en_US.utf-8';
-        $en_backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
-        if (!isset($en_backend)) return;
+        $en_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', $args);
+        if (!isset($en_backend)) {
+            return;
+        }
         if ($en_backend->bindDomain($dnType, $dnName) &&
-            !$en_backend->loadContext($ctxType, $ctxName)) return;
+            !$en_backend->loadContext($ctxType, $ctxName)) {
+            return;
+        }
     } else {
         $en_backend =& $backend;
     }
 
     $maxReferences = xarModVars::get('translations', 'maxreferences');
 
-    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
-    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
+    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) {
+        return false;
+    }
+    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) {
+        return false;
+    }
     $workingCharset = $parsedWorkingLocale['charset'];
     $siteCharset = $parsedSiteLocale['charset'];
     if ($siteCharset != $workingCharset) {
@@ -79,7 +91,9 @@ function translations_adminapi_getcontextentries($args)
         }
         $entries[] = $entry;
         $numEntries++;
-        if (empty($translation)) $numEmptyEntries++;
+        if (empty($translation)) {
+            $numEmptyEntries++;
+        }
     }
 
     $numKeyEntries = 0;
@@ -107,7 +121,9 @@ function translations_adminapi_getcontextentries($args)
         $keyEntry['en_translation'] = $en_translation;
         $keyEntries[] = $keyEntry;
         $numKeyEntries++;
-        if (empty($translation)) $numEmptyKeyEntries++;
+        if (empty($translation)) {
+            $numEmptyKeyEntries++;
+        }
     }
 
     return array(
@@ -119,12 +135,12 @@ function translations_adminapi_getcontextentries($args)
         'numEmptyKeyEntries'=> $numEmptyKeyEntries,);
 }
 
-function translations_grab_source_code($references, $maxReferences = NULL)
+function translations_grab_source_code($references, $maxReferences = null)
 {
     $result = array();
     //static $files = array(); <-- this just takes too much memory
-    $showContext = xarModVars::get('translations','showcontext');
-    if(!$showContext) {
+    $showContext = xarModVars::get('translations', 'showcontext');
+    if (!$showContext) {
         $result[] = xarML('References have been disabled');
         return $result;
     }
@@ -135,14 +151,14 @@ function translations_grab_source_code($references, $maxReferences = NULL)
     $currentFileName = '';
     $referencesCount = count($references);
     $maxCodeLines = xarModVars::get('translations', 'maxcodelines');
-    if ($maxReferences == NULL) {
+    if ($maxReferences == null) {
         $maxReferences = $referencesCount;
     }
     for ($i = 0; $i < $referencesCount && $i < $maxReferences; $i++) {
         $ref = $references[$i];
         if ($ref['file'] != $currentFileName) {
             $currentFileName = $ref['file'];
-            if (file_exists($ref['file']))  {
+            if (file_exists($ref['file'])) {
                 // FIXME: this is potentially very memory hungry, cant we do this more efficient?
                 $currentFileData = file($ref['file']);
             } else {
@@ -151,7 +167,9 @@ function translations_grab_source_code($references, $maxReferences = NULL)
             }
         }
         $j = $ref['line'] - ($maxCodeLines/2) - 1;
-        if ($j < 0) $j = 0;
+        if ($j < 0) {
+            $j = 0;
+        }
         $source = array('pre'=>'', 'code'=>'', 'post'=>'');
         $linesCount = count($currentFileData);
         for ($c = 0; $c < $maxCodeLines && $j < $linesCount; $c++, $j++) {
@@ -168,5 +186,3 @@ function translations_grab_source_code($references, $maxReferences = NULL)
     }
     return $result;
 }
-
-?>

@@ -24,12 +24,12 @@ function translations_adminapi_get_theme_files($args)
     if (file_exists($themedir)) {
         $dd = opendir($themedir);
         while ($filename = readdir($dd)) {
-            if (!preg_match($pattern, $filename, $matches)) continue;
+            if (!preg_match($pattern, $filename, $matches)) {
+                continue;
+            }
             $names[] = $matches[1];
         }
         closedir($dd);
     }
     return $names;
 }
-
-?>

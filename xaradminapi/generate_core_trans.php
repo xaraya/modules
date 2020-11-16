@@ -21,12 +21,14 @@ function translations_adminapi_generate_core_trans($args)
     assert('isset($locale)');
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
-    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
         $l = xarLocaleGetInfo($locale);
         if ($l['charset'] == 'utf-8') {
             $ref_locale = $locale;
@@ -39,20 +41,30 @@ function translations_adminapi_generate_core_trans($args)
     }
 
     // Load core translations
-    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
-    if (!isset($backend)) return;
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    if (!isset($backend)) {
+        return;
+    }
 
     if (!$backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before generating translations you must first generate skels for locale #(1)', $ref_locale);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'core')));
         throw new Exception($msg);
     }
-    if (!$backend->loadContext('core:', 'core')) return;
+    if (!$backend->loadContext('core:', 'core')) {
+        return;
+    }
 
-    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
-    if (!isset($gen)) return;
-    if (!$gen->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) return;
-    if (!$gen->create('core:', 'core')) return;
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    if (!isset($gen)) {
+        return;
+    }
+    if (!$gen->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
+        return;
+    }
+    if (!$gen->create('core:', 'core')) {
+        return;
+    }
 
     $statistics['core'] = array('entries'=>0, 'keyEntries'=>0);
 
@@ -73,5 +85,3 @@ function translations_adminapi_generate_core_trans($args)
 
     return array('time' => $endTime - $startTime, 'statistics' => $statistics);
 }
-
-?>

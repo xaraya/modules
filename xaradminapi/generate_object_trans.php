@@ -28,17 +28,21 @@ function translations_adminapi_generate_object_trans($args)
     assert('isset($objectid) && isset($locale)');
 
     $object = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('objectid' => $objectid));
-    if (!is_object($object)) return;
+    if (!is_object($object)) {
+        return;
+    }
     $objectlabel = $object->label;
     $objectname = $object->name;
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
-    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
         $l = xarLocaleGetInfo($locale);
         if ($l['charset'] == 'utf-8') {
             $ref_locale = $locale;
@@ -50,17 +54,23 @@ function translations_adminapi_generate_object_trans($args)
         $ref_locale = $locale;
     }
 
-    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
-    if (!isset($backend)) return;
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    if (!isset($backend)) {
+        return;
+    }
     if (!$backend->bindDomain(xarMLS::DNTYPE_THEME, $themename)) {
         $msg = xarML('Before generating translations you must first generate skels.');
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'object')));
         throw new Exception($msg);
     }
 
-    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
-    if (!isset($gen)) return;
-    if (!$gen->bindDomain(xarMLS::DNTYPE_THEME, $themename)) return;
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    if (!isset($gen)) {
+        return;
+    }
+    if (!$gen->bindDomain(xarMLS::DNTYPE_THEME, $themename)) {
+        return;
+    }
 
     $object_contexts_list[] = 'objects:'.$objectname.'::common';
 
@@ -82,15 +92,22 @@ function translations_adminapi_generate_object_trans($args)
     }
 
     foreach ($object_contexts_list as $object_context) {
-        list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$object_context);
+        list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $object_context);
         $ctxType = 'objects:'.$ctxtype1;
         $ctxName = $ctxname1;
 
-        if (!$backend->loadContext($ctxType, $ctxName)) return;
-        if (!$gen->create($ctxType, $ctxName)) return;
+        if (!$backend->loadContext($ctxType, $ctxName)) {
+            return;
+        }
+        if (!$gen->create($ctxType, $ctxName)) {
+            return;
+        }
 
-        if ($ctxtype1 != '') $sName = $ctxtype1 . "::" . $ctxName;
-        else $sName = $ctxName;
+        if ($ctxtype1 != '') {
+            $sName = $ctxtype1 . "::" . $ctxName;
+        } else {
+            $sName = $ctxName;
+        }
 
         $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
         while (list($string, $translation) = $backend->enumTranslations()) {
@@ -110,4 +127,3 @@ function translations_adminapi_generate_object_trans($args)
 
     return array('time' => $endTime - $startTime, 'statistics' => $statistics);
 }
-?>

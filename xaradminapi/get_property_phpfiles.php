@@ -26,13 +26,13 @@ function translations_adminapi_get_property_phpfiles($args)
     if (file_exists(sys::code() . "properties/$propertydir")) {
         $dd = opendir(sys::code() . "properties/$propertydir");
         while ($filename = readdir($dd)) {
-            if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) continue;
+            if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) {
+                continue;
+            }
             $phpname = $matches[1];
-            $names[] = mb_ereg_replace("^xar","",$phpname);
+            $names[] = mb_ereg_replace("^xar", "", $phpname);
         }
         closedir($dd);
     }
     return $names;
 }
-
-?>

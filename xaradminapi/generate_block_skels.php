@@ -28,13 +28,15 @@ function translations_adminapi_generate_block_skels($args)
     // Argument check
     assert('isset($blockid) && isset($locale)');
 
-    $blockinfo = xarMod::apiFunc('blocks','types','getitem',array('type_id' => $blockid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
+    $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', array('type_id' => $blockid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
     
     $blockname = $blockinfo['type'];
     $blockdir = $blockinfo['type'];
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
     sys::import('modules.translations.class.PHPParser');
@@ -45,20 +47,24 @@ function translations_adminapi_generate_block_skels($args)
     $startTime = $time[1] + $time[0];
 
     // Load core translations
-    $core_backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
-    if (!isset($core_backend)) return;
+    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    if (!isset($core_backend)) {
+        return;
+    }
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) block, you must first generate skels for the core.', $blockname);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
     }
-    if (!$core_backend->loadContext('core:', 'core')) return;
+    if (!$core_backend->loadContext('core:', 'core')) {
+        return;
+    }
 
     // Parse files
     $transEntriesCollection = array();
     $transKeyEntriesCollection = array();
 
-    $subnames = xarMod::apiFunc('translations','admin','get_block_phpfiles',array('blockdir'=>$blockdir));
+    $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', array('blockdir'=>$blockdir));
 
     $block_contexts_list = array();
     foreach ($subnames as $subname) {
@@ -72,28 +78,33 @@ function translations_adminapi_generate_block_skels($args)
             $transEntriesCollection[$subname] = $parser->getTransEntries();
             $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();
         }
-
     }
 
-    $dirnames = xarMod::apiFunc('translations','admin','get_block_dirs',array('blockdir'=>$blockdir));
-    xarLog::variable('dirnames',$dirnames);
+    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', array('blockdir'=>$blockdir));
+    xarLog::variable('dirnames', $dirnames);
     foreach ($dirnames as $dirname) {
         ${$dirname . "names"} = array();
         if (!preg_match('!^templates!i', $dirname, $matches)) {
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             $xtype = 'php';
-        }
-        else {
+        } else {
             $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
             $xtype = 'xt';
         }
-        $subnames = xarMod::apiFunc('translations','admin','get_block_files',
-                         array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern));
-        xarLog::variable('subnames',$subnames);
+        $subnames = xarMod::apiFunc(
+            'translations',
+            'admin',
+            'get_block_files',
+            array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern)
+        );
+        xarLog::variable('subnames', $subnames);
         foreach ($subnames as $subname) {
             $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
-            if ($xtype == 'xt') $parser = new TPLParser();
-            else $parser = new PHPParser();
+            if ($xtype == 'xt') {
+                $parser = new TPLParser();
+            } else {
+                $parser = new PHPParser();
+            }
             $parser->parse(sys::code() . "blocks/$blockdir/xar$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;
             $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
@@ -106,17 +117,23 @@ function translations_adminapi_generate_block_skels($args)
 
     $subnames[] = 'common';
     // Load previously made translations
-    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
-    if (!isset($backend)) return;
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    if (!isset($backend)) {
+        return;
+    }
 
-    if ($backend->bindDomain(xarMLS::DNTYPE_BLOCK,$blockname)) {
-        if ($backend->hasContext('blocks:','common')){
-            if (!$backend->loadContext('blocks:','common')) return;
+    if ($backend->bindDomain(xarMLS::DNTYPE_BLOCK, $blockname)) {
+        if ($backend->hasContext('blocks:', 'common')) {
+            if (!$backend->loadContext('blocks:', 'common')) {
+                return;
+            }
         }
         foreach ($block_contexts_list as $block_context) {
-            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$block_context);
-            if ($backend->hasContext('blocks:'.$ctxtype1,$ctxname1)){
-                if (!$backend->loadContext('blocks:'.$ctxtype1,$ctxname1)) return;
+            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $block_context);
+            if ($backend->hasContext('blocks:'.$ctxtype1, $ctxname1)) {
+                if (!$backend->loadContext('blocks:'.$ctxtype1, $ctxname1)) {
+                    return;
+                }
             }
         }
     }
@@ -127,7 +144,9 @@ function translations_adminapi_generate_block_skels($args)
     if (file_exists($filename)) {
         $lines = file($filename);
         foreach ($lines as $line) {
-            if ($line{0} == '#') continue;
+            if ($line{0} == '#') {
+                continue;
+            }
             list($key, $value) = explode('=', $line);
             $key = trim($key);
             $value = trim($value);
@@ -137,20 +156,26 @@ function translations_adminapi_generate_block_skels($args)
 
     // Create skels
     $subnames = array_keys($transEntriesCollection);
-    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
-        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
+    if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
+        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) {
+            return false;
+        }
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {
         $genLocale = $locale;
     }
 
-    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
-    if (!isset($gen)) return;
-    if (!$gen->bindDomain(xarMLS::DNTYPE_BLOCK, $blockname)) return;
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    if (!isset($gen)) {
+        return;
+    }
+    if (!$gen->bindDomain(xarMLS::DNTYPE_BLOCK, $blockname)) {
+        return;
+    }
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
-           list ($ctxtype1, $ctxname1) = explode('::',$subname);
+            list($ctxtype1, $ctxname1) = explode('::', $subname);
         } else {
             $ctxtype1 = '';
             $ctxname1 = $subname;
@@ -166,7 +191,9 @@ function translations_adminapi_generate_block_skels($args)
 
                 // Check if string appears in core translations
                 $entry = $core_backend->getEntry($string);
-                if (isset($entry)) continue;
+                if (isset($entry)) {
+                    continue;
+                }
 
                 $statistics[$subname]['entries']++;
                 // Get previous translation, it's void if not yet translated
@@ -174,7 +201,9 @@ function translations_adminapi_generate_block_skels($args)
                 $marked = $backend->markEntry($string);
 
                 if (!$fileAlreadyOpen) {
-                    if (!$gen->create('blocks:'.$ctxtype1,$ctxname1)) return;
+                    if (!$gen->create('blocks:'.$ctxtype1, $ctxname1)) {
+                        return;
+                    }
                     $fileAlreadyOpen = true;
                 }
                 // Add entry
@@ -186,17 +215,23 @@ function translations_adminapi_generate_block_skels($args)
 
             // Check if key appears in core translations
             $keyEntry = $core_backend->getEntryByKey($key);
-            if (isset($keyEntry)) continue;
+            if (isset($keyEntry)) {
+                continue;
+            }
 
             $statistics[$subname]['keyEntries']++;
             // Get previous translation, it's void if not yet translated
             $translation = $backend->translateByKey($key);
             $marked = $backend->markEntryByKey($key);
             // Get the original translation made by developer if any
-            if (!$translation && isset($KEYS[$key])) $translation = $KEYS[$key];
+            if (!$translation && isset($KEYS[$key])) {
+                $translation = $KEYS[$key];
+            }
 
             if (!$fileAlreadyOpen) {
-                if (!$gen->create('blocks:'.$ctxtype1,$ctxname1)) return;
+                if (!$gen->create('blocks:'.$ctxtype1, $ctxname1)) {
+                    return;
+                }
                 $fileAlreadyOpen = true;
             }
             // Add key entry
@@ -206,10 +241,12 @@ function translations_adminapi_generate_block_skels($args)
         if ($fileAlreadyOpen) {
             $gen->close();
         } else {
-            $gen->deleteIfExists('blocks:'.$ctxtype1,$ctxname1);
+            $gen->deleteIfExists('blocks:'.$ctxtype1, $ctxname1);
         }
     }
-    if (!$gen->open('blocks:','fuzzy')) return;
+    if (!$gen->open('blocks:', 'fuzzy')) {
+        return;
+    }
     $fuzzyEntries = $backend->getFuzzyEntries();
     foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
         // Add entry
@@ -234,10 +271,11 @@ function block_translations_gather_common_entries($transEntriesCollection)
     $subnames = array_keys($transEntriesCollection);
     foreach ($subnames as $subname) {
         foreach ($transEntriesCollection[$subname] as $string => $references) {
-
             $refs_inserted = false;
             foreach ($subnames as $other_subname) {
-                if ($other_subname == $subname) continue;
+                if ($other_subname == $subname) {
+                    continue;
+                }
 
                 if (isset($transEntriesCollection[$other_subname][$string])) {
                     // Found a duplicated ML string
@@ -252,7 +290,7 @@ function block_translations_gather_common_entries($transEntriesCollection)
                             foreach ($commonEntries[$string] as $existant_refs) {
                                 if ($reference['file'] == $existant_refs['file'] &&
                                     $reference['line'] == $existant_refs['line']) {
-                                        $ref_exists = true;
+                                    $ref_exists = true;
                                 }
                             }
                             if (!$ref_exists) {
@@ -269,7 +307,7 @@ function block_translations_gather_common_entries($transEntriesCollection)
                         foreach ($commonEntries[$string] as $existant_refs) {
                             if ($reference['file'] == $existant_refs['file'] &&
                                 $reference['line'] == $existant_refs['line']) {
-                                    $ref_exists = true;
+                                $ref_exists = true;
                             }
                         }
                         if (!$ref_exists) {
@@ -286,5 +324,3 @@ function block_translations_gather_common_entries($transEntriesCollection)
     $transEntriesCollection['common'] = $commonEntries;
     return $transEntriesCollection;
 }
-
-?>

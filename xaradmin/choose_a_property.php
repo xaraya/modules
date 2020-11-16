@@ -14,12 +14,14 @@
 function translations_admin_choose_a_property()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
     
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
-    $q = new Query('SELECT',$tables['dynamic_properties_def']);
+    $q = new Query('SELECT', $tables['dynamic_properties_def']);
     $q->eq('modid', 0);
     $q->run();
     $propertylist = $q->output();
@@ -29,5 +31,3 @@ function translations_admin_choose_a_property()
     $data['dnType'] = xarMLS::DNTYPE_PROPERTY;
     return $data;
 }
-
-?>

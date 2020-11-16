@@ -15,43 +15,53 @@
 function translations_admin_generate_trans_result()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVarFetch('dnType', 'int', $dnType)) {
+        return;
+    }
+    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+        return;
+    }
+    if (!xarVarFetch('extid', 'int', $extid)) {
+        return;
+    }
 
     $locale = translations_release_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $res = xarMod::apiFunc('translations','admin','generate_core_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'generate_core_trans', $args);
         break;
         case xarMLS::DNTYPE_MODULE:
         $args['modid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','generate_module_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'generate_module_trans', $args);
         break;
         case xarMLS::DNTYPE_THEME:
         $args['themeid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','generate_theme_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'generate_theme_trans', $args);
         break;
         case xarMLS::DNTYPE_PROPERTY:
         $args['propertyid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','generate_property_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'generate_property_trans', $args);
         break;
         case xarMLS::DNTYPE_BLOCK:
         $args['blockid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','generate_block_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'generate_block_trans', $args);
         break;
         case xarMLS::DNTYPE_OBJECT:
         $args['objectid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','generate_object_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'generate_object_trans', $args);
         break;
     }
 
-    if (!isset($res)) return;
+    if (!isset($res)) {
+        return;
+    }
     $data = $res;
-    if ($data == NULL) {
+    if ($data == null) {
         xarController::redirect(xarModURL('translations', 'admin', 'generate_trans_info'));
         return true;
     }
@@ -67,5 +77,3 @@ function translations_admin_generate_trans_result()
 
     return $data;
 }
-
-?>

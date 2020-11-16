@@ -12,15 +12,13 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
  */
 
-function translations_adminapi_archiver_flags($args = NULL)
+function translations_adminapi_archiver_flags($args = null)
 {
-    static $archiver_flags = NULL;
+    static $archiver_flags = null;
     if (isset($args['archiver_flags'])) {
         $archiver_flags = $args['archiver_flags'];
-    } elseif ($archiver_flags == NULL) {
+    } elseif ($archiver_flags == null) {
         $archiver_flags = xarModVars::get('translations', 'archiver_flags');
     }
     return $archiver_flags;
 }
-
-?>

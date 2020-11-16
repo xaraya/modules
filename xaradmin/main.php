@@ -15,7 +15,7 @@
 /**
  * Entry point for translations admin screen
  *
- * A somewhat longer description of the function which may be 
+ * A somewhat longer description of the function which may be
  * multiple lines, can contain examples.
  *
  * @access  public
@@ -23,15 +23,17 @@
 */
 function translations_admin_main()
 {
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        $redirect = xarModVars::get('translations','defaultbackpage');
+        $redirect = xarModVars::get('translations', 'defaultbackpage');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarModAPIFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
             xarController::redirect(xarModURL('translations', 'admin', 'start'));
@@ -39,5 +41,3 @@ function translations_admin_main()
     }
     return true;
 }
-
-?>

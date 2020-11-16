@@ -12,15 +12,13 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
  */
 
-function translations_adminapi_archiver_path($args = NULL)
+function translations_adminapi_archiver_path($args = null)
 {
-    static $archiver_path = NULL;
+    static $archiver_path = null;
     if (isset($args['archiver_path'])) {
         $archiver_path = $args['archiver_path'];
-    } elseif ($archiver_path == NULL) {
+    } elseif ($archiver_path == null) {
         $archiver_path = xarModVars::get('translations', 'archiver_path');
     }
     return $archiver_path;
 }
-
-?>

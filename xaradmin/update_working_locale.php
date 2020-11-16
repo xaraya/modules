@@ -15,12 +15,14 @@
 function translations_admin_update_working_locale()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('locale', 'str:1:', $locale)) return;
+    if (!xarVarFetch('locale', 'str:1:', $locale)) {
+        return;
+    }
     translations_working_locale($locale);
     translations_release_locale($locale);
-    xarController::redirect(xarModURL('translations', 'admin','start'));
+    xarController::redirect(xarModURL('translations', 'admin', 'start'));
 }
-
-?>

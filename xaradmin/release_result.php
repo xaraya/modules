@@ -15,31 +15,41 @@
 function translations_admin_release_result()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVarFetch('dnType', 'int', $dnType)) {
+        return;
+    }
+    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+        return;
+    }
+    if (!xarVarFetch('extid', 'int', $extid)) {
+        return;
+    }
 
     $locale = translations_release_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $res = xarMod::apiFunc('translations','admin','release_core_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'release_core_trans', $args);
         break;
         case xarMLS::DNTYPE_MODULE:
         $args['modid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','release_module_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'release_module_trans', $args);
         break;
         case xarMLS::DNTYPE_THEME:
         $args['themeid'] = $extid;
-        $res = xarMod::apiFunc('translations','admin','release_theme_trans',$args);
+        $res = xarMod::apiFunc('translations', 'admin', 'release_theme_trans', $args);
         break;
     }
-    if (!isset($res)) return;
+    if (!isset($res)) {
+        return;
+    }
 
     $filename = $res;
-    if ($filename == NULL) {
+    if ($filename == null) {
         xarController::redirect(xarModURL('translations', 'admin', 'release_info'));
     }
 
@@ -51,5 +61,3 @@ function translations_admin_release_result()
 
     return $tplData;
 }
-
-?>

@@ -15,15 +15,15 @@
 function translations_admin_core_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if (!xarSecurityCheck('AdminTranslations')) {
+        return;
+    }
 
     $tplData = translations_create_opbar(OVERVIEW, xarMLS::DNTYPE_CORE, 'xaraya', 0);
-    $tplData['verNum'] = xarConfigVars::get(null,'System.Core.VersionNum');
-    $tplData['verId'] = xarConfigVars::get(null,'System.Core.VersionId');
-    $tplData['verSub'] = xarConfigVars::get(null,'System.Core.VersionSub');
+    $tplData['verNum'] = xarConfigVars::get(null, 'System.Core.VersionNum');
+    $tplData['verId'] = xarConfigVars::get(null, 'System.Core.VersionId');
+    $tplData['verSub'] = xarConfigVars::get(null, 'System.Core.VersionSub');
     $tplData['dnType'] = xarMLS::DNTYPE_CORE;
     $tplData['dnName'] = 'xaraya';
     return $tplData;
 }
-
-?>
