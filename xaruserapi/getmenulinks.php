@@ -19,8 +19,8 @@ function reminders_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewReminders', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+    if (xarSecurity::check('ViewReminders', 0)) {
+        $menulinks[] = array('url'   => xarController::URL(
             'reminders',
             'user',
             'main'

@@ -18,7 +18,7 @@
 function reminders_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadReminders')) {
+    if (!xarSecurity::check('ReadReminders')) {
         return;
     }
 
@@ -28,7 +28,7 @@ function reminders_user_main()
         $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
-        xarController::redirect(xarModURL('reminders', 'user', 'reminders'));
+        xarController::redirect(xarController::URL('reminders', 'user', 'reminders'));
     }
     return true;
 }

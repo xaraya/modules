@@ -16,14 +16,14 @@
  */
 function reminders_user_remove()
 {
-    if (!xarSecurityCheck('ReadReminders')) {
+    if (!xarSecurity::check('ReadReminders')) {
         return;
     }
 
-    if (!xarVarFetch('code', 'str', $data['code'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('code', 'str', $data['code'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -43,7 +43,7 @@ function reminders_user_remove()
     $email_dates = xarMod::apiFunc('reminders', 'user', 'get_email_dates', array('array' => $data['item']));
     $data['remaining'] = count($email_dates);
     
-    $data['authid'] = xarSecGenAuthKey('reminders');
+    $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
     }

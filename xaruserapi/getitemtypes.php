@@ -20,7 +20,7 @@ function reminders_userapi_getitemtypes($args)
 
     $itemtypes[1] = array('label' => xarML('Native Reminders'),
                           'title' => xarML('View Reminders'),
-                          'url'   => xarModURL('reminders', 'user', 'view')
+                          'url'   => xarController::URL('reminders', 'user', 'view')
                          );
 
     $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30227, 'native' => false));

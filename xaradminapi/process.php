@@ -42,7 +42,7 @@ function reminders_adminapi_process($args)
     $q->eq('entries.state', 3);
 
     if ($args['test']) {
-        if (!xarVarFetch('entry_list', 'str', $data['entry_list'], '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('entry_list', 'str', $data['entry_list'], '', xarVar::NOT_REQUIRED)) {
             return;
         }
         $data['entry_list'] = explode(',', $data['entry_list']);

@@ -17,7 +17,7 @@
 
 function reminders_admin_main()
 {
-    if (!xarSecurityCheck('ManageReminders')) {
+    if (!xarSecurity::check('ManageReminders')) {
         return;
     }
 
@@ -30,7 +30,7 @@ function reminders_admin_main()
             $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('reminders', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('reminders', 'admin', 'modifyconfig'));
         }
     }
     return true;

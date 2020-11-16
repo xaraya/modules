@@ -17,31 +17,31 @@
 
 function reminders_admin_new_entry()
 {
-    if (!xarSecurityCheck('AddReminders')) {
+    if (!xarSecurity::check('AddReminders')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'reminders_entries', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'reminders_entries', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['tplmodule'] = 'reminders';
-    $data['authid'] = xarSecGenAuthKey('reminders');
+    $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -50,7 +50,7 @@ function reminders_admin_new_entry()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('reminders', 'admin', 'new_entry', $data);
+            return xarTpl::module('reminders', 'admin', 'new_entry', $data);
         } else {
             // Good data: proceed
             // First generate the code for this item
@@ -62,7 +62,7 @@ function reminders_admin_new_entry()
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('reminders', 'admin', 'view_entries'));
+            xarController::redirect(xarController::URL('reminders', 'admin', 'view_entries'));
             return true;
         }
     }

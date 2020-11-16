@@ -20,19 +20,19 @@
 function reminders_admin_modifyconfig_utility()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminReminders')) {
+    if (!xarSecurity::check('AdminReminders')) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'reminders_general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'reminders_general', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'reminders', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tabmodule', 'str:1:100', $tabmodule, 'reminders', xarVar::NOT_REQUIRED)) {
         return;
     }
-    $hooks = xarModCallHooks('module', 'getconfig', 'reminders');
+    $hooks = xarModHooks::call('module', 'getconfig', 'reminders');
     if (!empty($hooks) && isset($hooks['tabs'])) {
         foreach ($hooks['tabs'] as $key => $row) {
             $configarea[$key]  = $row['configarea'];
@@ -63,25 +63,25 @@ function reminders_admin_modifyconfig_utility()
 
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
-            if (!xarVarFetch('items_per_page', 'int', $items_per_page, xarModVars::get('reminders', 'items_per_page'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+            if (!xarVar::fetch('items_per_page', 'int', $items_per_page, xarModVars::get('reminders', 'items_per_page'), xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
                 return;
             }
-            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('modulealias', 'checkbox', $use_module_alias, xarModVars::get('reminders', 'use_module_alias'), XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('modulealias', 'checkbox', $use_module_alias, xarModVars::get('reminders', 'use_module_alias'), xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('module_alias_name', 'str', $module_alias_name, xarModVars::get('reminders', 'module_alias_name'), XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('module_alias_name', 'str', $module_alias_name, xarModVars::get('reminders', 'module_alias_name'), xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('defaultmastertable', 'str', $defaultmastertable, xarModVars::get('reminders', 'defaultmastertable'), XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('defaultmastertable', 'str', $defaultmastertable, xarModVars::get('reminders', 'defaultmastertable'), xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('bar', 'str:1', $bar, 'Bar', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('bar', 'str:1', $bar, 'Bar', xarVar::NOT_REQUIRED)) {
                 return;
             }
 
@@ -107,7 +107,7 @@ function reminders_admin_modifyconfig_utility()
                 }
             }
 
-            xarController::redirect(xarModURL('reminders', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('reminders', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;
@@ -115,6 +115,6 @@ function reminders_admin_modifyconfig_utility()
     }
     $data['hooks'] = $hooks;
     $data['tabmodule'] = $tabmodule;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
