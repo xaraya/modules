@@ -17,26 +17,26 @@
 function hitcount_admin_view()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminHitcount')) {
+    if (!xarSecurity::check('AdminHitcount')) {
         return;
     }
 
-    if (!xarVarFetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sortorder', 'isset', $sortorder, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sortorder', 'isset', $sortorder, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'isset', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -65,24 +65,24 @@ function hitcount_admin_view()
                 $moditem['numhits'] = $stats['hits'];
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
-                //    $moditem['link'] = xarModURL($modinfo['name'],'user','main');
+                //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
                 } else {
                     if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                     //    $moditem['link'] = $mytypes[$itemtype]['url'];
                     } else {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                        //    $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                        //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                     }
                 }
-                $moditem['link'] = xarModURL(
+                $moditem['link'] = xarController::URL(
                     'hitcount',
                     'admin',
                     'view',
                     array('modid' => $modid,
                                                    'itemtype' => empty($itemtype) ? null : $itemtype)
                 );
-                $moditem['delete'] = xarModURL(
+                $moditem['delete'] = xarController::URL(
                     'hitcount',
                     'admin',
                     'delete',
@@ -94,7 +94,7 @@ function hitcount_admin_view()
                 $data['numhits'] += $moditem['numhits'];
             }
         }
-        $data['delete'] = xarModURL('hitcount', 'admin', 'delete');
+        $data['delete'] = xarController::URL('hitcount', 'admin', 'delete');
     } else {
         $modinfo = xarMod::getInfo($modid);
         if (empty($itemtype)) {
@@ -118,7 +118,7 @@ function hitcount_admin_view()
             //    $data['modlink'] = $mytypes[$itemtype]['url'];
             } else {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
             }
             if (isset($modlist[$modid][$itemtype])) {
                 $stats = $modlist[$modid][$itemtype];
@@ -138,7 +138,7 @@ function hitcount_admin_view()
         // pager
         $data['startnum'] = $startnum;
         $data['total'] = $data['numitems'];
-        $data['urltemplate'] = xarModURL(
+        $data['urltemplate'] = xarController::URL(
             'hitcount',
             'admin',
             'view',
@@ -181,7 +181,7 @@ function hitcount_admin_view()
         foreach ($getitems as $itemid => $numhits) {
             $data['moditems'][$itemid] = array();
             $data['moditems'][$itemid]['numhits'] = $numhits;
-            $data['moditems'][$itemid]['delete'] = xarModURL(
+            $data['moditems'][$itemid]['delete'] = xarController::URL(
                 'hitcount',
                 'admin',
                 'delete',
@@ -196,7 +196,7 @@ function hitcount_admin_view()
         }
         unset($getitems);
         unset($itemlinks);
-        $data['delete'] = xarModURL(
+        $data['delete'] = xarController::URL(
             'hitcount',
             'admin',
             'delete',
@@ -213,7 +213,7 @@ function hitcount_admin_view()
 //             $data['sortlink']['itemid'] = '';
 //
 //        } else {
-        $data['sortlink']['itemid'] = xarModURL(
+        $data['sortlink']['itemid'] = xarController::URL(
             'hitcount',
             'admin',
             'view',
@@ -227,7 +227,7 @@ function hitcount_admin_view()
         //       if (!empty($sort) && $sort == 'numhits') {
         //            $data['sortlink']['numhits'] = '';
         //       } else {
-        $data['sortlink']['numhits'] = xarModURL(
+        $data['sortlink']['numhits'] = xarController::URL(
             'hitcount',
             'admin',
             'view',

@@ -50,7 +50,7 @@ function hitcount_adminapi_deleteall($args)
     // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('DeleteHitcountItem', 1, 'Item', "$objectid:All:All")) {
+    if (!xarSecurity::check('DeleteHitcountItem', 1, 'Item', "$objectid:All:All")) {
         return;
     }
 

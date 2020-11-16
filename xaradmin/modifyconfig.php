@@ -18,14 +18,14 @@
 function hitcount_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminHitcount')) {
+    if (!xarSecurity::check('AdminHitcount')) {
         return;
     }
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -39,7 +39,7 @@ function hitcount_admin_modifyconfig()
             switch ($data['tab']) {
                 case 'general':
                     // Quick Data Array
-                    $data['authid'] = xarSecGenAuthKey();
+                    $data['authid'] = xarSec::genAuthKey();
                     $data['numitems'] = xarModVars::get('hitcount', 'numitems');
                     if (empty($data['numitems'])) {
                         $data['numitems'] = 10;
@@ -63,27 +63,27 @@ function hitcount_admin_modifyconfig()
         break;
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            if (!xarSec::confirmAuthKey()) {
+                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
             }
             switch ($data['tab']) {
                 case 'general':
-                    if (!xarVarFetch('countadmin', 'checkbox', $countadmin, false, XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('countadmin', 'checkbox', $countadmin, false, xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('numitems', 'int', $numitems, 10, XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('numitems', 'int', $numitems, 10, xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('numstats', 'int', $numstats, 100, xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('showtitle', 'checkbox', $showtitle, false, xarVar::NOT_REQUIRED)) {
                         return;
                     }
 
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTplModule('eventhub', 'admin', 'modifyconfig', $data);
+                        return xarTpl::module('eventhub', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
@@ -93,7 +93,7 @@ function hitcount_admin_modifyconfig()
                     xarModVars::set('hitcount', 'numitems', $numitems);
                     xarModVars::set('hitcount', 'numstats', $numstats);
                     xarModVars::set('hitcount', 'showtitle', $showtitle);
-                    xarController::redirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
+                    xarController::redirect(xarController::URL('hitcount', 'admin', 'modifyconfig'));
                     // Return
                     return true;
                         break;

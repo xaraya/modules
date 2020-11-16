@@ -43,7 +43,7 @@ function hitcount_adminapi_update($args)
             isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
     $modid = xarMod::getRegId($modname);
@@ -69,11 +69,11 @@ function hitcount_adminapi_update($args)
     // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('ReadHitcountItem', 1, 'Item', "$modname:$itemtype:$objectid")) {
+    if (!xarSecurity::check('ReadHitcountItem', 1, 'Item', "$modname:$itemtype:$objectid")) {
         return;
     }
 
-    if (!xarModAPILoad('hitcount', 'user')) {
+    if (!xarMod::apiLoad('hitcount', 'user')) {
         return;
     }
 

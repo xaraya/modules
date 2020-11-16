@@ -7,7 +7,7 @@
             <legend>
                 Configure Hitcount Hooks
             </legend>
-            <xar:set name="url">#xarModURL('hitcount','admin','hooks')#</xar:set>
+            <xar:set name="url">#xarController::URL('hitcount','admin','hooks')#</xar:set>
             <xar:module main="false" module="modules" type="admin" func="hooks" curhook="hitcount" return_url="$url"/>
         </fieldset>
     </div>

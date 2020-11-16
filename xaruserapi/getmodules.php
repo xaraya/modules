@@ -18,7 +18,7 @@
 function hitcount_userapi_getmodules($args)
 {
     // Security Check
-    if (!xarSecurityCheck('ViewHitcountItems')) {
+    if (!xarSecurity::check('ViewHitcountItems')) {
         return;
     }
 

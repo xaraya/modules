@@ -41,7 +41,7 @@ function hitcount_userapi_get($args)
             isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
     $modid = xarMod::getRegId($modname);
@@ -66,7 +66,7 @@ function hitcount_userapi_get($args)
 
     // TODO: re-evaluate this for hook calls !!
     // Security check
-    if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:$itemtype:$objectid")) {
+    if (!xarSecurity::check('ViewHitcountItems', 1, 'Item', "$modname:$itemtype:$objectid")) {
         return;
     }
 
