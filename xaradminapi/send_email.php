@@ -34,7 +34,7 @@ function reminders_adminapi_send_email($data)
 
     $result = array();
     $attachments = array();
-    $data['name_1']->value = $data['info']['name_1'];
+    $data['name']->value = $data['info']['name_1'];
     
     // Set a placeholder name if we don't have one
 	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
@@ -46,7 +46,7 @@ function reminders_adminapi_send_email($data)
         $bccaddress = array();
     } else {
         // If we are not testing, then send to the chosen participant
-        $recipientname    = $data['name_1']->getValue();
+        $recipientname    = $data['name']->getValue();
         $recipientaddress = $data['info']['email_1'];
     }
     $data['reminder_text'] = trim($data['info']['message']);

@@ -148,7 +148,7 @@ function reminders_adminapi_process($args)
                 
 				// The email for this period is not sent: do it
 				// Get the template information for this message
-				$this_template_id = $row['template'];
+				$this_template_id = $row['template_id'];
 				if (isset($templates[$this_template_id])) {
 					// We already have the information.
 				} else {
