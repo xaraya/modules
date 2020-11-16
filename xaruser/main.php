@@ -18,11 +18,11 @@
     function karma_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadKarma')) return;
+        if (!xarSecurityCheck('ReadKarma')) {
+            return;
+        }
 
 //        xarResponse::redirect(xarModURL('karma', 'user', 'view'));
         // success
         return array(); //true;
     }
-
-?>

@@ -23,4 +23,3 @@ function karma_adminapi_new_post($args)
     $itemid = $tag->createItem($args);
     return $itemid;
 }
-?>

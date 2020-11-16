@@ -23,4 +23,3 @@ function karma_adminapi_modify_tag($args)
     $itemid = $tag->updateItem($args);
     return $itemid;
 }
-?>

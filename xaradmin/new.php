@@ -16,11 +16,11 @@
  */
     function karma_admin_new()
     {
-        if (!xarSecurityCheck('AddKarma')) return;
+        if (!xarSecurityCheck('AddKarma')) {
+            return;
+        }
 
-        $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'karma'));
+        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'karma'));
         $data['tplmodule'] = 'karma';
         return $data;
     }
-
-?>

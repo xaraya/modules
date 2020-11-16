@@ -23,4 +23,3 @@
             array('mask' => 'AdminKarma', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Karma configuration'), 'label' => xarML('Modify Configuration')),
         );
     }
-?>

@@ -23,4 +23,3 @@
     $modversion['securityschema'] = array();
     $modversion['dependency']     = array();
     $modversion['dependencyinfo'] = array();
-?>

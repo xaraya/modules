@@ -22,14 +22,16 @@
     {
 
     # --------------------------------------------------------
-    #
-    # Set tables
-    #
+        #
+        # Set tables
+        #
         $q = new Query();
         $prefix = xarDB::getPrefix();
         
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_tags";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_karma_tags (
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(255) NOT NULL default '', 
@@ -46,10 +48,14 @@
             KEY i_tag_state (state), 
             KEY i_tag_count (count) 
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
   
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_posts";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_karma_posts (
             id                integer unsigned NOT NULL auto_increment,
             module_id         int unsigned NOT NULL default '0',
@@ -70,10 +76,14 @@
             KEY i_posts_user_id (user_id), 
             KEY i_posts_count (count)
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_users";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_karma_users (
             id                integer unsigned NOT NULL auto_increment,
             tagcount          int unsigned NOT NULL default '0', 
@@ -86,30 +96,42 @@
             KEY i_users_timelasttag (timelasttag),
             KEY i_users_timelastpost (timelastpost) 
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_tags_posts";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_karma_tags_posts (
             tag_id            int unsigned NOT NULL default '0', 
             post_id           int unsigned NOT NULL default '0', 
             KEY i_tags_posts_tag_id (tag_id), 
             KEY i_tags_posts_post_id (post_id) 
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_subscriptions";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_karma_subscriptions (
             tag_id            int unsigned NOT NULL default '0', 
             user_id           int unsigned NOT NULL default '0', 
             KEY i_subscriptions_tag_id (tag_id), 
             KEY i_subscriptions_user_id (user_id) 
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_visits";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_karma_visits (
             tag_id            int unsigned NOT NULL default '0', 
             user_id           int unsigned NOT NULL default '0', 
@@ -118,62 +140,70 @@
             KEY i_visits_user_id (user_id) ,
             KEY i_visits_timelastvisit (timelastvisit) 
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
-# --------------------------------------------------------
-    #
-    # Set up masks
-    #
-        xarRegisterMask('ViewKarma','All','karma','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadKarma','All','karma','All','All','ACCESS_READ');
-        xarRegisterMask('ManageKarma','All','karma','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminKarma','All','karma','All','All','ACCESS_ADMIN');
+        # --------------------------------------------------------
+        #
+        # Set up masks
+        #
+        xarRegisterMask('ViewKarma', 'All', 'karma', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarRegisterMask('ReadKarma', 'All', 'karma', 'All', 'All', 'ACCESS_READ');
+        xarRegisterMask('ManageKarma', 'All', 'karma', 'All', 'All', 'ACCESS_DELETE');
+        xarRegisterMask('AdminKarma', 'All', 'karma', 'All', 'All', 'ACCESS_ADMIN');
 
-    # --------------------------------------------------------
-    #
-    # Set up privileges
-    #
-        xarRegisterPrivilege('ManageKarma','All','karma','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminKarma','All','karma','All','All','ACCESS_ADMIN');
+        # --------------------------------------------------------
+        #
+        # Set up privileges
+        #
+        xarRegisterPrivilege('ManageKarma', 'All', 'karma', 'All', 'All', 'ACCESS_DELETE');
+        xarRegisterPrivilege('AdminKarma', 'All', 'karma', 'All', 'All', 'ACCESS_ADMIN');
 
-    # --------------------------------------------------------
-    #
-    # Set up modvars
-    #
+        # --------------------------------------------------------
+        #
+        # Set up modvars
+        #
         xarModVars::set('karma', 'itemsperpage', 20);
-        xarModVars::set('karma', 'useModuleAlias',0);
-        xarModVars::set('karma', 'aliasname','Karma');
+        xarModVars::set('karma', 'useModuleAlias', 0);
+        xarModVars::set('karma', 'aliasname', 'Karma');
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file
         // This variable is referenced in the xartemplates/includes/defaults.xd file
-    //    xarModVars::set('karma', 'bar', 'Bar');
+        //    xarModVars::set('karma', 'bar', 'Bar');
 
-    # --------------------------------------------------------
-    #
-    # Create DD objects
-    #
+        # --------------------------------------------------------
+        #
+        # Create DD objects
+        #
         $module = 'karma';
         $objects = array(
                          'karma_tags',
                          'karma_posts',
                          );
 
-        if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
-
-    # --------------------------------------------------------
-    #
-    # Set up hooks
-    #
-/* Remove for now
-        // This is a GUI hook for the roles module that enhances the roles profile page
-        if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-                'karma', 'user', 'usermenu')) {
-            return false;
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+            return;
         }
-*/
-        xarMod::apiFunc('modules', 'admin', 'enablehooks',
-            array('callerModName' => 'karma', 'hookModName' => 'karma'));
+
+        # --------------------------------------------------------
+        #
+        # Set up hooks
+        #
+        /* Remove for now
+                // This is a GUI hook for the roles module that enhances the roles profile page
+                if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+                        'karma', 'user', 'usermenu')) {
+                    return false;
+                }
+        */
+        xarMod::apiFunc(
+            'modules',
+            'admin',
+            'enablehooks',
+            array('callerModName' => 'karma', 'hookModName' => 'karma')
+        );
 
         return true;
     }
@@ -186,7 +216,5 @@
     function karma_delete()
     {
         $this_module = 'karma';
-        return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
     }
-
-?>

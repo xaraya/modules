@@ -16,10 +16,11 @@
  */
     function karma_admin_view_tags($args)
     {
-        if (!xarSecurityCheck('EditKarma')) return;
+        if (!xarSecurityCheck('EditKarma')) {
+            return;
+        }
 
-        $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'karma_tags'));
+        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'karma_tags'));
         $data['object']->getItems();
         return $data;
     }
-?>

@@ -19,8 +19,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function karma_adminapi_modify_post($args)
 {
-	$tag = DataObjectMaster::getObject(array('name' => 'karma_posts'));
+    $tag = DataObjectMaster::getObject(array('name' => 'karma_posts'));
     $itemid = $tag->updateItem($args);
     return $itemid;
 }
-?>
