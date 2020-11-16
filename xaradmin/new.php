@@ -17,29 +17,29 @@
     
     function sitemapper_admin_new()
     {
-        if (!xarSecurityCheck('AddSitemapper')) {
+        if (!xarSecurity::check('AddSitemapper')) {
             return;
         }
 
-        if (!xarVarFetch('name', 'str', $name, 'sitemapper_sources', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('name', 'str', $name, 'sitemapper_sources', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'sitemapper';
-        $data['authid'] = xarSecGenAuthKey('sitemapper');
+        $data['authid'] = xarSec::genAuthKey('sitemapper');
         if ($data['confirm']) {
         
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+            if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
                 return;
             }
 
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             
@@ -48,13 +48,13 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('sitemapper', 'admin', 'new', $data);
+                return xarTpl::module('sitemapper', 'admin', 'new', $data);
             } else {
                 // Good data: create the item
                 $itemid = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('sitemapper', 'admin', 'view'));
+                xarController::redirect(xarController::URL('sitemapper', 'admin', 'view'));
                 return true;
             }
         }

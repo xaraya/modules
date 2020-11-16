@@ -15,14 +15,14 @@
  */
     function sitemapper_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageSitemapper')) {
+        if (!xarSecurity::check('ManageSitemapper')) {
             return;
         }
 
         $modulename = 'sitemapper';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
             return;
         }
         if (!empty($objectname)) {

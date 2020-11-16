@@ -13,14 +13,14 @@
     </div>
     <div class="xar-mod-body">
         <xar:var name="label">Official Icon</xar:var>
-        <img src="#xarTplGetImage('admin.gif', 'sitemapper')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
+        <img src="#xarTpl::getImage('admin.gif', 'sitemapper')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
 
         <h2>
             <xar:mlstring>Overview</xar:mlstring>
         </h2>
 
         <p>
-            Detail information on this module can be found <a href="#xarModURL('modules','admin','modinfonew',array('id' => xarMod::getRegid('sitemapper')))#">here</a>.
+            Detail information on this module can be found <a href="#xarController::URL('modules','admin','modinfonew',array('id' => xarMod::getRegid('sitemapper')))#">here</a>.
         </p>
         <div style="clear:both">&#160;</div>
     </div>

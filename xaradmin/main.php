@@ -17,7 +17,7 @@
 
     function sitemapper_admin_main()
     {
-        if (!xarSecurityCheck('EditSitemapper')) {
+        if (!xarSecurity::check('EditSitemapper')) {
             return;
         }
 
@@ -26,9 +26,9 @@
         $samemodule = $info[0] == $refererinfo[0];
 
         if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule) {
-            return xarTplModule('sitemapper', 'admin', 'overview');
+            return xarTpl::module('sitemapper', 'admin', 'overview');
         } else {
-            xarController::redirect(xarModURL('sitemapper', 'admin', 'view'));
+            xarController::redirect(xarController::URL('sitemapper', 'admin', 'view'));
             return true;
         }
     }

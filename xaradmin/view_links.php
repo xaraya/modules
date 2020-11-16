@@ -14,7 +14,7 @@
 
     function sitemapper_admin_view_links()
     {
-        if (!xarVarFetch('regenerate', 'int', $data['regenerate'], 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        if (!xarVar::fetch('regenerate', 'int', $data['regenerate'], 0, xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
             return;
         }
         if ($data['regenerate']) {
@@ -27,7 +27,7 @@
             foreach ($data['items'] as $key => $source) {
             
                 // Ignore modules that are not active
-                if (!xarModIsAvailable($source['module'])) {
+                if (!xarMod::isAvailable($source['module'])) {
                     continue;
                 }
                 
@@ -36,7 +36,7 @@
                 
                     // Single page
                     case 1:
-                        $linkdata = xarModURL($source['module'], $source['display_type'], $source['display_function']);
+                        $linkdata = xarController::URL($source['module'], $source['display_type'], $source['display_function']);
                         if (is_array($linkdata)) {
                             // Need a special function here for each module
                             $locationdata = array();

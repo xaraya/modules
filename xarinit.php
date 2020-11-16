@@ -107,19 +107,19 @@
         #
         # Set up masks
         #
-        xarRegisterMask('ViewSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('EditSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterMask('AddSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterMask('ManageSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('EditSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_EDIT');
+        xarMasks::register('AddSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADD');
+        xarMasks::register('ManageSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('ManageSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('ManageSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminSitemapper', 'All', 'sitemapper', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
