@@ -18,14 +18,14 @@
     
     function eav_admin_modify_entity()
     {
-        if (!xarSecurityCheck('EditEAV')) {
+        if (!xarSecurity::check('EditEAV')) {
             return;
         }
 
-        if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -35,7 +35,7 @@
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -50,7 +50,7 @@
                 $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('eav', 'admin', 'view_entities'));
+                xarController::redirect(xarController::URL('eav', 'admin', 'view_entities'));
                 return true;
             }
         }

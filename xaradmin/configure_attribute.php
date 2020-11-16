@@ -16,29 +16,29 @@
 function eav_admin_configure_attribute(array $args=array())
 {
     // Security
-    if (!xarSecurityCheck('ManageEAV')) {
+    if (!xarSecurity::check('ManageEAV')) {
         return;
     }
 
     extract($args);
 
     // get the property id
-    if (!xarVarFetch('itemid', 'id', $itemid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'id', $itemid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('exit', 'isset', $exit, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('exit', 'isset', $exit, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'isset', $confirm, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('confirm', 'isset', $confirm, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('preview', 'isset', $preview, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('preview', 'isset', $preview, null, xarVar::DONT_SET)) {
         return;
     }
 
     if (empty($itemid)) {
         // Get the property type for sample configuration
-        if (!xarVarFetch('proptype', 'isset', $proptype, null, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('proptype', 'isset', $proptype, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -90,7 +90,7 @@ function eav_admin_configure_attribute(array $args=array())
     }
 
     if (!empty($preview) || !empty($confirm) || !empty($exit)) {
-        if (!xarVarFetch($data['name'], 'isset', $configuration, null, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch($data['name'], 'isset', $configuration, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -103,7 +103,7 @@ function eav_admin_configure_attribute(array $args=array())
             if (!empty($confirm) || !empty($exit)) {
                 // store the updated configuration rule back in the value
                 $attribute->properties['configuration']->value = $property->configuration;
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
                 }
 
@@ -113,18 +113,18 @@ function eav_admin_configure_attribute(array $args=array())
                 }
 
                 if (empty($exit)) {
-                    $return_url = xarModURL('eav', 'admin', 'configure_attribute', array('itemid' => $itemid));
+                    $return_url = xarController::URL('eav', 'admin', 'configure_attribute', array('itemid' => $itemid));
                     xarController::redirect($return_url);
                     return true;
                 }
             }
             if (!empty($exit)) {
-                if (!xarVarFetch('return_url', 'isset', $return_url, null, XARVAR_DONT_SET)) {
+                if (!xarVar::fetch('return_url', 'isset', $return_url, null, xarVar::DONT_SET)) {
                     return;
                 }
                 if (empty($return_url)) {
                     // return to modifyprop
-                    $return_url = xarModURL(
+                    $return_url = xarController::URL(
                         'eav',
                         'admin',
                         'add_attribute',
@@ -184,14 +184,14 @@ function eav_config_propval($proptype)
         return $data;
     }
 
-    if (!xarVarFetch('preview', 'isset', $preview, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('preview', 'isset', $preview, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'isset', $confirm, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('confirm', 'isset', $confirm, null, xarVar::DONT_SET)) {
         return;
     }
     if (!empty($preview) || !empty($confirm)) {
-        if (!xarVarFetch($data['name'], 'isset', $configuration, null, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch($data['name'], 'isset', $configuration, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 

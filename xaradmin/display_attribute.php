@@ -4,7 +4,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function eav_admin_display_attribute($args)
 {
-    if (!xarVarFetch('id', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 

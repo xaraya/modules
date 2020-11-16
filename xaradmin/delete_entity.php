@@ -13,17 +13,17 @@
     sys::import('modules.dynamicdata.class.objects.master');
     function eav_admin_delete_entity()
     {
-        if (!xarSecurityCheck('ManageEAV')) {
+        if (!xarSecurity::check('ManageEAV')) {
             return;
         }
 
-        if (!xarVarFetch('name', 'str:1', $name, 'eav_eav', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('name', 'str:1', $name, 'eav_eav', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'str:1', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'str:1', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -33,12 +33,12 @@
         $data['object']->getItem(array('itemid' => $data['itemid']));
         
         $data['tplmodule'] = 'eav';
-        $data['authid'] = xarSecGenAuthKey('eav');
+        $data['authid'] = xarSec::genAuthKey('eav');
 
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -46,7 +46,7 @@
             $item = $data['object']->deleteItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('eav', 'admin', 'view_entities'));
+            xarController::redirect(xarController::URL('eav', 'admin', 'view_entities'));
             return true;
         }
         return $data;

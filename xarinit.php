@@ -127,27 +127,27 @@
         #
         # Set up masks
         #
-        xarRegisterMask('ViewEAV', 'All', 'eav', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadEAV', 'All', 'eav', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('CommentEAV', 'All', 'eav', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterMask('ModerateEAV', 'All', 'eav', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterMask('EditEAV', 'All', 'eav', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterMask('AddEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterMask('ManageEAV', 'All', 'eav', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewEAV', 'All', 'eav', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadEAV', 'All', 'eav', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('CommentEAV', 'All', 'eav', 'All', 'All', 'ACCESS_COMMENT');
+        xarMasks::register('ModerateEAV', 'All', 'eav', 'All', 'All', 'ACCESS_MODERATE');
+        xarMasks::register('EditEAV', 'All', 'eav', 'All', 'All', 'ACCESS_EDIT');
+        xarMasks::register('AddEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADD');
+        xarMasks::register('ManageEAV', 'All', 'eav', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('ViewEAV', 'All', 'eav', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadEAV', 'All', 'eav', 'All', 'All', 'ACCESS_READ');
-        xarRegisterPrivilege('CommentEAV', 'All', 'eav', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateEAV', 'All', 'eav', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterPrivilege('EditEAV', 'All', 'eav', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterPrivilege('AddEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterPrivilege('ManageEAV', 'All', 'eav', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('ViewEAV', 'All', 'eav', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarPrivileges::register('ReadEAV', 'All', 'eav', 'All', 'All', 'ACCESS_READ');
+        xarPrivileges::register('CommentEAV', 'All', 'eav', 'All', 'All', 'ACCESS_COMMENT');
+        xarPrivileges::register('ModerateEAV', 'All', 'eav', 'All', 'All', 'ACCESS_MODERATE');
+        xarPrivileges::register('EditEAV', 'All', 'eav', 'All', 'All', 'ACCESS_EDIT');
+        xarPrivileges::register('AddEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADD');
+        xarPrivileges::register('ManageEAV', 'All', 'eav', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminEAV', 'All', 'eav', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
@@ -161,7 +161,7 @@
                         'eav_empty',
                          );
 
-        if (!xarModAPIFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
             return;
         }
 
@@ -194,5 +194,5 @@
     function eav_delete()
     {
         $this_module = 'eav';
-        return xarModAPIFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
     }

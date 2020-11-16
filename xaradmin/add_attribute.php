@@ -15,20 +15,20 @@
  */
 function eav_admin_add_attribute(array $args=array())
 {
-    if (!xarSecurityCheck('ManageEAV')) {
+    if (!xarSecurity::check('ManageEAV')) {
         return;
     }
 
-    if (!xarVarFetch('objectname', 'isset', $data['objectname'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectname', 'isset', $data['objectname'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('objectid', 'isset', $data['objectid'], null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectid', 'isset', $data['objectid'], null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('details', 'isset', $details, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('details', 'isset', $details, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('layout', 'str:1', $data['layout'], 'default', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('layout', 'str:1', $data['layout'], 'default', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -44,7 +44,7 @@ function eav_admin_add_attribute(array $args=array())
     $data['object'] = DataObjectMaster::getObject(array('objectid' => $data['objectid']));
 
     // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     xarTpl::setPageTitle(xarML('Modify DataProperties #(1)', $data['object']->label));
 
@@ -68,7 +68,7 @@ function eav_admin_add_attribute(array $args=array())
     $data['fieldstatusprop'] =& DataPropertyMaster::getProperty(array('type' => 'fieldstatus'));
 
     // We have to specify this here, the js expects non xml urls and the => makes the template invalied
-    $data['urlform'] = xarModURL('dynamicdata', 'admin', 'form', array('objectid' => $data['objectid'], 'theme' => 'print'), false);
+    $data['urlform'] = xarController::URL('dynamicdata', 'admin', 'form', array('objectid' => $data['objectid'], 'theme' => 'print'), false);
 
     return $data;
 }

@@ -22,19 +22,19 @@
 function eav_admin_order_attributes()
 {
     // Security
-    if (!xarSecurityCheck('EditEAV')) {
+    if (!xarSecurity::check('EditEAV')) {
         return;
     }
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch()
-    if (!xarVarFetch('objectid', 'isset', $object_id, null, XARVAR_DONT_SET)) {
+    // function should be obtained from xarVar::fetch()
+    if (!xarVar::fetch('objectid', 'isset', $object_id, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('direction', 'isset', $direction, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('direction', 'isset', $direction, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -99,7 +99,7 @@ function eav_admin_order_attributes()
         return;
     }
 
-    xarController::redirect(xarModURL(
+    xarController::redirect(xarController::URL(
         'eav',
         'admin',
         'add_attribute',

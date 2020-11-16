@@ -18,30 +18,30 @@
     
     function eav_admin_new()
     {
-        if (!xarSecurityCheck('AddEAV')) {
+        if (!xarSecurity::check('AddEAV')) {
             return;
         }
 
-        if (!xarVarFetch('name', 'str', $name, 'eav_attributes', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('name', 'str', $name, 'eav_attributes', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'eav';
-        $data['authid'] = xarSecGenAuthKey('eav');
+        $data['authid'] = xarSec::genAuthKey('eav');
 
         if ($data['confirm']) {
         
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+            if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
                 return;
             }
 
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             
@@ -50,13 +50,13 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('eav', 'admin', 'new', $data);
+                return xarTpl::module('eav', 'admin', 'new', $data);
             } else {
                 // Good data: create the item
                 $itemid = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('eav', 'admin', 'view'));
+                xarController::redirect(xarController::URL('eav', 'admin', 'view'));
                 return true;
             }
         }

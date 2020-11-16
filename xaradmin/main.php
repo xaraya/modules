@@ -17,14 +17,14 @@
 
     function eav_admin_main()
     {
-        if (!xarSecurityCheck('ManageEAV')) {
+        if (!xarSecurity::check('ManageEAV')) {
             return;
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarController::redirect(xarModURL('eav', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig'));
         }
         // success
         return true;

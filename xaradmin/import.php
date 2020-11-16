@@ -19,29 +19,29 @@ sys::import('modules.dynamicdata.class.objects.master');
 function eav_admin_import(array $args=array())
 {
     // Security
-    if (!xarSecurityCheck('AdminDynamicData')) {
+    if (!xarSecurity::check('AdminDynamicData')) {
         return;
     }
 
-    if (!xarVarFetch('basedir', 'isset', $basedir, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('basedir', 'isset', $basedir, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('import', 'isset', $import, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('xml', 'isset', $xml, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('xml', 'isset', $xml, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('refresh', 'isset', $refresh, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('refresh', 'isset', $refresh, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('keepitemid', 'isset', $keepitemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('keepitemid', 'isset', $keepitemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('overwrite', 'checkbox', $overwrite, false, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('overwrite', 'checkbox', $overwrite, false, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('prefix', 'isset', $data['prefix'], xarDB::getPrefix(), XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('prefix', 'isset', $data['prefix'], xarDB::getPrefix(), xarVar::DONT_SET)) {
         return;
     }
 
@@ -54,7 +54,7 @@ function eav_admin_import(array $args=array())
         $basedir = sys::code() . 'modules/eav';
     }
     $data['basedir'] = $basedir;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     $filetype = 'xml';
     $files = xarMod::apiFunc(
@@ -71,7 +71,7 @@ function eav_admin_import(array $args=array())
     }
 
     if (empty($refresh) && (!empty($import) || !empty($xml))) {
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
         }
 
@@ -101,9 +101,9 @@ function eav_admin_import(array $args=array())
                                             )
                 );
             } catch (DuplicateException $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
             } catch (Exception $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
             }
         } else {
             try {
@@ -118,16 +118,16 @@ function eav_admin_import(array $args=array())
                                             )
                 );
             } catch (DuplicateException $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
             } catch (Exception $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
             }
         }
         if (empty($objectname)) {
             return;
         }
 
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'eav',
             'admin',
             'add_attribute',

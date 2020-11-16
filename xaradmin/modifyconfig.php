@@ -20,13 +20,13 @@
     function eav_admin_modifyconfig()
     {
         // Security Check
-        if (!xarSecurityCheck('AdminEAV')) {
+        if (!xarSecurity::check('AdminEAV')) {
             return;
         }
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
             return;
         }
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -52,14 +52,14 @@
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
                 switch ($data['tab']) {
                     case 'general':
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {
-                            return xarTplModule('eav', 'admin', 'modifyconfig', $data);
+                            return xarTpl::module('eav', 'admin', 'modifyconfig', $data);
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
@@ -72,12 +72,12 @@
                         break;
                 }
 
-                xarController::redirect(xarModURL('eav', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
 
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         return $data;
     }

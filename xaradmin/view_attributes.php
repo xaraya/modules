@@ -16,7 +16,7 @@
  */
     function eav_admin_view_attributes($args)
     {
-        if (!xarSecurityCheck('ManageEAV')) {
+        if (!xarSecurity::check('ManageEAV')) {
             return;
         }
 
