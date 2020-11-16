@@ -30,5 +30,3 @@ function keywords_xartables()
     // Return the table information
     return $xarTables;
 }
-
-?>

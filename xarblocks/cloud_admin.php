@@ -14,7 +14,7 @@ sys::import('modules.keywords.xarblocks.cloud');
 
 class Keywords_CloudBlockAdmin extends Keywords_CloudBlock implements iBlock
 {
-    function modify()
+    public function modify()
     {
         $data = $this->getContent();
 
@@ -22,10 +22,14 @@ class Keywords_CloudBlockAdmin extends Keywords_CloudBlock implements iBlock
         switch ($data['cloudtype']) {
             default:
             case 1:
-                if (!xarMod::isAvailable('categories')) $data['status'] = 'not_available';
+                if (!xarMod::isAvailable('categories')) {
+                    $data['status'] = 'not_available';
+                }
                 break;
             case 3:
-                if (!xarMod::isAvailable('keywords')) $data['status'] = 'not_available';
+                if (!xarMod::isAvailable('keywords')) {
+                    $data['status'] = 'not_available';
+                }
                 break;
         }
         return $data;
@@ -34,13 +38,22 @@ class Keywords_CloudBlockAdmin extends Keywords_CloudBlock implements iBlock
     public function update()
     {
         // Get the cloud type
-        if (!xarVarFetch('cloudtype',  'int',      $vars['cloudtype'],  $this->cloudtype, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('color',      'str:1:',   $vars['color'],      $this->color,XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('background', 'str:1:',   $vars['background'], $this->background,XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('module_id',  'str:1:',   $vars['module_id'],  $this->module_id,XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('itemtype',   'str:1:',   $vars['itemtype'],   $this->itemtype,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('cloudtype', 'int', $vars['cloudtype'], $this->cloudtype, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('color', 'str:1:', $vars['color'], $this->color, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('background', 'str:1:', $vars['background'], $this->background, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('module_id', 'str:1:', $vars['module_id'], $this->module_id, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('itemtype', 'str:1:', $vars['itemtype'], $this->itemtype, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
         $this->setContent($vars);
         return true;
     }
 }
-?>

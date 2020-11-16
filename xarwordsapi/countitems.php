@@ -1,21 +1,27 @@
 <?php
-function keywords_wordsapi_countitems(Array $args=array())
+function keywords_wordsapi_countitems(array $args=array())
 {
     extract($args);
 
-    if (isset($id) && (empty($id) || !is_numeric($id)))
+    if (isset($id) && (empty($id) || !is_numeric($id))) {
         $invalid[] = 'id';
+    }
 
-    if (isset($index_id) && (empty($index_id) || !is_numeric($index_id)))
+    if (isset($index_id) && (empty($index_id) || !is_numeric($index_id))) {
         $invalid[] = 'index_id';
+    }
 
     if (isset($keyword)) {
         // we may have been given a string list
         if (!empty($keyword) && !is_array($keyword)) {
-            $keyword = xarMod::apiFunc('keywords','admin','separatekeywords',
+            $keyword = xarMod::apiFunc(
+                'keywords',
+                'admin',
+                'separatekeywords',
                 array(
                     'keywords' => $keyword,
-                ));
+                )
+            );
         }
         if (is_array($keyword)) {
             foreach ($keyword as $dt) {
@@ -29,16 +35,20 @@ function keywords_wordsapi_countitems(Array $args=array())
         }
     }
 
-    if (!empty($module))
+    if (!empty($module)) {
         $module_id = xarMod::getRegId($module);
-    if (isset($module_id) && (empty($module_id) || !is_numeric($module_id)))
+    }
+    if (isset($module_id) && (empty($module_id) || !is_numeric($module_id))) {
         $invalid[] = 'module_id';
+    }
 
-    if (isset($itemtype) && !is_numeric($itemtype))
+    if (isset($itemtype) && !is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
+    }
 
-    if (isset($itemid) && !is_numeric($itemid))
+    if (isset($itemid) && !is_numeric($itemid)) {
         $invalid[] = 'itemid';
+    }
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
@@ -115,19 +125,20 @@ function keywords_wordsapi_countitems(Array $args=array())
 
     $query = "SELECT " . implode(',', $select);
     $query .= " FROM " . implode(',', $from);
-    if (!empty($join))
+    if (!empty($join)) {
         $query .= " " . implode(' ', $join);
-    if (!empty($where))
+    }
+    if (!empty($where)) {
         $query .= " WHERE " . implode(' AND ', $where);
-    if (!empty($groupby))
+    }
+    if (!empty($groupby)) {
         $query .= " GROUP BY " . implode(',', $groupby);
+    }
 
     // return the count
-    $result = $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     list($numitems) = $result->fields;
     $result->Close();
 
     return $numitems;
-
 }
-?>

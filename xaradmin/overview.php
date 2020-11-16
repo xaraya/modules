@@ -18,12 +18,12 @@
  */
 function keywords_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminKeywords',0)) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminKeywords', 0)) {
+        return;
+    }
 
     $data=array();
 
-    return xarTpl::module('keywords', 'admin', 'main', $data,'main');
+    return xarTpl::module('keywords', 'admin', 'main', $data, 'main');
 }
-
-?>

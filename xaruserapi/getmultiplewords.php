@@ -22,7 +22,9 @@
  */
 function keywords_userapi_getmultiplewords($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
     extract($args);
 
@@ -52,15 +54,16 @@ function keywords_userapi_getmultiplewords($args)
             $query .= " AND itemtype = $itemtype";
         }
         $bindvars = array($modid, $item);
-        $result =& $dbconn->Execute($query,$bindvars);
-        if (!$result) return;
+        $result =& $dbconn->Execute($query, $bindvars);
+        if (!$result) {
+            return;
+        }
 
         for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $keyword) = $result->fields;
+            list($id, $keyword) = $result->fields;
             $keywords[$item][] = array('id'      => $id,
                                        'keyword' => $keyword);
         }
     }
     return $keywords;
 }
-?>

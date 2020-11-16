@@ -3,7 +3,7 @@ class Keywords extends Object
 {
     const CONFIG_MODVAR = 'keywords_config';
     protected static $instance;
-    protected static $configs = array();  
+    protected static $configs = array();
     
     public function __construct()
     {
@@ -23,21 +23,25 @@ class Keywords extends Object
         sys::import('modules.keywords.class.config');
         $hash = "$module:$itemtype";
         if (isset(self::$configs[$hash])) {
-            if (empty($args)) 
+            if (empty($args)) {
                 return self::$configs[$hash];
+            }
             $config = self::$configs[$hash];
         }
-        if (empty($config) && !empty($itemtype)) // try for module itemtype specific settings
+        if (empty($config) && !empty($itemtype)) { // try for module itemtype specific settings
             $config = @unserialize(xarModVars::get($module, self::CONFIG_MODVAR.'_'.$itemtype));
-        if (empty($config)) // fall back on module specific defaults
+        }
+        if (empty($config)) { // fall back on module specific defaults
             $config =  @unserialize(xarModVars::get($module, self::CONFIG_MODVAR));
-        if (empty($config)) // fall back on keywords defaults 
+        }
+        if (empty($config)) { // fall back on keywords defaults
             $config =  @unserialize(xarModVars::get('keywords', self::CONFIG_MODVAR));
+        }
         if (empty($config)) {
             // first run ever or keywords defaults modvar deleted manually, re create using object defaults
             $config = new KeywordsConfig($module, $itemtype);
         } elseif (is_array($config)) {
-            // config stored as array, create object using array values 
+            // config stored as array, create object using array values
             $config = new KeywordsConfig($module, $itemtype, $config);
         } elseif ($config->module != $module || $config->itemtype != $itemtype) {
             // config stored as object, sync module and itemtype
@@ -47,7 +51,7 @@ class Keywords extends Object
         if (!empty($args)) {
             $config->setArgs($args);
             $config->refresh($config);
-        }      
+        }
         return self::$configs[$hash] = $config;
     }
     
@@ -67,4 +71,3 @@ class Keywords extends Object
         return true;
     }
 }
-?>

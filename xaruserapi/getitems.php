@@ -24,7 +24,9 @@
  */
 function keywords_userapi_getitems($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
     extract($args);
 
@@ -63,7 +65,7 @@ function keywords_userapi_getitems($args)
         $query .= " WHERE keyword = ?";
         $bindvars[] = $keyword;
     }
-    if (!empty($itemid) && is_numeric($itemid) ) {
+    if (!empty($itemid) && is_numeric($itemid)) {
         $query .= " AND itemid = ?";
         $bindvars[] = $itemid;
     }
@@ -76,7 +78,7 @@ function keywords_userapi_getitems($args)
             $bindvars[] = (int)$itemtype;
         }
     }
-    if (!empty($modid) && is_numeric($modid) ) {
+    if (!empty($modid) && is_numeric($modid)) {
         $query .= " AND module_id = ?";
         $bindvars[] = $modid;
     }
@@ -88,9 +90,11 @@ function keywords_userapi_getitems($args)
         }
         $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     } else {
-        $result =& $dbconn->Execute($query,$bindvars);
+        $result =& $dbconn->Execute($query, $bindvars);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $items = array();
     if ($result->EOF) {
@@ -110,5 +114,3 @@ function keywords_userapi_getitems($args)
     $result->Close();
     return $items;
 }
-
-?>

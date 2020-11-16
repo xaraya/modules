@@ -1,21 +1,26 @@
 <?php
-function keywords_indexapi_getitems(Array $args=array())
+function keywords_indexapi_getitems(array $args=array())
 {
     extract($args);
 
-    if (isset($id) && !is_numeric($id))
+    if (isset($id) && !is_numeric($id)) {
         $invalid[] = 'id';
+    }
 
-    if (!empty($module))
+    if (!empty($module)) {
         $module_id = xarMod::getRegId($module);
-    if (isset($module_id) && (empty($module_id) || !is_numeric($module_id)))
+    }
+    if (isset($module_id) && (empty($module_id) || !is_numeric($module_id))) {
         $invalid[] = 'module_id';
+    }
 
-    if (isset($itemtype) && !is_numeric($itemtype))
+    if (isset($itemtype) && !is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
+    }
 
-    if (isset($itemid) && !is_numeric($itemid))
+    if (isset($itemid) && !is_numeric($itemid)) {
         $invalid[] = 'itemid';
+    }
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
@@ -64,20 +69,25 @@ function keywords_indexapi_getitems(Array $args=array())
 
     $query = "SELECT " . implode(',', $select);
     $query .= " FROM " . implode(',', $from);
-    if (!empty($join))
+    if (!empty($join)) {
         $query .= " " . implode(' ', $join);
-    if (!empty($where))
+    }
+    if (!empty($where)) {
         $query .= " WHERE " . implode(' AND ', $where);
-    if (!empty($orderby))
+    }
+    if (!empty($orderby)) {
         $query .= " ORDER BY " . implode(',', $orderby);
-    if (!empty($groupby))
+    }
+    if (!empty($groupby)) {
         $query .= " GROUP BY " . implode(',', $groupby);
+    }
 
     $stmt = $dbconn->prepareStatement($query);
     if (!empty($numitems)) {
         $stmt->setLimit($numitems);
-        if (empty($startnum))
+        if (empty($startnum)) {
             $startnum = 1;
+        }
         $stmt->setOffset($startnum - 1);
     }
     $result = $stmt->executeQuery($bindvars);
@@ -85,8 +95,9 @@ function keywords_indexapi_getitems(Array $args=array())
     $items = array();
     while ($result->next()) {
         $item = array();
-        foreach (array_keys($select) as $field)
+        foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
+        }
 
 
         $items[] = $item;
@@ -95,4 +106,3 @@ function keywords_indexapi_getitems(Array $args=array())
 
     return $items;
 }
-?>

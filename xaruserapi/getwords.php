@@ -24,7 +24,9 @@
  */
 function keywords_userapi_getwords($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
     extract($args);
 
@@ -62,5 +64,3 @@ function keywords_userapi_getwords($args)
 
     return $words;
 }
-
-?>

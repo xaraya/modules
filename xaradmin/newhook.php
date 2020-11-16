@@ -22,8 +22,9 @@ function keywords_admin_newhook($args)
 {
     extract($args);
 
-    if (empty($extrainfo))
+    if (empty($extrainfo)) {
         $extrainfo = array();
+    }
 
     // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
@@ -51,42 +52,61 @@ function keywords_admin_newhook($args)
         $itemid = $objectid;
     }
     // new item won't have an id yet
-    if (empty($itemid))
+    if (empty($itemid)) {
         $itemid = 0;
+    }
 
     // @todo: replace this with access prop
-    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:All")) return '';
+    if (!xarSecurityCheck('AddKeywords', 0, 'Item', "$modid:$itemtype:All")) {
+        return '';
+    }
 
     // get settings currently in force for this module/itemtype
-    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+    $settings = xarMod::apiFunc(
+        'keywords',
+        'hooks',
+        'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
-        ));
+        )
+    );
 
     // see if keywords were passed to hook call
     if (!empty($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
         // could be an item preview, try fetch from form input
-        if (!xarVarFetch('keywords', 'isset',
-            $keywords, null, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch(
+            'keywords',
+            'isset',
+            $keywords,
+            null,
+            XARVAR_DONT_SET
+        )) {
+            return;
+        }
     }
 
     // we may have been given a string list
     if (!empty($keywords) && !is_array($keywords)) {
-        $keywords = xarMod::apiFunc('keywords','admin','separatekeywords',
+        $keywords = xarMod::apiFunc(
+            'keywords',
+            'admin',
+            'separatekeywords',
             array(
                 'keywords' => $keywords,
-            ));
+            )
+        );
     }
 
     // it's ok if there are no keywords
-    if (empty($keywords))
+    if (empty($keywords)) {
         $keywords = array();
+    }
 
     // Retrieve the list of allowed delimiters
-    $delimiters = xarModVars::get('keywords','delimiters');
+    $delimiters = xarModVars::get('keywords', 'delimiters');
 
     $data = $settings;
     if (empty($settings['restrict_words'])) {
@@ -96,16 +116,18 @@ function keywords_admin_newhook($args)
         $data['keywords'] = !empty($keywords) ? implode($delimiter, $keywords) : '';
     } else {
         // get restricted list based on current settings
-        $data['restricted_list'] = xarMod::apiFunc('keywords', 'words', 'getwords',
+        $data['restricted_list'] = xarMod::apiFunc(
+            'keywords',
+            'words',
+            'getwords',
             array(
                 'index_id' => $settings['index_id'],
-            ));
+            )
+        );
         // return only keywords that are also in the restricted list
         $data['keywords'] = array_intersect($keywords, $data['restricted_list']);
     }
     $data['delimiters'] = $delimiters;
 
     return xarTpl::module('keywords', 'admin', 'newhook', $data);
-
 }
-?>

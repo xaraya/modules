@@ -1,5 +1,5 @@
 <?php
-function keywords_wordsapi_countmoduleitems(Array $args=array())
+function keywords_wordsapi_countmoduleitems(array $args=array())
 {
     extract($args);
 
@@ -25,17 +25,19 @@ function keywords_wordsapi_countmoduleitems(Array $args=array())
 
     $query = "SELECT " . implode(',', $select);
     $query .= " FROM " . implode(',', $from);
-    if (!empty($join))
+    if (!empty($join)) {
         $query .= " " . implode(' ', $join);
-    if (!empty($where))
+    }
+    if (!empty($where)) {
         $query .= " WHERE " . implode(' AND ', $where);
-    if (!empty($groupby))
+    }
+    if (!empty($groupby)) {
         $query .= " GROUP BY " . implode(',', $groupby);
+    }
 
     // return the count
-    $result = $dbconn->Execute($query,$bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     list($numitems) = $result->fields;
     $result->Close();
     return $numitems;
 }
-?>

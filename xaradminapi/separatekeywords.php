@@ -26,7 +26,9 @@ function keywords_adminapi_separatekeywords($args)
     str_replace(':', '', $delimiters);
 
     // Ensure we can fall back to a default.
-    if (empty($delimiters)) $delimiters = ';';
+    if (empty($delimiters)) {
+        $delimiters = ';';
+    }
 
     // Get first delimiter for creating the array.
     $first = substr($delimiters, 0, 1);
@@ -39,4 +41,3 @@ function keywords_adminapi_separatekeywords($args)
 
     return $words;
 }
-?>

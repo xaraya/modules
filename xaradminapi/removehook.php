@@ -22,8 +22,9 @@ function keywords_adminapi_removehook($args)
 {
     extract($args);
 
-    if (empty($extrainfo))
+    if (empty($extrainfo)) {
         $extrainfo = array();
+    }
 
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
@@ -43,18 +44,29 @@ function keywords_adminapi_removehook($args)
     }
 
     // delete all words associated with this module
-    if (!xarMod::apiFunc('keywords', 'words', 'deleteitems',
+    if (!xarMod::apiFunc(
+        'keywords',
+        'words',
+        'deleteitems',
         array(
             'module_id' => $modid,
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     // delete all indexes for this module
-    if (!xarMod::apiFunc('keywords', 'index', 'deleteitems',
+    if (!xarMod::apiFunc(
+        'keywords',
+        'index',
+        'deleteitems',
         array(
             'module_id' => $modid,
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     // Return the extra info
     return $extrainfo;
 }
-?>

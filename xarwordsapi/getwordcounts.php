@@ -19,20 +19,24 @@
  * @return array
  * @throws BadParameterException, SQLException
 **/
-function keywords_wordsapi_getwordcounts(Array $args=array())
+function keywords_wordsapi_getwordcounts(array $args=array())
 {
     extract($args);
 
-    if (!empty($module))
+    if (!empty($module)) {
         $module_id = xarMod::getRegId($module);
-    if (isset($module_id) && (empty($module_id) || !is_numeric($module_id)))
+    }
+    if (isset($module_id) && (empty($module_id) || !is_numeric($module_id))) {
         $invalid[] = 'module_id';
+    }
 
-    if (isset($itemtype) && !is_numeric($itemtype))
+    if (isset($itemtype) && !is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
+    }
 
-    if (isset($itemid) && !is_numeric($itemid))
+    if (isset($itemid) && !is_numeric($itemid)) {
         $invalid[] = 'itemid';
+    }
 
 
     if (!empty($invalid)) {
@@ -93,27 +97,33 @@ function keywords_wordsapi_getwordcounts(Array $args=array())
 
     $groupby['keyword'] = 'words.keyword';
 
-    if (empty($orderby))
+    if (empty($orderby)) {
         $orderby['keyword'] = 'words.keyword ASC';
-        //$orderby['count'] = 'wordcount DESC';
+    }
+    //$orderby['count'] = 'wordcount DESC';
 
 
     $query = "SELECT " . implode(',', $select);
     $query .= " FROM " . implode(',', $from);
-    if (!empty($join))
+    if (!empty($join)) {
         $query .= " " . implode(' ', $join);
-    if (!empty($where))
+    }
+    if (!empty($where)) {
         $query .= " WHERE " . implode(' AND ', $where);
-    if (!empty($groupby))
+    }
+    if (!empty($groupby)) {
         $query .= " GROUP BY " . implode(',', $groupby);
-    if (!empty($orderby))
+    }
+    if (!empty($orderby)) {
         $query .= " ORDER BY " . implode(',', $orderby);
+    }
 
     $stmt = $dbconn->prepareStatement($query);
     if (!empty($numitems)) {
         $stmt->setLimit($numitems);
-        if (empty($startnum))
+        if (empty($startnum)) {
             $startnum = 1;
+        }
         $stmt->setOffset($startnum - 1);
     }
     $result = $stmt->executeQuery($bindvars);
@@ -121,13 +131,12 @@ function keywords_wordsapi_getwordcounts(Array $args=array())
     $items = array();
     while ($result->next()) {
         $item = array();
-        foreach (array_keys($select) as $field)
+        foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
+        }
         $items[] = $item;
     }
     $result->close();
 
     return $items;
-
 }
-?>

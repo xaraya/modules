@@ -39,16 +39,18 @@ function keywords_adminapi_getwordslimited($args)
               FROM $keywordstable
               WHERE module_id = ?";
 
-              $bindvars[] = $moduleid;
+    $bindvars[] = $moduleid;
 
     if (isset($itemtype)) {
-          $query .= " AND itemtype = ?";
-          $bindvars[] = $itemtype;
+        $query .= " AND itemtype = ?";
+        $bindvars[] = $itemtype;
     }
     $query .= " ORDER BY keyword ASC";
-    $result =& $dbconn->Execute($query,$bindvars);
+    $result =& $dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     $keywords = array();
     $keywords = '';
     if ($result->EOF) {
@@ -63,10 +65,9 @@ function keywords_adminapi_getwordslimited($args)
     }
     $result->Close();
 
-    $delimiters = xarModVars::get('keywords','delimiters');
-    $delimiter = substr($delimiters,0,1)." ";
+    $delimiters = xarModVars::get('keywords', 'delimiters');
+    $delimiter = substr($delimiters, 0, 1)." ";
     $keywords = implode($delimiter, $keywords);
 
     return $keywords;
 }
-?>

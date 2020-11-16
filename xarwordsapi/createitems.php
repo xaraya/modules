@@ -1,15 +1,17 @@
 <?php
-function keywords_wordsapi_createitems(Array $args=array())
+function keywords_wordsapi_createitems(array $args=array())
 {
     extract($args);
 
-    if (empty($index_id) || !is_numeric($index_id))
+    if (empty($index_id) || !is_numeric($index_id)) {
         $invalid[] = 'index_id';
+    }
 
     if (isset($keyword)) {
-        if (is_string($keyword))
+        if (is_string($keyword)) {
             $keyword = (strpos($keyword, ',') !== false) ?
                 array_map('trim', explode(',', $keyword)) : array(trim($keyword));
+        }
         if (is_array($keyword)) {
             $keyword = array_unique(array_filter($keyword));
             foreach ($keyword as $dt) {
@@ -58,4 +60,3 @@ function keywords_wordsapi_createitems(Array $args=array())
     }
     return true;
 }
-?>

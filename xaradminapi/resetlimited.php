@@ -16,14 +16,17 @@
  */
 function keywords_adminapi_resetlimited($args)
 {
-   //if (!xarSecurityCheck('AdminKeywords')) return;
-   if (!xarSecurityCheck('AddKeywords')) return;
+    //if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('AddKeywords')) {
+        return;
+    }
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     $query = "DELETE FROM $keywordstable";
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     return true;
 }
-?>

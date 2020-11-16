@@ -1,10 +1,12 @@
 <?php
-function keywords_wordsapi_getwords(Array $args=array())
+function keywords_wordsapi_getwords(array $args=array())
 {
     $items = xarMod::apiFunc('keywords', 'words', 'getitems', $args);
-    if (empty($items)) return $items;
-    foreach ($items as $item)
+    if (empty($items)) {
+        return $items;
+    }
+    foreach ($items as $item) {
         $words[$item['keyword']] = $item['keyword'];
+    }
     return $words;
 }
-?>

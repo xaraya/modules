@@ -1,10 +1,11 @@
 <?php
-function keywords_hooks_modulemodifyconfig(Array $args=array())
+function keywords_hooks_modulemodifyconfig(array $args=array())
 {
     extract($args);
 
-    if (empty($extrainfo))
+    if (empty($extrainfo)) {
         $extrainfo = array();
+    }
 
     // objectid is the name of the module
     if (empty($objectid)) {
@@ -36,17 +37,25 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
         $itemtype = 0;
     }
 
-    $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+    $data = xarMod::apiFunc(
+        'keywords',
+        'hooks',
+        'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
-        ));
+        )
+    );
 
     if (!empty($data['restrict_words'])) {
-        $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
+        $restricted_list = xarMod::apiFunc(
+            'keywords',
+            'words',
+            'getwords',
             array(
                 'index_id' => $data['index_id'],
-            ));
+            )
+        );
         $data['restricted_list'] = implode(', ', $restricted_list);
     }
 
@@ -56,4 +65,3 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
 
     return xarTpl::module('keywords', 'hooks', 'modulemodifyconfig', $data);
 }
-?>

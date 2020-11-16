@@ -1,5 +1,5 @@
 <?php
-function keywords_wordsapi_getmodulecounts(Array $args=array())
+function keywords_wordsapi_getmodulecounts(array $args=array())
 {
     extract($args);
 
@@ -42,20 +42,25 @@ function keywords_wordsapi_getmodulecounts(Array $args=array())
 
     $query = "SELECT " . implode(',', $select);
     $query .= " FROM " . implode(',', $from);
-    if (!empty($join))
+    if (!empty($join)) {
         $query .= " " . implode(' ', $join);
-    if (!empty($where))
+    }
+    if (!empty($where)) {
         $query .= " WHERE " . implode(' AND ', $where);
-    if (!empty($groupby))
+    }
+    if (!empty($groupby)) {
         $query .= " GROUP BY " . implode(',', $groupby);
-    if (!empty($orderby))
+    }
+    if (!empty($orderby)) {
         $query .= " ORDER BY " . implode(',', $orderby);
+    }
 
     $stmt = $dbconn->prepareStatement($query);
     if (!empty($numitems)) {
         $stmt->setLimit($numitems);
-        if (empty($startnum))
+        if (empty($startnum)) {
             $startnum = 1;
+        }
         $stmt->setOffset($startnum - 1);
     }
     $result = $stmt->executeQuery($bindvars);
@@ -63,14 +68,15 @@ function keywords_wordsapi_getmodulecounts(Array $args=array())
     $items = array();
     while ($result->next()) {
         $item = array();
-        foreach (array_keys($select) as $field)
+        foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
-        if (!isset($items[$item['module']]))
+        }
+        if (!isset($items[$item['module']])) {
             $items[$item['module']] = array();
+        }
         $items[$item['module']][$item['itemtype']] = $item;
     }
     $result->close();
 
     return $items;
 }
-?>

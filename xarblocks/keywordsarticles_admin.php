@@ -21,8 +21,8 @@ class Keywords_KeywordsarticlesBlockAdmin extends Keywords_KeywordsarticlesBlock
     public function modify()
     {
         $vars = $this->getContent();
-        $vars['pubtypes'] = xarMod::apiFunc('articles','user','getpubtypes');
-        $vars['categorylist'] = xarMod::apiFunc('categories','user','getcat');
+        $vars['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+        $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
         $vars['statusoptions'] = array(array('id' => '3,2',
                                          'name' => xarML('All Published')),
                                    array('id' => '3',
@@ -38,12 +38,19 @@ class Keywords_KeywordsarticlesBlockAdmin extends Keywords_KeywordsarticlesBlock
 
     public function update()
     {
-        if (!xarVarFetch('ptid', 'id', $vars['ptid'],$this->ptid, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('cid', 'int:1:', $vars['cid'],$this->cid, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('status', 'str:1:', $vars['status'], $this->status, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('ptid', 'id', $vars['ptid'], $this->ptid, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('cid', 'int:1:', $vars['cid'], $this->cid, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('status', 'str:1:', $vars['status'], $this->status, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'], 1, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
         $this->setContent($vars);
         return true;
     }
 }
-?>

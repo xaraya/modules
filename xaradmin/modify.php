@@ -23,23 +23,55 @@
  */
 function keywords_admin_modify($args)
 {
-    if (!xarSecurityCheck('ManageKeywords')) return;
+    if (!xarSecurityCheck('ManageKeywords')) {
+        return;
+    }
 
     $data = array();
 
-    if (!xarVarFetch('module_id', 'id',
-        $module_id, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('itemtype', 'id',
-        $itemtype, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('itemid', 'id',
-        $itemid, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('return_url', 'pre:trim:str:1:',
-        $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch(
+        'module_id',
+        'id',
+        $module_id,
+        null,
+        XARVAR_DONT_SET
+    )) {
+        return;
+    }
+    if (!xarVarFetch(
+        'itemtype',
+        'id',
+        $itemtype,
+        null,
+        XARVAR_DONT_SET
+    )) {
+        return;
+    }
+    if (!xarVarFetch(
+        'itemid',
+        'id',
+        $itemid,
+        null,
+        XARVAR_DONT_SET
+    )) {
+        return;
+    }
+    if (!xarVarFetch(
+        'return_url',
+        'pre:trim:str:1:',
+        $return_url,
+        '',
+        XARVAR_NOT_REQUIRED
+    )) {
+        return;
+    }
 
-    if (empty($module_id))
+    if (empty($module_id)) {
         $invalid[] = 'module_id';
-    if (empty($itemid))
+    }
+    if (empty($itemid)) {
         $invalid[] = 'itemid';
+    }
 
     if (!empty($invalid)) {
         $msg = 'Missing #(1) for #(2) module #(3) function #(4)()';
@@ -47,61 +79,101 @@ function keywords_admin_modify($args)
         throw new EmptyParameterException($vars, $msg);
     }
 
-    if (!xarVarFetch('phase', 'pre:trim:lower:enum:update',
-        $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch(
+        'phase',
+        'pre:trim:lower:enum:update',
+        $phase,
+        'form',
+        XARVAR_NOT_REQUIRED
+    )) {
+        return;
+    }
 
     $modname = xarMod::getName($module_id);
 
     if ($phase == 'update') {
-        if (!xarSecConfirmAuthKey())
+        if (!xarSecConfirmAuthKey()) {
             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        }
         // check for keywords empty and redirect to delete confirm
-        if (!xarVarFetch('keywords', 'isset',
-            $keywords, null, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch(
+            'keywords',
+            'isset',
+            $keywords,
+            null,
+            XARVAR_DONT_SET
+        )) {
+            return;
+        }
         if (empty($keywords)) {
-            $delete_url = xarModURL('keywords', 'admin', 'delete',
+            $delete_url = xarModURL(
+                'keywords',
+                'admin',
+                'delete',
                 array(
                     'module_id' => $module_id,
                     'itemtype' => $itemtype,
                     'itemid' => $itemid,
-               ));
+               )
+            );
             xarController::redirect($delete_url);
         }
-        xarMod::apiFunc('keywords', 'admin', 'updatehook',
+        xarMod::apiFunc(
+            'keywords',
+            'admin',
+            'updatehook',
             array(
                 'objectid' => $itemid,
                 'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype, 'itemid' => $itemid),
-            ));
-        if (empty($return_url))
-            $return_url = xarModURL('keywords', 'admin', 'modify',
+            )
+        );
+        if (empty($return_url)) {
+            $return_url = xarModURL(
+                'keywords',
+                'admin',
+                'modify',
                 array(
                     'module_id' => $module_id,
                     'itemtype' => $itemtype,
                     'itemid' => $itemid,
-                ));
+                )
+            );
+        }
         xarController::redirect($return_url);
     }
 
     try {
-        $item = xarMod::apiFunc($modname, 'user', 'getitemlinks',
+        $item = xarMod::apiFunc(
+            $modname,
+            'user',
+            'getitemlinks',
             array(
                 'itemtype' => $itemtype,
                 'itemids' => array($itemid),
-            ));
+            )
+        );
         $item = reset($item);
     } catch (Exception $e) {
         $item = array(
             'label' => xarML('Item #(1)', $itemid),
             'title' => xarML('Display Item #(1)', $itemid),
-            'url' => xarModURL($modname, 'user', 'display',
-                array('itemtype' => $itemtype, 'itemid' => $itemid)),
+            'url' => xarModURL(
+                $modname,
+                'user',
+                'display',
+                array('itemtype' => $itemtype, 'itemid' => $itemid)
+            ),
         );
     }
 
-    $modlist = xarMod::apiFunc('keywords', 'words', 'getmodulecounts',
+    $modlist = xarMod::apiFunc(
+        'keywords',
+        'words',
+        'getmodulecounts',
         array(
             'skip_restricted' => true,
-        ));
+        )
+    );
     $modtypes = array();
     $modules = array();
     foreach ($modlist as $module => $itemtypes) {
@@ -115,7 +187,9 @@ function keywords_admin_modify($args)
             }
         }
         foreach ($itemtypes as $typeid => $typeinfo) {
-            if (empty($typeid)) continue;
+            if (empty($typeid)) {
+                continue;
+            }
             if (!isset($modtypes[$module][$typeid])) {
                 $modtypes[$module][$typeid] = array(
                     'label' => xarML('Itemtype #(1)', $typeid),
@@ -135,17 +209,24 @@ function keywords_admin_modify($args)
     $data['item'] = $item;
     $data['return_url'] = $return_url;
 
-    $data['modify_hook'] = xarMod::guiFunc('keywords', 'admin', 'modifyhook',
+    $data['modify_hook'] = xarMod::guiFunc(
+        'keywords',
+        'admin',
+        'modifyhook',
         array(
             'objectid' => $itemid,
             'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype, 'itemid' => $itemid),
-        ));
-    $data['display_hook'] = xarMod::guiFunc('keywords', 'user', 'displayhook',
+        )
+    );
+    $data['display_hook'] = xarMod::guiFunc(
+        'keywords',
+        'user',
+        'displayhook',
         array(
             'objectid' => $itemid,
             'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype, 'itemid' => $itemid, 'showlabel' => false, 'tpltype' => 'admin'),
-        ));
+        )
+    );
 
     return $data;
 }
-?>

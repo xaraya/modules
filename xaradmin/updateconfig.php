@@ -19,25 +19,29 @@
  */
 function keywords_admin_updateconfig()
 {
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
+    if (!xarSecurityCheck('AdminKeywords')) {
+        return;
+    }
 
-    if (!xarSecConfirmAuthKey()) return;
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    xarVarFetch('restricted', 'int:0:1', $restricted, 0);
+    xarVarFetch('useitemtype', 'int:0:1', $useitemtype, 0);
+    xarVarFetch('keywords', 'isset', $keywords, '', XARVAR_DONT_SET);
+    xarVarFetch('isalias', 'isset', $isalias, '', XARVAR_DONT_SET);
+    xarVarFetch('showsort', 'isset', $showsort, '', XARVAR_DONT_SET);
+    xarVarFetch('displaycolumns', 'isset', $displaycolumns, '', XARVAR_DONT_SET);
+    xarVarFetch('delimiters', 'isset', $delimiters, '', XARVAR_DONT_SET);
 
-    xarVarFetch('restricted','int:0:1',$restricted, 0);
-    xarVarFetch('useitemtype','int:0:1',$useitemtype, 0);
-    xarVarFetch('keywords','isset',$keywords,'', XARVAR_DONT_SET);
-    xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
-    xarVarFetch('showsort','isset',$showsort,'', XARVAR_DONT_SET);
-    xarVarFetch('displaycolumns','isset',$displaycolumns,'', XARVAR_DONT_SET);
-    xarVarFetch('delimiters','isset',$delimiters,'', XARVAR_DONT_SET);
-
-    xarModVars::set('keywords','restricted',$restricted);
-    xarModVars::set('keywords','useitemtype',$useitemtype);
+    xarModVars::set('keywords', 'restricted', $restricted);
+    xarModVars::set('keywords', 'useitemtype', $useitemtype);
 
     if (isset($keywords) && is_array($keywords)) {
-        xarMod::apiFunc('keywords',
-                      'admin',
-                      'resetlimited'
+        xarMod::apiFunc(
+            'keywords',
+            'admin',
+            'resetlimited'
         );
         foreach ($keywords as $modname => $value) {
             if ($modname == 'default.0' || $modname == 'default') {
@@ -45,7 +49,7 @@ function keywords_admin_updateconfig()
                 $itemtype = '0';
             } else {
                 $moduleitem = explode(".", $modname);
-                $moduleid = xarModGetIDFromName($moduleitem[0],'module');
+                $moduleid = xarModGetIDFromName($moduleitem[0], 'module');
                 if (isset($moduleitem[1]) && is_numeric($moduleitem[1])) {
                     $itemtype = $moduleitem[1];
                 } else {
@@ -53,8 +57,11 @@ function keywords_admin_updateconfig()
                 }
             }
             if ($value <> '') {
-                xarMod::apiFunc('keywords', 'admin', 'limited',
-                              array('moduleid' => $moduleid,
+                xarMod::apiFunc(
+                    'keywords',
+                    'admin',
+                    'limited',
+                    array('moduleid' => $moduleid,
                                     'keyword'  => $value,
                                     'itemtype' => $itemtype)
                 );
@@ -62,30 +69,30 @@ function keywords_admin_updateconfig()
         }
     }
     if (empty($isalias)) {
-        xarModVars::set('keywords','SupportShortURLs',0);
+        xarModVars::set('keywords', 'SupportShortURLs', 0);
     } else {
-        xarModVars::set('keywords','SupportShortURLs',1);
+        xarModVars::set('keywords', 'SupportShortURLs', 1);
     }
     if (empty($showsort)) {
-        xarModVars::set('keywords','showsort',0);
+        xarModVars::set('keywords', 'showsort', 0);
     } else {
-        xarModVars::set('keywords','showsort',1);
+        xarModVars::set('keywords', 'showsort', 1);
     }
     if (empty($displaycolumns)) {
-        xarModVars::set('keywords','displaycolumns',2);
+        xarModVars::set('keywords', 'displaycolumns', 2);
     } else {
-        xarModVars::set('keywords','displaycolumns',$displaycolumns);
+        xarModVars::set('keywords', 'displaycolumns', $displaycolumns);
     }
     if (isset($delimiters)) {
-        xarModVars::set('keywords','delimiters',trim($delimiters));
+        xarModVars::set('keywords', 'delimiters', trim($delimiters));
     }
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'keywords'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'keywords'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
     $data['module_settings']->getItem();
 
     $isvalid = $data['module_settings']->checkInput();
     if (!$isvalid) {
-        return xarTpl::module('keywords','admin','modifyconfig', $data);
+        return xarTpl::module('keywords', 'admin', 'modifyconfig', $data);
     } else {
         $itemid = $data['module_settings']->updateItem();
     }
@@ -93,4 +100,3 @@ function keywords_admin_updateconfig()
     xarController::redirect(xarModURL('keywords', 'admin', 'modifyconfig'));
     return true;
 }
-?>

@@ -20,7 +20,9 @@
  */
 function keywords_userapi_getlist($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
     extract($args);
 
@@ -28,30 +30,30 @@ function keywords_userapi_getlist($args)
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
 
-    if (!isset($tab)){
+    if (!isset($tab)) {
         $tab='0';
     }
 
-    if ($tab == '0'){
+    if ($tab == '0') {
         $where = null;
-    } elseif ($tab == '1'){
+    } elseif ($tab == '1') {
         $where = " WHERE ("
         ."'A' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'F')";
-    } elseif ($tab == '2'){
-           $where = " WHERE ("
+    } elseif ($tab == '2') {
+        $where = " WHERE ("
         ."'G' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'L')";
-    } elseif ($tab == '3'){
-           $where = " WHERE ("
+    } elseif ($tab == '3') {
+        $where = " WHERE ("
         ."'M' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'R')";
-    } elseif ($tab == '4'){
-           $where = " WHERE ("
+    } elseif ($tab == '4') {
+        $where = " WHERE ("
         ."'S' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'Z')";
-    } elseif ($tab == '5'){
-          $where = " WHERE ("
+    } elseif ($tab == '5') {
+        $where = " WHERE ("
         .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) < 'A' OR "
         .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) > 'Z')";
     }
@@ -64,7 +66,9 @@ function keywords_userapi_getlist($args)
                   GROUP BY keyword
                   ORDER BY keyword ASC";
         $result =& $dbconn->Execute($query);
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
         $items = array();
         if ($result->EOF) {
@@ -72,7 +76,7 @@ function keywords_userapi_getlist($args)
             return $items;
         }
         while (!$result->EOF) {
-            list($word,$count) = $result->fields;
+            list($word, $count) = $result->fields;
             $items[$word] = $count;
             $result->MoveNext();
         }
@@ -85,7 +89,9 @@ function keywords_userapi_getlist($args)
               FROM $keywordstable  $where
               ORDER BY keyword ASC";
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $items = array();
     $items[''] = '';
@@ -101,5 +107,3 @@ function keywords_userapi_getlist($args)
     $result->Close();
     return $items;
 }
-
-?>

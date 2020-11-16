@@ -1,22 +1,28 @@
 <?php
-function keywords_indexapi_createitem(Array $args=array())
+function keywords_indexapi_createitem(array $args=array())
 {
     extract($args);
 
-    if (!empty($module))
+    if (!empty($module)) {
         $module_id = xarMod::getId($module);
-    if (empty($module_id) || !is_numeric($module_id))
+    }
+    if (empty($module_id) || !is_numeric($module_id)) {
         $invalid[] = 'module_id';
+    }
 
-    if (empty($itemtype))
+    if (empty($itemtype)) {
         $itemtype = 0;
-    if (!is_numeric($itemtype))
+    }
+    if (!is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
+    }
 
-    if (empty($itemid))
+    if (empty($itemid)) {
         $itemid = 0;
-    if (!is_numeric($itemid))
+    }
+    if (!is_numeric($itemid)) {
         $invalid[] = 'itemid';
+    }
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
@@ -24,12 +30,18 @@ function keywords_indexapi_createitem(Array $args=array())
         throw new BadParameterException($vars, $msg);
     }
 
-    if ($item = xarMod::apiFunc('keywords', 'index', 'getitem',
+    if ($item = xarMod::apiFunc(
+        'keywords',
+        'index',
+        'getitem',
         array(
             'module_id' => $module_id,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        ))) return $item;
+        )
+    )) {
+        return $item;
+    }
 
     $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
@@ -52,7 +64,9 @@ function keywords_indexapi_createitem(Array $args=array())
         throw $e;
     }
 
-    if (empty($id)) return;
+    if (empty($id)) {
+        return;
+    }
     // return item to caller (saves a further getitem call)
     $item = array(
         'id' => $id,
@@ -63,4 +77,3 @@ function keywords_indexapi_createitem(Array $args=array())
 
     return $item;
 }
-?>

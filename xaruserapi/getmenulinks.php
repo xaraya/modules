@@ -22,4 +22,3 @@ function keywords_userapi_getmenulinks()
 
     return $menulinks;
 }
-?>

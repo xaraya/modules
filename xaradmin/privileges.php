@@ -19,28 +19,60 @@
 function keywords_admin_privileges($args)
 {
     // Security Check
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('AdminKeywords')) {
+        return;
+    }
 
     extract($args);
 
-    if (!xarVarFetch('moduleid',     'id', $moduleid,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('itemtype',     'int:1:', $itemtype,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('itemid',       'id', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('pparentid',    'isset', $pparentid,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('moduleid', 'id', $moduleid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'id', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('apply', 'isset', $apply, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extpid', 'isset', $extpid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extname', 'isset', $extname, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extrealm', 'isset', $extrealm, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extmodule', 'isset', $extmodule, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extinstance', 'isset', $extinstance, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('extlevel', 'isset', $extlevel, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('pparentid', 'isset', $pparentid, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     if (!empty($extinstance)) {
-        $parts = explode(':',$extinstance);
-        if (count($parts) > 0 && !empty($parts[0])) $moduleid = $parts[0];
-        if (count($parts) > 1 && !empty($parts[1])) $itemtype = $parts[1];
-        if (count($parts) > 2 && !empty($parts[2])) $itemid = $parts[2];
+        $parts = explode(':', $extinstance);
+        if (count($parts) > 0 && !empty($parts[0])) {
+            $moduleid = $parts[0];
+        }
+        if (count($parts) > 1 && !empty($parts[1])) {
+            $itemtype = $parts[1];
+        }
+        if (count($parts) > 2 && !empty($parts[2])) {
+            $itemid = $parts[2];
+        }
     }
 
     if (empty($moduleid) || $moduleid == 'All' || !is_numeric($moduleid)) {
@@ -75,28 +107,40 @@ function keywords_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,
-                                  $newinstance,$extlevel,$pparentid);
+        $pid = xarReturnPrivilege(
+            $extpid,
+            $extname,
+            $extrealm,
+            $extmodule,
+            $extcomponent,
+            $newinstance,
+            $extlevel,
+            $pparentid
+        );
         if (empty($pid)) {
             return; // throw back
         }
 
         // redirect to the privilege
-        xarController::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
-                                      array('id' => $pid)));
+        xarController::redirect(xarModURL(
+            'privileges',
+            'admin',
+            'modifyprivilege',
+            array('id' => $pid)
+        ));
         return true;
     }
 
-/*
-    if (!empty($moduleid)) {
-        $numitems = xarMod::apiFunc('categories','user','countitems',
-                                  array('modid' => $moduleid,
-                                        'cids'  => (empty($cid) ? null : array($cid))
-                                       ));
-    } else {
-        $numitems = xarML('probably');
-    }
-*/
+    /*
+        if (!empty($moduleid)) {
+            $numitems = xarMod::apiFunc('categories','user','countitems',
+                                      array('modid' => $moduleid,
+                                            'cids'  => (empty($cid) ? null : array($cid))
+                                           ));
+        } else {
+            $numitems = xarML('probably');
+        }
+    */
     $numitems = xarML('probably');
 
     $extlevels = array(
@@ -122,7 +166,7 @@ function keywords_admin_privileges($args)
                   'extlevel'     => $extlevel,
                   'extlevels'    => $extlevels,
                   'pparentid'    => $pparentid,
-                  'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                  'extinstance'  => xarVarPrepForDisplay(join(':', $newinstance)),
                  );
 
     $data['refreshlabel'] = xarML('Refresh');
@@ -133,16 +177,24 @@ function keywords_admin_privileges($args)
 
 
     // Get the list of all modules currently hooked to categories
-    $hookedmodlist = xarMod::apiFunc('modules','admin','gethookedmodules',
-                                   array('hookModName' => 'keywords'));
+    $hookedmodlist = xarMod::apiFunc(
+        'modules',
+        'admin',
+        'gethookedmodules',
+        array('hookModName' => 'keywords')
+    );
     if (!isset($hookedmodlist)) {
         $hookedmodlist = array();
     }
     $modlist = array();
     foreach ($hookedmodlist as $modname => $val) {
-        if (empty($modname)) continue;
+        if (empty($modname)) {
+            continue;
+        }
         $modid = xarModGetIDFromName($modname);
-        if (empty($modid)) continue;
+        if (empty($modid)) {
+            continue;
+        }
         $modinfo = xarModGetInfo($modid);
         $modlist[$modid] = $modinfo['displayname'];
     }
@@ -157,27 +209,31 @@ function keywords_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        $pid = xarReturnPrivilege($extpid, $extname, $extrealm, $extmodule, $extcomponent, $newinstance, $extlevel);
         if (empty($pid)) {
             return; // throw back
         }
 
         // redirect to the privilege
-        xarController::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
-                                      array('pid' => $pid)));
+        xarController::redirect(xarModURL(
+            'privileges',
+            'admin',
+            'modifyprivilege',
+            array('pid' => $pid)
+        ));
         return true;
     }
 
-/*
-    if (!empty($moduleid)) {
-        $numitems = xarMod::apiFunc('categories','user','countitems',
-                                  array('modid' => $moduleid,
-                                        'cids'  => (empty($cid) ? null : array($cid))
-                                       ));
-    } else {
-        $numitems = xarML('probably');
-    }
-*/
+    /*
+        if (!empty($moduleid)) {
+            $numitems = xarMod::apiFunc('categories','user','countitems',
+                                      array('modid' => $moduleid,
+                                            'cids'  => (empty($cid) ? null : array($cid))
+                                           ));
+        } else {
+            $numitems = xarML('probably');
+        }
+    */
     $numitems = xarML('probably');
 
     $data = array(
@@ -192,7 +248,7 @@ function keywords_admin_privileges($args)
                   'extmodule'    => $extmodule,
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
-                  'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                  'extinstance'  => xarVarPrepForDisplay(join(':', $newinstance)),
                  );
 
     $data['refreshlabel'] = xarML('Refresh');
@@ -200,5 +256,3 @@ function keywords_admin_privileges($args)
 
     return $data;
 }
-
-?>

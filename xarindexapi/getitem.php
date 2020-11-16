@@ -1,5 +1,5 @@
 <?php
-function keywords_indexapi_getitem(Array $args=array())
+function keywords_indexapi_getitem(array $args=array())
 {
     if (empty($args)) {
         $msg = 'Missing #(1) for #(2) module #(3) function #(4)()';
@@ -19,4 +19,3 @@ function keywords_indexapi_getitem(Array $args=array())
         return reset($items);
     }
 }
-?>

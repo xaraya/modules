@@ -28,5 +28,3 @@ if (false) {
     xarML('Keywords');
     xarML('Assign keywords to module items (taxonomy) and look up items by keyword');
 }
-
-?>

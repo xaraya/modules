@@ -24,8 +24,9 @@ function keywords_adminapi_deletehook($args)
 {
     extract($args);
 
-    if (empty($extrainfo))
+    if (empty($extrainfo)) {
         $extrainfo = array();
+    }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -60,25 +61,40 @@ function keywords_adminapi_deletehook($args)
     }
 
     // get the index_id for this module/itemtype/item
-    $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
+    $index_id = xarMod::apiFunc(
+        'keywords',
+        'index',
+        'getid',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        ));
+        )
+    );
 
     // delete all keywords associated with this item
-    if (!xarMod::apiFunc('keywords', 'words', 'deleteitems',
+    if (!xarMod::apiFunc(
+        'keywords',
+        'words',
+        'deleteitems',
         array(
             'index_id' => $index_id,
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     // delete the index
-    if (!xarMod::apiFunc('keywords', 'index', 'deleteitem',
+    if (!xarMod::apiFunc(
+        'keywords',
+        'index',
+        'deleteitem',
         array(
             'id' => $index_id,
-        ))) return;
+        )
+    )) {
+        return;
+    }
 
     return $extrainfo;
 }
-?>

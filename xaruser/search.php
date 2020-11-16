@@ -17,17 +17,26 @@
  */
 function keywords_user_search($args)
 {
-if (!xarSecurityCheck('ReadKeywords',0)) return '';
+    if (!xarSecurityCheck('ReadKeywords', 0)) {
+        return '';
+    }
 
-    if(!xarVarFetch('search',   'isset', $data['search'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bool',     'isset', $bool,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,           NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('search', 'isset', $data['search'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('bool', 'isset', $bool, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $data['keys'] = array();
-    if($data['search'] == '') return $data;
+    if ($data['search'] == '') {
+        return $data;
+    }
 
     $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', array('search' => $data['search']));
 
-   return $data;
+    return $data;
 }
-?>

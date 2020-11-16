@@ -26,8 +26,12 @@ class KeywordsConfig extends ObjectDescriptor
     
     public function __wakeup()
     {
-        $this->index_id = xarMod::apiFunc('keywords', 'index', 'getid', 
-            array('module' => $this->module, 'itemtype' => $this->itemtype));
+        $this->index_id = xarMod::apiFunc(
+            'keywords',
+            'index',
+            'getid',
+            array('module' => $this->module, 'itemtype' => $this->itemtype)
+        );
     }
     
     public function __sleep()
@@ -35,4 +39,3 @@ class KeywordsConfig extends ObjectDescriptor
         return array_keys($this->getPublicProperties());
     }
 }
-?>

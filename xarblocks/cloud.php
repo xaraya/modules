@@ -41,15 +41,18 @@ class Keywords_CloudBlock extends BasicBlock
 
     public function init()
     {
-        if (empty($this->font_min))
+        if (empty($this->font_min)) {
             $this->font_min = xarModVars::get('keywords', 'cloud_font_min', 1);
-        if (empty($this->font_max))
+        }
+        if (empty($this->font_max)) {
             $this->font_max = xarModVars::get('keywords', 'cloud_font_max', 3);
-        if (empty($this->font_unit))
+        }
+        if (empty($this->font_unit)) {
             $this->font_unit = xarModVars::get('keywords', 'cloud_font_unit', 'em');
+        }
     }
 
-    function display()
+    public function display()
     {
         $vars = $this->getContent();
         $vars['tags'] = array();
@@ -58,11 +61,9 @@ class Keywords_CloudBlock extends BasicBlock
             break;
             case 2:
             case 3:
-                $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $vars['cloudtype']));
+                $vars['tags'] = xarMod::apiFunc('keywords', 'user', 'getkeywordhits', array('cloudtype' => $vars['cloudtype']));
             break;
         }
         return $vars;
     }
-
 }
-?>

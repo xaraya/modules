@@ -1,10 +1,11 @@
 <?php
-function keywords_hooksapi_getsubjects(Array $args=array())
+function keywords_hooksapi_getsubjects(array $args=array())
 {
     extract($args);
 
-    if (!isset($module) || empty($module))
+    if (!isset($module) || empty($module)) {
         $module = null;
+    }
 
     $subjects = xarHooks::getObserverSubjects('keywords', $module);
     if (!empty($subjects)) {
@@ -17,7 +18,9 @@ function keywords_hooksapi_getsubjects(Array $args=array())
             }
             $modinfo['itemtypes'] = array();
             foreach ($itemtypes as $typeid => $typeinfo) {
-                if (!isset($hooks[0]) && !isset($hooks[$typeid])) continue; // not hooked
+                if (!isset($hooks[0]) && !isset($hooks[$typeid])) {
+                    continue;
+                } // not hooked
                 $modinfo['itemtypes'][$typeid] = $typeinfo;
             }
             $subjects[$hookedto] += $modinfo;
@@ -26,4 +29,3 @@ function keywords_hooksapi_getsubjects(Array $args=array())
     }
     return $subjects;
 }
-?>

@@ -29,7 +29,9 @@ function keywords_adminapi_getallkey($args)
         return;
     }
 
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('AdminKeywords')) {
+        return;
+    }
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
@@ -40,8 +42,10 @@ function keywords_adminapi_getallkey($args)
               WHERE module_id = ?
               OR module_id = '0'
               ORDER BY keyword ASC";
-    $result =& $dbconn->Execute($query,array($moduleid));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($moduleid));
+    if (!$result) {
+        return;
+    }
 
     $keywords = array();
 
@@ -60,4 +64,3 @@ function keywords_adminapi_getallkey($args)
     $result->Close();
     return $keywords;
 }
-?>

@@ -21,16 +21,26 @@
  */
 function keywords_userapi_getwordslimited($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
     extract($args);
 
     if (!isset($moduleid) || !is_numeric($moduleid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module id', 'user', 'getwordslimited', 'keywords');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module id',
+            'user',
+            'getwordslimited',
+            'keywords'
+        );
 
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        xarErrorSet(
+            XAR_USER_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
 
@@ -42,23 +52,25 @@ function keywords_userapi_getwordslimited($args)
 
     // Get restricted keywords for this module item
 
-    $useitemtype = xarModVars::get('keywords','useitemtype');
+    $useitemtype = xarModVars::get('keywords', 'useitemtype');
 
     $query = "SELECT id,
                      keyword
              FROM $keywordstable ";
     if (!empty($useitemtype) && isset($itemtype)) {
-          $query .= " WHERE module_id = '0' OR ( module_id= ? AND  itemtype = ? ) ORDER BY keyword ASC";
-          $bindvars[] = $moduleid;
-          $bindvars[] = $itemtype;
-       } else {
-          $query .= " WHERE module_id = '0' OR  module_id= ? ORDER BY keyword ASC";
-          $bindvars[] = $moduleid;
+        $query .= " WHERE module_id = '0' OR ( module_id= ? AND  itemtype = ? ) ORDER BY keyword ASC";
+        $bindvars[] = $moduleid;
+        $bindvars[] = $itemtype;
+    } else {
+        $query .= " WHERE module_id = '0' OR  module_id= ? ORDER BY keyword ASC";
+        $bindvars[] = $moduleid;
     }
 
 
-    $result =& $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
     if ($result->EOF) {
         $result->Close();
     }
@@ -75,6 +87,3 @@ function keywords_userapi_getwordslimited($args)
 
     return $keywords;
 }
-
-
-?>

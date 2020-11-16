@@ -40,7 +40,7 @@ function keywords_userapi_encode_shorturl($args)
             unset($get['tab']);
         } elseif (!empty($keyword)) {
             $path[] = $keyword;
-             unset($get['keyword']);
+            unset($get['keyword']);
             if (!empty($id)) {
                 $path[] = $id;
                 unset($getp['id']);
@@ -53,5 +53,3 @@ function keywords_userapi_encode_shorturl($args)
     }
     return array('path'=>$path,'get'=>$get);
 }
-
-?>

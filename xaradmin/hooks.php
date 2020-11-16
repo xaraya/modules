@@ -18,12 +18,13 @@
  * @return array data for the template display
  *
  */
-function keywords_admin_hooks(Array $args=array())
+function keywords_admin_hooks(array $args=array())
 {
     // Security
-    if(!xarSecurityCheck('ManageKeywords')) return;
+    if (!xarSecurityCheck('ManageKeywords')) {
+        return;
+    }
 
     $data = array();
     return $data;
 }
-?>

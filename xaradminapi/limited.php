@@ -18,7 +18,9 @@
 function keywords_adminapi_limited($args)
 {
     extract($args);
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('AdminKeywords')) {
+        return;
+    }
     $invalid = array();
     if (!isset($moduleid) || !is_numeric($moduleid)) {
         $invalid[] = 'moduleid';
@@ -30,26 +32,36 @@ function keywords_adminapi_limited($args)
         $invalid[] = 'itemtype';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'update limited', 'Keywords');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'admin',
+            'update limited',
+            'Keywords'
+        );
+        xarErrorSet(
+            XAR_SYSTEM_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
 
-    $key = xarMod::apiFunc('keywords',
-                         'admin',
-                         'separatekeywords',
-                          array('keywords' => $keyword));
+    $key = xarMod::apiFunc(
+        'keywords',
+        'admin',
+        'separatekeywords',
+        array('keywords' => $keyword)
+    );
 
     foreach ($key as $keyres) {
-    $keyres = trim($keyres);
+        $keyres = trim($keyres);
 
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $keywordstable = $xartable['keywords_restr'];
-    $nextId = $dbconn->GenId($keywordstable);
-    $query = "INSERT INTO $keywordstable (
+        $dbconn = xarDB::getConn();
+        $xartable =& xarDB::getTables();
+        $keywordstable = $xartable['keywords_restr'];
+        $nextId = $dbconn->GenId($keywordstable);
+        $query = "INSERT INTO $keywordstable (
               id,
               keyword,
               module_id,
@@ -59,9 +71,10 @@ function keywords_adminapi_limited($args)
               ?,
               ?,
               ?)";
-    $result =& $dbconn->Execute($query,array($nextId, $keyres, $moduleid, $itemtype));
-    if (!$result) return;
+        $result =& $dbconn->Execute($query, array($nextId, $keyres, $moduleid, $itemtype));
+        if (!$result) {
+            return;
+        }
     }
     return;
 }
-?>

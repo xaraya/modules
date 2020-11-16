@@ -16,12 +16,18 @@
  */
 function keywords_userapi_search($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
-    if (empty($args) || count($args) < 1)  return;
+    if (empty($args) || count($args) < 1) {
+        return;
+    }
 
     extract($args);
-    if($args['search'] == '') return;
+    if ($args['search'] == '') {
+        return;
+    }
     
     // If there is more than one keyword passed, separate them
     $words = xarMod::apiFunc('keywords', 'admin', 'separatekeywords', array('keywords' => $args['search']));
@@ -44,12 +50,10 @@ function keywords_userapi_search($args)
     }
     $q->qor($a);
     $q->setgroup('keyword');
-    $q->addorder('keyword','ASC');
+    $q->addorder('keyword', 'ASC');
     $q->optimize = false;
     $q->run();
     $result = $q->output();
 
     return $result;
-
 }
-?>

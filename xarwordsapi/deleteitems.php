@@ -1,22 +1,27 @@
 <?php
-function keywords_wordsapi_deleteitems(Array $args=array())
+function keywords_wordsapi_deleteitems(array $args=array())
 {
     extract($args);
 
     if (isset($index_id)) {
         // deleting some words by index_id
-        if (empty($index_id) || !is_numeric($index_id))
+        if (empty($index_id) || !is_numeric($index_id)) {
             $invalid[] = 'index_id';
+        }
     } elseif (isset($module) || isset($module_id)) {
         // deleting some words by module_id (+ itemtype) (+ itemid)
-        if (!empty($module))
+        if (!empty($module)) {
             $module_id = xarMod::getRegId($module);
-        if (empty($module_id) || !is_numeric($module_id))
+        }
+        if (empty($module_id) || !is_numeric($module_id)) {
             $invalid[] = 'module_id';
-        if (isset($itemtype) && !is_numeric($itemtype))
+        }
+        if (isset($itemtype) && !is_numeric($itemtype)) {
             $invalid[] = 'itemtype';
-        if (isset($itemid) && !is_numeric($itemid))
+        }
+        if (isset($itemid) && !is_numeric($itemid)) {
             $invalid[] = 'itemid';
+        }
     } elseif (!empty($keyword)) {
         // deleting some words
     } else {
@@ -26,11 +31,16 @@ function keywords_wordsapi_deleteitems(Array $args=array())
 
     // we may have been given a list of words to delete
     if (isset($keyword)) {
-        if (is_string($keyword))
-            $keyword = xarMod::apiFunc('keywords','admin','separatekeywords',
+        if (is_string($keyword)) {
+            $keyword = xarMod::apiFunc(
+                'keywords',
+                'admin',
+                'separatekeywords',
                 array(
                     'keywords' => $keyword,
-                ));
+                )
+            );
+        }
         if (is_array($keyword)) {
             foreach ($keyword as $dt) {
                 if (!is_string($dt)) {
@@ -103,6 +113,4 @@ function keywords_wordsapi_deleteitems(Array $args=array())
     }
 
     return true;
-
 }
-?>

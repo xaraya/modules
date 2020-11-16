@@ -18,17 +18,17 @@
 function keywords_user_main($args=array())
 {
     // Xaraya security
-    if(!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) {
+        return;
+    }
 
-    $redirect = xarModVars::get('keywords','frontend_page');
+    $redirect = xarModVars::get('keywords', 'frontend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
         xarController::redirect(xarModURL('keywords', 'user', 'view', $args));
     }
     return true;
 }
-
-?>

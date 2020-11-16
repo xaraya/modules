@@ -33,20 +33,18 @@ class Keywords_SearchBlock extends BasicBlock
     public $module_id           = 27;
     public $itemtype            = 1;
 
-/*    function display()
-    {
-        $vars = $this->getContent();
-        $vars['tags'] = array();
-        switch ($vars['cloudtype']) {
-            case 1:
-            break;
-            case 2:
-            case 3:
-                $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $vars['cloudtype']));
-            break;
-        }
-        return $vars;
-    }*/
-
+    /*    function display()
+        {
+            $vars = $this->getContent();
+            $vars['tags'] = array();
+            switch ($vars['cloudtype']) {
+                case 1:
+                break;
+                case 2:
+                case 3:
+                    $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $vars['cloudtype']));
+                break;
+            }
+            return $vars;
+        }*/
 }
-?>

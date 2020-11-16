@@ -26,12 +26,14 @@ function keywords_init()
         $q = new Query();
         $prefix = xarDB::getPrefix();
 
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
-# Table structures
+        # Table structures
 #
         $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords_index";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_keywords_index (
           id                integer unsigned NOT NULL auto_increment,
           module_id         integer unsigned NOT NULL default 0,
@@ -42,10 +44,14 @@ function keywords_init()
           UNIQUE KEY `i_xar_keywords_index` (`module_id`,`itemtype`,`itemid`,`keyword_id`),
           KEY `keyword_id` (`keyword_id`)
         )";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords";
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         $query = "CREATE TABLE " . $prefix . "_keywords (
           id                integer unsigned NOT NULL auto_increment,
           index_id          integer unsigned NOT NULL default 0,
@@ -54,63 +60,70 @@ function keywords_init()
           UNIQUE KEY `keyword` (`keyword`),
           KEY `index_id` (`index_id`)
         )";
-        if (!$q->run($query)) return;
-
+        if (!$q->run($query)) {
+            return;
+        }
     } catch (Exception $e) {
         throw new Exception(xarML('Could not create module tables'));
     }
 
-/*********************************************************************
- * Set up Module Vars (common configuration)
- *********************************************************************/
+    /*********************************************************************
+     * Set up Module Vars (common configuration)
+     *********************************************************************/
 
-    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => $module));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => $module));
     $module_settings->initialize();
 
 
-/*********************************************************************
- * Set Module Vars (module configuration)
- *********************************************************************/
+    /*********************************************************************
+     * Set Module Vars (module configuration)
+     *********************************************************************/
 
-    xarModVars::set($module, 'delimiters',       ',;');
-    xarModVars::set($module, 'stats_per_page',   100);
-    xarModVars::set($module, 'items_per_page',   20);
-    xarModVars::set($module, 'user_layout',      'list');
-    xarModVars::set($module, 'cols_per_page',    2);
-    xarModVars::set($module, 'words_per_page',   50);
-    xarModVars::set($module, 'cloud_font_min',   1);
-    xarModVars::set($module, 'cloud_font_max',   3);
-    xarModVars::set($module, 'cloud_font_unit',  'em');
+    xarModVars::set($module, 'delimiters', ',;');
+    xarModVars::set($module, 'stats_per_page', 100);
+    xarModVars::set($module, 'items_per_page', 20);
+    xarModVars::set($module, 'user_layout', 'list');
+    xarModVars::set($module, 'cols_per_page', 2);
+    xarModVars::set($module, 'words_per_page', 50);
+    xarModVars::set($module, 'cloud_font_min', 1);
+    xarModVars::set($module, 'cloud_font_max', 3);
+    xarModVars::set($module, 'cloud_font_unit', 'em');
     xarModVars::set($module, 'use_module_icons', true);
 
-/*********************************************************************
- * Create Module DD Objects
- *********************************************************************/
+    /*********************************************************************
+     * Create Module DD Objects
+     *********************************************************************/
 
     $objects = array('keywords_keywords');
-    if(!xarMod::apiFunc('modules','admin','standardinstall',
-        array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc(
+        'modules',
+        'admin',
+        'standardinstall',
+        array('module' => $module, 'objects' => $objects)
+    )) {
+        return;
+    }
 
-/*********************************************************************
- * Register Module Hook Observers
- *********************************************************************/
+    /*********************************************************************
+     * Register Module Hook Observers
+     *********************************************************************/
 
-    xarHooks::registerObserver('ItemNew',            $module, 'gui', 'admin', 'newhook');
-    xarHooks::registerObserver('ItemCreate',         $module, 'api', 'admin', 'createhook');
-    xarHooks::registerObserver('ItemDisplay',        $module, 'gui', 'user',  'displayhook');
-    xarHooks::registerObserver('ItemModify',         $module, 'gui', 'admin', 'modifyhook');
-    xarHooks::registerObserver('ItemUpdate',         $module, 'api', 'admin', 'updatehook');
-    xarHooks::registerObserver('ItemDelete',         $module, 'api', 'admin', 'deletehook');
+    xarHooks::registerObserver('ItemNew', $module, 'gui', 'admin', 'newhook');
+    xarHooks::registerObserver('ItemCreate', $module, 'api', 'admin', 'createhook');
+    xarHooks::registerObserver('ItemDisplay', $module, 'gui', 'user', 'displayhook');
+    xarHooks::registerObserver('ItemModify', $module, 'gui', 'admin', 'modifyhook');
+    xarHooks::registerObserver('ItemUpdate', $module, 'api', 'admin', 'updatehook');
+    xarHooks::registerObserver('ItemDelete', $module, 'api', 'admin', 'deletehook');
 
-    xarHooks::registerObserver('ItemSearch',         $module, 'gui', 'user',  'search');
+    xarHooks::registerObserver('ItemSearch', $module, 'gui', 'user', 'search');
 
     xarHooks::registerObserver('ModuleModifyconfig', $module, 'gui', 'hooks', 'modulemodifyconfig');
     xarHooks::registerObserver('ModuleUpdateconfig', $module, 'api', 'hooks', 'moduleupdateconfig');
-    xarHooks::registerObserver('ModuleRemove',       $module, 'api', 'admin', 'removehook');
+    xarHooks::registerObserver('ModuleRemove', $module, 'api', 'admin', 'removehook');
 
-/*********************************************************************
- * Define Module Privilege Instances
- *********************************************************************/
+    /*********************************************************************
+     * Define Module Privilege Instances
+     *********************************************************************/
 
     // Defined Instances are: module_id, itemtype and itemid
     $instances = array(
@@ -122,17 +135,17 @@ function keywords_init()
     xarDefineInstance($module, 'Item', $instances);
 
 
-/*********************************************************************
- * Register Module Privilege Masks
- *********************************************************************/
+    /*********************************************************************
+     * Register Module Privilege Masks
+     *********************************************************************/
 
-// TODO: tweak this - allow viewing keywords of "your own items" someday ?
-// MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
-    xarRegisterMask('ReadKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddKeywords',    'All', $module, 'Item', 'All:All:All', 'ACCESS_COMMENT');
+    // TODO: tweak this - allow viewing keywords of "your own items" someday ?
+    // MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
+    xarRegisterMask('ReadKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('ManageKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminKeywords',  'All', $module, 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('AdminKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -159,8 +172,9 @@ function keywords_upgrade($oldversion)
 
                 $dbconn = xarDB::getConn();
                 $xartable =& xarDB::getTables();
-                $query = xarDBCreateTable($xartable['keywords_restr'],
-                             array('id'         => array('type'        => 'integer',
+                $query = xarDBCreateTable(
+                    $xartable['keywords_restr'],
+                    array('id'         => array('type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
                                                             'primary_key' => true),
@@ -172,19 +186,31 @@ function keywords_upgrade($oldversion)
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0')
-                                  ));
+                                  )
+                );
 
-                if (empty($query)) return; // throw back
+                if (empty($query)) {
+                    return;
+                } // throw back
 
                 // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
                 $result = $dbconn->Execute($query);
-                if (!$result) return;
-
-                if (!xarModRegisterHook('item', 'search', 'GUI',
-                        'keywords', 'user', 'search')) {
+                if (!$result) {
                     return;
                 }
 
+                if (!xarModRegisterHook(
+                    'item',
+                    'search',
+                    'GUI',
+                    'keywords',
+                    'user',
+                    'search'
+                )) {
+                    return;
+                }
+
+                // no break
         case '1.0.2':
             //Alter table restr to add itemtype
             // Get database information
@@ -192,36 +218,53 @@ function keywords_upgrade($oldversion)
             $xartable =& xarDB::getTables();
 
             // Add column 'itemtype' to table
-             $query = xarDBAlterTable($xartable['keywords_restr'],
-                                     array('command' => 'add',
+             $query = xarDBAlterTable(
+                 $xartable['keywords_restr'],
+                 array('command' => 'add',
                                            'field' => 'itemtype',
                                            'type' => 'integer',
                                            'null' => false,
-                                           'default' => '0'));
+                                           'default' => '0')
+             );
             $result = & $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Register blocks
-            if (!xarMod::apiFunc('blocks',
-                    'admin',
-                    'register_block_type',
-                    array('modName'  => 'keywords',
-                            'blockType'=> 'keywordsarticles'))) return;
-            if (!xarMod::apiFunc('blocks',
-                    'admin',
-                    'register_block_type',
-                    array('modName'  => 'keywords',
-                            'blockType'=> 'keywordscategories'))) return;
+            if (!xarMod::apiFunc(
+                'blocks',
+                'admin',
+                'register_block_type',
+                array('modName'  => 'keywords',
+                            'blockType'=> 'keywordsarticles')
+            )) {
+                return;
+            }
+            if (!xarMod::apiFunc(
+                'blocks',
+                'admin',
+                'register_block_type',
+                array('modName'  => 'keywords',
+                            'blockType'=> 'keywordscategories')
+            )) {
+                return;
+            }
 
+                            // no break
         case '1.0.3':
             xarModVars::set('keywords', 'useitemtype', 0);
 
+            // no break
         case '1.0.4':
             xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
 
+            // no break
         case '1.0.5':
             // upgrade to v2.0.0
-            if (!keywords_upgrade_200()) return;
+            if (!keywords_upgrade_200()) {
+                return;
+            }
 
             break;
     }
@@ -249,15 +292,19 @@ function keywords_delete()
     $q = new Query();
     // drop tables
     $query = "DROP TABLE IF EXISTS " . $indextable;
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "DROP TABLE IF EXISTS " . $keywordstable;
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
     // Remove Masks and Instances
     xarRemoveMasks('keywords');
     xarRemoveInstances('keywords');
 
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'keywords'));
 }
 
 function keywords_upgrade_200()
@@ -278,7 +325,9 @@ function keywords_upgrade_200()
         $q = new Query();
         // drop table
         $query = "DROP TABLE IF EXISTS " . $indextable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         //
         // CREATE TABLE {$prefix}_keywords_index (
         //   id         integer NOT NULL auto_increment,
@@ -305,11 +354,10 @@ function keywords_upgrade_200()
             'fields' => array('module_id', 'itemtype', 'itemid'),
             'unique' => true
         );
-        $query = xarDBCreateIndex($indextable,$index);
+        $query = xarDBCreateIndex($indextable, $index);
         $dbconn->Execute($query);
         // Let's commit this, since we're gonna do some other stuff
         $dbconn->commit();
-
     } catch (Exception $e) {
         $dbconn->rollback();
         throw $e;
@@ -347,7 +395,7 @@ function keywords_upgrade_200()
     // populate index table
     if (!empty($values)) {
         $insert = "INSERT INTO $indextable (module_id, itemtype, itemid)";
-        $insert .= " VALUES " . implode(',',$values);
+        $insert .= " VALUES " . implode(',', $values);
         try {
             $dbconn->begin();
             $stmt = $dbconn->prepareStatement($insert);
@@ -368,8 +416,9 @@ function keywords_upgrade_200()
     $keywords = array();
     while ($result->next()) {
         list($module_id, $itemtype, $itemid, $keyword) = $result->fields;
-        if (!isset($keywords[$keyword]))
+        if (!isset($keywords[$keyword])) {
             $keywords[$keyword] = array();
+        }
         $keywords[$keyword][] = array('module_id' => $module_id, 'itemtype' => $itemtype, 'itemid' => $itemid);
     }
     $result->close();
@@ -381,8 +430,9 @@ function keywords_upgrade_200()
     $result = $stmt->executeQuery(array());
     while ($result->next()) {
         list($module_id, $itemtype, $keyword) = $result->fields;
-        if (!isset($keywords[$keyword]))
+        if (!isset($keywords[$keyword])) {
             $keywords[$keyword] = array();
+        }
         $keywords[$keyword][] = array('module_id' => $module_id, 'itemtype' => $itemtype, 'itemid' => 0);
     }
     $result->close();
@@ -394,10 +444,14 @@ function keywords_upgrade_200()
         $q = new Query();
         // drop keywords table
         $query = "DROP TABLE IF EXISTS " . $keywordstable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         // drop keywords_restr table
         $query = "DROP TABLE IF EXISTS " . $restrtable;
-        if (!$q->run($query)) return;
+        if (!$q->run($query)) {
+            return;
+        }
         //
         // CREATE TABLE {$prefix}_keywords (
         //   id         integer NOT NULL auto_increment,
@@ -421,18 +475,17 @@ function keywords_upgrade_200()
             'fields' => array('keyword'),
             'unique' => false
         );
-        $query = xarDBCreateIndex($keywordstable,$index);
+        $query = xarDBCreateIndex($keywordstable, $index);
         $dbconn->Execute($query);
         $index = array(
             'name'   => 'i_'.$prefix.'_keywords_index_id',
             'fields' => array('index_id'),
             'unique' => false
         );
-        $query = xarDBCreateIndex($keywordstable,$index);
+        $query = xarDBCreateIndex($keywordstable, $index);
         $dbconn->Execute($query);
         // Let's commit this, since we're gonna do some other stuff
         $dbconn->commit();
-
     } catch (Exception $e) {
         $dbconn->rollback();
         throw $e;
@@ -448,10 +501,12 @@ function keywords_upgrade_200()
         // create hash table of index ids
         while ($result->next()) {
             list($id, $module_id, $itemtype, $itemid) = $result->fields;
-            if (!isset($indexes[$module_id]))
+            if (!isset($indexes[$module_id])) {
                 $indexes[$module_id] = array();
-            if (!isset($indexes[$module_id][$itemtype]))
+            }
+            if (!isset($indexes[$module_id][$itemtype])) {
                 $indexes[$module_id][$itemtype] = array();
+            }
             $indexes[$module_id][$itemtype][$itemid] = $id;
         }
         $result->close();
@@ -470,7 +525,7 @@ function keywords_upgrade_200()
         // populate keywords table
         if (!empty($values)) {
             $insert = "INSERT INTO $keywordstable (index_id, keyword)";
-            $insert .= " VALUES " . implode(',',$values);
+            $insert .= " VALUES " . implode(',', $values);
             try {
                 $dbconn->begin();
                 $stmt = $dbconn->prepareStatement($insert);
@@ -491,10 +546,14 @@ function keywords_upgrade_200()
         if (!empty($subjects)) {
             foreach (array_keys($subjects) as $hookedto) {
                 // get the modules default settings
-                $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+                $settings = xarMod::apiFunc(
+                    'keywords',
+                    'hooks',
+                    'getsettings',
                     array(
                         'module' => $hookedto,
-                    ));
+                    )
+                );
                 // set module default to restricted words
                 $settings['restrict_words'] = true;
                 if (!$useitemtype) {
@@ -504,34 +563,48 @@ function keywords_upgrade_200()
                     // per itemtype allowed, set restriction per itemtype
                     if (!empty($subjects[$hookedto]['itemtypes'])) {
                         foreach (array_keys($subjects[$hookedto]['itemtypes']) as $itemtype) {
-                            if (empty($itemtype)) continue;
-                            $typesettings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+                            if (empty($itemtype)) {
+                                continue;
+                            }
+                            $typesettings = xarMod::apiFunc(
+                                'keywords',
+                                'hooks',
+                                'getsettings',
                                 array(
                                     'module' => $hookedto,
                                     'itemtype' => $itemtype,
-                                ));
+                                )
+                            );
                             $typesettings['restrict_words'] = true;
-                            xarMod::apiFunc('keywords', 'hooks', 'updatesettings',
+                            xarMod::apiFunc(
+                                'keywords',
+                                'hooks',
+                                'updatesettings',
                                 array(
                                     'module' => $hookedto,
                                     'itemtype' => $itemtype,
                                     'settings' => $typesettings,
-                                ));
+                                )
+                            );
                         }
                     }
                 }
-                xarMod::apiFunc('keywords', 'hooks', 'updatesettings',
+                xarMod::apiFunc(
+                    'keywords',
+                    'hooks',
+                    'updatesettings',
                     array(
                         'module' => $hookedto,
                         'settings' => $settings,
-                    ));
+                    )
+                );
             }
         }
     }
     xarModVars::delete('keywords', 'restricted');
     xarModVars::delete('keywords', 'useitemtype');
 
-    $cols_per_page = xarModVars::get('keywords', 'displaycolumns',2);
+    $cols_per_page = xarModVars::get('keywords', 'displaycolumns', 2);
     xarModVars::delete('keywords', 'displaycolumns');
 
     // new modvars
@@ -550,5 +623,3 @@ function keywords_upgrade_200()
 
     return true;
 }
-
-?>

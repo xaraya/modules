@@ -1,22 +1,27 @@
 <?php
-function keywords_indexapi_deleteitems(Array $args=array())
+function keywords_indexapi_deleteitems(array $args=array())
 {
     extract($args);
 
     if (isset($id)) {
         // deleting item by id
-        if (empty($id) || !is_numeric($id))
+        if (empty($id) || !is_numeric($id)) {
             $invalid[] = 'id';
+        }
     } elseif (isset($module) || isset($module_id)) {
         // deleting some items by module_id (+ itemtype) (+ itemid)
-        if (!empty($module))
+        if (!empty($module)) {
             $module_id = xarMod::getRegId($module);
-        if (empty($module_id) || !is_numeric($module_id))
+        }
+        if (empty($module_id) || !is_numeric($module_id)) {
             $invalid[] = 'module_id';
-        if (isset($itemtype) && !is_numeric($itemtype))
+        }
+        if (isset($itemtype) && !is_numeric($itemtype)) {
             $invalid[] = 'itemtype';
-        if (isset($itemid) && !is_numeric($itemid))
+        }
+        if (isset($itemid) && !is_numeric($itemid)) {
             $invalid[] = 'itemid';
+        }
     } else {
         // trying to delete everything!
         $invalid[] = 'arguments';
@@ -63,4 +68,3 @@ function keywords_indexapi_deleteitems(Array $args=array())
     }
     return true;
 }
-?>
