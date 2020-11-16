@@ -16,18 +16,18 @@
  */
 function otp_admin_setup($args)
 {
-    if (!xarSecurityCheck('ManageOtp')) {
+    if (!xarSecurity::check('ManageOtp')) {
         return;
     }
     // Define which object will be shown
-    if (!xarVarFetch('algorithm', 'str', $algorithm, xarModVars::get('otp', 'algorithm'), XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('algorithm', 'str', $algorithm, xarModVars::get('otp', 'algorithm'), xarVar::DONT_SET)) {
         return;
     }
-//    if (!xarVarFetch('seed',      'str', $seed,      '', XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('input', 'str', $input, 'BoDe Hop JaKe Stow juT RAP', XARVAR_DONT_SET)) {
+//    if (!xarVar::fetch('seed',      'str', $seed,      '', xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('input', 'str', $input, 'BoDe Hop JaKe Stow juT RAP', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('seq', 'str', $seq, xarModVars::get('otp', 'sequence'), XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('seq', 'str', $seq, xarModVars::get('otp', 'sequence'), xarVar::DONT_SET)) {
         return;
     }
 

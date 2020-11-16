@@ -16,14 +16,14 @@
  */
 function otp_admin_view($args)
 {
-    if (!xarSecurityCheck('ManageOtp')) {
+    if (!xarSecurity::check('ManageOtp')) {
         return;
     }
 
     $modulename = 'otp';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
         return;
     }
     if (!empty($objectname)) {

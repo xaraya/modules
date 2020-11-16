@@ -13,17 +13,17 @@
 
 function otp_admin_delete()
 {
-    if (!xarSecurityCheck('ManageOtp')) {
+    if (!xarSecurity::check('ManageOtp')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str:1', $name, 'otp_otp', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, 'otp_otp', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -32,12 +32,12 @@ function otp_admin_delete()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'otp';
-    $data['authid'] = xarSecGenAuthKey('otp');
+    $data['authid'] = xarSec::genAuthKey('otp');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -45,7 +45,7 @@ function otp_admin_delete()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('otp', 'admin', 'view'));
+        xarController::redirect(xarController::URL('otp', 'admin', 'view'));
         return true;
     }
     return $data;

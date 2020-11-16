@@ -18,15 +18,15 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function otp_user_display()
 {
-    if (!xarSecurityCheck('ReadOtp')) {
+    if (!xarSecurity::check('ReadOtp')) {
         return;
     }
     xarTpl::setPageTitle('Display Otp');
 
-    if (!xarVarFetch('name', 'str', $name, 'otp_otp', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'otp_otp', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 

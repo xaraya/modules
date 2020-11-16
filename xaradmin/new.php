@@ -17,31 +17,31 @@
 
 function otp_admin_new()
 {
-    if (!xarSecurityCheck('AddOtp')) {
+    if (!xarSecurity::check('AddOtp')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'otp_otp', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'otp_otp', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['tplmodule'] = 'otp';
-    $data['authid'] = xarSecGenAuthKey('otp');
+    $data['authid'] = xarSec::genAuthKey('otp');
 
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -50,13 +50,13 @@ function otp_admin_new()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('otp', 'admin', 'new', $data);
+            return xarTpl::module('otp', 'admin', 'new', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('otp', 'admin', 'view'));
+            xarController::redirect(xarController::URL('otp', 'admin', 'view'));
             return true;
         }
     }

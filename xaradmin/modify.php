@@ -17,17 +17,17 @@
     
 function otp_admin_modify()
 {
-    if (!xarSecurityCheck('EditOtp')) {
+    if (!xarSecurity::check('EditOtp')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'otp_otp', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'otp_otp', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function otp_admin_modify()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'otp';
-    $data['authid'] = xarSecGenAuthKey('otp');
+    $data['authid'] = xarSec::genAuthKey('otp');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -50,13 +50,13 @@ function otp_admin_modify()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('otp', 'admin', 'modify', $data);
+            return xarTpl::module('otp', 'admin', 'modify', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('otp', 'admin', 'view'));
+            xarController::redirect(xarController::URL('otp', 'admin', 'view'));
             return true;
         }
     }
