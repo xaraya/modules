@@ -36,26 +36,32 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addfield('e.id AS event_id');           // The ID of the event
     $q->addfield('s.groupid AS groupid');       // The ID of a group of recipients
     $q->addfield('s.userid AS userid');         // The ID of a specific user
-    $q->addfield('s.email AS email');           // The 
+    $q->addfield('s.email AS email');           // The
     // Only want pending jobs
-    $q->eq('e.state',3);
-    $q->eq('p.state',2);
+    $q->eq('e.state', 3);
+    $q->eq('p.state', 2);
 //    $q->qecho();
     $q->run();
 
     $pendings = $q->output();
     // Bail if nothing to do
-    if (empty($pendings)) return 0;
+    if (empty($pendings)) {
+        return 0;
+    }
 
     $recipients = array();
     foreach ($pendings as $row) {
         // Add a cc email if there is one
         // Add a default name as we have no other
-        if (!empty($row['email'])) $recipients[$row['event_id']][$row['email']] = xarML('Subscriber');
+        if (!empty($row['email'])) {
+            $recipients[$row['event_id']][$row['email']] = xarML('Subscriber');
+        }
         // Add a user if one was passed
         $user_id = (int)$row['userid'];
         $user = xarMod::apiFunc('roles', 'user', 'get', array('id' => $user_id));
-        if (!empty($user)) $recipients[$row['event_id']][$user['email']] = $user['name'];
+        if (!empty($user)) {
+            $recipients[$row['event_id']][$user['email']] = $user['name'];
+        }
         
         // Add the descendants of a group, if one was passed
         if (!empty($row['groupid'])) {
@@ -84,7 +90,7 @@ function pubsub_adminapi_process_queue_nodigest($args)
     $q->addfield('p.itemtype AS itemtype');
     $q->addfield('p.itemid AS itemid');
     $q->addfield('p.url AS url');
-    $q->eq('p.state',2);
+    $q->eq('p.state', 2);
 //    $q->qecho();
     $q->run();
 
@@ -97,10 +103,14 @@ function pubsub_adminapi_process_queue_nodigest($args)
 
     // We only recognize certain types of events
     $recognized_events = xarModVars::get('pubsub', 'recognized_events');
-    if (empty($recognized_events)) return false;
+    if (empty($recognized_events)) {
+        return false;
+    }
     
     $recognized_events = explode(',', xarModVars::get('pubsub', 'recognized_events'));
-    foreach ($recognized_events as $k => $v) $recognized_events[$k] = trim($v);
+    foreach ($recognized_events as $k => $v) {
+        $recognized_events[$k] = trim($v);
+    }
     
     // Set up an object to update each job
     $q1 = new Query('UPDATE', $tables['pubsub_process']);
@@ -113,9 +123,13 @@ function pubsub_adminapi_process_queue_nodigest($args)
     sys::import('modules.dynamicdata.class.properties.master');
     foreach ($q->output() as $row) {
         // Is this a proper event?
-        if (!in_array($row['event_type'], $recognized_events)) continue;
+        if (!in_array($row['event_type'], $recognized_events)) {
+            continue;
+        }
         // Does this event have subscribers?
-        if (!isset($recipients[$row['event_id']])) continue;
+        if (!isset($recipients[$row['event_id']])) {
+            continue;
+        }
         
         // Assemble the message
         $event_object = DataObjectMaster::getObject(array('objectid' => (int)$row['object_id']));
@@ -130,13 +144,17 @@ function pubsub_adminapi_process_queue_nodigest($args)
         $mail_data['url']         = $row['url'];
         
         // Send the mails
-        $result = xarMod::apiFunc('pubsub','admin','runjob',
-                      array('template_id'   => (int)$row['template_id'],
+        $result = xarMod::apiFunc(
+            'pubsub',
+            'admin',
+            'runjob',
+            array('template_id'   => (int)$row['template_id'],
                             'recipients'    => $recipients[$row['event_id']],
                             'sendername'    => xarModVars::get('pubsub', 'defaultsendername'),
                             'senderaddress' => xarModVars::get('pubsub', 'defaultsenderaddress'),
                             'mail_data'     => $mail_data,
-                            ));
+                            )
+        );
         $count = $count + count($recipients[$row['event_id']]);
         // Set the job's state to inactive
         $q1->eq('id', (int)$row['job_id']);
@@ -154,7 +172,4 @@ function pubsub_adminapi_process_queue_nodigest($args)
         xarLog::message($message, xarLog::LEVEL_DEBUG);
     }
     return $count;
-
 }
-
-?>

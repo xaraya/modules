@@ -21,14 +21,12 @@
  */
 function pubsub_adminapi_process_queue($args)
 {
-    $allindigest = xarModVars::get('pubsub','allindigest');
+    $allindigest = xarModVars::get('pubsub', 'allindigest');
 
     if (empty($allindigest)) {
-        $count = xarMod::apiFunc('pubsub','admin','process_queue_nodigest',$args);
+        $count = xarMod::apiFunc('pubsub', 'admin', 'process_queue_nodigest', $args);
     } else {
-        $count = xarMod::apiFunc('pubsub','admin','process_queue_digest',$args);
+        $count = xarMod::apiFunc('pubsub', 'admin', 'process_queue_digest', $args);
     }
     return $count;
 }
-
-?>

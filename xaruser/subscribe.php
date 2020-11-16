@@ -28,53 +28,84 @@ function pubsub_user_subscribe()
         return;
     }
 
-    if (!xarVarFetch('modid',      'isset', $modid,     false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cid',        'isset', $cid,       false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype',   'isset', $itemtype,  false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('returnurl',  'isset', $returnurl, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modid', 'isset', $modid, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('cid', 'isset', $cid, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'isset', $itemtype, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('returnurl', 'isset', $returnurl, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $returnurl = rawurldecode($returnurl);
 
     // Argument check
     $invalid = array();
-    if (!isset($returnurl) || !is_string($returnurl)) $invalid[] = 'returnurl';
-    if (!isset($modid) || !is_numeric($modid)) $invalid[] = 'modid';
-    if (!isset($cid) || !is_numeric($cid)) $invalid[] = 'cid';
-    if (!isset($itemtype) || !is_numeric($itemtype)) $invalid[] = 'itemtype';
+    if (!isset($returnurl) || !is_string($returnurl)) {
+        $invalid[] = 'returnurl';
+    }
+    if (!isset($modid) || !is_numeric($modid)) {
+        $invalid[] = 'modid';
+    }
+    if (!isset($cid) || !is_numeric($cid)) {
+        $invalid[] = 'cid';
+    }
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $invalid[] = 'itemtype';
+    }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-        join(', ',$invalid), 'subscribe', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(2)() in module #(3)',
+            join(', ', $invalid),
+            'subscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // What is groupdescr???
-    if (!isset($groupdescr))
+    if (!isset($groupdescr)) {
         $groupdescr = 'Subscribe';
+    }
 
     // check if we already have an event for this, or create it if necessary
-    $eventid = xarMod::apiFunc('pubsub','admin','checkevent',
-                             array('modid' => $modid,
+    $eventid = xarMod::apiFunc(
+        'pubsub',
+        'admin',
+        'checkevent',
+        array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'cid' => $cid,
-                                   'groupdescr' => $groupdescr));
-    if (empty($eventid)) return; // throw back
+                                   'groupdescr' => $groupdescr)
+    );
+    if (empty($eventid)) {
+        return;
+    } // throw back
 
-// TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
-// Am hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
-    if (!xarMod::apiFunc('pubsub',
-                       'user',
-                       'adduser',
-                        array('eventid' => $eventid,
+    // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
+    // Am hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
+    if (!xarMod::apiFunc(
+        'pubsub',
+        'user',
+        'adduser',
+        array('eventid' => $eventid,
                               'actionid' => 1,
-                              'userid' => $userid))) {
-        $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-                     'adduser', 'subscribe', 'Pubsub');
+                              'userid' => $userid)
+    )) {
+        $msg = xarML(
+            'Bad return from #(1) in function #(2)() in module #(3)',
+            'adduser',
+            'subscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     xarController::redirect($returnurl);
     return true;
 }
-
-?>

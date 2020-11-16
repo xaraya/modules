@@ -46,13 +46,19 @@ function pubsub_adminapi_updateevent($args)
     //    $invalid[] = 'actionid';
     //}
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'updateevent', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'updateevent',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:$eventid:All:All")) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:$eventid:All:All")) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -65,12 +71,11 @@ function pubsub_adminapi_updateevent($args)
                   itemtype = ?,
                   groupdescr = ?
               WHERE eventid = ?";
-        $bindvars = array((int)$module, $itemtype, $groupdescr, (int)$eventid);
-        $result = $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    $bindvars = array((int)$module, $itemtype, $groupdescr, (int)$eventid);
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     return true;
-
 } // END updateevent
-
-?>

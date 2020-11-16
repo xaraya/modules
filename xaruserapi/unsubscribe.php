@@ -29,13 +29,23 @@ function pubsub_userapi_unsubscribe($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($modid))       { $invalid[] = 'modid'; }
-    if (!isset($cid))         { $invalid[] = 'cid'; }
+    if (!isset($modid)) {
+        $invalid[] = 'modid';
+    }
+    if (!isset($cid)) {
+        $invalid[] = 'cid';
+    }
 //    if (!isset($itemtype))  { $invalid[] = 'itemtype'; }
-    if (!isset($userid))      { $invalid[] = 'userid'; }
+    if (!isset($userid)) {
+        $invalid[] = 'userid';
+    }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
-        join(', ',$invalid), 'unsubscribe', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'unsubscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -59,21 +69,26 @@ function pubsub_userapi_unsubscribe($args)
         array_push($bindvars, $extra);
     }
     $result = $dbconn->Execute($query, $bindvars);
-    if (!$result || $result->EOF) return;
+    if (!$result || $result->EOF) {
+        return;
+    }
 
     list($pubsubid) = $result->fields;
 
-    if (!xarMod::apiFunc('pubsub',
-                       'user',
-                       'deluser',
-                        array('pubsubid' => $pubsubid))) {
-        $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-                     'deluser', 'unsubscribe', 'Pubsub');
+    if (!xarMod::apiFunc(
+        'pubsub',
+        'user',
+        'deluser',
+        array('pubsubid' => $pubsubid)
+    )) {
+        $msg = xarML(
+            'Bad return from #(1) in function #(2)() in module #(3)',
+            'deluser',
+            'unsubscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     return true;
-
 } // END unsubscribe
-
-?>

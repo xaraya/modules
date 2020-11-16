@@ -21,7 +21,9 @@
 function pubsub_userapi_getalltemplates($args)
 {
     $templates = array();
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    if (!xarSecurityCheck('AdminPubSub')) {
+        return;
+    }
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -32,7 +34,9 @@ function pubsub_userapi_getalltemplates($args)
                 FROM $pubsubtemplatestable";
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $name) = $result->fields;
@@ -43,5 +47,3 @@ function pubsub_userapi_getalltemplates($args)
 
     return $templates;
 }
-
-?>

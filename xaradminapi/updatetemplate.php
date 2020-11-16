@@ -39,13 +39,19 @@ function pubsub_adminapi_updatetemplate($args)
         $invalid[] = 'template';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'updatetemplate', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'updatetemplate',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$id")) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$id")) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -63,9 +69,9 @@ function pubsub_adminapi_updatetemplate($args)
               WHERE id = ?";
     $bindvars = array($template, $compiled, $name, (int)$id);
     $result = $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

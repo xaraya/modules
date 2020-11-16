@@ -21,7 +21,6 @@ class ModulesModLoadSubject extends EventSubject implements ixarEventSubject
     **/
     public function __construct($modName)
     {
-        parent::__construct($modName);                             
+        parent::__construct($modName);
     }
 }
-?>

@@ -31,7 +31,9 @@ function pubsub_adminapi_runjob($args)
     $template_name = '';
 
     // If no template ID was passed, take the default template
-    if (empty($args['template_id'])) $args['template_id'] = 1;
+    if (empty($args['template_id'])) {
+        $args['template_id'] = 1;
+    }
     
     if (!empty($args['template_id'])) {
         sys::import('modules.dynamicdata.class.properties.master');
@@ -81,7 +83,7 @@ function pubsub_adminapi_runjob($args)
                       'bccaddresses'     => array(),
                       'data'             => $args['mail_data'],
             );
-            $result['code'] = xarMod::apiFunc('mailer','user','send', $mailargs);
+            $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
         } catch (Exception $e) {
             $result['exception'] = $e->getMessage();
         }
@@ -109,14 +111,26 @@ function pubsub_adminapi_runjob($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($id) || !is_numeric($id)) $invalid[] = 'id';
-    if (!isset($pubsubid) || !is_numeric($pubsubid)) $invalid[] = 'pubsubid';
-    if (!isset($objectid) || !is_numeric($objectid)) $invalid[] = 'objectid';
-    if (!isset($id) || !is_numeric($id)) $invalid[] = 'id';
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
+    }
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
+        $invalid[] = 'pubsubid';
+    }
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $invalid[] = 'objectid';
+    }
+    if (!isset($id) || !is_numeric($id)) {
+        $invalid[] = 'id';
+    }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'runjob', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'runjob',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -138,19 +152,23 @@ function pubsub_adminapi_runjob($args)
               ON $pubsubsubscriptionstable.eventid = $pubsubeventstable.eventid
               WHERE pubsubid = ?";
     $result   = $dbconn->Execute($query, array((int)$pubsubid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    if ($result->EOF) return;
+    if ($result->EOF) {
+        return;
+    }
 
-    list($actionid,$userid,$eventid,$modid,$itemtype,$email) = $result->fields;
+    list($actionid, $userid, $eventid, $modid, $itemtype, $email) = $result->fields;
 
-    if( $userid != -1 ) {
-        $info = xarUser::getVar('email',$userid);
-        $name = xarUser::getVar('uname',$userid);
+    if ($userid != -1) {
+        $info = xarUser::getVar('email', $userid);
+        $name = xarUser::getVar('uname', $userid);
     } else {
-        $emailinfo = explode(' ',$email,2);
+        $emailinfo = explode(' ', $email, 2);
         $info    = $emailinfo[0];
-        if( isset($emailinfo[1]) ) {
+        if (isset($emailinfo[1])) {
             $name = $emailinfo[1];
         } else {
             $name = '';
@@ -165,8 +183,7 @@ function pubsub_adminapi_runjob($args)
         $modname = $modinfo['name'];
     }
 
-    switch ($actionid)
-    {
+    switch ($actionid) {
         case 1:
             $action = 'mail';
             break;
@@ -186,7 +203,9 @@ function pubsub_adminapi_runjob($args)
                   FROM $pubsubtemplatestable
                   WHERE id = ?";
         $result   = $dbconn->Execute($query, array((int)$id));
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
         if ($result->EOF) {
             $msg = xarML('Invalid #(1) template', 'Pubsub');
@@ -212,16 +231,20 @@ function pubsub_adminapi_runjob($args)
         $tplData['templatecontent'] =$templatecontent;
 
         // (try to) retrieve a title and link for this item
-        $itemlinks = xarMod::apiFunc($modname,'user','getitemlinks',
-                                   array('itemtype' => $itemtype,
+        $itemlinks = xarMod::apiFunc(
+            $modname,
+            'user',
+            'getitemlinks',
+            array('itemtype' => $itemtype,
                                          'itemids' => array($objectid)),
-                                   0); // don't throw an exception here
+            0
+        ); // don't throw an exception here
         if (!empty($itemlinks) && !empty($itemlinks[$objectid])) {
             $tplData['title'] = $itemlinks[$objectid]['label'];
             $tplData['link'] =  $itemlinks[$objectid]['url'];
         } else {
             $tplData['title'] = xarML('Item #(1)', $objectid);
-            $tplData['link'] =  xarModURL($modname,'user','main');
+            $tplData['link'] =  xarModURL($modname, 'user', 'main');
         }
 
         // *** TODO  ***
@@ -231,13 +254,13 @@ function pubsub_adminapi_runjob($args)
         // this event.
         // But you can use $userid to get the relevant user, as above...
 
-         if( xarModVars::get('pubsub','subjecttitle') == 1 ) {
-             $subject = $tplData['title'];
-         } else {
-             $subject = xarML('Publish / Subscribe Notification');
-         }
-         $fmail = xarModVars::get('role', 'adminmail');
-         $fname = xarModVars::get('role', 'adminmail');
+        if (xarModVars::get('pubsub', 'subjecttitle') == 1) {
+            $subject = $tplData['title'];
+        } else {
+            $subject = xarML('Publish / Subscribe Notification');
+        }
+        $fmail = xarModVars::get('role', 'adminmail');
+        $fname = xarModVars::get('role', 'adminmail');
 
         // call BL with the (compiled) template to parse it and generate the HTML free plaintext version
         $html = xarTplString($compiled, $tplData);
@@ -246,86 +269,97 @@ function pubsub_adminapi_runjob($args)
 
         $UseTemplateVersions = xarModVars::get('pubsub', 'UseTemplateVersions') ? true : false;
         if ($UseTemplateVersions) {
-             $htmltemplate = 'html-' . $id;
-             $texttemplate = 'text-' . $id;
+            $htmltemplate = 'html-' . $id;
+            $texttemplate = 'text-' . $id;
         } else {
-             $htmltemplate = 'html';
-             $texttemplate = 'text';
+            $htmltemplate = 'html';
+            $texttemplate = 'text';
         }
 
-        $htmlmessage= xarTplModule('pubsub','user','mail',$tplData,$htmltemplate);
+        $htmlmessage= xarTplModule('pubsub', 'user', 'mail', $tplData, $htmltemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
             // Default to the module template
-            $htmlmessage= xarTplModule('pubsub', 'user', 'mail',$tplData,'html');
+            $htmlmessage= xarTplModule('pubsub', 'user', 'mail', $tplData, 'html');
         }
-        $textmessage= xarTplModule('pubsub','user','mail', $tplData,$texttemplate);
+        $textmessage= xarTplModule('pubsub', 'user', 'mail', $tplData, $texttemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
-            $textmessage= xarTplModule('pubsub', 'user', 'mail',$tplData,'text');
+            $textmessage= xarTplModule('pubsub', 'user', 'mail', $tplData, 'text');
         }
 
-            /*
-            $boundary = "b" . md5(uniqid(time()));
-            $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
-            $message .= "Content-type: multipart/mixed; ";
-            $message .= "boundary = $boundary\r\n\r\n";
-            $message .= "This is a MIME encoded message.\r\n\r\n";
-            // first the plaintext message
-            $message .= "--$boundary\r\n";
-            $message .= "Content-type: text/plain\r\n";
-            $message .= "Content-Transfer-Encoding: base64";
-            $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
-            // now the HTML version
-            $message .= "--$boundary\r\n";
-            $message .= "Content-type: text/html\r\n";
-            $message .= "Content-Transfer-Encoding: base64";
-            $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
+        /*
+        $boundary = "b" . md5(uniqid(time()));
+        $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
+        $message .= "Content-type: multipart/mixed; ";
+        $message .= "boundary = $boundary\r\n\r\n";
+        $message .= "This is a MIME encoded message.\r\n\r\n";
+        // first the plaintext message
+        $message .= "--$boundary\r\n";
+        $message .= "Content-type: text/plain\r\n";
+        $message .= "Content-Transfer-Encoding: base64";
+        $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
+        // now the HTML version
+        $message .= "--$boundary\r\n";
+        $message .= "Content-type: text/html\r\n";
+        $message .= "Content-Transfer-Encoding: base64";
+        $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
 
-            */
-        if ($actionid == 2 ) {
-             // Send the mail using the mail module
-             if (!xarMod::apiFunc('mail',
-                                'admin',
-                                'sendhtmlmail',
-                                array('info'     => $info,
+        */
+        if ($actionid == 2) {
+            // Send the mail using the mail module
+            if (!xarMod::apiFunc(
+                'mail',
+                'admin',
+                'sendhtmlmail',
+                array('info'     => $info,
                                       'name'     => $name,
                                       'subject'  => $subject,
                                       'message'  => $textmessage,
                                       'htmlmessage' => $htmlmessage,
                                       'from'     => $fmail,
                                       'fromname' => $fname,
-                                      'usetemplates' => false))) return;
+                                      'usetemplates' => false)
+            )) {
+                return;
+            }
         } else {
-             // plaintext mail
-             if (!xarMod::apiFunc('mail',
-                                'admin',
-                                'sendmail',
-                                array('info'     => $info,
+            // plaintext mail
+            if (!xarMod::apiFunc(
+                'mail',
+                'admin',
+                'sendmail',
+                array('info'     => $info,
                                       'name'     => $name,
                                       'subject'  => $subject,
                                       'message'  => $textmessage,
                                       'htmlmessage' => $htmlmessage,
                                       'from'     => $fmail,
                                       'fromname' => $fname,
-                                      'usetemplates' => false))) return;
+                                      'usetemplates' => false)
+            )) {
+                return;
+            }
         }
         // delete job from queue now it has run
-        xarMod::apiFunc('pubsub','admin','deljob', array('id' => $id));
-
+        xarMod::apiFunc('pubsub', 'admin', 'deljob', array('id' => $id));
     } else {
         // invalid action - update queue accordingly
-        xarMod::apiFunc('pubsub','admin','updatejob',
-                      array('id' => $id,
+        xarMod::apiFunc(
+            'pubsub',
+            'admin',
+            'updatejob',
+            array('id' => $id,
                             'pubsub_id' => $pubsub_id,
                             'object_id' => $object_id,
                             'template_id' => $template_id,
-                            'status' => 'error'));
-        $msg = xarML('Invalid #(1) action',
-                     'Pubsub');
+                            'status' => 'error')
+        );
+        $msg = xarML(
+            'Invalid #(1) action',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
     return true;
 }
-
-?>

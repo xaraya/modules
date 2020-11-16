@@ -25,9 +25,9 @@ function pubsub_userapi_get_recognized_events()
     $recognized_events = explode(',', xarModVars::get('pubsub', 'recognized_events'));
     foreach ($recognized_events as $event) {
         $event = trim($event);
-        if (!empty($event)) $events[$event] = $event;
+        if (!empty($event)) {
+            $events[$event] = $event;
+        }
     }
     return $events;
 }
-
-?>

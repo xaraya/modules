@@ -33,30 +33,31 @@ function pubsub_user_displayicon($args)
         return;
     }
 
-    if (!isset($extrainfo)) $extrainfo = array();
+    if (!isset($extrainfo)) {
+        $extrainfo = array();
+    }
 
     /**
      * Validate parameters
      */
     $invalid = array();
-    if(!isset($extrainfo) || !is_array($extrainfo)) {
+    if (!isset($extrainfo) || !is_array($extrainfo)) {
         $invalid[] = 'extrainfo';
-    } elseif(isset($extrainfo['cid'])) {
-
+    } elseif (isset($extrainfo['cid'])) {
         $cid = $extrainfo['cid'];
 
         if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
             $cid = $extrainfo['cid'];
         }
-// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+        // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
         if (isset($extrainfo['current_module']) && is_string($extrainfo['current_module'])) {
             $modname = $extrainfo['current_module'];
         } elseif (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         }
-        if(isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
+        if (isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
             $itemtype = $extrainfo['current_itemtype'];
-        } elseif(isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+        } elseif (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
             $itemtype = $extrainfo['itemtype'];
         }
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
@@ -72,8 +73,13 @@ function pubsub_user_displayicon($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'displayicon','pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'displayicon',
+            'pubsub'
+        );
         throw new Exception($msg);
     } else {
     }
@@ -95,9 +101,11 @@ function pubsub_user_displayicon($args)
     }
 
     // if pubsub isn't hooked to this module & itemtype, don't show subscription either
-    if (!xarModIsHooked('pubsub',$modname,$itemtype)) return array('donotdisplay'=>TRUE);
+    if (!xarModIsHooked('pubsub', $modname, $itemtype)) {
+        return array('donotdisplay'=>true);
+    }
 
-/// check for unsubscribe
+    /// check for unsubscribe
     /**
      * Fetch the eventid to check
      */
@@ -116,13 +124,15 @@ function pubsub_user_displayicon($args)
                  AND $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
                  AND $pubsubsubscriptionstable.userid = ?";
 
-        $bindvars = array((int)$modid, (int)$itemtype, (int)$cid, (int)$userid);
-        if (isset($extra)) {
-            $query .= " AND $pubsubeventstable.extra = ?";
-            array_push($bindvars, $extra);
-        }
-        $result = $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    $bindvars = array((int)$modid, (int)$itemtype, (int)$cid, (int)$userid);
+    if (isset($extra)) {
+        $query .= " AND $pubsubeventstable.extra = ?";
+        array_push($bindvars, $extra);
+    }
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
     if ($result->EOF) {
         /**
          * If we get a hit on pubsub_reg, that mean we are already subscribed
@@ -132,7 +142,7 @@ function pubsub_user_displayicon($args)
         $data['subscribe'] = 0;
     }
 
-    $data['subdata'] = array ('modname' => $modname
+    $data['subdata'] = array('modname' => $modname
                              ,'modid'   => $modid
                              ,'itemtype' => $itemtype
                              ,'cid'     => $cid
@@ -141,11 +151,11 @@ function pubsub_user_displayicon($args)
                              ,'subaction' => $data['subscribe']
                              );
 
-    $data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);
-    $data['subTEXT'] = xarML ('Subscribe');
+    $data['subURL'] = xarModURL('pubsub', 'user', 'modifysubscription', $data['subdata']);
+    $data['subTEXT'] = xarML('Subscribe');
 
-    $data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);
-    $data['unsubTEXT'] = xarML ('Unsubscribe');
+    $data['unsubURL'] = xarModURL('pubsub', 'user', 'modifysubscription', $data['subdata']);
+    $data['unsubTEXT'] = xarML('Unsubscribe');
 
     if (!empty($layout)) {
         $data['layout'] = $layout;
@@ -153,7 +163,4 @@ function pubsub_user_displayicon($args)
         $data['layout'] = 'icon';
     }
     return $data;
-
 } // END displayicon
-
-?>

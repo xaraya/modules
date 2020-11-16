@@ -20,10 +20,10 @@
 function pubsub_admin_main()
 {
     // Security check
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    if (!xarSecurityCheck('AdminPubSub')) {
+        return;
+    }
 //        xarController::redirect(xarModURL('pubsub', 'admin', 'viewall'));
     // Return the template variables defined in this function
     return array();
 }
-
-?>

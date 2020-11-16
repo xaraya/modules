@@ -31,13 +31,19 @@ function pubsub_adminapi_delevent($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
-                    join(', ',$invalid), 'delevent', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'delevent',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('DeletePubSub')) return;
+    if (!xarSecurityCheck('DeletePubSub')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -48,10 +54,9 @@ function pubsub_adminapi_delevent($args)
     $query = "DELETE FROM $pubsubeventstable
             WHERE eventid = ?";
     $dbconn->Execute($query, array((int)$eventid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     return true;
-
 } // END delevent
-
-?>

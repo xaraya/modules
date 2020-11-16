@@ -43,8 +43,12 @@ function pubsub_adminapi_runjobdigest($args)
         $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'runjob', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'runjob',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -66,21 +70,23 @@ function pubsub_adminapi_runjobdigest($args)
               ON $pubsubsubscriptionstable.eventid = $pubsubeventstable.eventid
               WHERE pubsubid = ?";
     $result   = $dbconn->Execute($query, array((int)$pubsubid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    if ($result->EOF) return;
+    if ($result->EOF) {
+        return;
+    }
 
-    list($actionid,$userid,$eventid,$modid,$itemtype,$email) = $result->fields;
+    list($actionid, $userid, $eventid, $modid, $itemtype, $email) = $result->fields;
 
-    if( $userid != -1 )
-    {
-        $info = xarUser::getVar('email',$userid);
-        $name = xarUser::getVar('uname',$userid);
+    if ($userid != -1) {
+        $info = xarUser::getVar('email', $userid);
+        $name = xarUser::getVar('uname', $userid);
     } else {
-        $emailinfo = explode(' ',$email,2);
+        $emailinfo = explode(' ', $email, 2);
         $info    = $emailinfo[0];
-        if( isset($emailinfo[1]) )
-        {
+        if (isset($emailinfo[1])) {
             $name = $emailinfo[1];
         } else {
             $name = '';
@@ -95,8 +101,7 @@ function pubsub_adminapi_runjobdigest($args)
         $modname = $modinfo['name'];
     }
 
-    switch ($actionid)
-    {
+    switch ($actionid) {
         case 1:
             $action = 'mail';
             break;
@@ -116,19 +121,25 @@ function pubsub_adminapi_runjobdigest($args)
                   FROM $pubsubtemplatestable
                   WHERE id = ?";
         $result   = $dbconn->Execute($query, array((int)$id));
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
         if ($result->EOF) {
-            $msg = xarML('Invalid #(1) template',
-                         'Pubsub');
+            $msg = xarML(
+                'Invalid #(1) template',
+                'Pubsub'
+            );
             throw new Exception($msg);
         }
 
         $compiled = $result->fields[0];
 
         if (empty($compiled)) {
-            $msg = xarML('Invalid #(1) template',
-                         'Pubsub');
+            $msg = xarML(
+                'Invalid #(1) template',
+                'Pubsub'
+            );
             throw new Exception($msg);
         }
 
@@ -140,16 +151,20 @@ function pubsub_adminapi_runjobdigest($args)
         $tplData['itemid'] = $objectid;
 
         // (try to) retrieve a title and link for this item
-        $itemlinks = xarMod::apiFunc($modname,'user','getitemlinks',
-                                   array('itemtype' => $itemtype,
+        $itemlinks = xarMod::apiFunc(
+            $modname,
+            'user',
+            'getitemlinks',
+            array('itemtype' => $itemtype,
                                          'itemids' => array($objectid)),
-                                   0); // don't throw an exception here
+            0
+        ); // don't throw an exception here
         if (!empty($itemlinks) && !empty($itemlinks[$objectid])) {
             $tplData['title'] = $itemlinks[$objectid]['label'];
             $tplData['link'] =  $itemlinks[$objectid]['url'];
         } else {
             $tplData['title'] = xarML('Item #(1)', $objectid);
-            $tplData['link'] =  xarModURL($modname,'user','main');
+            $tplData['link'] =  xarModURL($modname, 'user', 'main');
         }
 
         // *** TODO  ***
@@ -179,30 +194,31 @@ function pubsub_adminapi_runjobdigest($args)
             $message .= "Content-type: text/html\r\n";
             $message .= "Content-Transfer-Encoding: base64";
             $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
-         } else {
+        } else {
             // plaintext mail
             $message=$plaintext;
             // add the link at the bottom, because it's probably gone with the strip_tags
-            $message .= "\n" . xarML(' Link: #(1)',$tplData['link']);
-         }
-      // TODO: make configurable too ?
+            $message .= "\n" . xarML(' Link: #(1)', $tplData['link']);
+        }
+        // TODO: make configurable too ?
         $piece = array('email'=>$info,'content'=>$message,'name'=>$name);
-      } else {
-            // invalid action - update queue accordingly
-            xarMod::apiFunc('pubsub','admin','updatejob',
-                          array('id' => $id,
+    } else {
+        // invalid action - update queue accordingly
+        xarMod::apiFunc(
+            'pubsub',
+            'admin',
+            'updatejob',
+            array('id' => $id,
                                 'pubsub_id' => $pubsub_id,
                                 'object_id' => $object_id,
                                 'template_id' => $template_id,
-                                'status' => 'error'));
-            $msg = xarML('Invalid #(1) action',
-                         'Pubsub');
-            throw new Exception($msg);
-        }
-        return $piece;
-
+                                'status' => 'error')
+        );
+        $msg = xarML(
+            'Invalid #(1) action',
+            'Pubsub'
+        );
+        throw new Exception($msg);
+    }
+    return $piece;
 }
-
-
-
-?>

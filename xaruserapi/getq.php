@@ -36,7 +36,7 @@ function pubsub_userapi_getq($args)
 
     // Load categories API
     if (!xarModAPILoad('categories', 'user')) {
-        $msg = xarML('Unable to load #(1) #(2) API','categories','user');
+        $msg = xarML('Unable to load #(1) #(2) API', 'categories', 'user');
         throw new Exception($msg);
     }
     $categoriestable = $xartable['categories'];
@@ -77,11 +77,13 @@ function pubsub_userapi_getq($args)
     if (!empty($status) && is_string($status)) {
         $query .= " WHERE $pubsubprocesstable.status = ?";
         $bindvars = array($status);
-        $result = $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     } else {
         $result = $dbconn->Execute($query);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $queue = array();
     while (!$result->EOF) {
@@ -89,12 +91,9 @@ function pubsub_userapi_getq($args)
         list($info['id'],$info['pubsubid'],$info['objectid'],$info['template_id'],$info['status'],
              $info['eventid'],$info['userid'],$info['actionid'],$info['subdate'],$info['email'],
              $info['modid'],$info['itemtype'],$info['cid'],$info['extra'],
-             $info['templatename'],$info['modname'],$info['username'],$info['catname']) = $result->fields;
+             $info['templatename'], $info['modname'], $info['username'], $info['catname']) = $result->fields;
         $queue[] = $info;
         $result->MoveNext();
     }
     return $queue;
-
 } // END getq
-
-?>

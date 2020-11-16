@@ -26,15 +26,24 @@ function pubsub_userapi_getsubscriptions($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($userid) || !is_numeric($userid)) $invalid[] = 'userid';
+    if (!isset($userid) || !is_numeric($userid)) {
+        $invalid[] = 'userid';
+    }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'getsubscriptions', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'getsubscriptions',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
-    if (!xarModAPILoad('categories', 'user')) return;
+    if (!xarModAPILoad('categories', 'user')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -64,7 +73,9 @@ function pubsub_userapi_getsubscriptions($args)
                  AND $pubsubsubscriptionstable.userid =  ?";
 
     $result = $dbconn->Execute($query, array((int)$userid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $items = array();
     while (!$result->EOF) {
@@ -83,5 +94,3 @@ function pubsub_userapi_getsubscriptions($args)
     }
     return $items;
 }
-
-?>

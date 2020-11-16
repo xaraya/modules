@@ -30,7 +30,9 @@ function pubsub_init()
     $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_events";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_pubsub_events (
             id                  integer unsigned NOT NULL auto_increment,
             name                varchar(64) NOT NULL DEFAULT '',
@@ -47,10 +49,14 @@ function pubsub_init()
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_subscriptions";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_pubsub_subscriptions (
             id                  integer unsigned NOT NULL auto_increment,
             event_id            integer unsigned NOT NULL DEFAULT '0',
@@ -65,10 +71,14 @@ function pubsub_init()
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_process";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_pubsub_process (
             id                  integer unsigned NOT NULL auto_increment,
             event_id            integer unsigned NOT NULL DEFAULT '0',
@@ -84,10 +94,14 @@ function pubsub_init()
             state               tinyint(3) NOT NULL default 3, 
             PRIMARY KEY(id)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_templates";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_pubsub_templates (
             id                  integer unsigned NOT NULL auto_increment,
             name                varchar(64) NOT NULL DEFAULT '',
@@ -102,11 +116,13 @@ function pubsub_init()
             PRIMARY KEY(id),
             KEY templatename (name)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create DD objects
+    # Create DD objects
 #
     $module = 'pubsub';
     $objects = array(
@@ -116,100 +132,102 @@ function pubsub_init()
                     'pubsub_process',
                      );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Default data for other modules
-#    
+    # Default data for other modules
+#
     // Add basic mailer templates
     if (xarMod::isAvailable('mailer')) {
         $dat_file = sys::code() . 'modules/' . $module . '/xardata/'.'mailer_templates-dat.xml';
-        if(file_exists($dat_file)) {
+        if (file_exists($dat_file)) {
             $data['file'] = $dat_file;
-            $objectid = xarMod::apiFunc('dynamicdata','util','import', $data);
+            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
         }
     }
 
-/*    $nextId = $dbconn->GenId($pubsubtemplatestable);
-    $name = 'default';
-    $template = '<xar:ml>
-<xar:mlstring>A new item #(1) was created in module #(2).<br/>
-Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
-<xar:mlvar>#$itemid#</xar:mlvar>
-<xar:mlvar>#$module#</xar:mlvar>
-<xar:mlvar>#$link#</xar:mlvar>
-<xar:mlvar>#$title#</xar:mlvar>
-</xar:ml>';
-    // compile the template now
-    $compiled = xarTplCompileString($template);
+    /*    $nextId = $dbconn->GenId($pubsubtemplatestable);
+        $name = 'default';
+        $template = '<xar:ml>
+    <xar:mlstring>A new item #(1) was created in module #(2).<br/>
+    Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
+    <xar:mlvar>#$itemid#</xar:mlvar>
+    <xar:mlvar>#$module#</xar:mlvar>
+    <xar:mlvar>#$link#</xar:mlvar>
+    <xar:mlvar>#$title#</xar:mlvar>
+    </xar:ml>';
+        // compile the template now
+        $compiled = xarTplCompileString($template);
 
 
-    $query = "INSERT INTO $pubsubtemplatestable (id, name, template, compiled)
-              VALUES (?,?,?,?)";
-    $bindvars=array($nextId, $name, $template, $compiled);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return; */
-/*
-// used by categories only (for now)
-    if (!xarModRegisterHook('item',
-                           'display',
-                           'GUI',
-                           'pubsub',
-                           'user',
-                           'displayicon')) {
-        return false;
-    }
+        $query = "INSERT INTO $pubsubtemplatestable (id, name, template, compiled)
+                  VALUES (?,?,?,?)";
+        $bindvars=array($nextId, $name, $template, $compiled);
+        $result = $dbconn->Execute($query,$bindvars);
+        if (!$result) return; */
+    /*
+    // used by categories only (for now)
+        if (!xarModRegisterHook('item',
+                               'display',
+                               'GUI',
+                               'pubsub',
+                               'user',
+                               'displayicon')) {
+            return false;
+        }
 
-// used by roles only
-    if (!xarModRegisterHook('item',
-                           'usermenu',
-                           'GUI',
-                           'pubsub',
-                           'user',
-                           'usermenu')) {
-        return false;
-    }
-*/
-// TODO: review this :-)
+    // used by roles only
+        if (!xarModRegisterHook('item',
+                               'usermenu',
+                               'GUI',
+                               'pubsub',
+                               'user',
+                               'usermenu')) {
+            return false;
+        }
+    */
+    // TODO: review this :-)
 
-/*    // Define instances for this module
-    $query1 = "SELECT DISTINCT pubsubid FROM " . $pubsubsubscriptionstable;
-    $query2 = "SELECT DISTINCT eventid FROM " . $pubsubeventstable;
-    $query3 = "SELECT DISTINCT id FROM " . $pubsubprocesstable;
+    /*    // Define instances for this module
+        $query1 = "SELECT DISTINCT pubsubid FROM " . $pubsubsubscriptionstable;
+        $query2 = "SELECT DISTINCT eventid FROM " . $pubsubeventstable;
+        $query3 = "SELECT DISTINCT id FROM " . $pubsubprocesstable;
 
-    $instances = array(
-                        array('header' => 'Pubsub ID:',
-                                'query' => $query1,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Event ID:',
-                                'query' => $query2,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Handling ID:',
-                                'query' => $query3,
-                                'limit' => 20
-                            )
-                    );
-    xarDefineInstance('pubsub','Item',$instances);*/
+        $instances = array(
+                            array('header' => 'Pubsub ID:',
+                                    'query' => $query1,
+                                    'limit' => 20
+                                ),
+                            array('header' => 'Event ID:',
+                                    'query' => $query2,
+                                    'limit' => 20
+                                ),
+                            array('header' => 'Handling ID:',
+                                    'query' => $query3,
+                                    'limit' => 20
+                                )
+                        );
+        xarDefineInstance('pubsub','Item',$instances);*/
 
     // Define mask definitions for security checks
-    xarRegisterMask('OverviewPubSub','All','pubsub','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadPubSub','All','pubsub','All','All','ACCESS_READ');
-    xarRegisterMask('EditPubSub','All','pubsub','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddPubSub','All','pubsub','All','All','ACCESS_ADD');
-    xarRegisterMask('ManagePubSub','All','pubsub','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminPubSub','All','pubsub','All','All','ACCESS_ADMIN');
+    xarRegisterMask('OverviewPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('EditPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('ManagePubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminPubSub', 'All', 'pubsub', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up modvars
     #
-    xarModVars::set('pubsub', 'enable_default_template',0);
-    xarModVars::set('pubsub', 'recognized_events','itemcreate,itemupdate,itemdelete');
-    xarModVars::set('pubsub', 'sendnotice_subscription',false);
-    xarModVars::set('pubsub', 'sendnotice_queue',false);
+    xarModVars::set('pubsub', 'enable_default_template', 0);
+    xarModVars::set('pubsub', 'recognized_events', 'itemcreate,itemupdate,itemdelete');
+    xarModVars::set('pubsub', 'sendnotice_subscription', false);
+    xarModVars::set('pubsub', 'sendnotice_queue', false);
 
     # --------------------------------------------------------
     #
@@ -236,7 +254,8 @@ function pubsub_upgrade($oldversion)
     switch ($oldversion) {
         case '2.0.0':
             // We can now use local templates in the pubsub/xartemplates dir
-            xarModVars::set('pubsub','usetemplateids',1);
+            xarModVars::set('pubsub', 'usetemplateids', 1);
+            // no break
         default:
             break;
     }
@@ -305,7 +324,5 @@ function pubsub_delete()
     $q->eq('module_id', xarMod::getRegid($module));
     $q->run();
     
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
 }
-
-?>

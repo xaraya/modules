@@ -31,16 +31,26 @@ function pubsub_adminapi_checkevent($args)
     extract($args);
 
     if (empty($modid) || !is_numeric($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'module', 'admin', 'checkevent', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module',
+            'admin',
+            'checkevent',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
     if (empty($itemtype) || !is_numeric($itemtype)) {
         $itemtype = 0;
     }
     if (!isset($cid) || !is_numeric($cid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'category', 'admin', 'checkevent', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'category',
+            'admin',
+            'checkevent',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -61,7 +71,9 @@ function pubsub_adminapi_checkevent($args)
         array_push($bindvars, $extra);
     }
     $result = $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // if event already exists then just return the event id;
     if (!$result->EOF) {
@@ -93,14 +105,13 @@ function pubsub_adminapi_checkevent($args)
     $bindvars = array((int)$id, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr);
     $result = $dbconn->Execute($query, $bindvars);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Get the ID of the item that was inserted
     $id = $dbconn->PO_Insert_ID($pubsubeventstable, 'id');
 
     // return eventID
     return $id;
-
 }
-
-?>

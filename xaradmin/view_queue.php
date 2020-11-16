@@ -18,24 +18,31 @@
  */
 function pubsub_admin_view_queue($args)
 {
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurityCheck('ManagePubSub')) {
+        return;
+    }
     
     extract($args);
-    if (!xarVarFetch('action','str', $action, '')) return;
-    if (!xarVarFetch('id','int', $id, 0)) return;
+    if (!xarVarFetch('action', 'str', $action, '')) {
+        return;
+    }
+    if (!xarVarFetch('id', 'int', $id, 0)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
 
     if (!empty($action) && ($action == 'process')) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         
-        $result = xarMod::apiFunc('pubsub','admin','process_queue');
+        $result = xarMod::apiFunc('pubsub', 'admin', 'process_queue');
         
         // Notify the admin if required
         if (xarModVars::get('pubsub', 'sendnotice_queue')) {
-        
             $admin = xarRoles::getRole(xarModVars::get('roles', 'admin'));
 
             $args['mail_data']['message_type'] = 'queue';
@@ -55,7 +62,7 @@ function pubsub_admin_view_queue($args)
                       'bccaddresses'     => array(),
                       'data'             => $args['mail_data'],
             );
-            $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
+            $data['result'] = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
         }
 
         xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
@@ -63,5 +70,3 @@ function pubsub_admin_view_queue($args)
     }
     return $data;
 }
-
-?>

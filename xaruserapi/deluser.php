@@ -32,13 +32,20 @@ function pubsub_userapi_deluser($args)
         $invalid[] = 'pubsubid';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'unsubscribe', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'unsubscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$pubsubid')) return;
+    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$pubsubid')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -52,5 +59,3 @@ function pubsub_userapi_deluser($args)
 
     return true;
 } // END delUser
-
-?>

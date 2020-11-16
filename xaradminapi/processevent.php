@@ -93,11 +93,9 @@ function pubsub_adminapi_processevent($args)
 
     // Create an array to list the subscriptions that need to be processed.
     $markSubscriptions = array();
-    $includechildren = xarModVars::get('pubsub','includechildren');
-    if ( !empty($cid) && $includechildren == 1 )
-    {
-        $ancestors = xarMod::apiFunc('categories','user','getancestors'
-                                   , array('cid'=>$cid,'order'=>'self') );
+    $includechildren = xarModVars::get('pubsub', 'includechildren');
+    if (!empty($cid) && $includechildren == 1) {
+        $ancestors = xarMod::apiFunc('categories', 'user', 'getancestors', array('cid'=>$cid,'order'=>'self'));
         $ancestors = array_keys($ancestors);
 
         $query = "SELECT pubsubid, cid
@@ -113,19 +111,17 @@ function pubsub_adminapi_processevent($args)
             array_push($bindvars, $extra);
         }
         $result = $dbconn->Execute($query, $bindvars);
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
-        for (; !$result->EOF; $result->MoveNext())
-        {
+        for (; !$result->EOF; $result->MoveNext()) {
             list($pubsubid, $cid) = $result->fields;
 
-            if( $cid == $cid || in_array($cid, $ancestors))
-            {
+            if ($cid == $cid || in_array($cid, $ancestors)) {
                 $markSubscriptions[] = $pubsubid;
             }
         }
-
-
     } else {
         $query = "SELECT pubsubid
                     FROM $pubsubeventstable, $pubsubsubscriptionstable
@@ -139,18 +135,18 @@ function pubsub_adminapi_processevent($args)
             array_push($bindvars, $extra);
         }
         $result = $dbconn->Execute($query, $bindvars);
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
 
-        for (; !$result->EOF; $result->MoveNext())
-        {
+        for (; !$result->EOF; $result->MoveNext()) {
             list($pubsubid) = $result->fields;
 
             $markSubscriptions[] = $pubsubid;
         }
     }
 
-    foreach( $markSubscriptions as $pubsubid )
-    {
+    foreach ($markSubscriptions as $pubsubid) {
         // Get next ID in table
         $nextId = $dbconn->GenId($pubsubprocesstable);
 
@@ -165,11 +161,10 @@ function pubsub_adminapi_processevent($args)
                   'pending')";
         $bindvars = array((int)$nextId, (int)$pubsubid, (int)$objectid, (int)$template_id);
         $result2 = $dbconn->Execute($query, $bindvars);
-        if (!$result2) return;
+        if (!$result2) {
+            return;
+        }
     }
 
     return true;
-
 } // END processevent
-
-?>

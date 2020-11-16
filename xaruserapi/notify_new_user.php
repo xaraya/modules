@@ -17,7 +17,7 @@
 function pubsub_userapi_notify_new_user($args)
 {
     // Send Welcome mail to the subscribed user
-				
+                
     $mail_data = array();
     $mail_data['header']       = xarML('Thanks to subscribing at #(1)', xarModVars::get('themes', 'SiteName'));
     $mail_data['footer']       = xarML('Xaraya #(1) Module', UCFirst(xarMod::getName()));
@@ -33,11 +33,10 @@ function pubsub_userapi_notify_new_user($args)
                   'data'             => $args['mail_data'],
     );
     
-    $result = xarMod::apiFunc('mailer','user','send', $mailargs);
-		
+    $result = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
+        
     // Notify the admin if required
-    if (xarModVars::get('pubsub','sendnotice_subscription')) {
-    
+    if (xarModVars::get('pubsub', 'sendnotice_subscription')) {
         $admin = xarRoles::getRole(xarModVars::get('roles', 'admin'));
 
         $mail_data = array();
@@ -58,8 +57,6 @@ function pubsub_userapi_notify_new_user($args)
                   'bccaddresses'     => array(),
                   'data'             => $args['mail_data'],
         );
-        $result = xarMod::apiFunc('mailer','user','send', $mailargs);
+        $result = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
     }
 }
-
-?>

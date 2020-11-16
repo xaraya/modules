@@ -32,13 +32,19 @@ function pubsub_adminapi_addtemplate($args)
         $invalid[] = 'name';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
-                    join(', ',$invalid), 'addtemplate', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for function #(2)() in module #(3)',
+            join(', ', $invalid),
+            'addtemplate',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('AddPubSub')) return;
+    if (!xarSecurityCheck('AddPubSub')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -51,11 +57,16 @@ function pubsub_adminapi_addtemplate($args)
               WHERE name = ?";
 
     $result = $dbconn->Execute($query, array($name));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     if (!$result->EOF) {
-        $msg = xarML('Item already exists in function #(1)() in module #(2)',
-                    'addtemplate', 'Pubsub');
+        $msg = xarML(
+            'Item already exists in function #(1)() in module #(2)',
+            'addtemplate',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -73,13 +84,13 @@ function pubsub_adminapi_addtemplate($args)
               compiled)
             VALUES (?,?,?,?)";
     $bindvars = array($nextId, $name, $template, $compiled);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     $nextId = $dbconn->PO_Insert_ID($pubsubtemplatestable, 'templateid');
 
     // return eventID
     return $nextId;
 }
-
-?>

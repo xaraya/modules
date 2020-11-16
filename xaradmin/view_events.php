@@ -19,7 +19,9 @@
  */
 function pubsub_admin_view_events()
 {
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurityCheck('ManagePubSub')) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_events'));
@@ -41,5 +43,3 @@ function pubsub_admin_view_events()
 
     return $data;
 }
-
-?>

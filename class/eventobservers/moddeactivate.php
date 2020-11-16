@@ -18,8 +18,7 @@ class ModulesModDeactivateObserver extends EventObserver implements ixarEventObs
     public function notify(ixarEventSubject $subject)
     {
         $modName = $subject->getArgs();
-        // let any hooks know the module was deactivated    
+        // let any hooks know the module was deactivated
         xarHooks::notify('ModuleDeactivate', array('objectid' => $modName, 'module' => $modName));
     }
 }
-?>

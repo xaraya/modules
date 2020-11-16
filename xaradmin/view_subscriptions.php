@@ -19,19 +19,27 @@
  */
 function pubsub_admin_view_subscriptions()
 {
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurityCheck('ManagePubSub')) {
+        return;
+    }
     xarTplSetPageTitle('View Subscribers');
 
-    if (!xarVarFetch('eventid', 'int::', $eventid,  0,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pubsubid','int::', $pubsubid, FALSE, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('unsub',   'int::', $unsub,    FALSE, XARVAR_NOT_REQUIRED)) return;
-/*
-    if (empty($eventid)) {
-        $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
-                    'event id', 'view_subscriptions', 'Pubsub');
-        throw new Exception($msg);
+    if (!xarVarFetch('eventid', 'int::', $eventid, 0, XARVAR_NOT_REQUIRED)) {
+        return;
     }
-*/
+    if (!xarVarFetch('pubsubid', 'int::', $pubsubid, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('unsub', 'int::', $unsub, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    /*
+        if (empty($eventid)) {
+            $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
+                        'event id', 'view_subscriptions', 'Pubsub');
+            throw new Exception($msg);
+        }
+    */
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_subscriptions'));
     $q = $data['object']->dataquery;
@@ -40,7 +48,9 @@ function pubsub_admin_view_subscriptions()
     $q->eq('subscriptions.state', 3);
     
     // If an event ID was passed, then filter on it
-    if (!empty($eventid)) $q->eq('subscriptions.event', $eventid);
+    if (!empty($eventid)) {
+        $q->eq('subscriptions.event', $eventid);
+    }
     
     return $data;
 
@@ -49,16 +59,24 @@ function pubsub_admin_view_subscriptions()
 
     if ($unsub && $pubsubid) {
         if (!xarMod::apiFunc('pubsub', 'user', 'deluser', array('pubsubid' => $pubsubid))) {
-            $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-                         'deluser', 'view_subscriptions', 'Pubsub');
+            $msg = xarML(
+                'Bad return from #(1) in function #(2)() in module #(3)',
+                'deluser',
+                'view_subscriptions',
+                'Pubsub'
+            );
             throw new Exception($msg);
         }
     }
 
-    $info = xarMod::apiFunc('pubsub','user','getevent', array('eventid' => $eventid));
+    $info = xarMod::apiFunc('pubsub', 'user', 'getevent', array('eventid' => $eventid));
     if (empty($info)) {
-        $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
-                    'event id', 'view_subscriptions', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for function #(2)() in module #(3)',
+            'event id',
+            'view_subscriptions',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -75,7 +93,9 @@ function pubsub_admin_view_subscriptions()
     $data['authid'] = xarSecGenAuthKey();
     $data['pager'] = '';
 
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    if (!xarSecurityCheck('AdminPubSub')) {
+        return;
+    }
 
     // The user API function is called
     $subscriptions = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', array('eventid'=>$eventid));
@@ -90,7 +110,4 @@ function pubsub_admin_view_subscriptions()
     // return the template variables defined in this template
 
     return $data;
-
 }
-
-?>

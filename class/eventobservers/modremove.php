@@ -23,11 +23,10 @@ class ModulesModRemoveObserver extends EventObserver implements ixarEventObserve
         // Delete any masks still around
         xarRemoveMasks($modName);
         // check and reset the defaultmodule if we're about to remove it
-        if ($modName == xarModVars::get('modules', 'defaultmodule')) 
-            xarModVars::set('modules', 'defaultmodule','base');
-        // let any hooks know the module is being removed    
+        if ($modName == xarModVars::get('modules', 'defaultmodule')) {
+            xarModVars::set('modules', 'defaultmodule', 'base');
+        }
+        // let any hooks know the module is being removed
         xarHooks::notify('ModuleRemove', array('objectid' => $modName, 'module' => $modName));
-
     }
 }
-?>

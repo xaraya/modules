@@ -22,19 +22,26 @@ sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_admin_display_subscription()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurityCheck('ManagePubSub')) {
+        return;
+    }
     xarTpl::setPageTitle('Display Subscription');
 
-    if (!xarVarFetch('name',       'str',    $name,            'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str', $name, 'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
-	
+    
     $data['tplmodule'] = 'pubsub';
     
     return $data;
 }
-?>

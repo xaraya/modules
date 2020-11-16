@@ -30,13 +30,19 @@ function pubsub_adminapi_deltemplate($args)
         $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
-                    join(', ',$invalid), 'deltemplate', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for function #(2)() in module #(3)',
+            join(', ', $invalid),
+            'deltemplate',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('DeletePubSub')) return;
+    if (!xarSecurityCheck('DeletePubSub')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -47,9 +53,9 @@ function pubsub_adminapi_deltemplate($args)
     $query = "DELETE FROM $pubsubtemplatestable
               WHERE id = ?";
     $result = $dbconn->Execute($query, array((int)$id));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

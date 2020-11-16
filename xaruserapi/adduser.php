@@ -35,26 +35,31 @@ function pubsub_userapi_adduser($args)
     if (!isset($actionid) || !is_numeric($actionid)) {
         $invalid[] = 'actionid';
     }
-    if ( (!isset($userid) || !is_numeric($userid)) && (!isset($email) || empty($email)) )
-    {
+    if ((!isset($userid) || !is_numeric($userid)) && (!isset($email) || empty($email))) {
         $invalid[] = 'userid or email';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'subscribe', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'subscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Check if we're subscribing an anonymous user, or a known userid
-    if ( (!isset($userid) || !is_numeric($userid)) && (isset($email) || !empty($email)) )
-    {
+    if ((!isset($userid) || !is_numeric($userid)) && (isset($email) || !empty($email))) {
         $userid = -1;
 
         //TODO: EMail validation, is this a valid email address
     }
 
     // Security check
-    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$eventid')) return;
+    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$eventid')) {
+        return;
+    }
 
     // Database information
     $dbconn =& xarDB::getConn();
@@ -65,7 +70,9 @@ function pubsub_userapi_adduser($args)
     // TODO: Just noting that this doesn't actually do anything other then a useless query
     $query = "SELECT pubsubid FROM $pubsubsubscriptionstable";
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Get next ID in table
     $nextId = $dbconn->GenID($pubsubsubscriptionstable);
@@ -81,12 +88,12 @@ function pubsub_userapi_adduser($args)
             VALUES (?,?,?,?," . time() . ",?)";
     $bindvars = array($nextId, $eventid, $userid, $actionid, $email);
     $result = $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // return pubsub ID
     $nextId = $dbconn->PO_Insert_ID($pubsubsubscriptionstable, 'pubsubid');
 
     return $nextId;
 }
-
-?>

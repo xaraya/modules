@@ -25,11 +25,17 @@
 function pubsub_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminPubSub')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarSecurityCheck('AdminPubSub')) {
+        return;
+    }
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        return;
+    }
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'pubsub'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'pubsub'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
@@ -37,15 +43,19 @@ function pubsub_admin_modifyconfig()
     $data['templates'][0] = xarML('not supported');
 
     // get the list of available templates
-    $templates = xarMod::apiFunc('pubsub','user','getalltemplates');
+    $templates = xarMod::apiFunc('pubsub', 'user', 'getalltemplates');
     foreach ($templates as $id => $name) {
         $data['templates'][$id] = $name;
     }
 
     $data['settings'] = array();
 
-    if (!xarVarFetch('phase', 'pre:trim:lower:str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab',   'pre:trim:lower:str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'pre:trim:lower:str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        return;
+    }
+    if (!xarVarFetch('tab', 'pre:trim:lower:str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     switch (strtolower($phase)) {
         case 'modify':
@@ -53,10 +63,14 @@ function pubsub_admin_modifyconfig()
             switch ($data['tab']) {
                 case 'general':
                 default:
-                	$data['regoptions'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=> 3, 'module'=> "pubsub"));
+                    $data['regoptions'] = xarMod::apiFunc('mailer', 'user', 'getall_mails', array('state'=> 3, 'module'=> "pubsub"));
                     // get the list of hooked modules
-                    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
-                                                   array('hookModName' => 'pubsub'));
+                    $hookedmodules = xarMod::apiFunc(
+                        'modules',
+                        'admin',
+                        'gethookedmodules',
+                        array('hookModName' => 'pubsub')
+                    );
                     if (isset($hookedmodules) && is_array($hookedmodules)) {
                         foreach ($hookedmodules as $modname => $value) {
                             // Get the list of all item types for this module (if any)
@@ -148,36 +162,48 @@ function pubsub_admin_modifyconfig()
                             }
                         }
                             */
+                        }
+                        break;
                     }
-                break;
-            }
             break;
         }
         break;
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
 
             switch ($data['tab']) {
                 case 'general':
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTpl::module('pubsub','admin','modifyconfig', $data);
+                        return xarTpl::module('pubsub', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
                     
                     // Get parameters
-                    xarVarFetch('settings',       'isset',    $settings,      '', XARVAR_DONT_SET);
-                    xarVarFetch('subjecttitle',   'checkbox', $subjecttitle,  false, XARVAR_DONT_SET);
-                    xarVarFetch('includechildren','checkbox', $includechildren,false, XARVAR_DONT_SET);
-                    xarVarFetch('allindigest',    'checkbox', $allindigest,   false, XARVAR_DONT_SET);
-                    xarVarFetch('usetemplateids', 'checkbox',  $usetemplateids, false, XARVAR_DONT_SET);
-					if (!xarVarFetch('sendnotice_subscription',        'checkbox', $sendnotice_subscription,        false, XARVAR_NOT_REQUIRED)) return;
-					if (!xarVarFetch('sendnotice_queue',        'checkbox', $sendnotice_queue,        false, XARVAR_NOT_REQUIRED)) return;
-					if (!xarVarFetch('enable_default_template',        'checkbox', $enable_default_template,        false, XARVAR_NOT_REQUIRED)) return;
-					if (!xarVarFetch('recognized_events',        'str', $recognized_events,        '', XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('debugmode',  'checkbox', $debugmode, xarModVars::get('pubsub', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
+                    xarVarFetch('settings', 'isset', $settings, '', XARVAR_DONT_SET);
+                    xarVarFetch('subjecttitle', 'checkbox', $subjecttitle, false, XARVAR_DONT_SET);
+                    xarVarFetch('includechildren', 'checkbox', $includechildren, false, XARVAR_DONT_SET);
+                    xarVarFetch('allindigest', 'checkbox', $allindigest, false, XARVAR_DONT_SET);
+                    xarVarFetch('usetemplateids', 'checkbox', $usetemplateids, false, XARVAR_DONT_SET);
+                    if (!xarVarFetch('sendnotice_subscription', 'checkbox', $sendnotice_subscription, false, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('sendnotice_queue', 'checkbox', $sendnotice_queue, false, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('enable_default_template', 'checkbox', $enable_default_template, false, XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('recognized_events', 'str', $recognized_events, '', XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('debugmode', 'checkbox', $debugmode, xarModVars::get('pubsub', 'debugmode'), XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
 
                     if (isset($settings) && is_array($settings)) {
                         foreach ($settings as $name => $value) {
@@ -190,10 +216,10 @@ function pubsub_admin_modifyconfig()
                     } else {
                         xarModVars::set('pubsub','SupportShortURLs',1);
                     }*/
-                    xarModVars::set('pubsub', 'subjecttitle',$subjecttitle);
-                    xarModVars::set('pubsub', 'includechildren',$includechildren);
-                    xarModVars::set('pubsub', 'usetemplateids',$usetemplateids);
-                    xarModVars::set('pubsub', 'allindigest',$allindigest);
+                    xarModVars::set('pubsub', 'subjecttitle', $subjecttitle);
+                    xarModVars::set('pubsub', 'includechildren', $includechildren);
+                    xarModVars::set('pubsub', 'usetemplateids', $usetemplateids);
+                    xarModVars::set('pubsub', 'allindigest', $allindigest);
                     xarModVars::set('pubsub', 'sendnotice_subscription', $sendnotice_subscription);
                     xarModVars::set('pubsub', 'sendnotice_queue', $sendnotice_queue);
                     xarModVars::set('pubsub', 'enable_default_template', $enable_default_template);
@@ -201,34 +227,52 @@ function pubsub_admin_modifyconfig()
                     xarModVars::set('pubsub', 'debugmode', $debugmode);
 
                     if (xarMod::isAvailable('scheduler')) {
-                        if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) {
+                            return;
+                        }
                         // see if we have a scheduler job running to process the pubsub queue
-                        $job = xarMod::apiFunc('scheduler','user','get',
-                                             array('module' => 'pubsub',
+                        $job = xarMod::apiFunc(
+                            'scheduler',
+                            'user',
+                            'get',
+                            array('module' => 'pubsub',
                                                    'type'   => 'admin',
-                                                   'func'   => 'processq'));
+                                                   'func'   => 'processq')
+                        );
                         if (empty($job) || empty($job['interval'])) {
                             if (!empty($interval)) {
                                 // create a scheduler job
-                                xarMod::apiFunc('scheduler','admin','create',
-                                              array('module' => 'pubsub',
+                                xarMod::apiFunc(
+                                    'scheduler',
+                                    'admin',
+                                    'create',
+                                    array('module' => 'pubsub',
                                                     'type' => 'admin',
                                                     'func' => 'processq',
-                                                    'interval' => $interval));
+                                                    'interval' => $interval)
+                                );
                             }
                         } elseif (empty($interval)) {
                             // delete the scheduler job
-                            xarMod::apiFunc('scheduler','admin','delete',
-                                          array('module' => 'pubsub',
+                            xarMod::apiFunc(
+                                'scheduler',
+                                'admin',
+                                'delete',
+                                array('module' => 'pubsub',
                                                 'type' => 'admin',
-                                                'func' => 'processq'));
+                                                'func' => 'processq')
+                            );
                         } elseif ($interval != $job['interval']) {
                             // update the scheduler job
-                            xarMod::apiFunc('scheduler','admin','update',
-                                          array('module' => 'pubsub',
+                            xarMod::apiFunc(
+                                'scheduler',
+                                'admin',
+                                'update',
+                                array('module' => 'pubsub',
                                                 'type' => 'admin',
                                                 'func' => 'processq',
-                                                'interval' => $interval));
+                                                'interval' => $interval)
+                            );
                         }
                     }
 
@@ -243,12 +287,16 @@ function pubsub_admin_modifyconfig()
     // Bug 4777 $data['SupportShortURLs'] = xarModVars::get('pubsub','SupportShortURLs');
 
     if (xarMod::isAvailable('scheduler')) {
-        $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
+        $data['intervals'] = xarMod::apiFunc('scheduler', 'user', 'intervals');
         // see if we have a scheduler job running to process the pubsub queue
-        $job = xarMod::apiFunc('scheduler','user','get',
-                             array('module' => 'pubsub',
+        $job = xarMod::apiFunc(
+            'scheduler',
+            'user',
+            'get',
+            array('module' => 'pubsub',
                                    'type' => 'admin',
-                                   'func' => 'processq'));
+                                   'func' => 'processq')
+        );
         if (empty($job) || empty($job['interval'])) {
             $data['interval'] = '';
         } else {
@@ -261,5 +309,3 @@ function pubsub_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-
-?>

@@ -34,13 +34,20 @@ function pubsub_userapi_updatesubscription($args)
         $invalid[] = 'objectid';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'updatesubscription', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'updatesubscription',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All:$pubsubid')) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All:$pubsubid')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -52,8 +59,10 @@ function pubsub_userapi_updatesubscription($args)
               SET actionid = ?
               WHERE pubsubid = ?";
     $bindvars=array($actionid, $pubsubid);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
@@ -72,11 +81,18 @@ function pubsub_userapi_delsubscriptions($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($userid) || !is_numeric($userid)) $invalid[] = 'userid';
+    if (!isset($userid) || !is_numeric($userid)) {
+        $invalid[] = 'userid';
+    }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'delsubscriptions', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'delsubscriptions',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -90,9 +106,9 @@ function pubsub_userapi_delsubscriptions($args)
               WHERE userid = ?";
     $bindvars=array($userid);
     $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

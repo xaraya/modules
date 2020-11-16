@@ -33,5 +33,3 @@ function pubsub_xartables()
 
     return $xartable;
 }
-
-?>

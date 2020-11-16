@@ -33,21 +33,32 @@ function pubsub_userapi_subscribe($args)
 
     // Argument check
     $invalid = array();
-    if (!isset($modid))                    { $invalid[] = 'modid'; }
-    if (!isset($cid))                      { $invalid[] = 'cid'; }
-    if (!isset($itemtype))                 { $invalid[] = 'itemtype'; }
-    if (!isset($userid) && !isset($email)) { $invalid[] = 'userid/email'; }
+    if (!isset($modid)) {
+        $invalid[] = 'modid';
+    }
+    if (!isset($cid)) {
+        $invalid[] = 'cid';
+    }
+    if (!isset($itemtype)) {
+        $invalid[] = 'itemtype';
+    }
+    if (!isset($userid) && !isset($email)) {
+        $invalid[] = 'userid/email';
+    }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-        join(', ',$invalid), 'subscribe', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(2)() in module #(3)',
+            join(', ', $invalid),
+            'subscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
-    if( !isset($userid) && isset($email) && !empty($email) )
-    {
+    if (!isset($userid) && isset($email) && !empty($email)) {
         $userid = -1;
-        //TODO: Email validation to make sure this is a valid looking email address
-    } elseif ( !isset($email) ) {
+    //TODO: Email validation to make sure this is a valid looking email address
+    } elseif (!isset($email)) {
         $email = '';
     }
 
@@ -58,35 +69,45 @@ function pubsub_userapi_subscribe($args)
     if (!isset($actionid)) {
         $actionid = 1;
     }
-    if (!isset($groupdescr))
+    if (!isset($groupdescr)) {
         $groupdescr = 'Subscribe';
+    }
 
     // check if we already have an event for this, or create it if necessary
-    $eventid = xarMod::apiFunc('pubsub','admin','checkevent',
-                             array('modid' => $modid,
+    $eventid = xarMod::apiFunc(
+        'pubsub',
+        'admin',
+        'checkevent',
+        array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'cid' => $cid,
                                    'extra' => $extra,
-                                   'groupdescr' => $groupdescr));
-    if (empty($eventid)) return; // throw back
+                                   'groupdescr' => $groupdescr)
+    );
+    if (empty($eventid)) {
+        return;
+    } // throw back
 
-// TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
-// AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
-    if (!xarMod::apiFunc('pubsub',
-                       'user',
-                       'adduser',
-                        array('eventid' => $eventid
+    // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
+    // AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
+    if (!xarMod::apiFunc(
+        'pubsub',
+        'user',
+        'adduser',
+        array('eventid' => $eventid
                              ,'actionid' => $actionid
                              ,'userid' => $userid
                              ,'email' => $email
-                              ))) {
-        $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-                     'adduser', 'subscribe', 'Pubsub');
+                              )
+    )) {
+        $msg = xarML(
+            'Bad return from #(1) in function #(2)() in module #(3)',
+            'adduser',
+            'subscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     return true;
-
 } // END subscribe
-
-?>

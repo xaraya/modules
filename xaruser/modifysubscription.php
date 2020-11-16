@@ -25,13 +25,27 @@
  */
 function pubsub_user_modifysubscription()
 {
-    if (!xarVarFetch('modid',     'int',$modid,FALSE)) return;
-    if (!xarVarFetch('cid',       'int',$cid,FALSE)) return;
-    if (!xarVarFetch('itemtype',  'int',$itemtype,FALSE)) return;
-    if (!xarVarFetch('returnurl', 'str',$returnurl,FALSE)) return;
-    if (!xarVarFetch('subaction', 'int',$subaction,FALSE)) return;
-    if (!xarVarFetch('extra',     'str',$extra,'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('groupdescr','str',$groupdescr,'Subscribe',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modid', 'int', $modid, false)) {
+        return;
+    }
+    if (!xarVarFetch('cid', 'int', $cid, false)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'int', $itemtype, false)) {
+        return;
+    }
+    if (!xarVarFetch('returnurl', 'str', $returnurl, false)) {
+        return;
+    }
+    if (!xarVarFetch('subaction', 'int', $subaction, false)) {
+        return;
+    }
+    if (!xarVarFetch('extra', 'str', $extra, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('groupdescr', 'str', $groupdescr, 'Subscribe', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $returnurl = rawurldecode($returnurl);
 
@@ -43,23 +57,31 @@ function pubsub_user_modifysubscription()
 
     switch ($subaction) {
         case 0:
-            xarMod::apiFunc('pubsub','user','unsubscribe',
-                          array('modid'   => $modid
+            xarMod::apiFunc(
+                'pubsub',
+                'user',
+                'unsubscribe',
+                array('modid'   => $modid
                                ,'itemtype'=> $itemtype
                                ,'cid'     => $cid
                                ,'extra'   => $extra
                                ,'userid'  => $userid
-                               ));
+                               )
+            );
             break;
         case 1:
-            xarMod::apiFunc('pubsub','user','subscribe',
-                          array('modid'     => $modid
+            xarMod::apiFunc(
+                'pubsub',
+                'user',
+                'subscribe',
+                array('modid'     => $modid
                                ,'itemtype'  => $itemtype
                                ,'cid'       => $cid
                                ,'extra'     => $extra
                                ,'groupdescr'=> $groupdescr
                                ,'userid'    => $userid
-                               ));
+                               )
+            );
             break;
         default:
             // do nothing
@@ -69,5 +91,3 @@ function pubsub_user_modifysubscription()
     xarController::redirect($returnurl);
     return true;
 }
-
-?>

@@ -33,7 +33,9 @@ function pubsub_adminapi_process_queue_digest($args)
               FROM $pubsubtemplatestable
               WHERE name= 'wrapper'";
     $result   = $dbconn->Execute($query);
-    if (!$result) $compiled ='<?php echo $contents; ?>';
+    if (!$result) {
+        $compiled ='<?php echo $contents; ?>';
+    }
     $compiled = $result->fields[0];
 
     // Get all jobs in pending state
@@ -45,7 +47,9 @@ function pubsub_adminapi_process_queue_digest($args)
               FROM $pubsubprocesstable
               WHERE status = 'pending'";
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
@@ -57,13 +61,17 @@ function pubsub_adminapi_process_queue_digest($args)
 
     // now start building the digest
     while (!$result->EOF) {
-        list($id,$pubsub_id,$object_id,$template_id) = $result->fields;
+        list($id, $pubsub_id, $object_id, $template_id) = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
-        $message= xarMod::apiFunc('pubsub','admin','runjobdigest',
-                      array('id' => $id,
+        $message= xarMod::apiFunc(
+            'pubsub',
+            'admin',
+            'runjobdigest',
+            array('id' => $id,
                             'pubsub_id' => $pubsub_id,
                             'object_id' => $object_id,
-                            'template_id' => $template_id));
+                            'template_id' => $template_id)
+        );
         if (!isset($digest[$message['email']])) {
             $digest[$message['email']] = $message['content'] ;
         } else {
@@ -84,25 +92,28 @@ function pubsub_adminapi_process_queue_digest($args)
 
     $fmail = xarModVars::get('role', 'adminmail');
     $fname = xarModVars::get('role', 'adminmail');
-    $sitename = xarModVars::get('themes','SiteName');
+    $sitename = xarModVars::get('themes', 'SiteName');
     $subject = xarML('New articles from').' '.$sitename;
 
     foreach ($digest as $email => $content) {
+        $tplData = array();
+        $tplData['contents'] = $content;
 
-    $tplData = array();
-    $tplData['contents'] = $content;
-
-    $html = xarTplString($compiled, $tplData);
-    $plaintext = strip_tags($html);
-        if (!xarMod::apiFunc('mail',
-                           'admin',
-                           'sendmail',
-                           array('info'     => $email,
+        $html = xarTplString($compiled, $tplData);
+        $plaintext = strip_tags($html);
+        if (!xarMod::apiFunc(
+            'mail',
+            'admin',
+            'sendmail',
+            array('info'     => $email,
                                  'name'     => $name[$email],
                                  'subject'  => $subject,
                                  'message'  => $plaintext,
                                  'from'     => $fmail,
-                                 'fromname' => $fname))) return;
+                                 'fromname' => $fname)
+        )) {
+            return;
+        }
         /*
         foreach($handle[$email] as $key=>$value) {
             if (!isset($handleverify[$id])) {
@@ -115,12 +126,13 @@ function pubsub_adminapi_process_queue_digest($args)
     }
     foreach ($handlecount as $id=> $value) {
 //      if ($value = $handleverify[$id]) {
-           xarMod::apiFunc('pubsub','admin','deljob',
-                         array('id' => $id));
+        xarMod::apiFunc(
+            'pubsub',
+            'admin',
+            'deljob',
+            array('id' => $id)
+        );
 //        }
     }
     return $count;
-
 } // END processq
-
-?>

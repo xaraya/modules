@@ -31,8 +31,12 @@ function pubsub_adminapi_deljob($args)
         $invalid[] = 'id';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'deljob', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'deljob',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -51,9 +55,9 @@ function pubsub_adminapi_deljob($args)
     $query = "DELETE FROM $pubsubprocesstable
               WHERE id = ?";
     $result = $dbconn->Execute($query, array((int)$id));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

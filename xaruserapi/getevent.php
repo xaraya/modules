@@ -26,12 +26,19 @@ function pubsub_userapi_getevent($args)
     extract($args);
 
     if (empty($eventid) || !is_numeric($eventid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'event id', 'user', 'getevent', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'event id',
+            'user',
+            'getevent',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
-    if (!xarModAPILoad('categories','user')) return;
+    if (!xarModAPILoad('categories', 'user')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -54,11 +61,15 @@ function pubsub_userapi_getevent($args)
                   ON $pubsubeventstable.cid = $categoriestable.cid
                WHERE eventid = ?";
     $result = $dbconn->Execute($query, array((int)$eventid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $info = array();
 
-    if ($result->EOF) return false;
+    if ($result->EOF) {
+        return false;
+    }
 
     list($info['modid'],
          $info['modname'],
@@ -70,5 +81,3 @@ function pubsub_userapi_getevent($args)
 
     return $info;
 }
-
-?>

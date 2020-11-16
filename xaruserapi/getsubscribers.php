@@ -62,27 +62,18 @@ function pubsub_userapi_getsubscribers($args)
                  AND $pubsubeventstable.eventid = $eventid";
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($username
-            ,$modname
-            ,$modid
-            ,$itemtype
-            ,$cid
-            ,$subdate
-            ,$pubsubid
-            ,$email
-            ,$userid
+        list($username, $modname, $modid, $itemtype, $cid, $subdate, $pubsubid, $email, $userid
            ) = $result->fields;
-        if (xarSecurityCheck('AdminPubSub', 0))
-        {
-            if( $userid == -1 )
-            {
-                $emailinfo = explode(' ',$email,2);
+        if (xarSecurityCheck('AdminPubSub', 0)) {
+            if ($userid == -1) {
+                $emailinfo = explode(' ', $email, 2);
                 $username    = $emailinfo[0];
-                if( isset($emailinfo[1]) )
-                {
+                if (isset($emailinfo[1])) {
                     $displayname = $emailinfo[1];
                 } else {
                     $displayname = '';
@@ -106,7 +97,4 @@ function pubsub_userapi_getsubscribers($args)
     $result->Close();
 
     return $subscriptions;
-
 }
-
-?>

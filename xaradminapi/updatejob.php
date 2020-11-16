@@ -47,13 +47,19 @@ function pubsub_adminapi_updatejob($args)
         $invalid[] = 'status';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'updatejob', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'updatejob',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:$id:All")) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:$id:All")) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -66,11 +72,11 @@ function pubsub_adminapi_updatejob($args)
                   objectid = ?,
                   status = ?
             WHERE id = ?";
-        $bindvars = array((int)$pubsubid, (int)$objectid, $status, $id);
-        $result = $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    $bindvars = array((int)$pubsubid, (int)$objectid, $status, $id);
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     return true;
 }
-
-?>

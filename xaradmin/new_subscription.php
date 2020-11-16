@@ -21,10 +21,16 @@
     
     function pubsub_admin_new_subscription()
     {
-        if (!xarSecurityCheck('AddPubSub')) return;
+        if (!xarSecurityCheck('AddPubSub')) {
+            return;
+        }
 
-        if (!xarVarFetch('name',       'str',    $name,            'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('name', 'str', $name, 'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'pubsub';
@@ -32,23 +38,24 @@
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
             
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('pubsub','admin','new_subscription', $data);        
+                return xarTplModule('pubsub', 'admin', 'new_subscription', $data);
             } else {
                 // Good data: create the item
                 $item = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('pubsub','admin','view_subscriptions'));
+                xarController::redirect(xarModURL('pubsub', 'admin', 'view_subscriptions'));
                 return true;
             }
         }
         return $data;
     }
-?>

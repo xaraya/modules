@@ -37,4 +37,3 @@ $modversion['dependencyinfo'] = array(
                                         'minversion' => '1.0.0'
                                      ),
                                       );
-?>

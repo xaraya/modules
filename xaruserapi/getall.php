@@ -29,7 +29,7 @@ function pubsub_userapi_getall($args)
 
     // Load categories API
     if (!xarModAPILoad('categories', 'user')) {
-        $msg = xarML('Unable to load #(1) #(2) API','categories','user');
+        $msg = xarML('Unable to load #(1) #(2) API', 'categories', 'user');
         throw new Exception($msg);
     }
 
@@ -60,7 +60,9 @@ function pubsub_userapi_getall($args)
                     ,$categoriestable.id";
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $modname, $itemtype, $catname, $cid, $numsubscriptions) = $result->fields;
@@ -79,5 +81,3 @@ function pubsub_userapi_getall($args)
 
     return $events;
 }
-
-?>

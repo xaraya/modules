@@ -46,5 +46,3 @@ class PubsubBaseObserver extends HookObserver implements ixarEventObserver
         return $template_id;
     }
 }
-
-?>

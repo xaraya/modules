@@ -24,7 +24,9 @@ class PubsubItemDeleteObserver extends PubsubBaseObserver implements ixarEventOb
         try {
             $valid_array = $this->validate($extrainfo);
             // If validation failed, just return to sender
-            if (!$valid_array) return $extrainfo;
+            if (!$valid_array) {
+                return $extrainfo;
+            }
             // Validation succeeded; take the result
             $extrainfo = $valid_array;
         } catch (Exception $e) {
@@ -36,8 +38,11 @@ class PubsubItemDeleteObserver extends PubsubBaseObserver implements ixarEventOb
         $template_id = $this->getTemplate($extrainfo);
 
         // Process the event (i.e. create a job for each event)
-        xarMod::apiFunc('pubsub','admin','processevent',
-                       array('module_id'   => $extrainfo['module_id'],
+        xarMod::apiFunc(
+            'pubsub',
+            'admin',
+            'processevent',
+            array('module_id'   => $extrainfo['module_id'],
                              'itemtype'    => $extrainfo['itemtype'],
                              'cid'         => $extrainfo['cid'],
                              'itemid'      => $extrainfo['itemid'],
@@ -47,10 +52,10 @@ class PubsubItemDeleteObserver extends PubsubBaseObserver implements ixarEventOb
                              'event_type'  => 'itemdelete',
                              'url'         => $extrainfo['url'],
                              'state'       => 2
-                             ));
+                             )
+        );
                          
         // The subject expects an array of extrainfo: whether or not the event was created, we go on.
         return $extrainfo;
     }
 }
-?>

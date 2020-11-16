@@ -19,8 +19,10 @@
  */
 function pubsub_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminPubSub',0)) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminPubSub', 0)) {
+        return;
+    }
 
     $data=array();
 
@@ -28,7 +30,5 @@ function pubsub_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTplModule('pubsub', 'admin', 'main', $data,'main');
+    return xarTplModule('pubsub', 'admin', 'main', $data, 'main');
 }
-
-?>

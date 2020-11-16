@@ -39,16 +39,23 @@ function pubsub_user_remove($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
-        join(', ',$invalid), 'remove', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'remove',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
-    if (!xarMod::apiFunc('pubsub',
-                       'user',
-                       'deluser',
-                        array('eventid' => $eventid)))
-        return; // throw back
+    if (!xarMod::apiFunc(
+        'pubsub',
+        'user',
+        'deluser',
+        array('eventid' => $eventid)
+    )) {
+        return;
+    } // throw back
 
     return true;
 }
@@ -67,8 +74,13 @@ function pubsub_user_subscribed($args)
         $invalid[] = 'actionid';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'subscribed', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'subscribed',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -76,4 +88,3 @@ function pubsub_user_subscribed($args)
 
     return $data;
 }
-?>

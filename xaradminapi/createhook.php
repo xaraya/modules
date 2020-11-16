@@ -29,13 +29,21 @@ function pubsub_adminapi_createhook($args)
 
     // This has to be an argument
     if (empty($objectid)) {
-        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     'object ID', 'createhook', 'pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(2)() in module #(3)',
+            'object ID',
+            'createhook',
+            'pubsub'
+        );
         throw new Exception($msg);
     }
     if (!isset($extrainfo)) {
-        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     'extrainfo', 'createhook', 'pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(2)() in module #(3)',
+            'extrainfo',
+            'createhook',
+            'pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -47,7 +55,9 @@ function pubsub_adminapi_createhook($args)
         $modname = xarModGetName();
     }
     $modid = xarModGetIDFromName($modname);
-    if (!$modid) return $extrainfo; // throw back
+    if (!$modid) {
+        return $extrainfo;
+    } // throw back
 
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -55,17 +65,17 @@ function pubsub_adminapi_createhook($args)
         $itemtype = 0;
     }
 
-    if ($createwithstatus = xarModVars::get('pubsub',"$modname.$itemtype.createwithstatus") ) {
+    if ($createwithstatus = xarModVars::get('pubsub', "$modname.$itemtype.createwithstatus")) {
         if ($createwithstatus == 1) {
-            if (isset($extrainfo['status']) & $extrainfo['status'] < 2 ) {
+            if (isset($extrainfo['status']) & $extrainfo['status'] < 2) {
                 return $extrainfo;
             }
         }
     }
 
-    $templateid = xarModVars::get('pubsub',"$modname.$itemtype.create");
+    $templateid = xarModVars::get('pubsub', "$modname.$itemtype.create");
     if (!isset($templateid)) {
-        $templateid = xarModVars::get('pubsub',"$modname.create");
+        $templateid = xarModVars::get('pubsub', "$modname.create");
     }
     // if there's no 'create' template defined for this module(+itemtype), we're done here
     if (empty($templateid)) {
@@ -83,7 +93,7 @@ function pubsub_adminapi_createhook($args)
     if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
         $cid = $extrainfo['cid'];
     } elseif (isset($extrainfo['cids'][0]) && is_numeric($extrainfo['cids'][0])) {
-    // TODO: loop over all categories
+        // TODO: loop over all categories
         $cid = $extrainfo['cids'][0];
     } else {
         // Do nothing if we do not get a cid.
@@ -91,36 +101,37 @@ function pubsub_adminapi_createhook($args)
     }
 
     $extra = null;
-/* */
-// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+    /* */
+    // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
     if ($modname == 'comments') {
         $extra = '';
         if (isset($extrainfo['current_module']) && is_string($extrainfo['current_module'])) {
             $extra = xarModGetIDFromName($extrainfo['current_module']);
         }
-        if(isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
+        if (isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
             $extra .= '-' . $extrainfo['current_itemtype'];
         }
-        if(isset($extrainfo['current_itemid']) && is_numeric($extrainfo['current_itemid'])) {
+        if (isset($extrainfo['current_itemid']) && is_numeric($extrainfo['current_itemid'])) {
             $extra .= '-' . $extrainfo['current_itemid'];
         }
     }
-/* */
+    /* */
 
     // process the event (i.e. create a job for each subscription)
-    if (!xarMod::apiFunc('pubsub','admin','processevent',
-                       array('modid' => $modid,
+    if (!xarMod::apiFunc(
+        'pubsub',
+        'admin',
+        'processevent',
+        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'cid' => $cid,
                              'extra' => $extra,
                              'objectid' => $objectid,
-                             'templateid' => $templateid))) {
+                             'templateid' => $templateid)
+    )) {
         // oops - but life goes on in hook functions :)
         return $extrainfo;
     }
 
     return $extrainfo;
-
 } // END createhook
-
-?>

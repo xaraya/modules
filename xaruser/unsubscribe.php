@@ -29,10 +29,18 @@ function pubsub_user_unsubscribe($args)
         return;
     }
 
-    if (!xarVarFetch('modid', 'int:1:', $modid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cid', 'int:1:', $cid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modid', 'int:1:', $modid, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('cid', 'int:1:', $cid, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
 
     $returnurl = rawurldecode($returnurl);
@@ -40,14 +48,26 @@ function pubsub_user_unsubscribe($args)
     extract($args);
     // Argument check
     $invalid = array();
-    if (!isset($returnurl) || !is_string($returnurl)) $invalid[] = 'returnurl';
-    if (!isset($modid) || !is_numeric($modid)) $invalid[] = 'modid';
-    if (!isset($cid) || !is_numeric($cid)) $invalid[] = 'cid';
-    if (!isset($itemtype) || !is_numeric($itemtype)) $invalid[] = 'itemtype';
+    if (!isset($returnurl) || !is_string($returnurl)) {
+        $invalid[] = 'returnurl';
+    }
+    if (!isset($modid) || !is_numeric($modid)) {
+        $invalid[] = 'modid';
+    }
+    if (!isset($cid) || !is_numeric($cid)) {
+        $invalid[] = 'cid';
+    }
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $invalid[] = 'itemtype';
+    }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
-        join(', ',$invalid), 'unsubscribe', 'Pubsub');
+        $msg = xarML(
+            'Invalid #(1) in function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'unsubscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
@@ -68,22 +88,27 @@ function pubsub_user_unsubscribe($args)
 
     $bindvars = array((int)$modid, $itemtype, (int)$userid, $cid);
     $result = $dbconn->Execute($query, $bindvars);
-    if (!$result || $result->EOF) return;
+    if (!$result || $result->EOF) {
+        return;
+    }
 
     list($pubsubid) = $result->fields;
 
-    if (!xarMod::apiFunc('pubsub',
-                       'user',
-                       'deluser',
-                        array('pubsubid' => $pubsubid))) {
-        $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-                     'deluser', 'unsubscribe', 'Pubsub');
+    if (!xarMod::apiFunc(
+        'pubsub',
+        'user',
+        'deluser',
+        array('pubsubid' => $pubsubid)
+    )) {
+        $msg = xarML(
+            'Bad return from #(1) in function #(2)() in module #(3)',
+            'deluser',
+            'unsubscribe',
+            'Pubsub'
+        );
         throw new Exception($msg);
     }
 
     xarController::redirect($returnurl);
     return true;
-
 }
-
-?>
