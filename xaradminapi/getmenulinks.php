@@ -18,7 +18,7 @@
  */
 function comments_adminapi_getmenulinks()
 {
-    $menulinks[] = array('url'   => xarModURL(
+    $menulinks[] = array('url'   => xarController::URL(
         'comments',
         'admin',
         'stats'
@@ -27,7 +27,7 @@ function comments_adminapi_getmenulinks()
                          'label' => xarML('View Statistics'));
     /* Comment blacklist unavailable at 2005-10-12
     if (xarModVars::get('comments', 'useblacklist') == true){
-        $menulinks[] = Array('url'   => xarModURL('comments',
+        $menulinks[] = Array('url'   => xarController::URL('comments',
                                                   'admin',
                                                   'importblacklist'),
                              'title' => xarML('Import the latest blacklist'),
@@ -35,7 +35,7 @@ function comments_adminapi_getmenulinks()
     }
     */
 
-    $menulinks[] = array('url'   => xarModURL(
+    $menulinks[] = array('url'   => xarController::URL(
         'comments',
         'admin',
         'modifyconfig'

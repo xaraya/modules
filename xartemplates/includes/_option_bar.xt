@@ -6,10 +6,10 @@
     </p>
     <xar:set name="showoptions">xarModVars::get('comments','showoptions')</xar:set>
     <xar:if condition="empty($showoptions)">
-        <xar:if condition="xarModIsHooked('comments','roles', 0) and xarUserIsLoggedIn()">
+        <xar:if condition="xarModHooks::isHooked('comments','roles', 0) and xarUser::isLoggedIn()">
             <p class="xar-comments-note xar-sub">
                 Change Your Comments Rendering Settings
-                <a href="#xarModURL('roles', 'user', 'account')#">
+                <a href="#xarController::URL('roles', 'user', 'account')#">
                     here
                 </a>.
             </p>

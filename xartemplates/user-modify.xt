@@ -6,7 +6,7 @@
 
     <xar:data-display object="$object"/>
     <h3>Modify a comment</h3>
-    <form action="#xarModURL('comments', 'user', 'modify')#" method="post">
+    <form action="#xarController::URL('comments', 'user', 'modify')#" method="post">
         <div class="xar-ib-leftpanel">
             <xar:data-form object="$object"/>
             <div class="xar-row">

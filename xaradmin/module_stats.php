@@ -15,13 +15,13 @@ function comments_admin_module_stats()
 {
 
     // Security Check
-    if (!xarSecurityCheck('AdminComments')) {
+    if (!xarSecurity::check('AdminComments')) {
         return;
     }
-    if (!xarVarFetch('modid', 'int:1', $modid)) {
+    if (!xarVar::fetch('modid', 'int:1', $modid)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'int:0', $urlitemtype, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'int:0', $urlitemtype, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -41,7 +41,7 @@ function comments_admin_module_stats()
             $data['itemtypelabel'] = $mytypes[$urlitemtype]['label'];
         //$data['modlink'] = $mytypes[$urlitemtype]['url'];
         } else {
-            //$data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $urlitemtype));
+            //$data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $urlitemtype));
         }
     }
 
@@ -49,7 +49,7 @@ function comments_admin_module_stats()
     if (empty($numstats)) {
         $numstats = 100;
     }
-    if (!xarVarFetch('startnum', 'id', $startnum, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('startnum', 'id', $startnum, null, xarVar::DONT_SET)) {
         return;
     }
     if (empty($startnum)) {
@@ -57,7 +57,7 @@ function comments_admin_module_stats()
     }
 
     $args = array('modid' => $modid, 'numitems' => $numstats, 'startnum' => $startnum);
-    if (!xarVarFetch('itemtype', 'int', $itemtypearg, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'int', $itemtypearg, null, xarVar::NOT_REQUIRED)) {
         return;
     }
     if (isset($itemtypearg)) {
@@ -107,7 +107,7 @@ function comments_admin_module_stats()
         $stats[$itemid] = array();
         $stats[$itemid]['pageid'] = $itemid;
         $stats[$itemid]['total'] = $info['count'];
-        $stats[$itemid]['delete_url'] = xarModURL(
+        $stats[$itemid]['delete_url'] = xarController::URL(
             'comments',
             'admin',
             'delete',
@@ -137,7 +137,7 @@ function comments_admin_module_stats()
     } else {
         $dalltype = 'module';
     }
-    $data['delete_all_url']   = xarModURL(
+    $data['delete_all_url']   = xarController::URL(
         'comments',
         'admin',
         'delete',
@@ -165,7 +165,7 @@ function comments_admin_module_stats()
         $data['pager'] = xarTplPager::getPager(
             $startnum,
             $numitems,
-            xarModURL(
+            xarController::URL(
                                               'comments',
                                               'admin',
                                               'module_stats',

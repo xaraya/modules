@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:sec mask="ReplyComments" catch="false">
-      <form action="#xarModURL('comments', 'user', 'reply')#" method="post" name="post" id="post" onSubmit="submitonce(this)">
+      <form action="#xarController::URL('comments', 'user', 'reply')#" method="post" name="post" id="post" onSubmit="submitonce(this)">
         <div class="xar-ib-wrapper xar-accent-outline">
           <xar:if condition="$hooks['formdisplay'] ne ''">
           
@@ -20,10 +20,10 @@
               <p>
                   Name
                 :
-                <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
-                  <a href="#xarModURL('roles', 'user', 'display', array('id' => $package['role_id']))#">#$package['name']#</a>
-                  <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
-                    [ <a class="xar-norm" href="#xarModURL('authsystem', 'user', 'logout')#">
+                <xar:if condition="strtolower(xarUser::getVar('uname')) ne 'anonymous'">
+                  <a href="#xarController::URL('roles', 'user', 'display', array('id' => $package['role_id']))#">#$package['name']#</a>
+                  <xar:if condition="$receipt['action'] ne 'modify' and xarUser::isLoggedIn()">
+                    [ <a class="xar-norm" href="#xarController::URL('authsystem', 'user', 'logout')#">
                         Logout
                     </a> ]
                   </xar:if>

@@ -24,16 +24,16 @@
  */
 function comments_userapi_getoptions()
 {
-    if (!xarVarFetch('depth', 'int', $depth, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('depth', 'int', $depth, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('render', 'str', $render, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('render', 'str', $render, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('order', 'int', $order, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('order', 'int', $order, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('sortby', 'int', $sortby, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sortby', 'int', $sortby, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -51,7 +51,7 @@ function comments_userapi_getoptions()
         }
     } else {
         // Not doing user settings for now
-        /*if (xarUserIsLoggedIn()) {
+        /*if (xarUser::isLoggedIn()) {
             // Grab user's depth setting.
             $settings['depth'] = xarModUserVars::get('comments','depth');
         } else {*/
@@ -62,7 +62,7 @@ function comments_userapi_getoptions()
     if (isset($render) && !empty($render)) {
         $settings['render'] = $render;
     } else {
-        /*if (xarUserIsLoggedIn()) {
+        /*if (xarUser::isLoggedIn()) {
             // Grab user's depth setting.
             $settings['render'] = xarModUserVars::get('comments','render');
         } else {*/
@@ -73,7 +73,7 @@ function comments_userapi_getoptions()
     if (isset($order) && !empty($order)) {
         $settings['order'] = $order;
     } else {
-        /*if (xarUserIsLoggedIn()) {
+        /*if (xarUser::isLoggedIn()) {
             // Grab user's depth setting.
             $settings['order'] = xarModUserVars::get('comments','order');
         } else {*/
@@ -84,7 +84,7 @@ function comments_userapi_getoptions()
     if (isset($sortby) && !empty($sortby)) {
         $settings['sortby'] = $sortby;
     } else {
-        /*if (xarUserIsLoggedIn()) {
+        /*if (xarUser::isLoggedIn()) {
             // Grab user's depth setting.
             $settings['sortby'] = xarModUserVars::get('comments','sortby');
         } else {*/

@@ -10,7 +10,7 @@
                 #$loop:item['link']#
             </link>
             <pubDate>
-                #xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT", $loop:item['datetime'])#
+                #xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT", $loop:item['datetime'])#
             </pubDate>
             <!--
             <content:format rdf:resource="http://www.w3.org/1999/xhtml"/>

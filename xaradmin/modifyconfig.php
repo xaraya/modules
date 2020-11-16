@@ -21,12 +21,12 @@ function comments_admin_modifyconfig()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('Admincomments')) {
+    if (!xarSecurity::check('Admincomments')) {
         return;
     }
 
     // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
 
@@ -62,7 +62,7 @@ function comments_admin_modifyconfig()
             # the dynamicdata module, where the same check is done. Since both checks cannot simultaneously
             # be passed, (the act of checking resets the check) the one below is disabled in this example.
             #
-            //if (!xarSecConfirmAuthKey()) return;
+            //if (!xarSec::confirmAuthKey()) return;
 
             # --------------------------------------------------------
             #
@@ -77,7 +77,7 @@ function comments_admin_modifyconfig()
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('comments', 'admin', 'modifyconfig', $data);
+                return xarTpl::module('comments', 'admin', 'modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
@@ -95,16 +95,16 @@ function comments_admin_modifyconfig()
             #
             /*
                 // Get parameters from whatever input we need.  All arguments to this
-                // function should be obtained from xarVarFetch(), getting them
+                // function should be obtained from xarVar::fetch(), getting them
                 // from other places such as the environment is not allowed, as that makes
                 // assumptions that will not hold in future versions of Xaraya
-                if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVar::fetch('bold', 'checkbox', $bold, false, xarVar::NOT_REQUIRED)) return;
 
                 // Confirm authorisation code.  This checks that the form had a valid
                 // authorisation code attached to it.  If it did not then the function will
                 // proceed no further as it is possible that this is an attempt at sending
                 // in false data to the system
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSec::confirmAuthKey()) return;
 
                 xarModVars::set('comments', 'bold', $bold);
             */
@@ -129,7 +129,7 @@ function comments_admin_modifyconfig()
 
                 $item = $object->updateItem(array('itemid' => 0));
 
-                xarController::redirect(xarModURL('comments', 'admin', 'modifyconfig'));
+                xarController::redirect(xarController::URL('comments', 'admin', 'modifyconfig'));
 
             # --------------------------------------------------------
             #

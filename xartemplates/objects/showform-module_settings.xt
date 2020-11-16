@@ -109,7 +109,7 @@
     </fieldset>
 
 
-    <xar:if condition="xarModIsAvailable('filters')">
+    <xar:if condition="xarMod::isAvailable('filters')">
         <fieldset class="mod_settings" id="mod_settings_last">
             <h4>Filters Module:</h4>
             <xar:set name="name">'enable_filters'</xar:set>

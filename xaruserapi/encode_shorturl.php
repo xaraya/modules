@@ -12,10 +12,10 @@
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 /**
- * return the path for a short URL to xarModURL for this module
+ * return the path for a short URL to xarController::URL for this module
  *
  * @author the Comments module development team
- * @param $args the function and arguments passed to xarModURL
+ * @param $args the function and arguments passed to xarController::URL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
@@ -36,7 +36,7 @@ function comments_userapi_encode_shorturl($args)
     $path = '';
     // if we want to add some common arguments as URL parameters below
     $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
+    // we can't rely on xarMod::getName() here -> you must specify the modname !
     $module = 'comments';
 
     // specify some short URLs relevant to your module

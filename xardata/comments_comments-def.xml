@@ -40,7 +40,7 @@
       <id>5128</id>
       <label>Author</label>
       <type>username</type>
-      <defaultvalue>xarUserGetVar('uname')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>comments.author</source>
       <status>33</status>
       <seq>3</seq>

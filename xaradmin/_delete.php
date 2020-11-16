@@ -19,10 +19,10 @@
  */
 function comments_admin_delete()
 {
-    if (!xarSecurityCheck('AdminComments')) {
+    if (!xarSecurity::check('AdminComments')) {
         return;
     }
-    if (!xarVarFetch('dtype', 'str:1:', $dtype)) {
+    if (!xarVar::fetch('dtype', 'str:1:', $dtype)) {
         return;
     }
     $delete_args = array();
@@ -36,7 +36,7 @@ function comments_admin_delete()
 
         switch (strtolower($dtype)) {
             case 'object':
-                if (!xarVarFetch('objectid', 'int:1', $objectid)) {
+                if (!xarVar::fetch('objectid', 'int:1', $objectid)) {
                     return;
                 }
 
@@ -52,7 +52,7 @@ function comments_admin_delete()
             // the module id and the object id
             // no break
             case 'module':
-                if (!xarVarFetch('modid', 'int:1', $modid)) {
+                if (!xarVar::fetch('modid', 'int:1', $modid)) {
                     return;
                 }
 
@@ -60,7 +60,7 @@ function comments_admin_delete()
                     $msg = xarML('Invalid or Missing Parameter \'modid\'');
                     throw new BadParameterException($msg);
                 }
-                if (!xarVarFetch('itemtype', 'int:1', $itemtype)) {
+                if (!xarVar::fetch('itemtype', 'int:1', $itemtype)) {
                     return;
                 }
                 if (empty($itemtype)) {
@@ -80,7 +80,7 @@ function comments_admin_delete()
         }
     }
 
-    if (!xarVarFetch('submitted', 'str:1:', $submitted, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('submitted', 'str:1:', $submitted, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     // if we're gathering submitted info form the delete
@@ -90,22 +90,22 @@ function comments_admin_delete()
     if (isset($submitted) && !empty($submitted)) {
 
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
-        if (!xarVarFetch('choice', 'str:1:', $choice)) {
+        if (!xarVar::fetch('choice', 'str:1:', $choice)) {
             return;
         }
 
         // if choice isn't set or it has an incorrect value,
         // redirect back to the choice page
         if (!isset($choice) || !eregi('^(yes|no|true|false)$', $choice)) {
-            xarController::redirect(xarModURL('comments', 'admin', 'delete', $delete_args));
+            xarController::redirect(xarController::URL('comments', 'admin', 'delete', $delete_args));
         }
 
         if ($choice == 'yes' || $choice == 'true') {
-            if (!xarModAPILoad('comments', 'user')) {
+            if (!xarMod::apiLoad('comments', 'user')) {
                 die("COULDN'T LOAD API!!!");
             }
             $retval = true;
@@ -150,7 +150,7 @@ function comments_admin_delete()
             }
         } else {
             if (isset($modid)) {
-                xarController::redirect(xarModURL(
+                xarController::redirect(xarController::URL(
                     'comments',
                     'admin',
                     'module_stats',
@@ -158,12 +158,12 @@ function comments_admin_delete()
                                                     'itemtype' => empty($itemtype) ? null : $itemtype)
                 ));
             } else {
-                xarController::redirect(xarModURL('comments', 'admin', 'stats'));
+                xarController::redirect(xarController::URL('comments', 'admin', 'stats'));
             }
         }
 
         if (isset($modid) && strtolower($dtype) == 'object') {
-            xarController::redirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'comments',
                 'admin',
                 'module_stats',
@@ -171,13 +171,13 @@ function comments_admin_delete()
                                                 'itemtype' => empty($itemtype) ? null : $itemtype)
             ));
         } else {
-            xarController::redirect(xarModURL('comments', 'admin', 'stats'));
+            xarController::redirect(xarController::URL('comments', 'admin', 'stats'));
         }
     }
     // If we're here, then we haven't received authorization
     // to delete any comments yet - so here we ask for confirmation.
-    $output['authid'] = xarSecGenAuthKey();
-    $output['delete_url'] = xarModURL('comments', 'admin', 'delete', $delete_args);
+    $output['authid'] = xarSec::genAuthKey();
+    $output['delete_url'] = xarController::URL('comments', 'admin', 'delete', $delete_args);
 
     return $output;
 }

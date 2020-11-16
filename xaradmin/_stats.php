@@ -19,7 +19,7 @@ function comments_admin_stats()
 {
 
     // Security Check
-    if (!xarSecurityCheck('AdminComments')) {
+    if (!xarSecurity::check('AdminComments')) {
         return;
     }
 
@@ -58,24 +58,24 @@ function comments_admin_stats()
             }
             if ($itemtype == 0) {
                 $moditem['modname'] = ucwords($modinfo['displayname']);
-            //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','main');
+            //    $moditem['modlink'] = xarController::URL($modinfo['name'],'user','main');
             } else {
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 //    $moditem['modlink'] = $mytypes[$itemtype]['url'];
                 } else {
                     $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                    //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                    //    $moditem['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                 }
             }
-            $moditem['module_url'] = xarModURL(
+            $moditem['module_url'] = xarController::URL(
                 'comments',
                 'admin',
                 'module_stats',
                 array('modid' => $modid,
                                                      'itemtype' => empty($itemtype) ? null : $itemtype)
             );
-            $moditem['delete_url'] = xarModURL(
+            $moditem['delete_url'] = xarController::URL(
                 'comments',
                 'admin',
                 'delete',
@@ -89,7 +89,7 @@ function comments_admin_stats()
         }
     }
     $output['data']             = $data;
-    $output['delete_all_url']   = xarModURL(
+    $output['delete_all_url']   = xarController::URL(
         'comments',
         'admin',
         'delete',

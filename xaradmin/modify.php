@@ -20,16 +20,16 @@
  */
 function comments_admin_modify()
 {
-    if (!xarVarFetch('id', 'id', $id, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('id', 'id', $id, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('parent_url', 'str', $parent_url, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('parent_url', 'str', $parent_url, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('view', 'str', $data['view'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('view', 'str', $data['view'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -55,10 +55,10 @@ function comments_admin_modify()
     $check = $commentsobject->getItem(array('itemid' => $id));
     if (empty($check)) {
         $msg = 'There is no comment with an itemid of ' . $id;
-        return xarTplModule('base', 'message', 'notfound', array('msg' => $msg));
+        return xarTpl::module('base', 'message', 'notfound', array('msg' => $msg));
     }
 
-    if (!xarSecurityCheck('EditComments', 0)) {
+    if (!xarSecurity::check('EditComments', 0)) {
         return;
     }
 
@@ -70,25 +70,25 @@ function comments_admin_modify()
 
     $data['label'] = $object->label;
 
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     if ($data['confirm']) {
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
-            return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        if (!xarSec::confirmAuthKey()) {
+            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
         }
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
 
         if (!$isvalid) {
-            return xarTplModule('comments', 'admin', 'modify', $data);
+            return xarTpl::module('comments', 'admin', 'modify', $data);
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
-            return xarTplModule('comments', 'admin', 'modify', $data);
+            return xarTpl::module('comments', 'admin', 'modify', $data);
         } else {
             // Good data: update the item
 
@@ -99,7 +99,7 @@ function comments_admin_modify()
             if (!empty($data['view'])) {
                 xarController::redirect($values['parent_url']);
             } else {
-                xarController::redirect(xarModURL('comments', 'admin', 'modify', array('id'=>$id)));
+                xarController::redirect(xarController::URL('comments', 'admin', 'modify', array('id'=>$id)));
             }
             return true;
         }

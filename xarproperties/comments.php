@@ -35,7 +35,7 @@ class CommentsProperty extends DataProperty
 
     public function showInput(array $data = array())
     {
-        if (!xarSecurityCheck('ReadComments', 0)) {
+        if (!xarSecurity::check('ReadComments', 0)) {
             return;
         }
 
@@ -43,7 +43,7 @@ class CommentsProperty extends DataProperty
         if (!empty($data['id'])) {
             $id = $data['id'];
         } else {
-            xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('id', 'int:1:', $id, 0, xarVar::NOT_REQUIRED);
         }
 
         // and set the selected id to this one
@@ -63,14 +63,14 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['modid'])) {
             $data['modid'] = $header['modid'];
         } else {
-            xarVarFetch('modid', 'isset', $modid, null, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED);
             if (empty($modid)) {
-                $modid = xarMod::getRegID(xarModGetName());
+                $modid = xarMod::getRegID(xarMod::getName());
             }
             $data['modid'] = $modid;
             $header['modid'] = $modid;
         }
-        $header['modname'] = xarModGetNameFromID($header['modid']);
+        $header['modname'] = xarMod::getNameFromID($header['modid']);
 
         // Fetch the itemtype
         if (isset($data['itemtype'])) {
@@ -78,7 +78,7 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['itemtype'])) {
             $data['itemtype'] = $header['itemtype'];
         } else {
-            xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED);
             $data['itemtype'] = $itemtype;
             $header['itemtype'] = $itemtype;
         }
@@ -99,7 +99,7 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['objectid'])) {
             $data['objectid'] = $header['objectid'];
         } else {
-            xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('objectid', 'isset', $objectid, null, xarVar::NOT_REQUIRED);
             $data['objectid'] = $objectid;
             $header['objectid'] = $objectid;
         }
@@ -109,18 +109,18 @@ class CommentsProperty extends DataProperty
         } elseif (isset($header['selected_id'])) {
             $data['selected_id'] = $header['selected_id'];
         } else {
-            xarVarFetch('selected_id', 'isset', $selected_id, null, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('selected_id', 'isset', $selected_id, null, xarVar::NOT_REQUIRED);
             $data['selected_id'] = $selected_id;
             $header['selected_id'] = $selected_id;
         }
         if (!isset($data['thread'])) {
-            xarVarFetch('thread', 'isset', $thread, null, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('thread', 'isset', $thread, null, xarVar::NOT_REQUIRED);
         }
         if (isset($thread) && $thread == 1) {
             $header['cid'] = $cid;
         }
 
-        if (!xarModLoad('comments', 'renderer')) {
+        if (!xarMod::load('comments', 'renderer')) {
             $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
             throw new BadParameterException($msg);
         }
@@ -163,25 +163,25 @@ class CommentsProperty extends DataProperty
         // run text and title through transform hooks
         if (!empty($package['comments'])) {
             foreach ($package['comments'] as $key => $comment) {
-                $comment['text'] = xarVarPrepHTMLDisplay($comment['text']);
-                $comment['title'] = xarVarPrepForDisplay($comment['title']);
+                $comment['text'] = xarVar::prepHTMLDisplay($comment['text']);
+                $comment['title'] = xarVar::prepForDisplay($comment['title']);
                 // say which pieces of text (array keys) you want to be transformed
                 $comment['transform'] = array('text');
                 // call the item transform hooks
                 // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-                $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
+                $package['comments'][$key] = xarModHooks::call('item', 'transform', $comment['id'], $comment, 'comments');
             }
         }
 
         $header['input-title']            = xarML('Post a new comment');
 
         $package['settings']['max_depth'] = _COM_MAX_DEPTH;
-        $package['role_id']               = xarUserGetVar('id');
-        $package['uname']                 = xarUserGetVar('uname');
-        $package['name']                  = xarUserGetVar('name');
-        // Bug 6175: removed xarVarPrepForDisplay() from the title, as articles already
+        $package['role_id']               = xarUser::getVar('id');
+        $package['uname']                 = xarUser::getVar('uname');
+        $package['name']                  = xarUser::getVar('name');
+        // Bug 6175: removed xarVar::prepForDisplay() from the title, as articles already
         // does this *but* maybe needs fixing in articles instead?
-        $package['new_title']             = xarVarGetCached('Comments.title', 'title');
+        $package['new_title']             = xarVar::getCached('Comments.title', 'title');
 
         // Let's honour the phpdoc entry at the top :-)
         /*if(isset($data['returnurl'])) {
@@ -208,12 +208,12 @@ class CommentsProperty extends DataProperty
             $header['objectlink'] = $itemlinks[$header['objectid']]['url'];
             $header['objecttitle'] = $itemlinks[$header['objectid']]['label'];
         } else {
-            $url = xarModURL($modinfo['name'], 'user', 'main');
+            $url = xarController::URL($modinfo['name'], 'user', 'main');
         }
 
         /*$receipt['returnurl'] = array('encoded' => rawurlencode($url), 'decoded' => $url);*/
 
-        $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
+        $receipt['post_url']              = xarController::URL('comments', 'user', 'reply');
         $receipt['action']                = 'display';
 
         $hooks = xarMod::apiFunc('comments', 'user', 'formhooks');

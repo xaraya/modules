@@ -51,7 +51,7 @@ function comments_adminapi_delete_node($args)
     $args['module'] = 'comments';
     $args['itemtype'] = $itemtype;
     $args['itemid'] = $node;
-    xarModCallHooks('item', 'delete', $node, $args);
+    xarModHooks::call('item', 'delete', $node, $args);
 
     //Now delete the item ....
     $dbconn = xarDB::getConn();

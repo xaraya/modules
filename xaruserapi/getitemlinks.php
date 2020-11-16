@@ -23,7 +23,7 @@ function comments_userapi_getitemlinks($args)
 {
     extract($args);
     $itemlinks = array();
-    if (!xarSecurityCheck('ReadComments', 0)) {
+    if (!xarSecurity::check('ReadComments', 0)) {
         return $itemlinks;
     }
 
@@ -42,14 +42,14 @@ function comments_userapi_getitemlinks($args)
         } else {
             $title = xarML('Comment #(1)', $itemid);
         }
-        $itemlinks[$itemid] = array('url'   => xarModURL(
+        $itemlinks[$itemid] = array('url'   => xarController::URL(
             'comments',
             'user',
             'display',
             array('id' => $itemid)
         ),
                                     'title' => xarML('Display Comment'),
-                                    'label' => xarVarPrepForDisplay($title));
+                                    'label' => xarVar::prepForDisplay($title));
     }
     return $itemlinks;
 }

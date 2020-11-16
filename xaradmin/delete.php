@@ -19,23 +19,23 @@
  */
 function comments_admin_delete()
 {
-    if (!xarSecurityCheck('ManageComments')) {
+    if (!xarSecurity::check('ManageComments')) {
         return;
     }
 
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('deletebranch', 'bool', $deletebranch, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('deletebranch', 'bool', $deletebranch, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('redirect', 'str', $data['redirect'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('redirect', 'str', $data['redirect'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'str', $data['itemtype'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'str', $data['itemtype'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('dtype', 'str', $data['dtype'], "", XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('dtype', 'str', $data['dtype'], "", xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -47,7 +47,7 @@ function comments_admin_delete()
 
     switch (strtolower($data['dtype'])) {
         case 'item': // delete just one comment
-            if (!xarVarFetch('itemid', 'int', $itemid)) {
+            if (!xarVar::fetch('itemid', 'int', $itemid)) {
                 return;
             }
 
@@ -62,13 +62,13 @@ function comments_admin_delete()
 
             break;
         case 'object': // delete all comments for a content item
-            if (!xarVarFetch('itemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('itemtype', 'int', $itemtype, 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('modid', 'int:1', $modid)) {
+            if (!xarVar::fetch('modid', 'int:1', $modid)) {
                 return;
             }
-            if (!xarVarFetch('objectid', 'int:1', $objectid)) {
+            if (!xarVar::fetch('objectid', 'int:1', $objectid)) {
                 return;
             }
 
@@ -80,10 +80,10 @@ function comments_admin_delete()
 
             break;
         case 'itemtype': // delete all comments for an itemtype
-            if (!xarVarFetch('itemtype', 'int', $itemtype)) {
+            if (!xarVar::fetch('itemtype', 'int', $itemtype)) {
                 return;
             }
-            if (!xarVarFetch('modid', 'int:1', $modid)) {
+            if (!xarVar::fetch('modid', 'int:1', $modid)) {
                 return;
             }
 
@@ -94,7 +94,7 @@ function comments_admin_delete()
 
             break;
         case 'module':  // delete all comments for a module
-            if (!xarVarFetch('modid', 'int:1', $modid)) {
+            if (!xarVar::fetch('modid', 'int:1', $modid)) {
                 return;
             }
 
@@ -130,7 +130,7 @@ function comments_admin_delete()
         $data['count'] = count($countitems);
 
         if ($data['confirm'] && is_array($data['items'])) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -148,7 +148,7 @@ function comments_admin_delete()
         }
     } else { // $data['dtype'] == 'item'
         if ($data['confirm']) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             if ($deletebranch) {
@@ -167,17 +167,17 @@ function comments_admin_delete()
         }
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     $data['delete_args'] = $delete_args;
 
     if ($data['confirm'] && !empty($data['redirect'])) {
         if ($data['redirect'] == 'view') {
-            xarController::redirect(xarModURL('comments', 'admin', 'view'));
+            xarController::redirect(xarController::URL('comments', 'admin', 'view'));
         } elseif ($data['redirect'] == 'stats') {
-            xarController::redirect(xarModURL('comments', 'admin', 'stats'));
+            xarController::redirect(xarController::URL('comments', 'admin', 'stats'));
         } elseif (is_numeric($data['redirect'])) {
-            xarController::redirect(xarModURL('comments', 'admin', 'module_stats', array('modid' => $data['redirect'])));
+            xarController::redirect(xarController::URL('comments', 'admin', 'module_stats', array('modid' => $data['redirect'])));
         }
     }
 

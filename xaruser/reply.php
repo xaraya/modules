@@ -31,7 +31,7 @@
 
 function comments_user_reply()
 {
-    if (!xarSecurityCheck('PostComments')) {
+    if (!xarSecurity::check('PostComments')) {
         return;
     }
 
@@ -44,7 +44,7 @@ function comments_user_reply()
     # --------------------------------------------------------
     # Take appropriate action
 #
-    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'reply', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('comment_action', 'str', $data['comment_action'], 'reply', xarVar::NOT_REQUIRED)) {
         return;
     }
     switch (strtolower($data['comment_action'])) {
@@ -59,7 +59,7 @@ function comments_user_reply()
             // should we look at the title as well?
             $package['transform'] = array('text');
 
-            $package = xarModCallHooks(
+            $package = xarModHooks::call(
                 'item',
                 'transform-input',
                 0,
@@ -68,7 +68,7 @@ function comments_user_reply()
                 0
             );
 
-            if (xarModVars::get('comments', 'AuthorizeComments') || xarSecurityCheck('AddComments')) {
+            if (xarModVars::get('comments', 'AuthorizeComments') || xarSecurity::check('AddComments')) {
                 $status = _COM_STATUS_ON;
             } else {
                 $status = _COM_STATUS_OFF;
@@ -96,7 +96,7 @@ function comments_user_reply()
 # --------------------------------------------------------
 # Bail if the proper args were not passed
 #
-            if (!xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('comment_id', 'int:1:', $data['comment_id'], 0, xarVar::NOT_REQUIRED)) {
                 return;
             }
             if (empty($data['comment_id'])) {
@@ -133,21 +133,21 @@ function comments_user_reply()
                 $header['objectlink'] = $itemlinks[$data['object']->properties['itemid']->value]['url'];
                 $header['objecttitle'] = $itemlinks[$data['object']->properties['itemid']->value]['label'];
             } else {
-                $url = xarModURL($modinfo['name'], 'user', 'main');
+                $url = xarController::URL($modinfo['name'], 'user', 'main');
             }
 /*
             list($text,
                  $title) =
-                        xarModCallHooks('item',
+                        xarModHooks::call('item',
                                         'transform',
                                          $data['object']->properties['parent_id']->value,
                                          array($text,
                                                $title));
 */
-            $text         = xarVarPrepHTMLDisplay($text);
-            $title        = xarVarPrepForDisplay($title);
+            $text         = xarVar::prepHTMLDisplay($text);
+            $title        = xarVar::prepForDisplay($title);
 
-            $package['new_title']            = xarVarPrepForDisplay($new_title);
+            $package['new_title']            = xarVar::prepForDisplay($new_title);
             $data['package']               = $package;
 
             // Create an object item for the reply
@@ -163,7 +163,7 @@ function comments_user_reply()
         case 'preview':
         default:
             list($package['transformed-text'],
-                 $package['transformed-title']) = xarModCallHooks(
+                 $package['transformed-title']) = xarModHooks::call(
                      'item',
                      'transform',
                      $header['parent_id'],
@@ -171,10 +171,10 @@ function comments_user_reply()
                                                             $package['title'])
                  );
 
-            $package['transformed-text']  = xarVarPrepHTMLDisplay($package['transformed-text']);
-            $package['transformed-title'] = xarVarPrepForDisplay($package['transformed-title']);
-            $package['text']              = xarVarPrepHTMLDisplay($package['text']);
-            $package['title']             = xarVarPrepForDisplay($package['title']);
+            $package['transformed-text']  = xarVar::prepHTMLDisplay($package['transformed-text']);
+            $package['transformed-title'] = xarVar::prepForDisplay($package['transformed-title']);
+            $package['text']              = xarVar::prepHTMLDisplay($package['text']);
+            $package['title']             = xarVar::prepForDisplay($package['title']);
 
             $comments[0]['text']      = $package['text'];
             $comments[0]['title']     = $package['title'];
@@ -182,11 +182,11 @@ function comments_user_reply()
             $comments[0]['itemtype']  = $header['itemtype'];
             $comments[0]['itemid']    = $header['itemid'];
             $comments[0]['parent_id'] = $header['parent_id'];
-            $comments[0]['author']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+            $comments[0]['author']    = ((xarUser::isLoggedIn() && !$package['postanon']) ? xarUser::getVar('name') : 'Anonymous');
             $comments[0]['id']       = 0;
             $comments[0]['postanon']  = $package['postanon'];
             // FIXME delete after time output testing
-            // $comments[0]['date']      = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
+            // $comments[0]['date']      = xarLocale::formatDate("%d %b %Y %H:%M:%S %Z",time());
             $comments[0]['date']      = time();
             $comments[0]['hostname']  = 'somewhere';
 
@@ -211,7 +211,7 @@ function comments_user_reply()
         $args['current_module'] = $modinfo['name'];
         $args['current_itemtype'] = $header['itemtype'];
         $args['current_itemid'] = $header['itemid'];
-        $hooks['iteminput'] = xarModCallHooks('item', 'new', 0, $args);
+        $hooks['iteminput'] = xarModHooks::call('item', 'new', 0, $args);
     */
 
     # --------------------------------------------------------
@@ -221,9 +221,9 @@ function comments_user_reply()
     $data['hooks']              = $hooks;
     $data['package']            = $package;
     $data['package']['date']    = time();
-    $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('id') : $anonuid);
-    $data['package']['uname']   = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('uname') : 'anonymous');
-    $data['package']['name']    = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('name') : 'Anonymous');
+    $data['package']['role_id']     = ((xarUser::isLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUser::getVar('id') : $anonuid);
+    $data['package']['uname']   = ((xarUser::isLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUser::getVar('uname') : 'anonymous');
+    $data['package']['name']    = ((xarUser::isLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUser::getVar('name') : 'Anonymous');
 
     return $data;
 }

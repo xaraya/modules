@@ -47,7 +47,7 @@ function comments_adminapi_import_blacklist($args)
 
     // Kinda hackish here.  No empty table command that I can find.
 
-    $query = xarDBDropTable($xartable['blacklist']);
+    $query = xarTableDDL::dropTable($xartable['blacklist']);
     $result =& $dbconn->Execute($query);
 
     if (!$result) {
@@ -62,7 +62,7 @@ function comments_adminapi_import_blacklist($args)
         'domain'   => array('type'=>'varchar',  'null'=>false,  'size'=>255)
     );
 
-    $query = xarDBCreateTable($xartable['blacklist'], $fields);
+    $query = xarTableDDL::createTable($xartable['blacklist'], $fields);
     $file = file('var/cache/rss/'.md5($feedfile).'.txt');
     $result =& $dbconn->Execute($query);
     if (!$result) {

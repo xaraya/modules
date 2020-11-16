@@ -25,10 +25,10 @@ function comments_adminapi_sort($args)
 
     extract($args);
 
-    if (!xarVarFetch($url_sortfield, 'isset', $sortfield, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch($url_sortfield, 'isset', $sortfield, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch($url_ascdesc, 'isset', $ascdesc, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch($url_ascdesc, 'isset', $ascdesc, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 

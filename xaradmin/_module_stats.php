@@ -15,13 +15,13 @@ function comments_admin_module_stats()
 {
 
     // Security Check
-    if (!xarSecurityCheck('AdminComments')) {
+    if (!xarSecurity::check('AdminComments')) {
         return;
     }
-    if (!xarVarFetch('modid', 'int:1', $modid)) {
+    if (!xarVar::fetch('modid', 'int:1', $modid)) {
         return;
     }
-    if (!xarVarFetch('itemtype', 'int:0', $itemtype, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemtype', 'int:0', $itemtype, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -49,7 +49,7 @@ function comments_admin_module_stats()
         //    $data['modlink'] = $mytypes[$itemtype]['url'];
         } else {
             $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-            //    $data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+            //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
         }
     }
 
@@ -57,7 +57,7 @@ function comments_admin_module_stats()
     if (empty($numstats)) {
         $numstats = 100;
     }
-    if (!xarVarFetch('startnum', 'id', $startnum, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('startnum', 'id', $startnum, null, xarVar::DONT_SET)) {
         return;
     }
     if (empty($startnum)) {
@@ -114,7 +114,7 @@ function comments_admin_module_stats()
         $pages[$itemid] = array();
         $pages[$itemid]['pageid'] = $itemid;
         $pages[$itemid]['total'] = $numcomments;
-        $pages[$itemid]['delete_url'] = xarModURL(
+        $pages[$itemid]['delete_url'] = xarController::URL(
             'comments',
             'admin',
             'delete',
@@ -137,7 +137,7 @@ function comments_admin_module_stats()
     }
 
     $data['data']             = $pages;
-    $data['delete_all_url']   = xarModURL(
+    $data['delete_all_url']   = xarController::URL(
         'comments',
         'admin',
         'delete',
@@ -163,7 +163,7 @@ function comments_admin_module_stats()
         $data['pager'] = xarTplPager::getPager(
             $startnum,
             $numitems,
-            xarModURL(
+            xarController::URL(
                                               'comments',
                                               'admin',
                                               'module_stats',

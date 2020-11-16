@@ -37,7 +37,7 @@ function comments_adminapi_remove_module($args)
     // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    // if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
+    // if(!xarSecurity::check('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
 
     // FIXME: we need to remove the comments for items of all types here, so a direct DB call
 //        would be better than this "delete recursively" trick

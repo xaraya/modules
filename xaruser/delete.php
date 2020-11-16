@@ -20,20 +20,20 @@
  */
 function comments_user_delete()
 {
-    if (!xarSecurityCheck('ManageComments')) {
+    if (!xarSecurity::check('ManageComments')) {
         return;
     }
     
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('deletebranch', 'bool', $deletebranch, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('deletebranch', 'bool', $deletebranch, false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('id', 'int', $data['id'], null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('id', 'int', $data['id'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('parent_url', 'str', $data['parent_url'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('parent_url', 'str', $data['parent_url'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -66,7 +66,7 @@ function comments_user_delete()
         }
     }
 
-    $data['package']['delete_url'] = xarModURL('comments', 'user', 'delete');
+    $data['package']['delete_url'] = xarController::URL('comments', 'user', 'delete');
 
     $comments = xarMod::apiFunc('comments', 'user', 'get_one', array('id' => $data['id']));
     if ($comments[0]['position_atomic']['right'] == $comments[0]['position_atomic']['left'] + 1) {

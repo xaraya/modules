@@ -96,13 +96,13 @@ function comments_userapi_search($args)
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['author'] = xarUserGetVar('name', $row['author']);
+        $row['author'] = xarUser::getVar('name', $row['author']);
         $commentlist[] = $row;
         $result->MoveNext();
     }
     $result->Close();
 
-    if (!xarModLoad('comments', 'renderer')) {
+    if (!xarMod::load('comments', 'renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
         throw new BadParameterException($msg);
     }

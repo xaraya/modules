@@ -6,15 +6,15 @@
     <div class="xar-row">
             <xar:var name="label">Name:</xar:var>
             <xar:data-label property="$properties['author']" label="$label"/>
-            <xar:if condition="xarUserIsLoggedIn()">
-                <a href="#xarModURL('roles', 'user', 'display', array('role_id' => xarUserGetVar('id')))#">
+            <xar:if condition="xarUser::isLoggedIn()">
+                <a href="#xarController::URL('roles', 'user', 'display', array('role_id' => xarUser::getVar('id')))#">
                     <xar:data-output property="$properties['author']"/>
                 </a>
     <!--
                 <xar:set name="newpost">!$properties['id']->value</xar:set>
                 <xar:if condition="$newpost">
                     &#160;
-                    [ <a class="xar-norm" href="#xarModURL('authsystem', 'user', 'logout')#">
+                    [ <a class="xar-norm" href="#xarController::URL('authsystem', 'user', 'logout')#">
                         Logout
                     </a> ]
                 </xar:if>

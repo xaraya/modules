@@ -18,7 +18,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-              <a href="#xarModURL('comments','admin','view')#" class="#$linkclass#">
+              <a href="#xarController::URL('comments','admin','view')#" class="#$linkclass#">
                     View Comments
                   </a>
             </li>
@@ -32,7 +32,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-              <a href="#xarModURL('comments','admin','stats')#" class="#$linkclass#">
+              <a href="#xarController::URL('comments','admin','stats')#" class="#$linkclass#">
                     View Statistics
                   </a>
             </li>
@@ -46,7 +46,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-              <a href="#xarModURL('comments','admin','modifyconfig')#" class="#$linkclass#">
+              <a href="#xarController::URL('comments','admin','modifyconfig')#" class="#$linkclass#">
                     Modify Configuration
                   </a>
             </li>
@@ -60,7 +60,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-              <a href="#xarModURL('comments','admin','overview')#" class="#$linkclass#">
+              <a href="#xarController::URL('comments','admin','overview')#" class="#$linkclass#">
                         Overview
                     </a>
             </li>

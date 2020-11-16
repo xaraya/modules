@@ -29,12 +29,12 @@
                 <xar:set name="arrow">'desc'</xar:set>
             </xar:if>
 
-            <a href="#xarModURL('comments','admin','view', array('sortfield' => $name, 'ascdesc' => strtoupper($arrow)))#"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
+            <a href="#xarController::URL('comments','admin','view', array('sortfield' => $name, 'ascdesc' => strtoupper($arrow)))#"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
 
         <xar:else />
 
         <!--we're not sorting on this column, so we should make the column head a link-->
-            <a href="#xarModURL('comments','admin','view', array('sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
+            <a href="#xarController::URL('comments','admin','view', array('sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
 
         </xar:if>
 
@@ -63,12 +63,12 @@
                     <xar:if condition="empty($linkfield)">
                         <td valign="top">
 
-<xar:if condition="xarSecurityCheck('EditComments',0)">
-    <a href="#xarModURL('comments','admin','modify', array('id' => $id))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Edit" /></a>
+<xar:if condition="xarSecurity::check('EditComments',0)">
+    <a href="#xarController::URL('comments','admin','modify', array('id' => $id))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Edit" /></a>
 </xar:if>
 
-<xar:if condition="xarSecurityCheck('DeleteComments',0)">
-    &amp;nbsp;  <a href="#xarModURL('comments','admin','delete', array('id' => $id, 'dtype' => 'object', 'modid' => $fields['modid'], 'objectid' => $fields['objectid'],'itemtype' => $fields['itemtype']))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+<xar:if condition="xarSecurity::check('DeleteComments',0)">
+    &amp;nbsp;  <a href="#xarController::URL('comments','admin','delete', array('id' => $id, 'dtype' => 'object', 'modid' => $fields['modid'], 'objectid' => $fields['objectid'],'itemtype' => $fields['itemtype']))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 </xar:if>
 
 

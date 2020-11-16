@@ -89,7 +89,7 @@ function comments_userapi_add($args)
         $postanon = 0;
     }
     if (!isset($author)) {
-        $author = xarUserGetVar('id');
+        $author = xarUser::getVar('id');
     }
 
     if (!isset($hostname)) {
@@ -274,7 +274,7 @@ function comments_userapi_add($args)
         $args['current_module'] = $modinfo['name'];
         $args['current_itemtype'] = $itemtype;
         $args['current_itemid'] = $itemid;
-        xarModCallHooks('item', 'create', $id, $args);
+        xarModHooks::call('item', 'create', $id, $args);
         return $id;
     }
 }

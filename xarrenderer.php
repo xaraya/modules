@@ -501,28 +501,28 @@ function comments_renderer_array_image_substitution($matrix, $modName = null)
     foreach ($matrix as $value) {
         switch ($value) {
             case _COM_O_CONNECTOR:
-                $map[] = xarTplGetImage('n_nosub.gif', $modName);
+                $map[] = xarTpl::getImage('n_nosub.gif', $modName);
                 break;
             case _COM_P_CONNECTOR:
-                $map[] = xarTplGetImage('n_sub.gif', $modName);
+                $map[] = xarTpl::getImage('n_sub.gif', $modName);
                 break;
             case _COM_T_CONNECTOR:
-                $map[] = xarTplGetImage('n_sub_branch_t.gif', $modName);
+                $map[] = xarTpl::getImage('n_sub_branch_t.gif', $modName);
                 break;
             case _COM_L_CONNECTOR:
-                $map[] = xarTplGetImage('n_sub_branch_l.gif', $modName);
+                $map[] = xarTpl::getImage('n_sub_branch_l.gif', $modName);
                 break;
             case _COM_I_CONNECTOR:
-                $map[] = xarTplGetImage('n_sub_line.gif', $modName);
+                $map[] = xarTpl::getImage('n_sub_line.gif', $modName);
                 break;
             case _COM_BLANK_CONNECTOR:
-                $map[] = xarTplGetImage('n_spacer.gif', $modName);
+                $map[] = xarTpl::getImage('n_spacer.gif', $modName);
                 break;
             case _COM_DASH_CONNECTOR:
-                $map[] = xarTplGetImage('n_sub_end.gif', $modName);
+                $map[] = xarTpl::getImage('n_sub_end.gif', $modName);
                 break;
             case _COM_CUTOFF_CONNECTOR:
-                $map[] = xarTplGetImage('n_sub_cutoff.gif', $modName);
+                $map[] = xarTpl::getImage('n_sub_cutoff.gif', $modName);
                 break;
             default:
             case _COM_NO_CONNECTOR:

@@ -62,7 +62,7 @@ function comments_userapi_getitems($args)
     if (!isset($mask)) {
         $mask = 'ReadComments';
     }
-    if (!xarSecurityCheck($mask)) {
+    if (!xarSecurity::check($mask)) {
         return;
     }
 

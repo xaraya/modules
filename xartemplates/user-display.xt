@@ -34,7 +34,7 @@
                 If pubsub is hooked to comments, allow subscribing here to be informed of new comments
             -->
             <!--
-                <xar:if condition="xarModIsAvailable('pubsub') and xarModIsHooked('pubsub','comments')">
+                <xar:if condition="xarMod::isAvailable('pubsub') and xarModHooks::isHooked('pubsub','comments')">
                     <xar:set name="extrainfo">array('module' => 'comments', 'id' => 0, 'extra' => $header['moduleid'].'-'.$header['itemtype'].'-'.$header['objectid'])</xar:set>
                     <xar:module main="false" module="pubsub" func="displayicon" extrainfo="$extrainfo" layout="text"/>
                 </xar:if>
