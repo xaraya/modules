@@ -3,12 +3,12 @@
 $suite = new xarTestSuite('User system tests');
 $suites[] = $suite;
 
-class testxarUserLogin extends xarTestCase
+class testxarUser::logIn extends xarTestCase
 {
-    public function testxarUserLoginWithValidParams()
+    public function testxarUser::logInWithValidParams()
     {
         $this->expected = true;
-        $this->actual   = xarUserLogin('admin', 'marc');
+        $this->actual   = xarUser::logIn('admin', 'marc');
         $res = $this->assertSame($this->actual, $this->expected, "A call with correct parameters returns true");
         return $res;
     }
@@ -16,7 +16,7 @@ class testxarUserLogin extends xarTestCase
     {
         try {
             $this->expected = '[exception]';
-            $this->actual   = xarUserLogin('admin');
+            $this->actual   = xarUser::logIn('admin');
             $res = $this->assertSame($this->actual, $this->expected, "A call with fewer than 2 params throws an exception");
             return $res;
         } catch (Exception $e) {
@@ -26,19 +26,19 @@ class testxarUserLogin extends xarTestCase
     public function testgetNameWithInvalidUser()
     {
         $this->expected = false;
-        $this->actual   = xarUserLogin('admin1', 'marc');
+        $this->actual   = xarUser::logIn('admin1', 'marc');
         $res = $this->assertSame($this->actual, $this->expected, "A call with an invalid username returns false");
         return $res;
     }
     public function testgetNameWithBadPassword()
     {
         $this->expected = false;
-        $this->actual   = xarUserLogin('admin', 'dork');
+        $this->actual   = xarUser::logIn('admin', 'dork');
         $res = $this->assertSame($this->actual, $this->expected, "A call with an incorrect password returns false");
         return $res;
     }
 }
-$suite->AddTestCase('testxarUserLogin', 'xarUserLogin($username,$password)');
+$suite->AddTestCase('testxarUser::logIn', 'xarUser::logIn($username,$password)');
 
 class testxarUser::getVar extends xarTestCase
 {

@@ -35,7 +35,7 @@ class testxarModgetID extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetID', 'xarMod::getID($modulename)');
 
-class testxarModgetName extends xarTestCase
+class testxarMod::getName extends xarTestCase
 {
     public function testgetName()
     {
@@ -77,7 +77,7 @@ class testxarModgetName extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModgetName', 'xarMod::getName($regid)');
+$suite->AddTestCase('testxarMod::getName', 'xarMod::getName($regid)');
 
 class testxarModgetDisplayName extends xarTestCase
 {
@@ -225,7 +225,7 @@ class testxarModgetRegid extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetRegid', 'xarMod::getRegID($modulename)');
 
-class testxarModgetInfo extends xarTestCase
+class testxarMod::getInfo extends xarTestCase
 {
     public function testgetInfo()
     {
@@ -282,7 +282,7 @@ class testxarModgetInfo extends xarTestCase
         return $res;
     }
 }
-$suite->AddTestCase('testxarModgetInfo', 'xarMod::getInfo($regid, $type)');
+$suite->AddTestCase('testxarMod::getInfo', 'xarMod::getInfo($regid, $type)');
 
 class testxarModgetBaseInfo extends xarTestCase
 {
@@ -394,7 +394,7 @@ class testxarModgetFileInfo extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetFileInfo', 'xarMod::getFileInfo($modulename, $type)');
 
-class testxarModloadDbInfoInfo extends xarTestCase
+class testxarMod::loadDbInfoInfo extends xarTestCase
 {
     public function testloadDbInfo()
     {
@@ -436,7 +436,7 @@ class testxarModloadDbInfoInfo extends xarTestCase
         return $res;
     }
 }
-$suite->AddTestCase('testxarModloadDbInfoInfo', 'xarMod::loadDbInfo($modulename, $moduledir, $type)');
+$suite->AddTestCase('testxarMod::loadDbInfoInfo', 'xarMod::loadDbInfo($modulename, $moduledir, $type)');
 
 class testxarModgetState extends xarTestCase
 {
@@ -497,7 +497,7 @@ class testxarModgetState extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetState', 'xarMod::getState($regid, $type)');
 
-class testxarModisAvailable extends xarTestCase
+class testxarMod::isAvailable extends xarTestCase
 {
     public function testisAvailable()
     {
@@ -550,9 +550,9 @@ class testxarModisAvailable extends xarTestCase
         return $res;
     }
 }
-$suite->AddTestCase('testxarModisAvailable', 'xarMod::isAvailable($modulename, $type)');
+$suite->AddTestCase('testxarMod::isAvailable', 'xarMod::isAvailable($modulename, $type)');
 
-class testxarModload extends xarTestCase
+class testxarMod::load extends xarTestCase
 {
     public function testload()
     {
@@ -595,9 +595,9 @@ class testxarModload extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModload', 'xarMod::load($modulename, $type)');
+$suite->AddTestCase('testxarMod::load', 'xarMod::load($modulename, $type)');
 
-class testxarModapiload extends xarTestCase
+class testxarMod::apiLoad extends xarTestCase
 {
     public function testapiload()
     {
@@ -640,7 +640,7 @@ class testxarModapiload extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModapiload', 'xarMod::apiload($modulename, $type)');
+$suite->AddTestCase('testxarMod::apiLoad', 'xarMod::apiload($modulename, $type)');
 
 class testxarModHooks::register extends xarTestCase
 {
