@@ -121,7 +121,7 @@ function workflow_admin_monitor_workitems()
     }
     foreach ($items['data'] as $index => $info) {
         $items['data'][$index]['timescale'] = intval($scale * $info['duration']);
-        $items['data'][$index]['duration'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']));
+        $items['data'][$index]['duration'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']));
         if (!empty($info['started'])) {
             $items['data'][$index]['started'] = xarLocale::getFormattedDate('medium', $info['started']) . ' '
                                             . xarLocale::getFormattedTime('short', $info['started']);

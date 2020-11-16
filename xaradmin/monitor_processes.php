@@ -118,9 +118,9 @@ function workflow_admin_monitor_processes()
     }
     foreach ($items['data'] as $index => $info) {
         if (isset($info['duration'])) {
-            $items['data'][$index]['duration']['min'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['min']));
-            $items['data'][$index]['duration']['avg'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['avg']));
-            $items['data'][$index]['duration']['max'] = xarModApiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['max']));
+            $items['data'][$index]['duration']['min'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['min']));
+            $items['data'][$index]['duration']['avg'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['avg']));
+            $items['data'][$index]['duration']['max'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']['max']));
             $info['duration']['max'] -= $info['duration']['avg'];
             $info['duration']['avg'] -= $info['duration']['min'];
             $items['data'][$index]['timescale'] = array();
