@@ -18,17 +18,17 @@
 function scraper_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadScraper')) return;
+    if (!xarSecurityCheck('ReadScraper')) {
+        return;
+    }
 
-    $redirect = xarModVars::get('scraper','frontend_page');
+    $redirect = xarModVars::get('scraper', 'frontend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
         xarController::redirect(xarModURL('scraper', 'user', 'scraper'));
     }
     return true;
 }
-
-?>

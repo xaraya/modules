@@ -19,15 +19,15 @@ function scraper_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewScraper',0)) {
-        $menulinks[] = array('url'   => xarModURL('scraper',
-                                                  'user',
-                                                  'main'),
+    if (xarSecurityCheck('ViewScraper', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'scraper',
+            'user',
+            'main'
+        ),
                               'title' => xarML(''),
                               'label' => xarML(''));
     }
 
     return $menulinks;
 }
-
-?>

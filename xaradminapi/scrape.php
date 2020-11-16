@@ -13,8 +13,8 @@
 /**
  * Scrape a URL
  *
- * @param integer $id The ID of the 
- * @return array $data 
+ * @param integer $id The ID of the
+ * @return array $data
  *
  * To test this, call
  * $data = xarMod::apiFunc('scraper', 'admin', 'scrape', array('id' => 1));
@@ -28,7 +28,9 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function scraper_adminapi_scrape($args)
 {
-    if (!isset($args['id'])) return false;
+    if (!isset($args['id'])) {
+        return false;
+    }
 
     // Get the URL and code for this ID
     $charge = DataObjectMaster::getObject(array('name' => 'scraper_urls'));
@@ -51,8 +53,9 @@ function scraper_adminapi_scrape($args)
     $code = $charge->properties['code']->value;
     eval($code);
     // By convention we will return an array
-    if (empty($data)) $data = array();
+    if (empty($data)) {
+        $data = array();
+    }
 
     return $data;
 }
-?>

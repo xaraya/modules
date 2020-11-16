@@ -17,11 +17,19 @@
 
 function scraper_admin_delete_url()
 {
-    if (!xarSecurityCheck('ManageScraper')) return;
+    if (!xarSecurityCheck('ManageScraper')) {
+        return;
+    }
 
-    if (!xarVarFetch('name',       'str:1',     $name,            'scraper_urls',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',       $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'checkbox',  $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str:1', $name, 'scraper_urls', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -33,16 +41,16 @@ function scraper_admin_delete_url()
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         // Delete the item
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('scraper','admin','view_urls'));
+        xarController::redirect(xarModURL('scraper', 'admin', 'view_urls'));
         return true;
     }
     return $data;
 }
-
-?>

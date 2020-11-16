@@ -17,15 +17,17 @@
 
 function scraper_admin_main()
 {
-    if(!xarSecurityCheck('ManageScraper')) return;
+    if (!xarSecurityCheck('ManageScraper')) {
+        return;
+    }
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        $redirect = xarModVars::get('scraper','backend_page');
+        $redirect = xarModVars::get('scraper', 'backend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
             xarController::redirect(xarModURL('scraper', 'admin', 'modifyconfig'));
@@ -33,4 +35,3 @@ function scraper_admin_main()
     }
     return true;
 }
-?>

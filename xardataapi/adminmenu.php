@@ -24,4 +24,3 @@ function scraper_dataapi_adminmenu()
         array('mask' => 'AdminScraper', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Scraper configuration'), 'label' => xarML('Modify Config')),
     );
 }
-?>

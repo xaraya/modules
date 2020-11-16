@@ -18,7 +18,9 @@
 function scraper_adminapi_getconfighook($args)
 {
     extract($args);
-    if (!isset($extrainfo['tabs'])) $extrainfo['tabs'] = array();
+    if (!isset($extrainfo['tabs'])) {
+        $extrainfo['tabs'] = array();
+    }
     $module = 'scraper';
     $tabinfo = array(
             'module'  => $module,
@@ -29,4 +31,3 @@ function scraper_adminapi_getconfighook($args)
     $extrainfo['tabs'][] = $tabinfo;
     return $extrainfo;
 }
-?>
