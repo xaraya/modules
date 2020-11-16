@@ -2115,7 +2115,7 @@ class Date
      *   - <b>Y,YYY</b> - Year with thousands-separator in this position; five
      *                    possible separators
      *   - <b>Y.YYY</b>
-     *   - <b>Y·YYY</b> - N.B. space-dot (mid-dot, interpunct) is valid only in
+     *   - <b>YÂ·YYY</b> - N.B. space-dot (mid-dot, interpunct) is valid only in
      *                    ISO 8859-1 (so take care when using UTF-8 in
      *                    particular)
      *   - <b>Y'YYY</b>
@@ -2167,7 +2167,7 @@ class Date
     {
         if (!preg_match('/^("([^"\\\\]|\\\\\\\\|\\\\")*"|(D{1,3}|S?C+|' .
                         'HH(12|24)?|I[DW]|S?IY*|J|M[IM]|Q|SS(SSS)?|S?TZ[HS]|' .
-                        'TZM|U|W[W147]?|S?Y{1,3}([,.·\' ]?YYY)*)(SP(TH)?|' .
+                        'TZM|U|W[W147]?|S?Y{1,3}([,.Â·\' ]?YYY)*)(SP(TH)?|' .
                         'TH(SP)?)?|AD|A\.D\.|AM|A\.M\.|BCE?|B\.C\.(E\.)?|CE|' .
                         'C\.E\.|DAY|DY|F(F*|[1-9][0-9]*)|MON(TH)?|NP|PM|' .
                         'P\.M\.|RM|TZ[CINOR]|S?YEAR|[^A-Z0-9"])*$/i',
@@ -3140,7 +3140,7 @@ class Date
                     $hs_thousandsep  = null;
                     $hn_thousandseps = 0;
                     if ($hn_codelen <= 3) {
-                        while (preg_match('/([,.·\' ])YYY/i',
+                        while (preg_match('/([,.Â·\' ])YYY/i',
                                           substr($ps_format,
                                                  $i + $hn_codelen,
                                                  4),

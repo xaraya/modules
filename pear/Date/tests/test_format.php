@@ -133,7 +133,7 @@ compare('%', $date->formatLikeStrftime('%%'), '%%');
 //
 compare('x', $date->formatLikeStrftime('x'), 'x');
 
-compare(' ¬!£$%^&*()_+{}:@~<>?[];\'#,./-=`\\|', $date->formatLikeSQL(' ¬!£$%^&*()_+{}:@~<>?[];\'#,./-=`\\|'), ' ¬!£$%^&*()_+{}:@~<>?[];\'#,./-=`\\|');
+compare(' Â¬!Â£$%^&*()_+{}:@~<>?[];\'#,./-=`\\|', $date->formatLikeSQL(' Â¬!Â£$%^&*()_+{}:@~<>?[];\'#,./-=`\\|'), ' Â¬!Â£$%^&*()_+{}:@~<>?[];\'#,./-=`\\|');
 
 compare('text "   \\', $date->formatLikeSQL('"text \"   \\\\"'), '"text \"   \\\\"');
 
@@ -456,7 +456,7 @@ compare('07', $date->formatLikeSQL('YY'), 'YY');
 compare('007', $date->formatLikeSQL('YYY'), 'YYY');
 compare('2,007', $date->formatLikeSQL('Y,YYY'), 'Y,YYY');
 compare('02.007', $date->formatLikeSQL('YY.YYY'), 'YY.YYY');
-compare('002·007', $date->formatLikeSQL('YYY·YYY'), 'YYY·YYY');
+compare('002Â·007', $date->formatLikeSQL('YYYÂ·YYY'), 'YYYÂ·YYY');
 compare(' 7', $date->formatLikeSQL('SY'), 'SY');
 compare(' 07', $date->formatLikeSQL('SYY'), 'SYY');
 compare(' 007', $date->formatLikeSQL('SYYY'), 'SYYY');
