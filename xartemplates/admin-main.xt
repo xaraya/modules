@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Images Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="images" />
-  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <img src="#xarTpl::getImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
   <h2>
     <xar:mlstring>Overview</xar:mlstring>
   </h2>
@@ -30,13 +32,13 @@
         <xar:mlstring>Image Tags</xar:mlstring>
     </h4>
     <p>
-        &lt;xar:image-resize src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /&gt;
+        &#60;xar:image-resize src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /&#62;
     </p>
     <p>
         <xar:mlstring>
             The IMAGE tag is useful for displaying (cached) images at different proportions. Images are resized according
             to the height/width values you specify with the resulting image cached for faster displaying later on. Note: Any other attribute
-            not listed will be passed directly on to the resultant &lt;img&gt; tag.
+            not listed will be passed directly on to the resultant &#60;img&#62; tag.
         </xar:mlstring>
     </p>
     <p>
@@ -45,14 +47,14 @@
             <p>
                 Resize an image's width while keeping the proportions:<br />
                 <br />
-                &lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;
+                &#60;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&#62;
             </p>
         </xar:mlstring>
         <xar:mlstring>
             <p>
                 Apply some pre-defined image processing (e.g. watermark):<br />
                 <br />
-                &lt;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&gt;
+                &#60;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&#62;
             </p>
         </xar:mlstring>
     </p>
@@ -72,7 +74,7 @@
         Take special note on the approval of files in the uploads module. Only files that have been approved will normally be accessible by standard users, or you need to assign them the EDIT privilege for the uploads.
         </xar:mlstring>
     </p>
-        <xar:if condition="xarModGetVar('images','upgrade-1.0.0')">
+        <xar:if condition="xarModVars::get('images','upgrade-1.0.0')">
         <h3>
         <xar:mlstring>Upgrade from version 1.0.0</xar:mlstring>
         </h3>
@@ -91,6 +93,7 @@
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
+         <strong>&#160;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.0&#160; #xarLocale::getFormattedDate('short','1130972400')#
   </p>
 </div>
+</xar:template>

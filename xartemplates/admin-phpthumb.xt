@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Images Administration</xar:mlstring>
@@ -25,14 +27,14 @@
         <strong><xar:mlstring>Configure</xar:mlstring></strong>
         <xar:if condition="!empty($selimage['filePreview'])">
         |
-        <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
         </xar:if>
         <xar:if condition="!empty($selimage['fileDownload'])">
         |
-        <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
         </xar:if>
     </p>
-    <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'phpthumb')#">
+    <form method="post" name="post" id="post" action="#xarController::URL('images', 'admin', 'phpthumb')#">
     <table class="xar-fullwidth xar-accent">
     <xar:if condition="!empty($selimage)">
         <tr>
@@ -51,7 +53,7 @@
                 <xar:mlstring>Modified</xar:mlstring>
             </td>
             <td>
-                #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
+                #xarLocale::getFormattedDate('short',$selimage['fileModified'])#
             </td>
         </tr>
         <tr>
@@ -92,12 +94,12 @@
             <td colspan="4">
                 <input type="submit" name="load" value="#xarML('Load')#" />
                 <select name="setting" id="setting">
-                    <option value=""><xar:mlstring>[ New Settings --&gt; ]</xar:mlstring></option>
+                    <option value=""><xar:mlstring>[ New Settings --&#62; ]</xar:mlstring></option>
                     <xar:foreach in="$settings" key="$name">
                         <xar:if condition="!empty($setting) and $name eq $setting">
-                            <option value="#xarVarPrepForDisplay($name)#" selected="selected">#$name#</option>
+                            <option value="#xarVar::prepForDisplay($name)#" selected="selected">#$name#</option>
                         <xar:else/>
-                            <option value="#xarVarPrepForDisplay($name)#">#$name#</option>
+                            <option value="#xarVar::prepForDisplay($name)#">#$name#</option>
                         </xar:if>
                     </xar:foreach>
                 </select>
@@ -343,7 +345,7 @@
                 </label>
             </td>
             <td>
-                <input type="text" name="filter[wmt][0]" id="filter_wmt_0" value="#xarVarPrepForDisplay($filter['wmt'][0])#" />
+                <input type="text" name="filter[wmt][0]" id="filter_wmt_0" value="#xarVar::prepForDisplay($filter['wmt'][0])#" />
             </td>
             <td class="xar-accent">
                 <label for="filter_wmt_5">
@@ -452,7 +454,7 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
                 </label>
             </td>
             <td>
-                <input type="text" name="fltr[0]" id="fltr_0" value="#xarVarPrepForDisplay($fltr[0])#" />
+                <input type="text" name="fltr[0]" id="fltr_0" value="#xarVar::prepForDisplay($fltr[0])#" />
             </td>
             <td class="xar-accent">
                 <label for="fltr_1">
@@ -460,7 +462,7 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
                 </label>
             </td>
             <td>
-                <input type="text" name="fltr[1]" id="fltr_1" value="#xarVarPrepForDisplay($fltr[1])#" />
+                <input type="text" name="fltr[1]" id="fltr_1" value="#xarVar::prepForDisplay($fltr[1])#" />
             </td>
         </tr>
         <tr>
@@ -470,7 +472,7 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
                 </label>
             </td>
             <td>
-                <input type="text" name="fltr[2]" id="fltr_2" value="#xarVarPrepForDisplay($fltr[2])#" />
+                <input type="text" name="fltr[2]" id="fltr_2" value="#xarVar::prepForDisplay($fltr[2])#" />
             </td>
             <td class="xar-accent">
                 <label for="fltr_3">
@@ -478,7 +480,7 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
                 </label>
             </td>
             <td>
-                <input type="text" name="fltr[3]" id="fltr_3" value="#xarVarPrepForDisplay($fltr[3])#" />
+                <input type="text" name="fltr[3]" id="fltr_3" value="#xarVar::prepForDisplay($fltr[3])#" />
             </td>
         </tr>
         <tr>
@@ -560,12 +562,12 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
 
     <hr/>
     <p>
-        <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
         |
         <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
         <xar:if condition="!empty($selimage['fileDownload'])">
         |
-        <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
         </xar:if>
     </p>
     <p><img src="#$selimage['filePreview']#" border="0" /></p>
@@ -576,10 +578,10 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
 
     <hr/>
     <p>
-        <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
         <xar:if condition="!empty($selimage['filePreview'])">
         |
-        <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
         </xar:if>
         |
         <strong><xar:mlstring>Original Image</xar:mlstring></strong>
@@ -596,3 +598,5 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
         </i></p>
     </div>
 
+
+</xar:template>
