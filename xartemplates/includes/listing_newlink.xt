@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="($objectname eq 'scraper_scraper')">
         <xar:access level="600">
-            <xar:set name="link">xarModURL($module, 'admin', 'new', array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+            <xar:set name="link">xarController::URL($module, 'admin', 'new', array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
             <xar:var name="label">Add Item</xar:var>
             <xar:button type="link" target="$link" label="$label" title="Add an item"/>
         </xar:access>

@@ -17,31 +17,31 @@
 
 function scraper_admin_new_url()
 {
-    if (!xarSecurityCheck('AddScraper')) {
+    if (!xarSecurity::check('AddScraper')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'scraper_urls', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'scraper_urls', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['tplmodule'] = 'scraper';
-    $data['authid'] = xarSecGenAuthKey('scraper');
+    $data['authid'] = xarSec::genAuthKey('scraper');
 
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -50,13 +50,13 @@ function scraper_admin_new_url()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('scraper', 'admin', 'new_url', $data);
+            return xarTpl::module('scraper', 'admin', 'new_url', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('scraper', 'admin', 'view_urls'));
+            xarController::redirect(xarController::URL('scraper', 'admin', 'view_urls'));
             return true;
         }
     }

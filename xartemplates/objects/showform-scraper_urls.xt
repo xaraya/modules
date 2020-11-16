@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="is_admin">xarIsAncestor('Administrators', xarUser::getVar('uname'))</xar:set>
+    <xar:set name="is_admin">xarRoles::isAncestor('Administrators', xarUser::getVar('uname'))</xar:set>
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <div class="xar-row">
         <div class="xar-col-condensed">

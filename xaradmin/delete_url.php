@@ -17,17 +17,17 @@
 
 function scraper_admin_delete_url()
 {
-    if (!xarSecurityCheck('ManageScraper')) {
+    if (!xarSecurity::check('ManageScraper')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str:1', $name, 'scraper_urls', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, 'scraper_urls', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function scraper_admin_delete_url()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'scraper';
-    $data['authid'] = xarSecGenAuthKey('scraper');
+    $data['authid'] = xarSec::genAuthKey('scraper');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -49,7 +49,7 @@ function scraper_admin_delete_url()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('scraper', 'admin', 'view_urls'));
+        xarController::redirect(xarController::URL('scraper', 'admin', 'view_urls'));
         return true;
     }
     return $data;

@@ -20,7 +20,7 @@ function scraper_userapi_getitemtypes($args)
 
     $itemtypes[1] = array('label' => xarML('Native Scraper'),
                           'title' => xarML('View Scraper'),
-                          'url'   => xarModURL('scraper', 'user', 'view')
+                          'url'   => xarController::URL('scraper', 'user', 'view')
                          );
 
     $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30228, 'native' => false));

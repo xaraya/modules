@@ -53,27 +53,27 @@ function scraper_init()
 #
     # Set up masks
 #
-    xarRegisterMask('ViewScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('CommentScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_COMMENT');
-    xarRegisterMask('ModerateScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_MODERATE');
-    xarRegisterMask('EditScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManageScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ViewScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('CommentScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_COMMENT');
+    xarMasks::register('ModerateScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_MODERATE');
+    xarMasks::register('EditScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #
     # Set up privileges
 #
-    xarRegisterPrivilege('ViewScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_READ');
-    xarRegisterPrivilege('CommentScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_MODERATE');
-    xarRegisterPrivilege('EditScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterPrivilege('AddScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterPrivilege('ManageScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterPrivilege('AdminScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADMIN');
+    xarPrivileges::register('ViewScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_READ');
+    xarPrivileges::register('CommentScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_COMMENT');
+    xarPrivileges::register('ModerateScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_MODERATE');
+    xarPrivileges::register('EditScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_EDIT');
+    xarPrivileges::register('AddScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADD');
+    xarPrivileges::register('ManageScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminScraper', 'All', 'scraper', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
 #

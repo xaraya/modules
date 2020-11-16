@@ -17,17 +17,17 @@
     
 function scraper_admin_modify_url()
 {
-    if (!xarSecurityCheck('EditScraper')) {
+    if (!xarSecurity::check('EditScraper')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'scraper_urls', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'scraper_urls', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function scraper_admin_modify_url()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'scraper';
-    $data['authid'] = xarSecGenAuthKey('scraper');
+    $data['authid'] = xarSec::genAuthKey('scraper');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -50,13 +50,13 @@ function scraper_admin_modify_url()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('scraper', 'admin', 'modify_url', $data);
+            return xarTpl::module('scraper', 'admin', 'modify_url', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('scraper', 'admin', 'view_urls'));
+            xarController::redirect(xarController::URL('scraper', 'admin', 'view_urls'));
             return true;
         }
     }

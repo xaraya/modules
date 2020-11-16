@@ -3,18 +3,18 @@
     <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
     <xar:if condition="($objectname eq 'scraper_urls')">
         <xar:access level="500">
-            <a href="#xarModURL($module, 'admin', 'test_url', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                <img src="#xarTplGetImage('icons/'.'test.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+            <a href="#xarController::URL($module, 'admin', 'test_url', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                <img src="#xarTpl::getImage('icons/'.'test.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
             </a>
         </xar:access>
         <xar:access level="500">
-            <a href="#xarModURL($module, 'admin', 'modify_url', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+            <a href="#xarController::URL($module, 'admin', 'modify_url', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
             </a>
         </xar:access>
         <xar:access level="700">
-            <a href="#xarModURL($module, 'admin', 'delete_url', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
-                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+            <a href="#xarController::URL($module, 'admin', 'delete_url', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
             </a>
         </xar:access>
         <xar:if condition="isset($show_bulk) AND $show_bulk">

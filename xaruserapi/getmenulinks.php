@@ -19,8 +19,8 @@ function scraper_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewScraper', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+    if (xarSecurity::check('ViewScraper', 0)) {
+        $menulinks[] = array('url'   => xarController::URL(
             'scraper',
             'user',
             'main'

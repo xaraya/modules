@@ -18,7 +18,7 @@
 function scraper_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadScraper')) {
+    if (!xarSecurity::check('ReadScraper')) {
         return;
     }
 
@@ -28,7 +28,7 @@ function scraper_user_main()
         $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
-        xarController::redirect(xarModURL('scraper', 'user', 'scraper'));
+        xarController::redirect(xarController::URL('scraper', 'user', 'scraper'));
     }
     return true;
 }

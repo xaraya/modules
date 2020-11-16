@@ -16,14 +16,14 @@
  */
 function scraper_admin_view_tables($args)
 {
-    if (!xarSecurityCheck('ManageScraper')) {
+    if (!xarSecurity::check('ManageScraper')) {
         return;
     }
 
     $modulename = 'scraper';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
         return;
     }
     if (!empty($objectname)) {

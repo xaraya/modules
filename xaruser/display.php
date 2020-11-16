@@ -18,15 +18,15 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function scraper_user_display()
 {
-    if (!xarSecurityCheck('ReadScraper')) {
+    if (!xarSecurity::check('ReadScraper')) {
         return;
     }
     xarTpl::setPageTitle('Display Scraper');
 
-    if (!xarVarFetch('name', 'str', $name, 'scraper_scraper', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'scraper_scraper', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 

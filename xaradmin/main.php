@@ -17,7 +17,7 @@
 
 function scraper_admin_main()
 {
-    if (!xarSecurityCheck('ManageScraper')) {
+    if (!xarSecurity::check('ManageScraper')) {
         return;
     }
 
@@ -30,7 +30,7 @@ function scraper_admin_main()
             $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('scraper', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('scraper', 'admin', 'modifyconfig'));
         }
     }
     return true;
