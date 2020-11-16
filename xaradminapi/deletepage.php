@@ -61,10 +61,10 @@ function xarpages_adminapi_deletepage($args)
 
     //There are two possibilities when deleting a set:
     // 1 - Destroy every child inside it
-    // 2 - Destroy the parent, and make the parent´s parent inherity the children
+    // 2 - Destroy the parent, and make the parent's parent inherity the children
     // Option 1 is easiest, so we will go with it for now.
 
-    // This part was mostly taken from Joe Celko´s article SQL for Smarties on DBMS, April 1996
+    // This part was mostly taken from Joe Celko's article SQL for Smarties on DBMS, April 1996
     // So deleting all the subtree
 
     // Remove the page and its sub-tree

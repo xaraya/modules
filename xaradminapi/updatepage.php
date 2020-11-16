@@ -9,7 +9,7 @@
  * @param $args['desc'] the modified description of the page
  * @param $args['moving'] = 1 means the page can move to a new position
  *
- * If $args['moving'] != 1 then these shouldn´t be set:
+ * If $args['moving'] != 1 then these shouldn't be set:
  * @param $args['insertpoint'] the ID of the reference page
  *
  * This parameter is set in relationship with the reference page:
