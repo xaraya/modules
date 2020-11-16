@@ -30,15 +30,23 @@ function messages_userapi_getitemlinks($args)
     }
 
     foreach ($args['itemids'] as $itemid) {
-        $item = xarMod::apiFunc('roles', 'user', 'get',
-            array('id' => $itemid));
-        if (!isset($item)) return;
-        $itemlinks[$itemid] = array('url' => xarModURL('roles', 'user', 'display',
-                array('id' => $itemid)),
+        $item = xarMod::apiFunc(
+            'roles',
+            'user',
+            'get',
+            array('id' => $itemid)
+        );
+        if (!isset($item)) {
+            return;
+        }
+        $itemlinks[$itemid] = array('url' => xarModURL(
+            'roles',
+            'user',
+            'display',
+            array('id' => $itemid)
+        ),
             'title' => xarML('Display User'),
             'label' => xarVarPrepForDisplay($item['name']));
     }
     return $itemlinks;
 }
-
-?>

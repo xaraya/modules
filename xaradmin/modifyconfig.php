@@ -16,18 +16,22 @@
  * module
  */
 function messages_admin_modifyconfig()
-{ 
+{
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminMessages')) return;
+    if (!xarSecurityCheck('AdminMessages')) {
+        return;
+    }
 
-	$data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
+    $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
 
     // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return; 
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+        return;
+    }
 
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'banks'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'banks'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
 
@@ -70,18 +74,20 @@ function messages_admin_modifyconfig()
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('messages','admin','modifyconfig', $data);
+                return xarTplModule('messages', 'admin', 'modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
 
-			foreach ($data['groups'] as $key => $value) {
-				//$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
-				//$property->checkInput('roleid_'.$key); 
-				$the_key = $value['id'];
-				if (!xarVarFetch('roleid_'.$the_key,  'array',    $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) return; 
-				xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}),$the_key);
-			}
+            foreach ($data['groups'] as $key => $value) {
+                //$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key));
+                //$property->checkInput('roleid_'.$key);
+                $the_key = $value['id'];
+                if (!xarVarFetch('roleid_'.$the_key, 'array', $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) {
+                    return;
+                }
+                xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}), $the_key);
+            }
 
             # --------------------------------------------------------
             #
@@ -126,11 +132,11 @@ function messages_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-				 
-				
+                 
+                
                 $item = $object->updateItem(array('itemid' => 0));
 
-				xarResponse::redirect(xarModURL('messages','admin','modifyconfig'));
+                xarResponse::redirect(xarModURL('messages', 'admin', 'modifyconfig'));
 
             # --------------------------------------------------------
             #
@@ -145,7 +151,9 @@ function messages_admin_modifyconfig()
             # This needs to be the last thing happening on this page because it redirects. Code below
             # this point will not execute
 
-                if (!xarMod::guiFunc('messages','admin','update')) return;
+                if (!xarMod::guiFunc('messages', 'admin', 'update')) {
+                    return;
+                }
 
             break;
     }
@@ -153,5 +161,3 @@ function messages_admin_modifyconfig()
     // Return the template variables defined in this function
     return $data;
 }
-
-?>

@@ -14,44 +14,47 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_userapi_decode_shorturl($params) {
-
-    if ($params[0] != 'messages')
+function messages_userapi_decode_shorturl($params)
+{
+    if ($params[0] != 'messages') {
         return;
+    }
 
-    if (empty($params[1])) $params[1] = '';
+    if (empty($params[1])) {
+        $params[1] = '';
+    }
 
-	if (is_numeric($params[1])) {
-		return array('display', array('id' => $params[1]));
-	}
+    if (is_numeric($params[1])) {
+        return array('display', array('id' => $params[1]));
+    }
 
     switch ($params[1]) {
-        case 'new': 
-			$args = array();
-			if (isset($params[2])) {
-				$args['to'] = $params[2];
-			}
-			if (isset($params[3]) && $params[3] == 'opt') {
-				$args['opt'] = true;
-			}
+        case 'new':
+            $args = array();
+            if (isset($params[2])) {
+                $args['to'] = $params[2];
+            }
+            if (isset($params[3]) && $params[3] == 'opt') {
+                $args['opt'] = true;
+            }
             return array('new', $args);
             break;
-		case 'modify':
+        case 'modify':
             return array('modify', array('id' => $params[2]));
             break;
-		case 'reply':
+        case 'reply':
             return array('reply', array('replyto' => $params[2]));
             break;
-		case 'markunread':
+        case 'markunread':
             return array('markunread', array('id' => $params[2]));
             break;
-		case 'sent':
+        case 'sent':
             return array('view', array('folder' => 'sent'));
             break;
         case 'drafts':
             return array('view', array('folder' => 'drafts'));
             break;
-		case 'delete':
+        case 'delete':
             return array('delete', array('id' => $params[2]));
             break;
         default:
@@ -59,6 +62,4 @@ function messages_userapi_decode_shorturl($params) {
             return array('view', array());
             break;
     }
-
 }
-?>

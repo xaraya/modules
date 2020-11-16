@@ -25,10 +25,10 @@
 function messages_userapi_usermenu($args)
 {
     // not logged in?
-    if (!xarUserIsLoggedIn()){
+    if (!xarUserIsLoggedIn()) {
         // redirect user to their account page after login
         $redirecturl = xarModURL('roles', 'user', 'account');
-        xarResponse::redirect(xarModURL($defaultloginmodname,'user','showloginform', array('redirecturl' => $redirecturl)));
+        xarResponse::redirect(xarModURL($defaultloginmodname, 'user', 'showloginform', array('redirecturl' => $redirecturl)));
     }
 
     // edit account is disabled?
@@ -42,24 +42,26 @@ function messages_userapi_usermenu($args)
 
     $data = array();
 
-    if (empty($phase))
+    if (empty($phase)) {
         $phase = 'showform';
+    }
 
-    if (empty($id) || !is_numeric($id))
+    if (empty($id) || !is_numeric($id)) {
         $id = xarUserGetVar('id');
+    }
 
     if (!isset($object)) {
         $object = xarMod::apiFunc('base', 'admin', 'getusersettings', array('module' => 'messages', 'itemid' => $id));
     }
     // only get the fields we need
     $fieldlist = array();
-    $settings = explode(',',xarModVars::get('roles', 'duvsettings'));
+    $settings = explode(',', xarModVars::get('roles', 'duvsettings'));
     $fieldlist[] = 'user_sendemail';
-	$fieldlist[] = 'enable_autoreply';
-	$fieldlist[] = 'autoreply';
-	$fieldlist[] = 'user_send_redirect';
+    $fieldlist[] = 'enable_autoreply';
+    $fieldlist[] = 'autoreply';
+    $fieldlist[] = 'user_send_redirect';
     
-    $object->setFieldList(join(',',$fieldlist));
+    $object->setFieldList(join(',', $fieldlist));
     switch (strtolower($phase)) {
 
         /**
@@ -106,9 +108,9 @@ function messages_userapi_usermenu($args)
         **/
         case 'checkinput':
             $isvalid = $object->checkInput();
-	
-			//$user_sendemail = $object->properties['user_sendemail']->value;
-			//xarModItemVars::set('messages', "user_sendemail", $user_sendemail ,$id); 
+    
+            //$user_sendemail = $object->properties['user_sendemail']->value;
+            //xarModItemVars::set('messages', "user_sendemail", $user_sendemail ,$id);
 
             /*if (!empty($object->properties['userhome']) && (bool)xarModVars::get('roles','allowuserhomeedit')) {
                $home = $object->properties['userhome']->getValue();
@@ -140,8 +142,10 @@ function messages_userapi_usermenu($args)
         **/
         case 'updateitem':
             // if you added the module name when you generated the authkey,
-            // be sure to use it here when confirming :) 
-            if (!xarSecConfirmAuthKey('messages')) return;
+            // be sure to use it here when confirming :)
+            if (!xarSecConfirmAuthKey('messages')) {
+                return;
+            }
             // data is already validated, go ahead and update the item
             $object->updateItem();
             // you could just return directly from here...
@@ -160,5 +164,3 @@ function messages_userapi_usermenu($args)
     // if we got here, we don't know what went wrong, just return false
     return false;
 }
-
-?>

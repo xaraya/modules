@@ -25,13 +25,15 @@ function messages_init()
     $q = new Query();
     $prefix = xarDB::getPrefix();
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Table structure for table messages
+    # Table structure for table messages
 #
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_messages";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_messages (
       id                integer unsigned NOT NULL auto_increment,
       from_id           integer unsigned NOT NULL default 0,
@@ -49,36 +51,40 @@ function messages_init()
       PRIMARY KEY  (id),
       KEY `messages_from_id` (`from_id`)
     ) TYPE=MyISAM";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
-	# --------------------------------------------------------
-	#
-	# Create DD objects
-	#
+    # --------------------------------------------------------
+    #
+    # Create DD objects
+    #
     $module = 'messages';
     $objects = array(
-					'messages_user_settings',
-					'messages_module_settings',
-					'messages_messages'
+                    'messages_user_settings',
+                    'messages_module_settings',
+                    'messages_messages'
                      );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
 
-	xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
-    xarModVars::set('messages', 'allowautoreply', true );
-	xarModVars::set('messages', 'allowanonymous', false);
-	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
-	xarModVars::set('messages', 'strip_tags', true);
-	xarModVars::set('messages', 'send_redirect', 1);
-	xarModVars::set('messages', 'allowusersendredirect', false);
+    xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
+    xarModVars::set('messages', 'allowautoreply', true);
+    xarModVars::set('messages', 'allowanonymous', false);
+    xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
+    xarModVars::set('messages', 'strip_tags', true);
+    xarModVars::set('messages', 'send_redirect', 1);
+    xarModVars::set('messages', 'allowusersendredirect', false);
 
-	// not sure if the following are needed?
-	xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
-	xarModVars::set('messages', 'enable_autoreply', false);
-	xarModVars::set('messages', 'autoreply', '');
-	xarModVars::set('messages', 'user_send_redirect', 1);
+    // not sure if the following are needed?
+    xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
+    xarModVars::set('messages', 'enable_autoreply', false);
+    xarModVars::set('messages', 'autoreply', '');
+    xarModVars::set('messages', 'user_send_redirect', 1);
 
-	//xarModVars::set('messages', 'buddylist', 0);
+    //xarModVars::set('messages', 'buddylist', 0);
     //xarModVars::set('messages', 'limitsaved', 12);
     //xarModVars::set('messages', 'limitout', 10);
     //xarModVars::set('messages', 'limitinbox', 10);
@@ -92,61 +98,66 @@ function messages_init()
     //xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
     //xarModVars::set('messages', 'away_message', '');
 
-	# --------------------------------------------------------
-	#
-	# Set up configuration modvars (general)
-	#
+    # --------------------------------------------------------
+    #
+    # Set up configuration modvars (general)
+    #
 
-	$module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
-	$module_settings->initialize();
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'messages'));
+    $module_settings->initialize();
 
 
     /*
      * REGISTER BLOCKS
      */
 
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'messages',
-                             'blockType'=> 'newmessages'))) return;
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'register_block_type',
+        array('modName'  => 'messages',
+                             'blockType'=> 'newmessages')
+    )) {
+        return;
+    }
     /*
      * REGISTER HOOKS
      */
 
     // Hook into the roles module (Your Account page)
     xarMod::apiFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
+        'modules',
+        'admin',
+        'enablehooks',
+        array(
             'hookModName'       => 'roles'
-            ,'callerModName'    => 'messages'));
+            ,'callerModName'    => 'messages')
+    );
 
-/*
-     // Hook into the Dynamic Data module
-    xarMod::apiFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'dynamicdata'
-            ,'callerModName'    => 'messages'));
+    /*
+         // Hook into the Dynamic Data module
+        xarMod::apiFunc(
+            'modules'
+            ,'admin'
+            ,'enablehooks'
+            ,array(
+                'hookModName'       => 'dynamicdata'
+                ,'callerModName'    => 'messages'));
 
-    $objectid = xarMod::apiFunc('dynamicdata','util','import',
-                              array('file' => 'modules/messages/messages.data.xml'));
-    if (empty($objectid)) return;
-    // save the object id for later
-    xarModVars::set('messages','objectid',$objectid);
-*/
+        $objectid = xarMod::apiFunc('dynamicdata','util','import',
+                                  array('file' => 'modules/messages/messages.data.xml'));
+        if (empty($objectid)) return;
+        // save the object id for later
+        xarModVars::set('messages','objectid',$objectid);
+    */
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create privilege instances
+    # Create privilege instances
 #
 
-	xarDefineInstance('messages', 'Block', array());
-	xarDefineInstance('messages', 'Item', array());
+    xarDefineInstance('messages', 'Block', array());
+    xarDefineInstance('messages', 'Item', array());
 
     /*
      * REGISTER MASKS
@@ -154,29 +165,29 @@ function messages_init()
 
     // Register Block types (this *should* happen at activation/deactivation)
     //xarBlockTypeRegister('messages', 'incomming');
-    xarRegisterMask('ReadMessagesBlock','All','messages','Block','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ViewMessages','All','messages','Item','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadMessages','All','messages','Item','All','ACCESS_READ');
-    xarRegisterMask('EditMessages','All','messages','Item','All','ACCESS_EDIT');
-    xarRegisterMask('AddMessages','All','messages','Item','All','ACCESS_ADD');
-    xarRegisterMask('DenyReadMessages','All','messages','Item','All','ACCESS_NONE');
-    xarRegisterMask('ManageMessages','All','messages','Item','All','ACCESS_DELETE');
-    xarRegisterMask('AdminMessages','All','messages','Item','All','ACCESS_ADMIN');
+    xarRegisterMask('ReadMessagesBlock', 'All', 'messages', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ViewMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_READ');
+    xarRegisterMask('EditMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_ADD');
+    xarRegisterMask('DenyReadMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_NONE');
+    xarRegisterMask('ManageMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminMessages', 'All', 'messages', 'Item', 'All', 'ACCESS_ADMIN');
     /*********************************************************************
     * Enter some default privileges
     * Format is
     * register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterPrivilege('ManageMessages','All','messages','All','All','ACCESS_DELETE',xarML('Delete access to messages'));
-    xarRegisterPrivilege('DenyReadMessages','All','messages','All','All','ACCESS_NONE',xarML('Deny access to messages'));
+    xarRegisterPrivilege('ManageMessages', 'All', 'messages', 'All', 'All', 'ACCESS_DELETE', xarML('Delete access to messages'));
+    xarRegisterPrivilege('DenyReadMessages', 'All', 'messages', 'All', 'All', 'ACCESS_NONE', xarML('Deny access to messages'));
     /*********************************************************************
     * Assign the default privileges to groups/users
     * Format is
     * assign(Privilege,Role)
     *********************************************************************/
 
-    xarAssignPrivilege('ManageMessages','Users');
-    xarAssignPrivilege('DenyReadMessages','Everybody');
+    xarAssignPrivilege('ManageMessages', 'Users');
+    xarAssignPrivilege('DenyReadMessages', 'Everybody');
 
     // Initialisation successful
     return true;
@@ -189,7 +200,7 @@ function messages_init()
 function messages_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
-    switch($oldversion) {
+    switch ($oldversion) {
         case '0.5':
             break;
         case '1.0':
@@ -199,29 +210,30 @@ function messages_upgrade($oldversion)
         case '1.8.0':
             // compatability upgrade
             xarModVars::set('messages', 'away_message', '');
+            // no break
         case '1.8.1':
             // nothing to do for this rev
             break;
         case '1.9':
         case '1.9.0':
 
-			xarMod::apiFunc('dynamicdata','util','import', array(
-						'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
-						'overwrite' => true
-						));
-			 
-			// new module vars
-			xarModVars::set('messages', 'allowautoreply', true);
-			xarModVars::set('messages', 'send_redirect', true);
-			xarModVars::set('messages', 'allowusersendredirect', false);
+            xarMod::apiFunc('dynamicdata', 'util', 'import', array(
+                        'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
+                        'overwrite' => true
+                        ));
+             
+            // new module vars
+            xarModVars::set('messages', 'allowautoreply', true);
+            xarModVars::set('messages', 'send_redirect', true);
+            xarModVars::set('messages', 'allowusersendredirect', false);
 
-			xarMod::apiFunc('dynamicdata','util','import', array(
-						'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
-						'overwrite' => true
-						));
-			
-			// new user vars
-			xarModVars::set('messages', 'user_send_redirect', 1);
+            xarMod::apiFunc('dynamicdata', 'util', 'import', array(
+                        'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
+                        'overwrite' => true
+                        ));
+            
+            // new user vars
+            xarModVars::set('messages', 'user_send_redirect', 1);
 
             break;
         case '2.0.0':
@@ -244,15 +256,17 @@ function messages_delete()
      * UNREGISTER BLOCKS
      */
 
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'messages',
-                             'blockType'=> 'newmessages'))) return;
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'unregister_block_type',
+        array('modName'  => 'messages',
+                             'blockType'=> 'newmessages')
+    )) {
+        return;
+    }
 
-//	xarRemovePrivileges('messages');
+    //	xarRemovePrivileges('messages');
 
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'messages'));
 }
-
-?>

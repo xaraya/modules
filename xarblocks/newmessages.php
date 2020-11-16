@@ -25,10 +25,12 @@
         public $text_type_long      = 'My Messages';
         public $allow_multiple      = true;
 
-        function display(Array $data=array())
+        public function display(array $data=array())
         {
             $data = parent::display($data);
-            if (empty($data)) return;
+            if (empty($data)) {
+                return;
+            }
             $vars = $data['content'];
 
             $itemtype=1;
@@ -37,28 +39,32 @@
             $role_id = xarSession::getVar('role_id');
         
             // Count total Messages
-            $totalin = xarMod::apiFunc('messages',
-                                      'user',
-                                      'get_count',
-                                      array(
+            $totalin = xarMod::apiFunc(
+                'messages',
+                'user',
+                'get_count',
+                array(
                                           'recipient' => $role_id
-                        ));
+                        )
+            );
             $vars['totalin'] = $totalin;
         
             // Count Unread Messages
-            $unread = xarMod::apiFunc('messages',
-                                      'user',
-                                      'get_count',
-                                      array(
+            $unread = xarMod::apiFunc(
+                'messages',
+                'user',
+                'get_count',
+                array(
                                           'recipient' => xarUserGetVar('id'),
                                           'unread'=>true
-                        ));
+                        )
+            );
             $vars['unread'] = $unread;
         
             // No messages return emptymessage
-            if (empty($unread) || $unread == 0){ 
+            if (empty($unread) || $unread == 0) {
                 $vars['content'] = 'No new messages';
-                if (empty($data['title'])){
+                if (empty($data['title'])) {
                     $data['title'] = xarML('My Messages');
                 }
                 $data['content'] = $vars;
@@ -66,11 +72,10 @@
                 $vars['numitems'] = $unread;
                 $data['content'] = $vars;
         
-                if (empty($data['title'])){
+                if (empty($data['title'])) {
                     $data['title'] = xarML('My Messages');
                 }
             }
             return $data;
         }
-    }        
-?>
+    }

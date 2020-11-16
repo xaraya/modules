@@ -16,12 +16,12 @@
  */
 function messages_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminMessages')) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminMessages')) {
+        return;
+    }
 
     $data=array();
 
-     return xarTplModule('messages', 'admin', 'overview', $data);
+    return xarTplModule('messages', 'admin', 'overview', $data);
 }
-
-?>

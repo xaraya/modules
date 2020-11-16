@@ -12,12 +12,10 @@
  * @author XarayaGeek
  */
 
-    // The following constants define overall status of a message 
-    define('MESSAGES_NOTDELETED', 0);    
-	define('MESSAGES_DELETED', 1);
+    // The following constants define overall status of a message
+    define('MESSAGES_NOTDELETED', 0);
+    define('MESSAGES_DELETED', 1);
 
-    define('MESSAGES_STATUS_DRAFT',  0);
+    define('MESSAGES_STATUS_DRAFT', 0);
     define('MESSAGES_STATUS_UNREAD', 1);
-    define('MESSAGES_STATUS_READ',   2);
-
-?>
+    define('MESSAGES_STATUS_READ', 2);

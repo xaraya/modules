@@ -14,15 +14,15 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_userapi_encode_shorturl($args) {
-
-    $func = NULL;
-    $module = NULL;
-    $id = NULL;
+function messages_userapi_encode_shorturl($args)
+{
+    $func = null;
+    $module = null;
+    $id = null;
     $rest = array();
 
-    foreach($args as $name => $value) {
-        switch($name) {
+    foreach ($args as $name => $value) {
+        switch ($name) {
             case 'module':
                 $module = $value;
                 break;
@@ -32,13 +32,13 @@ function messages_userapi_encode_shorturl($args) {
             case 'replyto':
                 $replyto = $value;
                 break;
-			case 'func':
+            case 'func':
                 $func = $value;
                 break;
-			case 'to':
+            case 'to':
                 $to = $value;
                 break;
-			case 'folder':
+            case 'folder':
                 $folder = $value;
                 break;
             default:
@@ -47,7 +47,7 @@ function messages_userapi_encode_shorturl($args) {
     }
 
     // kind of a assertion :-))
-    if(isset($module) && $module != 'messages') {
+    if (isset($module) && $module != 'messages') {
         return;
     }
 
@@ -56,60 +56,62 @@ function messages_userapi_encode_shorturl($args) {
      */
     $path = '/messages';
 
-    if (empty($func)) return;
+    if (empty($func)) {
+        return;
+    }
 
     switch ($func) {
         case 'delete':
             $path .= '/delete';
-			if (isset($id)) {
-                $path .= '/' . $id;
-                unset($id);
-            } 
-            break;
-        case 'markunread':
-			$path .= '/markunread';
-			if (isset($id)) {
+            if (isset($id)) {
                 $path .= '/' . $id;
                 unset($id);
             }
-			break;
-		case 'new':
-			$path .= '/new';
-			if (isset($to)) {
+            break;
+        case 'markunread':
+            $path .= '/markunread';
+            if (isset($id)) {
+                $path .= '/' . $id;
+                unset($id);
+            }
+            break;
+        case 'new':
+            $path .= '/new';
+            if (isset($to)) {
                 $path .= '/' . $to;
                 unset($to);
             }
-			if (isset($opt) && $opt) {
+            if (isset($opt) && $opt) {
                 $path .= '/opt';
             }
-			break;
+            break;
         case 'modify':
-			$path .= '/modify'; 
-			if (isset($id)) {
+            $path .= '/modify';
+            if (isset($id)) {
                 $path .= '/' . $id;
                 unset($id);
-            } 
-			break;
-		case 'reply':
-			$path .= '/reply';
-			if (isset($replyto)) {
+            }
+            break;
+        case 'reply':
+            $path .= '/reply';
+            if (isset($replyto)) {
                 $path .= '/' . $replyto;
             }
-			break; 
-		case 'display':
-			$path .= '/' . $id;
-			break;
+            break;
+        case 'display':
+            $path .= '/' . $id;
+            break;
         case 'main':
         default: // main, view
             if (isset($folder)) {
-				if ($folder == 'sent') {
-					$path .= '/sent';
-				} elseif ($folder == 'drafts') {
-					$path .= '/drafts';
-				} 
-			} else { 
-				$path .= '/inbox'; // default
-			}
+                if ($folder == 'sent') {
+                    $path .= '/sent';
+                } elseif ($folder == 'drafts') {
+                    $path .= '/drafts';
+                }
+            } else {
+                $path .= '/inbox'; // default
+            }
             break;
     }
 
@@ -117,11 +119,11 @@ function messages_userapi_encode_shorturl($args) {
         $rest['id'] = $id;
     }
 
-	if (isset($replyto)) {
+    if (isset($replyto)) {
         $rest['replyto'] = $replyto;
     }
 
-	if (($func = 'markunread' || $func == 'display') && isset($folder)) {
+    if (($func = 'markunread' || $func == 'display') && isset($folder)) {
         $rest['folder'] = $folder;
     }
 
@@ -137,7 +139,4 @@ function messages_userapi_encode_shorturl($args) {
     }
 
     return $path;
-
 }
-
-?>

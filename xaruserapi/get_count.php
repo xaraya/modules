@@ -31,9 +31,14 @@ function messages_userapi_get_count($args)
 
     $exception = false;
 
-    if ( (!isset($author) || empty($author)) && (!isset($recipient) || empty($recipient)) ) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'author/recipient', 'userapi', 'get_count', 'messages');
+    if ((!isset($author) || empty($author)) && (!isset($recipient) || empty($recipient))) {
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'author/recipient',
+            'userapi',
+            'get_count',
+            'messages'
+        );
         throw new BadParameterException($msg);
         $exception |= true;
     }
@@ -76,10 +81,11 @@ function messages_userapi_get_count($args)
     }
 
 
-    $result =& $dbconn->Execute($sql,$bindvars);
+    $result =& $dbconn->Execute($sql, $bindvars);
 
-    if (!$result)
+    if (!$result) {
         return;
+    }
 
     if ($result->EOF) {
         return 0;
@@ -91,5 +97,3 @@ function messages_userapi_get_count($args)
 
     return $numitems;
 }
-
-?>
