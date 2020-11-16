@@ -27,7 +27,7 @@ function release_userapi_getitemtypes($args)
             $itemtypevalue = $etype;
             $itemtypes[$etype] = array('label' => $ename,
                                    'title' => xarML('Extension Type'),
-                                   'url' => xarModURL('release', 'user', 'display', array('type' => $etype)));
+                                   'url' => xarController::URL('release', 'user', 'display', array('type' => $etype)));
         }
     }
     return $itemtypes;

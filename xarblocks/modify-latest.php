@@ -45,10 +45,10 @@ function release_latestblock_modify($blockinfo)
  */
 function release_latestblock_update($blockinfo)
 {
-    if (!xarVarFetch('numitems', 'int:0', $vars['numitems'], 5, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numitems', 'int:0', $vars['numitems'], 5, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('shownonfeeditems', 'checkbox', $vars['shownonfeeditems'], false, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('shownonfeeditems', 'checkbox', $vars['shownonfeeditems'], false, xarVar::DONT_SET)) {
         return;
     }
     $vars['shownonfeeditems'] = $vars['shownonfeeditems']?1:0;

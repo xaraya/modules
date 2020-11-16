@@ -6,7 +6,7 @@
     <div class="xar-mod-body">
         <h2>Notify Release - Details</h2>
         <xar:template type="module" file="user-menu" />
-        <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="preview" />
             <input type="hidden" name="rid" id="rid" value="#$rid#" />

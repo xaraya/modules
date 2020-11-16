@@ -10,24 +10,24 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
               <td width="30%">
-                  <a href="#xarModURL('release', 'admin', 'viewnotes')#">Pending</a><br /><br />
+                  <a href="#xarController::URL('release', 'admin', 'viewnotes')#">Pending</a><br /><br />
               </td>
           </tr>
           <tr>
               <td width="30%">
                   Certification Status:<br />
-                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
-                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
+                  &#160;&#160;<a href="#xarController::URL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
+                  &#160;&#160;<a href="#xarController::URL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
               </td>
               <td width="30%">
                   Price:<br />
-                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
-                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
+                  &#160;&#160;<a href="#xarController::URL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
+                  &#160;&#160;<a href="#xarController::URL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
               </td>
               <td width="30%">
                   Support:<br />
-                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
-                  &#160;&#160;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
+                  &#160;&#160;<a href="#xarController::URL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
+                  &#160;&#160;<a href="#xarController::URL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
               </td>
           </tr>
       </table>

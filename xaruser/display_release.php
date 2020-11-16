@@ -18,14 +18,14 @@
     
     function release_user_display_release()
     {
-        if (!xarSecurityCheck('ReadRelease')) {
+        if (!xarSecurity::check('ReadRelease')) {
             return;
         }
 
-        if (!xarVarFetch('name', 'str', $name, 'release_notes', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('name', 'str', $name, 'release_notes', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
 

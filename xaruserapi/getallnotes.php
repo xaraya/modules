@@ -25,7 +25,7 @@ function release_userapi_getallnotes($args)
     $releaseinfo = array();
 
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -110,7 +110,7 @@ function release_userapi_getallnotes($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($rnid, $rid,$eid,$regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink,
              $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype) = $result->fields;
-        if (xarSecurityCheck('OverviewRelease', 0)) {
+        if (xarSecurity::check('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
                                    'eid'        => $eid,

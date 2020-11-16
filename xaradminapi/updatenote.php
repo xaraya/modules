@@ -44,7 +44,7 @@ function release_adminapi_updatenote($args)
         $exttype = $link['exttype'];
     }
     // Security Check
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 
@@ -87,7 +87,7 @@ function release_adminapi_updatenote($args)
     $args['module'] = 'release';
     $args['itemtype'] = $exttype;
     $args['itemid'] = $rnid;
-    xarModCallHooks('item', 'update', $rnid, $args);
+    xarModHooks::call('item', 'update', $rnid, $args);
 
     // Return the id of the newly created user to the calling process
     return $rnid;

@@ -13,11 +13,11 @@
 
 function release_user_rssviewnotes()
 {
-    if (!xarVarFetch('releaseno', 'int:0:', $releaseno, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('releaseno', 'int:0:', $releaseno, null, xarVar::DONT_SET)) {
         return;
     }
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -40,9 +40,9 @@ function release_user_rssviewnotes()
             array('rid' => $items[$i]['rid'])
         );
 
-        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
 
-        $items[$i]['displaylink'] =  xarModURL(
+        $items[$i]['displaylink'] =  xarController::URL(
             'release',
             'user',
             'displaynote',
@@ -50,7 +50,7 @@ function release_user_rssviewnotes()
             '1'
         );
 
-        $items[$i]['desc'] = nl2br(xarVarPrepForDisplay($getid['desc']));
+        $items[$i]['desc'] = nl2br(xarVar::prepForDisplay($getid['desc']));
     }
 
     // Add the array of items to the template variables

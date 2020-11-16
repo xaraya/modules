@@ -21,7 +21,7 @@
 function release_user_rssviewthemes()
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -47,11 +47,11 @@ function release_user_rssviewthemes()
             array('eid' => $items[$i]['eid'])
         );
 
-        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
 
-        $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
+        $items[$i]['displname'] = xarVar::prepForDisplay($getid['displname']);
 
-        $items[$i]['displaylink'] =  xarModURL(
+        $items[$i]['displaylink'] =  xarController::URL(
             'release',
             'user',
             'displaynote',
@@ -59,7 +59,7 @@ function release_user_rssviewthemes()
             '1'
         );
 
-        $items[$i]['desc'] = nl2br(xarVarPrepForDisplay($getid['desc']));
+        $items[$i]['desc'] = nl2br(xarVar::prepForDisplay($getid['desc']));
     }
 
 

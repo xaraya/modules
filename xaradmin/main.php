@@ -11,7 +11,7 @@
 function release_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 
@@ -22,7 +22,7 @@ function release_admin_main()
         xarController::redirect($urldata['redirecturl']);
         return true;
     } else {
-        xarController::redirect(xarModURL('release', 'admin', 'viewnotes'));
+        xarController::redirect(xarController::URL('release', 'admin', 'viewnotes'));
     }
     return true;
 }

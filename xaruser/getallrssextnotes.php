@@ -25,7 +25,7 @@ function release_userapi_getallrssextnotes($args)
     $releaseinfo = array();
 
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -52,7 +52,7 @@ function release_userapi_getallrssextnotes($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($rnid, $eid, $rid, $exttype, $version) = $result->fields;
-        if (xarSecurityCheck('OverviewRelease', 0)) {
+        if (xarSecurity::check('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'eid'        => $eid,
                                    'rid'        => $rid,

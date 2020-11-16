@@ -25,7 +25,7 @@
             </table>
         </xar:if>
 
-        <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
            <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="mtype" id="mtype" value="#$mtype#" />
             <input type="hidden" name="rid" id="rid" value="#$rid#" />

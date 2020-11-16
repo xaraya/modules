@@ -52,7 +52,7 @@ function release_userapi_updateid($args)
     $modified = time();
 
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -98,7 +98,7 @@ function release_userapi_updateid($args)
 
     // Let the calling process know that we have finished successfully
 
-    xarModCallHooks('item', 'update', $eid, $args);
+    xarModHooks::call('item', 'update', $eid, $args);
 
     // Return the id of the newly created user to the calling process
     return $eid;

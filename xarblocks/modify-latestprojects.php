@@ -45,10 +45,10 @@ function release_latestprojectsblock_modify($blockinfo)
  */
 function release_latestprojectsblock_update($blockinfo)
 {
-    if (!xarVarFetch('numitems', 'int:0', $vars['numitems'], 5, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numitems', 'int:0', $vars['numitems'], 5, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('showonlists', 'checkbox', $vars['showonlists'], false, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('showonlists', 'checkbox', $vars['showonlists'], false, xarVar::DONT_SET)) {
         return;
     }
     $vars['showonlists'] = $vars['showonlists']?1:0;

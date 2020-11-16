@@ -31,11 +31,11 @@
                         </xar:if>
                      </xar:foreach>
                     <li>
-                        <a href="#xarModURL('release', 'user', 'display', array('eid' => $extension['eid']))#">
+                        <a href="#xarController::URL('release', 'user', 'display', array('eid' => $extension['eid']))#">
                             #$exttypename# - ID #$extension['rid']#  #$extension['displname']#
                         </a>
                          by 
-                        <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
+                        <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
                     </li>
                 </xar:foreach>
             </ul>

@@ -9,11 +9,11 @@
     <xar:if condition="!isset($tab)">
         <xar:set name="tab">''</xar:set>
     </xar:if>
-    <xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
-    <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
-    <xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
-    <xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
-    <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'95'))</xar:set>
+    <xar:set name="extlisturl">xarController::URL('release','user','view')</xar:set>
+    <xar:set name="extreleaseurl">xarController::URL('release','user','viewnotes')</xar:set>
+    <xar:set name="extdocsurldev">xarController::URL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
+    <xar:set name="extdocsurladm">xarController::URL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
+    <xar:set name="extdocsurlthm">xarController::URL('articles','user','view',array('itemtype'=>'9','catid'=>'95'))</xar:set>
     <xar:set name="extname">ucfirst($regname)</xar:set>
     <xar:template file="user-mod-head"/>
 
@@ -39,7 +39,7 @@
                        Released: 
                  </h2>
                  <span style="float: right; width: 78%;text-align: left;">
-                       #xarLocaleFormatDate('%d %B %Y %H:%M', $time)#
+                       #xarLocale::formatDate('%d %B %Y %H:%M', $time)#
                  </span>
               </div>
               <div style="clear: both;">

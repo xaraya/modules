@@ -2,19 +2,19 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:set name="releaselink">
-        xarModURL('release','user','viewnotes') 
+        xarController::URL('release','user','viewnotes') 
     </xar:set>
     <xar:if condition="count($items) ge 1">
         <ul>
             <xar:foreach in="$items" value="$item">
                 <xar:if condition="empty($item['link'])">
                     <li>
-                        #xarVarPrepForDisplay($item['rid'])# 
+                        #xarVar::prepForDisplay($item['rid'])# 
                     </li>
                     <xar:else />
                     <li>
                         <a href="#$item['link']#">
-                            #xarVarPrepForDisplay(ucfirst($item['regname']))# V#xarVarPrepForDisplay($item['version'])#
+                            #xarVar::prepForDisplay(ucfirst($item['regname']))# V#xarVar::prepForDisplay($item['version'])#
                         </a>
                     </li>
                 </xar:if>

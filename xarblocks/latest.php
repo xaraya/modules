@@ -49,7 +49,7 @@ function release_latestblock_info()
 function release_latestblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ReadReleaseBlock', 1, 'Block', $blockinfo['title'])) {
+    if (!xarSecurity::check('ReadReleaseBlock', 1, 'Block', $blockinfo['title'])) {
         return;
     }
 
@@ -83,15 +83,15 @@ function release_latestblock_display($blockinfo)
         return;
     } // throw back
 
-    // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
+    // TODO: check for conflicts between transformation hook output and xarVar::prepForDisplay
     // Loop through each item and display it.
     $data['items'] = array();
     if (is_array($items)) {
         foreach ($items as $item) {
             // Security check 2 - if the user has read access to the item, show a
             // link to display the details of the item
-            if (xarSecurityCheck('OverviewRelease', 0, 'Item', "$item[rnid]:All:$item[eid]")) {
-                $item['link'] = xarModURL(
+            if (xarSecurity::check('OverviewRelease', 0, 'Item', "$item[rnid]:All:$item[eid]")) {
+                $item['link'] = xarController::URL(
                     'release',
                     'user',
                     'displaynote',
@@ -106,7 +106,7 @@ function release_latestblock_display($blockinfo)
             $roles = new xarRoles();
             $role = $roles->getRole($item['uid']);
             $item['author']= $role->getName();
-            $item['authorlink']=xarModURL('roles', 'user', 'display', array('uid'=>$item['uid']));
+            $item['authorlink']=xarController::URL('roles', 'user', 'display', array('uid'=>$item['uid']));
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }

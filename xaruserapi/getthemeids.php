@@ -37,7 +37,7 @@ function release_userapi_getthemeids($args)
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if(!xarSecurity::check('OverviewRelease')) return;
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -72,7 +72,7 @@ function release_userapi_getthemeids($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
                      $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj, $exttype) = $result->fields;
-        if (xarSecurityCheck('OverviewRelease', 0)) {
+        if (xarSecurity::check('OverviewRelease', 0)) {
             $releaseinfo[] = array('eid'        => $eid,
                                    'rid'        => $rid,
                                    'uid'        => $uid,

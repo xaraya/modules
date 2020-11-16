@@ -17,13 +17,13 @@
 function release_admin_modifyconfig()
 {
     // Security check
-    if (!xarSecurityCheck('AdminRelease')) {
+    if (!xarSecurity::check('AdminRelease')) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -46,14 +46,14 @@ function release_admin_modifyconfig()
 
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             switch ($data['tab']) {
                 case 'general':
                     $isvalid = $data['module_settings']->checkInput();
                     if (!$isvalid) {
-                        return xarTplModule('release', 'admin', 'modifyconfig', $data);
+                        return xarTpl::module('release', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
@@ -62,12 +62,12 @@ function release_admin_modifyconfig()
                     break;
             }
             // Jump to the next page
-            xarController::redirect(xarModURL('release', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('release', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
             return true;
             break;
     }
 
-    $hooks = xarModCallHooks(
+    $hooks = xarModHooks::call(
         'module',
         'modifyconfig',
         'release',

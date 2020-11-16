@@ -2,15 +2,15 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:set name="releaselink">
-        xarModURL('release','user','view')
+        xarController::URL('release','user','view')
     </xar:set>
     <xar:if condition="count($items) ge 1">
         <ul>
         <xar:foreach in="$items" value="$item">
                 <xar:if condition="empty($item['link'])">
-                    <li>#xarVarPrepForDisplay($item['rid'])#</li>
+                    <li>#xarVar::prepForDisplay($item['rid'])#</li>
                     <xar:else />
-                    <xar:set name="nicename">xarVarPrepForDisplay(ucfirst($item['regname']))</xar:set>
+                    <xar:set name="nicename">xarVar::prepForDisplay(ucfirst($item['regname']))</xar:set>
                     <li>
                         <xar:ml>
                             <xar:mlstring>#(1) <a href="#(2)">#(3)</a> by <a href="#(4)">#(5)</a></xar:mlstring>

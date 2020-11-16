@@ -4,34 +4,34 @@
     <xar:template file="user-mod-head"/>
 <!--
     <xar:set name="searchlink">
-        xarModURL('search','user','main')
+        xarController::URL('search','user','main')
     </xar:set>
     <xar:set name="addextension">
-        xarModURL('release','user','addid') 
+        xarController::URL('release','user','addid') 
     </xar:set>
     <xar:set name="releaseoverview">
-        xarModURL('release','user','main')
+        xarController::URL('release','user','main')
     </xar:set>
     <xar:set name="extlisturl">
-        xarModURL('release','user','view') 
+        xarController::URL('release','user','view') 
     </xar:set>
     <xar:set name="extreleaseurl">
-        xarModURL('release','user','viewnotes')
+        xarController::URL('release','user','viewnotes')
     </xar:set>
     <xar:set name="extdocsurldev">
-        xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87')) 
+        xarController::URL('articles','user','view',array('itemtype'=>'9','catid'=>'87')) 
     </xar:set>
     <xar:set name="extdocsurladm">
-        xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93')) 
+        xarController::URL('articles','user','view',array('itemtype'=>'9','catid'=>'93')) 
     </xar:set>
     <xar:set name="extdocsurlthm">
-        xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82')) 
+        xarController::URL('articles','user','view',array('itemtype'=>'9','catid'=>'82')) 
     </xar:set>
     <xar:set name="commenthook">
-        xarModIsHooked('comments')
+        xarModHooks::isHooked('comments')
     </xar:set>
     <xar:set name="hithook">
-        xarModIsHooked('hitcount')
+        xarModHooks::isHooked('hitcount')
     </xar:set>
     <div class="xar-mod-body" style="width:95%;">
         <h2>View All Registered Projects</h2>
@@ -77,13 +77,13 @@
                     <table width="100%" border="0" cellspacing="2" cellpadding="2">
                     <tr>
                         <th nowrap="nowrap">
-                            <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarModURL('release','user','view',array('sort'=>'id'))#">ID</a>
+                            <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarController::URL('release','user','view',array('sort'=>'id'))#">ID</a>
                         </th>
                         <th width="30%" align="left">
-                            <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarModURL('release','user','view',array('sort'=>'name'))#">Name (regname sort)</a>
+                            <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarController::URL('release','user','view',array('sort'=>'name'))#">Name (regname sort)</a>
                         </th>
                         <th width="25%" align="left">
-                            <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarModURL('release','user','view',array('sort'=>'author'))#">Author (uname)</a>
+                            <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarController::URL('release','user','view',array('sort'=>'author'))#">Author (uname)</a>
                         </th>
                         <th width="5%">
                             Release Notification
@@ -95,14 +95,14 @@
                         </th>
                         </xar:comment>
                         <th width="10%">
-                            <a title="#xarML('Sort project extensions by Project State')#"  href="#xarModURL('release','user','view',array('sort'=>'rstate'))#">State </a>
+                            <a title="#xarML('Sort project extensions by Project State')#"  href="#xarController::URL('release','user','view',array('sort'=>'rstate'))#">State </a>
                         </th>
                         <xar:if condition="$commenthook eq true">
                             <th width="5%">
                                 Comments
                             </th>
                         </xar:if>
-                        <xar:if condition="xarModIsHooked('hitcount','release')">
+                        <xar:if condition="xarModHooks::isHooked('hitcount','release')">
                             <th width="5%">
                                 Hits
                             </th>
@@ -152,7 +152,7 @@
                                     #$loop:item['comments']#
                                 </td>
                             </xar:if>
-                            <xar:if condition="xarModIsHooked('hitcount','release')">
+                            <xar:if condition="xarModHooks::isHooked('hitcount','release')">
                                 <td width="5%" class="#$rowclass#">
                                     #$loop:item['hitcount']#
                                 </td>

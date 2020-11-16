@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="isallowed">xarIsParent('Administrators', xarUser::getVar('uname'))</xar:set>
+    <xar:set name="isallowed">xarRoles::isParent('Administrators', xarUser::getVar('uname'))</xar:set>
 
     <xar:if condition="$isallowed">
         <div class="xar-row">

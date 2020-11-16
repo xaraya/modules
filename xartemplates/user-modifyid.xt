@@ -9,7 +9,7 @@
     <div class="xar-mod-body">
     <h2>Modify Registered Extension Entry</h2>
     <xar:template type="module" file="user-minimenu" />
-        <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="update" />    
             <input type="hidden" name="rid" id="rid" value="#$rid#" />

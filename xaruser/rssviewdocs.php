@@ -21,7 +21,7 @@
 function release_user_rssviewdocs()
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 

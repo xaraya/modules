@@ -21,19 +21,19 @@
 function release_user_adddocs()
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
-    if (!xarVarFetch('rid', 'isset', $rid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('rid', 'isset', $rid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:', $phase, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:', $phase, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('exttype', 'isset', $exttype, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('exttype', 'isset', $exttype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('eid', 'isset', $eid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('eid', 'isset', $eid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -50,10 +50,10 @@ function release_user_adddocs()
             // First we need to get the module that we are adding the release note to.
             // This will be done in several stages so that the information is accurate.
 
-            $authid = xarSecGenAuthKey();
-            $data = xarTplModule('release', 'user', 'adddocs_getmodule', array('authid'    => $authid));
+            $authid = xarSec::genAuthKey();
+            $data = xarTpl::module('release', 'user', 'adddocs_getmodule', array('authid'    => $authid));
 
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Documentation')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Documentation')));
 
             break;
 
@@ -61,7 +61,7 @@ function release_user_adddocs()
             // First we need to get the module that we are adding the release note to.
             // This will be done in several stages so that the information is accurate.
 
-           if (!xarVarFetch('rid', 'isset', $rid, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('rid', 'isset', $rid, null, xarVar::NOT_REQUIRED)) {
                return;
            }
 
@@ -76,7 +76,7 @@ function release_user_adddocs()
             
             $uid = xarUser::getVar('id');
 
-            if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
+            if (($data['uid'] == $uid) or (xarSecurity::check('EditRelease', 0))) {
                 $message = '';
             } else {
                 $message = xarML('You are not allowed to add documentation to this module');
@@ -88,10 +88,10 @@ function release_user_adddocs()
                 $data['name']='';
             }
 
-            xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));
+            xarTpl::setPageTitle(xarVar::prepForDisplay($data['name']));
 
-            $authid = xarSecGenAuthKey();
-            $data = xarTplModule(
+            $authid = xarSec::genAuthKey();
+            $data = xarTpl::module(
                 'release',
                 'user',
                 'adddocs_start',
@@ -125,7 +125,7 @@ function release_user_adddocs()
             }
 
 
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -133,12 +133,12 @@ function release_user_adddocs()
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
             }
 
 
             $data['items'] = $items;
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
         
             break;
         
@@ -161,7 +161,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -169,12 +169,12 @@ function release_user_adddocs()
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
             }
 
 
             $data['items'] = $items;
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
 
             break;
 
@@ -197,7 +197,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -205,12 +205,12 @@ function release_user_adddocs()
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
             }
 
 
             $data['items'] = $items;
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
 
             break;
         
@@ -233,7 +233,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -241,12 +241,12 @@ function release_user_adddocs()
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
             }
 
 
             $data['items'] = $items;
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
 
 
             break;
@@ -270,7 +270,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -278,40 +278,40 @@ function release_user_adddocs()
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
             }
 
 
             $data['items'] = $items;
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
 
             break;
 
         case 'update':
-            if (!xarVarFetch('rid', 'isset', $rid, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('rid', 'isset', $rid, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('mtype', 'isset', $mtype, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('mtype', 'isset', $mtype, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('title', 'str:1:', $title, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('title', 'str:1:', $title, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('return', 'isset', $return, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('return', 'isset', $return, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('doc', 'isset', $doc, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('doc', 'isset', $doc, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('eid', 'isset', $eid, null, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('eid', 'isset', $eid, null, xarVar::NOT_REQUIRED)) {
                 return;
             }
 
-           if (!xarSecConfirmAuthKey()) {
+           if (!xarSec::confirmAuthKey()) {
                return;
            }
 
-           if (!xarSecurityCheck('EditRelease', 0)) {
+           if (!xarSecurity::check('EditRelease', 0)) {
                $approved = 1;
            } else {
                $approved = 2;
@@ -332,7 +332,7 @@ function release_user_adddocs()
                 return;
             }
 
-            xarController::redirect(xarModURL('release', 'user', 'adddocs', array('phase' => $return,
+            xarController::redirect(xarController::URL('release', 'user', 'adddocs', array('phase' => $return,
                                                                               'eid' => $eid)));
 
            $data = '';

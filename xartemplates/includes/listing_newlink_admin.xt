@@ -4,7 +4,7 @@
     <xar:elseif condition="$objectname eq 'release_extensions'"/>
         <xar:access level="600">
             <xar:var name="title">Add A New Extension</xar:var>
-            <xar:set name="link">xarModURL($module,'admin','new_extension')</xar:set>
+            <xar:set name="link">xarController::URL($module,'admin','new_extension')</xar:set>
             <a style="font-weight:bold;" href ="#$link#">
                 <xar:if condition="xarModVars::get('release', 'use_module_icons')">
                     <xar:set name="imgfile">'icons/'.'document-new.png'</xar:set>
@@ -17,7 +17,7 @@
     <xar:elseif condition="$objectname eq 'release_notes'"/>
         <xar:access level="600">
             <xar:var name="title">Add A New Release</xar:var>
-            <xar:set name="link">xarModURL($module,'admin','new_release')</xar:set>
+            <xar:set name="link">xarController::URL($module,'admin','new_release')</xar:set>
             <a style="font-weight:bold;" href ="#$link#">
                 <xar:if condition="xarModVars::get('release', 'use_module_icons')">
                     <xar:set name="imgfile">'icons/'.'document-new.png'</xar:set>
@@ -30,7 +30,7 @@
     <xar:elseif condition="$objectname eq 'release_docs'"/>
         <xar:access level="600">
             <xar:var name="title">Add New Documentation</xar:var>
-            <xar:set name="link">xarModURL($module,'admin','new_documentation')</xar:set>
+            <xar:set name="link">xarController::URL($module,'admin','new_documentation')</xar:set>
             <a style="font-weight:bold;" href ="#$link#">
                 <xar:if condition="xarModVars::get('release', 'use_module_icons')">
                     <xar:set name="imgfile">'icons/'.'document-new.png'</xar:set>

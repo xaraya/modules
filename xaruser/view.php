@@ -20,16 +20,16 @@
 function release_user_view()
 {
     return array();
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:', $phase, 'all', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('catid', 'int', $catid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('catid', 'int', $catid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('sort', 'str', $sort, 'id', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'str', $sort, 'id', xarVar::NOT_REQUIRED)) {
         return;
     }
     // Default parameters
@@ -37,7 +37,7 @@ function release_user_view()
         $startnum = 1;
     }
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -80,12 +80,12 @@ function release_user_view()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < ($numitems); $i++) {
         $item = $items[$i];
-        $items[$i]['author'] = xarVarPrepForDisplay($item['author']);
+        $items[$i]['author'] = xarVar::prepForDisplay($item['author']);
         // Basic Information
-        $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
-        $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
-        $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
-        $items[$i]['rstate'] = xarVarPrepForDisplay($item['rstate']);
+        $items[$i]['rid'] = xarVar::prepForDisplay($item['rid']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($item['regname']);
+        $items[$i]['displname'] = xarVar::prepForDisplay($item['displname']);
+        $items[$i]['rstate'] = xarVar::prepForDisplay($item['rstate']);
         /* use the xarUser::getVar func as we only want name
          * TODO: Where is this user taken to?
          */
@@ -98,7 +98,7 @@ function release_user_view()
 
         // Author Name and Contact URL
 
-        $items[$i]['contacturl'] = xarModURL(
+        $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
@@ -106,7 +106,7 @@ function release_user_view()
         );
 
         // InfoURL
-        $items[$i]['infourl'] = xarModURL(
+        $items[$i]['infourl'] = xarController::URL(
             'release',
             'user',
             'display',
@@ -118,8 +118,8 @@ function release_user_view()
         $items[$i]['infotitle'] = xarML('View');
 
         // Edit
-        if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
-            $items[$i]['editurl'] = xarModURL(
+        if (($uid == $item['uid']) or (xarSecurity::check('EditRelease', 0))) {
+            $items[$i]['editurl'] = xarController::URL(
                 'release',
                 'user',
                 'modifyid',
@@ -131,8 +131,8 @@ function release_user_view()
             $items[$i]['editurl'] = '';
         }
         // Delete
-        if (($uid == $item['uid']) or (xarSecurityCheck('ManageRelease', 0))) {
-            $items[$i]['delurl'] = xarModURL(
+        if (($uid == $item['uid']) or (xarSecurity::check('ManageRelease', 0))) {
+            $items[$i]['delurl'] = xarController::URL(
                 'release',
                 'admin',
                 'deleteid',
@@ -144,8 +144,8 @@ function release_user_view()
             $items[$i]['delurl'] = '';
         }
         // Add Release Note URL
-        if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
-            $items[$i]['addurl'] = xarModURL(
+        if (($uid == $item['uid']) or (xarSecurity::check('EditRelease', 0))) {
+            $items[$i]['addurl'] = xarController::URL(
                 'release',
                 'user',
                 'addnotes',
@@ -159,8 +159,8 @@ function release_user_view()
         }
 
         // Add Docs URL
-        if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
-            $items[$i]['adddocs'] = xarModURL(
+        if (($uid == $item['uid']) or (xarSecurity::check('EditRelease', 0))) {
+            $items[$i]['adddocs'] = xarController::URL(
                 'release',
                 'user',
                 'adddocs',
@@ -174,13 +174,13 @@ function release_user_view()
         }
 
         $items[$i]['comments'] = '0';
-        if (xarModIsAvailable('comments')) {
+        if (xarMod::isAvailable('comments')) {
             // Get Comments
             $items[$i]['comments'] = xarMod::apiFunc(
                 'comments',
                 'user',
                 'get_count',
-                array('modid' => xarModGetIDFromName('release'),
+                array('modid' => xarMod::getRegId('release'),
                                                         'itemtype' => $item['exttype'],
                                                          'objectid' => (int)$item['eid'])
             );
@@ -191,13 +191,13 @@ function release_user_view()
         }
 
         $items[$i]['hitcount'] = '0';
-        if (xarModIsAvailable('hitcount')) {
+        if (xarMod::isAvailable('hitcount')) {
             // Get Hits
             $items[$i]['hitcount'] = xarMod::apiFunc(
                 'hitcount',
                 'user',
                 'get',
-                array('modid' => xarModGetIDFromName('release'),
+                array('modid' => xarMod::getRegId('release'),
                                                          'itemtype' => $item['exttype'],
                                                          'objectid' => (int)$item['eid'])
             );
@@ -223,10 +223,10 @@ function release_user_view()
 
         $allitems = xarMod::apiFunc('release', 'user', 'countitems', array('exttype'=>$exttype,'catid'=>$catid));
 
-        $data['pager'] = xarTplGetPager(
+        $data['pager'] = xarTplPager::getPager(
             $startnum,
             $allitems,
-            xarModURL(
+            xarController::URL(
                'release',
                'user',
                'view',

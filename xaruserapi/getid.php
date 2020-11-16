@@ -62,7 +62,7 @@ function release_userapi_getid($args)
          $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('OverviewRelease', 0)) {
+    if (!xarSecurity::check('OverviewRelease', 0)) {
         return false;
     }
 

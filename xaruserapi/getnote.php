@@ -60,7 +60,7 @@ function release_userapi_getnote($args)
         $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('OverviewRelease', 0)) {
+    if (!xarSecurity::check('OverviewRelease', 0)) {
         return false;
     }
 

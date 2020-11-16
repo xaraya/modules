@@ -128,7 +128,7 @@ function release_userapi_decode_shorturl($params)
         return array('display', $args);
     } else {
         $cid = xarModVars::get('release', 'mastercids');
-        if (xarModAPILoad('categories', 'user')) {
+        if (xarMod::apiLoad('categories', 'user')) {
             $cats = xarMod::apiFunc(
                 'categories',
                 'user',

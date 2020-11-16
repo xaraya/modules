@@ -22,7 +22,7 @@
 function release_user_getdoc()
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -40,12 +40,12 @@ function release_user_getdoc()
         return;
     }
 
-    $hooks = xarModCallHooks(
+    $hooks = xarModHooks::call(
         'item',
         'display',
         $rdid,
         array('itemtype'  => '3',
-                                       'returnurl' => xarModURL(
+                                       'returnurl' => xarController::URL(
                                            'release',
                                            'user',
                                            'getdoc',
@@ -62,8 +62,8 @@ function release_user_getdoc()
         $item['hooks'] = $hooks;
     }
 
-    $item['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-    $item['title'] = xarVarPrepHTMLDisplay($item['title']);
+    $item['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+    $item['title'] = xarVar::prepHTMLDisplay($item['title']);
 
     return $item;
 }

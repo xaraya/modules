@@ -21,14 +21,14 @@
 function release_admin_modifynote()
 {
     // Security Check
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 
-    if (!xarVarFetch('rnid', 'id', $rnid)) {
+    if (!xarVar::fetch('rnid', 'id', $rnid)) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -95,7 +95,7 @@ function release_admin_modifynote()
             $data['username'] = $user['name'];
             $data['changelogf'] = nl2br($data['changelog']);
             $data['notesf'] = nl2br($data['notes']);
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
 
             $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
             $data['exttypes']=$exttypes;
@@ -108,71 +108,71 @@ function release_admin_modifynote()
             break;
 
         case 'update':
-          if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {
+          if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
               return;
           }
-           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('regname', 'str:1:', $regname, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
                return;
            };
-           if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('dllink', 'str:1:', $dllink, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('dllink', 'str:1:', $dllink, '', xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('price', 'float', $price, 0, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('price', 'float', $price, 0, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('demolink', 'str:1:254', $demolink, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('demolink', 'str:1:254', $demolink, '', xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('supportlink', 'str:1:254', $supportlink, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('supportlink', 'str:1:254', $supportlink, '', xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('changelog', 'str:1:', $changelog, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('changelog', 'str:1:', $changelog, '', xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('notes', 'str:1:', $notes, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('notes', 'str:1:', $notes, '', xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('certified', 'int:1:2', $certified, 1, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('certified', 'int:1:2', $certified, 1, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('approved', 'int:1:2', $approved, 1, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('approved', 'int:1:2', $approved, 1, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('rstate', 'int:0:6', $rstate, 0, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, false, XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('enotes', 'str:0:', $enotes, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('enotes', 'str:0:', $enotes, '', xarVar::NOT_REQUIRED)) {
                return;
            }
-           if (!xarVarFetch('newtime', 'isset', $newtime, '', XARVAR_NOT_REQUIRED)) {
+           if (!xarVar::fetch('newtime', 'isset', $newtime, '', xarVar::NOT_REQUIRED)) {
                return;
            }
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
             $usefeed = $usefeedchecked? 1: 0;
             $newtime = strtotime($newtime);
             if ($newtime >0) {
-                $newtime= $newtime- xarMLS_userOffset($newtime) * 3600;
+                $newtime= $newtime- xarMLS::userOffset($newtime) * 3600;
             } else {
                 $newtime= $data['time'];
             }
@@ -206,7 +206,7 @@ function release_admin_modifynote()
                 return;
             }
 
-            xarController::redirect(xarModURL('release', 'user', 'displaynote', array('rnid'=>$rnid)));
+            xarController::redirect(xarController::URL('release', 'user', 'displaynote', array('rnid'=>$rnid)));
 
             return true;
 

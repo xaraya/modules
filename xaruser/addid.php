@@ -22,12 +22,12 @@ function release_user_addid($args)
 {
     extract($args);
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
-    xarVarFetch('phase', 'enum:add:update', $phase, 'add', XARVAR_NOT_REQUIRED);
-    xarVarFetch('msg', 'str', $msg, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('phase', 'enum:add:update', $phase, 'add', xarVar::NOT_REQUIRED);
+    xarVar::fetch('msg', 'str', $msg, '', xarVar::NOT_REQUIRED);
 
     $data['msg']=$msg;
     if (empty($phase)) {
@@ -45,16 +45,16 @@ function release_user_addid($args)
     $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes'); //extension types
 
     $data['exttypes']=$exttypes;
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
         switch (strtolower($phase)) {
 
             case 'add':
             default:
                 $data['uid'] = xarUser::getVar('id');
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
 
                 $item['module'] = 'release';
-                $hooks = xarModCallHooks('item', 'new', '', $item);
+                $hooks = xarModHooks::call('item', 'new', '', $item);
                 if (empty($hooks['categories'])) {
                     $cathook = '';
                 } else {
@@ -70,40 +70,40 @@ function release_user_addid($args)
                 break;
 
             case 'update':
-                if (!xarVarFetch('ridno', 'int:1:', $ridno, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('ridno', 'int:1:', $ridno, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('uid', 'int:1:', $uid, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('uid', 'int:1:', $uid, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('regname', 'str:1:', $regname, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('displname', 'str:1:', $displname, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('displname', 'str:1:', $displname, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('desc', 'str:1:', $desc, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('desc', 'str:1:', $desc, '', xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('exttype', 'int:0:', $exttype, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('exttype', 'int:0:', $exttype, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('class', 'int:0:', $class, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('class', 'int:0:', $class, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('rstate', 'int:0:6', $rstate, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('rstate', 'int:0:6', $rstate, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('members', 'str:0:', $members, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('members', 'str:0:', $members, '', xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('scmlink', 'str:0:', $scmlink, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('scmlink', 'str:0:', $scmlink, '', xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('openproj', 'checkbox', $openproj, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('openproj', 'checkbox', $openproj, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                if (!xarVarFetch('modify_cids', 'list:int:1:', $cids, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('modify_cids', 'list:int:1:', $cids, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
                 
@@ -111,7 +111,7 @@ function release_user_addid($args)
                 $uid = xarUser::getVar('id');
                 $openproj = isset($openproj)? 1:0;
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
                 if (!isset($ridno)) {
@@ -148,7 +148,7 @@ function release_user_addid($args)
                     return $data;
                 }
 
-                xarController::redirect(xarModURL('release', 'user', 'display', array('eid'=>$newid)));
+                xarController::redirect(xarController::URL('release', 'user', 'display', array('eid'=>$newid)));
                 return true;
                 break;
         }

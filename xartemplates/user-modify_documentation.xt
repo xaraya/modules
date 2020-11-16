@@ -12,7 +12,7 @@
         </fieldset>
     </xar:if>
 
-    <form method="post" action="#xarModURL('release','user','modify_documentation')#">
+    <form method="post" action="#xarController::URL('release','user','modify_documentation')#">
         <fieldset>
             <legend>Modify documentation details</legend>
             <xar:data-form object="$object" tplmodule="$tplmodule"/>
@@ -21,7 +21,7 @@
             <div class="xar-col">
             </div>
             <div class="xar-col">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                 <input type="hidden" name="name" id="name" value="#$object:name#"/>
                 <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
                 <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
@@ -31,7 +31,7 @@
                 <xar:var name="label">Update</xar:var>
                 <xar:button type="submit" name="post" value="$label" class="btn-primary"/>&#160;
                 <xar:var name="label">Delete</xar:var>
-                <xar:set name="target">xarModURL('release', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
+                <xar:set name="target">xarController::URL('release', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
                 <xar:button type="link" target="$target" value="$label" class="btn-danger"/>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <div class="xar-mod-body">
     <h2>Modify Registered Extension Entry</h2>
     <xar:template type="module" file="user-minimenu" />
-        <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="update" />    
             <input type="hidden" name="rid" id="rid" value="#$rid#" />

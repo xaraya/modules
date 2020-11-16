@@ -13,7 +13,7 @@
       </span>
       <span style="float:left; text-align:left; width:85%;">
 
-      <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+      <form action="#xarController::URL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
           <input type="radio" name="phase" id="phase" value="certified"  />
           Certified
           &#160;&#160;<input type="radio" name="phase" id="phase" value="price"  />
@@ -57,7 +57,7 @@
                   Author: 
                   <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
                   on
-                  #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
+                  #xarLocale::formatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
                       <xar:if condition="!empty($loop:item['counter'])">
                         (#$loop:item['hitcount']# Reads)
                       </xar:if>

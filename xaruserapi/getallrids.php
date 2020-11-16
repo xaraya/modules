@@ -42,7 +42,7 @@ function release_userapi_getallrids($args)
     $releaseinfo = array();
 
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -171,7 +171,7 @@ function release_userapi_getallrids($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($eid,$rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
              $regtime, $modified, $members, $scmlink, $openproj, $exttype, $uname) = $result->fields;
-        if (xarSecurityCheck('OverviewRelease', 0)) {
+        if (xarSecurity::check('OverviewRelease', 0)) {
             $releaseinfo[] = array('eid'        => $eid,
                                    'rid'        => $rid,
                                    'uid'        => $uid,

@@ -20,14 +20,14 @@
  */
 function release_admin_new_documentation($args)
 {
-    if (!xarSecurityCheck('AddRelease')) {
+    if (!xarSecurity::check('AddRelease')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'release_docs', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'release_docs', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -38,12 +38,12 @@ function release_admin_new_documentation($args)
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -52,13 +52,13 @@ function release_admin_new_documentation($args)
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('release', 'admin', 'new_documentation', $data);
+            return xarTpl::module('release', 'admin', 'new_documentation', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('release', 'admin', 'view_documentation'));
+            xarController::redirect(xarController::URL('release', 'admin', 'view_documentation'));
             return true;
         }
     }

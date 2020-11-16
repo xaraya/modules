@@ -4,8 +4,8 @@
     <xar:template file="user-mod-head"/>
 
     <div class="xar-mod-body">
-        <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
-        <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
+        <xar:set name='retryurl'>xarController::URL('release','user','addid')</xar:set>
+        <xar:set name="retryID">xarController::URL('release','user','view')</xar:set>
 
         <h2>Register a New Project ID</h2>
         <xar:template type="module" file="user-menu" />

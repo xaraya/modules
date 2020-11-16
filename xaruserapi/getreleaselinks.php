@@ -37,7 +37,7 @@ function release_userapi_getreleaselinks($args)
     $releaseinfo = array();
 
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -53,7 +53,7 @@ function release_userapi_getreleaselinks($args)
     $releaselinks = array();
     foreach ($releaseinfo as $release) {
         $item['release']['regname']=$release['regname'];
-        $item['release']['link'] = xarModURL('release', 'admin', 'modifynote', array('rnid'=>$release['rnid']));
+        $item['release']['link'] = xarController::URL('release', 'admin', 'modifynote', array('rnid'=>$release['rnid']));
         $releaselinks[] = $item['release'];
     }
     $releaselinks['counted']=$totreleases;

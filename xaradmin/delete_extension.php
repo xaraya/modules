@@ -20,17 +20,17 @@
  */
 function release_admin_delete_extension($args)
 {
-    if (!xarSecurityCheck('ManageRelease')) {
+    if (!xarSecurity::check('ManageRelease')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str:1', $name, 'release_extensions', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, 'release_extensions', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -39,12 +39,12 @@ function release_admin_delete_extension($args)
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'release';
-    $data['authid'] = xarSecGenAuthKey('release');
+    $data['authid'] = xarSec::genAuthKey('release');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -52,16 +52,16 @@ function release_admin_delete_extension($args)
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('release', 'admin', 'view_extensions'));
+        xarController::redirect(xarController::URL('release', 'admin', 'view_extensions'));
         return true;
     }
     return $data;
 }
 /*
     // Get parameters
-    if (!xarVarFetch('eid', 'id', $eid)) return;
-    if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('eid', 'id', $eid)) return;
+    if (!xarVar::fetch('obid', 'str:1:', $obid, '', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirmation','str:1:',$confirmation,'',xarVar::NOT_REQUIRED)) return;
 
     extract($args);
 
@@ -77,25 +77,25 @@ function release_admin_delete_extension($args)
     $rid = $data['rid'];
     $regname = $data['regname'];
     // Security Check
-    if(!xarSecurityCheck('ManageRelease')) return;
+    if(!xarSecurity::check('ManageRelease')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
         //Load Template
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         return $data;
     }
 
     // If we get here it means that the user has confirmed the action
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
 
     if (!xarMod::apiFunc('release', 'admin', 'deleteid',
                         array('eid' => $eid,'rid'=>$rid, 'regname'=>$regname))) return;
 
     // Redirect
-    xarController::redirect(xarModURL('release', 'admin', 'viewids'));
+    xarController::redirect(xarController::URL('release', 'admin', 'viewids'));
 
     // Return
     return true;

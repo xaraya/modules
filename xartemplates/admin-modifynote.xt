@@ -6,7 +6,7 @@
     <div class="xar-mod-body">
         <h2>Release Module :: Preview Release By #$username#</h2>
         <p>
-            <form action="#xarModURL('release', 'admin', 'modifynote')#" method="post" enctype="application/x-www-form-urlencoded">
+            <form action="#xarController::URL('release', 'admin', 'modifynote')#" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="rid" id="rid" value="#$rid#" />
@@ -27,7 +27,7 @@
                             Date Added
                         </td>
                         <td align="left" valign="top" class="xar-norm">
-                            #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
+                            #xarLocale::formatDate('%d %B %Y %H:%M:%S %Z', $time)#
                             <xar:data-input type="calendar" name="newtime" id="newtime" />
                         </td>
                     </tr>

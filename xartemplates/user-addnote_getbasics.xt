@@ -17,7 +17,7 @@
     <div class="xar-mod-body">
         <h2>Notify Release - Basic Details</h2>
         <xar:template type="module" file="user-menu" />
-        <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <form action="#xarController::URL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="getdetails" />
             <input type="hidden" name="rid" id="rid" value="#$rid#" />

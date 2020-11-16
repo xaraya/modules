@@ -20,21 +20,21 @@
 function release_admin_viewdocs()
 {
     // Security Check
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 
     // Get parameters
-    if (!xarVarFetch('phase', 'enum:unapproved:viewall:certified:price:supported', $phase, 'unapproved', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'enum:unapproved:viewall:certified:price:supported', $phase, 'unapproved', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('startnum', 'int', $starnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int', $starnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('filter', 'str', $filter, $filter, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('exttype', 'str', $exttype, $exttype, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('exttype', 'str', $exttype, $exttype, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -151,8 +151,8 @@ function release_admin_viewdocs()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
 
-        if (xarSecurityCheck('EditRelease', 0)) {
-            $items[$i]['editurl'] = xarModURL(
+        if (xarSecurity::check('EditRelease', 0)) {
+            $items[$i]['editurl'] = xarController::URL(
                 'release',
                 'admin',
                 'modifynote',
@@ -162,8 +162,8 @@ function release_admin_viewdocs()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('ManageRelease', 0)) {
-            $items[$i]['deleteurl'] = xarModURL(
+        if (xarSecurity::check('ManageRelease', 0)) {
+            $items[$i]['deleteurl'] = xarController::URL(
                 'release',
                 'admin',
                 'deletenote',
@@ -183,9 +183,9 @@ function release_admin_viewdocs()
             array('rid' => $items[$i]['rid'])
         );
 
-        $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
-        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
-        $items[$i]['displaylink'] =  xarModURL(
+        $items[$i]['exttype'] = xarVar::prepForDisplay($getid['exttype']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
+        $items[$i]['displaylink'] =  xarController::URL(
             'release',
             'user',
             'displaynote',
@@ -199,7 +199,7 @@ function release_admin_viewdocs()
             array('uid' => $getid['uid'])
         );
 
-        $items[$i]['contacturl'] = xarModURL(
+        $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
@@ -208,7 +208,7 @@ function release_admin_viewdocs()
 
 
         $items[$i]['realname'] = $getuser['name'];
-        $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
+        $items[$i]['desc'] = xarVar::prepForDisplay($getid['desc']);
 
         if ($item['certified'] == 1) {
             $items[$i]['certifiedstatus'] = xarML('Yes');

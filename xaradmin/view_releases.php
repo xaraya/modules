@@ -12,7 +12,7 @@
  */
 function release_admin_view_releases()
 {
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 

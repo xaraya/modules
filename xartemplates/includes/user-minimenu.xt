@@ -9,7 +9,7 @@
                 </dt>
                <xar:if condition="$tab eq 'back'">
                    <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
+                       <a href="#xarServer::getCurrentURL()#">
                            View Extensions List
                        </a>
                    </dd>
@@ -22,7 +22,7 @@
                </xar:if>
                <xar:if condition="$tab eq 'basic'">
                    <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
+                       <a href="#xarServer::getCurrentURL()#">
                          <xar:ml>
                               <xar:mlstring>#(1) Summary</xar:mlstring>
                               <xar:mlvar>#$extname#</xar:mlvar>
@@ -41,7 +41,7 @@
                </xar:if>
                <xar:if condition="$tab eq 'versions'">
                    <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
+                       <a href="#xarServer::getCurrentURL()#">
                          <xar:ml>
                               <xar:mlstring>#(1) Version History</xar:mlstring>
                               <xar:mlvar>#$extname#</xar:mlvar>

@@ -79,7 +79,7 @@ function release_userapi_createnote($args)
     $rnid = $dbconn->PO_Insert_ID($releasetable, 'xar_rnid');
 
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'create', $rnid, 'rnid');
+    xarModHooks::call('item', 'create', $rnid, 'rnid');
 
     // Return the id of the newly created user to the calling process
     return $rnid;

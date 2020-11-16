@@ -21,13 +21,13 @@
 function release_admin_deletenote()
 {
     // Get parameters
-    if (!xarVarFetch('rnid', 'id', $rnid)) {
+    if (!xarVar::fetch('rnid', 'id', $rnid)) {
         return;
     }
-    if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('obid', 'str:1:', $obid, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirmation', 'str:1:', $confirmation, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirmation', 'str:1:', $confirmation, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     
@@ -48,21 +48,21 @@ function release_admin_deletenote()
     }
 
     // Security Check
-    if (!xarSecurityCheck('ManageRelease')) {
+    if (!xarSecurity::check('ManageRelease')) {
         return;
     }
 
     // Check for confirmation.
     if (empty($confirmation)) {
         //Load Template
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         return $data;
     }
 
     // If we get here it means that the user has confirmed the action
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -76,7 +76,7 @@ function release_admin_deletenote()
     }
 
     // Redirect
-    xarController::redirect(xarModURL('release', 'admin', 'viewnotes'));
+    xarController::redirect(xarController::URL('release', 'admin', 'viewnotes'));
 
     // Return
     return true;

@@ -191,20 +191,20 @@ function release_init()
         array('callerModName' => 'release', 'hookModName' => 'categories')
     );
     // search hook
-    if (!xarModRegisterHook('item', 'search', 'GUI', 'release', 'user', 'search')) {
+    if (!xarModHooks::register('item', 'search', 'GUI', 'release', 'user', 'search')) {
         return false;
     }
     # --------------------------------------------------------
 #
     # Set up masks
 #
-    xarRegisterMask('ViewRelease', 'All', 'release', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditRelease', 'All', 'release', 'All', 'All', 'ACCESS_EDIT');
-    xarRegisterMask('AddRelease', 'All', 'release', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('ManageRelease', 'All', 'release', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminRelease', 'All', 'release', 'All', 'All', 'ACCESS_ADMIN');
-    xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ViewRelease', 'All', 'release', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('EditRelease', 'All', 'release', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddRelease', 'All', 'release', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageRelease', 'All', 'release', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminRelease', 'All', 'release', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
 
     return true;
 }

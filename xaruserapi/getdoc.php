@@ -42,7 +42,7 @@ function release_userapi_getdoc($args)
     list($rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('OverviewRelease', 0)) {
+    if (!xarSecurity::check('OverviewRelease', 0)) {
         return false;
     }
 

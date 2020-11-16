@@ -21,28 +21,28 @@
 function release_user_display($args)
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
     extract($args);
 
-    if (!xarVarFetch('rid', 'int', $rid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('rid', 'int', $rid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('exttype', 'int', $exttype, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('exttype', 'int', $exttype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int', $startnum, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:7', $phase, 'view', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'basic', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -104,8 +104,8 @@ function release_user_display($args)
 
     $realname = $getuser['name'];
     //determine edit link
-    if ((xarUser::getVar('id') == $id['uid']) || xarSecurityCheck('EditRelease', 0)) {
-        $data['editlink']=xarModURL('release', 'user', 'modifyid', array('eid'=>$eid));
+    if ((xarUser::getVar('id') == $id['uid']) || xarSecurity::check('EditRelease', 0)) {
+        $data['editlink']=xarController::URL('release', 'user', 'modifyid', array('eid'=>$eid));
     } else {
         $data['editlink']='';
     }
@@ -133,9 +133,9 @@ function release_user_display($args)
         foreach ($memberlist as $key=>$iid) {
             foreach ($iid as $userid=>$username) {
                 if ($key == 0) {
-                    $memberstring = "<a href=\"".xarModURL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
+                    $memberstring = "<a href=\"".xarController::URL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
                 } else {
-                    $memberstring .=", <a href=\"".xarModURL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
+                    $memberstring .=", <a href=\"".xarController::URL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
                 }
             }
         }
@@ -143,8 +143,8 @@ function release_user_display($args)
     $item['module'] = 'release';
     $item['itemtype'] = $exttype;
     $item['item'] = $eid;
-    $item['returnurl']=xarModURL('release', 'user', 'display', array('eid' => $eid));
-    $hooks = xarModCallHooks('item', 'display', $eid, $item);
+    $item['returnurl']=xarController::URL('release', 'user', 'display', array('eid' => $eid));
+    $hooks = xarModHooks::call('item', 'display', $eid, $item);
 
     if (empty($hooks)) {
         $data['hooks'] = '';
@@ -185,8 +185,8 @@ function release_user_display($args)
     } else {
         $latest['nightlylink']='';
     }
-    if (xarModIsAvailable('articles') && xarModIsAvailable('keywords') && isset($id['regname'])) {
-        $latest['onsitedocs']=xarModURL('keywords', 'user', 'main', array('keyword'=>$id['regname']));
+    if (xarMod::isAvailable('articles') && xarMod::isAvailable('keywords') && isset($id['regname'])) {
+        $latest['onsitedocs']=xarController::URL('keywords', 'user', 'main', array('keyword'=>$id['regname']));
     } else {
         $latest['onsitedocs'] ='';
     }
@@ -220,19 +220,19 @@ function release_user_display($args)
                     array('eid' => $items[$i]['eid'])
                 );
 
-                $items[$i]['rid'] = xarVarPrepForDisplay($getid['rid']);
-                $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
-                $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
-                $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
-                $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
-                $items[$i]['displaylink'] =  xarModURL(
+                $items[$i]['rid'] = xarVar::prepForDisplay($getid['rid']);
+                $items[$i]['exttype'] = xarVar::prepForDisplay($getid['exttype']);
+                $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
+                $items[$i]['displname'] = xarVar::prepForDisplay($getid['displname']);
+                $items[$i]['class'] = xarVar::prepForDisplay($getid['class']);
+                $items[$i]['displaylink'] =  xarController::URL(
                     'release',
                     'user',
                     'displaynote',
                     array('rnid' => $items[$i]['rnid'])
                 );
-                if (xarSecurityCheck('AdminRelease', 0)) {
-                    $items[$i]['editlink'] =  xarModURL(
+                if (xarSecurity::check('AdminRelease', 0)) {
+                    $items[$i]['editlink'] =  xarController::URL(
                         'release',
                         'admin',
                         'modifynote',
@@ -249,7 +249,7 @@ function release_user_display($args)
                     array('uid' => $getid['uid'])
                 );
 
-                $items[$i]['contacturl'] = xarModURL(
+                $items[$i]['contacturl'] = xarController::URL(
                     'roles',
                     'user',
                     'display',
@@ -258,7 +258,7 @@ function release_user_display($args)
 
 
                 $items[$i]['realname'] = $getuser['name'];
-                $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
+                $items[$i]['desc'] = xarVar::prepForDisplay($getid['desc']);
 
                 if ($items[$i]['certified'] == 2) {
                     $items[$i]['certifiedstatus'] = xarML('Yes');
@@ -272,7 +272,7 @@ function release_user_display($args)
                     'comments',
                     'user',
                     'get_count',
-                    array('modid' => xarModGetIDFromName('release'),
+                    array('modid' => xarMod::getRegId('release'),
                                                              'itemtype' =>(int)$item['exttype'],
                                                              'objectid' => $item['rnid'])
                 );
@@ -335,8 +335,8 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -367,8 +367,8 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -399,8 +399,8 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -431,8 +431,8 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release', 'user', 'getdoc',
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                $items[$i]['docurl'] = xarController::URL('release', 'user', 'getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -463,8 +463,8 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release', 'user', 'getdoc',
+                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                $items[$i]['docurl'] = xarController::URL('release', 'user', 'getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 

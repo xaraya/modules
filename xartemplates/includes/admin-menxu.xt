@@ -3,11 +3,11 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:comment>Common Administration menu</xar:comment>
 
-    <xar:if condition="xarModGetVar('themes','adminpagemenu')">
+    <xar:if condition="xarModVars::get('themes','adminpagemenu')">
 
     <xar:style scope="module" module="base" file="navtabs" />
 
-    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="request">xarRequest::getInfo()</xar:set>
     <xar:set name="activetab">#$request.2#</xar:set>
 
     <div>

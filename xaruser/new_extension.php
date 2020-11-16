@@ -20,14 +20,14 @@
  */
 function release_user_new_extension($args)
 {
-    if (!xarSecurityCheck('AddRelease')) {
+    if (!xarSecurity::check('AddRelease')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'release_extensions', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'release_extensions', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -38,12 +38,12 @@ function release_user_new_extension($args)
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -52,13 +52,13 @@ function release_user_new_extension($args)
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('release', 'user', 'new_extension', $data);
+            return xarTpl::module('release', 'user', 'new_extension', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('release', 'user', 'view_extensions'));
+            xarController::redirect(xarController::URL('release', 'user', 'view_extensions'));
             return true;
         }
     }

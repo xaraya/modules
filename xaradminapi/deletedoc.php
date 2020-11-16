@@ -41,7 +41,7 @@ function release_adminapi_deletedoc($args)
     }
 
     // Security Check
-    if (!xarSecurityCheck('ManageRelease')) {
+    if (!xarSecurity::check('ManageRelease')) {
         return;
     }
 
@@ -60,7 +60,7 @@ function release_adminapi_deletedoc($args)
     }
 
     // Let any hooks know that we have deleted a link
-    xarModCallHooks('item', 'delete', $rdid, '');
+    xarModHooks::call('item', 'delete', $rdid, '');
 
     // Let the calling process know that we have finished successfully
     return true;

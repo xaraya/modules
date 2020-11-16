@@ -67,7 +67,7 @@ function release_userapi_createdoc($args)
     $rdid = $dbconn->PO_Insert_ID($releasetable, 'xar_rdid');
 
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'create', $rdid, 'rdid');
+    xarModHooks::call('item', 'create', $rdid, 'rdid');
 
     // Return the id of the newly created user to the calling process
     return $rdid;

@@ -34,7 +34,7 @@ function release_userapi_getdocs($args)
     $releasedocs = array();
 
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -77,7 +77,7 @@ function release_userapi_getdocs($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
-        if (xarSecurityCheck('OverviewRelease', 0)) {
+        if (xarSecurity::check('OverviewRelease', 0)) {
             $releasedocs[] = array('rdid'       => $rdid,
                                    'eid'        => $eid,
                                    'rid'        => $rid,

@@ -23,20 +23,20 @@
  */
 function release_admin_viewnotes()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:', $phase, 'all', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('filter', 'str:1:', $filter, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('exttype', 'str:1:', $exttype, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('exttype', 'str:1:', $exttype, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
     // Security Check
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 
@@ -171,8 +171,8 @@ function release_admin_viewnotes()
     for ($i = 0; $i < $numitems; $i++) {
         $item = $items[$i];
 
-        if (xarSecurityCheck('EditRelease', 0)) {
-            $items[$i]['editurl'] = xarModURL(
+        if (xarSecurity::check('EditRelease', 0)) {
+            $items[$i]['editurl'] = xarController::URL(
                 'release',
                 'admin',
                 'modifynote',
@@ -182,8 +182,8 @@ function release_admin_viewnotes()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('ManageRelease', 0)) {
-            $items[$i]['deleteurl'] = xarModURL(
+        if (xarSecurity::check('ManageRelease', 0)) {
+            $items[$i]['deleteurl'] = xarController::URL(
                 'release',
                 'admin',
                 'deletenote',
@@ -203,9 +203,9 @@ function release_admin_viewnotes()
             array('rid' => $items[$i]['rid'])
         );
 
-        $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
-        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
-        $items[$i]['displaylink'] =  xarModURL(
+        $items[$i]['exttype'] = xarVar::prepForDisplay($getid['exttype']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
+        $items[$i]['displaylink'] =  xarController::URL(
             'release',
             'user',
             'displaynote',
@@ -219,7 +219,7 @@ function release_admin_viewnotes()
             array('uid' => $getid['uid'])
         );
 
-        $items[$i]['contacturl'] = xarModURL(
+        $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
@@ -228,7 +228,7 @@ function release_admin_viewnotes()
 
 
         $items[$i]['realname'] = $getuser['name'];
-        $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
+        $items[$i]['desc'] = xarVar::prepForDisplay($getid['desc']);
 
         if ($item['certified'] == 1) {
             $items[$i]['certifiedstatus'] = xarML('Yes');
@@ -238,10 +238,10 @@ function release_admin_viewnotes()
         $items[$i]['changelog'] = nl2br($item['changelog']);
         $items[$i]['notes'] = nl2br($item['notes']);
 
-        $data['pager'] = xarTplGetPager(
+        $data['pager'] = xarTplPager::getPager(
             $startnum,
             xarMod::apiFunc('release', 'user', 'countnotes', array('phase'=>$phase,'filter'=>$filter)),
-            xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
+            xarController::URL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
             xarModUserVars::get('release', 'itemsperpage', $uid)
         );
     }

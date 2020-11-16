@@ -12,7 +12,7 @@
  */
 function release_admin_view_extensions()
 {
-    if (!xarSecurityCheck('EditRelease')) {
+    if (!xarSecurity::check('EditRelease')) {
         return;
     }
 
@@ -21,11 +21,11 @@ function release_admin_view_extensions()
 
     return $data;
 
-    /*if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+    /*if (!xarVar::fetch('startnum', 'str:1:', $startnum, '1', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'str', $phase, 'all', xarVar::NOT_REQUIRED)) return;
 
     // Security Check
-    if(!xarSecurityCheck('EditRelease')) return;
+    if(!xarSecurity::check('EditRelease')) return;
 
     $uid = xarUser::getVar('id');
 
@@ -49,21 +49,21 @@ function release_admin_view_extensions()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        $items[$i]['eid'] = xarVarPrepForDisplay($item['eid']);
-        $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
-        $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
-        $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
+        $items[$i]['eid'] = xarVar::prepForDisplay($item['eid']);
+        $items[$i]['rid'] = xarVar::prepForDisplay($item['rid']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($item['regname']);
+        $items[$i]['displname'] = xarVar::prepForDisplay($item['displname']);
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('EditRelease', 0)) {
-            $items[$i]['editurl'] = xarModURL('release', 'user', 'modifyid',
+        if (xarSecurity::check('EditRelease', 0)) {
+            $items[$i]['editurl'] = xarController::URL('release', 'user', 'modifyid',
                                               array('eid' => $item['eid']));
         } else {
             $items[$i]['editurl'] = '';
         }
 
         $items[$i]['deletetitle'] = xarML('Delete');
-        if (xarSecurityCheck('ManageRelease', 0)) {
-            $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deleteid',
+        if (xarSecurity::check('ManageRelease', 0)) {
+            $items[$i]['deleteurl'] = xarController::URL('release', 'admin', 'deleteid',
                                                array('eid' => $item['eid']));
         } else {
             $items[$i]['deleteurl'] = '';
@@ -72,9 +72,9 @@ function release_admin_view_extensions()
     }
     //Add the pager
     $data['phase']=$phase;
-    $data['pager'] = xarTplGetPager($startnum,
+    $data['pager'] = xarTplPager::getPager($startnum,
         xarMod::apiFunc('release', 'user', 'countitems',array('exttype'=>$exttype)),
-        xarModURL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
+        xarController::URL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
         xarModUserVars::get('release', 'itemsperpage', $uid));
     // Add the array of items to the template variables
     $data['items'] = $items;

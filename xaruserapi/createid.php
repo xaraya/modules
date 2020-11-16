@@ -113,7 +113,7 @@ function release_userapi_createid($args)
     }
 
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'create', $nexteid, 'eid');
+    xarModHooks::call('item', 'create', $nexteid, 'eid');
     $eid=$nexteid;
     // Return the id of the newly created user to the calling process
     return $eid;

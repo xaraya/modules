@@ -27,37 +27,37 @@
 function release_user_search($args)
 {
     extract($args);
-    if (!xarVarFetch('q', 'isset', $q, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('q', 'isset', $q, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('bool', 'isset', $bool, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('bool', 'isset', $bool, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('regname', 'str:0:', $regname, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('regname', 'str:0:', $regname, '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('displname', 'str:0:', $displname, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('displname', 'str:0:', $displname, '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('desc', 'str:0:', $desc, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('desc', 'str:0:', $desc, '', xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('rid', 'id', $rid, 0, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('rid', 'id', $rid, 0, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('eid', 'id', $eid, 0, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('eid', 'id', $eid, 0, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('uid', 'id', $uid, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('uid', 'id', $uid, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('author', 'isset', $author, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('authorsearch', 'isset', $authorsearch, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('authorsearch', 'isset', $authorsearch, null, xarVar::DONT_SET)) {
         return;
     }
     $data       = array();
@@ -146,7 +146,7 @@ function release_user_search($args)
     $data['exttypes']=$exttypes;
 
     $search['q']=$q;
-    $seach['modid']= xarModGetIDFromName('release');
+    $seach['modid']= xarMod::getRegId('release');
     /* Search for release information */
     $data['release'] = xarMod::apiFunc('release', 'user', 'search', $search);
 

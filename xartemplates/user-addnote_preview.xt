@@ -6,7 +6,7 @@
     <div class="xar-mod-body">
         <h2>Release Module :: Preview</h2>
 
-        <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="update" />
             <input type="hidden" name="rid" id="rid" value="#$rid#" /> 

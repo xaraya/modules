@@ -10,7 +10,7 @@
         <xar:else />
             From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).
             <div style="text-align:center;">
-                <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+                <form action="#xarController::URL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="rid" id="rid" value="#$rid#" />
                 <input type="hidden" name="eid" id="eid" value="#$eid#" />

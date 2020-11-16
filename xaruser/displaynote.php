@@ -23,14 +23,14 @@ function release_user_displaynote($args)
 {
     extract($args);
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
-    if (!xarVarFetch('rnid', 'int:1:', $rnid, null)) {
+    if (!xarVar::fetch('rnid', 'int:1:', $rnid, null)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'basic', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -62,12 +62,12 @@ function release_user_displaynote($args)
     );
 
 
-    $hooks = xarModCallHooks(
+    $hooks = xarModHooks::call(
         'item',
         'display',
         $rnid,
         array('itemtype'  => $item['exttype'],
-                                          'returnurl' => xarModURL(
+                                          'returnurl' => xarController::URL(
                                               'release',
                                               'user',
                                               'displaynote',
@@ -115,7 +115,7 @@ function release_user_displaynote($args)
     $item['exttypes'] = $exttypes;
     $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
-    $item['extensionpage']= xarModURL(
+    $item['extensionpage']= xarController::URL(
         'release',
         'user',
         'display',

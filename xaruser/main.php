@@ -20,7 +20,7 @@
 function release_user_main()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ViewRelease')) {
+    if (!xarSecurity::check('ViewRelease')) {
         return;
     }
 
@@ -31,9 +31,9 @@ function release_user_main()
         xarController::redirect($urldata['redirecturl']);
     } else {
         if (xarUser::isLoggedIn()) {
-            xarController::redirect(xarModURL('release', 'user', 'view'));
+            xarController::redirect(xarController::URL('release', 'user', 'view'));
         } else {
-            xarController::redirect(xarModURL('release', 'user', 'frontpage'));
+            xarController::redirect(xarController::URL('release', 'user', 'frontpage'));
         }
     }
     return true;

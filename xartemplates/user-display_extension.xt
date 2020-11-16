@@ -6,7 +6,7 @@
     <div class="xar-mod-body">
       <xar:set name="extname">ucfirst($regname)</xar:set>
       <xar:set name="goback">Back to List</xar:set>
-      <xar:set name="listview">xarModURL('release','user','view',array('tab'=>'back'))</xar:set>
+      <xar:set name="listview">xarController::URL('release','user','view',array('tab'=>'back'))</xar:set>
       <h2>
         <xar:ml>
           <xar:mlstring>#(1) ID #(2): #(3)</xar:mlstring>
@@ -25,7 +25,7 @@
             <p>
                Latest Version:
                    <xar:if condition="!empty($latest['version'])">
-                       <strong>#$latest['version']#</strong>&#160;&#160; #xarLocaleFormatDate('%d %B %Y ', $latest['time'])#
+                       <strong>#$latest['version']#</strong>&#160;&#160; #xarLocale::formatDate('%d %B %Y ', $latest['time'])#
                    <xar:else />
                         &#160;Unavailable
                    </xar:if>
@@ -126,14 +126,14 @@
             <span class="xar-form-label xar-title">
                 Last Modified:</span>
             <xar:if condition="isset($modified) and !empty($modified)">
-                #xarLocaleGetFormattedDate('medium',$modified)# #xarLocaleGetFormattedTime('medium',$modified)#
+                #xarLocale::getFormattedDate('medium',$modified)# #xarLocale::getFormattedTime('medium',$modified)#
             </xar:if>
         </div>
         <div class="xar-form-wrapper xar-padding-thickends xar-clearleft">
             <span class="xar-form-label xar-title">
                 Registration Date:</span>
             <xar:if condition="$regtime gt 0">
-                #xarLocaleGetFormattedDate('medium',$regtime)#
+                #xarLocale::getFormattedDate('medium',$regtime)#
             <xar:else />
                 A while ago (unknown)
             </xar:if>
@@ -148,7 +148,7 @@
     </xar:if>
 
     <xar:comment>bug 3435
-            <form action="#xarModURL('release', 'user', 'display')#" method="post" enctype="application/x-www-form-urlencoded">
+            <form action="#xarController::URL('release', 'user', 'display')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="rid" id="rid" value="#$rid#" />
             <input type="radio" name="phase" id="phase" value="view"  />
             Basic Information
@@ -198,7 +198,7 @@
                     Author:
                     <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
                     Date:
-                    #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
+                    #xarLocale::formatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
                 </span>
                 </div>
                 <div style="clear: both; padding-top:5px;">
@@ -269,7 +269,7 @@
                     #$loop:item['notes']#
                 </span>
                 </div>
-                <xar:if condition="xarSecurityCheck('AdminRelease',0)">
+                <xar:if condition="xarSecurity::check('AdminRelease',0)">
                 <div style="clear: both; padding-top: 5px; padding-bottom:20px;">
                 <span style="float: left; width: 30%; text-align: left;">
                     <b>Editor Notes:</b>

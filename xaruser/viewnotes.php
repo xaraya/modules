@@ -20,20 +20,20 @@
  */
 function release_user_viewnotes()
 {
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('startnum', 'str:1:', $startnum, '1', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('phase', 'str:1:', $phase, 'all', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('filter', 'str:1:', $filter, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('exttype', 'str:1:', $exttype, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('exttype', 'str:1:', $exttype, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
@@ -169,7 +169,7 @@ function release_user_viewnotes()
         );
 
 
-        $items[$i]['displaylink'] =  xarModURL(
+        $items[$i]['displaylink'] =  xarController::URL(
             'release',
             'user',
             'displaynote',
@@ -183,7 +183,7 @@ function release_user_viewnotes()
             array('uid' => $getid['uid'])
         );
 
-        $items[$i]['contacturl'] = xarModURL(
+        $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
@@ -191,22 +191,22 @@ function release_user_viewnotes()
         );
 
         $flipext = array_flip($exttypes);
-        $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
+        $items[$i]['exttype'] = xarVar::prepForDisplay($getid['exttype']);
         $item[$i]['exttypename']=array_search($getid['exttype'], $flipext);
-        $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
-        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
-        $items[$i]['rid'] = xarVarPrepForDisplay($getid['rid']);
-        $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
+        $items[$i]['class'] = xarVar::prepForDisplay($getid['class']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
+        $items[$i]['rid'] = xarVar::prepForDisplay($getid['rid']);
+        $items[$i]['displname'] = xarVar::prepForDisplay($getid['displname']);
         $items[$i]['realname'] = $getuser['name'];
-        $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));
-        $items[$i]['notes'] = nl2br(xarVarPrepHTMLDisplay($item['notes']));
+        $items[$i]['desc'] = nl2br(xarVar::prepHTMLDisplay($getid['desc']));
+        $items[$i]['notes'] = nl2br(xarVar::prepHTMLDisplay($item['notes']));
 
 
         //Add pager
-        $data['pager'] = xarTplGetPager(
+        $data['pager'] = xarTplPager::getPager(
             $startnum,
             xarMod::apiFunc('release', 'user', 'countnotes', array('phase'=>$phase)),
-            xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
+            xarController::URL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
                                                                            'filter'=>$filter,
                                                                             'exttype' =>$exttype)),
             xarModUserVars::get('release', 'itemsperpage', $uid)

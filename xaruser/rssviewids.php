@@ -14,11 +14,11 @@
 function release_user_rssviewids()
 {
     // Security Check
-    if (!xarSecurityCheck('OverviewRelease')) {
+    if (!xarSecurity::check('OverviewRelease')) {
         return;
     }
 
-    xarVarFetch('phase', 'enum:all:themes:modules', $phase, 'all', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('phase', 'enum:all:themes:modules', $phase, 'all', xarVar::NOT_REQUIRED);
 
     if (empty($phase)) {
         $phase = 'all';
@@ -59,11 +59,11 @@ function release_user_rssviewids()
         $item = $items[$i];
 
         // Basic Information
-        $items[$i]['eid'] = xarVarPrepForDisplay($item['eid']);
-        $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
-        $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
-        $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
-        $items[$i]['desc'] = xarVarPrepForDisplay($item['desc']);
+        $items[$i]['eid'] = xarVar::prepForDisplay($item['eid']);
+        $items[$i]['rid'] = xarVar::prepForDisplay($item['rid']);
+        $items[$i]['regname'] = xarVar::prepForDisplay($item['regname']);
+        $items[$i]['displname'] = xarVar::prepForDisplay($item['displname']);
+        $items[$i]['desc'] = xarVar::prepForDisplay($item['desc']);
 
         $getuser = xarMod::apiFunc(
             'roles',
@@ -74,7 +74,7 @@ function release_user_rssviewids()
 
         // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
-        $items[$i]['contacturl'] = xarModURL(
+        $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
@@ -82,7 +82,7 @@ function release_user_rssviewids()
         );
 
         // InfoURL
-        $items[$i]['infourl'] = xarModURL(
+        $items[$i]['infourl'] = xarController::URL(
             'release',
             'user',
             'display',

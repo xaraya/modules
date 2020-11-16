@@ -6,7 +6,7 @@
     <div class="xar-mod-body">
         <h2>Register a New Extension</h2>
 
-        <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset>
               <legend>Extension Information</legend>
               <xar:data-form object="$object" tplmodule="$tplmodule"/>
@@ -15,7 +15,7 @@
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <input type="hidden" name="name" id="name" value="#$object:name#"/>
                     <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
                     <input type="hidden" name="confirm" id="confirm" value="true"/>
@@ -27,10 +27,10 @@
             </div>
         </form>
 <!--
-        <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
         </form>
-        <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
-        <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
+        <xar:set name='retryurl'>xarController::URL('release','user','addid')</xar:set>
+        <xar:set name="retryID">xarController::URL('release','user','view')</xar:set>
 
 
         <xar:template type="module" file="user-menu" />
@@ -40,8 +40,8 @@
                <xar:block module="authsystem" type="login" />
             </div>
         <xar:else />
-            <form action="#xarModURL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <form action="#xarController::URL('release','admin','new_extension')#" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
                 <fieldset class="formelements xar-norm">
                     <legend>Extension Information</legend>

@@ -8,7 +8,7 @@
 
         Enter your extension ID and select your extension type below, so the system can begin the release notification process.
         <div align="center">
-            <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+            <form action="#xarController::URL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="start" />
                 <table border="0" cellpadding="5">
