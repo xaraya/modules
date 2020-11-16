@@ -109,7 +109,7 @@ function sitetools_admin_backup($args)
                 return $status;
             }
             /* set javascript header */
-            xarModAPIfunc('base', 'javascript', 'modulefile', array('filename'=>'sitetools_admin_backup.js'));
+            xarMod::apiFunc('base', 'javascript', 'modulefile', array('filename'=>'sitetools_admin_backup.js'));
 
             $data['dbtables']    = $tabledata['dbtables'];
             $tabletotal          = $tabledata['tabletotal'];

@@ -170,7 +170,7 @@ function sitetools_init()
     /**
      * Register the module components that are privileges objects
      * Format is
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     * xarMasks::register(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
     xarMasks::register('ReadSiteToolsBlock', 'All', 'sitetools', 'Block', 'All', 'ACCESS_OVERVIEW');
