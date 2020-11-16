@@ -16,7 +16,7 @@
     function wurfl_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadWurfl')) {
+        if (!xarSecurity::check('ReadWurfl')) {
             return;
         }
 

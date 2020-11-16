@@ -15,10 +15,10 @@ class WurflPreDispatchObserver extends EventObserver implements ixarEventObserve
         // Default Page Title
         // CHECKME: Does this need to be here?
         $SiteSlogan = xarModVars::get('themes', 'SiteSlogan');
-        xarTpl::setPageTitle(xarVarPrepForDisplay($SiteSlogan));
+        xarTpl::setPageTitle(xarVar::prepForDisplay($SiteSlogan));
 
         $request = xarController::getRequest();
-        if (empty($theme) && xarUserIsLoggedIn() && $request->getType() == 'admin') {
+        if (empty($theme) && xarUser::isLoggedIn() && $request->getType() == 'admin') {
             // Admin theme
             $theme = xarModVars::get('themes', 'admin_theme');
             self::setTheme($theme);
@@ -45,11 +45,11 @@ class WurflPreDispatchObserver extends EventObserver implements ixarEventObserve
         if (empty($theme)) {
             return $set;
         }
-        $theme = xarVarPrepForOS($theme);
-        if (xarThemeIsAvailable($theme)) {
+        $theme = xarVar::prepForOS($theme);
+        if (xarTheme::isAvailable($theme)) {
             $set = true;
             xarTpl::setThemeName($theme);
-            xarVarSetCached('Themes.name', 'CurrentTheme', $theme);
+            xarVar::setCached('Themes.name', 'CurrentTheme', $theme);
         }
         return $set;
     }

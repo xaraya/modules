@@ -16,17 +16,17 @@
     
     function wurfl_admin_delete()
     {
-        if (!xarSecurityCheck('ManageWurfl')) {
+        if (!xarSecurity::check('ManageWurfl')) {
             return;
         }
 
-        if (!xarVarFetch('name', 'str:1', $name, 'wurfl_wurfl', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('name', 'str:1', $name, 'wurfl_wurfl', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'str:1', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'str:1', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -34,12 +34,12 @@
         $data['object']->getItem(array('itemid' => $data['itemid']));
 
         $data['tplmodule'] = 'wurfl';
-        $data['authid'] = xarSecGenAuthKey('wurfl');
+        $data['authid'] = xarSec::genAuthKey('wurfl');
 
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -47,7 +47,7 @@
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarController::redirect(xarModURL('wurfl', 'admin', 'view'));
+            xarController::redirect(xarController::URL('wurfl', 'admin', 'view'));
             return true;
         }
         return $data;

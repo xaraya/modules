@@ -56,7 +56,7 @@ class Wurfl_RedirectBlockDisplay extends Wurfl_RedirectBlock
         $xarmeta->register(array(
             'type' => 'http-equiv',
             'value' => 'Content-Type',
-            'content' => 'text/html; charset=' . xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale()),
+            'content' => 'text/html; charset=' . xarMLS::getCharsetFromLocale(xarMLS::getCurrentLocale()),
             'lang' => '',
             'dir' => '',
             'scheme' => '',
@@ -64,11 +64,11 @@ class Wurfl_RedirectBlockDisplay extends Wurfl_RedirectBlock
         // while we're here, handle modules setting meta refresh via the cache
         // NOTE: this functionality is deprecated, instead use the xar:meta tag, eg...
         // <xar:meta type="http-equiv" value="refresh" content="3; URL=http://www.example.com"/>
-        if (xarVarIsCached('Meta.refresh', 'url') && xarVarIsCached('Meta.refresh', 'time')) {
+        if (xarVar::isCached('Meta.refresh', 'url') && xarVar::isCached('Meta.refresh', 'time')) {
             $xarmeta->register(array(
                 'type' => 'http-equiv',
                 'value' => 'Refresh',
-                'content' => xarVarGetCached('Meta.refresh', 'time').'; URL='.xarVarGetCached('Meta.refresh', 'url'),
+                'content' => xarVar::getCached('Meta.refresh', 'time').'; URL='.xarVar::getCached('Meta.refresh', 'url'),
                 'lang' => '',
                 'dir' => '',
                 'scheme' => '',
@@ -80,8 +80,8 @@ class Wurfl_RedirectBlockDisplay extends Wurfl_RedirectBlock
         }
 
         //Pager Buttons
-        $meta['first']          = xarVarGetCached('Pager.first', 'leftarrow');
-        $meta['last']           = xarVarGetCached('Pager.last', 'rightarrow');
+        $meta['first']          = xarVar::getCached('Pager.first', 'leftarrow');
+        $meta['last']           = xarVar::getCached('Pager.last', 'rightarrow');
 
         return $meta;
     }

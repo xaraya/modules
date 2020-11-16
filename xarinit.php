@@ -18,27 +18,27 @@
 
     function wurfl_init()
     {
-        xarRegisterMask('ViewWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('CommentWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterMask('ModerateWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterMask('EditWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterMask('AddWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterMask('ManageWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('CommentWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_COMMENT');
+        xarMasks::register('ModerateWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_MODERATE');
+        xarMasks::register('EditWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_EDIT');
+        xarMasks::register('AddWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADD');
+        xarMasks::register('ManageWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('ViewWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_READ');
-        xarRegisterPrivilege('CommentWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_MODERATE');
-        xarRegisterPrivilege('EditWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterPrivilege('AddWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADD');
-        xarRegisterPrivilege('ManageWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('ViewWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarPrivileges::register('ReadWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_READ');
+        xarPrivileges::register('CommentWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_COMMENT');
+        xarPrivileges::register('ModerateWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_MODERATE');
+        xarPrivileges::register('EditWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_EDIT');
+        xarPrivileges::register('AddWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADD');
+        xarPrivileges::register('ManageWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminWurfl', 'All', 'wurfl', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
@@ -81,7 +81,7 @@
     function wurfl_delete()
     {
         $this_module = 'wurfl';
-        xarModAPIFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
         
         // Unregister all mapper event subjects
         xarMapperEvents::unregisterSubject('PreDispatch');

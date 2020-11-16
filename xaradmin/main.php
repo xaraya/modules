@@ -15,14 +15,14 @@
 
     function wurfl_admin_main()
     {
-        if (!xarSecurityCheck('ManageWurfl')) {
+        if (!xarSecurity::check('ManageWurfl')) {
             return;
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarController::redirect(xarModURL('wurfl', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig'));
         }
         // success
         return true;
