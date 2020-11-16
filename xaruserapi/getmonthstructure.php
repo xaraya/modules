@@ -22,9 +22,9 @@ function calendar_userapi_getmonthstructure($args=array())
         return;
     }
     
-    xarVarValidate('int:1:12', $month);
-    xarVarValidate('int::', $year);
-    xarVarFetch('cal_sdow', 'int:0:6', $cal_sdow, 0);
+    xarVar::validate('int:1:12', $month);
+    xarVar::validate('int::', $year);
+    xarVar::fetch('cal_sdow', 'int:0:6', $cal_sdow, 0);
     
     $c = xarMod::apiFunc('calendar', 'user', 'factory', 'calendar');
     $c->setStartDayOfWeek($cal_sdow);

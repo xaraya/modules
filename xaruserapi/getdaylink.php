@@ -18,7 +18,7 @@
  *  @author Roger Raymond
  *  @access public
  *  @param string $date YYYYMMDD date to provide link to
- *  @return string a valid link based on xarModURL()
+ *  @return string a valid link based on xarController::URL()
  *  @todo add necessary get vars to the resulting URL
  */
 function calendar_userapi_getDayLink($date=null)
@@ -30,6 +30,6 @@ function calendar_userapi_getDayLink($date=null)
     $month = substr($date, 4, 2);
     $day = substr($date, 6, 2);
     
-    $link = xarModURL('calendar', 'user', 'day', array('cal_date'=>$date));
+    $link = xarController::URL('calendar', 'user', 'day', array('cal_date'=>$date));
     return $link;
 }

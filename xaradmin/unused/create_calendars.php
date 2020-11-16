@@ -5,30 +5,30 @@ function calendar_admin_create_calendars()
     // Get parameters
     // TODO HELPNEEDED here: how do I handle this (e.g. missing calname should return a
     // message
-    if (!xarVarFetch('add_calendar', 'isset', $add_calendar)) {
+    if (!xarVar::fetch('add_calendar', 'isset', $add_calendar)) {
         return;
     }
-    if (!xarVarFetch('calname', 'str:1:', $calname)) {
+    if (!xarVar::fetch('calname', 'str:1:', $calname)) {
         return;
     }
-    if (!xarVarFetch('addtype', 'str:1:', $addtype)) {
+    if (!xarVar::fetch('addtype', 'str:1:', $addtype)) {
         return;
     }
-    if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('location', 'str:1:', $location, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('uri', 'str:1:', $uri, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('uri', 'str:1:', $uri, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
     
     // Security Check
     // TODO
-//    if(!xarSecurityCheck('AddCalendar', 0, 'Calendar')) {return;}
+//    if(!xarSecurity::check('AddCalendar', 0, 'Calendar')) {return;}
     
     // Check if module name has already been used.
     $checkname = xarMod::apiFunc('calendar', 'user', 'get', array('calname' => $calname));
@@ -66,6 +66,6 @@ function calendar_admin_create_calendars()
     
     // Go on and edit the new instance
     xarController::redirect(
-        xarModURL('calendar', 'admin', 'add_calendars', array('calid'=>$calid,'calname'=>$calname))
+        xarController::URL('calendar', 'admin', 'add_calendars', array('calid'=>$calid,'calname'=>$calname))
     );
 }

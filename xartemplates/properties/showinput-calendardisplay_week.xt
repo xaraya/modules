@@ -25,8 +25,8 @@
                 <xar:button type="link" target="$prevYearURL" label="$label"/>
                 <xar:var name="label">Previous Week</xar:var>
                 <xar:button type="link" target="$prevWeekURL" label="$label"/>
-                #xarLocaleFormatDate('%B %d %Y',$startts)# -
-                #xarLocaleFormatDate('%B %d %Y',$endts)#
+                #xarLocale::formatDate('%B %d %Y',$startts)# -
+                #xarLocale::formatDate('%B %d %Y',$endts)#
                 <xar:var name="label">Next Week</xar:var>
                 <xar:button type="link" target="$nextWeekURL" label="$label"/>
                 <xar:var name="label">Next Year</xar:var>
@@ -44,8 +44,8 @@
                         <td>&#160;<!-- week info goes here --></td>
                     </xar:if>
                     <!-- populate the day -->
-                    <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
-                    <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>                    
+                    <xar:set name="today">xarLocale::formatDate('%Y%m%d')</xar:set>
+                    <xar:set name="thisday">xarLocale::formatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>                    
                     <xar:if condition="$today eq $thisday">
                         <xar:set name="accentclass">'xar-accent'</xar:set>
                     <xar:else />
@@ -68,7 +68,7 @@
                                     <tr>
                                         <td style="line-height: 12px;text-align: left">
                                             <xar:if condition="empty($entry['return_link'])">
-                                                <a href="#xarModURL('calendar','user','display',array('itemid' => $entry['id'], 'name' => 'calendar_event'))#">
+                                                <a href="#xarController::URL('calendar','user','display',array('itemid' => $entry['id'], 'name' => 'calendar_event'))#">
                                                     #$entry['name']#
                                                 </a>
                                             <xar:else />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-    <form name="cal-user-modify" action="#xarModURL('calendar','user','updateconfig')#" method="post">
+    <form name="cal-user-modify" action="#xarController::URL('calendar','user','updateconfig')#" method="post">
 
     <p>
     <label for="default_view">Default Calendar View</label>

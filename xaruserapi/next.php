@@ -13,9 +13,9 @@
 
 function calendar_userapi_next($args=array())
 {
-    xarVarFetch('cal_sdow', 'int:0:7', $cal_sdow, 0);
+    xarVar::fetch('cal_sdow', 'int:0:7', $cal_sdow, 0);
     // what function are we in
-    xarVarFetch('func', 'str::', $func);
+    xarVar::fetch('func', 'str::', $func);
     
     extract($args);
     unset($args);
@@ -24,9 +24,9 @@ function calendar_userapi_next($args=array())
         $cal_interval = 1;
     }
 
-    xarVarValidate('int::', $cal_date);
-    xarVarValidate('int:1:', $cal_interval);
-    xarVarValidate('str::', $cal_type);
+    xarVar::validate('int::', $cal_date);
+    xarVar::validate('int:1:', $cal_interval);
+    xarVar::validate('str::', $cal_type);
 
     $y = substr($cal_date, 0, 4);
     $m = substr($cal_date, 4, 2);
@@ -52,5 +52,5 @@ function calendar_userapi_next($args=array())
     }
     
     $new_date = gmdate('Ymd', gmmktime(0, 0, 0, $m, $d, $y));
-    return xarModURL('calendar', 'user', strtolower($func), array('cal_date'=>$new_date,'cal_sdow'=>$cal_sdow));
+    return xarController::URL('calendar', 'user', strtolower($func), array('cal_date'=>$new_date,'cal_sdow'=>$cal_sdow));
 }

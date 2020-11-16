@@ -19,7 +19,7 @@ $t =& new Benchmark_Timer;
 $t->start();
     $ical = xarMod::apiFunc('icalendar','user','factory','ical_parser');
 $t->setMarker('Class Instantiated');
-    xarVarFetch('file','str::',$file);
+    xarVar::fetch('file','str::',$file);
 $t->setMarker('File Var Fetched');
     //$ical->setFile('code/modules/timezone/zoneinfo/America/Phoenix.ics');
     $ical->setFile($file);

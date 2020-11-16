@@ -4,7 +4,7 @@
     <div class="xar-sub">
         <xar:set name="current_view">xarMod::apiFunc('calendar','user','currentView')</xar:set>
         <a href="#xarMod::apiFunc('calendar','user','current'.$current_view.'URL')#">
-            <span>Today is</span> &#160;#xarLocaleFormatDate('%c %z',$now[0])#
+            <span>Today is</span> &#160;#xarLocale::formatDate('%c %z',$now[0])#
         </a>
     </div>
 </xar:template>

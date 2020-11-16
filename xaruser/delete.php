@@ -34,34 +34,34 @@ function calendar_user_delete($args)
 {
     extract($args);
 
-    if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectid', 'isset', $objectid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('name', 'isset', $name, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('name', 'isset', $name, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'id', $itemid)) {
+    if (!xarVar::fetch('itemid', 'id', $itemid)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'isset', $confirm, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('confirm', 'isset', $confirm, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('noconfirm', 'isset', $noconfirm, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('noconfirm', 'isset', $noconfirm, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('join', 'isset', $join, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('join', 'isset', $join, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('table', 'isset', $table, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('table', 'isset', $table, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('tplmodule', 'isset', $tplmodule, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('tplmodule', 'isset', $tplmodule, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('template', 'isset', $template, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('template', 'isset', $template, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('return_url', 'isset', $return_url, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('return_url', 'isset', $return_url, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -79,7 +79,7 @@ function calendar_user_delete($args)
     $data = $myobject->toArray();
 
     // Security check
-    if (!xarSecurityCheck('DeleteDynamicDataItem', 1, 'Item', $data['moduleid'].":".$data['itemtype'].":".$data['itemid'])) {
+    if (!xarSecurity::check('DeleteDynamicDataItem', 1, 'Item', $data['moduleid'].":".$data['itemtype'].":".$data['itemid'])) {
         return;
     }
 
@@ -91,20 +91,20 @@ function calendar_user_delete($args)
     $myobject->getItem();
 
     if (empty($confirm)) {
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $data['object'] = $myobject;
 
         if (file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
             file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
-            return xarTplModule($data['tplmodule'], 'user', 'delete', $data, $data['template']);
+            return xarTpl::module($data['tplmodule'], 'user', 'delete', $data, $data['template']);
         } else {
-            return xarTplModule('calendar', 'user', 'delete', $data, $data['template']);
+            return xarTpl::module('calendar', 'user', 'delete', $data, $data['template']);
         }
     }
 
     // If we get here it means that the user has confirmed the action
 
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -113,7 +113,7 @@ function calendar_user_delete($args)
         xarController::redirect($return_url);
     } else {
         $default = xarModVars::get('calendar', 'default_view');
-        xarController::redirect(xarModURL(
+        xarController::redirect(xarController::URL(
             'calendar',
             'user',
             $default,

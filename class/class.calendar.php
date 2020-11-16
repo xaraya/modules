@@ -24,7 +24,7 @@ class Calendar
         $this->startDayOfWeek = 0;
 
         // load the locale date
-        $localeData =& xarMLSLoadLocaleData();
+        $localeData =& xarLocale::loadData();
         //echo '<pre>'; print_r($localeData); echo '</pre>';
         // long month names from locale.xml
         $this->monthNamesLong = array(
@@ -206,7 +206,7 @@ class Calendar
     public function setStartDayOfWeek($d)
     {
         // validate the input
-        if (!xarVarValidate('int:0:6', $d)) {
+        if (!xarVar::validate('int:0:6', $d)) {
             // we'll just leave it as is then
             return true;
         }

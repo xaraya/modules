@@ -45,7 +45,7 @@
             include_once(CALENDAR_ROOT.'Calendar.php');
 
 
-            $tplData['form_action'] = xarModURL('calendar', 'user', 'changecalnav');
+            $tplData['form_action'] = xarController::URL('calendar', 'user', 'changecalnav');
             $tplData['blockid'] = $data['bid'];
 
             if (xarServer::getVar('REQUEST_METHOD') == 'GET') {

@@ -7,7 +7,7 @@
         <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
             <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
                 <xar:var name="label">Official Icon</xar:var>
-                <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
+                <img src="#xarTpl::getImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
             </div>
             <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
                 Battle plan (see file xartemplates/includes/plan.xd)

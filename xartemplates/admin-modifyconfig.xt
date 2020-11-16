@@ -40,8 +40,8 @@
 
     <table width="100%" border="0" cellspacing="1" cellpadding="8">
     <!--
-        // Start form - note the use of xarModURL() to create the recipient URL of
-        // this form.  All URLs should be generated through xarModURL() to ensure
+        // Start form - note the use of xarController::URL() to create the recipient URL of
+        // this form.  All URLs should be generated through xarController::URL() to ensure
         // compatibility with future versions of Xaraya
     -->
     <form method="post" action="&xar-modurl-calendar-admin-updateconfig;">

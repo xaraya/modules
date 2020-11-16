@@ -6,10 +6,10 @@
 function calendar_admin_delete_calendar()
 {
     // Get parameters
-    if (!xarVarFetch('calid', 'id', $calid)) {
+    if (!xarVar::fetch('calid', 'id', $calid)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -24,7 +24,7 @@ function calendar_admin_delete_calendar()
         $msg = xarML(
             'Unable to find #(1) item #(2)',
             'Calendar',
-            xarVarPrepForDisplay($calid)
+            xarVar::prepForDisplay($calid)
         );
         throw new Exception($msg);
     }
@@ -37,7 +37,7 @@ function calendar_admin_delete_calendar()
     /* TODO: security
         if (!xarMod::apiFunc('calendar','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to delete item #(1)',
-                         xarVarPrepForDisplay($calid));
+                         xarVar::prepForDisplay($calid));
             throw new Exception($msg);
         }
     */
@@ -64,14 +64,14 @@ function calendar_admin_delete_calendar()
         $data['confirmlabel'] = xarML('Confirm');
 
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
         // Return the template variables defined in this function
         return $data;
     }
 
     // Confirmation present
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
@@ -94,12 +94,12 @@ function calendar_admin_delete_calendar()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarController::redirect(xarModURL('calendar', 'admin', 'view_calendars'));
+            xarController::redirect(xarController::URL('calendar', 'admin', 'view_calendars'));
             return true;
         }
     }
 
-    xarController::redirect(xarModURL('calendar', 'admin', 'view_calendars'));
+    xarController::redirect(xarController::URL('calendar', 'admin', 'view_calendars'));
 
     return true;
 }

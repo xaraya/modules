@@ -63,7 +63,7 @@ function calendar_adminapi_delete_calendar($args)
     // Call delete hooks for categories, hitcount etc.
     $args['module'] = 'calendar';
     $args['itemid'] = $calid;
-    xarModCallHooks('item', 'delete', $calid, $args);
+    xarModHooks::call('item', 'delete', $calid, $args);
 
     // Get database setup
     $dbconn = xarDB::getConn();

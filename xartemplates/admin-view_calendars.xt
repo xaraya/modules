@@ -7,7 +7,7 @@
     <div style="margin: auto;">
 
         <h2>Calendars</h2>
-        <form method="post" action="#xarModURL('calendar','admin','view_calendars')#">
+        <form method="post" action="#xarController::URL('calendar','admin','view_calendars')#">
           <input type="hidden" name="authid" id="authid" value="#$authid#"/>
           <table>
             <tr>
@@ -30,7 +30,7 @@
                 <td>
                    View 
                    Edit 
-                  <a href="#xarModURL('calendar','admin','delete_calendar',array('calid' => $calendar['cid']))#">
+                  <a href="#xarController::URL('calendar','admin','delete_calendar',array('calid' => $calendar['cid']))#">
                      Delete 
                   </a>
                 </td>

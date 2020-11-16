@@ -31,13 +31,13 @@ function calendar_userapi_encode_shorturl(&$params)
         $day = substr($params['cal_date'], 6, 2);
     }
     if (empty($year)) {
-        $year  = xarLocaleFormatDate('%Y');
+        $year  = xarLocale::formatDate('%Y');
     }
     if (empty($month)) {
-        $month = xarLocaleFormatDate('%m');
+        $month = xarLocale::formatDate('%m');
     }
     if (empty($day)) {
-        $day   = xarLocaleFormatDate('%d');
+        $day   = xarLocale::formatDate('%d');
     }
 
 
@@ -75,14 +75,14 @@ function calendar_userapi_encode_shorturl(&$params)
         case 'edit':
             $path = "/$module/edit/";
             if(isset($params['cal_eid']) && !empty($params['cal_eid'])) {
-                $path .= xarVarPrepForDisplay($params['cal_eid']).'.html/';
+                $path .= xarVar::prepForDisplay($params['cal_eid']).'.html/';
             }
             break;
 
         case 'publish':
             $path = "/$module/publish/";
             if(isset($params['calname']) && !empty($params['calname'])) {
-                $path .= xarVarPrepForDisplay($params['calname']).'.ics';
+                $path .= xarVar::prepForDisplay($params['calname']).'.ics';
             }
             break;
         */

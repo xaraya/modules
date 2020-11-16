@@ -58,7 +58,7 @@ if (!defined('CALENDAR_MODULE_INCLUDES')) {
  */
 function calendar_userapi_currentView()
 {
-    xarVarFetch('func', 'str::', $func, 'main', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('func', 'str::', $func, 'main', xarVar::NOT_REQUIRED);
     $valid = array('day','week','month','year');
     $func = strtolower($func);
     if (!in_array($func, $valid)) {
@@ -74,7 +74,7 @@ function calendar_userapi_buildURL($args=array())
     extract($args);
     unset($args);
 
-    return xarModURL(
+    return xarController::URL(
         'calendar',
         'user',
         $cal_view,
@@ -91,7 +91,7 @@ function calendar_userapi_currentMonthURL()
         'buildURL',
         array(
                     'cal_view'=>'month',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m%d')
+                    'cal_date'=>xarLocale::formatDate('%Y%m%d')
                     )
     );
 }
@@ -104,7 +104,7 @@ function calendar_userapi_currentWeekURL()
         'buildURL',
         array(
                     'cal_view'=>'week',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m%d')
+                    'cal_date'=>xarLocale::formatDate('%Y%m%d')
                     )
     );
 }
@@ -117,7 +117,7 @@ function calendar_userapi_currentDayURL()
         'buildURL',
         array(
                     'cal_view'=>'day',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m%d')
+                    'cal_date'=>xarLocale::formatDate('%Y%m%d')
                     )
     );
 }
@@ -130,7 +130,7 @@ function calendar_userapi_currentYearURL()
         'buildURL',
         array(
                     'cal_view'=>'year',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m')
+                    'cal_date'=>xarLocale::formatDate('%Y%m')
                     )
     );
 }

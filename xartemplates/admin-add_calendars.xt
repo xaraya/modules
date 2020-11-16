@@ -9,7 +9,7 @@
       <h2>#$message#</h2>
     </xar:if>
     <h2>Add a calendar to the database</h2>
-    <form method="post" action="#xarModURL('calendar','admin','create_calendars)#">
+    <form method="post" action="#xarController::URL('calendar','admin','create_calendars)#">
       <input type="hidden" name="authid" id="authid" value="#$authid#"/>
       <table>
         <tr>

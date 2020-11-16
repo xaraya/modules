@@ -44,7 +44,7 @@ function calendar_userapi_get($args)
     }
 
     // Security check
-//    if (!xarSecurityCheck('ViewCalendars')) return;
+//    if (!xarSecurity::check('ViewCalendars')) return;
 
     $calendars = array();
     $dbconn = xarDB::getConn();

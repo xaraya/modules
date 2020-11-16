@@ -16,32 +16,32 @@
     {
         extract($args);
 
-        if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('objectid', 'isset', $objectid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('itemid', 'isset', $itemid, 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemid', 'isset', $itemid, 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('preview', 'isset', $preview, 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('preview', 'isset', $preview, 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('return_url', 'isset', $return_url, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('return_url', 'isset', $return_url, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('join', 'isset', $join, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('join', 'isset', $join, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('table', 'isset', $table, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('table', 'isset', $table, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('template', 'isset', $template, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('template', 'isset', $template, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('tplmodule', 'isset', $tplmodule, 'calendar', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('tplmodule', 'isset', $tplmodule, 'calendar', xarVar::NOT_REQUIRED)) {
             return;
         }
 
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -58,7 +58,7 @@
 
             $data['object'] = & $myobject;
 
-            $data['authid'] = xarSecGenAuthKey();
+            $data['authid'] = xarSec::genAuthKey();
             $data['preview'] = $preview;
             if (!empty($return_url)) {
                 $data['return_url'] = $return_url;
@@ -75,13 +75,13 @@
             $item['itemtype'] = $myobject->itemtype;
             $item['itemid'] = $myobject->itemid;
             $hooks = array();
-            $hooks = xarModCallHooks('item', 'new', $myobject->itemid, $item, $modinfo['name']);
+            $hooks = xarModHooks::call('item', 'new', $myobject->itemid, $item, $modinfo['name']);
             $data['hooks'] = $hooks;
 
             if (!isset($template)) {
                 $template = $myobject->name;
             }
-            return xarTplModule($tplmodule, 'user', 'new', $data, $template);
+            return xarTpl::module($tplmodule, 'user', 'new', $data, $template);
         }
 
         $itemid = $myobject->createItem();
@@ -96,12 +96,12 @@
         $item = $myobject->getFieldValues();
         $item['module'] = 'calendar';
         $item['itemtype'] = 1;
-        xarModCallHooks('item', 'create', $itemid, $item);
+        xarModHooks::call('item', 'create', $itemid, $item);
 
         if (!empty($return_url)) {
             xarController::redirect($return_url);
         } else {
-            xarController::redirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'dynamicdata',
                 'admin',
                 'view',
