@@ -43,7 +43,7 @@
                                 <xar:mlstring>Search terms</xar:mlstring>
                             </label>
                             <input name="q" id="q" value="#$q#" />
-                            <input type="hidden" name="filter" value="#xarModAPIfunc('xarpages','func','facet',array('show'=&gt;true))#" />
+                            <input type="hidden" name="filter" value="#xarMod::apiFunc('xarpages','func','facet',array('show'=&gt;true))#" />
                             <input type="submit" />
                         </p>
                     </form>
@@ -71,10 +71,10 @@
                                     <xar:if condition="$loop:index eq 0">
                                         #xarVar::prepForDisplay($loop:item.name)#
                                     <xar:else />
-                                        &gt; <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</a>
+                                        &gt; <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</a>
                                     </xar:if>
                                 </xar:loop>
-                                <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('remove'=&gt;$loop:filter_facets:item))))#" title="#xarML('Remove this filter')#"><img src="#xarTpl::getImage('emblem-unreadable.png')#" /></a>
+                                <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('remove'=&gt;$loop:filter_facets:item))))#" title="#xarML('Remove this filter')#"><img src="#xarTpl::getImage('emblem-unreadable.png')#" /></a>
                             </p>
                         </xar:loop>
                     </div>
@@ -105,7 +105,7 @@
                                         <xar:if condition="$loop:index gt 1">
                                             |
                                         </xar:if>
-                                        <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</a>
+                                        <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</a>
                                         (#$loop:item.count#)
                                     </xar:if>
                                 </xar:if>

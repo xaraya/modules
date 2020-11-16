@@ -20,5 +20,5 @@ function xarpages_admin_new($args)
         $args['ptid'] = $itemtype;
     }
 
-    return xarModfunc('xarpages', 'admin', 'modifypage', $args);
+    return xarMod::guiFunc('xarpages', 'admin', 'modifypage', $args);
 }

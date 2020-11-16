@@ -49,7 +49,7 @@ function xarpages_admin_deletetype($args)
         $data['authkey'] = xarSec::genAuthKey();
 
         // Get a count of pages that will also be deleted.
-        $data['count'] = xarModAPIfunc(
+        $data['count'] = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpages',

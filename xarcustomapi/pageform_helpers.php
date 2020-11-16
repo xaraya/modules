@@ -4,7 +4,7 @@
  * author: jonathan linowes
 */
 
-// Initialisation function, so we can include this file using xarModAPIfunc()
+// Initialisation function, so we can include this file using xarMod::apiFunc()
 function xarpages_customapi_pageform_helpers($args)
 {
     return true;
@@ -25,8 +25,8 @@ function _pageform_getobject($pf, $pagename)
         return;
     }
     $objectid = $var[$pagename . '_objectid'];
-    //$object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
-    $object = xarModApiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$objectid ));
+    //$object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
+    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$objectid ));
     $ser = $var[$pagename];
     $vals = unserialize($ser);
     $object->checkInput($vals); // really just want to do a set value, not validate, oh well TODO:write a loop instead
@@ -237,9 +237,9 @@ function _pageform_getnav($args, $pf, $isaction = 0)
 function _pageform_url($pid, $pf = null)
 {
     if (!empty($pf)) {
-        $url = xarModUrl('xarpages', 'user', 'display', array('pid'=>$pid, 'pf'=>$pf));
+        $url = xarController::URL('xarpages', 'user', 'display', array('pid'=>$pid, 'pf'=>$pf));
     } else {
-        $url = xarModUrl('xarpages', 'user', 'display', array('pid'=>$pid));
+        $url = xarController::URL('xarpages', 'user', 'display', array('pid'=>$pid));
     }
     return $url;
 }

@@ -41,7 +41,7 @@ function xarpages_adminapi_createpage($args)
     }
 
     // Get the itemtype.
-    $pagetype = xarModAPIfunc(
+    $pagetype = xarMod::apiFunc(
         'xarpages',
         'user',
         'gettype',
@@ -89,7 +89,7 @@ function xarpages_adminapi_createpage($args)
         $offset = 'before';
     }
 
-    $gap = xarModAPIfunc(
+    $gap = xarMod::apiFunc(
         'xarpages',
         'tree',
         'insertprep',

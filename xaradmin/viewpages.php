@@ -38,7 +38,7 @@ function xarpages_admin_viewpages($args)
         // TODO: pass to template.
         return $data; //xarML('NO PAGES DEFINED');
     } else {
-        $data['pages'] = xarModAPIfunc('xarpages', 'tree', 'array_maptree', $data['pages']);
+        $data['pages'] = xarMod::apiFunc('xarpages', 'tree', 'array_maptree', $data['pages']);
     }
 
     $data['contains'] = $contains;

@@ -28,7 +28,7 @@
                     </label>
                     <xar:loop name="$cats">
                         <xar:if condition="$loop:index gt 0"> | </xar:if>
-                        <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
+                        <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
                             #xarVar::prepForDisplay($loop:item.name)#
                         </a>
                     </xar:loop>
@@ -49,7 +49,7 @@
                     <label class="xar-form-label">
                         <xar:mlstring>Summary:</xar:mlstring>
                     </label>
-                    #xarModAPIfunc('xarpages','user','transform_text',array('text'=>$summary,'maxwords'=>50))#
+                    #xarMod::apiFunc('xarpages','user','transform_text',array('text'=>$summary,'maxwords'=>50))#
                 </div>
             </xar:if>
         </div>
@@ -63,7 +63,7 @@
         <description>#xarVar::prepForDisplay($summary)#</description>
         <xar:if condition="!empty($cats)">
             <xar:loop name="$cats">
-                <category domain="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</category>
+                <category domain="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</category>
             </xar:loop>
         </xar:if>
     </item>

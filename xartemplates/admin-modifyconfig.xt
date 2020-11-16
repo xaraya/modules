@@ -8,7 +8,7 @@
     <h2>
         <xar:mlstring>Modify Configuration</xar:mlstring>
     </h2>
-    <form class="xar-xarpages-admin" action="#xarModUrl('xarpages', 'admin', 'modifyconfig')#" method="post">
+    <form class="xar-xarpages-admin" action="#xarController::URL('xarpages', 'admin', 'modifyconfig')#" method="post">
         <div class="xar-form-section">
             <h3>
                 <xar:mlstring>Properties</xar:mlstring>

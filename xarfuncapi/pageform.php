@@ -24,7 +24,7 @@
 function xarpages_funcapi_pageform($args)
 {
     // Include the helper functions
-    xarModAPIfunc('xarpages', 'custom', 'pageform_helpers');
+    xarMod::apiFunc('xarpages', 'custom', 'pageform_helpers');
 
     // incoming pageform key
     if (!xarVar::fetch('pf', 'str', $pf, '', xarVar::NOT_REQUIRED)) {
@@ -65,8 +65,8 @@ function xarpages_funcapi_pageform($args)
 
     if (empty($object)) {
         // create empty one
-        //$object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$dd['data'] ));
-        $object = xarModApiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$dd['data'] ));
+        //$object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$dd['data'] ));
+        $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$dd['data'] ));
 
         // reset values with user function
         if (!empty($dd['reset_php'])) {

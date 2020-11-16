@@ -117,7 +117,7 @@ function xarpages_admin_modifypage($args)
         if (empty($ptid)) {
             // The page type has not yet been chosen.
             // Get a list of page types.
-            $pagetypes = xarModAPIfunc(
+            $pagetypes = xarMod::apiFunc(
                 'xarpages',
                 'user',
                 'gettypes',
@@ -142,7 +142,7 @@ function xarpages_admin_modifypage($args)
             // TODO: if there are any templates for this page type, present
             // the user with a selection to chose from. For now, just take the
             // the first template (if any) available.
-            $templates = xarModAPIfunc(
+            $templates = xarMod::apiFunc(
                 'xarpages',
                 'user',
                 'getpages',
@@ -176,7 +176,7 @@ function xarpages_admin_modifypage($args)
                 'alias' => 0,
                 'template' => '',
                 'page_template' => '',
-                'pagetype' => xarModAPIfunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
+                'pagetype' => xarMod::apiFunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
             );
 
             // If we have a template, then set a few values up to initialise the new page form.
@@ -218,7 +218,7 @@ function xarpages_admin_modifypage($args)
     // whether it is available before using its API.
     $custom_apis = array();
     foreach (array('encode', 'decode', 'func') as $api) {
-        $data['custom_apis'][$api] = xarModAPIfunc(
+        $data['custom_apis'][$api] = xarMod::apiFunc(
             'xarpages',
             'user',
             'browse_files',
@@ -241,7 +241,7 @@ function xarpages_admin_modifypage($args)
     // The template will be prefixed by 'page-' and then the name of the page type.
     $template_prefix = 'page-' . $data['page']['pagetype']['name'] . '-';
 
-    $templates = xarModAPIfunc(
+    $templates = xarMod::apiFunc(
         'xarpages',
         'user',
         'browse_files',
@@ -260,10 +260,10 @@ function xarpages_admin_modifypage($args)
     }
 
     // Loop through the themes, and fetch any templates there.
-    $themes = xarModAPIfunc('themes', 'admin', 'getlist', array('state' => xarTheme::STATE_ACTIVE));
+    $themes = xarMod::apiFunc('themes', 'admin', 'getlist', array('state' => xarTheme::STATE_ACTIVE));
     foreach ($themes as $theme) {
         // Check for templates for this module in the theme.
-        $templates = xarModAPIfunc(
+        $templates = xarMod::apiFunc(
             'xarpages',
             'user',
             'browse_files',
@@ -286,7 +286,7 @@ function xarpages_admin_modifypage($args)
     $data['templates'] = $template_list;
     $data['themes'] = $themes;
 
-    $data['statuses'] = xarModAPIfunc('xarpages', 'user', 'getstatuses');
+    $data['statuses'] = xarMod::apiFunc('xarpages', 'user', 'getstatuses');
 
     // Return output (allows a different admin page per page type)
     if (!empty($data['page']['pagetype']['name'])) {

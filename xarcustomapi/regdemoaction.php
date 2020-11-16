@@ -1,7 +1,7 @@
 <?php
 
 /* args for pageaction processing function
-    $ret = xarModApiFunc('xarpages','customapi','regdemo_process',array( 'in'=>&$inobject, 'inprop'=>&$inobject->properties, 'out'=>&$outobject, 'outprop'=>&$outobject->properties))
+    $ret = xarMod::apiFunc('xarpages','customapi','regdemo_process',array( 'in'=>&$inobject, 'inprop'=>&$inobject->properties, 'out'=>&$outobject, 'outprop'=>&$outobject->properties))
 
 */
 
@@ -20,13 +20,13 @@ function pageform_regdemoaction_process(&$inobj, &$outobj)
     //die();
     //return 1;
     // determine state of this create user
-    $state = xarModApiFunc('registration', 'user', 'createstate');
+    $state = xarMod::apiFunc('registration', 'user', 'createstate');
     //echo "state [$state]"; die();
     
     // actually create the user
     $email = $inprop['email']->getValue();
     $pass = $inprop['password']->getValue();
-    $uid = xarModApiFunc(
+    $uid = xarMod::apiFunc(
         'registration',
         'user',
         'createuser',
@@ -42,7 +42,7 @@ function pageform_regdemoaction_process(&$inobj, &$outobj)
     }
 
     // send out notifications
-    $ret = xarModApiFunc(
+    $ret = xarMod::apiFunc(
         'registration',
         'user',
         'createnotify',

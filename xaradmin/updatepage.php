@@ -91,7 +91,7 @@ function xarpages_admin_updatepage($args)
     }
 
     // Validate the status against the list available.
-    $statuses = xarModAPIfunc('xarpages', 'user', 'getstatuses');
+    $statuses = xarMod::apiFunc('xarpages', 'user', 'getstatuses');
     if (!xarVar::fetch('status', 'pre:upper:enum:' . implode(':', array_keys($statuses)), $status, null, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -178,7 +178,7 @@ function xarpages_admin_updatepage($args)
         if ($batch) {
             // If there are more to create, then go to the create page.
             xarController::redirect(
-                xarModUrl(
+                xarController::URL(
                     'xarpages',
                     'admin',
                     'modifypage',

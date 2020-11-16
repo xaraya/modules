@@ -70,7 +70,7 @@ function xarpages_admin_updatetype($args)
         }
     }
 
-    xarController::redirect(xarModUrl('xarpages', 'admin', 'viewtypes'));
+    xarController::redirect(xarController::URL('xarpages', 'admin', 'viewtypes'));
 
     return true;
 }

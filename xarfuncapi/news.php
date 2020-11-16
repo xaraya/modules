@@ -221,7 +221,7 @@ function xarpages_funcapi_news($args)
     // Now fetch the category details.
     if (!empty($all_cat_cids)) {
         $all_cat_cids = array_unique($all_cat_cids);
-        $all_cats = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids' => $all_cat_cids));
+        $all_cats = xarMod::apiFunc('categories', 'user', 'getcatinfo', array('cids' => $all_cat_cids));
 
         // Distribute the category details back to the items.
         foreach ($articles as $cid_article_key => $cid_article) {
@@ -264,7 +264,7 @@ function xarpages_funcapi_news($args)
             // Fetch keywords and articles related by keyword.
             // CHECKME: does xarModHooks::isHooked accept an array of ptids?
             if (xarModHooks::isHooked('keywords', 'articles', $ptids)) {
-                $keyword_words = xarModAPIfunc(
+                $keyword_words = xarMod::apiFunc(
                     'keywords',
                     'user',
                     'getwords',
@@ -280,7 +280,7 @@ function xarpages_funcapi_news($args)
                     // TODO: safety check for cases where articles etc don't exist
                     foreach ($keyword_words as $keyword_word) {
                         // Get the item IDs that share this module's keywords
-                        $keyword_items = xarModAPIfunc(
+                        $keyword_items = xarMod::apiFunc(
                             'keywords',
                             'user',
                             'getitems',
@@ -303,7 +303,7 @@ function xarpages_funcapi_news($args)
                         $word_ids = array_values($word_ids);
 
                         // If we have keywords, go grab the articles - just need titles.
-                        $keyword_articles = xarModAPIfunc(
+                        $keyword_articles = xarMod::apiFunc(
                             'articles',
                             'user',
                             'getall',

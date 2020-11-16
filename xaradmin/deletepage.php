@@ -51,7 +51,7 @@ function xarpages_admin_deletepage($args)
         $data = array('page' => $page, 'return_url' => $return_url);
         $data['authkey'] = xarSec::genAuthKey();
 
-        $data['count'] = xarModAPIfunc(
+        $data['count'] = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpages',

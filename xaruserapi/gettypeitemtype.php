@@ -13,7 +13,7 @@ function xarpages_userapi_gettypeitemtype($args)
     }
 
     // Get the itemtype of the page type.
-    $pagetype = xarModAPIfunc(
+    $pagetype = xarMod::apiFunc(
         'xarpages',
         'user',
         'gettype',
@@ -24,7 +24,7 @@ function xarpages_userapi_gettypeitemtype($args)
         $type_itemtype = $pagetype['ptid'];
     } else {
         // If it does not exist, then create it now.
-        $type_itemtype = xarModAPIfunc(
+        $type_itemtype = xarMod::apiFunc(
             'xarpages',
             'admin',
             'createtype',

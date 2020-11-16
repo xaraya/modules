@@ -31,7 +31,7 @@ function xarpages_userapi_decode_shorturl($params)
 
     // Look for a root page with the name as the first part of the path.
     if (isset($params[0])) {
-        $rootpage = xarModAPIfunc(
+        $rootpage = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpage',
@@ -42,7 +42,7 @@ function xarpages_userapi_decode_shorturl($params)
     // If no root page matches, and an alias was provided, look for a non-root start page.
     // These are used as short-cuts.
     if (empty($rootpage) && $args['module_alias'] != 'xarpages') {
-        $rootpage = xarModAPIfunc(
+        $rootpage = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpage',
@@ -63,7 +63,7 @@ function xarpages_userapi_decode_shorturl($params)
         array_shift($params);
 
         // Fetch the complete page tree for the root page.
-        $tree = xarModAPIfunc(
+        $tree = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpagestree',
@@ -100,7 +100,7 @@ function xarpages_userapi_decode_shorturl($params)
         $decode_url = $tree['pages'][$pid]['decode_url'];
         if (!empty($decode_url)) {
             // Attempt to invoke the custom decode URL function, suppressing errors.
-            $args2 = xarModAPIfunc('xarpages', 'decode', $decode_url, $params, false);
+            $args2 = xarMod::apiFunc('xarpages', 'decode', $decode_url, $params, false);
 
             // If any decoding was done, merge in the results.
             if (!empty($args2) && is_array($args2)) {

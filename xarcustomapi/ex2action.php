@@ -37,7 +37,7 @@ function pageform_ex2action_validate(&$inobj)
         // better message than the default property one
         $invalids['email'] = "Please enter a valid email address";
     } else {
-        $invalids['email'] = xarModApiFunc('registration', 'user', 'checkvar', array('type'=>'email', 'var'=>$values['email']));
+        $invalids['email'] = xarMod::apiFunc('registration', 'user', 'checkvar', array('type'=>'email', 'var'=>$values['email']));
         if (!empty($invalids['email'])) {
             $isvalid = true;
         }
@@ -45,9 +45,9 @@ function pageform_ex2action_validate(&$inobj)
     
     // check passwords
     if (empty($invalids['password'])) {
-        $invalids['password'] = xarModApiFunc('registration', 'user', 'checkvar', array('type'=>'pass1', 'var'=>$values['password'] ));
+        $invalids['password'] = xarMod::apiFunc('registration', 'user', 'checkvar', array('type'=>'pass1', 'var'=>$values['password'] ));
         if (empty($invalids['password'])) {
-            $invalids['password_again'] = xarModApiFunc('registration', 'user', 'checkvar', array('type'=>'pass2', 'var'=>array($values['password'],$values['password_again']) ));
+            $invalids['password_again'] = xarMod::apiFunc('registration', 'user', 'checkvar', array('type'=>'pass2', 'var'=>array($values['password'],$values['password_again']) ));
         }
     }
     if (!empty($invalids['password'])) {
@@ -80,7 +80,7 @@ function pageform_ex2action_process(&$inobj, &$outobj)
     
     // CREATE USER
     // determine state of this create user
-    $state = xarModApiFunc('registration', 'user', 'createstate');
+    $state = xarMod::apiFunc('registration', 'user', 'createstate');
     
     $email = $values['email'];
     $pass = $values['password'];
@@ -89,12 +89,12 @@ function pageform_ex2action_process(&$inobj, &$outobj)
     // find a unique user name (not used for log in)
     //do {
     //  $username = time();
-    //  $inval = xarModApiFunc('registration','user','checkvar', array('type'=>'username', 'var'=>$username));
+    //  $inval = xarMod::apiFunc('registration','user','checkvar', array('type'=>'username', 'var'=>$username));
     //} while (!empty($inval));
     
     
     // actually create the user
-    $uid = xarModApiFunc(
+    $uid = xarMod::apiFunc(
         'registration',
         'user',
         'createuser',
@@ -108,7 +108,7 @@ function pageform_ex2action_process(&$inobj, &$outobj)
         $outvalues['message'] = 'Cannot create new user account';
     } else {
         // send out notifications
-        $ret = xarModApiFunc(
+        $ret = xarMod::apiFunc(
             'registration',
             'user',
             'createnotify',

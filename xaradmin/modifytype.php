@@ -29,7 +29,7 @@ function xarpages_admin_modifytype($args)
     $data = array();
 
     // Get the itemtype of the page type.
-    $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+    $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
 
     if (!empty($ptid)) {
         // Editing an existing page type

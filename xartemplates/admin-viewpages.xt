@@ -51,7 +51,7 @@ jQuery('select#"."contains').change(function(event) {
         </p>
     </xar:if>
 
-    <xar:set name="root_pages">#xarModAPIfunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
+    <xar:set name="root_pages">#xarMod::apiFunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
     <xar:if condition="!empty($root_pages)">
         <xar:set name="method">'get'</xar:set>
         <form method="#$method#" action="#xarController::URL('xarpages','admin','viewpages')#">

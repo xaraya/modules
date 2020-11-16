@@ -9,12 +9,12 @@
         <h3>
             <xar:comment>Add an edit link if we have the privileges</xar:comment>
             <xar:if condition="xarSecurity::check('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)">
-                [ <a href="#xarController::URL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">
+                [ <a href="#xarController::URL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServer::getCurrentURL(array(),false)))#">
                     <xar:mlstring>Edit</xar:mlstring>
                 </a> ]
             </xar:if>
             <a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#">
-                #xarvarPrepForDisplay($title)#
+                #xarVar::prepForDisplay($title)#
             </a>
         </h3>
     </div>

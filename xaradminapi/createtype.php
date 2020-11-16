@@ -27,7 +27,7 @@ function xarpages_adminapi_createtype($args)
     // the system itemtype pagetype will be created, so do it first to
     // increase the likelyhood that it will get ID number 1.
     if ($name[0] != '@') {
-        $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+        $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
     }
 
     // TODO: validate name (mandatory and unique)

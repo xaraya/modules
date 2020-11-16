@@ -122,7 +122,7 @@ class xarpages_customapi_multiform_master
     // Allows processing functions to jump to a page by name.
     public function pagename_to_pid($pagename)
     {
-        $page = xarModAPIfunc('xarpages', 'user', 'getpage', array('name' => $pagename));
+        $page = xarMod::apiFunc('xarpages', 'user', 'getpage', array('name' => $pagename));
 
         if (!empty($page)) {
             $pid = $page['pid'];
@@ -144,9 +144,9 @@ class xarpages_customapi_multiform_master
     {
         // Save any 'passdata'.
         // This can be retrieved *one time only* using the API function:
-        // $passdata = xarModAPIfunc('xarpages', 'multiform', 'passdata');
+        // $passdata = xarMod::apiFunc('xarpages', 'multiform', 'passdata');
         if (!empty($args) && is_array($args)) {
-            xarModAPIfunc('xarpages', 'multiform', 'passdata', $args);
+            xarMod::apiFunc('xarpages', 'multiform', 'passdata', $args);
         }
 
         $this->last_page = true;
