@@ -26,47 +26,47 @@ function comments_userapi_modify($args)
     $error = false;
 
     if (!isset($title)) {
-        $msg .= xarMLbykey('title ');
+        $msg .= xarMLS::translateByKey('title ');
         $error = true;
     }
 
     if (!isset($id)) {
-        $msg .= xarMLbykey('id ');
+        $msg .= xarMLS::translateByKey('id ');
         $error = true;
     }
 
     if (!isset($text)) {
-        $msg .= xarMLbykey('text ');
+        $msg .= xarMLS::translateByKey('text ');
         $error = true;
     }
 
     if (!isset($postanon)) {
-        $msg .= xarMLbykey('postanon ');
+        $msg .= xarMLS::translateByKey('postanon ');
         $error = true;
     }
 
     if (isset($itemtype) && !xarVar::validate('int:0:', $itemtype)) {
-        $msg .= xarMLbykey('itemtype');
+        $msg .= xarMLS::translateByKey('itemtype');
         $error = true;
     }
 
     if (isset($objectid) && !xarVar::validate('int:1:', $objectid)) {
-        $msg .= xarMLbykey('objectid');
+        $msg .= xarMLS::translateByKey('objectid');
         $error = true;
     }
 
     if (isset($date) && !xarVar::validate('int:1:', $date)) {
-        $msg .= xarMLbykey('date');
+        $msg .= xarMLS::translateByKey('date');
         $error = true;
     }
 
     if (isset($status) && !xarVar::validate('enum:1:2:3', $status)) {
-        $msg .= xarMLbykey('status');
+        $msg .= xarMLS::translateByKey('status');
         $error = true;
     }
 
     if (isset($useeditstamp) && !xarVar::validate('enum:0:1:2', $useeditstamp)) {
-        $msg .= xarMLbykey('useeditstamp');
+        $msg .= xarMLS::translateByKey('useeditstamp');
         $error = true;
     }
 
@@ -90,7 +90,7 @@ function comments_userapi_modify($args)
     /* jojodee: good idea. I'll move it direct to comments template and then can add it to
                 any others we like as well, like xarbb.
     if (xarModHooks::isHooked('changelog', 'comments', 0)){
-        $url = xarModUrl('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $id));
+        $url = xarController::URL('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $id));
         $text .= "\n<p>\n";
         $text .= '<a href="' . $url . '" title="' . xarML('See Changes') .'">';
         $text .= '</a>';

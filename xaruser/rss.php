@@ -117,7 +117,7 @@ function comments_user_rss($args)
             }
         } else {
             // We'll use the comment link instead
-            $items[$i]['link'] = xarModUrl('comments', 'user', 'display', array('id' => $item['id']));
+            $items[$i]['link'] = xarController::URL('comments', 'user', 'display', array('id' => $item['id']));
         }
 
         $items[$i]['rsssummary'] = preg_replace('<br />', "\n", $item['text']);
