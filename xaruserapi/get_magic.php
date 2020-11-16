@@ -22,13 +22,12 @@
   *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
   */
 
-function mime_userapi_get_magic( $args )
+function mime_userapi_get_magic($args)
 {
-
     extract($args);
 
-    if (!isset($magicId) && !isseT($magicValue)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId','userapi_get_magic','mime');
+    if (!isset($magicId) && !isset($magicValue)) {
+        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId', 'userapi_get_magic', 'mime');
         throw new Exception($msg);
     }
 
@@ -57,7 +56,7 @@ function mime_userapi_get_magic( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result || $result->EOF)  {
+    if (!$result || $result->EOF) {
         return array();
     }
 
@@ -69,5 +68,3 @@ function mime_userapi_get_magic( $args )
                  'magicOffset' => $row['offset'],
                  'magicLength' => $row['length']);
 }
-
-?>

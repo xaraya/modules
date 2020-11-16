@@ -13,7 +13,7 @@
  */
 
 /**
- * Tries to guess the mime type based on the file fileName. 
+ * Tries to guess the mime type based on the file fileName.
  * If it is unable to do so, it returns FALSE. If there is an error,
  * FALSE is returned along with an exception.
  *
@@ -25,20 +25,18 @@
  *
  * @return string||boolean  mime-type or FALSE with exception on error, FALSE and no exception if unknown mime-type
  */
-function mime_userapi_extension_to_mime( $args ) 
+function mime_userapi_extension_to_mime($args)
 {
-
     extract($args);
 
     if (!isset($fileName) || empty($fileName)) {
         $msg = xarML('Missing fileName parameter!');
         throw new Exception($msg);
-    } 
+    }
 
     if (empty($fileName)) {
         return 'application/octet-stream';
     } else {
-    
         $fileName = strtolower($fileName);
         $parts = explode('.', $fileName);
         
@@ -46,21 +44,26 @@ function mime_userapi_extension_to_mime( $args )
         // seperator, hence no extension. So we fallback
         // to analyze_file()
         if (count($parts) > 1) {
-            
             $extension = $parts[count($parts) - 1];
-            $extensionInfo = xarModAPIFunc('mime', 'user', 'get_extension', 
-                                            array('extensionName' => $extension));
+            $extensionInfo = xarModAPIFunc(
+                'mime',
+                'user',
+                'get_extension',
+                array('extensionName' => $extension)
+            );
             if (!empty($extensionInfo)) {
-                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', 
-                                           array('subtypeId' => $extensionInfo['subtypeId']));
+                $mimeType = xarModAPIFunc(
+                    'mime',
+                    'user',
+                    'get_mimetype',
+                    array('subtypeId' => $extensionInfo['subtypeId'])
+                );
                 if (!empty($mimeType)) {
                     return $mimeType;
-                } 
-            } 
+                }
+            }
         } else {
             return 'application/octet-stream';
-        }        
+        }
     }
 }
-
-?>

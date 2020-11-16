@@ -47,7 +47,7 @@ function mime_userapi_getall_types($args)
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result)  {
+    if (!$result) {
         return array();
     }
 
@@ -68,4 +68,3 @@ function mime_userapi_getall_types($args)
     $result->Close();
     return $typeInfo;
 }
-?>

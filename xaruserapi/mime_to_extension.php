@@ -23,9 +23,8 @@
  * @param   string      $mime_type MIME type to be mapped to a file extension.
  * @return  string      The file extension of the MIME type.
  */
-function mime_userapi_mime_to_extension( $args )
+function mime_userapi_mime_to_extension($args)
 {
-
     extract($args);
 
     if (!isset($mime_type) || empty($mime_type)) {
@@ -33,7 +32,7 @@ function mime_userapi_mime_to_extension( $args )
         throw new Exception($msg);
     }
 
-    $typeparts = explode('/',$mime_type);
+    $typeparts = explode('/', $mime_type);
     if (count($typeparts) < 2) {
         $msg = xarML('Missing mime type or subtype parameter!');
         throw new Exception($msg);
@@ -45,17 +44,17 @@ function mime_userapi_mime_to_extension( $args )
     $q->addtable($xartable['mime_type'], 'mt');
     $q->addtable($xartable['mime_subtype'], 'mst');
     $q->addtable($xartable['mime_extension'], 'me');
-    $q->join('mt.id','mst.type_id');
-    $q->join('mst.id','me.subtype_id');
-    $q->eq('mt.name',$typeparts[0]);
-    $q->eq('mst.name',$typeparts[1]);
+    $q->join('mt.id', 'mst.type_id');
+    $q->join('mst.id', 'me.subtype_id');
+    $q->eq('mt.name', $typeparts[0]);
+    $q->eq('mst.name', $typeparts[1]);
     
     $q->addfield('mt.name AS type_name');
     $q->addfield('mst.name AS subtype_name');
     $q->addfield('me.name AS extension');
-    if (!$q->run()) return;
+    if (!$q->run()) {
+        return;
+    }
 
     return $q->output();
 }
-
-?>

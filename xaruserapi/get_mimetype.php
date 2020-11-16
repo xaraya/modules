@@ -22,13 +22,12 @@
   *  returns array      An array of (subtypeId, subtypeName) or an empty array
   */
 
-function mime_userapi_get_mimetype( $args )
+function mime_userapi_get_mimetype($args)
 {
-
     extract($args);
 
     if (!isset($subtypeId) && !isset($subtypeName)) {
-        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_subtype');
+        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_subtype');
         throw new Exception($msg);
     }
 
@@ -56,7 +55,7 @@ function mime_userapi_get_mimetype( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result || $result->EOF)  {
+    if (!$result || $result->EOF) {
         return;
     }
 
@@ -64,5 +63,3 @@ function mime_userapi_get_mimetype( $args )
 
     return $row['mimetype'] . '/' . $row['mimesubtype'];
 }
-
-?>

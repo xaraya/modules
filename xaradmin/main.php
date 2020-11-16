@@ -20,7 +20,9 @@
     {
         xarController::redirect(xarModURL('mime', 'admin', 'view'));
         
-        if(!xarSecurityCheck('ManageMime')) return;
+        if (!xarSecurityCheck('ManageMime')) {
+            return;
+        }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
@@ -30,4 +32,3 @@
         // success
         return true;
     }
-?>

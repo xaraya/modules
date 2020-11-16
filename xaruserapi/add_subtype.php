@@ -23,25 +23,32 @@
   *  returns array      false on error, the sub type id otherwise
   */
 
-function mime_userapi_add_subtype( $args )
+function mime_userapi_add_subtype($args)
 {
-
     extract($args);
 
     if (!isset($typeId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'typeId','userapi_add_subtypes','mime');
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'typeId',
+            'userapi_add_subtypes',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
     if (!isset($subtypeName)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'subtypeName','userapi_add_subtype','mime');
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'subtypeName',
+            'userapi_add_subtype',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
     if (!isset($subtypeDesc) || !is_string($subtypeDesc)) {
-        $subtypeDesc = NULL;
+        $subtypeDesc = null;
     }
 
     // Get database setup
@@ -67,10 +74,8 @@ function mime_userapi_add_subtype( $args )
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $dbconn->PO_Insert_ID($subtype_table, 'id');
     }
 }
-
-?>

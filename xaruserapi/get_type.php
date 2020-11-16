@@ -22,13 +22,12 @@
   *  returns array      An array of (typeId, typeName) or an empty array
   */
 
-function mime_userapi_get_type( $args )
+function mime_userapi_get_type($args)
 {
-
     extract($args);
 
     if (!isset($typeId) && !isset($typeName)) {
-        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_type');
+        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_type');
         throw new Exception($msg);
     }
 
@@ -54,7 +53,7 @@ function mime_userapi_get_type( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result || $result->EOF)  {
+    if (!$result || $result->EOF) {
         return array();
     }
 
@@ -63,5 +62,3 @@ function mime_userapi_get_type( $args )
     return array('typeId'   => (int)$row['id'],
                  'typeName' => $row['name']);
 }
-
-?>

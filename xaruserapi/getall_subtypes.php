@@ -95,7 +95,9 @@ function mime_userapi_getall_subtypes($args)
     $result = $dbconn->Execute($sql, $bind);
 
     // Return NULL in the event of an error.
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
 
     $subtypeInfo = array();
     while (!$result->EOF) {
@@ -113,4 +115,3 @@ function mime_userapi_getall_subtypes($args)
 
     return $subtypeInfo;
 }
-?>

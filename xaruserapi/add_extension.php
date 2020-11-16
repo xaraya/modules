@@ -22,20 +22,27 @@
   *  returns array      An array of (subtypeId, extension) or an empty array
   */
 
-function mime_userapi_add_extension( $args )
+function mime_userapi_add_extension($args)
 {
-
     extract($args);
 
     if (!isset($subtypeId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'subtypeId','userapi_add_extension','mime');
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'subtypeId',
+            'userapi_add_extension',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
     if (!isset($extensionName)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'extensionName','userapi_add_extension','mime');
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'extensionName',
+            'userapi_add_extension',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
@@ -56,13 +63,11 @@ function mime_userapi_add_extension( $args )
             VALUES (?, ?, ?)";
     $bindvars = array((int) $subtypeId, $extensionId, (string) strtolower($extensionName));
 
-    $result = $dbconn->Execute($sql,$bindvars);
+    $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $dbconn->PO_Insert_ID($extension_table, 'id');
     }
 }
-
-?>

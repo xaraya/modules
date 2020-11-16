@@ -25,7 +25,7 @@
  * @returns string
  */
 
-function mime_userapi_get_mime_image( $args )
+function mime_userapi_get_mime_image($args)
 {
     extract($args);
 
@@ -36,8 +36,12 @@ function mime_userapi_get_mime_image( $args )
     }
 
     // Defaults.
-    if (empty($fileSuffix)) {$fileSuffix = '.png';}
-    if (empty($defaultBase)) {$defaultBase = 'default';}
+    if (empty($fileSuffix)) {
+        $fileSuffix = '.png';
+    }
+    if (empty($defaultBase)) {
+        $defaultBase = 'default';
+    }
 
     // Explode the list of suffixes.
     // A list of suffixes to try can be given, e.g. '-8x8.gif|.png'
@@ -49,22 +53,28 @@ function mime_userapi_get_mime_image( $args )
     }
 
     // Try the complete mimetype-subtype image.
-    foreach($fileSuffixes as $fileSuffix) {
+    foreach ($fileSuffixes as $fileSuffix) {
         $imageFile = $mimeType[0] . '-' . $mimeType[1] . $fileSuffix;
-        if ($imageURI = xarTplGetImage($imageFile, 'mime')) {break;}
+        if ($imageURI = xarTplGetImage($imageFile, 'mime')) {
+            break;
+        }
     }
 
     // Otherwise, try the top level mimetype image.
-    if ($imageURI == NULL) {
-        foreach($fileSuffixes as $fileSuffix) {
+    if ($imageURI == null) {
+        foreach ($fileSuffixes as $fileSuffix) {
             $imageFile = $mimeType[0] . $fileSuffix;
-            if ($imageURI = xarTplGetImage($imageFile, 'mime')) {break;}
+            if ($imageURI = xarTplGetImage($imageFile, 'mime')) {
+                break;
+            }
         }
 
-        if ($imageURI == NULL) {
-            foreach($fileSuffixes as $fileSuffix) {
+        if ($imageURI == null) {
+            foreach ($fileSuffixes as $fileSuffix) {
                 $imageFile = $defaultBase . $fileSuffix;
-                if ($imageURI = xarTplGetImage($imageFile, 'mime')) {break;}
+                if ($imageURI = xarTplGetImage($imageFile, 'mime')) {
+                    break;
+                }
             }
         }
     }
@@ -73,5 +83,3 @@ function mime_userapi_get_mime_image( $args )
     // We also have 'imageFile' set, which could be a useful (alternative) return value.
     return $imageURI;
 }
-
-?>

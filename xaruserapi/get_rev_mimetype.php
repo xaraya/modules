@@ -17,13 +17,12 @@
   *
   *  @author Carl P. Corliss
   *  @access public
-  *  @param  string     the mime type we want to lookup id's for 
+  *  @param  string     the mime type we want to lookup id's for
   *  returns array      An array of (subtypeId, subtypeName) or an empty array
   */
   
-function mime_userapi_get_rev_mimetype( $args ) 
+function mime_userapi_get_rev_mimetype($args)
 {
-
     extract($args);
     
     if (empty($mimeType)) {
@@ -39,7 +38,7 @@ function mime_userapi_get_rev_mimetype( $args )
     
     $mimeType = explode('/', $mimeType);
 
-    $typeInfo = xarModAPIFunc('mime','user','get_type', array('typeName' => $mimeType[0]));
+    $typeInfo = xarModAPIFunc('mime', 'user', 'get_type', array('typeName' => $mimeType[0]));
     if (!isset($typeInfo['typeId'])) {
         // if not found return 0 for the id of both type / subtype
         return array('typeId' => 0, 'subtypeId' => 0);
@@ -55,7 +54,4 @@ function mime_userapi_get_rev_mimetype( $args )
     } else {
         return array('typeId' => $typeId, 'subtypeId' => $subtypeInfo['subtypeId']);
     }
-        
-}    
-    
-?>
+}

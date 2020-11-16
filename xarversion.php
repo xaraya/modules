@@ -28,4 +28,3 @@ $modversion['user']           = false;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 $modversion['securityschema'] = array();
-?>

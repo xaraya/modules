@@ -26,7 +26,7 @@
  *                 it will try to guess one of either text/plain or
  *                 application/octet-stream by reading the first 256 bytes of the file
  */
-function mime_userapi_analyze_file( $args )
+function mime_userapi_analyze_file($args)
 {
     extract($args);
 
@@ -42,17 +42,21 @@ function mime_userapi_analyze_file( $args )
     // Start off trying mime_content_type
     if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
         $ftype = mime_content_type($fileName);
-        if (isset($ftype) && strlen($ftype)) return $ftype;
+        if (isset($ftype) && strlen($ftype)) {
+            return $ftype;
+        }
     }
 
     // Try to use if disponible pecl fileinfo extension
     // Note: as of PHP 5.3 this is included in the PHP distribution. Leave the if condition here, doesn't do any harm.
-    if(extension_loaded('fileinfo')) {
+    if (extension_loaded('fileinfo')) {
         $res = finfo_open(FILEINFO_MIME);
         $mime_type = finfo_file($res, $fileName);
         finfo_close($res);
-        if (isset($mime_type) && strlen($mime_type)) return $mime_type;
-     }
+        if (isset($mime_type) && strlen($mime_type)) {
+            return $mime_type;
+        }
+    }
 
     // If that didn't work, try getimagesize to see if the file is an image
     $fileInfo = @getimagesize($fileName);
@@ -86,7 +90,7 @@ function mime_userapi_analyze_file( $args )
         $mime_list = xarModAPIFunc('mime', 'user', 'getall_magic');
 
 
-        foreach($mime_list as $mime_type => $mime_info) {
+        foreach ($mime_list as $mime_type => $mime_info) {
 
             // if this mime_type doesn't have a
             // magic string to check against, then
@@ -104,22 +108,32 @@ function mime_userapi_analyze_file( $args )
 
                 if ($magicInfo['offset'] >= 0) {
                     if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
-                        $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]',
-                                      $magicInfo['offset'], $fileName);
-                    throw new Exception($msg);
+                        $msg = xarML(
+                            'Unable to seek to offset [#(1)] within file: [#(2)]',
+                            $magicInfo['offset'],
+                            $fileName
+                        );
+                        throw new Exception($msg);
                     }
                 }
 
                 if (!($value = @fread($fp, $magicInfo['length']))) {
-                    $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].',
-                                 $magicInfo['length'], $fileName);
+                    $msg = xarML(
+                        'Unable to read (#(1) bytes) from file: [#(2)].',
+                        $magicInfo['length'],
+                        $fileName
+                    );
                     throw new Exception($msg);
                 }
 
                 if ($magicInfo['value'] == base64_encode($value)) {
                     fclose($fp);
-                       $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype',
-                                                  array('subtypeId' => $magicInfo['subtypeId']));
+                    $mimeType = xarModAPIFunc(
+                        'mime',
+                        'user',
+                        'get_mimetype',
+                        array('subtypeId' => $magicInfo['subtypeId'])
+                    );
                     if (!empty($mimeType)) {
                         return $mimeType;
                     }
@@ -162,10 +176,10 @@ function mime_userapi_analyze_file( $args )
             $mime_type = 'text/plain';
         }
 
-        if ($fp) fclose($fp);
+        if ($fp) {
+            fclose($fp);
+        }
 
         return $mime_type;
     }
 }
-
-?>

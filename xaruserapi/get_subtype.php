@@ -13,7 +13,7 @@
  */
 
  /**
-  *  Get the name of a mime type 
+  *  Get the name of a mime type
   *
   *  @author Carl P. Corliss
   *  @author Jason Judge
@@ -42,6 +42,4 @@ function mime_userapi_get_subtype($args)
 
     // There is a single subtype element - return just that element.
     return reset($subtypes);
-}    
-    
-?>
+}

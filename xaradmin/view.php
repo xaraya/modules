@@ -17,23 +17,30 @@
  */
     function mime_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageMime')) return;
+        if (!xarSecurityCheck('ManageMime')) {
+            return;
+        }
 
         $modulename = 'mime';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
-        if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
+        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!empty($objectname)) {
+            xarModUserVars::set($modulename, 'defaultmastertable', $objectname);
+        }
 
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));
-        $data['objectname'] = xarModUserVars::get($modulename,'defaultmastertable');
+        $data['objectname'] = xarModUserVars::get($modulename, 'defaultmastertable');
         $items = $object->getItems();
         $options = array();
-        foreach ($items as $item)
-            if (strpos($item['name'],$modulename) !== false)
+        foreach ($items as $item) {
+            if (strpos($item['name'], $modulename) !== false) {
                 $options[] = array('id' => $item['name'], 'name' => $item['name']);
+            }
+        }
         $data['options'] = $options;
         return $data;
     }
-?>

@@ -21,17 +21,19 @@
   *  returns array      An array of (subtypeId, extension) or an empty array
   */
 
-function mime_userapi_getall_extensions( $args )
+function mime_userapi_getall_extensions($args)
 {
-
     extract($args);
 
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
             $where = " WHERE subtype_id = $subtypeId";
         } else {
-            $msg = xarML('Supplied parameter [#(1)] for function [#(2)], is not an integer!',
-                         'subtypeId','mime_userapi_getall_extensions');
+            $msg = xarML(
+                'Supplied parameter [#(1)] for function [#(2)], is not an integer!',
+                'subtypeId',
+                'mime_userapi_getall_extensions'
+            );
             throw new Exception($msg);
         }
     } else {
@@ -55,7 +57,7 @@ function mime_userapi_getall_extensions( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result | $result->EOF)  {
+    if (!$result | $result->EOF) {
         return array();
     }
 
@@ -71,5 +73,3 @@ function mime_userapi_getall_extensions( $args )
 
     return $subtypeInfo;
 }
-
-?>

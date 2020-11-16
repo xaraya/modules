@@ -21,18 +21,21 @@
   *  returns array      An array of (typeId, typeName) or an empty array
   */
 
-function mime_userapi_add_type( $args )
+function mime_userapi_add_type($args)
 {
-
-    extract( $args );
+    extract($args);
 
     // Get database setup
     $dbconn = xarDB::getConn();
     $xartable     =& xarDB::getTables();
 
     if (!isset($typeName) || empty($typeName)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'typeName','userapi_add_type','mime');
+        $msg = xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'typeName',
+            'userapi_add_type',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
@@ -53,10 +56,8 @@ function mime_userapi_add_type( $args )
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $dbconn->PO_Insert_ID($type_table, 'id');
     }
 }
-
-?>

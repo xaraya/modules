@@ -21,32 +21,47 @@
   *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
   */
 
-function mime_userapi_add_magic( $args )
+function mime_userapi_add_magic($args)
 {
-
     extract($args);
 
     if (!isset($subtypeId)) {
-        $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                      'subtypeId','userapi_add_magic','mime');
+        $msg =  xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'subtypeId',
+            'userapi_add_magic',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
     if (!isset($magicValue)) {
-        $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                      'magicValue','userapi_add_magic','mime');
+        $msg =  xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'magicValue',
+            'userapi_add_magic',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
     if (!isset($magicOffset)) {
-        $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                      'magicOffset','userapi_add_magic','mime');
+        $msg =  xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'magicOffset',
+            'userapi_add_magic',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
     if (!isset($magicLength)) {
-        $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                      'magicLength','userapi_add_magic','mime');
+        $msg =  xarML(
+            'Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
+            'magicLength',
+            'userapi_add_magic',
+            'mime'
+        );
         throw new Exception($msg);
     }
 
@@ -74,10 +89,8 @@ function mime_userapi_add_magic( $args )
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return FALSE;
+        return false;
     } else {
         return $dbconn->PO_Insert_ID($magic_table, 'id');
     }
 }
-
-?>

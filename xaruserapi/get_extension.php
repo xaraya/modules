@@ -22,13 +22,12 @@
   *  returns array      An array of (subtypeId, extension) or an empty array
   */
 
-function mime_userapi_get_extension( $args )
+function mime_userapi_get_extension($args)
 {
-
     extract($args);
 
     if (!isset($extensionId) && !isset($extensionName)) {
-        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_extension');
+        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime', 'userapi', 'get_extension');
         throw new Exception($msg);
     }
 
@@ -55,7 +54,7 @@ function mime_userapi_get_extension( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result || $result->EOF)  {
+    if (!$result || $result->EOF) {
         return array();
     }
 
@@ -65,5 +64,3 @@ function mime_userapi_get_extension( $args )
                  'extensionId'   => $row['id'],
                  'extensionName' => $row['name']);
 }
-
-?>

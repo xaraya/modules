@@ -19,7 +19,7 @@
  */
 function mime_init()
 {
-    $error = FALSE;
+    $error = false;
 
     //Load Table Maintenance API
     sys::import('xaraya.tableddl');
@@ -29,30 +29,30 @@ function mime_init()
 
     $fields['mime_type'] = array(
         'id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'name'        => array('type'=>'varchar',  'null'=>false,  'size'=>255),
         'state'       => array('type' => 'integer', 'null' => false, 'default' => 3),
     );
 
     $fields['mime_subtype'] = array(
         'id'            => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'name'          => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
-        'type_id'       => array('type'=>'integer',  'null'=>FALSE),
-        'description'   => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
+        'name'          => array('type'=>'varchar',  'null'=>false,  'size'=>255),
+        'type_id'       => array('type'=>'integer',  'null'=>false),
+        'description'   => array('type'=>'varchar',  'null'=>true,  'size'=>255),
         'state'         => array('type' => 'integer', 'null' => false, 'default' => 3),
     );
 
     $fields['mime_extension'] = array(
         'id'            => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'subtype_id'    => array('type'=>'integer',  'null'=>FALSE),
-        'name'          => array('type'=>'varchar',  'null'=>FALSE,  'size'=>10)
+        'subtype_id'    => array('type'=>'integer',  'null'=>false),
+        'name'          => array('type'=>'varchar',  'null'=>false,  'size'=>10)
     );
 
     $fields['mime_magic'] = array(
         'id'         => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'subtype_id' => array('type'=>'integer',  'null'=>FALSE),
-        'value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>255),
-        'length'     => array('type'=>'integer',  'null'=>FALSE),
-        'offset'     => array('type'=>'integer',  'null'=>FALSE)
+        'subtype_id' => array('type'=>'integer',  'null'=>false),
+        'value'      => array('type'=>'varchar',  'null'=>false, 'size'=>255),
+        'length'     => array('type'=>'integer',  'null'=>false),
+        'offset'     => array('type'=>'integer',  'null'=>false)
     );
 
     // Create all the tables and, if there are errors
@@ -65,11 +65,11 @@ function mime_init()
         $query = xarDBCreateTable($xartable[$table], $data);
         $result = $dbconn->Execute($query);
         if (!$result) {
-            $tables[$table] = FALSE;
-            $error |= TRUE;
+            $tables[$table] = false;
+            $error |= true;
         } else {
-            $tables[$table] = TRUE;
-            $error |= FALSE;
+            $tables[$table] = true;
+            $error |= false;
         }
     }
 
@@ -81,10 +81,11 @@ function mime_init()
             $query = xarDBDropTable($xartable[$table]);
             $result = $dbconn->Execute($query);
 
-            if(!$result)
+            if (!$result) {
                 return;
+            }
         }
-        return FALSE;
+        return false;
     }
 
 
@@ -92,33 +93,35 @@ function mime_init()
     #
     # Set up masks
     #
-        xarRegisterMask('EditMime','All','mime','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddMime','All','mime','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageMime','All','mime','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminMime','All','mime','All','All','ACCESS_ADMIN');
+    xarRegisterMask('EditMime', 'All', 'mime', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddMime', 'All', 'mime', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('ManageMime', 'All', 'mime', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminMime', 'All', 'mime', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
-        xarRegisterPrivilege('EditMime','All','mime','All','All','ACCESS_EDIT');
-        xarRegisterPrivilege('AddMime','All','mime','All','All','ACCESS_ADD');
-        xarRegisterPrivilege('ManageMime','All','mime','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminMime','All','mime','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('EditMime', 'All', 'mime', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterPrivilege('AddMime', 'All', 'mime', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterPrivilege('ManageMime', 'All', 'mime', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterPrivilege('AdminMime', 'All', 'mime', 'All', 'All', 'ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Create DD objects
     #
-        $module = 'mime';
-        $objects = array(
+    $module = 'mime';
+    $objects = array(
                         'mime_types',
                         'mime_subtypes',
                         'mime_magic',
                         'mime_extensions',
                          );
 
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if (!xarModAPIFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
 
     # --------------------------------------------------------
     #
@@ -127,7 +130,7 @@ function mime_init()
 //        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mime'));
 //        $module_settings->initialize();
 
-        xarModVars::set('mime', 'defaultmastertable','mime_types');
+    xarModVars::set('mime', 'defaultmastertable', 'mime_types');
 
     // Initialisation successful
     return true;
@@ -144,7 +147,7 @@ function mime_upgrade($oldversion)
     $datadict = xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number
-    switch($oldversion) {
+    switch ($oldversion) {
         case '1.1.0':
             // Upgrade from version 1.1.0
     }
@@ -159,7 +162,5 @@ function mime_upgrade($oldversion)
 function mime_delete()
 {
     $module = 'mime';
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
 }
-
-?>
