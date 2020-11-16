@@ -642,12 +642,12 @@ class testxarModapiload extends xarTestCase
 }
 $suite->AddTestCase('testxarModapiload', 'xarMod::apiload($modulename, $type)');
 
-class testxarModRegisterHook extends xarTestCase
+class testxarModHooks::register extends xarTestCase
 {
     public function testRegisterHook()
     {
         $this->expected = true;
-        $this->actual   = xarModRegisterHook('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee', 'fff');
+        $this->actual   = xarModHooks::register('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee', 'fff');
         $res = $this->assertSame($this->actual, $this->expected, "Call with valid module name and 6 params returns a boolean");
         return $res;
     }
@@ -655,7 +655,7 @@ class testxarModRegisterHook extends xarTestCase
     {
         try {
             $this->expected = '[exception]';
-            $this->actual   = xarModRegisterHook('aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff');
+            $this->actual   = xarModHooks::register('aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff');
             $res = $this->assertSame($this->actual, $this->expected, "Call with invalid module name and 6 params throws an exception");
             return $res;
         } catch (Exception $e) {
@@ -666,7 +666,7 @@ class testxarModRegisterHook extends xarTestCase
     {
         try {
             $this->expected = '[exception]';
-            $this->actual   = xarModRegisterHook('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee');
+            $this->actual   = xarModHooks::register('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee');
             $res = $this->assertSame($this->actual, $this->expected, "Call with less than 6 params throws an exception");
             return $res;
         } catch (Exception $e) {
@@ -674,21 +674,21 @@ class testxarModRegisterHook extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModRegisterHook', 'xarModRegisterHook($hookObject, $hookAction, $hookArea, $hookModName, $hookModType, $hookFuncName)');
+$suite->AddTestCase('testxarModHooks::register', 'xarModHooks::register($hookObject, $hookAction, $hookArea, $hookModName, $hookModType, $hookFuncName)');
 
-class testxarModUnregisterHook extends xarTestCase
+class testxarModHooks::unregister extends xarTestCase
 {
     public function testRegisterHook()
     {
         $this->expected = true;
-        $this->actual   = xarModUnregisterHook('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee', 'fff');
+        $this->actual   = xarModHooks::unregister('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee', 'fff');
         $res = $this->assertSame($this->actual, $this->expected, "Call with valid module name and 6 params returns true");
         return $res;
     }
     public function testUnregisterHookWithSixBadParam()
     {
         $this->expected = true;
-        $this->actual   = xarModUnregisterHook('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee', 'fff');
+        $this->actual   = xarModHooks::unregister('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee', 'fff');
         $res = $this->assertSame($this->actual, $this->expected, "Call with invalid 6 params returns true");
         return $res;
     }
@@ -696,7 +696,7 @@ class testxarModUnregisterHook extends xarTestCase
     {
         try {
             $this->expected = '[exception]';
-            $this->actual   = xarModUnregisterHook('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee');
+            $this->actual   = xarModHooks::unregister('aaa', 'bbb', 'ccc', 'xarayatesting', 'eee');
             $res = $this->assertSame($this->actual, $this->expected, "Call with less than 6 params throws an exception");
             return $res;
         } catch (Exception $e) {
@@ -704,4 +704,4 @@ class testxarModUnregisterHook extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModUnregisterHook', 'xarModUnegisterHook($hookObject, $hookAction, $hookArea,$hookModName, $hookModType, $hookFuncName)');
+$suite->AddTestCase('testxarModHooks::unregister', 'xarModUnegisterHook($hookObject, $hookAction, $hookArea,$hookModName, $hookModType, $hookFuncName)');

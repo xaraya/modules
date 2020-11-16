@@ -40,57 +40,57 @@ class testxarUserLogin extends xarTestCase
 }
 $suite->AddTestCase('testxarUserLogin', 'xarUserLogin($username,$password)');
 
-class testxarUserGetVar extends xarTestCase
+class testxarUser::getVar extends xarTestCase
 {
-    public function testxarUserGetVarWithNoParams()
+    public function testxarUser::getVarWithNoParams()
     {
         try {
             $this->expected = '[exception]';
-            $this->actual   = xarUserGetVar();
+            $this->actual   = xarUser::getVar();
             $res = $this->assertSame($this->actual, $this->expected, "A call with no params throws an exception");
             return $res;
         } catch (Exception $e) {
             return $this->assertTrue(true, "A call with no params throws an exception");
         }
     }
-    public function testxarUserGetVarWithNameIsID()
+    public function testxarUser::getVarWithNameIsID()
     {
         $this->expected = xarSession::getVar('role_id');
-        $this->actual   = xarUserGetVar('id');
-        $res = $this->assertSame($this->actual, $this->expected, "xarUserGetVar('id') returns the id of the current user");
+        $this->actual   = xarUser::getVar('id');
+        $res = $this->assertSame($this->actual, $this->expected, "xarUser::getVar('id') returns the id of the current user");
         return $res;
     }
-    public function testxarUserGetVarWithNameIsName()
+    public function testxarUser::getVarWithNameIsName()
     {
         $this->expected = 'Administrator';
-        $this->actual   = xarUserGetVar('name');
-        $res = $this->assertSame($this->actual, $this->expected, "xarUserGetVar('name') returns the name of the current user");
+        $this->actual   = xarUser::getVar('name');
+        $res = $this->assertSame($this->actual, $this->expected, "xarUser::getVar('name') returns the name of the current user");
         return $res;
     }
-    public function testxarUserGetVarWithNameIsUName()
+    public function testxarUser::getVarWithNameIsUName()
     {
         $this->expected = 'admin';
-        $this->actual   = xarUserGetVar('uname');
-        $res = $this->assertSame($this->actual, $this->expected, "xarUserGetVar('uname') returns the user name of the current user");
+        $this->actual   = xarUser::getVar('uname');
+        $res = $this->assertSame($this->actual, $this->expected, "xarUser::getVar('uname') returns the user name of the current user");
         return $res;
     }
-    public function testxarUserGetVarWithNameIsEmail()
+    public function testxarUser::getVarWithNameIsEmail()
     {
         $this->expected = 'none@none.com';
-        $this->actual   = xarUserGetVar('email');
-        $res = $this->assertSame($this->actual, $this->expected, "xarUserGetVar('email') returns the email of the current user");
+        $this->actual   = xarUser::getVar('email');
+        $res = $this->assertSame($this->actual, $this->expected, "xarUser::getVar('email') returns the email of the current user");
         return $res;
     }
-    public function testxarUserGetVarWithNameIsPass()
+    public function testxarUser::getVarWithNameIsPass()
     {
         try {
             $this->expected = '[exception]';
-            $this->actual   = xarUserGetVar('pass');
-            $res = $this->assertSame($this->actual, $this->expected, "xarUserGetVar('pass') returns an exception");
+            $this->actual   = xarUser::getVar('pass');
+            $res = $this->assertSame($this->actual, $this->expected, "xarUser::getVar('pass') returns an exception");
             return $res;
         } catch (Exception $e) {
-            return $this->assertTrue(true, "xarUserGetVar('pass') returns an exception");
+            return $this->assertTrue(true, "xarUser::getVar('pass') returns an exception");
         }
     }
 }
-$suite->AddTestCase('testxarUserGetVar', 'testxarUserGetVar($name,$id)');
+$suite->AddTestCase('testxarUser::getVar', 'testxarUser::getVar($name,$id)');

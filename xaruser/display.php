@@ -5,13 +5,13 @@ function xarayatesting_user_display($args)
 {
     extract($args);
 
-    if (!xarVarFetch('name', 'isset', $name, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('name', 'isset', $name, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('tplmodule', 'isset', $tplmodule, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('tplmodule', 'isset', $tplmodule, null, xarVar::DONT_SET)) {
         return;
     }
 

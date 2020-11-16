@@ -26,7 +26,7 @@ class testxarMod extends xarTestCase
         // We must be in the root of the webserver directory
         $dir=exec('bk root')."/html";
         chdir($dir);
-        $info = xarMod_getFileInfo('base');
+        $info = xarMod::getFileInfo('base');
         // The returned array should contain 15 entries
         $res = $this->assertEquals(count($info), 15, 0, "GetFileInfo should return 15 entries");
         chdir($savedir);

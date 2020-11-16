@@ -49,18 +49,18 @@
         #
         # Set up masks
         #
-        xarRegisterMask('ViewXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('EditXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_EDIT');
-        xarRegisterMask('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('EditXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_EDIT');
+        xarMasks::register('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
@@ -122,7 +122,7 @@
         // Generate the SQL to drop the table using the API
         $prefix = xarDB::getPrefix();
         $table = $prefix . "_" . $this_module;
-        $query = xarDBDropTable($table);
+        $query = xarTableDDL::dropTable($table);
         if (empty($query)) {
             return;
         } // throw back
@@ -157,8 +157,8 @@
         #
         # Remove modvars, masks and privilege instances
         #
-        xarRemoveMasks($this_module);
-        xarRemoveInstances($this_module);
+        xarMasks::removemasks($this_module);
+        xarPrivileges::removeInstances($this_module);
         xarModVars::delete_all($this_module);
 
         return true;

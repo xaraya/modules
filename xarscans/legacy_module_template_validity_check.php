@@ -2,14 +2,14 @@
 
     function xarayatesting_scans_legacy_module_template_validity_check()
     {
-        if (!xarVarFetch('item', 'str', $item, 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('item', 'str', $item, 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'int', $data['confirm'], 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'int', $data['confirm'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
         
-        $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
+        $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
         if (!$data['confirm']) {
             $data['items'] = $items;
         } else {

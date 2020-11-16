@@ -31,7 +31,7 @@
             <xar:var name="label">Back</xar:var>
             <xar:button type="cancel" label="$label"/>
             <xar:var name="label">Back to Scans</xar:var>
-            <xar:set name="target">xarModURL('xarayatesting','admin','othertests')</xar:set>
+            <xar:set name="target">xarController::URL('xarayatesting','admin','othertests')</xar:set>
             <xar:button type="link" target="$target" label="$label"/>
         </xar:if>
     </div>

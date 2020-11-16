@@ -6,7 +6,7 @@ class testxarUser1 extends xarTestCase
     
     public function testEmptyUserVar()
     {
-        return $this->assertNull(xarUserGetVar(''), "Passing empty user var should return null");
+        return $this->assertNull(xarUser::getVar(''), "Passing empty user var should return null");
     }
 }
 

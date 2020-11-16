@@ -2,14 +2,14 @@
 
     function xarayatesting_scans_theme_template_validity_check()
     {
-        if (!xarVarFetch('item', 'str', $item, 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('item', 'str', $item, 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'int', $data['confirm'], 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'int', $data['confirm'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
 
-        $items = xarMod::apiFunc('themes', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
+        $items = xarMod::apiFunc('themes', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
         
         if (!$data['confirm']) {
             $data['items'] = array();
@@ -18,7 +18,7 @@
             }
         } else {
             if ($item != 0) {
-                $items = array(xarThemeGetInfo($item));
+                $items = array(xarTheme::getInfo($item));
             }
             $reader = new XMLReader();
             $checked_themes = array();

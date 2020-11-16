@@ -5,7 +5,7 @@
  */
     function xarayatesting_admin_new()
     {
-        if (!xarSecurityCheck('AddXarayatesting')) {
+        if (!xarSecurity::check('AddXarayatesting')) {
             return;
         }
 

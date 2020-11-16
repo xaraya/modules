@@ -7,7 +7,7 @@
             <ul>
                 <xar:foreach in="$tests" value="$test">
                     <li>
-                        <a href="#xarModURL('xarayatesting','scans',$test['name'])#">#$test['name']#</a>
+                        <a href="#xarController::URL('xarayatesting','scans',$test['name'])#">#$test['name']#</a>
                     </li>
                 </xar:foreach>
             </ul>
