@@ -25,12 +25,12 @@ echo '</pre>';
 echo "<hr>Creating: new Calendar_Day(date('Y'), date('n'), date('d'));<br />";
 $Calendar = new Calendar_Day(date('Y'), date('n'), date('d'));
 
-echo '<hr>Previous month is: '.Calendar_Util_Textual::prevMonthName($Calendar,'two').'<br />';
-echo 'This month is: '.Calendar_Util_Textual::thisMonthName($Calendar,'short').'<br />';
+echo '<hr>Previous month is: '.Calendar_Util_Textual::prevMonthName($Calendar, 'two').'<br />';
+echo 'This month is: '.Calendar_Util_Textual::thisMonthName($Calendar, 'short').'<br />';
 echo 'Next month is: '.Calendar_Util_Textual::nextMonthName($Calendar).'<br /><hr />';
 echo 'Previous day is: '.Calendar_Util_Textual::prevDayName($Calendar).'<br />';
-echo 'This day is: '.Calendar_Util_Textual::thisDayName($Calendar,'short').'<br />';
-echo 'Next day is: '.Calendar_Util_Textual::nextDayName($Calendar,'one').'<br /><hr />';
+echo 'This day is: '.Calendar_Util_Textual::thisDayName($Calendar, 'short').'<br />';
+echo 'Next day is: '.Calendar_Util_Textual::nextDayName($Calendar, 'one').'<br /><hr />';
 
 echo "Creating: new Calendar_Month_Weekdays(date('Y'), date('n'), 6); - Saturday is first day of week<br />";
 $Calendar = new Calendar_Month_Weekdays(date('Y'), date('n'), 6);
@@ -41,7 +41,7 @@ $Calendar = new Calendar_Month_Weekdays(date('Y'), date('n'), 6);
 <caption><?php echo Calendar_Util_Textual::thisMonthName($Calendar).' '.$Calendar->thisYear(); ?></caption>
 <tr>
 <?php
-$dayheaders = Calendar_Util_Textual::orderedWeekdays($Calendar,'short');
+$dayheaders = Calendar_Util_Textual::orderedWeekdays($Calendar, 'short');
 foreach ($dayheaders as $dayheader) {
     echo '<th>'.$dayheader.'</th>';
 }

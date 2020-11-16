@@ -16,8 +16,10 @@ require_once('./decorator_tests.php');
 require_once('./util_tests.php');
 
 
-class AllTests extends GroupTest {
-    function AllTests() {
+class AllTests extends GroupTest
+{
+    public function AllTests()
+    {
         $this->GroupTest('All PEAR::Calendar Tests');
         $this->AddTestCase(new CalendarTests());
         $this->AddTestCase(new CalendarTabularTests());
@@ -31,4 +33,3 @@ class AllTests extends GroupTest {
 
 $test = new AllTests();
 $test->run(new HtmlReporter());
-?>

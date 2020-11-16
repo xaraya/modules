@@ -11,7 +11,7 @@
         public $day =1;
         public $firstDay = false;
 
-        function build($events=array())
+        public function build($events=array())
         {
             /*include_once CALENDAR_ROOT . 'Day.php';
             include_once CALENDAR_ROOT .  'Table/Helper.php';
@@ -43,17 +43,17 @@
             */
 
             for ($i=1; $i <= $end; $i++) {
-                $Day = new Calendar_Day(2000,1,1); // Create Day with dummy values
+                $Day = new Calendar_Day(2000, 1, 1); // Create Day with dummy values
                 $Day->setTimeStamp($this->cE->dateToStamp($this->year, $this->month, $this->day++));
                 $this->children[$i] = new Event($Day);
 
-            /*
-                $stamp = $this->cE->dateToStamp($year, $month, $day++);
-                $this->children[$i] = new Calendar_Day(
-                                    $this->cE->stampToYear($stamp),
-                                    $this->cE->stampToMonth($stamp),
-                                    $this->cE->stampToDay($stamp));
-                                    */
+                /*
+                    $stamp = $this->cE->dateToStamp($year, $month, $day++);
+                    $this->children[$i] = new Calendar_Day(
+                                        $this->cE->stampToYear($stamp),
+                                        $this->cE->stampToMonth($stamp),
+                                        $this->cE->stampToDay($stamp));
+                                        */
             }
 
             $this->calendar->children = $this->children;
@@ -78,7 +78,7 @@
             return true;
         }
 
-        function setSelection($events)
+        public function setSelection($events)
         {
             $this->cE =& $this->getEngine();
             $year  = $this->cE->stampToYear($this->calendar->thisWeek);
@@ -107,9 +107,11 @@
             }
         }
 
-        function fetch()
+        public function fetch()
         {
-            if (empty($this->calendar->children)) return array();
+            if (empty($this->calendar->children)) {
+                return array();
+            }
             $child = each($this->calendar->children);
             if ($child) {
                 return $child['value'];
@@ -119,4 +121,3 @@
             }
         }
     }
-?>

@@ -20,4 +20,4 @@ function calendar_xartables()
     $xartables['calendar_event'] = $prefix . '_event';
 
     return $xartables;
-} ?>
+}

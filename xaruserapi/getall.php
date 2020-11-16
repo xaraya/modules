@@ -57,7 +57,9 @@ function calendar_userapi_getall($args)
     } else {
         $result = $dbconn->Execute($query);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid,
@@ -71,4 +73,3 @@ function calendar_userapi_getall($args)
     $result->Close();
     return $calendars;
 }
-?>

@@ -40,7 +40,7 @@ class Calendar_Engine_Interface
      * @return mixed
      * @access protected
      */
-    function stampCollection($stamp)
+    public function stampCollection($stamp)
     {
     }
 
@@ -50,7 +50,7 @@ class Calendar_Engine_Interface
      * @return int year (e.g. 2003)
      * @access protected
      */
-    function stampToYear($stamp)
+    public function stampToYear($stamp)
     {
     }
 
@@ -60,7 +60,7 @@ class Calendar_Engine_Interface
      * @return int month (e.g. 9)
      * @access protected
      */
-    function stampToMonth($stamp)
+    public function stampToMonth($stamp)
     {
     }
 
@@ -70,7 +70,7 @@ class Calendar_Engine_Interface
      * @return int day (e.g. 15)
      * @access protected
      */
-    function stampToDay($stamp)
+    public function stampToDay($stamp)
     {
     }
 
@@ -80,7 +80,7 @@ class Calendar_Engine_Interface
      * @return int hour (e.g. 13)
      * @access protected
      */
-    function stampToHour($stamp)
+    public function stampToHour($stamp)
     {
     }
 
@@ -90,7 +90,7 @@ class Calendar_Engine_Interface
      * @return int minute (e.g. 34)
      * @access protected
      */
-    function stampToMinute($stamp)
+    public function stampToMinute($stamp)
     {
     }
 
@@ -100,7 +100,7 @@ class Calendar_Engine_Interface
      * @return int second (e.g. 51)
      * @access protected
      */
-    function stampToSecond($stamp)
+    public function stampToSecond($stamp)
     {
     }
 
@@ -118,7 +118,7 @@ class Calendar_Engine_Interface
      * @return int (depends on implementation)
      * @access protected
      */
-    function dateToStamp($y,$m,$d,$h,$i,$s)
+    public function dateToStamp($y, $m, $d, $h, $i, $s)
     {
     }
 
@@ -127,7 +127,7 @@ class Calendar_Engine_Interface
      * @return int (e.g. 2037)
      * @access protected
      */
-    function getMaxYears()
+    public function getMaxYears()
     {
     }
 
@@ -136,7 +136,7 @@ class Calendar_Engine_Interface
      * @return int (e.g 1902)
      * @access protected
      */
-    function getMinYears()
+    public function getMinYears()
     {
     }
 
@@ -146,7 +146,7 @@ class Calendar_Engine_Interface
      * @return int (e.g. 12)
      * @access protected
      */
-    function getMonthsInYear($y=null)
+    public function getMonthsInYear($y=null)
     {
     }
 
@@ -157,7 +157,7 @@ class Calendar_Engine_Interface
      * @return int days in month
      * @access protected
      */
-    function getDaysInMonth($y, $m)
+    public function getDaysInMonth($y, $m)
     {
     }
 
@@ -169,7 +169,7 @@ class Calendar_Engine_Interface
      * @return int
      * @access protected
      */
-    function getFirstDayInMonth ($y, $m)
+    public function getFirstDayInMonth($y, $m)
     {
     }
 
@@ -181,7 +181,7 @@ class Calendar_Engine_Interface
      * @return int (e.g. 7)
      * @access protected
      */
-    function getDaysInWeek($y=NULL, $m=NULL, $d=NULL)
+    public function getDaysInWeek($y=null, $m=null, $d=null)
     {
     }
 
@@ -193,7 +193,7 @@ class Calendar_Engine_Interface
      * @return int week number
      * @access protected
      */
-    function getWeekNInYear($y, $m, $d)
+    public function getWeekNInYear($y, $m, $d)
     {
     }
 
@@ -206,7 +206,7 @@ class Calendar_Engine_Interface
      * @return int week number
      * @access protected
      */
-    function getWeekNInMonth($y, $m, $d, $firstDay=1)
+    public function getWeekNInMonth($y, $m, $d, $firstDay=1)
     {
     }
 
@@ -218,7 +218,7 @@ class Calendar_Engine_Interface
      * @return int weeks number
      * @access protected
      */
-    function getWeeksInMonth($y, $m)
+    public function getWeeksInMonth($y, $m)
     {
     }
 
@@ -230,7 +230,7 @@ class Calendar_Engine_Interface
      * @return int weekday number
      * @access protected
      */
-    function getDayOfWeek($y, $m, $d)
+    public function getDayOfWeek($y, $m, $d)
     {
     }
 
@@ -242,7 +242,7 @@ class Calendar_Engine_Interface
      * @return array list of numeric values of days in week, beginning 0
      * @access protected
      */
-    function getWeekDays($y=NULL, $m=NULL, $d=NULL)
+    public function getWeekDays($y=null, $m=null, $d=null)
     {
     }
 
@@ -256,7 +256,7 @@ class Calendar_Engine_Interface
      * @see getWeekDays
      * @access protected
      */
-    function getFirstDayOfWeek($y=NULL, $m=NULL, $d=NULL)
+    public function getFirstDayOfWeek($y=null, $m=null, $d=null)
     {
     }
 
@@ -266,7 +266,7 @@ class Calendar_Engine_Interface
      * @return int (e.g. 24)
      * @access protected
      */
-    function getHoursInDay($y=null,$m=null,$d=null)
+    public function getHoursInDay($y=null, $m=null, $d=null)
     {
     }
 
@@ -276,7 +276,7 @@ class Calendar_Engine_Interface
      * @return int
      * @access protected
      */
-    function getMinutesInHour($y=null,$m=null,$d=null,$h=null)
+    public function getMinutesInHour($y=null, $m=null, $d=null, $h=null)
     {
     }
 
@@ -286,8 +286,7 @@ class Calendar_Engine_Interface
      * @return int
      * @access protected
      */
-    function getSecondsInMinute($y=null,$m=null,$d=null,$h=null,$i=null)
+    public function getSecondsInMinute($y=null, $m=null, $d=null, $h=null, $i=null)
     {
     }
 }
-?>

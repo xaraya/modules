@@ -4,5 +4,3 @@
     class CalnavBlock extends BasicBlock
     {
     }
-
-?>

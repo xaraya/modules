@@ -15,24 +15,37 @@
 
     function calendar_adminapi_hookupdate($data)
     {
-        if (!isset($data['extrainfo']) || !is_array($data['extrainfo'])) $data['extrainfo'] = array();
+        if (!isset($data['extrainfo']) || !is_array($data['extrainfo'])) {
+            $data['extrainfo'] = array();
+        }
 
         // When called via hooks, modname will be empty, but we get it from the
         // extrainfo or the current module
         if (empty($data['module'])) {
-            if (!empty($data['extrainfo']['module'])) $data['module'] = $data['extrainfo']['module'];
-            else $data['module'] = xarMod::getName();
+            if (!empty($data['extrainfo']['module'])) {
+                $data['module'] = $data['extrainfo']['module'];
+            } else {
+                $data['module'] = xarMod::getName();
+            }
         }
         $data['module_id'] = xarMod::getID(($data['module']));
-        if (empty($data['module_id']))  throw new IDNotFoundException("module id for " . $data['modname']);
+        if (empty($data['module_id'])) {
+            throw new IDNotFoundException("module id for " . $data['modname']);
+        }
 
         if (!isset($data['itemtype']) || !is_numeric($data['itemtype'])) {
-             if (isset($data['extrainfo']['itemtype']) && is_numeric($data['extrainfo']['itemtype'])) $data['itemtype'] = $data['extrainfo']['itemtype'];
-             else $data['itemtype'] = 0;
+            if (isset($data['extrainfo']['itemtype']) && is_numeric($data['extrainfo']['itemtype'])) {
+                $data['itemtype'] = $data['extrainfo']['itemtype'];
+            } else {
+                $data['itemtype'] = 0;
+            }
         }
         if (!isset($data['itemid']) || !is_numeric($data['itemid'])) {
-             if (isset($data['extrainfo']['item_id']) && is_numeric($data['extrainfo']['item_id'])) $data['itemid'] = $data['extrainfo']['item_id'];
-             else $data['itemid'] = 0;
+            if (isset($data['extrainfo']['item_id']) && is_numeric($data['extrainfo']['item_id'])) {
+                $data['itemid'] = $data['extrainfo']['item_id'];
+            } else {
+                $data['itemid'] = 0;
+            }
         }
 
         $data['extrainfo']['module_id'] = $data['module_id'];
@@ -59,4 +72,3 @@
         
         return $data['extrainfo'];
     }
-?>

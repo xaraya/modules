@@ -11,7 +11,7 @@
         public $day = 1;
         public $firstDay = false;
 
-        function build($events=array(), $firstDay = null)
+        public function build($events=array(), $firstDay = null)
         {
             $this->year = $this->calendar->year;
             require_once CALENDAR_ROOT.'Factory.php';
@@ -28,4 +28,3 @@
             return true;
         }
     }
-?>

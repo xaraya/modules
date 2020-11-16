@@ -5,17 +5,29 @@ function calendar_admin_create_calendars()
     // Get parameters
     // TODO HELPNEEDED here: how do I handle this (e.g. missing calname should return a
     // message
-    if (!xarVarFetch('add_calendar', 'isset', $add_calendar)) {return;}
-    if (!xarVarFetch('calname', 'str:1:', $calname)) {return;}
-    if (!xarVarFetch('addtype', 'str:1:', $addtype)) {return;}
-    if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('uri', 'str:1:', $uri, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('add_calendar', 'isset', $add_calendar)) {
+        return;
+    }
+    if (!xarVarFetch('calname', 'str:1:', $calname)) {
+        return;
+    }
+    if (!xarVarFetch('addtype', 'str:1:', $addtype)) {
+        return;
+    }
+    if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('uri', 'str:1:', $uri, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {return;}
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
     
     // Security Check
-    // TODO 
+    // TODO
 //    if(!xarSecurityCheck('AddCalendar', 0, 'Calendar')) {return;}
     
     // Check if module name has already been used.
@@ -26,32 +38,34 @@ function calendar_admin_create_calendars()
         throw new Exception($msg);
     }
     
-    if ($addtype == 'db')  {    
+    if ($addtype == 'db') {
         $fileuri = 'a';
     } elseif ($addtype == 'file') {
         $fileuri = $location;
-    } elseif ($addtype == 'uri')  {
+    } elseif ($addtype == 'uri') {
         $fileuri = $uri;
-    }    
+    }
     
     // Pass to API
     $calid = xarMod::apiFunc(
-        'calendar', 'admin', 'create_calendars',
-            array(  'calname'      => $calname
-                   ,'fileuri'     => $fileuri 
+        'calendar',
+        'admin',
+        'create_calendars',
+        array(  'calname'      => $calname
+                   ,'fileuri'     => $fileuri
                    ,'addtype'     => $addtype
 //  TODO: modid, and rolid
 //              ,  'mod_id'      => $mod_id
 //              ,  'role_id'  => $role_id
                  )
-            );
+    );
 
-    if (!$calid) return;
+    if (!$calid) {
+        return;
+    }
     
     // Go on and edit the new instance
     xarController::redirect(
-            xarModURL('calendar', 'admin', 'add_calendars',array('calid'=>$calid,'calname'=>$calname) )
-            );
-    
-} 
-?>
+        xarModURL('calendar', 'admin', 'add_calendars', array('calid'=>$calid,'calname'=>$calname))
+    );
+}

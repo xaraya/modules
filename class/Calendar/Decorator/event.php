@@ -10,17 +10,17 @@ include_once CALENDAR_ROOT.'Decorator.php';
  */
 class Event extends Calendar_Decorator
 {
-    var $author;            // event author
-    var $startdate;         // (YYYYMMDD) event start date
-    var $starttime;         // (HHMMSS) event start time
-    var $enddate;           // (YYYYMMDD) event end date (if any)
-    var $endtime;           // (HHMMSS) event end time (if any)
-    var $duration;          // in seconds (-1 for all-day)
-    var $repeat;            // type of repeating
-    var $repeatfreq;        // frequency of the repeating
-    var $repeattype;        // frequency type
-    var $repeatonnum;       // repeat on 1st,2nd,3rd,4th,Last
-    var $repeatonday;       //
+    public $author;            // event author
+    public $startdate;         // (YYYYMMDD) event start date
+    public $starttime;         // (HHMMSS) event start time
+    public $enddate;           // (YYYYMMDD) event end date (if any)
+    public $endtime;           // (HHMMSS) event end time (if any)
+    public $duration;          // in seconds (-1 for all-day)
+    public $repeat;            // type of repeating
+    public $repeatfreq;        // frequency of the repeating
+    public $repeattype;        // frequency type
+    public $repeatonnum;       // repeat on 1st,2nd,3rd,4th,Last
+    public $repeatonday;       //
 
     public $cE;
     public $year;
@@ -30,7 +30,7 @@ class Event extends Calendar_Decorator
     public $entry   = array();
     public $entries = array();
 
-    function __construct(Calendar $calendar)
+    public function __construct(Calendar $calendar)
     {   // set the author
         //$this->author = xarUserGetVar('id');
         Calendar_Decorator::Calendar_Decorator($calendar);
@@ -40,22 +40,26 @@ class Event extends Calendar_Decorator
         $this->day = $this->calendar->day;
     }
 
-    function setEntry($entry) {
+    public function setEntry($entry)
+    {
         $this->entry = $entry;
     }
-    function getEntry() {
+    public function getEntry()
+    {
         return $this->entry;
     }
 
-    function addEntry1($entry) {
+    public function addEntry1($entry)
+    {
         $this->entries[] = $entry;
     }
 
-    function getEntries() {
+    public function getEntries()
+    {
         return $this->entries;
     }
 
-    function buildEvent(&$id)
+    public function buildEvent(&$id)
     {
         return true;
     }
@@ -65,7 +69,7 @@ class Event extends Calendar_Decorator
      *
      *  @param array $data the block layout data array
      */
-    function getEventDataForBL(&$data)
+    public function getEventDataForBL(&$data)
     {
         $data['event_id']            = 0;
         $data['calendar_id']         = 'default';
@@ -83,27 +87,27 @@ class Event extends Calendar_Decorator
         $data['event_exrrule_'] = null;
     }
 
-    function setStartTime($time)
+    public function setStartTime($time)
     {
         $this->starttime =& $time;
     }
 
-    function setEndTime($time)
+    public function setEndTime($time)
     {
         $this->endtime =& $time;
     }
 
-    function setStartDate($date)
+    public function setStartDate($date)
     {
         $this->startdate =& $date;
     }
 
-    function setEndDate($date)
+    public function setEndDate($date)
     {
         $this->enddate =& $date;
     }
 
-    function setDuration($days,$hours,$minutes)
+    public function setDuration($days, $hours, $minutes)
     {
         $seconds = (int) ($days * 24 * 60 * 60) ;
         $seconds += (int) ($hours * 60 * 60) ;
@@ -111,37 +115,32 @@ class Event extends Calendar_Decorator
         $this->duration =& $seconds;
     }
 
-    function setRepeat($repeat)
+    public function setRepeat($repeat)
     {
         $this->repeat =& $repeat;
     }
 
-    function setRepeatFreq($freq)
+    public function setRepeatFreq($freq)
     {
         $this->repeatfreq =& $freq;
     }
 
-    function setRepeatType($type)
+    public function setRepeatType($type)
     {
         $this->repeattype =& $type;
     }
 
-    function setRepeatOnNum($on)
+    public function setRepeatOnNum($on)
     {
         $this->repeatonnum =& $on;
     }
 
-    function setRepeatOnDay($day)
+    public function setRepeatOnDay($day)
     {
         $this->repeatonday =& $day;
     }
-    function current($day)
+    public function current($day)
     {
         return $this->calendar->current();
     }
-
-
-
 }
-
-?>

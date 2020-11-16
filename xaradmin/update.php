@@ -16,15 +16,31 @@
     {
         extract($args);
 
-        if(!xarVarFetch('objectid',   'isset', $objectid,    NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('itemid',     'isset', $itemid,      NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('join',       'isset', $join,        NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('table',      'isset', $table,       NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('tplmodule',  'isset', $tplmodule,   'calendar', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('return_url', 'isset', $return_url,  NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('preview',    'isset', $preview,     0, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('join', 'isset', $join, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('table', 'isset', $table, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('tplmodule', 'isset', $tplmodule, 'calendar', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('return_url', 'isset', $return_url, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('preview', 'isset', $preview, 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
                                              'join'     => $join,
                                              'table'    => $table,
@@ -33,17 +49,17 @@
         // if we're editing a dynamic property, save its property type to cache
         // for correct processing of the configuration rule (ValidationProperty)
         if ($myobject->objectid == 2) {
-            xarVarSetCached('dynamicdata','currentproptype', $myobject->properties['type']);
+            xarVarSetCached('dynamicdata', 'currentproptype', $myobject->properties['type']);
         }
 
         $isvalid = $myobject->checkInput(array(), 0, 'dd');
 
         // recover any session var information
-        $data = xarMod::apiFunc('dynamicdata','user','getcontext',array('module' => $tplmodule));
+        $data = xarMod::apiFunc('dynamicdata', 'user', 'getcontext', array('module' => $tplmodule));
         extract($data);
 
         if (!empty($preview) || !$isvalid) {
-            $data = array_merge($data, xarMod::apiFunc('dynamicdata','admin','menu'));
+            $data = array_merge($data, xarMod::apiFunc('dynamicdata', 'admin', 'menu'));
             $data['object'] = & $myobject;
 
             $data['objectid'] = $myobject->objectid;
@@ -68,15 +84,17 @@
             $hooks = xarModCallHooks('item', 'modify', $myobject->itemid, $item, $modinfo['name']);
             $data['hooks'] = $hooks;
 
-            return xarTplModule($tplmodule,'user','modify', $data);
+            return xarTplModule($tplmodule, 'user', 'modify', $data);
         }
 
         // Valid and not previewing, update the object
 
         $itemid = $myobject->updateItem();
-        if (!isset($itemid)) return; // throw back
+        if (!isset($itemid)) {
+            return;
+        } // throw back
 
-         // If we are here then the update is valid: reset the session var
+        // If we are here then the update is valid: reset the session var
         xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
 
         $item = $myobject->getFieldValues();
@@ -88,15 +106,22 @@
             xarController::redirect($return_url);
         } elseif ($myobject->objectid == 2) { // for dynamic properties, return to modifyprop
             $objectid = $myobject->properties['objectid']->value;
-            xarController::redirect(xarModURL('dynamicdata', 'admin', 'modifyprop',
-                                          array('itemid' => $objectid)));
+            xarController::redirect(xarModURL(
+                'dynamicdata',
+                'admin',
+                'modifyprop',
+                array('itemid' => $objectid)
+            ));
         } else {
-            xarController::redirect(xarModURL('dynamicdata', 'admin', 'view',
-                                          array(
+            xarController::redirect(xarModURL(
+                'dynamicdata',
+                'admin',
+                'view',
+                array(
                                           'itemid' => $objectid,
                                           'tplmodule' => $tplmodule
-                                          )));
+                                          )
+            ));
         }
         return true;
     }
-?>

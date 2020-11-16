@@ -54,7 +54,7 @@ class Calendar_Second extends Calendar
      * @param int minute e.g. 31
      * @param int second e.g. 45
      */
-    function Calendar_Second($y, $m, $d, $h, $i, $s)
+    public function Calendar_Second($y, $m, $d, $h, $i, $s)
     {
         $this->loadTime($y, $m, $d, $h, $i, $s);
     }
@@ -63,7 +63,7 @@ class Calendar_Second extends Calendar
      * Overwrite build
      * @return NULL
      */
-    function build()
+    public function build()
     {
         return null;
     }
@@ -72,7 +72,7 @@ class Calendar_Second extends Calendar
      * Overwrite fetch
      * @return NULL
      */
-    function fetch()
+    public function fetch()
     {
         return null;
     }
@@ -81,7 +81,7 @@ class Calendar_Second extends Calendar
      * Overwrite fetchAll
      * @return NULL
      */
-    function fetchAll()
+    public function fetchAll()
     {
         return null;
     }
@@ -90,9 +90,8 @@ class Calendar_Second extends Calendar
      * Overwrite size
      * @return NULL
      */
-    function size()
+    public function size()
     {
         return null;
     }
 }
-?>

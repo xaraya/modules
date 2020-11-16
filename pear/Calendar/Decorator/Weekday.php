@@ -60,14 +60,14 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      * @var int (default = 1 for Monday)
      * @access private
      */
-    var $firstDay = 1;
+    public $firstDay = 1;
 
     /**
      * Constructs Calendar_Decorator_Weekday
      * @param object subclass of Calendar
      * @access public
      */
-    function Calendar_Decorator_Weekday(& $Calendar)
+    public function Calendar_Decorator_Weekday(& $Calendar)
     {
         parent::Calendar_Decorator($Calendar);
     }
@@ -78,7 +78,8 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      * @return void
      * @access public
      */
-    function setFirstDay($firstDay) {
+    public function setFirstDay($firstDay)
+    {
         $this->firstDay = (int)$firstDay;
     }
 
@@ -88,12 +89,12 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      * @return int numeric day of week or timestamp
      * @access public
      */
-    function prevWeekDay($format = 'int')
+    public function prevWeekDay($format = 'int')
     {
         $ts = $this->calendar->prevDay('timestamp');
-        $Day = new Calendar_Day(2000,1,1);
+        $Day = new Calendar_Day(2000, 1, 1);
         $Day->setTimeStamp($ts);
-        $day = $this->calendar->cE->getDayOfWeek($Day->thisYear(),$Day->thisMonth(),$Day->thisDay());
+        $day = $this->calendar->cE->getDayOfWeek($Day->thisYear(), $Day->thisMonth(), $Day->thisDay());
         $day = $this->adjustWeekScale($day);
         return $this->returnValue('Day', $format, $ts, $day);
     }
@@ -104,10 +105,10 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      * @return int numeric day of week or timestamp
      * @access public
      */
-    function thisWeekDay($format = 'int')
+    public function thisWeekDay($format = 'int')
     {
         $ts = $this->calendar->thisDay('timestamp');
-        $day = $this->calendar->cE->getDayOfWeek($this->calendar->year,$this->calendar->month,$this->calendar->day);
+        $day = $this->calendar->cE->getDayOfWeek($this->calendar->year, $this->calendar->month, $this->calendar->day);
         $day = $this->adjustWeekScale($day);
         return $this->returnValue('Day', $format, $ts, $day);
     }
@@ -118,12 +119,12 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      * @return int numeric day of week or timestamp
      * @access public
      */
-    function nextWeekDay($format = 'int')
+    public function nextWeekDay($format = 'int')
     {
         $ts = $this->calendar->nextDay('timestamp');
-        $Day = new Calendar_Day(2000,1,1);
+        $Day = new Calendar_Day(2000, 1, 1);
         $Day->setTimeStamp($ts);
-        $day = $this->calendar->cE->getDayOfWeek($Day->thisYear(),$Day->thisMonth(),$Day->thisDay());
+        $day = $this->calendar->cE->getDayOfWeek($Day->thisYear(), $Day->thisMonth(), $Day->thisDay());
         $day = $this->adjustWeekScale($day);
         return $this->returnValue('Day', $format, $ts, $day);
     }
@@ -134,15 +135,17 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      * @return int day of week adjusted to first day
      * @access private
      */
-    function adjustWeekScale($dayOfWeek) {
+    public function adjustWeekScale($dayOfWeek)
+    {
         $dayOfWeek = $dayOfWeek - $this->firstDay;
-        if ( $dayOfWeek >= 0 ) {
+        if ($dayOfWeek >= 0) {
             return $dayOfWeek;
         } else {
             return $this->calendar->cE->getDaysInWeek(
-                $this->calendar->year,$this->calendar->month,$this->calendar->day
-                ) + $dayOfWeek;
+                $this->calendar->year,
+                $this->calendar->month,
+                $this->calendar->day
+            ) + $dayOfWeek;
         }
     }
 }
-?>

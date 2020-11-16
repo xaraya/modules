@@ -118,22 +118,22 @@ class Date_Span
     /**
      * @var int
      */
-    var $day;
+    public $day;
 
     /**
      * @var int
      */
-    var $hour;
+    public $hour;
 
     /**
      * @var int
      */
-    var $minute;
+    public $minute;
 
     /**
      * @var int
      */
-    var $second;
+    public $second;
 
     // }}}
     // {{{ Constructor
@@ -150,7 +150,7 @@ class Date_Span
      * @see    set()
      * @access public
      */
-    function Date_Span($time = 0, $format = null)
+    public function Date_Span($time = 0, $format = null)
     {
         $this->set($time, $format);
     }
@@ -177,7 +177,7 @@ class Date_Span
      * @see    setFromDateDiff()
      * @access public
      */
-    function set($time = 0, $format = null)
+    public function set($time = 0, $format = null)
     {
         if (is_a($time, 'date_span')) {
             return $this->copy($time);
@@ -214,7 +214,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromArray($time)
+    public function setFromArray($time)
     {
         if (!is_array($time)) {
             return false;
@@ -292,7 +292,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromString($time, $format = null)
+    public function setFromString($time, $format = null)
     {
         if (is_null($format)) {
             $format = $GLOBALS['_DATE_SPAN_INPUT_FORMAT'];
@@ -311,12 +311,22 @@ class Date_Span
                         case 'c':
                             $str .= '%d, %d:%d:%d';
                             array_push(
-                                $vars, 'day', 'hour', 'minute', 'second');
+                                $vars,
+                                'day',
+                                'hour',
+                                'minute',
+                                'second'
+                            );
                             break;
                         case 'C':
                             $str .= '%d, %2d:%2d:%2d';
                             array_push(
-                                $vars, 'day', 'hour', 'minute', 'second');
+                                $vars,
+                                'day',
+                                'hour',
+                                'minute',
+                                'second'
+                            );
                             break;
                         case 'd':
                             $str .= '%f';
@@ -364,7 +374,12 @@ class Date_Span
                         case 'r':
                             $str .= '%2d:%2d:%2d %2s';
                             array_push(
-                                $vars, 'hour', 'minute', 'second', 'pm');
+                                $vars,
+                                'hour',
+                                'minute',
+                                'second',
+                                'pm'
+                            );
                             break;
                         case 'R':
                             $str .= '%2d:%2d';
@@ -417,16 +432,20 @@ class Date_Span
                     switch (count($time)) {
                         case 0:
                             return $this->setFromArray(
-                                array(0, 0, 0, 0));
+                                array(0, 0, 0, 0)
+                            );
                         case 1:
                             return $this->setFromArray(
-                                array(0, $time[0], 0, 0));
+                                array(0, $time[0], 0, 0)
+                            );
                         case 2:
                             return $this->setFromArray(
-                                array(0, $time[0], $time[1], 0));
+                                array(0, $time[0], $time[1], 0)
+                            );
                         case 3:
                             return $this->setFromArray(
-                                array(0, $time[0], $time[1], $time[2]));
+                                array(0, $time[0], $time[1], $time[2])
+                            );
                         default:
                             return $this->setFromArray($time);
                     }
@@ -448,7 +467,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromSeconds($seconds)
+    public function setFromSeconds($seconds)
     {
         if ($seconds < 0) {
             return false;
@@ -476,7 +495,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromMinutes($minutes)
+    public function setFromMinutes($minutes)
     {
         return $this->setFromSeconds(round($minutes * 60));
     }
@@ -493,7 +512,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromHours($hours)
+    public function setFromHours($hours)
     {
         return $this->setFromSeconds(round($hours * 3600));
     }
@@ -510,7 +529,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromDays($days)
+    public function setFromDays($days)
     {
         return $this->setFromSeconds(round($days * 86400));
     }
@@ -531,7 +550,7 @@ class Date_Span
      *
      * @access public
      */
-    function setFromDateDiff($date1, $date2)
+    public function setFromDateDiff($date1, $date2)
     {
         if (!is_a($date1, 'date') or !is_a($date2, 'date')) {
             return false;
@@ -542,8 +561,12 @@ class Date_Span
             list($date1, $date2) = array($date2, $date1);
         }
         $days = Date_Calc::dateDiff(
-            $date1->getDay(), $date1->getMonth(), $date1->getYear(),
-            $date2->getDay(), $date2->getMonth(), $date2->getYear()
+            $date1->getDay(),
+            $date1->getMonth(),
+            $date1->getYear(),
+            $date2->getDay(),
+            $date2->getMonth(),
+            $date2->getYear()
         );
         $hours = $date2->getHour() - $date1->getHour();
         $mins  = $date2->getMinute() - $date1->getMinute();
@@ -566,7 +589,7 @@ class Date_Span
      *
      * @access public
      */
-    function copy($time)
+    public function copy($time)
     {
         if (is_a($time, 'date_span')) {
             $this->second = $time->second;
@@ -628,7 +651,7 @@ class Date_Span
      *
      * @access public
      */
-    function format($format = null)
+    public function format($format = null)
     {
         if (is_null($format)) {
             $format = $GLOBALS['_DATE_SPAN_FORMAT'];
@@ -693,7 +716,7 @@ class Date_Span
                         $output .= $this->minute;
                         break;
                     case 'M':
-                        $output .= sprintf('%02d',$this->minute);
+                        $output .= sprintf('%02d', $this->minute);
                         break;
                     case 'n':
                         $output .= "\n";
@@ -719,7 +742,9 @@ class Date_Span
                         break;
                     case 'R':
                         $output .= sprintf(
-                            '%02d:%02d', $this->hour, $this->minute
+                            '%02d:%02d',
+                            $this->hour,
+                            $this->minute
                         );
                         break;
                     case 's':
@@ -734,7 +759,9 @@ class Date_Span
                     case 'T':
                         $output .= sprintf(
                             '%02d:%02d:%02d',
-                            $this->hour, $this->minute, $this->second
+                            $this->hour,
+                            $this->minute,
+                            $this->second
                         );
                         break;
                     case '%':
@@ -760,7 +787,7 @@ class Date_Span
      *
      * @access public
      */
-    function toSeconds()
+    public function toSeconds()
     {
         return $this->day * 86400 + $this->hour * 3600 +
             $this->minute * 60 + $this->second;
@@ -776,7 +803,7 @@ class Date_Span
      *
      * @access public
      */
-    function toMinutes()
+    public function toMinutes()
     {
         return $this->day * 1440 + $this->hour * 60 + $this->minute +
             $this->second / 60;
@@ -792,7 +819,7 @@ class Date_Span
      *
      * @access public
      */
-    function toHours()
+    public function toHours()
     {
         return $this->day * 24 + $this->hour + $this->minute / 60 +
             $this->second / 3600;
@@ -808,7 +835,7 @@ class Date_Span
      *
      * @access public
      */
-    function toDays()
+    public function toDays()
     {
         return $this->day + $this->hour / 24 + $this->minute / 1440 +
             $this->second / 86400;
@@ -824,7 +851,7 @@ class Date_Span
      *
      * @access public
      */
-    function add($time)
+    public function add($time)
     {
         return $this->setFromSeconds(
             $this->toSeconds() + $time->toSeconds()
@@ -845,7 +872,7 @@ class Date_Span
      *
      * @access public
      */
-    function subtract($time)
+    public function subtract($time)
     {
         $sub = $this->toSeconds() - $time->toSeconds();
         if ($sub < 0) {
@@ -867,7 +894,7 @@ class Date_Span
      *
      * @access public
      */
-    function equal($time)
+    public function equal($time)
     {
         return $this->toSeconds() == $time->toSeconds();
     }
@@ -884,7 +911,7 @@ class Date_Span
      *
      * @access public
      */
-    function greaterEqual($time)
+    public function greaterEqual($time)
     {
         return $this->toSeconds() >= $time->toSeconds();
     }
@@ -901,7 +928,7 @@ class Date_Span
      *
      * @access public
      */
-    function lowerEqual($time)
+    public function lowerEqual($time)
     {
         return $this->toSeconds() <= $time->toSeconds();
     }
@@ -918,7 +945,7 @@ class Date_Span
      *
      * @access public
      */
-    function greater($time)
+    public function greater($time)
     {
         return $this->toSeconds() > $time->toSeconds();
     }
@@ -935,7 +962,7 @@ class Date_Span
      *
      * @access public
      */
-    function lower($time)
+    public function lower($time)
     {
         return $this->toSeconds() < $time->toSeconds();
     }
@@ -957,7 +984,7 @@ class Date_Span
      * @static
      * @access public
      */
-    function compare($time1, $time2)
+    public function compare($time1, $time2)
     {
         if ($time1->equal($time2)) {
             return 0;
@@ -976,7 +1003,7 @@ class Date_Span
      *
      * @return bool True is it's empty.
      */
-    function isEmpty()
+    public function isEmpty()
     {
         return !$this->day && !$this->hour && !$this->minute && !$this->second;
     }
@@ -993,7 +1020,7 @@ class Date_Span
      *
      * @static
      */
-    function setDefaultInputFormat($format)
+    public function setDefaultInputFormat($format)
     {
         $old = $GLOBALS['_DATE_SPAN_INPUT_FORMAT'];
         $GLOBALS['_DATE_SPAN_INPUT_FORMAT'] = $format;
@@ -1010,7 +1037,7 @@ class Date_Span
      *
      * @static
      */
-    function getDefaultInputFormat()
+    public function getDefaultInputFormat()
     {
         return $GLOBALS['_DATE_SPAN_INPUT_FORMAT'];
     }
@@ -1027,7 +1054,7 @@ class Date_Span
      *
      * @static
      */
-    function setDefaultFormat($format)
+    public function setDefaultFormat($format)
     {
         $old = $GLOBALS['_DATE_SPAN_FORMAT'];
         $GLOBALS['_DATE_SPAN_FORMAT'] = $format;
@@ -1044,7 +1071,7 @@ class Date_Span
      *
      * @static
      */
-    function getDefaultFormat()
+    public function getDefaultFormat()
     {
         return $GLOBALS['_DATE_SPAN_FORMAT'];
     }
@@ -1057,7 +1084,8 @@ class Date_Span
      *
      * @return object Date_Span Copy of the object.
      */
-    function __clone() {
+    public function __clone()
+    {
         $c = get_class($this);
         $s = new $c;
         $s->day    = $this->day;
@@ -1080,4 +1108,3 @@ class Date_Span
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

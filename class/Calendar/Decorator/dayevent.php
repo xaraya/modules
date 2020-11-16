@@ -11,7 +11,7 @@
         public $day;
         public $firstDay = false;
 
-        function build($events=array())
+        public function build($events=array())
         {
             require_once CALENDAR_ROOT.'Hour.php';
 
@@ -31,41 +31,41 @@
         }
 
 
-/*            include_once CALENDAR_ROOT . 'Day.php';
-            include_once CALENDAR_ROOT .  'Table/Helper.php';
-            $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
-            $this->cE = & $this->getEngine();
-            $this->year  = $this->thisYear();
-            $this->month = $this->thisMonth();
-            $this->day = $this->thisDay();
+        /*            include_once CALENDAR_ROOT . 'Day.php';
+                    include_once CALENDAR_ROOT .  'Table/Helper.php';
+                    $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
+                    $this->cE = & $this->getEngine();
+                    $this->year  = $this->thisYear();
+                    $this->month = $this->thisMonth();
+                    $this->day = $this->thisDay();
 
-            $hoursInDay = $this->cE->getDaysInMonth($this->year, $this->month);
-            for ($i=1; $i<=$daysInMonth; $i++) {
-                $Day = new Calendar_Day(2000,1,1); // Create Day with dummy values
-                $Day->setTimeStamp($this->cE->dateToStamp($this->year, $this->month, $i));
-                $this->children[$i] = new Event($Day);
-            }
-            $this->calendar->children = $this->children;
-            if (count($events) > 0) {
-                $this->setSelection($events);
-            }
-            $this->calendar->tableHelper = & $this->tableHelper;
-            $this->calendar->buildEmptyDaysBefore();
-            $this->calendar->shiftDays();
-            $this->calendar->buildEmptyDaysAfter();
-            $this->calendar->setWeekMarkers();
-            return true;
-        }
-*/
+                    $hoursInDay = $this->cE->getDaysInMonth($this->year, $this->month);
+                    for ($i=1; $i<=$daysInMonth; $i++) {
+                        $Day = new Calendar_Day(2000,1,1); // Create Day with dummy values
+                        $Day->setTimeStamp($this->cE->dateToStamp($this->year, $this->month, $i));
+                        $this->children[$i] = new Event($Day);
+                    }
+                    $this->calendar->children = $this->children;
+                    if (count($events) > 0) {
+                        $this->setSelection($events);
+                    }
+                    $this->calendar->tableHelper = & $this->tableHelper;
+                    $this->calendar->buildEmptyDaysBefore();
+                    $this->calendar->shiftDays();
+                    $this->calendar->buildEmptyDaysAfter();
+                    $this->calendar->setWeekMarkers();
+                    return true;
+                }
+        */
 
-        function setSelection($events)
+        public function setSelection($events)
         {
             $hoursInDay = $this->cE->getHoursInDay($this->year, $this->month, $this->day);
             for ($i=0; $i<$hoursInDay; $i++) {
                 $stamp1 = $this->cE->dateToStamp($this->year, $this->month, $this->day, $i);
                 $stamp2 = $this->cE->dateToStamp($this->year, $this->month, $this->day, $i+1);
                 foreach ($events as $event) {
-                if (($stamp1 <= $event['end_time'] && $stamp2 > $event['end_time'])) {
+                    if (($stamp1 <= $event['end_time'] && $stamp2 > $event['end_time'])) {
                         $this->children[$i]->addEntry1($event);
                         $this->children[$i]->setSelected();
                     }
@@ -83,9 +83,11 @@
             }
         }
 
-        function fetch()
+        public function fetch()
         {
-            if (empty($this->children)) return array();
+            if (empty($this->children)) {
+                return array();
+            }
             $child = each($this->children);
             if ($child) {
                 return $child['value'];
@@ -95,4 +97,3 @@
             }
         }
     }
-?>

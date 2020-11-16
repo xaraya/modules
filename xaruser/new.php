@@ -17,9 +17,13 @@
  */
 function calendar_user_new()
 {
-    if (!xarSecurityCheck('AddCalendar')) return;
+    if (!xarSecurityCheck('AddCalendar')) {
+        return;
+    }
 
-    if (!xarVarFetch('page',  'str:1',  $data['page'], 'week', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('page', 'str:1', $data['page'], 'week', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     xarSession::setVar('ddcontext.calendar', array('page' => $data['page'],
                                                     ));
     $data['object'] = DataobjectMaster::getObject(array('name' => 'calendar_event'));
@@ -27,4 +31,3 @@ function calendar_user_new()
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
-?>

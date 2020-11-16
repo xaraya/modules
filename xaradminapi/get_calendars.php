@@ -37,8 +37,8 @@ function calendar_adminapi_get_calendars()
     $ics_array = array();
 
     if ($dir = @opendir($curdir)) {
-        while(($file = @readdir($dir)) !== false) {
-            if (preg_match('/\.(ics)$/',$file)) {
+        while (($file = @readdir($dir)) !== false) {
+            if (preg_match('/\.(ics)$/', $file)) {
                 $ics_array[] = $file;
             }
         }
@@ -50,5 +50,3 @@ function calendar_adminapi_get_calendars()
     // Return the array containing the menu configuration
     return $cals;
 }
-
-?>

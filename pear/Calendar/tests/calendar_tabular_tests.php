@@ -4,8 +4,10 @@
 require_once('simple_include.php');
 require_once('calendar_include.php');
 
-class CalendarTabularTests extends GroupTest {
-    function CalendarTabularTests() {
+class CalendarTabularTests extends GroupTest
+{
+    public function CalendarTabularTests()
+    {
         $this->GroupTest('Calendar Tabular Tests');
         $this->addTestFile('month_weekdays_test.php');
         $this->addTestFile('month_weeks_test.php');
@@ -19,4 +21,3 @@ if (!defined('TEST_RUNNING')) {
     $test = new CalendarTabularTests();
     $test->run(new HtmlReporter());
 }
-?>

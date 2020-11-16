@@ -14,7 +14,7 @@
 /* Include files needed */
 sys::import('modules.dynamicdata.class.properties');
 sys::import('xaraya.structures.query');
-xarMod::apiLoad('calendar','user');
+xarMod::apiLoad('calendar', 'user');
 
 class CalendarDisplayProperty extends DataProperty
 {
@@ -26,7 +26,7 @@ class CalendarDisplayProperty extends DataProperty
     public $timeframe  = 'week';
     public $owner;
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
 
@@ -36,14 +36,18 @@ class CalendarDisplayProperty extends DataProperty
         $this->owner = xarUser::getVar('id');
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = array())
     {
-        if (empty($data['role_id'])) $data['role_id'] = $this->owner;
-        if (empty($data['timeframe'])) $data['timeframe'] = $this->timeframe;
+        if (empty($data['role_id'])) {
+            $data['role_id'] = $this->owner;
+        }
+        if (empty($data['timeframe'])) {
+            $data['timeframe'] = $this->timeframe;
+        }
         $this->template = 'calendardisplay_' . $data['timeframe'];
-        $this->includes($data['timeframe']); 
+        $this->includes($data['timeframe']);
 
-        $data = array_merge($data, $this->setup($data['timeframe'],$data['role_id']));
+        $data = array_merge($data, $this->setup($data['timeframe'], $data['role_id']));
         return parent::showInput($data);
     }
 
@@ -73,14 +77,14 @@ class CalendarDisplayProperty extends DataProperty
     
     public function setup($timeframe, $role_id)
     {
-        $data = xarMod::apiFunc('calendar','user','getUserDateTimeInfo');
+        $data = xarMod::apiFunc('calendar', 'user', 'getUserDateTimeInfo');
         switch ($timeframe) {
             case 'week':
-                $WeekEvents = new Calendar_Week($data['cal_year'],$data['cal_month'],$data['cal_day'],CALENDAR_FIRST_DAY_OF_WEEK);
+                $WeekEvents = new Calendar_Week($data['cal_year'], $data['cal_month'], $data['cal_day'], CALENDAR_FIRST_DAY_OF_WEEK);
                 $start_time = $WeekEvents->thisWeek;
                 $end_time = $WeekEvents->nextWeek;
 
-                $events = $this->getEvents($start_time, $end_time, $role_id); 
+                $events = $this->getEvents($start_time, $end_time, $role_id);
 
                 $WeekDecorator = new WeekEvent_Decorator($WeekEvents);
                 $WeekDecorator->build($events);
@@ -91,15 +95,17 @@ class CalendarDisplayProperty extends DataProperty
                 $MonthEvents = new Calendar_Month_Weekdays(
                     $data['cal_year'],
                     $data['cal_month'] + 1,
-                    xarModVars::get('calendar', 'cal_sdow'));
+                    xarModVars::get('calendar', 'cal_sdow')
+                );
                 $end_time = $MonthEvents->getTimestamp();
                 $MonthEvents = new Calendar_Month_Weekdays(
                     $data['cal_year'],
                     $data['cal_month'],
-                    xarModVars::get('calendar', 'cal_sdow'));
+                    xarModVars::get('calendar', 'cal_sdow')
+                );
                 $start_time = $MonthEvents->getTimestamp();
 
-                $events = $this->getEvents($start_time, $end_time, $role_id); 
+                $events = $this->getEvents($start_time, $end_time, $role_id);
 
                 $MonthDecorator = new MonthEvent_Decorator($MonthEvents);
                 $MonthDecorator->build($events);
@@ -111,7 +117,7 @@ class CalendarDisplayProperty extends DataProperty
                 $Year = new Calendar_Year($data['cal_year']);
                 $start_time = $Year->getTimestamp();
                 
-                $events = $this->getEvents($start_time, $end_time, $role_id); 
+                $events = $this->getEvents($start_time, $end_time, $role_id);
 
                 $YearDecorator = new YearEvent_Decorator($Year);
                 $YearDecorator->build($events);
@@ -129,11 +135,11 @@ class CalendarDisplayProperty extends DataProperty
         $q = new Query('SELECT', $xartable['calendar_event']);
         $q->ge('start_time', $start_time);
         $q->lt('start_time', $end_time);
-        $q->eq('role_id',$role_id);
+        $q->eq('role_id', $role_id);
 //        $q->qecho();
-        if (!$q->run()) return;
+        if (!$q->run()) {
+            return;
+        }
         return $q->output();
     }
 }
-
-?>

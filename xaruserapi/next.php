@@ -15,41 +15,42 @@ function calendar_userapi_next($args=array())
 {
     xarVarFetch('cal_sdow', 'int:0:7', $cal_sdow, 0);
     // what function are we in
-    xarVarFetch('func','str::',$func);
+    xarVarFetch('func', 'str::', $func);
     
-    extract($args); unset($args);
+    extract($args);
+    unset($args);
     
-    if(!isset($cal_interval)) $cal_interval = 1;
+    if (!isset($cal_interval)) {
+        $cal_interval = 1;
+    }
 
     xarVarValidate('int::', $cal_date);
     xarVarValidate('int:1:', $cal_interval);
     xarVarValidate('str::', $cal_type);
 
-    $y = substr($cal_date,0,4);
-    $m = substr($cal_date,4,2);
-    $d = substr($cal_date,6,2);
+    $y = substr($cal_date, 0, 4);
+    $m = substr($cal_date, 4, 2);
+    $d = substr($cal_date, 6, 2);
     
-    switch(strtolower($cal_type)) {
+    switch (strtolower($cal_type)) {
     
-        case 'day' :
+        case 'day':
             $d += $cal_interval;
             break;
             
-        case 'week' :
+        case 'week':
             $d += (7 * $cal_interval);
             break;
             
-        case 'month' :
+        case 'month':
             $m += $cal_interval;
             break;
             
-        case 'year' :
+        case 'year':
             $y += $cal_interval;
-            break;    
+            break;
     }
     
-    $new_date = gmdate('Ymd',gmmktime(0,0,0,$m,$d,$y));
-    return xarModURL('calendar','user',strtolower($func),array('cal_date'=>$new_date,'cal_sdow'=>$cal_sdow));
+    $new_date = gmdate('Ymd', gmmktime(0, 0, 0, $m, $d, $y));
+    return xarModURL('calendar', 'user', strtolower($func), array('cal_date'=>$new_date,'cal_sdow'=>$cal_sdow));
 }
-
-?>

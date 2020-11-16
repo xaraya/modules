@@ -57,7 +57,7 @@ class Calendar_Year extends Calendar
      * @param int year e.g. 2003
      * @access public
      */
-    function Calendar_Year($y)
+    public function Calendar_Year($y)
     {
         $this->loadTime($y);
     }
@@ -78,7 +78,7 @@ class Calendar_Year extends Calendar
      * @return boolean
      * @access public
      */
-    function build($sDates = array(), $firstDay = null)
+    public function build($sDates = array(), $firstDay = null)
     {
         require_once CALENDAR_ROOT.'Factory.php';
         $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
@@ -98,7 +98,8 @@ class Calendar_Year extends Calendar
      * @return void
      * @access private
      */
-    function setSelection($sDates) {
+    public function setSelection($sDates)
+    {
         foreach ($sDates as $sDate) {
             if ($this->year == $sDate->thisYear()) {
                 $key = $sDate->thisMonth();
@@ -110,4 +111,3 @@ class Calendar_Year extends Calendar
         }
     }
 }
-?>

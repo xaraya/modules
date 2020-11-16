@@ -7,17 +7,17 @@
 
 class Calendar
 {
-    var $startDayOfWeek;
-    var $monthNamesLong = array();
-    var $monthNamesShort = array();
-    var $dayNamesLong = array();
-    var $dayNamesMedium = array();
-    var $dayNamesShort = array();
+    public $startDayOfWeek;
+    public $monthNamesLong = array();
+    public $monthNamesShort = array();
+    public $dayNamesLong = array();
+    public $dayNamesMedium = array();
+    public $dayNamesShort = array();
 
     /**
      *    constructor
      */
-    function __construct()
+    public function __construct()
     {
         // default start day of week = sunday
         // TODO::Make this an Admin/User Setting
@@ -81,13 +81,13 @@ class Calendar
         );
 
         // returns just the first letter from the shortDayNames
-        $this->dayNamesShort = array(substr($this->dayNamesMedium[0],0,1),
-                                     substr($this->dayNamesMedium[1],0,1),
-                                     substr($this->dayNamesMedium[2],0,1),
-                                     substr($this->dayNamesMedium[3],0,1),
-                                     substr($this->dayNamesMedium[4],0,1),
-                                     substr($this->dayNamesMedium[5],0,1),
-                                     substr($this->dayNamesMedium[6],0,1));
+        $this->dayNamesShort = array(substr($this->dayNamesMedium[0], 0, 1),
+                                     substr($this->dayNamesMedium[1], 0, 1),
+                                     substr($this->dayNamesMedium[2], 0, 1),
+                                     substr($this->dayNamesMedium[3], 0, 1),
+                                     substr($this->dayNamesMedium[4], 0, 1),
+                                     substr($this->dayNamesMedium[5], 0, 1),
+                                     substr($this->dayNamesMedium[6], 0, 1));
     }
 
     /**
@@ -96,7 +96,7 @@ class Calendar
      *    @params $date2 string valid date as YYYYMMDD
      *    @return array events for the range specified
      */
-    function &getEvents($date1,$date2=null)
+    public function &getEvents($date1, $date2=null)
     {
         return true;
     }
@@ -105,17 +105,19 @@ class Calendar
      *  creates an array used to build the final output
      *  @param string $d optional date of the week to build [ YYYYMMDD ]
      */
-    function &getCalendarWeek($d=null)
+    public function &getCalendarWeek($d=null)
     {
-        if(!isset($d)) $d = xarMod::apiFunc('calendar','user','createUserDateTime','Ymd');
-        $year = substr($d,0,4);
-        $month = substr($d,4,2);
-        $day = substr($d,6,2);
+        if (!isset($d)) {
+            $d = xarMod::apiFunc('calendar', 'user', 'createUserDateTime', 'Ymd');
+        }
+        $year = substr($d, 0, 4);
+        $month = substr($d, 4, 2);
+        $day = substr($d, 6, 2);
 
         $month = $this->getCalendarMonth($year.$month);
 
-        foreach($month as $week) {
-            if(in_array($d,$week)) {
+        foreach ($month as $week) {
+            if (in_array($d, $week)) {
                 $week_array = $week;
                 break;
             }
@@ -128,41 +130,47 @@ class Calendar
      *  creates an array used to build the final output
      *  @param string $d optional date of the month to build [ YYYYMM ]
      */
-    function &getCalendarMonth($d=null)
+    public function &getCalendarMonth($d=null)
     {
-        if(!isset($d)) $d = xarMod::apiFunc('calendar','user','createUserDateTime','Ym');
-        $year  = substr($d,0,4);
-        $month = substr($d,4,2);
+        if (!isset($d)) {
+            $d = xarMod::apiFunc('calendar', 'user', 'createUserDateTime', 'Ym');
+        }
+        $year  = substr($d, 0, 4);
+        $month = substr($d, 4, 2);
 
         $month_array = array();
-        $numDays = gmdate('t',gmmktime(0,0,0,$month,1,$year));
-        $dowFirstDay = gmdate('w',gmmktime(0,0,0,$month,1,$year));
-        $dowLastDay = gmdate('w',gmmktime(0,0,0,$month,$numDays,$year));
+        $numDays = gmdate('t', gmmktime(0, 0, 0, $month, 1, $year));
+        $dowFirstDay = gmdate('w', gmmktime(0, 0, 0, $month, 1, $year));
+        $dowLastDay = gmdate('w', gmmktime(0, 0, 0, $month, $numDays, $year));
 
         // calculate the days needed for a full starting week
-        if($dowFirstDay < $this->startDayOfWeek) {
+        if ($dowFirstDay < $this->startDayOfWeek) {
             $pastDays = $dowFirstDay - $this->startDayOfWeek + 7;
         } else {
             $pastDays = $dowFirstDay - $this->startDayOfWeek;
         }
-        if($pastDays < 0) $pastDays = -$pastDays;
+        if ($pastDays < 0) {
+            $pastDays = -$pastDays;
+        }
 
         // calculate the days needed for a full ending week
-        if($dowLastDay < $this->startDayOfWeek) {
+        if ($dowLastDay < $this->startDayOfWeek) {
             $nextDays = $this->startDayOfWeek - $dowLastDay - 1;
         } else {
             $nextDays = $dowLastDay - $this->startDayOfWeek - 6;
         }
-        if($nextDays < 0) $nextDays = -$nextDays;
+        if ($nextDays < 0) {
+            $nextDays = -$nextDays;
+        }
 
-        $start = gmdate('Ymd',gmmktime(0,0,0,$month,1-$pastDays,$year));
-        $last = gmdate('Ymd',gmmktime(0,0,0,$month,$numDays+$nextDays,$year));
+        $start = gmdate('Ymd', gmmktime(0, 0, 0, $month, 1-$pastDays, $year));
+        $last = gmdate('Ymd', gmmktime(0, 0, 0, $month, $numDays+$nextDays, $year));
         $numWeeks = ceil(($this->dateToDays($last) - $this->dateToDays($start))/7);
         $current_day = $this->dateToDays($start);
 
         // build the month array
-        for($i=0; $i<$numWeeks; $i++) {
-            for($d=0; $d<7; $d++) {
+        for ($i=0; $i<$numWeeks; $i++) {
+            for ($d=0; $d<7; $d++) {
                 $date = $this->daysToDate($current_day);
                 $month_array[$i][$d] = $date;
                 $current_day++;
@@ -176,14 +184,16 @@ class Calendar
      *  creates an array used to build the final output
      *  @param string $d optional date of the year to build [ YYYY ]
      */
-    function &getCalendarYear($y=null)
+    public function &getCalendarYear($y=null)
     {
-        if(!isset($y)) $y = xarMod::apiFunc('calendar','user','createUserDateTime','Y');
+        if (!isset($y)) {
+            $y = xarMod::apiFunc('calendar', 'user', 'createUserDateTime', 'Y');
+        }
 
         $year_array = array();
         // year month loops
-        for($i=1;$i<=12;$i++) {
-            $m = sprintf('%02d',$i);
+        for ($i=1;$i<=12;$i++) {
+            $m = sprintf('%02d', $i);
             $year_array[$i] = $this->getCalendarMonth($y.$m);
         }
         return $year_array;
@@ -193,10 +203,10 @@ class Calendar
      *  Sets the day the calendar starts on (0=Sunday through 6=Saturday)
      *  @param int $d day of week the calendar should start on
      */
-    function setStartDayOfWeek($d)
+    public function setStartDayOfWeek($d)
     {
         // validate the input
-        if(!xarVarValidate('int:0:6',$d)) {
+        if (!xarVarValidate('int:0:6', $d)) {
             // we'll just leave it as is then
             return true;
         }
@@ -208,7 +218,7 @@ class Calendar
      *  Returns the day the calendar starts on (0=Sunday through 6=Saturday)
      *  @return int day of week the calendar starts on
      */
-    function &getStartDayOfWeek()
+    public function &getStartDayOfWeek()
     {
         return $this->startDayOfWeek;
     }
@@ -217,85 +227,105 @@ class Calendar
      *  Returns the day the calendar starts on (0=Sunday through 6=Saturday)
      *  @return bool if the day is
      */
-    function dayIs($dow=0,$date=null)
+    public function dayIs($dow=0, $date=null)
     {
-        if(!isset($date)) $date = xarMod::apiFunc('calendar','user','createUserDateTime','Ymd');
-        $year = substr($date,0,4);
-        $month = substr($date,4,2);
-        $day = substr($date,6,2);
-        if($dow == date('w',mktime(0,0,0,$month,$day,$year))) {
+        if (!isset($date)) {
+            $date = xarMod::apiFunc('calendar', 'user', 'createUserDateTime', 'Ymd');
+        }
+        $year = substr($date, 0, 4);
+        $month = substr($date, 4, 2);
+        $day = substr($date, 6, 2);
+        if ($dow == date('w', mktime(0, 0, 0, $month, $day, $year))) {
             return true;
         }
         return false;
     }
 
-    function &getLongMonthNames()
+    public function &getLongMonthNames()
     {
         return $this->monthNamesLong;
     }
 
-    function &getShortMonthNames()
+    public function &getShortMonthNames()
     {
         return $this->monthNamesShort;
     }
 
-    function &getLongDayNames($sdow=0)
+    public function &getLongDayNames($sdow=0)
     {
-        if($sdow == 0) return $this->dayNamesLong;
+        if ($sdow == 0) {
+            return $this->dayNamesLong;
+        }
         $ordered_array = array();
-        for($i=0;$i<7;$i++) {
+        for ($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesLong[$sdow];
-            if(++$sdow > 6) $sdow=0;
+            if (++$sdow > 6) {
+                $sdow=0;
+            }
         }
         return $ordered_array;
     }
 
-    function &getMediumDayNames($sdow=0)
+    public function &getMediumDayNames($sdow=0)
     {
-        if($sdow == 0) return $this->dayNamesMedium;
+        if ($sdow == 0) {
+            return $this->dayNamesMedium;
+        }
         $ordered_array = array();
-        for($i=0;$i<7;$i++) {
+        for ($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesMedium[$sdow];
-            if(++$sdow > 6) $sdow=0;
+            if (++$sdow > 6) {
+                $sdow=0;
+            }
         }
         return $ordered_array;
     }
 
-    function &getShortDayNames($sdow=0)
+    public function &getShortDayNames($sdow=0)
     {
-        if($sdow == 0) return $this->dayNamesShort;
+        if ($sdow == 0) {
+            return $this->dayNamesShort;
+        }
         $ordered_array = array();
-        for($i=0;$i<7;$i++) {
+        for ($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesShort[$sdow];
-            if(++$sdow > 6) $sdow=0;
+            if (++$sdow > 6) {
+                $sdow=0;
+            }
         }
         return $ordered_array;
     }
 
-    function &MonthLong($month=1)
+    public function &MonthLong($month=1)
     {
         return $this->monthNamesLong[--$month];
     }
-    function &MonthShort($month=1)
+    public function &MonthShort($month=1)
     {
         return $this->monthNamesLong[--$month];
     }
-    function &DayLong($day)
+    public function &DayLong($day)
     {
-        if(!isset($day)) $day = 0;
+        if (!isset($day)) {
+            $day = 0;
+        }
         return $this->dayNamesLong[$day];
     }
-    function &DayMedium($day)
+    public function &DayMedium($day)
     {
-        if(!isset($day)) $day = 0;
+        if (!isset($day)) {
+            $day = 0;
+        }
         return $this->dayNamesMedium[$day];
     }
-    function &DayShort($day)
+    public function &DayShort($day)
     {
-        if(!isset($day)) $day = 0;
+        if (!isset($day)) {
+            $day = 0;
+        }
         return $this->dayNamesShort[$day];
     }
-    function &FormatDate($date)
+    public function &FormatDate($date)
     {
         return true;
     }
@@ -305,17 +335,17 @@ class Calendar
      *    borrowed from Date_Calc class
      *    @access private
      */
-    function dateToDays($d)
+    public function dateToDays($d)
     {
-        $century = substr($d,0,2);
-        $year    = substr($d,2,2);
-        $month   = substr($d,4,2);
-        $day     = substr($d,6,2);
-        if($month > 2) {
+        $century = substr($d, 0, 2);
+        $year    = substr($d, 2, 2);
+        $month   = substr($d, 4, 2);
+        $day     = substr($d, 6, 2);
+        if ($month > 2) {
             $month -= 3;
         } else {
             $month += 9;
-            if($year) {
+            if ($year) {
                 $year--;
             } else {
                 $year = 99;
@@ -329,7 +359,7 @@ class Calendar
      *    borrowed from Date_Calc class
      *    @access private
      */
-    function daysToDate($days)
+    public function daysToDate($days)
     {
         $days   -= 1721119;
         $century = floor((4*$days-1)/146097);
@@ -341,20 +371,17 @@ class Calendar
         $month   = floor((5*$day-3)/153);
         $day     = floor(5*$day-3-153*$month);
         $day     = floor(($day+5)/5);
-        if($month < 10) {
+        if ($month < 10) {
             $month +=3;
         } else {
             $month -=9;
-            if($year++ == 99) {
+            if ($year++ == 99) {
                 $year = 0;
                 $century++;
             }
         }
-        $century = sprintf("%02d",$century);
-        $year = sprintf("%02d",$year);
-        return(gmdate('Ymd',gmmktime(0,0,0,$month,$day,$century.$year)));
+        $century = sprintf("%02d", $century);
+        $year = sprintf("%02d", $year);
+        return(gmdate('Ymd', gmmktime(0, 0, 0, $month, $day, $century.$year)));
     }
-
-
 }
-?>

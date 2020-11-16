@@ -20,11 +20,11 @@ function calendar_userapi_getevents($args)
 
     $q = new Query('SELECT');
     $q->addtable($xartable['calendar_event']);
-    $q->ge('start_time',$day->thisDay(TRUE));
-    $q->lt('start_time',$day->nextDay(TRUE));
+    $q->ge('start_time', $day->thisDay(true));
+    $q->lt('start_time', $day->nextDay(true));
 
-    if (!$q->run()) return;
+    if (!$q->run()) {
+        return;
+    }
     return $q->output();
 }
-
-?>

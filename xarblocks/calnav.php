@@ -18,7 +18,6 @@
 
     class Calendar_CalnavBlock extends BasicBlock implements iBlock
     {
-
         public $name                = 'CalnavBlock';
         public $module              = 'calendar';
         public $text_type           = 'Calnav';
@@ -27,19 +26,21 @@
 
         public $nocache             = 1;
 
-/**
- * Display func.
- * @param $blockinfo array
- * @returns $blockinfo array
- */
+        /**
+         * Display func.
+         * @param $blockinfo array
+         * @returns $blockinfo array
+         */
 
-        function display(Array $data=array())
+        public function display(array $data=array())
         {
             $data = parent::display($data);
-            if (empty($data)) return;
+            if (empty($data)) {
+                return;
+            }
 
             if (!defined('CALENDAR_ROOT')) {
-                define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
+                define('CALENDAR_ROOT', xarModVars::get('calendar', 'pearcalendar_root'));
             }
             include_once(CALENDAR_ROOT.'Calendar.php');
 
@@ -60,4 +61,3 @@
             return $data;
         }
     }
-?>

@@ -45,5 +45,3 @@ $modversion['securityschema'] = array('calendar::event'     => 'Event Title::Eve
                                       'calendar::user'      => 'User Name::User ID',
                                       'calendar::sharing'   => 'User Name::User ID',
                                       'calendar::'          => '::');
-
-?>

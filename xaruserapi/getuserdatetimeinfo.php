@@ -19,18 +19,18 @@ function calendar_userapi_getUserDateTimeInfo()
     $data = array();
     $data['cal_date'] =& $cal_date;
 
-    if(!preg_match('/([\d]{4,4})([\d]{2,2})?([\d]{2,2})?/',$cal_date,$match)) {
+    if (!preg_match('/([\d]{4,4})([\d]{2,2})?([\d]{2,2})?/', $cal_date, $match)) {
         $year = xarLocaleFormateDate('Y');
         $month = xarLocaleFormateDate('m');
         $day = xarLocaleFormateDate('d');
     } else {
         $year = $match[1];
-        if(isset($match[2])) {
+        if (isset($match[2])) {
             $month=$match[2];
         } else {
             $month='01';
         }
-        if(isset($match[3])) {
+        if (isset($match[3])) {
             $day=$match[3];
         } else {
             $day='01';
@@ -45,10 +45,8 @@ function calendar_userapi_getUserDateTimeInfo()
 
     sys::import('xaraya.structures.datetime');
     $today = new XarDateTime();
-    $usertz = xarModUserVars::get('roles','usertimezone',xarSession::getVar('role_id'));
+    $usertz = xarModUserVars::get('roles', 'usertimezone', xarSession::getVar('role_id'));
     $useroffset = $today->getTZOffset($usertz);
     $data['now'] = getdate(time() + $useroffset);
     return $data;
 }
-
-?>

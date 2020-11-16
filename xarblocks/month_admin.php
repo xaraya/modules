@@ -15,21 +15,20 @@ sys::import('modules.calendar.xarblocks.month');
 
 class Calendar_MonthBlockAdmin extends Calendar_MonthBlock
 {
-    function modify()
+    public function modify()
     {
         $data = $this->getContent();
         return $data;
     }
 
-    function update(Array $data=array())
+    public function update(array $data=array())
     {
         $args = array();
-        xarVarFetch('targetmodule',   'str',     $args['targetmodule'],  $this->targetmodule, XARVAR_NOT_REQUIRED);
-        xarVarFetch('targettype',     'str',     $args['targettype'],    $this->targettype, XARVAR_NOT_REQUIRED);
-        xarVarFetch('targetfunc',     'str',     $args['targetfunc'],    $this->targetfunc, XARVAR_NOT_REQUIRED);
+        xarVarFetch('targetmodule', 'str', $args['targetmodule'], $this->targetmodule, XARVAR_NOT_REQUIRED);
+        xarVarFetch('targettype', 'str', $args['targettype'], $this->targettype, XARVAR_NOT_REQUIRED);
+        xarVarFetch('targetfunc', 'str', $args['targetfunc'], $this->targetfunc, XARVAR_NOT_REQUIRED);
 
         $this->setContent($args);
-        return true;        
+        return true;
     }
 }
-?>

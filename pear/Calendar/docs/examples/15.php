@@ -2,7 +2,8 @@
 /**
 * Shows more on how a week can be used
 */
-function getmicrotime() {
+function getmicrotime()
+{
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
@@ -13,9 +14,15 @@ if (!@include 'Calendar/Calendar.php') {
 }
 require_once CALENDAR_ROOT.'Week.php';
 
-if (!isset($_GET['y'])) $_GET['y'] = date('Y');
-if (!isset($_GET['m'])) $_GET['m'] = date('m');
-if (!isset($_GET['d'])) $_GET['d'] = 1;
+if (!isset($_GET['y'])) {
+    $_GET['y'] = date('Y');
+}
+if (!isset($_GET['m'])) {
+    $_GET['m'] = date('m');
+}
+if (!isset($_GET['d'])) {
+    $_GET['d'] = 1;
+}
 
 // Build the month
 $Week = new Calendar_Week($_GET['y'], $_GET['m'], $_GET['d']);
@@ -33,11 +40,11 @@ if (!$Validator->isValidWeek()) {
 </head>
 <body>
 <h1>Paging Weeks</h1>
-<h2>Week: <?php echo $Week->thisWeek().' '.date('F Y',$Week->thisMonth(true)); ?></h2>
+<h2>Week: <?php echo $Week->thisWeek().' '.date('F Y', $Week->thisMonth(true)); ?></h2>
 <?php
 $Week->build();
 while ($Day = $Week->fetch()) {
-    echo '<p>'.date('jS F',$Day->thisDay(true))."</p>\n";
+    echo '<p>'.date('jS F', $Day->thisDay(true))."</p>\n";
 }
 $days = $Week->fetchAll();
 

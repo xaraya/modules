@@ -11,6 +11,4 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-xarMod::apiLoad('calendar','defines');
-
-?>
+xarMod::apiLoad('calendar', 'defines');

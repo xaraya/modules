@@ -54,17 +54,17 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function monthNames($format='long')
+    public static function monthNames($format='long')
     {
         $formats = array('one'=>'%b', 'two'=>'%b', 'short'=>'%b', 'long'=>'%B');
-        if (!array_key_exists($format,$formats)) {
+        if (!array_key_exists($format, $formats)) {
             $format = 'long';
         }
         $months = array();
         for ($i=1; $i<=12; $i++) {
             $stamp = mktime(0, 0, 0, $i, 1, 2003);
             $month = strftime($formats[$format], $stamp);
-            switch($format) {
+            switch ($format) {
                 case 'one':
                     $month = substr($month, 0, 1);
                 break;
@@ -84,17 +84,17 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function weekdayNames($format='long')
+    public static function weekdayNames($format='long')
     {
         $formats = array('one'=>'%a', 'two'=>'%a', 'short'=>'%a', 'long'=>'%A');
-        if (!array_key_exists($format,$formats)) {
+        if (!array_key_exists($format, $formats)) {
             $format = 'long';
         }
         $days = array();
         for ($i=0; $i<=6; $i++) {
             $stamp = mktime(0, 0, 0, 11, $i+2, 2003);
             $day = strftime($formats[$format], $stamp);
-            switch($format) {
+            switch ($format) {
                 case 'one':
                     $day = substr($day, 0, 1);
                 break;
@@ -115,7 +115,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function prevMonthName($Calendar, $format='long')
+    public static function prevMonthName($Calendar, $format='long')
     {
         $months = Calendar_Util_Textual::monthNames($format);
         return $months[$Calendar->prevMonth()];
@@ -129,7 +129,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function thisMonthName($Calendar, $format='long')
+    public static function thisMonthName($Calendar, $format='long')
     {
         $months = Calendar_Util_Textual::monthNames($format);
         return $months[$Calendar->thisMonth()];
@@ -143,7 +143,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function nextMonthName($Calendar, $format='long')
+    public static function nextMonthName($Calendar, $format='long')
     {
         $months = Calendar_Util_Textual::monthNames($format);
         return $months[$Calendar->nextMonth()];
@@ -158,14 +158,17 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function prevDayName($Calendar, $format='long')
+    public static function prevDayName($Calendar, $format='long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
         $stamp = $Calendar->prevDay('timestamp');
         $cE = $Calendar->getEngine();
         require_once 'Date/Calc.php';
-        $day = Date_Calc::dayOfWeek($cE->stampToDay($stamp),
-            $cE->stampToMonth($stamp), $cE->stampToYear($stamp));
+        $day = Date_Calc::dayOfWeek(
+            $cE->stampToDay($stamp),
+            $cE->stampToMonth($stamp),
+            $cE->stampToYear($stamp)
+        );
         return $days[$day];
     }
 
@@ -178,7 +181,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function thisDayName($Calendar, $format='long')
+    public static function thisDayName($Calendar, $format='long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
         require_once 'Date/Calc.php';
@@ -194,14 +197,17 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function nextDayName($Calendar, $format='long')
+    public static function nextDayName($Calendar, $format='long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
         $stamp = $Calendar->nextDay('timestamp');
         $cE = $Calendar->getEngine();
         require_once 'Date/Calc.php';
-        $day = Date_Calc::dayOfWeek($cE->stampToDay($stamp),
-            $cE->stampToMonth($stamp), $cE->stampToYear($stamp));
+        $day = Date_Calc::dayOfWeek(
+            $cE->stampToDay($stamp),
+            $cE->stampToMonth($stamp),
+            $cE->stampToYear($stamp)
+        );
         return $days[$day];
     }
 
@@ -215,7 +221,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    static function orderedWeekdays($Calendar, $format='long')
+    public static function orderedWeekdays($Calendar, $format='long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
 
@@ -236,4 +242,3 @@ class Calendar_Util_Textual
         return $returndays;
     }
 }
-?>

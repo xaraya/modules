@@ -11,7 +11,7 @@
         public $day =1;
         public $firstDay = false;
 
-        function build($events=array())
+        public function build($events=array())
         {
             include_once CALENDAR_ROOT .  'Table/Helper.php';
             $this->tableHelper = new Calendar_Table_Helper($this->calendar, $this->firstDay);
@@ -35,7 +35,7 @@
             return true;
         }
 
-        function setSelection($events)
+        public function setSelection($events)
         {
             $daysInMonth = $this->cE->getDaysInMonth($this->year, $this->month);
             for ($i=1; $i<=$daysInMonth; $i++) {
@@ -54,9 +54,11 @@
             }
         }
 
-        function fetch()
+        public function fetch()
         {
-            if (empty($this->calendar->children)) return array();
+            if (empty($this->calendar->children)) {
+                return array();
+            }
             $child = each($this->calendar->children);
             if ($child) {
                 return $child['value'];
@@ -66,4 +68,3 @@
             }
         }
     }
-?>

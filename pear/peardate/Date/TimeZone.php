@@ -75,49 +75,49 @@ class Date_TimeZone
      * Time Zone ID of this time zone
      * @var string
      */
-    var $id;
+    public $id;
 
     /**
      * Long Name of this time zone (ie Central Standard Time)
      * @var string
      */
-    var $longname;
+    public $longname;
 
     /**
      * Short Name of this time zone (ie CST)
      * @var string
      */
-    var $shortname;
+    public $shortname;
 
     /**
      * true if this time zone observes daylight savings time
      * @var boolean
      */
-    var $hasdst;
+    public $hasdst;
 
     /**
      * DST Long Name of this time zone
      * @var string
      */
-    var $dstlongname;
+    public $dstlongname;
 
     /**
      * DST Short Name of this timezone
      * @var string
      */
-    var $dstshortname;
+    public $dstshortname;
 
     /**
      * offset, in milliseconds, of this timezone
      * @var int
      */
-    var $offset;
+    public $offset;
 
     /**
      * System Default Time Zone
      * @var object Date_TimeZone
      */
-    var $default;
+    public $default;
 
     // }}}
     // {{{ Constructor
@@ -133,15 +133,15 @@ class Date_TimeZone
      * @param string $id the time zone id
      * @return object Date_TimeZone the new Date_TimeZone object
      */
-    function Date_TimeZone($id)
+    public function Date_TimeZone($id)
     {
         $_DATE_TIMEZONE_DATA =& $GLOBALS['_DATE_TIMEZONE_DATA'];
-        if(Date_TimeZone::isValidID($id)) {
+        if (Date_TimeZone::isValidID($id)) {
             $this->id = $id;
             $this->longname = $_DATE_TIMEZONE_DATA[$id]['longname'];
             $this->shortname = $_DATE_TIMEZONE_DATA[$id]['shortname'];
             $this->offset = $_DATE_TIMEZONE_DATA[$id]['offset'];
-            if($_DATE_TIMEZONE_DATA[$id]['hasdst']) {
+            if ($_DATE_TIMEZONE_DATA[$id]['hasdst']) {
                 $this->hasdst = true;
                 $this->dstlongname = $_DATE_TIMEZONE_DATA[$id]['dstlongname'];
                 $this->dstshortname = $_DATE_TIMEZONE_DATA[$id]['dstshortname'];
@@ -171,7 +171,7 @@ class Date_TimeZone
      * @access public
      * @return object Date_TimeZone the default time zone
      */
-    function getDefault()
+    public function getDefault()
     {
         return new Date_TimeZone($GLOBALS['_DATE_TIMEZONE_DEFAULT']);
     }
@@ -187,9 +187,9 @@ class Date_TimeZone
      * @access public
      * @param string $id the time zone id to use
      */
-    function setDefault($id)
+    public function setDefault($id)
     {
-        if(Date_TimeZone::isValidID($id)) {
+        if (Date_TimeZone::isValidID($id)) {
             $GLOBALS['_DATE_TIMEZONE_DEFAULT'] = $id;
         }
     }
@@ -206,9 +206,9 @@ class Date_TimeZone
      * @param string $id the id to test
      * @return boolean true if the supplied ID is valid
      */
-    function isValidID($id)
+    public function isValidID($id)
     {
-        if(isset($GLOBALS['_DATE_TIMEZONE_DATA'][$id])) {
+        if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$id])) {
             return true;
         } else {
             return false;
@@ -228,9 +228,9 @@ class Date_TimeZone
      * @param object Date_TimeZone $tz the timezone to test
      * @return boolean true if this time zone is equal to the supplied time zone
      */
-    function isEqual($tz)
+    public function isEqual($tz)
     {
-        if(strcasecmp($this->id, $tz->id) == 0) {
+        if (strcasecmp($this->id, $tz->id) == 0) {
             return true;
         } else {
             return false;
@@ -255,9 +255,9 @@ class Date_TimeZone
      * @param object Date_TimeZone $tz the timezone object to test
      * @return boolean true if this time zone is equivalent to the supplied time zone
      */
-    function isEquivalent($tz)
+    public function isEquivalent($tz)
     {
-        if($this->offset == $tz->offset && $this->hasdst == $tz->hasdst) {
+        if ($this->offset == $tz->offset && $this->hasdst == $tz->hasdst) {
             return true;
         } else {
             return false;
@@ -275,7 +275,7 @@ class Date_TimeZone
      * @access public
      * @return boolean true if this time zone has DST
      */
-    function hasDaylightTime()
+    public function hasDaylightTime()
     {
         return $this->hasdst;
     }
@@ -298,10 +298,10 @@ class Date_TimeZone
      * @param object Date $date the date/time to test
      * @return boolean true if this date is in DST for this time zone
      */
-    function inDaylightTime($date)
+    public function inDaylightTime($date)
     {
         $env_tz = '';
-        if(isset($_ENV['TZ']) && getenv('TZ')) {
+        if (isset($_ENV['TZ']) && getenv('TZ')) {
             $env_tz = getenv('TZ');
         }
 
@@ -326,9 +326,9 @@ class Date_TimeZone
      * @access public
      * @return int the DST offset, in milliseconds or zero if the zone does not observe DST
      */
-    function getDSTSavings()
+    public function getDSTSavings()
     {
-        if($this->hasdst) {
+        if ($this->hasdst) {
             return 3600000;
         } else {
             return 0;
@@ -350,9 +350,9 @@ class Date_TimeZone
      * @param object Date $date the Date to test
      * @return int the corrected offset to UTC in milliseconds
      */
-    function getOffset($date)
+    public function getOffset($date)
     {
-        if($this->inDaylightTime($date)) {
+        if ($this->inDaylightTime($date)) {
             return $this->offset + $this->getDSTSavings();
         } else {
             return $this->offset;
@@ -370,7 +370,7 @@ class Date_TimeZone
      * @access public
      * @return mixed an array of strings with the valid time zone IDs
      */
-    function getAvailableIDs()
+    public function getAvailableIDs()
     {
         return array_keys($GLOBALS['_DATE_TIMEZONE_DATA']);
     }
@@ -386,7 +386,7 @@ class Date_TimeZone
      * @access public
      * @return string the id
      */
-    function getID()
+    public function getID()
     {
         return $this->id;
     }
@@ -403,7 +403,7 @@ class Date_TimeZone
      * @access public
      * @return string the long name
      */
-    function getLongName()
+    public function getLongName()
     {
         return $this->longname;
     }
@@ -419,7 +419,7 @@ class Date_TimeZone
      * @access public
      * @return string the short name
      */
-    function getShortName()
+    public function getShortName()
     {
         return $this->shortname;
     }
@@ -435,7 +435,7 @@ class Date_TimeZone
      * @access public
      * @return string the daylight savings time long name
      */
-    function getDSTLongName()
+    public function getDSTLongName()
     {
         return $this->dstlongname;
     }
@@ -451,7 +451,7 @@ class Date_TimeZone
      * @access public
      * @return string the daylight savings time short name
      */
-    function getDSTShortName()
+    public function getDSTShortName()
     {
         return $this->dstshortname;
     }
@@ -467,7 +467,7 @@ class Date_TimeZone
      * @access public
      * @return int the offset, in milliseconds
      */
-    function getRawOffset()
+    public function getRawOffset()
     {
         return $this->offset;
     }
@@ -4706,9 +4706,8 @@ $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
  * First try _DATE_TIMEZONE_DEFAULT global, then PHP_TZ environment var,
  * then TZ environment var
  */
-if(isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
-   && Date_TimeZone::isValidID($GLOBALS['_DATE_TIMEZONE_DEFAULT']))
-{
+if (isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
+   && Date_TimeZone::isValidID($GLOBALS['_DATE_TIMEZONE_DEFAULT'])) {
     Date_TimeZone::setDefault($GLOBALS['_DATE_TIMEZONE_DEFAULT']);
 } elseif (getenv('PHP_TZ') && Date_TimeZone::isValidID(getenv('PHP_TZ'))) {
     Date_TimeZone::setDefault(getenv('PHP_TZ'));
@@ -4728,4 +4727,3 @@ if(isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

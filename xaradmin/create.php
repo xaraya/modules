@@ -16,27 +16,45 @@
     {
         extract($args);
 
-        if (!xarVarFetch('objectid',    'isset', $objectid,   NULL, XARVAR_DONT_SET)) return;
-        if (!xarVarFetch('itemid',      'isset', $itemid,     0,    XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('preview',     'isset', $preview,    0,    XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('join',        'isset', $join,       NULL, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('table',       'isset', $table,      NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('template',     'isset', $template,   NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('tplmodule',    'isset', $tplmodule,   'calendar', XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('itemid', 'isset', $itemid, 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('preview', 'isset', $preview, 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('return_url', 'isset', $return_url, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('join', 'isset', $join, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('table', 'isset', $table, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('template', 'isset', $template, null, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('tplmodule', 'isset', $tplmodule, 'calendar', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
                                              'itemid'   => $itemid));
         $isvalid = $myobject->checkInput();
 
         // recover any session var information
-        $data = xarMod::apiFunc('dynamicdata','user','getcontext',array('module' => $tplmodule));
+        $data = xarMod::apiFunc('dynamicdata', 'user', 'getcontext', array('module' => $tplmodule));
         extract($data);
 
         if (!empty($preview) || !$isvalid) {
-            $data = array_merge($data, xarMod::apiFunc('dynamicdata','admin','menu'));
+            $data = array_merge($data, xarMod::apiFunc('dynamicdata', 'admin', 'menu'));
 
             $data['object'] = & $myobject;
 
@@ -60,18 +78,20 @@
             $hooks = xarModCallHooks('item', 'new', $myobject->itemid, $item, $modinfo['name']);
             $data['hooks'] = $hooks;
 
-            if(!isset($template)) {
+            if (!isset($template)) {
                 $template = $myobject->name;
             }
-            return xarTplModule($tplmodule,'user','new',$data,$template);
+            return xarTplModule($tplmodule, 'user', 'new', $data, $template);
         }
 
         $itemid = $myobject->createItem();
 
-       // If we are here then the create is valid: reset the session var
+        // If we are here then the create is valid: reset the session var
         xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
 
-        if (empty($itemid)) return; // throw back
+        if (empty($itemid)) {
+            return;
+        } // throw back
 
         $item = $myobject->getFieldValues();
         $item['module'] = 'calendar';
@@ -81,13 +101,15 @@
         if (!empty($return_url)) {
             xarController::redirect($return_url);
         } else {
-            xarController::redirect(xarModURL('dynamicdata', 'admin', 'view',
-                                          array(
+            xarController::redirect(xarModURL(
+                'dynamicdata',
+                'admin',
+                'view',
+                array(
                                           'itemid' => $myobject->objectid,
                                           'tplmodule' => $tplmodule
-                                          )));
+                                          )
+            ));
         }
         return true;
     }
-
-?>

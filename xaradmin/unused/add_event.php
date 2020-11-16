@@ -3,7 +3,9 @@ function calendar_admin_add_event()
 {
 
     // Security check
-    if (!xarSecurityCheck('Admincalendar')) return;
+    if (!xarSecurityCheck('Admincalendar')) {
+        return;
+    }
 
     // Generate a one-time authorisation code for this operation
     $data = xarMod::apiFunc('calendar', 'admin', 'get_calendars');
@@ -14,18 +16,17 @@ function calendar_admin_add_event()
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Create event'));
 
     //TODO: should I include this stuff? --amoro
-/*    $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
-        array('module' => 'calendar'));
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('', $hooks);
-    } else {
-        $data['hooks'] = $hooks;
-    }
-*/
+    /*    $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
+            array('module' => 'calendar'));
+        if (empty($hooks)) {
+            $data['hooks'] = '';
+        } elseif (is_array($hooks)) {
+            $data['hooks'] = join('', $hooks);
+        } else {
+            $data['hooks'] = $hooks;
+        }
+    */
 
     // Return the template variables defined in this function
     return $data;
 }
-?>

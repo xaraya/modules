@@ -32,9 +32,14 @@ function calendar_userapi_get($args)
 {
     extract($args);
     // Optional arguments
-    if (!isset($calname) && ( !isset($calid) || !is_numeric($calid) ) ) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                             'calid or calname', 'userapi', 'get', 'calendar');
+    if (!isset($calname) && (!isset($calid) || !is_numeric($calid))) {
+        $msg = xarML(
+            'Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
+            'calid or calname',
+            'userapi',
+            'get',
+            'calendar'
+        );
         throw new Exception($msg);
     }
 
@@ -69,7 +74,9 @@ function calendar_userapi_get($args)
     // Run the query
     $result = $dbconn->Execute($query);
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid,
@@ -83,4 +90,3 @@ function calendar_userapi_get($args)
     $result->Close();
     return $calendars;
 }
-?>

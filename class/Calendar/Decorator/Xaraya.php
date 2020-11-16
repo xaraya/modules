@@ -10,7 +10,7 @@ sys::import('modules.calendar.pear.Calendar.Decorator');
 
 class Calendar_Decorator_Xaraya extends Calendar_Decorator
 {
-    function __construct(&$Calendar)
+    public function __construct(&$Calendar)
     {
         parent::__construct($Calendar);
     }
@@ -21,7 +21,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return string
      * @access public
      */
-    function prev($unit)
+    public function prev($unit)
     {
         $method = 'prev'.$unit;
         $stamp  = $this->{$method}('timestamp');
@@ -34,7 +34,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return string
      * @access public
      */
-    function current($unit)
+    public function current($unit)
     {
         $method = 'this'.$unit;
         $stamp  = $this->{$method}('timestamp');
@@ -47,7 +47,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return string
      * @access public
      */
-    function next($unit)
+    public function next($unit)
     {
         $method = 'next'.$unit;
         $stamp  = $this->{$method}('timestamp');
@@ -60,7 +60,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 2002 or timestamp
      * @access public
      */
-    function prevYear($format = 'int')
+    public function prevYear($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year-1, $this->calendar->month, $this->calendar->day, 0, 0, 0);
         return $this->calendar->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -72,7 +72,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 2003 or timestamp
      * @access public
      */
-    function thisYear($format = 'int')
+    public function thisYear($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->day, 0, 0, 0);
         return $this->calendar->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -84,7 +84,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 2004 or timestamp
      * @access public
      */
-    function nextYear($format = 'int')
+    public function nextYear($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year+1, $this->calendar->month, $this->calendar->day, 0, 0, 0);
         return $this->calendar->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -96,7 +96,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 4 or Unix timestamp
      * @access public
      */
-    function prevMonth($format = 'int')
+    public function prevMonth($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month-1, $this->calendar->day, 0, 0, 0);
         return $this->calendar->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -108,7 +108,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 5 or timestamp
      * @access public
      */
-    function thisMonth($format = 'int')
+    public function thisMonth($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->day, 0, 0, 0);
         return $this->calendar->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -120,7 +120,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 6 or timestamp
      * @access public
      */
-    function nextMonth($format = 'int')
+    public function nextMonth($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month+1, $this->calendar->day, 0, 0, 0);
         return $this->calendar->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -132,7 +132,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 10 or timestamp
      * @access public
      */
-    function prevWeek($format = 'int')
+    public function prevWeek($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->children[1]->day-7, 0, 0, 0);
         return $this->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -144,7 +144,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 11 or timestamp
      * @access public
      */
-    function thisWeek($format = 'int')
+    public function thisWeek($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->children[1]->day, 0, 0, 0);
         return $this->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -156,7 +156,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 12 or timestamp
      * @access public
      */
-    function nextWeek($format = 'int')
+    public function nextWeek($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->children[1]->day+7, 0, 0, 0);
         return $this->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -168,7 +168,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 10 or timestamp
      * @access public
      */
-    function prevDay($format = 'int')
+    public function prevDay($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->day-1, 0, 0, 0);
         return $this->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -180,7 +180,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 11 or timestamp
      * @access public
      */
-    function thisDay($format = 'int')
+    public function thisDay($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->day, 0, 0, 0);
         return $this->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -192,7 +192,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return int e.g. 12 or timestamp
      * @access public
      */
-    function nextDay($format = 'int')
+    public function nextDay($format = 'int')
     {
         $ts = $this->calendar->cE->dateToStamp($this->calendar->year, $this->calendar->month, $this->calendar->day+1, 0, 0, 0);
         return $this->returnValue('Day', $format, $ts, $this->calendar->cE->stampToDay($ts));
@@ -205,7 +205,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      * @return string build uri string
      * @access private
      */
-    function buildUriString($method, $stamp)
+    public function buildUriString($method, $stamp)
     {
 
         //var_dump(get_class_methods($this->calendar));
@@ -213,7 +213,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
         //die();
         // we want to create the method by seeing what Object is creating this
         $obj_methods = get_class_methods($this->calendar);
-        switch($obj_methods[0]) {
+        switch ($obj_methods[0]) {
             case 'Calendar_Day':
                 $method = 'day';
                 break;
@@ -229,12 +229,9 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
                 break;
         }
 
-        $cal_date = xarLocaleFormatDate('%Y%m%d',$stamp);
-        $uriString = xarModURL('calendar','user',$method,array('cal_date'=>$cal_date));
+        $cal_date = xarLocaleFormatDate('%Y%m%d', $stamp);
+        $uriString = xarModURL('calendar', 'user', $method, array('cal_date'=>$cal_date));
 //        $uriString = xarServer::getCurrentURL(array('cal_date'=>$cal_date));
         return $uriString;
     }
-
 }
-
-?>

@@ -16,4 +16,3 @@ function calendar_userapi_getweeknumber()
 {
     return 1;
 }
-?>

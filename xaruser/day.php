@@ -21,19 +21,21 @@ sys::import('xaraya.structures.query');
 
 function calendar_user_day()
 {
-    $data = xarMod::apiFunc('calendar','user','getUserDateTimeInfo');
-    $DayEvents = new Calendar_Day($data['cal_year'],$data['cal_month'],$data['cal_day'],CALENDAR_FIRST_DAY_OF_WEEK);
+    $data = xarMod::apiFunc('calendar', 'user', 'getUserDateTimeInfo');
+    $DayEvents = new Calendar_Day($data['cal_year'], $data['cal_month'], $data['cal_day'], CALENDAR_FIRST_DAY_OF_WEEK);
     $args = array(
         'day' => &$Day,
     );
-    $day_endts = $DayEvents->getTimestamp() + xarModVars::get('calendar','day_end') + 3600;
+    $day_endts = $DayEvents->getTimestamp() + xarModVars::get('calendar', 'day_end') + 3600;
 //        $events = xarMod::apiFunc('icalendar','user','getevents',$args);
 
     // get all the events. need to improve this query
     $xartable =& xarDB::getTables();
     $q = new Query('SELECT', $xartable['calendar_event']);
 //        $q->qecho();
-    if (!$q->run()) return;
+    if (!$q->run()) {
+        return;
+    }
     $events = $q->output();
 
     // Do some calculations to complete the entries' info
@@ -49,9 +51,9 @@ function calendar_user_day()
         $slotcount = count($slots);
         for ($i=0;$i<$slotcount;$i++) {
             if ($events[$j]['start_time'] >= $slots[$i][1]) {
-                    foreach ($slots as $slot) {
-                        $events[$slot[0]]['neighbors'] = $slotcount;
-                    }
+                foreach ($slots as $slot) {
+                    $events[$slot[0]]['neighbors'] = $slotcount;
+                }
                 $thisslot = $i;
                 $slots = array(0 => array($j,$events[$j]['end_time']));
                 $placed = true;
@@ -64,30 +66,30 @@ function calendar_user_day()
         }
         $events[$j]['place'] = $thisslot;
     }
-    foreach ($slots as $slot) $events[$slot[0]]['neighbors'] = $slotcount;
-
-//foreach($events as $event) {var_dump($event);echo "<br />";}
-/*
-    $selection = array();
-    foreach ( $entries as $entry ) {
-        $Hour = new Calendar_Hour(2000,1,1,1);
-        $Hour->setTimeStamp($entry['start_time']);
-
-        // Create the decorator, passing it the Hour
-        $event = new Event($Hour);
-
-        // Attach the payload
-        $event->setEntry($entry);
-
-        // Add the decorator to the selection
-        $selection[] = $event;
+    foreach ($slots as $slot) {
+        $events[$slot[0]]['neighbors'] = $slotcount;
     }
-    */
+
+    //foreach($events as $event) {var_dump($event);echo "<br />";}
+    /*
+        $selection = array();
+        foreach ( $entries as $entry ) {
+            $Hour = new Calendar_Hour(2000,1,1,1);
+            $Hour->setTimeStamp($entry['start_time']);
+
+            // Create the decorator, passing it the Hour
+            $event = new Event($Hour);
+
+            // Attach the payload
+            $event->setEntry($entry);
+
+            // Add the decorator to the selection
+            $selection[] = $event;
+        }
+        */
     $DayDecorator = new DayEvent_Decorator($DayEvents);
     $DayDecorator->build($events);
     $data['Day'] =& $DayDecorator;
     $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
     return $data;
 }
-
-?>

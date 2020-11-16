@@ -17,13 +17,13 @@
 function calendar_user_publish($args)
 {
     extract($args);
-    xarVarFetch('calid','id',$calid,0,XARVAR_NOT_REQUIRED);
-    xarVarFetch('calname','str:1:',$calname,'',XARVAR_NOT_REQUIRED);
+    xarVarFetch('calid', 'id', $calid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('calname', 'str:1:', $calname, '', XARVAR_NOT_REQUIRED);
 
-// test
+    // test
     xarModVars::set('calendar', 'SupportShortURLs', 1);
 
-// TODO: security et al.
+    // TODO: security et al.
 
     if (!empty($calid) || !empty($calname)) {
 
@@ -43,77 +43,72 @@ function calendar_user_publish($args)
             exit;
          }
 */
-         $calendars = xarMod::apiFunc('calendar','user','get',
-                                    array('calid' => $calid,
-                                          'calname' => $calname));
-         if (!isset($calendars)) return;
+        $calendars = xarMod::apiFunc(
+            'calendar',
+            'user',
+            'get',
+            array('calid' => $calid,
+                                          'calname' => $calname)
+        );
+        if (!isset($calendars)) {
+            return;
+        }
 
-         // we found a calendar
-         if (count($calendars) == 1) {
-             if (empty($calendars[0]['cpath'])) {
-                 // TODO: retrieve entries from database and create ics file
+        // we found a calendar
+        if (count($calendars) == 1) {
+            if (empty($calendars[0]['cpath'])) {
+                // TODO: retrieve entries from database and create ics file
+            } else {
+                $curdir = sys::varpath() . '/calendar';
+                $curfile = $curdir . '/' . $calendars[0]['cpath'];
+                if (file_exists($curfile) && filesize($curfile) > 0) {
+                    if ($_SERVER['REQUEST_METHOD'] != 'PUT') {
+                        // return the .ics file
+                        header('Content-Type: text/calendar');
+                        @readfile($curfile);
 
-             } else {
-                 $curdir = sys::varpath() . '/calendar';
-                 $curfile = $curdir . '/' . $calendars[0]['cpath'];
-                 if (file_exists($curfile) && filesize($curfile) > 0) {
-
-                     if($_SERVER['REQUEST_METHOD'] != 'PUT')
-                     {
-                         // return the .ics file
-                         header('Content-Type: text/calendar');
-                         @readfile($curfile);
-
-             // TODO: use webdavserver instead ?
+                    // TODO: use webdavserver instead ?
                  // Cfr. phpicalendar/calendars/publish.php (doesn't seem to work for PHP < 4.3)
                      // publishing
-                     } else {
-                         // get calendar data
-                         $data = '';
-                         if($fp = fopen('php://input','r'))
-                         {
-                             while($chunk = fgets($fp,4096))
-                             {
-                                 $data .= $chunk;
-                             }
-                             /*
-                             while(!@feof($fp))
-                             {
-                                 $data .= fgets($fp,4096);
-                             }
-                             */
-                             @fclose($fp);
-                         } else {
-                             xarLog::message('failed opening standard input', xarLog::LEVEL_WARNING);
-                         }
+                    } else {
+                        // get calendar data
+                        $data = '';
+                        if ($fp = fopen('php://input', 'r')) {
+                            while ($chunk = fgets($fp, 4096)) {
+                                $data .= $chunk;
+                            }
+                            /*
+                            while(!@feof($fp))
+                            {
+                                $data .= fgets($fp,4096);
+                            }
+                            */
+                            @fclose($fp);
+                        } else {
+                            xarLog::message('failed opening standard input', xarLog::LEVEL_WARNING);
+                        }
 
-                         if(!empty($data))
-                         {
-                             //xarLog::message($data);
-                             // write to file
-                             if($fp = fopen($curfile,'w+'))
-                             {
-                                 fputs($fp, $data, strlen($data) );
-                                 @fclose($fp);
-                             }
-                             else
-                             {
-                                 xarLog::message( 'couldnt open file '.$curfile, xarLog::LEVEL_WARNING);
-                             }
-                         } else {
-                             xarLog::message('failed getting any data', xarLog::LEVEL_WARNING);
-                         }
-                     }
-                     // we're done here
-                     exit;
-                 }
-             }
-         }
+                        if (!empty($data)) {
+                            //xarLog::message($data);
+                            // write to file
+                            if ($fp = fopen($curfile, 'w+')) {
+                                fputs($fp, $data, strlen($data));
+                                @fclose($fp);
+                            } else {
+                                xarLog::message('couldnt open file '.$curfile, xarLog::LEVEL_WARNING);
+                            }
+                        } else {
+                            xarLog::message('failed getting any data', xarLog::LEVEL_WARNING);
+                        }
+                    }
+                    // we're done here
+                    exit;
+                }
+            }
+        }
     }
     $data = array();
-    $data['calendars'] = xarMod::apiFunc('calendar','user','getall');
+    $data['calendars'] = xarMod::apiFunc('calendar', 'user', 'getall');
 
     return $data;
 }
-
-?>

@@ -30,7 +30,7 @@ function calendar_adminapi_create_calendars($args)
 
     // argument check
     if (!isset($calname)) {
-        $msg = xarML('Calendar name not specified','admin','create','calendar');
+        $msg = xarML('Calendar name not specified', 'admin', 'create', 'calendar');
         throw new Exception($msg);
     }
 
@@ -59,11 +59,14 @@ function calendar_adminapi_create_calendars($args)
             ) VALUES (?, ?, ?, ?)';
 
     $result = $dbconn->Execute(
-        $query, array(
+        $query,
+        array(
             $nextId, $role_id, $mod_id, $calname
         )
     );
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
 
     // Get ID of row inserted.
     $calendid = $dbconn->PO_Insert_ID($caltable, 'xar_id');
@@ -74,7 +77,6 @@ function calendar_adminapi_create_calendars($args)
     // WARNING: if somebody changes this you should also change the
     // delete function to avoid major dataloss!!! --amoro
     if ($addtype != 'db') {
-
         $filestable = $xartable['calfiles'];
         $cal_filestable = $xartable['calendars_files'];
 
@@ -84,7 +86,8 @@ function calendar_adminapi_create_calendars($args)
                   xar_path
                 ) VALUES (?, ?)';
         $result = $dbconn->Execute(
-            $query, array(
+            $query,
+            array(
                 $nextID,$fileuri
             )
         );
@@ -97,12 +100,11 @@ function calendar_adminapi_create_calendars($args)
                       xar_files_id
                     ) VALUES (?, ?)';
         $result = $dbconn->Execute(
-            $query, array(
+            $query,
+            array(
                 $calendid,$fileid
             )
         );
     }
     return $calendid;
 }
-
-?>

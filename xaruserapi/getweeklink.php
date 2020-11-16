@@ -23,12 +23,13 @@
  */
 function calendar_userapi_getWeekLink($date=null)
 {
-    if(!isset($date)) $date = date('Ymd');
-    $year = substr($date,0,4);
-    $month = substr($date,4,2);
-    $day = substr($date,6,2);
+    if (!isset($date)) {
+        $date = date('Ymd');
+    }
+    $year = substr($date, 0, 4);
+    $month = substr($date, 4, 2);
+    $day = substr($date, 6, 2);
     
-    $link = xarModURL('calendar','user','week',array('cal_date'=>$date));
-    return $link;        
+    $link = xarModURL('calendar', 'user', 'week', array('cal_date'=>$date));
+    return $link;
 }
-?>

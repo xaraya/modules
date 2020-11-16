@@ -31,6 +31,4 @@ function &calendar_userapi_createUserDateTime($format='Ymd')
         // $tzoffset = site's timezone offset
     }
     */
-    
 }
-?>

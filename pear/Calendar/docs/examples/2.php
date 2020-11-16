@@ -3,14 +3,15 @@
 * Description: Demonstrates building a calendar for a month using the Week class
 * Uses UnixTs engine
 */
-function getmicrotime(){
-    list($usec, $sec) = explode(" ",microtime());
+function getmicrotime()
+{
+    list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
 $start = getmicrotime();
 
 // Force UnixTs engine (default setting)
-define('CALENDAR_ENGINE','UnixTS');
+define('CALENDAR_ENGINE', 'UnixTS');
 
 if (!@include 'Calendar'.DIRECTORY_SEPARATOR.'Calendar.php') {
     define('CALENDAR_ROOT', '../../');
@@ -19,17 +20,23 @@ require_once CALENDAR_ROOT.'Month/Weeks.php';
 require_once CALENDAR_ROOT.'Day.php';
 
 // Initialize GET variables if not set
-if (!isset($_GET['y'])) $_GET['y'] = date('Y');
-if (!isset($_GET['m'])) $_GET['m'] = date('m');
-if (!isset($_GET['d'])) $_GET['d'] = date('d');
+if (!isset($_GET['y'])) {
+    $_GET['y'] = date('Y');
+}
+if (!isset($_GET['m'])) {
+    $_GET['m'] = date('m');
+}
+if (!isset($_GET['d'])) {
+    $_GET['d'] = date('d');
+}
 
 // Build a month object
 $Month = new Calendar_Month_Weeks($_GET['y'], $_GET['m']);
 
 // Create an array of days which are "selected"
 // Used for Week::build() below
-$selectedDays = array (
-    new Calendar_Day($_GET['y'],$_GET['m'], $_GET['d']),
+$selectedDays = array(
+    new Calendar_Day($_GET['y'], $_GET['m'], $_GET['d']),
     new Calendar_Day($_GET['y'], 12, 25),
     new Calendar_Day(date('Y'), date('m'), date('d')),
     );
@@ -116,7 +123,7 @@ while ($Week = $Month->fetch()) {
         if ($Day->isSelected()) {
             echo '<td class="selected">'.$Day->thisDay().'</td>'."\n";
         // Check to see if day is empty
-        } else if ($Day->isEmpty()) {
+        } elseif ($Day->isEmpty()) {
             echo '<td class="empty">'.$Day->thisDay().'</td>'."\n";
         } else {
             echo '<td><a href="'.$link.'">'.$Day->thisDay().'</a></td>'."\n";

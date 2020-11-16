@@ -39,23 +39,27 @@ function calendar_adminapi_delete_calendar($args)
 
     // Argument check
     if (!isset($calid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'calendar ID', 'admin', 'delete',
-                    'Calendar');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'calendar ID',
+            'admin',
+            'delete',
+            'Calendar'
+        );
         throw new Exception($msg);
     }
 
     // TODO: Security check
-/*
-    if (!xarMod::apiLoad('calendar', 'user')) return;
+    /*
+        if (!xarMod::apiLoad('calendar', 'user')) return;
 
-    $args['mask'] = 'DeleteCalendars';
-    if (!xarMod::apiFunc('calendar','user','checksecurity',$args)) {
-        $msg = xarML('Not authorized to delete #(1) items',
-                    'Calendar');
-        throw new Exception($msg);
-    }
-*/
+        $args['mask'] = 'DeleteCalendars';
+        if (!xarMod::apiFunc('calendar','user','checksecurity',$args)) {
+            $msg = xarML('Not authorized to delete #(1) items',
+                        'Calendar');
+            throw new Exception($msg);
+        }
+    */
     // Call delete hooks for categories, hitcount etc.
     $args['module'] = 'calendar';
     $args['itemid'] = $calid;
@@ -72,7 +76,9 @@ function calendar_adminapi_delete_calendar($args)
     $query ="SELECT xar_files_id FROM $cal_filestable
              WHERE xar_calendars_id = ? LIMIT 1 ";
     $result = $dbconn->Execute($query, array($calid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
         // there should be only one result
@@ -83,23 +89,27 @@ function calendar_adminapi_delete_calendar($args)
         $query = "DELETE FROM $calfiles
                   WHERE xar_id = ?";
         $result = $dbconn->Execute($query, array($file_id));
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
     }
 
     // Delete item
     $query = "DELETE FROM $calendarstable
               WHERE xar_id = ?";
     $result = $dbconn->Execute($query, array($calid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $query = "DELETE FROM $cal_filestable
               WHERE xar_calendars_id = ?";
     $result = $dbconn->Execute($query, array($calid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $result -> Close();
 
     return true;
 }
-
-?>
