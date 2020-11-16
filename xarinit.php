@@ -148,7 +148,7 @@ function hitcount_init()
     /*********************************************************************
     * Register the module components that are privileges objects
     * Format is
-    * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+    * xarMasks::register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
 
 
@@ -188,7 +188,7 @@ function hitcount_upgrade($oldversion)
             $dbconn = xarDB::getConn();
             $xartable =& xarDB::getTables();
 
-            $tmodInfo = xarMod_GetBaseInfo('hitcount');
+            $tmodInfo = xarMod::getBaseInfo('hitcount');
             $tmodId = $tmodInfo['systemid'];
 
             $sql = "UPDATE $xartable[hooks]
