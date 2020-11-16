@@ -18,21 +18,25 @@
   */
 function sitetools_admin_terminal()
 {
-    if(!xarVarFetch('term_input','str::',$term_input,'')) return;
+    if (!xarVarFetch('term_input', 'str::', $term_input, '')) {
+        return;
+    }
 
-   if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
     $output = array();
-    if($term_input != '') {
+    if ($term_input != '') {
         /* Pass verbatim to database; */
         $dbconn = xarDB::getConn();
         $result =& $dbconn->Execute($term_input);
-        if(!$result) {
+        if (!$result) {
             $error = xarCurrentError();
             $output[] = array("Error" => $error->getShort());
             xarErrorFree();
         } else {
-            if(is_object($result)) {
-                while(!$result->EOF) {
+            if (is_object($result)) {
+                while (!$result->EOF) {
                     $row = $result->GetRowAssoc(true);
                     $output[] = $row;
                     $result->MoveNext();
@@ -49,5 +53,3 @@ function sitetools_admin_terminal()
     return $data;
     return array();
 }
-
-?>

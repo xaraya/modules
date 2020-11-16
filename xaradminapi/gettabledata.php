@@ -17,9 +17,11 @@
 function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
 {
     // Security check
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
 
-    if (($dbname='') || (empty($dbname))){
+    if (($dbname='') || (empty($dbname))) {
         $dbconn = xarDB::getConn();
         $dbname= xarDB::getName();
     }
@@ -35,14 +37,14 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
             $tables = mysql_list_tables($dbname);
             $i=0;
             if ($tables) {
-                 while (list($tablename) = mysql_fetch_array($tables)) {
+                while (list($tablename) = mysql_fetch_array($tables)) {
                     $i++;
-                   $SQLquery = 'SELECT COUNT(*) AS num FROM '.$tablename;
-                   $result = mysql_query($SQLquery);
-                   $row = mysql_fetch_array($result);
-                   $dbtables[] = array('tablenum'=>$i, 'tablename'=>$tablename, 'tablerecs'=>$row['num']);
+                    $SQLquery = 'SELECT COUNT(*) AS num FROM '.$tablename;
+                    $result = mysql_query($SQLquery);
+                    $row = mysql_fetch_array($result);
+                    $dbtables[] = array('tablenum'=>$i, 'tablename'=>$tablename, 'tablerecs'=>$row['num']);
                 }
-            }else {
+            } else {
                 echo "No table query results";
             }
 
@@ -51,7 +53,6 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
             $items['dbname']    = $dbname;
 
     }
-   //Return data for display
-   return $items;
+    //Return data for display
+    return $items;
 }
-?>

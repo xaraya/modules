@@ -16,44 +16,48 @@
  *@parameter $bkfile is the name of the backup file
  *
 */
-function sitetools_admin_downloadbkup ($args)
+function sitetools_admin_downloadbkup($args)
 {
-    if (!xarVarFetch('savefile', 'str:1', $savefile,'')) return;
- // Security check
- if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarVarFetch('savefile', 'str:1', $savefile, '')) {
+        return;
+    }
+    // Security check
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
 
 
-  if ((!isset($savefile)) || (empty($savefile))) {
-       // Handle the user exceptions yourself
-       $status = xarML('The file to download does not exist.');
-       $reason = xarCurrentError();
-       if (!empty($reason)) {
-          $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
-       }
-       // Free the exception to tell Xaraya that you handled it
-       xarErrorFree();
-       return $status;
-  }
+    if ((!isset($savefile)) || (empty($savefile))) {
+        // Handle the user exceptions yourself
+        $status = xarML('The file to download does not exist.');
+        $reason = xarCurrentError();
+        if (!empty($reason)) {
+            $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
+        }
+        // Free the exception to tell Xaraya that you handled it
+        xarErrorFree();
+        return $status;
+    }
 
 
-  //check the file exists
- $pathtofile=xarModVars::get('sitetools','backuppath');
+    //check the file exists
+    $pathtofile=xarModVars::get('sitetools', 'backuppath');
 
-  $filetodownload = $pathtofile.'/'.$savefile;
+    $filetodownload = $pathtofile.'/'.$savefile;
 
-  if (!file_exists($filetodownload)) {
-       // Handle the user exceptions yourself
-       $status = xarML('The file to download does not exist.');
-       $reason = xarCurrentError();
-       if (!empty($reason)) {
-          $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
-       }
-       // Free the exception to tell Xaraya that you handled it
-       xarErrorFree();
-       return $status;
-  }
+    if (!file_exists($filetodownload)) {
+        // Handle the user exceptions yourself
+        $status = xarML('The file to download does not exist.');
+        $reason = xarCurrentError();
+        if (!empty($reason)) {
+            $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
+        }
+        // Free the exception to tell Xaraya that you handled it
+        xarErrorFree();
+        return $status;
+    }
 
-//  $mimetp=mime_content_type ($filetodownload);
+    //  $mimetp=mime_content_type ($filetodownload);
 
     ob_end_clean();
     // Setup headers for browser
@@ -68,19 +72,15 @@ function sitetools_admin_downloadbkup ($args)
     header("Content-disposition: attachment; filename=\"".basename($filetodownload)."\"");
 //    header("Content-length: $size");
 
-   $fp = fopen($filetodownload,"rb");
-    if( is_resource($fp) )
-    {
-        while( !feof($fp) )
-        {
+    $fp = fopen($filetodownload, "rb");
+    if (is_resource($fp)) {
+        while (!feof($fp)) {
             echo fread($fp, 1024);
         }
     }
     fclose($fp);
 
- //ob_end_flush;
+    //ob_end_flush;
 
-   exit();
-
+    exit();
 }
-?>

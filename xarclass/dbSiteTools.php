@@ -19,10 +19,10 @@
 class dbSiteTools
 {
     // initialize some vars
-    var $_database_info;
-    var $dbconn;
+    public $_database_info;
+    public $dbconn;
 
-    function dbSiteTools ($dbname='',$dbtype='')
+    public function dbSiteTools($dbname='', $dbtype='')
     {
         if (empty($this->dbconn)) {
             $this->dbconn = xarDB::getConn();
@@ -37,41 +37,38 @@ class dbSiteTools
         } else {
             $this->dbname=$dbname;
         }
-       $this->_database_info =array($this->dbtype,$this->dbconn,$this->dbname);
+        $this->_database_info =array($this->dbtype,$this->dbconn,$this->dbname);
     }
 
-    function selecttables($dbname='')
+    public function selecttables($dbname='')
     {
         $SelectedTables = $this->_selecttables($this->dbname);
-         // Return items
+        // Return items
         return $SelectedTables;
     }
 
-    function checktables($SelectedTables)
+    public function checktables($SelectedTables)
     {
         $TableErrors = $this->_checktables($SelectedTables);
 
-         // Return items
+        // Return items
         return $TableErrors;
     }
-    function bkcountoverallrows($SelectedTables,$number_of_cols='')
+    public function bkcountoverallrows($SelectedTables, $number_of_cols='')
     {
-        $overallrows = $this->_bkcountoverallrows($SelectedTables,$number_of_cols);
+        $overallrows = $this->_bkcountoverallrows($SelectedTables, $number_of_cols);
 
         return $overallrows;
     }
 
-    function backup($bkvars)
+    public function backup($bkvars)
     {
         $runningstatus = $this->_backup($bkvars);
-        if (!$runningstatus) {return false;}
+        if (!$runningstatus) {
+            return false;
+        }
 
         // Return
         return $runningstatus;
     }
-
-
-
 }
-
-?>

@@ -19,39 +19,41 @@
  */
 function sitetools_schedulerapi_backup($args)
 {
-    extract ($args);
+    extract($args);
 
-    if (!isset($dbname) || ($dbname='') || (empty($dbname))){
+    if (!isset($dbname) || ($dbname='') || (empty($dbname))) {
         $dbconn = xarDB::getConn();
-            $dbname= xarDB::getName();
-            $dbtype= xarDB::getType();
+        $dbname= xarDB::getName();
+        $dbtype= xarDB::getType();
     }
     $SelectedTables=''; //Todo: setup a default array of selected tables for partial backups
 
-    $startbackup=xarModVars::get('sitetools','defaultbktype');
+    $startbackup=xarModVars::get('sitetools', 'defaultbktype');
 
     if ((!isset($startbackup)) || (empty($startbackup))) {
-      $startbackup='complete';
+        $startbackup='complete';
     }
 
     if ((!isset($usegz)) && (bool)(function_exists('gzopen'))) {
-         $usegz =true;
+        $usegz =true;
     } else {
         $usegz = false;
     }
 
     $screen=0; //TODO: Fix this when configurable in main backup util
     $data=array();
-    $data= xarModAPIFunc('sitetools','admin','backupdb',
-                               array ('usegz'          => $usegz,
+    $data= xarModAPIFunc(
+        'sitetools',
+        'admin',
+        'backupdb',
+        array('usegz'          => $usegz,
                                       'startbackup'    => $startbackup,
                                       'screen'         => $screen,
                                       'SelectedTables' => $SelectedTables,
                                       'dbname'         => $dbname,
-                                      'dbtype'         => $dbtype));
+                                      'dbtype'         => $dbtype)
+    );
 
 
- return true;
+    return true;
 }
-
-?>

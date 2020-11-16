@@ -20,26 +20,34 @@
 function sitetools_admin_cacheview($args)
 {
     /* Get parameters from whatever input we need. */
-    if (!xarVarFetch('action', 'str:1', $action, false, XARVAR_NOT_REQUIRED)) return;
-     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hashn', 'str:1:', $hashn, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('templn', 'str:1:', $templn, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('action', 'str:1', $action, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('hashn', 'str:1:', $hashn, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('templn', 'str:1:', $templn, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     /* Security check - important to do this as early as possible */
     if (!xarSecurityCheck('AdminSiteTools')) {
         return;
     }
 
-    $cachedir  = xarModVars::get('sitetools','templcachepath');
-    $cachefile = xarModVars::get('sitetools','templcachepath').'/CACHEKEYS';
-    $scriptcache=xarModVars::get('sitetools','templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
+    $cachedir  = xarModVars::get('sitetools', 'templcachepath');
+    $cachefile = xarModVars::get('sitetools', 'templcachepath').'/CACHEKEYS';
+    $scriptcache=xarModVars::get('sitetools', 'templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
     $data=array();
-          $data['popup']=false;
+    $data['popup']=false;
     /* Check for confirmation. */
     $data['authid'] = xarSecGenAuthKey();
     if (empty($action)) {
         /* No action set yet - display cache file list and await action */
-         $data['showfiles']=false;
+        $data['showfiles']=false;
         /* Generate a one-time authorisation code for this operation */
         $data['items']='';
         $cachelist=array();
@@ -49,22 +57,26 @@ function sitetools_admin_cacheview($args)
         umask();
         $count=0;
         $cachekeyfile=file($cachefile);
-        $fd = fopen($cachefile,'r');
-        while (list ($line_num, $line) = each ($cachekeyfile)) {
-              $cachelist[]=array(explode(": ", $line));
+        $fd = fopen($cachefile, 'r');
+        while (list($line_num, $line) = each($cachekeyfile)) {
+            $cachelist[]=array(explode(": ", $line));
             ++$count;
         }
         $data['count']=$count;
         fclose($fd);
 
         /* generate all the URLS for cache file list */
-        foreach($cachelist as $hashname) {
+        foreach ($cachelist as $hashname) {
             foreach ($hashname as $filen) {
-               $hashn=htmlspecialchars($filen[0]);
-               $templn=htmlspecialchars($filen[1]);
-               $fullnurl=xarModURL('sitetools','admin','cacheview',
-                                  array('action'=>'show','templn'=>$templn,'hashn'=>$hashn));
-               $cachenames[$hashn]=array('hashn'=>$hashn,
+                $hashn=htmlspecialchars($filen[0]);
+                $templn=htmlspecialchars($filen[1]);
+                $fullnurl=xarModURL(
+                    'sitetools',
+                    'admin',
+                    'cacheview',
+                    array('action'=>'show','templn'=>$templn,'hashn'=>$hashn)
+                );
+                $cachenames[$hashn]=array('hashn'=>$hashn,
                                    'templn'=>$templn,
                                    'fullnurl'=>$fullnurl);
             }
@@ -77,8 +89,7 @@ function sitetools_admin_cacheview($args)
 
         /* Return the template variables defined in this function */
         return $data;
-
-    } elseif ($action=='show'){
+    } elseif ($action=='show') {
         $data['showfiles']= true;
         $hashfile=$cachedir.'/'.$hashn.'.php';
         $newfile=array();
@@ -100,4 +111,3 @@ function sitetools_admin_cacheview($args)
     /*  Return */
     return true;
 }
-?>

@@ -35,4 +35,3 @@ $modversion['dependencyinfo'] = array(
                                             'version_ge' => '2.4.0',
                                          ),
                                       );
-?>

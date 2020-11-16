@@ -15,8 +15,7 @@
  * TODO: Add in multidatabase once multidatabase functionality and location decided
  * TODO: Remove all the commented out code once classes fully tidied and tested
  */
-function sitetools_adminapi_backupdb ($args)
-
+function sitetools_adminapi_backupdb($args)
 {
     extract($args);
     // Security check - allow scheduler api funcs to run as anon bug #2802
@@ -26,20 +25,24 @@ function sitetools_adminapi_backupdb ($args)
     $items['startbackup']=$startbackup;
     $items['usegz']=$usegz;
     //Assign missing or empty variables
-    if (!isset($startbackup)) return;
-
-    if ((($usegz==1) || !isset($usegz)) && (bool)(function_exists('gzopen'))) {
-         $GZ_enabled =true;
-    } else {
-       $GZ_enabled = false;
+    if (!isset($startbackup)) {
+        return;
     }
 
-    if ($screen=='') $screen==false;
+    if ((($usegz==1) || !isset($usegz)) && (bool)(function_exists('gzopen'))) {
+        $GZ_enabled =true;
+    } else {
+        $GZ_enabled = false;
+    }
 
-    if (!isset($dbname) || ($dbname='') || (empty($dbname))){
+    if ($screen=='') {
+        $screen==false;
+    }
+
+    if (!isset($dbname) || ($dbname='') || (empty($dbname))) {
         $dbconn = xarDB::getConn();
-            $dbname= xarDB::getName();
-            $dbtype= xarDB::getType();
+        $dbname= xarDB::getName();
+        $dbtype= xarDB::getType();
     }
     //setup variables
     $items['usegz']=$usegz;
@@ -47,11 +50,11 @@ function sitetools_adminapi_backupdb ($args)
     $backtickchar   = '';
     $quotechar      = '\'';
     $buffer_size    = 32768;
-    $usedbprefix = xarModVars::get('sitetools','usedbprefix');
-    $items['number_of_cols'] = xarModVars::get('sitetools','colnumber');
+    $usedbprefix = xarModVars::get('sitetools', 'usedbprefix');
+    $items['number_of_cols'] = xarModVars::get('sitetools', 'colnumber');
     $number_of_cols=$items['number_of_cols'];
-    $lineterminator = xarModVars::get('sitetools','lineterm'); // not in use  --hard coded with \n for now
-    $backupabsolutepath= xarModVars::get('sitetools','backuppath').'/';
+    $lineterminator = xarModVars::get('sitetools', 'lineterm'); // not in use  --hard coded with \n for now
+    $backupabsolutepath= xarModVars::get('sitetools', 'backuppath').'/';
     $items['warning']=0;
 
     //Let's make dbname as a prefix configurable
@@ -61,19 +64,19 @@ function sitetools_adminapi_backupdb ($args)
         $thedbprefix='';
     }
 
-    if (xarModVars::get('sitetools','timestamp') ==1) {
+    if (xarModVars::get('sitetools', 'timestamp') ==1) {
         $items['backuptimestamp'] = '.'.date('Y-m-d');
     } else {
         $items['backuptimestamp'] = '';
     }
     //check directory exists and is writeable
-   $items['warningmessage']='<span class="xar-accent">'
+    $items['warningmessage']='<span class="xar-accent">'
                             .xarML('WARNING: directory does not exist or is not writeable: ').$backupabsolutepath.'</span><br /><br />'
                             .xarML(' Please ensure the backup directory exisits and is writeable');
 
     if ((!is_dir($backupabsolutepath)) || (!is_writeable($backupabsolutepath))) {
-       $items['warning']=1;
-       return $items;
+        $items['warning']=1;
+        return $items;
     }
     $items['authid']     = xarSecGenAuthKey();
     $backuptimestamp    = $items['backuptimestamp'];
@@ -93,9 +96,9 @@ function sitetools_adminapi_backupdb ($args)
         }
     }
     // Instantiation of SiteTools class
-     sys::import('modules.sitetools.xarclass.dbSiteTools_'.$dbtype);
-     $classname="dbSiteTools_".$dbtype;
-     $bkitems= new $classname();
+    sys::import('modules.sitetools.xarclass.dbSiteTools_'.$dbtype);
+    $classname="dbSiteTools_".$dbtype;
+    $bkitems= new $classname();
 
     //Open up files for write and setup up file headers
     if (($GZ_enabled && ($zp = gzopen($backupabsolutepath.$tempbackupfilename, 'wb'))) || (!$GZ_enabled && ($fp = fopen($backupabsolutepath.$tempbackupfilename, 'wb')))) {
@@ -126,7 +129,6 @@ function sitetools_adminapi_backupdb ($args)
             }
             //headers for partial - selected tables
         } elseif ($SelectedTables) {
-
             if ($GZ_enabled) {
                 gzwrite($zp, "Selected Tables Only\n\n", strlen("Selected Tables Only\n\n"));
             } else {
@@ -138,31 +140,28 @@ function sitetools_adminapi_backupdb ($args)
 
         // headers for complete backup
         } else {
-
             if ($GZ_enabled) {
                 gzwrite($zp, "Complete\n\n", strlen("Complete\n\n"));
             } else {
                 fwrite($fp, "Complete\n\n", strlen("Complete\n\n"));
             }
             $backuptype = 'full';
-            if ($startbackup=='complete')
-            {
-              $btype=xarML('Full - Complete Inserts');
+            if ($startbackup=='complete') {
+                $btype=xarML('Full - Complete Inserts');
             } else {
-            $btype=xarML('Full - Standard Inserts');
+                $btype=xarML('Full - Standard Inserts');
             }
             unset($SelectedTables);
             $SelectedTables =$bkitems-> selecttables($dbname);
-         /* Move to class
-         $tables = mysql_list_tables($dbname);
-            if (is_resource($tables)) {
-                $tablecounter = 0;
-                 while (list($tablename) = mysql_fetch_array($tables)) {
-                    $SelectedTables["$dbname"][] = $tablename;
-                }
-            }
-         */
-
+            /* Move to class
+            $tables = mysql_list_tables($dbname);
+               if (is_resource($tables)) {
+                   $tablecounter = 0;
+                    while (list($tablename) = mysql_fetch_array($tables)) {
+                       $SelectedTables["$dbname"][] = $tablename;
+                   }
+               }
+            */
         }//headers finished
 
         $runningstatus[]['message']='<span id="topprogress" class="xar-block-title">'.xarML('Overall Progress: ').'</span>';
@@ -233,10 +232,10 @@ function sitetools_adminapi_backupdb ($args)
         $starttime = getmicrotime();
         $alltablesstructure = '';
         $runningstatus[]['message']=xarML('Creating table structures for ').'<b>'.$dbname.'</b>'.xarML(' database tables').'<br /><br />';
-           //Switch to backup class
-           //Pass $SelectedTables
-           //Pass all our vars in an array
-           $bkvars = array('SelectedTables' => $SelectedTables,
+        //Switch to backup class
+        //Pass $SelectedTables
+        //Pass all our vars in an array
+        $bkvars = array('SelectedTables' => $SelectedTables,
                            'GZ_enabled' => $GZ_enabled,
                            'number_of_cols' => $number_of_cols,
                            'overallrows'    => $overallrows,
@@ -253,154 +252,154 @@ function sitetools_adminapi_backupdb ($args)
                         'screen'    => $screen);
 
         $runningstatus = $bkitems-> backup($bkvars);
-           /*
+        /*
         foreach ($SelectedTables as $dbname => $value) {
-            mysql_select_db($dbname);
-            for ($t = 0; $t < count($SelectedTables["$dbname"]); $t++) {
-                $fieldnames     = array();
-                $structurelines = array();
-                $result = mysql_query('SHOW FIELDS FROM '.$SelectedTables["$dbname"]["$t"]);
-                while ($row = mysql_fetch_array($result)) {
-                    $structureline  = $row['Field'];
-                    $structureline .= ' '.$row['Type'];
-                    $structureline .= ' '.($row['Null'] ? '' : 'NOT ').'NULL';
-                    if (isset($row['Default'])) {
-                        switch ($row['Type']) {
-                            case 'tinytext':
-                            case 'tinyblob':
-                            case 'text':
-                            case 'blob':
-                            case 'mediumtext':
-                            case 'mediumblob':
-                            case 'longtext':
-                            case 'longblob':
-                            // no default values
-                                break;
-                            default:
-                                $structureline .= ' default \''.$row['Default'].'\'';
-                                break;
-                        }
-                    }
-                    $structureline .= ($row['Extra'] ? ' '.$row['Extra'] : '');
-                    $structurelines[] = $structureline;
-                    $fieldnames[] = $row['Field'];
-                }
-                mysql_free_result($result);
-                $tablekeys    = array();
-                $uniquekeys   = array();
-                $fulltextkeys = array();
-                $result = mysql_query('SHOW KEYS FROM '.$SelectedTables["$dbname"]["$t"]);
-                while ($row = mysql_fetch_array($result)) {
-                    $uniquekeys[$row['Key_name']] = FALSE;
-                    if ($row['Non_unique'] == 0) {
-                        $uniquekeys[$row['Key_name']] = TRUE;
-                    }
-                    $fulltextkeys[$row['Key_name']] = FALSE;
-                    if ($row['Comment'] == 'FULLTEXT') {
-                        $fulltextkeys[$row['Key_name']] = TRUE;
-                    }
-                    $tablekeys[$row['Key_name']][$row['Seq_in_index']] = $row['Column_name'];
-                    ksort($tablekeys[$row['Key_name']]);
-                }
-                mysql_free_result($result);
-                foreach ($tablekeys as $keyname => $keyfieldnames) {
-                    $structureline  = '';
-                    if ($keyname == 'PRIMARY') {
-                        $structureline .= 'PRIMARY ';
-                    } else {
-                        $structureline .= ($fulltextkeys[$keyname] ? 'FULLTEXT ' : '');
-                        $structureline .= ($uniquekeys[$keyname]   ? 'UNIQUE '   : '');
-                    }
-                    $structureline .= 'KEY'.(($keyname == 'PRIMARY') ? '' : ' '.$keyname);
-                    $structureline .= ' ('.implode(',', $keyfieldnames).')';
-                    $structurelines[] = $structureline;
-                }
-                   $tablestructure  = "CREATE TABLE ".$thedbprefix.$SelectedTables["$dbname"]["$t"]." (\n";
-                $tablestructure .= "  ".implode(",\n  ", $structurelines)."\n";
-                $tablestructure .= ");\n\n";
-                $alltablesstructure .= str_replace(' ,', ',', $tablestructure);
+         mysql_select_db($dbname);
+         for ($t = 0; $t < count($SelectedTables["$dbname"]); $t++) {
+             $fieldnames     = array();
+             $structurelines = array();
+             $result = mysql_query('SHOW FIELDS FROM '.$SelectedTables["$dbname"]["$t"]);
+             while ($row = mysql_fetch_array($result)) {
+                 $structureline  = $row['Field'];
+                 $structureline .= ' '.$row['Type'];
+                 $structureline .= ' '.($row['Null'] ? '' : 'NOT ').'NULL';
+                 if (isset($row['Default'])) {
+                     switch ($row['Type']) {
+                         case 'tinytext':
+                         case 'tinyblob':
+                         case 'text':
+                         case 'blob':
+                         case 'mediumtext':
+                         case 'mediumblob':
+                         case 'longtext':
+                         case 'longblob':
+                         // no default values
+                             break;
+                         default:
+                             $structureline .= ' default \''.$row['Default'].'\'';
+                             break;
+                     }
+                 }
+                 $structureline .= ($row['Extra'] ? ' '.$row['Extra'] : '');
+                 $structurelines[] = $structureline;
+                 $fieldnames[] = $row['Field'];
+             }
+             mysql_free_result($result);
+             $tablekeys    = array();
+             $uniquekeys   = array();
+             $fulltextkeys = array();
+             $result = mysql_query('SHOW KEYS FROM '.$SelectedTables["$dbname"]["$t"]);
+             while ($row = mysql_fetch_array($result)) {
+                 $uniquekeys[$row['Key_name']] = FALSE;
+                 if ($row['Non_unique'] == 0) {
+                     $uniquekeys[$row['Key_name']] = TRUE;
+                 }
+                 $fulltextkeys[$row['Key_name']] = FALSE;
+                 if ($row['Comment'] == 'FULLTEXT') {
+                     $fulltextkeys[$row['Key_name']] = TRUE;
+                 }
+                 $tablekeys[$row['Key_name']][$row['Seq_in_index']] = $row['Column_name'];
+                 ksort($tablekeys[$row['Key_name']]);
+             }
+             mysql_free_result($result);
+             foreach ($tablekeys as $keyname => $keyfieldnames) {
+                 $structureline  = '';
+                 if ($keyname == 'PRIMARY') {
+                     $structureline .= 'PRIMARY ';
+                 } else {
+                     $structureline .= ($fulltextkeys[$keyname] ? 'FULLTEXT ' : '');
+                     $structureline .= ($uniquekeys[$keyname]   ? 'UNIQUE '   : '');
+                 }
+                 $structureline .= 'KEY'.(($keyname == 'PRIMARY') ? '' : ' '.$keyname);
+                 $structureline .= ' ('.implode(',', $keyfieldnames).')';
+                 $structurelines[] = $structureline;
+             }
+                $tablestructure  = "CREATE TABLE ".$thedbprefix.$SelectedTables["$dbname"]["$t"]." (\n";
+             $tablestructure .= "  ".implode(",\n  ", $structurelines)."\n";
+             $tablestructure .= ");\n\n";
+             $alltablesstructure .= str_replace(' ,', ',', $tablestructure);
 
-            } // end table structure backup
+         } // end table structure backup
         }
         if ($GZ_enabled) {
-            gzwrite($zp, $alltablesstructure."\n", strlen($alltablesstructure) + strlen("\n"));
+         gzwrite($zp, $alltablesstructure."\n", strlen($alltablesstructure) + strlen("\n"));
         } else {
-            fwrite($fp, $alltablesstructure."\n", strlen($alltablesstructure) + strlen("\n"));
+         fwrite($fp, $alltablesstructure."\n", strlen($alltablesstructure) + strlen("\n"));
         }
 
         if ($startbackup != 'structure') {
-            $processedrows    = 0;
-            foreach ($SelectedTables as $dbname => $value) {
-                mysql_select_db($dbname);
-                for ($t = 0; $t < count($SelectedTables["$dbname"]); $t++) {
-                    $result = mysql_query('SELECT * FROM '.$SelectedTables["$dbname"]["$t"]);
-                    $rows["$t"] = mysql_num_rows($result);
-                    if ($rows["$t"] > 0) {
-                        $tabledatadumpline = "# dumping data for ".$dbname.".".$SelectedTables["$dbname"]["$t"]."\n";
-                        if ($GZ_enabled) {
-                            gzwrite($zp, $tabledatadumpline, strlen($tabledatadumpline));
-                        } else {
-                            fwrite($fp, $tabledatadumpline, strlen($tabledatadumpline));
-                        }
-                    }
-                    unset($fieldnames);
-                    for ($i = 0; $i < mysql_num_fields($result); $i++) {
-                        $fieldnames[] = mysql_field_name($result, $i);
-                    }
-                    if ($startbackup=='complete') {
-                        $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' ('.implode(', ', $fieldnames).') VALUES (';
-                    } else {
-                        $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' VALUES (';
-                    }
-                    $currentrow       = 0;
-                    $thistableinserts = '';
+         $processedrows    = 0;
+         foreach ($SelectedTables as $dbname => $value) {
+             mysql_select_db($dbname);
+             for ($t = 0; $t < count($SelectedTables["$dbname"]); $t++) {
+                 $result = mysql_query('SELECT * FROM '.$SelectedTables["$dbname"]["$t"]);
+                 $rows["$t"] = mysql_num_rows($result);
+                 if ($rows["$t"] > 0) {
+                     $tabledatadumpline = "# dumping data for ".$dbname.".".$SelectedTables["$dbname"]["$t"]."\n";
+                     if ($GZ_enabled) {
+                         gzwrite($zp, $tabledatadumpline, strlen($tabledatadumpline));
+                     } else {
+                         fwrite($fp, $tabledatadumpline, strlen($tabledatadumpline));
+                     }
+                 }
+                 unset($fieldnames);
+                 for ($i = 0; $i < mysql_num_fields($result); $i++) {
+                     $fieldnames[] = mysql_field_name($result, $i);
+                 }
+                 if ($startbackup=='complete') {
+                     $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' ('.implode(', ', $fieldnames).') VALUES (';
+                 } else {
+                     $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' VALUES (';
+                 }
+                 $currentrow       = 0;
+                 $thistableinserts = '';
 
-                    while ($row = mysql_fetch_array($result)) {
-                        unset($valuevalues);
-                        foreach ($fieldnames as $key => $val) {
-                            $valuevalues[] = mysql_escape_string($row["$key"]);
-                        }
-                        $thistableinserts .= $insertstatement.$quotechar.implode($quotechar.", ".$quotechar, $valuevalues).$quotechar.");\n";
+                 while ($row = mysql_fetch_array($result)) {
+                     unset($valuevalues);
+                     foreach ($fieldnames as $key => $val) {
+                         $valuevalues[] = mysql_escape_string($row["$key"]);
+                     }
+                     $thistableinserts .= $insertstatement.$quotechar.implode($quotechar.", ".$quotechar, $valuevalues).$quotechar.");\n";
 
-                        if (strlen($thistableinserts) >= $buffer_size) {
-                            if ($GZ_enabled) {
-                                gzwrite($zp, $thistableinserts, strlen($thistableinserts));
-                            } else {
-                                fwrite($fp, $thistableinserts, strlen($thistableinserts));
-                            }
-                            $thistableinserts = '';
-                        }
+                     if (strlen($thistableinserts) >= $buffer_size) {
+                         if ($GZ_enabled) {
+                             gzwrite($zp, $thistableinserts, strlen($thistableinserts));
+                         } else {
+                             fwrite($fp, $thistableinserts, strlen($thistableinserts));
+                         }
+                         $thistableinserts = '';
+                     }
 
-                        if ((++$currentrow % 1000) == 0) {
-                            // @set_time_limit(60);
-                            $runningstatus[]['message']='<b>'.$SelectedTables["$dbname"]["$t"].' ('.number_format($rows["$t"]).' records, ['.number_format(($currentrow / $rows["$t"])*100).'%])</b>';
-                            $elapsedtime = getmicrotime() - $starttime;
-                            $percentprocessed = ($processedrows + $currentrow) / $overallrows;
-                            $runningstatus[]['message']='Overall Progress: '.number_format($processedrows + $currentrow).' / '.number_format($overallrows).' ('.number_format($percentprocessed * 100, 1).'% done) ['.FormattedTimeRemaining($elapsedtime).' elapsed';
-                            if (($percentprocessed > 0) && ($percentprocessed < 1)) {
-                                $runningstatus[]['message']=', '.FormattedTimeRemaining(abs($elapsedtime - ($elapsedtime / $percentprocessed))).' remaining';
-                            }
-                            $runningstatus[]['message']= ']';
-                            //flush();
+                     if ((++$currentrow % 1000) == 0) {
+                         // @set_time_limit(60);
+                         $runningstatus[]['message']='<b>'.$SelectedTables["$dbname"]["$t"].' ('.number_format($rows["$t"]).' records, ['.number_format(($currentrow / $rows["$t"])*100).'%])</b>';
+                         $elapsedtime = getmicrotime() - $starttime;
+                         $percentprocessed = ($processedrows + $currentrow) / $overallrows;
+                         $runningstatus[]['message']='Overall Progress: '.number_format($processedrows + $currentrow).' / '.number_format($overallrows).' ('.number_format($percentprocessed * 100, 1).'% done) ['.FormattedTimeRemaining($elapsedtime).' elapsed';
+                         if (($percentprocessed > 0) && ($percentprocessed < 1)) {
+                             $runningstatus[]['message']=', '.FormattedTimeRemaining(abs($elapsedtime - ($elapsedtime / $percentprocessed))).' remaining';
+                         }
+                         $runningstatus[]['message']= ']';
+                         //flush();
 
-                        }
-                    }
+                     }
+                 }
 
-                    $runningstatus[]['message']=$SelectedTables["$dbname"]["$t"].' ('.number_format($rows["$t"]).' records, [100%])';
-                    $processedrows += $rows["$t"];
+                 $runningstatus[]['message']=$SelectedTables["$dbname"]["$t"].' ('.number_format($rows["$t"]).' records, [100%])';
+                 $processedrows += $rows["$t"];
 
-                    if ($GZ_enabled) {
-                        gzwrite($zp, $thistableinserts."\n\n", strlen($thistableinserts) + strlen("\n") + strlen("\n"));
-                    } else {
-                        fwrite($fp, $thistableinserts."\n\n", strlen($thistableinserts) + strlen("\n") + strlen("\n"));
-                    }
-                }
-            }
+                 if ($GZ_enabled) {
+                     gzwrite($zp, $thistableinserts."\n\n", strlen($thistableinserts) + strlen("\n") + strlen("\n"));
+                 } else {
+                     fwrite($fp, $thistableinserts."\n\n", strlen($thistableinserts) + strlen("\n") + strlen("\n"));
+                 }
+             }
+         }
         }
         if ($GZ_enabled) {
-            gzclose($zp);
+         gzclose($zp);
         } else {
-            fclose($fp);
+         fclose($fp);
         }
 end the backup that is moved to class
 */
@@ -412,7 +411,7 @@ end the backup that is moved to class
             $items['bkfiletype']=xarML('Structure backup filename: ');
             $items['bkfilename']=$backupabsolutepath.$strubackupfilename;
             $items['bkname']=$strubackupfilename;
-        } else if ($backuptype == 'full') {
+        } elseif ($backuptype == 'full') {
             if (file_exists($backupabsolutepath.$fullbackupfilename)) {
                 unlink($backupabsolutepath.$fullbackupfilename); // Windows won't allow overwriting via rename
             }
@@ -421,7 +420,7 @@ end the backup that is moved to class
             $items['bkfilename']=$backupabsolutepath.$fullbackupfilename;
             $items['bkname']=$fullbackupfilename;
         } else {
-               if (file_exists($backupabsolutepath.$partbackupfilename)) {
+            if (file_exists($backupabsolutepath.$partbackupfilename)) {
                 unlink($backupabsolutepath.$partbackupfilename); // Windows won't allow overwriting via rename
             }
             rename($backupabsolutepath.$tempbackupfilename, $backupabsolutepath.$partbackupfilename);
@@ -429,7 +428,7 @@ end the backup that is moved to class
             $items['bkfilename']=$backupabsolutepath.$partbackupfilename;
             $items['bkname']=$partbackupfilename;
         }
-       $items['bkfilesize']=FileSizeNiceDisplay(filesize($items['bkfilename']), 2);
+        $items['bkfilesize']=FileSizeNiceDisplay(filesize($items['bkfilename']), 2);
         $items['completetime']= FormattedTimeRemaining(getmicrotime() - $starttime, 2);
         $items['deleteurl']="[Click to Delete]";
     } else {
@@ -439,21 +438,21 @@ end the backup that is moved to class
     $items['backuptype']=$backuptype;
     $items['btype']=$btype;
 
-   //Return data for display
-   return $items;
+    //Return data for display
+    return $items;
 }
  //A few formatting functions
  function FormattedTimeRemaining($seconds, $precision=1)
  {
-    if ($seconds > 86400) {
-        return number_format($seconds / 86400, $precision).' days';
-    } else if ($seconds > 3600) {
-        return number_format($seconds / 3600, $precision).' hours';
-    } else if ($seconds > 60) {
-        return number_format($seconds / 60, $precision).' minutes';
-    }
-    return number_format($seconds, $precision).' seconds';
-}
+     if ($seconds > 86400) {
+         return number_format($seconds / 86400, $precision).' days';
+     } elseif ($seconds > 3600) {
+         return number_format($seconds / 3600, $precision).' hours';
+     } elseif ($seconds > 60) {
+         return number_format($seconds / 60, $precision).' minutes';
+     }
+     return number_format($seconds, $precision).' seconds';
+ }
 function FileSizeNiceDisplay($filesize, $precision=2)
 {
     if ($filesize < 1000) {
@@ -473,4 +472,3 @@ function FileSizeNiceDisplay($filesize, $precision=2)
     }
     return number_format($filesize, $precision).' '.$sizeunit;
 }
-?>

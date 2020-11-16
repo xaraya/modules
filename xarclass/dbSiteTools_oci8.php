@@ -10,7 +10,7 @@
  */
 
 /**
- * SiteTools Database abstraction class extension 
+ * SiteTools Database abstraction class extension
  *
  * @author Richard Cave <rcave@xaraya.com>
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
@@ -20,19 +20,17 @@ sys::import('modules.sitetools.xarclass.dbSiteTools');
 
 class dbSiteTools_oci8 extends dbSiteTools
 {
-    function _optimize()
+    public function _optimize()
     {
         $rowinfo = array();
 
         // Do something
 
-        return $rowinfo; 
+        return $rowinfo;
     }
 
-    function _backup()
+    public function _backup()
     {
         return true;
     }
 }
-
-?>

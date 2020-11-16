@@ -27,7 +27,9 @@ function sitetools_adminapi_countitems()
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     // Obtain the number of items
     list($numitems) = $result->fields;
     // All successful database queries produce a result set, and that result
@@ -36,4 +38,3 @@ function sitetools_adminapi_countitems()
     // Return the number of items
     return $numitems;
 }
-?>

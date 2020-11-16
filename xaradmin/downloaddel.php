@@ -16,53 +16,55 @@
  *@parameter $bkfile is the name of the backup file
  *
 */
-function sitetools_admin_downloaddel ($args)
+function sitetools_admin_downloaddel($args)
 {
-   if (!xarVarFetch('savefile', 'str:1', $savefile,'')) return;
-
-   /* Security checkn*/
-   if (!xarSecurityCheck('AdminSiteTools')) return;
-
-   if ((!isset($savefile)) || (empty($savefile))) {
-       // Handle the user exceptions yourself
-       $status = xarML('The file to delete does not exist.');
-       $reason = xarCurrentError();
-       if (!empty($reason)) {
-          $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
-       }
-       /* Free the exception to tell Xaraya that you handled it */
-       xarErrorFree();
-       return $status;
-  }
-   $info=array();
-   /*check the file exists */
-   $pathtofile=xarModVars::get('sitetools','backuppath');
-
-  $filetodelete = $pathtofile.'/'.$savefile;
-
-  if (!file_exists($filetodelete)) {
-        /* Handle the user exceptions yourself */
-       $status = xarML('The file to delete does not exist.');
-       $reason = xarCurrentError();
-       if (!empty($reason)) {
-          $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
-       }
-       /* Free the exception to tell Xaraya that you handled it */
-       xarErrorFree();
-       return $status;
-  }
-
-
- $filedeleted=unlink($filetodelete);
- if ($filedeleted) {
-        $info['outcome']=true;
-
-    } else {
-           $info['outcome']=false;
+    if (!xarVarFetch('savefile', 'str:1', $savefile, '')) {
+        return;
     }
 
- $info['filedeleted']=$filetodelete;
+    /* Security checkn*/
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
 
-return $info;
+    if ((!isset($savefile)) || (empty($savefile))) {
+        // Handle the user exceptions yourself
+        $status = xarML('The file to delete does not exist.');
+        $reason = xarCurrentError();
+        if (!empty($reason)) {
+            $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
+        }
+        /* Free the exception to tell Xaraya that you handled it */
+        xarErrorFree();
+        return $status;
+    }
+    $info=array();
+    /*check the file exists */
+    $pathtofile=xarModVars::get('sitetools', 'backuppath');
+
+    $filetodelete = $pathtofile.'/'.$savefile;
+
+    if (!file_exists($filetodelete)) {
+        /* Handle the user exceptions yourself */
+        $status = xarML('The file to delete does not exist.');
+        $reason = xarCurrentError();
+        if (!empty($reason)) {
+            $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
+        }
+        /* Free the exception to tell Xaraya that you handled it */
+        xarErrorFree();
+        return $status;
+    }
+
+
+    $filedeleted=unlink($filetodelete);
+    if ($filedeleted) {
+        $info['outcome']=true;
+    } else {
+        $info['outcome']=false;
+    }
+
+    $info['filedeleted']=$filetodelete;
+
+    return $info;
 }
-?>

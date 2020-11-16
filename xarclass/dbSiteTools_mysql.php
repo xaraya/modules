@@ -18,7 +18,7 @@ sys::import('modules.sitetools.xarclass.dbSiteTools');
 
 class dbSiteTools_mysql extends dbSiteTools
 {
-    function _optimize()
+    public function _optimize()
     {
         $tot_data = 0;
         $tot_idx = 0;
@@ -28,74 +28,75 @@ class dbSiteTools_mysql extends dbSiteTools
         $gain=0;
         $rowinfo['total_gain']=0;
         $rowinfo['total_kbs']=0;
-        $version=substr(mysql_get_server_info(),0,3);
+        $version=substr(mysql_get_server_info(), 0, 3);
         $local_query = 'SHOW TABLE STATUS FROM '.$this->dbname;
         $result      = @mysql_query($local_query);
         if (@mysql_num_rows($result)) {
             while ($row = mysql_fetch_array($result)) {
                 if ($version>='4.1') {
-                  $rowdata[]=array('rowname' => $row[0],
+                    $rowdata[]=array('rowname' => $row[0],
                                     'totaldata'  => $row[6],
                                     'totalidx'   => $row[8],
                                     'gain'       => $row[9]);
                 } else {
-                   $rowdata[]=array('rowname' => $row[0],
+                    $rowdata[]=array('rowname' => $row[0],
                                     'totaldata'  => $row[5],
                                     'totalidx'   => $row[7],
                                     'gain'       => $row[8]);
                 }
                 $local_query = 'OPTIMIZE TABLE '.$row[0];
                 $resultat  = mysql_query($local_query);
-           }
+            }
         }
 
-        if (!$resultat) {return false;}
+        if (!$resultat) {
+            return false;
+        }
                                                                                            
         $rowinfo = array();
         foreach ($rowdata as $datum) {
             $total = $datum['totaldata'] + $datum['totalidx'];
             $total = $total/1024;
-            $total = round($total,3);
+            $total = round($total, 3);
             $gain  = $datum['gain']/1024;
             $total_gain += $gain;
             $total_kbs  += $total;
-            $gain  = round ($gain,3);
+            $gain  = round($gain, 3);
             $rowinfo['rowdata'][]=array('total' => $total,
                                         'gain'  => $gain,
                                         'tablename' => $datum['rowname']);
-         }
+        }
         $rowinfo['total_gain']=$total_gain;
         $rowinfo['total_kbs']=$total_kbs;
         $rowinfo['dbname']=$this->dbname;
 
         return $rowinfo;
-
     }
 
-    function _selecttables()
+    public function _selecttables()
     {
         $tables = mysql_list_tables($this->dbname);
-            if (is_resource($tables)) {
-                $tablecounter = 0;
-                      while (list($tablename) = mysql_fetch_array($tables)) {
-                        $SelectedTables["$this->dbname"][] = $tablename;
-                        }
+        if (is_resource($tables)) {
+            $tablecounter = 0;
+            while (list($tablename) = mysql_fetch_array($tables)) {
+                $SelectedTables["$this->dbname"][] = $tablename;
             }
+        }
         $this->SelectedTables = $SelectedTables;
         return $SelectedTables;
     }
 
-    function _checktables($SelectedTables)
+    public function _checktables($SelectedTables)
     {
         foreach ($SelectedTables as $this->dbname => $selectedtablesarray) {
-               mysql_select_db($this->dbname);
+            mysql_select_db($this->dbname);
             foreach ($selectedtablesarray as $selectedtablename) {
                 $result = mysql_query('CHECK TABLE '.$selectedtablename);
                 while ($row = mysql_fetch_array($result)) {
                     if ($row['Msg_text'] == 'OK') {
                         mysql_query('OPTIMIZE TABLE '.$selectedtablename);
                     } else {
-                         $TableErrors[] = $row['Table'].' ['.$row['Msg_type'].'] '.$row['Msg_text'];
+                        $TableErrors[] = $row['Table'].' ['.$row['Msg_type'].'] '.$row['Msg_text'];
                         if (!isset($TableErrorTables) || !is_array($TableErrorTables) || !in_array($this->dbname.'.'.$selectedtablename, $TableErrorTables)) {
                             $TableErrorDB[]     = $this->dbname;
                             $TableErrorTables[] = $selectedtablename;
@@ -111,18 +112,17 @@ class dbSiteTools_mysql extends dbSiteTools
                 mysql_select_db($TableErrorDB["$t"]);
                 $fixresult = mysql_query('REPAIR TABLE '.$TableErrorTables["$t"].' EXTENDED');
                 while ($fixrow = mysql_fetch_array($fixresult)) {
-                   $TableErrors[] = $fixrow['Table'].' ['.$fixrow['Msg_type'].'] '.$fixrow['Msg_text'];
+                    $TableErrors[] = $fixrow['Table'].' ['.$fixrow['Msg_type'].'] '.$fixrow['Msg_text'];
                 }
             }
-        return $TableErrors;
-
+            return $TableErrors;
         }
     }
 
-    function _bkcountoverallrows($SelectedTables,$number_of_cols)
-    {  
-       $overallrows=0;
-       foreach ($SelectedTables as $this->dbname => $value) {
+    public function _bkcountoverallrows($SelectedTables, $number_of_cols)
+    {
+        $overallrows=0;
+        foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
             $tablecounter = 1;
             for ($t = 0; $t < count($SelectedTables["$this->dbname"]); $t++) {
@@ -140,9 +140,8 @@ class dbSiteTools_mysql extends dbSiteTools
         return $overallrows;
     }
     
-    function _backup($bkvars)
+    public function _backup($bkvars)
     {
-
         $SelectedTables =$bkvars['SelectedTables'];
         $GZ_enabled =$bkvars['GZ_enabled'];
         $number_of_cols =$bkvars['number_of_cols'];
@@ -157,7 +156,7 @@ class dbSiteTools_mysql extends dbSiteTools
         $buffer_size=$bkvars['buffer_size'];
         $runningstatus=$bkvars['runningstatus'];
         $starttime=$bkvars['starttime'];
-        $screen=$bkvars['screen']; 
+        $screen=$bkvars['screen'];
 
         foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
@@ -196,13 +195,13 @@ class dbSiteTools_mysql extends dbSiteTools
                 $fulltextkeys = array();
                 $result = mysql_query('SHOW KEYS FROM '.$SelectedTables["$this->dbname"]["$t"]);
                 while ($row = mysql_fetch_array($result)) {
-                    $uniquekeys[$row['Key_name']] = FALSE;
+                    $uniquekeys[$row['Key_name']] = false;
                     if ($row['Non_unique'] == 0) {
-                        $uniquekeys[$row['Key_name']] = TRUE;
+                        $uniquekeys[$row['Key_name']] = true;
                     }
-                    $fulltextkeys[$row['Key_name']] = FALSE;
+                    $fulltextkeys[$row['Key_name']] = false;
                     if ($row['Comment'] == 'FULLTEXT') {
-                        $fulltextkeys[$row['Key_name']] = TRUE;
+                        $fulltextkeys[$row['Key_name']] = true;
                     }
                     $tablekeys[$row['Key_name']][$row['Seq_in_index']] = $row['Column_name'];
                     ksort($tablekeys[$row['Key_name']]);
@@ -220,11 +219,10 @@ class dbSiteTools_mysql extends dbSiteTools
                     $structureline .= ' ('.implode(',', $keyfieldnames).')';
                     $structurelines[] = $structureline;
                 }
-                   $tablestructure  = "CREATE TABLE ".$thedbprefix.$SelectedTables["$this->dbname"]["$t"]." (\n";
+                $tablestructure  = "CREATE TABLE ".$thedbprefix.$SelectedTables["$this->dbname"]["$t"]." (\n";
                 $tablestructure .= "  ".implode(",\n  ", $structurelines)."\n";
                 $tablestructure .= ");\n\n";
                 $alltablesstructure .= str_replace(' ,', ',', $tablestructure);
-
             } // end table structure backup
         }
         if ($GZ_enabled) {
@@ -287,7 +285,6 @@ class dbSiteTools_mysql extends dbSiteTools
                             }
                             $runningstatus[]['message']= ']';
                             //flush();
-
                         }
                     }
 
@@ -308,10 +305,6 @@ class dbSiteTools_mysql extends dbSiteTools
             fclose($fp);
         }
 
-    return $runningstatus;
+        return $runningstatus;
     }
-
-
 }
-
-?>

@@ -16,7 +16,7 @@
 */
 function sitetools_adminapi_getall($args)
 {
-   extract($args);
+    extract($args);
 
     if (!isset($startnum)) {
         $startnum = 1;
@@ -25,7 +25,7 @@ function sitetools_adminapi_getall($args)
         $numitems = -1;
     }
 
-        $invalid = array();
+    $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
     }
@@ -33,13 +33,23 @@ function sitetools_adminapi_getall($args)
         $invalid[] = 'numitems';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'Example');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'user',
+            'getall',
+            'Example'
+        );
+        xarErrorSet(
+            XAR_SYSTEM_EXCEPTION,
+            'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
     $items = array();
 
     // Get database setup
@@ -53,8 +63,10 @@ function sitetools_adminapi_getall($args)
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return;
-     for (; !$result->EOF; $result->MoveNext()) {
+    if (!$result) {
+        return;
+    }
+    for (; !$result->EOF; $result->MoveNext()) {
         list($stid, $stgain) = $result->fields;
         if (xarSecurityCheck('AdminSiteTools')) {
             $items[] = array('stid' => $stid,
@@ -67,4 +79,3 @@ function sitetools_adminapi_getall($args)
     // Return the number of items
     return $items;
 }
-?>

@@ -23,20 +23,22 @@ function sitetools_admin_modifyconfig()
      */
     $data = xarModAPIFunc('sitetools', 'admin', 'menu');
     /* Security check - important to do this as early as possible */
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     /* Specify some labels and values for display */
-    $data['adopath']     = xarModVars::get('sitetools','adocachepath');
-    $data['rsspath']     = xarModVars::get('sitetools','rsscachepath');
-    $data['templpath']   = xarModVars::get('sitetools','templcachepath');
-    $data['backuppath']  = xarModVars::get('sitetools','backuppath');
-    $data['usetimestamp']= xarModVars::get('sitetools','timestamp');
-    $data['lineterm']    = xarModVars::get('sitetools','lineterm');
-    $data['colnumber']    = xarModVars::get('sitetools','colnumber');
-    $data['defaultbktype'] = xarModVars::get('sitetools','defaultbktype');
-    $data['defaultbktype'] = xarModVars::get('sitetools','defaultbktype');
-    $data['usedbprefix']    = xarModVars::get('sitetools','usedbprefix');
+    $data['adopath']     = xarModVars::get('sitetools', 'adocachepath');
+    $data['rsspath']     = xarModVars::get('sitetools', 'rsscachepath');
+    $data['templpath']   = xarModVars::get('sitetools', 'templcachepath');
+    $data['backuppath']  = xarModVars::get('sitetools', 'backuppath');
+    $data['usetimestamp']= xarModVars::get('sitetools', 'timestamp');
+    $data['lineterm']    = xarModVars::get('sitetools', 'lineterm');
+    $data['colnumber']    = xarModVars::get('sitetools', 'colnumber');
+    $data['defaultbktype'] = xarModVars::get('sitetools', 'defaultbktype');
+    $data['defaultbktype'] = xarModVars::get('sitetools', 'defaultbktype');
+    $data['usedbprefix']    = xarModVars::get('sitetools', 'usedbprefix');
 
     $data['defadopath']   = sys::varpath()."/cache/adodb";
     $data['defrsspath']   = sys::varpath()."/cache/rss";
@@ -49,19 +51,22 @@ function sitetools_admin_modifyconfig()
     $data['schedule']['backup']=xarML('Run Backup Job');
 
     if (xarModIsAvailable('scheduler')) {
-        $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+        $data['intervals'] = xarModAPIFunc('scheduler', 'user', 'intervals');
         $data['interval'] = array();
         foreach ($schedulerapi as $func) {
             // see if we have a scheduler job running to execute this function
-            $job = xarModAPIFunc('scheduler','user','get',
-                                 array('module' => 'sitetools',
+            $job = xarModAPIFunc(
+                'scheduler',
+                'user',
+                'get',
+                array('module' => 'sitetools',
                                        'type' => 'scheduler',
-                                       'func' => $func));
+                                       'func' => $func)
+            );
             if (empty($job) || empty($job['interval'])) {
                 $data['interval'][$func] = '';
             } else {
                 $data['interval'][$func] = $job['interval'];
-
             }
         }
     } else {
@@ -69,8 +74,12 @@ function sitetools_admin_modifyconfig()
         $data['interval'] = array();
     }
 
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'sitetools',
-        array('module' => 'sitetools'));
+    $hooks = xarModCallHooks(
+        'module',
+        'modifyconfig',
+        'sitetools',
+        array('module' => 'sitetools')
+    );
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -79,7 +88,6 @@ function sitetools_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
 
-   /*Return the template variables defined in this function */
- return $data;
+    /*Return the template variables defined in this function */
+    return $data;
 }
-?>

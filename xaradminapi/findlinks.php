@@ -22,13 +22,15 @@ function sitetools_adminapi_findlinks($args)
 {
     extract($args);
 
-    if (!isset($skiplocal)) $skiplocal = false;
+    if (!isset($skiplocal)) {
+        $skiplocal = false;
+    }
 
     // load APIs for table names etc.
-    xarModAPILoad('roles','user');
-    xarModAPILoad('dynamicdata','user');
+    xarModAPILoad('roles', 'user');
+    xarModAPILoad('dynamicdata', 'user');
     if (xarModIsAvailable('articles')) {
-        xarModAPILoad('articles','user');
+        xarModAPILoad('articles', 'user');
     }
 
     $dbconn = xarDB::getConn();
@@ -39,7 +41,9 @@ function sitetools_adminapi_findlinks($args)
     // remove old links from the database
     $query = "DELETE FROM $linkstable";
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $count = array();
 
@@ -49,7 +53,7 @@ function sitetools_adminapi_findlinks($args)
     if (!empty($fields['articles']) && xarModIsAvailable('articles')) {
         $modid = xarMod::getRegID('articles');
         $articlestable = $xartable['articles'];
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
 
         foreach ($fields['articles'] as $ptid => $fieldlist) {
             $descr = $pubtypes[$ptid]['descr'];
@@ -59,7 +63,7 @@ function sitetools_adminapi_findlinks($args)
             // get the list of defined columns for articles
             $columns = array_keys($pubtypes[$ptid]['config']);
             foreach ($fieldlist as $field) {
-                if (in_array($field,$columns)) {
+                if (in_array($field, $columns)) {
                     $articlefields[] = $field;
                 } else {
                     $dynamicfields[] = $field;
@@ -70,14 +74,22 @@ function sitetools_adminapi_findlinks($args)
                 foreach ($articlefields as $field) {
                     $where[] = $field . " ne ''";
                 }
-                $whereclause = join(' or ',$where);
+                $whereclause = join(' or ', $where);
                 $getfields = $articlefields;
-                if (!in_array('aid',$getfields)) $getfields[] = 'aid';
-                if (!in_array('title',$getfields)) $getfields[] = 'title';
-                $items = xarModAPIFunc('articles','user','getall',
-                                       array('ptid' => $ptid,
+                if (!in_array('aid', $getfields)) {
+                    $getfields[] = 'aid';
+                }
+                if (!in_array('title', $getfields)) {
+                    $getfields[] = 'title';
+                }
+                $items = xarModAPIFunc(
+                    'articles',
+                    'user',
+                    'getall',
+                    array('ptid' => $ptid,
                                              'fields' => $getfields,
-                                             'where' => $whereclause));
+                                             'where' => $whereclause)
+                );
                 $serialized = array();
                 foreach ($articlefields as $field) {
                     if ($pubtypes[$ptid]['config'][$field]['format'] == 'urltitle') {
@@ -85,26 +97,36 @@ function sitetools_adminapi_findlinks($args)
                     }
                 }
                 foreach ($items as $item) {
-                    $url = xarModURL('articles','user','display',
-                                     array('aid' => $item['aid']));
+                    $url = xarModURL(
+                        'articles',
+                        'user',
+                        'display',
+                        array('aid' => $item['aid'])
+                    );
                     foreach ($articlefields as $field) {
-                        if (empty($item[$field])) continue;
+                        if (empty($item[$field])) {
+                            continue;
+                        }
                         if (!empty($serialized[$field])) {
                             $info = unserialize($item[$field]);
-                            if (empty($info['link'])) continue;
+                            if (empty($info['link'])) {
+                                continue;
+                            }
                             $item[$field] = $info['link'];
                         }
                         if ($skiplocal &&
-                            (!strstr($item[$field],'://') ||
-                              preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
+                            (!strstr($item[$field], '://') ||
+                              preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!", $item[$field]))) {
                             continue;
                         }
                         $id = $dbconn->GenId($linkstable);
                         $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                         $bindvars = array($id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url);
-                        $result =& $dbconn->Execute($query,$bindvars);
-                        if (!$result) return;
+                        $result =& $dbconn->Execute($query, $bindvars);
+                        if (!$result) {
+                            return;
+                        }
                         $count[$descr]++;
                     }
                 }
@@ -114,7 +136,7 @@ function sitetools_adminapi_findlinks($args)
                 foreach ($dynamicfields as $field) {
                     $where[] = $field . " ne ''";
                 }
-                $whereclause = join(' or ',$where);
+                $whereclause = join(' or ', $where);
                 $object = new Dynamic_Object_List(array('moduleid' => $modid,
                                                         'itemtype' => $ptid,
                                                         'fieldlist' => $fieldlist,
@@ -130,26 +152,36 @@ function sitetools_adminapi_findlinks($args)
                     }
                 }
                 foreach ($items as $item) {
-                    $url = xarModURL('articles','user','display',
-                                     array('aid' => $item['aid']));
+                    $url = xarModURL(
+                        'articles',
+                        'user',
+                        'display',
+                        array('aid' => $item['aid'])
+                    );
                     foreach ($dynamicfields as $field) {
-                        if (empty($item[$field])) continue;
+                        if (empty($item[$field])) {
+                            continue;
+                        }
                         if (!empty($serialized[$field])) {
                             $info = unserialize($item[$field]);
-                            if (empty($info['link'])) continue;
+                            if (empty($info['link'])) {
+                                continue;
+                            }
                             $item[$field] = $info['link'];
                         }
                         if ($skiplocal &&
-                            (!strstr($item[$field],'://') ||
-                              preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
+                            (!strstr($item[$field], '://') ||
+                              preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!", $item[$field]))) {
                             continue;
                         }
                         $id = $dbconn->GenId($linkstable);
                         $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                         $bindvars = array($id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url);
-                        $result =& $dbconn->Execute($query,$bindvars);
-                        if (!$result) return;
+                        $result =& $dbconn->Execute($query, $bindvars);
+                        if (!$result) {
+                            return;
+                        }
                         $count[$descr]++;
                     }
                 }
@@ -169,7 +201,7 @@ function sitetools_adminapi_findlinks($args)
             foreach ($fieldlist as $field) {
                 $where[] = $field . " ne ''";
             }
-            $whereclause = join(' or ',$where);
+            $whereclause = join(' or ', $where);
             $object = new Dynamic_Object_List(array('moduleid' => $modid,
                                                     'itemtype' => $itemtype,
                                                     'fieldlist' => $fieldlist,
@@ -186,26 +218,36 @@ function sitetools_adminapi_findlinks($args)
             }
             $count[$descr[$itemtype]] = 0;
             foreach ($items as $itemid => $item) {
-                $url = xarModURL('roles','user','display',
-                                 array('uid' => $itemid));
+                $url = xarModURL(
+                    'roles',
+                    'user',
+                    'display',
+                    array('uid' => $itemid)
+                );
                 foreach ($fieldlist as $field) {
-                    if (empty($item[$field])) continue;
+                    if (empty($item[$field])) {
+                        continue;
+                    }
                     if (!empty($serialized[$field])) {
                         $info = unserialize($item[$field]);
-                        if (empty($info['link'])) continue;
+                        if (empty($info['link'])) {
+                            continue;
+                        }
                         $item[$field] = $info['link'];
                     }
                     if ($skiplocal &&
-                        (!strstr($item[$field],'://') ||
-                          preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
+                        (!strstr($item[$field], '://') ||
+                          preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!", $item[$field]))) {
                         continue;
                     }
                     $id = $dbconn->GenId($linkstable);
                     $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                     $bindvars = array($id, $item[$field], 0, $modid, $itemtype, $itemid, $item['name'], $url);
-                    $result =& $dbconn->Execute($query,$bindvars);
-                    if (!$result) return;
+                    $result =& $dbconn->Execute($query, $bindvars);
+                    if (!$result) {
+                        return;
+                    }
                     $count[$descr[$itemtype]]++;
                 }
             }
@@ -214,4 +256,3 @@ function sitetools_adminapi_findlinks($args)
     // TODO: find links for ...
     return $count;
 }
-?>

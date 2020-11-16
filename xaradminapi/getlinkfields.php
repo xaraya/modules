@@ -18,7 +18,7 @@
 */
 sys::import('modules.dynamicdata.class.properties.master');
 function sitetools_adminapi_getlinkfields($args)
-{ 
+{
     extract($args);
 
     $modules = array();
@@ -27,14 +27,15 @@ function sitetools_adminapi_getlinkfields($args)
 
     // find relevant fields for articles
     if (xarModIsAvailable('articles')) {
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
-        $fieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+        $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+        $fieldformats = xarModAPIFunc('articles', 'user', 'getpubfieldformats');
         foreach ($pubtypes as $pubid => $pubtype) {
             $fields = array();
             foreach ($pubtype['config'] as $field => $info) {
-                if (empty($info['label'])) continue;
-                switch ($info['format'])
-                {
+                if (empty($info['label'])) {
+                    continue;
+                }
+                switch ($info['format']) {
                     case 'url':
                     case 'image':
                 // skip imagelists here
@@ -53,13 +54,16 @@ function sitetools_adminapi_getlinkfields($args)
                         break;
                 }
             }
-            $object = xarModAPIFunc('dynamicdata','user','getobject',
-                                    array('module' => 'articles',
-                                          'itemtype' => $pubid));
+            $object = xarModAPIFunc(
+                'dynamicdata',
+                'user',
+                'getobject',
+                array('module' => 'articles',
+                                          'itemtype' => $pubid)
+            );
             if (!empty($object) && count($object->properties) > 0) {
                 foreach ($object->properties as $name => $property) {
-                    switch ($proptypes[$property->type]['name'])
-                    {
+                    switch ($proptypes[$property->type]['name']) {
                         case 'url':
                         case 'image':
                     // skip imagelists here
@@ -83,13 +87,16 @@ function sitetools_adminapi_getlinkfields($args)
 
     // find relevant fields for roles
     // only 1 itemtype for now, but groups might have separate DD fields later on
-    $rolesobject = xarModAPIFunc('dynamicdata','user','getobject',
-                                 array('module' => 'roles'));
+    $rolesobject = xarModAPIFunc(
+        'dynamicdata',
+        'user',
+        'getobject',
+        array('module' => 'roles')
+    );
     if (!empty($rolesobject) && count($rolesobject->properties) > 0) {
         $fields = array();
         foreach ($rolesobject->properties as $name => $property) {
-            switch ($proptypes[$property->type]['name'])
-            {
+            switch ($proptypes[$property->type]['name']) {
                 case 'url':
                 case 'image':
             // skip imagelists here
@@ -114,5 +121,3 @@ function sitetools_adminapi_getlinkfields($args)
 
     return $modules;
 }
-
-?>

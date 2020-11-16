@@ -18,19 +18,33 @@
  */
 function sitetools_admin_links()
 {
-    if (!xarVarFetch('find', 'str:1:', $find, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('check', 'str:1:', $check, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('find', 'str:1:', $find, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('check', 'str:1:', $check, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     /* Security check */
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
 
     $data = array();
 
-    $data['checked'] = xarModVars::get('sitetools','links_checked');
-    if (!xarVarFetch('startnum', 'str:1:', $data['startnum'], '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sort', 'str:1:', $data['sort'], '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str:1:', $status, '', XARVAR_NOT_REQUIRED)) return;
+    $data['checked'] = xarModVars::get('sitetools', 'links_checked');
+    if (!xarVarFetch('startnum', 'str:1:', $data['startnum'], '1', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('sort', 'str:1:', $data['sort'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('status', 'str:1:', $status, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     if (!empty($filter)) {
         $data['where'] = 'status ne 200';
     } elseif (!empty($status) && is_numeric($status)) {
@@ -40,15 +54,17 @@ function sitetools_admin_links()
     }
 
     /* get the list of relevant link fields per module/itemtype */
-    $data['modules'] = xarModAPIFunc('sitetools','admin','getlinkfields');
-    if (!isset($data['modules'])) return;
+    $data['modules'] = xarModAPIFunc('sitetools', 'admin', 'getlinkfields');
+    if (!isset($data['modules'])) {
+        return;
+    }
 
     if (empty($find)) {
-        $todo = xarModVars::get('sitetools','links_todo');
+        $todo = xarModVars::get('sitetools', 'links_todo');
         if (!empty($todo)) {
             $data['todo'] = unserialize($todo);
         }
-        $count = xarModVars::get('sitetools','links_count');
+        $count = xarModVars::get('sitetools', 'links_count');
         $data['total'] = 0;
         if (!empty($count)) {
             $data['count'] = unserialize($count);
@@ -68,7 +84,9 @@ function sitetools_admin_links()
     }
 
     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     if (!empty($check)) {
         /* let's run without interruptions for a while :) */
@@ -84,8 +102,8 @@ function sitetools_admin_links()
         register_shutdown_function('sitetools_admin_startcheck');
 
         /* try to force a reload (still doesn't work for Windows servers) */
-        $url = xarModURL('sitetools','admin','links');
-        $url = preg_replace('/&amp;/','&',$url);
+        $url = xarModURL('sitetools', 'admin', 'links');
+        $url = preg_replace('/&amp;/', '&', $url);
         header("Refresh: 0; URL=$url");
 
         $data['checked'] = xarML('Link check started');
@@ -99,25 +117,47 @@ function sitetools_admin_links()
 
     @set_time_limit(120);
 
-    if (!xarVarFetch('todo', 'isset', $todo, array(), XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('skiplocal', 'isset', $skiplocal, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('method', 'isset', $method, 'GET', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('follow', 'isset', $follow, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('todo', 'isset', $todo, array(), XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('skiplocal', 'isset', $skiplocal, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('method', 'isset', $method, 'GET', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('follow', 'isset', $follow, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // build up field list per module & itemtype
     $fields = array();
     foreach ($todo as $field => $val) {
-        if (empty($val)) continue;
-        if (!preg_match('/^(\w+)\.(\d+)\.(\w+)/',$field,$matches)) continue;
-        if (!isset($fields[$matches[1]])) $fields[$matches[1]] = array();
-        if (!isset($fields[$matches[1]][$matches[2]])) $fields[$matches[1]][$matches[2]] = array();
+        if (empty($val)) {
+            continue;
+        }
+        if (!preg_match('/^(\w+)\.(\d+)\.(\w+)/', $field, $matches)) {
+            continue;
+        }
+        if (!isset($fields[$matches[1]])) {
+            $fields[$matches[1]] = array();
+        }
+        if (!isset($fields[$matches[1]][$matches[2]])) {
+            $fields[$matches[1]][$matches[2]] = array();
+        }
         $fields[$matches[1]][$matches[2]][] = $matches[3];
     }
     /* find the links in the different fields and save them to the database */
-    $data['count'] = xarModAPIFunc('sitetools','admin','findlinks',
-                                   array('fields' => $fields,
-                                         'skiplocal' => $skiplocal));
-    if (!isset($data['count'])) return;
+    $data['count'] = xarModAPIFunc(
+        'sitetools',
+        'admin',
+        'findlinks',
+        array('fields' => $fields,
+                                         'skiplocal' => $skiplocal)
+    );
+    if (!isset($data['count'])) {
+        return;
+    }
 
     $data['total'] = 0;
     foreach ($data['count'] as $module => $numitems) {
@@ -126,16 +166,16 @@ function sitetools_admin_links()
 
     $data['todo'] = $todo;
 
-    xarModVars::set('sitetools','links_todo',serialize($data['todo']));
-    xarModVars::set('sitetools','links_count',serialize($data['count']));
-    xarModVars::set('sitetools','links_skiplocal',$skiplocal);
-    xarModVars::set('sitetools','links_method',$method);
-    xarModVars::set('sitetools','links_follow',$follow);
+    xarModVars::set('sitetools', 'links_todo', serialize($data['todo']));
+    xarModVars::set('sitetools', 'links_count', serialize($data['count']));
+    xarModVars::set('sitetools', 'links_skiplocal', $skiplocal);
+    xarModVars::set('sitetools', 'links_method', $method);
+    xarModVars::set('sitetools', 'links_follow', $follow);
 
     /* some clean-up of previous link checks */
     if (!empty($data['checked'])) {
         $data['checked'] = '';
-        xarModDelVar('sitetools','links_checked');
+        xarModDelVar('sitetools', 'links_checked');
     }
 
     /* Generate a one-time authorisation code for this operation */
@@ -157,13 +197,15 @@ function sitetools_admin_startcheck()
         chdir($GLOBALS['xarSitetools_BaseDir']);
     }
 
-    $skiplocal = xarModVars::get('sitetools','links_skiplocal');
-    $method = xarModVars::get('sitetools','links_method');
-    $follow = xarModVars::get('sitetools','links_follow');
-    xarModAPIFunc('sitetools','admin','checklinks',
-                  array('skiplocal' => $skiplocal,
+    $skiplocal = xarModVars::get('sitetools', 'links_skiplocal');
+    $method = xarModVars::get('sitetools', 'links_method');
+    $follow = xarModVars::get('sitetools', 'links_follow');
+    xarModAPIFunc(
+        'sitetools',
+        'admin',
+        'checklinks',
+        array('skiplocal' => $skiplocal,
                         'method' => $emthod,
-                        'follow' => $follow));
+                        'follow' => $follow)
+    );
 }
-
-?>

@@ -35,5 +35,3 @@ function sitetools_xartables()
     /* Return the table information */
     return $xarTables;
 }
-
-?>

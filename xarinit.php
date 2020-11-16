@@ -38,15 +38,20 @@ function sitetools_init()
                 );
 
     $query = xarDBCreateTable($sitetoolstable, $fields);
-    if (empty($query)) return; // throw back
+    if (empty($query)) {
+        return;
+    } // throw back
 
     /* Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful */
     $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $linkstable = $xartable['sitetools_links'];
-    $query = xarDBCreateTable($linkstable,
-                             array('xar_id'         => array('type'        => 'integer',
+    $query = xarDBCreateTable(
+        $linkstable,
+        array('xar_id'         => array('type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
                                                             'primary_key' => true),
@@ -77,13 +82,18 @@ function sitetools_init()
                                                             'size'        => 254,
                                                             'null'        => false,
                                                             'default'     => ''),
-                                  ));
+                                  )
+    );
 
-    if (empty($query)) return;
+    if (empty($query)) {
+        return;
+    }
 
     /* Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful */
     $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     /* allow several entries for the same link here */
     $index = array(
@@ -91,9 +101,11 @@ function sitetools_init()
         'fields'    => array('xar_link'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($linkstable,$index);
+    $query = xarDBCreateIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     /* allow several links for the same module item */
     $index = array(
@@ -101,9 +113,11 @@ function sitetools_init()
         'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($linkstable,$index);
+    $query = xarDBCreateIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     /* allow many entries with the same status here */
     $index = array(
@@ -111,16 +125,24 @@ function sitetools_init()
         'fields'    => array('xar_status'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($linkstable,$index);
+    $query = xarDBCreateIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     /* create the dynamic object that will represent our items */
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => sys::code() . 'modules/sitetools/sitetools_links.xml'));
-    if (empty($objectid)) return;
+    $objectid = xarModAPIFunc(
+        'dynamicdata',
+        'util',
+        'import',
+        array('file' => sys::code() . 'modules/sitetools/sitetools_links.xml')
+    );
+    if (empty($objectid)) {
+        return;
+    }
     // save the object id for later
-    xarModVars::set('sitetools','objectid_links',$objectid);
+    xarModVars::set('sitetools', 'objectid_links', $objectid);
 
     /* Set up an initial value for a module variable. */
     /* Use relative path for now */
@@ -134,17 +156,17 @@ function sitetools_init()
     }
     */
     $backupdir=sys::varpath()."/uploads";
-    xarModVars::set('sitetools','adocachepath',sys::varpath()."/cache/adodb");
-    xarModVars::set('sitetools','rsscachepath', sys::varpath()."/cache/rss");
-    xarModVars::set('sitetools','templcachepath', sys::varpath()."/cache/templates");
-    xarModVars::set('sitetools','backuppath', $backupdir);
-    xarModVars::set('sitetools','lineterm','\n');
-    xarModVars::set('sitetools','timestamp',1);
-    xarModVars::set('sitetools','colnumber',3);
-    xarModVars::set('sitetools','defaultbktype','complete');
-    xarModVars::set('sitetools','links_skiplocal',1);
-    xarModVars::set('sitetools','links_method','GET');
-    xarModVars::set('sitetools','links_follow',0);
+    xarModVars::set('sitetools', 'adocachepath', sys::varpath()."/cache/adodb");
+    xarModVars::set('sitetools', 'rsscachepath', sys::varpath()."/cache/rss");
+    xarModVars::set('sitetools', 'templcachepath', sys::varpath()."/cache/templates");
+    xarModVars::set('sitetools', 'backuppath', $backupdir);
+    xarModVars::set('sitetools', 'lineterm', '\n');
+    xarModVars::set('sitetools', 'timestamp', 1);
+    xarModVars::set('sitetools', 'colnumber', 3);
+    xarModVars::set('sitetools', 'defaultbktype', 'complete');
+    xarModVars::set('sitetools', 'links_skiplocal', 1);
+    xarModVars::set('sitetools', 'links_method', 'GET');
+    xarModVars::set('sitetools', 'links_follow', 0);
     /**
      * Register the module components that are privileges objects
      * Format is
@@ -178,8 +200,9 @@ function sitetools_upgrade($oldversion)
             sys::import('xaraya.tableddl');
 
             $linkstable = $xartable['sitetools_links'];
-            $query = xarDBCreateTable($linkstable,
-                                     array('xar_id'         => array('type'        => 'integer',
+            $query = xarDBCreateTable(
+                $linkstable,
+                array('xar_id'         => array('type'        => 'integer',
                                                                     'null'       => false,
                                                                     'increment'  => true,
                                                                     'primary_key' => true),
@@ -211,13 +234,18 @@ function sitetools_upgrade($oldversion)
                                                                     'size'        => 254,
                                                                     'null'        => false,
                                                                     'default'     => ''),
-                                          ));
+                                          )
+            );
 
-            if (empty($query)) return; // throw back
+            if (empty($query)) {
+                return;
+            } // throw back
 
             /* Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful */
             $result = &$dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             /* allow several entries for the same link here */
             $index = array(
@@ -225,9 +253,11 @@ function sitetools_upgrade($oldversion)
                 'fields'    => array('xar_link'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($linkstable,$index);
+            $query = xarDBCreateIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             /* allow several links for the same module item */
             $index = array(
@@ -235,9 +265,11 @@ function sitetools_upgrade($oldversion)
                 'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($linkstable,$index);
+            $query = xarDBCreateIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             /* allow many entries with the same status here */
             $index = array(
@@ -245,26 +277,35 @@ function sitetools_upgrade($oldversion)
                 'fields'    => array('xar_status'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($linkstable,$index);
+            $query = xarDBCreateIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             /* create the dynamic object that will represent our items */
-            $objectid = xarModAPIFunc('dynamicdata','util','import',
-                                      array('file' => 'modules/sitetools/sitetools_links.xml'));
-            if (empty($objectid)) return;
+            $objectid = xarModAPIFunc(
+                'dynamicdata',
+                'util',
+                'import',
+                array('file' => 'modules/sitetools/sitetools_links.xml')
+            );
+            if (empty($objectid)) {
+                return;
+            }
             /* save the object id for later */
-            xarModVars::set('sitetools','objectid_links',$objectid);
+            xarModVars::set('sitetools', 'objectid_links', $objectid);
             /*update vars for backup tool*/
-            xarModVars::set('sitetools','colnumber',3);
-            xarModVars::set('sitetools','defaultbktype','complete');
+            xarModVars::set('sitetools', 'colnumber', 3);
+            xarModVars::set('sitetools', 'defaultbktype', 'complete');
+            // no break
         case '0.2':
         case 1.0:
 
         case 2.0:
     }
     /* Update successful */
-        return true;
+    return true;
 }
 
 /**
@@ -281,26 +322,38 @@ function sitetools_delete()
     sys::import('xaraya.tableddl');
     /* Generate the SQL to drop the table using the API */
     $query = xarDBDropTable($xartable['sitetools']);
-    if (empty($query)) return;
+    if (empty($query)) {
+        return;
+    }
 
     /* Drop the table and send exception if returns false. */
     $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     /* delete the dynamic object and its properties */
-    $objectid = xarModVars::get('sitetools','objectid_links');
+    $objectid = xarModVars::get('sitetools', 'objectid_links');
     if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',
-                      array('objectid' => $objectid));
-        xarModVars::delete('sitetools','objectid_links');
+        xarModAPIFunc(
+            'dynamicdata',
+            'admin',
+            'deleteobject',
+            array('objectid' => $objectid)
+        );
+        xarModVars::delete('sitetools', 'objectid_links');
     }
 
     /* Generate the SQL to drop the table using the API */
     $query = xarDBDropTable($xartable['sitetools_links']);
-    if (empty($query)) return;
+    if (empty($query)) {
+        return;
+    }
     /* Drop the table and send exception if returns false. */
     $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     /* Delete any sitetools module variables */
     xarModVars::delete_all('sitetools');
@@ -311,5 +364,3 @@ function sitetools_delete()
     /* Deletion successful */
     return true;
 }
-
-?>

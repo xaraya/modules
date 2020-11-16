@@ -20,39 +20,53 @@
  */
 function sitetools_admin_backup($args)
 {
-   if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('startbackup', 'str:2:', $startbackup, '', XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('usegz', 'int:1', $usegz, 0, XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('dbname', 'str:1', $dbname,'' , XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('SelectedTables', 'array:', $SelectedTables, '', XARVAR_NOT_REQUIRED)) return;
-   /* Security check */
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('startbackup', 'str:2:', $startbackup, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('usegz', 'int:1', $usegz, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('dbname', 'str:1', $dbname, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('SelectedTables', 'array:', $SelectedTables, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    /* Security check */
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
 
     $data=array();
     /*setup variables */
     $data['usegz']=$usegz;
     $data['screen']=$screen;
-      $data['startbackup']=$startbackup;
+    $data['startbackup']=$startbackup;
 
-    $data['number_of_cols'] = xarModVars::get('sitetools','colnumber');
+    $data['number_of_cols'] = xarModVars::get('sitetools', 'colnumber');
     $number_of_cols=$data['number_of_cols'];
-    $backupabsolutepath= xarModVars::get('sitetools','backuppath').'/';
+    $backupabsolutepath= xarModVars::get('sitetools', 'backuppath').'/';
     $data['warning']=0;
     $data['warningmessage']='<span class="xar-accent">'
                             .xarML('WARNING: directory does not exist or is not writeable: ').$backupabsolutepath.'</span><br /><br />'
                             .xarML(' Please ensure the backup directory exisits and is writeable');
 
     if ((!is_dir($backupabsolutepath)) || (!is_writeable($backupabsolutepath))) {
-       $data['warning']=1;
-       return $data;
+        $data['warning']=1;
+        return $data;
     }
     $data['authid']     = xarSecGenAuthKey();
     /* Setup the current database for backup - until there is option to choose it TODO */
-    if (($dbname='') || (empty($dbname))){
+    if (($dbname='') || (empty($dbname))) {
         $dbconn = xarDB::getConn();
-            $dbname= xarDB::GetName();
-            $dbtype= xarDB::GetType();
+        $dbname= xarDB::GetName();
+        $dbtype= xarDB::GetType();
     }
 
     $data['confirm']=$confirm;
@@ -61,10 +75,10 @@ function sitetools_admin_backup($args)
 
 
     if (empty($startbackup)) {
-       /* No confirmation yet - display a suitable form to obtain confirmation
-        * of this action from the user
-        * setup option links
-        */
+        /* No confirmation yet - display a suitable form to obtain confirmation
+         * of this action from the user
+         * setup option links
+         */
         $data['backupops']=array();
         $data['backupops']['complete'] = xarML('Full backup - complete inserts');
         $data['backupops']['standard'] = xarML('Full backup - standard inserts');
@@ -75,12 +89,11 @@ function sitetools_admin_backup($args)
 
     /* Start actual backup for all types here */
     } elseif ($startbackup) {
-
         $confirm='';
-        if ($startbackup =='partial'){
-           $tabledata=array();
-           $tabledata=xarModAPIFunc('sitetools','admin','gettabledata');
-           if ($tabledata == false) {
+        if ($startbackup =='partial') {
+            $tabledata=array();
+            $tabledata=xarModAPIFunc('sitetools', 'admin', 'gettabledata');
+            if ($tabledata == false) {
                 /* Throw back any system exceptions (e.g. database failure) */
                 if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                     return; /* throw back */
@@ -107,17 +120,23 @@ function sitetools_admin_backup($args)
             return $data;
         }
 
-        if (!xarSecConfirmAuthKey()) {return;}
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         @set_time_limit(600);
 
         $bkupdata=array();
-        $bkupdata= xarModAPIFunc('sitetools','admin','backupdb',
-                               array ('usegz'          => $data['usegz'],
+        $bkupdata= xarModAPIFunc(
+            'sitetools',
+            'admin',
+            'backupdb',
+            array('usegz'          => $data['usegz'],
                                       'startbackup'    => $data['startbackup'],
                                       'screen'         => $data['screen'],
                                       'SelectedTables' => $SelectedTables,
                                       'dbname'         => $dbname,
-                                      'dbtype'         => $dbtype));
+                                      'dbtype'         => $dbtype)
+        );
 
 
         if ($bkupdata == false) {
@@ -140,7 +159,7 @@ function sitetools_admin_backup($args)
         $data['deleteurl'] =$bkupdata['deleteurl'];
         $data['warning'] =$bkupdata['warning'];
         if ($screen==0) {
-           $data['runningstatus'] ='';
+            $data['runningstatus'] ='';
         } else {
             $data['runningstatus'] =$bkupdata['runningstatus'];
         }
@@ -155,16 +174,21 @@ function sitetools_admin_backup($args)
         $data['btype'] =$bkupdata['btype'];
         /*  $downloadfile=$bkupdata['bkname']; */
 
-       /*Generate download, view and delete URLS */
+        /*Generate download, view and delete URLS */
 
-        $data['downloadurl']= xarModURL('sitetools','admin','downloadbkup',
-                                     array('savefile' => $data['bkname']));
-        $data['deleteurl']= xarModURL('sitetools','admin','downloaddel',
-                                     array('savefile' => $data['bkname']));
+        $data['downloadurl']= xarModURL(
+            'sitetools',
+            'admin',
+            'downloadbkup',
+            array('savefile' => $data['bkname'])
+        );
+        $data['deleteurl']= xarModURL(
+            'sitetools',
+            'admin',
+            'downloaddel',
+            array('savefile' => $data['bkname'])
+        );
     }
 
-  return $data;
-
+    return $data;
 }
-
-?>

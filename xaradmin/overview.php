@@ -23,8 +23,10 @@
  */
 function sitetools_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminSiteTools')) {
+        return;
+    }
 
     $data=array();
     
@@ -32,7 +34,5 @@ function sitetools_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('sitetools', 'admin', 'main', $data,'main');
+    return xarTplModule('sitetools', 'admin', 'main', $data, 'main');
 }
-
-?>

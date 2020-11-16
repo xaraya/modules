@@ -24,7 +24,7 @@ function sitetools_schedulerapi_optimize($args)
     /* DO LATER: get some configuration info here if necessary
      * for now lets just use current database
      */
-    if (empty($dbname)){
+    if (empty($dbname)) {
         $dbconn = xarDB::getConn();
         $dbname= xarDB::getName();
     }
@@ -32,18 +32,22 @@ function sitetools_schedulerapi_optimize($args)
     /*   It may return true (or some logging text) if it succeeds, and null if it fails
      *   return
      */
-     $tabledata=xarModAPIFunc('sitetools','admin','optimizedb',
-                      array('dbname' => $dbname));
+    $tabledata=xarModAPIFunc(
+        'sitetools',
+        'admin',
+        'optimizedb',
+        array('dbname' => $dbname)
+    );
 
-       $total_gain= $tabledata['total_gain'];
-       $total_gain = round ($total_gain,3);
-       //Add this new optimization record to the database
-       return xarModAPIFunc('sitetools',
-                              'admin',
-                              'create',
-                              array('totalgain' => $total_gain));
+    $total_gain= $tabledata['total_gain'];
+    $total_gain = round($total_gain, 3);
+    //Add this new optimization record to the database
+    return xarModAPIFunc(
+        'sitetools',
+        'admin',
+        'create',
+        array('totalgain' => $total_gain)
+    );
 
     return true;
 }
-
-?>
