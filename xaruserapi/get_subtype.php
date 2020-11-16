@@ -27,7 +27,7 @@ function mime_userapi_get_subtype($args)
 {
     // Farm the query off.
     // No need to duplicate the database query here.
-    $subtypes = xarModAPIfunc('mime', 'user', 'getall_subtypes', $args);
+    $subtypes = xarMod::apiFunc('mime', 'user', 'getall_subtypes', $args);
 
     if (empty($subtypes)) {
         // No matches.
