@@ -21,8 +21,8 @@ function release_userapi_countnotes($args)
 {
     extract($args);
 
-    if (empty($phase)){
-     $phase='viewall';
+    if (empty($phase)) {
+        $phase='viewall';
     }
 
     $dbconn =& xarDB::getConn();
@@ -31,7 +31,7 @@ function release_userapi_countnotes($args)
     $releasenotes = $xartable['release_notes'];
     $releaseids = $xartable['release_id'];
 
-     $query = "SELECT COUNT(1)
+    $query = "SELECT COUNT(1)
             FROM $releasenotes";
 
 
@@ -46,7 +46,7 @@ function release_userapi_countnotes($args)
     } elseif ($phase=='price') {
         $query .= " WHERE xar_price = 2
                     AND xar_approved = 2";
-    }elseif ($phase=='supported') {
+    } elseif ($phase=='supported') {
         $query .= " WHERE xar_supported = 2
                     AND xar_approved = 2";
     }
@@ -55,7 +55,9 @@ function release_userapi_countnotes($args)
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     // Obtain the number of items
     list($numitems) = $result->fields;
     // All successful database queries produce a result set, and that result
@@ -65,5 +67,3 @@ function release_userapi_countnotes($args)
     // Return the number of items
     return $numitems;
 }
-
-?>

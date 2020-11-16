@@ -20,7 +20,9 @@ function release_userapi_createnote($args)
     if ((!isset($rid)) ||
         (!isset($eid)) ||
         (!isset($exttype)) ||
-        (!isset($version))) throw new BadParameterException(null,xarML('Wrong arguments to release_userapi_create'));
+        (!isset($version))) {
+        throw new BadParameterException(null, xarML('Wrong arguments to release_userapi_create'));
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -68,8 +70,10 @@ function release_userapi_createnote($args)
 
     $bindvars = array($nextId,(int)$eid,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
                       $supportlink,$changelog,$notes,$time,$certified,$approved,$rstate,(int)$usefeed,(int)$exttype);
-    $result =&$dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result =&$dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     // Get the ID of the item that we inserted
     $rnid = $dbconn->PO_Insert_ID($releasetable, 'xar_rnid');
@@ -79,6 +83,4 @@ function release_userapi_createnote($args)
 
     // Return the id of the newly created user to the calling process
     return $rnid;
-
 }
-?>

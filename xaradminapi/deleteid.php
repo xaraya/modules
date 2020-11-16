@@ -12,9 +12,9 @@
  */
 /**
  * Delete an ID
- * 
+ *
  * @param $rid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
@@ -24,16 +24,26 @@ function release_adminapi_deleteid($args)
     extract($args);
 
     // Argument check
-    if (!isset($rid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+    if (!isset($rid)) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     // The user API function is called
-    $link = xarMod::apiFunc('release', 'user', 'getid',
-                         array('eid' => $eid));
+    $link = xarMod::apiFunc(
+        'release',
+        'user',
+        'getid',
+        array('eid' => $eid)
+    );
 
-    if ($link == false) throw new EmptyParameterException(null,xarML('No Such Release ID Present'));
+    if ($link == false) {
+        throw new EmptyParameterException(null, xarML('No Such Release ID Present'));
+    }
 
     // Security Check
-    if(!xarSecurityCheck('ManageRelease')) return;
+    if (!xarSecurityCheck('ManageRelease')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -44,8 +54,10 @@ function release_adminapi_deleteid($args)
     // Delete the item
     $query = "DELETE FROM $releasetable
             WHERE xar_eid = ?";
-    $result =& $dbconn->Execute($query,array($eid));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($eid));
+    if (!$result) {
+        return;
+    }
 
     // Let any hooks know that we have deleted a link
     xarModCallHooks('item', 'delete', $eid, '');
@@ -53,5 +65,3 @@ function release_adminapi_deleteid($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
-
-?>

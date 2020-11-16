@@ -20,17 +20,15 @@ function release_userapi_getitemtypes($args)
     $itemtypes = array();
 
     // Use the extension type as itemtypes
-    $exttypes = xarMod::apiFunc('release', 'user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
 
-    foreach($exttypes as $etype=>$ename){
-     if ($etype != 0) {
-        $itemtypevalue = $etype;
-        $itemtypes[$etype] = array('label' => $ename,
+    foreach ($exttypes as $etype=>$ename) {
+        if ($etype != 0) {
+            $itemtypevalue = $etype;
+            $itemtypes[$etype] = array('label' => $ename,
                                    'title' => xarML('Extension Type'),
-                                   'url' => xarModURL('release','user','display',array('type' => $etype)));
-     }
+                                   'url' => xarModURL('release', 'user', 'display', array('type' => $etype)));
+        }
     }
     return $itemtypes;
-
 }
-?>

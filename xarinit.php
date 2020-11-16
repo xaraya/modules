@@ -25,15 +25,17 @@ function release_init()
     sys::import('xaraya.structures.query');
     $xartable =& xarDB::getTables();
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set tables
+    # Set tables
 #
     $q = new Query();
     $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_release_extensions";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_release_extensions (
             id                  integer unsigned NOT NULL auto_increment,
             extension_id        integer unsigned NOT NULL DEFAULT '0',
@@ -55,10 +57,14 @@ function release_init()
             KEY i_release_id (name,extension_type),
             KEY i_release_id_rid (extension_id,extension_type)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_release_notes";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_release_notes (
             id                  integer unsigned NOT NULL auto_increment,
             release_id          integer unsigned NOT NULL DEFAULT '0',
@@ -82,10 +88,14 @@ function release_init()
             PRIMARY KEY(id),
             KEY i_release_notes_id (release_id)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_release_docs";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_release_docs (
             id                  integer unsigned NOT NULL auto_increment,
             release_id          integer unsigned NOT NULL DEFAULT '0',
@@ -98,11 +108,13 @@ function release_init()
             seq                 tinyint NOT NULL DEFAULT '1',
             PRIMARY KEY(id)
             )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Create DD objects
+    # Create DD objects
 #
     $module = 'release';
     $objects = array(
@@ -111,10 +123,12 @@ function release_init()
                      'release_docs',
                      );
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
-# --------------------------------------------------------
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        return;
+    }
+    # --------------------------------------------------------
 #
-# Create Base Category
+    # Create Base Category
 #
     $catName = 'Release';
     try {
@@ -122,7 +136,7 @@ function release_init()
         $worker = new CategoryWorker();
         $basecid = $worker->name2id($catName);
     } catch (Exception $e) {
-        $basecid = 0;        
+        $basecid = 0;
     }
     if (empty($basecid)) {
         sys::import('modules.dynamicdata.class.objects.master');
@@ -138,46 +152,58 @@ function release_init()
     // Save the base category in a modvar
     xarModVars::set('release', 'mastercids', $basecid);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up modvars
+    # Set up modvars
 #
     xarModVars::set('release', 'SupportShortURLs', 0);
 
     // Register Block types
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'   => 'release',
-                             'blockType' => 'latest'))) return;
-     // Register Block types
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'   => 'release',
-                             'blockType' => 'latestprojects'))) return;
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'register_block_type',
+        array('modName'   => 'release',
+                             'blockType' => 'latest')
+    )) {
+        return;
+    }
+    // Register Block types
+    if (!xarMod::apiFunc(
+        'blocks',
+        'admin',
+        'register_block_type',
+        array('modName'   => 'release',
+                             'blockType' => 'latestprojects')
+    )) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up hooks
+    # Set up hooks
 #
 
-    xarMod::apiFunc('modules','admin','enablehooks',
-          array('callerModName' => 'release', 'hookModName' => 'categories'));
+    xarMod::apiFunc(
+        'modules',
+        'admin',
+        'enablehooks',
+        array('callerModName' => 'release', 'hookModName' => 'categories')
+    );
     // search hook
     if (!xarModRegisterHook('item', 'search', 'GUI', 'release', 'user', 'search')) {
         return false;
     }
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Set up masks
+    # Set up masks
 #
-    xarRegisterMask('ViewRelease','All','release','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ViewRelease', 'All', 'release', 'All', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditRelease','All','release','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddRelease','All','release','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageRelease','All','release','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
+    xarRegisterMask('EditRelease', 'All', 'release', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddRelease', 'All', 'release', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('ManageRelease', 'All', 'release', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminRelease', 'All', 'release', 'All', 'All', 'ACCESS_ADMIN');
     xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
 
     return true;
@@ -190,7 +216,7 @@ function release_init()
 function release_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
-    switch($oldversion) {
+    switch ($oldversion) {
        case '1.0.0': // current version
 
         break;
@@ -206,6 +232,5 @@ function release_upgrade($oldversion)
 function release_delete()
 {
     $module = 'publications';
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
 }
-?>

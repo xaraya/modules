@@ -12,13 +12,13 @@
  */
 /**
  * count the number of docs per release
- * 
+ *
  * @param int $rid ID
  * @return int number of docs for rid
  */
 function release_userapi_countdocs($args)
 {
-    extract ($args);
+    extract($args);
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -29,7 +29,9 @@ function release_userapi_countdocs($args)
             FROM $releasetable
             WHERE xar_eid = ?";
     $result =&$dbconn->Execute($query, array($eid));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     list($numitems) = $result->fields;
 
@@ -37,5 +39,3 @@ function release_userapi_countdocs($args)
 
     return $numitems;
 }
-
-?>

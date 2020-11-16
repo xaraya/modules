@@ -12,9 +12,9 @@
  */
 /**
  * Display waiting content
- * 
- * @param 
- * 
+ *
+ * @param
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
@@ -26,12 +26,15 @@ function release_admin_waitingcontent()
     
     // Get releasenotes
     unset($released);
-    $released = xarMod::apiFunc('release', 'user', 'getreleaselinks',
-                          array('approved' => 1));
+    $released = xarMod::apiFunc(
+        'release',
+        'user',
+        'getreleaselinks',
+        array('approved' => 1)
+    );
 
-     $data['loop'] = $released;
-     $data['counted']=$released['counted'];
+    $data['loop'] = $released;
+    $data['counted']=$released['counted'];
 
-     return $data;
+    return $data;
 }
-?>

@@ -12,19 +12,27 @@
  */
 /**
  * Delete a releaase
- * 
+ *
  * @param $rid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
 function release_admin_delete_release($args)
 {
-    if (!xarSecurityCheck('ManageRelease')) return;
+    if (!xarSecurityCheck('ManageRelease')) {
+        return;
+    }
 
-    if (!xarVarFetch('name',       'str:1',     $name,            'release_notes',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',       $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'checkbox',  $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str:1', $name, 'release_notes', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -36,15 +44,16 @@ function release_admin_delete_release($args)
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         // Delete the item
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('release','admin','view_releases'));
+        xarController::redirect(xarModURL('release', 'admin', 'view_releases'));
         return true;
     }
     return $data;
 }
-?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Latest Projects
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -32,7 +32,7 @@ function release_latestprojectsblock_init()
  * @return array
  */
 function release_latestprojectsblock_info()
-{ 
+{
     // Values
     return array('text_type' => 'Latest Extensions',
         'module' => 'release',
@@ -41,16 +41,18 @@ function release_latestprojectsblock_info()
         'form_content' => false,
         'form_refresh' => false,
         'show_preview' => true);
-} 
+}
 
 /**
  * display block
  * @return array
  */
 function release_latestprojectsblock_display($blockinfo)
-{ 
+{
     // Security check
-    if (!xarSecurityCheck('ReadReleaseBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadReleaseBlock', 1, 'Block', $blockinfo['title'])) {
+        return;
+    }
 
     // Get variables from content block.
 
@@ -69,45 +71,50 @@ function release_latestprojectsblock_display($blockinfo)
     }
     $usefeed = ($vars['showonlists'] == 1)?1:null; //null - no selection on usefeed, 1 select for lists
     // The API function is called to get all notes
-  $items = xarMod::apiFunc('release', 'user', 'getallrids',
-                     array('numitems' => $vars['numitems'],
+    $items = xarMod::apiFunc(
+        'release',
+        'user',
+        'getallrids',
+        array('numitems' => $vars['numitems'],
                            'openproj' => $vars['showonlists'],
                            'sort'     => 'regtime')
-                          );
+    );
 
-    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;} // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        return;
+    } // throw back
 
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
     $data['items'] = array();
     if (is_array($items)) {
         foreach ($items as $item) {
-
             if (xarSecurityCheck('OverviewRelease', 0)) {
                 $item['link'] = xarModURL(
-                    'release', 'user', 'display',
+                    'release',
+                    'user',
+                    'display',
                     array('eid' => $item['eid'])
                 );
 
-                // Security check 2 - else only display the item name (or whatever is
+            // Security check 2 - else only display the item name (or whatever is
                 // appropriate for your module)
             } else {
                 $item['link'] = '';
             }
-            $exttypes = xarMod::apiFunc('release','user','getexttypes');
+            $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
             foreach ($exttypes as $k=>$v) {
-                if ($item['exttype'] == $k){
-                  $item['exttypename'] = $v;
+                if ($item['exttype'] == $k) {
+                    $item['exttypename'] = $v;
                 }
             }
 
             $roles = new xarRoles();
             $role = $roles->getRole($item['uid']);
             $item['author']= $role->getName();
-            $item['authorlink']=xarModURL('roles','user','display',array('uid'=>$item['uid']));
+            $item['authorlink']=xarModURL('roles', 'user', 'display', array('uid'=>$item['uid']));
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
-
         }
     }
     $data['blockid'] = $blockinfo['bid'];
@@ -117,4 +124,3 @@ function release_latestprojectsblock_display($blockinfo)
 
     return $blockinfo;
 }
-?>

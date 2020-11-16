@@ -14,7 +14,7 @@
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
- * 
+ *
  * @author jojodee
  * @param  $params array containing the different elements of the virtual path
  * @returns array
@@ -25,10 +25,10 @@ function release_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $flipext = array_flip($exttypes);
     $extnamearray =array();
-    foreach ($exttypes as $k=>$v){
+    foreach ($exttypes as $k=>$v) {
         $extnamearray[] = strtolower($v);
     }
 
@@ -49,74 +49,73 @@ function release_userapi_decode_shorturl($params)
         // -> we'll go to the main function
         return array('main', $args);
     } elseif (preg_match('/^viewnotes/i', $params[1])) {
-            return array('viewnotes', $args);
+        return array('viewnotes', $args);
     } elseif (preg_match('/^view/i', $params[1])) {
         if (!empty($params[2]) && ($params[2] == 'id.html')) {
-          $args['sort']='id';
-        }elseif (!empty($params[2]) && ($params[2] == 'name.html')) {
-          $args['sort']='name';
-        }elseif (!empty($params[2]) && ($params[2] == 'author.html')) {
-          $args['sort']='author';
-          }elseif (!empty($params[2]) && ($params[2] == 'rstate.html')) {
-          $args['sort']='rstate';
+            $args['sort']='id';
+        } elseif (!empty($params[2]) && ($params[2] == 'name.html')) {
+            $args['sort']='name';
+        } elseif (!empty($params[2]) && ($params[2] == 'author.html')) {
+            $args['sort']='author';
+        } elseif (!empty($params[2]) && ($params[2] == 'rstate.html')) {
+            $args['sort']='rstate';
         }
         return array('view', $args);
     } elseif (preg_match('/^addid/i', $params[1])) {
-            return array('addid', $args);
-   } elseif (preg_match('/^displaynote/i', $params[1])) {
-            if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
-             $args['rnid']=$matches[1];
-            }
-        return array('displaynote', $args);
-    }elseif (preg_match('/^addnotes/i', $params[1])) {
-        if (empty($params[2])) {
-           return array('addnotes', $args);
-        }elseif (!empty($params[2]) && ($params[2] == 'start')) {
-           $args['phase']='start';
+        return array('addid', $args);
+    } elseif (preg_match('/^displaynote/i', $params[1])) {
+        if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)) {
+            $args['rnid']=$matches[1];
         }
-        if (!empty($params[2]) && in_array($params[2], $extnamearray)){
-            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
-             $args['rid']=$matches[1];
-             $args['exttype'] =(int)array_search($params[2],$flipext);
+        return array('displaynote', $args);
+    } elseif (preg_match('/^addnotes/i', $params[1])) {
+        if (empty($params[2])) {
+            return array('addnotes', $args);
+        } elseif (!empty($params[2]) && ($params[2] == 'start')) {
+            $args['phase']='start';
+        }
+        if (!empty($params[2]) && in_array($params[2], $extnamearray)) {
+            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+                $args['rid']=$matches[1];
+                $args['exttype'] =(int)array_search($params[2], $flipext);
             }
-        }elseif(!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
-              $eid = $matches[1];
-              $args['eid'] = (int)$eid;
-        }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
+        } elseif (!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+            $eid = $matches[1];
+            $args['eid'] = (int)$eid;
+        } elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)) {
             $args['rid']=$matches[1];
             $args['exttype']= 1;//try module?
         }
 
         return array('addnotes', $args);
-   } elseif ($params[1] == 'modifyid') {
-       if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
-            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
-             $args['rid']=$matches[1];
-             $args['exttype'] =(int)array_search($params[2],$flipext);
+    } elseif ($params[1] == 'modifyid') {
+        if (!empty($params[2]) && in_array($params[2], $extnamearray)) {//try eid first
+            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+                $args['rid']=$matches[1];
+                $args['exttype'] =(int)array_search($params[2], $flipext);
             }
-        }elseif(!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
-              $eid = $matches[1];
-              $args['eid'] = (int)$eid;
-        }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
+        } elseif (!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+            $eid = $matches[1];
+            $args['eid'] = (int)$eid;
+        } elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)) {
             $args['rid']=$matches[1];
             $args['exttype']= 1;//try module?
         }
         return array('modifyid', $args);
     } elseif ($params[1] == 'version') {
-        if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
-            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
-            // something that starts with a number must be for the display function
+        if (!empty($params[2]) && in_array($params[2], $extnamearray)) {//try eid first
+            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+                // something that starts with a number must be for the display function
                 $rid = $matches[1];
                 $args['rid'] = (int)$rid;
                 $args['phase']='version';
-                $args['exttype'] =(int)array_search($params[2],$flipext);
+                $args['exttype'] =(int)array_search($params[2], $flipext);
             }
-        }elseif(!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
-                $eid = $matches[1];
-                $args['eid'] = (int)$eid;
-                $args['phase']='version';
-
-        }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
+        } elseif (!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+            $eid = $matches[1];
+            $args['eid'] = (int)$eid;
+            $args['phase']='version';
+        } elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)) {
             $args['rid']=(int)$matches[1];
         }
         return array('display', $args);
@@ -128,36 +127,36 @@ function release_userapi_decode_shorturl($params)
         $args['phase']='view';
         return array('display', $args);
     } else {
-        $cid = xarModVars::get('release','mastercids');
-        if (xarModAPILoad('categories','user')) {
-            $cats = xarMod::apiFunc('categories',
-                              'user',
-                              'getcat',
-                         array('cid' => $cid,
+        $cid = xarModVars::get('release', 'mastercids');
+        if (xarModAPILoad('categories', 'user')) {
+            $cats = xarMod::apiFunc(
+                'categories',
+                'user',
+                'getcat',
+                array('cid' => $cid,
                                'return_itself' => true,
-                               'getchildren' => true));
+                               'getchildren' => true)
+            );
             // lower-case for fanciful search engines/people
-             $params[1] = strtolower($params[1]);
-             $foundcid = 0;
-             foreach ($cats as $cat) {
-                 if ($params[1] == strtolower($cat['name'])) {
-                     $foundcid = $cat['cid'];
-                 break;
-             }
-         }
-         // check if we found a matching category
-         if (!empty($foundcid)) {
-         $args['catid'] = $foundcid;
-         // TODO: now analyse $params[2] for index, list, \d+ etc.
+            $params[1] = strtolower($params[1]);
+            $foundcid = 0;
+            foreach ($cats as $cat) {
+                if ($params[1] == strtolower($cat['name'])) {
+                    $foundcid = $cat['cid'];
+                    break;
+                }
+            }
+            // check if we found a matching category
+            if (!empty($foundcid)) {
+                $args['catid'] = $foundcid;
+                // TODO: now analyse $params[2] for index, list, \d+ etc.
          // and return array('whatever', $args);
-          }
-         }
-          // we have no idea what this virtual path could be, so we'll just
-          // forget about trying to decode this thing
-          // you *could* return the main function here if you want to
-         return array('main', $args);
+            }
+        }
+        // we have no idea what this virtual path could be, so we'll just
+        // forget about trying to decode this thing
+        // you *could* return the main function here if you want to
+        return array('main', $args);
     }
     // default : return nothing -> no short URL decoded
 }
-
-?>

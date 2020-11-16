@@ -11,12 +11,14 @@
 function release_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditRelease')) return;
+    if (!xarSecurityCheck('EditRelease')) {
+        return;
+    }
 
-    $redirect = xarModVars::get('release','backend_page');
+    $redirect = xarModVars::get('release', 'backend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
         return true;
     } else {
@@ -24,5 +26,3 @@ function release_admin_main()
     }
     return true;
 }
-
-?>

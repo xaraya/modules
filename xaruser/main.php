@@ -12,7 +12,7 @@
  */
 /**
  * Main user function
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  * @return array empty
@@ -20,12 +20,14 @@
 function release_user_main()
 {
     // Xaraya security
-    if(!xarSecurityCheck('ViewRelease')) return;
+    if (!xarSecurityCheck('ViewRelease')) {
+        return;
+    }
 
-    $redirect = xarModVars::get('release','frontend_page');
+    $redirect = xarModVars::get('release', 'frontend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
         if (xarUser::isLoggedIn()) {
@@ -36,5 +38,3 @@ function release_user_main()
     }
     return true;
 }
-
-?>

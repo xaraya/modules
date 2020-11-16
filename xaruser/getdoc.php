@@ -14,7 +14,7 @@
  * Add an extension and request an ID
  *
  * @param enum phase Phase we are at
- * 
+ *
  * @return array
  * @author Release module development team
  */
@@ -22,29 +22,42 @@
 function release_user_getdoc()
 {
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     $rdid = xarVarCleanFromInput('rdid');
 
     // The user API function is called.
-    $item = xarMod::apiFunc('release', 'user', 'getdoc',
-                          array('rdid' => $rdid));
+    $item = xarMod::apiFunc(
+        'release',
+        'user',
+        'getdoc',
+        array('rdid' => $rdid)
+    );
 
-    if ($item == false) return;
+    if ($item == false) {
+        return;
+    }
 
-        $hooks = xarModCallHooks('item', 'display', $rdid,
-                                 array('itemtype'  => '3',
-                                       'returnurl' => xarModURL('release',
-                                                                'user',
-                                                                'getdoc',
-                                                                 array('rdid' => $rdid))
+    $hooks = xarModCallHooks(
+        'item',
+        'display',
+        $rdid,
+        array('itemtype'  => '3',
+                                       'returnurl' => xarModURL(
+                                           'release',
+                                           'user',
+                                           'getdoc',
+                                           array('rdid' => $rdid)
+                                       )
                                              )
-                                        );
+    );
 
     if (empty($hooks)) {
         $item['hooks'] = '';
     } elseif (is_array($hooks)) {
-        $item['hooks'] = join('',$hooks);
+        $item['hooks'] = join('', $hooks);
     } else {
         $item['hooks'] = $hooks;
     }
@@ -54,5 +67,3 @@ function release_user_getdoc()
 
     return $item;
 }
-
-?>

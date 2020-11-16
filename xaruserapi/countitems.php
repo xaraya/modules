@@ -27,13 +27,16 @@ function release_userapi_countitems($args)
     // getting - $table and $column don't cut it in more complex modules
     $releasetable = $xartable['release_id'];
     //Joins on Catids
-    if(!empty($catid))
-    {
-        $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin',
-                              array('modid'    => 773,
+    if (!empty($catid)) {
+        $categoriesdef = xarMod::apiFunc(
+            'categories',
+            'user',
+            'leftjoin',
+            array('modid'    => 773,
                                     'itemtype' => 0,
                                     'cids'     => array($catid),
-                                    'andcids'  => 1));
+                                    'andcids'  => 1)
+        );
     }
 
     $query = "SELECT COUNT(1)
@@ -42,15 +45,13 @@ function release_userapi_countitems($args)
 
     $from ='';
     $where = array();
-    if (!empty($catid) && count(array($catid)) > 0)
-    {
+    if (!empty($catid) && count(array($catid)) > 0) {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
         $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_eid';
 
-        if (!empty($categoriesdef['more']))
-        {
+        if (!empty($categoriesdef['more'])) {
             //$from = ' ( ' . $from . ' ) ';
             $from .= $categoriesdef['more'];
         }
@@ -58,37 +59,40 @@ function release_userapi_countitems($args)
         $where[] = $categoriesdef['where'];
         $query .= $from;
     }
-/*
-    switch ($idtypes) {
-    case 3: // module
-        $where[] = "xar_type = '0'";
-        break;
-    case 2: // theme
-        $where[] = "xar_type = '1'";
-        break;
-    }
-    if (!empty($exttype)) {
-        $where[] = " xar_exttype = ?";
-        $bindvars[] = $exttype;
-    }*/
+    /*
+        switch ($idtypes) {
+        case 3: // module
+            $where[] = "xar_type = '0'";
+            break;
+        case 2: // theme
+            $where[] = "xar_type = '1'";
+            break;
+        }
+        if (!empty($exttype)) {
+            $where[] = " xar_exttype = ?";
+            $bindvars[] = $exttype;
+        }*/
     if (!empty($certified)) {
         $where[] = " xar_certified = ?";
         $bindvars[] = $certified;
     }
 
-    if (count($where) > 0)
-    {
+    if (count($where) > 0) {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
     $query .= " ORDER BY xar_eid";
 
     $result =& $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     // Obtain the number of items
     list($numitems) = $result->fields;
     // All successful database queries produce a result set, and that result
@@ -97,5 +101,3 @@ function release_userapi_countitems($args)
     // Return the number of items
     return $numitems;
 }
-
-?>

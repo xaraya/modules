@@ -14,7 +14,7 @@
  * Add an extension and request an ID
  *
  * @param enum phase Phase we are at
- * 
+ *
  * @return array
  * @author Release module development team
  */
@@ -25,7 +25,9 @@ function release_userapi_getallrssextnotes($args)
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -43,7 +45,9 @@ function release_userapi_getallrssextnotes($args)
             ORDER by xar_time DESC";
 
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
@@ -62,4 +66,3 @@ function release_userapi_getallrssextnotes($args)
     // Return the users
     return $releaseinfo;
 }
-?>

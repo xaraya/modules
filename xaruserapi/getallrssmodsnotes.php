@@ -18,7 +18,9 @@ function release_userapi_getallrssmodsnotes($args)
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -37,11 +39,13 @@ function release_userapi_getallrssmodsnotes($args)
 
     $bindvars = array(2, 1, $exttype);
     $result =& $dbconn->Execute($query, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $eid,$rid, $version) = $result->fields;
+        list($rnid, $eid, $rid, $version) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'eid'        => $eid,
@@ -55,4 +59,3 @@ function release_userapi_getallrssmodsnotes($args)
     // Return the users
     return $releaseinfo;
 }
-?>

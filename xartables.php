@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Release Table definitions
  *
@@ -11,7 +11,7 @@
  */
 /**
  * Table definitions
- * 
+ *
  * This function is called when Xaraya searches for the tables in this module
  *
  * Original Author of file: John Cox via phpMailer Team
@@ -35,5 +35,3 @@ function release_xartables()
     // Return the table information
     return $xartable;
 }
-
-?>

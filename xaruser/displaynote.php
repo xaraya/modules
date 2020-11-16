@@ -14,7 +14,7 @@
  * Display a note
  *
  * @param int rnid Release Note ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  * @return array with notes info
@@ -23,40 +23,67 @@ function release_user_displaynote($args)
 {
     extract($args);
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
-    if (!xarVarFetch('rnid', 'int:1:', $rnid, null)) {return;}
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rnid', 'int:1:', $rnid, null)) {
+        return;
+    }
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // The user API function is called.
-    $item = xarMod::apiFunc('release', 'user', 'getnote',
-                          array('rnid' => $rnid));
+    $item = xarMod::apiFunc(
+        'release',
+        'user',
+        'getnote',
+        array('rnid' => $rnid)
+    );
 
-    if ($item == false) return;
+    if ($item == false) {
+        return;
+    }
 
     // The user API function is called.
-    $id = xarMod::apiFunc('release', 'user', 'getid',
-                          array('eid' => $item['eid']));
+    $id = xarMod::apiFunc(
+        'release',
+        'user',
+        'getid',
+        array('eid' => $item['eid'])
+    );
 
-    $getuser = xarMod::apiFunc('roles', 'user', 'get',
-                              array('uid' => $id['uid']));
+    $getuser = xarMod::apiFunc(
+        'roles',
+        'user',
+        'get',
+        array('uid' => $id['uid'])
+    );
 
 
-    $hooks = xarModCallHooks('item','display', $rnid,
-                                    array('itemtype'  => $item['exttype'],
-                                          'returnurl' => xarModURL('release', 'user','displaynote',
-                                                                   array('rnid' => $rnid))
+    $hooks = xarModCallHooks(
+        'item',
+        'display',
+        $rnid,
+        array('itemtype'  => $item['exttype'],
+                                          'returnurl' => xarModURL(
+                                              'release',
+                                              'user',
+                                              'displaynote',
+                                              array('rnid' => $rnid)
+                                          )
                                          )
-                                    );
+    );
     // TODO: MichelV rewrite hookcall to array
     if (empty($hooks)) {
         $item['hooks'] = '';
     } elseif (is_array($hooks)) {
-        $item['hooks'] = join('',$hooks);
+        $item['hooks'] = join('', $hooks);
     } else {
         $item['hooks'] = $hooks;
     }
-    if ($item['certified'] == 2){
+    if ($item['certified'] == 2) {
         $item['certifiedstatus'] = xarML('Yes');
     } else {
         $item['certifiedstatus'] = xarML('No');
@@ -70,13 +97,13 @@ function release_user_displaynote($args)
     $stateoptions[5] = xarML('Inactive');
 
     foreach ($stateoptions as $key => $value) {
-     if ($key==$item['rstate']) {
-       $stateoption=$stateoptions[$key];
-     }
+        if ($key==$item['rstate']) {
+            $stateoption=$stateoptions[$key];
+        }
     }
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $fliptypes = array_flip($exttypes);
-    $exttypename = array_search($id['exttype'],$fliptypes);
+    $exttypename = array_search($id['exttype'], $fliptypes);
     $item['exttypename'] = $exttypename;
     $item['stateoption']=$stateoption;
     $item['desc'] = nl2br($id['desc']);
@@ -88,10 +115,14 @@ function release_user_displaynote($args)
     $item['exttypes'] = $exttypes;
     $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
-    $item['extensionpage']= xarModURL('release','user','display',
-                                array('eid' => $item['eid'],
+    $item['extensionpage']= xarModURL(
+        'release',
+        'user',
+        'display',
+        array('eid' => $item['eid'],
                                       'phase' => 'version',
-                                      'tab'  => 'versions'));
+                                      'tab'  => 'versions')
+    );
 
     $item['realname'] = $getuser['name'];
     $item['notes'] = nl2br($item['notes']);
@@ -100,5 +131,3 @@ function release_user_displaynote($args)
 }
 
 // Begin Docs Portion
-
-?>

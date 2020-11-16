@@ -21,59 +21,91 @@
 function release_user_display($args)
 {
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     extract($args);
 
-    if (!xarVarFetch('rid', 'int', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('exttype', 'int', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rid', 'int', $rid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('exttype', 'int', $exttype, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // The user API function is called.
 
-    if (isset($eid)){
-        $id = xarMod::apiFunc('release', 'user', 'getid',
-                             array('eid' => $eid));
+    if (isset($eid)) {
+        $id = xarMod::apiFunc(
+            'release',
+            'user',
+            'getid',
+            array('eid' => $eid)
+        );
         $rid = (int)$id['rid'];
         $exttype = (int)$id['exttype'];
-    }elseif (isset($rid)) { //just in case we have older url
-      if (isset ($exttype)) {
-        $id = xarMod::apiFunc('release', 'user', 'getid',
-                          array('rid' => $rid,
-                                'exttype' => $exttype));
-      }else{
-        $id = xarMod::apiFunc('release', 'user', 'getid',
-                          array('rid' => (int)$rid));
-
+    } elseif (isset($rid)) { //just in case we have older url
+        if (isset($exttype)) {
+            $id = xarMod::apiFunc(
+                'release',
+                'user',
+                'getid',
+                array('rid' => $rid,
+                                'exttype' => $exttype)
+            );
+        } else {
+            $id = xarMod::apiFunc(
+                'release',
+                'user',
+                'getid',
+                array('rid' => (int)$rid)
+            );
         }
         $eid = (int)$id['eid'];
         $exttype = (int)$id['exttype'];
     }
 
 
-    $cats = xarMod::apiFunc('categories','user','getitemcats',
-                           array('module'=>'release','item'=>$eid)
-                         );
+    $cats = xarMod::apiFunc(
+        'categories',
+        'user',
+        'getitemcats',
+        array('module'=>'release','item'=>$eid)
+    );
 
 
     //set the type
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $fliptype = array_flip($exttypes);
-    $exttypename = array_search($exttype,$fliptype);
+    $exttypename = array_search($exttype, $fliptype);
     $data['exttypename']=$exttypename;
     $data['exttypes']=$exttypes;
     $data['rid'] = $rid;
     $data['eid'] = $eid;
-    $getuser = xarMod::apiFunc('roles', 'user','get',
-                              array('uid' => $id['uid']));
+    $getuser = xarMod::apiFunc(
+        'roles',
+        'user',
+        'get',
+        array('uid' => $id['uid'])
+    );
 
     $realname = $getuser['name'];
     //determine edit link
-    if ((xarUser::getVar('id') == $id['uid']) || xarSecurityCheck('EditRelease',0)) {
-        $data['editlink']=xarModURL('release','user','modifyid',array('eid'=>$eid));
+    if ((xarUser::getVar('id') == $id['uid']) || xarSecurityCheck('EditRelease', 0)) {
+        $data['editlink']=xarModURL('release', 'user', 'modifyid', array('eid'=>$eid));
     } else {
         $data['editlink']='';
     }
@@ -93,74 +125,79 @@ function release_user_display($args)
         $memberdata = unserialize($members);
         if (count($memberdata)>0) {
             foreach ($memberdata as $k => $v) {
-                $memberlist[]=array($v => xarUser::getVar('uname',$v));
+                $memberlist[]=array($v => xarUser::getVar('uname', $v));
             }
         }
 
 
         foreach ($memberlist as $key=>$iid) {
-            foreach($iid as $userid=>$username) {
-               if ($key == 0) {
-                    $memberstring = "<a href=\"".xarModURL('roles','user','display',array('uid'=>$userid))."\">".$username."</a>";
-                }else{
-                    $memberstring .=", <a href=\"".xarModURL('roles','user','display',array('uid'=>$userid))."\">".$username."</a>";
+            foreach ($iid as $userid=>$username) {
+                if ($key == 0) {
+                    $memberstring = "<a href=\"".xarModURL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
+                } else {
+                    $memberstring .=", <a href=\"".xarModURL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
                 }
             }
         }
     }
     $item['module'] = 'release';
-        $item['itemtype'] = $exttype;
-        $item['item'] = $eid;
-        $item['returnurl']=xarModURL('release', 'user','display', array('eid' => $eid));
-        $hooks = xarModCallHooks('item','display', $eid, $item);
+    $item['itemtype'] = $exttype;
+    $item['item'] = $eid;
+    $item['returnurl']=xarModURL('release', 'user', 'display', array('eid' => $eid));
+    $hooks = xarModCallHooks('item', 'display', $eid, $item);
 
-        if (empty($hooks)) {
-            $data['hooks'] = '';
-        } else {
-            $data['hooks'] = $hooks;
-        }
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } else {
+        $data['hooks'] = $hooks;
+    }
 
-       // The user API function is called.
-       $items = array();
-       $items = xarMod::apiFunc('release', 'user','getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModVars::get('release',
-                                                                  'itemsperpage'),
-                                        'eid' => $eid));
-        if (empty($items)){
-                $data['message'] = xarML('There is no version history on this module');
-            }
-        $latest=array();
-        if (isset($items) && isset($items[0])){
-            $latest=$items[0];
-        }
-        if (!isset($latest['dllink'])){
-               $latest['dllink']='';
-            }
-        if (!isset($latest['version'])){
-               $latest['version']='';
-        }
+    // The user API function is called.
+    $items = array();
+    $items = xarMod::apiFunc(
+        'release',
+        'user',
+        'getallnotes',
+        array('startnum' => $startnum,
+                                        'numitems' => xarModVars::get(
+                                            'release',
+                                            'itemsperpage'
+                                        ),
+                                        'eid' => $eid)
+    );
+    if (empty($items)) {
+        $data['message'] = xarML('There is no version history on this module');
+    }
+    $latest=array();
+    if (isset($items) && isset($items[0])) {
+        $latest=$items[0];
+    }
+    if (!isset($latest['dllink'])) {
+        $latest['dllink']='';
+    }
+    if (!isset($latest['version'])) {
+        $latest['version']='';
+    }
 
-        //use the release editor notes for xaraya mtn repo latest nightly until we get more fields
-        if (isset($latest['enotes']) && strpos($latest['enotes'],'mt.xaraya.com')) {
+    //use the release editor notes for xaraya mtn repo latest nightly until we get more fields
+    if (isset($latest['enotes']) && strpos($latest['enotes'], 'mt.xaraya.com')) {
+        $latest['nightlylink']=$latest['enotes'];
+    } else {
+        $latest['nightlylink']='';
+    }
+    if (xarModIsAvailable('articles') && xarModIsAvailable('keywords') && isset($id['regname'])) {
+        $latest['onsitedocs']=xarModURL('keywords', 'user', 'main', array('keyword'=>$id['regname']));
+    } else {
+        $latest['onsitedocs'] ='';
+    }
+    if (!isset($id['scmlink'])) {
+        $latest['scmlink']='';
+    } else {
+        $latest['scmlink']=$id['scmlink'];
+    }
+    $data['latest']=$latest;
 
-          $latest['nightlylink']=$latest['enotes'];
-        }else{
-          $latest['nightlylink']='';
-        }
-        if (xarModIsAvailable('articles') && xarModIsAvailable('keywords') && isset($id['regname'])){
-           $latest['onsitedocs']=xarModURL('keywords','user','main',array('keyword'=>$id['regname']));
-        }else{
-           $latest['onsitedocs'] ='';
-        }
-        if (!isset($id['scmlink'])){
-               $latest['scmlink']='';
-        }else{
-            $latest['scmlink']=$id['scmlink'];
-        }
-        $data['latest']=$latest;
-
-    switch(strtolower($phase)) {
+    switch (strtolower($phase)) {
         case 'view':
         default:
 
@@ -176,45 +213,69 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 // The user API function is called.
-                $getid = xarMod::apiFunc('release', 'user','getid',
-                                       array('eid' => $items[$i]['eid']));
+                $getid = xarMod::apiFunc(
+                    'release',
+                    'user',
+                    'getid',
+                    array('eid' => $items[$i]['eid'])
+                );
 
                 $items[$i]['rid'] = xarVarPrepForDisplay($getid['rid']);
                 $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
                 $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
                 $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
                 $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
-                $items[$i]['displaylink'] =  xarModURL('release', 'user','displaynote',
-                                                   array('rnid' => $items[$i]['rnid']));
-                if (xarSecurityCheck('AdminRelease',0)) {
-                    $items[$i]['editlink'] =  xarModURL('release', 'admin','modifynote',
-                                                   array('rnid' => $items[$i]['rnid']));
-                }else{
+                $items[$i]['displaylink'] =  xarModURL(
+                    'release',
+                    'user',
+                    'displaynote',
+                    array('rnid' => $items[$i]['rnid'])
+                );
+                if (xarSecurityCheck('AdminRelease', 0)) {
+                    $items[$i]['editlink'] =  xarModURL(
+                        'release',
+                        'admin',
+                        'modifynote',
+                        array('rnid' => $items[$i]['rnid'])
+                    );
+                } else {
                     $items[$i]['editlink'] =  '';
                 }
 
-                $getuser = xarMod::apiFunc('roles','user','get',
-                                          array('uid' => $getid['uid']));
+                $getuser = xarMod::apiFunc(
+                    'roles',
+                    'user',
+                    'get',
+                    array('uid' => $getid['uid'])
+                );
 
-                $items[$i]['contacturl'] = xarModURL('roles','user','display',
-                                                      array('uid' => $getid['uid']));
+                $items[$i]['contacturl'] = xarModURL(
+                    'roles',
+                    'user',
+                    'display',
+                    array('uid' => $getid['uid'])
+                );
 
 
                 $items[$i]['realname'] = $getuser['name'];
                 $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
 
-                if ($items[$i]['certified'] == 2){
+                if ($items[$i]['certified'] == 2) {
                     $items[$i]['certifiedstatus'] = xarML('Yes');
                 } else {
-                   $items[$i]['certifiedstatus'] = xarML('No');
+                    $items[$i]['certifiedstatus'] = xarML('No');
                 }
                 $items[$i]['changelog'] = nl2br($items[$i]['changelog']);
                 $items[$i]['notes'] = nl2br($items[$i]['notes']);
 
-                $items[$i]['comments'] = xarMod::apiFunc('comments', 'user','get_count',
-                                                       array('modid' => xarModGetIDFromName('release'),
+                $items[$i]['comments'] = xarMod::apiFunc(
+                    'comments',
+                    'user',
+                    'get_count',
+                    array('modid' => xarModGetIDFromName('release'),
                                                              'itemtype' =>(int)$item['exttype'],
-                                                             'objectid' => $item['rnid']));
+                                                             'objectid' => $item['rnid'])
+                );
                 
                 if (!$items[$i]['comments']) {
                     $items[$i]['comments'] = '0';
@@ -224,10 +285,14 @@ function release_user_display($args)
                     $items[$i]['comments'] .= ' ';
                 }
 
-               $items[$i]['hitcount'] = xarMod::apiFunc('hitcount', 'user','get',
-                                                       array('modname' => 'release',
+                $items[$i]['hitcount'] = xarMod::apiFunc(
+                    'hitcount',
+                    'user',
+                    'get',
+                    array('modname' => 'release',
                                                         'itemtype' =>(int)$item['exttype'],
-                                                             'objectid' => $item['rnid']));
+                                                             'objectid' => $item['rnid'])
+                );
 
                 if (!$items[$i]['hitcount']) {
                     $items[$i]['hitcount'] = '0';
@@ -240,12 +305,10 @@ function release_user_display($args)
                 //Get the status update of each release
                 foreach ($stateoptions as $key => $value) {
                     if ($key==$items[$i]['rstate']) {
-                       $rstatesel=$stateoptions[$key];
+                        $rstatesel=$stateoptions[$key];
                     }
                 }
                 $items[$i]['rstatesel']=$rstatesel;
-
-
             }
 
             $data['version'] = 2;
@@ -257,7 +320,7 @@ function release_user_display($args)
       /*
         case 'docsmodule':
             $data['mtype'] = 'mgeneral';
-            // The user API function is called. 
+            // The user API function is called.
 
             $items = xarMod::apiFunc('release', 'user','getdocs',
                                     array('eid' => $eid,
@@ -283,13 +346,13 @@ function release_user_display($args)
             $data['version'] = 0;
             $data['docs'] = 2;
             $data['general'] = 0;
-       
+
             break;
-        
+
         case 'docstheme':
 
             $data['mtype'] = 'tgeneral';
-            // The user API function is called. 
+            // The user API function is called.
 
             $items = xarMod::apiFunc('release', 'user','getdocs',
                                     array('eid' => $eid,
@@ -320,7 +383,7 @@ function release_user_display($args)
         case 'docsblockgroups':
 
             $data['mtype'] = 'bgroups';
-            // The user API function is called. 
+            // The user API function is called.
 
             $items = xarMod::apiFunc('release', 'user','getdocs',
                                     array('eid' => $eid,
@@ -330,7 +393,7 @@ function release_user_display($args)
                 $data['message'] = xarML('There is no block groups documentation defined');
             }
 
-            
+
             // Check individual permissions for Edit / Delete
             for ($i = 0; $i < count($items); $i++) {
                 $item = $items[$i];
@@ -349,11 +412,11 @@ function release_user_display($args)
             $data['general'] = 0;
 
             break;
-        
+
         case 'docsblocks':
 
             $data['mtype'] = 'mblocks';
-            // The user API function is called. 
+            // The user API function is called.
 
             $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
@@ -385,7 +448,7 @@ function release_user_display($args)
         case 'docshooks':
 
             $data['mtype'] = 'mhooks';
-            // The user API function is called. 
+            // The user API function is called.
 
             $items = xarMod::apiFunc('release', 'user', 'getdocs',
                                     array('eid' => $eid,
@@ -417,24 +480,24 @@ function release_user_display($args)
 
     }
     foreach ($stateoptions as $key => $value) {
-         if ($key==$id['rstate']) {
-             $rstatesel=$stateoptions[$key];
-         }
+        if ($key==$id['rstate']) {
+            $rstatesel=$stateoptions[$key];
+        }
     }
 
-     $data['rstatesel']=$rstatesel;
-     $data['stateoptions']=$stateoptions;
+    $data['rstatesel']=$rstatesel;
+    $data['stateoptions']=$stateoptions;
 
-// Version History
-// View Docs
-// Comment on docs
+    // Version History
+    // View Docs
+    // Comment on docs
     $time=time();
     $data['time']=$time;
     $data['desc'] = nl2br($id['desc']);
     $data['regname'] = $id['regname'];
     $data['regtime'] = $id['regtime'];
     $data['displname'] = $id['displname'];
-    $scmlink = str_replace('http://','',$id['scmlink']);
+    $scmlink = str_replace('http://', '', $id['scmlink']);
     $data['scmlink']= !empty($scmlink) ? $id['scmlink'] : '';
     $data['exttypename'] = $exttypename;
     $data['class'] = $id['class'];
@@ -444,7 +507,5 @@ function release_user_display($args)
     $data['realname'] = $realname;
     $data['startnum']=$startnum;
 
-return $data;
+    return $data;
 }
-
-?>

@@ -20,10 +20,16 @@
  */
 function release_user_new_extension($args)
 {
-    if (!xarSecurityCheck('AddRelease')) return;
+    if (!xarSecurityCheck('AddRelease')) {
+        return;
+    }
 
-    if (!xarVarFetch('name',       'str',    $name,            'release_extensions', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str', $name, 'release_extensions', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'release_extensions'));
@@ -32,26 +38,29 @@ function release_user_new_extension($args)
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+            return;
+        }
 
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('release','user','new_extension', $data);        
+            return xarTplModule('release', 'user', 'new_extension', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('release','user','view_extensions'));
+            xarController::redirect(xarModURL('release', 'user', 'view_extensions'));
             return true;
         }
     }
     return $data;
 }
-?>

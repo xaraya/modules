@@ -29,20 +29,22 @@ function release_userapi_getallrids($args)
     }
 
     if (!isset($catid)) {
-    $catid =NULL;
+        $catid =null;
     }
     if (empty($sort)) {
         $sortlist = array('rids');
     } elseif (is_array($sort)) {
         $sortlist = $sort;
     } else {
-        $sortlist = explode(',',$sort);
+        $sortlist = explode(',', $sort);
     }
 
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -51,13 +53,16 @@ function release_userapi_getallrids($args)
     $releasetable = $xartable['release_id'];
     $rolestable = $xartable['roles'];
     //Joins on Catids
-    if(!empty($catid) )
-    {
-        $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin', 
-                              array('modid'    => 773,
+    if (!empty($catid)) {
+        $categoriesdef = xarMod::apiFunc(
+            'categories',
+            'user',
+            'leftjoin',
+            array('modid'    => 773,
                                     'itemtype' => 0, //has to stay this way til we can convert this
                                     'cids'     => array($catid),
-                                    'andcids'  => 1));
+                                    'andcids'  => 1)
+        );
     }
 
     $query = "SELECT $releasetable.xar_eid,
@@ -81,18 +86,16 @@ function release_userapi_getallrids($args)
             LEFT JOIN $rolestable
             ON $releasetable.xar_uid = $rolestable.xar_uid";
     $bindvars = array();
-die("Y");
+    die("Y");
     $from ='';
     $where = array();
-    if (!empty($catid) && count(array($catid)) > 0) 
-    {
+    if (!empty($catid) && count(array($catid)) > 0) {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
         $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_eid';
         
-        if (!empty($categoriesdef['more'])) 
-        {
+        if (!empty($categoriesdef['more'])) {
             //$from = ' ( ' . $from . ' ) ';
             $from .= $categoriesdef['more'];
         }
@@ -117,21 +120,23 @@ die("Y");
         $bindvars[] = $certified;
     }
 
-   if (!empty($openproj)) {
-       $where[] = " xar_openproj = ?";
+    if (!empty($openproj)) {
+        $where[] = " xar_openproj = ?";
         $bindvars[] = (int)$openproj;
-   }
-   if (count($where) > 0) {
+    }
+    if (count($where) > 0) {
         $query .= ' WHERE ' . join(' AND ', $where);
-   }
+    }
 
     if (count($sortlist) > 0) {
         $sortparts = array();
-      foreach ($sortlist as $criteria) {
+        foreach ($sortlist as $criteria) {
             // ignore empty sort criteria
-            if (empty($criteria)) continue;
+            if (empty($criteria)) {
+                continue;
+            }
             // split off trailing ASC or DESC
-            if (preg_match('/^(.+)\s+(ASC|DESC)\s*$/i',$criteria,$matches)) {
+            if (preg_match('/^(.+)\s+(ASC|DESC)\s*$/i', $criteria, $matches)) {
                 $criteria = trim($matches[1]);
                 $sortorder = strtoupper($matches[2]);
             } else {
@@ -147,23 +152,25 @@ die("Y");
                 $sortparts[] = ' xar_rstate ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'regtime') {
                 $sortparts[] = ' xar_regtime ' . (!empty($sortorder) ? $sortorder : 'DESC');
-            } else{
-                 $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } else {
+                $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             }
         }
-        $query .= ' ORDER BY ' . join(', ',$sortparts);
+        $query .= ' ORDER BY ' . join(', ', $sortparts);
     } else { // default is 'rid
         $query .= ' ORDER BY  xar_eid ASC';
     }
 
     //  $query .= " ORDER BY xar_rid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($eid,$rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
-             $regtime, $modified, $members, $scmlink,$openproj,$exttype, $uname) = $result->fields;
+             $regtime, $modified, $members, $scmlink, $openproj, $exttype, $uname) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('eid'        => $eid,
                                    'rid'        => $rid,
@@ -187,7 +194,5 @@ die("Y");
     $result->Close();
 
     // Return the users
-  return $releaseinfo;
+    return $releaseinfo;
 }
-
-?>

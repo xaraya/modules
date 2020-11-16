@@ -22,21 +22,29 @@ function release_user_modifyid($args)
 {
     extract($args);
     // Security Check
-    if(!xarSecurityCheck('EditRelease')) return;
-    if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('eid', 'int:1:',  $eid, null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarSecurityCheck('EditRelease')) {
+        return;
+    }
+    if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $data = xarMod::apiFunc('release', 'user', 'getid', array('eid' => $eid));
 
-    if ($data == false) return;
+    if ($data == false) {
+        return;
+    }
 
-    if (empty($phase)){
+    if (empty($phase)) {
         $phase = 'modify';
     }
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $data['exttypes']=$exttypes;
     $rid = $data['rid'];
-    switch(strtolower($phase)) {
+    switch (strtolower($phase)) {
 
         case 'modify':
         default:
@@ -47,18 +55,18 @@ function release_user_modifyid($args)
             $memberstring = '';
             $members=trim($data['members']);
             if (isset($members) && !empty($members)) {
-               $memberdata = unserialize($members);
+                $memberdata = unserialize($members);
                 if (count($memberdata)>0) {
                     foreach ($memberdata as $k => $v) {
-                       $memberlist[] = xarUser::getVar('uname',$v);
+                        $memberlist[] = xarUser::getVar('uname', $v);
                     }
                 }
                 $memberstring='';
                 foreach ($memberlist as $key=>$uname) {
                     if ($key == 0) {
-                    $memberstring = $uname;
-                    }else{
-                    $memberstring .=','.$uname;
+                        $memberstring = $uname;
+                    } else {
+                        $memberstring .=','.$uname;
                     }
                 }
             }
@@ -101,46 +109,87 @@ function release_user_modifyid($args)
             break;
 
         case 'update':
-            if (!xarVarFetch('rid',       'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('uid',       'int:1:',  $uid, null, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('regname',   'str:1:',  $regname, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('displname', 'str:1:',  $displname, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('desc',      'str:0:',  $desc, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('certified', 'int:0:1', $certified, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('exttype',   'int:0:',  $exttype, null, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('class',     'int:0:',  $class, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('rstate',    'int:0:',  $rstate, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('newmembers', 'str:0:', $newmembers, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('scmlink',   'str:0:',  $scmlink, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('openproj',   'checkbox',  $openproj, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('cids',      'str:0:',  $cids, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('modifyreferer', 'str:0:',  $modifyreferer, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('return_url', 'str:0:',  $return_url, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('eid',       'int:1:',  $eid, null, XARVAR_NOT_REQUIRED)) return;            
+            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('uid', 'int:1:', $uid, null, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('regname', 'str:1:', $regname, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('displname', 'str:1:', $displname, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('desc', 'str:0:', $desc, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('certified', 'int:0:1', $certified, 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('exttype', 'int:0:', $exttype, null, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('class', 'int:0:', $class, 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('rstate', 'int:0:', $rstate, 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('newmembers', 'str:0:', $newmembers, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('scmlink', 'str:0:', $scmlink, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('openproj', 'checkbox', $openproj, false, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('cids', 'str:0:', $cids, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('modifyreferer', 'str:0:', $modifyreferer, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('return_url', 'str:0:', $return_url, '', XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
             $existingmembers = $data['members'];
             $openproj = isset($openproj)? 1:0;
             $memberslist=array();
             if (!empty($newmembers)) {
-              $newmemberlist = explode(',',$newmembers);
+                $newmemberlist = explode(',', $newmembers);
 
-              foreach ($newmemberlist as $k=>$v) {
-                  $userRole = xarMod::apiFunc('roles',  'user',  'get',
-                                       array('uname' => trim($v)));
-                  if (is_array($userRole)) {
-                      $memberslist[]=$userRole['uid'];
-                  }
-              }
+                foreach ($newmemberlist as $k=>$v) {
+                    $userRole = xarMod::apiFunc(
+                        'roles',
+                        'user',
+                        'get',
+                        array('uname' => trim($v))
+                    );
+                    if (is_array($userRole)) {
+                        $memberslist[]=$userRole['uid'];
+                    }
+                }
 
-              $members = serialize($memberslist);
-            }else {
+                $members = serialize($memberslist);
+            } else {
                 $members = '';
             }
 
             // The user API function is called.
-            if (!xarMod::apiFunc('release', 'user','updateid',
-                                array('eid'       => $eid,
+            if (!xarMod::apiFunc(
+                'release',
+                'user',
+                'updateid',
+                array('eid'       => $eid,
                                       'rid'       => $rid,
                                       'uid'       => $uid,
                                       'regname'   => $regname,
@@ -153,9 +202,12 @@ function release_user_modifyid($args)
                                       'members'   => $members,
                                       'scmlink'   => $scmlink,
                                       'openproj'  => $openproj,
-                                      'cids'      => $cids))) return;
+                                      'cids'      => $cids)
+            )) {
+                return;
+            }
 
-                xarController::redirect(xarModURL('release', 'user', 'display',array('eid'=>$eid)));
+                xarController::redirect(xarModURL('release', 'user', 'display', array('eid'=>$eid)));
           return true;
 
             break;
@@ -163,4 +215,3 @@ function release_user_modifyid($args)
 
     return $data;
 }
-?>

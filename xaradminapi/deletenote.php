@@ -12,9 +12,9 @@
  */
 /**
  * Delete a note
- * 
+ *
  * @param $rnid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
@@ -24,16 +24,26 @@ function release_adminapi_deletenote($args)
     extract($args);
 
     // Argument check
-    if (!isset($rnid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+    if (!isset($rnid)) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     // The user API function is called
-    $link = xarMod::apiFunc('release', 'user', 'getnote',
-                         array('rnid' => $rnid));
+    $link = xarMod::apiFunc(
+        'release',
+        'user',
+        'getnote',
+        array('rnid' => $rnid)
+    );
 
-    if ($link == false) throw new EmptyParameterException(null,xarML('No Such Release Note Present'));
+    if ($link == false) {
+        throw new EmptyParameterException(null, xarML('No Such Release Note Present'));
+    }
 
     // Security Check
-    if(!xarSecurityCheck('ManageRelease')) return;
+    if (!xarSecurityCheck('ManageRelease')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -44,8 +54,10 @@ function release_adminapi_deletenote($args)
     // Delete the item
     $query = "DELETE FROM $releasenotetable
             WHERE xar_rnid = ?";
-    $result =& $dbconn->Execute($query,array($rnid));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($rnid));
+    if (!$result) {
+        return;
+    }
 
     // Let any hooks know that we have deleted a link
     xarModCallHooks('item', 'delete', $rnid, '');
@@ -53,5 +65,3 @@ function release_adminapi_deletenote($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
-
-?>

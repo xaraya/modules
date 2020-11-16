@@ -25,7 +25,7 @@ function release_userapi_search($args)
     }
     extract($args);
 
-     if($q == ''){
+    if ($q == '') {
         return;
     }
 
@@ -67,7 +67,7 @@ function release_userapi_search($args)
 
         $bindvars[] = '%'.$regname.'%';
     }
-   if (isset($displname)) {
+    if (isset($displname)) {
         if (isset($rid) || isset($uid) || isset($regname)) {
             $sql .= " OR ";
         }
@@ -84,7 +84,9 @@ function release_userapi_search($args)
     $sql .= ")  ORDER BY xar_rid ASC";
 
     $result =& $dbconn->Execute($sql, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     // no results to return .. then return them :p
     if ($result->EOF) {
         return array();
@@ -98,7 +100,7 @@ function release_userapi_search($args)
                                 'regname' => $regname,
                                 'displname' => $displname,
                                 'desc' => $desc,
-                                'author' => xarUser::getVar('name',$uid),
+                                'author' => xarUser::getVar('name', $uid),
                                 'exttype' => $exttype );
         }
     }
@@ -106,6 +108,4 @@ function release_userapi_search($args)
 
     // Return the releases
     return $releases;
-
 }
-?>

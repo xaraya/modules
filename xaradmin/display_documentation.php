@@ -18,10 +18,16 @@
     
     function release_admin_display_documentation()
     {
-        if (!xarSecurityCheck('ReadRelease')) return;
+        if (!xarSecurityCheck('ReadRelease')) {
+            return;
+        }
 
-        if (!xarVarFetch('name',       'str',    $name,            'release_docs', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('name', 'str', $name, 'release_docs', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['object']->getItem(array('itemid' => $data['itemid']));
@@ -30,4 +36,3 @@
 
         return $data;
     }
-?>

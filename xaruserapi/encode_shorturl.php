@@ -13,7 +13,7 @@
 
 /**
  * return the path for a short URL to xarModURL for this module
- * 
+ *
  * @author jojodee
  * @param  $args the function and arguments passed to xarModURL
  * @returns string
@@ -29,10 +29,10 @@ function release_userapi_encode_shorturl($args)
         return;
     }
     //get the extension types
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $extname ='';
     if (isset($exttype)) {
-        $exttypename = array_search($exttype,$exttypes);
+        $exttypename = array_search($exttype, $exttypes);
         $extname = strtolower($exttypename);
     }
 
@@ -49,91 +49,86 @@ function release_userapi_encode_shorturl($args)
         if (isset($sort)) {
             $path = '/' . $module . '/view/' . $sort . '.html';
         } else {
-             $path = '/' . $module . '/view.html';
+            $path = '/' . $module . '/view.html';
         }
     } elseif ($func == 'display') {
         // check for required parameters
         if (isset($rid) && is_numeric($rid)) {
-           if (!isset($exttype)) {// have to assume it's a module for backward compatibility ==1
-               if (isset($phase) && $phase=='version'){
+            if (!isset($exttype)) {// have to assume it's a module for backward compatibility ==1
+                if (isset($phase) && $phase=='version') {
                     $path = '/' . $module . '/version/module/' . $rid . '.html';
-               }elseif (isset($phase) && $phase=='view'){
+                } elseif (isset($phase) && $phase=='view') {
                     $path = '/' . $module . '/module/' . $rid . '.html';
-               }else {
+                } else {
                     $path = '/' . $module . '/module/' . $rid . '.html';
-               }
-           }else {
-                if (isset($phase) && $phase=='version'){
+                }
+            } else {
+                if (isset($phase) && $phase=='version') {
                     $path = '/' . $module . '/version/'.$extname.'/' . $rid . '.html';
-               }elseif (isset($phase) && $phase=='view'){
+                } elseif (isset($phase) && $phase=='view') {
                     $path = '/' . $module . '/' . $extname.'/' .$rid . '.html';
-               }else {
+                } else {
                     $path = '/' . $module . '/' .$extname.'/' . $rid . '.html';
                 }
-           }
-
+            }
         } elseif (isset($eid)) {
-            if (isset($phase) && $phase=='version'){
-                    $path = '/' . $module . '/version/eid/' . $eid;
-            }elseif (isset($phase) && $phase=='view'){
-                    $path = '/' . $module . '/eid/' . $eid;
-            }else {
-                    $path = '/' . $module . '/eid/' . $eid;
+            if (isset($phase) && $phase=='version') {
+                $path = '/' . $module . '/version/eid/' . $eid;
+            } elseif (isset($phase) && $phase=='view') {
+                $path = '/' . $module . '/eid/' . $eid;
+            } else {
+                $path = '/' . $module . '/eid/' . $eid;
             }
         }
     } elseif ($func == 'viewnotes') {
         $path = '/' . $module . '/viewnotes.html';
-
     } elseif ($func == 'displaynote') {
         // check for required parameters
         if (isset($rnid) && is_numeric($rnid)) {
             $path = '/' . $module . '/displaynote/' . $rnid . '.html';
         } else {
         }
-
     } elseif ($func == 'addnotes') {
         // check for required parameters
-        if (isset($rid)){
-            if (!isset($exttype)){ //have to assume a module .. backward compatibility, ugg
+        if (isset($rid)) {
+            if (!isset($exttype)) { //have to assume a module .. backward compatibility, ugg
                 if (isset($phase) && ($phase=='start')) {
                     $path = '/' . $module . '/addnotes/module/' . $rid . '.html';
                 } else {
-                     $path = '/' . $module . '/module/addnotes.html';
+                    $path = '/' . $module . '/module/addnotes.html';
                 }
-            }else {
+            } else {
                 if (isset($phase) && ($phase=='start')) {
                     $path = '/' . $module . '/addnotes/'.$extname.'/' . $rid . '.html';
                 } else {
-                     $path = '/' . $module . '/'.$extname.'/addnotes.html';
+                    $path = '/' . $module . '/'.$extname.'/addnotes.html';
                 }
             }
-        }elseif (isset($eid)){
-           if (isset($phase) && ($phase=='start')) {
-                    $path = '/' . $module . '/addnotes/eid/' . $eid;
-           } else {
-                     $path = '/' . $module . '/addnotes.html';
-           }
+        } elseif (isset($eid)) {
+            if (isset($phase) && ($phase=='start')) {
+                $path = '/' . $module . '/addnotes/eid/' . $eid;
+            } else {
+                $path = '/' . $module . '/addnotes.html';
+            }
         }
     } elseif ($func == 'addid') {
         $path = '/' . $module . '/addid.html';
-
     } elseif ($func == 'modifyid') {
         if (isset($rid)) {
-            if (!isset($exttype)){ //have to assume a module .. backward compatibility, ugg
+            if (!isset($exttype)) { //have to assume a module .. backward compatibility, ugg
                 // check for required parameters
                 if (isset($rid) && is_numeric($rid)) {
                     $path = '/' . $module . '/modifyid/module/' . $rid . '.html';
                 } else {
                 }
-            }else {
+            } else {
                 if (isset($rid) && is_numeric($rid)) {
                     $path = '/' . $module . '/modifyid/'.$extname.'/'. $rid . '.html';
-               }
+                }
             }
-        }elseif (isset($eid)){
-             $path = '/' . $module . '/modifyid/eid/'. $eid;
+        } elseif (isset($eid)) {
+            $path = '/' . $module . '/modifyid/eid/'. $eid;
         }
-
     } else {
         // -> don't create a path here
     }
@@ -142,7 +137,7 @@ function release_userapi_encode_shorturl($args)
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
             $join = '&';
-        } 
+        }
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
             $join = '&';
@@ -151,13 +146,11 @@ function release_userapi_encode_shorturl($args)
                 $catid = join('+', $cids);
             } else {
                 $catid = join('-', $cids);
-            } 
+            }
             $path .= $join . 'catid=' . $catid;
             $join = '&';
-        } 
-    } 
+        }
+    }
 
     return $path;
-} 
-
-?>
+}

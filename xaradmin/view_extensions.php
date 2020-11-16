@@ -12,7 +12,9 @@
  */
 function release_admin_view_extensions()
 {
-    if (!xarSecurityCheck('EditRelease')) return;
+    if (!xarSecurityCheck('EditRelease')) {
+        return;
+    }
 
     // Get the object to be listed
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_extensions'));
@@ -34,7 +36,7 @@ function release_admin_view_extensions()
             $exttype=$k;
         }
     }
-    // The user API function is called. 
+    // The user API function is called.
     $items = xarMod::apiFunc('release', 'user', 'getallrids',
                        array('exttype'  => $exttype,
                              'startnum' => $startnum,
@@ -79,5 +81,3 @@ function release_admin_view_extensions()
     return $data;
     */
 }
-
-?>

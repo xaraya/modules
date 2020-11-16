@@ -12,7 +12,7 @@
  */
 /**
  * Create a doc by user
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  * @param rid, title, doc, type, approved
@@ -24,11 +24,13 @@ function release_userapi_createdoc($args)
 
     // Argument check
     if ((!isset($eid)) ||
-        (!isset($rid)) ||    
+        (!isset($rid)) ||
         (!isset($title)) ||
         (!isset($doc)) ||
         (!isset($exttype)) ||
-        (!isset($approved))) throw new BadParameterException(null,xarML('Wrong arguments to release_userapi_createdoc'));
+        (!isset($approved))) {
+        throw new BadParameterException(null, xarML('Wrong arguments to release_userapi_createdoc'));
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -36,7 +38,7 @@ function release_userapi_createdoc($args)
 
     $releasetable = $xartable['release_docs'];
 
-    if (empty($approved)){
+    if (empty($approved)) {
         $approved = 1;
     }
 
@@ -56,8 +58,10 @@ function release_userapi_createdoc($args)
             VALUES (?,?,?,?,?,?,?,?)";
 
     $bindvars = array($nextId,$eid,$rid,$title,$doc,$exttype,$time,$approved);
-    $result =& $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     // Get the ID of the item that we inserted
     $rdid = $dbconn->PO_Insert_ID($releasetable, 'xar_rdid');
@@ -67,7 +71,4 @@ function release_userapi_createdoc($args)
 
     // Return the id of the newly created user to the calling process
     return $rdid;
-
 }
-
-?>

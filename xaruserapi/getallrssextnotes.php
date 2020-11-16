@@ -12,7 +12,7 @@
  */
 /**
  * Get module IDs
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author jojodee
  * @author Release module development team
@@ -26,7 +26,9 @@ function release_userapi_getallrssextnotes($args)
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -44,11 +46,13 @@ function release_userapi_getallrssextnotes($args)
             ORDER by xar_time DESC";
 
     if (isset($releaseno) && is_numeric($releaseno)) { //unlimited if not set??
-       $result =& $dbconn->SelectLimit($query, $releaseno, 0);
+        $result =& $dbconn->SelectLimit($query, $releaseno, 0);
     } else {
-       $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
@@ -67,5 +71,3 @@ function release_userapi_getallrssextnotes($args)
     // Return the users
     return $releaseinfo;
 }
-
-?>

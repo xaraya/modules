@@ -25,7 +25,9 @@ function release_userapi_getallnotes($args)
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -76,18 +78,18 @@ function release_userapi_getallnotes($args)
         $where .= " AND rnotes.xar_rid = ?
                     AND rnotes.xar_approved = 2";
         $bindvars[] = $rid;
-    }elseif (!empty($approved)) {
+    } elseif (!empty($approved)) {
         $where .= " AND rnotes.xar_approved = ?";
         $bindvars[] = $approved;
     } elseif (!empty($eid)) {
         $where .= " AND rnotes.xar_eid = ?
                     AND rnotes.xar_approved = 2";
-                    $bindvars[]=$eid;
+        $bindvars[]=$eid;
     }
     if (!empty($usefeed)) {
         if (!empty($where)) {
             $where .= " AND rnotes.xar_usefeed = ?";
-        } else{
+        } else {
             $where .= " AND rnotes.xar_usefeed = ?
                     AND rnotes.xar_approved = 2";
         }
@@ -98,14 +100,16 @@ function release_userapi_getallnotes($args)
 
     $query .= " ORDER by xar_time DESC";
 
-            //ORDER BY xar_rnid";
+    //ORDER BY xar_rnid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($rnid, $rid,$eid,$regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink,
-             $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved,$rstate,$usefeed,$exttype) = $result->fields;
+             $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
@@ -137,5 +141,3 @@ function release_userapi_getallnotes($args)
     // Return the users
     return $releaseinfo;
 }
-
-?>

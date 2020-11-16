@@ -32,7 +32,9 @@ function release_userapi_getallids($args)
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -60,24 +62,26 @@ function release_userapi_getallids($args)
             ORDER BY xar_eid";
     if (!empty($certified)) {
         $query .= " WHERE xar_certified = ?";
-      $bindvars[]=$certified;
+        $bindvars[]=$certified;
     }
     if (isset($exttype) and !empty($exttype)) {
         if (!empty($certified)) {
-           $query .= " AND xar_exttype = ?";
-        }else {
-           $query .= " WHERE xar_exttype = ?";
+            $query .= " AND xar_exttype = ?";
+        } else {
+            $query .= " WHERE xar_exttype = ?";
         }
-       $bindvars[]= $exttype;
+        $bindvars[]= $exttype;
     }
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
-             $rstate, $regtime, $modified, $members, $scmlink,$openproj, $exttype) = $result->fields;
+             $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('eid'        => $eid,
                                    'rid'        => $rid,
@@ -103,5 +107,3 @@ function release_userapi_getallids($args)
     // Return the users
     return $releaseinfo;
 }
-
-?>

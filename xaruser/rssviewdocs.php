@@ -14,20 +14,22 @@
  * Display a release
  *
  * @param rid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
 function release_user_rssviewdocs()
 {
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
-    // The user API function is called. 
-    $id = xarMod::apiFunc('release', 'user', 'getallids',
-                          array('certified' => '2'));
-
-
+    // The user API function is called.
+    $id = xarMod::apiFunc(
+        'release',
+        'user',
+        'getallids',
+        array('certified' => '2')
+    );
 }
-
-?>

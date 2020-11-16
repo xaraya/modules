@@ -12,9 +12,9 @@
  */
 /**
  * Update a note
- * 
+ *
  * @param $rnid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
@@ -24,19 +24,29 @@ function release_adminapi_updatenote($args)
     extract($args);
 
     // Argument check
-    if  (!isset($rnid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+    if (!isset($rnid)) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     // The user API function is called
-    $link = xarMod::apiFunc('release', 'user', 'getnote',
-                          array('rnid' => $rnid));
+    $link = xarMod::apiFunc(
+        'release',
+        'user',
+        'getnote',
+        array('rnid' => $rnid)
+    );
     
-    if ($link == false) throw new EmptyParameterException(null,xarML('No Such Release Note Present'));
+    if ($link == false) {
+        throw new EmptyParameterException(null, xarML('No Such Release Note Present'));
+    }
 
     if (!isset($exttype)) {
         $exttype = $link['exttype'];
     }
     // Security Check
-    if(!xarSecurityCheck('EditRelease')) return;
+    if (!xarSecurityCheck('EditRelease')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -67,8 +77,10 @@ function release_adminapi_updatenote($args)
             WHERE xar_rnid = ?";
     $bindvars=array($rid,$version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
                     $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,(int)$exttype,$rnid);
-    $result =& $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     // Let the calling process know that we have finished successfully
     // Let any hooks know that we have created a new user.
@@ -80,5 +92,3 @@ function release_adminapi_updatenote($args)
     // Return the id of the newly created user to the calling process
     return $rnid;
 }
-
-?>

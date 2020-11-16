@@ -19,7 +19,9 @@ function release_userapi_getnote($args)
 {
     extract($args);
 
-    if (!isset($rnid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+    if (!isset($rnid)) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -49,11 +51,13 @@ function release_userapi_getnote($args)
                      xar_exttype
             FROM $releasetable
             WHERE xar_rnid = ?";
-    $result =& $dbconn->Execute($query,array($rnid));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($rnid));
+    if (!$result) {
+        return;
+    }
 
     list($rnid, $eid,$rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink,
-        $changelog, $notes, $time, $enotes, $certified, $approved,$rstate,$usefeed,$exttype) = $result->fields;
+        $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -83,5 +87,3 @@ function release_userapi_getnote($args)
 
     return $releaseinfo;
 }
-
-?>

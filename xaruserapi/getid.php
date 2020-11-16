@@ -14,7 +14,9 @@ function release_userapi_getid($args)
 {
     extract($args);
 
-    if (!isset($eid) && (!isset($rid))) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+    if (!isset($eid) && (!isset($rid))) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -39,23 +41,25 @@ function release_userapi_getid($args)
                      xar_openproj,
                      xar_exttype
             FROM $releasetable ";
-   if (isset($eid)) {
-            $query .= "WHERE xar_eid = ?";
-            $bindvars = array($eid);
-   }elseif (isset($rid) && isset($exttype) && !empty($exttype)){
-           $query .= "WHERE xar_rid = ? AND xar_exttype = ?";
-            $bindvars = array((int)$rid,(int)$exttype);
-   }elseif (isset($rid) && (!isset($exttype) || empty($exttype))) { //legacy check
-       //try modules and themes for backward compatibility
-           $query .= "WHERE xar_rid = ? ";
-            $bindvars = array((int)$rid);
-   }
+    if (isset($eid)) {
+        $query .= "WHERE xar_eid = ?";
+        $bindvars = array($eid);
+    } elseif (isset($rid) && isset($exttype) && !empty($exttype)) {
+        $query .= "WHERE xar_rid = ? AND xar_exttype = ?";
+        $bindvars = array((int)$rid,(int)$exttype);
+    } elseif (isset($rid) && (!isset($exttype) || empty($exttype))) { //legacy check
+        //try modules and themes for backward compatibility
+        $query .= "WHERE xar_rid = ? ";
+        $bindvars = array((int)$rid);
+    }
 
-    $result =& $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
-         $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype ) = $result->fields;
+         $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -81,4 +85,3 @@ function release_userapi_getid($args)
 
     return $releaseinfo;
 }
-?>

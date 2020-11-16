@@ -13,10 +13,10 @@
 
 /**
  * Get release links
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
- * @TODO 
+ * @TODO
  */
 function release_userapi_getreleaselinks($args)
 {
@@ -34,13 +34,17 @@ function release_userapi_getreleaselinks($args)
         $all = 1;
     }
 
-   $releaseinfo = array();
+    $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
-     $releaseinfo = xarMod::apiFunc(
-        'release', 'user', 'getallnotes',
+    $releaseinfo = xarMod::apiFunc(
+        'release',
+        'user',
+        'getallnotes',
         array('approved' => 1)
     );
 
@@ -48,12 +52,10 @@ function release_userapi_getreleaselinks($args)
 
     $releaselinks = array();
     foreach ($releaseinfo as $release) {
-         $item['release']['regname']=$release['regname'];
-         $item['release']['link'] = xarModURL('release','admin','modifynote',array('rnid'=>$release['rnid']));
+        $item['release']['regname']=$release['regname'];
+        $item['release']['link'] = xarModURL('release', 'admin', 'modifynote', array('rnid'=>$release['rnid']));
         $releaselinks[] = $item['release'];
     }
     $releaselinks['counted']=$totreleases;
     return $releaselinks;
 }
-
-?>

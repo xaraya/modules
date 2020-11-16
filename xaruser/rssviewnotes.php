@@ -13,15 +13,19 @@
 
 function release_user_rssviewnotes()
 {
-     if(!xarVarFetch('releaseno',   'int:0:', $releaseno,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('releaseno', 'int:0:', $releaseno, null, XARVAR_DONT_SET)) {
+        return;
+    }
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     $data['items'] = array();
 
 
     // The user API function is called.
-    $items = xarMod::apiFunc('release', 'user','getallrssextnotes',array('releaseno'=>$releaseno));
+    $items = xarMod::apiFunc('release', 'user', 'getallrssextnotes', array('releaseno'=>$releaseno));
 
     $totalitems=count($items);
     // Check individual permissions for Edit / Delete
@@ -29,14 +33,22 @@ function release_user_rssviewnotes()
         $item = $items[$i];
 
         // The user API function is called.
-        $getid = xarMod::apiFunc('release', 'user', 'getid',
-                               array('rid' => $items[$i]['rid']));
+        $getid = xarMod::apiFunc(
+            'release',
+            'user',
+            'getid',
+            array('rid' => $items[$i]['rid'])
+        );
 
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
 
-        $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
-                                                array('rnid' => $item['rnid']),
-                                                '1');
+        $items[$i]['displaylink'] =  xarModURL(
+            'release',
+            'user',
+            'displaynote',
+            array('rnid' => $item['rnid']),
+            '1'
+        );
 
         $items[$i]['desc'] = nl2br(xarVarPrepForDisplay($getid['desc']));
     }
@@ -46,6 +58,4 @@ function release_user_rssviewnotes()
 
     // Return the template variables defined in this function
     return $data;
-
 }
-?>

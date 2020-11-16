@@ -14,7 +14,9 @@ function release_userapi_getdoc($args)
 {
     extract($args);
 
-    if (!isset($rdid)) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+    if (!isset($rdid)) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -32,10 +34,12 @@ function release_userapi_getdoc($args)
                      xar_approved
             FROM $releasetable
             WHERE xar_rdid = ?";
-    $result =& $dbconn->Execute($query,array($rdid));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($rdid));
+    if (!$result) {
+        return;
+    }
 
-    list($rdid, $eid,$rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
+    list($rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -53,4 +57,3 @@ function release_userapi_getdoc($args)
 
     return $releaseinfo;
 }
-?>

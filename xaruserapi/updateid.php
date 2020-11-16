@@ -13,10 +13,10 @@
 
 /**
  * Get module IDs
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
- * @TODO 
+ * @TODO
  */
 function release_userapi_updateid($args)
 {
@@ -29,28 +29,38 @@ function release_userapi_updateid($args)
         (!isset($regname)) ||
         (!isset($displname)) ||
         (!isset($exttype)) ||
-        (!isset($class))) throw new BadParameterException(null,xarML('Invalid Parameter Count'));
+        (!isset($class))) {
+        throw new BadParameterException(null, xarML('Invalid Parameter Count'));
+    }
 
     // The user API function is called
-    $link = xarMod::apiFunc('release', 'user', 'getid',
-                          array('eid' => $eid));
+    $link = xarMod::apiFunc(
+        'release',
+        'user',
+        'getid',
+        array('eid' => $eid)
+    );
 
-    if ($link == false) throw new BadParameterException(null,xarML('No Such Release ID Present'));
+    if ($link == false) {
+        throw new BadParameterException(null, xarML('No Such Release ID Present'));
+    }
 
     //this should not change once registered
     if (!isset($regtime)) {
-       $regtime=$link['regtime'];
+        $regtime=$link['regtime'];
     }
     $modified = time();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
 
-    if (empty($approved)){
+    if (empty($approved)) {
         $approved = '1';
     }
 
@@ -75,8 +85,10 @@ function release_userapi_updateid($args)
             WHERE xar_eid     = ?";
     $bindvars = array((int)$uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
                       $regtime, $modified, $members, $scmlink, $openproj, (int)$exttype,(int)$eid);
-    $result =& $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     if (empty($cids)) {
         $cids = array();
@@ -91,5 +103,3 @@ function release_userapi_updateid($args)
     // Return the id of the newly created user to the calling process
     return $eid;
 }
-
-?>

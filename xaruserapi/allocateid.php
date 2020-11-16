@@ -20,28 +20,29 @@ function release_userapi_allocateid($args)
 {
     extract($args);
 
-   /* Get rid of leading and trailing spaces in the name */
+    /* Get rid of leading and trailing spaces in the name */
 
     if (!isset($regname) || !isset($exttype)) {
-       $msg = xarML('Both a registration name and extension type were not provided and are needed for registration.');
-        throw new Exception(null,$msg);
+        $msg = xarML('Both a registration name and extension type were not provided and are needed for registration.');
+        throw new Exception(null, $msg);
     }
     //check the name - common to all types?
     // Argument check
     if (!ereg("^[a-z0-9][a-z0-9_-]*[a-z0-9]$", $regname)) {
         $msg = xarML('Registered name may only contain alphanumeric characters, included underscore or hypen, and no spaces.');
-        throw new Exception(null,$msg);
+        throw new Exception(null, $msg);
     }
     if (isset($ridno) && is_integer($ridno) && $ridno >0) { //could be a supplied ID, let's check if it's available.
-      $checkrid = xarMod::apiFunc('release','user','getid',array('rid'=>$ridno, 'exttype'=>$exttype));
-      if (isset($checkrid['regname']) && !empty($checkrid['regname'])) { //the rid is take, try again
-          xarErrorFree();xarErrorHandled();
-          return;
-      }else {
-        //we are done here - use this rid as it seems ok
-        return $ridno;
-      }
-     }
+        $checkrid = xarMod::apiFunc('release', 'user', 'getid', array('rid'=>$ridno, 'exttype'=>$exttype));
+        if (isset($checkrid['regname']) && !empty($checkrid['regname'])) { //the rid is take, try again
+            xarErrorFree();
+            xarErrorHandled();
+            return;
+        } else {
+            //we are done here - use this rid as it seems ok
+            return $ridno;
+        }
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -49,17 +50,19 @@ function release_userapi_allocateid($args)
 
     $releasetable = $xartable['release_id'];
 
-     // Check if that regname exists for the given extension type - this part is common to all
-     $query = "SELECT xar_rid FROM $releasetable
+    // Check if that regname exists for the given extension type - this part is common to all
+    $query = "SELECT xar_rid FROM $releasetable
               WHERE xar_regname = ?
               AND xar_exttype = ?";
 
-              $result =& $dbconn->Execute($query,array($regname,$exttype));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($regname,$exttype));
+    if (!$result) {
+        return;
+    }
 
     if ($result->RecordCount() > 0) {
         $msg = xarML('Sorry, the name you requested is already registered for that extension type, please choose another.');
-        throw new Exception(null,$msg);
+        throw new Exception(null, $msg);
     }
 
     $bindvars=array();
@@ -70,22 +73,24 @@ function release_userapi_allocateid($args)
     $allrids=array();
     // Get all IDs
     $query2 = "SELECT xar_rid FROM $releasetable ";
-            if ($exttype ==1 or $exttype ==2) {//modules or themes
-               $query2 .= " WHERE xar_exttype <= 2";
-            } else {
-               $query2 .= " WHERE xar_exttype = ?";
-               $bindvars =array((int)$exttype);
-            }
+    if ($exttype ==1 or $exttype ==2) {//modules or themes
+        $query2 .= " WHERE xar_exttype <= 2";
+    } else {
+        $query2 .= " WHERE xar_exttype = ?";
+        $bindvars =array((int)$exttype);
+    }
 
-                $query2 .= " ORDER BY xar_rid";
+    $query2 .= " ORDER BY xar_rid";
             
-            $result =& $dbconn->Execute($query2,$bindvars);
-            if (!$result) return;
-               for (; !$result->EOF; $result->MoveNext()) {
-                   list($rid) = $result->fields;
-                   $allrids[] = array('rid'=> $rid);
-               }
-            $result->Close();
+    $result =& $dbconn->Execute($query2, $bindvars);
+    if (!$result) {
+        return;
+    }
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($rid) = $result->fields;
+        $allrids[] = array('rid'=> $rid);
+    }
+    $result->Close();
 
     //jojodee - we want to get all the rids that exist and may not be sequential,
     // and allocate first free number to the next rid available for the extension type
@@ -93,14 +98,14 @@ function release_userapi_allocateid($args)
     $totalrids=count($allrids);
     $i=0;
     $nextregid=1;  //We want to start from ID=1 not 0
-    for ($i = 0; $i < $totalrids; $i++)
-    {
+    for ($i = 0; $i < $totalrids; $i++) {
         if ($nextregid == ($allrids[$i]['rid'])) {
             $nextregid++;
         }
     }
-    if ($nextregid == 0) return;
+    if ($nextregid == 0) {
+        return;
+    }
 
-  return $nextregid;
+    return $nextregid;
 }
-?>

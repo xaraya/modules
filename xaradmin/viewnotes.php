@@ -12,42 +12,58 @@
  */
 /**
  * view notes
- * 
+ *
  * @param $startnum
  * @param $phase
  * @param $filter
  * @param $type
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
 function release_admin_viewnotes()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase',    'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter',   'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('exttype', 'str:1:',  $exttype, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('exttype', 'str:1:', $exttype, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     // Security Check
-    if(!xarSecurityCheck('EditRelease')) return;
+    if (!xarSecurityCheck('EditRelease')) {
+        return;
+    }
 
     $uid = xarUser::getVar('id');
     $data['items'] = array();
 
-    if (empty($phase)){
+    if (empty($phase)) {
         $phase = 'unapproved';
     }
-    switch(strtolower($phase)) {
+    switch (strtolower($phase)) {
 
         case 'unapproved':
         default:
 
             // The user API function is called.
-            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModVars::get('roles',
-                                                                  'itemsperpage'),
-                                        'unapproved' => 1));
-            if ($items == false){
+            $items = xarMod::apiFunc(
+                'release',
+                'user',
+                'getallnotes',
+                array('startnum' => $startnum,
+                                        'numitems' => xarModVars::get(
+                                            'roles',
+                                            'itemsperpage'
+                                        ),
+                                        'unapproved' => 1)
+            );
+            if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
             $phasedesc =xarML('Pending');
@@ -56,12 +72,18 @@ function release_admin_viewnotes()
         case 'viewall':
 
             // The user API function is called.
-            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModVars::get('roles',
-                                                                  'itemsperpage'),
-                                        'approved' => 2));
-            if ($items == false){
+            $items = xarMod::apiFunc(
+                'release',
+                'user',
+                'getallnotes',
+                array('startnum' => $startnum,
+                                        'numitems' => xarModVars::get(
+                                            'roles',
+                                            'itemsperpage'
+                                        ),
+                                        'approved' => 2)
+            );
+            if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
             $phasedesc =xarML('All Approved');
@@ -70,38 +92,50 @@ function release_admin_viewnotes()
         case 'certified':
 
             // The user API function is called.
-            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModVars::get('roles',
-                                                                  'itemsperpage'),
-                                        'certified'=> $filter));
+            $items = xarMod::apiFunc(
+                'release',
+                'user',
+                'getallnotes',
+                array('startnum' => $startnum,
+                                        'numitems' => xarModVars::get(
+                                            'roles',
+                                            'itemsperpage'
+                                        ),
+                                        'certified'=> $filter)
+            );
             
-            if ($items == false){
+            if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
             if ($filter == 1) {
-               $phasedesc =xarML('Non-Certified');
-            }else{
-               $phasedesc =xarML('Certified');
+                $phasedesc =xarML('Non-Certified');
+            } else {
+                $phasedesc =xarML('Certified');
             }
             break;
 
         case 'price':
 
             // The user API function is called.
-            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModVars::get('roles',
-                                                                  'itemsperpage'),
-                                        'price'    => $filter));
+            $items = xarMod::apiFunc(
+                'release',
+                'user',
+                'getallnotes',
+                array('startnum' => $startnum,
+                                        'numitems' => xarModVars::get(
+                                            'roles',
+                                            'itemsperpage'
+                                        ),
+                                        'price'    => $filter)
+            );
             
-            if ($items == false){
+            if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
             if ($filter == 1) {
-               $phasedesc =xarML('Free');
-            }else{
-               $phasedesc =xarML('Commercial');
+                $phasedesc =xarML('Free');
+            } else {
+                $phasedesc =xarML('Commercial');
             }
 
             break;
@@ -109,20 +143,26 @@ function release_admin_viewnotes()
         case 'supported':
 
             // The user API function is called.
-            $items = xarMod::apiFunc('release', 'user', 'getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModVars::get('roles',
-                                                                  'itemsperpage'),
-                                        'supported'=> $filter));
+            $items = xarMod::apiFunc(
+                'release',
+                'user',
+                'getallnotes',
+                array('startnum' => $startnum,
+                                        'numitems' => xarModVars::get(
+                                            'roles',
+                                            'itemsperpage'
+                                        ),
+                                        'supported'=> $filter)
+            );
             
-            if ($items == false){
+            if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
              if ($filter == 1) {
-               $phasedesc =xarML('Not Supported');
-            }else{
-               $phasedesc =xarML('Supported');
-            }
+                 $phasedesc =xarML('Not Supported');
+             } else {
+                 $phasedesc =xarML('Supported');
+             }
 
             break;
     }
@@ -132,15 +172,23 @@ function release_admin_viewnotes()
         $item = $items[$i];
 
         if (xarSecurityCheck('EditRelease', 0)) {
-            $items[$i]['editurl'] = xarModURL('release', 'admin', 'modifynote',
-                                              array('rnid' => $item['rnid']));
+            $items[$i]['editurl'] = xarModURL(
+                'release',
+                'admin',
+                'modifynote',
+                array('rnid' => $item['rnid'])
+            );
         } else {
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('ManageRelease', 0)) {
-            $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deletenote',
-                                               array('rnid' => $item['rnid']));
+            $items[$i]['deleteurl'] = xarModURL(
+                'release',
+                'admin',
+                'deletenote',
+                array('rnid' => $item['rnid'])
+            );
         } else {
             $items[$i]['deleteurl'] = '';
         }
@@ -148,25 +196,41 @@ function release_admin_viewnotes()
 
 
         // The user API function is called.
-        $getid = xarMod::apiFunc('release', 'user', 'getid',
-                               array('rid' => $items[$i]['rid']));
+        $getid = xarMod::apiFunc(
+            'release',
+            'user',
+            'getid',
+            array('rid' => $items[$i]['rid'])
+        );
 
         $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
-        $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
-                                           array('rnid' => $item['rnid']));
+        $items[$i]['displaylink'] =  xarModURL(
+            'release',
+            'user',
+            'displaynote',
+            array('rnid' => $item['rnid'])
+        );
 
-        $getuser = xarMod::apiFunc('roles', 'user', 'get',
-                                  array('uid' => $getid['uid']));
+        $getuser = xarMod::apiFunc(
+            'roles',
+            'user',
+            'get',
+            array('uid' => $getid['uid'])
+        );
 
-        $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
-                                              array('uid' => $getid['uid']));
+        $items[$i]['contacturl'] = xarModURL(
+            'roles',
+            'user',
+            'display',
+            array('uid' => $getid['uid'])
+        );
 
 
         $items[$i]['realname'] = $getuser['name'];
         $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
 
-        if ($item['certified'] == 1){
+        if ($item['certified'] == 1) {
             $items[$i]['certifiedstatus'] = xarML('Yes');
         } else {
             $items[$i]['certifiedstatus'] = xarML('No');
@@ -174,10 +238,12 @@ function release_admin_viewnotes()
         $items[$i]['changelog'] = nl2br($item['changelog']);
         $items[$i]['notes'] = nl2br($item['notes']);
 
-     $data['pager'] = xarTplGetPager($startnum,
-        xarMod::apiFunc('release', 'user', 'countnotes',array('phase'=>$phase,'filter'=>$filter)),
-        xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
-        xarModUserVars::get('release', 'itemsperpage', $uid));
+        $data['pager'] = xarTplGetPager(
+            $startnum,
+            xarMod::apiFunc('release', 'user', 'countnotes', array('phase'=>$phase,'filter'=>$filter)),
+            xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
+            xarModUserVars::get('release', 'itemsperpage', $uid)
+        );
     }
 
     $data['phase'] = $phasedesc;
@@ -188,6 +254,4 @@ function release_admin_viewnotes()
 
     // Return the template variables defined in this function
     return $data;
-
 }
-?>

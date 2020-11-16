@@ -12,12 +12,12 @@
  */
 /**
  * Get the docs
- * 
+ *
  * @param $rnid $rid $approved
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
- * 
+ *
  */
 function release_userapi_getdocs($args)
 {
@@ -34,7 +34,9 @@ function release_userapi_getdocs($args)
     $releasedocs = array();
 
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
+    if (!xarSecurityCheck('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -57,7 +59,7 @@ function release_userapi_getdocs($args)
     if (!empty($approved)) {
         $query .= " WHERE xar_eid = ? AND xar_approved = ? AND xar_exttype = ?";
         array_push($bindvars, $eid, $approved, $exttype);
-    } elseif(empty($exttype)) {
+    } elseif (empty($exttype)) {
         $query .= " WHERE xar_approved = ?";
         array_push($bindvars, $approved);
     } else {
@@ -68,11 +70,13 @@ function release_userapi_getdocs($args)
     $query .= " ORDER BY xar_rdid";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rdid, $eid,$rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
+        list($rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releasedocs[] = array('rdid'       => $rdid,
                                    'eid'        => $eid,
@@ -88,8 +92,5 @@ function release_userapi_getdocs($args)
     $result->Close();
 
     // Return the users
-return $releasedocs;
-
+    return $releasedocs;
 }
-
-?>

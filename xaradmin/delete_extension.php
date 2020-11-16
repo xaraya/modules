@@ -12,19 +12,27 @@
  */
 /**
  * Delete an extension
- * 
+ *
  * @param $rid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
 function release_admin_delete_extension($args)
 {
-    if (!xarSecurityCheck('ManageRelease')) return;
+    if (!xarSecurityCheck('ManageRelease')) {
+        return;
+    }
 
-    if (!xarVarFetch('name',       'str:1',     $name,            'release_extensions',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',       $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'checkbox',  $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str:1', $name, 'release_extensions', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -36,13 +44,15 @@ function release_admin_delete_extension($args)
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         // Delete the item
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('release','admin','view_extensions'));
+        xarController::redirect(xarModURL('release', 'admin', 'view_extensions'));
         return true;
     }
     return $data;
@@ -52,12 +62,12 @@ function release_admin_delete_extension($args)
     if (!xarVarFetch('eid', 'id', $eid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
-    
+
     extract($args);
 
     if (!empty($obid)) {
         $rid = $obid;
-    } 
+    }
 
     // The user API function is called.
     $data = xarMod::apiFunc('release', 'user', 'getid',
@@ -91,4 +101,3 @@ function release_admin_delete_extension($args)
     return true;
 }
 */
-?>

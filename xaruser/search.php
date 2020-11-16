@@ -27,26 +27,48 @@
 function release_user_search($args)
 {
     extract($args);
-    if (!xarVarFetch('q',         'isset',  $q,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('bool',      'isset',  $bool,     NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sort',      'isset',  $sort,     NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('regname',   'str:0:', $regname,  '',   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('displname', 'str:0:', $displname,'',   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('desc',      'str:0:', $desc,     '',   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('rid',       'id',     $rid,      0,    XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('eid',       'id',     $eid,      0,    XARVAR_DONT_SET)) return;    
-    if (!xarVarFetch('uid',       'id',     $uid,      NULL, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('author',     'isset',  $author,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('authorsearch','isset',  $authorsearch,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('q', 'isset', $q, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('bool', 'isset', $bool, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('sort', 'isset', $sort, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('regname', 'str:0:', $regname, '', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('displname', 'str:0:', $displname, '', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('desc', 'str:0:', $desc, '', XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('rid', 'id', $rid, 0, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eid', 'id', $eid, 0, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('uid', 'id', $uid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('author', 'isset', $author, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('authorsearch', 'isset', $authorsearch, null, XARVAR_DONT_SET)) {
+        return;
+    }
     $data       = array();
     $search     = array();
-   if (isset($args['objectid'])) {
+    if (isset($args['objectid'])) {
         $ishooked = 1;
     } else {
         $ishooked = '';
     }
     $data['ishooked']=$ishooked;
-   if (!isset($q) || strlen(trim($q)) <= 0) {
+    if (!isset($q) || strlen(trim($q)) <= 0) {
         if (isset($author) && strlen(trim($author)) > 0) {
             $q = $author;
             $search['author']=$author;
@@ -57,7 +79,7 @@ function release_user_search($args)
         $data['authorsearch']=1;
     }
 
-     if(trim($q) == ''){
+    if (trim($q) == '') {
         return $data;
     }
     // Default parameters
@@ -89,8 +111,8 @@ function release_user_search($args)
         $displayname='';
     }
     if (isset($desc)) {
-         $search['desc'] = $q;
-         $data['desc'] = 1;
+        $search['desc'] = $q;
+        $data['desc'] = 1;
     } else {
         $data['desc']=0;
         $desc='';
@@ -106,8 +128,10 @@ function release_user_search($args)
         $query = "SELECT xar_uid
                   FROM $rolestable
                   WHERE xar_uname = ? or xar_name = ?";
-        $result =& $dbconn->Execute($query,array($search['author'],$search['author']));
-        if (!$result) return;
+        $result =& $dbconn->Execute($query, array($search['author'],$search['author']));
+        if (!$result) {
+            return;
+        }
         // if we found the uid add it to the search list,
         // otherwise we won't bother searching for it
         if (!$result->EOF) {
@@ -118,18 +142,17 @@ function release_user_search($args)
     } else {
         $search['author']='';
     }
-    $exttypes = xarMod::apiFunc('release','user','getexttypes');
+    $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $data['exttypes']=$exttypes;
 
     $search['q']=$q;
     $seach['modid']= xarModGetIDFromName('release');
     /* Search for release information */
-    $data['release'] = xarMod::apiFunc('release','user','search',$search);
+    $data['release'] = xarMod::apiFunc('release', 'user', 'search', $search);
 
-    if (empty($data['release'])){
+    if (empty($data['release'])) {
         $data['status'] = xarML('No extension found that matches your search');
     }
 
     return $data;
 }
-?>
