@@ -20,7 +20,7 @@
 
         $itemtypes[1] = array('label' => xarML('Native Karma'),
                               'title' => xarML('View Karma'),
-                              'url'   => xarModURL('karma', 'user', 'view')
+                              'url'   => xarController::URL('karma', 'user', 'view')
                              );
 
         $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30059, 'native' => false));

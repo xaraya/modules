@@ -19,8 +19,8 @@ function karma_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewKarma', 0)) {
-        $menulinks[] = array('url'   => xarModURL(
+    if (xarSecurity::check('ViewKarma', 0)) {
+        $menulinks[] = array('url'   => xarController::URL(
             'karma',
             'user',
             'main'

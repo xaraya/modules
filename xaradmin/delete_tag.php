@@ -17,17 +17,17 @@
 
 function karma_admin_delete_tag()
 {
-    if (!xarSecurityCheck('ManageKarma')) {
+    if (!xarSecurity::check('ManageKarma')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str:1', $name, 'karma_tags', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str:1', $name, 'karma_tags', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function karma_admin_delete_tag()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'karma';
-    $data['authid'] = xarSecGenAuthKey('karma');
+    $data['authid'] = xarSec::genAuthKey('karma');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -49,7 +49,7 @@ function karma_admin_delete_tag()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('karma', 'admin', 'view'));
+        xarController::redirect(xarController::URL('karma', 'admin', 'view'));
         return true;
     }
     return $data;

@@ -17,7 +17,7 @@
 
 function karma_admin_main()
 {
-    if (!xarSecurityCheck('ManageKarma')) {
+    if (!xarSecurity::check('ManageKarma')) {
         return;
     }
 
@@ -30,7 +30,7 @@ function karma_admin_main()
             $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('karma', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('karma', 'admin', 'modifyconfig'));
         }
     }
     return true;

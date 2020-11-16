@@ -16,7 +16,7 @@
  */
     function karma_admin_view_tags($args)
     {
-        if (!xarSecurityCheck('EditKarma')) {
+        if (!xarSecurity::check('EditKarma')) {
             return;
         }
 

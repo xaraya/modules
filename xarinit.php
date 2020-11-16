@@ -148,17 +148,17 @@
         #
         # Set up masks
         #
-        xarRegisterMask('ViewKarma', 'All', 'karma', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarRegisterMask('ReadKarma', 'All', 'karma', 'All', 'All', 'ACCESS_READ');
-        xarRegisterMask('ManageKarma', 'All', 'karma', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterMask('AdminKarma', 'All', 'karma', 'All', 'All', 'ACCESS_ADMIN');
+        xarMasks::register('ViewKarma', 'All', 'karma', 'All', 'All', 'ACCESS_OVERVIEW');
+        xarMasks::register('ReadKarma', 'All', 'karma', 'All', 'All', 'ACCESS_READ');
+        xarMasks::register('ManageKarma', 'All', 'karma', 'All', 'All', 'ACCESS_DELETE');
+        xarMasks::register('AdminKarma', 'All', 'karma', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
         # Set up privileges
         #
-        xarRegisterPrivilege('ManageKarma', 'All', 'karma', 'All', 'All', 'ACCESS_DELETE');
-        xarRegisterPrivilege('AdminKarma', 'All', 'karma', 'All', 'All', 'ACCESS_ADMIN');
+        xarPrivileges::register('ManageKarma', 'All', 'karma', 'All', 'All', 'ACCESS_DELETE');
+        xarPrivileges::register('AdminKarma', 'All', 'karma', 'All', 'All', 'ACCESS_ADMIN');
 
         # --------------------------------------------------------
         #
@@ -193,7 +193,7 @@
         #
         /* Remove for now
                 // This is a GUI hook for the roles module that enhances the roles profile page
-                if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+                if (!xarModHooks::register('item', 'usermenu', 'GUI',
                         'karma', 'user', 'usermenu')) {
                     return false;
                 }

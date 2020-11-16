@@ -17,17 +17,17 @@
     
 function karma_admin_modify()
 {
-    if (!xarSecurityCheck('EditKarma')) {
+    if (!xarSecurity::check('EditKarma')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'karma_tags', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'karma_tags', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,12 +36,12 @@ function karma_admin_modify()
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'karma';
-    $data['authid'] = xarSecGenAuthKey('karma');
+    $data['authid'] = xarSec::genAuthKey('karma');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -50,12 +50,12 @@ function karma_admin_modify()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('karma', 'admin', 'modify', $data);
+            return xarTpl::module('karma', 'admin', 'modify', $data);
         } else {
             // Good data: create the item
             $itemid = xarMod::apiFunc('karma', 'admin', 'modify_tag', array('itemid' => $data['itemid']));
             // Jump to the next page
-            xarController::redirect(xarModURL('karma', 'admin', 'view'));
+            xarController::redirect(xarController::URL('karma', 'admin', 'view'));
             return true;
         }
     }

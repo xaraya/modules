@@ -16,7 +16,7 @@
  */
     function karma_admin_new()
     {
-        if (!xarSecurityCheck('AddKarma')) {
+        if (!xarSecurity::check('AddKarma')) {
             return;
         }
 

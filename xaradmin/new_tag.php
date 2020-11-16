@@ -17,31 +17,31 @@
 
 function karma_admin_new_tag()
 {
-    if (!xarSecurityCheck('AddKarma')) {
+    if (!xarSecurity::check('AddKarma')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'karma_tags', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'karma_tags', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['tplmodule'] = 'karma';
-    $data['authid'] = xarSecGenAuthKey('karma');
+    $data['authid'] = xarSec::genAuthKey('karma');
 
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
         
@@ -50,13 +50,13 @@ function karma_admin_new_tag()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('karma', 'admin', 'new_tag', $data);
+            return xarTpl::module('karma', 'admin', 'new_tag', $data);
         } else {
             // Good data: create the item
             $itemid = xarMod::apiFunc('karma', 'admin', 'new_tag', );
             
             // Jump to the next page
-            xarController::redirect(xarModURL('karma', 'admin', 'view_tags'));
+            xarController::redirect(xarController::URL('karma', 'admin', 'view_tags'));
             return true;
         }
     }
