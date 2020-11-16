@@ -72,10 +72,10 @@ function images_adminapi_countimages($args)
 
         $cachekey = md5(serialize($params));
         // get the number of images from temporary cache - see getimages()
-        if (xarVarIsCached('Modules.Images', 'countimages.'.$cachekey)) {
-            return xarVarGetCached('Modules.Images', 'countimages.'.$cachekey);
+        if (xarVar::isCached('Modules.Images', 'countimages.'.$cachekey)) {
+            return xarVar::getCached('Modules.Images', 'countimages.'.$cachekey);
         } else {
-            $files = xarModAPIFunc(
+            $files = xarMod::apiFunc(
                 'dynamicdata',
                 'admin',
                 'browse',

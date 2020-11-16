@@ -33,7 +33,7 @@ function images_adminapi_countderivatives($args)
     }
 
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
     if (empty($thumbsdir)) {
         return 0;
@@ -60,10 +60,10 @@ function images_adminapi_countderivatives($args)
 
     $cachekey = md5(serialize($params));
     // get the number of images from temporary cache - see getderivatives()
-    if (xarVarIsCached('Modules.Images', 'countderivatives.'.$cachekey)) {
-        return xarVarGetCached('Modules.Images', 'countderivatives.'.$cachekey);
+    if (xarVar::isCached('Modules.Images', 'countderivatives.'.$cachekey)) {
+        return xarVar::getCached('Modules.Images', 'countderivatives.'.$cachekey);
     } else {
-        $files = xarModAPIFunc(
+        $files = xarMod::apiFunc(
             'dynamicdata',
             'admin',
             'browse',

@@ -74,10 +74,10 @@ function images_userapi_getimagesize($args)
         }
         $string = 'width="' . $extrainfo['width'] . '" height="' . $extrainfo['height'] . '"';
         return array($extrainfo['width'],$extrainfo['height'],$type,$string);
-    } elseif (extension_loaded('gd') && xarModAPILoad('uploads', 'user') &&
+    } elseif (extension_loaded('gd') && xarMod::apiLoad('uploads', 'user') &&
               defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {
         // get the image data from the database
-        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
         if (!empty($data)) {
             $src = implode('', $data);
             unset($data);
@@ -92,7 +92,7 @@ function images_userapi_getimagesize($args)
                 }
                 $extrainfo['width'] = $width;
                 $extrainfo['height'] = $height;
-                xarModAPIFunc(
+                xarMod::apiFunc(
                     'uploads',
                     'user',
                     'db_modify_file',

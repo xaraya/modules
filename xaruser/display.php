@@ -24,13 +24,13 @@ function images_user_display($args)
 {
     extract($args);
 
-    if (!xarVarFetch('fileId', 'str:1:', $fileId)) {
+    if (!xarVar::fetch('fileId', 'str:1:', $fileId)) {
         return;
     }
-    if (!xarVarFetch('width', 'str:1:', $width, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('width', 'str:1:', $width, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('height', 'str:1:', $height, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -44,10 +44,10 @@ function images_user_display($args)
         $data = array('fileLocation' => $fileLocation);
     }
 
-    $image = xarModAPIFunc('images', 'user', 'load_image', $data);
+    $image = xarMod::apiFunc('images', 'user', 'load_image', $data);
 
     if (!is_object($image)) {
-        xarResponseRedirect('modules/images/xarimages/admin.gif');
+        xarController::redirect('modules/images/xarimages/admin.gif');
         return true;
         //    $msg = xarML('Unable to find file: [#(1)]', $fileId);
     //    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
@@ -105,7 +105,7 @@ function images_user_display($args)
 
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    $pageBuffer = xarModAPIFunc('base', 'user', 'get_output_buffer');
+    $pageBuffer = xarMod::apiFunc('base', 'user', 'get_output_buffer');
 
     ob_start();
 
@@ -130,11 +130,11 @@ function images_user_display($args)
         }
 
         // FIXME: make sure the file is indeed supposed to be stored in the database :-)
-    } elseif (is_numeric($fileId) && xarModIsAvailable('uploads')) {
+    } elseif (is_numeric($fileId) && xarMod::isAvailable('uploads')) {
         $fileSize = 0;
 
         // get the image data from the database
-        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
         if (!empty($data)) {
             foreach ($data as $chunk) {
                 $fileSize += strlen($chunk);
@@ -143,7 +143,7 @@ function images_user_display($args)
             unset($data);
         }
     } else {
-        xarResponseRedirect('modules/images/xarimages/admin.gif');
+        xarController::redirect('modules/images/xarimages/admin.gif');
         return true;
     }
 
@@ -154,8 +154,8 @@ function images_user_display($args)
 
     // Make sure to check the browser / os type - IE 5.x on Mac (os9 / osX / etc) does
     // not like headers being sent for iamges - so leave them out for those particular cases
-    $osName      = xarSessionGetVar('osname');
-    $browserName = xarSessionGetVar('browsername');
+    $osName      = xarSession::getVar('osname');
+    $browserName = xarSession::getVar('browsername');
 
     if (empty($osName) || $osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
         header("Pragma: ");

@@ -73,7 +73,7 @@ function images_adminapi_getimages($args)
 
         $cachekey = md5(serialize($params));
         if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
-            $cacheinfo = xarModGetVar('images', 'file.cachelist.'.$cachekey);
+            $cacheinfo = xarModVars::get('images', 'file.cachelist.'.$cachekey);
             if (!empty($cacheinfo)) {
                 $cacheinfo = @unserialize($cacheinfo);
                 if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
@@ -84,7 +84,7 @@ function images_adminapi_getimages($args)
         }
 
         if (!isset($imagelist)) {
-            $files = xarModAPIFunc(
+            $files = xarMod::apiFunc(
                 'dynamicdata',
                 'admin',
                 'browse',
@@ -127,13 +127,13 @@ function images_adminapi_getimages($args)
             $cacheinfo = array('time' => time(),
                                'list' => $imagelist);
             $cacheinfo = serialize($cacheinfo);
-            xarModSetVar('images', 'file.cachelist.'.$cachekey, $cacheinfo);
+            xarModVars::set('images', 'file.cachelist.'.$cachekey, $cacheinfo);
             unset($cacheinfo);
         }
     }
 
     // save the number of images in temporary cache for countimages()
-    xarVarSetCached('Modules.Images', 'countimages.'.$cachekey, count($imagelist));
+    xarVar::setCached('Modules.Images', 'countimages.'.$cachekey, count($imagelist));
 
     if (empty($sort)) {
         $sort = '';

@@ -12,13 +12,13 @@
 function images_admin_phpthumb($args)
 {
     // Security check
-    if (!xarSecurityCheck('AdminImages')) {
+    if (!xarSecurity::check('AdminImages')) {
         return;
     }
 
     extract($args);
 
-    if (!xarVarFetch('fid', 'isset', $fileId, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fid', 'isset', $fileId, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($fileId) && is_array($fileId)) {
@@ -26,9 +26,9 @@ function images_admin_phpthumb($args)
     }
 
     // Get the base directories configured for server images
-    $basedirs = xarModAPIFunc('images', 'user', 'getbasedirs');
+    $basedirs = xarMod::apiFunc('images', 'user', 'getbasedirs');
 
-    if (!xarVarFetch('bid', 'isset', $baseId, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('bid', 'isset', $baseId, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (empty($baseId) || empty($basedirs[$baseId])) {
@@ -46,7 +46,7 @@ function images_admin_phpthumb($args)
 
     // we're dealing with an uploads file here
     } elseif (is_numeric($fileId)) {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getuploads',
@@ -58,8 +58,8 @@ function images_admin_phpthumb($args)
 
         // we're dealing with a derivative image here
     } elseif (preg_match('/^[0-9a-f]{32}$/i', $fileId)) {
-        $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
-        $data['images'] = xarModAPIFunc(
+        $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getderivatives',
@@ -75,7 +75,7 @@ function images_admin_phpthumb($args)
 
         // we're dealing with a server image here
     } else {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getimages',
@@ -87,12 +87,12 @@ function images_admin_phpthumb($args)
     }
 
     // Get the pre-defined settings for phpThumb
-    $data['settings'] = xarModAPIFunc('images', 'user', 'getsettings');
+    $data['settings'] = xarMod::apiFunc('images', 'user', 'getsettings');
 
-    if (!xarVarFetch('setting', 'str:1:', $setting, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('setting', 'str:1:', $setting, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('load', 'str:1:', $load, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('load', 'str:1:', $load, null, xarVar::DONT_SET)) {
         return;
     }
     //$data['setting'] = $setting;
@@ -107,65 +107,65 @@ function images_admin_phpthumb($args)
 
     if (empty($skipinput)) {
         // URL parameters for phpThumb() - cfr. xardocs/phpthumb.readme.txt
-        if (!xarVarFetch('w', 'int:1:', $w, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('w', 'int:1:', $w, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('h', 'int:1:', $h, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('h', 'int:1:', $h, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('f', 'enum:jpeg:png:gif', $f, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('f', 'enum:jpeg:png:gif', $f, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('q', 'int:1:', $q, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('q', 'int:1:', $q, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('sx', 'float:0:', $sx, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('sx', 'float:0:', $sx, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('sy', 'float:0:', $sy, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('sy', 'float:0:', $sy, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('sw', 'float:0:', $sw, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('sw', 'float:0:', $sw, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('sh', 'float:0:', $sh, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('sh', 'float:0:', $sh, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('zc', 'checkbox', $zc, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('zc', 'checkbox', $zc, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('bg', 'str:6:6', $bg, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('bg', 'str:6:6', $bg, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('bc', 'str:6:6', $bc, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('bc', 'str:6:6', $bc, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('fltr', 'isset', $fltr, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('fltr', 'isset', $fltr, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('xto', 'checkbox', $xto, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('xto', 'checkbox', $xto, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('ra', 'int', $ra, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('ra', 'int', $ra, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('ar', 'enum:p:P:L:l:x', $ar, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('ar', 'enum:p:P:L:l:x', $ar, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('aoe', 'checkbox', $aoe, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('aoe', 'checkbox', $aoe, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('iar', 'checkbox', $iar, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('iar', 'checkbox', $iar, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('far', 'checkbox', $far, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('far', 'checkbox', $far, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('maxb', 'int:1:', $maxb, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('maxb', 'int:1:', $maxb, null, xarVar::DONT_SET)) {
             return;
         }
         // Process filters via input form
-        if (!xarVarFetch('filter', 'isset', $filter, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('filter', 'isset', $filter, null, xarVar::DONT_SET)) {
             return;
         }
     }
@@ -200,7 +200,7 @@ function images_admin_phpthumb($args)
         $filter['wmt'][3] = substr($filter['wmt'][3], 1);
     }
 
-    if (!xarVarFetch('save', 'str:1:', $save, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('save', 'str:1:', $save, null, xarVar::DONT_SET)) {
         return;
     }
     if (empty($save) && !empty($data['selimage']['fileLocation'])) {
@@ -212,15 +212,15 @@ function images_admin_phpthumb($args)
     }
     $data['save'] = $save;
 
-    if (!xarVarFetch('preview', 'str:1:', $preview, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('preview', 'str:1:', $preview, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($preview) || !empty($confirm)) {
         if (!empty($confirm)) {
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
         }
@@ -249,7 +249,7 @@ function images_admin_phpthumb($args)
         include_once('modules/images/xarclass/phpthumb.class.php');
         $phpThumb = new phpThumb();
 
-        $imagemagick = xarModGetVar('images', 'file.imagemagick');
+        $imagemagick = xarModVars::get('images', 'file.imagemagick');
         if (!empty($imagemagick) && file_exists($imagemagick)) {
             $phpThumb->config_imagemagick_path = realpath($imagemagick);
         }
@@ -261,14 +261,14 @@ function images_admin_phpthumb($args)
             $phpThumb->setSourceFilename($file);
         } elseif (is_numeric($fileId) && defined('_UPLOADS_STORE_DB_DATA') && ($data['selimage']['storeType'] & _UPLOADS_STORE_DB_DATA)) {
             // get the image data from the database
-            $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+            $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
             if (!empty($data)) {
                 $src = implode('', $data);
                 unset($data);
                 $phpThumb->setSourceData($src);
 
                 if (empty($save)) {
-                    $tmpdir = xarModGetVar('uploads', 'path.uploads-directory');
+                    $tmpdir = xarModVars::get('uploads', 'path.uploads-directory');
                     if (is_dir($tmpdir) && is_writable($tmpdir)) {
                         $save = tempnam($tmpdir, 'xarimage-');
                     } else {
@@ -309,7 +309,7 @@ function images_admin_phpthumb($args)
                             } else {
                                 $fileType = 'image/' . $f;
                             }
-                            if (!xarModAPIFunc(
+                            if (!xarMod::apiFunc(
                                 'uploads',
                                 'user',
                                 'db_modify_file',
@@ -322,7 +322,7 @@ function images_admin_phpthumb($args)
                                 return;
                             }
                             if (!empty($dbfile)) {
-                                if (!xarModAPIFunc(
+                                if (!xarMod::apiFunc(
                                     'uploads',
                                     'user',
                                     'file_dump',
@@ -333,7 +333,7 @@ function images_admin_phpthumb($args)
                                 }
                             }
                             // Redirect to viewing the updated image here (for now)
-                            xarResponseRedirect(xarModURL(
+                            xarController::redirect(xarController::URL(
                                 'images',
                                 'admin',
                                 'uploads',
@@ -343,7 +343,7 @@ function images_admin_phpthumb($args)
                             return true;
                         } elseif (preg_match('/^[0-9a-f]{32}$/i', $fileId)) {
                             // Redirect to viewing the updated image here (for now)
-                            xarResponseRedirect(xarModURL(
+                            xarController::redirect(xarController::URL(
                                 'images',
                                 'admin',
                                 'derivatives',
@@ -353,7 +353,7 @@ function images_admin_phpthumb($args)
                             return true;
                         } else {
                             // Redirect to viewing the updated image here (for now)
-                            xarResponseRedirect(xarModURL(
+                            xarController::redirect(xarController::URL(
                                 'images',
                                 'admin',
                                 'browse',
@@ -420,10 +420,10 @@ function images_admin_phpthumb($args)
         }
     }
 
-    if (!xarVarFetch('newset', 'str:1:', $newset, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('newset', 'str:1:', $newset, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('store', 'str:1:', $store, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('store', 'str:1:', $store, null, xarVar::DONT_SET)) {
         return;
     }
     if (!empty($store)) {
@@ -441,12 +441,12 @@ function images_admin_phpthumb($args)
                 unset($data['settings'][$setting]['fid']);
             }
 
-            xarModAPIFunc('images', 'admin', 'setsettings', $data['settings']);
+            xarMod::apiFunc('images', 'admin', 'setsettings', $data['settings']);
 
             // Note: processed images are named md5(filelocation)-[setting].[ext] - see process_image() function
             $add = xarVarPrepForOs($setting);
             $add = strtr($add, array(' ' => ''));
-            $affected = xarModAPIFunc(
+            $affected = xarMod::apiFunc(
                 'images',
                 'admin',
                 'getderivatives',
@@ -466,7 +466,7 @@ function images_admin_phpthumb($args)
         if (!empty($baseId)) {
             $previewargs['bid'] = $baseId;
         }
-        $previewurl = xarModURL(
+        $previewurl = xarController::URL(
             'images',
             'admin',
             'phpthumb',
@@ -543,6 +543,6 @@ function images_admin_phpthumb($args)
         $data['fltr'][] = '';
     }
 
-    $data['authid'] = xarSecGenAuthKey('images');
+    $data['authid'] = xarSec::genAuthKey('images');
     return $data;
 }

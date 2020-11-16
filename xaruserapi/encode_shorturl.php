@@ -12,10 +12,10 @@
  * @author Images Module Development Team
  */
 /**
- * return the path for a short URL to xarModURL for this module
+ * return the path for a short URL to xarController::URL for this module
  *
  * @author the Images module development team
- * @param $args the function and arguments passed to xarModURL
+ * @param $args the function and arguments passed to xarController::URL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
@@ -38,14 +38,14 @@ function images_userapi_encode_shorturl($args)
             $type = explode('/', $fileType);
 
         // get the mime type from cache for resize()
-        } elseif (xarVarIsCached('Module.Images', 'imagemime.'.$fileId)) {
-            $fileType = xarVarGetCached('Module.Images', 'imagemime.'.$fileId);
+        } elseif (xarVar::isCached('Module.Images', 'imagemime.'.$fileId)) {
+            $fileType = xarVar::getCached('Module.Images', 'imagemime.'.$fileId);
             $type = explode('/', $fileType);
 
         // get the mime type from the database (urgh)
         } else {
             // Bug 5410 Make a two step process
-            $imageinfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' =>$fileId));
+            $imageinfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' =>$fileId));
             $image = end($imageinfo);
 
             if (empty($image)) {
@@ -66,7 +66,7 @@ function images_userapi_encode_shorturl($args)
     $path = '';
     // if we want to add some common arguments as URL parameters below
     $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
+    // we can't rely on xarMod::getName() here -> you must specify the modname !
     $module = 'images';
 
     // clean the array of the items we already have

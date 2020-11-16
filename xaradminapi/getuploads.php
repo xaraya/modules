@@ -29,7 +29,7 @@ function images_adminapi_getuploads($args)
             $typeName = 'image';
         }
         // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
-        $typeinfo = xarModAPIFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
+        $typeinfo = xarMod::apiFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
         if (empty($typeinfo)) {
             return;
         }
@@ -40,7 +40,7 @@ function images_adminapi_getuploads($args)
         $filters['status']   = null;
         $filters['inverse']  = null;
 
-        $options  = xarModAPIFunc('uploads', 'user', 'process_filters', $filters);
+        $options  = xarMod::apiFunc('uploads', 'user', 'process_filters', $filters);
         $filter   = $options['filter'];
 
         if (!empty($getnext)) {
@@ -62,11 +62,11 @@ function images_adminapi_getuploads($args)
         }
     }
 
-    $imagelist = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
+    $imagelist = xarMod::apiFunc('uploads', 'user', 'db_get_file', $filter);
 
     foreach ($imagelist as $id => $image) {
         if (!empty($image['fileLocation'])) {
-            $imageInfo = xarModAPIFunc('images', 'user', 'getimagesize', $image);
+            $imageInfo = xarMod::apiFunc('images', 'user', 'getimagesize', $image);
             if (!empty($imageInfo)) {
                 $imagelist[$id]['width']  = $imageInfo[0];
                 $imagelist[$id]['height'] = $imageInfo[1];

@@ -78,7 +78,7 @@ function & images_userapi_transform($body)
                 $args['label'] = 'empty';
                 $args['src']   = $id;
 
-                if (!xarModAPIFunc('images', 'user', 'resize', $args)) {
+                if (!xarMod::apiFunc('images', 'user', 'resize', $args)) {
                     return;
                 } else {
                     unset($args['label']);
@@ -90,7 +90,7 @@ function & images_userapi_transform($body)
                     $args['width']  = $args['width'];
                     $args['height'] = $args['height'];
 
-                    $replacement = xarModURL('images', 'user', 'display', $args);
+                    $replacement = xarController::URL('images', 'user', 'display', $args);
                 }
                 break;
         }

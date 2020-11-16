@@ -19,25 +19,25 @@
 function images_admin_derivatives()
 {
     // Security check
-    if (!xarSecurityCheck('AdminImages')) {
+    if (!xarSecurity::check('AdminImages')) {
         return;
     }
 
     $data = array();
 
     // Note: fileId is an MD5 hash of the derivative image location here
-    if (!xarVarFetch('fileId', 'str:1:', $fileId, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fileId', 'str:1:', $fileId, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     $data['fileId'] = $fileId;
 
-    if (!xarVarFetch('startnum', 'int:0:', $startnum, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('startnum', 'int:0:', $startnum, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('numitems', 'int:0:', $numitems, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numitems', 'int:0:', $numitems, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'enum:name:width:height:size:time', $sort, 'name', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'enum:name:width:height:size:time', $sort, 'name', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -46,14 +46,14 @@ function images_admin_derivatives()
     $data['sort'] = ($sort != 'name') ? $sort : null;
 
     // Check if we can cache the image list
-    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+    $data['cacheExpire'] = xarModVars::get('images', 'file.cache-expire');
 
-    $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
+    $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
 
     $data['pager'] = '';
     if (!empty($fileId)) {
         $params = $data;
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getderivatives',
@@ -62,15 +62,15 @@ function images_admin_derivatives()
     } else {
         $params = $data;
         if (!isset($numitems)) {
-            $params['numitems'] = xarModGetVar('images', 'view.itemsperpage');
+            $params['numitems'] = xarModVars::get('images', 'view.itemsperpage');
         }
         // Check if we need to refresh the cache anyway
-        if (!xarVarFetch('refresh', 'int:0:', $refresh, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('refresh', 'int:0:', $refresh, null, xarVar::DONT_SET)) {
             return;
         }
         $params['cacheRefresh'] = $refresh;
 
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getderivatives',
@@ -78,7 +78,7 @@ function images_admin_derivatives()
         );
 
         // Note: this must be called *after* getderivatives() to benefit from caching
-        $countitems = xarModAPIFunc(
+        $countitems = xarMod::apiFunc(
             'images',
             'admin',
             'countderivatives',
@@ -87,10 +87,10 @@ function images_admin_derivatives()
 
         // Add pager
         if (!empty($params['numitems']) && $countitems > $params['numitems']) {
-            $data['pager'] = xarTplGetPager(
+            $data['pager'] = xarTplPager::getPager(
                 $startnum,
                 $countitems,
-                xarModURL(
+                xarController::URL(
                                                 'images',
                                                 'admin',
                                                 'derivatives',
@@ -104,7 +104,7 @@ function images_admin_derivatives()
     }
 
     // Check if we need to do anything special here
-    if (!xarVarFetch('action', 'str:1:', $action, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'str:1:', $action, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -127,21 +127,21 @@ function images_admin_derivatives()
                 return $data;
 
             case 'delete':
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (!empty($confirm)) {
-                    if (!xarSecConfirmAuthKey()) {
+                    if (!xarSec::confirmAuthKey()) {
                         return;
                     }
                     // delete the derivative image now
                     @unlink($found['fileLocation']);
-                    xarResponseRedirect(xarModURL('images', 'admin', 'derivatives'));
+                    xarController::redirect(xarController::URL('images', 'admin', 'derivatives'));
                     return true;
                 }
                 $data['selimage'] = $found;
                 $data['action'] = 'delete';
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                 return $data;
 
             default:

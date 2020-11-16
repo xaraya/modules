@@ -41,7 +41,7 @@ function uploads_admin_importgallery($args)
                      'cids' => array(),
                   // for preview
                      'pubtypeid' => $Picture_Publication_Type_ID,
-                     'authorid' => xarSessionGetVar('uid'),
+                     'authorid' => xarSession::getVar('uid'),
                      'aid' => 0
                      );
 
@@ -58,14 +58,14 @@ function uploads_admin_importgallery($args)
 
     // Kick mod available
     $outputStuff .= "Checking mod avaliable (dynamicdata): ";
-    $avail = xarModIsAvailable("dynamicdata");
+    $avail = xarMod::isAvailable("dynamicdata");
     if ($avail) {
         $outputStuff .= "yes<br/>";
     } else {
         $outputStuff .= "no<br/>";
     }
     $outputStuff .= "Checking mod avaliable (categories): ";
-    $avail = xarModIsAvailable("categories");
+    $avail = xarMod::isAvailable("categories");
     if ($avail) {
         $outputStuff .= "yes<br/>";
     } else {
@@ -152,7 +152,7 @@ function uploads_admin_importgallery($args)
                                  ,'type'     => '');
 
                     if ($actuallyImport) {
-                        $info = xarModAPIFunc('uploads', 'user', 'store', $data);
+                        $info = xarMod::apiFunc('uploads', 'user', 'store', $data);
                     } else {
                         $info = array('link'=>''); //dummy for when not importing
                     }
@@ -184,7 +184,7 @@ function uploads_admin_importgallery($args)
 //                $outputStuff .= "<i>Creating Article: - </i> ".$article['title']."<br/>";
 
                 if ($actuallyImport) {
-                    $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+                    $aid = xarMod::apiFunc('articles', 'admin', 'create', $article);
                 } else {
                     $aid = "Mock run, Article not actually created.";
                 }
@@ -226,7 +226,7 @@ function createCat($Root_Cat_Name, $catpath, $description)
             $path = $cat_name;
         }
 
-        $cid  = xarModAPIFunc('categories', 'user', 'categoryexists', array('path'=>$path));
+        $cid  = xarMod::apiFunc('categories', 'user', 'categoryexists', array('path'=>$path));
 //        $outputStuff .= "path: $path [$lastCID/$cid]<br/>";
         if (!$cid) {
             //This one is missing, create it.
@@ -235,7 +235,7 @@ function createCat($Root_Cat_Name, $catpath, $description)
             $args['description'] = $description;
             $args['image'] = '';
             $args['parent_id'] = $lastCID;
-            $cid = xarModAPIFunc('categories', 'admin', 'create', $args);
+            $cid = xarMod::apiFunc('categories', 'admin', 'create', $args);
             $outputStuff .= "Created: $cat_name ($cid)<br/>";
         }
         $lastCID = $cid;
@@ -323,8 +323,8 @@ function pruneFiles($FilesInDir, $image_import_dir, $album)
     if (isset($FilesInDir)) {
 
         // Get database setup
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn =& xarDB::getConn();
+        $xartable =& xarDB::getTables();
 
         // table and column definitions
         $uploadstable = $xartable['uploads'];

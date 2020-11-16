@@ -28,7 +28,7 @@ function images_adminapi_replace_image($args)
     extract($args);
 
     if (!empty($fileId) && empty($fileLocation)) {
-        $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+        $fileInfo = end(xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
         if (empty($fileInfo)) {
             return;
         } else {
@@ -53,7 +53,7 @@ function images_adminapi_replace_image($args)
 
     // TODO: replace files stored in xar_file_data too
 
-    $location = xarModAPIFunc(
+    $location = xarMod::apiFunc(
         'images',
         'admin',
         'resize_image',
@@ -73,7 +73,7 @@ function images_adminapi_replace_image($args)
     }
 
     // Update the uploads database information
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'uploads',
         'user',
         'db_modify_file',

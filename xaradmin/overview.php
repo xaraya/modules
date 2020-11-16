@@ -14,14 +14,14 @@
 /**
  * Overview displays standard Overview page
  *
- * @return array xarTplModule with $data containing template data
+ * @return array xarTpl::module with $data containing template data
             containing the menulinks for the overview item on the main manu
  * @since 14 Oct 2005
  */
 function images_admin_overview()
 {
     /* Security Check */
-    if (!xarSecurityCheck('AdminImages', 0)) {
+    if (!xarSecurity::check('AdminImages', 0)) {
         return;
     }
 
@@ -31,5 +31,5 @@ function images_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('images', 'admin', 'main', $data, 'main');
+    return xarTpl::module('images', 'admin', 'main', $data, 'main');
 }

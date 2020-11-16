@@ -19,7 +19,7 @@
 function images_init()
 {
     // Load any predefined constants
-    xarModAPILoad('images', 'user');
+    xarMod::apiLoad('images', 'user');
 
     // Check for the required extensions
     // GD is only needed if the user wants to use resize.
@@ -28,21 +28,21 @@ function images_init()
 
 
     // Set up module variables
-    xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
-    xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
-    xarModSetVar('images', 'view.itemsperpage', 200);
-    xarModSetVar('images', 'file.cache-expire', 60);
-    xarModSetVar('images', 'file.imagemagick', '');
+    xarModVars::set('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
+    xarModVars::set('images', 'path.derivative-store', 'Put a real directory in here...!');
+    xarModVars::set('images', 'view.itemsperpage', 200);
+    xarModVars::set('images', 'file.cache-expire', 60);
+    xarModVars::set('images', 'file.imagemagick', '');
 
     /*
-        xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
-        xarRegisterMask('AddUploads',   'All','images','Image','All','ACCESS_ADD');
-        xarRegisterMask('EditUploads',  'All','images','Image','All','ACCESS_EDIT');
-        xarRegisterMask('DeleteUploads','All','images','Image','All','ACCESS_DELETE');
+        xarMasks::register('ViewUploads',  'All','images','Image','All','ACCESS_READ');
+        xarMasks::register('AddUploads',   'All','images','Image','All','ACCESS_ADD');
+        xarMasks::register('EditUploads',  'All','images','Image','All','ACCESS_EDIT');
+        xarMasks::register('DeleteUploads','All','images','Image','All','ACCESS_DELETE');
     */
-    xarRegisterMask('AdminImages', 'All', 'images', 'Image', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('AdminImages', 'All', 'images', 'Image', 'All', 'ACCESS_ADMIN');
 
-    if (!xarModRegisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
+    if (!xarModHooks::register('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
         $msg = xarML('Could not register hook.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -70,12 +70,12 @@ function images_upgrade($oldversion)
     switch ($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
-            $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+            $thumbsdir = xarModVars::get('images', 'path.derivative-store');
             if (!empty($thumbsdir) && is_dir($thumbsdir)) {
-                xarModSetVar('images', 'upgrade-1.0.0', 1);
+                xarModVars::set('images', 'upgrade-1.0.0', 1);
                 // remove all old-style derivatives
             /* skip this - too risky depending on site config
-                $images = xarModAPIFunc('images','admin','getderivatives');
+                $images = xarMod::apiFunc('images','admin','getderivatives');
                 if (!empty($images)) {
                     foreach ($images as $image) {
                         @unlink($image['fileLocation']);
@@ -105,11 +105,11 @@ function images_delete()
     // Unregister template tag
     xarTplUnregisterTag('image-resize');
     // Remove mask
-    xarUnregisterMask('AdminImages');
+    xarMasks::unregister('AdminImages');
     // Unregister the hook
-    xarModUnregisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook');
+    xarModHooks::unregister('item', 'transform', 'API', 'images', 'user', 'transformhook');
     // Delete module variables
-    xarModDelAllVars('images');
+    xarModVars::delete_all('images');
     // Deletion successful
     return true;
 }

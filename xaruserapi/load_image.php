@@ -56,7 +56,7 @@ function & images_userapi_load_image($args)
     if (!empty($fileId) && is_numeric($fileId)) {
         // if we only get the fileId
         if (empty($fileLocation) || !isset($storeType)) {
-            $fileInfoArray = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+            $fileInfoArray = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
             $fileInfo = end($fileInfoArray);
             if (empty($fileInfo)) {
                 return null;
@@ -90,12 +90,12 @@ function & images_userapi_load_image($args)
     }
 
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
 
     include_once('modules/images/xarclass/image_properties.php');
 
-    switch (xarModGetVar('images', 'type.graphics-library')) {
+    switch (xarModVars::get('images', 'type.graphics-library')) {
         case _IMAGES_LIBRARY_IMAGEMAGICK:
             include_once('modules/images/xarclass/image_ImageMagick.php');
             $newImage = new Image_ImageMagick($location, $thumbsdir);

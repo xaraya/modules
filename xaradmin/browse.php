@@ -19,12 +19,12 @@
 function images_admin_browse()
 {
     // Security check
-    if (!xarSecurityCheck('AdminImages')) {
+    if (!xarSecurity::check('AdminImages')) {
         return;
     }
 
     // Note: fileId is a base 64 encode of the image location here, or an array of fileId's
-    if (!xarVarFetch('fid', 'isset', $fileId, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fid', 'isset', $fileId, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($fileId) && is_array($fileId)) {
@@ -35,9 +35,9 @@ function images_admin_browse()
     }
 
     // Get the base directories configured for server images
-    $basedirs = xarModAPIFunc('images', 'user', 'getbasedirs');
+    $basedirs = xarMod::apiFunc('images', 'user', 'getbasedirs');
 
-    if (!xarVarFetch('bid', 'isset', $baseId, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('bid', 'isset', $baseId, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (empty($baseId) || empty($basedirs[$baseId])) {
@@ -49,22 +49,22 @@ function images_admin_browse()
     $data['baseId'] = $baseId;
     $data['fileId'] = $fileId;
 
-    if (!xarVarFetch('startnum', 'int:0:', $startnum, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('startnum', 'int:0:', $startnum, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('numitems', 'int:0:', $numitems, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numitems', 'int:0:', $numitems, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'enum:name:type:width:height:size:time', $sort, 'name', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'enum:name:type:width:height:size:time', $sort, 'name', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('action', 'str:1:', $action, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'str:1:', $action, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('getnext', 'str:1:', $getnext, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('getnext', 'str:1:', $getnext, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('getprev', 'str:1:', $getprev, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('getprev', 'str:1:', $getprev, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -75,11 +75,11 @@ function images_admin_browse()
     $data['getprev'] = $getprev;
 
     // Check if we can cache the image list
-    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+    $data['cacheExpire'] = xarModVars::get('images', 'file.cache-expire');
 
     $data['pager'] = '';
     if (!empty($fileId)) {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getimages',
@@ -88,15 +88,15 @@ function images_admin_browse()
     } else {
         $params = $data;
         if (!isset($numitems)) {
-            $params['numitems'] = xarModGetVar('images', 'view.itemsperpage');
+            $params['numitems'] = xarModVars::get('images', 'view.itemsperpage');
         }
         // Check if we need to refresh the cache anyway
-        if (!xarVarFetch('refresh', 'int:0:', $refresh, null, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('refresh', 'int:0:', $refresh, null, xarVar::DONT_SET)) {
             return;
         }
         $params['cacheRefresh'] = $refresh;
 
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getimages',
@@ -106,7 +106,7 @@ function images_admin_browse()
         if ((!empty($getnext) || !empty($getprev)) &&
             !empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'images',
                 'admin',
                 'browse',
@@ -118,7 +118,7 @@ function images_admin_browse()
         }
 
         // Note: this must be called *after* getimages() to benefit from caching
-        $countitems = xarModAPIFunc(
+        $countitems = xarMod::apiFunc(
             'images',
             'admin',
             'countimages',
@@ -127,10 +127,10 @@ function images_admin_browse()
 
         // Add pager
         if (!empty($params['numitems']) && $countitems > $params['numitems']) {
-            $data['pager'] = xarTplGetPager(
+            $data['pager'] = xarTplPager::getPager(
                 $startnum,
                 $countitems,
-                xarModURL(
+                xarController::URL(
                                                 'images',
                                                 'admin',
                                                 'browse',
@@ -147,13 +147,13 @@ function images_admin_browse()
     $data['basedirs'] = $basedirs;
 
     // Get the pre-defined settings for phpThumb
-    $data['settings'] = xarModAPIFunc('images', 'user', 'getsettings');
+    $data['settings'] = xarMod::apiFunc('images', 'user', 'getsettings');
 
     // Check if we need to do anything special here
-    if (!xarVarFetch('processlist', 'str:1:', $processlist, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('processlist', 'str:1:', $processlist, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('resizelist', 'str:1:', $resizelist, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('resizelist', 'str:1:', $resizelist, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($processlist)) {
@@ -183,7 +183,7 @@ function images_admin_browse()
             $found = $data['images'][$fileId];
             // Get derivative images for this image
             if (file_exists($found['fileLocation'])) {
-                $found['derivatives'] = xarModAPIFunc(
+                $found['derivatives'] = xarMod::apiFunc(
                     'images',
                     'admin',
                     'getderivatives',
@@ -201,24 +201,24 @@ function images_admin_browse()
                 return $data;
 
             case 'resize':
-                if (!xarVarFetch('width', 'int:1:', $width, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('width', 'int:1:', $width, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('height', 'int:1:', $height, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('height', 'int:1:', $height, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('replace', 'int:0:1', $replace, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('replace', 'int:0:1', $replace, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (!empty($confirm) && (!empty($width) || !empty($height))) {
-                    if (!xarSecConfirmAuthKey()) {
+                    if (!xarSec::confirmAuthKey()) {
                         return;
                     }
                     if (!empty($replace) && !empty($found['fileLocation'])) {
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'replace_image',
@@ -230,7 +230,7 @@ function images_admin_browse()
                             return;
                         }
                         // Redirect to viewing the original image here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'browse',
@@ -239,7 +239,7 @@ function images_admin_browse()
                                                             'fid' => $found['fileId'])
                         ));
                     } else {
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'resize_image',
@@ -251,7 +251,7 @@ function images_admin_browse()
                             return;
                         }
                         // Redirect to viewing the derivative image here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'derivatives',
@@ -275,38 +275,38 @@ function images_admin_browse()
                     $data['replace'] = 1;
                 }
                 $data['action'] = 'resize';
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                 return $data;
 
             case 'delete':
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (!empty($confirm)) {
-                    if (!xarSecConfirmAuthKey()) {
+                    if (!xarSec::confirmAuthKey()) {
                         return;
                     }
                     // delete the server image now
                     @unlink($found['fileLocation']);
-                    xarResponseRedirect(xarModURL('images', 'admin', 'browse'));
+                    xarController::redirect(xarController::URL('images', 'admin', 'browse'));
                     return true;
                 }
                 $data['selimage'] = $found;
                 $data['action'] = 'delete';
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                 return $data;
 
             case 'resizelist':
-                if (!xarVarFetch('width', 'int:1:', $width, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('width', 'int:1:', $width, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('height', 'int:1:', $height, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('height', 'int:1:', $height, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('replace', 'int:0:1', $replace, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('replace', 'int:0:1', $replace, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (empty($confirm) || (empty($width) && empty($height))) {
@@ -325,11 +325,11 @@ function images_admin_browse()
                     } else {
                         $data['replace'] = '1';
                     }
-                    $data['authid'] = xarSecGenAuthKey();
+                    $data['authid'] = xarSec::genAuthKey();
                     return $data;
                 }
 
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
                 if (!empty($replace)) {
@@ -337,7 +337,7 @@ function images_admin_browse()
                         if (empty($info['fileLocation'])) {
                             continue;
                         }
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'replace_image',
@@ -350,7 +350,7 @@ function images_admin_browse()
                         }
                     }
                     // Redirect to viewing the server images here (for now)
-                    xarResponseRedirect(xarModURL(
+                    xarController::redirect(xarController::URL(
                         'images',
                         'admin',
                         'browse',
@@ -364,7 +364,7 @@ function images_admin_browse()
                         if (empty($info['fileLocation'])) {
                             continue;
                         }
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'resize_image',
@@ -377,7 +377,7 @@ function images_admin_browse()
                         }
                     }
                     // Redirect to viewing the derivative images here (for now)
-                    xarResponseRedirect(xarModURL(
+                    xarController::redirect(xarController::URL(
                         'images',
                         'admin',
                         'derivatives',
@@ -389,13 +389,13 @@ function images_admin_browse()
                 return true;
 
             case 'processlist':
-                if (!xarVarFetch('saveas', 'int:0:2', $saveas, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('saveas', 'int:0:2', $saveas, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('setting', 'str:1:', $setting, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('setting', 'str:1:', $setting, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (empty($confirm) || empty($setting) || empty($data['settings'][$setting])) {
@@ -412,11 +412,11 @@ function images_admin_browse()
                     } else {
                         $data['saveas'] = $saveas;
                     }
-                    $data['authid'] = xarSecGenAuthKey();
+                    $data['authid'] = xarSec::genAuthKey();
                     return $data;
                 }
 
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
 
@@ -425,7 +425,7 @@ function images_admin_browse()
                     if (empty($info['fileLocation'])) {
                         continue;
                     }
-                    $location = xarModAPIFunc(
+                    $location = xarMod::apiFunc(
                         'images',
                         'admin',
                         'process_image',
@@ -441,7 +441,7 @@ function images_admin_browse()
                 switch ($saveas) {
                     case 1: // [image]_new.[ext]
                         // Redirect to viewing the server images here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'browse',
@@ -454,7 +454,7 @@ function images_admin_browse()
 
                     case 2: // replace
                         // Redirect to viewing the server images here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'browse',
@@ -468,7 +468,7 @@ function images_admin_browse()
                     case 0: // derivative
                     default:
                         // Redirect to viewing the derivative images here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'derivatives',

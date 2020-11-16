@@ -21,39 +21,39 @@ function images_admin_uploads($args)
     extract($args);
 
     // Security check for images
-    if (!xarSecurityCheck('AdminImages')) {
+    if (!xarSecurity::check('AdminImages')) {
         return;
     }
 
     // Security check for uploads
-    if (!xarModIsAvailable('uploads') || !xarSecurityCheck('AdminUploads')) {
+    if (!xarMod::isAvailable('uploads') || !xarSecurity::check('AdminUploads')) {
         return;
     }
 
     // Note: fileId is the uploads fileId here, or an array of uploads fileId's
-    if (!xarVarFetch('fileId', 'isset', $fileId, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('fileId', 'isset', $fileId, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($fileId) && is_array($fileId)) {
         $fileId = array_keys($fileId);
     }
 
-    if (!xarVarFetch('startnum', 'int:0:', $startnum, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('startnum', 'int:0:', $startnum, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('numitems', 'int:0:', $numitems, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('numitems', 'int:0:', $numitems, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('sort', 'enum:name:type:width:height:size:time', $sort, 'name', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('sort', 'enum:name:type:width:height:size:time', $sort, 'name', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('action', 'str:1:', $action, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('action', 'str:1:', $action, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('getnext', 'str:1:', $getnext, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('getnext', 'str:1:', $getnext, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('getprev', 'str:1:', $getprev, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('getprev', 'str:1:', $getprev, null, xarVar::DONT_SET)) {
         return;
     }
 
@@ -63,19 +63,19 @@ function images_admin_uploads($args)
     $data['sort'] = ($sort != 'name') ? $sort : null;
 
     if (!isset($numitems)) {
-        $numitems = xarModGetVar('images', 'view.itemsperpage');
+        $numitems = xarModVars::get('images', 'view.itemsperpage');
     }
 
     $data['pager'] = '';
     if (!empty($fileId)) {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getuploads',
             array('fileId'   => $fileId)
         );
     } elseif (!empty($getnext)) {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getuploads',
@@ -83,7 +83,7 @@ function images_admin_uploads($args)
         );
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'images',
                 'admin',
                 'uploads',
@@ -93,7 +93,7 @@ function images_admin_uploads($args)
             return true;
         }
     } elseif (!empty($getprev)) {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getuploads',
@@ -101,7 +101,7 @@ function images_admin_uploads($args)
         );
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL(
+            xarController::redirect(xarController::URL(
                 'images',
                 'admin',
                 'uploads',
@@ -111,7 +111,7 @@ function images_admin_uploads($args)
             return true;
         }
     } else {
-        $data['images'] = xarModAPIFunc(
+        $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getuploads',
@@ -119,14 +119,14 @@ function images_admin_uploads($args)
                                               'numitems' => $numitems,
                                               'sort'     => $sort)
         );
-        $countitems = xarModAPIFunc('images', 'admin', 'countuploads');
+        $countitems = xarMod::apiFunc('images', 'admin', 'countuploads');
 
         // Add pager
         if (!empty($numitems) && $countitems > $numitems) {
-            $data['pager'] = xarTplGetPager(
+            $data['pager'] = xarTplPager::getPager(
                 $startnum,
                 $countitems,
-                xarModURL(
+                xarController::URL(
                                                 'images',
                                                 'admin',
                                                 'uploads',
@@ -140,13 +140,13 @@ function images_admin_uploads($args)
     }
 
     // Get the pre-defined settings for phpThumb
-    $data['settings'] = xarModAPIFunc('images', 'user', 'getsettings');
+    $data['settings'] = xarMod::apiFunc('images', 'user', 'getsettings');
 
     // Check if we need to do anything special here
-    if (!xarVarFetch('processlist', 'str:1:', $processlist, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('processlist', 'str:1:', $processlist, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('resizelist', 'str:1:', $resizelist, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('resizelist', 'str:1:', $resizelist, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($processlist)) {
@@ -177,7 +177,7 @@ function images_admin_uploads($args)
             // Get derivative images for this image
             if (!empty($found['fileHash'])) {
                 if (file_exists($found['fileLocation'])) {
-                    $found['derivatives'] = xarModAPIFunc(
+                    $found['derivatives'] = xarMod::apiFunc(
                         'images',
                         'admin',
                         'getderivatives',
@@ -185,7 +185,7 @@ function images_admin_uploads($args)
                     );
                 } else {
                     // the file is probably stored in the database, so we pass the fileId here
-                    $found['derivatives'] = xarModAPIFunc(
+                    $found['derivatives'] = xarMod::apiFunc(
                         'images',
                         'admin',
                         'getderivatives',
@@ -194,7 +194,7 @@ function images_admin_uploads($args)
                 }
             }
             // Get known associations for this image (currently unused)
-            $found['associations'] = xarModAPIFunc(
+            $found['associations'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_get_associations',
@@ -226,9 +226,9 @@ function images_admin_uploads($args)
                     }
                 }
                 foreach ($modlist as $modid => $itemtypes) {
-                    $modinfo = xarModGetInfo($modid);
+                    $modinfo = xarMod::getInfo($modid);
                     // Get the list of all item types for this module (if any)
-                    $mytypes = xarModAPIFunc(
+                    $mytypes = xarMod::apiFunc(
                         $modinfo['name'],
                         'user',
                         'getitemtypes',
@@ -243,18 +243,18 @@ function images_admin_uploads($args)
                         $moditem['itemtype'] = $itemtype;
                         if ($itemtype == 0) {
                             $moditem['modname'] = ucwords($modinfo['displayname']);
-                        //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','main');
+                        //    $moditem['modlink'] = xarController::URL($modinfo['name'],'user','main');
                         } else {
                             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                                 $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                             //    $moditem['modlink'] = $mytypes[$itemtype]['url'];
                             } else {
                                 $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                                //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                                //    $moditem['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                             }
                         }
                         $itemids = array_keys($items);
-                        $itemlinks = xarModAPIFunc(
+                        $itemlinks = xarMod::apiFunc(
                             $modinfo['name'],
                             'user',
                             'getitemlinks',
@@ -287,24 +287,24 @@ function images_admin_uploads($args)
                 return $data;
 
             case 'resize':
-                if (!xarVarFetch('width', 'int:1:', $width, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('width', 'int:1:', $width, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('height', 'int:1:', $height, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('height', 'int:1:', $height, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('replace', 'int:0:1', $replace, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('replace', 'int:0:1', $replace, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (!empty($confirm) && (!empty($width) || !empty($height))) {
-                    if (!xarSecConfirmAuthKey()) {
+                    if (!xarSec::confirmAuthKey()) {
                         return;
                     }
                     if (!empty($replace) && !empty($found['fileLocation'])) {
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'replace_image',
@@ -316,7 +316,7 @@ function images_admin_uploads($args)
                             return;
                         }
                         // Redirect to viewing the original image here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'uploads',
@@ -324,7 +324,7 @@ function images_admin_uploads($args)
                                                             'fileId' => $found['fileId'])
                         ));
                     } else {
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'resize_image',
@@ -336,7 +336,7 @@ function images_admin_uploads($args)
                             return;
                         }
                         // Redirect to viewing the derivative image here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'derivatives',
@@ -360,42 +360,42 @@ function images_admin_uploads($args)
                     $data['replace'] = 1;
                 }
                 $data['action'] = 'resize';
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                 return $data;
 
             case 'delete':
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (!empty($confirm)) {
-                    if (!xarSecConfirmAuthKey()) {
+                    if (!xarSec::confirmAuthKey()) {
                         return;
                     }
                     // delete the uploaded image now
                     $fileList = array($fileId => $found);
-                    $result = xarModAPIFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
+                    $result = xarMod::apiFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
                     if (!$result) {
                         return;
                     }
-                    xarResponseRedirect(xarModURL('images', 'admin', 'uploads'));
+                    xarController::redirect(xarController::URL('images', 'admin', 'uploads'));
                     return true;
                 }
                 $data['selimage'] = $found;
                 $data['action'] = 'delete';
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = xarSec::genAuthKey();
                 return $data;
 
             case 'resizelist':
-                if (!xarVarFetch('width', 'int:1:', $width, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('width', 'int:1:', $width, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('height', 'int:1:', $height, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('height', 'int:1:', $height, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('replace', 'int:0:1', $replace, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('replace', 'int:0:1', $replace, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (empty($confirm) || (empty($width) && empty($height))) {
@@ -414,16 +414,16 @@ function images_admin_uploads($args)
                     } else {
                         $data['replace'] = '1';
                     }
-                    $data['authid'] = xarSecGenAuthKey();
+                    $data['authid'] = xarSec::genAuthKey();
                     return $data;
                 }
 
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
                 if (!empty($replace)) {
                     foreach ($found as $id) {
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'replace_image',
@@ -436,7 +436,7 @@ function images_admin_uploads($args)
                         }
                     }
                     // Redirect to viewing the uploaded images here (for now)
-                    xarResponseRedirect(xarModURL(
+                    xarController::redirect(xarController::URL(
                         'images',
                         'admin',
                         'uploads',
@@ -444,7 +444,7 @@ function images_admin_uploads($args)
                     ));
                 } else {
                     foreach ($found as $id) {
-                        $location = xarModAPIFunc(
+                        $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'resize_image',
@@ -457,7 +457,7 @@ function images_admin_uploads($args)
                         }
                     }
                     // Redirect to viewing the derivative images here (for now)
-                    xarResponseRedirect(xarModURL(
+                    xarController::redirect(xarController::URL(
                         'images',
                         'admin',
                         'derivatives',
@@ -469,13 +469,13 @@ function images_admin_uploads($args)
                 return true;
 
             case 'processlist':
-                if (!xarVarFetch('saveas', 'int:0:2', $saveas, 0, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('saveas', 'int:0:2', $saveas, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('setting', 'str:1:', $setting, null, XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('setting', 'str:1:', $setting, null, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+                if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
                     return;
                 }
                 if (empty($confirm) || empty($setting) || empty($data['settings'][$setting])) {
@@ -492,11 +492,11 @@ function images_admin_uploads($args)
                     } else {
                         $data['saveas'] = $saveas;
                     }
-                    $data['authid'] = xarSecGenAuthKey();
+                    $data['authid'] = xarSec::genAuthKey();
                     return $data;
                 }
 
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return;
                 }
 
@@ -505,7 +505,7 @@ function images_admin_uploads($args)
                     if (empty($data['images'][$id])) {
                         continue;
                     }
-                    $location = xarModAPIFunc(
+                    $location = xarMod::apiFunc(
                         'images',
                         'admin',
                         'process_image',
@@ -521,7 +521,7 @@ function images_admin_uploads($args)
                 switch ($saveas) {
                     case 1: // [image]_new.[ext]
                         // Redirect to viewing the uploaded images here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'uploads',
@@ -531,7 +531,7 @@ function images_admin_uploads($args)
 
                     case 2: // replace
                         // Redirect to viewing the uploaded images here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'uploads',
@@ -542,7 +542,7 @@ function images_admin_uploads($args)
                     case 0: // derivative
                     default:
                         // Redirect to viewing the derivative images here (for now)
-                        xarResponseRedirect(xarModURL(
+                        xarController::redirect(xarController::URL(
                             'images',
                             'admin',
                             'derivatives',

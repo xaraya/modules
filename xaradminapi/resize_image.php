@@ -63,11 +63,11 @@ function images_adminapi_resize_image($args)
         $msg = xarML("Required parameters '#(1)' and '#(2)' are missing.", 'width', 'height');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
-    } elseif (!isset($width) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
+    } elseif (!isset($width) && !xarVar::validate('regexp:/[0-9]+(px|%)/:', $height)) {
         $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'height');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
-    } elseif (!isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $width)) {
+    } elseif (!isset($height) && !xarVar::validate('regexp:/[0-9]+(px|%)/:', $width)) {
         $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'width');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
@@ -98,7 +98,7 @@ function images_adminapi_resize_image($args)
 
     // if both arguments are specified, give priority to fileId
     if (!empty($fileId)) {
-        $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+        $fileInfo = end(xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
         if (empty($fileInfo)) {
             return;
         } else {
@@ -111,14 +111,14 @@ function images_adminapi_resize_image($args)
 
     // TODO: refactor to support other libraries (ImageMagick/NetPBM)
     if (!empty($fileInfo['fileLocation'])) {
-        $imageInfo = xarModAPIFunc('images', 'user', 'getimagesize', $fileInfo);
-        $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
+        $imageInfo = xarMod::apiFunc('images', 'user', 'getimagesize', $fileInfo);
+        $gd_info = xarMod::apiFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
             $notSupported = true;
         }
     } elseif (!empty($fileLocation) && file_exists($fileLocation)) {
         $imageInfo = @getimagesize($fileLocation);
-        $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
+        $gd_info = xarMod::apiFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
             $notSupported = true;
         }
@@ -133,10 +133,10 @@ function images_adminapi_resize_image($args)
     }
 
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
 
-    $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId,
+    $image = xarMod::apiFunc('images', 'user', 'load_image', array('fileId' => $fileId,
                                                                  'fileLocation' => $location,
                                                                  'thumbsdir' => $thumbsdir));
 

@@ -27,7 +27,7 @@ function images_adminapi_process_image($args)
 {
     extract($args);
 
-    $settings = xarModAPIFunc('images', 'user', 'getsettings');
+    $settings = xarMod::apiFunc('images', 'user', 'getsettings');
     if (!empty($setting) && !empty($settings[$setting])) {
         $params = $settings[$setting];
     } elseif (!empty($params)) {
@@ -102,7 +102,7 @@ function images_adminapi_process_image($args)
 
             case 0: // derivative
             default:
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use MD5 hash of file location here
                 $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
@@ -123,9 +123,9 @@ function images_adminapi_process_image($args)
     // If the image is stored in the database (uploads module)
         // NOTE: the next line is the *only* place i could find which suppresses exceptions through the 0 parameter at the end
         // NOTE: in the 2.x branch that parameter does not exist anymore, so the next code needs to be changed.
-    } elseif (is_numeric($image['fileId']) && xarModIsAvailable('uploads') && xarModAPILoad('uploads', 'user', 0) &&
+    } elseif (is_numeric($image['fileId']) && xarMod::isAvailable('uploads') && xarMod::apiLoad('uploads', 'user', 0) &&
               defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
-        $uploadsdir = xarModGetVar('uploads', 'path.uploads-directory');
+        $uploadsdir = xarModVars::get('uploads', 'path.uploads-directory');
         switch ($saveas) {
             case 1: // [image]_new.[ext] // CHECKME: not in the database ?
                 $save = realpath($uploadsdir) . '/' . $image['fileName'];
@@ -147,7 +147,7 @@ function images_adminapi_process_image($args)
 
             case 0: // derivative
             default:
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use file id here
                 $save = realpath($thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
@@ -162,7 +162,7 @@ function images_adminapi_process_image($args)
         }
 
         // get the image data from the database
-        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
         if (empty($data)) {
             $msg = xarML(
                 "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
@@ -285,7 +285,7 @@ function images_adminapi_process_image($args)
 
     // update the uploads file entry if we overwrite a file !
     if (is_numeric($image['fileId']) && $saveas == 2) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'uploads',
             'user',
             'db_modify_file',
@@ -299,7 +299,7 @@ function images_adminapi_process_image($args)
         }
         if (!empty($dbfile)) {
             // store the image in the database
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'uploads',
                 'user',
                 'file_dump',
@@ -319,7 +319,7 @@ function &images_get_thumb()
     include_once('modules/images/xarclass/phpthumb.class.php');
     $phpThumb = new phpThumb();
 
-    $imagemagick = xarModGetVar('images', 'file.imagemagick');
+    $imagemagick = xarModVars::get('images', 'file.imagemagick');
     if (!empty($imagemagick) && file_exists($imagemagick)) {
         $phpThumb->config_imagemagick_path = realpath($imagemagick);
     }

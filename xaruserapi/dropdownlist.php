@@ -31,16 +31,16 @@ function images_userapi_dropdownlist($args = array())
     }
     if (!isset($args['bid'])) {
         // Get the uploads images
-        $images = xarModAPIFunc('images', 'admin', 'getuploads', $args);
+        $images = xarMod::apiFunc('images', 'admin', 'getuploads', $args);
     } else {
         // Get the base directories configured for server images
-        $basedirs = xarModAPIFunc('images', 'user', 'getbasedirs');
+        $basedirs = xarMod::apiFunc('images', 'user', 'getbasedirs');
         if (empty($args['bid']) || empty($basedirs[$args['bid']])) {
             $args['bid'] = 0; // themes directory
         }
         $args = array_merge($basedirs[$args['bid']], $args);
         // Get the server images
-        $images = xarModAPIFunc('images', 'admin', 'getimages', $args);
+        $images = xarMod::apiFunc('images', 'admin', 'getimages', $args);
     }
     if (!$images) {
         return;
@@ -59,7 +59,7 @@ function images_userapi_dropdownlist($args = array())
             continue;
         }
         // TODO: support other formatting options here depending on the field type ?
-        $list[$image['fileId']] = xarVarPrepForDisplay($image[$field]);
+        $list[$image['fileId']] = xarVar::prepForDisplay($image[$field]);
     }
 
     return $list;

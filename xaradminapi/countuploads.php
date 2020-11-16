@@ -25,7 +25,7 @@ function images_adminapi_countuploads($args)
     }
 
     // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
-    $typeinfo = xarModAPIFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
+    $typeinfo = xarMod::apiFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
     if (empty($typeinfo)) {
         return;
     }
@@ -36,10 +36,10 @@ function images_adminapi_countuploads($args)
     $filters['status']   = null;
     $filters['inverse']  = null;
 
-    $options  = xarModAPIFunc('uploads', 'user', 'process_filters', $filters);
+    $options  = xarMod::apiFunc('uploads', 'user', 'process_filters', $filters);
     $filter   = $options['filter'];
 
-    $numimages = xarModAPIFunc('uploads', 'user', 'db_count', $filter);
+    $numimages = xarMod::apiFunc('uploads', 'user', 'db_count', $filter);
 
     return $numimages;
 }

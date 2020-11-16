@@ -47,7 +47,7 @@ class Image_Properties
                 $this->setMime($this->_getMimeType($fileInfo['imageType']));
                 return $this;
             }
-            $imageInfo = xarModAPIFunc('images', 'user', 'getimagesize', $fileInfo);
+            $imageInfo = xarMod::apiFunc('images', 'user', 'getimagesize', $fileInfo);
         } elseif (file_exists($fileInfo)) {
             $this->fileLocation = $fileInfo;
             $this->fileName = basename($fileInfo);

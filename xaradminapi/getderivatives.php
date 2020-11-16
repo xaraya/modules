@@ -28,7 +28,7 @@ function images_adminapi_getderivatives($args)
 {
     extract($args);
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
     if (empty($thumbsdir)) {
         return array();
@@ -66,7 +66,7 @@ function images_adminapi_getderivatives($args)
     } else {
         $cachekey = md5(serialize($params));
         if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
-            $cacheinfo = xarModGetVar('images', 'file.cachederiv.'.$cachekey);
+            $cacheinfo = xarModVars::get('images', 'file.cachederiv.'.$cachekey);
             if (!empty($cacheinfo)) {
                 $cacheinfo = @unserialize($cacheinfo);
                 if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
@@ -78,7 +78,7 @@ function images_adminapi_getderivatives($args)
     }
 
     if (!isset($imagelist)) {
-        $files = xarModAPIFunc(
+        $files = xarMod::apiFunc(
             'dynamicdata',
             'admin',
             'browse',
@@ -101,7 +101,7 @@ function images_adminapi_getderivatives($args)
                 }
                 $info = stat($thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
-                                     'fileDownload' => xarModURL(
+                                     'fileDownload' => xarController::URL(
                                          'images',
                                          'user',
                                          'display',
@@ -127,7 +127,7 @@ function images_adminapi_getderivatives($args)
                 $statinfo = stat($thumbsdir . '/' . $file);
                 $sizeinfo = getimagesize($thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
-                                     'fileDownload' => xarModURL(
+                                     'fileDownload' => xarController::URL(
                                          'images',
                                          'user',
                                          'display',
@@ -147,13 +147,13 @@ function images_adminapi_getderivatives($args)
 
         // CHECKME: keep track of originals for server images too ?
 
-        if (empty($fileName) && xarModIsAvailable('uploads')) {
+        if (empty($fileName) && xarMod::isAvailable('uploads')) {
             $fileinfo = array();
             foreach (array_keys($filenames) as $file) {
                 // CHECKME: verify this once derivatives can be created in sub-directories of thumbsdir
                 // this is probably the file id for some uploaded/imported file stored in the database
                 if (preg_match('/^(.*\/)?(\d+)$/', $file, $matches)) {
-                    $fileinfo[$file] = xarModAPIFunc(
+                    $fileinfo[$file] = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'db_get_file',
@@ -164,7 +164,7 @@ function images_adminapi_getderivatives($args)
                 } elseif (preg_match('/^(.*\/)?([0-9a-f]{32})$/i', $file, $matches)) {
 
                 // CHECKME: watch out for duplicates here too
-                    $fileinfo[$file] = xarModAPIFunc(
+                    $fileinfo[$file] = xarMod::apiFunc(
                         'uploads',
                         'user',
                         'db_get_file',
@@ -193,13 +193,13 @@ function images_adminapi_getderivatives($args)
             $cacheinfo = array('time' => time(),
                                'list' => $imagelist);
             $cacheinfo = serialize($cacheinfo);
-            xarModSetVar('images', 'file.cachederiv.'.$cachekey, $cacheinfo);
+            xarModVars::set('images', 'file.cachederiv.'.$cachekey, $cacheinfo);
             unset($cacheinfo);
         }
     }
 
     // save the number of images in temporary cache for countderivatives()
-    xarVarSetCached('Modules.Images', 'countderivatives.'.$cachekey, count($imagelist));
+    xarVar::setCached('Modules.Images', 'countderivatives.'.$cachekey, count($imagelist));
 
     if (empty($sort)) {
         $sort = '';

@@ -23,14 +23,14 @@ function uploads_admin_importpictures($args)
     $image_import_dir = '/home/epicsaga/public_html/var/uploads/images';
     $Picture_Publication_Type_ID = 5;
 
-    xarModSetVar('uploads', 'obfuscate_imports', 0);
+    xarModVars::set('uploads', 'obfuscate_imports', 0);
 
 
     echo "Import Pictures here<br/>";
 
     // Kick mod available
     echo "Checking mod avaliable (dynamicdata): ";
-    $avail = xarModIsAvailable("dynamicdata");
+    $avail = xarMod::isAvailable("dynamicdata");
     if ($avail) {
         echo "yes<br/>";
     } else {
@@ -54,7 +54,7 @@ function uploads_admin_importpictures($args)
     $cids = array();
 
     $pubtypeid = $Picture_Publication_Type_ID;
-    $authorid  = xarSessionGetVar('uid');
+    $authorid  = xarSession::getVar('uid');
     $aid       = 0;
 
     $article = array('title' => $title,
@@ -93,7 +93,7 @@ function uploads_admin_importpictures($args)
                          ,'type'     => '');
 
             echo "About to store<br/>";
-            $info = xarModAPIFunc('uploads', 'user', 'store', $data);
+            $info = xarMod::apiFunc('uploads', 'user', 'store', $data);
             echo '<pre>';
             print_r($info);
             echo '</pre>';
@@ -109,7 +109,7 @@ function uploads_admin_importpictures($args)
 
         // Create Picture Article
         echo "Creating Article<br/>";
-        $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+        $aid = xarMod::apiFunc('articles', 'admin', 'create', $article);
 
 
         echo "Article Created :: ID :: $aid<br/>";
@@ -155,8 +155,8 @@ function pruneFiles($FilesInDir, $image_import_dir)
     if (isset($FilesInDir)) {
 
         // Get database setup
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn =& xarDB::getConn();
+        $xartable =& xarDB::getTables();
 
         // table and column definitions
         $uploadstable = $xartable['uploads'];

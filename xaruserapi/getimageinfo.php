@@ -56,7 +56,7 @@ function images_userapi_getimageinfo($args)
 
     if (!empty($fileId) && is_numeric($fileId)) {
         // Get file information from the uploads module
-        $imageInfoArray = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+        $imageInfoArray = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
         $imageInfo = end($imageInfoArray);
         if (!empty($imageInfo)) {
             // Check the modified and writable
@@ -68,7 +68,7 @@ function images_userapi_getimageinfo($args)
                 $imageInfo['isWritable']   = false;
             }
             // Get image size and type information
-            $sizeinfo = xarModAPIFunc('images', 'user', 'getimagesize', $imageInfo);
+            $sizeinfo = xarMod::apiFunc('images', 'user', 'getimagesize', $imageInfo);
             if (!empty($sizeinfo)) {
                 $imageInfo['imageWidth']  = $sizeinfo[0];
                 $imageInfo['imageHeight'] = $sizeinfo[1];
