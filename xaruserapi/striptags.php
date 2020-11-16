@@ -60,7 +60,7 @@ function html_userapi_striptags($args)
     // Get the tags to be removed and pass them to the stylesheet
     $stripTag = array();
     $stripAttrs = array();
-    foreach ($GLOBALS['xarVar_allowableHTML'] as $k=>$v) {
+    foreach ($GLOBALS['xarVar::ALLOWableHTML'] as $k=>$v) {
         if ($k == '!--') {
             if ($v < 2) {
                 $stripTag[] = $k;
