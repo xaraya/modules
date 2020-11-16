@@ -18,11 +18,17 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function otp_user_display()
 {
-    if (!xarSecurityCheck('ReadOtp')) return;
+    if (!xarSecurityCheck('ReadOtp')) {
+        return;
+    }
     xarTpl::setPageTitle('Display Otp');
 
-    if (!xarVarFetch('name',       'str',    $name,            'otp_otp', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str', $name, 'otp_otp', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
@@ -31,4 +37,3 @@ function otp_user_display()
 
     return $data;
 }
-?>

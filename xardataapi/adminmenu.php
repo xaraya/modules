@@ -24,4 +24,3 @@
             array('mask' => 'AdminOtp', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Otp configuration'), 'label' => xarML('Modify Config')),
         );
     }
-?>

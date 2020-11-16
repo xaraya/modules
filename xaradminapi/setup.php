@@ -22,4 +22,3 @@
         $result = $otp->initializeOtp($args['passphrase'], $args['seed'], $args['seq_number'], $args['algorithm']);
         return $result;
     }
-?>

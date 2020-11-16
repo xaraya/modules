@@ -17,15 +17,17 @@
 
 function otp_admin_main()
 {
-    if(!xarSecurityCheck('ManageOtp')) return;
+    if (!xarSecurityCheck('ManageOtp')) {
+        return;
+    }
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        $redirect = xarModVars::get('otp','backend_page');
+        $redirect = xarModVars::get('otp', 'backend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarModAPIFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
             xarController::redirect(xarModURL('otp', 'admin', 'modifyconfig'));
@@ -33,4 +35,3 @@ function otp_admin_main()
     }
     return true;
 }
-?>

@@ -27,16 +27,20 @@ function otp_adminapi_generate_otp($args)
     $otp = new Otp();
 
     // We need an initial passphrase to generate an OTP
-    if (!isset($args['passphrase'])) return false;
+    if (!isset($args['passphrase'])) {
+        return false;
+    }
     // If not user identification is passed, we assume the ident is being used as the passphrase
-    if (!isset($args['user_ident'])) $args['user_ident'] = $args['passphrase'];
+    if (!isset($args['user_ident'])) {
+        $args['user_ident'] = $args['passphrase'];
+    }
 
     // Check if we already have a otp sequence generated for this user
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
     
     $q = new Query('SELECT', $tables['otp_otps']);
-    $q->eq('user_ident',  $args['user_ident']);
+    $q->eq('user_ident', $args['user_ident']);
     $q->run();
     $result = $q->row();
     
@@ -49,18 +53,24 @@ function otp_adminapi_generate_otp($args)
         } else {
             // Expired: delete it and continue below
             $q = new Query('DELETE', $tables['otp_otps']);
-            $q->eq('user_ident',  $args['user_ident']);
+            $q->eq('user_ident', $args['user_ident']);
             $q->run();
         }
     }
     
     // Make sure we have all the other needed data
-    if (!isset($args['save'])) $args['save'] = true;;
+    if (!isset($args['save'])) {
+        $args['save'] = true;
+    };
     if (!isset($args['seed'])) {
         $args['seed'] = xarMod::apiFunc('otp', 'admin', 'generate_seed');
     }
-    if (!isset($args['sequence'])) $args['sequence'] = xarModVars::get('otp', 'sequence');
-    if (!isset($args['algorithm'])) $args['algorithm'] = xarModVars::get('otp', 'algorithm');
+    if (!isset($args['sequence'])) {
+        $args['sequence'] = xarModVars::get('otp', 'sequence');
+    }
+    if (!isset($args['algorithm'])) {
+        $args['algorithm'] = xarModVars::get('otp', 'algorithm');
+    }
     
     // Generate the password
     $one_time = $otp->generateOtp($args['passphrase'], $args['seed'], $args['sequence'], $args['algorithm']);
@@ -71,11 +81,11 @@ function otp_adminapi_generate_otp($args)
         $result = $q->row();
         if (empty($result)) {
             $q = new Query('INSERT', $tables['otp_otps']);
-            $q->addfield('user_ident',   $args['user_ident']);
-            $q->addfield('passphrase',   $passphrase);
-            $q->addfield('seed',         $args['seed']);
-            $q->addfield('sequence',     $args['sequence'] - 1);
-            $q->addfield('algorithm',    $args['algorithm']);
+            $q->addfield('user_ident', $args['user_ident']);
+            $q->addfield('passphrase', $passphrase);
+            $q->addfield('seed', $args['seed']);
+            $q->addfield('sequence', $args['sequence'] - 1);
+            $q->addfield('algorithm', $args['algorithm']);
             $q->addfield('time_created', time());
             $q->addfield('time_expires', time() + (int)xarModVars::get('otp', 'expires'));
             $q->run();
@@ -85,4 +95,3 @@ function otp_adminapi_generate_otp($args)
     // Return it
     return $one_time;
 }
-?>

@@ -19,15 +19,15 @@ function otp_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewOtp',0)) {
-        $menulinks[] = array('url'   => xarModURL('otp',
-                                                  'user',
-                                                  'main'),
+    if (xarSecurityCheck('ViewOtp', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'otp',
+            'user',
+            'main'
+        ),
                               'title' => xarML(''),
                               'label' => xarML(''));
     }
 
     return $menulinks;
 }
-
-?>

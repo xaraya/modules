@@ -18,17 +18,17 @@
 function otp_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadOtp')) return;
+    if (!xarSecurityCheck('ReadOtp')) {
+        return;
+    }
 
-    $redirect = xarModVars::get('otp','frontend_page');
+    $redirect = xarModVars::get('otp', 'frontend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarModAPIFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
         xarController::redirect(xarModURL('otp', 'user', 'otp'));
     }
     return true;
 }
-
-?>

@@ -25,7 +25,9 @@ function otp_adminapi_create_challenge($args)
     $q = new Query('SELECT', $tables['otp_used_seeds']);
     $q->run();
     $used_seeds = array();
-    foreach ($q->output() as $row) $used_seeds[] = $row['seed'];
+    foreach ($q->output() as $row) {
+        $used_seeds[] = $row['seed'];
+    }
     
     // Assemble the challenge
     $otp = new Otp();
@@ -34,4 +36,3 @@ function otp_adminapi_create_challenge($args)
     // Return it
     return $challenge;
 }
-?>

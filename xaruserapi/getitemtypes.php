@@ -20,10 +20,10 @@
 
         $itemtypes[1] = array('label' => xarML('Native Otp'),
                               'title' => xarML('View Otp'),
-                              'url'   => xarModURL('otp','user','view')
+                              'url'   => xarModURL('otp', 'user', 'view')
                              );
 
-        $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30053, 'native' => false));
+        $extensionitemtypes = xarModAPIFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30053, 'native' => false));
 
         /* TODO: activate this code when we move to php5
         $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
@@ -32,8 +32,11 @@
         */
 
         $types = array();
-        foreach ($itemtypes as $key => $value) $types[$key] = $value;
-        foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
+        foreach ($itemtypes as $key => $value) {
+            $types[$key] = $value;
+        }
+        foreach ($extensionitemtypes as $key => $value) {
+            $types[$key] = $value;
+        }
         return $types;
     }
-?>
