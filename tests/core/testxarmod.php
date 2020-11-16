@@ -35,7 +35,7 @@ class testxarModgetID extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetID', 'xarMod::getID($modulename)');
 
-class testxarMod::getName extends xarTestCase
+class testxarModGetName extends xarTestCase
 {
     public function testgetName()
     {
@@ -77,7 +77,7 @@ class testxarMod::getName extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarMod::getName', 'xarMod::getName($regid)');
+$suite->AddTestCase('testxarModGetName', 'xarMod::getName($regid)');
 
 class testxarModgetDisplayName extends xarTestCase
 {
@@ -225,7 +225,7 @@ class testxarModgetRegid extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetRegid', 'xarMod::getRegID($modulename)');
 
-class testxarMod::getInfo extends xarTestCase
+class testxarModGetInfo extends xarTestCase
 {
     public function testgetInfo()
     {
@@ -282,7 +282,7 @@ class testxarMod::getInfo extends xarTestCase
         return $res;
     }
 }
-$suite->AddTestCase('testxarMod::getInfo', 'xarMod::getInfo($regid, $type)');
+$suite->AddTestCase('testxarModGetInfo', 'xarMod::getInfo($regid, $type)');
 
 class testxarModgetBaseInfo extends xarTestCase
 {
@@ -394,7 +394,7 @@ class testxarModgetFileInfo extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetFileInfo', 'xarMod::getFileInfo($modulename, $type)');
 
-class testxarMod::loadDbInfoInfo extends xarTestCase
+class testxarModLoadDbInfoInfo extends xarTestCase
 {
     public function testloadDbInfo()
     {
@@ -436,7 +436,7 @@ class testxarMod::loadDbInfoInfo extends xarTestCase
         return $res;
     }
 }
-$suite->AddTestCase('testxarMod::loadDbInfoInfo', 'xarMod::loadDbInfo($modulename, $moduledir, $type)');
+$suite->AddTestCase('testxarModLoadDbInfoInfo', 'xarMod::loadDbInfo($modulename, $moduledir, $type)');
 
 class testxarModgetState extends xarTestCase
 {
@@ -497,7 +497,7 @@ class testxarModgetState extends xarTestCase
 }
 $suite->AddTestCase('testxarModgetState', 'xarMod::getState($regid, $type)');
 
-class testxarMod::isAvailable extends xarTestCase
+class testxarModIsAvailable extends xarTestCase
 {
     public function testisAvailable()
     {
@@ -550,9 +550,9 @@ class testxarMod::isAvailable extends xarTestCase
         return $res;
     }
 }
-$suite->AddTestCase('testxarMod::isAvailable', 'xarMod::isAvailable($modulename, $type)');
+$suite->AddTestCase('testxarModIsAvailable', 'xarMod::isAvailable($modulename, $type)');
 
-class testxarMod::load extends xarTestCase
+class testxarModLoad extends xarTestCase
 {
     public function testload()
     {
@@ -595,9 +595,9 @@ class testxarMod::load extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarMod::load', 'xarMod::load($modulename, $type)');
+$suite->AddTestCase('testxarModLoad', 'xarMod::load($modulename, $type)');
 
-class testxarMod::apiLoad extends xarTestCase
+class testxarModApiLoad extends xarTestCase
 {
     public function testapiload()
     {
@@ -640,9 +640,9 @@ class testxarMod::apiLoad extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarMod::apiLoad', 'xarMod::apiload($modulename, $type)');
+$suite->AddTestCase('testxarModApiLoad', 'xarMod::apiload($modulename, $type)');
 
-class testxarModHooks::register extends xarTestCase
+class testxarModHooksRegister extends xarTestCase
 {
     public function testRegisterHook()
     {
@@ -674,9 +674,9 @@ class testxarModHooks::register extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModHooks::register', 'xarModHooks::register($hookObject, $hookAction, $hookArea, $hookModName, $hookModType, $hookFuncName)');
+$suite->AddTestCase('testxarModHooksRegister', 'xarModHooks::register($hookObject, $hookAction, $hookArea, $hookModName, $hookModType, $hookFuncName)');
 
-class testxarModHooks::unregister extends xarTestCase
+class testxarModHooksUnregister extends xarTestCase
 {
     public function testRegisterHook()
     {
@@ -704,4 +704,4 @@ class testxarModHooks::unregister extends xarTestCase
         }
     }
 }
-$suite->AddTestCase('testxarModHooks::unregister', 'xarModUnegisterHook($hookObject, $hookAction, $hookArea,$hookModName, $hookModType, $hookFuncName)');
+$suite->AddTestCase('testxarModHooksUnregister', 'xarModUnegisterHook($hookObject, $hookAction, $hookArea,$hookModName, $hookModType, $hookFuncName)');
