@@ -18,7 +18,9 @@
 function hitcount_userapi_getmodules($args)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewHitcountItems')) return;
+    if (!xarSecurityCheck('ViewHitcountItems')) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -32,11 +34,13 @@ function hitcount_userapi_getmodules($args)
             GROUP BY m.regid, h.itemtype";
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$numitems,$numhits) = $result->fields;
+        list($modid, $itemtype, $numitems, $numhits) = $result->fields;
         $modlist[$modid][$itemtype] = array('items' => $numitems, 'hits' => $numhits);
         $result->MoveNext();
     }
@@ -44,4 +48,3 @@ function hitcount_userapi_getmodules($args)
 
     return $modlist;
 }
-?>

@@ -16,7 +16,9 @@
  */
 function hitcount_admin_main()
 {
-    if(!xarSecurityCheck('ManageHitcount')) return;
+    if (!xarSecurityCheck('ManageHitcount')) {
+        return;
+    }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
@@ -25,5 +27,3 @@ function hitcount_admin_main()
     }
     return true;
 }
-
-?>

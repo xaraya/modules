@@ -27,7 +27,9 @@ function hitcount_user_display($args)
     extract($args);
 
     // Load API
-    if (!xarModAPILoad('hitcount', 'admin')) return;
+    if (!xarModAPILoad('hitcount', 'admin')) {
+        return;
+    }
 
     // When called via hooks, modname will be empty, but we get it from the
     // extrainfo or from the current module
@@ -40,15 +42,15 @@ function hitcount_user_display($args)
         }
     }
     if (!isset($args['itemtype']) || !is_numeric($args['itemtype'])) {
-         if (isset($extrainfo) && is_array($extrainfo) &&
+        if (isset($extrainfo) && is_array($extrainfo) &&
              isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $args['itemtype'] = $extrainfo['itemtype'];
-         } else {
-             $args['itemtype'] = 0;
-         }
+            $args['itemtype'] = $extrainfo['itemtype'];
+        } else {
+            $args['itemtype'] = 0;
+        }
     }
-    if (xarVarIsCached('Hooks.hitcount','nocount') ||
-        (xarSecurityCheck('AdminHitcount', 0) && xarModVars::get('hitcount', 'countadmin') == FALSE) ) {
+    if (xarVarIsCached('Hooks.hitcount', 'nocount') ||
+        (xarSecurityCheck('AdminHitcount', 0) && xarModVars::get('hitcount', 'countadmin') == false)) {
         $hitcount = xarMod::apiFunc('hitcount', 'user', 'get', $args);
     } else {
         $hitcount = xarMod::apiFunc('hitcount', 'admin', 'update', $args);
@@ -57,15 +59,13 @@ function hitcount_user_display($args)
     // @fixme: this function should return output to a template, not directly as a string!
     if (isset($hitcount)) {
         // Display current hitcount or set the cached variable
-        if (!xarVarIsCached('Hooks.hitcount','save') ||
-            xarVarGetCached('Hooks.hitcount','save') == false ) {
+        if (!xarVarIsCached('Hooks.hitcount', 'save') ||
+            xarVarGetCached('Hooks.hitcount', 'save') == false) {
             return '(' . $hitcount . ' ' . xarML('Reads') . ')';
         } else {
-            xarVarSetCached('Hooks.hitcount','value',$hitcount);
+            xarVarSetCached('Hooks.hitcount', 'value', $hitcount);
         }
     }
 
     return '';
 }
-
-?>

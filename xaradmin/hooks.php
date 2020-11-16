@@ -20,11 +20,11 @@
 function hitcount_admin_hooks()
 {
     /* Security Check */
-    if(!xarSecurityCheck('AdminHitcount',0)) return;
+    if (!xarSecurityCheck('AdminHitcount', 0)) {
+        return;
+    }
 
     $data = array();
 
     return $data;
 }
-
-?>

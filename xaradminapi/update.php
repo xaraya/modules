@@ -26,8 +26,13 @@ function hitcount_adminapi_update($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'update', 'Hitcount');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'object ID',
+            'admin',
+            'update',
+            'Hitcount'
+        );
         throw new Exception($msg);
     }
 
@@ -43,40 +48,55 @@ function hitcount_adminapi_update($args)
     }
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'update', 'Hitcount');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module name',
+            'admin',
+            'update',
+            'Hitcount'
+        );
         throw new Exception($msg);
     }
     if (!isset($itemtype) || !is_numeric($itemtype)) {
-         if (isset($extrainfo) && is_array($extrainfo) &&
+        if (isset($extrainfo) && is_array($extrainfo) &&
              isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $itemtype = $extrainfo['itemtype'];
-         } else {
-             $itemtype = 0;
-         }
+            $itemtype = $extrainfo['itemtype'];
+        } else {
+            $itemtype = 0;
+        }
     }
 
-// TODO: re-evaluate this for hook calls !!
+    // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
+    if (!xarSecurityCheck('ReadHitcountItem', 1, 'Item', "$modname:$itemtype:$objectid")) {
+        return;
+    }
 
-    if (!xarModAPILoad('hitcount', 'user')) return;
+    if (!xarModAPILoad('hitcount', 'user')) {
+        return;
+    }
 
     // get current hit count
-    $oldhits = xarMod::apiFunc('hitcount',
-                            'user',
-                            'get',
-                            array('objectid' => $objectid,
+    $oldhits = xarMod::apiFunc(
+        'hitcount',
+        'user',
+        'get',
+        array('objectid' => $objectid,
                                   'itemtype' => $itemtype,
-                                  'modname' => $modname));
+                                  'modname' => $modname)
+    );
 
     // create the item if necessary
     if (!isset($oldhits)) {
-        $hcid = xarMod::apiFunc('hitcount','admin','create',
-                             array('objectid' => $objectid,
+        $hcid = xarMod::apiFunc(
+            'hitcount',
+            'admin',
+            'create',
+            array('objectid' => $objectid,
                                    'itemtype' => $itemtype,
-                                   'modname' => $modname));
+                                   'modname' => $modname)
+        );
         if (!isset($hcid)) {
             return; // throw back whatever it was that failed
         }
@@ -100,11 +120,11 @@ function hitcount_adminapi_update($args)
               AND itemtype = ?
               AND itemid = ?";
     $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     // Return the new hitcount (give or take a few other hits in the meantime)
     return $hits;
 }
-
-?>

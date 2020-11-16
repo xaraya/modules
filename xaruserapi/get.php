@@ -24,8 +24,13 @@ function hitcount_userapi_get($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'user', 'get', 'Hitcount');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'object ID',
+            'user',
+            'get',
+            'Hitcount'
+        );
         throw new Exception($msg);
     }
 
@@ -41,22 +46,29 @@ function hitcount_userapi_get($args)
     }
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'user', 'get', 'Hitcount');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module name',
+            'user',
+            'get',
+            'Hitcount'
+        );
         throw new Exception($msg);
     }
     if (!isset($itemtype) || !is_numeric($itemtype)) {
-         if (isset($extrainfo) && is_array($extrainfo) &&
+        if (isset($extrainfo) && is_array($extrainfo) &&
              isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $itemtype = $extrainfo['itemtype'];
-         } else {
-             $itemtype = 0;
-         }
+            $itemtype = $extrainfo['itemtype'];
+        } else {
+            $itemtype = 0;
+        }
     }
 
-// TODO: re-evaluate this for hook calls !!
+    // TODO: re-evaluate this for hook calls !!
     // Security check
-    if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
+    if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:$itemtype:$objectid")) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -70,13 +82,13 @@ function hitcount_userapi_get($args)
               AND itemtype = ?
               AND itemid = ?";
     $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
-    $result = $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) {
+        return;
+    }
 
     $hits = $result->fields[0];
     $result->close();
 
     return $hits;
 }
-
-?>

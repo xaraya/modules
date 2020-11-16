@@ -23,7 +23,9 @@
 function hitcount_admin_overview()
 {
     /* Security Check */
-    if(!xarSecurityCheck('AdminHitcount',0)) return;
+    if (!xarSecurityCheck('AdminHitcount', 0)) {
+        return;
+    }
 
     $data=array();
 
@@ -31,7 +33,5 @@ function hitcount_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTplModule('hitcount', 'admin', 'main', $data,'main');
+    return xarTplModule('hitcount', 'admin', 'main', $data, 'main');
 }
-
-?>

@@ -30,5 +30,3 @@ function hitcount_xartables()
     // Return table information
     return $xartable;
 }
-
-?>

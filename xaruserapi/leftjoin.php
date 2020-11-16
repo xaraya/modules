@@ -54,10 +54,14 @@ function hitcount_userapi_leftjoin($args)
     // Security check
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
-            if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:All:$itemid")) return;
+            if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:All:$itemid")) {
+                return;
+            }
         }
     } else {
-        if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:All:All")) return;
+        if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:All:All")) {
+            return;
+        }
     }
 
     // Table definition
@@ -81,7 +85,9 @@ function hitcount_userapi_leftjoin($args)
         } elseif (is_array($itemtype) && count($itemtype) > 0) {
             $seentype = array();
             foreach ($itemtype as $id) {
-                if (empty($id) || !is_numeric($id)) continue;
+                if (empty($id) || !is_numeric($id)) {
+                    continue;
+                }
                 $seentype[$id] = 1;
             }
             if (count($seentype) == 1) {
@@ -100,22 +106,22 @@ function hitcount_userapi_leftjoin($args)
     if (count($itemids) > 0) {
         $allids = join(', ', $itemids);
         $leftjoin['where'] = $xartable['hitcount'] . '.itemid IN (' . $allids . ')';
-/*
-        if (!empty($modid)) {
-            $leftjoin['where'] .= ' AND ' .
-                                  $xartable['hitcount'] . '.module_id = ' .
-                                  $modid;
-        }
-*/
+    /*
+            if (!empty($modid)) {
+                $leftjoin['where'] .= ' AND ' .
+                                      $xartable['hitcount'] . '.module_id = ' .
+                                      $modid;
+            }
+    */
     } else {
-/*
-        if (!empty($modid)) {
-            $leftjoin['where'] = $xartable['hitcount'] . '.module_id = ' .
-                                 $modid;
-        } else {
-            $leftjoin['where'] = '';
-        }
-*/
+        /*
+                if (!empty($modid)) {
+                    $leftjoin['where'] = $xartable['hitcount'] . '.module_id = ' .
+                                         $modid;
+                } else {
+                    $leftjoin['where'] = '';
+                }
+        */
         $leftjoin['where'] = '';
     }
 
@@ -127,5 +133,3 @@ function hitcount_userapi_leftjoin($args)
 
     return $leftjoin;
 }
-
-?>

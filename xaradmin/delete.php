@@ -22,12 +22,22 @@
 function hitcount_admin_delete()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminHitcount')) return;
+    if (!xarSecurityCheck('AdminHitcount')) {
+        return;
+    }
 
-    if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modid', 'isset', $modid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -43,9 +53,14 @@ function hitcount_admin_delete()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
+                $mytypes = xarMod::apiFunc(
+                    $modinfo['name'],
+                    'user',
+                    'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(), 0);
+                                         array(),
+                    0
+                );
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 } else {
@@ -60,17 +75,19 @@ function hitcount_admin_delete()
     }
 
     if (!xarSecConfirmAuthKey()) {
-        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-    }        
-    if (!xarMod::apiFunc('hitcount','admin','delete',
-                       array('modid' => $modid,
+        return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+    }
+    if (!xarMod::apiFunc(
+        'hitcount',
+        'admin',
+        'delete',
+        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
-                             'confirm' => $confirm))) {
+                             'confirm' => $confirm)
+    )) {
         return;
     }
     xarController::redirect(xarModURL('hitcount', 'admin', 'view'));
     return true;
 }
-
-?>

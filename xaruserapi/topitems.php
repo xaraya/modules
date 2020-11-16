@@ -40,7 +40,9 @@ function hitcount_userapi_topitems($args)
     }
 
     // Security check
-    if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
+    if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:$itemtype:All")) {
+        return;
+    }
 
     // Database information
     $dbconn = xarDB::getConn();
@@ -64,11 +66,13 @@ function hitcount_userapi_topitems($args)
 
     //$result = $dbconn->Execute($query);
     $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $topitems = array();
     while (!$result->EOF) {
-        list($id,$hits) = $result->fields;
+        list($id, $hits) = $result->fields;
         $topitems[] = array('itemid' => $id, 'hits' => $hits);
         $result->MoveNext();
     }
@@ -76,5 +80,3 @@ function hitcount_userapi_topitems($args)
 
     return $topitems;
 }
-
-?>

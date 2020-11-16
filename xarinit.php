@@ -30,8 +30,9 @@ function hitcount_init()
     sys::import('xaraya.tableddl');
 
     // Create tables
-    $query = xarDBCreateTable($xartable['hitcount'],
-                             array('id'         => array('type'        => 'integer',
+    $query = xarDBCreateTable(
+        $xartable['hitcount'],
+        array('id'         => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'increment'   => true,
@@ -60,49 +61,64 @@ function hitcount_init()
                                    'lasthit'    => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0')));
+                                                            'default'     => '0'))
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateIndex($xartable['hitcount'],
-                             array('name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
+    $query = xarDBCreateIndex(
+        $xartable['hitcount'],
+        array('name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
                                    'fields' => array('module_id','itemtype', 'itemid'),
-                                   'unique' => false));
+                                   'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateIndex($xartable['hitcount'],
-                             array('name'   => 'i_' . xarDB::getPrefix() . '_hititem',
+    $query = xarDBCreateIndex(
+        $xartable['hitcount'],
+        array('name'   => 'i_' . xarDB::getPrefix() . '_hititem',
                                    'fields' => array('itemid'),
-                                   'unique' => false));
+                                   'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
-    $query = xarDBCreateIndex($xartable['hitcount'],
-                             array('name'   => 'i_' . xarDB::getPrefix() . '_hits',
+    $query = xarDBCreateIndex(
+        $xartable['hitcount'],
+        array('name'   => 'i_' . xarDB::getPrefix() . '_hits',
                                    'fields' => array('hits'),
-                                   'unique' => false));
+                                   'unique' => false)
+    );
 
     $result = $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Set up module hooks - using hook call handlers now
     // from Jamaica 2.2.0 onwards we use the new hook system
     // (see observers in hitcount/class/hookobservers/)
-    xarHooks::registerObserver('ItemCreate',  'hitcount');
+    xarHooks::registerObserver('ItemCreate', 'hitcount');
     xarHooks::registerObserver('ItemDisplay', 'hitcount');
-    xarHooks::registerObserver('ItemDelete',  'hitcount');
+    xarHooks::registerObserver('ItemDelete', 'hitcount');
     // @checkme: there seems to be a 'view' hook implemented in the 2.0.0-b4 revised hook calls
-    // but no such hook exists, the nearest would be the yet to be implemented ItemtypeView hook 
+    // but no such hook exists, the nearest would be the yet to be implemented ItemtypeView hook
     //xarHooks::registerObserver('ItemtypeView', 'hitcount');
     xarHooks::registerObserver('ModuleRemove', 'hitcount');
     // when a module item is displayed, created or deleted
     // (use xarVarSetCached('Hooks.hitcount','save', 1) to tell hitcount *not*
     // to display the hit count, but to save it in 'Hooks.hitcount', 'value')
-    // <chris> - why is this necessary? 
+    // <chris> - why is this necessary?
 
     /*********************************************************************
     * Define instances for this module
@@ -127,7 +143,7 @@ function hitcount_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('hitcount','Item',$instances);
+    xarDefineInstance('hitcount', 'Item', $instances);
 
     /*********************************************************************
     * Register the module components that are privileges objects
@@ -136,16 +152,16 @@ function hitcount_init()
     *********************************************************************/
 
 
-    xarRegisterMask('ViewHitcountItems','All','hitcount','Item','All:All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadHitcountItem','All','hitcount','Item','All:All:All','ACCESS_READ');
-    xarRegisterMask('DeleteHitcountItem','All','hitcount','Item','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('ManageHitcount','All','hitcount','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewHitcountItems', 'All', 'hitcount', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadHitcountItem', 'All', 'hitcount', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('DeleteHitcountItem', 'All', 'hitcount', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('ManageHitcount', 'All', 'hitcount', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminHitcount', 'All', 'hitcount', 'All', 'All', 'ACCESS_ADMIN');
 
-    xarRegisterPrivilege('ViewHitcount','All','hitcount','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadHitcount','All','hitcount','All','All','ACCESS_READ');
-    xarRegisterPrivilege('ManageHitcount','All','hitcount','All','All:All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('ViewHitcount', 'All', 'hitcount', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadHitcount', 'All', 'hitcount', 'All', 'All', 'ACCESS_READ');
+    xarRegisterPrivilege('ManageHitcount', 'All', 'hitcount', 'All', 'All:All', 'ACCESS_DELETE');
+    xarRegisterPrivilege('AdminHitcount', 'All', 'hitcount', 'All', 'All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -157,7 +173,7 @@ function hitcount_init()
 function hitcount_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
-    switch($oldversion) {
+    switch ($oldversion) {
         case '2.0.0':
             // intermediate versions from repository in jamaica 2.0.0-b2 may have wrong module id's
             // stored in xar_hitcount
@@ -167,7 +183,7 @@ function hitcount_upgrade($oldversion)
             /*
                 This functionality has been replaced, skip straight to the new hook system
                 when upgrading from this version
-                
+
             // switch from hook functions to hook class handlers
             $dbconn = xarDB::getConn();
             $xartable =& xarDB::getTables();
@@ -211,9 +227,7 @@ function hitcount_upgrade($oldversion)
  */
 function hitcount_delete()
 {
-    // nothing special to do here - rely on standard deinstall to take care of everything 
+    // nothing special to do here - rely on standard deinstall to take care of everything
     $module = 'hitcount';
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
 }
-
-?>

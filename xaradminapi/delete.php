@@ -31,8 +31,13 @@ function hitcount_adminapi_delete($args)
     // if we're coming via a hook call
     if (isset($objectid)) {
         if (!is_numeric($objectid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                        'object ID', 'admin', 'delete', 'Hitcount');
+            $msg = xarML(
+                'Invalid #(1) for #(2) function #(3)() in module #(4)',
+                'object ID',
+                'admin',
+                'delete',
+                'Hitcount'
+            );
             throw new Exception($msg);
         }
         $itemid = $objectid;
@@ -49,8 +54,13 @@ function hitcount_adminapi_delete($args)
         }
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                        'module name', 'admin', 'delete', 'Hitcount');
+            $msg = xarML(
+                'Invalid #(1) for #(2) function #(3)() in module #(4)',
+                'module name',
+                'admin',
+                'delete',
+                'Hitcount'
+            );
             throw new Exception($msg);
         }
 
@@ -62,10 +72,12 @@ function hitcount_adminapi_delete($args)
             }
         }
 
-// TODO: re-evaluate this for hook calls !!
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
-        if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"$modname:$itemtype:$itemid")) return;
+        // TODO: re-evaluate this for hook calls !!
+        // Security check - important to do this as early on as possible to
+        // avoid potential security holes or just too much wasted processing
+        if (!xarSecurityCheck('DeleteHitcountItem', 1, 'Item', "$modname:$itemtype:$itemid")) {
+            return;
+        }
 
         $dbconn = xarDB::getConn();
         $xartable =& xarDB::getTables();
@@ -77,10 +89,12 @@ function hitcount_adminapi_delete($args)
                   AND itemtype = ?
                   AND itemid = ?";
         $bindvars = array((int)$modid, (int)$itemtype, (int)$itemid);
-        $result = $dbconn->Execute($query,$bindvars);
-        if (!$result) return;
+        $result = $dbconn->Execute($query, $bindvars);
+        if (!$result) {
+            return;
+        }
 
-    // hmmm, I think we'll skip calling more hooks here... :-)
+        // hmmm, I think we'll skip calling more hooks here... :-)
 
         // Return the extra info
         if (!isset($extrainfo)) {
@@ -90,8 +104,9 @@ function hitcount_adminapi_delete($args)
 
     // if we're coming from the delete GUI (or elsewhere)
     } elseif (!empty($confirm)) {
-
-        if (!xarSecurityCheck('AdminHitcount')) return;
+        if (!xarSecurityCheck('AdminHitcount')) {
+            return;
+        }
 
         // Database information
         $dbconn = xarDB::getConn();
@@ -102,8 +117,13 @@ function hitcount_adminapi_delete($args)
         $query = "DELETE FROM $hitcounttable ";
         if (!empty($modid)) {
             if (!is_numeric($modid)) {
-                $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                             'module id', 'admin', 'delete', 'Hitcount');
+                $msg = xarML(
+                    'Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module id',
+                    'admin',
+                    'delete',
+                    'Hitcount'
+                );
                 throw new Exception($msg);
             }
             if (empty($itemtype) || !is_numeric($itemtype)) {
@@ -119,12 +139,12 @@ function hitcount_adminapi_delete($args)
             }
         }
 
-        $result = $dbconn->Execute($query,$bindvars);
-        if (!$result) return;
+        $result = $dbconn->Execute($query, $bindvars);
+        if (!$result) {
+            return;
+        }
 
         return true;
     }
     return false;
 }
-
-?>

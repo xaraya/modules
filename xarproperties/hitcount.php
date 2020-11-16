@@ -24,7 +24,7 @@ class HitCountProperty extends NumberBoxProperty
 
     private $hitcache  = null;
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->filepath   = 'modules/hitcount/xarproperties';
@@ -42,25 +42,25 @@ class HitCountProperty extends NumberBoxProperty
         return $this->getHitcount();
     }
 
-    function getItemValue($itemid)
+    public function getItemValue($itemid)
     {
         return $this->getHitcount(array('value' => $itemid));
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = array())
     {
         $data['value'] = $this->getHitcount($data);
         return parent::showInput($data);
     }
 
-    public function showOutput(Array $data = array())
+    public function showOutput(array $data = array())
     {
         // the dummy datastore will use the itemid as value for this property !
         $data['value'] = $this->getHitcount($data, 1);
         return parent::showOutput($data);
     }
 
-    private function getHitcount(Array $data = array(), $update = 0)
+    private function getHitcount(array $data = array(), $update = 0)
     {
         // if we don't have an objectref, return the value as is
         if (empty($this->objectref) || empty($this->objectref->objectid)) {
@@ -76,16 +76,24 @@ class HitCountProperty extends NumberBoxProperty
             if (!isset($this->hitcache)) {
                 if (!empty($update) && $this->checkForUpdate()) {
                     // update the hitcount for this item
-                    $this->hitcache = xarMod::apiFunc('hitcount', 'admin', 'update',
-                                                      array('modname'  => xarMod::getName($this->objectref->moduleid),
+                    $this->hitcache = xarMod::apiFunc(
+                        'hitcount',
+                        'admin',
+                        'update',
+                        array('modname'  => xarMod::getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid));
+                                                            'objectid' => $this->objectref->itemid)
+                    );
                 } else {
                     // get the hitcount for this item
-                    $this->hitcache = xarMod::apiFunc('hitcount', 'user', 'get',
-                                                      array('modname'  => xarMod::getName($this->objectref->moduleid),
+                    $this->hitcache = xarMod::apiFunc(
+                        'hitcount',
+                        'user',
+                        'get',
+                        array('modname'  => xarMod::getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid));
+                                                            'objectid' => $this->objectref->itemid)
+                    );
                 }
                 if (empty($this->hitcache)) {
                     $this->hitcache = 0;
@@ -97,23 +105,27 @@ class HitCountProperty extends NumberBoxProperty
         } elseif (!empty($this->_items) && isset($data['value']) && !empty($this->_items[$data['value']])) {
             if (!isset($this->hitcache)) {
                 // get the hitcount for all the items in the objectref
-                $this->hitcache = xarMod::apiFunc('hitcount','user','getitems',
-                                                  array('modid'    => $this->objectref->moduleid,
+                $this->hitcache = xarMod::apiFunc(
+                    'hitcount',
+                    'user',
+                    'getitems',
+                    array('modid'    => $this->objectref->moduleid,
                                                         'itemtype' => $this->objectref->itemtype,
-                                                        'itemids'  => $this->objectref->itemids));
+                                                        'itemids'  => $this->objectref->itemids)
+                );
                 if (empty($this->hitcache)) {
                     $this->hitcache = array();
                 }
-/*
-                // set the hitcount for all the items in the objectref ? No, we'll work via local hitcache
-                foreach ($this->objectref->itemids as $itemid) {
-                    if (isset($this->hitcache[$itemid])) {
-                        $this->objectref->items[$itemid][$this->name] = $this->hitcache[$itemid];
-                    } else {
-                        $this->objectref->items[$itemid][$this->name] = 0;
-                    }
-                }
-*/
+                /*
+                                // set the hitcount for all the items in the objectref ? No, we'll work via local hitcache
+                                foreach ($this->objectref->itemids as $itemid) {
+                                    if (isset($this->hitcache[$itemid])) {
+                                        $this->objectref->items[$itemid][$this->name] = $this->hitcache[$itemid];
+                                    } else {
+                                        $this->objectref->items[$itemid][$this->name] = 0;
+                                    }
+                                }
+                */
             }
             if (!empty($this->hitcache) && isset($this->hitcache[$data['value']])) {
                 return $this->hitcache[$data['value']];
@@ -126,7 +138,7 @@ class HitCountProperty extends NumberBoxProperty
     private function checkForUpdate()
     {
         // check for 'preview' argument
-        xarVarFetch('preview', 'isset', $preview, NULL, XARVAR_DONT_SET);
+        xarVarFetch('preview', 'isset', $preview, null, XARVAR_DONT_SET);
 
         // if we're previewing an item, don't update
         if (!empty($preview)) {
@@ -135,7 +147,6 @@ class HitCountProperty extends NumberBoxProperty
         // if we don't count admin hits and the user is an admin, don't update
         } elseif (!xarModVars::get('hitcount', 'countadmin') && xarSecurityCheck('AdminHitcount', 0)) {
             return false;
-
         } else {
             return true;
         }
@@ -165,12 +176,14 @@ class HitCountProperty extends NumberBoxProperty
             return;
         }
         // delete hitcount entry
-        xarMod::apiFunc('hitcount', 'admin', 'delete',
-                        array('modname'  => xarMod::getName($this->objectref->moduleid),
+        xarMod::apiFunc(
+            'hitcount',
+            'admin',
+            'delete',
+            array('modname'  => xarMod::getName($this->objectref->moduleid),
                               'itemtype' => $this->objectref->itemtype,
-                              'objectid' => $itemid));
+                              'objectid' => $itemid)
+        );
         return true;
     }
 }
-
-?>

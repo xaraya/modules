@@ -25,33 +25,47 @@ function hitcount_adminapi_deleteall($args)
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID (= module name)', 'admin', 'deleteall', 'Hitcount');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'object ID (= module name)',
+            'admin',
+            'deleteall',
+            'Hitcount'
+        );
         throw new Exception($msg);
     }
 
     $modid = xarMod::getRegId($objectid);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module ID', 'admin', 'deleteall', 'Hitcount');
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'module ID',
+            'admin',
+            'deleteall',
+            'Hitcount'
+        );
         throw new Exception($msg);
     }
 
-// TODO: re-evaluate this for hook calls !!
+    // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"$objectid:All:All")) return;
+    if (!xarSecurityCheck('DeleteHitcountItem', 1, 'Item', "$objectid:All:All")) {
+        return;
+    }
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
-// FIXME: delete only for a particular module + itemtype (e.g. dd object, articles pubtype, ...)
+    // FIXME: delete only for a particular module + itemtype (e.g. dd object, articles pubtype, ...)
 
     $query = "DELETE FROM $hitcounttable
             WHERE module_id = ?";
-    $result = $dbconn->Execute($query,array((int)$modid));
-    if (!$result) return;
+    $result = $dbconn->Execute($query, array((int)$modid));
+    if (!$result) {
+        return;
+    }
 
     // hmmm, I think we'll skip calling more hooks here... :-)
 
@@ -61,5 +75,3 @@ function hitcount_adminapi_deleteall($args)
     }
     return $extrainfo;
 }
-
-?>

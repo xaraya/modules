@@ -63,10 +63,14 @@ function hitcount_userapi_getitems($args)
     // Security check
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
-            if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$itemid")) return;
+            if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:$itemtype:$itemid")) {
+                return;
+            }
         }
     } else {
-        if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
+        if (!xarSecurityCheck('ViewHitcountItems', 1, 'Item', "$modname:$itemtype:All")) {
+            return;
+        }
     }
 
     // Database information
@@ -83,7 +87,7 @@ function hitcount_userapi_getitems($args)
     $bindvars[] = (int) $modid;
     $bindvars[] = (int) $itemtype;
     if (count($itemids) > 0) {
-        $bindmarkers = '?' . str_repeat(',?',count($itemids)-1);
+        $bindmarkers = '?' . str_repeat(',?', count($itemids)-1);
         $query .= " AND itemid IN ($bindmarkers)";
         foreach ($itemids as $itemid) {
             $bindvars[] = (int) $itemid;
@@ -96,15 +100,17 @@ function hitcount_userapi_getitems($args)
     }
 
     if (!empty($numitems) && !empty($startnum)) {
-        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1,$bindvars);
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
     } else {
-        $result = $dbconn->Execute($query,$bindvars);
+        $result = $dbconn->Execute($query, $bindvars);
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $hitlist = array();
     while (!$result->EOF) {
-        list($id,$hits) = $result->fields;
+        list($id, $hits) = $result->fields;
         $hitlist[$id] = $hits;
         $result->MoveNext();
     }
@@ -112,5 +118,3 @@ function hitcount_userapi_getitems($args)
 
     return $hitlist;
 }
-
-?>
