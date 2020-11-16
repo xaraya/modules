@@ -31,7 +31,7 @@ function release_userapi_getthemeids($args)
     }
     $exttypes= xarMod::apiFunc('release','user','getexttypes');
     $text = xarML('Theme');
-    $extid = array_search($text,$exttypes)
+    $extid = array_search($text,$exttypes);
     $releaseinfo = array();
 
     $releaseinfo = array();
@@ -82,7 +82,7 @@ function release_userapi_getthemeids($args)
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
-                                   'rstate'     => $rstate
+                                   'rstate'     => $rstate,
                                    'regtime'    => $regtime,
                                    'modified'   => $modified,
                                    'members'    => $members,

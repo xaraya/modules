@@ -30,7 +30,7 @@ function release_userapi_getmoduleids($args)
     }
     $exttypes= xarMod::apiFunc('release','user','getexttypes');
     $text = xarML('Module');
-    $extid = array_search($text,$exttypes)
+    $extid = array_search($text,$exttypes);
     $releaseinfo = array();
 
     // Security Check
