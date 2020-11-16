@@ -162,7 +162,9 @@ function xarpages_userapi_getpages($args)
         . (empty($count) ? ' ORDER BY tpages.xar_left ASC' : '');
 
     $result = $dbconn->execute($query, $bind);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     if ($count) {
         if ($result->EOF) {
@@ -177,7 +179,9 @@ function xarpages_userapi_getpages($args)
 
         // Get all the page type details.
         $pagetypes = xarModAPIfunc(
-            'xarpages', 'user', 'gettypes',
+            'xarpages',
+            'user',
+            'gettypes',
             array('key' => 'ptid', 'dd_flag' => $dd_flag)
         );
 
@@ -200,7 +204,7 @@ function xarpages_userapi_getpages($args)
             // To prevent broken trees, if a page is not assessible, prune
             // (ie discard) descendant pages of that page. Descendants will have
             // a left value between the left and right values of the
-            // inaccessible page. 
+            // inaccessible page.
 
             if (!empty($prune_left)) {
                 if ($left <= $prune_left) {
@@ -288,7 +292,7 @@ function xarpages_userapi_getpages($args)
             // Merge the DD data into the main page tree.
             // TODO: an easier way to merge arrays? This just seems clumsy.
             if (!empty($dd_data)) {
-                foreach($dd_data as $key => $data) {
+                foreach ($dd_data as $key => $data) {
                     $pages[$key]['dd'] = $data;
                 }
             }
@@ -297,5 +301,3 @@ function xarpages_userapi_getpages($args)
 
     return $pages;
 }
-
-?>

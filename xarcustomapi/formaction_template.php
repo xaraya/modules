@@ -23,10 +23,10 @@ function xarpages_customapi_formaction_template($args)
 }
 
 /* pageform validation function
-    note, we can assume that the objects checkInput method has already been called 
+    note, we can assume that the objects checkInput method has already been called
     to fetch the posted vars and property validation
     This can do function does further validation and processing.
-    note: return value 0 will go back to form for user to change input, 
+    note: return value 0 will go back to form for user to change input,
           return value 1 will continue to next page, we do if all is ok
 */
 
@@ -62,7 +62,7 @@ function pageform_formaction_template_validate(&$inobj)
 /* pageform processing function
     note, we can assume all input values are valid
 
-    note: return value 0 will go back to form for user to change input, 
+    note: return value 0 will go back to form for user to change input,
           return value 1 will continue to next page, we do if all is ok, and also on fatal errors
 */
 function pageform_formaction_template_process(&$inobj, &$outobj)
@@ -95,9 +95,9 @@ function pageform_formaction_template_process(&$inobj, &$outobj)
 
     // If invalid fields are detected then make sure we return to the current form.
     // You not want to do this if processing is a one-way street.
-    if (!$isvalid1 || !$isvalid2) $return = $return_invalid;
+    if (!$isvalid1 || !$isvalid2) {
+        $return = $return_invalid;
+    }
     
     return $return;
 }
-
-?>

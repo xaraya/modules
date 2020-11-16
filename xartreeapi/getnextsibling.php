@@ -42,5 +42,3 @@ function xarpages_treeapi_getnextsibling($args)
         return;
     }
 }
-
-?>

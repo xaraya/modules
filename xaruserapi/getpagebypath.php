@@ -37,7 +37,7 @@ function xarpages_userapi_getpagebypath($args)
         $fragment = preg_replace('/.*#/', '', $path);
         $path = preg_replace('/#.*/', '', $path);
     } else {
-        $fragment = NULL;
+        $fragment = null;
     }
 
     if (preg_match('/\?/', $path)) {
@@ -48,7 +48,7 @@ function xarpages_userapi_getpagebypath($args)
         // Expand the params into an array we can merge in later.
         $params = explode('&', $params);
         $params2 = array();
-        foreach($params as $param) {
+        foreach ($params as $param) {
             list($p, $v) = explode('=', $param);
             if (!empty($p) && isset($v)) {
                 $params2[$p] = $v;
@@ -82,7 +82,9 @@ function xarpages_userapi_getpagebypath($args)
     // TODO: if there is no path (i.e. just a page name), then we don't have
     // to worry about ancestors.
     $pages = xarModAPIfunc(
-        'xarpages', 'user', 'getpages',
+        'xarpages',
+        'user',
+        'getpages',
         array(
             'tree_contains_name' => $pagename,
             'tree_ancestors' => true,
@@ -97,8 +99,8 @@ function xarpages_userapi_getpagebypath($args)
 
     $depthstack = array();
     $pathstack = array();
-    foreach($pages as $pid => $page) {
-        // 
+    foreach ($pages as $pid => $page) {
+        //
         if (!empty($depthstack)) {
             while (!empty($depthstack) && end($depthstack) < $page['right']) {
                 array_pop($depthstack);
@@ -119,7 +121,7 @@ function xarpages_userapi_getpagebypath($args)
 
     // Scan the paths and see if the path we have been given matches.
     $page_id = 0;
-    foreach($all_paths as $pid => $this_path) {
+    foreach ($all_paths as $pid => $this_path) {
         $pages[$pid]['path'] = $this_path;
         if ($absolute && $this_path == $path) {
             // Found an exact match on an absolute path.
@@ -145,7 +147,7 @@ function xarpages_userapi_getpagebypath($args)
         // Create the URL for this page.
         // XML encoding is left at its default setting.
         $params['pid'] = $page_id;
-        $page['url'] = xarModURL('xarpages', 'user', 'display', $params, NULL, $fragment);
+        $page['url'] = xarModURL('xarpages', 'user', 'display', $params, null, $fragment);
 
         return $pages[$page_id];
     } else {
@@ -153,5 +155,3 @@ function xarpages_userapi_getpagebypath($args)
         return;
     }
 }
-
-?>

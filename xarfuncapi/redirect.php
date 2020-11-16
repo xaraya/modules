@@ -18,5 +18,3 @@ function xarpages_funcapi_redirect($args)
 
     return;
 }
-
-?>

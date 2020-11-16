@@ -17,5 +17,3 @@ function xarpages_admin_newpage($args)
 {
     return xarModFunc('xarpages', 'admin', 'modifypage', $args);
 }
-
-?>

@@ -28,7 +28,7 @@ function xarpages_userapi_transformhook($args)
         }
 
         // Loop through elements to transform.
-        foreach($extrainfo as $key => $text) {
+        foreach ($extrainfo as $key => $text) {
             if (empty($keys) || isset($keys[$key])) {
                 if ($transformref) {
                     $extrainfo[$key] = preg_replace('/(<a[^>]+href=")#/i', '$1'.$_SERVER['REQUEST_URI'].'#', $extrainfo[$key]);
@@ -43,5 +43,3 @@ function xarpages_userapi_transformhook($args)
 
     return $extrainfo;
 }
-
-?>

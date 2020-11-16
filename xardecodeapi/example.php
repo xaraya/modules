@@ -27,5 +27,3 @@ function xarpages_decodeapi_example($args)
 
     return $get;
 }
-
-?>

@@ -55,5 +55,3 @@ function xarpages_adminapi_getmenulinks()
 
     return $menulinks;
 }
-
-?>

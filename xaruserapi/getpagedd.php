@@ -7,7 +7,7 @@ function xarpages_userapi_getpagedd($args)
 {
     extract($args);
 
-    // TODO: Check if we are hooked to DD and that there are pages to 
+    // TODO: Check if we are hooked to DD and that there are pages to
     // fetch for, before attempting to fetch fields.
     if (empty($pages)) {
         return;
@@ -30,25 +30,25 @@ function xarpages_userapi_getpagedd($args)
 
     // Loop for each item type, fetching the item DD records for all items
     // within each item type in one go.
-    foreach($itemtypes as $itemtype => $items) {
+    foreach ($itemtypes as $itemtype => $items) {
         // Continue to the next page type if this one isn't hooked.
         if (!xarModIsHooked('dynamicdata', 'xarpages', $itemtype)) {
             continue;
         }
 
         $dd_data = xarModAPIfunc(
-            'dynamicdata', 'user', 'getitems',
+            'dynamicdata',
+            'user',
+            'getitems',
             array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($items))
         );
 
         // Copy the dd records into the result array, using the
         // same keys as the original items.
-        foreach($dd_data as $dd_key => $dd_items) {
+        foreach ($dd_data as $dd_key => $dd_items) {
             $result[$itemtypes[$itemtype][$dd_key]] = $dd_items;
         }
     }
 
     return($result);
 }
-
-?>

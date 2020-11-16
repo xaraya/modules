@@ -7,43 +7,43 @@
 class xarpages_customapi_multiform_master
 {
     // The form object.
-    var $formobject = NULL;
+    public $formobject = null;
 
     // The raw values from the form object.
     // Can be altered by the validation functions.
-    var $values = array();
+    public $values = array();
 
     // Invalids array (messages for each property that is invalid).
     // Can be altered by the validation functions.
-    var $invalids = array();
+    public $invalids = array();
 
     // Next page ID
     // This is the page the user should go to next, if the 'next' button
     // has been pressed.
-    var $next_page_pid = NULL;
+    public $next_page_pid = null;
 
     // New URL, which can be set by a processing function.
-    var $redirect_url = NULL;
+    public $redirect_url = null;
 
     // Work data array, used to pass information form one form to another,
     // through the processing functions (only available for writing to the
     // processing functions).
-    var $workdata = array();
+    public $workdata = array();
 
     // The accumulated form data so far.
     // Read-only for both validation and processing functions.
     // Can be referenced for inter-page validation rules.
-    var $formdata = array();
+    public $formdata = array();
 
     // Set if this is the last processing step.
     // After this step, the session will be cleared before jumping to the last page.
-    var $last_page = false;
+    public $last_page = false;
 
     // The reason for any errors or warnings returned by methods in this object.
-    var $reason_detail = '';
+    public $reason_detail = '';
 
     // Copy of the multiform key name
-    var $multiform_key_name = 'mk';
+    public $multiform_key_name = 'mk';
 
     /*
     * Constructor.
@@ -55,7 +55,7 @@ class xarpages_customapi_multiform_master
     * the processing functions.
     */
 
-    function xarpages_customapi_multiform_master($args)
+    public function xarpages_customapi_multiform_master($args)
     {
         // Store the object and extract its data into arrays.
         if (isset($args['formobject'])) {
@@ -64,13 +64,19 @@ class xarpages_customapi_multiform_master
         }
 
         // Store the workdata array.
-        if (isset($args['workdata'])) $this->workdata = $args['workdata'];
+        if (isset($args['workdata'])) {
+            $this->workdata = $args['workdata'];
+        }
 
         // Store the accumlative form data array.
-        if (isset($args['formdata'])) $this->formdata = $args['formdata'];
+        if (isset($args['formdata'])) {
+            $this->formdata = $args['formdata'];
+        }
 
         // Store the multiform_key_name.
-        if (isset($args['multiform_key_name'])) $this->multiform_key_name = $args['multiform_key_name'];
+        if (isset($args['multiform_key_name'])) {
+            $this->multiform_key_name = $args['multiform_key_name'];
+        }
 
         // Set a default error reason detail.
         $this->reason_detail = xarML('No reason given.');
@@ -78,28 +84,34 @@ class xarpages_customapi_multiform_master
 
     // Take the values and invalids from the object,
     // and place them into the object arrays
-    function extract_formobject()
+    public function extract_formobject()
     {
         $this->values = array();
         $this->invalids = array();
 
         if (!empty($this->formobject->properties)) {
-            foreach($this->formobject->properties as $name => $property) {
+            foreach ($this->formobject->properties as $name => $property) {
                 $this->values[$name] = $property->getValue();
-                if (!empty($property->invalid)) $this->invalids[$name] = $property->invalid;
+                if (!empty($property->invalid)) {
+                    $this->invalids[$name] = $property->invalid;
+                }
             }
         }
     }
 
     // Take the values and invalids from the object arrays,
     // and place them back into the form object.
-    function compact_formobject()
+    public function compact_formobject()
     {
         $property_names = array();
         if (!empty($this->formobject->properties)) {
-            foreach($this->formobject->properties as $name => $property) {
-                if (isset($this->invalids[$name])) $this->formobject->properties[$name]->invalid = $this->invalids[$name];
-                if (isset($this->values[$name])) {$this->formobject->properties[$name]->setValue($this->values[$name]);}
+            foreach ($this->formobject->properties as $name => $property) {
+                if (isset($this->invalids[$name])) {
+                    $this->formobject->properties[$name]->invalid = $this->invalids[$name];
+                }
+                if (isset($this->values[$name])) {
+                    $this->formobject->properties[$name]->setValue($this->values[$name]);
+                }
             }
         }
 
@@ -108,7 +120,7 @@ class xarpages_customapi_multiform_master
 
     // Convert a page name to a pid
     // Allows processing functions to jump to a page by name.
-    function pagename_to_pid($pagename)
+    public function pagename_to_pid($pagename)
     {
         $page = xarModAPIfunc('xarpages', 'user', 'getpage', array('name' => $pagename));
 
@@ -125,10 +137,10 @@ class xarpages_customapi_multiform_master
     // This clears out the session completely. It is called in the very last
     // processing step, before the user is redirected off to a 'thankyou'
     // page or some other location.
-    // Any array passed into the finish function, will be saved in the 
+    // Any array passed into the finish function, will be saved in the
     // session for use outside the form sequence. It allows, for example,
     // final confirmation details to be passed out to a 'thankyou' page.
-    function finish($args = array())
+    public function finish($args = array())
     {
         // Save any 'passdata'.
         // This can be retrieved *one time only* using the API function:
@@ -142,15 +154,17 @@ class xarpages_customapi_multiform_master
     }
 
     // Set the next page by pid
-    function set_next_page_pid($pid) {
+    public function set_next_page_pid($pid)
+    {
         $this->next_page_pid = $pid;
     }
 
     // Set the next page by its name
-    function set_next_page_name($name) {
+    public function set_next_page_name($name)
+    {
         $pid = $this->pagename_to_pid($name);
-        if (!empty($pid)) $this->next_page_pid = $pid;
+        if (!empty($pid)) {
+            $this->next_page_pid = $pid;
+        }
     }
 }
-
-?>

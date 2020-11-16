@@ -29,7 +29,9 @@ function xarpages_user_display($args)
     // TODO: allow the administrator to display other statuses.
     if (!empty($pid)) {
         $current_page = xarModAPIfunc(
-            'xarpages', 'user', 'getpage',
+            'xarpages',
+            'user',
+            'getpage',
             array('pid' => $pid, 'status' => 'ACTIVE,EMPTY')
         );
 
@@ -42,7 +44,9 @@ function xarpages_user_display($args)
 
             if (!empty($pid)) {
                 $current_page = xarModAPIfunc(
-                    'xarpages', 'user', 'getpage',
+                    'xarpages',
+                    'user',
+                    'getpage',
                     array('pid' => $pid, 'status' => 'ACTIVE')
                 );
             }
@@ -55,24 +59,31 @@ function xarpages_user_display($args)
     // has no privilege by virtue of an ancestor.
     $noprivspage = xarModGetVar('xarpages', 'noprivspage');
     if (!empty($current_page) && !xarSecurityCheck(
-        'ReadXarpagesPage', (empty($noprivspage) ? 1 : 0), 'Page',
-        $current_page['name'] . ':' . $current_page['pagetype']['name'], 'xarpages'
+        'ReadXarpagesPage',
+        (empty($noprivspage) ? 1 : 0),
+        'Page',
+        $current_page['name'] . ':' . $current_page['pagetype']['name'],
+        'xarpages'
     )) {
         // If we don't have a special page reserved for handling lack of
         // privileges, then return now with a generic error.
         // The security check would have been called up with error handling
         // enabled if there were a 'no privs' page.
-        if (empty($noprivspage)) {return;}
+        if (empty($noprivspage)) {
+            return;
+        }
 
         // No privileges to read this page.
         // Direct to a 'no privs' page, so an admin can notify the
         // visitor of restricted areas of the site.
-        $current_page = NULL;
+        $current_page = null;
         $pid = $noprivspage;
 
         if (!empty($pid)) {
             $current_page = xarModAPIfunc(
-                'xarpages', 'user', 'getpage',
+                'xarpages',
+                'user',
+                'getpage',
                 array('pid' => $pid, 'status' => 'ACTIVE')
             );
         }
@@ -86,7 +97,9 @@ function xarpages_user_display($args)
 
         if (!empty($pid)) {
             $current_page = xarModAPIfunc(
-                'xarpages', 'user', 'getpage',
+                'xarpages',
+                'user',
+                'getpage',
                 array('pid' => $pid, 'status' => 'ACTIVE')
             );
         }
@@ -103,7 +116,9 @@ function xarpages_user_display($args)
     // and EMPTY pages to every level of user.
     // Get the complete tree for this section of pages.
     $data = xarModAPIfunc(
-        'xarpages', 'user', 'getpagestree',
+        'xarpages',
+        'user',
+        'getpagestree',
         array(
             'tree_contains_pid' => $pid,
             'dd_flag' => true,
@@ -130,7 +145,7 @@ function xarpages_user_display($args)
     // an ACTIVE child.
     if ($data['pages'][$pid]['status'] == 'EMPTY') {
         if (!empty($data['pages'][$pid]['child_keys'])) {
-            foreach($data['pages'][$pid]['child_keys'] as $scan_key) {
+            foreach ($data['pages'][$pid]['child_keys'] as $scan_key) {
                 // If the page is displayable, then treat it as the new page.
                 if ($data['pages'][$scan_key]['status'] == 'ACTIVE') {
                     $pid = $data['pages'][$scan_key]['pid'];
@@ -160,7 +175,9 @@ function xarpages_user_display($args)
     // Add in flags etc. to the data indicating where the current
     // page is in relation to the page tree.
     $data = xarModAPIfunc(
-        'xarpages', 'user', 'addcurrentpageflags',
+        'xarpages',
+        'user',
+        'addcurrentpageflags',
         array('pagedata' => $data, 'pid' => $pid)
     );
 
@@ -182,19 +199,25 @@ function xarpages_user_display($args)
         $data['current_page']['dd']['itemtype'] = $data['current_page']['ptid'];
 
         $data['current_page']['dd'] = xarModCallHooks(
-            'item', 'transform', $pid, $data['current_page']['dd'], 'xarpages'
+            'item',
+            'transform',
+            $pid,
+            $data['current_page']['dd'],
+            'xarpages'
         );
     }
 
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
     // i.e. all ancestors and the current page layered over each other.
-    // TODO: we could save each step here in an array indexed by pid or key - 
+    // TODO: we could save each step here in an array indexed by pid or key -
     // just have a hunch it would be useful, but not sure how at this stage.
     $inherited = array();
     foreach ($data['ancestors'] as $ancestor) {
         $inherited = xarModAPIfunc(
-            'xarpages', 'user', 'arrayoverlay',
+            'xarpages',
+            'user',
+            'arrayoverlay',
             array($inherited, $ancestor)
         );
     }
@@ -228,7 +251,7 @@ function xarpages_user_display($args)
     if (!empty($inherited['function'])) {
         // Allow a pipeline of functions (e.g. func1;func2;func3)
         $functions = explode(';', $inherited['function']);
-        foreach($functions as $function) {
+        foreach ($functions as $function) {
             // Call up the function, suppressing errors in case it does not exist.
             $data2 = xarModAPIfunc('xarpages', 'func', $function, $data, false);
 
@@ -269,7 +292,9 @@ function xarpages_user_display($args)
     $item['itemtype'] = $data['current_page']['ptid'];
     $item['itemid'] = $pid;
     $item['returnurl'] = xarModURL(
-        'xarpages','user','display',
+        'xarpages',
+        'user',
+        'display',
         array('pid' => $pid)
     );
     // All hook data in the 'hooks' element.
@@ -286,9 +311,10 @@ function xarpages_user_display($args)
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
     return xarTplModule(
-        'xarpages', 'page', $data['inherited']['pagetype']['name'], $data,
+        'xarpages',
+        'page',
+        $data['inherited']['pagetype']['name'],
+        $data,
         ($data['inherited']['template'] == 'default' ? '' : $data['inherited']['template'])
     );
 }
-
-?>

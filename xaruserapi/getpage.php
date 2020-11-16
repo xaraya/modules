@@ -18,5 +18,3 @@ function xarpages_userapi_getpage($args)
         return reset($pages);
     }
 }
-
-?>

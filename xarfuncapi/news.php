@@ -5,7 +5,9 @@
 function xarpages_funcapi_news($args)
 {
     // The articles publication type is required, and is selected by the page.
-    if (empty($args['current_page']['dd']['pubtype'])) return $args;
+    if (empty($args['current_page']['dd']['pubtype'])) {
+        return $args;
+    }
 
     // There may be multiple publication types, as a comma-separated list.
     // The articles API can accept such a list directly.
@@ -32,12 +34,18 @@ function xarpages_funcapi_news($args)
     xarVarFetch('archive', 'str', $archive, '', XARVAR_NOT_REQUIRED);
     if (!empty($archive)) {
         // Add in an '-' characters if they have been left out.
-        if (preg_match('/^\d{6}$/', $archive)) $archive = substr($archive, 0, 4) . '-' . substr($archive, 4, 2);
-        if (preg_match('/^\d{8}$/', $archive)) $archive = substr($archive, 0, 4) . '-' . substr($archive, 4, 2) . '-' . substr($archive, 6, 2);
+        if (preg_match('/^\d{6}$/', $archive)) {
+            $archive = substr($archive, 0, 4) . '-' . substr($archive, 4, 2);
+        }
+        if (preg_match('/^\d{8}$/', $archive)) {
+            $archive = substr($archive, 0, 4) . '-' . substr($archive, 4, 2) . '-' . substr($archive, 6, 2);
+        }
 
         // Check the format passed in. YYYY, YYYY-MM or YYYY-MM-DD, defaulting to this month if invalid.
         // TODO: check valid ranges have been supplied, i.e. that the result is possibly a valid date.
-        if (!preg_match('/^\d{4}(|-\d{2}|-\d{2}-\d{2})$/', $archive)) $archive = date('Y-m');
+        if (!preg_match('/^\d{4}(|-\d{2}|-\d{2}-\d{2})$/', $archive)) {
+            $archive = date('Y-m');
+        }
     }
 
 
@@ -100,21 +108,37 @@ function xarpages_funcapi_news($args)
     
     // General sort methods will be what articles supports (practically just date and title)
     xarVarFetch('sort', 'str', $sort, '', XARVAR_NOT_REQUIRED);
-    if (empty($sort)) $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
+    if (empty($sort)) {
+        $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
+    }
 
     // Put all the category ids into the cids array.
-    if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
+    if (!empty($cid) && !in_array($cid, $cids)) {
+        array_push($cids, $cid);
+    }
 
     // Set the URL Params array.
     $url_params = array();
 
     // Add in some (i.e. all) optional values if they are not set to their defaults.
-    if ($startnum > 1) $url_params['startnum'] = $startnum;
-    if ($numitems != $settings['itemsperpage']) $url_params['numitems'] = $numitems;
-    if (!empty($q)) $url_params['q'] = $q;
-    if (!empty($cids)) $url_params['cids'] = $cids;
-    if (!empty($aid)) $url_params['aid'] = $aid;
-    if (!empty($archive)) $url_params['archive'] = $archive;
+    if ($startnum > 1) {
+        $url_params['startnum'] = $startnum;
+    }
+    if ($numitems != $settings['itemsperpage']) {
+        $url_params['numitems'] = $numitems;
+    }
+    if (!empty($q)) {
+        $url_params['q'] = $q;
+    }
+    if (!empty($cids)) {
+        $url_params['cids'] = $cids;
+    }
+    if (!empty($aid)) {
+        $url_params['aid'] = $aid;
+    }
+    if (!empty($archive)) {
+        $url_params['archive'] = $archive;
+    }
 
     // This flag is set, and passed into the template, if the user is doing any
     // kind of searching, i.e. is not on the first page, is selecting a category
@@ -189,7 +213,7 @@ function xarpages_funcapi_news($args)
     // Get the details of all the categories selected in these articles.
     // Gather a list of unique category IDs.
     $all_cat_cids = array();
-    foreach($articles as $cid_article) {
+    foreach ($articles as $cid_article) {
         if (!empty($cid_article['cids']) && is_array($cid_article['cids'])) {
             $all_cat_cids = array_merge($all_cat_cids, $cid_article['cids']);
         }
@@ -200,9 +224,9 @@ function xarpages_funcapi_news($args)
         $all_cats = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids' => $all_cat_cids));
 
         // Distribute the category details back to the items.
-        foreach($articles as $cid_article_key => $cid_article) {
+        foreach ($articles as $cid_article_key => $cid_article) {
             if (!empty($cid_article['cids']) && is_array($cid_article['cids'])) {
-                foreach($cid_article['cids'] as $article_cid) {
+                foreach ($cid_article['cids'] as $article_cid) {
                     $articles[$cid_article_key]['categories'][$article_cid] = $all_cats[$article_cid];
                 }
             }
@@ -241,7 +265,9 @@ function xarpages_funcapi_news($args)
             // CHECKME: does xarModIsHooked accept an array of ptids?
             if (xarModIsHooked('keywords', 'articles', $ptids)) {
                 $keyword_words = xarModAPIfunc(
-                    'keywords', 'user', 'getwords',
+                    'keywords',
+                    'user',
+                    'getwords',
                     array('itemid' => $aid, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
                 );
                 //var_dump($keyword_words);
@@ -252,15 +278,17 @@ function xarpages_funcapi_news($args)
                     $keyword_index = array();
 
                     // TODO: safety check for cases where articles etc don't exist
-                    foreach($keyword_words as $keyword_word) {
+                    foreach ($keyword_words as $keyword_word) {
                         // Get the item IDs that share this module's keywords
                         $keyword_items = xarModAPIfunc(
-                            'keywords', 'user', 'getitems',
+                            'keywords',
+                            'user',
+                            'getitems',
                             array('keyword' => $keyword_word, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
                         );
                         if (!empty($keyword_items)) {
                             $keywords[$keyword_word] = $keyword_items;
-                            foreach($keyword_items as $key => $keyword_item) {
+                            foreach ($keyword_items as $key => $keyword_item) {
                                 // Add the item ID to the list for fetching the articles.
                                 $word_ids[$keyword_item['itemid']] = $keyword_item['itemid'];
                                 // Index this item so we know where to put the article details.
@@ -276,14 +304,16 @@ function xarpages_funcapi_news($args)
 
                         // If we have keywords, go grab the articles - just need titles.
                         $keyword_articles = xarModAPIfunc(
-                            'articles', 'user', 'getall',
+                            'articles',
+                            'user',
+                            'getall',
                             array('aids' => $word_ids, 'status' => $status, 'fields' => array('aid','title'), 'enddate' => time())
                         );
 
-                        foreach($keyword_articles as $key => $keyword_article) {
+                        foreach ($keyword_articles as $key => $keyword_article) {
                             // Merge the article item in with the keyword details.
                             if (isset($keyword_index[$keyword_article['aid']])) {
-                                foreach($keyword_index[$keyword_article['aid']] as $keyX => $dummy) {
+                                foreach ($keyword_index[$keyword_article['aid']] as $keyX => $dummy) {
                                     $keyword_index[$keyword_article['aid']][$keyX] += $keyword_article;
                                 }
                             }
@@ -292,28 +322,30 @@ function xarpages_funcapi_news($args)
                         // Put the keywords list onto the article.
                         $article['keywords'] = $keywords;
                     }
-
                 }
             }
 
             // Perform other required hooks (e.g. hitcount) against the article.
             if (!empty($article)) {
                 $article['hooks'] = xarModCallHooks(
-                    'item', 'display', $aid,
+                    'item',
+                    'display',
+                    $aid,
                     array(
                         'module' => 'articles',
                         'itemtype' => $article['pubtypeid'],
                         'itemid' => $aid,
                         'title' => $article['title'],
                         'returnurl' => xarServerGetCurrentURL() //xarModURL('articles', 'user', 'display', array('ptid' => $ptid, 'aid' => $aid))
-                    ), 'articles'
+                    ),
+                    'articles'
                 );
             }
 
             // If the article is in the list of articles, then we can provide links
             // to next/previous and other articles.
             $i = 0;
-            foreach($articles as $item) {
+            foreach ($articles as $item) {
                 if ($item['aid'] == $aid) {
                     // This is the one.
                     // Easiest way is to fetch three articles and get their IDs.
@@ -352,7 +384,9 @@ function xarpages_funcapi_news($args)
                         if ($article_number == 1) {
                             // No previous (next only)
                             $next_startnum = $startnum;
-                            if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
+                            if (($i + 1) == $numitems) {
+                                $next_startnum = $startnum + $numitems;
+                            }
                             $next_article = array_pop($range_articles);
                             $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                             $prev_article = array();
@@ -362,7 +396,9 @@ function xarpages_funcapi_news($args)
                             $next_article = array();
                             $next_url = '';
                             $prev_startnum = $startnum;
-                            if ($i == 0) $prev_startnum = $startnum - $numitems;
+                            if ($i == 0) {
+                                $prev_startnum = $startnum - $numitems;
+                            }
                             $prev_article = array_shift($range_articles);
                             $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
                         }
@@ -370,8 +406,12 @@ function xarpages_funcapi_news($args)
                         // Both next and previous
                         $next_startnum = $startnum;
                         $prev_startnum = $startnum;
-                        if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
-                        if ($i == 0) $prev_startnum = $startnum - $numitems;
+                        if (($i + 1) == $numitems) {
+                            $next_startnum = $startnum + $numitems;
+                        }
+                        if ($i == 0) {
+                            $prev_startnum = $startnum - $numitems;
+                        }
                         $next_article = array_pop($range_articles);
                         $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                         $prev_article = array_shift($range_articles);
@@ -393,7 +433,7 @@ function xarpages_funcapi_news($args)
         // Apply required transform hooks to summaries.
         // Only do the transform if there are some fields we want to transform.
         if (!empty($transform_fields_summary)) {
-            foreach($articles as $t_key => $t_article) {
+            foreach ($articles as $t_key => $t_article) {
                 $t_article['transform'] = $transform_fields_summary;
                 $t_article['itemtype'] = $t_article['pubtypeid'];
                 $t_article['itemid'] = $t_article['aid'];
@@ -425,7 +465,7 @@ function xarpages_funcapi_news($args)
 
         $archive_data['years'] = array();
 
-        foreach($month_counts as $month_key => $month_count) {
+        foreach ($month_counts as $month_key => $month_count) {
             $loop_year = (int)substr($month_key, 0, 4);
             $loop_month = (int)substr($month_key, 5, 2);
 
@@ -435,11 +475,14 @@ function xarpages_funcapi_news($args)
                 $archive_data['years'][$loop_year]['months'] = array();
 
                 // Fill in the months so we have an empty framework.
-                for($i=1; $i<=12; $i++) $archive_data['years'][$loop_year]['months'][$i] = array();
+                for ($i=1; $i<=12; $i++) {
+                    $archive_data['years'][$loop_year]['months'][$i] = array();
+                }
             }
 
             $archive_data['years'][$loop_year]['months'][$loop_month]['count'] = $month_count;
-            $archive_data['years'][$loop_year]['months'][$loop_month]['archive'] = sprintf('%04d-%02d', $loop_year, $loop_month);;
+            $archive_data['years'][$loop_year]['months'][$loop_month]['archive'] = sprintf('%04d-%02d', $loop_year, $loop_month);
+            ;
             $archive_data['years'][$loop_year]['count'] += $month_count;
         }
 
@@ -471,5 +514,3 @@ function xarpages_funcapi_news($args)
 
     return $args;
 }
-
-?>

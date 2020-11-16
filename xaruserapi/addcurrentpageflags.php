@@ -19,7 +19,9 @@ function xarpages_userapi_addcurrentpageflags($args)
 {
     extract($args);
 
-    if (empty($pagedata) || empty($pid) || !isset($pagedata['pages'][$pid])) {return;}
+    if (empty($pagedata) || empty($pid) || !isset($pagedata['pages'][$pid])) {
+        return;
+    }
 
     if (empty($root_pids) || !is_array($root_pids)) {
         $root_pids = array();
@@ -76,7 +78,7 @@ function xarpages_userapi_addcurrentpageflags($args)
         // Reference the page. Note we are working back down the tree
         // towards the root page, so will unshift each page to the front
         // of the ancestors array.
-        array_unshift($pagedata['ancestors'], NULL);
+        array_unshift($pagedata['ancestors'], null);
         $pagedata['ancestors'][0] =& $pagedata['pages'][$this_pid];
 
         // Get the parent page.
@@ -135,10 +137,10 @@ function xarpages_userapi_addcurrentpageflags($args)
     // Go through each ancestor and flag up the siblings of those ancestors.
     // They will be all pages that are children of the ancestors, assuming the
     // root ancestor does not have any siblings.
-    foreach($pagedata['ancestors'] as $key => $value) {
+    foreach ($pagedata['ancestors'] as $key => $value) {
         if (isset($value['child_keys']) && is_array($value['child_keys'])) {
             //var_dump($value['child_keys']);
-            foreach($value['child_keys'] as $value2) {
+            foreach ($value['child_keys'] as $value2) {
                 $pagedata['pages'][$value2]['is_ancestor_sibling'] = true;
             }
         }
@@ -149,5 +151,3 @@ function xarpages_userapi_addcurrentpageflags($args)
 
     return $pagedata;
 }
-
-?>

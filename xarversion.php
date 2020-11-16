@@ -42,4 +42,3 @@ if (false) {
     xarML('Xarpages');
     xarML('Static pages administration');
 }
-?>

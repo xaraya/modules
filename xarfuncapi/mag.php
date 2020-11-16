@@ -21,7 +21,7 @@ function xarpages_funcapi_mag($args)
     // (magazine ID) DD property.
     if (!empty($args['current_page']['dd']['mid'])) {
         $mid = $args['current_page']['dd']['mid'];
-    } elseif(!empty($args['current_page']['dd']['body']) && is_numeric($args['current_page']['dd']['body'])) {
+    } elseif (!empty($args['current_page']['dd']['body']) && is_numeric($args['current_page']['dd']['body'])) {
         // If just using a standard 'html' page type, then the mag ID can be put into the body.
         $mid = (int)$args['current_page']['dd']['body'];
     }
@@ -39,5 +39,3 @@ function xarpages_funcapi_mag($args)
 
     return $args;
 }
-
-?>

@@ -47,7 +47,7 @@ function xarpages_funcapi_capture_person_file($args)
     $details['http_user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 
     // Remove any '|'s or non-printable characters.
-    foreach($details as $key => $value) {
+    foreach ($details as $key => $value) {
         $value = str_replace(array('|', '"'), '', $value);
         $details[$key] = preg_replace(array('/[\\ca-\\cz\\x7f]/'), '', $value);
     }
@@ -80,5 +80,3 @@ function xarpages_funcapi_capture_person_file($args)
         }
     }
 }
-
-?>

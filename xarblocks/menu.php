@@ -136,7 +136,9 @@ function xarpages_menublock_display($blockinfo)
     }
 
     // If there is no pid, then we have no page or tree to display.
-    if (empty($pid)) {return;}
+    if (empty($pid)) {
+        return;
+    }
 
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
@@ -158,7 +160,9 @@ function xarpages_menublock_display($blockinfo)
     if (empty($pagedata)) {
         // Get the page data here now.
         $pagedata = xarModAPIfunc(
-            'xarpages', 'user', 'getpagestree',
+            'xarpages',
+            'user',
+            'getpagestree',
             array(
                 'tree_contains_pid' => $pid,
                 'dd_flag' => true,
@@ -169,7 +173,9 @@ function xarpages_menublock_display($blockinfo)
 
         // If $pagedata is empty, then we have an invalid ID or
         // no permissions. Return NULL if so, suppressing the block.
-        if (empty($pagedata['pages'])) {return;}
+        if (empty($pagedata['pages'])) {
+            return;
+        }
 
         // Cache the data now we have gone to the trouble of fetching the tree.
         // Only cache it if the cache is empty to start with. We only cache a complete
@@ -182,7 +188,7 @@ function xarpages_menublock_display($blockinfo)
 
 
     // If the user has set a 'start level' then make sure the page sits at that level or above.
-    // TODO: take into account the options that allow default pages to be displayed when 
+    // TODO: take into account the options that allow default pages to be displayed when
     // the current page does not fit into the specified range.
     // If the start level is greater than 0, then work back through ancestors to find
     // the implied root page.
@@ -198,7 +204,9 @@ function xarpages_menublock_display($blockinfo)
             // and add it to the root pids list.
             $scan_pid = $pid;
             while (true) {
-                if (empty($pagedata['pages'][$scan_pid]['parent_pid'])) break;
+                if (empty($pagedata['pages'][$scan_pid]['parent_pid'])) {
+                    break;
+                }
                 if ($pagedata['pages'][$scan_pid]['depth'] < $vars['start_level']) {
                     $root_pids[] = $scan_pid;
                     break;
@@ -207,7 +215,9 @@ function xarpages_menublock_display($blockinfo)
             }
 
             // If the root pid has no children, we should hide the block.
-            if (!empty($vars['multi_homed']) && empty($pagedata['pages'][$scan_pid]['child_keys'])) return;
+            if (!empty($vars['multi_homed']) && empty($pagedata['pages'][$scan_pid]['child_keys'])) {
+                return;
+            }
         }
     }
 
@@ -220,7 +230,7 @@ function xarpages_menublock_display($blockinfo)
     // TODO: Make sure we only prune above the root nodes. Trust the user for now to do that.
     //$prune_pids = array(15);
     if (!empty($prune_pids)) {
-        foreach($prune_pids as $prune_pid) {
+        foreach ($prune_pids as $prune_pid) {
             if (isset($pagedata['pages'][$prune_pid])) {
                 // The page exists.
                 // Move the current page if necessary.
@@ -241,7 +251,9 @@ function xarpages_menublock_display($blockinfo)
     // Here we add the various flags to the pagedata, based on
     // the current page.
     $pagedata = xarModAPIfunc(
-        'xarpages', 'user', 'addcurrentpageflags',
+        'xarpages',
+        'user',
+        'addcurrentpageflags',
         array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
     );
 
@@ -266,5 +278,3 @@ function xarpages_menublock_display($blockinfo)
 
     return $blockinfo;
 }
-
-?>

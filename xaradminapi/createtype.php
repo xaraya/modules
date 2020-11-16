@@ -42,7 +42,7 @@ function xarpages_adminapi_createtype($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('desc') as $colname) {
+    foreach (array('desc') as $colname) {
         if (isset($$colname)) {
             $bind[] = (string)$$colname;
             $cols[] = 'xar_' . $colname;
@@ -62,7 +62,9 @@ function xarpages_adminapi_createtype($args)
         . ' VALUES(?' . str_repeat(',?', count($cols)-1) . ')';
 
     $result = $dbconn->execute($query, $bind);
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
 
     $ptid = $dbconn->PO_Insert_ID($tablename, 'xar_ptid');
 
@@ -71,11 +73,13 @@ function xarpages_adminapi_createtype($args)
     $files = array();
     $basedir = 'modules/xarpages/xardata';
     $xml_files = xarModAPIFunc(
-        'dynamicdata', 'admin', 'browse',
+        'dynamicdata',
+        'admin',
+        'browse',
         array('basedir' => $basedir, 'filetype' => 'xml')
     );
     if (!empty($xml_files)) {
-        foreach($xml_files as $xml_file) {
+        foreach ($xml_files as $xml_file) {
             $type_name = preg_replace('/-def\.xml$/', '', $xml_file);
             $files[$type_name] = $xml_file;
         }
@@ -83,7 +87,9 @@ function xarpages_adminapi_createtype($args)
         if (isset($files[$name])) {
             // There is an XML file to import.
             $objectid = xarModAPIFunc(
-                'dynamicdata', 'util', 'import',
+                'dynamicdata',
+                'util',
+                'import',
                 array('file' => $basedir . '/' . $files[$name], 'keepitemid' => false)
             );
 
@@ -98,7 +104,10 @@ function xarpages_adminapi_createtype($args)
                 // TODO: either this needs to be done automatically when the object is
                 // updated, or the need for keeping an itemtype on the properties should
                 // be removed.
-                xarModAPIFunc('dynamicdata', 'admin', 'syncprops',
+                xarModAPIFunc(
+                    'dynamicdata',
+                    'admin',
+                    'syncprops',
                     array(
                         'objectid' => $objectid,
                         'moduleid' => xarModGetIDFromName('xarpages'),
@@ -119,7 +128,9 @@ function xarpages_adminapi_createtype($args)
     if (!empty($type_itemtype)) {
         // Create hooks.
         xarModCallHooks(
-            'item', 'create', $ptid,
+            'item',
+            'create',
+            $ptid,
             array(
                 'itemtype' => $type_itemtype,
                 'module' => 'xarpages',
@@ -130,5 +141,3 @@ function xarpages_adminapi_createtype($args)
 
     return $ptid;
 }
-
-?>

@@ -19,7 +19,9 @@ function xarpages_admin_modifyconfig($args)
     $data = array();
 
     // Need admin priv to modify config.
-    if (!xarSecurityCheck('AdminXarpagesPage')) return;
+    if (!xarSecurityCheck('AdminXarpagesPage')) {
+        return;
+    }
 
     // Get the tree of all pages.
     $data['tree'] = xarModAPIfunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
@@ -52,12 +54,16 @@ function xarpages_admin_modifyconfig($args)
         // Form has been submitted.
 
         // Confirm authorisation code.
-        if (!xarSecConfirmAuthKey()) {return;}
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
 
         // Get the special pages.
-        foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
+        foreach (array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
             unset($special_id);
-            if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
             xarModSetVar('xarpages', $special_name, $special_id);
 
             // Save value for redisplaying in the form.
@@ -98,12 +104,14 @@ function xarpages_admin_modifyconfig($args)
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
     $confighooks = xarModCallHooks(
-        'module', 'modifyconfig', 'xarpages',
+        'module',
+        'modifyconfig',
+        'xarpages',
         array('module' => 'xarpages', 'itemtype' => $type_itemtype)
     );
 
     // Clear out any empty hooks.
-    foreach($confighooks as $key => $confighook) {
+    foreach ($confighooks as $key => $confighook) {
         if (trim($confighook) == '') {
             unset($confighooks[$key]);
         } else {
@@ -114,5 +122,3 @@ function xarpages_admin_modifyconfig($args)
 
     return $data;
 }
-
-?>

@@ -12,5 +12,3 @@ function xarpages_userapi_gettype($args)
 
     return(reset($types));
 }
-
-?>

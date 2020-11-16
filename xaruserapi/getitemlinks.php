@@ -24,7 +24,9 @@ function xarpages_userapi_getitemlinks($args)
     }
 
     $pages = xarModAPIFunc(
-        'xarpages','user','getpages',
+        'xarpages',
+        'user',
+        'getpages',
         array(
             'itemtype' => $itemtype,
             'pids'     => $itemids,
@@ -34,14 +36,16 @@ function xarpages_userapi_getitemlinks($args)
     );
 
     if (empty($pages)) {
-       return $itemlinks;
+        return $itemlinks;
     }
 
     // If we didn't have a list of itemids, return all the pages we found.
     if (empty($itemids)) {
         foreach ($pages as $page) {
             $itemid = $page['pid'];
-            if (!isset($page[$field])) continue;
+            if (!isset($page[$field])) {
+                continue;
+            }
             $itemlinks[$itemid] = array(
                 'url' => xarModURL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
                 'title' => xarML('Display Page'),
@@ -57,9 +61,13 @@ function xarpages_userapi_getitemlinks($args)
         $itemid2key[$page['pid']] = $key;
     }
     foreach ($itemids as $itemid) {
-        if (!isset($itemid2key[$itemid])) continue;
+        if (!isset($itemid2key[$itemid])) {
+            continue;
+        }
         $page = $pages[$itemid2key[$itemid]];
-        if (!isset($page[$field])) continue;
+        if (!isset($page[$field])) {
+            continue;
+        }
         $itemlinks[$itemid] = array(
             'url'   => xarModURL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
             'title' => xarML('Display Page'),
@@ -69,5 +77,3 @@ function xarpages_userapi_getitemlinks($args)
 
     return $itemlinks;
 }
-
-?>

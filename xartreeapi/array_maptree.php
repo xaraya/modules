@@ -159,7 +159,6 @@ function xarpages_treeapi_array_maptree($items)
                 if ($current_depth == $prev_depth) {
                     $matrix[($current_depth - 1)] = _XARPAGES_T_CONNECTOR;
                 }
-
             }
 
             // Once we've got the T and L connectors done, we need to go through
@@ -208,9 +207,9 @@ function xarpages_treeapi_array_maptree($items)
  * @todo Wouldn't it be nice to be able to join these images together into a single image for each page and cache them?
  */
 
-function xarpages_treeapi_array_image_substitution($node) 
+function xarpages_treeapi_array_image_substitution($node)
 {
-    static $image_list = NULL;
+    static $image_list = null;
 
     if (!isset($image_list)) {
         $style = 'class="xar-xarpages-tree"';
@@ -238,5 +237,3 @@ function xarpages_treeapi_array_image_substitution($node)
         return '';
     }
 }
-
-?>

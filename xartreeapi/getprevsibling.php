@@ -42,5 +42,3 @@ function xarpages_treeapi_getprevsibling($args)
         return;
     }
 }
-
-?>

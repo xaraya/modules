@@ -14,13 +14,13 @@ function xarpages_userapi_getitemfields($args)
 
     $itemfields = array();
 
-/*
-    $itemfields['pid']  = array(
-        'name'  => 'pid',
-        'label' => xarML('Page ID'),
-        'type'  => 'itemid'
-    );
-*/
+    /*
+        $itemfields['pid']  = array(
+            'name'  => 'pid',
+            'label' => xarML('Page ID'),
+            'type'  => 'itemid'
+        );
+    */
 
     $itemfields['name'] = array(
         'name'  => 'name',
@@ -51,5 +51,3 @@ function xarpages_userapi_getitemfields($args)
 
     return $itemfields;
 }
-
-?>

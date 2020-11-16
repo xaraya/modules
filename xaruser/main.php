@@ -10,5 +10,3 @@ function xarpages_user_main()
         return xarModFunc('xarpages', 'user', 'display', array('pid' => $pid));
     }
 }
-
-?>

@@ -11,7 +11,7 @@
 
 function xarpages_userapi_gettypes($args)
 {
-    static $static_all_pagetypes = NULL;
+    static $static_all_pagetypes = null;
 
     extract($args);
 
@@ -55,7 +55,9 @@ function xarpages_userapi_gettypes($args)
         . ' ORDER BY xar_name ASC';
 
     $result = $dbconn->execute($query, $bind);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $types = array();
     $itemtype = 0;
@@ -90,7 +92,7 @@ function xarpages_userapi_gettypes($args)
     if ($dd_flag && !empty($itemtype) && xarModIsHooked('dynamicdata', 'xarpages', $itemtype)) {
         // Collect the item IDs together
         $item_ids = array();
-        foreach($types as $type_key => $type) {
+        foreach ($types as $type_key => $type) {
             if ($type['name'][0] != '@') {
                 $item_ids[$type['ptid']] = $type_key;
             }
@@ -99,13 +101,15 @@ function xarpages_userapi_gettypes($args)
         // Fetch the DD fields for all page types in one go.
         if (!empty($item_ids)) {
             $dd_data = xarModAPIfunc(
-                'dynamicdata', 'user', 'getitems',
+                'dynamicdata',
+                'user',
+                'getitems',
                 array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($item_ids))
             );
 
             // Move the DD fields to the types array.
             if (is_array($dd_data)) {
-                foreach($dd_data as $dd_key => $dd_items) {
+                foreach ($dd_data as $dd_key => $dd_items) {
                     $types[$item_ids[$dd_key]]['dd'] = $dd_items;
                 }
             }
@@ -119,5 +123,3 @@ function xarpages_userapi_gettypes($args)
 
     return($types);
 }
-
-?>

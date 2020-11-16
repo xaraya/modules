@@ -18,16 +18,20 @@ function xarpages_admin_viewtypes($args)
     extract($args);
 
     // Security check
-    if (!xarSecurityCheck('EditXarpagesPage', 1)) {return false;}
+    if (!xarSecurityCheck('EditXarpagesPage', 1)) {
+        return false;
+    }
 
     $types = xarModAPIFunc(
-        'xarpages', 'user', 'gettypes',
+        'xarpages',
+        'user',
+        'gettypes',
         array('key' => 'index', 'dd_flag' => false)
     );
 
-    if (empty($types)) $types = array();
+    if (empty($types)) {
+        $types = array();
+    }
 
     return array('types' => $types);
 }
-
-?>

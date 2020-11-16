@@ -23,8 +23,7 @@ function xarpages_userapi_arrayoverlay($args)
         return $array_top;
     }
 
-    foreach ($array_top AS $key_top => $value_top)
-    {
+    foreach ($array_top as $key_top => $value_top) {
         if ($value_top != '' || !isset($array_base[$key_top])) {
             if (!isset($array_base[$key_top])) {
                 $array_base[$key_top] = $value_top;
@@ -36,5 +35,3 @@ function xarpages_userapi_arrayoverlay($args)
 
     return $array_base;
 }
-
-?>

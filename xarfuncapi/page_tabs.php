@@ -28,8 +28,8 @@ function xarpages_funcapi_page_tabs($args)
 
     // We operate on the 'body' DD field only.
     if (empty($args['current_page']['dd'][$c_body_name])) {
-       // No body field is available.
-       return;
+        // No body field is available.
+        return;
     }
     $body =& $args['current_page']['dd'][$c_body_name];
 
@@ -64,7 +64,9 @@ function xarpages_funcapi_page_tabs($args)
     // TODO: allow different temlates to be used.
     // Options could be set using further comments.
     $new_body = xarTplModule(
-        'xarpages', 'func', $c_template,
+        'xarpages',
+        'func',
+        $c_template,
         array(
             'sections' => $sections,
             'section_count' => $section_count,
@@ -82,5 +84,3 @@ function xarpages_funcapi_page_tabs($args)
 
     return $args;
 }
-
-?>

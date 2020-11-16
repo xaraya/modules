@@ -108,7 +108,9 @@ function xarpages_crumbblock_display($blockinfo)
     }
 
     // If there is no pid, then we have no page or tree to display.
-    if (empty($pagedata)) {return;}
+    if (empty($pagedata)) {
+        return;
+    }
     
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
@@ -126,7 +128,9 @@ function xarpages_crumbblock_display($blockinfo)
     // Here we add the various flags to the pagedata, based on
     // the current page.
     $pagedata = xarModAPIfunc(
-        'xarpages', 'user', 'addcurrentpageflags',
+        'xarpages',
+        'user',
+        'addcurrentpageflags',
         array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
     );
 
@@ -146,5 +150,3 @@ function xarpages_crumbblock_display($blockinfo)
 
     return $blockinfo;
 }
-
-?>

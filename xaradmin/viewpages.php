@@ -28,7 +28,9 @@ function xarpages_admin_viewpages($args)
     xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
 
     $data = xarModAPIFunc(
-        'xarpages', 'user', 'getpagestree',
+        'xarpages',
+        'user',
+        'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
     );
 
@@ -47,7 +49,7 @@ function xarpages_admin_viewpages($args)
     // AddPage - new pages can be added (further checks may limit it to certain page types)
     // DeletePage - page can be renamed, moved and deleted
     if (!empty($data['pages'])) {
-        foreach($data['pages'] as $key => $page) {
+        foreach ($data['pages'] as $key => $page) {
             if (xarSecurityCheck('ModerateXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
                 $data['pages'][$key]['moderate_allowed'] = true;
             }
@@ -91,7 +93,7 @@ function xarpages_admin_viewpages($args)
             ksort($children[$parent], SORT_NUMERIC);
         }
         if ($parent == 0) {
-            if(isset($children[$pid]) && count($children[$pid]) > 0) {
+            if (isset($children[$pid]) && count($children[$pid]) > 0) {
                 ksort($children[$pid], SORT_NUMERIC);
                 $tmppage['children'] = $children[$pid];
             }
@@ -109,5 +111,3 @@ function xarpages_admin_viewpages($args)
 
     return $data;
 }
-
-?>

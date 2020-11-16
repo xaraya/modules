@@ -30,5 +30,3 @@ function xarpages_encodeapi_example($args)
         'get' => $get
     );
 }
-
-?>

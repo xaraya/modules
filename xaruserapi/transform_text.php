@@ -30,7 +30,9 @@ function xarpages_userapi_transform_text($args)
     // keeps code size down in templates.
     if (isset($text) && is_string($text)) {
         $text_in = $text;
-        if (!isset($format) || $format != 'html') $format = 'text';
+        if (!isset($format) || $format != 'html') {
+            $format = 'text';
+        }
     }
     if (isset($html) && is_string($html)) {
         $text_in = $html;
@@ -41,7 +43,9 @@ function xarpages_userapi_transform_text($args)
     $text_in = str_replace(array("\n\r", "\r\n"), "\n", $text_in);
 
     // Check if we need to limit the word count.
-    if (!empty($maxwords) && is_numeric($maxwords) && $maxwords > 0 && str_word_count($text_in) > $maxwords) $reduce_words = true;
+    if (!empty($maxwords) && is_numeric($maxwords) && $maxwords > 0 && str_word_count($text_in) > $maxwords) {
+        $reduce_words = true;
+    }
 
     if ((!empty($format) && $format == 'text') || !empty($reduce_words)) {
         // Transform to text - strip out HTML
@@ -82,7 +86,9 @@ function xarpages_userapi_transform_text($args)
                 // #(3) - (maximum) words display
 
                 // Message parameter can be passed in.
-                if (!isset($maxwords_message)) $maxwords_message = '... (#(1) words total)';
+                if (!isset($maxwords_message)) {
+                    $maxwords_message = '... (#(1) words total)';
+                }
                 $text_in .= xarML($maxwords_message, $total_words, $total_words - $maxwords, $maxwords);
             }
         }
@@ -107,7 +113,9 @@ function xarpages_userapi_transform_text($args)
 
 function ievents_userapi_transform_smart_html($text)
 {
-    if (strlen(trim($text)) == 0) return '';
+    if (strlen(trim($text)) == 0) {
+        return '';
+    }
 
     $dobreak = 1;
 
@@ -177,11 +185,10 @@ function ievents_userapi_transform_smart_html($text)
 }
 
 // Remove paragraphs and breaks from within any <pre> tags.
-function ievents_userapi_transform_clean_pre($text) {
-	$text = str_replace('<br />', '', $text);
-	$text = str_replace('<p>', "\n", $text);
-	$text = str_replace('</p>', '', $text);
-	return $text;
+function ievents_userapi_transform_clean_pre($text)
+{
+    $text = str_replace('<br />', '', $text);
+    $text = str_replace('<p>', "\n", $text);
+    $text = str_replace('</p>', '', $text);
+    return $text;
 }
-
-?>

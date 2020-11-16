@@ -8,19 +8,23 @@
 
 /*
  * Get the master page for the current page.
- */ 
+ */
 
 function xarpages_multiformapi_getmasterpage($args)
 {
     // Save some time by caching the master page.
     // It won't change through the life of one page rendering.
-    static $master_page = NULL;
-    if (!empty($master_page)) return $master_page;
+    static $master_page = null;
+    if (!empty($master_page)) {
+        return $master_page;
+    }
 
     $master_page_type_name = 'multiform_master';
 
     // Get the ancestor tree.
-    if (empty($args['current_page']['pidpath'])) return;
+    if (empty($args['current_page']['pidpath'])) {
+        return;
+    }
     $pidpath = $args['current_page']['pidpath'];
 
     // We need to walk up through the ancestors to find a page of type 'multiform_master'
@@ -29,8 +33,10 @@ function xarpages_multiformapi_getmasterpage($args)
 
     $masterpage_pid = 0;
 
-    if (empty($args['pages'])) return;
-    while(!empty($pidpath)) {
+    if (empty($args['pages'])) {
+        return;
+    }
+    while (!empty($pidpath)) {
         $pid = array_pop($pidpath);
         $pagetype = $args['pages'][$pid]['pagetype']['name'];
         if ($pagetype == $master_page_type_name) {
@@ -47,8 +53,10 @@ function xarpages_multiformapi_getmasterpage($args)
         // Get a list of descendant pages that make up the form sequence.
         // This is a linearised list of descendants of the master page, arranged left-to-right.
         $page_sequence = array();
-        foreach($args['pages'] as $pid => $page) {
-            if ($page['left'] > $master_page['right']) break;
+        foreach ($args['pages'] as $pid => $page) {
+            if ($page['left'] > $master_page['right']) {
+                break;
+            }
             if ($page['left'] > $master_page['left'] && $page['status'] == 'ACTIVE' && $page['pagetype']['name'] != 'multiform_exception') {
                 $page_sequence[] = $pid;
             }
@@ -91,7 +99,7 @@ function &xarpages_multiformapi_sessionvar($args = array())
         //   - or a single flag to indicate whether the page successfuly validated
         // - flag to indicate whether the user is allowed to revisit the page
         // The history array will be ordered in the order in which pages were first encountered.
-        // This is important for the history 
+        // This is important for the history
         $session_var = array(
             'session_key' => '',
             'expires' => 0,
@@ -133,7 +141,7 @@ function xarpages_multiformapi_sessionkey($args)
         // Clear the key in the session.
         // TODO: this is probably a good point to clear everything in the session,
         // i.e. to clear the whole session_vars array.
-        $session_key = NULL;
+        $session_key = null;
         $session_vars['reset'] = true;
         xarpages_multiformapi_sessionvar($session_vars);
     }
@@ -152,7 +160,9 @@ function xarpages_multiformapi_getvalobject($args)
 {
     extract($args);
 
-    if (empty($name) || !xarVarValidate('pre:trim:ftoken', $name)) return;
+    if (empty($name) || !xarVarValidate('pre:trim:ftoken', $name)) {
+        return;
+    }
 
     // Call the object creation factory function.
     // Pass the args through, as it will contain initialisation data for the object.
@@ -170,7 +180,7 @@ function xarpages_multiformapi_getvalobject($args)
  * This data pass uses a different session variable than the main form sequence, so
  * can be used to pass data out at the end of a sequence (after the sequence session
  * has been cleared).
- */ 
+ */
 
 function xarpages_multiformapi_passdata($args = array())
 {
@@ -180,7 +190,9 @@ function xarpages_multiformapi_passdata($args = array())
     if (empty($args)) {
         // No args, so return whatever is stored
         $args = xarSessionGetVar($session_var_name);
-        if (empty($args)) $args = NULL;
+        if (empty($args)) {
+            $args = null;
+        }
         xarSessionDelVar($session_var_name);
     } else {
         // Args supplied, so store it
@@ -214,33 +226,43 @@ function xarpages_multiformapi_get_object_populated($args)
         $page = xarModAPIfunc('xarpages', 'user', 'getpage', array('name' => $pagename));
 
         // No page found.
-        if (empty($page)) return;
+        if (empty($page)) {
+            return;
+        }
 
         // No object id found.
-        if (empty($page['dd']['formobject'])) return;
+        if (empty($page['dd']['formobject'])) {
+            return;
+        }
 
         $objectid = (int)$page['dd']['formobject'];
     }
 
     // No object ID, after the above checks.
-    if (empty($objectid)) return;
+    if (empty($objectid)) {
+        return;
+    }
 
     // Attempt to get the DD object.
     $object = xarModApiFunc(
-        'dynamicdata', 'user', 'getobject',
+        'dynamicdata',
+        'user',
+        'getobject',
         array('objectid' => $objectid)
     );
 
     // No object found
-    if (empty($object)) return;
+    if (empty($object)) {
+        return;
+    }
 
     // Populate the object from the session.
     $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-    foreach($object->properties as $name => $property) {
-        if (isset($session_vars['formdata'][$name])) $object->properties[$name]->setValue($session_vars['formdata'][$name]);
+    foreach ($object->properties as $name => $property) {
+        if (isset($session_vars['formdata'][$name])) {
+            $object->properties[$name]->setValue($session_vars['formdata'][$name]);
+        }
     }
 
     return $object;
 }
-
-?>

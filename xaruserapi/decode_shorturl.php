@@ -32,7 +32,9 @@ function xarpages_userapi_decode_shorturl($params)
     // Look for a root page with the name as the first part of the path.
     if (isset($params[0])) {
         $rootpage = xarModAPIfunc(
-            'xarpages', 'user', 'getpage',
+            'xarpages',
+            'user',
+            'getpage',
             array('name' => strtolower($params[0]), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
         );
     }
@@ -41,7 +43,9 @@ function xarpages_userapi_decode_shorturl($params)
     // These are used as short-cuts.
     if (empty($rootpage) && $args['module_alias'] != 'xarpages') {
         $rootpage = xarModAPIfunc(
-            'xarpages', 'user', 'getpage',
+            'xarpages',
+            'user',
+            'getpage',
             array('name' => strtolower($params[0]), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
         );
     }
@@ -53,14 +57,16 @@ function xarpages_userapi_decode_shorturl($params)
     // index.php/site/about or index.php/xarpages/site/about
 
     if (!empty($rootpage)) {
-        // The first part of the path matches 
+        // The first part of the path matches
 
         // Shift away the matched first part of the path.
         array_shift($params);
 
         // Fetch the complete page tree for the root page.
         $tree = xarModAPIfunc(
-            'xarpages', 'user', 'getpagestree',
+            'xarpages',
+            'user',
+            'getpagestree',
             array(
                 'left_range' => array($rootpage['left'], $rootpage['right']),
                 'dd_flag' => false,
@@ -98,7 +104,7 @@ function xarpages_userapi_decode_shorturl($params)
 
             // If any decoding was done, merge in the results.
             if (!empty($args2) && is_array($args2)) {
-                foreach($args2 as $key => $value) {
+                foreach ($args2 as $key => $value) {
                     $args[$key] = $value;
                 }
             }
@@ -110,5 +116,3 @@ function xarpages_userapi_decode_shorturl($params)
     // default: return nothing -> no short URL decoded
     return;
 }
-
-?>

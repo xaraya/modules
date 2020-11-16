@@ -7,5 +7,3 @@ function xarpages_funcapi_null($args)
 {
     return;
 }
-
-?>

@@ -46,25 +46,41 @@ function xarpages_userapi_browse_files($args)
 
     // Levels lies between 1 and max_levels.
     // Set levels=1 to stay in a single diectory.
-    if (!xarVarValidate('int:1:'.$max_levels, $levels, true)) {$levels = $max_levels;}
+    if (!xarVarValidate('int:1:'.$max_levels, $levels, true)) {
+        $levels = $max_levels;
+    }
 
     // The path return format is an unumerated type.
-    if (!xarVarValidate('enum:abs:rel:file', $retpath, true)) {$retpath = 'file';}
+    if (!xarVarValidate('enum:abs:rel:file', $retpath, true)) {
+        $retpath = 'file';
+    }
 
     // An array of directories to skip.
-    if (!xarVarValidate('list:string:1', $skipdirs, true)) {$skipdirs = array();}
+    if (!xarVarValidate('list:string:1', $skipdirs, true)) {
+        $skipdirs = array();
+    }
 
     // Always skip current and parent directory.
     $skipdirs += array('.', '..');
 
     // Skip common configuration control directories
-    if (!empty($skipdirscc)) {$skipdirs += array('SCCS', 'sccs', 'CVS', 'cvs');}
+    if (!empty($skipdirscc)) {
+        $skipdirs += array('SCCS', 'sccs', 'CVS', 'cvs');
+    }
 
     // Other flags.
-    if (!isset($retdirs)) {$retdirs = false;}
-    if (!isset($retfiles)) {$retfiles = true;}
-    if (!isset($is_writeable)) {$is_writeable = false;}
-    if (!isset($is_readable)) {$is_readable = false;}
+    if (!isset($retdirs)) {
+        $retdirs = false;
+    }
+    if (!isset($retfiles)) {
+        $retfiles = true;
+    }
+    if (!isset($is_writeable)) {
+        $is_writeable = false;
+    }
+    if (!isset($is_readable)) {
+        $is_readable = false;
+    }
 
     // Get the root directory.
     $rootdir = '.';
@@ -109,30 +125,46 @@ function xarpages_userapi_browse_files($args)
     while (!empty($scandir)) {
         list($thislevel, $thisdir) = array_shift($scandir);
         if ($dh = @opendir($basedir . $thisdir)) {
-            while(($filename = @readdir($dh)) !== false) {
+            while (($filename = @readdir($dh)) !== false) {
                 // Got a file or directory.
                 $thisfile = $basedir . $thisdir . '/' . $filename;
 
                 // Skip if we only want readable files.
-                if ($is_readable && !is_readable($thisfile)) {continue;}
+                if ($is_readable && !is_readable($thisfile)) {
+                    continue;
+                }
 
                 if (is_file($thisfile)) {
                     // Go to the next file if we don't want to return files.
-                    if (!$retfiles) {continue;}
+                    if (!$retfiles) {
+                        continue;
+                    }
 
                     // Skip this file if we only want writeable files and directories.
-                    if ($is_writeable && !is_writeable($thisfile)) {continue;}
+                    if ($is_writeable && !is_writeable($thisfile)) {
+                        continue;
+                    }
 
                     // Check the filtering rules.
-                    if (!empty($match_glob) && @fnmatch($match_glob, $filename) !== true) {continue;}
-                    if (!empty($match_re) && @preg_match($match_preg, $filename) !== true) {continue;}
-                    if (!empty($match_exact) && $match_exact !== $filename) {continue;}
+                    if (!empty($match_glob) && @fnmatch($match_glob, $filename) !== true) {
+                        continue;
+                    }
+                    if (!empty($match_re) && @preg_match($match_preg, $filename) !== true) {
+                        continue;
+                    }
+                    if (!empty($match_exact) && $match_exact !== $filename) {
+                        continue;
+                    }
                 } elseif (is_dir($thisfile)) {
                     // Skip specified directories.
-                    if (in_array($filename, $skipdirs)) {continue;}
+                    if (in_array($filename, $skipdirs)) {
+                        continue;
+                    }
 
                     // Skip this directory if we only want writeable files and directories.
-                    if ($is_writeable && !is_writeable($thisfile)) {continue;}
+                    if ($is_writeable && !is_writeable($thisfile)) {
+                        continue;
+                    }
 
                     if ($thislevel < $levels && is_readable($thisfile)) {
                         // We have not maxed out on the levels yet, so go deeper (only if dir is readable).
@@ -140,7 +172,9 @@ function xarpages_userapi_browse_files($args)
                     }
 
                     // Go to the next file if we don't want to log the directory in the result set.
-                    if (!$retdirs) {continue;}
+                    if (!$retdirs) {
+                        continue;
+                    }
 
                     // Suffix to indicate this is a directory.
                     $filename .= '/';
@@ -173,5 +207,3 @@ function xarpages_userapi_browse_files($args)
 
     return $filelist;
 }
-
-?>

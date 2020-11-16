@@ -20,7 +20,9 @@ function xarpages_adminapi_deletepage($args)
 
     // Obtain current information on the page we are going to delete.
     $page = xarModAPIFunc(
-        'xarpages', 'user', 'getpage',
+        'xarpages',
+        'user',
+        'getpage',
         array('pid' => $pid, 'dd_flag' => false)
     );
     if (empty($page)) {
@@ -45,7 +47,7 @@ function xarpages_adminapi_deletepage($args)
 
     // If the page was used as a special page anywhere, then reset that too,
     // so we don't have any special page orphans.
-    foreach(array('default', 'error', 'notfound') as $special) {
+    foreach (array('default', 'error', 'notfound') as $special) {
         if (xarModGetVar('xarpages', $special . 'page') == $pid) {
             xarModSetVar('xarpages', $special . 'page', 0);
         }
@@ -71,7 +73,9 @@ function xarpages_adminapi_deletepage($args)
     // Get a list of pages we are going to delete.
     $query = 'SELECT xar_pid FROM ' . $table . ' WHERE xar_left BETWEEN ? AND ?';
     $result = $dbconn->Execute($query, array($left, $right));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $pids = array();
     while (!$result->EOF) {
@@ -84,7 +88,9 @@ function xarpages_adminapi_deletepage($args)
     $query = 'DELETE FROM ' . $table . ' WHERE xar_left BETWEEN ? AND ?';
 
     $result = $dbconn->Execute($query, array($left, $right));
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Now close up the the gap
     $query = 'UPDATE ' . $table
@@ -100,24 +106,27 @@ function xarpages_adminapi_deletepage($args)
         . ' END';
 
     $result = $dbconn->Execute(
-        $query, array(
+        $query,
+        array(
             (int)$left,
             (int)$deslocation_inside,
             (int)$left,
             (int)$deslocation_inside
         )
     );
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Call hooks for every page being deleted, not just the main one.
-    foreach($pids as $pid) {
+    foreach ($pids as $pid) {
         xarModCallHooks(
-            'item', 'delete', $pid,
+            'item',
+            'delete',
+            $pid,
             array('module' => 'xarpages', 'itemtype' => $page['itemtype'])
         );
     }
 
     return true;
 }
-
-?>

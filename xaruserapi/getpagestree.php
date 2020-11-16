@@ -34,7 +34,7 @@ function xarpages_userapi_getpagestree($args)
     $pathstack = array();
 
     // Create some additional arrays to help navigate the [flat] pages array.
-    foreach($pages as $key => $page) {
+    foreach ($pages as $key => $page) {
         // Put links in the pages themselves.
         // Ensure each page has at least an empty array of child keys.
         if (!isset($pages[$key]['child_keys'])) {
@@ -104,5 +104,3 @@ function xarpages_userapi_getpagestree($args)
 
     return $tree;
 }
-
-?>

@@ -32,5 +32,3 @@ function xarpages_userapi_getitemtypes($args)
     }
     return $itemtypes;
 }
-
-?>

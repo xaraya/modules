@@ -49,12 +49,10 @@ function xarpages_treeapi_getsiblings($args)
     } else {
         // Insert point is the virtual root.
         // Virtual root has no siblings
-        if(isset($includeself) && $includeself == true) {
+        if (isset($includeself) && $includeself == true) {
             return array(0);
         } else {
             return;
         }
     }
 }
-
-?>

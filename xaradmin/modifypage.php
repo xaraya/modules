@@ -17,12 +17,20 @@ function xarpages_admin_modifypage($args)
 {
     extract($args);
 
-    if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
-    if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('pid', 'id', $pid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {
+        return;
+    }
 
-    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {
+        return;
+    }
 
     $data = array();
 
@@ -37,7 +45,9 @@ function xarpages_admin_modifypage($args)
         // Setting up necessary data.
         $data['pid'] = $pid;
         $data['page'] = xarModAPIFunc(
-            'xarpages', 'user', 'getpage',
+            'xarpages',
+            'user',
+            'getpage',
             array('pid' => $pid)
         );
 
@@ -55,14 +65,18 @@ function xarpages_admin_modifypage($args)
 
         // We need all pages, but with the current page tree pruned.
         $pages = xarModAPIFunc(
-            'xarpages', 'user', 'getpagestree',
+            'xarpages',
+            'user',
+            'getpagestree',
             array('left_exclude' => array($data['page']['left'], $data['page']['right']))
         );
 
         $data['func'] = 'modify';
 
         $hooks = xarModCallHooks(
-            'item', 'modify', $pid,
+            'item',
+            'modify',
+            $pid,
             array(
                 'module' => 'xarpages',
                 'itemtype' => $data['page']['itemtype'],
@@ -77,9 +91,15 @@ function xarpages_admin_modifypage($args)
             return;
         }
 
-        if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('insertpoint', 'id', $insertpoint, 0, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('position', 'str', $position, 'after', XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('insertpoint', 'id', $insertpoint, 0, XARVAR_DONT_SET)) {
+            return;
+        }
+        if (!xarVarFetch('position', 'str', $position, 'after', XARVAR_DONT_SET)) {
+            return;
+        }
 
         // TODO: fix this batch stuff. When the batch flag is selected, we want to return
         // the user to the 'new page' screen after creating a page, but with the refernce
@@ -91,21 +111,23 @@ function xarpages_admin_modifypage($args)
         $data['position'] = $position;
 
         $data['func'] = 'create';
-        $data['pid'] = NULL;
+        $data['pid'] = null;
         $data['ptid'] = $ptid;
 
         if (empty($ptid)) {
             // The page type has not yet been chosen.
             // Get a list of page types.
             $pagetypes = xarModAPIfunc(
-                'xarpages', 'user', 'gettypes',
+                'xarpages',
+                'user',
+                'gettypes',
                 array('key' => 'ptid')
             );
 
             // Check privileges of each page type: are we allowed to create
             // pages for each type? We may actually end up with no page types
             // but that depends on the permissions.
-            foreach($pagetypes as $key => $pagetype) {
+            foreach ($pagetypes as $key => $pagetype) {
                 if (!xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
                     unset($pagetypes[$key]);
                 }
@@ -121,7 +143,9 @@ function xarpages_admin_modifypage($args)
             // the user with a selection to chose from. For now, just take the
             // the first template (if any) available.
             $templates = xarModAPIfunc(
-                'xarpages', 'user', 'getpages',
+                'xarpages',
+                'user',
+                'getpages',
                 array('itemtype' => $ptid, 'status' => 'TEMPLATE')
             );
             if (count($templates) > 0) {
@@ -132,7 +156,9 @@ function xarpages_admin_modifypage($args)
             $pages = xarModAPIFunc('xarpages', 'user', 'getpagestree');
 
             $hooks = xarModCallHooks(
-                'item', 'new', '',
+                'item',
+                'new',
+                '',
                 array('module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => '')
             );
 
@@ -169,7 +195,7 @@ function xarpages_admin_modifypage($args)
 
     // Clear out any empty hooks, and truncate the remainder.
     if (isset($hooks)) {
-        foreach($hooks as $key => $hook) {
+        foreach ($hooks as $key => $hook) {
             if (trim($hook) == '') {
                 unset($hooks[$key]);
             } else {
@@ -185,15 +211,17 @@ function xarpages_admin_modifypage($args)
     }
     $data['pages'] = $pages['pages'];
 
-    $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages')); 
+    $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages'));
 
     // Get lists of files in the various custom APIs.
     // Dynamicdata is a prerequisite for this module, so no need to check
     // whether it is available before using its API.
     $custom_apis = array();
-    foreach(array('encode', 'decode', 'func') as $api) {
+    foreach (array('encode', 'decode', 'func') as $api) {
         $data['custom_apis'][$api] = xarModAPIfunc(
-            'xarpages', 'user', 'browse_files',
+            'xarpages',
+            'user',
+            'browse_files',
             array(
                 'module'=>'xarpages',
                 'basedir'=>'xar'.$api.'api',
@@ -214,7 +242,9 @@ function xarpages_admin_modifypage($args)
     $template_prefix = 'page-' . $data['page']['pagetype']['name'] . '-';
 
     $templates = xarModAPIfunc(
-        'xarpages', 'user', 'browse_files',
+        'xarpages',
+        'user',
+        'browse_files',
         array(
             'module'=>'xarpages',
             'basedir'=>'xartemplates',
@@ -224,17 +254,19 @@ function xarpages_admin_modifypage($args)
         )
     );
     if (!empty($templates)) {
-        foreach($templates as $template) {
+        foreach ($templates as $template) {
             $template_list[$template] = 'xarpages: ' . $template;
         }
     }
 
     // Loop through the themes, and fetch any templates there.
     $themes = xarModAPIfunc('themes', 'admin', 'getlist', array('state' => XARTHEME_STATE_ACTIVE));
-    foreach($themes as $theme) {
+    foreach ($themes as $theme) {
         // Check for templates for this module in the theme.
         $templates = xarModAPIfunc(
-            'xarpages', 'user', 'browse_files',
+            'xarpages',
+            'user',
+            'browse_files',
             array(
                 // TODO: find a way to avoid messing around with directory assumptions here.
                 // Idealy this module should not need to know anything about this file structure.
@@ -245,8 +277,8 @@ function xarpages_admin_modifypage($args)
             )
         );
         if (!empty($templates)) {
-            foreach($templates as $template) {
-                    $template_list[$template] = $theme['name'] . ': ' . $template;
+            foreach ($templates as $template) {
+                $template_list[$template] = $theme['name'] . ': ' . $template;
             }
         }
     }
@@ -260,10 +292,8 @@ function xarpages_admin_modifypage($args)
     if (!empty($data['page']['pagetype']['name'])) {
         $pagetype = $data['page']['pagetype']['name'];
     } else {
-        $pagetype = NULL;
+        $pagetype = null;
     }
 
     return xarTplModule('xarpages', 'admin', 'modifypage', $data, $pagetype);
 }
-
-?>

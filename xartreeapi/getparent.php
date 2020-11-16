@@ -34,7 +34,4 @@ function xarpages_treeapi_getparent($args)
         // Insert point is the virtual root.
         $return = array(0);
     }
-
 }
-
-?>

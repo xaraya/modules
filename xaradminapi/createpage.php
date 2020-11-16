@@ -42,7 +42,9 @@ function xarpages_adminapi_createpage($args)
 
     // Get the itemtype.
     $pagetype = xarModAPIfunc(
-        'xarpages', 'user', 'gettype',
+        'xarpages',
+        'user',
+        'gettype',
         array('ptid' => $itemtype)
     );
 
@@ -69,7 +71,7 @@ function xarpages_adminapi_createpage($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('desc', 'template', 'page_template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
+    foreach (array('desc', 'template', 'page_template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = 'xar_' . $colname;
@@ -88,7 +90,9 @@ function xarpages_adminapi_createpage($args)
     }
 
     $gap = xarModAPIfunc(
-        'xarpages', 'tree', 'insertprep',
+        'xarpages',
+        'tree',
+        'insertprep',
         array_merge(
             $args,
             array('tablename' => $tablename, 'idname' => 'xar_pid')
@@ -121,7 +125,9 @@ function xarpages_adminapi_createpage($args)
             . ' VALUES(?' . str_repeat(',?', count($cols)-1) . ')';
 
         $result = $dbconn->execute($query, $bind);
-        if (!$result) {return;}
+        if (!$result) {
+            return;
+        }
 
         $pid = $dbconn->PO_Insert_ID($tablename, $idname);
     }
@@ -139,5 +145,3 @@ function xarpages_adminapi_createpage($args)
 
     return $pid;
 }
-
-?>

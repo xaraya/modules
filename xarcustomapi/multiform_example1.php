@@ -15,7 +15,7 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
     // Constructor for form set 'example1'
     // Leaving this constructor out completely would have the same effect as just
     // calling the parent constructor.
-    function xarpages_customapi_multiform_example1($args)
+    public function xarpages_customapi_multiform_example1($args)
     {
         // Call the parent constructor.
         parent::xarpages_customapi_multiform_master($args);
@@ -29,7 +29,7 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
     //
     
     // The initialise method is called before the form is displayed.
-    function initialise_ex1page1($args)
+    public function initialise_ex1page1($args)
     {
         // If the name field is blank, then put either the current user's name into it
         // (if logged in) or a short message.
@@ -48,10 +48,12 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
 
     // Validate page 'ex1page1'.
     // This is invoked when the user submits the form on this page.
-    function validate_ex1page1($args)
+    public function validate_ex1page1($args)
     {
         // If the user has entered an age too high, then raise an error against that property.
-        if ($this->values['age'] > 65) $this->invalids['age'] = xarML('Too old to skateboard!');
+        if ($this->values['age'] > 65) {
+            $this->invalids['age'] = xarML('Too old to skateboard!');
+        }
 
         // If any 'invalids' errors are returned, then the form will be considered to
         // be in error. You can force this error condition without returning any
@@ -64,7 +66,7 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
     // This is invoked only if both the following ocnditions are true:
     // - The form is completely valid (no errors); and
     // - The user has requested to go to the 'next' page.
-    function process_ex1page1($args)
+    public function process_ex1page1($args)
     {
         // If the user enters 'hello' into the 'name' property, then do two things:
         // - Set the name to 'world', overwriting the 'hello'
@@ -89,7 +91,7 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
 
     // Page 3 is the final page.
     // We don't do any custom validation for it.
-    function process_ex1page3($args)
+    public function process_ex1page3($args)
     {
         // This is the point where all the collected data (in $this->formdata)
         // and work data (in $this->workdata) can be processed for the final time.
@@ -114,5 +116,3 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
         return $this->finish($this->workdata);
     }
 }
-
-?>

@@ -28,5 +28,3 @@ function xarpages_userapi_getstatuses($args)
         )
     );
 }
-
-?>

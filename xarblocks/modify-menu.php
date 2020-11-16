@@ -29,18 +29,34 @@ function xarpages_menublock_modify($blockinfo)
     }
 
     // Defaults
-    if (!isset($vars['multi_homed'])) {$vars['multi_homed'] = true;}
-    if (!isset($vars['current_source'])) {$vars['current_source'] = 'AUTO';}
-    if (!isset($vars['default_pid'])) {$vars['default_pid'] = 'AUTO';}
-    if (!isset($vars['max_level'])) {$vars['max_level'] = 0;}
-    if (!isset($vars['start_level'])) {$vars['start_level'] = 0;}
-    if (!isset($vars['root_pids'])) {$vars['root_pids'] = array();}
-    if (!isset($vars['prune_pids'])) {$vars['prune_pids'] = array();}
+    if (!isset($vars['multi_homed'])) {
+        $vars['multi_homed'] = true;
+    }
+    if (!isset($vars['current_source'])) {
+        $vars['current_source'] = 'AUTO';
+    }
+    if (!isset($vars['default_pid'])) {
+        $vars['default_pid'] = 'AUTO';
+    }
+    if (!isset($vars['max_level'])) {
+        $vars['max_level'] = 0;
+    }
+    if (!isset($vars['start_level'])) {
+        $vars['start_level'] = 0;
+    }
+    if (!isset($vars['root_pids'])) {
+        $vars['root_pids'] = array();
+    }
+    if (!isset($vars['prune_pids'])) {
+        $vars['prune_pids'] = array();
+    }
 
     // Get a list of all pages for the drop-downs.
     // Get the tree of all pages, without the DD for speed.
     $vars['all_pages'] = xarModAPIfunc(
-        'xarpages', 'user', 'getpagestree',
+        'xarpages',
+        'user',
+        'getpagestree',
         array('dd_flag' => false, 'key' => 'pid')
     );
 
@@ -55,7 +71,7 @@ function xarpages_menublock_modify($blockinfo)
     // the pages which are not yet under one of the selected root pages.
     // That would just be an extra little usability touch.
     $vars['root_pids'] = array_flip($vars['root_pids']);
-    foreach($vars['root_pids'] as $key => $value) {
+    foreach ($vars['root_pids'] as $key => $value) {
         if (isset($vars['all_pages']['pages'][$key])) {
             $vars['root_pids'][$key] = $vars['all_pages']['pages'][$key]['slash_separated'];
         } else {
@@ -64,7 +80,7 @@ function xarpages_menublock_modify($blockinfo)
     }
 
     $vars['prune_pids'] = array_flip($vars['prune_pids']);
-    foreach($vars['prune_pids'] as $key => $value) {
+    foreach ($vars['prune_pids'] as $key => $value) {
         if (isset($vars['all_pages']['pages'][$key])) {
             $vars['prune_pids'][$key] = $vars['all_pages']['pages'][$key]['slash_separated'];
         } else {
@@ -118,7 +134,7 @@ function xarpages_menublock_update($blockinfo)
     if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['root_pids'] = array_flip($vars['root_pids']);
-        foreach($remove_root_pid as $remove) {
+        foreach ($remove_root_pid as $remove) {
             if (isset($vars['root_pids'][$remove])) {
                 unset($vars['root_pids'][$remove]);
             }
@@ -139,7 +155,7 @@ function xarpages_menublock_update($blockinfo)
     if (xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_prune_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['prune_pids'] = array_flip($vars['prune_pids']);
-        foreach($remove_prune_pid as $remove) {
+        foreach ($remove_prune_pid as $remove) {
             if (isset($vars['prune_pids'][$remove])) {
                 unset($vars['prune_pids'][$remove]);
             }
@@ -165,5 +181,3 @@ function xarpages_menublock_update($blockinfo)
 
     return $blockinfo;
 }
-
-?>

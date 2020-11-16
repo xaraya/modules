@@ -13,7 +13,9 @@ function xarpages_userapi_getaliases($args)
     $xartable =& xarDBGetTables();
     $dbconn =& xarDBGetConn();
 
-    if (empty($mincount) || !is_numeric($mincount)) $mincount = 1;
+    if (empty($mincount) || !is_numeric($mincount)) {
+        $mincount = 1;
+    }
 
     $query = 'SELECT xar_name, COUNT(xar_name)'
         . ' FROM ' . $xartable['xarpages_pages']
@@ -27,11 +29,13 @@ function xarpages_userapi_getaliases($args)
     }
 
     $result = $dbconn->execute($query, $bind);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $return = array();
 
-    while(!$result->EOF) {
+    while (!$result->EOF) {
         list($name, $name_count) = $result->fields;
 
         if (xarModGetAlias($name) == 'xarpages') {
@@ -43,5 +47,3 @@ function xarpages_userapi_getaliases($args)
 
     return $return;
 }
-
-?>

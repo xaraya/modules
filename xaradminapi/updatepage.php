@@ -84,7 +84,9 @@ function xarpages_adminapi_updatepage($args)
     // Move the item in the hierarchy/tree, if required.
     if (!empty($moving) && $moving == 1) {
         if (!xarModAPIfunc(
-            'xarpages', 'tree', 'moveitem',
+            'xarpages',
+            'tree',
+            'moveitem',
             array(
                 'tablename' => $tablename,
                 'idname' => 'xar_pid',
@@ -92,7 +94,9 @@ function xarpages_adminapi_updatepage($args)
                 'itemid' => $pid,
                 'offset' => $offset
             )
-        )) {return;}
+        )) {
+            return;
+        }
     }
 
     // Data for the query.
@@ -101,7 +105,7 @@ function xarpages_adminapi_updatepage($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('name', 'desc', 'page_template', 'template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
+    foreach (array('name', 'desc', 'page_template', 'template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = (string)$$colname;
             $cols[] = 'xar_' . $colname . ' = ?';
@@ -116,7 +120,9 @@ function xarpages_adminapi_updatepage($args)
         . ' WHERE xar_pid = ?';
 
     $result = $dbconn->execute($query, $bind);
-    if (!$result) {return;}
+    if (!$result) {
+        return;
+    }
 
     // If the status should be recursed to descendants, then do so.
     if (!empty($status_recurse) && !empty($status) && ($status == 'ACTIVE' || $status == 'INACTIVE')) {
@@ -132,7 +138,9 @@ function xarpages_adminapi_updatepage($args)
                 (int)$page['left'], (int)$page['right']
             )
         );
-        if (!$result) {return;}
+        if (!$result) {
+            return;
+        }
     }
 
     // Update hooks - by passing the original $args list, any DD fields will also be passed
@@ -143,5 +151,3 @@ function xarpages_adminapi_updatepage($args)
 
     return true;
 }
-
-?>

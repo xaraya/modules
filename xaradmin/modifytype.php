@@ -19,8 +19,12 @@ function xarpages_admin_modifytype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $data = array();
 
@@ -32,7 +36,9 @@ function xarpages_admin_modifytype($args)
 
         // We need all pages, but with the current page tree pruned.
         $type = xarModAPIFunc(
-            'xarpages', 'user', 'gettype',
+            'xarpages',
+            'user',
+            'gettype',
             array('ptid' => $ptid, 'dd_flag' => false)
         );
 
@@ -52,13 +58,17 @@ function xarpages_admin_modifytype($args)
 
         // The modify hooks for the page type as an item.
         $modifyhooks = xarModCallHooks(
-            'item', 'modify', $type['ptid'],
+            'item',
+            'modify',
+            $type['ptid'],
             array('module' => 'xarpages', 'itemtype' => $type_itemtype)
         );
 
         // Do config hooks for the page type as an item type.
         $confighooks = xarModCallHooks(
-            'module', 'modifyconfig', 'xarpages',
+            'module',
+            'modifyconfig',
+            'xarpages',
             array('module' => 'xarpages', 'itemtype' => $type['ptid'])
         );
     } else {
@@ -67,13 +77,15 @@ function xarpages_admin_modifytype($args)
         // Get some example page types from the xardata directory.
         $files = array();
         $xml_files = xarModAPIFunc(
-            'dynamicdata', 'admin', 'browse',
+            'dynamicdata',
+            'admin',
+            'browse',
             array('basedir' => 'modules/xarpages/xardata', 'filetype' => 'xml')
         );
         if (!empty($xml_files)) {
             $files[''] = xarML('-- Predefined --');
 
-            foreach($xml_files as $xml_file) {
+            foreach ($xml_files as $xml_file) {
                 $type_name = preg_replace('/-def\.xml$/', '', $xml_file);
                 $files[$type_name] = $type_name;
             }
@@ -87,23 +99,25 @@ function xarpages_admin_modifytype($args)
 
         // Default data for the page type form.
         $type = array(
-            'ptid' => NULL,
+            'ptid' => null,
             'name' => '',
             'desc' => ''
         );
 
         $data['func'] = 'create';
-        $data['ptid'] = NULL;
+        $data['ptid'] = null;
 
         // The 'new' modify hooks for the page type as an item.
         $modifyhooks = xarModCallHooks(
-            'item', 'new', '',
+            'item',
+            'new',
+            '',
             array('module' => 'xarpages', 'itemtype' => $type_itemtype)
         );
     }
 
     // Clear out any empty hooks, trim the remainder.
-    foreach($modifyhooks as $key => $modifyhook) {
+    foreach ($modifyhooks as $key => $modifyhook) {
         if (trim($modifyhook) == '') {
             unset($modifyhooks[$key]);
         } else {
@@ -114,7 +128,7 @@ function xarpages_admin_modifytype($args)
 
     // Clear out any empty hooks, trim the remainder.
     if (isset($confighooks)) {
-        foreach($confighooks as $key => $confighook) {
+        foreach ($confighooks as $key => $confighook) {
             if (trim($confighook) == '') {
                 unset($confighooks[$key]);
             } else {
@@ -131,5 +145,3 @@ function xarpages_admin_modifytype($args)
     // Return output
     return $data;
 }
-
-?>

@@ -26,7 +26,7 @@
  *
  * If a minimal core were loaded, it would then be possible to
  * rewrite image URLs etc to pick up images from the current
- * theme when available, allowing theme-overrideable images 
+ * theme when available, allowing theme-overrideable images
  * referenced in a module CSS script.
  *
  * Now the really clever bit, that I would like to implement,
@@ -103,7 +103,7 @@ function sniffer()
 
     $platform = 'Other';
     $platforms = array('Win', 'Mac', 'Linux');
-    foreach($platforms as $check) {
+    foreach ($platforms as $check) {
         if (strstr($http_agent, $check)) {
             $platform = $check;
             break;
@@ -393,5 +393,3 @@ div.${container_class} ul.side-menu1 li a:hover {
 
 /* MSIE MAC may need all anchors floated to the left - we will treat that as dead browser for now */
 ENDCSS;
-
-?>

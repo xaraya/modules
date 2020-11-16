@@ -30,13 +30,19 @@ function xarpages_crumbblock_modify($blockinfo)
     }
 
     // Defaults
-    if (!isset($vars['include_root'])) {$vars['include_root'] = false;}
-    if (!isset($vars['root_pids'])) {$vars['root_pids'] = array();}
+    if (!isset($vars['include_root'])) {
+        $vars['include_root'] = false;
+    }
+    if (!isset($vars['root_pids'])) {
+        $vars['root_pids'] = array();
+    }
 
     // Get a list of all pages for the drop-downs.
     // Get the tree of all pages, without the DD for speed.
     $vars['all_pages'] = xarModAPIfunc(
-        'xarpages', 'user', 'getpagestree',
+        'xarpages',
+        'user',
+        'getpagestree',
         array('dd_flag' => false, 'key' => 'pid')
     );
 
@@ -51,7 +57,7 @@ function xarpages_crumbblock_modify($blockinfo)
     // the pages which are not yet under one of the selected root pages.
     // That would just be an extra little usability touch.
     $vars['root_pids'] = array_flip($vars['root_pids']);
-    foreach($vars['root_pids'] as $key => $value) {
+    foreach ($vars['root_pids'] as $key => $value) {
         if (isset($vars['all_pages']['pages'][$key])) {
             $vars['root_pids'][$key] = $vars['all_pages']['pages'][$key]['slash_separated'];
         } else {
@@ -93,7 +99,7 @@ function xarpages_crumbblock_update($blockinfo)
     if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['root_pids'] = array_flip($vars['root_pids']);
-        foreach($remove_root_pid as $remove) {
+        foreach ($remove_root_pid as $remove) {
             if (isset($vars['root_pids'][$remove])) {
                 unset($vars['root_pids'][$remove]);
             }
@@ -106,5 +112,3 @@ function xarpages_crumbblock_update($blockinfo)
 
     return $blockinfo;
 }
-
-?>

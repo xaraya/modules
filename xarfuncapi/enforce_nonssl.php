@@ -26,5 +26,3 @@ function xarpages_funcapi_enforce_nonssl($args)
 
     return true;
 }
-
-?>

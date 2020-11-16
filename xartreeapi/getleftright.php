@@ -33,7 +33,7 @@ function xarpages_treeapi_getleftright($args)
     } else {
         // Insert point is the virtual root.
         // This query should return EOF when the table is empty,
-        // but it doesn't (on MySQL, at least - I'm sure a MAX() of 
+        // but it doesn't (on MySQL, at least - I'm sure a MAX() of
         // no rows returns no rows in Oracle).
         $query = 'SELECT 0, MIN(xar_left)-1 as xar_left, MAX(xar_right)+1 as xar_right'
             . ' FROM ' . $tablename;
@@ -53,5 +53,3 @@ function xarpages_treeapi_getleftright($args)
 
     return $return;
 }
-
-?>

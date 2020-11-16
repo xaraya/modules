@@ -17,13 +17,21 @@ function xarpages_admin_deletepage($args)
 {
     extract($args);
 
-    if (!xarVarFetch('pid', 'id', $pid)) return;
-    if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('pid', 'id', $pid)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {
+        return;
+    }
 
     // Get page information
     $page = xarModAPIFunc(
-        'xarpages', 'user', 'getpage',
+        'xarpages',
+        'user',
+        'getpage',
         array('pid' => $pid)
     );
 
@@ -44,7 +52,9 @@ function xarpages_admin_deletepage($args)
         $data['authkey'] = xarSecGenAuthKey();
 
         $data['count'] = xarModAPIfunc(
-            'xarpages', 'user', 'getpages',
+            'xarpages',
+            'user',
+            'getpages',
             array('count' => true, 'left_range' => array($page['left']+1, $page['right']-1))
         );
 
@@ -53,13 +63,20 @@ function xarpages_admin_deletepage($args)
     }
 
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {return;}
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     // Pass to API
     if (!xarModAPIFunc(
-        'xarpages', 'admin', 'deletepage',
-        array('pid' => $pid))
-    ) return;
+        'xarpages',
+        'admin',
+        'deletepage',
+        array('pid' => $pid)
+    )
+    ) {
+        return;
+    }
 
     if (!empty($return_url)) {
         xarResponseRedirect($return_url);
@@ -69,5 +86,3 @@ function xarpages_admin_deletepage($args)
 
     return true;
 }
-
-?>

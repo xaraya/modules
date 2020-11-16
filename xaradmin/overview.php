@@ -21,5 +21,3 @@ function xarpages_admin_overview()
     //just return to main function that displays the overview
     return xarTplModule('xarpages', 'admin', 'main', $data, 'main');
 }
-
-?>

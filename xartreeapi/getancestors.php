@@ -53,5 +53,3 @@ function xarpages_treeapi_getancestors($args)
         return array(0);
     }
 }
-
-?>

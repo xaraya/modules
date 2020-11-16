@@ -27,7 +27,7 @@ function xarpages_funcapi_example($args)
     // If the GET parameter 'cid' has been set, and is numeric
     // then pass it into the page as parameter 'cid'.
 
-    xarVarFetch('cid', 'id', $cid, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('cid', 'id', $cid, null, XARVAR_NOT_REQUIRED);
 
     if (!empty($cid)) {
         // I would recomment putting all the custom values under the 'custom'
@@ -39,5 +39,3 @@ function xarpages_funcapi_example($args)
 
     return $args;
 }
-
-?>

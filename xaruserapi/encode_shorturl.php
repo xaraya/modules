@@ -7,7 +7,7 @@ function xarpages_userapi_encode_shorturl($args)
 {
     extract($args);
 
-    static $pages = NULL;
+    static $pages = null;
 
     // We need a page ID to continue, for now.
     // TODO: allow this to be expanded to page names.
@@ -29,7 +29,9 @@ function xarpages_userapi_encode_shorturl($args)
     if (empty($pages)) {
         // Fetch all pages, with no DD required.
         $pages = xarModAPIfunc(
-            'xarpages', 'user', 'getpages',
+            'xarpages',
+            'user',
+            'getpages',
             array('dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/)
         );
     }
@@ -93,5 +95,3 @@ function xarpages_userapi_encode_shorturl($args)
     // Requires xarMod.php from Xaraya 1.0 RC1 or higher to work.
     return array('path' => $path, 'get' => $get);
 }
-
-?>

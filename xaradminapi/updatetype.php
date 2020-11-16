@@ -46,7 +46,7 @@ function xarpages_adminapi_updatetype($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('name', 'desc') as $colname) {
+    foreach (array('name', 'desc') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = 'xar_' . $colname . ' = ?';
@@ -61,24 +61,28 @@ function xarpages_adminapi_updatetype($args)
         . ' WHERE xar_ptid = ?';
 
     $result = $dbconn->execute($query, $bind);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
     // Call update hooks (for page type as a type).
     xarModCallHooks(
-        'item', 'update', $ptid,
+        'item',
+        'update',
+        $ptid,
         array('module' => 'xarpages', 'itemtype' => $type_itemtype)
     );
 
     // Call config hooks (for page type as an itemtype)
     xarModCallHooks(
-        'module', 'updateconfig', 'xarpages',
+        'module',
+        'updateconfig',
+        'xarpages',
         array('itemtype' => $ptid, 'module' => 'xarpages')
     );
 
 
     return true;
 }
-
-?>
