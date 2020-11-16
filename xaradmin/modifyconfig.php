@@ -57,7 +57,7 @@ function comments_admin_modifyconfig()
             # Confirm the authorisation code
             #
             # This is done to make sure this was submitted by a human to this module and not called programatically
-            # However in this case we need to disable ît because although the common configuration below is
+            # However in this case we need to disable it because although the common configuration below is
             # handled in this module, the module-specific part at the end of the page is sent to be done by
             # the dynamicdata module, where the same check is done. Since both checks cannot simultaneously
             # be passed, (the act of checking resets the check) the one below is disabled in this example.
