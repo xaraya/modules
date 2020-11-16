@@ -17,9 +17,13 @@
 function html_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminHTML')) return;
+    if (!xarSecurityCheck('AdminHTML')) {
+        return;
+    }
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     switch (strtolower($phase)) {
         case 'modify':
@@ -30,11 +34,13 @@ function html_admin_modifyconfig()
             $data['submitlabel']    = xarML('Submit');
 
             // Call Modify Config Hooks
-            $hooks = xarModCallHooks('module',
-                                     'modifyconfig',
-                                     'html',
-                                     array('module'     => 'html',
-                                           'itemtype'   => 0));
+            $hooks = xarModCallHooks(
+                'module',
+                'modifyconfig',
+                'html',
+                array('module'     => 'html',
+                                           'itemtype'   => 0)
+            );
 
             if (empty($hooks)) {
                 $hooks = array();
@@ -43,21 +49,31 @@ function html_admin_modifyconfig()
             break;
 
         case 'update':
-            if (!xarVarFetch('dolinebreak', 'checkbox', $dolinebreak, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('dobreak', 'checkbox', $dobreak, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('transformtype', 'int', $transformtype, 1)) return;
+            if (!xarVarFetch('dolinebreak', 'checkbox', $dolinebreak, false, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('dobreak', 'checkbox', $dobreak, false, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVarFetch('transformtype', 'int', $transformtype, 1)) {
+                return;
+            }
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
             // Update module variables
             xarModVars::set('html', 'dolinebreak', $dolinebreak);
             xarModVars::set('html', 'dobreak', $dobreak);
             xarModVars::set('html', 'transformtype', $transformtype);
             // Call Update Config Hooks
-            xarModCallHooks('module',
-                            'updateconfig',
-                            'html',
-                            array('module'      => 'html',
-                                  'itemtype'    => 0));
+            xarModCallHooks(
+                'module',
+                'updateconfig',
+                'html',
+                array('module'      => 'html',
+                                  'itemtype'    => 0)
+            );
 
             xarController::redirect(xarModURL('html', 'admin', 'modifyconfig'));
             // Return
@@ -66,4 +82,3 @@ function html_admin_modifyconfig()
     }
     return $data;
 }
-?>

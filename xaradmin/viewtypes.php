@@ -12,10 +12,10 @@
  */
 
 /**
- * Set the tagtypes HTML 
+ * Set the tagtypes HTML
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  */
 function html_admin_viewtypes()
 {
@@ -27,32 +27,42 @@ function html_admin_viewtypes()
     $data['authid'] = xarSecGenAuthKey();
 
     // Security Check
-    if(!xarSecurityCheck('AdminHTML')) return;
+    if (!xarSecurityCheck('AdminHTML')) {
+        return;
+    }
 
     // The user API function is called.
-    $tagtypes = xarModAPIFunc('html',
-                              'user',
-                              'getalltypes');
+    $tagtypes = xarModAPIFunc(
+        'html',
+        'user',
+        'getalltypes'
+    );
 
     // Check for exceptions
-    if (!isset($tagtypes) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($tagtypes) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        return;
+    } // throw back
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($tagtypes); $idx++) {
-        if (xarSecurityCheck('EditHTML')) { 
-            $tagtypes[$idx]['editurl'] = xarModURL('html',
-                                                   'admin',
-                                                   'edittype',
-                                                   array('id' => $tagtypes[$idx]['id']));
+        if (xarSecurityCheck('EditHTML')) {
+            $tagtypes[$idx]['editurl'] = xarModURL(
+                'html',
+                'admin',
+                'edittype',
+                array('id' => $tagtypes[$idx]['id'])
+            );
         } else {
             $tagtypes[$idx]['editurl'] = '';
         }
 
-        if (xarSecurityCheck('ManageHTML')) { 
-            $tagtypes[$idx]['deleteurl'] = xarModURL('html',
-                                                     'admin',
-                                                     'deletetype',
-                                                     array('id' => $tagtypes[$idx]['id']));
+        if (xarSecurityCheck('ManageHTML')) {
+            $tagtypes[$idx]['deleteurl'] = xarModURL(
+                'html',
+                'admin',
+                'deletetype',
+                array('id' => $tagtypes[$idx]['id'])
+            );
         } else {
             $tagtypes[$idx]['deleteurl'] = '';
         }
@@ -64,5 +74,3 @@ function html_admin_viewtypes()
     // Return the template variables defined in this function
     return $data;
 }
-
-?>

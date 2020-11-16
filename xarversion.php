@@ -29,4 +29,3 @@ $modversion['user']         = 0;
 $modversion['class']        = 'Admin';
 $modversion['category']     = 'Global';
 //$modversion['dependency']  = array(778); BBCode Dependency in transformoutput removed
-?>

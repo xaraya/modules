@@ -22,22 +22,33 @@
 function html_admin_edit()
 {
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if (!xarSecurityCheck('EditHTML')) {
+        return;
+    }
 
     // Get parameters from input
-    if (!xarVarFetch('id',  'int:0:', $id)) return;
-    if (!xarVarFetch('tag', 'str:1:', $tag, '')) return;
-    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
+    if (!xarVarFetch('id', 'int:0:', $id)) {
+        return;
+    }
+    if (!xarVarFetch('tag', 'str:1:', $tag, '')) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) {
+        return;
+    }
 
     // Get the current html tag
-    $html = xarModAPIFunc('html',
-                          'user',
-                          'gettag',
-                          array('id' => $id));
+    $html = xarModAPIFunc(
+        'html',
+        'user',
+        'gettag',
+        array('id' => $id)
+    );
 
     // Check for exceptions
-    if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
-        return; // throw back
+    if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        return;
+    } // throw back
 
     // Check for confirmation.
     if (!$confirm) {
@@ -61,17 +72,22 @@ function html_admin_edit()
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for editing #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($id));
+        $msg = xarML(
+            'Invalid authorization key for editing #(1) HTML tag #(2)',
+            'HTML',
+            xarVarPrepForDisplay($id)
+        );
         return xarResponse::notFound();
     }
 
     // Modify the html tag
-    if (!xarModAPIFunc('html',
-                       'admin',
-                       'edit',
-                       array('id' => $id,
-                             'tag' => $tag))) {
+    if (!xarModAPIFunc(
+        'html',
+        'admin',
+        'edit',
+        array('id' => $id,
+                             'tag' => $tag)
+    )) {
         return; // throw back
     }
 
@@ -83,5 +99,3 @@ function html_admin_edit()
     // Return
     return true;
 }
-
-?>

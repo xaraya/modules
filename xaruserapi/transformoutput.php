@@ -27,9 +27,14 @@ function html_userapi_transformoutput($args)
 
     // Argument check
     if (!isset($extrainfo)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     'extrainfo', 'userapi', 'transformoutput', 'html');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
+            'extrainfo',
+            'userapi',
+            'transformoutput',
+            'html'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     if (is_array($extrainfo)) {
@@ -42,7 +47,7 @@ function html_userapi_transformoutput($args)
             return $extrainfo;
         }
         $transformed = array();
-        foreach($extrainfo as $text) {
+        foreach ($extrainfo as $text) {
             $transformed[] = html_userapitransformoutput($text);
         }
     } else {
@@ -62,17 +67,19 @@ function html_userapi_transformoutput($args)
 
 function html_userapitransformoutput($text)
 {
-   /* include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
-    $bbcode = new StringParser_BBCode();
-    $dotransform = xarModVars::get('html', 'dolinebreak');
-    if ($dotransform == 1){
-        $bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'nl2br');
-        $bbcode->setRootParagraphHandling(true);
-    }
-    $text = $bbcode->parse($text);
-    */
+    /* include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
+     $bbcode = new StringParser_BBCode();
+     $dotransform = xarModVars::get('html', 'dolinebreak');
+     if ($dotransform == 1){
+         $bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'nl2br');
+         $bbcode->setRootParagraphHandling(true);
+     }
+     $text = $bbcode->parse($text);
+     */
 
-    if (strlen(trim($text)) == 0) return '';
+    if (strlen(trim($text)) == 0) {
+        return '';
+    }
     $dobreak = xarModVars::get('html', 'dobreak');
     $dotransform = xarModVars::get('html', 'dolinebreak');
 
@@ -122,7 +129,7 @@ function html_userapitransformoutput($text)
 
         //Remove the plain linebreak transform and add this one as optional
         //Add in another below now to compensate, but only add linebreaks not br tags in case html is not used (ieg bbcode)
-        if ($dobreak == 1)  {
+        if ($dobreak == 1) {
             // A <br/> for a single newline, on its own, with no tags immediately surrounding it.
             // This allows breaks within a paragraph (where double-newlines define the paragraphs)
             // Preserve any additional white space
@@ -139,7 +146,7 @@ function html_userapitransformoutput($text)
         // Since this is HTML now, it can be safely trimmed.
         $text = trim($text);
     } elseif ($dobreak == 1) { // just do line breaks
-          $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br />'."\n".'$2', $text);
+        $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br />'."\n".'$2', $text);
     }
 
     return $text;
@@ -153,4 +160,3 @@ function html_userapitransformoutput_clean_pre($text)
     $text = str_replace('</p>', '', $text);
     return $text;
 }
-?>

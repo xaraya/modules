@@ -56,17 +56,21 @@ function html_init()
     // Create table
     $query = xarDBCreateTable($htmltable, $fields);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Create index on tag
     $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_tag',
                    'fields'    => array('tid, tag'),
-                   'unique'    => TRUE);
+                   'unique'    => true);
 
     // Create index
     $query = xarDBCreateIndex($htmltable, $index);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Create htmltypes table
     $htmltypestable = $xartable['htmltypes'];
@@ -87,16 +91,20 @@ function html_init()
     // Create table
     $query = xarDBCreateTable($htmltypestable, $fields);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Create index on type
     $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
                    'fields'    => array('type'),
-                   'unique'    => TRUE);
+                   'unique'    => true);
 
     $query = xarDBCreateIndex($htmltypestable, $index);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Insert HTML types into xar_htmltypes table
     $defaulttype = 'html';
@@ -113,7 +121,9 @@ function html_init()
     $result =& $dbconn->Execute($query, array($nextid, (string) $defaulttype));
 
     // Check for error
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Get the ID of the item that was inserted
     $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'id');
@@ -231,30 +241,40 @@ function html_init()
         $result =& $dbconn->Execute($query, $bindvars);
 
         // Check for errors
-        if (!$result) return;
+        if (!$result) {
+            return;
+        }
     }
 
     // Register Masks
-    xarRegisterMask('ReadHTML','All','html','All','All','ACCESS_READ');
-    xarRegisterMask('EditHTML','All','html','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddHTML','All','html','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageHTML','All','html','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminHTML','All','html','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ReadHTML', 'All', 'html', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('EditHTML', 'All', 'html', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddHTML', 'All', 'html', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('ManageHTML', 'All', 'html', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminHTML', 'All', 'html', 'All', 'All', 'ACCESS_ADMIN');
 
     // Set up module hooks
-    if (!xarModRegisterHook('item',
-                           'transform-input',
-                           'API',
-                           'html',
-                           'user',
-                           'transforminput')) return;
+    if (!xarModRegisterHook(
+        'item',
+        'transform-input',
+        'API',
+        'html',
+        'user',
+        'transforminput'
+    )) {
+        return;
+    }
 
-    if (!xarModRegisterHook('item',
-                           'transform',
-                           'API',
-                           'html',
-                           'user',
-                           'transformoutput')) return;
+    if (!xarModRegisterHook(
+        'item',
+        'transform',
+        'API',
+        'html',
+        'user',
+        'transformoutput'
+    )) {
+        return;
+    }
 
 
     // Initialisation successful
@@ -287,21 +307,30 @@ function html_upgrade($oldversion)
         case '1.0.0':
             // Code to upgrade from version 1.0 goes here
             // Set up module hooks
-            if (!xarModRegisterHook('item',
-                                   'transform-input',
-                                   'API',
-                                   'html',
-                                   'user',
-                                   'transforminput')) return;
+            if (!xarModRegisterHook(
+                'item',
+                'transform-input',
+                'API',
+                'html',
+                'user',
+                'transforminput'
+            )) {
+                return;
+            }
 
-            if (!xarModRegisterHook('item',
-                                   'transform',
-                                   'API',
-                                   'html',
-                                   'user',
-                                   'transformoutput')) return;
+            if (!xarModRegisterHook(
+                'item',
+                'transform',
+                'API',
+                'html',
+                'user',
+                'transformoutput'
+            )) {
+                return;
+            }
 
             // fall through to the next upgrade
+            // no break
         case '1.0.1':
         case '1.1.0':
             // Code to upgrade from version 1.1 goes here
@@ -310,17 +339,24 @@ function html_upgrade($oldversion)
             // values in Site.Core.AlloweableHTML
             $query = "UPDATE $htmltable SET allowed=0 WHERE allowed=1";
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             $query = "UPDATE $htmltable SET allowed=1 WHERE allowed=2";
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             $query = "UPDATE $htmltable SET allowed=2 WHERE allowed=3";
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // fall through to the next upgrade
+            // no break
         case '1.2.0':
             // Code to upgrade from version 1.2 goes here
 
@@ -341,12 +377,14 @@ function html_upgrade($oldversion)
             // Create table
             $query = xarDBCreateTable($htmltypestable, $fields);
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Create index on type
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
                            'fields'    => array('type'),
-                           'unique'    => TRUE);
+                           'unique'    => true);
 
             $query = xarDBCreateIndex($htmltypestable, $index);
             $result =& $dbconn->Execute($query);
@@ -366,46 +404,59 @@ function html_upgrade($oldversion)
             $result =& $dbconn->Execute($query, array( $nextid, (string) $defaulttype));
 
             // Check for error
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Get the ID of the item that was inserted
             $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'id');
 
             // Add the column 'tid' to the xar_html table
-             $query = xarDBAlterTable($htmltable,
-                                     array('command' => 'add',
+             $query = xarDBAlterTable(
+                 $htmltable,
+                 array('command' => 'add',
                                            'field' => 'tid',
                                            'type' => 'integer',
                                            'null' => false,
-                                           'default' => $htmltypeid));
+                                           'default' => $htmltypeid)
+             );
             $result = & $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Drop current index
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_1',
                            'fields'    => array('tag'));
             $query = xarDBDropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Set current html tags in xar_html to default type
             $query = "UPDATE $htmltable
                       SET tid = " . $htmltypeid;
 
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // Create new index on xar_html table
             $index = array('name'      => 'i_'.xarDB::getPrefix().'_html',
                            'fields'    => array('tid, tag'),
-                           'unique'    => TRUE);
+                           'unique'    => true);
 
             // Create index
             $query = xarDBCreateIndex($htmltable, $index);
             $result =& $dbconn->Execute($query);
-            if (!$result) return;
+            if (!$result) {
+                return;
+            }
 
             // fall through to the next upgrade
+            // no break
         case '1.3':
         case '1.3.0':
             xarModVars::set('html', 'transformtype', 1);
@@ -447,20 +498,28 @@ function html_delete()
     sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['html'] );
-    if (empty($query)) return; // throw back
+    $query = xarDBDropTable($xartable['html']);
+    if (empty($query)) {
+        return;
+    } // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['htmltypes']);
-    if (empty($query)) return; // throw back
+    if (empty($query)) {
+        return;
+    } // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Set the html back to safe html tags
     $allowedhtml = 'a:25:{s:3:"!--";s:1:"2";s:1:"a";s:1:"2";s:1:"b";s:1:"2";s:10:"blockquote";s:1:"2";s:2:"br";s:1:"2";s:6:"center";s:1:"2";s:3:"div";s:1:"2";s:2:"em";s:1:"2";s:4:"font";i:0;s:2:"hr";s:1:"2";s:1:"i";s:1:"2";s:3:"img";i:0;s:2:"li";s:1:"2";s:7:"marquee";i:0;s:2:"ol";s:1:"2";s:1:"p";s:1:"2";s:3:"pre";s:1:"2";s:4:"span";i:0;s:6:"strong";s:1:"2";s:2:"tt";s:1:"2";s:2:"ul";s:1:"2";s:5:"table";s:1:"2";s:2:"td";s:1:"2";s:2:"th";s:1:"2";s:2:"tr";s:1:"2";}';
@@ -468,8 +527,7 @@ function html_delete()
     // I'm lazy.  So shoot me, one time thing:
     $allowedhtml = unserialize($allowedhtml);
 
-    xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
+    xarConfigVars::set(null, 'Site.Core.AllowableHTML', $allowedhtml);
     // Deletion successful
     return true;
 }
-?>

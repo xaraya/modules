@@ -15,12 +15,14 @@
  * Add new html tag
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  */
 function html_admin_newtype()
 {
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if (!xarSecurityCheck('AddHTML')) {
+        return;
+    }
     
     $data['authid'] = xarSecGenAuthKey();
     $data['createbutton'] = xarML('Create Tag Type');
@@ -28,12 +30,12 @@ function html_admin_newtype()
     // Include 'formcheck' JavaScript.
     // TODO: move this to a template widget when available.
     xarModAPIfunc(
-        'base', 'javascript', 'modulefile',
+        'base',
+        'javascript',
+        'modulefile',
         array('module'=>'base', 'filename'=>'formcheck.js')
     );
 
     // Return the output
     return $data;
 }
-
-?>

@@ -22,22 +22,33 @@
 function html_admin_edittype()
 {
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if (!xarSecurityCheck('EditHTML')) {
+        return;
+    }
 
     // Get parameters from input
-    if (!xarVarFetch('id', 'int:0:', $id)) return;
-    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) return;
-    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
+    if (!xarVarFetch('id', 'int:0:', $id)) {
+        return;
+    }
+    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) {
+        return;
+    }
 
     // Get the current html tag
-    $type = xarModAPIFunc('html',
-                          'user',
-                          'gettype',
-                          array('id' => $id));
+    $type = xarModAPIFunc(
+        'html',
+        'user',
+        'gettype',
+        array('id' => $id)
+    );
 
     // Check for exceptions
-    if (!isset($type) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
-        return; // throw back
+    if (!isset($type) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        return;
+    } // throw back
 
     // Check for confirmation.
     if (!$confirm) {
@@ -60,17 +71,22 @@ function html_admin_edittype()
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for editing #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($id));
+        $msg = xarML(
+            'Invalid authorization key for editing #(1) HTML tag #(2)',
+            'HTML',
+            xarVarPrepForDisplay($id)
+        );
         return xarResponse::notFound();
     }
 
     // Modify the html tag
-    if (!xarModAPIFunc('html',
-                       'admin',
-                       'edittype',
-                       array('id' => $id,
-                             'tagtype' => $tagtype))) {
+    if (!xarModAPIFunc(
+        'html',
+        'admin',
+        'edittype',
+        array('id' => $id,
+                             'tagtype' => $tagtype)
+    )) {
         return; // throw back
     }
 
@@ -82,5 +98,3 @@ function html_admin_edittype()
     // Return
     return true;
 }
-
-?>

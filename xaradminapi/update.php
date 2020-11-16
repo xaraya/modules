@@ -36,12 +36,14 @@ function html_adminapi_update($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'update', 'html');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ', $invalid), 'adminapi', 'update', 'html');
+        throw new BadParameterException(null, $msg);
     }
 
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if (!xarSecurityCheck('EditHTML')) {
+        return;
+    }
     // Get datbase setup
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -51,11 +53,12 @@ function html_adminapi_update($args)
     $query = "UPDATE $htmltable
               SET   allowed = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query,array($allowed, $id));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($allowed, $id));
+    if (!$result) {
+        return;
+    }
     // Let any hooks know that we have deleted a html tag
     xarModCallHooks('item', 'update', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }
-?>

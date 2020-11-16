@@ -27,9 +27,14 @@ function html_userapi_transforminput($args)
 
     // Argument check
     if (!isset($extrainfo)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     'extrainfo', 'userapi', 'transforminput', 'html');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
+            'extrainfo',
+            'userapi',
+            'transforminput',
+            'html'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     if (is_array($extrainfo)) {
@@ -42,7 +47,7 @@ function html_userapi_transforminput($args)
             return $extrainfo;
         }
         $transformed = array();
-        foreach($extrainfo as $text) {
+        foreach ($extrainfo as $text) {
             $transformed[] = html_userapitransforminput($text);
         }
     } else {
@@ -88,5 +93,3 @@ function html_userapitransforminput($text)
     */
     return $text;
 }
-
-?>

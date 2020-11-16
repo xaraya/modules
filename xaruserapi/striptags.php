@@ -20,10 +20,13 @@
  */
 function html_userapi_striptags($args)
 {
-    if (!isset($args['string']))
+    if (!isset($args['string'])) {
         throw new Exception(xarML('No string was passed to the striptags function'));
+    }
         
-    if (empty($args['string'])) return $args['string'];
+    if (empty($args['string'])) {
+        return $args['string'];
+    }
 
     // This turns the entities into UTF-8 chars
     // see http://www.php.net/manual/en/function.html-entity-decode.php#104617
@@ -57,35 +60,43 @@ function html_userapi_striptags($args)
     // Get the tags to be removed and pass them to the stylesheet
     $stripTag = array();
     $stripAttrs = array();
-    foreach($GLOBALS['xarVar_allowableHTML'] as $k=>$v) {
+    foreach ($GLOBALS['xarVar_allowableHTML'] as $k=>$v) {
         if ($k == '!--') {
             if ($v < 2) {
                 $stripTag[] = $k;
             }
         } else {
-            switch($v) {
+            switch ($v) {
                 case 0: $stripTag[] = $k; break;
                 case 1: $stripAttrs[] = $k; break;
             }
         }
-    }    
+    }
     $xslProc->setParameter('', 'stripTag', "| " . implode(' | ', $stripTag) . " |");
     $xslProc->setParameter('', 'stripAttrs', "| " . implode('|', $stripAttrs) . " |");
     $transformed = $xslProc->transformToXML($xmlFile);
     return $transformed;
 }
-function html_entities_to_unicode($str) {
+function html_entities_to_unicode($str)
+{
     $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
-    $str = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); }, $str);
+    $str = preg_replace_callback("/(&#[0-9]+;)/", function ($m) {
+        return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES");
+    }, $str);
     return $str;
 }
 
-function html_convert_entities($str) {
-  return preg_replace_callback('/&([a-zA-Z][a-zA-Z0-9]+);/S',
-                               'convert_entity', $str);
+function html_convert_entities($str)
+{
+    return preg_replace_callback(
+        '/&([a-zA-Z][a-zA-Z0-9]+);/S',
+        'convert_entity',
+        $str
+    );
 }
-function convert_entity($matches) {
-  static $table = array(
+function convert_entity($matches)
+{
+    static $table = array(
     '&quot'      => '&#34;',   # quotation mark
     '&nbsp;'     => '&#160;',  # no-break space = non-breaking space, U+00A0 ISOnum
     '&iexcl;'    => '&#161;',  # inverted exclamation mark, U+00A1 ISOnum
@@ -340,8 +351,6 @@ function convert_entity($matches) {
     '&rsaquo;'   => '&#8250;', # single right-pointing angle quotation mark, U+203A ISO proposed
     '&euro;'     => '&#8364;', # euro sign, U+20AC NEW
 );
-// Entity not found? Destroy it.
-return isset($table[$matches[1]]) ? $table[$matches[1]] : '';
+    // Entity not found? Destroy it.
+    return isset($table[$matches[1]]) ? $table[$matches[1]] : '';
 }
-
-?>

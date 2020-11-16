@@ -25,34 +25,44 @@
 function html_admin_create($args)
 {
     // Get parameters from input
-    if (!xarVarFetch('tag', 'str:1:', $tag, '')) return;
-    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) return;
-    if (!xarVarFetch('allowed', 'int:0:', $allowed, 0)) return;
+    if (!xarVarFetch('tag', 'str:1:', $tag, '')) {
+        return;
+    }
+    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) {
+        return;
+    }
+    if (!xarVarFetch('allowed', 'int:0:', $allowed, 0)) {
+        return;
+    }
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if (!xarSecurityCheck('AddHTML')) {
+        return;
+    }
 
     // Check arguments
     if (empty($tag)) {
         $msg = xarML('No tag Provided, Please go back and provide a tag');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // The API function is called
-    $id = xarModAPIFunc('html',
-                         'admin',
-                         'create',
-                         array('tag' => $tag,
+    $id = xarModAPIFunc(
+        'html',
+        'admin',
+        'create',
+        array('tag' => $tag,
                                'type' => $tagtype,
-                               'allowed' => $allowed));
+                               'allowed' => $allowed)
+    );
 
     xarController::redirect(xarModURL('html', 'admin', 'set'));
 
     // Return
     return true;
 }
-
-?>

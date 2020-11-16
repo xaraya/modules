@@ -12,11 +12,11 @@
  */
 
 /**
- * Set the allowed HTML 
+ * Set the allowed HTML
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
+ * @author John Cox
+ * @author Richard Cave
  */
 function html_admin_set()
 {
@@ -28,32 +28,42 @@ function html_admin_set()
     $data['authid'] = xarSecGenAuthKey();
 
     // Security Check
-    if(!xarSecurityCheck('AdminHTML')) return;
+    if (!xarSecurityCheck('AdminHTML')) {
+        return;
+    }
 
     // The user API function is called.
-    $allowed = xarModAPIFunc('html',
-                             'user',
-                             'getalltags');
+    $allowed = xarModAPIFunc(
+        'html',
+        'user',
+        'getalltags'
+    );
 
     // Check for exceptions
-    if (!isset($allowed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($allowed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        return;
+    } // throw back
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($allowed); $idx++) {
-        if (xarSecurityCheck('EditHTML')) { 
-            $allowed[$idx]['editurl'] = xarModURL('html',
-                                                  'admin',
-                                                  'edit',
-                                                  array('id' => $allowed[$idx]['id']));
+        if (xarSecurityCheck('EditHTML')) {
+            $allowed[$idx]['editurl'] = xarModURL(
+                'html',
+                'admin',
+                'edit',
+                array('id' => $allowed[$idx]['id'])
+            );
         } else {
             $allowed[$idx]['editurl'] = '';
         }
 
-        if (xarSecurityCheck('ManageHTML')) { 
-            $allowed[$idx]['deleteurl'] = xarModURL('html',
-                                                    'admin',
-                                                    'delete',
-                                                    array('id' => $allowed[$idx]['id']));
+        if (xarSecurityCheck('ManageHTML')) {
+            $allowed[$idx]['deleteurl'] = xarModURL(
+                'html',
+                'admin',
+                'delete',
+                array('id' => $allowed[$idx]['id'])
+            );
         } else {
             $allowed[$idx]['deleteurl'] = '';
         }

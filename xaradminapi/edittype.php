@@ -35,23 +35,27 @@ function html_adminapi_edittype($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'edittype', 'html');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ', $invalid), 'adminapi', 'edittype', 'html');
+        throw new BadParameterException(null, $msg);
     }
 
     // The user API function is called
-    $type = xarModAPIFunc('html',
-                          'user',
-                          'gettype',
-                          array('id' => $id));
+    $type = xarModAPIFunc(
+        'html',
+        'user',
+        'gettype',
+        array('id' => $id)
+    );
 
     if ($type == false) {
         $msg = xarML('No such tag  type present.');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if (!xarSecurityCheck('EditHTML')) {
+        return;
+    }
 
     // Get datbase setup
     $dbconn = xarDB::getConn();
@@ -65,11 +69,12 @@ function html_adminapi_edittype($args)
     $query = "UPDATE $htmltypestable
               SET type = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query,array($tagtype, $id));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($tagtype, $id));
+    if (!$result) {
+        return;
+    }
     // Let any hooks know that we have deleted a html
     xarModCallHooks('item', 'edittype', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }
-?>

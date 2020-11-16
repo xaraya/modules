@@ -49,13 +49,15 @@ function html_userapi_getalltypes($args)
     $result =& $dbconn->Execute($query);
 
     // Check for an error
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put types into an array
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $type) = $result->fields;
 
-         $types[] = array('id'        => $id,
+        $types[] = array('id'        => $id,
                           'type'      => $type);
     }
 
@@ -64,5 +66,3 @@ function html_userapi_getalltypes($args)
 
     return $types;
 }
-
-?>

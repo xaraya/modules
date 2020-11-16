@@ -24,7 +24,9 @@
 function html_userapi_countitems()
 {
     // Security Check
-    if(!xarSecurityCheck('ReadHTML')) return;
+    if (!xarSecurityCheck('ReadHTML')) {
+        return;
+    }
     // Get database setup
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -33,7 +35,9 @@ function html_userapi_countitems()
     $query = "SELECT COUNT(1)
               FROM $htmltable";
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     // Get number of items
     list($numitems) = $result->fields;
     // Close result set
@@ -41,4 +45,3 @@ function html_userapi_countitems()
     // Return number of items
     return $numitems;
 }
-?>

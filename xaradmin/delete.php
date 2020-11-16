@@ -23,21 +23,30 @@
 function html_admin_delete()
 {
     // Security Check
-    if(!xarSecurityCheck('ManageHTML')) return;
+    if (!xarSecurityCheck('ManageHTML')) {
+        return;
+    }
 
     // Get parameters from input
-    if (!xarVarFetch('id', 'int:0:', $id)) return;
-    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
+    if (!xarVarFetch('id', 'int:0:', $id)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) {
+        return;
+    }
 
     // Get the current html tag
-    $html = xarModAPIFunc('html',
-                          'user',
-                          'gettag',
-                          array('id' => $id));
+    $html = xarModAPIFunc(
+        'html',
+        'user',
+        'gettag',
+        array('id' => $id)
+    );
 
     // Check for exceptions
-    if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
-        return; // throw back
+    if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        return;
+    } // throw back
 
     // Check for confirmation.
     if (!$confirm) {
@@ -60,16 +69,21 @@ function html_admin_delete()
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for deleting #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($id));
+        $msg = xarML(
+            'Invalid authorization key for deleting #(1) HTML tag #(2)',
+            'HTML',
+            xarVarPrepForDisplay($id)
+        );
         return xarResponse::notFound();
     }
 
     // Remove the html tag
-    if (!xarModAPIFunc('html',
-                       'admin',
-                       'delete',
-                       array('id' => $id))) {
+    if (!xarModAPIFunc(
+        'html',
+        'admin',
+        'delete',
+        array('id' => $id)
+    )) {
         return; // throw back
     }
 
@@ -81,5 +95,3 @@ function html_admin_delete()
     // Return
     return true;
 }
-
-?>

@@ -42,12 +42,14 @@ function html_adminapi_create($args)
         $allowed = 0;
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'create', 'html');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ', $invalid), 'adminapi', 'create', 'html');
+        throw new BadParameterException(null, $msg);
     }
 
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if (!xarSecurityCheck('AddHTML')) {
+        return;
+    }
 
     // Trim input
     $type = trim($type);
@@ -56,10 +58,12 @@ function html_adminapi_create($args)
     $type = strtolower($type);
 
     // Get ID of type
-    $tagtype = xarModAPIFunc('html',
-                             'user',
-                             'gettype',
-                             array('type' => $type));
+    $tagtype = xarModAPIFunc(
+        'html',
+        'user',
+        'gettype',
+        array('type' => $type)
+    );
 
     // Add item
     $dbconn = xarDB::getConn();
@@ -77,7 +81,9 @@ function html_adminapi_create($args)
         $q->addfield('tag', $tag);
         $q->addfield('allowed', $allowed);
         $q->eq('id', $result['id']);
-        if (!$q->run()) return;
+        if (!$q->run()) {
+            return;
+        }
         return $result['id'];
     } else {
         // New tag, create it
@@ -85,7 +91,9 @@ function html_adminapi_create($args)
         $q->addfield('tid', $tagtype['id']);
         $q->addfield('tag', $tag);
         $q->addfield('allowed', $allowed);
-        if (!$q->run()) return;
+        if (!$q->run()) {
+            return;
+        }
     }
 
     // Get the ID of the item that we inserted
@@ -95,12 +103,12 @@ function html_adminapi_create($args)
     // also add the tag to config vars
     if ($tagtype['type'] == 'html') {
         // Get the current html tags from config vars
-        $allowedhtml = xarConfigVars::get(null,'Site.Core.AllowableHTML');
+        $allowedhtml = xarConfigVars::get(null, 'Site.Core.AllowableHTML');
         // Add the new html tag
         $allowedhtml[$tag] = $allowed;
         error_log($tag . " " . $allowed);
         // Set the config vars
-        xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
+        xarConfigVars::set(null, 'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have created a new tag
     $item['module'] = 'html';
@@ -109,4 +117,3 @@ function html_adminapi_create($args)
     // Return the id of the newly created tag to the calling process
     return $itemid;
 }
-?>

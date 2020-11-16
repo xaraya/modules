@@ -22,25 +22,33 @@
 function html_admin_createtype($args)
 {
     // Get parameters from input
-    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) return;
+    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) {
+        return;
+    }
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if (!xarSecurityCheck('AddHTML')) {
+        return;
+    }
 
     // Check arguments
     if (empty($tagtype)) {
         $msg = xarML('No tag type provided, Please go back and provide a tag type.');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // The API function is called
-    $id = xarModAPIFunc('html',
-                        'admin',
-                        'createtype',
-                        array('tagtype' => $tagtype));
+    $id = xarModAPIFunc(
+        'html',
+        'admin',
+        'createtype',
+        array('tagtype' => $tagtype)
+    );
 
     if (!$id) {
         return false; //throw back
@@ -51,5 +59,3 @@ function html_admin_createtype($args)
     // Return
     return true;
 }
-
-?>

@@ -32,7 +32,9 @@ function html_userapi_getalltags($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadHTML')) return;
+    if (!xarSecurityCheck('ReadHTML')) {
+        return;
+    }
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -49,8 +51,10 @@ function html_userapi_getalltags($args)
         $query = "SELECT id
                   FROM $htmltypestable
                   WHERE type = ?";
-        $result =& $dbconn->Execute($query,array($type));
-        if (!$result) return;
+        $result =& $dbconn->Execute($query, array($type));
+        if (!$result) {
+            return;
+        }
 
         // Get type
         list($typeid) = $result->fields;
@@ -78,7 +82,9 @@ function html_userapi_getalltags($args)
         $result =& $dbconn->Execute($query);
     }
 
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Set empty array
     $tags = array();
@@ -91,7 +97,7 @@ function html_userapi_getalltags($args)
              $tag,
              $allowed) = $result->fields;
 
-         $tags[] = array('id'        => $id,
+        $tags[] = array('id'        => $id,
                          'tid'       => $tid,
                          'type'      => $type,
                          'tag'       => $tag,
@@ -102,4 +108,3 @@ function html_userapi_getalltags($args)
     $result->Close();
     return $tags;
 }
-?>

@@ -29,11 +29,13 @@ function html_userapi_gettag($args)
     // Argument check
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'id', 'userapi', 'get', 'html');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadHTML')) return;
+    if (!xarSecurityCheck('ReadHTML')) {
+        return;
+    }
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -51,8 +53,10 @@ function html_userapi_gettag($args)
               WHERE $htmltable.id = ?
               AND $htmltable.tid = $htmltypestable.id";
 
-        $result =& $dbconn->Execute($query,array($id));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($id));
+    if (!$result) {
+        return;
+    }
     list($id,
          $tid,
          $type,
@@ -66,4 +70,3 @@ function html_userapi_gettag($args)
                  'allowed'  => $allowed);
     return $tag;
 }
-?>

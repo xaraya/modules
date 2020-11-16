@@ -23,15 +23,19 @@
 function html_admin_updateset()
 {
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return;
+    }
 
     // Security Check
-    if(!xarSecurityCheck('AdminHTML')) return;
+    if (!xarSecurityCheck('AdminHTML')) {
+        return;
+    }
 
     // Get parameters from the input
     if (!xarVarFetch('tags', 'array:1:', $tags)) {
         $msg = xarML('No HTML tags were selected.');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // Initialize array for config vars
@@ -40,10 +44,12 @@ function html_admin_updateset()
     // Update HTML tags
     foreach ($tags as $id=>$allowed) {
         // Get the id of the htmltag
-        $thistag = xarModAPIFunc('html',
-                                 'user',
-                                 'gettag',
-                                 array('id' => $id));
+        $thistag = xarModAPIFunc(
+            'html',
+            'user',
+            'gettag',
+            array('id' => $id)
+        );
 
         if ($thistag) {
             $tag = $thistag['tag'];
@@ -51,12 +57,15 @@ function html_admin_updateset()
             // Check if update is necessary
             if ($thistag['allowed'] != $allowed) {
                 // Update
-                if (!xarModAPIFunc('html',
-                                   'admin',
-                                   'update',
-                                   array('id' => $id,
-                                         'allowed' => $allowed)))
+                if (!xarModAPIFunc(
+                    'html',
+                    'admin',
+                    'update',
+                    array('id' => $id,
+                                         'allowed' => $allowed)
+                )) {
                     return false;
+                }
             }
 
             // If this is an html tag, then
@@ -68,12 +77,10 @@ function html_admin_updateset()
     }
 
     // Set config vars
-    xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
+    xarConfigVars::set(null, 'Site.Core.AllowableHTML', $allowedhtml);
 
     // Redirect back to set
     xarController::redirect(xarModURL('html', 'admin', 'set'));
 
     return true;
 }
-
-?>

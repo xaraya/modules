@@ -32,13 +32,20 @@ function html_adminapi_createtype($args)
         $invalid[] = 'tagtype';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ',$invalid), 'adminapi', 'createtype', 'html');
-        throw new BadParameterException(null,$msg);
+        $msg = xarML(
+            'Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid),
+            'adminapi',
+            'createtype',
+            'html'
+        );
+        throw new BadParameterException(null, $msg);
     }
 
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if (!xarSecurityCheck('AddHTML')) {
+        return;
+    }
 
     // Trim input
     $tagtype = trim($tagtype);
@@ -51,11 +58,13 @@ function html_adminapi_createtype($args)
     $query = "SELECT id
               FROM $htmltypestable
               WHERE type = ?";
-    $result =& $dbconn->Execute($query,array($tagtype));
-    if (!$result) return false;
+    $result =& $dbconn->Execute($query, array($tagtype));
+    if (!$result) {
+        return false;
+    }
 
     if ($result->RecordCount() > 0) {
-        $msg = xarML('Tag type `#(1)` already exists!', $tagtype );
+        $msg = xarML('Tag type `#(1)` already exists!', $tagtype);
         throw new DuplicateException();
     }
 
@@ -69,8 +78,10 @@ function html_adminapi_createtype($args)
                     ?,
                     ?)";
 
-    $result =& $dbconn->Execute($query,array($nextId, $tagtype));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($nextId, $tagtype));
+    if (!$result) {
+        return;
+    }
     // Get the ID of the item that we inserted
     $id = $dbconn->PO_Insert_ID($htmltypestable, 'id');
     // Let any hooks know that we have created a new tag type
@@ -80,4 +91,3 @@ function html_adminapi_createtype($args)
     // Return the id of the newly created tag to the calling process
     return $id;
 }
-?>

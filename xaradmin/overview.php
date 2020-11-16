@@ -23,8 +23,10 @@
  */
 function html_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminHTML')) return;
+    /* Security Check */
+    if (!xarSecurityCheck('AdminHTML')) {
+        return;
+    }
 
     $data=array();
 
@@ -34,5 +36,3 @@ function html_admin_overview()
 
     return xarTplModule('html', 'admin', 'main', $data, 'main');
 }
-
-?>

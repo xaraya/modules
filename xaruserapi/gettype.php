@@ -35,7 +35,9 @@ function html_userapi_gettype($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadHTML')) return;
+    if (!xarSecurityCheck('ReadHTML')) {
+        return;
+    }
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -51,20 +53,21 @@ function html_userapi_gettype($args)
                          $htmltypestable.type
                   FROM  $htmltypestable
                   WHERE $htmltypestable.id = ?";
-        $result =& $dbconn->Execute($query,array($id));
+        $result =& $dbconn->Execute($query, array($id));
     } else {
         // Get tag type by type
         $query = "SELECT $htmltypestable.id,
                          $htmltypestable.type
                   FROM  $htmltypestable
                   WHERE $htmltypestable.type = ?";
-        $result =& $dbconn->Execute($query,array($type));
+        $result =& $dbconn->Execute($query, array($type));
     }
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
     list($id, $type) = $result->fields;
     $result->Close();
     $tagtype = array('id'        => $id,
                      'type'     => $type);
     return $tagtype;
 }
-?>
