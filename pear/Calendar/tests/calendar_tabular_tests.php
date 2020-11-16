@@ -1,13 +1,11 @@
 <?php
-// $Id: calendar_tabular_tests.php,v 1.2 2005/10/20 18:59:45 quipo Exp $
+// $Id: calendar_tabular_tests.php 198886 2005-10-20 18:59:45Z quipo $
 
 require_once('simple_include.php');
 require_once('calendar_include.php');
 
-class CalendarTabularTests extends GroupTest
-{
-    public function CalendarTabularTests()
-    {
+class CalendarTabularTests extends GroupTest {
+    function CalendarTabularTests() {
         $this->GroupTest('Calendar Tabular Tests');
         $this->addTestFile('month_weekdays_test.php');
         $this->addTestFile('month_weeks_test.php');
@@ -18,6 +16,7 @@ class CalendarTabularTests extends GroupTest
 
 if (!defined('TEST_RUNNING')) {
     define('TEST_RUNNING', true);
-    $test = new CalendarTabularTests();
+    $test = &new CalendarTabularTests();
     $test->run(new HtmlReporter());
 }
+?>

@@ -1,7 +1,7 @@
 <?php
-// $Id: calendar_include.php,v 1.4 2004/08/16 12:56:10 hfuecks Exp $
-if (!@include 'Calendar/Calendar.php') {
-    @define('CALENDAR_ROOT', '../');
+// $Id: calendar_include.php 166503 2004-08-16 12:56:10Z hfuecks $
+if ( !@include 'Calendar/Calendar.php' ) {
+    @define('CALENDAR_ROOT','../');
 }
 require_once(CALENDAR_ROOT . 'Year.php');
 require_once(CALENDAR_ROOT . 'Month.php');
@@ -25,3 +25,4 @@ require_once(CALENDAR_ROOT . 'Decorator/Weekday.php');
 require_once(CALENDAR_ROOT . 'Decorator/Wrapper.php');
 require_once(CALENDAR_ROOT . 'Util/Uri.php');
 require_once(CALENDAR_ROOT . 'Util/Textual.php');
+?>

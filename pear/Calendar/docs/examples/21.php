@@ -2,9 +2,8 @@
 /**
 * Description: a complete year with numeric week numbers
 */
-function getmicrotime()
-{
-    list($usec, $sec) = explode(" ", microtime());
+function getmicrotime(){
+    list($usec, $sec) = explode(" ",microtime());
     return ((float)$usec + (float)$sec);
 }
 $start = getmicrotime();
@@ -16,18 +15,16 @@ if (!@include 'Calendar/Calendar.php') {
 require_once CALENDAR_ROOT.'Year.php';
 require_once CALENDAR_ROOT.'Month/Weeks.php';
 
-define('CALENDAR_MONTH_STATE', CALENDAR_USE_MONTH_WEEKS);
+define ('CALENDAR_MONTH_STATE',CALENDAR_USE_MONTH_WEEKS);
 
-if (!isset($_GET['year'])) {
-    $_GET['year'] = date('Y');
-}
+if (!isset($_GET['year'])) $_GET['year'] = date('Y');
 
 $week_types = array(
     'n_in_year',
     'n_in_month',
 );
 
-if (!isset($_GET['week_type']) || !in_array($_GET['week_type'], $week_types)) {
+if (!isset($_GET['week_type']) || !in_array($_GET['week_type'],$week_types) ) {
     $_GET['week_type'] = 'n_in_year';
 }
 
@@ -91,13 +88,14 @@ th, td {
 <a href="?year=<?php echo $Year->prevYear(); ?>&week_type=<?php echo $_GET['week_type']; ?>"><<</a>
 </div>
 <div id="week_type">
-<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_year">Weeks by Year</a> :
-<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_month">Weeks by Month</a>
+<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_year">Weeks by Year</a> : 
+<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_month">Weeks by Month</a> 
 </div>
 </caption>
 <?php
 $i = 0;
 while ($Month = $Year->fetch()) {
+
     switch ($i) {
         case 0:
             echo "<tr>\n";
@@ -113,7 +111,7 @@ while ($Month = $Year->fetch()) {
     }
 
     echo "<td>\n<table class=\"month\">\n";
-    echo '<caption class="month">'.date('F', $Month->thisMonth(true)).'</caption>';
+    echo '<caption class="month">'.date('F', $Month->thisMonth(TRUE)).'</caption>';
     echo '<colgroup><col class="weekNumbers"><col span="7"></colgroup>'."\n";
     echo "<tr>\n<th>Week</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>\n</tr>";
     $Month->build();
@@ -124,7 +122,7 @@ while ($Month = $Year->fetch()) {
 
         while ($Day = $Week->fetch()) {
             if ($Day->isEmpty()) {
-                echo "<td>&#160;</td>\n";
+                echo "<td>&nbsp;</td>\n";
             } else {
                 echo "<td>".$Day->thisDay()."</td>\n";
             }
@@ -136,6 +134,6 @@ while ($Month = $Year->fetch()) {
 }
 ?>
 </table>
-<p>Took: <?php echo((getmicrotime()-$start)); ?></p>
+<p>Took: <?php echo ((getmicrotime()-$start)); ?></p>
 </body>
 </html>

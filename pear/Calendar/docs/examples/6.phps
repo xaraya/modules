@@ -74,11 +74,11 @@ while ( $Day = $Month->fetch() ) {
     } else if ( $Day->isSelected() ) {
         echo ( "<td><anchor><strong><u>".$Day->thisDay()."</u></strong>\n<go href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
             $Day->thisYear()."&amp;m=".$Day->thisMonth()."&amp;d=".$Day->thisDay().
-            "&amp;mime=wml\"/>\n</anchor></td>\n" );
+            "&amp;mime=wml\" />\n</anchor></td>\n" );
     } else {
         echo ( "<td><anchor>".$Day->thisDay()."\n<go href=\"?viewday=true&amp;y=".
             $Day->thisYear()."&amp;m=".$Day->thisMonth()."&amp;d=".$Day->thisDay().
-            "&amp;mime=wml\"/></anchor></td>\n" );
+            "&amp;mime=wml\" /></anchor></td>\n" );
     }
     if ( $Day->isLast() ) {
         echo ( "</tr>\n" );

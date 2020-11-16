@@ -1,13 +1,11 @@
 <?php
-// $Id: decorator_tests.php,v 1.1 2004/05/24 22:25:43 quipo Exp $
+// $Id: decorator_tests.php 159563 2004-05-24 22:25:43Z quipo $
 
 require_once('simple_include.php');
 require_once('calendar_include.php');
 
-class DecoratorTests extends GroupTest
-{
-    public function DecoratorTests()
-    {
+class DecoratorTests extends GroupTest {
+    function DecoratorTests() {
         $this->GroupTest('Decorator Tests');
         $this->addTestFile('decorator_test.php');
         $this->addTestFile('decorator_textual_test.php');
@@ -17,6 +15,7 @@ class DecoratorTests extends GroupTest
 
 if (!defined('TEST_RUNNING')) {
     define('TEST_RUNNING', true);
-    $test = new DecoratorTests();
+    $test = &new DecoratorTests();
     $test->run(new HtmlReporter());
 }
+?>

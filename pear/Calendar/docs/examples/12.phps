@@ -97,7 +97,7 @@ while ( $Month = $Year->fetch() ) {
             echo ( "<tr>\n" );
         }
         if ( $Day->isEmpty() ) {
-            echo ( "<td>&#160;</td>\n" );
+            echo ( "<td>&nbsp;</td>\n" );
         } else {
             echo ( "<td>".$Day->thisDay()."</td>\n" );
         }

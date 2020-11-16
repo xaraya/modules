@@ -57,7 +57,7 @@ $Second = new Calendar_Second($_POST['y'],$_POST['m'],$_POST['d'],$_POST['h'],$_
 ?>
 <p><b>Set the alarm clock</p></p>
 <form action="<?php echo ( $_SERVER['PHP_SELF'] ); ?>" method="post">
-Year: <input type="text" name="y" value="<?php echo ( $_POST['y'] ); ?>" size="4">&#160;
+Year: <input type="text" name="y" value="<?php echo ( $_POST['y'] ); ?>" size="4">&nbsp;
 Month:<select name="m">
 <?php
 $selection = array($Month);
@@ -70,7 +70,7 @@ while ( $Child = & $Year->fetch() ) {
     }
 }
 ?>
-</select>&#160;
+</select>&nbsp;
 Day:<select name="d">
 <?php
 $selection = array($Day);
@@ -83,7 +83,7 @@ while ( $Child = & $Month->fetch() ) {
     }
 }
 ?>
-</select>&#160;
+</select>&nbsp;
 Hour:<select name="h">
 <?php
 $selection = array($Hour);
@@ -96,7 +96,7 @@ while ( $Child = & $Day->fetch() ) {
     }
 }
 ?>
-</select>&#160;
+</select>&nbsp;
 Minute:<select name="i">
 <?php
 $selection = array($Minute);
@@ -109,7 +109,7 @@ while ( $Child = & $Hour->fetch() ) {
     }
 }
 ?>
-</select>&#160;
+</select>&nbsp;
 Second:<select name="s">
 <?php
 $selection = array($Second);
@@ -122,7 +122,7 @@ while ( $Child = & $Minute->fetch() ) {
     }
 }
 ?>
-</select>&#160;
+</select>&nbsp;
 <input type="submit" name="update" value="Set Alarm"><br>
 <?php
 }
