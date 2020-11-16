@@ -11,14 +11,14 @@
         <h1>
             <xar:ml>
                 <xar:mlstring>News Item - #(1)</xar:mlstring>
-                <xar:mlvar>#xarLocaleGetFormattedDate('short',$pubdate)#</xar:mlvar>
+                <xar:mlvar>#xarLocale::getFormattedDate('short',$pubdate)#</xar:mlvar>
             </xar:ml>
         </h1>
 
         <h3>
             <xar:comment>Add an edit link if we have the privileges</xar:comment>
-            <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
-                [ <a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">
+            <xar:if condition="#xarSecurity::check('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
+                [ <a href="#xarController::URL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">
                     <xar:mlstring>Edit</xar:mlstring>
                 </a> ]
             </xar:if>
@@ -42,5 +42,5 @@
     </xar:if>
 </div>
 
-<xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>
+<xar:set name="dummy">#xarTpl::setPageTitle($title)#</xar:set>
 

@@ -20,8 +20,8 @@ function xarpages_userapi_getpages($args)
 {
     extract($args);
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable =& xarDB::getTables();
+    $dbconn =& xarDB::getConn();
 
     $where = array();
     $bind = array();
@@ -33,7 +33,7 @@ function xarpages_userapi_getpages($args)
 
     // Possible values for the array key. Defaults to index (count incrementing from zero)
     // Note: 'name' may not be unique, but all the others are.
-    if (!xarVarValidate('enum:pid:index:name:left:right', $key, true)) {
+    if (!xarVar::validate('enum:pid:index:name:left:right', $key, true)) {
         $key = 'index';
     }
 
@@ -225,7 +225,7 @@ function xarpages_userapi_getpages($args)
             // show the 'no privs' page.
 
             $typename = $pagetypes[$itemtype]['name'];
-            if (!xarSecurityCheck('ViewXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+            if (!xarSecurity::check('ViewXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
                 // Save the right value. We need to skip all subsequent
                 // pages until we get to a page to the right of this one.
                 // The pages will be in 'left' order, so the descendants
@@ -241,7 +241,7 @@ function xarpages_userapi_getpages($args)
                 $overview_only_left = 0;
             }
 
-            if (!xarSecurityCheck('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+            if (!xarSecurity::check('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
                 // We have reached a page that allows only overview access.
                 // Flag all pages with the restricted view until we get past this page.
                 $overview_only_left = $right;

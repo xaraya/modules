@@ -10,7 +10,7 @@
     <h3>
         <xar:ml>
             <xar:mlstring>Do you want to delete page type '#(1)'?</xar:mlstring>
-            <xar:mlvar>#xarVarPrepForDisplay($type.name)#</xar:mlvar>
+            <xar:mlvar>#xarVar::prepForDisplay($type.name)#</xar:mlvar>
         </xar:ml>
     </h3>
 
@@ -25,13 +25,13 @@
 
 
     <xar:if condition="!xarRequestIsAJAX()">
-        <form action="#xarModURL('xarpages','admin','deletetype')#" method="post">
+        <form action="#xarController::URL('xarpages','admin','deletetype')#" method="post">
             <div class="xar-form-footer">
                 <input type="hidden" name="ptid" id="ptid" value="#$type.ptid#" />
                 <input type="hidden" name="authid" id="authid" value="#$authkey#" />
                 <input type="submit" name="confirm" id="confirmyes" value="#xarML('Delete')#" />
                 <p class="xar-align-center">
-                    <a href="#xarModURL('xarpages','admin','viewtypes')#">
+                    <a href="#xarController::URL('xarpages','admin','viewtypes')#">
                         <xar:mlstring>Cancel</xar:mlstring>
                     </a>
                 </p>

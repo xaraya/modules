@@ -1,15 +1,15 @@
 <xar:template module="xarpages" file="common" />
-<xar:if condition="xarTplGetThemeName() ne 'rss'">
+<xar:if condition="xarTpl::getThemeName() ne 'rss'">
     <xar:style file="facet" module="xarpages" scope="module" />
 
-    <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
-        [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
+    <xar:if condition="xarSecurity::check('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
+        [<a href="#xarController::URL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
     </xar:if>
 
     <div class="xarpages-page xarpages-page-facet">
         <xar:if condition="!empty($error)">
             <p class="xar-error">
-                #xarVarPrepForDisplay($error)#
+                #xarVar::prepForDisplay($error)#
             </p>
         <xar:elseif condition="!isset($q)" />
             <p class="xar-error">
@@ -29,7 +29,7 @@
 
             <xar:if condition="!empty($aid)">
                 <p>
-                    <a href="#xarServerGetCurrentURL(array('aid'=&gt;NULL))#"><xar:mlstring>Return to list</xar:mlstring></a>
+                    <a href="#xarServer::getCurrentURL(array('aid'=&gt;NULL))#"><xar:mlstring>Return to list</xar:mlstring></a>
                 </p>
             <xar:else />
                 <xar:comment>
@@ -56,11 +56,11 @@
                 <xar:if condition="!empty($filter_facets)">
                     <div class="filters-list">
                         <h3>
-                            <xar:if condition="xarThemeIsAvailable('rss')">
-                                <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;'rss'))#" title="#xarML('RSS feed for this filtered selection')#"><img src="#xarTplGetImage('rss16.png')#" /></a>&nbsp;
+                            <xar:if condition="xarTheme::isAvailable('rss')">
+                                <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;'rss'))#" title="#xarML('RSS feed for this filtered selection')#"><img src="#xarTpl::getImage('rss16.png')#" /></a>&nbsp;
                             </xar:if>
                             <xar:mlstring>Current Filters</xar:mlstring> 
-                            <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;NULL))#" title="#xarML('Remove all filters')#"><img src="#xarTplGetImage('emblem-unreadable.png')#" /></a>
+                            <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;NULL))#" title="#xarML('Remove all filters')#"><img src="#xarTpl::getImage('emblem-unreadable.png')#" /></a>
                         </h3>
                         <p class="hint">
                             <xar:mlstring>Remove a filter by clicking on its cross.</xar:mlstring>
@@ -69,12 +69,12 @@
                             <p>
                                 <xar:loop name="$facets[$loop:filter_facets:item]['filter_ancestors']">
                                     <xar:if condition="$loop:index eq 0">
-                                        #xarVarPrepForDisplay($loop:item.name)#
+                                        #xarVar::prepForDisplay($loop:item.name)#
                                     <xar:else />
-                                        &gt; <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</a>
+                                        &gt; <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</a>
                                     </xar:if>
                                 </xar:loop>
-                                <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('remove'=&gt;$loop:filter_facets:item))))#" title="#xarML('Remove this filter')#"><img src="#xarTplGetImage('emblem-unreadable.png')#" /></a>
+                                <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('remove'=&gt;$loop:filter_facets:item))))#" title="#xarML('Remove this filter')#"><img src="#xarTpl::getImage('emblem-unreadable.png')#" /></a>
                             </p>
                         </xar:loop>
                     </div>
@@ -87,8 +87,8 @@
                 <xar:if condition="!empty($subcat_facets)">
                     <div class="subcategories-list">
                         <h3>
-                            <xar:if condition="xarThemeIsAvailable('rss')">
-                                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'theme'=&gt;'rss'))#" title="#xarML('RSS feed for this page')#"><img src="#xarTplGetImage('rss16.png')#" /></a>&nbsp;
+                            <xar:if condition="xarTheme::isAvailable('rss')">
+                                <a href="#xarController::URL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'theme'=&gt;'rss'))#" title="#xarML('RSS feed for this page')#"><img src="#xarTpl::getImage('rss16.png')#" /></a>&nbsp;
                             </xar:if>
                             <xar:mlstring>Available filters</xar:mlstring>
                         </h3>
@@ -98,14 +98,14 @@
                         <xar:loop id="subcat_facets" name="$subcat_facets">
                             <xar:loop name="$facets[$loop:subcat_facets:item]['counts']">
                                 <xar:if condition="$loop:item.level eq 0">
-                                    <h4>#xarVarPrepForDisplay($loop:item.name)# (#$loop:item.count#)</h4>
+                                    <h4>#xarVar::prepForDisplay($loop:item.name)# (#$loop:item.count#)</h4>
                                 <xar:else />
                                     <xar:comment>Only go down one level. Further levels could be done using popups</xar:comment>
                                     <xar:if condition="$loop:item.level eq 1">
                                         <xar:if condition="$loop:index gt 1">
                                             |
                                         </xar:if>
-                                        <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</a>
+                                        <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVar::prepForDisplay($loop:item.name)#</a>
                                         (#$loop:item.count#)
                                     </xar:if>
                                 </xar:if>
@@ -146,12 +146,12 @@
 
                     <ul class="articles">
                         <xar:loop name="$articles">
-                            <li class="article"><xar:comment>#xarVarPrepForDisplay($loop:item.title)#</xar:comment>
+                            <li class="article"><xar:comment>#xarVar::prepForDisplay($loop:item.title)#</xar:comment>
                                 <xar:if condition="$article_count eq 1">
-                                    <xar:set name="detail">#xarTplModule('xarpages', $template_prefix, 'display', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+                                    <xar:set name="detail">#xarTpl::module('xarpages', $template_prefix, 'display', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
                                     #$detail#
                                 <xar:else />
-                                    <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+                                    <xar:set name="summary">#xarTpl::module('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
                                     #$summary#
                                 </xar:if>
                             </li>
@@ -186,9 +186,9 @@
     </div>
 <xar:else />
     <xar:comment>RSS Feed - this avoids having to put templates into another theme</xar:comment>
-    <xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid)))#</xar:set>
+    <xar:set name="dummy">#xarVar::setCached('themes','rss_channel_link',xarController::URL('xarpages','user','display',array('pid'=&gt;$current_page.pid)))#</xar:set>
     <xar:if condition="!empty($error)">
-        <p>#xarVarPrepForDisplay($error)#</p>
+        <p>#xarVar::prepForDisplay($error)#</p>
     <xar:elseif condition="!isset($q)" />
         <p>
             <xar:mlstring>The custom function 'facet' must be enabled for this page.</xar:mlstring>
@@ -197,7 +197,7 @@
         <xar:set name="template_prefix">'facet'</xar:set>
         <xar:if condition="$article_count ge 1">
             <xar:loop name="$articles">
-                <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+                <xar:set name="summary">#xarTpl::module('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
                 #$summary#
             </xar:loop>
         </xar:if>

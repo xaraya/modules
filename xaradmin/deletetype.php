@@ -17,20 +17,20 @@ function xarpages_admin_deletetype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('ptid', 'id', $ptid)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
     // Security check
-    if (!xarSecurityCheck('AdminXarpagesPagetype', 1)) {
+    if (!xarSecurity::check('AdminXarpagesPagetype', 1)) {
         return false;
     }
 
     // Get page type information
-    $type = xarModAPIFunc(
+    $type = xarMod::apiFunc(
         'xarpages',
         'user',
         'gettype',
@@ -46,7 +46,7 @@ function xarpages_admin_deletetype($args)
     // Check for confirmation
     if (empty($confirm)) {
         $data = array('type' => $type);
-        $data['authkey'] = xarSecGenAuthKey();
+        $data['authkey'] = xarSec::genAuthKey();
 
         // Get a count of pages that will also be deleted.
         $data['count'] = xarModAPIfunc(
@@ -61,12 +61,12 @@ function xarpages_admin_deletetype($args)
     }
 
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
     // Pass to API
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'xarpages',
         'admin',
         'deletetype',
@@ -76,7 +76,7 @@ function xarpages_admin_deletetype($args)
         return;
     }
 
-    xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewtypes'));
+    xarController::redirect(xarController::URL('xarpages', 'admin', 'viewtypes'));
 
     return true;
 }

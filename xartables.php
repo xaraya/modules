@@ -30,7 +30,7 @@ function xarpages_xartables()
     // Loop for each table.
     foreach (array('pages', 'types') as $table) {
         // Set the table name.
-        $xarTables[$basename . '_' . $table] = xarDBGetSiteTablePrefix() . '_' . $basename . '_' . $table;
+        $xarTables[$basename . '_' . $table] = xarDB::getPrefix() . '_' . $basename . '_' . $table;
     }
 
     // Return the table information

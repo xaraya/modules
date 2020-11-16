@@ -13,7 +13,7 @@ function xarpages_userapi_transformhook($args)
     // TODO: this is just HTML for now. How do we apply these transform
     // hooks in a more generic way in the future? I would guess they should
     // apply more to the complete page, but not sure much beyond that.
-    $transformref = xarModGetVar('xarpages', 'transformref');
+    $transformref = xarModVars::get('xarpages', 'transformref');
     if (empty($transformref)) {
         $transformref = 0;
     }

@@ -17,18 +17,18 @@ function xarpages_admin_deletepage($args)
 {
     extract($args);
 
-    if (!xarVarFetch('pid', 'id', $pid)) {
+    if (!xarVar::fetch('pid', 'id', $pid)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'str:1', $confirm, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('return_url', 'str:0:200', $return_url, '', xarVar::DONT_SET)) {
         return;
     }
 
     // Get page information
-    $page = xarModAPIFunc(
+    $page = xarMod::apiFunc(
         'xarpages',
         'user',
         'getpage',
@@ -42,14 +42,14 @@ function xarpages_admin_deletepage($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurity::check('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         return false;
     }
 
     // Check for confirmation
     if (empty($confirm)) {
         $data = array('page' => $page, 'return_url' => $return_url);
-        $data['authkey'] = xarSecGenAuthKey();
+        $data['authkey'] = xarSec::genAuthKey();
 
         $data['count'] = xarModAPIfunc(
             'xarpages',
@@ -63,12 +63,12 @@ function xarpages_admin_deletepage($args)
     }
 
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
     // Pass to API
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'xarpages',
         'admin',
         'deletepage',
@@ -79,9 +79,9 @@ function xarpages_admin_deletepage($args)
     }
 
     if (!empty($return_url)) {
-        xarResponseRedirect($return_url);
+        xarController::redirect($return_url);
     } else {
-        xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+        xarController::redirect(xarController::URL('xarpages', 'admin', 'viewpages'));
     }
 
     return true;

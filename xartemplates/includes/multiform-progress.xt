@@ -22,17 +22,17 @@
             </xar:if>
             <xar:if condition="$loop:index gt 0">&gt;</xar:if>
             <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
-                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:key,$multiform.multiform_key_name=&gt;$multiform.multiform_key))#">#xarVarPrepForDisplay($page_name)#</a>
+                <a href="#xarController::URL('xarpages','user','display',array('pid'=&gt;$loop:key,$multiform.multiform_key_name=&gt;$multiform.multiform_key))#">#xarVar::prepForDisplay($page_name)#</a>
                 <xar:set name="jump_allowed">'true'</xar:set>
             <xar:else />
-                <span>#xarVarPrepForDisplay($page_name)#</span>
+                <span>#xarVar::prepForDisplay($page_name)#</span>
             </xar:if>
         </xar:loop>
     </div>
 
     <xar:if condition="!empty($jump_allowed)">
         <div class="xarpages-multiform-history-jump">
-            <form method="post" action="#xarModURL('xarpages','user','display',array($multiform.multiform_key_name=&gt;$multiform.multiform_key))#">
+            <form method="post" action="#xarController::URL('xarpages','user','display',array($multiform.multiform_key_name=&gt;$multiform.multiform_key))#">
                 <label for="pid_select"><xar:mlstring>Jump back to page:</xar:mlstring></label>
                 <select name="pid" id="pid_select">
                     <option value="#$current_page.pid#"><xar:mlstring>----</xar:mlstring></option>
@@ -52,7 +52,7 @@
                         </xar:if>
 
                         <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
-                            <option value="#$loop:key#">#xarVarPrepForDisplay($page_name)#</option>
+                            <option value="#$loop:key#">#xarVar::prepForDisplay($page_name)#</option>
                         </xar:if>
                     </xar:loop>
                 </select>

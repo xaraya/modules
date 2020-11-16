@@ -47,14 +47,14 @@ jQuery('select#"."contains').change(function(event) {
 
     <xar:if condition="!empty($add_allowed)">
         <p>
-            <a href="#xarModURL('xarpages','admin','modifypage')#"><xar:mlstring>Add Page</xar:mlstring></a>
+            <a href="#xarController::URL('xarpages','admin','modifypage')#"><xar:mlstring>Add Page</xar:mlstring></a>
         </p>
     </xar:if>
 
     <xar:set name="root_pages">#xarModAPIfunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
     <xar:if condition="!empty($root_pages)">
         <xar:set name="method">'get'</xar:set>
-        <form method="#$method#" action="#xarModURL('xarpages','admin','viewpages')#">
+        <form method="#$method#" action="#xarController::URL('xarpages','admin','viewpages')#">
             <div>
                 <xar:if condition="$method eq 'get'">
                     <input name="module" type="hidden" value="xarpages" />
@@ -68,9 +68,9 @@ jQuery('select#"."contains').change(function(event) {
                     <option value="0"><xar:mlstring>-- All --</xar:mlstring></option>
                     <xar:loop name="$root_pages">
                         <xar:if condition="$loop:item.pid eq $contains">
-                            <option value="#$loop:item.pid#" selected="selected">[#$loop:item.pid#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pagetype.name)#)</option>
+                            <option value="#$loop:item.pid#" selected="selected">[#$loop:item.pid#] #xarVar::prepForDisplay($loop:item.name)# (#xarVar::prepForDisplay($loop:item.pagetype.name)#)</option>
                         <xar:else />
-                            <option value="#$loop:item.pid#">[#$loop:item.pid#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pagetype.name)#)</option>
+                            <option value="#$loop:item.pid#">[#$loop:item.pid#] #xarVar::prepForDisplay($loop:item.name)# (#xarVar::prepForDisplay($loop:item.pagetype.name)#)</option>
                         </xar:if>
                     </xar:loop>
                 </select>

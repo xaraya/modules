@@ -55,7 +55,7 @@ function xarpages_crumbblock_display($blockinfo)
 {
     // Security Check
     // TODO: remove this check once it goes into the blocks centrally.
-    //if (!xarSecurityCheck('ViewBlocks', 0, 'Block', 'xarpages:menu:' . $blockinfo['name'])) {return;}
+    //if (!xarSecurity::check('ViewBlocks', 0, 'Block', 'xarpages:menu:' . $blockinfo['name'])) {return;}
 
     // Get variables from content block.
     if (!is_array($blockinfo['content'])) {
@@ -77,8 +77,8 @@ function xarpages_crumbblock_display($blockinfo)
     $pid = 0;
 
     // Automatic: that means look at the page cache.
-    if (xarVarIsCached('Blocks.xarpages', 'current_pid')) {
-        $pid = xarVarGetCached('Blocks.xarpages', 'current_pid');
+    if (xarVar::isCached('Blocks.xarpages', 'current_pid')) {
+        $pid = xarVar::getCached('Blocks.xarpages', 'current_pid');
         // Make sure it is numeric.
         if (!isset($pid) || !is_numeric($pid)) {
             $pid = 0;
@@ -93,12 +93,12 @@ function xarpages_crumbblock_display($blockinfo)
     // The page details may have been cached, if
     // we are in the xarpages module, or have several
     // blocks on the same page showing the same tree.
-    if (xarVarIsCached('Blocks.xarpages', 'pagedata')) {
+    if (xarVar::isCached('Blocks.xarpages', 'pagedata')) {
         // Pages are cached?
         // The 'serialize' hack ensures we have a proper copy of the
         // paga data, which is a self-referencing array. If we don't
         // do this, then any changes we make will affect the stored version.
-        $pagedata = unserialize(serialize(xarVarGetCached('Blocks.xarpages', 'pagedata')));
+        $pagedata = unserialize(serialize(xarVar::getCached('Blocks.xarpages', 'pagedata')));
 
         // If the cached tree does not contain the current page,
         // then we cannot use it.

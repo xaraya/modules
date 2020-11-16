@@ -215,19 +215,19 @@ function xarpages_treeapi_array_image_substitution($node)
         $style = 'class="xar-xarpages-tree"';
 
         $image_list[_XARPAGES_O_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_nosub.gif', 'xarpages') . '" alt="0" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_nosub.gif', 'xarpages') . '" alt="0" />';
         $image_list[_XARPAGES_P_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub.gif', 'xarpages') . '" alt="P" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_sub.gif', 'xarpages') . '" alt="P" />';
         $image_list[_XARPAGES_T_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_branch_t.gif', 'xarpages') . '" alt="t" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_sub_branch_t.gif', 'xarpages') . '" alt="t" />';
         $image_list[_XARPAGES_L_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_branch_l.gif', 'xarpages') . '" alt="L" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_sub_branch_l.gif', 'xarpages') . '" alt="L" />';
         $image_list[_XARPAGES_I_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_line.gif', 'xarpages') . '" alt="|" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_sub_line.gif', 'xarpages') . '" alt="|" />';
         $image_list[_XARPAGES_BLANK_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_spacer.gif', 'xarpages') . '" alt="&nbsp;" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_spacer.gif', 'xarpages') . '" alt="&nbsp;" />';
         $image_list[_XARPAGES_DASH_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_end.gif', 'xarpages') . '" alt="_" />';
+            '<img '.$style.' src="' . xarTpl::getImage('n_sub_end.gif', 'xarpages') . '" alt="_" />';
         $image_list[_XARPAGES_NO_CONNECTOR] = '';
     }
 

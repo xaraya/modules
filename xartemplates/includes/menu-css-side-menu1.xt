@@ -88,15 +88,15 @@
                         <xar:if condition="$page.status eq 'EMPTY' and empty($page.has_children)">
                             <h2>
                                 <xar:if condition="!empty($page.dd.menu_title)">
-                                    #xarVarPrepForDisplay($page.dd.menu_title)#
+                                    #xarVar::prepForDisplay($page.dd.menu_title)#
                                 <xar:else />
                                     #$page.name#
                                 </xar:if>
                             </h2>
                         <xar:else />
-                            <a class="#$class#" href="#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#" title="#xarVarPrepForDisplay($page.desc)#">
+                            <a class="#$class#" href="#xarController::URL('xarpages','user','display',array('pid'=&gt;$page.pid))#" title="#xarVar::prepForDisplay($page.desc)#">
                                 <xar:if condition="!empty($page.dd.menu_title)">
-                                    #xarVarPrepForDisplay($page.dd.menu_title)#
+                                    #xarVar::prepForDisplay($page.dd.menu_title)#
                                 <xar:else />
                                     #$page.name#
                                 </xar:if>

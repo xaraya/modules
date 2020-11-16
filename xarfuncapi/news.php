@@ -17,21 +17,21 @@ function xarpages_funcapi_news($args)
     // Get the details of the publication type (defaults etc.)
 
     // We get the first pubtype for historical reasons (DEPRECATED).
-    $pubtype = xarModAPIFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptids[0]));
+    $pubtype = xarMod::apiFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptids[0]));
 
     // Get the global settings if using multiple publication types, otherwise fetch
     // settings for the single selected publication type.
     if (count($ptids) > 1) {
-        $settings = unserialize(xarModGetVar('articles', 'settings'));
+        $settings = unserialize(xarModVars::get('articles', 'settings'));
     } else {
-        $settings = unserialize(xarModGetVar('articles', 'settings.' . $ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.' . $ptid));
     }
 
     // Parameter to allow selection of only front page articles. Limit to frontpage if true.
-    xarVarFetch('frontpage', 'bool', $frontpage, false, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('frontpage', 'bool', $frontpage, false, xarVar::NOT_REQUIRED);
 
     // Set the archive view.
-    xarVarFetch('archive', 'str', $archive, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('archive', 'str', $archive, '', xarVar::NOT_REQUIRED);
     if (!empty($archive)) {
         // Add in an '-' characters if they have been left out.
         if (preg_match('/^\d{6}$/', $archive)) {
@@ -57,24 +57,24 @@ function xarpages_funcapi_news($args)
     $max_numitems_ceiling = 1000;
 
     $max_numitems = ($settings['itemsperpage'] < ($max_numitems_floor/$max_numitems_factor) ? $max_numitems_floor : ($settings['itemsperpage'] > ($max_numitems_ceiling/$max_numitems_factor) ? $max_numitems_ceiling : $settings['itemsperpage'] * $max_numitems_factor));
-    xarVarFetch('startnum', 'int:1', $startnum, 1, XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['itemsperpage'], XARVAR_NOT_REQUIRED);
+    xarVar::fetch('startnum', 'int:1', $startnum, 1, xarVar::NOT_REQUIRED);
+    xarVar::fetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['itemsperpage'], xarVar::NOT_REQUIRED);
 
     // An individual item has been selected
     // TODO: support selection by name, though this may not be unique enough.
-    xarVarFetch('aid', 'id', $aid, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('aid', 'id', $aid, 0, xarVar::NOT_REQUIRED);
 
     // TODO: support some fancy category joining.
     // A single category selected: cid=N
-    xarVarFetch('cid', 'regexp:/_?\d+/', $cid, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('cid', 'regexp:/_?\d+/', $cid, '', xarVar::NOT_REQUIRED);
     // A group of categories selected, e.g. cids[]=N or cids[]=_M
-    xarVarFetch('cids', 'list:regexp:/_?\d+/', $cids, array(), XARVAR_NOT_REQUIRED);
+    xarVar::fetch('cids', 'list:regexp:/_?\d+/', $cids, array(), xarVar::NOT_REQUIRED);
 
     // All the categories rolled into one paramater, e.g. cats=_1+3 cats=4-5
-    xarVarFetch('cats', 'str', $cats, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('cats', 'str', $cats, '', xarVar::NOT_REQUIRED);
 
     if (!empty($cats)) {
-        if (xarVarValidate('strlist:+ -:regexp:/_?\d+/', $cats, true)) {
+        if (xarVar::validate('strlist:+ -:regexp:/_?\d+/', $cats, true)) {
             $cats_array = preg_split('/[+ -]+/', $cats);
             $cids = array_merge($cids, $cats_array);
         }
@@ -89,7 +89,7 @@ function xarpages_funcapi_news($args)
     }
 
     // Keyword search
-    xarVarFetch('q', 'pre:trim:passthru:strlist: ,;:pre:lower:trim:passthru:str', $q, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('q', 'pre:trim:passthru:strlist: ,;:pre:lower:trim:passthru:str', $q, '', xarVar::NOT_REQUIRED);
     // Clean up the keywords
     if (!empty($q)) {
         $q = trim(preg_replace('/[^a-z0-9 .,:;@#+-]/', '', strtolower($q)));
@@ -107,7 +107,7 @@ function xarpages_funcapi_news($args)
     $transform_fields_detail = array('summary', 'body', 'notes');
     
     // General sort methods will be what articles supports (practically just date and title)
-    xarVarFetch('sort', 'str', $sort, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('sort', 'str', $sort, '', xarVar::NOT_REQUIRED);
     if (empty($sort)) {
         $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
     }
@@ -151,7 +151,7 @@ function xarpages_funcapi_news($args)
     if (!empty($args['current_page']['dd']['mandatory_cat'])) {
         $mandatory_cat = $args['current_page']['dd']['mandatory_cat'];
         // It should be a comma-separated list
-        if (xarVarValidate('strlist:,:regexp:/_?\d+/', $mandatory_cat, true)) {
+        if (xarVar::validate('strlist:,:regexp:/_?\d+/', $mandatory_cat, true)) {
             $mandatory_cats = explode(',', $mandatory_cat);
             $cids = array_merge($cids, $mandatory_cats);
         }
@@ -184,7 +184,7 @@ function xarpages_funcapi_news($args)
     $enddate = strtotime('+1 day -1 second', time());
 
     // Get details for all pubtypes
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     $article_select = array(
         'startnum' => $startnum,
@@ -208,7 +208,7 @@ function xarpages_funcapi_news($args)
         ),
     );
 
-    $articles = xarModAPIFunc('articles', 'user', 'getall', $article_select);
+    $articles = xarMod::apiFunc('articles', 'user', 'getall', $article_select);
 
     // Get the details of all the categories selected in these articles.
     // Gather a list of unique category IDs.
@@ -236,10 +236,10 @@ function xarpages_funcapi_news($args)
     }
 
     // Set the Pager
-    $search_count = xarModAPIFunc('articles', 'user', 'countitems', $article_select);
+    $search_count = xarMod::apiFunc('articles', 'user', 'countitems', $article_select);
     $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid'], 'startnum' => '%%'));
-    $pager_base_url = xarModURL('xarpages', 'user', 'display', $pager_url_params);
-    $pager = xarTplGetPager($startnum, $search_count, $pager_base_url, $numitems);
+    $pager_base_url = xarController::URL('xarpages', 'user', 'display', $pager_url_params);
+    $pager = xarTplPager::getPager($startnum, $search_count, $pager_base_url, $numitems);
 
     // If an individual article has been selected, then get that separately.
     $article = array();
@@ -247,7 +247,7 @@ function xarpages_funcapi_news($args)
         $single_article_select = $article_select;
         $single_article_select['aid'] = $aid;
         unset($single_article_select['startnum']);
-        $article = xarModAPIFunc('articles', 'user', 'get', $single_article_select);
+        $article = xarMod::apiFunc('articles', 'user', 'get', $single_article_select);
 
         // Do transform hooks.
         // TODO: transform some dynamic data fields too? Make configurable.
@@ -258,17 +258,17 @@ function xarpages_funcapi_news($args)
                 $article['transform'] = $transform_fields_detail;
                 $article['itemtype'] = $article['pubtypeid'];
                 $article['itemid'] = $article['aid'];
-                $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
+                $article = xarModHooks::call('item', 'transform', $article['aid'], $article, 'articles');
             }
 
             // Fetch keywords and articles related by keyword.
-            // CHECKME: does xarModIsHooked accept an array of ptids?
-            if (xarModIsHooked('keywords', 'articles', $ptids)) {
+            // CHECKME: does xarModHooks::isHooked accept an array of ptids?
+            if (xarModHooks::isHooked('keywords', 'articles', $ptids)) {
                 $keyword_words = xarModAPIfunc(
                     'keywords',
                     'user',
                     'getwords',
-                    array('itemid' => $aid, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
+                    array('itemid' => $aid, 'modid' => xarMod::getRegId('articles'), 'itemtype' => $ptids)
                 );
                 //var_dump($keyword_words);
 
@@ -284,7 +284,7 @@ function xarpages_funcapi_news($args)
                             'keywords',
                             'user',
                             'getitems',
-                            array('keyword' => $keyword_word, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
+                            array('keyword' => $keyword_word, 'modid' => xarMod::getRegId('articles'), 'itemtype' => $ptids)
                         );
                         if (!empty($keyword_items)) {
                             $keywords[$keyword_word] = $keyword_items;
@@ -327,7 +327,7 @@ function xarpages_funcapi_news($args)
 
             // Perform other required hooks (e.g. hitcount) against the article.
             if (!empty($article)) {
-                $article['hooks'] = xarModCallHooks(
+                $article['hooks'] = xarModHooks::call(
                     'item',
                     'display',
                     $aid,
@@ -336,7 +336,7 @@ function xarpages_funcapi_news($args)
                         'itemtype' => $article['pubtypeid'],
                         'itemid' => $aid,
                         'title' => $article['title'],
-                        'returnurl' => xarServerGetCurrentURL() //xarModURL('articles', 'user', 'display', array('ptid' => $ptid, 'aid' => $aid))
+                        'returnurl' => xarServer::getCurrentURL() //xarController::URL('articles', 'user', 'display', array('ptid' => $ptid, 'aid' => $aid))
                     ),
                     'articles'
                 );
@@ -371,7 +371,7 @@ function xarpages_funcapi_news($args)
                         $range_article_select['numitems'] = 3;
                     }
                     // Fetch the range of articles either side of the current article.
-                    $range_articles = xarModAPIFunc('articles', 'user', 'getall', $range_article_select);
+                    $range_articles = xarMod::apiFunc('articles', 'user', 'getall', $range_article_select);
 
                     // Only one article available.
                     if (count($range_articles) <= 1) {
@@ -388,7 +388,7 @@ function xarpages_funcapi_news($args)
                                 $next_startnum = $startnum + $numitems;
                             }
                             $next_article = array_pop($range_articles);
-                            $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
+                            $next_url = xarServer::getCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                             $prev_article = array();
                             $prev_url = '';
                         } else {
@@ -400,7 +400,7 @@ function xarpages_funcapi_news($args)
                                 $prev_startnum = $startnum - $numitems;
                             }
                             $prev_article = array_shift($range_articles);
-                            $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
+                            $prev_url = xarServer::getCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
                         }
                     } elseif (count($range_articles) >= 3) {
                         // Both next and previous
@@ -413,9 +413,9 @@ function xarpages_funcapi_news($args)
                             $prev_startnum = $startnum - $numitems;
                         }
                         $next_article = array_pop($range_articles);
-                        $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
+                        $next_url = xarServer::getCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                         $prev_article = array_shift($range_articles);
-                        $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
+                        $prev_url = xarServer::getCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
                     }
 
                     $article['next_article'] = $next_article;
@@ -437,7 +437,7 @@ function xarpages_funcapi_news($args)
                 $t_article['transform'] = $transform_fields_summary;
                 $t_article['itemtype'] = $t_article['pubtypeid'];
                 $t_article['itemid'] = $t_article['aid'];
-                $articles[$t_key] = xarModCallHooks('item', 'transform', $t_article['aid'], $t_article, 'articles');
+                $articles[$t_key] = xarModHooks::call('item', 'transform', $t_article['aid'], $t_article, 'articles');
             }
         }
     }
@@ -447,7 +447,7 @@ function xarpages_funcapi_news($args)
         $month_select = $article_select;
 
         unset($month_select['pubdate']);
-        $month_counts = xarModAPIFunc('articles', 'user', 'getmonthcount', $month_select);
+        $month_counts = xarMod::apiFunc('articles', 'user', 'getmonthcount', $month_select);
 
         // DONE: Sum up counts by year
         // DONE: split up date for display as a title

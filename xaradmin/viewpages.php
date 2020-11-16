@@ -19,15 +19,15 @@ function xarpages_admin_viewpages($args)
     extract($args);
 
     // Security check
-    if (!xarSecurityCheck('ModerateXarpagesPage', 1, 'Page', 'All')) {
+    if (!xarSecurity::check('ModerateXarpagesPage', 1, 'Page', 'All')) {
         // No privilege for viewing pages.
         return false;
     }
 
     // Accept a parameter to allow selection of a single tree.
-    xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('contains', 'id', $contains, 0, xarVar::NOT_REQUIRED);
 
-    $data = xarModAPIFunc(
+    $data = xarMod::apiFunc(
         'xarpages',
         'user',
         'getpagestree',
@@ -50,13 +50,13 @@ function xarpages_admin_viewpages($args)
     // DeletePage - page can be renamed, moved and deleted
     if (!empty($data['pages'])) {
         foreach ($data['pages'] as $key => $page) {
-            if (xarSecurityCheck('ModerateXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+            if (xarSecurity::check('ModerateXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
                 $data['pages'][$key]['moderate_allowed'] = true;
             }
-            if (xarSecurityCheck('EditXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+            if (xarSecurity::check('EditXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
                 $data['pages'][$key]['edit_allowed'] = true;
             }
-            if (xarSecurityCheck('DeleteXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+            if (xarSecurity::check('DeleteXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
                 $data['pages'][$key]['delete_allowed'] = true;
             }
         }
@@ -105,7 +105,7 @@ function xarpages_admin_viewpages($args)
     $data['pages'] = $pagestree;
 
     // Check if the user is allowed to add pages.
-    if (xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All')) {
+    if (xarSecurity::check('AddXarpagesPage', 0, 'Page', 'All')) {
         $data['add_allowed'] = true;
     }
 

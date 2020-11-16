@@ -17,18 +17,18 @@ function xarpages_admin_modifypage($args)
 {
     extract($args);
 
-    if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('creating', 'bool', $creating, true, xarVar::NOT_REQUIRED)) {
         return;
     }
 
-    if (!xarVarFetch('pid', 'id', $pid, null, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('pid', 'id', $pid, null, xarVar::DONT_SET)) {
         return;
     }
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, 0, xarVar::DONT_SET)) {
         return;
     }
 
-    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('return_url', 'str:0:200', $return_url, '', xarVar::DONT_SET)) {
         return;
     }
 
@@ -44,7 +44,7 @@ function xarpages_admin_modifypage($args)
 
         // Setting up necessary data.
         $data['pid'] = $pid;
-        $data['page'] = xarModAPIFunc(
+        $data['page'] = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpage',
@@ -52,19 +52,19 @@ function xarpages_admin_modifypage($args)
         );
 
         // Check we have minimum privs to edit this page.
-        if (!xarSecurityCheck('EditXarpagesPage', 1, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
+        if (!xarSecurity::check('EditXarpagesPage', 1, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
             return;
         }
 
         // Check the level of access we have. Are we allowed to rename or delete this page?
-        if (xarSecurityCheck('DeleteXarpagesPage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
+        if (xarSecurity::check('DeleteXarpagesPage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
             $data['delete_allowed'] = true;
         }
 
         $data['ptid'] = $data['page']['pagetype']['ptid'];
 
         // We need all pages, but with the current page tree pruned.
-        $pages = xarModAPIFunc(
+        $pages = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpagestree',
@@ -73,7 +73,7 @@ function xarpages_admin_modifypage($args)
 
         $data['func'] = 'modify';
 
-        $hooks = xarModCallHooks(
+        $hooks = xarModHooks::call(
             'item',
             'modify',
             $pid,
@@ -87,17 +87,17 @@ function xarpages_admin_modifypage($args)
         // Adding a new page
 
         // Check we are allowed to create pages.
-        if (!xarSecurityCheck('AddXarpagesPage', 1, 'Page', 'All')) {
+        if (!xarSecurity::check('AddXarpagesPage', 1, 'Page', 'All')) {
             return;
         }
 
-        if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('ptid', 'id', $ptid, 0, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('insertpoint', 'id', $insertpoint, 0, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('insertpoint', 'id', $insertpoint, 0, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVarFetch('position', 'str', $position, 'after', XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('position', 'str', $position, 'after', xarVar::DONT_SET)) {
             return;
         }
 
@@ -128,7 +128,7 @@ function xarpages_admin_modifypage($args)
             // pages for each type? We may actually end up with no page types
             // but that depends on the permissions.
             foreach ($pagetypes as $key => $pagetype) {
-                if (!xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
+                if (!xarSecurity::check('AddXarpagesPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
                     unset($pagetypes[$key]);
                 }
             }
@@ -153,9 +153,9 @@ function xarpages_admin_modifypage($args)
             }
 
             // Get all pages.
-            $pages = xarModAPIFunc('xarpages', 'user', 'getpagestree');
+            $pages = xarMod::apiFunc('xarpages', 'user', 'getpagestree');
 
-            $hooks = xarModCallHooks(
+            $hooks = xarModHooks::call(
                 'item',
                 'new',
                 '',
@@ -211,7 +211,7 @@ function xarpages_admin_modifypage($args)
     }
     $data['pages'] = $pages['pages'];
 
-    $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages'));
+    $modinfo = xarMod::getInfo(xarMod::getRegId('xarpages'));
 
     // Get lists of files in the various custom APIs.
     // Dynamicdata is a prerequisite for this module, so no need to check
@@ -260,7 +260,7 @@ function xarpages_admin_modifypage($args)
     }
 
     // Loop through the themes, and fetch any templates there.
-    $themes = xarModAPIfunc('themes', 'admin', 'getlist', array('state' => XARTHEME_STATE_ACTIVE));
+    $themes = xarModAPIfunc('themes', 'admin', 'getlist', array('state' => xarTheme::STATE_ACTIVE));
     foreach ($themes as $theme) {
         // Check for templates for this module in the theme.
         $templates = xarModAPIfunc(
@@ -295,5 +295,5 @@ function xarpages_admin_modifypage($args)
         $pagetype = null;
     }
 
-    return xarTplModule('xarpages', 'admin', 'modifypage', $data, $pagetype);
+    return xarTpl::module('xarpages', 'admin', 'modifypage', $data, $pagetype);
 }

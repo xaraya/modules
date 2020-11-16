@@ -15,7 +15,7 @@
 
 function xarpages_admin_new($args)
 {
-    xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('itemtype', 'id', $itemtype, 0, xarVar::NOT_REQUIRED);
     if (!empty($itemtype)) {
         $args['ptid'] = $itemtype;
     }

@@ -16,11 +16,11 @@
 function xarpages_admin_main()
 {
     // Need admin priv to view the info page.
-    if (!xarSecurityCheck('AdminXarpagesPage')) {
+    if (!xarSecurity::check('AdminXarpagesPage')) {
         return;
     }
 
     // Redirect to the view page.
-    xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+    xarController::redirect(xarController::URL('xarpages', 'admin', 'viewpages'));
     return true;
 }

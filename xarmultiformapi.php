@@ -82,10 +82,10 @@ function &xarpages_multiformapi_sessionvar($args = array())
     $session_var_name = 'xarpages_multiform_sessionvars';
 
     if (empty($args)) {
-        $session_var = xarSessionGetVar($session_var_name);
+        $session_var = xarSession::getVar($session_var_name);
     } elseif (empty($args['reset'])) {
         $session_var = $args;
-        xarSessionSetVar($session_var_name, $session_var);
+        xarSession::setVar($session_var_name, $session_var);
     }
 
     // If not set, then make sure there is something there.
@@ -107,7 +107,7 @@ function &xarpages_multiformapi_sessionvar($args = array())
             'formdata' => array(), // Collected form data from (and shared between) all pages
             'workdata' => array(), // Working data for the process functions; used to pass data between pages
         );
-        xarSessionSetVar($session_var_name, $session_var);
+        xarSession::setVar($session_var_name, $session_var);
     }
 
     return $session_var;
@@ -160,7 +160,7 @@ function xarpages_multiformapi_getvalobject($args)
 {
     extract($args);
 
-    if (empty($name) || !xarVarValidate('pre:trim:ftoken', $name)) {
+    if (empty($name) || !xarVar::validate('pre:trim:ftoken', $name)) {
         return;
     }
 
@@ -189,14 +189,14 @@ function xarpages_multiformapi_passdata($args = array())
 
     if (empty($args)) {
         // No args, so return whatever is stored
-        $args = xarSessionGetVar($session_var_name);
+        $args = xarSession::getVar($session_var_name);
         if (empty($args)) {
             $args = null;
         }
-        xarSessionDelVar($session_var_name);
+        xarSession::delVar($session_var_name);
     } else {
         // Args supplied, so store it
-        xarSessionSetVar($session_var_name, $args);
+        xarSession::setVar($session_var_name, $args);
     }
 
     return $args;

@@ -28,12 +28,12 @@ function xarpages_adminapi_deletetype($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('AdminXarpagesPagetype', 1)) {
+    if (!xarSecurity::check('AdminXarpagesPagetype', 1)) {
         return;
     }
 
     // Get the [optional] pages for deleting.
-    $pages = xarModAPIFunc(
+    $pages = xarMod::apiFunc(
         'xarpages',
         'user',
         'getpages',
@@ -56,8 +56,8 @@ function xarpages_adminapi_deletetype($args)
     }
 
     // Get database setup.
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $query = 'DELETE FROM ' . $xartable['xarpages_types'] . ' WHERE xar_ptid = ?';
 
@@ -69,7 +69,7 @@ function xarpages_adminapi_deletetype($args)
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
     // Delete the page type as an item.
-    xarModCallHooks(
+    xarModHooks::call(
         'item',
         'delete',
         $type['ptid'],
@@ -78,7 +78,7 @@ function xarpages_adminapi_deletetype($args)
 
     // Delete the page type as a type.
     // TODO: this hook is not yet available.
-    //xarModCallHooks(
+    //xarModHooks::call(
     //    'itemtype', 'delete', $type_itemtype,
     //    array('module' => 'xarpages', 'itemtype' => $type_itemtype)
     //);

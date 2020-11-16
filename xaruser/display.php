@@ -14,14 +14,14 @@ function xarpages_user_display($args)
     // Fetch the page ID.
     // This may have been calculated from a path in the
     // short URL decode function.
-    xarVarFetch('pid', 'id', $pid, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('pid', 'id', $pid, 0, xarVar::NOT_REQUIRED);
 
     // TODO: much of this information may have been retrieved during short URL
     // decoding, so need not be done again.
 
     // If no PID supplied, get the default PID.
     if (empty($pid)) {
-        $pid = xarModGetVar('xarpages', 'defaultpage');
+        $pid = xarModVars::get('xarpages', 'defaultpage');
     }
 
     // Get the current page details.
@@ -40,7 +40,7 @@ function xarpages_user_display($args)
         // information to it, so it can render a sensible message or
         // make some choices.
         if (empty($current_page)) {
-            $pid = xarModGetVar('xarpages', 'notfoundpage');
+            $pid = xarModVars::get('xarpages', 'notfoundpage');
 
             if (!empty($pid)) {
                 $current_page = xarModAPIfunc(
@@ -57,8 +57,8 @@ function xarpages_user_display($args)
     // FIXME: this only checks the current page - the
     // tree fetch lower down will determine whether the page
     // has no privilege by virtue of an ancestor.
-    $noprivspage = xarModGetVar('xarpages', 'noprivspage');
-    if (!empty($current_page) && !xarSecurityCheck(
+    $noprivspage = xarModVars::get('xarpages', 'noprivspage');
+    if (!empty($current_page) && !xarSecurity::check(
         'ReadXarpagesPage',
         (empty($noprivspage) ? 1 : 0),
         'Page',
@@ -93,7 +93,7 @@ function xarpages_user_display($args)
         // Get the PID for the 'error' page.
         // We have a pid, but no page, so there must have been an error
         // attempting to fetch the page.
-        $pid = xarModGetVar('xarpages', 'errorpage');
+        $pid = xarModVars::get('xarpages', 'errorpage');
 
         if (!empty($pid)) {
             $current_page = xarModAPIfunc(
@@ -157,7 +157,7 @@ function xarpages_user_display($args)
 
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
-    xarVarSetCached('Blocks.xarpages', 'pagedata', $data);
+    xarVar::setCached('Blocks.xarpages', 'pagedata', $data);
 
     // The 'serialize' hack ensures we have a proper copy of the
     // paga data, which is a self-referencing array. If we don't
@@ -165,7 +165,7 @@ function xarpages_user_display($args)
     $data = unserialize(serialize($data));
 
     // Save the current page ID. This is used by blocks in 'automatic' mode.
-    xarVarSetCached('Blocks.xarpages', 'current_pid', $pid);
+    xarVar::setCached('Blocks.xarpages', 'current_pid', $pid);
 
     // Save a copy of the args passed into this function in the data array.
     // This allows, for example, form errors to be passed into the page
@@ -189,7 +189,7 @@ function xarpages_user_display($args)
     if (isset($data['current_page']['dd'])) {
         // If the fields have been limited for transform, then pass those
         // fields into the transform hook too.
-        $transformfields = xarModGetVar('xarpages', 'transformfields');
+        $transformfields = xarModVars::get('xarpages', 'transformfields');
         if (!empty($transformfields)) {
             $data['current_page']['dd']['transform'] = explode(' ', $transformfields);
             //var_dump($data['current_page']['dd']['transform']);
@@ -198,7 +198,7 @@ function xarpages_user_display($args)
         // Set the itemtype for the transform hook system.
         $data['current_page']['dd']['itemtype'] = $data['current_page']['ptid'];
 
-        $data['current_page']['dd'] = xarModCallHooks(
+        $data['current_page']['dd'] = xarModHooks::call(
             'item',
             'transform',
             $pid,
@@ -232,9 +232,9 @@ function xarpages_user_display($args)
     // Use rolled-up page here so the theme is inherited.
     // The special case theme name 'default' will disable this feature
     // and just use the default theme.
-    xarVarFetch('theme', 'enum:rss:print:', $theme_override, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('theme', 'enum:rss:print:', $theme_override, '', xarVar::NOT_REQUIRED);
     if (!empty($inherited['theme']) && $inherited['theme'] != 'default' && empty($theme_override)) {
-        xarTplSetThemeName($inherited['theme']);
+        xarTpl::setThemeName($inherited['theme']);
     }
 
     // Call up a custom function to do any further manipulation or
@@ -283,7 +283,7 @@ function xarpages_user_display($args)
     // The special case theme name 'default' will disable this feature
     // and just use the default page template.
     if (!empty($data['inherited']['page_template']) && $data['inherited']['page_template'] != 'default') {
-        xarTplSetPageTemplateName($data['inherited']['page_template']);
+        xarTpl::setPageTemplateName($data['inherited']['page_template']);
     }
 
     // Call display hooks
@@ -291,18 +291,18 @@ function xarpages_user_display($args)
     $item['module'] = 'xarpages';
     $item['itemtype'] = $data['current_page']['ptid'];
     $item['itemid'] = $pid;
-    $item['returnurl'] = xarModURL(
+    $item['returnurl'] = xarController::URL(
         'xarpages',
         'user',
         'display',
         array('pid' => $pid)
     );
     // All hook data in the 'hooks' element.
-    $data['hooks'] = xarModCallHooks('item', 'display', $pid, $item);
+    $data['hooks'] = xarModHooks::call('item', 'display', $pid, $item);
 
     // TODO: provide an alternative, configurable, default template, for when none found,
     // ultimately falling back to 'page'. We need to start messing around consuming
-    // errors from the error stack to do that though, as xarTplModule() does not have a
+    // errors from the error stack to do that though, as xarTpl::module() does not have a
     // fallback mechanism to alternative template names (it does shorter template names, but
     // not alternative).
 
@@ -310,7 +310,7 @@ function xarpages_user_display($args)
     // Use rolled-up page here so templates are inherited, i.e. so that setting a
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
-    return xarTplModule(
+    return xarTpl::module(
         'xarpages',
         'page',
         $data['inherited']['pagetype']['name'],

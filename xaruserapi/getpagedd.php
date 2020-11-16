@@ -32,7 +32,7 @@ function xarpages_userapi_getpagedd($args)
     // within each item type in one go.
     foreach ($itemtypes as $itemtype => $items) {
         // Continue to the next page type if this one isn't hooked.
-        if (!xarModIsHooked('dynamicdata', 'xarpages', $itemtype)) {
+        if (!xarModHooks::isHooked('dynamicdata', 'xarpages', $itemtype)) {
             continue;
         }
 

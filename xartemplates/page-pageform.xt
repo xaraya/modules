@@ -37,7 +37,7 @@
 
     <xar:if condition="!empty($pageform)">
         <xar:comment>
-            could use enctype='application/x-www-form-urlencoded' if we know there's no uploads. See other templates for examples, might need to call xarVarGetCached('Hooks.dynamicdata','withupload')
+            could use enctype='application/x-www-form-urlencoded' if we know there's no uploads. See other templates for examples, might need to call xarVar::getCached('Hooks.dynamicdata','withupload')
         </xar:comment>
         <form method="post" name="post" id="post" action="#$pageform['action_url']#" enctype='multipart/form-data'>
             <xar:if condition="!empty($current_page.dd.formlayout)">
@@ -73,10 +73,10 @@
         </form>
     </xar:if>
 
-    <xar:if condition="xarModAPIFunc('roles','user','checkprivilege', array('uid' =&gt; xarSessionGetVar('uid'), 'privilege' =&gt; 'grpEditorFlag'))">
+    <xar:if condition="xarMod::apiFunc('roles','user','checkprivilege', array('uid' =&gt; xarSession::getVar('uid'), 'privilege' =&gt; 'grpEditorFlag'))">
         <div class="xar-margin-thick">
             <span class="xar-alt xar-padding-thick">
-                <xar:mlstring>Editors Options:</xar:mlstring> <a href="#xarModURL('xarpages','admin','modifypage',array('pid' => $pid))#"><xar:mlstring>Edit this page</xar:mlstring></a>
+                <xar:mlstring>Editors Options:</xar:mlstring> <a href="#xarController::URL('xarpages','admin','modifypage',array('pid' => $pid))#"><xar:mlstring>Edit this page</xar:mlstring></a>
             </span>
         </div>
     </xar:if>
@@ -86,5 +86,5 @@
     set title last in case another module tried to set it, above
 </xar:comment>
 <xar:if condition="!empty($ttl)">
-    <xar:set name="dummy">#xarTplSetPageTitle($ttl)#</xar:set>
+    <xar:set name="dummy">#xarTpl::setPageTitle($ttl)#</xar:set>
 </xar:if>

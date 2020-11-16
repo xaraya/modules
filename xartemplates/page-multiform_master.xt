@@ -31,7 +31,7 @@
                 <xar:mlstring>Reason</xar:mlstring>
             </h2>
             <p>
-                #xarVarPrepForDisplay($multiform.passdata.reason_detail)#
+                #xarVar::prepForDisplay($multiform.passdata.reason_detail)#
             </p>
         </xar:if>
     <xar:elseif condition="$multiform.reason eq 'timeout'" />
@@ -53,7 +53,7 @@
             <p class="multiform-start">
                 <xar:ml>
                     <xar:mlstring>To start, <a href="#(1)">click here</a></xar:mlstring>
-                    <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
+                    <xar:mlvar>#xarController::URL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
                 </xar:ml>
             </p>
         </xar:if>
@@ -63,7 +63,7 @@
         <p class="multiform-restart">
             <xar:ml>
                 <xar:mlstring><a href="#(1)">To try again, click here</a></xar:mlstring>
-                <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
+                <xar:mlvar>#xarController::URL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
             </xar:ml>
         </p>
     </xar:if>

@@ -43,14 +43,14 @@ function xarpages_adminapi_updatepage($args)
     }
 
     // Check we have minimum privs to edit this page.
-    if (!xarSecurityCheck('EditXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurity::check('EditXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         return;
     }
 
     // Certain changes can only be made if we have delete privilege on the page.
     // Null those arguments out if we do not have the privs.
     // TODO: determine if there are other changes that should be disabled.
-    if (!xarSecurityCheck('DeleteXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurity::check('DeleteXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         // We do not allow the page to be renamed or moved if we only have edit priv.
         // TODO: perhaps there are other [arbitrary] attibutes that we would like to
         // prevent the user from changing?
@@ -62,8 +62,8 @@ function xarpages_adminapi_updatepage($args)
     // If the name has changed, then remove any alias to the old page name.
     if (isset($name)) {
         // Only delete the alias if it belongs to this module.
-        if (($page['name'] != $name || empty($alias)) && xarModGetAlias($page['name']) == 'xarpages') {
-            xarModDelAlias($page['name'], 'xarpages');
+        if (($page['name'] != $name || empty($alias)) && xarModAlias::resolve($page['name']) == 'xarpages') {
+            xarModAlias::delete($page['name'], 'xarpages');
         }
     }
 
@@ -71,14 +71,14 @@ function xarpages_adminapi_updatepage($args)
     if (!empty($alias)) {
         // Use the current name if passed in, else use the existing name.
         // Only set if the alias is not currently being used by this or any other module.
-        if (xarModGetAlias(isset($name) ? $name : $page['name']) != '') {
-            xarModSetAlias((isset($name) ? $name : $page['name']), 'xarpages');
+        if (xarModAlias::resolve(isset($name) ? $name : $page['name']) != '') {
+            xarModAlias::set((isset($name) ? $name : $page['name']), 'xarpages');
         }
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $tablename = $xartable['xarpages_pages'];
 
     // Move the item in the hierarchy/tree, if required.
@@ -147,7 +147,7 @@ function xarpages_adminapi_updatepage($args)
     $args['module'] = 'xarpages';
     $args['itemtype'] = $page['itemtype'];
     $args['itemid'] = $pid;
-    xarModCallHooks('item', 'update', $pid, $args);
+    xarModHooks::call('item', 'update', $pid, $args);
 
     return true;
 }

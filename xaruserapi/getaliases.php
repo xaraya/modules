@@ -10,8 +10,8 @@ function xarpages_userapi_getaliases($args)
 {
     extract($args);
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable =& xarDB::getTables();
+    $dbconn =& xarDB::getConn();
 
     if (empty($mincount) || !is_numeric($mincount)) {
         $mincount = 1;
@@ -38,7 +38,7 @@ function xarpages_userapi_getaliases($args)
     while (!$result->EOF) {
         list($name, $name_count) = $result->fields;
 
-        if (xarModGetAlias($name) == 'xarpages') {
+        if (xarModAlias::resolve($name) == 'xarpages') {
             $return[$name] = $name_count;
         }
 

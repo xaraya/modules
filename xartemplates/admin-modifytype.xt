@@ -13,20 +13,20 @@
     </h2>
 
     <xar:comment>Either modifying a page, or we have a page type</xar:comment>
-    <form action="#xarModURL('xarpages','admin','updatetype')#" method="post">
+    <form action="#xarController::URL('xarpages','admin','updatetype')#" method="post">
         <div class="xar-form-section">
             <h3>
                 <xar:mlstring>Page Type Attributes</xar:mlstring>
             </h3>
 
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
             <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 
             <div class="xar-form-input-wrapper">
                 <label for="name" class="xar-form-label">
                     <xar:mlstring>Name</xar:mlstring>
                 </label>
-                <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($type['name'])#" size="32" maxlength="64" />
+                <input type="text" name="name" id="name" value="#xarVar::prepForDisplay($type['name'])#" size="32" maxlength="64" />
                 <xar:if condition="empty($ptid) and !empty($files)">
                     <xar:data-input name="name_list" id="name_list" type="6" validation="$files" value="" />
                 </xar:if>
@@ -37,7 +37,7 @@
                     <xar:mlstring>Description</xar:mlstring>
                 </label>
                 <div class="xar-form-container-after">
-                    <textarea name="desc" id="desc" cols="" rows="" class="xar-form-textareasmall">#xarVarPrepForDisplay($type['desc'])#</textarea>
+                    <textarea name="desc" id="desc" cols="" rows="" class="xar-form-textareasmall">#xarVar::prepForDisplay($type['desc'])#</textarea>
                 </div>
             </div>
         </div>

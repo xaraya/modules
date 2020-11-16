@@ -85,7 +85,7 @@ function xarpages_crumbblock_update($blockinfo)
     // Reference to content array.
     $vars =& $blockinfo['content'];
 
-    if (xarVarFetch('include_root', 'bool', $include_root, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVar::fetch('include_root', 'bool', $include_root, false, xarVar::NOT_REQUIRED)) {
         $vars['include_root'] = $include_root;
     }
 
@@ -93,10 +93,10 @@ function xarpages_crumbblock_update($blockinfo)
     if (!isset($vars['root_pids'])) {
         $vars['root_pids'] = array();
     }
-    if (xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
+    if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_root_pid)) {
         $vars['root_pids'][] = $new_root_pid;
     }
-    if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
+    if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['root_pids'] = array_flip($vars['root_pids']);
         foreach ($remove_root_pid as $remove) {

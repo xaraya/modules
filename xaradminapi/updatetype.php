@@ -31,13 +31,13 @@ function xarpages_adminapi_updatetype($args)
     }
 
     // Security: allowed to create page types?
-    if (!xarSecurityCheck('EditXarpagesPagetype', 1, 'Pagetype', $type['name'])) {
+    if (!xarSecurity::check('EditXarpagesPagetype', 1, 'Pagetype', $type['name'])) {
         return;
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $tablename = $xartable['xarpages_types'];
 
     // Data for the query.
@@ -68,7 +68,7 @@ function xarpages_adminapi_updatetype($args)
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
     // Call update hooks (for page type as a type).
-    xarModCallHooks(
+    xarModHooks::call(
         'item',
         'update',
         $ptid,
@@ -76,7 +76,7 @@ function xarpages_adminapi_updatetype($args)
     );
 
     // Call config hooks (for page type as an itemtype)
-    xarModCallHooks(
+    xarModHooks::call(
         'module',
         'updateconfig',
         'xarpages',

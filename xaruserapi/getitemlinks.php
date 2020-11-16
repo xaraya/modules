@@ -23,7 +23,7 @@ function xarpages_userapi_getitemlinks($args)
         $field = 'name';
     }
 
-    $pages = xarModAPIFunc(
+    $pages = xarMod::apiFunc(
         'xarpages',
         'user',
         'getpages',
@@ -47,9 +47,9 @@ function xarpages_userapi_getitemlinks($args)
                 continue;
             }
             $itemlinks[$itemid] = array(
-                'url' => xarModURL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
+                'url' => xarController::URL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
                 'title' => xarML('Display Page'),
-                'label' => xarVarPrepForDisplay($page[$field])
+                'label' => xarVar::prepForDisplay($page[$field])
             );
         }
         return $itemlinks;
@@ -69,9 +69,9 @@ function xarpages_userapi_getitemlinks($args)
             continue;
         }
         $itemlinks[$itemid] = array(
-            'url'   => xarModURL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
+            'url'   => xarController::URL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
             'title' => xarML('Display Page'),
-            'label' => xarVarPrepForDisplay($page[$field])
+            'label' => xarVar::prepForDisplay($page[$field])
         );
     }
 

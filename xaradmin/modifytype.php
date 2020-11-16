@@ -19,10 +19,10 @@ function xarpages_admin_modifytype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('creating', 'bool', $creating, true, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('ptid', 'id', $ptid, 0, xarVar::DONT_SET)) {
         return;
     }
 
@@ -35,7 +35,7 @@ function xarpages_admin_modifytype($args)
         // Editing an existing page type
 
         // We need all pages, but with the current page tree pruned.
-        $type = xarModAPIFunc(
+        $type = xarMod::apiFunc(
             'xarpages',
             'user',
             'gettype',
@@ -50,14 +50,14 @@ function xarpages_admin_modifytype($args)
         }
 
         // Security: check we are able to modify this page type.
-        if (!xarSecurityCheck('EditXarpagesPagetype', 1, 'Pagetype', $type['name'])) {
+        if (!xarSecurity::check('EditXarpagesPagetype', 1, 'Pagetype', $type['name'])) {
             return;
         }
 
         $data['func'] = 'modify';
 
         // The modify hooks for the page type as an item.
-        $modifyhooks = xarModCallHooks(
+        $modifyhooks = xarModHooks::call(
             'item',
             'modify',
             $type['ptid'],
@@ -65,7 +65,7 @@ function xarpages_admin_modifytype($args)
         );
 
         // Do config hooks for the page type as an item type.
-        $confighooks = xarModCallHooks(
+        $confighooks = xarModHooks::call(
             'module',
             'modifyconfig',
             'xarpages',
@@ -76,7 +76,7 @@ function xarpages_admin_modifytype($args)
 
         // Get some example page types from the xardata directory.
         $files = array();
-        $xml_files = xarModAPIFunc(
+        $xml_files = xarMod::apiFunc(
             'dynamicdata',
             'admin',
             'browse',
@@ -93,7 +93,7 @@ function xarpages_admin_modifytype($args)
         $data['files'] = $files;
 
         // Security: allowed to create page types?
-        if (!xarSecurityCheck('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
+        if (!xarSecurity::check('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
             return;
         }
 
@@ -108,7 +108,7 @@ function xarpages_admin_modifytype($args)
         $data['ptid'] = null;
 
         // The 'new' modify hooks for the page type as an item.
-        $modifyhooks = xarModCallHooks(
+        $modifyhooks = xarModHooks::call(
             'item',
             'new',
             '',

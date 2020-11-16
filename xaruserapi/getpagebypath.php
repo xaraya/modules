@@ -71,7 +71,7 @@ function xarpages_userapi_getpagebypath($args)
         // module alias, then make it relative (since nothing
         // below that alias matters in their URL).
         $explode = explode('/', $path);
-        if (count($explode) > 2 && xarModGetAlias($explode[1]) == 'xarpages') {
+        if (count($explode) > 2 && xarModAlias::resolve($explode[1]) == 'xarpages') {
             $absolute = false;
         }
     } else {
@@ -147,7 +147,7 @@ function xarpages_userapi_getpagebypath($args)
         // Create the URL for this page.
         // XML encoding is left at its default setting.
         $params['pid'] = $page_id;
-        $page['url'] = xarModURL('xarpages', 'user', 'display', $params, null, $fragment);
+        $page['url'] = xarController::URL('xarpages', 'user', 'display', $params, null, $fragment);
 
         return $pages[$page_id];
     } else {

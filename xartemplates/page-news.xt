@@ -44,7 +44,7 @@
         <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
         <xar:if condition="!empty($articles) and is_array($articles)">
             <xar:loop name="$articles">
-                <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+                <xar:set name="summary">#xarTpl::module('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
                 #$summary#
             </xar:loop>
         <xar:else />
@@ -65,7 +65,7 @@
             </div>
         </xar:if>
         <div>
-            <xar:set name="display">#xarTplModule('xarpages', $template_prefix, 'display', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
+            <xar:set name="display">#xarTpl::module('xarpages', $template_prefix, 'display', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
             #$display#
         </div>
     <xar:else />

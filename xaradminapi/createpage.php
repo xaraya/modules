@@ -56,12 +56,12 @@ function xarpages_adminapi_createpage($args)
     }
 
     // Security check - can we create pages of this type?
-    if (!xarSecurityCheck('AddXarpagesPage', 1, 'Page', 'All:' . $pagetype['name'])) {
+    if (!xarSecurity::check('AddXarpagesPage', 1, 'Page', 'All:' . $pagetype['name'])) {
         return;
     }
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable =& xarDB::getTables();
+    $dbconn =& xarDB::getConn();
 
     $idname = 'xar_pid';
     $tablename = $xartable['xarpages_pages'];
@@ -136,11 +136,11 @@ function xarpages_adminapi_createpage($args)
     $args['module'] = 'xarpages';
     $args['itemtype'] = $itemtype;
     $args['itemid'] = $pid;
-    xarModCallHooks('item', 'create', $pid, $args);
+    xarModHooks::call('item', 'create', $pid, $args);
 
     // Set this page as a module alias if necessary.
     if (!empty($alias)) {
-        xarModSetAlias($name, 'xarpages');
+        xarModAlias::set($name, 'xarpages');
     }
 
     return $pid;

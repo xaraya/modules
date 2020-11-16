@@ -24,7 +24,7 @@ function xarpages_treeapi_insertprep($args)
     
     // Default operation is 'before' - i.e. put the new item in the place
     // of the insertpoint and move everything to the right one place.
-    if (!xarVarValidate('enum:before:after:firstchild:lastchild', $offset, true)) {
+    if (!xarVar::validate('enum:before:after:firstchild:lastchild', $offset, true)) {
         $offset = 'firstchild';
     }
 
@@ -45,7 +45,7 @@ function xarpages_treeapi_insertprep($args)
         }
     }
 
-    $dbconn =& xarDBGetConn();
+    $dbconn =& xarDB::getConn();
 
     $result = xarModAPIfunc(
         'xarpages',

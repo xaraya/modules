@@ -1,3 +1,3 @@
 <xar:comment>Common page setup for all xarpages pages.</xar:comment>
 
-<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+<xar:set name="dummy">#xarTpl::setPageTitle($current_page.desc)#</xar:set>

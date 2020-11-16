@@ -19,7 +19,7 @@ function xarpages_customapi_pageform_helpers($args)
 */
 function _pageform_getobject($pf, $pagename)
 {
-    $var = xarSessionGetVar($pf);
+    $var = xarSession::getVar($pf);
 
     if (empty($var) || empty($var[$pagename])) {
         return;
@@ -53,13 +53,13 @@ function _pageform_setobject($pf, $pagename, $object)
     $invals = _pageform_getinvalids($object); // should be ->getInvalids()
     $serinvals = serialize($invals);
     
-    $var = xarSessionGetVar($pf);
+    $var = xarSession::getVar($pf);
     
     $var[$pagename] = $ser;
     $var[$pagename . '_objectid'] = $object->objectid;
     $var[$pagename . '_invalids'] = $serinvals;
 
-    xarSessionSetVar($pf, $var);
+    xarSession::setVar($pf, $var);
     
     return $pf;
 }
@@ -69,14 +69,14 @@ function _pageform_setobject($pf, $pagename, $object)
 */
 function _pageform_unsetobject($pf, $pagename)
 {
-    $var = xarSessionGetVar($pf);
+    $var = xarSession::getVar($pf);
     if (empty($var)) {
         return;
     }
     unset($var[$pagename]);
     unset($var[$pagename . '_objectid']);
     unset($var[$pagename . '_invalids']);
-    xarSessionSetVar($pf, $var);
+    xarSession::setVar($pf, $var);
     return;
 }
 

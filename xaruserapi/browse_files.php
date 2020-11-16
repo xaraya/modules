@@ -46,17 +46,17 @@ function xarpages_userapi_browse_files($args)
 
     // Levels lies between 1 and max_levels.
     // Set levels=1 to stay in a single diectory.
-    if (!xarVarValidate('int:1:'.$max_levels, $levels, true)) {
+    if (!xarVar::validate('int:1:'.$max_levels, $levels, true)) {
         $levels = $max_levels;
     }
 
     // The path return format is an unumerated type.
-    if (!xarVarValidate('enum:abs:rel:file', $retpath, true)) {
+    if (!xarVar::validate('enum:abs:rel:file', $retpath, true)) {
         $retpath = 'file';
     }
 
     // An array of directories to skip.
-    if (!xarVarValidate('list:string:1', $skipdirs, true)) {
+    if (!xarVar::validate('list:string:1', $skipdirs, true)) {
         $skipdirs = array();
     }
 
@@ -88,7 +88,7 @@ function xarpages_userapi_browse_files($args)
     // If the module is set, then find its home.
     if (!empty($module)) {
         // Assume for now that we are looking only in the module home directory.
-        $modinfo = xarModGetInfo(xarModGetIDFromName($module));
+        $modinfo = xarMod::getInfo(xarMod::getRegId($module));
         if (!empty($modinfo)) {
             $rootdir = './modules/' . $modinfo['directory'];
         }

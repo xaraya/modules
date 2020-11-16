@@ -18,7 +18,7 @@ function xarpages_adminapi_createtype($args)
 
     // Security: allowed to create page types?
     if ($name[0] <> '@') {
-        if (!xarSecurityCheck('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
+        if (!xarSecurity::check('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
             return;
         }
     }
@@ -32,8 +32,8 @@ function xarpages_adminapi_createtype($args)
 
     // TODO: validate name (mandatory and unique)
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable =& xarDB::getTables();
+    $dbconn =& xarDB::getConn();
 
     $tablename = $xartable['xarpages_types'];
 
@@ -72,7 +72,7 @@ function xarpages_adminapi_createtype($args)
     // use it to create the DD hook object.
     $files = array();
     $basedir = 'modules/xarpages/xardata';
-    $xml_files = xarModAPIFunc(
+    $xml_files = xarMod::apiFunc(
         'dynamicdata',
         'admin',
         'browse',
@@ -86,7 +86,7 @@ function xarpages_adminapi_createtype($args)
 
         if (isset($files[$name])) {
             // There is an XML file to import.
-            $objectid = xarModAPIFunc(
+            $objectid = xarMod::apiFunc(
                 'dynamicdata',
                 'util',
                 'import',
@@ -104,13 +104,13 @@ function xarpages_adminapi_createtype($args)
                 // TODO: either this needs to be done automatically when the object is
                 // updated, or the need for keeping an itemtype on the properties should
                 // be removed.
-                xarModAPIFunc(
+                xarMod::apiFunc(
                     'dynamicdata',
                     'admin',
                     'syncprops',
                     array(
                         'objectid' => $objectid,
-                        'moduleid' => xarModGetIDFromName('xarpages'),
+                        'moduleid' => xarMod::getRegId('xarpages'),
                         'itemtype' => $ptid
                     )
                 );
@@ -127,7 +127,7 @@ function xarpages_adminapi_createtype($args)
     // across the whole module.
     if (!empty($type_itemtype)) {
         // Create hooks.
-        xarModCallHooks(
+        xarModHooks::call(
             'item',
             'create',
             $ptid,

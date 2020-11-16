@@ -5,7 +5,7 @@
  *
  * @returns array
  * @return array containing the item types and their description
- * @todo remove the need to do xarVarPrepForDisplay() here - it should be done at the point of display.
+ * @todo remove the need to do xarVar::prepForDisplay() here - it should be done at the point of display.
  */
 
 function xarpages_userapi_getitemtypes($args)
@@ -13,7 +13,7 @@ function xarpages_userapi_getitemtypes($args)
     $itemtypes = array();
 
     // Get publication types
-    $pagetypes = xarModAPIFunc('xarpages', 'user', 'gettypes');
+    $pagetypes = xarMod::apiFunc('xarpages', 'user', 'gettypes');
 
     foreach ($pagetypes as $pagetype) {
         // The description is multi-line, so only take the first line as the title.
@@ -25,9 +25,9 @@ function xarpages_userapi_getitemtypes($args)
         }
 
         $itemtypes[$pagetype['ptid']] = array(
-            'label' => xarVarPrepForDisplay($desc_line1),
-            'title' => xarVarPrepForDisplay(xarML('Display #(1)', $desc_line1)),
-            'url'   => xarModURL('xarpages', 'user', 'display', array('ptid' => $pagetype['ptid']))
+            'label' => xarVar::prepForDisplay($desc_line1),
+            'title' => xarVar::prepForDisplay(xarML('Display #(1)', $desc_line1)),
+            'url'   => xarController::URL('xarpages', 'user', 'display', array('ptid' => $pagetype['ptid']))
         );
     }
     return $itemtypes;

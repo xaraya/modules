@@ -61,7 +61,7 @@ function xarpages_funcapi_multiform($args)
     // If empty (or zero), then we assume there is no timeout required.
     if (empty($master_page['dd']['timeout_seconds'])) {
         $timeout_seconds = 0;
-    } elseif (xarVarValidate('int:30', $master_page['dd']['timeout_seconds'])) {
+    } elseif (xarVar::validate('int:30', $master_page['dd']['timeout_seconds'])) {
         // A minimum of 30 seconds, and must be an integer
         $timeout_seconds = $master_page['dd']['timeout_seconds'];
     } else {
@@ -115,7 +115,7 @@ function xarpages_funcapi_multiform($args)
     $user_action_requested = 'none';
     foreach (array('next', 'prev', 'cont') as $check_submit_button) {
         unset($submit_button_value);
-        xarVarFetch('multiform_submit_' . $check_submit_button, 'str', $submit_button_value, '', XARVAR_NOT_REQUIRED);
+        xarVar::fetch('multiform_submit_' . $check_submit_button, 'str', $submit_button_value, '', xarVar::NOT_REQUIRED);
         if (!empty($submit_button_value)) {
             $user_action_requested = $check_submit_button;
         }
@@ -147,7 +147,7 @@ function xarpages_funcapi_multiform($args)
     // (applies to non-multiform pages too)
     // The whole sequence can be cancelled at any time.
     // The parameter 'multiform_cancel' will trigger this - just put it into the current page URL.
-    xarVarFetch('multiform_cancel', 'str::100', $multiform_cancel, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('multiform_cancel', 'str::100', $multiform_cancel, '', xarVar::NOT_REQUIRED);
     if (!empty($multiform_cancel)) {
         // Set this to be the last page, then go to the master page.
         $last_page_flag = true;
@@ -167,7 +167,7 @@ function xarpages_funcapi_multiform($args)
             // and go to the first page.
             // Set the redirect_url rather than the redirect_pid, so we can ensure the session
             // key is not added to the redirect.
-            $redirect_url = xarModURL('xarpages', 'user', 'display', array('pid' => $current_page['pid']), false);
+            $redirect_url = xarController::URL('xarpages', 'user', 'display', array('pid' => $current_page['pid']), false);
         } else {
             // Set this to be the last page, then go to the master page.
             $redirect_pid = $master_page['pid'];
@@ -187,7 +187,7 @@ function xarpages_funcapi_multiform($args)
 
         // List of required fields
         if (!empty($dd['required_fields'])) {
-            xarVarValidate('strlist:,; :pre:trim:ftoken', $dd['required_fields']);
+            xarVar::validate('strlist:,; :pre:trim:ftoken', $dd['required_fields']);
             $required_fields = explode(',', $dd['required_fields']);
         }
 
@@ -231,7 +231,7 @@ function xarpages_funcapi_multiform($args)
         // The key is random, and lasts for the length of the multiform session.
         // It is also used as validation, to prevent a user from jumping
         // straight into the middle of a form sequence.
-        xarVarFetch($multiform_key_name, 'str::100', $multiform_key, '', XARVAR_NOT_REQUIRED);
+        xarVar::fetch($multiform_key_name, 'str::100', $multiform_key, '', xarVar::NOT_REQUIRED);
 
         if (!empty($multiform_key)) {
             // The user is submitting a form, or has already submitted at least one form.
@@ -633,7 +633,7 @@ function xarpages_funcapi_multiform($args)
         // dumped back here to handle an error, cancellation or timeout.
 
         // Check the reason we are here.
-        xarVarFetch('reason', 'enum:timeout:error:cancel', $reason, '', XARVAR_NOT_REQUIRED);
+        xarVar::fetch('reason', 'enum:timeout:error:cancel', $reason, '', xarVar::NOT_REQUIRED);
         $multiform['reason'] = $reason;
 
         // Fetch any additional data passed in from the previous page (within the form sequence).
@@ -686,7 +686,7 @@ function xarpages_funcapi_multiform($args)
         // Strictly, when we do a redirect, we should not be encoding the URL (so we don't).
         // Do not over-write a redirect URL that has already been set.
         if (empty($redirect_url)) {
-            $redirect_url = xarModURL('xarpages', 'user', 'display', $redirect_args, false);
+            $redirect_url = xarController::URL('xarpages', 'user', 'display', $redirect_args, false);
         }
 
         // Put an entry onto the end of the history, so we are allowed to come into that page.
@@ -718,7 +718,7 @@ function xarpages_funcapi_multiform($args)
         }
 
         // Set the redirect URL.
-        xarResponseRedirect($redirect_url);
+        xarController::redirect($redirect_url);
 
         // Returning 'false' indicates that we are doing a redirect, so no more xarpages
         // display handling is necessary.
@@ -742,7 +742,7 @@ function xarpages_funcapi_multiform($args)
         'save' => xarML('Save'),
         'next' => xarML('Next >>'),
     );
-    if (!empty($dd['submit_labels']) && xarVarValidate('strlist:,:pre:trim:str', $dd['submit_labels'])) {
+    if (!empty($dd['submit_labels']) && xarVar::validate('strlist:,:pre:trim:str', $dd['submit_labels'])) {
         $custom_labels = explode(',', $dd['submit_labels']);
         foreach (array('prev', 'save', 'next') as $key => $value) {
             // If a label is left out, then hide that button.

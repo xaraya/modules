@@ -19,7 +19,7 @@ function xarpages_adminapi_deletepage($args)
     }
 
     // Obtain current information on the page we are going to delete.
-    $page = xarModAPIFunc(
+    $page = xarMod::apiFunc(
         'xarpages',
         'user',
         'getpage',
@@ -33,12 +33,12 @@ function xarpages_adminapi_deletepage($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurity::check('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         return;
     }
 
     // Delete any module aliases for this page.
-    xarModDelAlias($page['name'], 'xarpages');
+    xarModAlias::delete($page['name'], 'xarpages');
 
     // These are set to be used later on
     $right = $page['right'];
@@ -48,14 +48,14 @@ function xarpages_adminapi_deletepage($args)
     // If the page was used as a special page anywhere, then reset that too,
     // so we don't have any special page orphans.
     foreach (array('default', 'error', 'notfound') as $special) {
-        if (xarModGetVar('xarpages', $special . 'page') == $pid) {
-            xarModSetVar('xarpages', $special . 'page', 0);
+        if (xarModVars::get('xarpages', $special . 'page') == $pid) {
+            xarModVars::set('xarpages', $special . 'page', 0);
         }
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     // Deleting a page
 
@@ -120,7 +120,7 @@ function xarpages_adminapi_deletepage($args)
 
     // Call hooks for every page being deleted, not just the main one.
     foreach ($pids as $pid) {
-        xarModCallHooks(
+        xarModHooks::call(
             'item',
             'delete',
             $pid,

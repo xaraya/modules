@@ -51,7 +51,7 @@
                 <label for="transformfields" title="#xarML('Limit dynamic data fields presented for transform hooks to a list of names')#" class="xar-form-label">
                     <xar:mlstring>Transform hook fields</xar:mlstring>
                 </label>
-                <input type="text" name="transformfields" id="transformfields" value="#xarVarPrepForDisplay($transformfields)#" maxlength="100" />
+                <input type="text" name="transformfields" id="transformfields" value="#xarVar::prepForDisplay($transformfields)#" maxlength="100" />
             </div>
         </div>
 

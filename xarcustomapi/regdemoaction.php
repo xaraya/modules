@@ -60,9 +60,9 @@ function pageform_regdemoaction_process(&$inobj, &$outobj)
     /*
         if ($state==ROLES_STATE_ACTIVE) {
             // log in and redirect
-            xarModAPIFunc('authsystem', 'user', 'login', array( 'uname' => $email, 'pass' => $pass, 'rememberme' => 0));
-            $redirect=xarServerGetBaseURL();
-            xarResponseRedirect($redirect);
+            xarMod::apiFunc('authsystem', 'user', 'login', array( 'uname' => $email, 'pass' => $pass, 'rememberme' => 0));
+            $redirect=xarServer::getBaseURL();
+            xarController::redirect($redirect);
         }
     */
     // ok, then pass state to next form

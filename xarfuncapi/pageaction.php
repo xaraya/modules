@@ -30,7 +30,7 @@ function xarpages_funcapi_pageaction($args)
     xarModAPIfunc('xarpages', 'custom', 'pageform_helpers');
 
     // incoming post vars
-    if (!xarVarFetch('pf', 'str', $pf, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('pf', 'str', $pf, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -52,7 +52,7 @@ function xarpages_funcapi_pageaction($args)
         if (isset($dd['unique_key']) && $dd['unique_key']) {
             $pf = _pageform_newkey();
         } else {
-            $pf = xarUserGetVar('uid');
+            $pf = xarUser::getVar('uid');
         }
     }
     // reuse (append) existing object if one
@@ -127,7 +127,7 @@ function xarpages_funcapi_pageaction($args)
         // save and redirect back to previous page
         _pageform_setobject($pf, $pages[$form_pid]['name'], $in_object);
         if ($dd['debug'] != 1) {
-            xarResponseRedirect($nav['form_url']);
+            xarController::redirect($nav['form_url']);
         }
         // else return
     }
@@ -187,7 +187,7 @@ function xarpages_funcapi_pageaction($args)
             // save input and redirect back to previous page (current form)
             _pageform_setobject($pf, $pages[$form_pid]['name'], $in_object);
             if ($dd['debug'] != 1) {
-                xarResponseRedirect($nav['form_url']);
+                xarController::redirect($nav['form_url']);
             }
             // else return
         }
@@ -204,9 +204,9 @@ function xarpages_funcapi_pageaction($args)
         // if not debugging, redirect
         if ($dd['debug'] != 1) {
             if (!empty($dd['redirect_nav'])) {
-                xarResponseRedirect($nav[$dd['redirect_nav']]);
+                xarController::redirect($nav[$dd['redirect_nav']]);
             } else {
-                xarResponseRedirect($nav['nextform_url']);
+                xarController::redirect($nav['nextform_url']);
             }
         }
     }

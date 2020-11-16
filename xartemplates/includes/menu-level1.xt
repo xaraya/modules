@@ -83,20 +83,20 @@
                         <xar:if condition="$page.status eq 'EMPTY' and empty($page.has_children)">
                             <a href="javascript:return false;"><span>
                             <xar:if condition="!empty($page.dd.menu_title)">
-                                #xarVarPrepForDisplay($page.dd.menu_title)#
+                                #xarVar::prepForDisplay($page.dd.menu_title)#
                             <xar:else />
                                 #$page.name#
                             </xar:if>
                             </span></a>
                         <xar:else />
                             <xar:if condition="!empty($page.dd.url) and $page.pagetype.name eq 'redirect'">
-                                <xar:set name="gourl">#xarVarPrepForDisplay($page.dd.url)#</xar:set>
+                                <xar:set name="gourl">#xarVar::prepForDisplay($page.dd.url)#</xar:set>
                             <xar:else />
-                                <xar:set name="gourl">#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#</xar:set>
+                                <xar:set name="gourl">#xarController::URL('xarpages','user','display',array('pid'=&gt;$page.pid))#</xar:set>
                             </xar:if>
-                            <a href="#$gourl#" title="#xarVarPrepForDisplay($page.desc)#" class="#$current_class#"><span>
+                            <a href="#$gourl#" title="#xarVar::prepForDisplay($page.desc)#" class="#$current_class#"><span>
                                 <xar:if condition="!empty($page.dd.menu_title)">
-                                    #xarVarPrepForDisplay($page.dd.menu_title)#
+                                    #xarVar::prepForDisplay($page.dd.menu_title)#
                                 <xar:else />
                                     #$page.name#
                                 </xar:if>

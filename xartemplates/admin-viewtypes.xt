@@ -40,15 +40,15 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
          </p>
 
         <p>
-            <a href="#xarModURL('xarpages','admin','newtype')#"><xar:mlstring>Add Page Type</xar:mlstring></a>
+            <a href="#xarController::URL('xarpages','admin','newtype')#"><xar:mlstring>Add Page Type</xar:mlstring></a>
         </p>
     <xar:else />
         <p>
-            <a href="#xarModURL('xarpages','admin','newtype')#"><xar:mlstring>Add Page Type</xar:mlstring></a>
+            <a href="#xarController::URL('xarpages','admin','newtype')#"><xar:mlstring>Add Page Type</xar:mlstring></a>
         </p>
-        <xar:set name="icon_modify">xarTplGetImage('icons/modify.png', 'base')</xar:set>
-        <xar:set name="icon_delete">xarTplGetImage('icons/delete.png', 'base')</xar:set>
-        <xar:set name="authid">xarSecGenAuthKey()</xar:set>
+        <xar:set name="icon_modify">xarTpl::getImage('icons/modify.png', 'base')</xar:set>
+        <xar:set name="icon_delete">xarTpl::getImage('icons/delete.png', 'base')</xar:set>
+        <xar:set name="authid">xarSec::genAuthKey()</xar:set>
         <table class="xar-items">
         <thead>
             <tr>
@@ -75,16 +75,16 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
 
                     <tr class="#$rowclass#">
                         <td>
-                            #xarVarPrepForDisplay($loop:item['name'])#
+                            #xarVar::prepForDisplay($loop:item['name'])#
                         </td>
                         <td>
-                            #xarVarPrepForDisplay($loop:item['desc'])#
+                            #xarVar::prepForDisplay($loop:item['desc'])#
                         </td>
                         <td class="xar-item-actions">
-                            <a href="#xarModURL('xarpages', 'admin', 'modifytype', array('ptid' => $loop:item['ptid']))#" title="#xarML('Modify')#" class="xar-icon">
+                            <a href="#xarController::URL('xarpages', 'admin', 'modifytype', array('ptid' => $loop:item['ptid']))#" title="#xarML('Modify')#" class="xar-icon">
                                 <img src="#$icon_modify#" alt="#xarML('Modify')#" />
                             </a>
-                            <a href="#xarModURL('xarpages', 'admin', 'deletetype', array('ptid' => $loop:item['ptid'], 'authid' => $authid))#" id="delete_#$loop:item['ptid']#" title="#xarML('Delete')#" class="xar-icon">
+                            <a href="#xarController::URL('xarpages', 'admin', 'deletetype', array('ptid' => $loop:item['ptid'], 'authid' => $authid))#" id="delete_#$loop:item['ptid']#" title="#xarML('Delete')#" class="xar-icon">
                                 <img src="#$icon_delete#" alt="#xarML('Delete')#" />
                             </a>
                         </td>

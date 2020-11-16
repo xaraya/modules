@@ -1,5 +1,5 @@
 <xar:comment>Set the page title to the description of the page.</xar:comment>
-<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+<xar:set name="dummy">#xarTpl::setPageTitle($current_page.desc)#</xar:set>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>XarPages</xar:mlstring></span>
 </div>
@@ -17,8 +17,8 @@
     </p>
 
     <p>
-        This page is named "#$current_page.name#" described as "#xarVarPrepForDisplay($current_page.desc)#".
-        The page type is "#$current_page.pagetype.name#" described as "#xarVarPrepForDisplay($current_page.pagetype.desc)#".
+        This page is named "#$current_page.name#" described as "#xarVar::prepForDisplay($current_page.desc)#".
+        The page type is "#$current_page.pagetype.name#" described as "#xarVar::prepForDisplay($current_page.pagetype.desc)#".
     </p>
 
     <xar:if condition="!empty($hooks)">

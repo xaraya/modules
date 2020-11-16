@@ -34,8 +34,8 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
         // If the name field is blank, then put either the current user's name into it
         // (if logged in) or a short message.
         if (empty($this->values['name'])) {
-            if (xarUserIsLoggedIn()) {
-                $this->values['name'] = xarUserGetVar('name');
+            if (xarUser::isLoggedIn()) {
+                $this->values['name'] = xarUser::getVar('name');
             } else {
                 $this->values['name'] = xarML('<Enter your name here>');
             }

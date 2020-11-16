@@ -18,14 +18,14 @@
 function xarpages_init()
 {
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $pagestable = $xartable['xarpages_pages'];
     $typestable = $xartable['xarpages_types'];
 
     // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $datadict =& xarTableDDL::init($dbconn, 'ALTERTABLE');
 
     /*
         CREATE TABLE `xar_xarpages_pages` (
@@ -74,7 +74,7 @@ function xarpages_init()
 
     // Create indexes.
     $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_left',
+        'i_' . xarDB::getPrefix() . '_xarpages_page_left',
         $pagestable,
         'xar_left'
     );
@@ -83,7 +83,7 @@ function xarpages_init()
     }
 
     $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_name',
+        'i_' . xarDB::getPrefix() . '_xarpages_page_name',
         $pagestable,
         'xar_name'
     );
@@ -92,7 +92,7 @@ function xarpages_init()
     }
 
     $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
+        'i_' . xarDB::getPrefix() . '_xarpages_page_type',
         $pagestable,
         'xar_itemtype'
     );
@@ -123,7 +123,7 @@ function xarpages_init()
 
     // The page type name must be unique.
     $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name',
+        'i_' . xarDB::getPrefix() . '_xarpages_type_name',
         $typestable,
         'xar_name',
         array('UNIQUE' => true)
@@ -134,17 +134,17 @@ function xarpages_init()
 
 
     // Set up module variables.
-    xarModSetVar('xarpages', 'defaultpage', 0);
-    xarModSetVar('xarpages', 'errorpage', 0);
-    xarModSetVar('xarpages', 'notfoundpage', 0);
-    xarModSetVar('xarpages', 'noprivspage', 0);
-    xarModSetVar('xarpages', 'shortestpath', 1);
-    xarModSetVar('xarpages', 'transformref', 1);
-    xarModSetVar('xarpages', 'transformfields', 'body');
+    xarModVars::set('xarpages', 'defaultpage', 0);
+    xarModVars::set('xarpages', 'errorpage', 0);
+    xarModVars::set('xarpages', 'notfoundpage', 0);
+    xarModVars::set('xarpages', 'noprivspage', 0);
+    xarModVars::set('xarpages', 'shortestpath', 1);
+    xarModVars::set('xarpages', 'transformref', 1);
+    xarModVars::set('xarpages', 'transformfields', 'body');
 
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.
-    xarModSetVar('xarpages', 'SupportShortURLs', 1);
+    xarModVars::set('xarpages', 'SupportShortURLs', 1);
 
     // Privileges.
 
@@ -170,7 +170,7 @@ function xarpages_init()
             'limit' => 50
         )
     );
-    xarDefineInstance(
+    xarPrivileges::defineInstance(
         'xarpages',
         'Page',
         $instances,
@@ -185,9 +185,9 @@ function xarpages_init()
     // Each mask defines something the user is able to do.
     // The masks are linked to the instances at runtime when security checks
     // are made:
-    // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
-    // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
-    xarRegisterMask(
+    // xarSecurity::check($mask, $showException, $component, $instance, $module, ...)
+    // xarMasks::register($name, $realm, $module, $component, $instance, $level, $description='')
+    xarMasks::register(
         'ViewXarpagesPage',
         'All',
         'xarpages',
@@ -196,7 +196,7 @@ function xarpages_init()
         'ACCESS_OVERVIEW',
         xarML('See that a page exists')
     );
-    xarRegisterMask(
+    xarMasks::register(
         'ReadXarpagesPage',
         'All',
         'xarpages',
@@ -205,7 +205,7 @@ function xarpages_init()
         'ACCESS_READ',
         xarML('Read or view a page')
     );
-    xarRegisterMask(
+    xarMasks::register(
         'ModerateXarpagesPage',
         'All',
         'xarpages',
@@ -214,7 +214,7 @@ function xarpages_init()
         'ACCESS_MODERATE',
         xarML('Change content of a page')
     );
-    xarRegisterMask(
+    xarMasks::register(
         'EditXarpagesPage',
         'All',
         'xarpages',
@@ -223,7 +223,7 @@ function xarpages_init()
         'ACCESS_EDIT',
         xarML('Move and rename a page')
     );
-    xarRegisterMask(
+    xarMasks::register(
         'AddXarpagesPage',
         'All',
         'xarpages',
@@ -232,7 +232,7 @@ function xarpages_init()
         'ACCESS_ADD',
         xarML('Add new pages')
     );
-    xarRegisterMask(
+    xarMasks::register(
         'DeleteXarpagesPage',
         'All',
         'xarpages',
@@ -241,7 +241,7 @@ function xarpages_init()
         'ACCESS_DELETE',
         xarML('Remove pages')
     );
-    xarRegisterMask(
+    xarMasks::register(
         'AdminXarpagesPage',
         'All',
         'xarpages',
@@ -260,7 +260,7 @@ function xarpages_init()
             'limit' => 50
         )
     );
-    xarDefineInstance(
+    xarPrivileges::defineInstance(
         'xarpages',
         'Pagetype',
         $instances,
@@ -274,7 +274,7 @@ function xarpages_init()
     // Masks for the component 'Pagetype'.
 
     // Allow the user to view the page types that are available.
-    xarRegisterMask(
+    xarMasks::register(
         'ModerateXarpagesPagetype',
         'All',
         'xarpages',
@@ -285,7 +285,7 @@ function xarpages_init()
     );
     // Allow the user to change the description and any hooks on the page type,
     // but not to rename it, delete it or create any new ones.
-    xarRegisterMask(
+    xarMasks::register(
         'EditXarpagesPagetype',
         'All',
         'xarpages',
@@ -297,7 +297,7 @@ function xarpages_init()
     // Since creation of templates are involved here (each page type requires at least
     // one [default] template), we go straight to admin level to make any changes in that area.
     // This access allows creation, deletion and renaming of page types.
-    xarRegisterMask(
+    xarMasks::register(
         'AdminXarpagesPagetype',
         'All',
         'xarpages',
@@ -312,8 +312,8 @@ function xarpages_init()
     // the module is installed.
 
     // Switch on all hooks from DD.
-    if (xarModIsAvailable('dynamicdata')) {
-        xarModAPIFunc(
+    if (xarMod::isAvailable('dynamicdata')) {
+        xarMod::apiFunc(
             'modules',
             'admin',
             'enablehooks',
@@ -327,7 +327,7 @@ function xarpages_init()
 
     // Register block types.
     foreach (array('menu', 'crumb') as $blocktype) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'blocks',
             'admin',
             'register_block_type',
@@ -341,7 +341,7 @@ function xarpages_init()
     }
 
     // Set up module hooks
-    if (!xarModRegisterHook(
+    if (!xarModHooks::register(
         'item',
         'transform',
         'API',
@@ -366,14 +366,14 @@ function xarpages_init()
 function xarpages_upgrade($oldversion)
 {
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $pagestable = $xartable['xarpages_pages'];
     $typestable = $xartable['xarpages_types'];
 
     // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $datadict =& xarTableDDL::init($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number.
     switch ($oldversion) {
@@ -386,7 +386,7 @@ function xarpages_upgrade($oldversion)
             $indexes = $datadict->getIndexes($pagestable);
 
             // Drop an erroneous unique index and recreate it non-unique.
-            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type';
+            $indexname = 'i_' . xarDB::getPrefix() . '_xarpages_page_type';
             if (isset($indexes[$indexname])) {
                 $result = $datadict->dropIndex($indexname, $pagestable);
             }
@@ -403,7 +403,7 @@ function xarpages_upgrade($oldversion)
             $indexes = $datadict->getIndexes($typestable);
 
             // The page type name must be unique.
-            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name';
+            $indexname = 'i_' . xarDB::getPrefix() . '_xarpages_type_name';
             if (!isset($indexes[$indexname])) {
                 $result = $datadict->createIndex(
                     $indexname,
@@ -435,7 +435,7 @@ function xarpages_upgrade($oldversion)
             // Register a 'menu' block type.
 
             // Register block types.
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'blocks',
                 'admin',
                 'register_block_type',
@@ -483,14 +483,14 @@ function xarpages_upgrade($oldversion)
         case '0.2.3':
         case '0.2.4':
             // Upgrade from 0.2.3 or 0.2.4 to 0.2.5
-            xarModSetVar('xarpages', 'shortestpath', 1);
+            xarModVars::set('xarpages', 'shortestpath', 1);
 
             // no break
         case '0.2.5':
             // Upgrade to 0.2.6 - new crumbtrail block added.
 
             // Register block types.
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'blocks',
                 'admin',
                 'register_block_type',
@@ -507,7 +507,7 @@ function xarpages_upgrade($oldversion)
             // Upgrade to 0.2.7 - new transform hook.
 
             // Set up module hooks
-            if (!xarModRegisterHook(
+            if (!xarModHooks::register(
                 'item',
                 'transform',
                 'API',
@@ -520,13 +520,13 @@ function xarpages_upgrade($oldversion)
             }
 
             // New module variables.
-            xarModSetVar('xarpages', 'transformfields', 'body');
-            xarModSetVar('xarpages', 'transformref', 1);
+            xarModVars::set('xarpages', 'transformfields', 'body');
+            xarModVars::set('xarpages', 'transformref', 1);
 
             // no break
         case '0.2.7':
             // Upgrade to 0.2.8 - new overview privilege on a page.
-            xarRegisterMask(
+            xarMasks::register(
                 'ViewXarpagesPage',
                 'All',
                 'xarpages',
@@ -553,14 +553,14 @@ function xarpages_upgrade($oldversion)
 function xarpages_delete()
 {
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $pagestable = $xartable['xarpages_pages'];
     $typestable = $xartable['xarpages_types'];
 
     // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $datadict =& xarTableDDL::init($dbconn, 'ALTERTABLE');
 
     // TODO: delete module aliases.
     // Probably have to loop through all pages and check whether they
@@ -573,11 +573,11 @@ function xarpages_delete()
     // TODO: remove blocks
 
     // Delete module variables
-    xarModDelAllVars('xarpages');
+    xarModVars::delete_all('xarpages');
 
     // Drop privileges.
-    xarRemoveMasks('xarpages');
-    xarRemoveInstances('xarpages');
+    xarMasks::removemasks('xarpages');
+    xarPrivileges::removeInstances('xarpages');
 
     // Deletion successful.
     return true;

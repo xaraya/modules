@@ -16,12 +16,12 @@ function xarpages_userapi_gettypes($args)
     extract($args);
 
     // Possible values for the array key. Defaults to 'index' (count incrementing from zero)
-    if (!xarVarValidate('enum:ptid:index:name', $key, true)) {
+    if (!xarVar::validate('enum:ptid:index:name', $key, true)) {
         $key = 'index';
     }
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable =& xarDB::getTables();
+    $dbconn =& xarDB::getConn();
 
     $where = array();
     $bind = array();
@@ -89,7 +89,7 @@ function xarpages_userapi_gettypes($args)
 
     // If we have an itemtype and are hooked to DD, then
     // fetch some DD data for each user-defined page type.
-    if ($dd_flag && !empty($itemtype) && xarModIsHooked('dynamicdata', 'xarpages', $itemtype)) {
+    if ($dd_flag && !empty($itemtype) && xarModHooks::isHooked('dynamicdata', 'xarpages', $itemtype)) {
         // Collect the item IDs together
         $item_ids = array();
         foreach ($types as $type_key => $type) {

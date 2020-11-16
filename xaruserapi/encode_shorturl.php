@@ -41,7 +41,7 @@ function xarpages_userapi_encode_shorturl($args)
         return;
     }
 
-    $use_shortest_paths = xarModGetVar('xarpages', 'shortestpath');
+    $use_shortest_paths = xarModVars::get('xarpages', 'shortestpath');
 
     // Consume the pid from the get parameters.
     unset($get['pid']);
@@ -53,7 +53,7 @@ function xarpages_userapi_encode_shorturl($args)
     $pid_follow = $pid;
     while ($pages[$pid_follow]['parent_key'] <> 0) {
         // TODO: could do with an API to get all aliases for a given module in one go.
-        if (!empty($use_shortest_paths) && xarModGetAlias($pages[$pid_follow]['name']) == 'xarpages') {
+        if (!empty($use_shortest_paths) && xarModAlias::resolve($pages[$pid_follow]['name']) == 'xarpages') {
             break;
         }
         array_unshift($path, $pages[$pid_follow]['name']);
@@ -65,7 +65,7 @@ function xarpages_userapi_encode_shorturl($args)
 
     // If the base path component is not the module alias, then add the
     // module name to the start of the path.
-    if (xarModGetAlias($pages[$pid_follow]['name']) != 'xarpages') {
+    if (xarModAlias::resolve($pages[$pid_follow]['name']) != 'xarpages') {
         array_unshift($path, 'xarpages');
     }
 

@@ -27,7 +27,7 @@ function xarpages_funcapi_pageform($args)
     xarModAPIfunc('xarpages', 'custom', 'pageform_helpers');
 
     // incoming pageform key
-    if (!xarVarFetch('pf', 'str', $pf, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('pf', 'str', $pf, '', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -44,7 +44,7 @@ function xarpages_funcapi_pageform($args)
         // (guaranteed a new cache)
             // TODO: somewhere have to clean out any old pf objects
         } else {
-            $pf = xarUserGetVar('uid');
+            $pf = xarUser::getVar('uid');
             // clear cached object
             _pageform_unsetobject($pf, $current_page['name']);
         }

@@ -15,5 +15,5 @@
 
 function xarpages_admin_newpage($args)
 {
-    return xarModFunc('xarpages', 'admin', 'modifypage', $args);
+    return xarMod::guiFunc('xarpages', 'admin', 'modifypage', $args);
 }

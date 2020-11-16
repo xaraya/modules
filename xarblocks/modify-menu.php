@@ -108,19 +108,19 @@ function xarpages_menublock_update($blockinfo)
     // Reference to content array.
     $vars =& $blockinfo['content'];
 
-    if (xarVarFetch('multi_homed', 'bool', $multi_homed, true, XARVAR_NOT_REQUIRED)) {
+    if (xarVar::fetch('multi_homed', 'bool', $multi_homed, true, xarVar::NOT_REQUIRED)) {
         $vars['multi_homed'] = $multi_homed;
     }
 
     // AUTO: the block picks up the page from cache Blocks.xarpages/current_pid.
     // DEFAULT: the block always uses the default page.
     // AUTODEFAULT: same as AUTO, but use the default page rather than NULL if outside and root page
-    if (xarVarFetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT:AUTODEFAULT', $current_source, 'AUTO', XARVAR_NOT_REQUIRED)) {
+    if (xarVar::fetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT:AUTODEFAULT', $current_source, 'AUTO', xarVar::NOT_REQUIRED)) {
         $vars['current_source'] = $current_source;
     }
 
     // The default page if none found by any other method.
-    if (xarVarFetch('default_pid', 'int:0', $default_pid, 0, XARVAR_NOT_REQUIRED)) {
+    if (xarVar::fetch('default_pid', 'int:0', $default_pid, 0, xarVar::NOT_REQUIRED)) {
         $vars['default_pid'] = $default_pid;
     }
 
@@ -128,10 +128,10 @@ function xarpages_menublock_update($blockinfo)
     if (!isset($vars['root_pids'])) {
         $vars['root_pids'] = array();
     }
-    if (xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
+    if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_root_pid)) {
         $vars['root_pids'][] = $new_root_pid;
     }
-    if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
+    if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['root_pids'] = array_flip($vars['root_pids']);
         foreach ($remove_root_pid as $remove) {
@@ -149,10 +149,10 @@ function xarpages_menublock_update($blockinfo)
     if (!isset($vars['prune_pids'])) {
         $vars['prune_pids'] = array();
     }
-    if (xarVarFetch('new_prune_pid', 'int:0', $new_prune_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_prune_pid)) {
+    if (xarVar::fetch('new_prune_pid', 'int:0', $new_prune_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_prune_pid)) {
         $vars['prune_pids'][] = $new_prune_pid;
     }
-    if (xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_prune_pid)) {
+    if (xarVar::fetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_prune_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['prune_pids'] = array_flip($vars['prune_pids']);
         foreach ($remove_prune_pid as $remove) {
@@ -169,13 +169,13 @@ function xarpages_menublock_update($blockinfo)
     // The maximum number of levels that are displayed.
     // This value does not affect the tree data, but is passed to the menu rendering
     // templates to make its own decision on how to truncate the menu.
-    if (xarVarFetch('max_level', 'int:0:999', $max_lavel, 0, XARVAR_NOT_REQUIRED)) {
+    if (xarVar::fetch('max_level', 'int:0:999', $max_lavel, 0, xarVar::NOT_REQUIRED)) {
         $vars['max_level'] = $max_lavel;
     }
 
     // The start level.
     // Hide the menu if the current page is below this level.
-    if (xarVarFetch('start_level', 'int:0:999', $start_lavel, 0, XARVAR_NOT_REQUIRED)) {
+    if (xarVar::fetch('start_level', 'int:0:999', $start_lavel, 0, xarVar::NOT_REQUIRED)) {
         $vars['start_level'] = $start_lavel;
     }
 

@@ -19,5 +19,5 @@ function xarpages_admin_overview()
 {
     $data=array();
     //just return to main function that displays the overview
-    return xarTplModule('xarpages', 'admin', 'main', $data, 'main');
+    return xarTpl::module('xarpages', 'admin', 'main', $data, 'main');
 }

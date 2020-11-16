@@ -16,7 +16,7 @@ function xarpages_funcapi_page_tabs($args)
     $c_section_head = '/<!-- section: (.+) -->/';
 
     // The 'tab' parameter gives the tab number to enable.
-    xarVarFetch('tab', 'int:1:99', $tab, 1, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('tab', 'int:1:99', $tab, 1, xarVar::NOT_REQUIRED);
 
     // What we want to do:
     // - If the page has 'sections' in it, then split the page into sections.
@@ -63,7 +63,7 @@ function xarpages_funcapi_page_tabs($args)
     // Now render the new body tag.
     // TODO: allow different temlates to be used.
     // Options could be set using further comments.
-    $new_body = xarTplModule(
+    $new_body = xarTpl::module(
         'xarpages',
         'func',
         $c_template,

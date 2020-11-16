@@ -15,7 +15,7 @@ function xarpages_treeapi_getsiblings($args)
     extract($args);
 
     // Database.
-    $dbconn =& xarDBGetConn();
+    $dbconn =& xarDB::getConn();
 
     if ($id <> 0) {
         // Insert point is a real item.

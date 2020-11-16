@@ -14,11 +14,11 @@
                 <xar:loop name="$multiform.formdata">
                     <tr>
                         <th scope="row">
-                            #xarVarPrepForDisplay($loop:key)#
+                            #xarVar::prepForDisplay($loop:key)#
                         </th>
                         <xar:if condition="is_string($loop:item)">
                             <td>
-                                #xarVarPrepForDisplay($loop:item)#
+                                #xarVar::prepForDisplay($loop:item)#
                             </td>
                         <xar:else />
                             <xar:set name="loop_item">#$loop:item#</xar:set>
@@ -44,11 +44,11 @@
                 <xar:loop name="$multiform.workdata">
                     <tr>
                         <th scope="row">
-                            #xarVarPrepForDisplay($loop:key)#
+                            #xarVar::prepForDisplay($loop:key)#
                         </th>
                         <xar:if condition="is_string($loop:item)">
                             <td>
-                                #xarVarPrepForDisplay($loop:item)#
+                                #xarVar::prepForDisplay($loop:item)#
                             </td>
                         <xar:else />
                             <xar:set name="loop_item">#$loop:item#</xar:set>

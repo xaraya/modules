@@ -123,7 +123,7 @@ function pageform_ex2action_process(&$inobj, &$outobj)
             $outvalues['message'] = 'Error sending email notifications';
         } else {
             // log in
-            xarModAPIFunc('authsystem', 'user', 'login', array( 'uname' => $username, 'pass' => $pass, 'rememberme' => 0));
+            xarMod::apiFunc('authsystem', 'user', 'login', array( 'uname' => $username, 'pass' => $pass, 'rememberme' => 0));
             $outvalues['message'] = "user account successfully created. username [$username] uid [$uid]";
         }
     }

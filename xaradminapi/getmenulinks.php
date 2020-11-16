@@ -13,41 +13,41 @@ function xarpages_adminapi_getmenulinks()
     $menulinks = array();
 
     // Security Check
-    if (xarSecurityCheck('ModerateXarpagesPage', 0)) {
+    if (xarSecurity::check('ModerateXarpagesPage', 0)) {
         $menulinks[] = array(
-            'url'   => xarModURL('xarpages', 'admin', 'viewpages'),
+            'url'   => xarController::URL('xarpages', 'admin', 'viewpages'),
             'title' => xarML('View pages'),
             'label' => xarML('View pages')
         );
     }
 
-    if (xarSecurityCheck('AddXarpagesPage', 0)) {
+    if (xarSecurity::check('AddXarpagesPage', 0)) {
         $menulinks[] = array(
-            'url'   => xarModURL('xarpages', 'admin', 'newpage'),
+            'url'   => xarController::URL('xarpages', 'admin', 'newpage'),
             'title' => xarML('Add a new page'),
             'label' => xarML('Add a page')
         );
     }
 
-    if (xarSecurityCheck('EditXarpagesPagetype', 0)) {
+    if (xarSecurity::check('EditXarpagesPagetype', 0)) {
         $menulinks[] = array(
-            'url'   => xarModURL('xarpages', 'admin', 'viewtypes'),
+            'url'   => xarController::URL('xarpages', 'admin', 'viewtypes'),
             'title' => xarML('View page types'),
             'label' => xarML('View page types')
         );
     }
 
-    if (xarSecurityCheck('AdminXarpagesPagetype', 0)) {
+    if (xarSecurity::check('AdminXarpagesPagetype', 0)) {
         $menulinks[] = array(
-            'url'   => xarModURL('xarpages', 'admin', 'newtype'),
+            'url'   => xarController::URL('xarpages', 'admin', 'newtype'),
             'title' => xarML('Add a page type'),
             'label' => xarML('Add a page type')
         );
     }
 
-    if (xarSecurityCheck('AdminXarpagesPage', 0)) {
+    if (xarSecurity::check('AdminXarpagesPage', 0)) {
         $menulinks[] = array(
-            'url'   => xarModURL('xarpages', 'admin', 'modifyconfig'),
+            'url'   => xarController::URL('xarpages', 'admin', 'modifyconfig'),
             'title' => xarML('Configuration'),
             'label' => xarML('Configuration')
         );

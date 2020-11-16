@@ -141,10 +141,10 @@ function xarpages_funcapi_facet($args)
 
     $global_edit_privs = null;
     foreach ($ptids as $ptid_key => $ptid) {
-        if (xarSecurityCheck('ViewArticles', 0, 'Article', "$ptid:All:All:All")) {
+        if (xarSecurity::check('ViewArticles', 0, 'Article', "$ptid:All:All:All")) {
             // Check if we have edit privs.
             if (!isset($edit_privs[$ptid])) {
-                $edit_privs[$ptid] = (xarSecurityCheck('EditArticles', 0, 'Article', "$ptid:All:All:All") ? true : false);
+                $edit_privs[$ptid] = (xarSecurity::check('EditArticles', 0, 'Article', "$ptid:All:All:All") ? true : false);
 
                 // Update the global (all pubtypes) edit privs flag. true=edit privs on everything, false=some edit privs missing.
                 if (!isset($global_edit_privs) || $global_edit_privs == true) {
@@ -209,14 +209,14 @@ function xarpages_funcapi_facet($args)
     //
 
     // Get the filter category IDs from the URL.
-    xarVarFetch('filter', 'strlist:,+ :id', $filter, array(), XARVAR_NOT_REQUIRED);
+    xarVar::fetch('filter', 'strlist:,+ :id', $filter, array(), xarVar::NOT_REQUIRED);
     if (!is_array($filter)) {
         $filter = explode(',', $filter);
     }
 
     // Fetch the query string (keywords)
     // TODO: validate and split up the words (ie. sanitize).
-    xarVarFetch('q', 'str:1:100', $q, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('q', 'str:1:100', $q, '', xarVar::NOT_REQUIRED);
 
     // If a query string is passed in, then do some cleaning first.
     // When using a query string, the way the categories are handled is slightly different
@@ -228,12 +228,12 @@ function xarpages_funcapi_facet($args)
     }
 
     // Fetch the article ID.
-    xarVarFetch('aid', 'id', $aid, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('aid', 'id', $aid, 0, xarVar::NOT_REQUIRED);
 
     // Pager
     $default_numitems = 20;
-    xarVarFetch('startnum', 'id', $startnum, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'enum:10:20:50:100', $numitems, $default_numitems, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('startnum', 'id', $startnum, 0, xarVar::NOT_REQUIRED);
+    xarVar::fetch('numitems', 'enum:10:20:50:100', $numitems, $default_numitems, xarVar::NOT_REQUIRED);
 
     ////////////////////////////////
     // Place the filter categories into their relevant factets.
@@ -388,11 +388,11 @@ function xarpages_funcapi_facet($args)
             );
 
             // Fetch the categories query parts.
-            $catfilterdef = xarModAPIFunc('categories', 'user', 'leftjoin', $filter_params);
+            $catfilterdef = xarMod::apiFunc('categories', 'user', 'leftjoin', $filter_params);
 
             // Fetch the articles query parts.
             // This function does not select for categories, so we add that in ourselves.
-            $artfilterdef = xarModAPIFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
+            $artfilterdef = xarMod::apiFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
             //echo "<pre>Articles def:<br />"; var_dump($artfilterdef); echo "</pre>";
 
             $catfilterdef['where'] = (empty($catfilterdef['where']) ? $artfilterdef['where'] : $catfilterdef['where'] . ' AND ' . $artfilterdef['where']);
@@ -431,7 +431,7 @@ function xarpages_funcapi_facet($args)
             // in order to get the counts right.
 
             // Fetch the articles query parts.
-            $artfilterdef = xarModAPIFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
+            $artfilterdef = xarMod::apiFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
 
             $filter_sql = 'SELECT ' . $artfilterdef['field']
                 . ' FROM ' . $artfilterdef['table']
@@ -553,11 +553,11 @@ function xarpages_funcapi_facet($args)
                 $transform_article['transform'] = array('summary', 'body');
                 $transform_article['itemtype'] = $transform_article['pubtypeid'];
                 $transform_article['itemid'] = $transform_article['aid'];
-                $articles[$article_key] = xarModCallHooks('item', 'transform', $article_value['aid'], $transform_article, 'articles');
+                $articles[$article_key] = xarModHooks::call('item', 'transform', $article_value['aid'], $transform_article, 'articles');
 
                 // Also add edit URLs if we have privileges.
                 if (!empty($edit_privs[$ptid])) {
-                    $articles[$article_key]['editurl'] = xarModURL(
+                    $articles[$article_key]['editurl'] = xarController::URL(
                         'articles',
                         'admin',
                         'modify',
@@ -600,17 +600,17 @@ function xarpages_funcapi_facet($args)
     if (!empty($articles)) {
         // Include the pager.
         if ($numitems != $default_numitems) {
-            $pager = xarTplGetPager(
+            $pager = xarTplPager::getPager(
                 $startnum,
                 $article_count,
-                xarServerGetCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
+                xarServer::getCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
                 $numitems
             );
         } else {
-            $pager = xarTplGetPager(
+            $pager = xarTplPager::getPager(
                 $startnum,
                 $article_count,
-                xarServerGetCurrentURL(array('startnum' => '%%')),
+                xarServer::getCurrentURL(array('startnum' => '%%')),
                 $numitems
             );
         }
@@ -619,7 +619,7 @@ function xarpages_funcapi_facet($args)
     }
 
     // Pubtypes will be needed by the templates.
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     $template_data = compact(
         'facets',

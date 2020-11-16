@@ -58,7 +58,7 @@ function xarpages_menublock_display($blockinfo)
 {
     // Security Check
     // TODO: remove this check once it goes into the blocks centrally.
-    //if (!xarSecurityCheck('ViewBlocks', 0, 'Block', 'xarpages:menu:' . $blockinfo['name'])) {return;}
+    //if (!xarSecurity::check('ViewBlocks', 0, 'Block', 'xarpages:menu:' . $blockinfo['name'])) {return;}
 
     // TODO:
     // We want a few facilities:
@@ -102,8 +102,8 @@ function xarpages_menublock_display($blockinfo)
     $pid = 0;
     if (empty($vars['current_source']) || $vars['current_source'] == 'AUTO' || $vars['current_source'] == 'AUTODEFAULT') {
         // Automatic: that means look at the page cache.
-        if (xarVarIsCached('Blocks.xarpages', 'current_pid')) {
-            $cached_pid = xarVarGetCached('Blocks.xarpages', 'current_pid');
+        if (xarVar::isCached('Blocks.xarpages', 'current_pid')) {
+            $cached_pid = xarVar::getCached('Blocks.xarpages', 'current_pid');
             // Make sure it is numeric.
             if (isset($cached_pid) && is_numeric($cached_pid)) {
                 $pid = $cached_pid;
@@ -121,12 +121,12 @@ function xarpages_menublock_display($blockinfo)
     // The page details *may* have been cached, if
     // we are in the xarpages module, or have several
     // blocks on the same page showing the same tree.
-    if (xarVarIsCached('Blocks.xarpages', 'pagedata')) {
+    if (xarVar::isCached('Blocks.xarpages', 'pagedata')) {
         // Pages are cached?
         // The 'serialize' hack ensures we have a proper copy of the
         // paga data, which is a self-referencing array. If we don't
         // do this, then any changes we make will affect the stored version.
-        $pagedata = unserialize(serialize(xarVarGetCached('Blocks.xarpages', 'pagedata')));
+        $pagedata = unserialize(serialize(xarVar::getCached('Blocks.xarpages', 'pagedata')));
         //$pagedata = unserialize(serialize($pagedata));
         // If the cached tree does not contain the current page,
         // then we cannot use it.
@@ -181,8 +181,8 @@ function xarpages_menublock_display($blockinfo)
         // Only cache it if the cache is empty to start with. We only cache a complete
         // tree here, so if any other blocks need it, it contains all possible
         // pages we could need in that tree.
-        if (!xarVarIsCached('Blocks.xarpages', 'pagedata')) {
-            xarVarSetCached('Blocks.xarpages', 'pagedata', $pagedata);
+        if (!xarVar::isCached('Blocks.xarpages', 'pagedata')) {
+            xarVar::setCached('Blocks.xarpages', 'pagedata', $pagedata);
         }
     }
 
