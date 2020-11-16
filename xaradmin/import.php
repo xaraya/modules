@@ -16,18 +16,34 @@
  */
 
 sys::import('modules.dynamicdata.class.objects.master');
-function eav_admin_import(Array $args=array())
+function eav_admin_import(array $args=array())
 {
     // Security
-    if(!xarSecurityCheck('AdminDynamicData')) return;
+    if (!xarSecurityCheck('AdminDynamicData')) {
+        return;
+    }
 
-    if(!xarVarFetch('basedir',    'isset', $basedir,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('import',     'isset', $import,      NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('xml',        'isset', $xml,         NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('refresh',    'isset', $refresh,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('keepitemid', 'isset', $keepitemid,  NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('overwrite',  'checkbox',  $overwrite,   false, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('prefix', 'isset', $data['prefix'],  xarDB::getPrefix(), XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('basedir', 'isset', $basedir, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('import', 'isset', $import, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('xml', 'isset', $xml, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('refresh', 'isset', $refresh, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('keepitemid', 'isset', $keepitemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('overwrite', 'checkbox', $overwrite, false, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('prefix', 'isset', $data['prefix'], xarDB::getPrefix(), XARVAR_DONT_SET)) {
+        return;
+    }
 
     extract($args);
 
@@ -41,19 +57,23 @@ function eav_admin_import(Array $args=array())
     $data['authid'] = xarSecGenAuthKey();
 
     $filetype = 'xml';
-    $files = xarMod::apiFunc('dynamicdata','admin','browse',
-                           array('basedir' => $basedir,
-                                 'filetype' => $filetype));
+    $files = xarMod::apiFunc(
+        'dynamicdata',
+        'admin',
+        'browse',
+        array('basedir' => $basedir,
+                                 'filetype' => $filetype)
+    );
     
     if (!isset($files) || count($files) < 1) {
-        $data['warning'] = xarML('There are currently no XML files available for import in "#(1)"',$basedir);
+        $data['warning'] = xarML('There are currently no XML files available for import in "#(1)"', $basedir);
         return $data;
     }
 
     if (empty($refresh) && (!empty($import) || !empty($xml))) {
         if (!xarSecConfirmAuthKey()) {
-            return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
-        }        
+            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        }
 
         if (empty($keepitemid)) {
             $keepitemid = 0;
@@ -67,45 +87,59 @@ function eav_admin_import(Array $args=array())
                 }
             }
             if (empty($found) || !file_exists($basedir . '/' . $file)) {
-                throw new FileNotFoundException($basedir,'No files were found to import in directory "#(1)"');
+                throw new FileNotFoundException($basedir, 'No files were found to import in directory "#(1)"');
             }
             try {
-                $objectname = xarMod::apiFunc('eav','util','import',
-                                      array('file' => $basedir . '/' . $file,
+                $objectname = xarMod::apiFunc(
+                    'eav',
+                    'util',
+                    'import',
+                    array('file' => $basedir . '/' . $file,
                                             'keepitemid' => $keepitemid,
                                             'overwrite' =>  $overwrite,
                                             'prefix' => $data['prefix'],
-                                            ));
+                                            )
+                );
             } catch (DuplicateException $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors',array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
+                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
             } catch (Exception $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors',array('layout' => 'bad_definition', 'name' => $e->getMessage()));
+                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
             }
         } else {
             try {
-                $objectname = xarMod::apiFunc('eav','util','import',
-                                      array('xml' => $xml,
+                $objectname = xarMod::apiFunc(
+                    'eav',
+                    'util',
+                    'import',
+                    array('xml' => $xml,
                                             'keepitemid' => $keepitemid,
                                             'overwrite' =>  $overwrite,
                                             'prefix' => $data['prefix'],
-                                            ));
+                                            )
+                );
             } catch (DuplicateException $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors',array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
+                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
             } catch (Exception $e) {
-                return xarTplModule('dynamicdata', 'user', 'errors',array('layout' => 'bad_definition', 'name' => $e->getMessage()));
+                return xarTplModule('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
             }
         }
-        if (empty($objectname)) return;
+        if (empty($objectname)) {
+            return;
+        }
 
-        xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
-                                      array('objectname' => $objectname)));
+        xarController::redirect(xarModURL(
+            'eav',
+            'admin',
+            'add_attribute',
+            array('objectname' => $objectname)
+        ));
         return true;
     }
 
     natsort($files);
-    array_unshift($files,'');
+    array_unshift($files, '');
     foreach ($files as $file) {
-         $data['options'][] = array('id' => $file,
+        $data['options'][] = array('id' => $file,
                                     'name' => $file);
     }
 
@@ -113,5 +147,3 @@ function eav_admin_import(Array $args=array())
 
     return $data;
 }
-
-?>

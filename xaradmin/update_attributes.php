@@ -15,28 +15,50 @@
  */
 function eav_admin_update_attributes()
 {
-    if(!xarVarFetch('objectid',             'isset', $objectid,          1, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_name',             'isset', $eav_name,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_label',            'isset', $eav_label,          NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_type',             'isset', $eav_type,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_default',          'isset', $eav_defaultvalue,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_seq',              'isset', $eav_seq,            NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('display_eav_status',   'isset', $display_eav_status, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('input_eav_status',     'isset', $input_eav_status,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_configuration',    'isset', $eav_configuration,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('attribute_definition', 'int', $attribute_definition,  0, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('objectid', 'isset', $objectid, 1, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eav_name', 'isset', $eav_name, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eav_label', 'isset', $eav_label, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eav_type', 'isset', $eav_type, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eav_default', 'isset', $eav_defaultvalue, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eav_seq', 'isset', $eav_seq, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('display_eav_status', 'isset', $display_eav_status, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('input_eav_status', 'isset', $input_eav_status, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('eav_configuration', 'isset', $eav_configuration, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('attribute_definition', 'int', $attribute_definition, 0, XARVAR_DONT_SET)) {
+        return;
+    }
 
     // Security
-    if(!xarSecurityCheck('AdminEAV')) return;
+    if (!xarSecurityCheck('AdminEAV')) {
+        return;
+    }
 
     if (!xarSecConfirmAuthKey()) {
-        return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
-    }        
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
     $object = DataObjectMaster::getObject(array('objectid' => $objectid));
 
-    $fields = xarMod::apiFunc('eav','user','getattributes', array('object_id' => $objectid));
+    $fields = xarMod::apiFunc('eav', 'user', 'getattributes', array('object_id' => $objectid));
 
     sys::import('xaraya.structures.query');
     $tables =& xarDB::getTables();
@@ -59,10 +81,10 @@ function eav_admin_update_attributes()
             // update property in xaradminapi.php
             if (!isset($eav_defaultvalue[$id])) {
                 $eav_defaultvalue[$id] = null;
-            } elseif (!empty($eav_defaultvalue[$id]) && preg_match('/\[LF\]/',$eav_defaultvalue[$id])) {
+            } elseif (!empty($eav_defaultvalue[$id]) && preg_match('/\[LF\]/', $eav_defaultvalue[$id])) {
                 // replace [LF] with line-feed again
                 $lf = chr(10);
-                $eav_defaultvalue[$id] = preg_replace('/\[LF\]/',$lf,$eav_defaultvalue[$id]);
+                $eav_defaultvalue[$id] = preg_replace('/\[LF\]/', $lf, $eav_defaultvalue[$id]);
             }
             if (!isset($eav_configuration[$id])) {
                 $eav_configuration[$id] = null;
@@ -88,7 +110,9 @@ function eav_admin_update_attributes()
             $q->addfield('timeupdated', time());
             $q->addfield('configuration', $eav_configuration[$id]);
             $q->eq('id', $id);
-            if(!$q->run()) return;
+            if (!$q->run()) {
+                return;
+            }
         }
     }
     $i++;
@@ -109,7 +133,9 @@ function eav_admin_update_attributes()
         $q->addfield('default_string');
         $q->addfield('default_text');
         $q->eq('id', $attribute_definition);
-        if(!$q->run()) return;
+        if (!$q->run()) {
+            return;
+        }
         $definition = $q->row();
         
         // Insert it in the attributes table
@@ -128,15 +154,16 @@ function eav_admin_update_attributes()
         $q->addfield('seq', $i);
         $q->addfield('timecreated', time());
         $q->addfield('timeupdated', time());
-        if(!$q->run()) return;
-        
+        if (!$q->run()) {
+            return;
+        }
     } else {
         // No efinition chosen. Check if we are entering a property manually
         if (!empty($eav_label[0]) && !empty($eav_property_id[0])) {
             // create new property in xaradminapi.php
             $name = strtolower($eav_label[0]);
-            $name = preg_replace('/[^a-z0-9_]+/','_',$name);
-            $name = preg_replace('/_$/','',$name);
+            $name = preg_replace('/[^a-z0-9_]+/', '_', $name);
+            $name = preg_replace('/_$/', '', $name);
             if (!isset($display_eav_status[0])) {
                 $display_eav_status[0] = DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE;
             }
@@ -157,12 +184,17 @@ function eav_admin_update_attributes()
             $q->addfield('seq', $i);
             $q->addfield('timecreated', time());
             $q->addfield('timeupdated', time());
-            if(!$q->run()) return;
+            if (!$q->run()) {
+                return;
+            }
         }
     }
 
-    xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
-                        array('objectid'    => $objectid)));
+    xarController::redirect(xarModURL(
+        'eav',
+        'admin',
+        'add_attribute',
+        array('objectid'    => $objectid)
+    ));
     return true;
 }
-?>

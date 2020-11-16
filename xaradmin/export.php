@@ -17,51 +17,68 @@
  */
 sys::import('modules.dynamicdata.class.objects.master');
 //sys::import('modules.eav.class.master');
-function eav_admin_export(Array $args=array())
+function eav_admin_export(array $args=array())
 {
     // Security
-    if (!xarSecurityCheck('ManageEAV')) return;
+    if (!xarSecurityCheck('ManageEAV')) {
+        return;
+    }
 
     extract($args);
 
-    if(!xarVarFetch('objectid', 'isset', $objectid, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('name',     'isset', $name    , NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('module_id','isset', $moduleid, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('tofile',   'isset', $tofile,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('convert',  'isset', $convert,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('objectid', 'isset', $objectid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('name', 'isset', $name, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('module_id', 'isset', $moduleid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemtype', 'isset', $itemtype, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('tofile', 'isset', $tofile, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('convert', 'isset', $convert, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     $modulename = 'eav';
     $data = array();
     $data['menutitle'] = xarML('EAV Data Utilities');
-	//Fill object dropdown
-	$data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
+    //Fill object dropdown
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
     $items = $data['object']->getItems();
-    if(empty($items)) {
-    	$data['errormessage'] = xarML('No entitites exist.');
-    	return $data;
+    if (empty($items)) {
+        $data['errormessage'] = xarML('No entitites exist.');
+        return $data;
     }
     $options = array();
     foreach ($items as $item) {
-    	$object = DataObjectMaster::getObjectInfo(
-                                array('moduleid' => $item['module'],
-                                      'objectid' => $item['object']));
+        $object = DataObjectMaster::getObjectInfo(
+            array('moduleid' => $item['module'],
+                                      'objectid' => $item['object'])
+        );
         $objectname = $object['name'];
         array_push($options, array('id' => $item['object'], 'name' => $objectname));
     }
-    if (!empty($options) && count($options) >= 0 ) {
-    	$data['options'] = $options;
-    } 
+    if (!empty($options) && count($options) >= 0) {
+        $data['options'] = $options;
+    }
 
-    //get the first item id in array if object id is null 
+    //get the first item id in array if object id is null
     if (empty($objectid)) {
-    	$objectid = $options[0]['id'];
+        $objectid = $options[0]['id'];
     }
     $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
-                                         		  'name'     => $name,
-                                         		  'itemid'   => $itemid,
-                                         		   'allprops' => true));
+                                                   'name'     => $name,
+                                                   'itemid'   => $itemid,
+                                                    'allprops' => true));
     
     if (!isset($myobject) || empty($myobject->label)) {
         $data['label'] = xarML('Unknown Object');
@@ -69,8 +86,9 @@ function eav_admin_export(Array $args=array())
         return $data;
     }
     // check security of the object
-    if (!$myobject->checkAccess('config'))
+    if (!$myobject->checkAccess('config')) {
         return xarResponse::Forbidden(xarML('Configure #(1) is forbidden', $myobject->label));
+    }
 
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
@@ -83,30 +101,51 @@ function eav_admin_export(Array $args=array())
     if (empty($itemid)) {
         $data['label'] = xarML('Export Object Definition for #(1)', $myobject->label);
 
-    	 $xml = xarMod::apiFunc('eav','util','export', 
-    	 						array('objectref' => &$myobject, "objectid" => $objectid));
-	    
+        $xml = xarMod::apiFunc(
+            'eav',
+            'util',
+            'export',
+            array('objectref' => &$myobject, "objectid" => $objectid)
+        );
+        
 
-        $data['formlink'] = xarModURL('eav','admin','export',
-                                      array('objectid' => $myobject->objectid,
-                                            'itemid'   => 'all'));
-        $data['filelink'] = xarModURL('eav','admin','export',
-                                      array('objectid' => $myobject->objectid,
+        $data['formlink'] = xarModURL(
+            'eav',
+            'admin',
+            'export',
+            array('objectid' => $myobject->objectid,
+                                            'itemid'   => 'all')
+        );
+        $data['filelink'] = xarModURL(
+            'eav',
+            'admin',
+            'export',
+            array('objectid' => $myobject->objectid,
                                             'itemid'   => 'all',
-                                            'tofile'   => 1));
+                                            'tofile'   => 1)
+        );
 
         if (!empty($myobject->datastores) && count($myobject->datastores) == 1 && !empty($myobject->datastores['_dynamic_data_'])) {
-            $data['convertlink'] = xarModURL('eav','admin','export',
-                                             array('objectid' => $myobject->objectid,
-                                                   'convert'  => 1));
+            $data['convertlink'] = xarModURL(
+                'eav',
+                'admin',
+                'export',
+                array('objectid' => $myobject->objectid,
+                                                   'convert'  => 1)
+            );
             if (!empty($convert)) {
-                if (!xarMod::apiFunc('eav','util','maketable',
-                                   array('objectref' => &$myobject))) return;
-
+                if (!xarMod::apiFunc(
+                    'eav',
+                    'util',
+                    'maketable',
+                    array('objectref' => &$myobject)
+                )) {
+                    return;
+                }
             }
         }
 
-    // export specific item
+        // export specific item
     } elseif (is_numeric($itemid)) {
         $data['label'] = xarML('Export Data for #(1) # #(2)', $myobject->label, $itemid);
 
@@ -121,7 +160,7 @@ function eav_admin_export(Array $args=array())
     // export all items (better save this to file, e.g. in var/cache/...)
     } elseif ($itemid == 'all') {
         $data['label'] = xarML('Export Data for all #(1) Items', $myobject->label);
-		
+        
         $mylist = DataObjectMaster::getObjectList(array('objectid' => $objectid,
                                                 'moduleid' => $moduleid,
                                                 'itemtype' => $itemtype));
@@ -135,7 +174,7 @@ function eav_admin_export(Array $args=array())
                 foreach ($mylist->properties as $name => $property) {
                     if (isset($item[$name])) {
                         if ($name == 'configuration') {
-                        // don't replace anything in the serialized value
+                            // don't replace anything in the serialized value
                             $xml .= "    <$name>" . $item[$name];
                         } else {
                             $xml .= "    <$name>";
@@ -149,13 +188,12 @@ function eav_admin_export(Array $args=array())
                 $xml .= '  </'.$mylist->name.">\n";
             }
             $xml .= "</items>\n";
-
         } else {
             $varDir = sys::varpath();
-            $outfile = $varDir . '/uploads/' . xarVarPrepForOS($mylist->name) . '.data.' . xarLocaleFormatDate('%Y%m%d%H%M%S',time()) . '.xml';
-            $fp = @fopen($outfile,'w');
+            $outfile = $varDir . '/uploads/' . xarVarPrepForOS($mylist->name) . '.data.' . xarLocaleFormatDate('%Y%m%d%H%M%S', time()) . '.xml';
+            $fp = @fopen($outfile, 'w');
             if (!$fp) {
-                $data['xml'] = xarML('Unable to open file #(1)',$outfile);
+                $data['xml'] = xarML('Unable to open file #(1)', $outfile);
                 return $data;
             }
             fputs($fp, "<items>\n");
@@ -172,9 +210,8 @@ function eav_admin_export(Array $args=array())
             }
             fputs($fp, "</items>\n");
             fclose($fp);
-            $xml .= xarML('Data saved to #(1)',$outfile);
+            $xml .= xarML('Data saved to #(1)', $outfile);
         }
-
     } else {
         $data['label'] = xarML('Unknown Request for #(1)', $label);
         $xml = '';
@@ -187,5 +224,3 @@ function eav_admin_export(Array $args=array())
 
     return $data;
 }
-
-?>

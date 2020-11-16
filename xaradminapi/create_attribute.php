@@ -13,26 +13,34 @@
 /**
  * create a new attribute for an object
  */
-function eav_adminapi_create_attribute(Array $args=array())
+function eav_adminapi_create_attribute(array $args=array())
 {
     extract($args);
 
     // Required arguments
     $invalid = array();
-    if (!isset($name) || !is_string($name)) $invalid[] = 'name';
-    if (!isset($type) || !is_numeric($type)) $invalid[] = 'type';
+    if (!isset($name) || !is_string($name)) {
+        $invalid[] = 'name';
+    }
+    if (!isset($type) || !is_numeric($type)) {
+        $invalid[] = 'type';
+    }
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ',$invalid), 'admin', 'createproperty', 'DynamicData');
-        throw new BadParameterException($vars,$msg);
+        $vars = array(join(', ', $invalid), 'admin', 'createproperty', 'DynamicData');
+        throw new BadParameterException($vars, $msg);
     }
 
     $itemid = 0;
 
     // get the properties of the 'properties' object
-    $fields = xarMod::apiFunc('dynamicdata','user','getprop',
-                            array('objectid' => 2)); // the properties
+    $fields = xarMod::apiFunc(
+        'dynamicdata',
+        'user',
+        'getprop',
+        array('objectid' => 2)
+    ); // the properties
 
     $values = array();
     // the acceptable arguments correspond to the property names !
@@ -47,4 +55,3 @@ function eav_adminapi_create_attribute(Array $args=array())
     $propid = $propertyobject->createItem($values);
     return $propid;
 }
-?>

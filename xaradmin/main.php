@@ -17,7 +17,9 @@
 
     function eav_admin_main()
     {
-        if(!xarSecurityCheck('ManageEAV')) return;
+        if (!xarSecurityCheck('ManageEAV')) {
+            return;
+        }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
@@ -27,4 +29,3 @@
         // success
         return true;
     }
-?>

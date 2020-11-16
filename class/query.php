@@ -29,21 +29,27 @@ class EAVQuery extends Query
     public $columnids;
     public $fieldsempty = 1;
     public $objectname;
-//---------------------------------------------------------
-// Constructor
-//---------------------------------------------------------
-    function EAVQuery($objectname=null)
-    { 
-     	if(empty($objectname)) return false;
-     	// Find the objectid from Object name
-       	if (!is_numeric($objectname)) {
+    //---------------------------------------------------------
+    // Constructor
+    //---------------------------------------------------------
+    public function EAVQuery($objectname=null)
+    {
+        if (empty($objectname)) {
+            return false;
+        }
+        // Find the objectid from Object name
+        if (!is_numeric($objectname)) {
             $objectInfo = DataObjectMaster::getObjectInfo(array('name' => $objectname));
             $object_id = $objectInfo['objectid'];
-   	         if(empty($object_id)) return false;
+            if (empty($object_id)) {
+                return false;
+            }
         }
 
         // We need an object ID
-        if(empty($object_id) || !is_numeric($object_id)) return false;
+        if (empty($object_id) || !is_numeric($object_id)) {
+            return false;
+        }
 
         // Load the EAV API so we have access to the EAV tables
         // Superfluous if we're coming from the EAV module, but we cannot know that
@@ -78,14 +84,16 @@ class EAVQuery extends Query
 
         // Only include active fields
         // TODO: adjust the query for property status
-		// parent::eq('status', 1);
+        // parent::eq('status', 1);
 
         // Get the column data and rearrange
-        if(!parent::run()) return;
+        if (!parent::run()) {
+            return;
+        }
         $columns = array();
         $columnnames = array();
         $colummids = array();
-        foreach(parent::output() as $column) {
+        foreach (parent::output() as $column) {
             $columns[$column['columnid']] = array('name' => $column['name'], 'label' => $column['label'], 'type' =>$column['type']);
             $columnnames[$column['name']] = $column['columnid'];
             $colummids[] = $column['columnid'];
@@ -102,7 +110,7 @@ class EAVQuery extends Query
 
         // The query will get its data from the eav_data table
         // whose fields are known
-      	$this->initalias = "init".time();
+        $this->initalias = "init".time();
         $init = $this->initalias;
         $this->table = $tables['eav_data'];
         parent::addtable($this->table, $init);
@@ -112,20 +120,22 @@ class EAVQuery extends Query
         //parent::in($this->initalias . '.attribute_id',$this->columnids);
     }
 
-    function output()
+    public function output()
     {
         return parent::output();
     }
 
-    function row($row=0)
+    public function row($row=0)
     {
         $rows = $this->output();
-        if (empty($rows)) return array();
+        if (empty($rows)) {
+            return array();
+        }
         return $rows[$row];
     }
 
-	/*
-	 * function addfield()
+    /*
+     * function addfield()
     {
         $numargs = func_num_args();
         $field = '';
@@ -143,57 +153,56 @@ class EAVQuery extends Query
 //        foreach ($fields as $field) $this->addfield($field);
 //    }
 
-    function adjunctclause($field)
+    public function adjunctclause($field)
     {
         sleep(1);
         $this->subalias = "sub".time();
         parent::addtable($this->table, $this->subalias);
         parent::join($this->initalias . '.item_id', $this->subalias . '.item_id');
-        parent::eq($this->subalias . '.attribute_id',$this->columnnames[$field]);
+        parent::eq($this->subalias . '.attribute_id', $this->columnnames[$field]);
     }
-    function join($field1,$field2,$active=1)
+    public function join($field1, $field2, $active=1)
     {
         // Nice try, but this doesn't work
         $this->adjunctclause($field1);
-        parent::join($this->subalias . '.value',$field2);
+        parent::join($this->subalias . '.value', $field2);
     }
-     // Disable this for the moment
-	function eq($field1,$field2,$active=1)
+    // Disable this for the moment
+    public function eq($field1, $field2, $active=1)
     {
         //$this->adjunctclause($field1);
-        parent::eq($field1,$field2);
-    } 
+        parent::eq($field1, $field2);
+    }
  
-    function ne($field1,$field2,$active=1)
+    public function ne($field1, $field2, $active=1)
     {
         $this->adjunctclause($field1);
-        parent::ne($this->subalias . '.value',$field2);
+        parent::ne($this->subalias . '.value', $field2);
     }
-    function ge($field1,$field2,$active=1)
+    public function ge($field1, $field2, $active=1)
     {
         $this->adjunctclause($field1);
-        parent::ge($this->subalias . '.value',$field2);
+        parent::ge($this->subalias . '.value', $field2);
     }
-    function le($field1,$field2,$active=1)
+    public function le($field1, $field2, $active=1)
     {
         $this->adjunctclause($field1);
-        parent::le($this->subalias . '.value',$field2);
+        parent::le($this->subalias . '.value', $field2);
     }
-    function like($field1,$field2,$active=1)
+    public function like($field1, $field2, $active=1)
     {
         $this->adjunctclause($field1);
-        parent::like($this->subalias . '.value',$field2);
+        parent::like($this->subalias . '.value', $field2);
     }
-  	function addorder($x = '',$y = 'ASC')
+    public function addorder($x = '', $y = 'ASC')
     {
         //$this->adjunctclause($x);
-        parent::addorder($x,$y);
+        parent::addorder($x, $y);
     }
 
-	function run($statement='',$display=1)
+    public function run($statement='', $display=1)
     {
-       //parent::in($this->initalias . '.property_id',$this->columnids);
-        parent::run($statement,$display);
+        //parent::in($this->initalias . '.property_id',$this->columnids);
+        parent::run($statement, $display);
     }
 }
-?>

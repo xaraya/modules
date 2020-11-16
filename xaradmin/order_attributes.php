@@ -22,29 +22,41 @@
 function eav_admin_order_attributes()
 {
     // Security
-    if(!xarSecurityCheck('EditEAV')) return;
+    if (!xarSecurityCheck('EditEAV')) {
+        return;
+    }
 
     // Get parameters from whatever input we need.  All arguments to this
     // function should be obtained from xarVarFetch()
-    if(!xarVarFetch('objectid',          'isset', $object_id,          NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',        'isset', $itemid,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('direction',     'isset', $direction,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('objectid', 'isset', $object_id, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('direction', 'isset', $direction, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     if (empty($direction)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
         $vars = array('direction', 'admin', 'orderprops', 'dynamicdata');
-        throw new BadParameterException($vars,$msg);
+        throw new BadParameterException($vars, $msg);
     }
 
     if (empty($itemid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
         $vars = array('itemid', 'admin', 'orderprops', 'dynamicdata');
-        throw new BadParameterException($vars,$msg);
+        throw new BadParameterException($vars, $msg);
     }
 
-    $fields = xarMod::apiFunc('eav','user','getattributes',
-                                   array('object_id' => $object_id,
-                                         'allprops' => true));
+    $fields = xarMod::apiFunc(
+        'eav',
+        'user',
+        'getattributes',
+        array('object_id' => $object_id,
+                                         'allprops' => true)
+    );
     $orders = array();
     $currentpos = null;
     foreach ($fields as $fname => $field) {
@@ -65,7 +77,9 @@ function eav_admin_order_attributes()
             $swappos = $i;
             $currentpos = $i+1;
         }
-        if (isset($swappos)) break;
+        if (isset($swappos)) {
+            break;
+        }
         $i++;
     }
 
@@ -74,17 +88,23 @@ function eav_admin_order_attributes()
     $q = new Query('UPDATE', $tables['eav_attributes']);
     $q->addfield('seq', (int)$fields[$swapwith]['seq']);
     $q->eq('id', (int)$itemid);
-    if(!$q->run()) return;
+    if (!$q->run()) {
+        return;
+    }
 
     $q = new Query('UPDATE', $tables['eav_attributes']);
     $q->addfield('seq', (int)$fields[$move_prop]['seq']);
     $q->eq('id', (int)$fields[$swapwith]['seq']);
-    if(!$q->run()) return;
+    if (!$q->run()) {
+        return;
+    }
 
-    xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
-                        array('objectid'    => $object_id,
-        )));
+    xarController::redirect(xarModURL(
+        'eav',
+        'admin',
+        'add_attribute',
+        array('objectid'    => $object_id,
+        )
+    ));
     return true;
 }
-
-?>

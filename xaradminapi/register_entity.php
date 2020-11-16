@@ -18,7 +18,9 @@
     function eav_adminapi_register_entity($args)
     {
         extract($args);
-        if (!isset($object) || !isset($module)) throw new Exception(xarML('Missing object or module for eav_adminapi_register_entity'));
+        if (!isset($object) || !isset($module)) {
+            throw new Exception(xarML('Missing object or module for eav_adminapi_register_entity'));
+        }
         
         $module_id = xarMod::getRegID($module);
         $object = DataObjectMaster::getObject(array('name' => $object));
@@ -30,7 +32,9 @@
         $q->eq('object_id', $object_id);
         $q->eq('module_id', $module_id);
         $q->run();
-        if (!empty($q->row())) return true;
+        if (!empty($q->row())) {
+            return true;
+        }
         
         sys::import('modules.dynamicdata.class.objects.master');
         $entity = DataObjectMaster::getObject(array('name' => 'eav_entities'));
@@ -39,4 +43,3 @@
         $itemid = $entity->createItem();
         return true;
     }
-?>

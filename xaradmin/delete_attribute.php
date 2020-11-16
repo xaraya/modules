@@ -14,30 +14,39 @@
     sys::import('modules.dynamicdata.class.objects.master');
     function eav_admin_delete_attribute()
     {
-        if (!xarSecurityCheck('ManageEAV')) return;
+        if (!xarSecurityCheck('ManageEAV')) {
+            return;
+        }
 
-        if (!xarVarFetch('name',       'str:1',  $name,    'eav_eav',     XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'str:1',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('name', 'str:1', $name, 'eav_eav', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVarFetch('confirm', 'str:1', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
-		$data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
-	    
-		// Get that specific item of the object
-    	$data['object']->getItem(array('itemid' => $data['itemid']));
+        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
+        
+        // Get that specific item of the object
+        $data['object']->getItem(array('itemid' => $data['itemid']));
 
         $data['tplmodule'] = 'eav';
         $data['authid'] = xarSecGenAuthKey('eav');
         
-        if ($data['confirm']) {        
+        if ($data['confirm']) {
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return;
+            }
 
             // Delete the item
             $item = $data['object']->deleteItem();
             // Jump to the next page
-            xarController::redirect(xarModURL('eav','admin','view_attributes'));
+            xarController::redirect(xarModURL('eav', 'admin', 'view_attributes'));
             return true;
         }
         return $data;
     }
-?>

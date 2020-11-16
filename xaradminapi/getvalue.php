@@ -18,10 +18,16 @@
     function eav_adminapi_getvalue($args)
     {
         extract($args);
-        if (!isset($property) && !isset($type)) throw new Exception(xarML('Missing property or type for eav_adminapi_getvalue'));
-        if (!isset($values)) throw new Exception(xarML('Missing values for eav_adminapi_getvalue'));
+        if (!isset($property) && !isset($type)) {
+            throw new Exception(xarML('Missing property or type for eav_adminapi_getvalue'));
+        }
+        if (!isset($values)) {
+            throw new Exception(xarML('Missing values for eav_adminapi_getvalue'));
+        }
         
-        if (isset($property)) $type = $property->basetype;
+        if (isset($property)) {
+            $type = $property->basetype;
+        }
         
         switch ($type) {
             case 'string': $value = $values['default_string']; break;
@@ -33,4 +39,3 @@
         
         return $value;
     }
-?>

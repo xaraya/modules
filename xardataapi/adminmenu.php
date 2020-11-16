@@ -24,4 +24,3 @@
             array('mask' => 'AdminEAV', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the EAV configuration'), 'label' => xarML('Modify Config')),
         );
     }
-?>

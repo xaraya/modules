@@ -18,11 +18,11 @@
     function eav_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadEAV')) return;
+        if (!xarSecurityCheck('ReadEAV')) {
+            return;
+        }
 
 //        xarController::redirect(xarModURL('eav', 'user', 'view'));
         // success
         return array(); //true;
     }
-
-?>

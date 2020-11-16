@@ -13,22 +13,34 @@
 /**
  * Configure an attribute of an eav object
  */
-function eav_admin_configure_attribute(Array $args=array())
+function eav_admin_configure_attribute(array $args=array())
 {
     // Security
-    if(!xarSecurityCheck('ManageEAV')) return;
+    if (!xarSecurityCheck('ManageEAV')) {
+        return;
+    }
 
     extract($args);
 
     // get the property id
-    if (!xarVarFetch('itemid',  'id',    $itemid, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('exit', 'isset', $exit, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('preview', 'isset', $preview, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid', 'id', $itemid, null, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('exit', 'isset', $exit, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'isset', $confirm, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('preview', 'isset', $preview, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
     if (empty($itemid)) {
         // Get the property type for sample configuration
-        if (!xarVarFetch('proptype', 'isset', $proptype, NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('proptype', 'isset', $proptype, null, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         // Show sample configuration for some property type
         return eav_config_propval($proptype);
@@ -37,23 +49,28 @@ function eav_admin_configure_attribute(Array $args=array())
     // Get the object corresponding to this attribute
     $attribute = DataObjectMaster::getObject(array('name'   => 'eav_attributes',
                                                   'itemid' => $itemid));
-    if (empty($attribute)) return;
+    if (empty($attribute)) {
+        return;
+    }
 
     $newid = $attribute->getItem();
 
     if (empty($newid) || empty($attribute->properties['id']->value)) {
-        throw new BadParameterException(null,'Invalid item id');
+        throw new BadParameterException(null, 'Invalid item id');
     }
     if (empty($attribute->properties['object_id']->value)) {
-        throw new BadParameterException(null,'Invalid object id');
+        throw new BadParameterException(null, 'Invalid object id');
     }
 
     // Check security of the parent object
     $parentobjectid = $attribute->properties['object_id']->value;
     $parentobject = DataObjectMaster::getObject(array('objectid' => $parentobjectid));
-    if (empty($parentobject)) return;
-    if (!$parentobject->checkAccess('config'))
+    if (empty($parentobject)) {
+        return;
+    }
+    if (!$parentobject->checkAccess('config')) {
         return xarResponse::Forbidden(xarML('Configure #(1) is forbidden', $parentobject->label));
+    }
     unset($parentobject);
 
     $data = array();
@@ -68,10 +85,14 @@ function eav_admin_configure_attribute(Array $args=array())
     $data['invalid']    = !empty($invalid) ? $invalid :'';
     $property = DataPropertyMaster::getProperty($data);
     $data['propertytype'] = DataPropertyMaster::getProperty(array('type' => $data['type']));
-    if (empty($property)) return;
+    if (empty($property)) {
+        return;
+    }
 
     if (!empty($preview) || !empty($confirm) || !empty($exit)) {
-        if (!xarVarFetch($data['name'],'isset',$configuration,NULL,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch($data['name'], 'isset', $configuration, null, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         // Pass the current value as configuration rule
         $data['configuration'] = isset($configuration) ? $configuration : '';
@@ -83,11 +104,13 @@ function eav_admin_configure_attribute(Array $args=array())
                 // store the updated configuration rule back in the value
                 $attribute->properties['configuration']->value = $property->configuration;
                 if (!xarSecConfirmAuthKey()) {
-                    return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
+                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
                 }
 
                 $newid = $attribute->updateItem();
-                if (empty($newid)) return;
+                if (empty($newid)) {
+                    return;
+                }
 
                 if (empty($exit)) {
                     $return_url = xarModURL('eav', 'admin', 'configure_attribute', array('itemid' => $itemid));
@@ -96,25 +119,29 @@ function eav_admin_configure_attribute(Array $args=array())
                 }
             }
             if (!empty($exit)) {
-                if (!xarVarFetch('return_url', 'isset', $return_url,  NULL, XARVAR_DONT_SET)) {return;}
+                if (!xarVarFetch('return_url', 'isset', $return_url, null, XARVAR_DONT_SET)) {
+                    return;
+                }
                 if (empty($return_url)) {
                     // return to modifyprop
-                    $return_url = xarModURL('eav', 'admin', 'add_attribute',
-                                            array('objectid' => $parentobjectid));
+                    $return_url = xarModURL(
+                        'eav',
+                        'admin',
+                        'add_attribute',
+                        array('objectid' => $parentobjectid)
+                    );
                 }
                 xarController::redirect($return_url);
                 return true;
             }
             // show preview/updated values
-
         } else {
             $attribute->properties['configuration']->invalid = $property->invalid;
-        }        
+        }
 
-    // pass the current value as configuration rule
+        // pass the current value as configuration rule
     } elseif (!empty($attribute->properties['configuration'])) {
         $data['configuration'] = $attribute->properties['configuration']->value;
-
     } else {
         $data['configuration'] = null;
     }
@@ -157,10 +184,16 @@ function eav_config_propval($proptype)
         return $data;
     }
 
-    if (!xarVarFetch('preview', 'isset', $preview, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('preview', 'isset', $preview, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'isset', $confirm, null, XARVAR_DONT_SET)) {
+        return;
+    }
     if (!empty($preview) || !empty($confirm)) {
-        if (!xarVarFetch($data['name'],'isset',$configuration,NULL,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch($data['name'], 'isset', $configuration, null, XARVAR_NOT_REQUIRED)) {
+            return;
+        }
 
         // pass the current value as configuration rule
         $data['configuration'] = isset($configuration) ? $configuration : '';
@@ -173,10 +206,9 @@ function eav_config_propval($proptype)
             $data['invalid'] = $property->invalid;
         }
 
-    // pass the current value as configuration rule
+        // pass the current value as configuration rule
     } elseif (!empty($property->configuration)) {
         $data['configuration'] = $property->configuration;
-
     } else {
         $data['configuration'] = null;
     }
@@ -199,5 +231,3 @@ function eav_config_propval($proptype)
 
     return $data;
 }
-
-?>

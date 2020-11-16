@@ -13,23 +13,33 @@
 /**
  * Add attributes to an obnject
  */
-function eav_admin_add_attribute(Array $args=array())
+function eav_admin_add_attribute(array $args=array())
 {
-    if (!xarSecurityCheck('ManageEAV')) return;
+    if (!xarSecurityCheck('ManageEAV')) {
+        return;
+    }
 
-	if(!xarVarFetch('objectname', 'isset', $data['objectname'],   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('objectid',   'isset', $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('details',    'isset', $details,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('layout',     'str:1', $data['layout'],   'default', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('objectname', 'isset', $data['objectname'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('objectid', 'isset', $data['objectid'], null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('details', 'isset', $details, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('layout', 'str:1', $data['layout'], 'default', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     //if (empty($data['objectid'])) return xarResponse::NotFound();
     sys::import('modules.dynamicdata.class.objects.master');
-	
-	if (!empty($data['objectname'])) {
-    	$info = DataObjectMaster::getObjectInfo(array('name' => $data['objectname']));
-    	$data['objectid'] = $info['objectid'];
-	}
-	
+    
+    if (!empty($data['objectname'])) {
+        $info = DataObjectMaster::getObjectInfo(array('name' => $data['objectname']));
+        $data['objectid'] = $info['objectid'];
+    }
+    
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('objectid' => $data['objectid']));
 
@@ -38,15 +48,19 @@ function eav_admin_add_attribute(Array $args=array())
 
     xarTpl::setPageTitle(xarML('Modify DataProperties #(1)', $data['object']->label));
 
-    $data['fields'] = xarMod::apiFunc('eav','user','getattributes',
-                                   array('object_id' => $data['objectid']));
+    $data['fields'] = xarMod::apiFunc(
+        'eav',
+        'user',
+        'getattributes',
+        array('object_id' => $data['objectid'])
+    );
 
     $isprimary = 0;
     foreach (array_keys($data['fields']) as $field) {
         // replace newlines with [LF] for textbox
-        if (!empty($data['fields'][$field]['defaultvalue']) && preg_match("/\n/",$data['fields'][$field]['defaultvalue'])) {
+        if (!empty($data['fields'][$field]['defaultvalue']) && preg_match("/\n/", $data['fields'][$field]['defaultvalue'])) {
             // Note : we could use addcslashes here, but that could lead to a whole bunch of other issues...
-            $data['fields'][$field]['defaultvalue'] = preg_replace("/\r?\n/",'[LF]',$data['fields'][$field]['defaultvalue']);
+            $data['fields'][$field]['defaultvalue'] = preg_replace("/\r?\n/", '[LF]', $data['fields'][$field]['defaultvalue']);
         }
     }
 
@@ -54,9 +68,7 @@ function eav_admin_add_attribute(Array $args=array())
     $data['fieldstatusprop'] =& DataPropertyMaster::getProperty(array('type' => 'fieldstatus'));
 
     // We have to specify this here, the js expects non xml urls and the => makes the template invalied
-    $data['urlform'] = xarModURL('dynamicdata','admin','form',array('objectid' => $data['objectid'], 'theme' => 'print'),false);
+    $data['urlform'] = xarModURL('dynamicdata', 'admin', 'form', array('objectid' => $data['objectid'], 'theme' => 'print'), false);
 
     return $data;
 }
-
-?>

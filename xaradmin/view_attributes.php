@@ -16,13 +16,18 @@
  */
     function eav_admin_view_attributes($args)
     {
-        if (!xarSecurityCheck('ManageEAV')) return;
+        if (!xarSecurityCheck('ManageEAV')) {
+            return;
+        }
 
         $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_attributes_def'));
 
-        if (!isset($data['object'])) {return;}
-        if (!$data['object']->checkAccess('view'))
+        if (!isset($data['object'])) {
+            return;
+        }
+        if (!$data['object']->checkAccess('view')) {
             return xarResponse::Forbidden(xarML('View #(1) is forbidden', $data['object']->label));
+        }
 
         // Count the number of items matching the preset arguments - do this before getItems()
         $data['object']->countItems();
@@ -32,4 +37,3 @@
 
         return $data;
     }
-?>

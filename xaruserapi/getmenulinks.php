@@ -19,15 +19,15 @@ function eav_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewEAV',0)) {
-        $menulinks[] = array('url'   => xarModURL('eav',
-                                                  'user',
-                                                  'main'),
+    if (xarSecurityCheck('ViewEAV', 0)) {
+        $menulinks[] = array('url'   => xarModURL(
+            'eav',
+            'user',
+            'main'
+        ),
                               'title' => xarML(''),
                               'label' => xarML(''));
     }
 
     return $menulinks;
 }
-
-?>

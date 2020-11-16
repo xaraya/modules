@@ -29,4 +29,3 @@
         // Return the table information
         return $xartable;
     }
-?>

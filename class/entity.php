@@ -27,9 +27,11 @@ class Entity extends DataObject
         }
     }
 
-    public function getItem(Array $args = array())
+    public function getItem(array $args = array())
     {
-        if (!isset($args['itemid'])) throw new EmptyParameterException('itemid');
+        if (!isset($args['itemid'])) {
+            throw new EmptyParameterException('itemid');
+        }
         
         // Load the value for each property from the database
         xarMod::apiLoad('eav');
@@ -37,7 +39,9 @@ class Entity extends DataObject
         $q = new Query('SELECT', $tables['eav_data']);
         $q->eq('item_id', $args['itemid']);
         $q->eq('object_id', $this->parent_id);
-        if (!$q->run()) return false;
+        if (!$q->run()) {
+            return false;
+        }
         $result = $q->output();
         foreach ($this->properties as $key => $attribute) {
             foreach ($result as $k => $row) {
@@ -53,15 +57,19 @@ class Entity extends DataObject
         return true;
     }
     
-    public function getItems_inert(Array $args = array())
+    public function getItems_inert(array $args = array())
     {
-        if (empty($args['itemids'])) return array();
+        if (empty($args['itemids'])) {
+            return array();
+        }
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         $q = new Query('SELECT', $tables['eav_data']);
         $q->in('item_id', $args['itemids']);
         $q->eq('object_id', $this->parent_id);
-        if (!$q->run()) return false;
+        if (!$q->run()) {
+            return false;
+        }
         foreach ($q->output() as $row) {
             foreach ($this->properties as $key => $attribute) {
                 if ((int)$attribute->id == (int)$row['attribute_id']) {
@@ -78,11 +86,13 @@ class Entity extends DataObject
         return $this->items;
     }
     
-    public function createItem(Array $args = array())
+    public function createItem(array $args = array())
     {
-        if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+        if (!isset($args['itemid'])) {
+            throw new MissingParameterException('itemid');
+        }
 
-        /* 
+        /*
          * This is analogous to the createItem method in dynamicdata/class/objects
          * Also cater to properties with their own createItem method
          */
@@ -96,12 +106,14 @@ class Entity extends DataObject
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
             $q->addfield('attribute_id', (int)$property->id);
-            if (!$q->run()) return false;
+            if (!$q->run()) {
+                return false;
+            }
             $q->clearfields();
         }
         
         foreach ($this->getFieldList() as $fieldname) {
-            if (method_exists($this->properties[$fieldname],'createvalue')) {
+            if (method_exists($this->properties[$fieldname], 'createvalue')) {
                 $this->properties[$fieldname]->createValue($args['itemid']);
             }
         }
@@ -109,11 +121,13 @@ class Entity extends DataObject
         return true;
     }
     
-    public function updateItem(Array $args = array())
+    public function updateItem(array $args = array())
     {
-        if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+        if (!isset($args['itemid'])) {
+            throw new MissingParameterException('itemid');
+        }
 
-        /* 
+        /*
          * This is analogous to the updateItem method in dynamicdata/class/objects
          * Also cater to properties with their own updateItem method
          */
@@ -124,27 +138,33 @@ class Entity extends DataObject
             $q = new Query('UPDATE', $tables['eav_data']);
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
-            $q->eq('object_id',    (int)$this->parent_id);
-            $q->eq('item_id',      (int)$args['itemid']);
+            $q->eq('object_id', (int)$this->parent_id);
+            $q->eq('item_id', (int)$args['itemid']);
             $q->eq('attribute_id', (int)$property->id);
-            if (!$q->run()) return false;
+            if (!$q->run()) {
+                return false;
+            }
             if (!$q->affected()) {
                 // Either the value didn't change, or the record was not found
                 // CHECKME: is there a better way of doing this?
                 $q = new Query('SELECT', $tables['eav_data']);
-                $q->eq('object_id',    (int)$this->parent_id);
-                $q->eq('item_id',      (int)$args['itemid']);
+                $q->eq('object_id', (int)$this->parent_id);
+                $q->eq('item_id', (int)$args['itemid']);
                 $q->eq('attribute_id', (int)$property->id);
-                if (!$q->run()) return false;
+                if (!$q->run()) {
+                    return false;
+                }
                 $result = $q->row();
                 if (empty($result)) {
                     $q = new Query('INSERT', $tables['eav_data']);
-                    $q->addfield('object_id',    (int)$this->parent_id);
-                    $q->addfield('item_id',      (int)$args['itemid']);
+                    $q->addfield('object_id', (int)$this->parent_id);
+                    $q->addfield('item_id', (int)$args['itemid']);
                     $q->addfield('attribute_id', (int)$property->id);
                     $valuefield = 'value_' . $property->basetype;
                     $q->addfield($valuefield, $property->value);
-                    if (!$q->run()) return false;
+                    if (!$q->run()) {
+                        return false;
+                    }
                 }
             }
             $q->clearfields();
@@ -152,7 +172,7 @@ class Entity extends DataObject
         }
 
         foreach ($this->getFieldList() as $fieldname) {
-            if (method_exists($this->properties[$fieldname],'updatevalue')) {
+            if (method_exists($this->properties[$fieldname], 'updatevalue')) {
                 $this->properties[$fieldname]->updateValue($args['itemid']);
             }
         }
@@ -160,16 +180,19 @@ class Entity extends DataObject
         return true;
     }
     
-    public function deleteItem(Array $args = array())
+    public function deleteItem(array $args = array())
     {
-        if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+        if (!isset($args['itemid'])) {
+            throw new MissingParameterException('itemid');
+        }
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         $q = new Query('DELETE', $tables['eav_data']);
         $q->eq('object_id', $this->parent_id);
         $q->eq('item_id', $args['itemid']);
-        if (!$q->run()) return false;
+        if (!$q->run()) {
+            return false;
+        }
         return true;
     }
 }
-?>

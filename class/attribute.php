@@ -23,38 +23,38 @@ class Attribute extends DataObject
         $this->adjustStates();
     }
 
-    public function getItem(Array $args = array())
+    public function getItem(array $args = array())
     {
         $itemid = parent::getItem($args);
     }
     
-    public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
+    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
     {
         $this->properties['property_id']->checkInput();
         echo $this->properties['property_id']->value;
-        foreach($this->properties as $key => $value) {
+        foreach ($this->properties as $key => $value) {
             echo $key . $value->getDisplayStatus() . "<br/>";
         }
         $this->adjustStates($this->properties['property_id']->value);
-        foreach($this->properties as $key => $value) {
+        foreach ($this->properties as $key => $value) {
             echo $key . $value->getDisplayStatus() . "<br/>";
         }
         return parent::checkInput();
     }
 
-    public function createItem(Array $args = array())
+    public function createItem(array $args = array())
     {
         $this->adjustStates();
         return parent::createItem($args);
     }
     
-    public function updateItem(Array $args = array())
+    public function updateItem(array $args = array())
     {
         $this->adjustStates();
         return parent::updateItem($args);
     }
     
-    public function deleteItem(Array $args = array())
+    public function deleteItem(array $args = array())
     {
         $this->adjustStates();
         return parent::deleteItem($args);
@@ -62,12 +62,15 @@ class Attribute extends DataObject
     
     private function adjustStates($propertytype=0)
     {
-        if (empty($propertytype)) $propertytype = $this->properties['property_id']->value;
+        if (empty($propertytype)) {
+            $propertytype = $this->properties['property_id']->value;
+        }
         $property = DataPropertyMaster::getProperty(array('type' => $propertytype));
         foreach ($this->valuefields as $field) {
-            if ($property->basetype == $field) continue;
+            if ($property->basetype == $field) {
+                continue;
+            }
             $this->properties['default_' . $field]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
     }
 }
-?>

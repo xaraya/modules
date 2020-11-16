@@ -18,7 +18,9 @@
     function eav_adminapi_getconfighook($args)
     {
         extract($args);
-        if (!isset($extrainfo['tabs'])) $extrainfo['tabs'] = array();
+        if (!isset($extrainfo['tabs'])) {
+            $extrainfo['tabs'] = array();
+        }
         $module = 'eav';
         $tabinfo = array(
                 'module'  => $module,
@@ -29,4 +31,3 @@
         $extrainfo['tabs'][] = $tabinfo;
         return $extrainfo;
     }
-?>

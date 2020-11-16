@@ -17,15 +17,13 @@
  *
  * @author mikespub <mikespub@xaraya.com>
  */
-function eav_utilapi_export(Array $args=array())
+function eav_utilapi_export(array $args=array())
 {
     $myobject = DataObjectMaster::getObject(array('name' => 'objects'));
     extract($args);
     if (isset($args['objectref'])) {
         $myobject->getItem(array('itemid' => $args['objectref']->objectid));
-
     } else {
-
         if (empty($objectid)) {
             $objectid = null;
         }
@@ -50,9 +48,9 @@ function eav_utilapi_export(Array $args=array())
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
     $object_properties = $data['object']->getItems();
       
-	$property_properties = xarMod::apiFunc('eav','user','getattributes', array('object_id' => $objectid));
-	
-	$proptypes = DataPropertyMaster::getPropertyTypes();
+    $property_properties = xarMod::apiFunc('eav', 'user', 'getattributes', array('object_id' => $objectid));
+    
+    $proptypes = DataPropertyMaster::getPropertyTypes();
 
     $prefix = xarDB::getPrefix();
     $prefix .= '_';
@@ -61,16 +59,16 @@ function eav_utilapi_export(Array $args=array())
     //Entity defination
     $xml .= '<object name="'.$myobject->properties['name']->value.'">'."\n";
     foreach ($object_properties as $objectProperties) {
-	    foreach ($objectProperties as $name => $value) {  
-	    	$args=array();
-	    	$args['objectid'] = $objectProperties['object'];
-	    	$info = $data['object']->getObjectInfo($args);
-	    	if($name == "object") {
-	    		$xml .= " <$name>".$info['name']."</$name>\n";
-	    	} else {
-	    		$xml .= " <$name>".$value."</$name>\n";
-	    	}
-	    }
+        foreach ($objectProperties as $name => $value) {
+            $args=array();
+            $args['objectid'] = $objectProperties['object'];
+            $info = $data['object']->getObjectInfo($args);
+            if ($name == "object") {
+                $xml .= " <$name>".$info['name']."</$name>\n";
+            } else {
+                $xml .= " <$name>".$value."</$name>\n";
+            }
+        }
     }
 
     //Attribute defination
@@ -79,16 +77,16 @@ function eav_utilapi_export(Array $args=array())
     foreach ($property_properties as $key => $value) {
         $xml .= '    <property name="'.$value['name'].'">' . "\n";
         foreach ($value as $subkey => $subvalue) {
-    		$args=array();
-    		$args['objectid'] = $value['object_id'];
-    		$info = $data['object']->getObjectInfo($args);
-            if($subkey == "object_id") {
-    			$xml .= "		<$subkey>".$info['name']."</$subkey>\n";
-    		} elseif($subkey == "module_id")  {
-    			$xml .= "		<$subkey>".$info['moduleid']."</$subkey>\n";
-    		}else {
-    			$xml .= "		<$subkey>".$subvalue."</$subkey>\n";
-    		}
+            $args=array();
+            $args['objectid'] = $value['object_id'];
+            $info = $data['object']->getObjectInfo($args);
+            if ($subkey == "object_id") {
+                $xml .= "		<$subkey>".$info['name']."</$subkey>\n";
+            } elseif ($subkey == "module_id") {
+                $xml .= "		<$subkey>".$info['moduleid']."</$subkey>\n";
+            } else {
+                $xml .= "		<$subkey>".$subvalue."</$subkey>\n";
+            }
         }
         $xml .= "    </property>\n";
     }
@@ -97,4 +95,3 @@ function eav_utilapi_export(Array $args=array())
     $xml .= "</object>\n";
     return $xml;
 }
-?>

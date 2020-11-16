@@ -4,10 +4,14 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function eav_admin_display_entity($args)
 {
-	if (!xarVarFetch('id' , 'int',    $data['itemid'] , 0 , XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
     $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_entities'));
-    if (!isset($data['object'])) return;
+    if (!isset($data['object'])) {
+        return;
+    }
     //if (!$data['object']->checkAccess('display'))
     //return xarResponse::Forbidden(xarML('Display #(1) is forbidden', $data['object']->label));
 
@@ -15,5 +19,3 @@ function eav_admin_display_entity($args)
     
     return $data;
 }
-
-?>
