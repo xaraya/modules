@@ -86,7 +86,7 @@ function crispbb_admin_unlinkhooks()
                 'current_sublink' => '',
             )
         );
-        xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
+        xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
         // Return the template variables defined in this function
         return $data;
     }

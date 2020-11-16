@@ -157,5 +157,5 @@ function crispbb_user_displayhook($args)
     if (!empty($data['quickreply'])) {
         $data['return_url'] = xarServer::getCurrentURL();
     }
-    return xarTPLModule('crispbb', 'user', 'displayhook', $data);
+    return xarTpl::module('crispbb', 'user', 'displayhook', $data);
 }

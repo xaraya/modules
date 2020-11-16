@@ -218,8 +218,8 @@ function crispbb_admin_modify($args)
                 $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'main');
                 $errorMsg['type'] = 'NO_PRIVILEGES';
                 $errorMsg['pageTitle'] = xarML('No Privileges');
-                xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-                return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
+                return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
             }
             if ($sublink == 'forumhooks') {
                 $component = 'forum';
@@ -314,7 +314,7 @@ function crispbb_admin_modify($args)
                         $hookMessage = xarML('Hook this module to #(1) #(2)', $data['forum']->properties['fname']->value, $component != 'forum' ? $label : '');
                     }
                 }
-                $hookModid = xarModGetIdFromName($hookMod);
+                $hookModid = xarMod::getRegId($hookMod);
                 $hookModinfo = xarMod::getInfo($hookModid);
                 $hooksettings[$hookMod] = array(
                     'status' => $hookStatus,
@@ -414,8 +414,8 @@ function crispbb_admin_modify($args)
                 $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'main');
                 $errorMsg['type'] = 'NO_PRIVILEGES';
                 $errorMsg['pageTitle'] = xarML('No Privileges');
-                xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-                return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
+                return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
             }
             if (!xarVar::fetch('privs', 'list', $privs, array(), xarVar::NOT_REQUIRED)) {
                 return;
@@ -521,7 +521,7 @@ function crispbb_admin_modify($args)
     $data['pageTitle'] = $pageTitle;
     $data['hookoutput'] = !empty($hooks) ? $hooks : '';
 
-    xarTPLSetPageTitle(xarVar::prepForDisplay(xarML($pageTitle)));
+    xarTpl::setPageTitle(xarVar::prepForDisplay(xarML($pageTitle)));
 
     return $data;
 }

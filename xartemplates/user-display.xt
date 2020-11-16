@@ -15,7 +15,7 @@
         <div class="xar-twothirdswidth xar-floatleft">
             <h2>#$ttitle#</h2>
             <xar:if condition="!empty($topicicon)">
-                <img src="#xarTPLGetImage($topicicon,'crispbb')#" alt="#xarML('icon')#" title="" />
+                <img src="#xarTpl::getImage($topicicon,'crispbb')#" alt="#xarML('icon')#" title="" />
             </xar:if>
             <xar:if condition="!empty($tdesc)">
             <em>#$tdesc#</em>
@@ -78,64 +78,64 @@
     <span class="xar-floatright xar-nowrap">
         <xar:if condition="!empty($approvetopicurl)">
              <a href="#$approvetopicurl#">
-            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
+            <img src="#xarTpl::getImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($modtrashcanurl)">
              <a href="#$modtrashcanurl#">
-            <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
+            <img src="#xarTpl::getImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($edittopicurl)">
             <a href="#$edittopicurl#">
-            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
+            <img src="#xarTpl::getImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($closetopicurl)">
             <a href="#$closetopicurl#">
-            <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
+            <img src="#xarTpl::getImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($opentopicurl)">
             <a href="#$opentopicurl#">
-            <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open this topic')#" />
+            <img src="#xarTpl::getImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($locktopicurl)">
             <a href="#$locktopicurl#">
-            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+            <img src="#xarTpl::getImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($unlocktopicurl)">
             <a href="#$unlocktopicurl#">
-            <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+            <img src="#xarTpl::getImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($movetopicurl)">
             <a href="#$movetopicurl#">
-            <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move this topic')#" />
+            <img src="#xarTpl::getImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move this topic')#" />
             </a>
         </xar:if>
         <xar:comment>
         <xar:if condition="!empty($splittopicurl)">
             <a href="#$splittopicurl#">
-            <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this topic')#" />
+            <img src="#xarTpl::getImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this topic')#" />
             </a>
         </xar:if>
         </xar:comment>
         <xar:if condition="!empty($modtopicurl)">
             <a href="#$modtopicurl#">
-            <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate this topic')#" />
+            <img src="#xarTpl::getImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($deletetopicurl)">
             <a href="#$deletetopicurl#">
-            <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
+            <img src="#xarTpl::getImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($purgetopicurl)">
             <a href="#$purgetopicurl#">
-            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this topic')#" />
+            <img src="#xarTpl::getImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this topic')#" />
             </a>
         </xar:if>
     </span>

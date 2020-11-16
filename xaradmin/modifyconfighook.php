@@ -84,5 +84,5 @@ function crispbb_admin_modifyconfighook($args)
         $foptions[$forum['fid']] = array('id' => $forum['fid'], 'name' => $forum['transformed_fname']);
     }
     $data['foptions'] = $foptions;
-    return xarTPLModule('crispbb', 'admin', 'modifyconfighook', $data);
+    return xarTpl::module('crispbb', 'admin', 'modifyconfighook', $data);
 }

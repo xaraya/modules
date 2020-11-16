@@ -255,7 +255,7 @@ function crispbb_admin_new($args)
         $data['withupload'] = 0;
     }
     // set page title
-    xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
     return $data;
 }

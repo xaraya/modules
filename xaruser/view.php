@@ -528,12 +528,12 @@ function crispbb_user_view($args)
         xarSession::setVar('crispbb_return_url', xarServer::getCurrentURL());
     }
 
-    xarTPLSetPageTitle(xarVar::prepForDisplay(xarML($pageTitle)));
+    xarTpl::setPageTitle(xarVar::prepForDisplay(xarML($pageTitle)));
     if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!empty($theme)) {
-        return xarTPLModule('crispbb', 'user', 'view-' . $theme, $data);
+        return xarTpl::module('crispbb', 'user', 'view-' . $theme, $data);
     }
     return $data;
 }

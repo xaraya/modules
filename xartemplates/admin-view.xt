@@ -12,13 +12,13 @@
         <p class="xar-align-center xar-error">#$statusmsg#</p>
     </xar:if>
     <xar:if condition="!empty($categories)">
-        <xar:set name="upicon">xarTPLGetImage('icons/go-up.png', 'base')</xar:set>
-        <xar:set name="downicon">xarTPLGetImage('icons/go-down.png', 'base')</xar:set>
-        <xar:set name="modifyicon">xarTPLGetImage('icons/modify.png', 'base')</xar:set>
-        <xar:set name="deleteicon">xarTPLGetImage('icons/delete.png', 'base')</xar:set>
-        <xar:set name="hooksicon">xarTPLGetImage('icons/hooks.png', 'base')</xar:set>
-        <xar:set name="privsicon">xarTPLGetImage('icons/privileges.png', 'base')</xar:set>
-        <xar:set name="infoicon">xarTPLGetImage('icons/info.png', 'base')</xar:set>
+        <xar:set name="upicon">xarTpl::getImage('icons/go-up.png', 'base')</xar:set>
+        <xar:set name="downicon">xarTpl::getImage('icons/go-down.png', 'base')</xar:set>
+        <xar:set name="modifyicon">xarTpl::getImage('icons/modify.png', 'base')</xar:set>
+        <xar:set name="deleteicon">xarTpl::getImage('icons/delete.png', 'base')</xar:set>
+        <xar:set name="hooksicon">xarTpl::getImage('icons/hooks.png', 'base')</xar:set>
+        <xar:set name="privsicon">xarTpl::getImage('icons/privileges.png', 'base')</xar:set>
+        <xar:set name="infoicon">xarTpl::getImage('icons/info.png', 'base')</xar:set>
         <xar:var name="modcattitle">Modify this category</xar:var>
         <xar:var name="delcattitle">Delete this category</xar:var>
         <xar:var name="upcattitle">Move this category up</xar:var>
@@ -82,35 +82,35 @@
 <div class="xar-mod-foot xar-align-center">
     <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
+            <img src="#xarTpl::getImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
             Waiting
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('View deleted topics in this forum')#" />
+            <img src="#xarTpl::getImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('View deleted topics in this forum')#" />
             Deleted
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
+            <img src="#xarTpl::getImage('icons/info.png', 'base')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
             Information
         </span>
         <span class="xar-nowrap">
-             <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate forum topics')#" />
+             <img src="#xarTpl::getImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate forum topics')#" />
              Moderate
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
+            <img src="#xarTpl::getImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
             Modify
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
+            <img src="#xarTpl::getImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
             Hooks
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
+            <img src="#xarTpl::getImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
             Privileges
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
+            <img src="#xarTpl::getImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
             Delete
         </span>
     </div>

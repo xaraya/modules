@@ -40,7 +40,7 @@
 	Options for creating and deleting directories are available in the file manager by right-clicking on directories in the directory tree.  You can also drag directories around, and can drag directories into other directories and drag files into directories.  
 	</p>
 	<p>
-	The <a href="#xarmodurl('ckeditor','admin','modifyconfig')#">modify config page</a> has a number of settings for PGRFileManager:
+	The <a href="#xarController::URL('ckeditor','admin','modifyconfig')#">modify config page</a> has a number of settings for PGRFileManager:
 	<blockquote><strong>rootPath</strong> -- Root location for your directories and files.  Set this to a directory that exists on your server.<br />
 	<strong>urlPath</strong> -- Base URL used by the editor to link to your files.  (Must be the URL equivalent of rootPath.)<br />
 	<strong>allowedExtensions</strong> -- Comma-separated list of file extensions that are permissible to upload.<br />

@@ -17,7 +17,7 @@
             <input type="radio" name="topicicon" id="#$theID#" value="#$option.id#" />
         </xar:if>
         <xar:if condition="(preg_match('/(gif|jpg|png)$/', $option['id']))">
-            <label for="#$theID#" title="#$option.name#"><img src="#xarTPLGetImage($option['imagepath'],'crispbb')#" alt="#$option.name#" /></label>
+            <label for="#$theID#" title="#$option.name#"><img src="#xarTpl::getImage($option['imagepath'],'crispbb')#" alt="#$option.name#" /></label>
         <xar:else />
             <label for="#$theID#" title="#$option.name#">#$option.name# </label>
         </xar:if>

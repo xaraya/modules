@@ -333,13 +333,13 @@ function crispbb_user_modifytopic($args)
                 xarVar::setCached('Meta.refresh', 'url', $return_url);
                 xarVar::setCached('Meta.refresh', 'time', $data['postbuffer']);
                 $pageTitle = xarML('Topic Updated');
-                xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
+                xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
                 $data['tid'] = $tid;
                 $data['ttitle'] = $ttitle;
                 $data['pid'] = null;
                 $data['message'] = xarML('Topic #(1) was updated successfully', $ttitle);
-                return xarTPLModule('crispbb', 'user', 'return', $data);
+                return xarTpl::module('crispbb', 'user', 'return', $data);
             }
 
             return xarResponse::Redirect($return_url);

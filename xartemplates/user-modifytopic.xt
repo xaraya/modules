@@ -51,7 +51,7 @@
 
                         <div class="xar-border-thinbottom">
                             <xar:if condition="$topicicon ne 'none' and !empty($iconlist)">
-                                <img src="#xarTPLGetImage($iconlist[$topicicon]['imagepath'],'crispbb')#" alt="topic icon" />
+                                <img src="#xarTpl::getImage($iconlist[$topicicon]['imagepath'],'crispbb')#" alt="topic icon" />
                             </xar:if>
                             <em>#$preview['tdesc']#</em>
                         </div>

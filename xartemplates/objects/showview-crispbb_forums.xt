@@ -8,16 +8,16 @@
     <!-- View for users - used in user GUI function -->
     <xar:elseif condition="$layout eq 'admin'" />
         <!-- View for forum admins - used in admin GUI functions -->
-        <xar:set name="upicon">xarTPLGetImage('icons/go-up.png', 'base')</xar:set>
-        <xar:set name="downicon">xarTPLGetImage('icons/go-down.png', 'base')</xar:set>
-        <xar:set name="modifyicon">xarTPLGetImage('icons/modify.png', 'base')</xar:set>
-        <xar:set name="deleteicon">xarTPLGetImage('icons/delete.png', 'base')</xar:set>
-        <xar:set name="hooksicon">xarTPLGetImage('icons/hooks.png', 'base')</xar:set>
-        <xar:set name="privsicon">xarTPLGetImage('icons/privileges.png', 'base')</xar:set>
-        <xar:set name="infoicon">xarTPLGetImage('icons/info.png', 'base')</xar:set>
-        <xar:set name="subsicon">xarTPLGetImage('icons/comment_warning.png', 'crispbb')</xar:set>
-        <xar:set name="delsicon">xarTPLGetImage('icons/bin.png', 'crispbb')</xar:set>
-        <xar:set name="moderateicon">xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')</xar:set>
+        <xar:set name="upicon">xarTpl::getImage('icons/go-up.png', 'base')</xar:set>
+        <xar:set name="downicon">xarTpl::getImage('icons/go-down.png', 'base')</xar:set>
+        <xar:set name="modifyicon">xarTpl::getImage('icons/modify.png', 'base')</xar:set>
+        <xar:set name="deleteicon">xarTpl::getImage('icons/delete.png', 'base')</xar:set>
+        <xar:set name="hooksicon">xarTpl::getImage('icons/hooks.png', 'base')</xar:set>
+        <xar:set name="privsicon">xarTpl::getImage('icons/privileges.png', 'base')</xar:set>
+        <xar:set name="infoicon">xarTpl::getImage('icons/info.png', 'base')</xar:set>
+        <xar:set name="subsicon">xarTpl::getImage('icons/comment_warning.png', 'crispbb')</xar:set>
+        <xar:set name="delsicon">xarTpl::getImage('icons/bin.png', 'crispbb')</xar:set>
+        <xar:set name="moderateicon">xarTpl::getImage('icons/comments_wrench_orange.png', 'crispbb')</xar:set>
         <thead>
             <tr>
                 <xar:foreach in="$properties" key="$name">

@@ -513,9 +513,9 @@ function crispbb_user_search()
     }
 
     if ($data['searchactive']) {
-        return xarTPLModule('crispbb', 'user', 'searchhook', $data);
+        return xarTpl::module('crispbb', 'user', 'searchhook', $data);
     } else {
-        xarTPLSetPageTitle(xarVar::prepForDisplay(xarML('Search Forums')));
+        xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Search Forums')));
         $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('noreplies' => true, 'tstatus' => array(0,1,2,4)));
         $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getmenulinks');
         $data['condition'] = xarVar::prepForDisplay(xarML($condition));
@@ -523,7 +523,7 @@ function crispbb_user_search()
             return;
         }
         if (!empty($theme)) {
-            return xarTPLModule('crispbb', 'user', 'search-' . $theme, $data);
+            return xarTpl::module('crispbb', 'user', 'search-' . $theme, $data);
         }
         return $data;
     }

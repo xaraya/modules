@@ -140,8 +140,8 @@ function crispbb_adminapi_update($args)
             // $errorMsg['return_url'] = empty($catid) ? xarServer::getBaseURL() : xarController::URL('crispbb', 'user', 'main');
             $errorMsg['type'] = 'NO_PRIVILEGES';
             $errorMsg['pageTitle'] = xarML('No Privileges');
-            xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-            return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+            xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
+            return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
         }
     }
 

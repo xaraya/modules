@@ -202,7 +202,7 @@ function crispbb_admin_modifyhooks($args)
 
     // store function name for use by admin-main as an entry point
     xarSession::setVar('crispbb_adminstartpage', 'modifyhooks');
-    xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
     return $data;
 }

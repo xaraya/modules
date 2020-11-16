@@ -124,7 +124,7 @@ function crispbb_admin_view($args)
     $pageTitle = xarML('Manage Forums');
     // store function name for use by admin-main as an entry point
     xarSession::setVar('crispbb_adminstartpage', 'view');
-    xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
 
     return $data;

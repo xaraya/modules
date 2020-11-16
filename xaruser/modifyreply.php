@@ -53,8 +53,8 @@ function crispbb_user_modifyreply($args)
             $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
             $errorMsg['pageTitle'] = xarML('Flood control');
             $errorMsg['type'] = 'FLOOD_CONTROL';
-            xarTPLSetPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
-            return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+            xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
+            return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
         }
     }
     */
@@ -281,11 +281,11 @@ function crispbb_user_modifyreply($args)
                 xarVar::setCached('Meta.refresh', 'url', $return_url);
                 xarVar::setCached('Meta.refresh', 'time', $data['postbuffer']);
                 $pageTitle = xarML('Reply Updated');
-                xarTPLSetPageTitle(xarVar::prepForDisplay($pageTitle));
+                xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
                 $data['pid'] = $pid;
                 $data['message'] = xarML('Reply to #(1) was updated successfully', $data['ttitle']);
-                return xarTPLModule('crispbb', 'user', 'return', $data);
+                return xarTpl::module('crispbb', 'user', 'return', $data);
             }
 
             return xarResponse::Redirect($return_url);

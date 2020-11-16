@@ -31,7 +31,7 @@
                 </xar:if>
                 <xar:data-form object="$settings" values="$values" />
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="hidden" name="sublink" id="sublink" value="edit" />
@@ -81,7 +81,7 @@
         </form>
     <xar:elseif condition="$sublink eq 'privileges'" />
         <p>
-            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" />
+            <img src="#xarTpl::getImage('icons/info.png', 'base')#" alt="#xarML('info')#" />
             These settings apply to privileges for this forum.
         </p>
         <form method="post" action="#xarController::URL('crispbb', 'admin', 'modify')#">

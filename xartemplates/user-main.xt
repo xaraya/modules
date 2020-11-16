@@ -15,7 +15,7 @@
             <xar:mlstring>Overview</xar:mlstring>
         </h2>
 
-	<p><a href="#xarmodurl('ckeditor','admin','overview')#">Module overview</a></p>
+	<p><a href="#xarController::URL('ckeditor','admin','overview')#">Module overview</a></p>
      
         <div style="clear:both">&#160;</div>
     </div>
