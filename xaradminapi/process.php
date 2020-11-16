@@ -19,9 +19,10 @@ function reminders_adminapi_process($args)
     if (!isset($args['copy_emails'])) $args['copy_emails'] = false;
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
+    //$entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
     $mailer_template = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
     
+    /*
     // Set all the relevant properties active here
     foreach($entries->properties as $name => $property) {
         if ($property->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) continue;
@@ -35,10 +36,12 @@ function reminders_adminapi_process($args)
     
     $entries->setFieldList();
     
-    $q = $entries->dataquery;
+    $q = $entries->dataquery;*/
     // Add the emails table for each email
     
     $tables = xarDB::getTables();
+    $q = new Query('SELECT');
+    $q->addtable($tables['reminders_entries'], 'entries');
     $q->addtable($tables['reminders_emails'], 'email_1');
     $q->leftjoin('entries.email_1', 'email_1.id');
     $q->addtable($tables['reminders_emails'], 'email_2');
