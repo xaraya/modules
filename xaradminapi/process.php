@@ -27,9 +27,23 @@ function reminders_adminapi_process($args)
         if ($property->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) continue;
         $entries->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
     }
+    
+    // Turn the email properties into numbers, because we need to link their corresponding rows from the email table
+    // Modify the some properties to be foreign table indices (make them static text)
+    $entries->modifyProperty('email_1', array('type' => 1));
+    $entries->modifyProperty('email_2', array('type' => 1));
+    
     $entries->setFieldList();
     
     $q = $entries->dataquery;
+    // Add the emails table for each email
+    
+    $tables = xarDB::getTables();
+    $q->addtable($tables['reminders_emails'], 'email_1');
+    $q->join('entries.email_1', 'email_1.id');
+    $q->addtable($tables['reminders_emails'], 'email_2');
+    $q->join('entries.email_2', 'email_2.id');
+    
     // Only active reminders
     $q->eq('entries.state', 3);
 
@@ -37,9 +51,8 @@ function reminders_adminapi_process($args)
     	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
     	$data['entry_list'] = explode(',', $data['entry_list']);
     	$q->in('entries.id', $data['entry_list']);
-//    	$q->qecho();
     }
-    
+    $q->qecho();
     $items = $entries->getItems();
     /*
     sys::import('xaraya.structures.query');
