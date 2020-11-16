@@ -22,30 +22,30 @@
  */
 function translations_admin_updateconfig()
 {
-    if (!xarSecConfirmAuthKey()) {
-        return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+    if (!xarSec::confirmAuthKey()) {
+        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
     }
 
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
     switch ($data['tab']) {
         case 'locales':
-            if (!xarVarFetch('defaultlocale', 'str:1:', $defaultLocale)) {
+            if (!xarVar::fetch('defaultlocale', 'str:1:', $defaultLocale)) {
                 return;
             }
-            if (!xarVarFetch('active', 'isset', $active)) {
+            if (!xarVar::fetch('active', 'isset', $active)) {
                 return;
             }
-            if (!xarVarFetch('mlsmode', 'str:1:', $MLSMode, 'SINGLE', XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('mlsmode', 'str:1:', $MLSMode, 'SINGLE', xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('translationsbackend', 'str:1:', $translationsBackend)) {
+            if (!xarVar::fetch('translationsbackend', 'str:1:', $translationsBackend)) {
                 return;
             }
 
@@ -58,7 +58,7 @@ function translations_admin_updateconfig()
             }
             sort($localesList);
 
-            if (($MLSMode == 'UNBOXED') && (xarMLSGetCharsetFromLocale($defaultLocale) != 'utf-8')) {
+            if (($MLSMode == 'UNBOXED') && (xarMLS::getCharsetFromLocale($defaultLocale) != 'utf-8')) {
                 $msg = xarML('You should select utf-8 locale as default before selecting UNBOXED mode');
                 throw new Exception($msg);
             }
@@ -70,13 +70,13 @@ function translations_admin_updateconfig()
             xarConfigVars::set(null, 'Site.MLS.TranslationsBackend', $translationsBackend);
             break;
         case 'display':
-            if (!xarVarFetch('showcontext', 'checkbox', $showContext, false, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('showcontext', 'checkbox', $showContext, false, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('maxreferences', 'int', $maxReferences, 5, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('maxreferences', 'int', $maxReferences, 5, xarVar::NOT_REQUIRED)) {
                 return;
             }
-            if (!xarVarFetch('maxcodelines', 'int', $maxCodeLines, 5, XARVAR_NOT_REQUIRED)) {
+            if (!xarVar::fetch('maxcodelines', 'int', $maxCodeLines, 5, xarVar::NOT_REQUIRED)) {
                 return;
             }
 
@@ -86,7 +86,7 @@ function translations_admin_updateconfig()
 
             break;
         case 'release':
-            if (!xarVarFetch('releasebackend', 'str:1:', $releaseBackend)) {
+            if (!xarVar::fetch('releasebackend', 'str:1:', $releaseBackend)) {
                 return;
             }
 
@@ -100,10 +100,10 @@ function translations_admin_updateconfig()
         $cacheTemplates = true;
 
         // Call updateconfig hooks
-        xarModCallHooks('module', 'updateconfig', 'translations', array('module' => 'translations'));
+        xarModHooks::call('module', 'updateconfig', 'translations', array('module' => 'translations'));
     }
 
-    xarController::redirect(xarModURL('translations', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+    xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
 
     return true;
 }

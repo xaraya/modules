@@ -12,7 +12,7 @@
         </p>
         <ul>
             <xar:loop name="$objectlist">
-              <li><a href="#xarModURL('translations', 'admin', 'object_overview', array('extid' => $loop:item['objectid']))#">
+              <li><a href="#xarController::URL('translations', 'admin', 'object_overview', array('extid' => $loop:item['objectid']))#">
                 #$loop:item['label']# (#$loop:item['name']#)
               </a></li>
             </xar:loop>

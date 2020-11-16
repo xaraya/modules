@@ -15,26 +15,26 @@
 function translations_admin_update_release_locale()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('locale', 'str:1:', $locale)) {
+    if (!xarVar::fetch('locale', 'str:1:', $locale)) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
             
     translations_release_locale($locale);
-    xarController::redirect(xarModURL('translations', 'admin', 'generate_trans_info', array(
+    xarController::redirect(xarController::URL('translations', 'admin', 'generate_trans_info', array(
         'dnType' => $dnType,
         'dnName' => $dnName,
         'extid'  => $extid)));

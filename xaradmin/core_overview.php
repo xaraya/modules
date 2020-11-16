@@ -15,7 +15,7 @@
 function translations_admin_core_overview()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 

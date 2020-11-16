@@ -21,7 +21,7 @@ function translations_adminapi_generate_core_trans($args)
     assert('isset($locale)');
 
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
@@ -29,12 +29,12 @@ function translations_adminapi_generate_core_trans($args)
     $startTime = $time[1] + $time[0];
 
     if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
-        $l = xarLocaleGetInfo($locale);
+        $l = xarMLS::localeGetInfo($locale);
         if ($l['charset'] == 'utf-8') {
             $ref_locale = $locale;
         } else {
             $l['charset'] = 'utf-8';
-            $ref_locale = xarLocaleGetString($l);
+            $ref_locale = xarMLS::localeGetString($l);
         }
     } else {
         $ref_locale = $locale;
@@ -48,7 +48,7 @@ function translations_adminapi_generate_core_trans($args)
 
     if (!$backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before generating translations you must first generate skels for locale #(1)', $ref_locale);
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'core')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'core')));
         throw new Exception($msg);
     }
     if (!$backend->loadContext('core:', 'core')) {

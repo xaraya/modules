@@ -16,7 +16,7 @@
 function translations_admin_choose_a_object()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 

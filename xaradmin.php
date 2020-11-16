@@ -15,11 +15,11 @@
 
 /* EVENT */function translations_adminevt_OnModLoad($args)
 {
-    if (xarMLSGetMode() != xarMLS::UNBOXED_MULTI_LANGUAGE_MODE) {
+    if (xarMLS::getMode() != xarMLS::UNBOXED_MULTI_LANGUAGE_MODE) {
         $msg = xarML('To execute the translations module you must set the Multi Language System mode to UNBOXED.');
         throw new Exception($msg);
     }
-    xarTplSetPageTitle(xarML('Welcome to translators\' paradise!'));
+    xarTpl::setPageTitle(xarML('Welcome to translators\' paradise!'));
 }
 
 // PRIVATE STUFF
@@ -51,13 +51,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
+        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
         $stepCount = $currentStep + 1;
 
@@ -72,13 +72,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_module');
+        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'module_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
         $stepCount = $currentStep + 1;
 
@@ -93,13 +93,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_property');
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_property');
+        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
         $stepCount = $currentStep + 1;
 
@@ -114,13 +114,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_block');
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'bock_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_block');
+        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'bock_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
         $stepCount = $currentStep + 1;
 
@@ -135,13 +135,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_theme');
+        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
         $stepCount = $currentStep + 1;
 
@@ -156,13 +156,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_object');
-        $stepURLs[INFO] = xarModURL('translations', 'admin', 'object_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_object');
+        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'object_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
         $stepCount = $currentStep + 1;
 
@@ -193,34 +193,34 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
     $opLabels[OVERVIEW] = xarML('Overview');
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
+        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
         break;
         case xarMLS::DNTYPE_MODULE:
-        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
+        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'module_overview', $urlarray);
         break;
         case xarMLS::DNTYPE_PROPERTY:
-        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'property_overview', $urlarray);
+        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'property_overview', $urlarray);
         break;
         case xarMLS::DNTYPE_BLOCK:
-        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'block_overview', $urlarray);
+        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'block_overview', $urlarray);
         break;
         case xarMLS::DNTYPE_THEME:
-        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
+        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
         break;
         case xarMLS::DNTYPE_OBJECT:
-        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'object_overview', $urlarray);
+        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'object_overview', $urlarray);
         break;
     }
     $opLabels[GEN_SKELS] = xarML('Generate skels');
-    $opURLs[GEN_SKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
+    $opURLs[GEN_SKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
     $opLabels[TRANSLATE] = xarML('Translate');
-    $opURLs[TRANSLATE] = xarModURL('translations', 'admin', 'translate', $urlarray);
+    $opURLs[TRANSLATE] = xarController::URL('translations', 'admin', 'translate', $urlarray);
     $opLabels[DEL_FUZZY] = xarML('Delete fuzzy');
-    $opURLs[DEL_FUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
+    $opURLs[DEL_FUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
     $opLabels[GEN_TRANS] = xarML('Generate translations');
-    $opURLs[GEN_TRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+    $opURLs[GEN_TRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
     $opLabels[RELEASE] = xarML('Release package');
-    $opURLs[RELEASE] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+    $opURLs[RELEASE] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
     // Enables See module details & Generate translations skels
     $enabledOps = array(true, true, false, false, false);
@@ -260,7 +260,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
     $startTime = $time[1] + $time[0];
 
     // Security Check
-    if (!xarSecurityCheck('ReadTranslations')) {
+    if (!xarSecurity::check('ReadTranslations')) {
         return;
     }
 
@@ -569,12 +569,12 @@ function translations_working_locale($locale = null)
     if (!$locale) {
         $locale = xarSession::getVar('translations_working_locale');
         if (!$locale) {
-            $locale = xarMLSGetCurrentLocale();
-            xarSessionSetVar('translations_working_locale', $locale);
+            $locale = xarMLS::getCurrentLocale();
+            xarSession::setVar('translations_working_locale', $locale);
         }
         return $locale;
     } else {
-        xarSessionSetVar('translations_working_locale', $locale);
+        xarSession::setVar('translations_working_locale', $locale);
     }
 }
 
@@ -584,10 +584,10 @@ function translations_release_locale($locale = null)
         $locale = xarSession::getVar('translations_release_locale');
         if (!$locale) {
             $locale = translations_working_locale();
-            xarSessionSetVar('translations_release_locale', $locale);
+            xarSession::setVar('translations_release_locale', $locale);
         }
         return $locale;
     } else {
-        xarSessionSetVar('translations_release_locale', $locale);
+        xarSession::setVar('translations_release_locale', $locale);
     }
 }

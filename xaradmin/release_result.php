@@ -15,17 +15,17 @@
 function translations_admin_release_result()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
 
@@ -50,7 +50,7 @@ function translations_admin_release_result()
 
     $filename = $res;
     if ($filename == null) {
-        xarController::redirect(xarModURL('translations', 'admin', 'release_info'));
+        xarController::redirect(xarController::URL('translations', 'admin', 'release_info'));
     }
 
     $tplData['url'] = sys::varpath().'/cache/'.$filename;

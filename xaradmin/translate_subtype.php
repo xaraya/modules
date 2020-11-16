@@ -15,17 +15,17 @@
 function translations_admin_translate_subtype()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
 
@@ -39,14 +39,14 @@ function translations_admin_translate_subtype()
     //    $i++;
     //}
     //$regexstring = 'regexp:/^(' . $regexstring . ')$/';
-    //if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    //if (!xarVar::fetch('subtype', $regexstring, $subtype)) return;
 
     // FIXME voll do we use subtype,subname really?
-    if (!xarVarFetch('defaultcontext', 'str:1:', $defaultcontext)) {
-        if (!xarVarFetch('subtype', 'str:1:', $subtype)) {
+    if (!xarVar::fetch('defaultcontext', 'str:1:', $defaultcontext)) {
+        if (!xarVar::fetch('subtype', 'str:1:', $subtype)) {
             return;
         }
-        if (!xarVarFetch('subname', 'str:1:', $subname)) {
+        if (!xarVar::fetch('subname', 'str:1:', $subname)) {
             return;
         }
     } else {
@@ -76,7 +76,7 @@ function translations_admin_translate_subtype()
     $entries['fuzzyNumEmptyKeyEntries'] = $fuzzyEntries['numEmptyKeyEntries'];
 
     $data = $entries;
-    $data['action'] = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
+    $data['action'] = xarController::URL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
 
     $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
     $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname);

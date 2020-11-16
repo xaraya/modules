@@ -15,17 +15,17 @@
 function translations_admin_generate_trans_result()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
 
@@ -62,7 +62,7 @@ function translations_admin_generate_trans_result()
     }
     $data = $res;
     if ($data == null) {
-        xarController::redirect(xarModURL('translations', 'admin', 'generate_trans_info'));
+        xarController::redirect(xarController::URL('translations', 'admin', 'generate_trans_info'));
         return true;
     }
 

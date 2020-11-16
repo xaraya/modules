@@ -15,17 +15,17 @@
 function translations_admin_delete_fuzzy_result()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
 
@@ -48,7 +48,7 @@ function translations_admin_delete_fuzzy_result()
         unlink($fileName);
     }
 
-    xarController::redirect(xarModURL(
+    xarController::redirect(xarController::URL(
         'translations',
         'admin',
         'translate',

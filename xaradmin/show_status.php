@@ -29,7 +29,7 @@ function &count_entries(&$entries)
 function translations_admin_show_status()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadTranslations')) {
+    if (!xarSecurity::check('ReadTranslations')) {
         return;
     }
    
@@ -41,7 +41,7 @@ function translations_admin_show_status()
     unset($tmp);
 
     // Get the modules
-    if (!($mods = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) {
+    if (!($mods = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ANY))))) {
         return;
     }
     $modentries = array();
@@ -144,7 +144,7 @@ function translations_admin_show_status()
     }
 
     // Get the themes
-    if (!($themes = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) {
+    if (!($themes = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => xarTheme::STATE_ANY))))) {
         return;
     }
 

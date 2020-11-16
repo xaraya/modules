@@ -12,6 +12,6 @@
 
 function translations_user_show_status()
 {
-    xarController::redirect(xarModURL('translations', 'admin', 'show_status'));
+    xarController::redirect(xarController::URL('translations', 'admin', 'show_status'));
     return true;
 }

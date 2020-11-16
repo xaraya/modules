@@ -337,8 +337,8 @@ class XMLTranslationsSkelsGenerator
     public function addEntry($string, $references, $translation = '')
     {
         // Replace any special characters with entities
-        $string = xarVarPrepForDisplay($string);
-        $translation = xarVarPrepForDisplay($translation);
+        $string = xarVar::prepForDisplay($string);
+        $translation = xarVar::prepForDisplay($translation);
         
         fwrite($this->fp, "<entry>");
         fwrite($this->fp, "\n\t<string>".$string."</string>");
@@ -356,8 +356,8 @@ class XMLTranslationsSkelsGenerator
     public function addKeyEntry($key, $references, $translation = '')
     {
         // Replace any special characters with entities
-        $string = xarVarPrepForDisplay($string);
-        $key = xarVarPrepForDisplay($key);
+        $string = xarVar::prepForDisplay($string);
+        $key = xarVar::prepForDisplay($key);
 
         fwrite($this->fp, "<keyEntry>");
         fwrite($this->fp, "\n\t<<key>".$key."</key>");

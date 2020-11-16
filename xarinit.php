@@ -25,8 +25,8 @@ function translations_init()
     xarModVars::set('translations', 'maxreferences', 5);
     xarModVars::set('translations', 'maxcodelines', 5);
 
-    xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('AdminTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('AdminTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_ADMIN');
 
     return true;
 }
@@ -50,8 +50,8 @@ function translations_delete()
     xarModVars::delete_all('translations');
 
     // Remove Masks and Instances
-    xarRemoveMasks('translations');
-    xarRemoveInstances('translations');
+    xarMasks::removemasks('translations');
+    xarPrivileges::removeInstances('translations');
 
     return true;
 }

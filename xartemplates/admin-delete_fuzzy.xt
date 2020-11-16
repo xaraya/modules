@@ -19,7 +19,7 @@
         <p>
         Now we're going to delete fuzzy file with old translations.
         </p>
-        <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'delete_fuzzy_result')#">
+        <form method="post" name="post" id="post" action="#xarController::URL('translations', 'admin', 'delete_fuzzy_result')#">
         <input type="hidden" name="dnType" value="#$dnType#"/>
         <input type="hidden" name="dnName" value="#$dnName#"/>
         <input type="hidden" name="extid" value="#$extid#"/>

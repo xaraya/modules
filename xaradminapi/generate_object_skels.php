@@ -39,7 +39,7 @@ function translations_adminapi_generate_object_skels($args)
     $objectname = $tplData['object']->name;
 
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
@@ -56,7 +56,7 @@ function translations_adminapi_generate_object_skels($args)
     }
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) object, you must first generate skels for the core.', $objectname);
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) {
@@ -149,7 +149,7 @@ function translations_adminapi_generate_object_skels($args)
     // Create skels
     $subnames = array_keys($transEntriesCollection);
     if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
-        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) {
+        if (!$parsedLocale = xarMLS::parseLocaleString($locale)) {
             return false;
         }
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';

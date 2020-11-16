@@ -15,7 +15,7 @@
 function translations_admin_translate_update()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
@@ -29,28 +29,28 @@ function translations_admin_translate_update()
     //    $i++;
     //}
     //$regexstring = 'regexp:/^(' . $regexstring . ')$/';
-    //if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    //if (!xarVar::fetch('subtype', $regexstring, $subtype)) return;
 
-    if (!xarVarFetch('subtype', 'str:1:', $subtype)) {
+    if (!xarVar::fetch('subtype', 'str:1:', $subtype)) {
         return;
     }
-    if (!xarVarFetch('subname', 'str:1:', $subname)) {
+    if (!xarVar::fetch('subname', 'str:1:', $subname)) {
         return;
     }
-    if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) {
+    if (!xarVar::fetch('numEntries', 'int:0:', $numEntries)) {
         return;
     }
-    if (!xarVarFetch('numKeyEntries', 'int:0:', $numKeyEntries)) {
+    if (!xarVar::fetch('numKeyEntries', 'int:0:', $numKeyEntries)) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
 
@@ -85,10 +85,10 @@ function translations_admin_translate_update()
         return;
     }
 
-    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) {
+    if (!$parsedWorkingLocale = xarMLS::parseLocaleString($locale)) {
         return false;
     }
-    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) {
+    if (!$parsedSiteLocale = xarMLS::parseLocaleString(xarMLS::getCurrentLocale())) {
         return false;
     }
     $workingCharset = $parsedWorkingLocale['charset'];
@@ -100,7 +100,7 @@ function translations_admin_translate_update()
 
     for ($i = 0; $i < $numEntries; $i++) {
         unset($translation);
-        if (!xarVarFetch('tid'.$i, 'str::', $translation, '', XARVAR_POST_ONLY)) {
+        if (!xarVar::fetch('tid'.$i, 'str::', $translation, '', xarVar::POST_ONLY)) {
             return;
         }
         if ($siteCharset != $workingCharset) {
@@ -114,7 +114,7 @@ function translations_admin_translate_update()
     }
     while (list($key, $translation) = $backend->enumKeyTranslations()) {
         unset($translation);
-        if (!xarVarFetch('key'.$key, 'str::', $translation, '', XARVAR_POST_ONLY)) {
+        if (!xarVar::fetch('key'.$key, 'str::', $translation, '', xarVar::POST_ONLY)) {
             return;
         }
         if ($siteCharset != $workingCharset) {
@@ -130,7 +130,7 @@ function translations_admin_translate_update()
     $gen->close();
 
     // Jump to the next page
-    xarController::redirect(xarModURL(
+    xarController::redirect(xarController::URL(
         'translations',
         'admin',
         'translate_subtype',

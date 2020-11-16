@@ -15,7 +15,7 @@
 function translations_user_main($args)
 {
     // Security Check
-    if (!xarSecurityCheck('ReadTranslations')) {
+    if (!xarSecurity::check('ReadTranslations')) {
         return;
     }
     if (!xarUser::IsLoggedIn()) {
@@ -25,10 +25,10 @@ function translations_user_main($args)
     $redirect = xarModVars::get('translations', 'frontend_page');
     if (!empty($redirect)) {
         $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarModAPIFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
-        xarController::redirect(xarModURL('translations', 'user', 'show_status'));
+        xarController::redirect(xarController::URL('translations', 'user', 'show_status'));
     }
     return true;
 }

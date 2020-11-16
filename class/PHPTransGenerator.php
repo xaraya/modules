@@ -23,7 +23,7 @@ class PHPTranslationsGenerator
     public function __construct($locale)
     {
         $this->locale = $locale;
-        $l = xarLocaleGetInfo($locale);
+        $l = xarMLS::localeGetInfo($locale);
         $this->outCharset = $l['charset'];
         $this->isUTF8 = ($l['charset'] == 'utf-8');
     }

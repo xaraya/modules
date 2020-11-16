@@ -57,10 +57,10 @@ function translations_adminapi_getcontextentries($args)
 
     $maxReferences = xarModVars::get('translations', 'maxreferences');
 
-    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) {
+    if (!$parsedWorkingLocale = xarMLS::parseLocaleString($locale)) {
         return false;
     }
-    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) {
+    if (!$parsedSiteLocale = xarMLS::parseLocaleString(xarMLS::getCurrentLocale())) {
         return false;
     }
     $workingCharset = $parsedWorkingLocale['charset'];

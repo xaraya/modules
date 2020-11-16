@@ -29,7 +29,7 @@ function translations_adminapi_generate_core_skels($args)
     // Argument check
     assert('isset($locale)');
 
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
@@ -64,7 +64,7 @@ function translations_adminapi_generate_core_skels($args)
 
     // Generate translations skels
     if (xarConfigVars::get(null, 'Site.MLS.TranslationsBackend') == 'xml2php') {
-        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) {
+        if (!$parsedLocale = xarMLS::parseLocaleString($locale)) {
             return false;
         }
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';

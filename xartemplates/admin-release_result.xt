@@ -9,7 +9,7 @@
     <p>
       <xar:ml>
         <xar:mlstring>A translation package archive has been created, with the translations for #(1)</xar:mlstring>
-        <xar:mlvar>#xarSessionGetVar('translations_working_locale')#</xar:mlvar>
+        <xar:mlvar>#xarSession::getVar('translations_working_locale')#</xar:mlvar>
       </xar:ml>
     </p>
     <p>

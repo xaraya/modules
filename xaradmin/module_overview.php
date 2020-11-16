@@ -15,11 +15,11 @@
 function translations_admin_module_overview()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarVarFetch('extid', 'id', $modid)) {
+    if (!xarVar::fetch('extid', 'id', $modid)) {
         return;
     }
 

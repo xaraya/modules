@@ -25,7 +25,7 @@
                 <xar:template file="update-button" module="base" />
             </form>
         <xar:elseif condition="$tab eq 'display'"/>
-            <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
+            <form action="#xarController::URL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>Display during translation</legend>
 
@@ -64,7 +64,7 @@
 
         <!-- Begin Release Options -->
         <xar:elseif condition="$tab eq 'release'"/>
-            <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
+            <form action="#xarController::URL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>Translations storage</legend>
                     <p class="xar-form-input-wrapper-before">

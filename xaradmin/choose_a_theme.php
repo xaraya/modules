@@ -15,11 +15,11 @@
 function translations_admin_choose_a_theme()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!($themelist = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) {
+    if (!($themelist = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => xarTheme::STATE_ANY))))) {
         return;
     }
 

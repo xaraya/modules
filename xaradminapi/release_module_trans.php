@@ -38,7 +38,7 @@ function translations_adminapi_release_module_trans($args)
     };
 
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
@@ -50,7 +50,7 @@ function translations_adminapi_release_module_trans($args)
     $dirpath = sys::code() . "var/locales/$locale/php/modules/$modname/";
     if (!file_exists($dirpath.'common.php')) {
         $msg = xarML('Before releasing translations package you must first generate translations.');
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'module')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'module')));
         throw new Exception($msg);
     }
 

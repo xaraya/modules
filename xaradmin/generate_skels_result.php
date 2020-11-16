@@ -18,24 +18,24 @@
 function translations_admin_generate_skels_result()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminTranslations')) {
+    if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
 
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return;
     }
 
-    if (!xarVarFetch('dnType', 'int', $dnType)) {
+    if (!xarVar::fetch('dnType', 'int', $dnType)) {
         return;
     }
-    if (!xarVarFetch('dnName', 'str:1:', $dnName)) {
+    if (!xarVar::fetch('dnName', 'str:1:', $dnName)) {
         return;
     }
-    if (!xarVarFetch('extid', 'int', $extid)) {
+    if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
-    if (!xarVarFetch('dnTypeAll', 'bool', $dnTypeAll, false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('dnTypeAll', 'bool', $dnTypeAll, false, xarVar::NOT_REQUIRED)) {
         return;
     }
     $locale = translations_working_locale();
@@ -49,11 +49,11 @@ function translations_admin_generate_skels_result()
             if ($dnTypeAll) {
 
                 // Get all modules
-                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_INSTALLED)));
                 if (!isset($installed)) {
                     return;
                 }
-                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
+                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_UNINITIALISED)));
                 if (!isset($uninstalled)) {
                     return;
                 }
@@ -98,7 +98,7 @@ function translations_admin_generate_skels_result()
 
     $data = $res;
     if ($data == null) {
-        xarController::redirect(xarModURL('translations', 'admin', 'generate_skels_info'));
+        xarController::redirect(xarController::URL('translations', 'admin', 'generate_skels_info'));
     }
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);

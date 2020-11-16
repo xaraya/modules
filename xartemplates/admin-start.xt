@@ -6,7 +6,7 @@
         <h2>Start Translate</h2>
         <xar:template file="admin-settings" type="module"/>
 
-        <form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations','admin','update_working_locale')#" method="post">
+        <form name="workingLocaleForm" id="workingLocaleForm" action="#xarController::URL('translations','admin','update_working_locale')#" method="post">
           <fieldset>
               <legend>Choose locale to work on</legend>
     
@@ -16,7 +16,7 @@
               items while you are working on a translation.</p>
           <p class="xar-form-input-wrapper-before">
             If you don't see the locale you want to translate in the dropdown below, you will need to create it (in your var/locale directory) and activate it on <em>Languages and Locales</em> in the <em>Modify Config</em> section of the 
-            <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'locales'))#">
+            <a href="#xarController::URL('base','admin','modifyconfig',array('tab'=>'locales'))#">
                 Base module.
             </a>  
           </p>
@@ -46,32 +46,32 @@
             
              <ul>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'core'))#">
+                  <a href="#xarController::URL('translations','admin','update_info',array('dntype'=>'core'))#">
                     Translate the core
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'module'))#">
+                  <a href="#xarController::URL('translations','admin','update_info',array('dntype'=>'module'))#">
                     Translate a module
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'property'))#">
+                  <a href="#xarController::URL('translations','admin','update_info',array('dntype'=>'property'))#">
                     Translate a property
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'block'))#">
+                  <a href="#xarController::URL('translations','admin','update_info',array('dntype'=>'block'))#">
                     Translate a block
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'theme'))#">
+                  <a href="#xarController::URL('translations','admin','update_info',array('dntype'=>'theme'))#">
                     Translate a theme
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'object'))#">
+                  <a href="#xarController::URL('translations','admin','update_info',array('dntype'=>'object'))#">
                     Translate a dataobject
                   </a>
                 </li>

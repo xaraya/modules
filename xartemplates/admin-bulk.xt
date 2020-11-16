@@ -16,7 +16,7 @@
           To generate all skeletons for all modules, use the button below:
         </p>
 
-        <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
+        <form method="post" name="post" id="post" action="#xarController::URL('translations', 'admin', 'generate_skels_result')#">
             <input type="hidden" name="dnType" value="3"/>
             <input type="hidden" name="dnName" value="modules"/>
             <input type="hidden" name="extid" value="1"/>
