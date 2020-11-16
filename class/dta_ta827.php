@@ -17,37 +17,41 @@
 
 sys::import('modules.payments.class.dta');
 
-class DTA_TA827 extends DTA{
-
+class DTA_TA827 extends DTA
+{
     protected $transactionType = 827;
 
-    public function setProcessingDay($timestamp=0) {
+    public function setProcessingDay($timestamp=0)
+    {
         $this->processingDay = $this->transformDate($timestamp);
     }
 
     /**
      * Set the bank clearing number of the recipients bank
-     * 
+     *
      * @param int $clearingNr
      * @throws Exception
      */
-    public function setRecipientClearingNr($clearingNr=0) {
-        if (!is_integer($clearingNr))
+    public function setRecipientClearingNr($clearingNr=0)
+    {
+        if (!is_integer($clearingNr)) {
             throw new Exception(xarML("Invalid recipient bank clearing number: #(1)", $clearingNr));
-        else
+        } else {
             $this->recipientClearingNr = str_pad($clearingNr, 12, $this->fillChar);
+        }
     }
 
-    public function setPaymentType($paymentType=0) {
+    public function setPaymentType($paymentType=0)
+    {
         $this->paymentType = $paymentType;
     }
 
-    protected function getConversionRate() 
+    protected function getConversionRate()
     {
         return '';
     }
 
-    protected function getBankAddressID() 
+    protected function getBankAddressID()
     {
         return '';
     }
@@ -66,13 +70,11 @@ class DTA_TA827 extends DTA{
 
         // segment 04
         array_push($record, $this->getSegment04());
-/*
-        // segment 05
-        array_push($record, $this->getSegment05());
-*/
+        /*
+                // segment 05
+                array_push($record, $this->getSegment05());
+        */
         $string = $this->concatenateRecord($record);
         return $string;
     }
-    
 }
-?>

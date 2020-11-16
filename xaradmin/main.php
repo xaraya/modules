@@ -17,7 +17,9 @@
 
     function payments_admin_main()
     {
-        if(!xarSecurityCheck('AdminPayments')) return;
+        if (!xarSecurityCheck('AdminPayments')) {
+            return;
+        }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
@@ -27,4 +29,3 @@
         // success
         return true;
     }
-?>

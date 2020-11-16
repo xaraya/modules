@@ -20,39 +20,51 @@
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_TRANSACTION_METHOD', 'AUTHORIZENET_CC_AIM_TRANSACTION_METHOD');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ORDER_STATUS_ID', 'AUTHORIZENET_CC_AIM_ORDER_STATUS_ID');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_CURL', 'AUTHORIZENET_CC_AIM_CURL');
-  //Psspl:Defined the different Error Messages.  
+  //Psspl:Defined the different Error Messages.
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_TITLE', 'There has been an error processing your credit card');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_GENERAL', 'Please try again and if problems persist, please try another payment method.');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_DECLINED', 'This credit card transaction has been declined. Please try again and if problems persist, please try another credit card or payment method.');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_INVALID_EXP_DATE', 'The credit card expiration date is invalid. Please check the card information and try again.');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_EXPIRED', 'The credit card has expired. Please try again with another card or payment method.');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_CVC', 'The credit card check number (CVC) is invalid. Please check the card information and try again.');
-  define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_INVALID_AMOUNT', 'Please enter a valid amount.');  
-  //Psspl:Added the Code for Http_failure.    
+  define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_INVALID_AMOUNT', 'Please enter a valid amount.');
+  //Psspl:Added the Code for Http_failure.
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_HTTP_FAILURE', 'Http Failure');
   
-  class authorizenet_cc_aim extends BasicPayment 
+  class authorizenet_cc_aim extends BasicPayment
   {
-    //Psspl:Added the Code initializing  Http_failure variable.       
-    var $enabled, $live, $gateway_url, $cc_aim_curl,$http_code,$curlInfo,$respose_reson_text;
-    var $authnet_values = array();
+      //Psspl:Added the Code initializing  Http_failure variable.
+      public $enabled;
+       
+      public $live;
+       
+      public $gateway_url;
+       
+      public $cc_aim_curl;
+       
+      public $http_code;
+       
+      public $curlInfo;
+       
+      public $respose_reson_text;
+      public $authnet_values = array();
 
-// class constructor
-    public function __construct() 
-    {
-      $this->enabled = true;
-      $this->live = false;
-      //$this->authnet_values = $this->getParams();
-    }
+      // class constructor
+      public function __construct()
+      {
+          $this->enabled = true;
+          $this->live = false;
+          //$this->authnet_values = $this->getParams();
+      }
 
-    function getParams(Array $args=array()) 
-    {
-        $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways_config'));
-        $object->getProperties();
-        $items = $object->getItems(array('where' => 'configuration_group_id eq 8'));
-        $aryParams = array();
-        foreach ($items as $key => $val) {
-            switch ($val['configuration_key']) {
+      public function getParams(array $args=array())
+      {
+          $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways_config'));
+          $object->getProperties();
+          $items = $object->getItems(array('where' => 'configuration_group_id eq 8'));
+          $aryParams = array();
+          foreach ($items as $key => $val) {
+              switch ($val['configuration_key']) {
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_LOGIN_ID:
                 //$aryParams['x_login'] = $val['configuration_value'];
                 $aryParams['x_login'] = isset($args['x_login']) ? urlencode($args['x_login']) : urlencode($val['configuration_value']);
@@ -64,105 +76,104 @@
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_MD5_HASH:
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_TRANSACTION_SERVER:
-            	//$this->live = ($val['configuration_value'] == 'Test')?false:true;            	
-              	if(isset($args['live'])){
-					$this->live = ($args['live'] == 'Test') ? false : true;	          			      		
-                }else {
-                	$this->live = ($val['configuration_value'] == 'Test') ? false : true;
+                //$this->live = ($val['configuration_value'] == 'Test')?false:true;
+                  if (isset($args['live'])) {
+                      $this->live = ($args['live'] == 'Test') ? false : true;
+                  } else {
+                      $this->live = ($val['configuration_value'] == 'Test') ? false : true;
+                  }
+                if ($this->live) {
+                    $this->gateway_url = 'https://secure.authorize.net/gateway/transact.dll';
+                } else {
+                    $this->gateway_url = 'https://test.authorize.net/gateway/transact.dll';
                 }
-                if($this->live) {
-          			$this->gateway_url = 'https://secure.authorize.net/gateway/transact.dll';
-      			} else {
-          			$this->gateway_url = 'https://test.authorize.net/gateway/transact.dll';
-      			}
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_TRANSACTION_MODE:
-            	//$aryParams['x_test_request'] = ($val['configuration_value'] == 'Test')?'TRUE':'FALSE';
-              	if(isset($args['x_test_request'])){
-					$aryParams['x_test_request'] = ($args['x_test_request'] == 'Test') ? 'TRUE' : 'FALSE';	          			      		
-                }else {
-                	$aryParams['x_test_request'] = ($val['configuration_value'] == 'Test') ? 'TRUE' : 'FALSE';
-                }                
+                //$aryParams['x_test_request'] = ($val['configuration_value'] == 'Test')?'TRUE':'FALSE';
+                  if (isset($args['x_test_request'])) {
+                      $aryParams['x_test_request'] = ($args['x_test_request'] == 'Test') ? 'TRUE' : 'FALSE';
+                  } else {
+                      $aryParams['x_test_request'] = ($val['configuration_value'] == 'Test') ? 'TRUE' : 'FALSE';
+                  }
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_TRANSACTION_METHOD:
-              	//$aryParams['x_type'] = (($val['configuration_value'] == 'Capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY');               
-            	if(isset($args['x_type'])){
-					$aryParams['x_type'] = (($args['x_type'] == 'Capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY');	          			      		
-                }else {
-                	$aryParams['x_type'] = (($val['configuration_value'] == 'Capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY');
+                  //$aryParams['x_type'] = (($val['configuration_value'] == 'Capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY');
+                if (isset($args['x_type'])) {
+                    $aryParams['x_type'] = (($args['x_type'] == 'Capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY');
+                } else {
+                    $aryParams['x_type'] = (($val['configuration_value'] == 'Capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY');
                 }
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_CURL:
-              	//$this->cc_aim_curl = $val['configuration_value'];  
-              	$this->cc_aim_curl = isset($args['cc_aim_curl']) ? $args['cc_aim_curl'] : $val['configuration_value'];            	
+                  //$this->cc_aim_curl = $val['configuration_value'];
+                  $this->cc_aim_curl = isset($args['cc_aim_curl']) ? $args['cc_aim_curl'] : $val['configuration_value'];
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ORDER_STATUS_ID:
               default:
                 break;
             }
-        }
-        $aryParams["x_version"] = "3.1";
-        $aryParams["x_delim_char"] = ",";
-        $aryParams["x_delim_data"] = "TRUE";
-        $aryParams["x_url"] = "FALSE";
-        $aryParams["x_method"] = "CC";
-        $aryParams["x_relay_response"] = "FALSE";
-        $aryParams["x_trans_id"] = xarSession::getVar('AUTHID');
+          }
+          $aryParams["x_version"] = "3.1";
+          $aryParams["x_delim_char"] = ",";
+          $aryParams["x_delim_data"] = "TRUE";
+          $aryParams["x_url"] = "FALSE";
+          $aryParams["x_method"] = "CC";
+          $aryParams["x_relay_response"] = "FALSE";
+          $aryParams["x_trans_id"] = xarSession::getVar('AUTHID');
         
-        $fields = unserialize(xarSession::GetVar('paymentfields'));
-        if(is_array($fields)) {
-            $aryParams["x_card_num"] = $fields['number'];
-            $aryParams["x_exp_date"] = date("my", $fields['expiration_date']);
-            $aryParams["x_card_code"] = $fields['control_number'];
-            $aryParams["x_first_name"] = $fields['name'];
-            //Psspl:Comment the code for resolving orderobject issue.
+          $fields = unserialize(xarSession::GetVar('paymentfields'));
+          if (is_array($fields)) {
+              $aryParams["x_card_num"] = $fields['number'];
+              $aryParams["x_exp_date"] = date("my", $fields['expiration_date']);
+              $aryParams["x_card_code"] = $fields['control_number'];
+              $aryParams["x_first_name"] = $fields['name'];
+              //Psspl:Comment the code for resolving orderobject issue.
             //$aryParams["x_amount"] = isset($fields['amount'])?$fields['amount']:"0.1";
-        }
+          }
         
-        $fields = unserialize(xarSession::GetVar('orderfields'));
-        if(is_array($fields)) {
+          $fields = unserialize(xarSession::GetVar('orderfields'));
+          if (is_array($fields)) {
               $aryParams["x_amount"] = isset($fields['amount'])?$fields['amount']:"0.1";
-            //$aryParams["x_currency_code"] = $fields['currency'];
-        }
+              //$aryParams["x_currency_code"] = $fields['currency'];
+          }
         
-        return $aryParams;
-    }
+          return $aryParams;
+      }
     
-// class methods
-    function update_status(Array $args=array()) 
-    {
-        $status = false;
-        $this->authnet_values = $this->getParams($args);
-      if ($this->enabled == true) {
-        $fields = "";
-        foreach( $this->authnet_values as $key => $value ) $fields .= "$key=" . urlencode( $value ) . "&";
-        $status = $this->sendTransactionToGateway($this->gateway_url, $fields);
-        //Psspl:Removed the Commeted code.
-        //Psspl:Added the code for Error handling.
-        if (!empty($status)) {
-            $regs = preg_split("/,(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/", $status);
+      // class methods
+      public function update_status(array $args=array())
+      {
+          $status = false;
+          $this->authnet_values = $this->getParams($args);
+          if ($this->enabled == true) {
+              $fields = "";
+              foreach ($this->authnet_values as $key => $value) {
+                  $fields .= "$key=" . urlencode($value) . "&";
+              }
+              $status = $this->sendTransactionToGateway($this->gateway_url, $fields);
+              //Psspl:Removed the Commeted code.
+              //Psspl:Added the code for Error handling.
+              if (!empty($status)) {
+                  $regs = preg_split("/,(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/", $status);
 
-            foreach ($regs as $key => $value)
-            {
-                $regs[$key] =$value;
-            }
-        }
-        else
-        {
-            $regs = array('-1', '-1', '-1');
-        }
-        $this->error = false;
+                  foreach ($regs as $key => $value) {
+                      $regs[$key] =$value;
+                  }
+              } else {
+                  $regs = array('-1', '-1', '-1');
+              }
+              $this->error = false;
 
-        if ($regs[0] == '1') {
-        } else {
-            switch ($regs[2]) {
+              if ($regs[0] == '1') {
+              } else {
+                  switch ($regs[2]) {
                 case '-1':
                     $this->error = 'HTTP_FAILURE';
                     break;
                 case '5':
                     $this->error = 'invalid_amount';
                     break;
-				
+                
                 case '7':
                     $this->error = 'invalid_expiration_date';
                     break;
@@ -180,131 +191,130 @@
                 case '78':
                     $this->error = 'cvc';
                     break;
-                   	
-                	    
+                       
+                        
                 default:
                     $this->error = 'general';
                     break;
             }
-        }
+              }
        
-        if ($this->error != false) {
-			//Psspl:Modified code for resolving the issue of regs[3].
-			//regs array not set when http failure error occurs.
-        	$this->respose_reson_text = isset($regs[3])?$regs[3]:'';
-             $error_message = $this->get_error();
-             //$error_message .= "$regs[3]";
-            xarSession::setVar('error_message' , $error_message);
-        } else {
-
-        }
-        //TODO: Comment below statement on live production server.
-        //Below statement will display the reponse got from Authorized.Net
-          return $this->generateResponse($status);
-      }
-      return $result;
-    }
-
-    function sendTransactionToGateway($url, $parameters) 
-    {
-      $server = parse_url($url);
-
-      if (isset($server['port']) === false) {
-        $server['port'] = ($server['scheme'] == 'https') ? 443 : 80;
+              if ($this->error != false) {
+                  //Psspl:Modified code for resolving the issue of regs[3].
+                  //regs array not set when http failure error occurs.
+                  $this->respose_reson_text = isset($regs[3])?$regs[3]:'';
+                  $error_message = $this->get_error();
+                  //$error_message .= "$regs[3]";
+                  xarSession::setVar('error_message', $error_message);
+              } else {
+              }
+              //TODO: Comment below statement on live production server.
+              //Below statement will display the reponse got from Authorized.Net
+              return $this->generateResponse($status);
+          }
+          return $result;
       }
 
-      if (isset($server['path']) === false) {
-        $server['path'] = '/';
+      public function sendTransactionToGateway($url, $parameters)
+      {
+          $server = parse_url($url);
+
+          if (isset($server['port']) === false) {
+              $server['port'] = ($server['scheme'] == 'https') ? 443 : 80;
+          }
+
+          if (isset($server['path']) === false) {
+              $server['path'] = '/';
+          }
+
+          if (isset($server['user']) && isset($server['pass'])) {
+              $header[] = 'Authorization: Basic ' . base64_encode($server['user'] . ':' . $server['pass']);
+          }
+
+          if (function_exists('curl_init')) {
+              $curl = curl_init($server['scheme'] . '://' . $server['host'] . $server['path'] . (isset($server['query']) ? '?' . $server['query'] : ''));
+              curl_setopt($curl, CURLOPT_PORT, $server['port']);
+              curl_setopt($curl, CURLOPT_HEADER, 0);
+              curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+              curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+              curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+              curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+              curl_setopt($curl, CURLOPT_POST, 1);
+              curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
+
+              $result = curl_exec($curl);
+              $this->curlInfo = curl_getinfo($curl);
+              curl_close($curl);
+              $this->http_code=$this->curlInfo['http_code'];
+              if ($this->curlInfo['http_code'] != 200) {
+                  return false;
+              }
+          } else {
+              exec(escapeshellarg($this->cc_aim_curl) . ' -d ' . escapeshellarg($parameters) . ' "' . $server['scheme'] . '://' . $server['host'] . $server['path'] . (isset($server['query']) ? '?' . $server['query'] : '') . '" -P ' . $server['port'] . ' -k', $result);
+              $result = implode("\n", $result);
+          }
+
+          return $result;
       }
-
-      if (isset($server['user']) && isset($server['pass'])) {
-        $header[] = 'Authorization: Basic ' . base64_encode($server['user'] . ':' . $server['pass']);
-      }
-
-      if (function_exists('curl_init')) {
-        $curl = curl_init($server['scheme'] . '://' . $server['host'] . $server['path'] . (isset($server['query']) ? '?' . $server['query'] : ''));
-        curl_setopt($curl, CURLOPT_PORT, $server['port']);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-        curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
-
-        $result = curl_exec($curl);
-        $this->curlInfo = curl_getinfo($curl);
-        curl_close($curl);
-        $this->http_code=$this->curlInfo['http_code'];
-        if($this->curlInfo['http_code'] != 200) {
-            return false;
-        }
-      } else {
-        exec(escapeshellarg($this->cc_aim_curl) . ' -d ' . escapeshellarg($parameters) . ' "' . $server['scheme'] . '://' . $server['host'] . $server['path'] . (isset($server['query']) ? '?' . $server['query'] : '') . '" -P ' . $server['port'] . ' -k', $result);
-        $result = implode("\n", $result);
-      }
-
-      return $result;
-    }
     
-    function generateResponse($resp)
-    {
-        $output = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
-        $text = $resp;
-        $h = substr_count($text, ",");
-        $h++;
-            for($j=1; $j <= $h; $j++){
-            $p = strpos($text, ",");
-            if ($p === false) { // note: three equal signs
-                $output .= "<tr>";
-                $output .= "<td class=\"e\">";
-                    //  x_delim_char is obviously not found in the last go-around
-                    if($j>=69){
-                        $output .= "Merchant-defined (".$j."): ";
-                        $output .= ": ";
-                        $output .= "</td>";
-                        $output .= "<td class=\"v\">";
-                        $output .= $text;
-                        $output .= "<br>";
-                    } else {
-                        $output .= $j;
-                        $output .= ": ";
-                        $output .= "</td>";
-                        $output .= "<td class=\"v\">";
-                        $output .= $text;
-                        $output .= "<br>";
-                    }
-                $output .= "</td>";
-                $output .= "</tr>";
-            }else{
-                $p++;
-                //  We found the x_delim_char and accounted for it . . . now do something with it
-                //  get one portion of the response at a time
-                $pstr = substr($text, 0, $p);
+      public function generateResponse($resp)
+      {
+          $output = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
+          $text = $resp;
+          $h = substr_count($text, ",");
+          $h++;
+          for ($j=1; $j <= $h; $j++) {
+              $p = strpos($text, ",");
+              if ($p === false) { // note: three equal signs
+                  $output .= "<tr>";
+                  $output .= "<td class=\"e\">";
+                  //  x_delim_char is obviously not found in the last go-around
+                  if ($j>=69) {
+                      $output .= "Merchant-defined (".$j."): ";
+                      $output .= ": ";
+                      $output .= "</td>";
+                      $output .= "<td class=\"v\">";
+                      $output .= $text;
+                      $output .= "<br>";
+                  } else {
+                      $output .= $j;
+                      $output .= ": ";
+                      $output .= "</td>";
+                      $output .= "<td class=\"v\">";
+                      $output .= $text;
+                      $output .= "<br>";
+                  }
+                  $output .= "</td>";
+                  $output .= "</tr>";
+              } else {
+                  $p++;
+                  //  We found the x_delim_char and accounted for it . . . now do something with it
+                  //  get one portion of the response at a time
+                  $pstr = substr($text, 0, $p);
         
-                //  this prepares the text and returns one value of the submitted
+                  //  this prepares the text and returns one value of the submitted
                 //  and processed name/value pairs at a time
                 //  for AIM-specific interpretations of the responses
                 //  please consult the AIM Guide and look up
                 //  the section called Gateway Response API
                 $pstr_trimmed = substr($pstr, 0, -1); // removes "," at the end
         
-                if($pstr_trimmed==""){
+                if ($pstr_trimmed=="") {
                     $pstr_trimmed="NO VALUE RETURNED";
                 }
-                $output .= "<tr>";
-                $output .= "<td class=\"e\">";
-                switch($j){
+                  $output .= "<tr>";
+                  $output .= "<td class=\"e\">";
+                  switch ($j) {
                     case 1:
                         $output .= "Response Code: ";
                         $output .= "</td>";
                         $output .= "<td class=\"v\">";
                         $fval="";
-                        if($pstr_trimmed=="1"){
+                        if ($pstr_trimmed=="1") {
                             $fval="Approved";
-                        }elseif($pstr_trimmed=="2"){
+                        } elseif ($pstr_trimmed=="2") {
                             $fval="Declined";
-                        }elseif($pstr_trimmed=="3"){
+                        } elseif ($pstr_trimmed=="3") {
                             $fval="Error";
                         }
                         $output .= $fval;
@@ -574,17 +584,17 @@
                         $output .= "</td>";
                         $output .= "<td class=\"v\">";
                         $fval="";
-                        if($pstr_trimmed=="M"){
+                        if ($pstr_trimmed=="M") {
                             $fval="M = Match";
-                        }elseif($pstr_trimmed=="N"){
+                        } elseif ($pstr_trimmed=="N") {
                             $fval="N = No Match";
-                        }elseif($pstr_trimmed=="P"){
+                        } elseif ($pstr_trimmed=="P") {
                             $fval="P = Not Processed";
-                        }elseif($pstr_trimmed=="S"){
+                        } elseif ($pstr_trimmed=="S") {
                             $fval="S = Should have been present";
-                        }elseif($pstr_trimmed=="U"){
+                        } elseif ($pstr_trimmed=="U") {
                             $fval="U = Issuer unable to process request";
-                        }else{
+                        } else {
                             $fval="NO VALUE RETURNED";
                         }
                         $output .= $fval;
@@ -627,7 +637,7 @@
                         $output .= "<br>";
                         break;
                     default:
-                        if($j>=69){
+                        if ($j>=69) {
                             $output .= "Merchant-defined (".$j."): ";
                             $output .= ": ";
                             $output .= "</td>";
@@ -644,65 +654,65 @@
                         }
                         break;
                 }
-                $output .= "</td>";
-                $output .= "</tr>";
-                // remove the part that we identified and work with the rest of the string
-                $text = substr($text, $p);
-            }
-        }
-        return $output .= "</table>";
-    }
+                  $output .= "</td>";
+                  $output .= "</tr>";
+                  // remove the part that we identified and work with the rest of the string
+                  $text = substr($text, $p);
+              }
+          }
+          return $output .= "</table>";
+      }
     
-    function javascript_validation() 
-        {
-            return false;
-        }
+      public function javascript_validation()
+      {
+          return false;
+      }
 
-    function selection() 
-    {
-        return false;
-    }
+      public function selection()
+      {
+          return false;
+      }
 
-    function pre_confirmation_check() 
-    {
-        return false;
-    }
+      public function pre_confirmation_check()
+      {
+          return false;
+      }
 
-    function confirmation() 
-    {
-        return false;
-    }
+      public function confirmation()
+      {
+          return false;
+      }
 
-    function process_button() 
-    {
-        return false;
-    }
+      public function process_button()
+      {
+          return false;
+      }
 
-    function before_process() 
-    {
-        return false;
-    }
+      public function before_process()
+      {
+          return false;
+      }
 
-    function after_process() 
-    {
-        return false;
-    }
+      public function after_process()
+      {
+          return false;
+      }
 
-    function output_error() 
-    {
-      return false;
-    }
+      public function output_error()
+      {
+          return false;
+      }
 
-    function get_error() 
-    {
-        //Psspl:Implemented the code for error handling.
-        $error_message = MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_GENERAL;
+      public function get_error()
+      {
+          //Psspl:Implemented the code for error handling.
+          $error_message = MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_GENERAL;
         
-        switch ($this->error) {
-            //Psspl:Added the Code for Http_failure menu.     
+          switch ($this->error) {
+            //Psspl:Added the Code for Http_failure menu.
             case 'HTTP_FAILURE':
                 $error_message = MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_HTTP_FAILURE ." ,Http Code:$this->http_code";
-                $dump=var_export($this->curlInfo,true);
+                $dump=var_export($this->curlInfo, true);
                 $error_message .="<br>Curl info message=$dump";
                 break;
             
@@ -733,35 +743,35 @@
                 //$error_message .="<br>Curl info message=$dump";
                 break;
         }
-        //Psspl:Gives the curl_info status.
-        //$dump=var_export($this->curlInfo,true);
-        //$error_message .="<br>Curl info message=$dump";
+          //Psspl:Gives the curl_info status.
+          //$dump=var_export($this->curlInfo,true);
+          //$error_message .="<br>Curl info message=$dump";
         
-        $this->error ="<B>".MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_TITLE;
-        $this->error.="</B><br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
-        $this->error.=$error_message."</td></tr></table>";
+          $this->error ="<B>".MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_TITLE;
+          $this->error.="</B><br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
+          $this->error.=$error_message."</td></tr></table>";
 
-        return $this->error;
-        //return false;
-    }
+          return $this->error;
+          //return false;
+      }
 
-    function check() 
-    {
-        return false;
-    }
+      public function check()
+      {
+          return false;
+      }
 
-    function install() 
-    {
-        return false;
-    }
+      public function install()
+      {
+          return false;
+      }
 
-    function remove() 
-    {
-        return false;
-    }
+      public function remove()
+      {
+          return false;
+      }
 
-    function keys() 
-    {
-        return false;
-    }
-  }?>
+      public function keys()
+      {
+          return false;
+      }
+  }

@@ -23,7 +23,9 @@
         }
 
         // Data Managers have access
-        if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) return;
+        if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) {
+            return;
+        }
         
         $oname = 'payments_ccpayments';
         
@@ -32,7 +34,9 @@
         $getarr = array();
         $items = $object->getItems(array('where' => 'state eq 3'));
         
-        if (empty($items)) return;
+        if (empty($items)) {
+            return;
+        }
         $items = $object->getViewValues();
                 
         // some kind of mod var here to control it in the future
@@ -41,21 +45,25 @@
         $operation = 2; // processed
         //processing object
         $pobject = DataObjectMaster::getObject(array('name' => $oname));
-        if (!empty($pobject->filepath)) include_once($pobject->filepath);
+        if (!empty($pobject->filepath)) {
+            include_once($pobject->filepath);
+        }
 
         $ptime = time();
         foreach ($ids as $id => $val) {
             if (empty($val)) {
-              continue;
+                continue;
             }
             //get the listing
-             $item = $pobject->getItem(array('itemid' => $val));
-             if (!$pobject->updateItem(array('state' => $operation, 'time_processed' => $ptime))) return;
+            $item = $pobject->getItem(array('itemid' => $val));
+            if (!$pobject->updateItem(array('state' => $operation, 'time_processed' => $ptime))) {
+                return;
+            }
         }
 
         $refresh = xarSession::getVar('ddcontext.payments');
 
-        xarModAPIFunc('export','user','export',array(
+        xarModAPIFunc('export', 'user', 'export', array(
                 'filetype'=>'excel',
                 'filename' => 'payments',
                 'dir' => true,
@@ -66,6 +74,4 @@
 //        if (!xarController::redirect($refresh['return_url'])) return;
         
         return true;
-
     }
-?>

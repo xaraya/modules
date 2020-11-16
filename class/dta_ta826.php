@@ -17,15 +17,16 @@
 
 sys::import('modules.payments.class.dta');
 
-class DTA_TA826 extends DTA{
-
+class DTA_TA826 extends DTA
+{
     protected $transactionType = 826;
 
-    public function setProcessingDay($timestamp=0) {
+    public function setProcessingDay($timestamp=0)
+    {
         $this->processingDay = $this->transformDate($timestamp);
     }
     
-    public function setClient($line1, $line2, $line3, $line4) 
+    public function setClient($line1, $line2, $line3, $line4)
     {
         $client = array();
         array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 20, $this->fillChar));
@@ -35,7 +36,7 @@ class DTA_TA826 extends DTA{
         $this->client = $client;
     }
 
-    public function setRecipient($account, $line1, $line2, $line3, $line4) 
+    public function setRecipient($account, $line1, $line2, $line3, $line4)
     {
         $recipient = array();
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 20))), 20, $this->fillChar));
@@ -46,20 +47,21 @@ class DTA_TA826 extends DTA{
         $this->recipient = $recipient;
     }
 
-    public function setPaymentReason($lines=array()) 
+    public function setPaymentReason($lines=array())
     {
         $reason = array();
         foreach ($lines as $line) {
             $line = trim($line);
-            if (strlen($line) > 27)
-            throw new Exception(xarML("Exceeds 27 characters: #(1)"), $line);
+            if (strlen($line) > 27) {
+                throw new Exception(xarML("Exceeds 27 characters: #(1)"), $line);
+            }
             array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 27, $this->fillChar));
         }
         array_push($reason, '  ');
         $this->paymentReason = $reason;
     }
 
-    protected function getConversionRate() 
+    protected function getConversionRate()
     {
         return '';
     }
@@ -90,4 +92,3 @@ class DTA_TA826 extends DTA{
         return $string;
     }
 }
-?>

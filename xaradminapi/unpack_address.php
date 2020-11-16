@@ -31,7 +31,9 @@ function payments_adminapi_unpack_address($args)
     
     // Rework them to have an element for each one we need
     $newfields = array();
-    foreach ($addressfields as $field) $newfields[$field['id']] = $field['value'];
+    foreach ($addressfields as $field) {
+        $newfields[$field['id']] = $field['value'];
+    }
     $street = isset($newfields['street']) ? $newfields['street'] : '';
     $city = isset($newfields['city']) ? $newfields['city'] : '';
     $postal_code = isset($newfields['postal_code']) ? $newfields['postal_code'] : '';
@@ -54,4 +56,3 @@ function payments_adminapi_unpack_address($args)
     );
     return $lines;
 }
-?>

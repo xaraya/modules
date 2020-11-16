@@ -11,22 +11,18 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 //Psspl:Implemented class for displaying the return status of paypal transaction.
-class paypalstatus 
+class paypalstatus
 {
-	function displayStatus()
-	{
-		$status = "<table border = '1'>";
-		
-		foreach ($_POST as $key => $value)
-		{
-			$status .=  "<tr><td>".$key."</td><td>".$value."</td></tr>";
-		}
-		
-		$status .= "</table>";
-		
-		return $status;
-	}
+    public function displayStatus()
+    {
+        $status = "<table border = '1'>";
+        
+        foreach ($_POST as $key => $value) {
+            $status .=  "<tr><td>".$key."</td><td>".$value."</td></tr>";
+        }
+        
+        $status .= "</table>";
+        
+        return $status;
+    }
 }
-	
-
-	

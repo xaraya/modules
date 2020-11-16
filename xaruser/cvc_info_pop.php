@@ -12,10 +12,11 @@
  */
 //Psspl:Added the code for csv number information.
     function payments_user_cvc_info_pop($args)
-    {       
-        if (!xarSecurityCheck('ReadPayments')) return;
-        echo xarTplModule('payments','user','cvc_info_pop');
+    {
+        if (!xarSecurityCheck('ReadPayments')) {
+            return;
+        }
+        echo xarTplModule('payments', 'user', 'cvc_info_pop');
         exit();
         return array();
     }
-?>

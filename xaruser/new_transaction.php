@@ -17,25 +17,35 @@
 
 function payments_user_new_transaction()
 {
-    if (!xarSecurityCheck('AddPayments')) return;
+    if (!xarSecurityCheck('AddPayments')) {
+        return;
+    }
 
-    if (!xarVarFetch('confirm',       'bool',   $data['confirm'],       false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type_changed',  'int',    $type_changed,          0,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('debit_account', 'int',    $data['debit_account'], 0,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('type_changed', 'int', $type_changed, 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('debit_account', 'int', $data['debit_account'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the payment transactions object
+    # Get the payment transactions object
 #
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
     $data['tplmodule'] = 'payments';
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Check if we are passing an api item
+    # Check if we are passing an api item
 #
-    if (!xarVarFetch('api',          'str',    $api,            '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('api', 'str', $api, '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
     $info = array();
     if (!empty($api)) {
@@ -43,8 +53,9 @@ function payments_user_new_transaction()
         eval("\$info = $function;");
         
         foreach ($info as $key => $value) {
-            if (isset($data['object']->properties[$key]))
+            if (isset($data['object']->properties[$key])) {
                 $data['object']->properties[$key]->value = $value;
+            }
         }
         // Adjust the execution date if the date passed is in the past
         if ($data['object']->properties['transaction_date']->value < time()) {
@@ -52,9 +63,9 @@ function payments_user_new_transaction()
         }
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Check if we already have a transaction created for this payment
+    # Check if we already have a transaction created for this payment
 #
     if (!empty($info['payment_object']) && !empty($info['payment_itemid'])) {
         $payments = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
@@ -66,7 +77,7 @@ function payments_user_new_transaction()
         
         // Sanity check
         if (count($items) > 1) {
-            return xarTpl::module('payments','user','errors',array('layout' => 'non_unique_source'));
+            return xarTpl::module('payments', 'user', 'errors', array('layout' => 'non_unique_source'));
         }
         
         // If we have a single item, it means we already created a payment slip. Go modify it
@@ -77,17 +88,17 @@ function payments_user_new_transaction()
         }
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the debit account information
+    # Get the debit account information
 #
     // All the debit accounts we will display
     $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('sender_object' => $info['sender_object'],
                                                                                               'sender_itemid' => $info['sender_itemid'],
                                                                                         ));
     
-    if(empty($data['debit_accounts'])) {
-        return xarTpl::module('payments','user','errors',array('layout' => 'no_sender'));
+    if (empty($data['debit_accounts'])) {
+        return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_sender'));
     }
     
     // Set the debit account for this transaction as the first one
@@ -109,10 +120,18 @@ function payments_user_new_transaction()
         
     // Set the debtor address
     $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_account['address']));
-    if (!empty($lines[3])) $lines[2] .= " " . $lines[3];
-    if (isset($lines[1])) $data['object']->properties['sender_line_2']->value  = $lines[1];
-    if (isset($lines[2])) $data['object']->properties['sender_line_3']->value  = $lines[2];
-    if (isset($lines[4])) $data['object']->properties['sender_line_4']->value  = $lines[4];
+    if (!empty($lines[3])) {
+        $lines[2] .= " " . $lines[3];
+    }
+    if (isset($lines[1])) {
+        $data['object']->properties['sender_line_2']->value  = $lines[1];
+    }
+    if (isset($lines[2])) {
+        $data['object']->properties['sender_line_3']->value  = $lines[2];
+    }
+    if (isset($lines[4])) {
+        $data['object']->properties['sender_line_4']->value  = $lines[4];
+    }
 
     // Set the debtor bank information
     $data['object']->properties['sender_iban']->value = $debit_account['iban'];
@@ -120,12 +139,13 @@ function payments_user_new_transaction()
     $data['object']->properties['sender_clearing']->value = $debit_account['clearing'];
 
     // We always need a sender reference of sorts for the payment
-    if (empty($data['object']->properties['sender_reference']->value)) 
+    if (empty($data['object']->properties['sender_reference']->value)) {
         $data['object']->properties['sender_reference']->value = xarML('Undefined');
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the beneficiary information of the last payment if one exists
+    # Get the beneficiary information of the last payment if one exists
 #
     $previous_exists = false;
     if (!empty($info['payment_object']) && !empty($info['payment_itemid'])) {
@@ -144,10 +164,18 @@ function payments_user_new_transaction()
                 $data['object']->properties['payment_type']->value  = $item['payment_type'];
                 $data['payment_type'] = $item['payment_type'];
             }
-            if (!empty($item['reference_number'])) $data['object']->properties['reference_number']->value  = $item['reference_number'];
-            if (!empty($item['post_account'])) $data['object']->properties['post_account']->value  = $item['post_account'];
-            if (!empty($item['iban'])) $data['object']->properties['iban']->value  = $item['iban'];
-            if (!empty($item['bic'])) $data['object']->properties['bic']->value  = $item['bic'];
+            if (!empty($item['reference_number'])) {
+                $data['object']->properties['reference_number']->value  = $item['reference_number'];
+            }
+            if (!empty($item['post_account'])) {
+                $data['object']->properties['post_account']->value  = $item['post_account'];
+            }
+            if (!empty($item['iban'])) {
+                $data['object']->properties['iban']->value  = $item['iban'];
+            }
+            if (!empty($item['bic'])) {
+                $data['object']->properties['bic']->value  = $item['bic'];
+            }
         }
     }
     
@@ -158,17 +186,21 @@ function payments_user_new_transaction()
     }
 
     // Let the payment type from the template override everything else
-    if (!xarVarFetch('payment_type',  'str',    $data['payment_type'],  '1',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('payment_type', 'str', $data['payment_type'], '1', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     $data['object']->properties['payment_type']->setValue($data['payment_type']);
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# The create button was clicked
+    # The create button was clicked
 #
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
+            return;
+        }
 
         // Check for a valid confirmation key
 //        if(!xarSecConfirmAuthKey()) return;
@@ -201,7 +233,7 @@ function payments_user_new_transaction()
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('payments','user','new_transaction', $data);        
+            return xarTplModule('payments', 'user', 'new_transaction', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
@@ -218,10 +250,9 @@ function payments_user_new_transaction()
             }
             
             // Jump to the next page
-            xarController::redirect(xarModURL('payments','user','view_transactions'));
+            xarController::redirect(xarModURL('payments', 'user', 'view_transactions'));
             return true;
         }
     }
     return $data;
 }
-?>

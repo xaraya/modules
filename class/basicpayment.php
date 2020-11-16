@@ -18,76 +18,76 @@
         public $description;
         public $status;
         
-        function __construct()
+        public function __construct()
         {
         }
 
-        function update_status(Array $args=array()) 
-        {
-            return false;
-        }
-
-        function javascript_validation() 
+        public function update_status(array $args=array())
         {
             return false;
         }
 
-        function selection() 
+        public function javascript_validation()
         {
             return false;
         }
 
-        function pre_confirmation_check() 
+        public function selection()
         {
             return false;
         }
 
-        function confirmation() 
+        public function pre_confirmation_check()
         {
             return false;
         }
 
-        function process_button() 
+        public function confirmation()
         {
             return false;
         }
 
-        function before_process() 
+        public function process_button()
         {
             return false;
         }
 
-        function after_process() 
+        public function before_process()
         {
             return false;
         }
 
-        function output_error() 
-        {
-          return false;
-        }
-
-        function get_error() 
+        public function after_process()
         {
             return false;
         }
 
-        function check() 
+        public function output_error()
         {
             return false;
         }
 
-        function install() 
+        public function get_error()
         {
             return false;
         }
 
-        function remove() 
+        public function check()
         {
             return false;
         }
 
-        function keys() 
+        public function install()
+        {
+            return false;
+        }
+
+        public function remove()
+        {
+            return false;
+        }
+
+        public function keys()
         {
             return false;
         }
@@ -96,7 +96,7 @@
     interface iPayment
     {
         public function __construct();
-        public function update_status(Array $args=array());
+        public function update_status(array $args=array());
         public function javascript_validation();
         public function selection();
         public function pre_confirmation_check();
@@ -110,4 +110,3 @@
         public function remove();
         public function keys();
     }
-?>

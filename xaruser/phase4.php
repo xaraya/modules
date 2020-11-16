@@ -15,16 +15,20 @@
     function payments_user_phase4()
     {
         //Psspl:Added the Read privilages.
-        if (!xarSecurityCheck('ReadPayments')) return;
+        if (!xarSecurityCheck('ReadPayments')) {
+            return;
+        }
         
         //Psspl:Implemented the code for return url.
         //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, XARVAR_DONT_SET)) {
+            return;
+        }
         
         /*
         //Psspl:Implemented the code for return url.
-        $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));       
-        $return_url_property->initialization_associative_array = 1;         
+        $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));
+        $return_url_property->initialization_associative_array = 1;
         $return_url_property->checkInput('return_url');
         $data['return_url'] = $return_url_property->value;
         */
@@ -38,55 +42,99 @@
         
         //Psspl: modified the code for return url.
         $data['return_url'] = unserialize(xarSession::GetVar('return_url'));
-        xarSession::delVar('return_url'); 
+        xarSession::delVar('return_url');
         
-        // Check for demo mode 
-        $demousers = unserialize(xarModVars::get('payments','demousers'));
-        if (xarModVars::get('payments','enable_demomode') && in_array(xarUserGetVar('uname'),$demousers)) {
+        // Check for demo mode
+        $demousers = unserialize(xarModVars::get('payments', 'demousers'));
+        if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUserGetVar('uname'), $demousers)) {
             $data['status'] = xarML('A simulated payment has been completed');
-            if(!empty($data['return_url']['success_return_link'])){
-                xarController::redirect($data['return_url']['success_return_link']);          
+            if (!empty($data['return_url']['success_return_link'])) {
+                xarController::redirect($data['return_url']['success_return_link']);
                 return true;
-            } 
+            }
             return $data;
         }
 
         $gateway = xarSession::getVar('gateway');
-        if($gateway == "iPayment_cc") {
-            if (!xarVarFetch('trx_currency', 'str', $trx_currency, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('trx_paymenttyp', 'str', $trx_paymenttyp, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('addr_name', 'str', $addr_name, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('trx_typ', 'str', $trx_typ, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('trx_amount', 'str', $trx_amount, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('ret_errorcode', 'str', $ret_errorcode, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('ret_fatalerror', 'str', $ret_fatalerror, "", XARVAR_DONT_SET)) {return;}          
-            if (!xarVarFetch('ret_errormsg', 'str', $ret_errormsg, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('ret_additionalmsg', 'str', $ret_additionalmsg, "", XARVAR_DONT_SET)) {return;}                                                                                            
-            if (!xarVarFetch('ret_ip', 'str', $ret_ip, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('redirect_needed', 'str', $redirect_needed, "", XARVAR_DONT_SET)) {return;}                                                                                            
-            if (!xarVarFetch('ret_status', 'str', $ret_status, "", XARVAR_DONT_SET)) {return;}      
-            if (!xarVarFetch('trxuser_id', 'str', $trxuser_id, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('trx_currency', 'str', $trx_currency, "", XARVAR_DONT_SET)) {return;}          
-            if (!xarVarFetch('ret_transdate', 'str', $ret_transdate, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('ret_transtime', 'str', $ret_transtime, "", XARVAR_DONT_SET)) {return;}                                                                                            
-            if (!xarVarFetch('ret_authcode', 'str', $ret_authcode, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('ret_booknr', 'str', $ret_booknr, "", XARVAR_DONT_SET)) {return;}                                                                                          
-            if (!xarVarFetch('ret_trx_number', 'str', $ret_trx_number, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('trx_paymentmethod', 'str', $trx_paymentmethod, "", XARVAR_DONT_SET)) {return;}                                                                                            
-            if (!xarVarFetch('trx_paymentdata_country', 'str', $trx_paymentdata_country, "", XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch('trx_remoteip_country', 'str', $trx_remoteip_country, "", XARVAR_DONT_SET)) {return;}                                                                                                          
+        if ($gateway == "iPayment_cc") {
+            if (!xarVarFetch('trx_currency', 'str', $trx_currency, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_paymenttyp', 'str', $trx_paymenttyp, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('addr_name', 'str', $addr_name, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_typ', 'str', $trx_typ, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_amount', 'str', $trx_amount, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_errorcode', 'str', $ret_errorcode, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_fatalerror', 'str', $ret_fatalerror, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_errormsg', 'str', $ret_errormsg, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_additionalmsg', 'str', $ret_additionalmsg, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_ip', 'str', $ret_ip, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('redirect_needed', 'str', $redirect_needed, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_status', 'str', $ret_status, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trxuser_id', 'str', $trxuser_id, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_currency', 'str', $trx_currency, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_transdate', 'str', $ret_transdate, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_transtime', 'str', $ret_transtime, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_authcode', 'str', $ret_authcode, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_booknr', 'str', $ret_booknr, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('ret_trx_number', 'str', $ret_trx_number, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_paymentmethod', 'str', $trx_paymentmethod, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_paymentdata_country', 'str', $trx_paymentdata_country, "", XARVAR_DONT_SET)) {
+                return;
+            }
+            if (!xarVarFetch('trx_remoteip_country', 'str', $trx_remoteip_country, "", XARVAR_DONT_SET)) {
+                return;
+            }
             //Psspl:Added the code for Error handling.
-            if($ret_errorcode!='0'){
+            if ($ret_errorcode!='0') {
                 $error_message ="<B>".MODULE_PAYMENT_IPAYMENT_CC_ERROR_HEADING;
                 $error_message.="</B><br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
                 $error_message.=MODULE_PAYMENT_IPAYMENT_CC_ERROR_MESSAGE."<br>";
                 //$error_message.=  $ret_errormsg."<br>";
                 $error_message.=  $ret_additionalmsg."</td></tr></table>";
-                xarSession::setVar('error_message' , $error_message);
+                xarSession::setVar('error_message', $error_message);
                 //Psspl: modified the code for allowEdit_payment.
-                xarController::redirect(xarModURL('payments', 'user', 'onestep',array('paymentmethod'=>$trx_paymentmethod,'MakeChanges'=>1,'errorFlag'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
+                xarController::redirect(xarModURL('payments', 'user', 'onestep', array('paymentmethod'=>$trx_paymentmethod,'MakeChanges'=>1,'errorFlag'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
                 return true;
-            } else { 
+            } else {
                 $output = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
                 $output .= "<tr>";
                 $output .= "<td class=\"e\">trx_currency: </td>";
@@ -182,36 +230,34 @@
                 $data['status'] = $output;
             }
         } else {
-            
             $data['status'] = "No gateway found" . $gateway;
         }
         
-         // Update the order information
+        // Update the order information
         $data['orderobject'] = null;
-        $orderobjectname = xarModVars::get('payments','orderobject');
+        $orderobjectname = xarModVars::get('payments', 'orderobject');
         $orderobject = DataObjectMaster::getObject(array('name' => $orderobjectname));
         $fields = unserialize(xarSession::GetVar('orderfields'));
         $orderobject->setFieldValues($fields);
         $orderobject->updateItem(array('itemid' => $fields['id']));
         
         // Remove the session vars we used
-        xarSession::setVar('orderfields',serialize(array()));
-        xarSession::setVar('paymentfields',serialize(array()));
+        xarSession::setVar('orderfields', serialize(array()));
+        xarSession::setVar('paymentfields', serialize(array()));
             
-       if(!empty($data['return_url']['success_return'])){
+        if (!empty($data['return_url']['success_return'])) {
             
             //Psspl:Implemented the code for calling success return API function.
-            $success_return = explode("," , $data['return_url']['success_return']);
+            $success_return = explode(",", $data['return_url']['success_return']);
              
-            xarModAPIFunc($success_return[0],$success_return[1],$success_return[2] ,array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
+            xarModAPIFunc($success_return[0], $success_return[1], $success_return[2], array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
             
             return true;
         }
         //Psspl : Added code for success return link.
-        if(!empty($data['return_url']['success_return_link'])){
-            xarController::redirect($data['return_url']['success_return_link']);          
+        if (!empty($data['return_url']['success_return_link'])) {
+            xarController::redirect($data['return_url']['success_return_link']);
             return true;
-        } 
+        }
         return $data;
     }
-?>

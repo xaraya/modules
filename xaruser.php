@@ -17,4 +17,3 @@
  */
 
 sys::import('modules.payments.xarincludes.defines');
-?>

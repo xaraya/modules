@@ -66,18 +66,17 @@ class PaymentsDaemon extends xarObject
         if (xarIsParent('Administrators', xarUser::getVar('uname'))) {
             $this->setMandant((int)xarModVars::get('ledgerba', 'default_mandant'));
         } else {
-        // For other users get the allowed companies
+            // For other users get the allowed companies
             $role_definition = xarMod::apiFunc('ledgerba', 'user', 'get_role_definition');
         
             // Set the user to the first one encountered
             try {
                 $mandanten = unserialize($role_definition['mandanten']);
                 $this->setMandant(reset($mandanten));
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 //Nothing there: give the user no access
             }
         }
-
     }
     
     public function __wakeup()
@@ -123,11 +122,11 @@ class PaymentsDaemon extends xarObject
     
     public function delete()
     {
-            if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
-                xarSession::delVar('paymentsdaemon');
-            } else {
-                xarModUserVars::delete('payments', 'daemon');
-            }
+        if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
+            xarSession::delVar('paymentsdaemon');
+        } else {
+            xarModUserVars::delete('payments', 'daemon');
+        }
         return true;
     }
     
@@ -159,36 +158,49 @@ class PaymentsDaemon extends xarObject
         return self::$instance;
     }
 
-/**
- *  Gets and sets
- */
-    public function getName()           { return $this->name; }
-    public function getEmail()          { return $this->email; }
-    public function getCurrentMandant() { return $this->current_mandant; }
-    public function getCurrentPeriod($ledger) 
+    /**
+     *  Gets and sets
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function getCurrentMandant()
+    {
+        return $this->current_mandant;
+    }
+    public function getCurrentPeriod($ledger)
     {
         // Make sure this period exists for now and the future
-        if (!isset($this->current_period[$ledger])) $this->current_period[$ledger] = array(0,0,-400);
+        if (!isset($this->current_period[$ledger])) {
+            $this->current_period[$ledger] = array(0,0,-400);
+        }
 
         $period = $this->current_period[$ledger];
         return $period;
     }
-    public function getPreviousPeriod($ledger) 
+    public function getPreviousPeriod($ledger)
     {
         // Make sure this period exists for now and the future
-        if (!isset($this->previous_period[$ledger])) $this->previous_period[$ledger] = array(0,0,-450);
+        if (!isset($this->previous_period[$ledger])) {
+            $this->previous_period[$ledger] = array(0,0,-450);
+        }
         
         $period = $this->previous_period[$ledger];
         return $period;
     }
-    public function getCurrentStandardPeriod() 
+    public function getCurrentStandardPeriod()
     {
         sys::import('modules.dynamicdata.class.objects.master');
         $period = DataObjectMaster::getObject(array('name' => 'ledgerba_periods'));
         $period->getItem(array('itemid' => $this->current_standard_period));
         return $period;
     }
-    public function getPreviousStandardPeriod() 
+    public function getPreviousStandardPeriod()
     {
         sys::import('modules.dynamicdata.class.objects.master');
         $period = DataObjectMaster::getObject(array('name' => 'ledgerba_periods'));
@@ -206,19 +218,23 @@ class PaymentsDaemon extends xarObject
         $this->email = $email;
         return true;
     }
-    public function setCurrentPeriod($ledger, $period) 
+    public function setCurrentPeriod($ledger, $period)
     {
-        $this->current_period[$ledger] = $period; 
+        $this->current_period[$ledger] = $period;
     }
-    public function setPreviousPeriod($ledger, $period) 
+    public function setPreviousPeriod($ledger, $period)
     {
-        $this->previous_period[$ledger] = $period; 
+        $this->previous_period[$ledger] = $period;
     }
     public function setMandant($id=0, $force=0)
     {
         $id = (int)$id;
-        if (empty($id)) return true;
-        if (!$force && ($id == $this->current_mandant) && !empty($this->mandant_settings)) return true;
+        if (empty($id)) {
+            return true;
+        }
+        if (!$force && ($id == $this->current_mandant) && !empty($this->mandant_settings)) {
+            return true;
+        }
         // Force a refresh
         $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', array('mandant_id' => $id));
         $this->mandant_settings = $mandant->getFieldValues(array(), 1);
@@ -226,9 +242,9 @@ class PaymentsDaemon extends xarObject
         return true;
     }
 
-/**
- *  Get the settings of the current mandant
- */
+    /**
+     *  Get the settings of the current mandant
+     */
     public function getMandantSettings($type='', $force_refresh=1)
     {
         $this->setMandant($this->current_mandant, $force_refresh);
@@ -252,16 +268,18 @@ class PaymentsDaemon extends xarObject
                 $settings = @unserialize($this->mandant_settings['so_settings']);
             break;
             default:
-                if (!isset($this->mandant_settings[$type])) throw new Exception(xarML('The setting #(1) does not exist', $type));
+                if (!isset($this->mandant_settings[$type])) {
+                    throw new Exception(xarML('The setting #(1) does not exist', $type));
+                }
                 $settings = $this->mandant_settings[$type];
             break;
         }
         return $settings;
     }
 
-/**
- *  Save the settings of the current mandant to the database
- */
+    /**
+     *  Save the settings of the current mandant to the database
+     */
     public function saveSettings($type='', $settings)
     {
         $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', array('mandant_id' => $id));
@@ -271,26 +289,32 @@ class PaymentsDaemon extends xarObject
         return true;
     }
     
-/**
- *  Get a specific setting of the current mandant
- */
+    /**
+     *  Get a specific setting of the current mandant
+     */
     public function getMandantSetting($type='', $setting='')
     {
         $settings = $this->getMandantSettings($type);
         if (is_array($settings)) {
-            if (!isset($settings[$setting])) throw new Exception(xarML('The setting #(1) does not exist', $setting));
+            if (!isset($settings[$setting])) {
+                throw new Exception(xarML('The setting #(1) does not exist', $setting));
+            }
             return $settings[$setting];
         }
         return $settings;
     }
     
-/**
- *  Set a specific setting of the current mandant
- */
+    /**
+     *  Set a specific setting of the current mandant
+     */
     public function setSetting($type='', $setting='', $value)
     {
-        if (empty($setting)) throw new Exception(xarML('No setting to be saved was passed'));
-        if (!isset($value)) throw new Exception(xarML('No value to be saved was passed'));
+        if (empty($setting)) {
+            throw new Exception(xarML('No setting to be saved was passed'));
+        }
+        if (!isset($value)) {
+            throw new Exception(xarML('No value to be saved was passed'));
+        }
         $settings = $this->getMandantSettings($type);
 //        if (!isset($settings[$setting])) throw new Exception(xarML('The setting #(1) does not exist', $setting));
         $settings[$setting] = $value;
@@ -302,41 +326,53 @@ class PaymentsDaemon extends xarObject
         return true;
     }
     
-/**
- *  Get the mandanten available to this user
- */
+    /**
+     *  Get the mandanten available to this user
+     */
     public function getMandanten()
     {
         if (empty($this->mandanten)) {
-            $this->mandanten = xarMod::apiFunc('ledgerba','user','get_mandanten');
+            $this->mandanten = xarMod::apiFunc('ledgerba', 'user', 'get_mandanten');
         }
         return $this->mandanten;
     }
 
-/**
- *  Retrieve any user specific settings ("fields":
- *  - the number of item on a listings page
- *  - the mandant we are configuring
- */
+    /**
+     *  Retrieve any user specific settings ("fields":
+     *  - the number of item on a listings page
+     *  - the mandant we are configuring
+     */
     public function checkInput($fields=array())
     {
         if (empty($fields)) {
             // The number of items displayed in listings on a page
-            if (!isset($this->items_per_page[xarMod::getName()])) $this->items_per_page[xarMod::getName()] = xarModVars::get(xarMod::getName(), 'items_per_page');
-            if(!xarVarFetch('items_per_page',  'int',   $data['items_per_page'],   $this->items_per_page[xarMod::getName()],     XARVAR_NOT_REQUIRED)) {return;}
+            if (!isset($this->items_per_page[xarMod::getName()])) {
+                $this->items_per_page[xarMod::getName()] = xarModVars::get(xarMod::getName(), 'items_per_page');
+            }
+            if (!xarVarFetch('items_per_page', 'int', $data['items_per_page'], $this->items_per_page[xarMod::getName()], XARVAR_NOT_REQUIRED)) {
+                return;
+            }
             $this->items_per_page[xarMod::getName()] = $data['items_per_page'];
 
             // The current mandant of this user
-            if(!xarVarFetch('current_mandant',  'int',   $data['current_mandant'],   0,     XARVAR_NOT_REQUIRED)) {return;}
-            if (!empty($data['current_mandant'])) $this->current_mandant = $data['current_mandant'];
-            else $data['current_mandant'] = $this->current_mandant;
+            if (!xarVarFetch('current_mandant', 'int', $data['current_mandant'], 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!empty($data['current_mandant'])) {
+                $this->current_mandant = $data['current_mandant'];
+            } else {
+                $data['current_mandant'] = $this->current_mandant;
+            }
 
             // The mandant this user is configuring
-            if(!xarVarFetch('config_mandant',  'int',   $data['config_mandant'],   0,     XARVAR_NOT_REQUIRED)) {return;}
-            if (!empty($data['config_mandant'])) xarModUserVars::set('ledgerba', 'config_mandant', $data['config_mandant']);
+            if (!xarVarFetch('config_mandant', 'int', $data['config_mandant'], 0, XARVAR_NOT_REQUIRED)) {
+                return;
+            }
+            if (!empty($data['config_mandant'])) {
+                xarModUserVars::set('ledgerba', 'config_mandant', $data['config_mandant']);
+            }
         } else {
         }
         return $data;
     }
 }
-?>

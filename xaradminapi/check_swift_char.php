@@ -18,11 +18,14 @@
 
 function payments_adminapi_check_swift_char($args)
 {
-    if (!isset($args['string'])) throw new Exception(xarML('Missing string parameter'));
+    if (!isset($args['string'])) {
+        throw new Exception(xarML('Missing string parameter'));
+    }
     
     preg_match("%([A-Za-z0-9]|[+|\?|/|\-|:|\(|\)|\.|,|'|\p{Zs}])*%", $args['string'], $matches);
     
-    if ($matches[0] == $args['string']) return $args['string'];
+    if ($matches[0] == $args['string']) {
+        return $args['string'];
+    }
     return false;
 }
-?>

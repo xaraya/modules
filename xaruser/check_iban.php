@@ -18,19 +18,24 @@
 function payments_user_check_iban()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadPayments')) return;
-    if (!xarVarFetch('iban',   'str',  $data['iban'], '', XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('confirm', 'bool', $data['confirm'],      false,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarSecurityCheck('ReadPayments')) {
+        return;
+    }
+    if (!xarVarFetch('iban', 'str', $data['iban'], '', XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
     
     sys::import('modules.payments.class.iban');
     $data['ibanobject'] = new IBAN($data['iban']);
     
     if ($data['confirm']) {
-        if (empty($data['iban'])) return $data;
-        
+        if (empty($data['iban'])) {
+            return $data;
+        }
     }
     
     return $data;
-    
 }
-?>

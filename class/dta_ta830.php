@@ -17,8 +17,8 @@
 
 sys::import('modules.payments.class.dta');
 
-class DTA_TA830 extends DTA{
-
+class DTA_TA830 extends DTA
+{
     protected $transactionType = 830;
     
     protected function getSegment02()
@@ -30,6 +30,4 @@ class DTA_TA830 extends DTA{
                 ;
         return $segment02;
     }
-    
 }
-?>

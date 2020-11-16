@@ -17,11 +17,12 @@
         extract($args);
 
         $xartable =& xarDB::getTables();
-        $q = new Query('SELECT',$xartable['payments_paymentmethods']);
-        $q->eq('category',$category);
+        $q = new Query('SELECT', $xartable['payments_paymentmethods']);
+        $q->eq('category', $category);
         $q->setorder('name');
-        if (!$q->run()) return;
-    //  $q->qecho();
+        if (!$q->run()) {
+            return;
+        }
+        //  $q->qecho();
         return $q->output();
     }
-?>

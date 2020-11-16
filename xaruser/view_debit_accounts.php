@@ -17,14 +17,16 @@
 function payments_user_view_debit_accounts($args)
 {
     // Data Managers have access
-    if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) return;
+    if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) {
+        return;
+    }
     xarTplSetPageTitle('View Debit Accounts');
 
     // Load the user's daemon
     $daemon = xarMod::apiFunc('payments', 'admin', 'get_daemon');
     $data = $daemon->checkInput();
 
-#------------------------------------------------------------
+    #------------------------------------------------------------
 
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
     $q = $data['object']->dataquery;
@@ -41,4 +43,3 @@ function payments_user_view_debit_accounts($args)
 //    $q->qecho();
     return $data;
 }
-?>

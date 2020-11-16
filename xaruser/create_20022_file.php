@@ -17,37 +17,48 @@
 
 function payments_user_create_20022_file()
 {
-    if (!xarSecurityCheck('AddPayments')) return;
-
-    // Make sure comments in templates are switched off
-    if (xarModVars::get('themes', 'ShowTemplates')) {die("Fix Me: HTML comments are on. Please turn them off in the themes module backend.");
-        return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
+    if (!xarSecurityCheck('AddPayments')) {
+        return;
     }
 
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('idlist' ,    'str',    $data['idlist'] , array() ,  XARVAR_NOT_REQUIRED)) return;
+    // Make sure comments in templates are switched off
+    if (xarModVars::get('themes', 'ShowTemplates')) {
+        die("Fix Me: HTML comments are on. Please turn them off in the themes module backend.");
+        return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_comments'));
+    }
+
+    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('idlist', 'str', $data['idlist'], array(), XARVAR_NOT_REQUIRED)) {
+        return;
+    }
 
     // Cater to both arrays and strings
-    if (!empty($data['idlist']) && !is_array($data['idlist'])) $data['idlist'] = explode(',', $data['idlist']);
+    if (!empty($data['idlist']) && !is_array($data['idlist'])) {
+        $data['idlist'] = explode(',', $data['idlist']);
+    }
     
     $data['tplmodule'] = 'payments';
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Define miscellaneous information
+    # Define miscellaneous information
 #
     $data['group_reference'] = time() . "-" . xarUser::getVar('id');
     $data['payment_method'] = "TRF";
     $data['batch_booking'] = "true";
     $data['message_identifier'] = xarMod::apiFunc('payments', 'admin', 'get_message_identifier');
-    if(empty($data['message_identifier'])) {
-        return xarTpl::module('payments','user','errors',array('layout' => 'bad_msg_identifier'));
+    if (empty($data['message_identifier'])) {
+        return xarTpl::module('payments', 'user', 'errors', array('layout' => 'bad_msg_identifier'));
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the payments to be transmitted
+    # Get the payments to be transmitted
 #
     // Get the payments object
     sys::import('modules.dynamicdata.class.objects.master');
@@ -59,13 +70,13 @@ function payments_user_create_20022_file()
     } elseif (!empty($data['idlist'])) {
         $q->in('id', $data['idlist']);
     } else {
-        return xarTpl::module('payments','user','errors',array('layout' => 'no_payments_id'));
+        return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_payments_id'));
     }
     $data['items'] = $data['object']->getItems();
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Run through the payments and do validity checks
+    # Run through the payments and do validity checks
 #
     sys::import('xaraya.structures.query');
     $tobject = new XarDateTime();
@@ -87,15 +98,15 @@ function payments_user_create_20022_file()
         }
     }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Get the debit account object
+    # Get the debit account object
 #
     $data['debit_account'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Update fields of the payment items
+    # Update fields of the payment items
 #
     // Generate the number of payments
     $data['number_of_transactions'] = count($data['items']);
@@ -141,20 +152,20 @@ function payments_user_create_20022_file()
     }
 
     try {
-        foreach ($data['items'] as $key => $item) {        
+        foreach ($data['items'] as $key => $item) {
             // Get this transaction
             $data['transaction']->getItem(array('itemid' => $item['id']));
             // Add the data
-            $data['transaction']->setFieldValues($data['items'][$key],1);
+            $data['transaction']->setFieldValues($data['items'][$key], 1);
             // Update the database transaction
             $data['transaction']->updateItem(array('itemid' => $item['id']));
         }
     } catch (Exception $e) {
-        return xarTpl::module('payments','user','errors',array('layout' => 'payment_slip_fail'));
+        return xarTpl::module('payments', 'user', 'errors', array('layout' => 'payment_slip_fail'));
     }
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Send the file to the browser
+    # Send the file to the browser
 #
     // Create an XML declaration
     $output = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -169,4 +180,3 @@ function payments_user_create_20022_file()
     echo $output;
     exit;
 }
-?>

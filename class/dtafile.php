@@ -17,22 +17,24 @@
  *
  */
 
-class DTA_File {
-
+class DTA_File
+{
     private $transactions = array();
     private $transactionCounter = 0;
     private $creationDate;
     private $ident;
     private $clearingNr;
-    public  $currentTransaction = NULL;
+    public $currentTransaction = null;
 
-    public function __construct($ident, $clearingNr) {
+    public function __construct($ident, $clearingNr)
+    {
         $this->creationDate = date('ymd');
         $this->ident = $ident;
         $this->clearingNr = $clearingNr;
     }
 
-    public function addTransaction($type) {
+    public function addTransaction($type)
+    {
         $this->transactionCounter++;
         $seqNr = $this->transactionCounter;
         sys::import('modules.payments.class.dta_ta' . $type);
@@ -44,15 +46,18 @@ class DTA_File {
         return $seqNr;
     }
 
-    public function loadTransaction($seqNr) {
+    public function loadTransaction($seqNr)
+    {
         return $this->transactions[$seqNr];
     }
 
-    public function saveTransaction($seqNr, $transaction) {
+    public function saveTransaction($seqNr, $transaction)
+    {
         return $this->transactions[$seqNr] = $transaction;
     }
 
-    private function createTotalRecord() {
+    private function createTotalRecord()
+    {
         $sum = 0;
         foreach ($this->transactions as $transaction) {
             $sum += $transaction->getPaymentAmountNumeric();
@@ -65,18 +70,21 @@ class DTA_File {
         $this->saveTransaction($id, $totalRecord);
     }
 
-    public function toFile($filename) {
+    public function toFile($filename)
+    {
         $this->createTotalRecord();
         $fptr = fopen($filename, 'w+');
-        if (!$fptr)
+        if (!$fptr) {
             throw new Exception(xarML("Cannot open the file #(1)", $filename));
+        }
         foreach ($this->transactions as $transaction) {
             fwrite($fptr, $transaction->toString());
         }
         fclose($fptr);
     }
 
-    public function toString() {
+    public function toString()
+    {
         $this->createTotalRecord();
         $output = '';
         foreach ($this->transactions as $transaction) {
@@ -86,7 +94,8 @@ class DTA_File {
         return $output;
     }
 
-    public function download() {
+    public function download()
+    {
         $output = $this->toString();
 
         $filename = 'DTAExport_' . time() . ".txt";
@@ -97,7 +106,4 @@ class DTA_File {
         echo $output;
         exit;
     }
-    
 }
-
-?>

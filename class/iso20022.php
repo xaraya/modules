@@ -13,17 +13,17 @@
  */
 
 /**
- * Class that 
+ * Class that
  */
  
 sys::import('modules.dynamicdata.class.objects.base');
 
 class ISO20022 extends DataObject
 {
-    public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
+    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
     {
         // Run checkInput of the parent: get and check the values
-        $isvalid = parent::checkInput($args,$suppress,$priority);
+        $isvalid = parent::checkInput($args, $suppress, $priority);
 
         if ($isvalid) {
             // Sanitize some property values
@@ -34,5 +34,3 @@ class ISO20022 extends DataObject
         return $isvalid;
     }
 }
-
-?>

@@ -56,4 +56,3 @@ $modversion['propertyinfo'] = array(
                                         'name' => 'iban',
                                         ),
                                     );
-?>

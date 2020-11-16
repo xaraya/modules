@@ -18,9 +18,9 @@
 
 sys::import('xaraya.structures.datetime');
 
-class DTA {
-
-    const CRLF                      = "\r\n";       
+class DTA
+{
+    const CRLF                      = "\r\n";
     
     protected $fillChar             = ' ';
     
@@ -57,7 +57,7 @@ class DTA {
         return $string;
     }
 
-    public function getHeader() 
+    public function getHeader()
     {
         $header = $this->getProcessingDay()
                 . $this->getRecipientClearingNr()
@@ -73,90 +73,97 @@ class DTA {
         return $header;
     }
 
-    public function setProcessingDay($timestamp=0) 
+    public function setProcessingDay($timestamp=0)
     {
         $this->processingDay = $this->transformDate(0);
     }
 
-    public function setRecipientClearingNr($clearingNr=0) 
+    public function setRecipientClearingNr($clearingNr=0)
     {
         $this->recipientClearingNr = $this->getPadding(12);
     }
 
-    public function setCreationDate($timestamp=0) 
+    public function setCreationDate($timestamp=0)
     {
         $this->creationDate =  $this->transformDate($timestamp);
     }
 
-    public function setClientClearingNr($clearingNr) 
+    public function setClientClearingNr($clearingNr)
     {
-        if (!is_integer($clearingNr))
+        if (!is_integer($clearingNr)) {
             throw new Exception(xarML("Invalid client bank clearing number: #(1)", $clearingNr));
-        else
+        } else {
             $this->clientClearingNr = str_pad($clearingNr, 7, $this->fillChar);
+        }
     }
 
-    public function setDataFileSender($senderID) 
+    public function setDataFileSender($senderID)
     {
-        if (!(strlen($senderID) == 5))
+        if (!(strlen($senderID) == 5)) {
             throw new Exception(xarML("Invalid DTA ID: #(1)"), $senderID);
-        else
+        } else {
             $this->dataFileSender = $senderID;
+        }
     }
 
-    public function setInputSequenceNr($sequenceNr) 
+    public function setInputSequenceNr($sequenceNr)
     {
-        if (!is_integer($sequenceNr))
+        if (!is_integer($sequenceNr)) {
             throw new Exception(xarML("Invalid input sequence number: #(1)"), $sequenceNr);
-        else
+        } else {
             $this->inputSequenceNr = str_pad($sequenceNr, 5, '0', STR_PAD_LEFT);
-            
+        }
     }
 
-    private function setPaymentType() {}
+    private function setPaymentType()
+    {
+    }
 
-    public function setPaymentAmount($amount, $currencyCode, $valuta = NULL) 
+    public function setPaymentAmount($amount, $currencyCode, $valuta = null)
     {
         $paymentAmount = '';
 
         // Check the value date
-        if ($valuta == NULL)
+        if ($valuta == null) {
             $valuta = '      ';
-        else {
+        } else {
             $valuta = $this->transformDate($valuta);
-            if (!is_numeric($valuta) || (strlen($valuta) != 6 ))
+            if (!is_numeric($valuta) || (strlen($valuta) != 6)) {
                 throw new Exception(xarML("The value date must have the format DDMMYY: #(1)", $valuta));
+            }
         }
 
         // Check the amount
-        if (!((is_float($amount)) || (is_integer($amount))))
+        if (!((is_float($amount)) || (is_integer($amount)))) {
             throw new Exception(xarML("The amount is not numeric: #(1)"), $amount);
-        else {
+        } else {
             $this->paymentAmountNumeric = $amount;
             $amount = str_pad(number_format($amount, 2, ',', ''), 12, $this->fillChar);
         }
 
         // Check the currency code
-        if (!strlen($currencyCode) == 3 )
+        if (!strlen($currencyCode) == 3) {
             throw new Exception(xarML("Invalid currency code"));
+        }
 
         $paymentAmount = $valuta . $currencyCode . $amount;
-        if (strlen($paymentAmount) != (6 + 3 + 12 ))
+        if (strlen($paymentAmount) != (6 + 3 + 12)) {
             throw new Exception(xarML("Invalid amount: #(1)", $paymentAmount));
-        else
+        } else {
             $this->paymentAmount = $paymentAmount;
+        }
     }
 
-    public function setDebitAccount($debitAccount) 
+    public function setDebitAccount($debitAccount)
     {
-        if (strlen($debitAccount) > 24)
+        if (strlen($debitAccount) > 24) {
             throw new Exception(xarML("Invalid debit account: #(1)"), $debitAccount);
-        else {
+        } else {
             $this->debitAccount = str_pad($debitAccount, 24, $this->fillChar);
         }
     }
 
-    public function setClient($line1, $line2, $line3, $line4) 
+    public function setClient($line1, $line2, $line3, $line4)
     {
         $client = array();
         array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 24, $this->fillChar));
@@ -166,7 +173,7 @@ class DTA {
         $this->client = $client;
     }
 
-    public function setRecipient($account, $line1, $line2, $line3, $line4) 
+    public function setRecipient($account, $line1, $line2, $line3, $line4)
     {
         $recipient = array();
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 24))), 24, $this->fillChar));
@@ -177,24 +184,25 @@ class DTA {
         $this->recipient = $recipient;
     }
 
-    public function setPaymentReason($lines=array()) 
+    public function setPaymentReason($lines=array())
     {
         $reason = array();
         foreach ($lines as $line) {
             $line = trim($line);
-            if (strlen($line) > 28)
-            throw new Exception(xarML("Exceeds 28 characters: #(1)"), $line);
+            if (strlen($line) > 28) {
+                throw new Exception(xarML("Exceeds 28 characters: #(1)"), $line);
+            }
             array_push($reason, str_pad(strtoupper($this->replaceChars($line)), 28, $this->fillChar));
         }
         $this->paymentReason = $reason;
     }
 
-    public function setConversionRate($rate) 
+    public function setConversionRate($rate)
     {
         // Check the amount
-        if (!((is_float($rate)) || (is_integer($rate))))
+        if (!((is_float($rate)) || (is_integer($rate)))) {
             throw new Exception(xarML("The rate is not numeric: #(1)"), $rate);
-        else {
+        } else {
             $this->conversionRate = str_pad(number_format($rate, 6, ',', ''), 12, $this->fillChar);
         }
     }
@@ -202,77 +210,77 @@ class DTA {
 
 
 
-    private function getProcessingDay() 
+    private function getProcessingDay()
     {
         return $this->processingDay;
     }
 
-    private function getRecipientClearingNr() 
+    private function getRecipientClearingNr()
     {
         return $this->recipientClearingNr;
     }
 
-    private function getOutputSequenceNr() 
+    private function getOutputSequenceNr()
     {
         return '00000';
     }
 
-    private function getCreationDate() 
+    private function getCreationDate()
     {
         return $this->creationDate;
     }
 
-    private function getClientClearingNr() 
+    private function getClientClearingNr()
     {
         return $this->clientClearingNr;
     }
 
-    private function getDataFileSender() 
+    private function getDataFileSender()
     {
         return $this->dataFileSender;
     }
 
-    private function getInputSequenceNr() 
+    private function getInputSequenceNr()
     {
         return $this->inputSequenceNr;
     }
 
-    private function getTransactionType() 
+    private function getTransactionType()
     {
         return $this->transactionType;
     }
 
-    private function getPaymentType() 
+    private function getPaymentType()
     {
         return $this->paymentType;
     }
 
-    private function getProcessingFlag() 
+    private function getProcessingFlag()
     {
         return $this->processingFlag;
     }
 
-    protected function getReferenceNr() 
+    protected function getReferenceNr()
     {
         return $this->getDataFileSender() . $this->getTransactionID();
     }
 
-    private function getTransactionID() 
+    private function getTransactionID()
     {
         return mt_rand(100000, 999999) . $this->getInputSequenceNr();
     }
 
-    protected function getDebitAccount() 
+    protected function getDebitAccount()
     {
         return $this->debitAccount;
     }
 
-    protected function getPaymentAmount() 
+    protected function getPaymentAmount()
     {
         return $this->paymentAmount;
     }
 
-    protected function getClient() 
+    protected function getClient()
     {
         $clients = $this->client;
         $client = '';
@@ -284,7 +292,7 @@ class DTA {
         return $client;
     }
 
-    protected function getRecipient() 
+    protected function getRecipient()
     {
         $recipients = $this->recipient;
         $recipient = '';
@@ -296,7 +304,7 @@ class DTA {
         return $recipient;
     }
 
-    protected function getPaymentReason() 
+    protected function getPaymentReason()
     {
         $reasons = $this->paymentReason;
         $reason = '';
@@ -365,10 +373,12 @@ class DTA {
         return $segment05;
     }
 
-    protected function transformDate($timestamp=0) 
+    protected function transformDate($timestamp=0)
     {
         $timestamp = (int)$timestamp;
-        if (empty($timestamp)) return '000000';
+        if (empty($timestamp)) {
+            return '000000';
+        }
 
         $date = new XarDateTime();
         $date->setTimestamp($timestamp);
@@ -383,12 +393,12 @@ class DTA {
 
 
 
-    public function getPaymentAmountNumeric() 
+    public function getPaymentAmountNumeric()
     {
         return $this->paymentAmountNumeric;
     }
 
-    private function getEndRecipient() 
+    private function getEndRecipient()
     {
         return $this->getPadding(30)
                 . $this->getPadding(24)
@@ -397,7 +407,7 @@ class DTA {
                 . $this->getPadding(24);
     }
 
-    protected function getPadding($length) 
+    protected function getPadding($length)
     {
         $padding = '';
         for ($i = 1; $i <= $length; $i++) {
@@ -406,9 +416,9 @@ class DTA {
         return $padding;
     }
 
-    protected function replaceChars($string) 
+    protected function replaceChars($string)
     {
-         $replace_chars = array(
+        $replace_chars = array(
          'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
          'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
          'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
@@ -420,5 +430,3 @@ class DTA {
         return strtr($string, $replace_chars);
     }
 }
-
-?>

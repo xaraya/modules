@@ -28,8 +28,20 @@ class SaferPay extends BasicPayment
     const MODULE_PAYMENT_SAFERPAYGW_ERROR_TITLE  = 'There has been an error processing your credit card';
     const MODULE_PAYMENT_SAFERPAYGW_ERROR_HTTP_FAILURE = 'Http Failure';
         
-    public $title, $description,$gateway_url,$live,$error_flag,$error_msg;
-    public $payinit_url,$curlInfo,$http_code;
+    public $title;
+        
+    public $description;
+        
+    public $gateway_url;
+        
+    public $live;
+        
+    public $error_flag;
+        
+    public $error_msg;
+    public $payinit_url;
+    public $curlInfo;
+    public $http_code;
     public $authnet_values = array();
     
 
@@ -37,7 +49,7 @@ class SaferPay extends BasicPayment
     {
         $this->live = false;
 
-        if($this->live) {
+        if ($this->live) {
             $this->gateway_url = 'https://www.saferpay.com/hosting/CreatePayInit.asp';
         } else {
             $this->gateway_url = 'https://www.saferpay.com/hosting/CreatePayInit.asp';
@@ -45,18 +57,18 @@ class SaferPay extends BasicPayment
     }
 
     // class methods
-    public function update_status(Array $args=array()) 
+    public function update_status(array $args=array())
     {
         $this->authnet_values = $this->getParams($args);
         
         $this->pre_confirmation_check();
         
-        xarSession::setVar('SAFERPAY_FLAG','ACTIVE');
+        xarSession::setVar('SAFERPAY_FLAG', 'ACTIVE');
         
         return true;
     }
     
-    public function getParams(Array $args=array())
+    public function getParams(array $args=array())
     {
         $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways_config'));
         $object->getProperties();
@@ -89,13 +101,16 @@ class SaferPay extends BasicPayment
                 case 'MODULE_PAYMENT_SAFERPAYGW_CCNAME':
                     //$aryParams['CCNAME'] = $val['configuration_value'];
                     $aryParams['CCNAME'] = isset($args['ccname']) ? urlencode($args['ccname']) : urlencode($val['configuration_value']);
+                    // no break
                 case 'MODULE_PAYMENT_SAFERPAYGW_ALLOWCOLLECT':
                     //$aryParams['ALLOWCOLLECT'] = $val['configuration_value'];
                     $aryParams['ALLOWCOLLECT'] = isset($args['allowcollect']) ? urlencode($args['allowcollect']) : urlencode($val['configuration_value']);
+                    // no break
                 case 'MODULE_PAYMENT_SAFERPAYGW_DELIVERY':
                     //$aryParams['DELIVERY'] = $val['configuration_value'];
                     $aryParams['DELIVERY'] = isset($args['delivery']) ? urlencode($args['delivery']) : urlencode($val['configuration_value']);
 
+                    // no break
                 default:
                     break;
             }
@@ -103,17 +118,18 @@ class SaferPay extends BasicPayment
         
         $fields = unserialize(xarSession::getVar('orderfields'));
         
-        if(is_array($fields)) {
-            
+        if (is_array($fields)) {
             $aryParams["CURRENCY"] = isset($args['currency']) ? $args['currency'] : $fields['currency'];
             //Psspl:Added the two more places in amount.
-            //The amount to be reserved specified in minor currency unit. 
+            //The amount to be reserved specified in minor currency unit.
             //E.g. EUR 1.35 must be passed as 135.
             $aryParams["AMOUNT"] = round($fields['net_amount']);
             $aryParams["AMOUNT"] .="00";
         }
         //Psspl: modified the code for allowEdit_payment.
-        if(!xarVarFetch('allowEdit_Payment', 'int', $allowEdit_Payment,   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('allowEdit_Payment', 'int', $allowEdit_Payment, null, XARVAR_DONT_SET)) {
+            return;
+        }
         
 //        $aryParams["SUCCESSLINK"] = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER['ORIG_PATH_INFO'] . "?module=payments%26func=phase3";
 //        $aryParams["FAILLINK"] = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER['ORIG_PATH_INFO'] . "?module=payments%26func=amount%26MakeChanges=1%26allowEdit_Payment=$allowEdit_Payment";
@@ -135,22 +151,22 @@ class SaferPay extends BasicPayment
             $return_url = array();
         }
         
-        if($return_url['success_return_link']) {
+        if ($return_url['success_return_link']) {
             $aryParams["SUCCESSLINK"] = $return_url['success_return_link'];
-            $aryParams["SUCCESSLINK"] = str_replace('&amp;','%26',$aryParams["SUCCESSLINK"]);
+            $aryParams["SUCCESSLINK"] = str_replace('&amp;', '%26', $aryParams["SUCCESSLINK"]);
         } else {
-            $aryParams["SUCCESSLINK"] = xarModURL('subscriptions','user','subscribe', array('phase' => 'subscribe_createcontract'));
-            $aryParams["SUCCESSLINK"] = str_replace('&','%26',$aryParams["SUCCESSLINK"]);
+            $aryParams["SUCCESSLINK"] = xarModURL('subscriptions', 'user', 'subscribe', array('phase' => 'subscribe_createcontract'));
+            $aryParams["SUCCESSLINK"] = str_replace('&', '%26', $aryParams["SUCCESSLINK"]);
         }
-        if($return_url['cancel_return']) {
+        if ($return_url['cancel_return']) {
             $aryParams["BACKLINK"] = $return_url['cancel_return'];
-            $aryParams["BACKLINK"] = str_replace('&amp;','%26',$aryParams["BACKLINK"]);
+            $aryParams["BACKLINK"] = str_replace('&amp;', '%26', $aryParams["BACKLINK"]);
         } else {
-            $aryParams["BACKLINK"] = xarModURL('subscriptions','user','subscribe');
-            $aryParams["BACKLINK"] = str_replace('&','%26',$aryParams["BACKLINK"]);
+            $aryParams["BACKLINK"] = xarModURL('subscriptions', 'user', 'subscribe');
+            $aryParams["BACKLINK"] = str_replace('&', '%26', $aryParams["BACKLINK"]);
         }
-        $aryParams["FAILLINK"] = xarModURL('subscriptions','user','subscribe');
-        $aryParams["FAILLINK"] = str_replace('&','%26',$aryParams["FAILLINK"]);
+        $aryParams["FAILLINK"] = xarModURL('subscriptions', 'user', 'subscribe');
+        $aryParams["FAILLINK"] = str_replace('&', '%26', $aryParams["FAILLINK"]);
 
         $aryParams["ORDERID"] = xarSession::getVar('AUTHID');
                 
@@ -186,7 +202,7 @@ class SaferPay extends BasicPayment
     
     public function getQueryParameter()
     {
-       $strAttributes = 'ACCOUNTID=' . $this->authnet_values['ACCOUNTID'] .
+        $strAttributes = 'ACCOUNTID=' . $this->authnet_values['ACCOUNTID'] .
                         '&LANGID=' . $this->authnet_values['LANGID'] .
                         '&AMOUNT=' . $this->authnet_values['AMOUNT'].
                         '&CURRENCY=' . $this->authnet_values['CURRENCY'] .
@@ -212,14 +228,13 @@ class SaferPay extends BasicPayment
         //Set error messages to null.
         $this->error_msg = "";
         
-        xarSession::setVar('error_message' , "");
+        xarSession::setVar('error_message', "");
                     
         $payinit_url = $this->sendTransactionToGateway($url);
 
-        if($this->validateURL($payinit_url)){
-            
+        if ($this->validateURL($payinit_url)) {
             return $this->process_url($payinit_url);
-        }else {
+        } else {
             return false;
         }
     }
@@ -228,30 +243,26 @@ class SaferPay extends BasicPayment
     {
         $this->error_flag = 1;
 
-        if($payinit_url == null){
-            
+        if ($payinit_url == null) {
             $this->error_flag = 0;
-        }else{
+        } else {
+            $check = substr($payinit_url, 0, 5);
             
-            $check = substr($payinit_url,0,5);
-            
-            if($check == "ERROR"){
-
+            if ($check == "ERROR") {
                 $this->error_flag = 0;
                 $this->error_msg .= self::MODULE_PAYMENT_SAFERPAYGW_ERROR_TITLE;
                 $this->error_msg .= "<br>".$payinit_url;
             }
         }
-        if(!$this->error_flag){
-
+        if (!$this->error_flag) {
             $error_message=$this->get_error();
-            xarSession::setVar('error_message' , $error_message);
+            xarSession::setVar('error_message', $error_message);
         }
         return $this->error_flag;
     }
     
     public function get_error()
-    { 
+    {
         $this->error .=  "<br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
         $this->error.=$this->error_msg."</td></tr></table>";
         return $this->error;
@@ -259,7 +270,6 @@ class SaferPay extends BasicPayment
 
     public function sendTransactionToGateway($sURL)
     {
-        
         if (function_exists('curl_init')) {
             $ch = curl_init($sURL);
         } else {
@@ -272,7 +282,7 @@ class SaferPay extends BasicPayment
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
 
-        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $sReturn = curl_exec($ch);
 
@@ -280,16 +290,15 @@ class SaferPay extends BasicPayment
 
         $this->http_code=$this->curlInfo['http_code'];
 
-        if($this->curlInfo['http_code'] != 200) {
-
-            $curl_failure_info = implode("<br>",$this->curlInfo);
+        if ($this->curlInfo['http_code'] != 200) {
+            $curl_failure_info = implode("<br>", $this->curlInfo);
 
             $this->error_msg = "<B>".self::MODULE_PAYMENT_SAFERPAYGW_ERROR_HTTP_FAILURE."</B>";
             
             //check for all curl information when failure.
             //$this->error_msg .= $curl_failure_info;
             return false;
-        } 
+        }
         curl_close($ch);
         return $sReturn;
     }
@@ -325,21 +334,22 @@ class SaferPay extends BasicPayment
     
     public function displaystatus()
     {
-        //Modified the code to get the response data from $DATA instead of $_SERVER as $_SERVER creates problem 
+        //Modified the code to get the response data from $DATA instead of $_SERVER as $_SERVER creates problem
         //for some PHP versions.
-        if (!xarVarFetch('DATA', 'str:', $saferpaydata, null, XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('DATA', 'str:', $saferpaydata, null, XARVAR_DONT_SET)) {
+            return;
+        }
 
         $status = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
         $arr1 = array();
 
         $replace_arr = array('"', "/>", "<");
-        $saferpaydata = str_replace($replace_arr,"",$saferpaydata);
+        $saferpaydata = str_replace($replace_arr, "", $saferpaydata);
         $valuedecode = rawurldecode($saferpaydata);
         $arr2 = explode(" ", $valuedecode);
 
-        foreach($arr2 as $k => $v){
-
-            $val  = explode('=',$v);
+        foreach ($arr2 as $k => $v) {
+            $val  = explode('=', $v);
 
             $status_key = isset($val[0])?$val[0]:'null';
             
@@ -348,8 +358,8 @@ class SaferPay extends BasicPayment
             $status_arr[$status_key] = $status_value;
         }
                 
-        foreach($status_arr as $key => $value){
-            switch($key) {
+        foreach ($status_arr as $key => $value) {
+            switch ($key) {
                 
                 case 'func':
                             break;
@@ -357,7 +367,7 @@ class SaferPay extends BasicPayment
                             break;
                 case 'DATA':
                             break;
-                case 'MSGTYPE': 
+                case 'MSGTYPE':
                         $status  .=  "<tr><td class=\"v\">$key</td>";
                         $status  .=  "<td class=\"v\">$value</td></tr>";
                         break;
@@ -379,9 +389,9 @@ class SaferPay extends BasicPayment
                             break;
                 case 'AMOUNT':
                         //convert the ammount back to the original format
-                        //The amount to be reserved specified in minor currency unit. 
+                        //The amount to be reserved specified in minor currency unit.
                         //13500 EUR to 135.00 EUR
-                        $value = substr($value,0,(strlen($value)-2));
+                        $value = substr($value, 0, (strlen($value)-2));
                         $value .= ".00";
                         $status  .=  "<tr><td class=\"v\">$key</td>";
                         $status  .=  "<td class=\"v\">$value</td></tr>";
@@ -429,7 +439,7 @@ class SaferPay extends BasicPayment
                 case 'SIGNATURE':
                         
                             break;
-                default :
+                default:
                         $status  .=  "<tr><td class=\"v\">$key</td>";
                         $status  .=  "<td class=\"v\">$value</td></tr>";
                             break;
@@ -440,4 +450,3 @@ class SaferPay extends BasicPayment
         return $status;
     }
 }
-?>

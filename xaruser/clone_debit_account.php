@@ -13,12 +13,20 @@
 function payments_user_clone_debit_account()
 {
     // Xaraya security
-    if(!xarSecurityCheck('AddPayments')) return;
+    if (!xarSecurityCheck('AddPayments')) {
+        return;
+    }
     xarTplSetPageTitle('Clone Debit Account');
 
-    if(!xarVarFetch('itemid',    'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('newname',   'str',   $newname,   "",   XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('confirm',   'int',   $confirm,   0,    XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid', 'isset', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('newname', 'str', $newname, "", XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('confirm', 'int', $confirm, 0, XARVAR_DONT_SET)) {
+        return;
+    }
     
     if (empty($itemid)) {
         xarController::redirect(xarModURL('ledgerar', 'user', 'view_debit_accounts'));
@@ -30,14 +38,16 @@ function payments_user_clone_debit_account()
     
     if ($confirm) {
         // Get the name for the clone
-        if (empty($newname)) $newname = $object->properties['name']->value . "_copy";
+        if (empty($newname)) {
+            $newname = $object->properties['name']->value . "_copy";
+        }
         $newname = str_ireplace(" ", "_", $newname);
             
         // Check if this object already exists
         $testobject = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
         $items = $testobject->getItems(array('where' => "name = '" . $newname . "'"));
         if (count($items)) {
-            return xarTplModule('payments','user','errors', array('layout' => 'duplicate_account_name', 'newname' => $newname));
+            return xarTplModule('payments', 'user', 'errors', array('layout' => 'duplicate_account_name', 'newname' => $newname));
         }
         
         // Create the clone
@@ -52,4 +62,3 @@ function payments_user_clone_debit_account()
     }
     return $data;
 }
-?>

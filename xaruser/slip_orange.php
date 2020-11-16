@@ -17,20 +17,25 @@
  
 // Make sure we have the required libraries
 $filepath = sys::lib() . 'tcpdf/tcpdf.php';
-if (!file_exists($filepath))
+if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the tcpdf library'));
+}
 $filepath = sys::lib() . 'SwissPaymentSlipTcpdf/src/SwissPaymentSlip/SwissPaymentSlipTcpdf/SwissPaymentSlipTcpdf.php';
-if (!file_exists($filepath))
+if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the SwissPaymentSlipTcpdf library'));
+}
 $filepath = sys::lib() . 'SwissPaymentSlipPdf/src/SwissPaymentSlip/SwissPaymentSlipPdf/SwissPaymentSlipPdf.php';
-if (!file_exists($filepath))
+if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the SwissPaymentSlipPdf library'));
+}
 $filepath = sys::lib() . 'SwissPaymentSlip/src/SwissPaymentSlip/SwissPaymentSlip/SwissPaymentSlip.php';
-if (!file_exists($filepath))
+if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the SwissPaymentSlip library'));
+}
 $filepath = sys::lib() . 'SwissPaymentSlip/src/SwissPaymentSlip/SwissPaymentSlip/SwissPaymentSlipData.php';
-if (!file_exists($filepath))
+if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the SwissPaymentSlipData library'));
+}
     
 // Import necessary classes
 sys::import('tcpdf/tcpdf');
@@ -42,7 +47,7 @@ sys::import('SwissPaymentSlipTcpdf.src.SwissPaymentSlip.SwissPaymentSlipTcpdf.Sw
 function payments_user_slip_orange()
 {
     // Create an instance of TCPDF, setup default settings
-    $tcPdf = new TCPDF('P', 'mm','A4', false, 'ISO-8859-1');
+    $tcPdf = new TCPDF('P', 'mm', 'A4', false, 'ISO-8859-1');
 
     // Since we currently don't have a OCRB font for TCPDF, we disable this
     //$tcPdf->AddFont('OCRB10');
@@ -56,7 +61,7 @@ function payments_user_slip_orange()
     $tcPdf->SetAutoPageBreak(false);
 
     // Insert a dummy invoice text, not part of the payment slip itself
-    $tcPdf->SetFont('Arial','',9);
+    $tcPdf->SetFont('Arial', '', 9);
     $tcPdf->Cell(50, 4, "Just some dummy text.");
 
     // Create a payment slip data container (value object)
@@ -86,4 +91,3 @@ function payments_user_slip_orange()
     // Output PDF named example_tcpdf_orange_slips.pdf to examples folder
     $tcPdf->Output(__DIR__ . DIRECTORY_SEPARATOR . 'example_tcpdf_orange_slips.pdf', 'F');
 }
-?>

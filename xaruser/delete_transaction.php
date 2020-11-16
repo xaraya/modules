@@ -18,29 +18,41 @@
 function payments_user_delete_transaction()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePayments')) return;
+    if (!xarSecurityCheck('ManagePayments')) {
+        return;
+    }
     xarTplSetPageTitle('Delete Payment');
 
-    if(!xarVarFetch('confirmed',  'bool', $confirmed,  false, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str',  $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',     'str',  $idlist,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',  'str',  $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('confirmed', 'bool', $confirmed, false, XARVAR_NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVarFetch('itemid', 'str', $itemid, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('idlist', 'str', $idlist, null, XARVAR_DONT_SET)) {
+        return;
+    }
+    if (!xarVarFetch('returnurl', 'str', $returnurl, null, XARVAR_DONT_SET)) {
+        return;
+    }
 
-    if (!empty($itemid)) $idlist = $itemid;
-    $ids = explode(',',trim($idlist,','));
+    if (!empty($itemid)) {
+        $idlist = $itemid;
+    }
+    $ids = explode(',', trim($idlist, ','));
     
     if (empty($idlist)) {
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('payments', 'user','view_transactions'));
+            xarController::redirect(xarModURL('payments', 'user', 'view_transactions'));
         }
     }
 
     $data['message'] = '';
     $data['itemid']  = $itemid;
 
-/*------------- Ask for Confirmation.  If yes, action ----------------------------*/
+    /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
     $course_item = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
@@ -66,10 +78,12 @@ function payments_user_delete_transaction()
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarModURL('payments','user','delete_payment',array('idlist' => $idlist));
-        return $data;        
+        $data['yes_action'] = xarModURL('payments', 'user', 'delete_payment', array('idlist' => $idlist));
+        return $data;
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return;
+        }
         $script = implode('_', xarController::$request->getInfo());
         foreach ($ids as $id) {
             $itemid = $course_item->deleteItem(array('itemid' => $id, 'script' => $script));
@@ -77,8 +91,7 @@ function payments_user_delete_transaction()
         }
 
         // Jump to the next page
-        xarController::redirect(xarModURL('payments','user','view_transactions'));
+        xarController::redirect(xarModURL('payments', 'user', 'view_transactions'));
         return true;
     }
 }
-?>

@@ -17,12 +17,11 @@
 //We are in <root>/html/modules/payments and we want <root>/lib
 include '../../../lib/bootstrap.php';
 
-//Import the server class to use the call xarServer::getCurrentURL() 
+//Import the server class to use the call xarServer::getCurrentURL()
 sys::import('xaraya.server');
 
 $url = xarServer::getCurrentURL();
 
-$url = str_replace("code/modules/payments/gestpaysuccess.php?a","index.php?module=payments&func=phase3&a",$url);
+$url = str_replace("code/modules/payments/gestpaysuccess.php?a", "index.php?module=payments&func=phase3&a", $url);
 
 xarController::redirect($url);
-?>

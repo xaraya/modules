@@ -16,11 +16,11 @@
  */
     function payments_admin_new()
     {
-        if (!xarSecurityCheck('AddPayments')) return;
+        if (!xarSecurityCheck('AddPayments')) {
+            return;
+        }
 
-        $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'payments'));
+        $data['object'] = xarModApiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'payments'));
         $data['tplmodule'] = 'payments';
         return $data;
     }
-
-?>

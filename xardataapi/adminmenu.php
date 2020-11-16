@@ -24,4 +24,3 @@
             array('mask' => 'AdminPayments', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Payments configuration'), 'label' => xarML('Modify Configuration')),
         );
     }
-?>
