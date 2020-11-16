@@ -21,10 +21,10 @@
 
         $itemtypes[1] = array('label' => xarML('Native Realms'),
                               'title' => xarML('View Realms'),
-                              'url'   => xarModURL('realms', 'user', 'view')
+                              'url'   => xarController::URL('realms', 'user', 'view')
                              );
 
-        $extensionitemtypes = xarModAPIFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30081, 'native' => false));
+        $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30081, 'native' => false));
 
         /* TODO: activate this code when we move to php5
         $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));

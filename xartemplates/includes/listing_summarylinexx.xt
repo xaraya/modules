@@ -17,7 +17,7 @@
                         <form method="post" action="&xar-modurl-dynamicdata-admin-create;" enctype="#$enc_type#">
                             <xar:data-form name="$objectname" tplmodule="$tplmodule" template="$objectname"/>
                             <div style="clear:both; text-align: center">
-                                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dynamicdata')#"/>
+                                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey('dynamicdata')#"/>
                                 <input type="hidden" name="objectid" id="objectid" value="#$thisobject:objectid#"/>
                                 <input type="hidden" name="itemid" id="itemid" value="0"/>
                                 <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
@@ -53,8 +53,8 @@
         </div>
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
             <xar:sec mask="AddRealms" catch="false">
-                <xar:set name="returnurl">xarModURL('realms','admin','view')</xar:set>
-                <a style="font-weight:bold;" href ="#xarModURL('realms','admin','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Item</a>
+                <xar:set name="returnurl">xarController::URL('realms','admin','view')</xar:set>
+                <a style="font-weight:bold;" href ="#xarController::URL('realms','admin','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Item</a>
             </xar:sec>
         </div>
     </xar:if>

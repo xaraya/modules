@@ -14,13 +14,13 @@
                 </td>
             <xar:else />
                 <td>
-                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditRealms',0)">
-                        <a href="#xarModURL('realms','admin','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $localmodule))#">
+                    <xar:if condition="xarUser::isLoggedIn() AND $field eq $keyfieldalias AND xarSecurity::check('EditRealms',0)">
+                        <a href="#xarController::URL('realms','admin','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $localmodule))#">
                             <xar:data-output property="$properties[$column]" value="$value"/>
                         </a>
                     <xar:else />
-                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadRealms',0)">
-                            <a href="#xarModURL('dynamicdata','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $localmodule))#">
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurity::check('ReadRealms',0)">
+                            <a href="#xarController::URL('dynamicdata','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $localmodule))#">
                                 <xar:data-output property="$properties[$column]" value="$value"/>
                             </a>
                         <xar:else />

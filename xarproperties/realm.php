@@ -41,7 +41,7 @@ class RealmProperty extends ObjectRefProperty
         if (!isset($data['value'])) {
             $data['value'] = $this->value;
         }
-        $cacheKey ='Roles.User.' . xarSessionGetVar('role_id');
+        $cacheKey ='Roles.User.' . xarSession::getVar('role_id');
         $infoid = 'realm';
         if (!empty($data['firstline'])) {
             $this->initialization_firstline = $data['firstline'];
@@ -64,7 +64,7 @@ class RealmProperty extends ObjectRefProperty
         if (!isset($data['value'])) {
             $data['value'] = $this->value;
         }
-        $cacheKey ='Roles.User.' . xarSessionGetVar('role_id');
+        $cacheKey ='Roles.User.' . xarSession::getVar('role_id');
         $infoid = 'realm';
         if (!empty($data['firstline'])) {
             $this->initialization_firstline = $data['firstline'];

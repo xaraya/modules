@@ -17,7 +17,7 @@
                         <form method="post" action="&xar-modurl-dynamicdata-admin-create;" enctype="#$enc_type#">
                             <xar:data-form name="$objectname" tplmodule="$tplmodule" template="$objectname"/>
                             <div style="clear:both; text-align: center">
-                                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dynamicdata')#"/>
+                                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey('dynamicdata')#"/>
                                 <input type="hidden" name="objectid" id="objectid" value="#$thisobject:objectid#"/>
                                 <input type="hidden" name="itemid" id="itemid" value="0"/>
                                 <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>

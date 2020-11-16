@@ -17,7 +17,7 @@
  */
     function realms_admin_view_realms($args)
     {
-        if (!xarSecurityCheck('ManageRealms')) {
+        if (!xarSecurity::check('ManageRealms')) {
             return;
         }
 

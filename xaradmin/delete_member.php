@@ -19,14 +19,14 @@
     
     function realms_admin_delete_member()
     {
-        if (!xarSecurityCheck('ManageRealms')) {
+        if (!xarSecurity::check('ManageRealms')) {
             return;
         }
 
-        if (!xarVarFetch('itemid', 'int', $data['itemid'], '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('itemid', 'int', $data['itemid'], '', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVarFetch('confirm', 'bool', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -38,7 +38,7 @@
         if ($data['confirm']) {
 
             // Check for a valid confirmation key
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return;
             }
 
@@ -46,7 +46,7 @@
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarController::redirect(xarModURL('realms', 'admin', 'view_members'));
+            xarController::redirect(xarController::URL('realms', 'admin', 'view_members'));
             return true;
         }
         return $data;

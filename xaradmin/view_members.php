@@ -17,12 +17,12 @@
  */
     function realms_admin_view_members($args)
     {
-        if (!xarSecurityCheck('ManageRealms')) {
+        if (!xarSecurity::check('ManageRealms')) {
             return;
         }
 
         // Define which object will be shown
-        if (!xarVarFetch('realm_id', 'int', $data['realm_id'], 0, XARVAR_DONT_SET)) {
+        if (!xarVar::fetch('realm_id', 'int', $data['realm_id'], 0, xarVar::DONT_SET)) {
             return;
         }
 

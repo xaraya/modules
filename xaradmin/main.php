@@ -18,14 +18,14 @@
 
     function realms_admin_main()
     {
-        if (!xarSecurityCheck('AdminRealms')) {
+        if (!xarSecurity::check('AdminRealms')) {
             return;
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarController::redirect(xarModURL('realms', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('realms', 'admin', 'modifyconfig'));
         }
         // success
         return true;
