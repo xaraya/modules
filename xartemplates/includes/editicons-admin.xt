@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+        
     <xar:sec mask="ManagePublications" catch="false">
         <xar:var name="label">Create a new publication</xar:var>
         <a href="#xarController::URL('publications', 'admin', 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">

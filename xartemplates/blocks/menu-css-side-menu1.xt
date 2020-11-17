@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
     <!-- 
         TODO: The CSS loaded will depend on what kind of menu you want.
         The CSS script should match the class of the wrapper div for the menu,

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
    <!--
     This template illustrates how to create menus using the staticmenu block's $menuarry variable
     Structure of $menuarray:
