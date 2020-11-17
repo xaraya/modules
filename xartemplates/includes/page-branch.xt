@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="icon_display">xarTpl::getImage('icons/display.png','base')</xar:set>
 <xar:set name="icon_delete">xarTpl::getImage('icons/delete.png', 'base')</xar:set>
@@ -33,3 +35,4 @@
         </li>
     </xar:foreach>
 </ul>
+</xar:template>

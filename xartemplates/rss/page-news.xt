@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:if condition="!empty($current_page.dd.page_title)">
     <xar:set name="dummy">#xarTpl::setPageTitle($current_page.dd.page_title)#</xar:set>
@@ -35,3 +37,5 @@
 </xar:if>
 
 
+
+</xar:template>

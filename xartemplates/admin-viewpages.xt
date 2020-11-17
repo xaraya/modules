@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="xarpages" />
 <xar:base-js-framework module="base" name="jquery" />
 <xar:base-js-plugin name="ui" framework="jquery" style="jquery-ui-1.8.8.custom.css" />
@@ -90,3 +92,5 @@ jQuery('select#"."contains').change(function(event) {
 
     </xar:if>
 </div>
+
+</xar:template>

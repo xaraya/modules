@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <div class="xar-form-input-wrapper">
         <label for="current_source_#$bid#" class="xar-form-label">
@@ -153,3 +155,4 @@
         </xar:if>
     </div>
 </div>
+</xar:template>

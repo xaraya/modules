@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Input:
         $pages      - list of all pages
@@ -140,3 +142,5 @@
         </ul>
     </xar:if>
 </xar:if>
+
+</xar:template>

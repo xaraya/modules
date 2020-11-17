@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="xarpages" />
 <xar:base-js-framework module="base" name="jquery" />
 <xar:base-js-plugin name="ui" framework="jquery" style="jquery-ui-1.8.8.custom.css" />
@@ -68,9 +70,9 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
             <xar:loop name="$types">
                 <xar:if condition="$loop:index ge 0">
                     <xar:if condition="(($loop:index + 1) % 2)">
-                        <xar:set name="$row_class">''</xar:set>
+                        <xar:set name="row_class">''</xar:set>
                     <xar:else />
-                        <xar:set name="$row_class">'xar-accent'</xar:set>
+                        <xar:set name="row_class">'xar-accent'</xar:set>
                     </xar:if>
 
                     <tr class="#$rowclass#">
@@ -96,3 +98,5 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
         </table>
     </xar:if>
 </div>
+
+</xar:template>

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>Common navbar stuff</xar:comment>
 <xar:template file="user-navbar" module="xarpages" />
 
@@ -94,3 +96,5 @@
         </xar:if>
     </xar:foreach>
 </xar:if>
+
+</xar:template>

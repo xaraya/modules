@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="xarpages" />
 <xar:comment>
   We are using multipart/form-data to cater for uploads which should not be a problem for use in all cases. 
@@ -322,3 +324,5 @@ jQuery('select#refpid').add('select#position').change(function(event) {
         </form>
     </xar:if>
 </div>
+
+</xar:template>

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="xarpages" />
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>XarPages</xar:mlstring></span>
@@ -7,3 +9,4 @@
         <xar:mlstring>No default page to load.</xar:mlstring>
     </h2>
 </div>
+</xar:template>

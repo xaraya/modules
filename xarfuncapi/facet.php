@@ -1,4 +1,6 @@
 <?php
+sys::import('modules.base.class.pager');
+
 
 /**
  * Function to provide faceted navigation on items in a page.

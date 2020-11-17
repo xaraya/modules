@@ -1,4 +1,6 @@
 <?php
+sys::import('modules.base.class.pager');
+
 
 // See xarpages/xardocs/news.txt for further details
 

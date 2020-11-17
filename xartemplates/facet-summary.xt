@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Fallback facet article summary.
     Use template "facet-summary-{pubtypename}.xt" to customise different pubtypes.
@@ -68,3 +70,4 @@
         </xar:if>
     </item>
 </xar:if>
+</xar:template>
