@@ -234,13 +234,16 @@ function publications_user_display($args)
             }
             $page = preg_replace($pattern,$replace,$page);
 
+            // We don't really want to replace the submits, do we?
+            /*
             $pattern='/(action)="([^"\r\n]*)"/';
             $page = preg_replace_callback($pattern,
                 function($matches) {
-                    return $matches[1] = xarServer::getCurrentURL();
+                    return $matches[1] = 'action="' . xarServer::getCurrentURL() . '"';
                 },
                 $page
             );
+            */
 
             // Find the URLs in links
             $pattern='/(href)="([^"\r\n]*)"/';
