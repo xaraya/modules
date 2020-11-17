@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:if condition="$pid gt 0">
 <!-- If this process is incomplete show a list of things which need fixing befor the process is valid -->
