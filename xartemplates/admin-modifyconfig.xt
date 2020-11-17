@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:set name="updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 <xar:set name="adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
