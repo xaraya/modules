@@ -1,4 +1,6 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"> 
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+ 
 
 <!--     <xar:set name="action">
         isset($action) ? $action : 'check'
