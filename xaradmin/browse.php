@@ -1,4 +1,6 @@
 <?php
+sys::import('modules.base.class.pager');
+
 /**
  * View a list of server images
  *

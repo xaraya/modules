@@ -93,22 +93,22 @@ function & images_userapi_load_image($args)
         $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
 
-    include_once('modules/images/xarclass/image_properties.php');
+    sys::import('modules.images.xarclass.image_properties');
 
     switch (xarModVars::get('images', 'type.graphics-library')) {
         case _IMAGES_LIBRARY_IMAGEMAGICK:
-            include_once('modules/images/xarclass/image_ImageMagick.php');
+            sys::import('modules.images.xarclass.image_ImageMagick');
             $newImage = new Image_ImageMagick($location, $thumbsdir);
             return $newImage;
             break;
         case _IMAGES_LIBRARY_NETPBM:
-            include_once('modules/images/xarclass/image_NetPBM.php');
+            sys::import('modules.images.xarclass.image_NetPBM');
             $newImage = new Image_NetPBM($location, $thumbsdir);
             return $newImage;
             break;
         default:
         case _IMAGES_LIBRARY_GD:
-            include_once('modules/images/xarclass/image_gd.php');
+            sys::import('modules.images.xarclass.image_gd');
             $newImage = new Image_GD($location, $thumbsdir);
             return $newImage;
             break;

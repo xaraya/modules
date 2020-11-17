@@ -47,10 +47,10 @@ function uploads_admin_importgallery($args)
 
 
     // Gallery Classes
-    include "modules/uploads/import/gallery/Album.php";
-    include "modules/uploads/import/gallery/AlbumDB.php";
-    include "modules/uploads/import/gallery/AlbumItem.php";
-    include "modules/uploads/import/gallery/Image.php";
+    sys::import("modules.uploads.import.gallery.Album");
+    sys::import("modules.uploads.import.gallery.AlbumDB");
+    sys::import("modules.uploads.import.gallery.AlbumItem");
+    sys::import("modules.uploads.import.gallery.Image");
 
 
 

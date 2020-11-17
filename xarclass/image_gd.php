@@ -1,6 +1,6 @@
 <?php
 
-include_once('modules/images/xarclass/image_properties.php');
+sys::import('modules.images.xarclass.image_properties');
 
 class Image_GD extends Image_Properties
 {
