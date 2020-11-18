@@ -29,22 +29,26 @@ function html_adminapi_delete($args)
     // Argument check
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', $id, 'adminapi', 'delete', 'html');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // The user API function is called
-    $html = xarMod::apiFunc('html',
-                          'user',
-                          'gettag',
-                          array('id' => $id));
+    $html = xarMod::apiFunc(
+        'html',
+        'user',
+        'gettag',
+        array('id' => $id)
+    );
 
     if ($html == false) {
         $msg = xarML('No Such HTML tag Present', 'html');
-        throw new BadParameterException(null,$msg);
+        throw new BadParameterException(null, $msg);
     }
 
     // Security Check
-    if(!xarSecurity::check('ManageHTML')) return;
+    if (!xarSecurity::check('ManageHTML')) {
+        return;
+    }
     // Get datbase setup
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -52,31 +56,34 @@ function html_adminapi_delete($args)
 
     // Delete the tag
     $query = "DELETE FROM $htmltable WHERE id = ?";
-    $result =& $dbconn->Execute($query,array($id));
-    if (!$result) return;
+    $result =& $dbconn->Execute($query, array($id));
+    if (!$result) {
+        return;
+    }
 
     // If this is an html tag, then
     // also delete the tag from the config vars
-    $tagtype = xarMod::apiFunc('html',
-                             'user',
-                             'gettype',
-                             array('id' => $html['tid']));
+    $tagtype = xarMod::apiFunc(
+        'html',
+        'user',
+        'gettype',
+        array('id' => $html['tid'])
+    );
 
     if ($tagtype['type'] == 'html') {
         $allowedhtml = array();
         // Get the current tags from config vars
-        foreach (xarConfigVars::get(null,'Site.Core.AllowableHTML') as $key => $value) {
+        foreach (xarConfigVars::get(null, 'Site.Core.AllowableHTML') as $key => $value) {
             // Remove the deleted html tag from the config vars
             if ($key != $html['tag']) {
                 $allowedhtml[$key] = $value;
             }
         }
         // Set the config vars
-        xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
+        xarConfigVars::set(null, 'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a html
     xarModHooks::call('item', 'delete', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }
-?>
