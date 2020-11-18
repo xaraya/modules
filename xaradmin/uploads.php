@@ -129,13 +129,13 @@ function images_admin_uploads($args)
                 $startnum,
                 $countitems,
                 xarController::URL(
-                                                'images',
-                                                'admin',
-                                                'uploads',
-                                                array('startnum' => '%%',
+                    'images',
+                    'admin',
+                    'uploads',
+                    array('startnum' => '%%',
                                                             'numitems' => $data['numitems'],
                                                             'sort'     => $data['sort'])
-                                            ),
+                ),
                 $numitems
             );
         }

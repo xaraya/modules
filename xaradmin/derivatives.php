@@ -93,13 +93,13 @@ function images_admin_derivatives()
                 $startnum,
                 $countitems,
                 xarController::URL(
-                                                'images',
-                                                'admin',
-                                                'derivatives',
-                                                array('startnum' => '%%',
+                    'images',
+                    'admin',
+                    'derivatives',
+                    array('startnum' => '%%',
                                                             'numitems' => $data['numitems'],
                                                             'sort'     => $data['sort'])
-                                            ),
+                ),
                 $params['numitems']
             );
         }

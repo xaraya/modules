@@ -133,14 +133,14 @@ function images_admin_browse()
                 $startnum,
                 $countitems,
                 xarController::URL(
-                                                'images',
-                                                'admin',
-                                                'browse',
-                                                array('bid'      => $baseId,
+                    'images',
+                    'admin',
+                    'browse',
+                    array('bid'      => $baseId,
                                                             'startnum' => '%%',
                                                             'numitems' => $data['numitems'],
                                                             'sort'     => $data['sort'])
-                                            ),
+                ),
                 $params['numitems']
             );
         }
