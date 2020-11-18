@@ -21,34 +21,44 @@
 					</table>
 				</div>
 			</div>
-				<xar:if condition="$remaining eq 0">
-					This was the last email of this reminder.
-				<xar:else/>
-					<xar:ml>
-						You will receive #(1) more reminders before this due date.
-						<xar:mlvar>#$remaining#</xar:mlvar>
-					</xar:ml>
-				</xar:if>
-			<div>
+			<div class="xar-row">
+				<div class="xar-col">
+				</div>
+				<div class="xar-col">
+					<xar:if condition="$remaining eq 0">
+						This was the last email of this reminder.
+					<xar:else/>
+						<xar:ml>
+							You will receive #(1) more reminders before this due date.
+							<xar:mlvar>#$remaining#</xar:mlvar>
+						</xar:ml>
+					</xar:if>
+				</div>
 			</div>
-			<xar:if condition="$item['recurring']">
-				<div>
-					This is a recurring reminder. Please choose:&#160;
+			<div class="xar-row">
+				<div class="xar-col">
 				</div>
-				<div>
-					<xar:set name="options">
-						array(
-							array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
-							array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
-						)
-					</xar:set>
-					<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
+				<div class="xar-col">
+					<xar:if condition="$item['recurring']">
+						<div>
+							This is a recurring reminder. Please choose:&#160;
+						</div>
+						<div>
+							<xar:set name="options">
+								array(
+									array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
+									array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
+								)
+							</xar:set>
+							<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
+						</div>
+					<xar:else/>
+						<div>
+							This is a one-time event.
+						</div>
+					</xar:if>
 				</div>
-			<xar:else/>
-				<div>
-					This is a one-time event.
-				</div>
-			</xar:if>
+			</div>
 			<form method="post" action="#xarServer::getCurrentURL()#">
 				<div class="xar-row">
 					<div class="xar-col">
@@ -63,10 +73,16 @@
 				</div>
 			</form>
         <xar:else/>
-	        <h3>Sorry!</h3>
-        	<div>
-        		The reminder you are looking for does not exist.
-        	</div>
+			<div class="xar-row">
+				<div class="xar-col">
+				</div>
+				<div class="xar-col">
+				<h3>Sorry!</h3>
+					<div>
+						The reminder you are looking for does not exist.
+					</div>
+				</div>
+			</div>
         </xar:if>
     </div>
 </xar:template>
