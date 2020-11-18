@@ -168,13 +168,13 @@ function comments_admin_module_stats()
             $startnum,
             $numitems,
             xarController::URL(
-                                              'comments',
-                                              'admin',
-                                              'module_stats',
-                                              array('modid' => $modid,
+                'comments',
+                'admin',
+                'module_stats',
+                array('modid' => $modid,
                                                           'itemtype' => $urlitemtype,
                                                           'startnum' => '%%')
-                                          ),
+            ),
             $numstats
         );
     } else {
