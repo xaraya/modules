@@ -5,17 +5,21 @@
     <div class="xar-mod-body">
         <xar:if condition="!empty($code)">
 	        <h3>Remove Reminder</h3>
-			<div>
-				<table style="width: 400px; border: 1px solid">
-					<tr>
-						<td style="padding: 5px; width: 300px">What</td>
-						<td style="padding: 5px; width: 100px">When</td>
-					</tr>
-					<tr>
-						<td style="padding: 5px; width: 300px"><b>#$item['message']#</b></td>
-						<td style="padding: 5px; width: 100px"><b><xar:data-output type="date" value="$item['due_date']"/></b></td>
-					</tr>
-				</table>
+			<div class="xar-row">
+				<div class="xar-col">
+				</div>
+				<div class="xar-col">
+					<table style="width: 400px; border: 1px solid">
+						<tr>
+							<td style="padding: 5px; width: 300px">What</td>
+							<td style="padding: 5px; width: 100px">When</td>
+						</tr>
+						<tr>
+							<td style="padding: 5px; width: 300px"><b>#$item['message']#</b></td>
+							<td style="padding: 5px; width: 100px"><b><xar:data-output type="date" value="$item['due_date']"/></b></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 				<xar:if condition="$remaining eq 0">
 					This was the last email of this reminder.
