@@ -4,7 +4,13 @@
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
         <xar:if condition="!empty($code)">
-	        <h3>Remove Reminder</h3>
+			<div class="xar-row">
+				<div class="xar-col-condensed">
+				</div>
+				<div class="xar-col">
+	        		<h3>Remove Reminder</h3>
+				</div>
+			</div>
 			<div class="xar-row" style="margin-bottom: 10px">
 				<div class="xar-col-condensed">
 				</div>
@@ -35,7 +41,7 @@
 					</xar:if>
 				</div>
 			</div>
-			<div class="xar-row">
+			<div class="xar-row" style="margin-bottom: 10px">
 				<div class="xar-col-condensed">
 				</div>
 				<div class="xar-col">
@@ -61,7 +67,7 @@
 			</div>
 			<form method="post" action="#xarServer::getCurrentURL()#">
 				<div class="xar-row">
-					<div class="xar-col-condensed">
+					<div class="xar-col">
 					</div>
 					<div class="xar-col">
 						<input type="hidden" name="authid" id="authid" value="#$authid#"/>
