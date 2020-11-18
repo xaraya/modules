@@ -227,14 +227,14 @@ function release_user_view()
             $startnum,
             $allitems,
             xarController::URL(
-               'release',
-               'user',
-               'view',
-               array('startnum' => '%%',
+                'release',
+                'user',
+                'view',
+                array('startnum' => '%%',
                      'exttype'=>$exttype,
                      'catid'=>$catid,
                      'sort'=>$sort)
-           ),
+            ),
             xarModUserVars::get('release', 'itemsperpage', $uid)
         );
     }

@@ -12,7 +12,7 @@
  */
 /**
  * Get module IDs
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  * @TODO Review - do we really need this now? Let's amalgamate ...
@@ -28,13 +28,15 @@ function release_userapi_getmoduleids($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    $exttypes= xarMod::apiFunc('release','user','getexttypes');
+    $exttypes= xarMod::apiFunc('release', 'user', 'getexttypes');
     $text = xarML('Module');
-    $extid = array_search($text,$exttypes);
+    $extid = array_search($text, $exttypes);
     $releaseinfo = array();
 
     // Security Check
-    if(!xarSecurity::check('OverviewRelease')) return;
+    if (!xarSecurity::check('OverviewRelease')) {
+        return;
+    }
 
     // Get database setup
     $dbconn =& xarDB::getConn();
@@ -63,7 +65,9 @@ function release_userapi_getmoduleids($args)
             ORDER BY xar_eid";
     $bindvars = array($extid);
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
-    if (!$result) return;
+    if (!$result) {
+        return;
+    }
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
@@ -94,4 +98,3 @@ function release_userapi_getmoduleids($args)
     // Return the users
     return $releaseinfo;
 }
-?>
