@@ -253,15 +253,15 @@ function uploads_admin_assoc()
                 $startnum,
                 $data['numlinks'],
                 xarController::URL(
-                                                'uploads',
-                                                'admin',
-                                                'assoc',
-                                                array('modid' => $modid,
+                    'uploads',
+                    'admin',
+                    'assoc',
+                    array('modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'fileId' => $fileId,
                                                             'sort' => $sort,
                                                             'startnum' => '%%')
-                                            ),
+                ),
                 $numstats
             );
         } else {

@@ -232,13 +232,13 @@ function uploads_admin_view()
             $startnum,
             $countitems,
             xarController::URL(
-                                            'uploads',
-                                            'admin',
-                                            'view',
-                                            array('startnum' => '%%',
+                'uploads',
+                'admin',
+                'view',
+                array('startnum' => '%%',
                                                         'numitems' => (empty($skipnum) ? $numitems : null),
                                                         'sort'     => $sort)
-                                        ),
+            ),
             $numitems
         );
     } else {
