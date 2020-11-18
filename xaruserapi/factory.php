@@ -27,32 +27,32 @@ function &calendar_userapi_factory($class)
     static $alarmobject;
     static $modinfo;
 
-    if(!isset($modinfo)) {
+    if (!isset($modinfo)) {
         $modInfo =& xarMod::getInfo(xarMod::getRegID('calendar'));
     }
 
-    switch(strtolower($class)) {
+    switch (strtolower($class)) {
 
         case 'calendar':
-            if(!isset($calobject)) {
+            if (!isset($calobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.calendar");
-                $calobject =& new Calendar;
+                $calobject = new Calendar();
             }
             return $calobject;
             break;
 
         case 'ical_parser':
-            if(!isset($icalobject)) {
+            if (!isset($icalobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.ical_parser");
-                $icalobject =& new iCal_Parser;
+                $icalobject = new iCal_Parser();
             }
             return $icalobject;
             break;
 
         case 'event':
-            if(!isset($eventobject)) {
+            if (!isset($eventobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.event");
-                $eventobject =& new Event;
+                $eventobject = new Event();
             }
             return $eventobject;
             break;
@@ -72,4 +72,3 @@ function &calendar_userapi_factory($class)
             break;
     }
 }
-?>
