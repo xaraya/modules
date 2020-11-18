@@ -22,4 +22,3 @@ function karma_userapi_getall_tags($args)
     $items = $tag->getItems();
     return $items;
 }
-?>
