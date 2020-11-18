@@ -35,9 +35,10 @@
 						This was the last email of this reminder.
 					<xar:else/>
 						<xar:ml>
-							You will receive #(1) more emails before the due date above. <br/>If you remove this reminder, you will not receive any more emails.
+							You will receive #(1) more emails before the due date above. 
 							<xar:mlvar>#$remaining#</xar:mlvar>
 						</xar:ml>
+						<br/>If you remove this reminder, you will not receive any more emails.
 					</xar:if>
 				</div>
 			</div>
