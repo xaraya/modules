@@ -5,8 +5,8 @@
     <div class="xar-mod-body">
         <xar:if condition="!empty($code)">
 	        <h3>Remove Reminder</h3>
-			<div class="xar-row">
-				<div class="xar-col">
+			<div class="xar-row" style="margin-bottom: 10px">
+				<div class="xar-col-condensed">
 				</div>
 				<div class="xar-col">
 					<table style="width: 400px; border: 1px solid">
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<div class="xar-row">
-				<div class="xar-col">
+				<div class="xar-col-condensed">
 				</div>
 				<div class="xar-col">
 					<xar:if condition="$remaining eq 0">
@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div class="xar-row">
-				<div class="xar-col">
+				<div class="xar-col-condensed">
 				</div>
 				<div class="xar-col">
 					<xar:if condition="$item['recurring']">
@@ -61,7 +61,7 @@
 			</div>
 			<form method="post" action="#xarServer::getCurrentURL()#">
 				<div class="xar-row">
-					<div class="xar-col">
+					<div class="xar-col-condensed">
 					</div>
 					<div class="xar-col">
 						<input type="hidden" name="authid" id="authid" value="#$authid#"/>
