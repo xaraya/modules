@@ -25,9 +25,10 @@ function reminders_adminapi_process($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
+    //$entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
     $mailer_template = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
     
+    /*
     // Set all the relevant properties active here
     foreach ($entries->properties as $name => $property) {
         if ($property->getDisplayStatus() == DataPropertyMaster::DD_DISPLAYSTATE_DISABLED) {
@@ -35,9 +36,61 @@ function reminders_adminapi_process($args)
         }
         $entries->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
     }
+    
+    // Turn the email properties into numbers, because we need to link their corresponding rows from the email table
+    // Modify the some properties to be foreign table indices (make them static text)
+    $entries->modifyProperty('email_1', array('type' => 1));
+    $entries->modifyProperty('email_2', array('type' => 1));
+    
     $entries->setFieldList();
     
-    $q = $entries->dataquery;
+    $q = $entries->dataquery;*/
+    // Add the emails table for each email
+    
+    $tables = xarDB::getTables();
+    $q = new Query('SELECT');
+    $q->addtable($tables['reminders_entries'], 'entries');
+    $q->addtable($tables['reminders_emails'], 'email_1');
+    $q->leftjoin('entries.email_id_1', 'email_1.id');
+    $q->addtable($tables['reminders_emails'], 'email_2');
+    $q->leftjoin('entries.email_id_2', 'email_2.id');
+    
+    // Add only these fields
+    $q->addfields(array(
+    				'entries.id',
+    			  	'email_1.name AS name_1',
+    			  	'email_1.address AS address_1',
+    			  	'email_2.name AS name_2',
+    			  	'email_2.address AS address_2',
+    			  	'code',
+    			  	'message',
+    			  	'template_id',
+    			  	'due_date',
+    			  	'recurring',
+    			  	'recur_period',
+    			  	'reminder_warning_1 AS reminder_1',
+    			  	'reminder_done_1',
+    			  	'reminder_warning_2 AS reminder_2',
+    			  	'reminder_done_2',
+    			  	'reminder_warning_3 AS reminder_3',
+    			  	'reminder_done_3',
+    			  	'reminder_warning_4 AS reminder_4',
+    			  	'reminder_done_4',
+    			  	'reminder_warning_5 AS reminder_5',
+    			  	'reminder_done_5',
+    			  	'reminder_warning_6 AS reminder_6',
+    			  	'reminder_done_6',
+    			  	'reminder_warning_7 AS reminder_7',
+    			  	'reminder_done_7',
+    			  	'reminder_warning_8 AS reminder_8',
+    			  	'reminder_done_8',
+    			  	'reminder_warning_9 AS reminder_9',
+    			  	'reminder_done_9',
+    			  	'reminder_warning_10 AS reminder_10',
+    			  	'reminder_done_10',
+    			  )
+    );
+    
     // Only active reminders
     $q->eq('entries.state', 3);
 
@@ -47,10 +100,12 @@ function reminders_adminapi_process($args)
         }
         $data['entry_list'] = explode(',', $data['entry_list']);
         $q->in('entries.id', $data['entry_list']);
-//    	$q->qecho();
     }
-    
-    $items = $entries->getItems();
+//    $q->qecho();
+//    $items = $entries->getItems();
+	$q->run();
+    $items = $q->output();
+//    var_dump($items);exit;
     /*
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
@@ -104,7 +159,7 @@ function reminders_adminapi_process($args)
                 
                 // The email for this period is not sent: do it
                 // Get the template information for this message
-                $this_template_id = $row['template'];
+                $this_template_id = $row['template_id'];
                 if (isset($templates[$this_template_id])) {
                     // We already have the information.
                 } else {

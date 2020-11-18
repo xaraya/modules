@@ -34,7 +34,7 @@ function reminders_adminapi_send_email($data)
 
     $result = array();
     $attachments = array();
-    $data['name']->value = $data['info']['name'];
+    $data['name']->value = $data['info']['name_1'];
     
     // Set a placeholder name if we don't have one
     if (empty($data['name']->value)) {
@@ -49,7 +49,7 @@ function reminders_adminapi_send_email($data)
     } else {
         // If we are not testing, then send to the chosen participant
         $recipientname    = $data['name']->getValue();
-        $recipientaddress = $data['info']['email'];
+        $recipientaddress = $data['info']['email_1'];
     }
     $data['reminder_text'] = trim($data['info']['message']);
     $data['code'] = $data['info']['code'];

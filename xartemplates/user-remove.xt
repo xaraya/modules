@@ -4,52 +4,73 @@
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
         <xar:if condition="!empty($code)">
-	        <h3>Remove Reminder</h3>
-			<div>
-				<table style="width: 400px; border: 1px solid">
-					<tr>
-						<td style="padding: 5px; width: 300px">What</td>
-						<td style="padding: 5px; width: 100px">When</td>
-					</tr>
-					<tr>
-						<td style="padding: 5px; width: 300px"><b>#$item['message']#</b></td>
-						<td style="padding: 5px; width: 100px"><b><xar:data-output type="date" value="$item['due_date']"/></b></td>
-					</tr>
-				</table>
+			<div class="xar-row">
+				<div class="xar-col-condensed">
+				</div>
+				<div class="xar-col">
+	        		<h3>Remove Reminder</h3>
+				</div>
 			</div>
-				<xar:if condition="$remaining eq 0">
-					This was the last email of this reminder.
-				<xar:else/>
-					<xar:ml>
-						You will receive #(1) more reminders before this due date.
-						<xar:mlvar>#$remaining#</xar:mlvar>
-					</xar:ml>
-				</xar:if>
-			<div>
+			<div class="xar-row" style="margin-bottom: 10px">
+				<div class="xar-col-condensed">
+				</div>
+				<div class="xar-col">
+					<table style="width: 400px; border: 1px solid">
+						<tr>
+							<td style="padding: 5px; width: 300px">What</td>
+							<td style="padding: 5px; width: 100px">When</td>
+						</tr>
+						<tr>
+							<td style="padding: 5px; width: 300px"><b>#$item['message']#</b></td>
+							<td style="padding: 5px; width: 100px"><b><xar:data-output type="date" value="$item['due_date']"/></b></td>
+						</tr>
+					</table>
+				</div>
 			</div>
-			<xar:if condition="$item['recurring']">
-				<div>
-					This is a recurring reminder. Please choose:&#160;
+			<div class="xar-row">
+				<div class="xar-col-condensed">
 				</div>
-				<div>
-					<xar:set name="options">
-						array(
-							array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
-							array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
-						)
-					</xar:set>
-					<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
+				<div class="xar-col">
+					<xar:if condition="$remaining eq 0">
+						This was the last email of this reminder.
+					<xar:else/>
+						<xar:ml>
+							You will receive #(1) more emails before the due date above. 
+							<xar:mlvar>#$remaining#</xar:mlvar>
+						</xar:ml>
+						<br/>If you remove this reminder, you will not receive any more emails.
+					</xar:if>
 				</div>
-			<xar:else/>
-				<div>
-					This is a one-time event.
+			</div>
+			<div class="xar-row" style="margin-bottom: 10px">
+				<div class="xar-col-condensed">
 				</div>
-			</xar:if>
+				<div class="xar-col">
+					<xar:if condition="$item['recurring']">
+						<div>
+							This is a recurring reminder. Please choose:&#160;
+						</div>
+						<div>
+							<xar:set name="options">
+								array(
+									array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
+									array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
+								)
+							</xar:set>
+							<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
+						</div>
+					<xar:else/>
+						<div>
+							This is a one-time event. No future recurring reminders of this type will be sent. 
+						</div>
+					</xar:if>
+				</div>
+			</div>
 			<form method="post" action="#xarServer::getCurrentURL()#">
 				<div class="xar-row">
-					<div class="xar-col">
+					<div class="xar-col-condensed">
 					</div>
-					<div class="xar-col">
+					<div class="xar-col" style="text-align: center">
 						<input type="hidden" name="authid" id="authid" value="#$authid#"/>
 						<input type="hidden" name="code" id="code" value="$code"/>
 						<input type="hidden" name="confirm" id="confirm" value="true"/>
@@ -59,10 +80,16 @@
 				</div>
 			</form>
         <xar:else/>
-	        <h3>Sorry!</h3>
-        	<div>
-        		The reminder you are looking for does not exist.
-        	</div>
+			<div class="xar-row">
+				<div class="xar-col">
+				</div>
+				<div class="xar-col">
+				<h3>Sorry!</h3>
+					<div>
+						The reminder you are looking for does not exist.
+					</div>
+				</div>
+			</div>
         </xar:if>
     </div>
 </xar:template>
