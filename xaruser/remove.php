@@ -67,7 +67,12 @@ function reminders_user_remove()
     	
     	// If we keep recurring reminders, then we need to spawn a new reminder from this one
     	if ($recurring == 1) {
-    		
+    		$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
+    		$item = $entry->getItem(array('itemid' => $itemid));
+    		$spawned = xarMod::apiFunc('reminders', 'user', 'spawn', array('object' => $item));
+    		if (!$spawned) {
+        		return xarTpl::module('reminders','user','errors',array('layout' => 'not_spawned'));
+    		}
     	}
     	
     	// Update flags to give the proper message
