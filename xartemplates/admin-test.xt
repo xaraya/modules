@@ -11,6 +11,23 @@
 				No entries were chosen
 			</p>
 		</xar:if>
+        <xar:if condition="xarModVars::get('mail', 'suppresssending')">
+            <div class="xar-row">
+                <p class="alert-info" style="text-align: left; padding:20px;">
+                    Attention: Global email suppression is in effect
+                    <br/>
+                    No emails will be sent
+                </p>
+            </div>
+        <xar:elseif condition="xarModVars::get('mail', 'redirectsending')"/>
+            <div class="xar-row">
+                <p class="alert-info" style="text-align: left; padding:20px;">
+                    Attention: Global redirect is in effect
+                    <br/>
+                    Emails are redirected to: <xar:var scope="module" module="mail" name="redirectaddress"/>
+                </p>
+            </div>
+        </xar:if>
 		<xar:foreach in="$results" value="$result">
 			<xar:if condition="isset($result['exception'])">
 				<xar:set name="isdebug">
