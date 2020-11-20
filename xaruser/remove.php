@@ -47,6 +47,12 @@ function reminders_user_remove()
     $data['authid'] = xarSecGenAuthKey('reminders');
 
     if ($data['confirm']) {
+    	// To remove this reminder we set it inactive
+    	$q = new Query('UPDATE', $tables['reminder_entries']);
+    	$q->addfield('state', 2);
+    	$q->eq('id', $data['item']['id']);
+    	$q->qecho(); exit;
+    	$q->run();
     }
 
     $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
