@@ -69,7 +69,7 @@ function reminders_user_remove()
     	if ($recurring == 1) {
     		$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
     		$item = $entry->getItem(array('itemid' => $itemid));
-    		$spawned = xarMod::apiFunc('reminders', 'user', 'spawn', array('object' => $item));
+    		$spawned = xarMod::apiFunc('reminders', 'admin', 'spawn', array('object' => $item));
     		if (!$spawned) {
         		return xarTpl::module('reminders','user','errors',array('layout' => 'not_spawned'));
     		}
