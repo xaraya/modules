@@ -42,31 +42,31 @@
 					</xar:if>
 				</div>
 			</div>
-			<div class="xar-row" style="margin-bottom: 10px">
-				<div class="xar-col-condensed">
-				</div>
-				<div class="xar-col">
-					<xar:if condition="$item['recurring']">
-						<div>
-							This is a recurring reminder. Please choose:&#160;
-						</div>
-						<div>
-							<xar:set name="options">
-								array(
-									array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
-									array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
-								)
-							</xar:set>
-							<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
-						</div>
-					<xar:else/>
-						<div>
-							This is a one-time event. No future recurring reminders of this type will be sent. 
-						</div>
-					</xar:if>
-				</div>
-			</div>
 			<form method="post" action="#xarServer::getCurrentURL()#">
+				<div class="xar-row" style="margin-bottom: 10px">
+					<div class="xar-col-condensed">
+					</div>
+					<div class="xar-col">
+						<xar:if condition="$item['recurring']">
+							<div>
+								This is a recurring reminder. Please choose:&#160;
+							</div>
+							<div>
+								<xar:set name="options">
+									array(
+										array('id' => 1, 'name' => xarML('Keep future reminders of this type')),
+										array('id' => 2, 'name' => xarML('Remove future reminders of this type also')),
+									)
+								</xar:set>
+								<xar:data-input type="dropdown" name="remove_recurring" options="$options"/>
+							</div>
+						<xar:else/>
+							<div>
+								This is a one-time event. No future recurring reminders of this type will be sent. 
+							</div>
+						</xar:if>
+					</div>
+				</div>
 				<div class="xar-row">
 					<div class="xar-col-condensed">
 					</div>
