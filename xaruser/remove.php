@@ -50,13 +50,19 @@ function reminders_user_remove()
     if ($data['confirm']) {
     	if (!xarVarFetch('itemid'           , 'int',    $itemid ,    0,    XARVAR_NOT_REQUIRED)) return;
     	if (!xarVarFetch('remove_recurring' , 'int',    $recurring , 0,    XARVAR_NOT_REQUIRED)) return;
+    	
     	// To remove this reminder we set it inactive
     	$tables = xarDB::getTables();
     	$q = new Query('UPDATE', $tables['reminders_entries']);
     	$q->addfield('state', 2);
     	$q->eq('id', $itemid);
-    	$q->qecho(); exit;
+//    	$q->qecho(); exit;
     	$q->run();
+    	
+    	// If we keep recurring reminders, then we need to spawn a new reminder from this one
+    	if ($recurring == 1) {
+    		
+    	}
     }
 
     $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
