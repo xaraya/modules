@@ -40,7 +40,13 @@ function reminders_user_remove()
 
     $items = $entries->getItems();
     $data['item'] = reset($items);
-    $data['itemid'] = $data['item']['id'];
+    
+    // If we have an active reminder, pass the ID. If not, remove the code
+    if (!empty($data['item'])) {
+	    $data['itemid'] = $data['item']['id'];
+	} else {
+    	$data['code'] = '';
+    }
 
     $email_dates = xarMod::apiFunc('reminders', 'user', 'get_email_dates', array('array' => $data['item']));
 	$data['remaining'] = count($email_dates);
