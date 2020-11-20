@@ -3,14 +3,14 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="user-mod-head"/>
     <div class="xar-mod-body">
-        <xar:if condition="!empty($code)">
-			<div class="xar-row">
-				<div class="xar-col-condensed">
-				</div>
-				<div class="xar-col">
-	        		<h3>Remove Reminder</h3>
-				</div>
+		<div class="xar-row">
+			<div class="xar-col-condensed">
 			</div>
+			<div class="xar-col">
+				<h3>Remove Reminder</h3>
+			</div>
+		</div>
+        <xar:if condition="!empty($code)">
 			<div class="xar-row" style="margin-bottom: 10px">
 				<div class="xar-col-condensed">
 				</div>
@@ -81,16 +81,29 @@
 				</div>
 			</form>
         <xar:else/>
-			<div class="xar-row">
-				<div class="xar-col">
-				</div>
-				<div class="xar-col">
-				<h3>Sorry!</h3>
-					<div>
-						The reminder you are looking for does not exist.
+			<xar:if condition="empty($removed)">
+				<div class="xar-row">
+					<div class="xar-col-condensed">
+					</div>
+					<div class="xar-col">
+					<h3>Sorry!</h3>
+						<div>
+							The reminder you are looking for does not exist.
+						</div>
 					</div>
 				</div>
-			</div>
+			<xar:else/>
+				<div class="xar-row">
+					<div class="xar-col-condensed">
+					</div>
+					<div class="xar-col">
+					<h3>Done!</h3>
+						<div>
+							The reminder has been removed.
+						</div>
+					</div>
+				</div>
+			</xar:if>
         </xar:if>
     </div>
 </xar:template>
