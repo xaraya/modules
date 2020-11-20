@@ -73,6 +73,7 @@
 					<div class="xar-col" style="text-align: center">
 						<input type="hidden" name="authid" id="authid" value="#$authid#"/>
 						<input type="hidden" name="code" id="code" value="$code"/>
+						<input type="hidden" name="itemid" id="itemid" value="$item['itemid']"/>
 						<input type="hidden" name="confirm" id="confirm" value="true"/>
 						<xar:var name="label">Remove this reminder</xar:var>
 						<xar:button type="submit" value="$label" class="btn-danger"/>
