@@ -36,7 +36,7 @@ function reminders_adminapi_spawn($data)
 	
 	// 
 	for ($i=1;$i<=10;$i++) unset($fields['reminder_done_' . $i]);
-	$fields['code'] = xaMod::apiFunc('reminders', 'admin', 'generate_code', array('array' => $fields));
+	$fields['code'] = xarMod::apiFunc('reminders', 'admin', 'generate_code', array('array' => $fields));
 	$fields['time_created'] = time();
 	$fields['time_modified'] = time();
 	$fields['state'] = 3;
