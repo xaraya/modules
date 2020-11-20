@@ -42,7 +42,7 @@ function reminders_adminapi_spawn($data)
 	$fields['state'] = 3;
 	
 	// Calculate the new due date
-	$date = XarDateTime();
+	$date = new XarDateTime();
 	$date->setTimestamp($fields['due_date']);	
 	switch ($fields['recur_period']) {
 		case 1:
