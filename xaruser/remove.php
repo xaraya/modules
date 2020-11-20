@@ -63,6 +63,10 @@ function reminders_user_remove()
     	if ($recurring == 1) {
     		
     	}
+    	
+    	// Update flags to give the proper message
+    	$data['code'] = '';
+    	$data['removed'] = 1;
     }
 
     $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
