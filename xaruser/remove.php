@@ -40,6 +40,7 @@ function reminders_user_remove()
 
     $items = $entries->getItems();
     $data['item'] = reset($items);
+    $data['itemid'] = $data['item']['id'];
 
     $email_dates = xarMod::apiFunc('reminders', 'user', 'get_email_dates', array('array' => $data['item']));
 	$data['remaining'] = count($email_dates);
