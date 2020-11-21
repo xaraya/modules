@@ -30,7 +30,10 @@ function reminders_adminapi_process($args)
     }
     $items = xarMod::apiFunc('reminders', 'user', 'getall', array('itemids' => $data['entry_list']));
 
-
+    // Get today's date
+    $datetime = new XarDateTime();
+    $today = $datetime->settoday();
+    
     // Run through the active reminders and send emails
     $current_id = 0;
     $previous_id = 0;
@@ -43,9 +46,58 @@ function reminders_adminapi_process($args)
     */
     $data['results'] = array();
     foreach ($items as $key => $row) {
-    	// Get the array of all the non-empty reminder dates of this reminder
+    
+    	// Get the array of all the reminder dates of this reminder
     	$dates = xarMod::apiFunc('reminders', 'user', 'get_date_array', array('array' => $row));
-    	var_dump($dates);exit;
+    	
+    	// Run through each of the 10 possible steps
+    	$done = false;
+    	$sent_ids = array();
+    	foreach ($dates as $key = $step) {
+    	
+    		// An empty step means that no date was defined
+    		if ($step['date'] == 0) continue;
+    		
+    		// We ignore steps with dates that have already passed, whether or not an email was sent
+    		if ($step['date'] < $today) continue;
+    		
+    		// If the step date coincides with today's date, we send an email
+    		if ($step['date'] == $today) {
+				// Get the template information for this message
+				$this_template_id = $row['template_id'];
+				if (isset($templates[$this_template_id])) {
+					// We already have the information.
+				} else {
+					// Get the information
+					$mailer_template->getItem(array('itemid' => $this_template_id));
+					$values = $mailer_template->getFieldValues();
+					$templates[$this_template_id]['message_id']   = $values['id'];
+					$templates[$this_template_id]['message_body'] = $values['body'];
+					$templates[$this_template_id]['subject']      = $values['subject'];
+				}
+				// Assemble the parameters for the email
+				$params['message_id']   = $templates[$this_template_id]['message_id'];
+				$params['message_body'] = $templates[$this_template_id]['message_body'];
+				$params['subject']      = $templates[$this_template_id]['subject'];
+				// Send the email
+				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+				$data['results'] = array_merge($data['results'], array($data['result']));
+               
+    			// This is not a test, so set this period reminder as done
+    			if (!$args['test']) {
+	    			$sent_ids[] = $step['index'];
+	    			$done = true;
+	    			// Jump to the next loop
+	    			continue;
+    			}
+    		}
+    			
+    		// Run through the rest of the sterps, in case we have 2 or more with today's date
+    		if ($step['date'] == $today) {
+	    		$sent_ids[] = $step['index'];
+    		}
+    	}
+    	var_dump($sent_ids);exit;
     	
         $current_id = $row['id'];
         $found = false;

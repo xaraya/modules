@@ -23,7 +23,15 @@ function reminders_userapi_get_date_array($args)
 		$fields = $args['array'];
 	}
 	
-    // Get the time in seconds before the due date for each of the possible periods
+    // Get a datetime object and set it to the due date
+    $datetime = new XarDateTime();
+    $datetime->setTimestamp($fields['due_date']);
+    $datetime->hours = 0;
+    $datetime->minutes = 0;
+    $datetime->regenerate();
+    $due_date = $datetime->getTimestamp();
+
+	// Get the time in seconds before the due date for each of the possible periods
     $seconds = xarMod::apiFunc('reminders', 'admin', 'get_warning_period_time', array('timeframe' => 'seconds'));
 
     $steps = array();
@@ -33,7 +41,7 @@ function reminders_userapi_get_date_array($args)
 		$this_step = $seconds[$this_step];
 		
 		$this_done = $fields['reminder_done_' . $i];
-		$stepvalue = $this_step == 0 ? 0 : $fields['due_date'] - $this_step;
+		$stepvalue = $this_step == 0 ? 0 : $due_date - $this_step;
 		$steps[] = array('index' => $i, 'date' => $stepvalue, 'done' => $this_done);
     }
     
@@ -48,7 +56,6 @@ function reminders_userapi_get_date_array($args)
 	// Debug display
 	if (xarModVars::get('reminders','debugmode') && 
 	in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-		$datetime = new XarDateTime();
 		$datetime->setTimestamp($fields['due_date']);
 		echo "Due date: " . $datetime->display() . "<br/>";
 		echo "Reminder steps array: " . "<br/>";
