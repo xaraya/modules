@@ -41,16 +41,72 @@ function reminders_adminapi_process($args)
     $templates = array();
     $data['results'] = array();
         
-    /*
-    * For each item we need to find the latest reminder that has not yet been sent
-    *
-    */
+    // Create a query object for reuse throughout
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
-    $q = new Query('UPDATE', $tables['reminders_entries']);
+    $q = new Query('UPDATE', $tables['reminders_entries']);    
+    
+    /*
+    * For each item we need to find the latest reminder that has not yet been sent
+    */
+    
     $data['results'] = array();
     foreach ($items as $key => $row) {
     
+    	// Prepare the data we need to send an email
+		// Get the template information for this message
+		$this_template_id = $row['template_id'];
+		if (isset($templates[$this_template_id])) {
+			// We already have the information.
+		} else {
+			// Get the information
+			$mailer_template->getItem(array('itemid' => $this_template_id));
+			$values = $mailer_template->getFieldValues();
+			$templates[$this_template_id]['message_id']   = $values['id'];
+			$templates[$this_template_id]['message_body'] = $values['body'];
+			$templates[$this_template_id]['subject']      = $values['subject'];
+		}
+		// Assemble the parameters for the email
+		$params['message_id']   = $templates[$this_template_id]['message_id'];
+		$params['message_body'] = $templates[$this_template_id]['message_body'];
+		$params['subject']      = $templates[$this_template_id]['subject'];
+    	
+    	// If we are past the due date, then make this reminder inactive and spawn a new one if need be
+    	if ($row['due_date'] > $today) {
+	    	// To remove this reminder we set it inactive
+	    	$itemid = (int)$row['id'];
+			$q->clearfields();
+			$q->clearconditions();
+			$q->addfield('state', 2);
+			$q->eq('id', $itemid);
+			$q->run();
+    	
+			// If this is a recurring reminder, then we need to spawn a new reminder from this one
+			if ($recurring == 1) {
+				$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
+				$item = $entry->getItem(array('itemid' => $itemid));
+				$spawned = xarMod::apiFunc('reminders', 'admin', 'spawn', array('object' => $entry));
+				if (!$spawned) {
+					return xarTpl::module('reminders','user','errors',array('layout' => 'not_spawned'));
+				}
+			}
+			// We are done with this reminder
+			break;
+    	}
+
+    	// If today is the due date, send the email in any case
+    	if ($row['due_date'] == $today) {
+			// Send the email
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['results'] = array_merge($data['results'], array($data['result']));
+			// We are done with this reminder
+			break;
+    	}
+    	
+    /*
+    * At this point the due date is still in the future
+    * We need to go through the dates and find the correct one to send
+    */
     	// Get the array of all the reminder dates of this reminder
     	$dates = xarMod::apiFunc('reminders', 'user', 'get_date_array', array('array' => $row));
     	
@@ -66,23 +122,7 @@ function reminders_adminapi_process($args)
     		if ($step['date'] < $today) continue;
     		
     		// If the step date coincides with today's date, or if today is the due date, we send an email
-    		if (($step['date'] == $today) || ($row['due_date'] == $today)) {
-				// Get the template information for this message
-				$this_template_id = $row['template_id'];
-				if (isset($templates[$this_template_id])) {
-					// We already have the information.
-				} else {
-					// Get the information
-					$mailer_template->getItem(array('itemid' => $this_template_id));
-					$values = $mailer_template->getFieldValues();
-					$templates[$this_template_id]['message_id']   = $values['id'];
-					$templates[$this_template_id]['message_body'] = $values['body'];
-					$templates[$this_template_id]['subject']      = $values['subject'];
-				}
-				// Assemble the parameters for the email
-				$params['message_id']   = $templates[$this_template_id]['message_id'];
-				$params['message_body'] = $templates[$this_template_id]['message_body'];
-				$params['subject']      = $templates[$this_template_id]['subject'];
+    		if ($step['date'] == $today) {
 				// Send the email
 				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 				$data['results'] = array_merge($data['results'], array($data['result']));
