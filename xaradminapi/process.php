@@ -65,8 +65,8 @@ function reminders_adminapi_process($args)
     		// We ignore steps with dates that have already passed, whether or not an email was sent
     		if ($step['date'] < $today) continue;
     		
-    		// If the step date coincides with today's date, we send an email
-    		if ($step['date'] == $today) {
+    		// If the step date coincides with today's date, or if today is the due date, we send an email
+    		if (($step['date'] == $today) || ($row['due_date'] == $today)) {
 				// Get the template information for this message
 				$this_template_id = $row['template_id'];
 				if (isset($templates[$this_template_id])) {

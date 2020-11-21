@@ -49,7 +49,8 @@ function reminders_user_remove()
     }
 
     $email_dates = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['item']));
-	$data['remaining'] = count($email_dates);
+	// By default we also send an email on the due date
+	$data['remaining'] = count($email_dates) + 1;
 	
     $data['authid'] = xarSecGenAuthKey('reminders');
 
