@@ -44,6 +44,15 @@ function reminders_userapi_get_date_array($args)
 	// Add the array as the last parameter, to sort by the common key
 	array_multisort($step, SORT_ASC, $steps);
 	
+	// Debug display
+	if (xarModVars::get('reminders','debugmode') && 
+	in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+		echo "Reminder steps array: " . "<br/>";
+		foreach($steps as $step) {
+			echo $step['step'] . "<br/>";
+		}
+	}
+	
 	return $steps;
 }
 ?>
