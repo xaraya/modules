@@ -38,7 +38,8 @@ function reminders_userapi_get_remaining_dates($args)
 		// Remove all dates that have the done flag set
 		if ($date['done'] == 1) unset($dates[$key]);
 		// Remove all dates that are in the past
-		if ($date['date'] < $today) unset($dates[$key]);
+		// Remove any dates that correspond to today (we didn't set the done flag yet)
+		if ($date['date'] <= $today) unset($dates[$key]);
 	}
 	
 	// What we have left is the dates that still have to send an email
