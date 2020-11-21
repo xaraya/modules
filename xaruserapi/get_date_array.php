@@ -33,7 +33,7 @@ function reminders_userapi_get_date_array($args)
 		$this_step = $seconds[$this_step];
 		
 		$this_done = $fields['reminder_done_' . $i];
-		$steps[] = array('step' => now() - $this_step, 'done' => $this_done);
+		$steps[] = array('step' => $fields['due_date'] - $this_step, 'done' => $this_done);
     }
     
     // Sort the array by steps ASC; this means by age, oldest first
