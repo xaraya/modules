@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			<form method="post" action="#xarServer::getCurrentURL()#">
-				<div class="xar-row" style="margin-bottom: 10px">
+				<div class="xar-row" style="margin-top: 10px; margin-bottom: 10px">
 					<div class="xar-col-condensed">
 					</div>
 					<div class="xar-col">
