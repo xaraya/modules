@@ -53,7 +53,7 @@ function reminders_adminapi_process($args)
     	// Run through each of the 10 possible steps
     	$done = false;
     	$sent_ids = array();
-    	foreach ($dates as $key = $step) {
+    	foreach ($dates as $step) {
     	
     		// An empty step means that no date was defined
     		if ($step['date'] == 0) continue;
