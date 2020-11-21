@@ -52,7 +52,7 @@ function reminders_userapi_get_date_array($args)
 		echo "Due date: " . $datetime->display() . "<br/>";
 		echo "Reminder steps array: " . "<br/>";
 		foreach($steps as $step) {
-			$datetime->setTimestamp($step);
+			$datetime->setTimestamp($step['step']);
 			echo $datetime->display() . "<br/>";
 		}
 	}
