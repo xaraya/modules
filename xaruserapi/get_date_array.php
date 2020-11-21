@@ -28,11 +28,11 @@ function reminders_userapi_get_date_array($args)
 
     $steps = array();
     for ($i=1;$i<=10;$i++) {
-		$this_step = 'reminder_' . $i;
+		$this_step = $fields['reminder_' . $i];
 		// Translate the step into a number of seconds
 		$this_step = $seconds[$this_step];
 		
-		$this_done = 'reminder_done_' . $i;
+		$this_done = $fields['reminder_done_' . $i];
 		$steps[] = array('step' => now() - $this_step, 'done' => $this_done);
     }
     
