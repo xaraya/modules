@@ -56,7 +56,7 @@ function reminders_adminapi_send_email($data)
     // Get the number of remaining emails to send
     $remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['info']));
 	// By default we also send an email on the due date
-	$data['remaining'] = count($email_dates) + 1;
+	$data['remaining'] = count($remaining) + 1;
     unset($data['info']);
 
     try {
