@@ -24,7 +24,7 @@ function reminders_userapi_get_date_array($args)
 	}
 	
 	// Get the time in seconds before the due date for each of the possible periods
-    xarMod::guiLoad('reminders', 'admin');
+    xarMod::load('reminders', 'admin');
     $seconds = xarMod::apiFunc('reminders', 'admin', 'get_warning_period_time', array('timeframe' => 'seconds'));
 
     $steps = array();
