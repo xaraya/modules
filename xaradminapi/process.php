@@ -47,7 +47,7 @@ function reminders_adminapi_process($args)
     */
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
-    $q = new Query('UPDATE', $tables['reminders_entries'];
+    $q = new Query('UPDATE', $tables['reminders_entries']);
     $data['results'] = array();
     foreach ($items as $key => $row) {
     
