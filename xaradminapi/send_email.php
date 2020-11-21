@@ -53,10 +53,21 @@ function reminders_adminapi_send_email($data)
     $data['code'] = $data['info']['code'];
     $data['due_date'] = $data['info']['due_date'];
     
-    // Get the number of remaining emails to send
-    $remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['info']));
-	// By default we also send an email on the due date
-	$data['remaining'] = count($remaining) + 1;
+    // Get today's date
+    $datetime = new XarDateTime();
+    $datetime->settoday();
+    $today = $datetime->getTimestamp();
+
+    if ($data['due_date'] == $today) {
+    	// If today is the due date, then this is the last email
+		$data['remaining'] = 0;
+    } else {
+		// Otherwise, get the number of remaining emails to send
+		$remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['info']));
+		// By default we also send an email on the due date
+		$data['remaining'] = count($remaining) + 1;
+    }
+
     unset($data['info']);
 
     try {
