@@ -34,16 +34,16 @@ function reminders_userapi_get_date_array($args)
 		
 		$this_done = $fields['reminder_done_' . $i];
 		$stepvalue = $this_step == 0 ? 0 : $fields['due_date'] - $this_step;
-		$steps[] = array('index' => $i, 'step' => $stepvalue, 'done' => $this_done);
+		$steps[] = array('index' => $i, 'date' => $stepvalue, 'done' => $this_done);
     }
     
     // Sort the array by steps ASC; this means by age, oldest first
 	// Obtain a list of columns
-	$step  = array_column($steps, 'step');
+	$date  = array_column($steps, 'date');
 	$done = array_column($steps, 'done');
 	// Sort the data with step ascending
 	// Add the array as the last parameter, to sort by the common key
-	array_multisort($step, SORT_ASC, $steps);
+	array_multisort($date, SORT_ASC, $steps);
 	
 	// Debug display
 	if (xarModVars::get('reminders','debugmode') && 
@@ -53,7 +53,7 @@ function reminders_userapi_get_date_array($args)
 		echo "Due date: " . $datetime->display() . "<br/>";
 		echo "Reminder steps array: " . "<br/>";
 		foreach($steps as $step) {
-			$datetime->setTimestamp($step['step']);
+			$datetime->setTimestamp($step['date']);
 			echo $step['index'] . " " . $datetime->display() . "<br/>";
 		}
 	}
