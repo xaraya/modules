@@ -72,7 +72,7 @@ function reminders_adminapi_process($args)
 		$params['subject']      = $templates[$this_template_id]['subject'];
     	
     	// If we are past the due date, then make this reminder inactive and spawn a new one if need be
-    	if ($row['due_date'] > $today) {
+    	if ($row['due_date'] < $today) {
 	    	// To remove this reminder we set it inactive
 	    	$itemid = (int)$row['id'];
 			$q->clearfields();
@@ -82,7 +82,7 @@ function reminders_adminapi_process($args)
 			$q->run();
     	
 			// If this is a recurring reminder, then we need to spawn a new reminder from this one
-			if ($recurring == 1) {
+			if ($row['recurring'] == 1) {
 				$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
 				$item = $entry->getItem(array('itemid' => $itemid));
 				$spawned = xarMod::apiFunc('reminders', 'admin', 'spawn', array('object' => $entry));
