@@ -26,8 +26,9 @@ function reminders_userapi_get_date_array($args)
     // Get a datetime object and set it to the due date
     $datetime = new XarDateTime();
     $datetime->setTimestamp($fields['due_date']);
-    $datetime->hours = 0;
-    $datetime->minutes = 0;
+    $datetime->hour = 0;
+    $datetime->minute = 0;
+    $datetime->second = 0;
     $datetime->regenerate();
     $due_date = $datetime->getTimestamp();
 
@@ -41,7 +42,7 @@ function reminders_userapi_get_date_array($args)
 		$this_step = $seconds[$this_step];
 		
 		$this_done = $fields['reminder_done_' . $i];
-		$stepvalue = $this_step == 0 ? 0 : $due_date - $this_step;
+		$stepvalue = $this_step == 0 ? 0 : $fields['due_date'] - $this_step;
 		$steps[] = array('index' => $i, 'date' => $stepvalue, 'done' => $this_done);
     }
     
