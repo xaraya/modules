@@ -32,7 +32,8 @@ function reminders_adminapi_process($args)
 
     // Get today's date
     $datetime = new XarDateTime();
-    $today = $datetime->settoday();
+    $datetime->settoday();
+    $today = $datetime->getTimestamp();
     
     // Run through the active reminders and send emails
     $current_id = 0;
@@ -44,6 +45,9 @@ function reminders_adminapi_process($args)
     * For each item we need to find the latest reminder that has not yet been sent
     *
     */
+    sys::import('xaraya.structures.query');
+    $tables = xarDB::getTables();
+    $q = new Query('UPDATE', $tables['reminders_entries'];
     $data['results'] = array();
     foreach ($items as $key => $row) {
     
@@ -92,12 +96,19 @@ function reminders_adminapi_process($args)
     			}
     		}
     			
-    		// Run through the rest of the sterps, in case we have 2 or more with today's date
+    		// Run through the rest of the steps, in case we have 2 or more with today's date
     		if ($step['date'] == $today) {
 	    		$sent_ids[] = $step['index'];
     		}
     	}
-    	var_dump($sent_ids);exit;
+    	
+    	// Update this reminder for the email(s) we have sent
+		$q->clearfields();
+		$q->clearconditions();
+    	foreach ($sent_ids as $id) {
+    		$q->eq('reminders_done_' . $id, 1);
+    	}
+    	$q->qecho();exit;
     	
         $current_id = $row['id'];
         $found = false;
