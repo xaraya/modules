@@ -29,23 +29,24 @@ function reminders_adminapi_process($args)
     	$data['entry_list'] = '';
     }
     $items = xarMod::apiFunc('reminders', 'user', 'getall', array('itemids' => $data['entry_list']));
-    var_dump($items);exit;
+
 
     // Run through the active reminders and send emails
     $current_id = 0;
     $previous_id = 0;
     $templates = array();
     $data['results'] = array();
-    
-    // Get the time in seconds before the due date for each of the possible periods
-    $days = xarMod::apiFunc('reminders', 'admin', 'get_warning_period_time', array('timeframe' => 'seconds'));
-    
+        
     /*
     * For each item we need to find the latest reminder that has not yet been sent
     *
     */
     $data['results'] = array();
     foreach ($items as $key => $row) {
+    	// Get the array of all the non-empty reminder dates of this reminder
+    	$dates = xarMod::apiFunc('reminders', 'user', 'get_date_array', array('array' => $row));
+    	var_dump($dates);exit;
+    	
         $current_id = $row['id'];
         $found = false;
         if ($current_id != $previous_id) {

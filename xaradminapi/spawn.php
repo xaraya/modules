@@ -24,6 +24,7 @@ function reminders_adminapi_spawn($data)
 #    - time_created, time_modified
 #    - state
 #
+	// Support both objects and arrays
 	if (!empty($data['object'])) {
 		// Get the raw values of this object
 		$fields = $data['object']->getFieldValues(array(), 1);
