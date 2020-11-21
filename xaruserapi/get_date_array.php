@@ -23,15 +23,6 @@ function reminders_userapi_get_date_array($args)
 		$fields = $args['array'];
 	}
 	
-    // Get a datetime object and set it to the due date
-    $datetime = new XarDateTime();
-    $datetime->setTimestamp($fields['due_date']);
-    $datetime->hour = 0;
-    $datetime->minute = 0;
-    $datetime->second = 0;
-    $datetime->regenerate();
-    $due_date = $datetime->getTimestamp();
-
 	// Get the time in seconds before the due date for each of the possible periods
     $seconds = xarMod::apiFunc('reminders', 'admin', 'get_warning_period_time', array('timeframe' => 'seconds'));
 
