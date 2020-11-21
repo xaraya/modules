@@ -33,6 +33,12 @@
 				<div class="xar-col">
 					<xar:if condition="$remaining eq 0">
 						This was the last email of this reminder.
+					<xar:elseif condition="$remaining eq 1"/>
+						<xar:ml>
+							You will receive #(1) more email before the due date above. 
+							<xar:mlvar>#$remaining#</xar:mlvar>
+						</xar:ml>
+						<br/>If you remove this reminder, you will not receive any more emails.
 					<xar:else/>
 						<xar:ml>
 							You will receive #(1) more emails before the due date above. 
@@ -47,9 +53,27 @@
 					<div class="xar-col-condensed">
 					</div>
 					<div class="xar-col">
+					<xar:set name="period">
+						array(
+							1 => xarML('day'),
+							2 => xarML('week'),
+							3 => xarML('two weeks'),
+							4 => xarML('month'),
+							5 => xarML('two months'),
+							6 => xarML('six months'),
+							7 => xarML('year'),							
+						)
+					</xar:set>
 						<xar:if condition="$item['recurring']">
 							<div>
-								This is a recurring reminder. Please choose:&#160;
+								<xar:ml>
+									This is a recurring reminder. It restarts every #(1) 
+									<xar:mlvar>$period[$item['recur_period']]</xar:mlvar>
+								</xar:ml>
+								
+							</div>
+							<div>
+								Please choose:&#160;
 							</div>
 							<div>
 								<xar:set name="options">
