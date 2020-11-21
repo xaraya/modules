@@ -48,7 +48,7 @@ function reminders_user_remove()
     	$data['code'] = '';
     }
 
-    $email_dates = xarMod::apiFunc('reminders', 'user', 'get_email_dates', array('array' => $data['item']));
+    $email_dates = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['item']));
 	$data['remaining'] = count($email_dates);
 	
     $data['authid'] = xarSecGenAuthKey('reminders');

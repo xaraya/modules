@@ -14,7 +14,7 @@
  * Get all email dates yet to be sent
  *
  */
-function reminders_userapi_get_email_dates($args)
+function reminders_userapi_get_remaining_dates($args)
 {
     if (isset($args['array'])) {
     	// We have an array of item values ("an item") from a dataobject
