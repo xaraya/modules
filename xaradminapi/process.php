@@ -109,9 +109,9 @@ function reminders_adminapi_process($args)
     	foreach ($sent_ids as $id) {
     		$q->eq('reminder_done_' . $id, 1);
     	}
-    	$q->qecho();exit;
+    	$q->run();
     	
-        $current_id = $row['id'];
+/*        $current_id = $row['id'];
         $found = false;
         if ($current_id != $previous_id) {
             for ($i=1;$i<=10;$i++) {
@@ -166,6 +166,7 @@ function reminders_adminapi_process($args)
             }
         }
         $previous_id = $current_id;
+        */
     }
     return $data['results'];
 }
