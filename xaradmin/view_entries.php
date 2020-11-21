@@ -23,6 +23,9 @@ function reminders_admin_view_entries($args)
     // Define which object will be shown
     if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_entries', XARVAR_DONT_SET)) return;
 
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
+    $data['object']->dataquery->eq('state', 3);
     return $data;
 }
 ?>
