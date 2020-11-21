@@ -25,7 +25,7 @@
 	<xar:if condition="$confirm">
 		<xar:if condition="empty($results)">
 			<p class="alert alert-warning" style="text-align: left; padding:20px;">
-				No entries were chosen
+				No emails were sent
 			</p>
 		</xar:if>
 		<xar:foreach in="$results" value="$result">
