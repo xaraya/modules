@@ -67,7 +67,7 @@
 						<xar:if condition="$item['recurring']">
 							<div>
 								<xar:ml>
-									This is a recurring reminder. It restarts every #(1) 
+									This is a recurring reminder. It restarts every #(1).
 									<xar:mlvar>$period[$item['recur_period']]</xar:mlvar>
 								</xar:ml>
 								
