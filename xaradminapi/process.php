@@ -105,9 +105,9 @@ function reminders_adminapi_process($args)
     	// Update this reminder for the email(s) we have sent
 		$q->clearfields();
 		$q->clearconditions();
-		$q->eq('id', $row['id']);
+		$q->eq('id', (int)$row['id']);
     	foreach ($sent_ids as $id) {
-    		$q->eq('reminder_done_' . $id, 1);
+    		$q->addfield('reminder_done_' . $id, 1);
     	}
     	$q->run();
     	
