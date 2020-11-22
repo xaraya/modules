@@ -16,11 +16,6 @@
  */
 function scheduler_user_main()
 {
-    // Security Check
-    if (!xarSecurityCheck('AdminScheduler')) {
-        return xarResponse::Forbidden(xarML('No access to this page'));
-    }
-
     // Check when we last ran the scheduler
     $lastrun = xarModVars::get('scheduler', 'lastrun');
     $now = time();
@@ -41,7 +36,7 @@ function scheduler_user_main()
     $data['output'] = xarMod::apiFunc('scheduler','user','runjobs');
     xarModVars::delete('scheduler','running');
     
-    if (xarIsParent('Administrators', xarUser::getVar('uname'))) {
+	if (xarModVars::get('scheduler','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
         // Show the output to administrators
         return $data;
     } else {
