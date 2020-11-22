@@ -20,9 +20,9 @@ function scheduler_user_main()
     $lastrun = xarModVars::get('scheduler', 'lastrun');
     $now = time();
 
-    $interval = xarModVars::get('scheduler', 'interval');
+    $interval = xarModVars::get('scheduler', 'interval');		// The interval is set in modifyconfig
     if (!empty($interval)) {
-        if (!empty($lastrun) && $lastrun >= $now - $interval )  // Make sure it's been at least five minutes
+        if (!empty($lastrun) && $lastrun >= $now - $interval )  // Make sure the defined interval has passed
         {
             $diff = time() - $lastrun;
             $data['message'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
