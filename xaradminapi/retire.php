@@ -25,7 +25,7 @@ function reminders_adminapi_retire($args)
 	$tables = xarDB::getTables();
 	$q = new Query('UPDATE', $tables['reminders_entries']);
 	$q->addfield('state', 1);
-	$q->eq('id', $$args['itemid']);
+	$q->eq('id', $args['itemid']);
 	$q->run();
 	
 	// If we keep recurring reminders, then we need to spawn a new reminder from this one
