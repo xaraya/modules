@@ -24,7 +24,10 @@ function reminders_schedulerapi_process($args)
     
     // Make the result human readable for the scheduler
 	$readable_result = '';
-	foreach ($results as $key => $value) $readable_result .= $key . ": " . $value . " ";
+	foreach ($results as $result) {
+		foreach ($result as $key => $value) $readable_result .= $key . ": " . $value . " ";
+		$readable_result .= trim($readable_result) . "<br/>";
+	}
 	$results = trim($readable_result);
 
     return $results;
