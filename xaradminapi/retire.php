@@ -31,7 +31,7 @@ function reminders_adminapi_retire($args)
 	// If we keep recurring reminders, then we need to spawn a new reminder from this one
 	if ($args['recurring'] == 1) {
 		$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
-		$item = $entry->getItem(array('itemid' => $itemid));
+		$item = $entry->getItem(array('itemid' => $args['itemid']));
 		$spawned = xarMod::apiFunc('reminders', 'admin', 'spawn', array('object' => $entry));
 		if (!$spawned) {
 			return xarTpl::module('reminders','user','errors',array('layout' => 'not_spawned'));
