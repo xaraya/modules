@@ -47,7 +47,7 @@ function reminders_adminapi_send_email($data)
     } else {
         // If we are not testing, then send to the chosen participant
         $recipientname    = $data['name']->getValue();
-        $recipientaddress = $data['info']['email_1'];
+        $recipientaddress = $data['info']['address_1'];
     }
     $data['reminder_text'] = trim($data['info']['message']);
     $data['code'] = $data['info']['code'];
