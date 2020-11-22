@@ -75,7 +75,7 @@ function reminders_adminapi_process($args)
     	if ($row['due_date'] < $today) {
 
 			// Retire the reminder
-			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $itemid, 'recurring' => $row['recurring']));
+			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $row['id'], 'recurring' => $row['recurring']));
 	    	
 			// We are done with this reminder
 			break;
@@ -88,7 +88,7 @@ function reminders_adminapi_process($args)
 			$data['results'] = array_merge($data['results'], array($data['result']));
 
 			// Retire the reminder
-			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $itemid, 'recurring' => $row['recurring']));
+			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $row['id'], 'recurring' => $row['recurring']));
 	    	
 			// We are done with this reminder
 			break;
