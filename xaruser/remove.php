@@ -61,7 +61,7 @@ function reminders_user_remove()
     	// To remove this reminder we set it inactive
     	$tables = xarDB::getTables();
     	$q = new Query('UPDATE', $tables['reminders_entries']);
-    	$q->addfield('state', 2);
+    	$q->addfield('state', 1);
     	$q->eq('id', $itemid);
 //    	$q->qecho(); exit;
     	$q->run();

@@ -77,7 +77,7 @@ function reminders_adminapi_process($args)
 	    	$itemid = (int)$row['id'];
 			$q->clearfields();
 			$q->clearconditions();
-			$q->addfield('state', 2);
+			$q->addfield('state', 1);
 			$q->eq('id', $itemid);
 			$q->run();
     	
