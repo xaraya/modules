@@ -30,7 +30,6 @@ function reminders_adminapi_send_email($data)
 #
 # Send the participant an email with the attachments
 #
-    $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $result = array();
     $attachments = array();
@@ -39,16 +38,15 @@ function reminders_adminapi_send_email($data)
     // Set a placeholder name if we don't have one
 	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
     
-    if ($data['test']) {
-        // If we are testing, then send to this user
-        $recipientname    = xarUser::getVar('name');
-        $recipientaddress = xarUser::getVar('email');
-        $bccaddress = array();
-    } else {
-        // If we are not testing, then send to the chosen participant
-        $recipientname    = $data['name']->getValue();
-        $recipientaddress = $data['info']['address_1'];
-    }
+	// Get the name and address of the chosen participant
+	$recipientname    = $data['name']->getValue();
+	$recipientaddress = $data['info']['address_1'];
+
+	// Add a CC if there is one
+    $ccaddress = !empty($data['info']['address_1']) ? array($data['info']['address_1']) : array();
+    // Maybe we'll add a BCC at some point
+    $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
+
     $data['reminder_text'] = trim($data['info']['message']);
     $data['code'] = $data['info']['code'];
     $data['due_date'] = $data['info']['due_date'];
@@ -76,6 +74,7 @@ function reminders_adminapi_send_email($data)
                       'senderaddress'    => xarModVars::get('reminders', 'defaultsenderaddress'),
                       'recipientname'    => $recipientname,
                       'recipientaddress' => $recipientaddress,
+                      'ccaddresses'      => $ccaddress,
                       'bccaddresses'     => $bccaddress,
                       'attachments'      => $attachments,
                       'data'             => $data, 
