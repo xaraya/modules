@@ -259,7 +259,12 @@ function scheduler_userapi_runjobs($args)
         } else {
             try {
                 $output = xarMod::apiFunc($job['module'], $job['type'], $job['function']);
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+            	// If we are debugging, then show an error here
+            	if (xarModVars::get('scheduler','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            		print_r($e->getMessage());exit;
+            	}
+            }
         }
         if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
