@@ -19,7 +19,7 @@ function reminders_schedulerapi_process($args)
 {
     $results = xarMod::apiFunc('reminders', 'admin', 'process');
 
-    return true;
+    return results;
 }
 
 ?>
