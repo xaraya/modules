@@ -49,7 +49,6 @@ function scheduler_admin_modifyconfig()
                         $itemid = $data['module_settings']->updateItem();
                     }
                     
-                    xarModVars::set('scheduler', 'interval', $interval);
                     if (!xarVarFetch('interval',   'int',      $interval,  xarModVars::get('scheduler', 'interval'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('debugmode',  'checkbox', $debugmode, xarModVars::get('scheduler', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
 
