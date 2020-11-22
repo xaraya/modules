@@ -43,7 +43,13 @@ function reminders_adminapi_send_email($data)
 	$recipientaddress = $data['info']['address_1'];
 
 	// Add a CC if there is one
-    $ccaddress = !empty($data['info']['address_1']) ? array($data['info']['address_1']) : array();
+	if (!empty($data['info']['address_1'])) {
+	    $data['name']->value = $data['info']['name_1'];
+	    $ccname = $data['name']->getValue();
+    	$ccaddress = array($data['info']['address_1'] => $ccname);
+	} else {
+    	$ccaddress = array();
+	}
     // Maybe we'll add a BCC at some point
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
