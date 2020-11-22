@@ -19,6 +19,8 @@ function reminders_schedulerapi_process($args)
 {
     $results = xarMod::apiFunc('reminders', 'admin', 'process');
 
+    // Tell the scheduler that the job ran, but nothing was sent
+    if (empty($results)) $results = xarML('No reminders sent');
     return $results;
 }
 
