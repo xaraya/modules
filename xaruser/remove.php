@@ -58,23 +58,8 @@ function reminders_user_remove()
     	if (!xarVarFetch('itemid'           , 'int',    $itemid ,    0,    XARVAR_NOT_REQUIRED)) return;
     	if (!xarVarFetch('remove_recurring' , 'int',    $recurring , 0,    XARVAR_NOT_REQUIRED)) return;
     	
-    	// To remove this reminder we set it inactive
-    	$tables = xarDB::getTables();
-    	$q = new Query('UPDATE', $tables['reminders_entries']);
-    	$q->addfield('state', 1);
-    	$q->eq('id', $itemid);
-//    	$q->qecho(); exit;
-    	$q->run();
-    	
-    	// If we keep recurring reminders, then we need to spawn a new reminder from this one
-    	if ($recurring == 1) {
-    		$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
-    		$item = $entry->getItem(array('itemid' => $itemid));
-    		$spawned = xarMod::apiFunc('reminders', 'admin', 'spawn', array('object' => $entry));
-    		if (!$spawned) {
-        		return xarTpl::module('reminders','user','errors',array('layout' => 'not_spawned'));
-    		}
-    	}
+    	// Retire the reminder
+    	xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $itemid, 'recurring' => $recurring));
     	
     	// Update flags to give the proper message
     	$data['code'] = '';

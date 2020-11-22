@@ -73,23 +73,10 @@ function reminders_adminapi_process($args)
     	
     	// If we are past the due date, then make this reminder inactive and spawn a new one if need be
     	if ($row['due_date'] < $today) {
-	    	// To remove this reminder we set it inactive
-	    	$itemid = (int)$row['id'];
-			$q->clearfields();
-			$q->clearconditions();
-			$q->addfield('state', 1);
-			$q->eq('id', $itemid);
-			$q->run();
-    	
-			// If this is a recurring reminder, then we need to spawn a new reminder from this one
-			if ($row['recurring'] == 1) {
-				$entry = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
-				$item = $entry->getItem(array('itemid' => $itemid));
-				$spawned = xarMod::apiFunc('reminders', 'admin', 'spawn', array('object' => $entry));
-				if (!$spawned) {
-					return xarTpl::module('reminders','user','errors',array('layout' => 'not_spawned'));
-				}
-			}
+
+			// Retire the reminder
+			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $itemid, 'recurring' => $row['recurring']));
+	    	
 			// We are done with this reminder
 			break;
     	}
@@ -99,6 +86,10 @@ function reminders_adminapi_process($args)
 			// Send the email
 			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 			$data['results'] = array_merge($data['results'], array($data['result']));
+
+			// Retire the reminder
+			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $itemid, 'recurring' => $row['recurring']));
+	    	
 			// We are done with this reminder
 			break;
     	}
