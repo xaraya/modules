@@ -21,6 +21,12 @@ function reminders_schedulerapi_process($args)
 
     // Tell the scheduler that the job ran, but nothing was sent
     if (empty($results)) $results = xarML('No reminders sent');
+    
+    // Make the result human readable for the scheduler
+	$readable_result = '';
+	foreach ($results as $key => $value) $readable_result .= $key . ": " . $value . " ";
+	$results = trim($readable_result);
+
     return $results;
 }
 
