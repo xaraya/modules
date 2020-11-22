@@ -26,9 +26,10 @@ function reminders_schedulerapi_process($args)
 	$readable_result = '';
 	foreach ($results as $result) {
 		foreach ($result as $key => $value) $readable_result .= $key . ": " . $value . " ";
-		$readable_result .= trim($readable_result) . "<br/>";
+		$readable_result = trim($readable_result) . "<br/>";
 	}
-	$results = trim($readable_result);
+	// Remove the final <br/>
+	$results = substr($readable_result, 0, -5);
 
     return $results;
 }
