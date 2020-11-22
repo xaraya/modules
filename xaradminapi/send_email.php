@@ -133,6 +133,10 @@ function reminders_adminapi_send_email($data)
 		$result['test_email']   = xarUser::getVar('email');
 	}
 
-    return $result;
+	// Make the result human readable
+	$readable_result = '';
+	foreach ($result as $key => $value) $readable_result .= $key . ": " . $value . " ";
+	$readable_result = trim($readable_result);
+    return $readable_result;
 }
 ?>
