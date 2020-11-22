@@ -132,7 +132,7 @@ function scheduler_init()
     $module = 'scheduler';
     $objects = array(
                    'scheduler_jobs',
-                     );
+                    );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
     // Initialisation successful
