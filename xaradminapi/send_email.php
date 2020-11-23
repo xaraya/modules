@@ -124,6 +124,17 @@ function reminders_adminapi_send_email($data)
         }
         // Send the email
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
+        
+        // Save to the database if called for
+        if (xarModVars::get('reminders', 'save_history')) {
+			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
+			$history->createItem(array(
+									'entry_id' => $data['info']['id'],
+									'message' => $data['reminder_text'],
+									'address' => $recipientaddress,
+									'due_date' => $data['due_date'],
+								));
+        }
       
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();

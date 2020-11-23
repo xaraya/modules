@@ -87,6 +87,7 @@ function reminders_init()
         entry_id          integer unsigned NOT NULL default 0, 
         message           varchar(255) NOT NULL default '', 
         address           varchar(255) NOT NULL default '', 
+        due_date          integer unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
     )";
