@@ -1,6 +1,6 @@
 <items>
-  <mailer_mails itemid="261">
-    <id>261</id>
+  <mailer_mails itemid="18">
+    <id>18</id>
     <name>Automatic Reminder</name>
     <description>An email reminder</description>
     <sender_name>Gabriella</sender_name>
@@ -34,7 +34,7 @@ structure.
 ** Profile **
 Licensed under MIT (https://github.com/charlesmudy/responsive-html-email-template/blob/master/LICENSE)
 Designed by Shina Charles Memud
-Respmail v1.2 (http://charlesmudy.com/respmail/)
+Respmail v1.2 (https://charlesmudy.com/respmail/)
 ** Quick modification **
 We are using width of 500 for the whole content,
 you can change it any size you want (e.g. 600).
@@ -49,8 +49,8 @@ Sizes: [
 		}
 	--&gt;
 &lt;!--
-	&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
-	&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+	&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+	&lt;html xmlns=&quot;https://www.w3.org/1999/xhtml&quot;&gt;
 	&lt;head&gt;
 		&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
 		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
@@ -106,7 +106,7 @@ Sizes: [
 			span[class=ios-color-hack2] a {color:##205478!important;text-decoration:none!important;}
 			span[class=ios-color-hack3] a {color:##8B8B8B!important;text-decoration:none!important;}
 			&lt;!-- A nice and clean way to target phone numbers you want clickable and avoid a mobile phone from linking other numbers that look like, but are not phone numbers.  Use these two blocks of code to &quot;unstyle&quot; any numbers that may be linked.  The second block gives you a class to apply with a span tag to the numbers you would like linked and styled.
-			Inspired by Campaign Monitor's article on using phone numbers in email: http://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
+			Inspired by Campaign Monitor's article on using phone numbers in email: https://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
 			--&gt;
 			.a[href^=&quot;tel&quot;], a[href^=&quot;sms&quot;] {text-decoration:none!important;color:##606060!important;pointer-events:none!important;cursor:default!important;}
 			.mobile_link a[href^=&quot;tel&quot;], .mobile_link a[href^=&quot;sms&quot;] {text-decoration:none!important;color:##606060!important;pointer-events:auto!important;cursor:default!important;}
@@ -153,8 +153,8 @@ Sizes: [
 				td[class=&quot;buttonContent&quot;] a{padding:15px !important;}
 			}
 			&lt;!--  CONDITIONS FOR ANDROID DEVICES ONLY
-			*   http://developer.android.com/guide/webapps/targeting.html
-			*   http://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/ ;
+			*   https://developer.android.com/guide/webapps/targeting.html
+			*   https://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/ ;
 			===================================================== --&gt;
 			@media only screen and (-webkit-device-pixel-ratio:.75){
 				&lt;!-- Put CSS for low density (ldpi) Android layouts in here --&gt;
@@ -178,7 +178,7 @@ Sizes: [
 			columns into a single vertical stack as on mobile clients. This is
 			primarily done to avoid the 'page break bug' and is optional.
 			More information here:
-			http://templates.mailchimp.com/development/css/outlook-conditional-css
+			https://templates.mailchimp.com/development/css/outlook-conditional-css
 		--&gt;
 		&lt;!--[if mso 12]&gt;
 			&lt;style type=&quot;text/css&quot;&gt;
@@ -256,8 +256,7 @@ Sizes: [
 																&lt;tr&gt;
 																	&lt;td align=&quot;center&quot; valign=&quot;middle&quot; class=&quot;textContent&quot;&gt;
 																		&lt;h1 style=&quot;color:##FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;&quot;&gt;
-                                                                            &lt;!-- &lt;img src=&quot;http://www.luetolf-carroll.com/grades/var/ckfinder/userfiles/images/ESADELogo.png&quot; alt=&quot;ESADE&quot;/&gt; --&gt;
-                                                                            Reminder
+                                                                            Due Date Reminder
 																		&lt;/h1&gt;
 																	&lt;/td&gt;
 																&lt;/tr&gt;
@@ -298,16 +297,66 @@ Sizes: [
 																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
 																			&lt;tr&gt;
 																				&lt;td valign=&quot;top&quot; class=&quot;textContent&quot;&gt;
+																				&lt;!--
 																					&lt;h3 style=&quot;color:##5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;&quot;&gt;
-																					Reminder
+																					Due Date Reminder
 																					&lt;/h3&gt;
+																				--&gt;
 																					&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:##5F5F5F;line-height:135%;&quot;&gt;
 						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:20px;color:##5F5F5F;line-height:135%;&quot;&gt;
-                            Dear #$name-&gt;getValue()#,
+                            Hello &lt;xar:data-output property=&quot;$name&quot; layout=&quot;fl&quot;/&gt;,
+                        &lt;/div&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:20px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            This is an email reminder for
+                        &lt;/div&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:12px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            &lt;table style=&quot;width: 100%; border: 1px solid&quot;&gt;
+                            	&lt;tr&gt;
+                            		&lt;td style=&quot;padding: 5px; min-width: 300px&quot;&gt;What&lt;/td&gt;
+                            		&lt;td style=&quot;padding: 5px; min-width: 100px&quot;&gt;When&lt;/td&gt;
+                            	&lt;/tr&gt;
+                            	&lt;tr&gt;
+                            		&lt;td style=&quot;padding: 5px; min-width: 300px&quot;&gt;&lt;b&gt;#$reminder_text#&lt;/b&gt;&lt;/td&gt;
+                            		&lt;td style=&quot;padding: 5px; min-width: 100px&quot;&gt;&lt;b&gt;&lt;xar:data-output type=&quot;date&quot; value=&quot;$due_date&quot;/&gt;&lt;/b&gt;&lt;/td&gt;
+                            	&lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/div&gt;
+                        &lt;!--
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            &lt;b&gt;#$reminder_text#&lt;/b&gt;
                         &lt;/div&gt;
 						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
-                            #$reminder_text#
+                            Due date for this: &lt;b&gt;&lt;xar:data-output type=&quot;date&quot; value=&quot;$due_date&quot;/&gt;&lt;/b&gt;
                         &lt;/div&gt;
+                        --&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+							&lt;xar:if condition=&quot;$remaining eq 0&quot;&gt;
+								This is the last email of this reminder.
+							&lt;xar:elseif condition=&quot;$remaining eq 1&quot;/&gt;
+								&lt;xar:ml&gt;
+									You will receive #(1) more email on the due date above. 
+									&lt;xar:mlvar&gt;#$remaining#&lt;/xar:mlvar&gt;
+								&lt;/xar:ml&gt;
+								&lt;br/&gt;If you remove this reminder, you will not receive any more emails.
+							&lt;xar:else/&gt;
+								&lt;xar:ml&gt;
+									You will receive #(1) more emails before the due date above. 
+									&lt;xar:mlvar&gt;#$remaining#&lt;/xar:mlvar&gt;
+								&lt;/xar:ml&gt;
+								&lt;br/&gt;If you remove this reminder, you will not receive any more emails.
+							&lt;/xar:if&gt;
+                        &lt;/div&gt;
+						&lt;xar:if condition=&quot;$remaining gt 0&quot;&gt;
+							&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+								To remove this reminder, click here:
+								&lt;!--
+								&lt;xar:var name=&quot;label&quot;&gt;Remove&lt;/xar:var&gt;
+								&lt;xar:set name=&quot;target&quot;&gt;xarModURL('reminders', 'user', 'remove', array('code' =&gt; 'dork'))&lt;/xar:set&gt;
+								&lt;xar:button type=&quot;link&quot; target=&quot;$target&quot; value=&quot;$label&quot; class=&quot;btn-primary&quot;/&gt;
+								--&gt;
+								&lt;a href=&quot;#xarModURL('reminders','user','remove',array('code'=&gt;$code))#&quot;&gt;Remove&lt;/a&gt;
+							&lt;/div&gt;
+						&lt;/xar:if&gt;
 																					&lt;/div&gt;
 																				&lt;/td&gt;
 																			&lt;/tr&gt;

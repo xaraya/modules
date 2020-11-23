@@ -80,6 +80,18 @@ function reminders_init()
     )";
     if (!$q->run($query)) return;
 
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_history";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_reminders_history (
+        id                integer unsigned NOT NULL auto_increment,
+        entry_id          integer unsigned NOT NULL default 0, 
+        message           varchar(255) NOT NULL default '', 
+        address           varchar(255) NOT NULL default '', 
+        timecreated       integer unsigned NOT NULL default 0, 
+        PRIMARY KEY  (id)
+    )";
+    if (!$q->run($query)) return;
+
 # --------------------------------------------------------
 #
 # Set up masks

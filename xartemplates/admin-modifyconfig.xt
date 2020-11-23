@@ -56,6 +56,12 @@
                     </legend>
                     <xar:template file="config_debug"/>
                 </fieldset>
+                <fieldset>
+                    <legend>
+                        Display
+                    </legend>
+                    <xar:template file="config_display"/>
+                </fieldset>
                 <input type="hidden" name="tab" id="tab" value="#$tab#"/>
                 <xar:template file="update-button" module="base" />
             </form>
