@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="$tabmodule ne 'reminders'">
-        <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
-    <xar:else />
         <xar:set name="regid">0</xar:set>
-    </xar:if>
+
     <div class="xar-row">
         <div class="xar-col">
             <xar:var name="label">Master table</xar:var>
