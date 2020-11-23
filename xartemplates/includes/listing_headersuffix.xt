@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="($objectname eq 'reminders_history')">
+    <xar:else/>
+		<xar:access level="200">
+			 <th width="5%" style="text-align: center;">
+				Option
+			 </th>
+		 </xar:access>
+    </xar:if>
+</xar:template>
