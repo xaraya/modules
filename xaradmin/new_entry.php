@@ -44,7 +44,7 @@ function reminders_admin_new_entry()
         } else {
             // Good data: proceed
             // First generate the code for this item
-			$code = xaMod::apiFunc('reminders', 'admin', 'generate_code', array('object' => $data['object']));
+			$code = xarMod::apiFunc('reminders', 'admin', 'generate_code', array('object' => $data['object']));
             // Add it to the object
             $data['object']->properties['code']->value = $code;
             // Now create the item
