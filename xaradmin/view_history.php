@@ -15,7 +15,7 @@
  *
  */
 
-function reminders_admin_history()
+function reminders_admin_view_history()
 {
     if (!xarSecurityCheck('ManageReminders')) return;
 

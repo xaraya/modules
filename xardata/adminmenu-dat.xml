@@ -39,9 +39,9 @@
         <menuitem>
             <mask>ManageReminders</mask>
             <includes>
-                <includeitem>history</includeitem>
+                <includeitem>view_history</includeitem>
             </includes>
-            <target>history</target>
+            <target>view_history</target>
             <title>View the emails sent</title>
             <label>View History</label>
         </menuitem>
