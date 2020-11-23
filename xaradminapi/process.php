@@ -112,8 +112,8 @@ function reminders_adminapi_process($args)
     		// We ignore steps with dates that have already passed, whether or not an email was sent
     		if ($step['date'] < $today) continue;
     		
-    		// If the step date coincides with today's date, or if today is the due date, we send an email
-    		if ($step['date'] == $today) {
+    		// If the step date coincides with today's date and an email has not been sent, we send an email
+    		if (($step['date'] == $today) && ($step['done'] == 0)) {
 				// Send the email
 				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 				$data['results'] = array_merge($data['results'], array($data['result']));
@@ -122,13 +122,13 @@ function reminders_adminapi_process($args)
     			if (!$args['test']) {
 	    			$sent_ids[] = $step['index'];
 	    			$done = true;
-	    			// Jump to the next loop
+	    			// Jump to the next iteration
 	    			continue;
     			}
     		}
     			
     		// Run through the rest of the steps, in case we have 2 or more with today's date
-    		if ($step['date'] == $today) {
+    		if (($step['date'] == $today) && ($step['done'] == 0)) {
 	    		$sent_ids[] = $step['index'];
     		}
     	}
