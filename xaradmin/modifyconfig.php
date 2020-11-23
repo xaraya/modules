@@ -59,9 +59,11 @@ function reminders_admin_modifyconfig()
                         $itemid = $data['module_settings']->updateItem();
                     }
 
+                    if (!xarVarFetch('save_history',     'checkbox', $debugmode, xarModVars::get('reminders', 'save_history'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('debugmode',        'checkbox', $debugmode, xarModVars::get('reminders', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
 
                     $modvars = array(
+                                    'save_history',
                                     'debugmode',
                                     );
 

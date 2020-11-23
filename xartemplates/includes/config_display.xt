@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$tabmodule ne 'reminders'">
+        <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
+    <xar:else />
+        <xar:set name="regid">0</xar:set>
+    </xar:if>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Master table</xar:var>
+            <label for="checked" title="#$label#" class="xar-form-label">
+                Default Master Table:
+            </label>
+        </div>
+        <div class="xar-col">
+			<xar:set name="value">xarModItemVars::get('reminders', 'defaultmastertable', $regid)</xar:set>
+			<xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Save history</xar:var>
+            <label for="checked" title="#$label#" class="xar-form-label">
+                Save history:
+            </label>
+        </div>
+        <div class="xar-col">
+			<xar:set name="value">xarModVars::get('reminders', 'save_history')</xar:set>
+            <xar:data-input type="checkbox" name="save_history"  checked="$checked"/>
+        </div>
+    </div>
+</xar:template>
