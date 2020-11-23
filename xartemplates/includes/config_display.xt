@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-        <xar:set name="regid">0</xar:set>
-
     <div class="xar-row">
         <div class="xar-col">
             <xar:var name="label">Master table</xar:var>
@@ -10,7 +8,7 @@
             </label>
         </div>
         <div class="xar-col">
-			<xar:set name="value">xarModItemVars::get('reminders', 'defaultmastertable', $regid)</xar:set>
+			<xar:set name="value">xarModVars::get('reminders', 'defaultmastertable')</xar:set>
 			<xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object"/>
         </div>
     </div>

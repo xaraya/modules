@@ -126,6 +126,7 @@ function reminders_init()
     $objects = array(
                      'reminders_emails',
                      'reminders_entries',
+                     'reminders_history',
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -140,8 +141,9 @@ function reminders_init()
     // Add variables like this next one when creating utility modules
     // This variable is referenced in the xaradmin/modifyconfig-utility.php file
     // This variable is referenced in the xartemplates/includes/defaults.xd file
-    xarModVars::set('reminders', 'defaultmastertable','reminders_reminders');
+    xarModVars::set('reminders', 'defaultmastertable','reminders_history');
     xarModVars::set('reminders', 'debugmode', false);
+    xarModVars::set('reminders', 'save_history', false);
 
 # --------------------------------------------------------
 #
