@@ -54,8 +54,9 @@ function reminders_adminapi_send_email($data)
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $data['reminder_text'] = trim($data['info']['message']);
-    $data['code'] = $data['info']['code'];
-    $data['due_date'] = $data['info']['due_date'];
+    $data['entry_id']      = $data['info']['id'];
+    $data['code']          = $data['info']['code'];
+    $data['due_date']      = $data['info']['due_date'];
     
     // Get today's date
     $datetime = new XarDateTime();
@@ -129,9 +130,9 @@ function reminders_adminapi_send_email($data)
         if (xarModVars::get('reminders', 'save_history')) {
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
 			$history->createItem(array(
-									'entry_id' => $data['info']['id'],
-									'message' => $data['reminder_text'],
-									'address' => $recipientaddress,
+									'entry_id' => $data['entry_id'],
+									'message'  => $data['reminder_text'],
+									'address'  => $recipientaddress,
 									'due_date' => $data['due_date'],
 								));
         }
