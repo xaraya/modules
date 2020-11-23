@@ -15,9 +15,9 @@
 function reminders_adminapi_generate_code($args)
 {
     // Support both objects and arrays
-	if (!empty($data['object'])) {
+	if (!empty($args['object'])) {
 		// Get the raw values of this object
-		$fields = $data['object']->getFieldValues(array(), 1);
+		$fields = $args['object']->getFieldValues(array(), 1);
 	} else {
 		$fields = $args['array'];
 	}
