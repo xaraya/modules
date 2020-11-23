@@ -21,7 +21,7 @@
         </div>
         <div class="xar-col">
 			<xar:set name="value">xarModVars::get('reminders', 'save_history')</xar:set>
-            <xar:data-input type="checkbox" name="save_history"  checked="$checked"/>
+            <xar:data-input type="checkbox" name="save_history"  checked="$save_history"/>
         </div>
     </div>
 </xar:template>
