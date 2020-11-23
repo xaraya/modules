@@ -1,0 +1,80 @@
+<object name="reminders_history">
+  <objectid>167</objectid>
+  <label>History</label>
+  <module_id>182</module_id>
+  <itemtype>97</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
+  <sources>a:1:{s:7:&quot;history&quot;;a:2:{i:0;s:21:&quot;xar_reminders_history&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:1:{i:0;a:19:{s:2:&quot;id&quot;;s:2:&quot;42&quot;;s:4:&quot;name&quot;;s:7:&quot;General&quot;;s:11:&quot;description&quot;;s:36:&quot;DataObjects used by non core modules&quot;;s:5:&quot;image&quot;;s:0:&quot;&quot;;s:8:&quot;template&quot;;s:0:&quot;&quot;;s:9:&quot;parent_id&quot;;s:1:&quot;5&quot;;s:7:&quot;left_id&quot;;s:2:&quot;14&quot;;s:8:&quot;right_id&quot;;s:2:&quot;15&quot;;s:12:&quot;child_object&quot;;s:0:&quot;&quot;;s:5:&quot;links&quot;;s:1:&quot;0&quot;;s:5:&quot;state&quot;;s:1:&quot;3&quot;;s:11:&quot;category_id&quot;;s:1:&quot;8&quot;;s:17:&quot;child_category_id&quot;;s:1:&quot;0&quot;;s:7:&quot;item_id&quot;;s:3:&quot;167&quot;;s:9:&quot;module_id&quot;;s:3:&quot;182&quot;;s:8:&quot;itemtype&quot;;s:1:&quot;0&quot;;s:11:&quot;property_id&quot;;s:2:&quot;17&quot;;s:7:&quot;tree_id&quot;;s:1:&quot;0&quot;;s:12:&quot;basecategory&quot;;s:1:&quot;5&quot;;}}</category>
+  <properties>
+    <property name="id">
+      <id>4042</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>history.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="entry_id">
+      <id>4043</id>
+      <label>Entry ID</label>
+      <type>integerbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>history.entry_id</source>
+      <status>65</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="message">
+      <id>4044</id>
+      <label>Message</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>history.message</source>
+      <status>65</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="address">
+      <id>4045</id>
+      <label>Address</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>history.address</source>
+      <status>65</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="due_date">
+      <id>4047</id>
+      <label>Due Date</label>
+      <type>datetime</type>
+      <defaultvalue>0</defaultvalue>
+      <source>history.due_date</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_created">
+      <id>4046</id>
+      <label>Time Created</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>history.timecreated</source>
+      <status>65</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+  </properties>
+</object>

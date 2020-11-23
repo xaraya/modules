@@ -127,7 +127,7 @@ function reminders_adminapi_send_email($data)
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
         
         // Save to the database if called for
-        if (xarModVars::get('reminders', 'save_history') && $result['code']) {
+        if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
 			$history->createItem(array(
 									'entry_id' => $data['entry_id'],
