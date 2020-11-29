@@ -60,8 +60,9 @@
 							3 => xarML('two weeks'),
 							4 => xarML('month'),
 							5 => xarML('two months'),
-							6 => xarML('six months'),
-							7 => xarML('year'),							
+							6 => xarML('three months'),
+							7 => xarML('six months'),
+							8 => xarML('year'),							
 						)
 					</xar:set>
 						<xar:if condition="$item['recurring']">
