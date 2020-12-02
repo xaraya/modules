@@ -115,6 +115,9 @@
 						<div>
 							The reminder you are looking for does not exist.
 						</div>
+						<div>
+							(Perhaps you already removed it?)
+						</div>
 					</div>
 				</div>
 			<xar:else/>
