@@ -5,10 +5,27 @@
         <h2>Test Reminders</h2>
     </div>
 
+	<xar:if condition="xarModVars::get('mail', 'suppresssending')">
+		<div class="xar-row">
+			<p class="alert-info" style="text-align: left; padding:20px;">
+				Attention: Global email suppression is in effect
+				<br/>
+				No emails will be sent
+			</p>
+		</div>
+	<xar:elseif condition="xarModVars::get('mail', 'redirectsending')"/>
+		<div class="xar-row">
+			<p class="alert-info" style="text-align: left; padding:20px;">
+				Attention: Global redirect is in effect
+				<br/>
+				Emails are redirected to: <xar:var scope="module" module="mail" name="redirectaddress"/>
+			</p>
+		</div>
+	</xar:if>
 	<xar:if condition="$confirm">
 		<xar:if condition="empty($results)">
 			<p class="alert alert-warning" style="text-align: left; padding:20px;">
-				No entries were chosen
+				No emails were sent
 			</p>
 		</xar:if>
 		<xar:foreach in="$results" value="$result">
@@ -59,7 +76,7 @@
 
     <xar:data-input type="listing" 
                     object="$object" 
-                    fieldlist="message,email_1,email_2,template,due_date,recurring,recur_period"
+                    fieldlist="message,email_1,email_2,template,due_date,recurring,recur_period,state"
                     tplmodule="reminders" 
                     layout="test"/>
     <form method="post" action="#xarServer::getCurrentURL()#">

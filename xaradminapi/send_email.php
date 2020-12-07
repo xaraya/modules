@@ -30,7 +30,6 @@ function reminders_adminapi_send_email($data)
 #
     # Send the participant an email with the attachments
 #
-    $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $result = array();
     $attachments = array();
@@ -41,23 +40,41 @@ function reminders_adminapi_send_email($data)
         $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
     }
     
-    if ($data['test']) {
-        // If we are testing, then send to this user
-        $recipientname    = xarUser::getVar('name');
-        $recipientaddress = xarUser::getVar('email');
-        $bccaddress = array();
-    } else {
-        // If we are not testing, then send to the chosen participant
-        $recipientname    = $data['name']->getValue();
-        $recipientaddress = $data['info']['email_1'];
-    }
+	// Get the name and address of the chosen participant
+	$recipientname    = $data['name']->getValue();
+	$recipientaddress = $data['info']['address_1'];
+
+	// Add a CC if there is one
+	if (!empty($data['info']['address_1'])) {
+	    $data['name']->value = $data['info']['name_1'];
+	    $ccname = $data['name']->getValue();
+    	$ccaddress = array($data['info']['address_1'] => $ccname);
+	} else {
+    	$ccaddress = array();
+	}
+    // Maybe we'll add a BCC at some point
+    $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
+
     $data['reminder_text'] = trim($data['info']['message']);
-    $data['code'] = $data['info']['code'];
-    $data['due_date'] = $data['info']['due_date'];
+    $data['entry_id']      = (int)$data['info']['id'];
+    $data['code']          = $data['info']['code'];
+    $data['due_date']      = (int)$data['info']['due_date'];
     
-    // Get the number of remaining emails to send
-    $remaining = xarMod::apiFunc('reminders', 'user', 'get_email_dates', array('array' => $data['info']));
-    $data['remaining'] = count($remaining);
+    // Get today's date
+    $datetime = new XarDateTime();
+    $datetime->settoday();
+    $today = $datetime->getTimestamp();
+
+    if ($data['due_date'] == $today) {
+    	// If today is the due date, then this is the last email
+		$data['remaining'] = 0;
+    } else {
+		// Otherwise, get the number of remaining emails to send
+		$remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['info']));
+		// By default we also send an email on the due date
+		$data['remaining'] = count($remaining) + 1;
+    }
+
     unset($data['info']);
 
     try {
@@ -66,6 +83,7 @@ function reminders_adminapi_send_email($data)
                       'senderaddress'    => xarModVars::get('reminders', 'defaultsenderaddress'),
                       'recipientname'    => $recipientname,
                       'recipientaddress' => $recipientaddress,
+                      'ccaddresses'      => $ccaddress,
                       'bccaddresses'     => $bccaddress,
                       'attachments'      => $attachments,
                       'data'             => $data,
@@ -117,7 +135,19 @@ function reminders_adminapi_send_email($data)
             $args['mail_type'] = 2;
         }
         // Send the email
-        $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $args);
+        $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
+        
+        // Save to the database if called for
+        if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
+			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
+			$history->createItem(array(
+									'entry_id' => $data['entry_id'],
+									'message'  => $data['reminder_text'],
+									'address'  => $recipientaddress,
+									'due_date' => $data['due_date'],
+								));
+        }
+      
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
     }

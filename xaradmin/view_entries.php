@@ -27,5 +27,8 @@ function reminders_admin_view_entries($args)
         return;
     }
 
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
+    $data['object']->dataquery->eq('state', 3);
     return $data;
 }

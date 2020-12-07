@@ -23,7 +23,9 @@ function reminders_xartables()
 
     $xartable['reminders_emails']          = xarDB::getPrefix() . '_reminders_emails';
     $xartable['reminders_entries']          = xarDB::getPrefix() . '_reminders_entries';
+    $xartable['reminders_history']          = xarDB::getPrefix() . '_reminders_history';
 
     // Return the table information
     return $xartable;
 }
+?>

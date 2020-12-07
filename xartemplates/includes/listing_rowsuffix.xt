@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:if condition="($objectname eq 'reminders_emails')">
     <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
-    <xar:if condition="($objectname eq 'reminders_emails')">
         <xar:access level="500">
             <a href="#xarController::URL($module, 'admin', 'modify_email', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this email')#" style="margin-right: 5px">
                 <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
@@ -15,7 +15,9 @@
         <xar:if condition="isset($show_bulk) AND $show_bulk">
             <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" />
         </xar:if>
-    <xar:elseif condition="$objectname eq 'reminders_entries'"/>
+    </td>
+<xar:elseif condition="$objectname eq 'reminders_entries'"/>
+    <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
         <xar:access level="500">
             <a href="#xarController::URL($module, 'admin', 'modify_entry', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this entry')#" style="margin-right: 5px">
                 <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
@@ -29,7 +31,7 @@
         <xar:if condition="isset($show_bulk) AND $show_bulk">
             <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" onchange="listing_getchecked('entry_list')"/>
         </xar:if>
-    <xar:else/>
-    </xar:if>
     </td>
+<xar:else/>
+</xar:if>
 </xar:template>

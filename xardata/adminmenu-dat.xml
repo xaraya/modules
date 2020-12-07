@@ -37,6 +37,15 @@
             <label>Test</label>
         </menuitem>
         <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>view_history</includeitem>
+            </includes>
+            <target>view_history</target>
+            <title>View the emails sent</title>
+            <label>View History</label>
+        </menuitem>
+        <menuitem>
             <mask>AdminReminders</mask>
             <includes>
                 <includeitem>modifyconfig</includeitem>

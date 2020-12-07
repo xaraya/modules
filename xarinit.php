@@ -88,7 +88,20 @@ function reminders_init()
         return;
     }
 
-    # --------------------------------------------------------
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_history";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_reminders_history (
+        id                integer unsigned NOT NULL auto_increment,
+        entry_id          integer unsigned NOT NULL default 0, 
+        message           varchar(255) NOT NULL default '', 
+        address           varchar(255) NOT NULL default '', 
+        due_date          integer unsigned NOT NULL default 0, 
+        timecreated       integer unsigned NOT NULL default 0, 
+        PRIMARY KEY  (id)
+    )";
+    if (!$q->run($query)) return;
+
+# --------------------------------------------------------
 #
     # Set up masks
 #
@@ -122,6 +135,7 @@ function reminders_init()
     $objects = array(
                      'reminders_emails',
                      'reminders_entries',
+                     'reminders_history',
                      );
 
     if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
@@ -138,8 +152,9 @@ function reminders_init()
     // Add variables like this next one when creating utility modules
     // This variable is referenced in the xaradmin/modifyconfig-utility.php file
     // This variable is referenced in the xartemplates/includes/defaults.xd file
-    xarModVars::set('reminders', 'defaultmastertable', 'reminders_reminders');
+    xarModVars::set('reminders', 'defaultmastertable','reminders_history');
     xarModVars::set('reminders', 'debugmode', false);
+    xarModVars::set('reminders', 'save_history', false);
 
     # --------------------------------------------------------
 #
