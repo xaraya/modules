@@ -8,7 +8,13 @@
         <xar:else/>
             <xar:if condition="!empty($output)">
                 <xar:foreach in="$output" value="$row">
-                    #$row#<br/>
+                	<xar:if condition="is_array($row)">
+                		<xar:foreach in="$row" value="$item">
+                			#$item#<br/>
+                		</xar:foreach>
+                	<xar:else/>
+						#$row#<br/>
+                	</xar:if>
                 </xar:foreach>
             </xar:if>
         </xar:if>

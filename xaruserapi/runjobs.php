@@ -57,7 +57,7 @@ function scheduler_userapi_runjobs($args)
 
     # --------------------------------------------------------
 #
-    # Get the jobs object for easy updating
+# Create a jobs object instance for easy updating
 #
     sys::import('modules.dynamicdata.class.objects.master');
     $jobobject = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
@@ -260,12 +260,16 @@ function scheduler_userapi_runjobs($args)
             try {
                 $output = xarMod::apiFunc($job['module'], $job['type'], $job['function']);
             } catch (Exception $e) {
+            	// If we are debugging, then show an error here
+            	if (xarModVars::get('scheduler','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            		print_r($e->getMessage());exit;
+            	}
             }
         }
         if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
             $log[] = xarML('Failed: ') . $jobname;
-            $log[] = $output;
+            $log[] = isset($output) ? $output : xarML('No output');
         } else {
             $jobs[$id]['result'] = xarML('OK');
             $log[] = xarML('Succeeded: ') . $jobname;

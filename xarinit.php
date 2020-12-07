@@ -110,7 +110,7 @@ function scheduler_init()
     xarModVars::set('scheduler', 'lastrun', 0);
     xarModVars::set('scheduler', 'items_per_page', 20);
     xarModVars::set('scheduler', 'interval', 5*60);
-    # --------------------------------------------------------
+    xarModVars::set('scheduler', 'debugmode', false);
 #
     # Register masks
 #
@@ -134,7 +134,7 @@ function scheduler_init()
     $module = 'scheduler';
     $objects = array(
                    'scheduler_jobs',
-                     );
+                    );
 
     if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
         return;

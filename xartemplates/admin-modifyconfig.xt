@@ -44,6 +44,12 @@
                         </div>
                     </div>
                 </fieldset>
+                <fieldset>
+                    <legend>
+                        Debugging
+                    </legend>
+                    <xar:template file="config_debug"/>
+                </fieldset>
             </xar:if>
             <xar:template file="update-button" module="base" />
         </form>
