@@ -30,7 +30,7 @@
     $modversion['admin']          = true;
     $modversion['user']           = true;
     $modversion['class']          = 'Complete';
-    $modversion['category']       = 'Utility';
+    $modversion['category']       = 'Miscellaneous';
     $modversion['securityschema'] = array();
     $modversion['dependency']     = array();
 	$modversion['dependencyinfo'] = array(
