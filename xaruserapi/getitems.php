@@ -149,7 +149,7 @@ function comments_userapi_getitems($args)
         $bindvars = array_merge($bindvars, $itemids);
         $query .= " AND itemid IN ($bindmarkers)";
     }
-    $query .= " GROUP BY itemid
+    $query .= " GROUP BY id, itemid
                 ORDER BY itemid";
 //                ORDER BY (1 + objectid";
 //
