@@ -10,10 +10,5 @@
             <target>modifyconfig</target>
             <label>General</label>
         </menuitem>
-        <menuitem>
-            <value>tab2</value>
-            <target>modifyconfig</target>
-            <label>Tab 2</label>
-        </menuitem>
     </menuitems>
 </menu>
