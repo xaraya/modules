@@ -21,5 +21,5 @@ sys::import('modules.xarcachemanager.class.cache_hooks');
  */
 function xarcachemanager_adminapi_regenstatic($nolimit = null)
 {
-    return xarCache_Hooks::regenstatic($nolimit);
+    xarCache_Hooks::regenstatic($nolimit);
 }

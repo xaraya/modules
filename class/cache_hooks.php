@@ -767,7 +767,7 @@ class xarCache_Hooks extends xarObject
      * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
      * @todo - actually raise errors, get intelligent and specific about cache files to remove
      */
-    public function updateconfighook($args)
+    public static function updateconfighook($args)
     {
         extract($args);
 

@@ -31,9 +31,12 @@ function xarcachemanager_adminapi_getstoragetypes()
     $storagetypes['database']     = array('name'    => 'database',
                                           'label'   => 'Database',
                                           'enabled' => true);
-    $storagetypes['apc']          = array('name'    => 'apc',
-                                          'label'   => 'Alternative PHP Cache (APC)',
-                                          'enabled' => function_exists('apc_fetch') ? true : false);
+    $storagetypes['apcu']         = array('name'    => 'apcu',
+                                          'label'   => 'APC User Cache (APCu)',
+                                          'enabled' => function_exists('apcu_fetch') ? true : false);
+    $storagetypes['doctrine']     = array('name'    => 'doctrine',
+                                          'label'   => 'Doctrine Cache (via composer)',
+                                          'enabled' => class_exists('Doctrine\\Common\\Cache\\CacheProvider') ? true : false);
     $storagetypes['eaccelerator'] = array('name'    => 'eaccelerator',
                                           'label'   => 'eAccelerator',
                                           'enabled' => function_exists('eaccelerator_get') ? true : false);

@@ -100,6 +100,7 @@ function xarcachemanager_admin_stats($args)
             $upper = ucfirst($tab);
             $enabled   = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
             $storage   = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
+            $provider  = $upper . 'CacheProvider'; // e.g. VariableCacheProvider
             $logfile   = $upper . 'LogFile'; // e.g. ModuleLogFile
             $cachetime = $upper . 'TimeExpiration'; // e.g. ObjectTimeExpiration
             $sizelimit = $upper . 'SizeLimit'; // e.g. VariableSizeLimit
@@ -126,9 +127,13 @@ function xarcachemanager_admin_stats($args)
                 return true;
             }
             if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
+                if (empty($data['settings'][$provider])) {
+                    $data['settings'][$provider] = null;
+                }
                 // get cache storage
                 $cachestorage = xarCache::getStorage(array('storage'   => $data['settings'][$storage],
                                                            'type'      => $tab,
+                                                           'provider'  => $data['settings'][$provider],
                                                            'cachedir'  => $outputCacheDir,
                                                            'expire'    => $data['settings'][$cachetime],
                                                            'sizelimit' => $data['settings'][$sizelimit]));
@@ -323,6 +328,7 @@ function xarcachemanager_admin_stats($args)
                 $upper = ucfirst($type);
                 $enabled   = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
                 $storage   = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
+                $provider  = $upper . 'CacheProvider'; // e.g. VariableCacheProvider
                 $logfile   = $upper . 'LogFile'; // e.g. ModLogFile
                 $cachetime = $upper . 'TimeExpiration'; // e.g. ObjectTimeExpiration
                 $sizelimit = $upper . 'SizeLimit'; // e.g. VariableSizeLimit
@@ -336,8 +342,12 @@ function xarcachemanager_admin_stats($args)
                                          'misses'  => 0,
                                          'modtime' => 0);
                 if ($data[$enabled] && !empty($data['settings'][$storage])) {
+                    if (empty($data['settings'][$provider])) {
+                        $data['settings'][$provider] = null;
+                    }
                     $cachestorage = xarCache::getStorage(array('storage'   => $data['settings'][$storage],
                                                                'type'      => $type,
+                                                               'provider'  => $data['settings'][$provider],
                                                                'cachedir'  => $outputCacheDir,
                                                                'expire'    => $data['settings'][$cachetime],
                                                                'sizelimit' => $data['settings'][$sizelimit]));
