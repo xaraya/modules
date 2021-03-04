@@ -750,7 +750,9 @@ function xarcachemanager_stats_sortitems(&$items, $sort)
     switch ($sort) {
         case 'key':
         case 'code':
-            $sortcode = 'return strcmp($a["' . $sort . '"],$b["' . $sort . '"]);';
+            uasort($items, function ($a, $b) use ($sort) {
+                return strcmp($a[$sort], $b[$sort]);
+            });
             break;
 
         case 'time':
@@ -762,13 +764,15 @@ function xarcachemanager_stats_sortitems(&$items, $sort)
         case 'first':
         case 'last':
         case 'pages':
-            $sortcode = 'if ($a["' . $sort . '"] == $b["' . $sort . '"]) return 0;
-                         return ($a["' . $sort . '"] > $b["' . $sort . '"]) ? -1 : 1;';
+            uasort($items, function ($a, $b) use ($sort) {
+                if ($a[$sort] == $b[$sort]) {
+                    return 0;
+                }
+                return ($a[$sort] > $b[$sort]) ? -1 : 1;
+            });
             break;
 
         default:
             return;
     }
-    $sortfunc = create_function('$a, $b', $sortcode);
-    uasort($items, $sortfunc);
 }
