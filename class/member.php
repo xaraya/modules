@@ -14,7 +14,7 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class Member extends DataObject
 {
-#---------------------------------------------------------
+    #---------------------------------------------------------
     # Constructor
 #
     public function __construct(DataObjectDescriptor $descriptor)
