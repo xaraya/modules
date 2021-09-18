@@ -75,7 +75,7 @@ function images_userapi_resize($args)
     }
 
     if (is_numeric($src)) {
-        $imageInfo = xarMod::apiFunc('images', 'user', 'getimageinfo', array('fileId' => $src));
+        $imageInfo = xarMod::apiFunc('images', 'user', 'getimageinfo', ['fileId' => $src]);
     } else {
         if (isset($basedir)) {
             $src = $basedir . '/' . $src;
@@ -84,7 +84,7 @@ function images_userapi_resize($args)
             'images',
             'user',
             'getimageinfo',
-            array('fileLocation' => $src)
+            ['fileLocation' => $src]
         );
     }
     if (!empty($imageInfo)) {
@@ -102,8 +102,8 @@ function images_userapi_resize($args)
     }
 
     $attribs = '';
-    $allowedAttribs = array('border', 'class', 'id', 'style', 'align', 'hspace', 'vspace',
-                            'onclick', 'onmousedown', 'onmouseup', 'onmouseout', 'onmouseover');
+    $allowedAttribs = ['border', 'class', 'id', 'style', 'align', 'hspace', 'vspace',
+                            'onclick', 'onmousedown', 'onmouseup', 'onmouseout', 'onmouseover', ];
 
     foreach ($args as $key => $value) {
         if (in_array(strtolower($key), $allowedAttribs)) {
@@ -119,11 +119,11 @@ function images_userapi_resize($args)
                 'images',
                 'admin',
                 'process_image',
-                array('image'    => $imageInfo,
+                ['image'    => $imageInfo,
                                             'saveas'   => 0, // derivative
                                             'setting'  => $setting,
                                             // don't process the image again if it already exists
-                                            'iscached' => true)
+                                            'iscached' => true, ]
             );
             if (empty($location)) {
                 $errorstack = xarErrorGet();
@@ -158,7 +158,7 @@ function images_userapi_resize($args)
                     'images',
                     'user',
                     'display',
-                    array('fileId' => base64_encode($location))
+                    ['fileId' => base64_encode($location)]
                 );
             }
 
@@ -175,11 +175,11 @@ function images_userapi_resize($args)
             'images',
             'admin',
             'process_image',
-            array('image'    => $imageInfo,
+            ['image'    => $imageInfo,
                                         'saveas'   => 0, // derivative
                                         'params'   => $params,
                                         // don't process the image again if it already exists
-                                        'iscached' => true)
+                                        'iscached' => true, ]
         );
         if (empty($location)) {
             $errorstack = xarErrorGet();
@@ -213,7 +213,7 @@ function images_userapi_resize($args)
                 'images',
                 'user',
                 'display',
-                array('fileId' => base64_encode($location))
+                ['fileId' => base64_encode($location)]
             );
         }
 
@@ -257,7 +257,7 @@ function images_userapi_resize($args)
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
-                $image->setPercent(array('wpercent' => $width));
+                $image->setPercent(['wpercent' => $width]);
                 break;
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
@@ -275,7 +275,7 @@ function images_userapi_resize($args)
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
-                $image->setPercent(array('hpercent' => $height));
+                $image->setPercent(['hpercent' => $height]);
                 break;
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
@@ -329,9 +329,9 @@ function images_userapi_resize($args)
             'images',
             'user',
             'display',
-            array('fileId' => is_numeric($src) ? $src : base64_encode($src),
+            ['fileId' => is_numeric($src) ? $src : base64_encode($src),
                                'height' => $image->getHeight(),
-                               'width'  => $image->getWidth())
+                               'width'  => $image->getWidth(), ]
         );
     }
 

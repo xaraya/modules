@@ -78,22 +78,22 @@ class Image_Properties
     {
         if (is_numeric($mimeType)) {
             switch ($mimeType) {
-                case 1:  return array('text' => 'image/gif', 'id' => 1);
-                case 2:  return array('text' => 'image/jpeg', 'id' => 2);
-                case 3:  return array('text' => 'image/png', 'id' => 3);
-                case 4:  return array('text' => 'application/x-shockwave-flash', 'id' => 4);
-                case 5:  return array('text' => 'image/psd', 'id' => 5);
-                case 6:  return array('text' => 'image/bmp', 'id' => 6);
+                case 1:  return ['text' => 'image/gif', 'id' => 1];
+                case 2:  return ['text' => 'image/jpeg', 'id' => 2];
+                case 3:  return ['text' => 'image/png', 'id' => 3];
+                case 4:  return ['text' => 'application/x-shockwave-flash', 'id' => 4];
+                case 5:  return ['text' => 'image/psd', 'id' => 5];
+                case 6:  return ['text' => 'image/bmp', 'id' => 6];
                 case 7:
-                case 8:  return array('text' => 'image/tiff', 'id' => 8);
-                case 9:  return array('text' => 'application/octet-stream', 'id' => 9);
-                case 10: return array('text' => 'image/jp2', 'id' => 10);
-                case 11: return array('text' => 'application/octet-stream', 'id' => 11);
-                case 12: return array('text' => 'application/octet-stream', 'id' => 12);
-                case 13: return array('text' => 'application/x-shockwave-flash', 'id' => 13);
-                case 14: return array('text' => 'image/iff', 'id' => 14);
-                case 15: return array('text' => 'image/vnd.wap.wbmp', 'id' => 15);
-                case 16: return array('text' => 'image/x-xbitmap', 'id' => 16);
+                case 8:  return ['text' => 'image/tiff', 'id' => 8];
+                case 9:  return ['text' => 'application/octet-stream', 'id' => 9];
+                case 10: return ['text' => 'image/jp2', 'id' => 10];
+                case 11: return ['text' => 'application/octet-stream', 'id' => 11];
+                case 12: return ['text' => 'application/octet-stream', 'id' => 12];
+                case 13: return ['text' => 'application/x-shockwave-flash', 'id' => 13];
+                case 14: return ['text' => 'image/iff', 'id' => 14];
+                case 15: return ['text' => 'image/vnd.wap.wbmp', 'id' => 15];
+                case 16: return ['text' => 'image/x-xbitmap', 'id' => 16];
                 default: return 'application/octet-stream';
             }
         } else {
@@ -127,7 +127,7 @@ class Image_Properties
                     break;
                 case 'both':
                     // choose wisely
-                    $ratios = array();
+                    $ratios = [];
 
                     $ratios[0]['width']  = $this->getWidth2HeightRatio() * $this->height;
                     $ratios[0]['height'] = $this->getHeight2WidthRatio() * $ratios[0]['width'];

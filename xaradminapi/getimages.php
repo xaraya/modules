@@ -30,7 +30,7 @@ function images_adminapi_getimages($args)
 {
     extract($args);
     if (empty($basedir)) {
-        return array();
+        return [];
     }
     if (!isset($baseurl)) {
         $baseurl = $basedir;
@@ -38,9 +38,9 @@ function images_adminapi_getimages($args)
 
     // Note: fileId is a base 64 encode of the image location here, or an array of fileId's
     if (!empty($fileId)) {
-        $files = array();
+        $files = [];
         if (!is_array($fileId)) {
-            $fileId = array($fileId);
+            $fileId = [$fileId];
         }
         foreach ($fileId as $id) {
             $file = base64_decode($id);
@@ -66,10 +66,10 @@ function images_adminapi_getimages($args)
             $recursive = true;
         }
 
-        $params = array('basedir'   => $basedir,
+        $params = ['basedir'   => $basedir,
                         'filematch' => $filematch,
                         'filetype'  => $filetype,
-                        'recursive' => $recursive);
+                        'recursive' => $recursive, ];
 
         $cachekey = md5(serialize($params));
         if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
@@ -97,7 +97,7 @@ function images_adminapi_getimages($args)
     }
 
     if (!isset($imagelist)) {
-        $imagelist = array();
+        $imagelist = [];
         foreach ($files as $file) {
             $statinfo = @stat($basedir . '/' . $file);
             $sizeinfo = @getimagesize($basedir . '/' . $file);
@@ -106,7 +106,7 @@ function images_adminapi_getimages($args)
             }
             // Note: we're using base 64 encoded fileId's here
             $id = base64_encode($file);
-            $imagelist[$id] = array('fileLocation' => $basedir . '/' . $file,
+            $imagelist[$id] = ['fileLocation' => $basedir . '/' . $file,
                                     'fileDownload' => $baseurl . '/' . $file,
                                     'fileName'     => $file,
                                     'fileType'     => $sizeinfo['mime'],
@@ -115,7 +115,7 @@ function images_adminapi_getimages($args)
                                     'fileModified' => $statinfo['mtime'],
                                     'isWritable'   => @is_writable($basedir . '/' . $file),
                                     'width'        => $sizeinfo[0],
-                                    'height'       => $sizeinfo[1]);
+                                    'height'       => $sizeinfo[1], ];
         }
 
         // we're done here
@@ -124,8 +124,8 @@ function images_adminapi_getimages($args)
         }
 
         if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
-            $cacheinfo = array('time' => time(),
-                               'list' => $imagelist);
+            $cacheinfo = ['time' => time(),
+                               'list' => $imagelist, ];
             $cacheinfo = serialize($cacheinfo);
             xarModVars::set('images', 'file.cachelist.'.$cachekey, $cacheinfo);
             unset($cacheinfo);
@@ -169,7 +169,7 @@ function images_adminapi_getimages($args)
 
     if (!empty($getnext)) {
         $found = 0;
-        $newlist = array();
+        $newlist = [];
         foreach (array_keys($imagelist) as $id) {
             if ($id == $getnext) {
                 $found++;
@@ -183,7 +183,7 @@ function images_adminapi_getimages($args)
         unset($newlist);
     } elseif (!empty($getprev)) {
         $oldid = '';
-        $newlist = array();
+        $newlist = [];
         foreach (array_keys($imagelist) as $id) {
             if ($id == $getprev) {
                 if (!empty($oldid)) {
@@ -202,7 +202,7 @@ function images_adminapi_getimages($args)
         if (count($imagelist) > $numitems) {
             // use array slice on the keys here (at least until PHP 5.0.2)
             $idlist = array_slice(array_keys($imagelist), $startnum-1, $numitems);
-            $newlist = array();
+            $newlist = [];
             foreach ($idlist as $id) {
                 $newlist[$id] = $imagelist[$id];
             }

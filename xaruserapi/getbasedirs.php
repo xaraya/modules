@@ -23,11 +23,11 @@ function images_userapi_getbasedirs()
         $basedirs = unserialize($basedirs);
     }
     if (empty($basedirs)) {
-        $basedirs = array();
-        $basedirs[0] = array('basedir'   => 'themes',
+        $basedirs = [];
+        $basedirs[0] = ['basedir'   => 'themes',
                              'baseurl'   => 'themes',
                              'filetypes' => 'gif|jpg|png',
-                             'recursive' => true);
+                             'recursive' => true, ];
         xarModVars::set('images', 'basedirs', serialize($basedirs));
     }
 

@@ -45,7 +45,7 @@ function images_userapi_encode_shorturl($args)
         // get the mime type from the database (urgh)
         } else {
             // Bug 5410 Make a two step process
-            $imageinfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' =>$fileId));
+            $imageinfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' =>$fileId]);
             $image = end($imageinfo);
 
             if (empty($image)) {
@@ -86,7 +86,7 @@ function images_userapi_encode_shorturl($args)
     if ($func == 'display') {
         // check for required parameters
         if (!empty($fileId) && is_numeric($fileId)) {
-            $path = '/' . $module . '/' . $fileName . (isset($extras) ? $extras : '');
+            $path = '/' . $module . '/' . $fileName . ($extras ?? '');
         }
     } else {
         // anything else that you haven't defined a short URL equivalent for

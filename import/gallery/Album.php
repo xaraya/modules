@@ -139,7 +139,7 @@ class Album
         my_flush();
 
         $changed = 0;
-        $check = array("thumb_size",
+        $check = ["thumb_size",
                 "resize_size",
                 "rows",
                 "cols",
@@ -147,7 +147,7 @@ class Album
                 "use_fullOnly",
                 "print_photos",
                 "display_clicks",
-                "public_comments");
+                "public_comments", ];
         foreach ($check as $field) {
             if (!$this->fields[$field]) {
                 $this->fields[$field] = $gallery->app->default[$field];
@@ -173,7 +173,7 @@ class Album
                 $changed = 1;
             }
             if (empty($this->fields['extra_fields']) || !is_array($this->fields['extra_fields'])) {
-                $this->fields['extra_fields']=array();
+                $this->fields['extra_fields']=[];
                 $changed = 1;
             }
         }
@@ -335,7 +335,7 @@ class Album
             $album = $album->getNestedAlbum($index);
             $index = $album->getHighlight();
             if (!isset($index)) {
-                return array(0, 0);
+                return [0, 0];
             }
             $photo = $album->getPhoto($index);
         }
@@ -611,7 +611,7 @@ class Album
         }
     }
 
-    public function addPhoto($file, $tag, $originalFilename, $caption, $pathToThumb="", $extraFields=array())
+    public function addPhoto($file, $tag, $originalFilename, $caption, $pathToThumb="", $extraFields=[])
     {
         global $gallery;
 
@@ -746,7 +746,7 @@ class Album
     {
         $index = $this->getHighlight();
         if (!isset($index)) {
-            return array(null, null);
+            return [null, null];
         }
         $photo = $this->getPhoto($index);
         $album = $this;
@@ -754,16 +754,16 @@ class Album
             $album = $album->getNestedAlbum($index);
             $index = $album->getHighlight();
             if (!isset($index)) {
-                return array(null, null);
+                return [null, null];
             }
             $photo = $album->getPhoto($index);
         }
-        return array($album, $photo);
+        return [$album, $photo];
     }
 
     public function getHighlightAsThumbnailTag($size=0, $attrs="")
     {
-        list($album, $photo) = $this->getHighlightedItem();
+        [$album, $photo] = $this->getHighlightedItem();
         if ($photo) {
             return $photo->getThumbnailTag($album->getAlbumDirURL("highlight"), $size, $attrs);
         } else {
@@ -773,7 +773,7 @@ class Album
 
     public function getHighlightTag($size=0, $attrs="")
     {
-        list($album, $photo) = $this->getHighlightedItem();
+        [$album, $photo] = $this->getHighlightedItem();
         if ($photo) {
             return $photo->getHighlightTag($album->getAlbumDirURL("highlight"), $size, $attrs);
         } else {
@@ -1121,18 +1121,18 @@ class Album
         global $gallery;
 
         if (empty($gallery->app->use_exif)) {
-            return array();
+            return [];
         }
 
         $dir = $this->getAlbumDir();
         $photo =& $this->getPhoto($index);
-        list($status, $exif, $needToSave) = $photo->getExif($dir, $forceRefresh);
+        [$status, $exif, $needToSave] = $photo->getExif($dir, $forceRefresh);
 
         if ($status != 0) {
             // An error occurred.
-            return array("junk1" => "",
+            return ["junk1" => "",
                  "Error" => "Error $status getting EXIF data",
-                 "junk2" => "");
+                 "junk2" => "", ];
         }
 
         if ($needToSave) {
@@ -1233,7 +1233,7 @@ class Album
     {
         global $gallery;
 
-        $perms = array();
+        $perms = [];
         if (!empty($this->fields["perms"][$permName])) {
             foreach ($this->fields["perms"][$permName] as $uid => $junk) {
                 $tmpUser = $gallery->userDB->getUserByUid($uid);

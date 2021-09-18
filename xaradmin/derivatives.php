@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -25,7 +26,7 @@ function images_admin_derivatives()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     // Note: fileId is an MD5 hash of the derivative image location here
     if (!xarVar::fetch('fileId', 'str:1:', $fileId, '', xarVar::NOT_REQUIRED)) {
@@ -96,9 +97,9 @@ function images_admin_derivatives()
                     'images',
                     'admin',
                     'derivatives',
-                    array('startnum' => '%%',
+                    ['startnum' => '%%',
                                                             'numitems' => $data['numitems'],
-                                                            'sort'     => $data['sort'])
+                                                            'sort'     => $data['sort'], ]
                 ),
                 $params['numitems']
             );

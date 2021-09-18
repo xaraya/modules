@@ -20,5 +20,5 @@
  */
 function images_xartables()
 {
-    return array();
+    return [];
 }

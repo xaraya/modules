@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -59,7 +60,7 @@ function images_admin_uploads($args)
         return;
     }
 
-    $data = array();
+    $data = [];
     $data['startnum'] = $startnum;
     $data['numitems'] = $numitems;
     $data['sort'] = ($sort != 'name') ? $sort : null;
@@ -74,14 +75,14 @@ function images_admin_uploads($args)
             'images',
             'admin',
             'getuploads',
-            array('fileId'   => $fileId)
+            ['fileId'   => $fileId]
         );
     } elseif (!empty($getnext)) {
         $data['images'] = xarMod::apiFunc(
             'images',
             'admin',
             'getuploads',
-            array('getnext'  => $getnext)
+            ['getnext'  => $getnext]
         );
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
@@ -89,8 +90,8 @@ function images_admin_uploads($args)
                 'images',
                 'admin',
                 'uploads',
-                array('action' => empty($action) ? 'view' : $action,
-                                                'fileId' => $image['fileId'])
+                ['action' => empty($action) ? 'view' : $action,
+                                                'fileId' => $image['fileId'], ]
             ));
             return true;
         }
@@ -99,7 +100,7 @@ function images_admin_uploads($args)
             'images',
             'admin',
             'getuploads',
-            array('getprev'  => $getprev)
+            ['getprev'  => $getprev]
         );
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
@@ -107,8 +108,8 @@ function images_admin_uploads($args)
                 'images',
                 'admin',
                 'uploads',
-                array('action' => empty($action) ? 'view' : $action,
-                                                'fileId' => $image['fileId'])
+                ['action' => empty($action) ? 'view' : $action,
+                                                'fileId' => $image['fileId'], ]
             ));
             return true;
         }
@@ -117,9 +118,9 @@ function images_admin_uploads($args)
             'images',
             'admin',
             'getuploads',
-            array('startnum' => $startnum,
+            ['startnum' => $startnum,
                                               'numitems' => $numitems,
-                                              'sort'     => $sort)
+                                              'sort'     => $sort, ]
         );
         $countitems = xarMod::apiFunc('images', 'admin', 'countuploads');
 
@@ -132,9 +133,9 @@ function images_admin_uploads($args)
                     'images',
                     'admin',
                     'uploads',
-                    array('startnum' => '%%',
+                    ['startnum' => '%%',
                                                             'numitems' => $data['numitems'],
-                                                            'sort'     => $data['sort'])
+                                                            'sort'     => $data['sort'], ]
                 ),
                 $numitems
             );
@@ -163,7 +164,7 @@ function images_admin_uploads($args)
 
         // if we're dealing with a list of fileId's, make sure they exist
         if (is_array($fileId) && ($action == 'resizelist' || $action == 'processlist')) {
-            $found = array();
+            $found = [];
             foreach ($fileId as $id) {
                 if (!empty($data['images'][$id])) {
                     $found[] = $id;
@@ -183,7 +184,7 @@ function images_admin_uploads($args)
                         'images',
                         'admin',
                         'getderivatives',
-                        array('fileLocation' => $found['fileLocation'])
+                        ['fileLocation' => $found['fileLocation']]
                     );
                 } else {
                     // the file is probably stored in the database, so we pass the fileId here
@@ -191,7 +192,7 @@ function images_admin_uploads($args)
                         'images',
                         'admin',
                         'getderivatives',
-                        array('fileLocation' => $found['fileId'])
+                        ['fileLocation' => $found['fileId']]
                     );
                 }
             }
@@ -200,29 +201,29 @@ function images_admin_uploads($args)
                 'uploads',
                 'user',
                 'db_get_associations',
-                array('fileId' => $found['fileId'])
+                ['fileId' => $found['fileId']]
             );
-            $found['moditems'] = array();
+            $found['moditems'] = [];
             if (!empty($found['associations'])) {
-                $modlist = array();
+                $modlist = [];
                 foreach ($found['associations'] as $assoc) {
                     // uploads 0.9.8 format
                     if (isset($assoc['objectId'])) {
                         if (!isset($modlist[$assoc['modId']])) {
-                            $modlist[$assoc['modId']] = array();
+                            $modlist[$assoc['modId']] = [];
                         }
                         if (!isset($modlist[$assoc['modId']][$assoc['itemType']])) {
-                            $modlist[$assoc['modId']][$assoc['itemType']] = array();
+                            $modlist[$assoc['modId']][$assoc['itemType']] = [];
                         }
                         $modlist[$assoc['modId']][$assoc['itemType']][$assoc['objectId']] = 1;
 
                     // uploads_guimods 0.9.9+ format
                     } elseif (isset($assoc['itemid'])) {
                         if (!isset($modlist[$assoc['modid']])) {
-                            $modlist[$assoc['modid']] = array();
+                            $modlist[$assoc['modid']] = [];
                         }
                         if (!isset($modlist[$assoc['modid']][$assoc['itemtype']])) {
-                            $modlist[$assoc['modid']][$assoc['itemtype']] = array();
+                            $modlist[$assoc['modid']][$assoc['itemtype']] = [];
                         }
                         $modlist[$assoc['modid']][$assoc['itemtype']][$assoc['itemid']] = 1;
                     }
@@ -235,11 +236,11 @@ function images_admin_uploads($args)
                         'user',
                         'getitemtypes',
                                              // don't throw an exception if this function doesn't exist
-                                             array(),
+                                             [],
                         0
                     );
                     foreach ($itemtypes as $itemtype => $items) {
-                        $moditem = array();
+                        $moditem = [];
                         $moditem['module'] = $modinfo['name'];
                         $moditem['modid'] = $modid;
                         $moditem['itemtype'] = $itemtype;
@@ -260,11 +261,11 @@ function images_admin_uploads($args)
                             $modinfo['name'],
                             'user',
                             'getitemlinks',
-                            array('itemtype' => $itemtype,
-                                                         'itemids' => $itemids),
+                            ['itemtype' => $itemtype,
+                                                         'itemids' => $itemids, ],
                             0
                         ); // don't throw an exception here
-                        $moditem['items'] = array();
+                        $moditem['items'] = [];
                         foreach ($itemids as $itemid) {
                             if (isset($itemlinks[$itemid])) {
                                 $moditem['items'][$itemid]['link'] = $itemlinks[$itemid]['url'];
@@ -310,9 +311,9 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'replace_image',
-                            array('fileId' => $found['fileId'],
+                            ['fileId' => $found['fileId'],
                                                         'width'  => (!empty($width) ? $width . 'px' : null),
-                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                                                        'height' => (!empty($height) ? $height . 'px' : null), ]
                         );
                         if (!$location) {
                             return;
@@ -322,17 +323,17 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'uploads',
-                            array('action' => 'view',
-                                                            'fileId' => $found['fileId'])
+                            ['action' => 'view',
+                                                            'fileId' => $found['fileId'], ]
                         ));
                     } else {
                         $location = xarMod::apiFunc(
                             'images',
                             'admin',
                             'resize_image',
-                            array('fileId' => $found['fileId'],
+                            ['fileId' => $found['fileId'],
                                                         'width'  => (!empty($width) ? $width . 'px' : null),
-                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                                                        'height' => (!empty($height) ? $height . 'px' : null), ]
                         );
                         if (!$location) {
                             return;
@@ -342,8 +343,8 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'derivatives',
-                            array('action' => 'view',
-                                                            'fileId' => md5($location))
+                            ['action' => 'view',
+                                                            'fileId' => md5($location), ]
                         ));
                     }
                     return true;
@@ -374,8 +375,8 @@ function images_admin_uploads($args)
                         return;
                     }
                     // delete the uploaded image now
-                    $fileList = array($fileId => $found);
-                    $result = xarMod::apiFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
+                    $fileList = [$fileId => $found];
+                    $result = xarMod::apiFunc('uploads', 'user', 'purge_files', ['fileList' => $fileList]);
                     if (!$result) {
                         return;
                     }
@@ -429,9 +430,9 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'replace_image',
-                            array('fileId' => $id,
+                            ['fileId' => $id,
                                                         'width'  => (!empty($width) ? $width . 'px' : null),
-                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                                                        'height' => (!empty($height) ? $height . 'px' : null), ]
                         );
                         if (!$location) {
                             return;
@@ -442,7 +443,7 @@ function images_admin_uploads($args)
                         'images',
                         'admin',
                         'uploads',
-                        array('sort' => 'time')
+                        ['sort' => 'time']
                     ));
                 } else {
                     foreach ($found as $id) {
@@ -450,9 +451,9 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'resize_image',
-                            array('fileId' => $id,
+                            ['fileId' => $id,
                                                         'width'  => (!empty($width) ? $width . 'px' : null),
-                                                        'height' => (!empty($height) ? $height . 'px' : null))
+                                                        'height' => (!empty($height) ? $height . 'px' : null), ]
                         );
                         if (!$location) {
                             return;
@@ -463,9 +464,9 @@ function images_admin_uploads($args)
                         'images',
                         'admin',
                         'derivatives',
-                        array('sort'    => 'time',
+                        ['sort'    => 'time',
                                                         // we need to refresh the cache here
-                                                        'refresh' => 1)
+                                                        'refresh' => 1, ]
                     ));
                 }
                 return true;
@@ -511,9 +512,9 @@ function images_admin_uploads($args)
                         'images',
                         'admin',
                         'process_image',
-                        array('image'   => $data['images'][$id],
+                        ['image'   => $data['images'][$id],
                                                     'saveas'  => $saveas,
-                                                    'setting' => $setting)
+                                                    'setting' => $setting, ]
                     );
                     if (!$location) {
                         return;
@@ -527,7 +528,7 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'uploads',
-                            array('sort' => 'time')
+                            ['sort' => 'time']
                         ));
                         break;
 
@@ -537,7 +538,7 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'uploads',
-                            array('sort' => 'time')
+                            ['sort' => 'time']
                         ));
                         break;
 
@@ -548,9 +549,9 @@ function images_admin_uploads($args)
                             'images',
                             'admin',
                             'derivatives',
-                            array('sort'    => 'time',
+                            ['sort'    => 'time',
                                                             // we need to refresh the cache here
-                                                            'refresh' => 1)
+                                                            'refresh' => 1, ]
                         ));
                         break;
                 }

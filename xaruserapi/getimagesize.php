@@ -73,11 +73,11 @@ function images_userapi_getimagesize($args)
                 break;
         }
         $string = 'width="' . $extrainfo['width'] . '" height="' . $extrainfo['height'] . '"';
-        return array($extrainfo['width'],$extrainfo['height'],$type,$string);
+        return [$extrainfo['width'],$extrainfo['height'],$type,$string];
     } elseif (extension_loaded('gd') && xarMod::apiLoad('uploads', 'user') &&
               defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {
         // get the image data from the database
-        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', ['fileId' => $fileId]);
         if (!empty($data)) {
             $src = implode('', $data);
             unset($data);
@@ -88,7 +88,7 @@ function images_userapi_getimagesize($args)
                 @imagedestroy($img);
                 // update the file entry in the uploads module
                 if (empty($extrainfo)) {
-                    $extrainfo = array();
+                    $extrainfo = [];
                 }
                 $extrainfo['width'] = $width;
                 $extrainfo['height'] = $height;
@@ -96,8 +96,8 @@ function images_userapi_getimagesize($args)
                     'uploads',
                     'user',
                     'db_modify_file',
-                    array('fileId' => $fileId,
-                                    'extrainfo' => $extrainfo)
+                    ['fileId' => $fileId,
+                                    'extrainfo' => $extrainfo, ]
                 );
                 // Simulate the type returned by getimagesize()
                 switch ($fileType) {
@@ -115,7 +115,7 @@ function images_userapi_getimagesize($args)
                         break;
                 }
                 $string = 'width="' . $width . '" height="' . $height . '"';
-                return array($width,$height,$type,$string);
+                return [$width,$height,$type,$string];
             }
         }
     }

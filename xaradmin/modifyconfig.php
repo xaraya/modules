@@ -37,21 +37,21 @@ function images_admin_modifyconfig()
         xarModVars::set('images', 'file.imagemagick', '');
     }
     $data['authid']                         = xarSec::genAuthKey();
-    $data['library']   = array('GD'          => _IMAGES_LIBRARY_GD,
+    $data['library']   = ['GD'          => _IMAGES_LIBRARY_GD,
                                'ImageMagick' => _IMAGES_LIBRARY_IMAGEMAGICK,
-                               'NetPBM'      => _IMAGES_LIBRARY_NETPBM);
+                               'NetPBM'      => _IMAGES_LIBRARY_NETPBM, ];
 
     $shortURLs = xarModVars::get('images', 'SupportShortURLs');
 
     $data['shortURLs'] = empty($shortURLs) ? 0 : 1;
 
     $data['basedirs'] = xarMod::apiFunc('images', 'user', 'getbasedirs');
-    $data['basedirs'][] = array('basedir' => '',
+    $data['basedirs'][] = ['basedir' => '',
                                 'baseurl' => '',
                                 'filetypes' => '',
-                                'recursive' => false);
+                                'recursive' => false, ];
 
-    $hooks = xarModHooks::call('module', 'modifyconfig', 'images', array());
+    $hooks = xarModHooks::call('module', 'modifyconfig', 'images', []);
 
     if (empty($hooks)) {
         $data['hooks'] = '';

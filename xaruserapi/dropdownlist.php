@@ -20,7 +20,7 @@
  * @param $args['field'] field to use in the dropdown list (default 'fileName')
  * @return array of images, or false on failure
  */
-function images_userapi_dropdownlist($args = array())
+function images_userapi_dropdownlist($args = [])
 {
     // Add default arguments
     if (!isset($args['sort'])) {
@@ -51,7 +51,7 @@ function images_userapi_dropdownlist($args = array())
     }
 
     // Fill in the dropdown list
-    $list = array();
+    $list = [];
     $list[0] = '';
     $field = $args['field'];
     foreach ($images as $image) {

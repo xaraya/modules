@@ -1,4 +1,5 @@
 <?php
+
 //////////////////////////////////////////////////////////////
 ///  phpThumb() by James Heinrich <info@silisoftware.com>   //
 //        available at http://phpthumb.sourceforge.net     ///
@@ -17,7 +18,6 @@ ob_end_clean();
 
 class phpthumb
 {
-
     // public:
     // START PARAMETERS (for object mode and phpThumb.php)
     // See phpthumb.readme.txt for descriptions of what each of these values are
@@ -40,7 +40,7 @@ class phpthumb
     public $zc   = null;     // Zoom Crop
     public $bc   = null;     // Border Color
     public $bg   = null;     // BackGround color
-    public $fltr = array();  // FiLTeRs
+    public $fltr = [];  // FiLTeRs
     public $goto = null;     // GO TO url after processing
     public $err  = null;     // default ERRor image filename
     public $xto  = null;     // extract eXif Thumbnail Only
@@ -93,12 +93,12 @@ class phpthumb
 
     // * Anti-Hotlink Configuration:
     public $config_nohotlink_enabled                    = true;
-    public $config_nohotlink_valid_domains              = array();
+    public $config_nohotlink_valid_domains              = [];
     public $config_nohotlink_erase_image                = true;
     public $config_nohotlink_text_message               = 'Off-server thumbnailing is not allowed';
     // * Off-server Linking Configuration:
     public $config_nooffsitelink_enabled                = false;
-    public $config_nooffsitelink_valid_domains          = array();
+    public $config_nooffsitelink_valid_domains          = [];
     public $config_nooffsitelink_require_refer          = false;
     public $config_nooffsitelink_erase_image            = true;
     public $config_nooffsitelink_watermark_src          = '';
@@ -159,8 +159,8 @@ class phpthumb
 
 
     // public: error messages (read-only; persistant)
-    public $debugmessages = array();
-    public $debugtiming   = array();
+    public $debugmessages = [];
+    public $debugtiming   = [];
     public $fatalerror    = null;
 
 
@@ -201,7 +201,7 @@ class phpthumb
 
     public $cache_filename         = null;
 
-    public $AlphaCapableFormats = array('png', 'ico', 'gif');
+    public $AlphaCapableFormats = ['png', 'ico', 'gif'];
     public $is_alpha = false;
 
     public $iswindows = null;
@@ -429,7 +429,7 @@ class phpthumb
             return true;
         }
 
-        $builtin_formats = array();
+        $builtin_formats = [];
         if (function_exists('ImageTypes')) {
             $imagetypes = ImageTypes();
             $builtin_formats['wbmp'] = (bool) ($imagetypes & IMG_WBMP);
@@ -501,7 +501,7 @@ class phpthumb
                     return false;
                 }
                 $phpthumb_ico = new phpthumb_ico();
-                $arrayOfOutputImages = array($this->gdimg_output);
+                $arrayOfOutputImages = [$this->gdimg_output];
                 $this->outputImageData = $phpthumb_ico->GD2ICOstring($arrayOfOutputImages);
                 unset($phpthumb_ico);
                 break;
@@ -532,7 +532,7 @@ class phpthumb
         // render thumbnail to this file only, do not cache, do not output to browser
         //$renderfilename = $this->ResolveFilenameToAbsolute(dirname($filename)).DIRECTORY_SEPARATOR.basename($filename);
         $renderfilename = $filename;
-        if (($filename{0} != '/') && ($filename{0} != '\\') && ($filename{1} != ':')) {
+        if (($filename[0] != '/') && ($filename[0] != '\\') && ($filename[1] != ':')) {
             $renderfilename = $this->ResolveFilenameToAbsolute($renderfilename);
         }
         if (!@is_writable(dirname($renderfilename))) {
@@ -627,7 +627,7 @@ class phpthumb
                     }
                     $phpthumb_ico = new phpthumb_ico();
                     if (is_object($phpthumb_ico)) {
-                        $arrayOfOutputImages = array($this->gdimg_output);
+                        $arrayOfOutputImages = [$this->gdimg_output];
                         $ico_data = $phpthumb_ico->GD2ICOstring($arrayOfOutputImages);
                         unset($phpthumb_ico);
                         if (!$ico_data) {
@@ -657,8 +657,8 @@ class phpthumb
     {
         $this->DebugMessage('skipping CleanUpCacheDirectory() set to purge ('.number_format($this->config_cache_maxage / 86400, 1).' days; '.number_format($this->config_cache_maxsize / 1048576, 2).'MB; '.number_format($this->config_cache_maxfiles).' files)', __FILE__, __LINE__);
         if (($this->config_cache_maxage > 0) || ($this->config_cache_maxsize > 0) || ($this->config_cache_maxfiles > 0)) {
-            $CacheDirOldFilesAge  = array();
-            $CacheDirOldFilesSize = array();
+            $CacheDirOldFilesAge  = [];
+            $CacheDirOldFilesSize = [];
             $AllFilesInCacheDirectory = phpthumb_functions::GetAllFilesInSubfolders($this->config_cache_directory);
             foreach ($AllFilesInCacheDirectory as $fullfilename) {
                 if (preg_match('/^phpThumb_cache_/i', basename($fullfilename)) && file_exists($fullfilename)) {
@@ -672,7 +672,7 @@ class phpthumb
             if (empty($CacheDirOldFilesSize)) {
                 return true;
             }
-            $DeletedKeys['zerobyte'] = array();
+            $DeletedKeys['zerobyte'] = [];
             foreach ($CacheDirOldFilesSize as $fullfilename => $filesize) {
                 // purge all zero-size files more than an hour old (to prevent trying to delete just-created and/or in-use files)
                 $cutofftime = time() - 3600;
@@ -689,7 +689,7 @@ class phpthumb
 
             if ($this->config_cache_maxfiles > 0) {
                 $TotalCachedFiles = count($CacheDirOldFilesAge);
-                $DeletedKeys['maxfiles'] = array();
+                $DeletedKeys['maxfiles'] = [];
                 foreach ($CacheDirOldFilesAge as $fullfilename => $filedate) {
                     if ($TotalCachedFiles > $this->config_cache_maxfiles) {
                         if (@unlink($fullfilename)) {
@@ -710,7 +710,7 @@ class phpthumb
 
             if ($this->config_cache_maxage > 0) {
                 $mindate = time() - $this->config_cache_maxage;
-                $DeletedKeys['maxage'] = array();
+                $DeletedKeys['maxage'] = [];
                 foreach ($CacheDirOldFilesAge as $fullfilename => $filedate) {
                     if ($filedate > 0) {
                         if ($filedate < $mindate) {
@@ -732,7 +732,7 @@ class phpthumb
 
             if ($this->config_cache_maxsize > 0) {
                 $TotalCachedFileSize = array_sum($CacheDirOldFilesSize);
-                $DeletedKeys['maxsize'] = array();
+                $DeletedKeys['maxsize'] = [];
                 foreach ($CacheDirOldFilesAge as $fullfilename => $filedate) {
                     if ($TotalCachedFileSize > $this->config_cache_maxsize) {
                         if (@unlink($fullfilename)) {
@@ -759,7 +759,7 @@ class phpthumb
         }
         $this->DebugMessage('CleanUpCacheDirectory() purged '.$totalpurged.' files (from '.count($AllFilesInCacheDirectory).') based on config settings', __FILE__, __LINE__);
         if ($totalpurged > 0) {
-            $empty_dirs = array();
+            $empty_dirs = [];
             foreach ($AllFilesInCacheDirectory as $fullfilename) {
                 if (is_dir($fullfilename)) {
                     $empty_dirs[realpath($fullfilename)] = 1;
@@ -845,7 +845,7 @@ class phpthumb
         }
         $alreadyCalled = true;
 
-        $AvailableImageOutputFormats = array();
+        $AvailableImageOutputFormats = [];
         $AvailableImageOutputFormats[] = 'text';
         if (@is_readable(dirname(__FILE__).'/phpthumb.ico.php')) {
             $AvailableImageOutputFormats[] = 'ico';
@@ -880,7 +880,7 @@ class phpthumb
             $this->DebugMessage('ImageTypes() does not exist - GD support might not be enabled?', __FILE__, __LINE__);
         }
         if ($this->ImageMagickVersion()) {
-            $IMformats = array('jpeg', 'png', 'gif', 'bmp', 'ico', 'wbmp');
+            $IMformats = ['jpeg', 'png', 'gif', 'bmp', 'ico', 'wbmp'];
             $this->DebugMessage('Addding ImageMagick formats to $AvailableImageOutputFormats ('.implode(';', $AvailableImageOutputFormats).')', __FILE__, __LINE__);
             foreach ($IMformats as $key => $format) {
                 $AvailableImageOutputFormats[] = $format;
@@ -988,7 +988,7 @@ class phpthumb
 
             //$AbsoluteFilename = $filename;
             return $filename;
-        } elseif ($this->iswindows && ($filename{1} == ':')) {
+        } elseif ($this->iswindows && ($filename[1] == ':')) {
 
             // absolute pathname (Windows)
             $AbsoluteFilename = $filename;
@@ -996,12 +996,12 @@ class phpthumb
 
             // absolute pathname (Windows)
             $AbsoluteFilename = $filename;
-        } elseif ($filename{0} == '/') {
+        } elseif ($filename[0] == '/') {
             if (@is_readable($filename) && !@is_readable($this->config_document_root.$filename)) {
 
                 // absolute filename (*nix)
                 $AbsoluteFilename = $filename;
-            } elseif ($filename{1} == '~') {
+            } elseif ($filename[1] == '~') {
 
                 // /~user/path
                 if ($ApacheLookupURIarray = phpthumb_functions::ApacheLookupURIarray($filename)) {
@@ -1114,7 +1114,7 @@ class phpthumb
             $which_convert = $this->ImageMagickWhichConvert();
             $IMversion     = $this->ImageMagickVersion();
 
-            if ($which_convert && ($which_convert{0} == '/') && @file_exists($which_convert)) {
+            if ($which_convert && ($which_convert[0] == '/') && @file_exists($which_convert)) {
 
                 // `which convert` *should* return the path if "convert" exist, or nothing if it doesn't
                 // other things *may* get returned, like "sh: convert: not found" or "no convert in /usr/local/bin /usr/sbin /usr/bin /usr/ccs/bin"
@@ -1139,7 +1139,7 @@ class phpthumb
             $commandline = $this->ImageMagickCommandlineBase();
             $commandline = (!is_null($commandline) ? $commandline : '');
 
-            $versionstring = array(0=>'', 1=>'');
+            $versionstring = [0=>'', 1=>''];
             if ($commandline) {
                 $commandline .= ' --version';
                 $this->DebugMessage('ImageMagick version checked with "'.$commandline.'"', __FILE__, __LINE__);
@@ -1160,7 +1160,7 @@ class phpthumb
     {
         static $IMoptions = null;
         if (is_null($IMoptions)) {
-            $IMoptions = array();
+            $IMoptions = [];
             $commandline = $this->ImageMagickCommandlineBase();
             if (!is_null($commandline)) {
                 $commandline .= ' -help';
@@ -1213,7 +1213,7 @@ class phpthumb
 
             // $UnAllowedParameters contains options that can only be processed in GD, not ImageMagick
             // note: 'fltr' *may* need to be processed by GD, but we'll check that in more detail below
-            $UnAllowedParameters = array('xto', 'ra', 'ar', 'bg', 'bc');
+            $UnAllowedParameters = ['xto', 'ra', 'ar', 'bg', 'bc'];
             foreach ($UnAllowedParameters as $parameter) {
                 if (isset($this->$parameter)) {
                     $this->DebugMessage('$this->useRawIMoutput=false because "'.$parameter.'" is set', __FILE__, __LINE__);
@@ -1452,7 +1452,7 @@ class phpthumb
                     }
                 }
                 foreach ($this->fltr as $filterkey => $filtercommand) {
-                    @list($command, $parameter) = explode('|', $filtercommand, 2);
+                    @[$command, $parameter] = explode('|', $filtercommand, 2);
                     switch ($command) {
                         case 'brit':
                             if ($this->ImageMagickSwitchAvailable('modulate')) {
@@ -1480,7 +1480,7 @@ class phpthumb
                             break;
 
                         case 'ds':
-                            if ($this->ImageMagickSwitchAvailable(array('colorspace', 'modulate'))) {
+                            if ($this->ImageMagickSwitchAvailable(['colorspace', 'modulate'])) {
                                 if ($parameter == 100) {
                                     $commandline .= ' -colorspace GRAY -modulate 100,0,100';
                                 } else {
@@ -1491,7 +1491,7 @@ class phpthumb
                             break;
 
                         case 'sat':
-                            if ($this->ImageMagickSwitchAvailable(array('colorspace', 'modulate'))) {
+                            if ($this->ImageMagickSwitchAvailable(['colorspace', 'modulate'])) {
                                 if ($parameter == -100) {
                                     $commandline .= ' -colorspace GRAY -modulate 100,0,100';
                                 } else {
@@ -1502,7 +1502,7 @@ class phpthumb
                             break;
 
                         case 'gray':
-                            if ($this->ImageMagickSwitchAvailable(array('colorspace', 'modulate'))) {
+                            if ($this->ImageMagickSwitchAvailable(['colorspace', 'modulate'])) {
                                 $commandline .= ' -colorspace GRAY -modulate 100,0,100';
                                 //$commandline .= ' -colorspace GRAY';
                                 unset($this->fltr[$filterkey]);
@@ -1510,15 +1510,15 @@ class phpthumb
                             break;
 
                         case 'clr':
-                            if ($this->ImageMagickSwitchAvailable(array('fill', 'colorize'))) {
-                                @list($amount, $color) = explode('|', $parameter);
+                            if ($this->ImageMagickSwitchAvailable(['fill', 'colorize'])) {
+                                @[$amount, $color] = explode('|', $parameter);
                                 $commandline .= ' -fill "#'.$color.'" -colorize '.$amount;
                             }
                             break;
 
                         case 'sep':
                             if ($this->ImageMagickSwitchAvailable('sepia-tone')) {
-                                @list($amount, $color) = explode('|', $parameter);
+                                @[$amount, $color] = explode('|', $parameter);
                                 $amount = ($amount ? $amount : 80);
                                 if (!$color) {
                                     $commandline .= ' -sepia-tone '.$amount.'%';
@@ -1542,16 +1542,16 @@ class phpthumb
                             break;
 
                         case 'th':
-                            if ($this->ImageMagickSwitchAvailable(array('threshold', 'dither', 'monochrome'))) {
+                            if ($this->ImageMagickSwitchAvailable(['threshold', 'dither', 'monochrome'])) {
                                 $commandline .= ' -threshold '.round($parameter / 2.55).'% -dither -monochrome';
                                 unset($this->fltr[$filterkey]);
                             }
                             break;
 
                         case 'rcd':
-                            if ($this->ImageMagickSwitchAvailable(array('colors', 'dither'))) {
-                                @list($colors, $dither) = explode('|', $parameter);
-                                $colors = ($colors                ?  (int) $colors : 256);
+                            if ($this->ImageMagickSwitchAvailable(['colors', 'dither'])) {
+                                @[$colors, $dither] = explode('|', $parameter);
+                                $colors = ($colors ? (int) $colors : 256);
                                 $dither  = ((strlen($dither) > 0) ? (bool) $dither : true);
                                 $commandline .= ' -colors '.max($colors, 8); // ImageMagick will otherwise fail with "cannot quantize to fewer than 8 colors"
                                 $commandline .= ($dither ? ' -dither' : ' +dither');
@@ -1560,7 +1560,7 @@ class phpthumb
                             break;
 
                         case 'flip':
-                            if ($this->ImageMagickSwitchAvailable(array('flip', 'flop'))) {
+                            if ($this->ImageMagickSwitchAvailable(['flip', 'flop'])) {
                                 if (strpos(strtolower($parameter), 'x') !== false) {
                                     $commandline .= ' -flop';
                                 }
@@ -1580,7 +1580,7 @@ class phpthumb
                             break;
 
                         case 'emb':
-                            if ($this->ImageMagickSwitchAvailable(array('emboss', 'negate'))) {
+                            if ($this->ImageMagickSwitchAvailable(['emboss', 'negate'])) {
                                 $parameter = ($parameter ? $parameter : 2);
                                 $commandline .= ' -emboss '.$parameter;
                                 if ($parameter < 2) {
@@ -1591,20 +1591,20 @@ class phpthumb
                             break;
 
                         case 'lvl':
-                            @list($band, $method, $threshold) = explode('|', $parameter);
+                            @[$band, $method, $threshold] = explode('|', $parameter);
                             $band      = ($band ? preg_replace('/[^RGBA\\*]/', '', strtoupper($band)) : '*');
-                            $method    = ((strlen($method) > 0)    ? intval($method)                :   2);
-                            $threshold = ((strlen($threshold) > 0) ? floatval($threshold)           : 0.1);
+                            $method    = ((strlen($method) > 0) ? intval($method) : 2);
+                            $threshold = ((strlen($threshold) > 0) ? floatval($threshold) : 0.1);
 
                             $band = preg_replace('/[^RGBA\\*]/', '', strtoupper($band));
 
-                            if (($method > 1) && !$this->ImageMagickSwitchAvailable(array('channel', 'contrast-stretch'))) {
+                            if (($method > 1) && !$this->ImageMagickSwitchAvailable(['channel', 'contrast-stretch'])) {
                                 // Because ImageMagick processing happens before PHP-GD filters, and because some
                                 // clipping is involved in the "lvl" filter, if "lvl" happens before "wb" then the
                                 // "wb" filter will have (almost) no effect. Therefore, if "wb" is enabled then
                                 // force the "lvl" filter to be processed by GD, not ImageMagick.
                                 foreach ($this->fltr as $fltr_key => $fltr_value) {
-                                    list($fltr_cmd) = explode('|', $fltr_value);
+                                    [$fltr_cmd] = explode('|', $fltr_value);
                                     if ($fltr_cmd == 'wb') {
                                         $this->DebugMessage('Setting "lvl" filter method to "0" (from "'.$method.'") because white-balance filter also enabled', __FILE__, __LINE__);
                                         $method = 0;
@@ -1641,8 +1641,8 @@ class phpthumb
                             break;
 
                         case 'wb':
-                            if ($this->ImageMagickSwitchAvailable(array('channel', 'contrast-stretch'))) {
-                                @list($threshold) = explode('|', $parameter);
+                            if ($this->ImageMagickSwitchAvailable(['channel', 'contrast-stretch'])) {
+                                @[$threshold] = explode('|', $parameter);
                                 $threshold = (is_float($threshold) ? $threshold : 0.1);
                                 $commandline .= ' -channel R -contrast-stretch '.$threshold.'%';
                                 $commandline .= ' -channel G -contrast-stretch '.$threshold.'%';
@@ -1654,7 +1654,7 @@ class phpthumb
 
                         case 'blur':
                             if ($this->ImageMagickSwitchAvailable('blur')) {
-                                @list($radius) = explode('|', $parameter);
+                                @[$radius] = explode('|', $parameter);
                                 $radius = ($radius ? $radius : 1);
                                 $commandline .= ' -blur '.$radius;
                                 unset($this->fltr[$filterkey]);
@@ -1663,7 +1663,7 @@ class phpthumb
 
                         case 'gblr':
                             if ($this->ImageMagickSwitchAvailable('gaussian')) {
-                                @list($radius) = explode('|', $parameter);
+                                @[$radius] = explode('|', $parameter);
                                 $radius = ($radius ? $radius : 1);
                                 $commandline .= ' -gaussian '.$radius;
                                 unset($this->fltr[$filterkey]);
@@ -1672,9 +1672,9 @@ class phpthumb
 
                         case 'usm':
                             if ($this->ImageMagickSwitchAvailable('unsharp')) {
-                                @list($amount, $radius, $threshold) = explode('|', $parameter);
-                                $amount    = ($amount            ? $amount    : 80);
-                                $radius    = ($radius            ? $radius    : 0.5);
+                                @[$amount, $radius, $threshold] = explode('|', $parameter);
+                                $amount    = ($amount ? $amount : 80);
+                                $radius    = ($radius ? $radius : 0.5);
                                 $threshold = (strlen($threshold) ? $threshold : 3);
                                 $commandline .= ' -unsharp '.number_format(($radius * 2) - 1, 2).'x1+'.number_format($amount / 100, 2).'+'.number_format($threshold / 100, 2);
                                 unset($this->fltr[$filterkey]);
@@ -1682,9 +1682,9 @@ class phpthumb
                             break;
 
                         case 'bord':
-                            if ($this->ImageMagickSwitchAvailable(array('border', 'bordercolor', 'thumbnail', 'crop'))) {
+                            if ($this->ImageMagickSwitchAvailable(['border', 'bordercolor', 'thumbnail', 'crop'])) {
                                 if (!$this->zc) {
-                                    @list($width, $rX, $rY, $color) = explode('|', $parameter);
+                                    @[$width, $rX, $rY, $color] = explode('|', $parameter);
                                     if ($width && !$rX && !$rY) {
                                         if (!phpthumb_functions::IsHexColor($color)) {
                                             $color = ($this->bc ? $this->bc : '000000');
@@ -1766,7 +1766,7 @@ class phpthumb
                 }
 
                 if (preg_match('/jpe?g/i', $outputFormat) && $this->q) {
-                    if ($this->ImageMagickSwitchAvailable(array('quality', 'interlace'))) {
+                    if ($this->ImageMagickSwitchAvailable(['quality', 'interlace'])) {
                         $commandline .= ' -quality '.$this->thumbnailQuality;
                         if ($this->config_output_interlace) {
                             // causes weird things with animated GIF... leave for JPEG only
@@ -1944,7 +1944,7 @@ class phpthumb
 
     public function OffsiteDomainIsAllowed($hostname, $allowed_domains)
     {
-        static $domain_is_allowed = array();
+        static $domain_is_allowed = [];
         $hostname = strtolower($hostname);
         if (!isset($domain_is_allowed[$hostname])) {
             $domain_is_allowed[$hostname] = false;
@@ -1976,7 +1976,7 @@ class phpthumb
             $this->DebugMessage('AntiOffsiteLinking() checking $_SERVER[HTTP_REFERER] "'.@$_SERVER['HTTP_REFERER'].'"', __FILE__, __LINE__);
             foreach ($this->config_nooffsitelink_valid_domains as $key => $valid_domain) {
                 // $_SERVER['HTTP_HOST'] contains the port number, so strip it out here to make default configuration work
-                list($clean_domain) = explode(':', $valid_domain);
+                [$clean_domain] = explode(':', $valid_domain);
                 $this->config_nooffsitelink_valid_domains[$key] = $clean_domain;
             }
             $parsed_url = phpthumb_functions::ParseURLbetter(@$_SERVER['HTTP_REFERER']);
@@ -2102,7 +2102,7 @@ class phpthumb
                         ImageColorTransparent($this->gdimg_output, $TransparentColor);
 
                         // scan through alpha channel image and note pixels with >50% transparency
-                        $TransparentPixels = array();
+                        $TransparentPixels = [];
                         for ($x = 0; $x < $this->thumbnail_width; $x++) {
                             for ($y = 0; $y < $this->thumbnail_height; $y++) {
                                 $AlphaChannelPixel = phpthumb_functions::GetPixelColor($img_alpha_mixdown_dither, $x, $y);
@@ -2161,7 +2161,7 @@ class phpthumb
             $phpthumbFilters = new phpthumb_filters();
             $phpthumbFilters->phpThumbObject = &$this;
             foreach ($this->fltr as $filtercommand) {
-                @list($command, $parameter) = explode('|', $filtercommand, 2);
+                @[$command, $parameter] = explode('|', $filtercommand, 2);
                 $this->DebugMessage('Attempting to process filter command "'.$command.'('.$parameter.')"', __FILE__, __LINE__);
                 switch ($command) {
                     case 'brit': // Brightness
@@ -2189,7 +2189,7 @@ class phpthumb
                             $this->DebugMessage('Skipping Colorize() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
                             break;
                         }
-                        @list($amount, $color) = explode('|', $parameter);
+                        @[$amount, $color] = explode('|', $parameter);
                         $phpthumbFilters->Colorize($this->gdimg_output, $amount, $color);
                         break;
 
@@ -2198,7 +2198,7 @@ class phpthumb
                             $this->DebugMessage('Skipping Sepia() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
                             break;
                         }
-                        @list($amount, $color) = explode('|', $parameter);
+                        @[$amount, $color] = explode('|', $parameter);
                         $phpthumbFilters->Sepia($this->gdimg_output, $amount, $color);
                         break;
 
@@ -2219,8 +2219,8 @@ class phpthumb
                             $this->DebugMessage('Skipping ReduceColorDepth() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
                             break;
                         }
-                        @list($colors, $dither) = explode('|', $parameter);
-                        $colors = ($colors                ?  (int) $colors : 256);
+                        @[$colors, $dither] = explode('|', $parameter);
+                        $colors = ($colors ? (int) $colors : 256);
                         $dither  = ((strlen($dither) > 0) ? (bool) $dither : true);
                         $phpthumbFilters->ReduceColorDepth($this->gdimg_output, $colors, $dither);
                         break;
@@ -2238,15 +2238,15 @@ class phpthumb
                         break;
 
                     case 'bvl': // Bevel
-                        @list($width, $color1, $color2) = explode('|', $parameter);
+                        @[$width, $color1, $color2] = explode('|', $parameter);
                         $phpthumbFilters->Bevel($this->gdimg_output, $width, $color1, $color2);
                         break;
 
                     case 'lvl': // autoLevels
-                        @list($band, $method, $threshold) = explode('|', $parameter);
+                        @[$band, $method, $threshold] = explode('|', $parameter);
                         $band      = ($band ? preg_replace('/[^RGBA\\*]/', '', strtoupper($band)) : '*');
-                        $method    = ((strlen($method) > 0)    ? intval($method)                :   2);
-                        $threshold = ((strlen($threshold) > 0) ? floatval($threshold)           : 0.1);
+                        $method    = ((strlen($method) > 0) ? intval($method) : 2);
+                        $threshold = ((strlen($threshold) > 0) ? floatval($threshold) : 0.1);
 
                         $phpthumbFilters->HistogramStretch($this->gdimg_output, $band, $method, $threshold);
                         break;
@@ -2260,20 +2260,20 @@ class phpthumb
                             $this->DebugMessage('Skipping HistogramOverlay() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
                             break;
                         }
-                        @list($bands, $colors, $width, $height, $alignment, $opacity, $margin_x, $margin_y) = explode('|', $parameter);
-                        $bands     = ($bands     ? $bands     :  '*');
-                        $colors    = ($colors    ? $colors    :   '');
-                        $width     = ($width     ? $width     : 0.25);
-                        $height    = ($height    ? $height    : 0.25);
+                        @[$bands, $colors, $width, $height, $alignment, $opacity, $margin_x, $margin_y] = explode('|', $parameter);
+                        $bands     = ($bands ? $bands : '*');
+                        $colors    = ($colors ? $colors : '');
+                        $width     = ($width ? $width : 0.25);
+                        $height    = ($height ? $height : 0.25);
                         $alignment = ($alignment ? $alignment : 'BR');
-                        $opacity   = ($opacity   ? $opacity   :   50);
-                        $margin_x  = ($margin_x  ? $margin_x  :    5);
+                        $opacity   = ($opacity ? $opacity : 50);
+                        $margin_x  = ($margin_x ? $margin_x : 5);
                         $margin_y  = $margin_y; // just to note it wasn't forgotten, but let the value always pass unchanged
                         $phpthumbFilters->HistogramOverlay($this->gdimg_output, $bands, $colors, $width, $height, $alignment, $opacity, $margin_x, $margin_y);
                         break;
 
                     case 'fram': // Frame
-                        @list($frame_width, $edge_width, $color_frame, $color1, $color2) = explode('|', $parameter);
+                        @[$frame_width, $edge_width, $color_frame, $color1, $color2] = explode('|', $parameter);
                         $phpthumbFilters->Frame($this->gdimg_output, $frame_width, $edge_width, $color_frame, $color1, $color2);
                         break;
 
@@ -2283,7 +2283,7 @@ class phpthumb
                             return false;
                         }
                         $this->is_alpha = true;
-                        @list($distance, $width, $color, $angle, $fade) = explode('|', $parameter);
+                        @[$distance, $width, $color, $angle, $fade] = explode('|', $parameter);
                         $phpthumbFilters->DropShadow($this->gdimg_output, $distance, $width, $color, $angle, $fade);
                         break;
 
@@ -2326,7 +2326,7 @@ class phpthumb
                             $this->DebugMessage('Skipping RoundedImageCorners() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
                             return false;
                         }
-                        @list($radius_x, $radius_y) = explode('|', $parameter);
+                        @[$radius_x, $radius_y] = explode('|', $parameter);
                         if (($radius_x < 1) || ($radius_y < 1)) {
                             $this->DebugMessage('Skipping RoundedImageCorners('.$radius_x.', '.$radius_y.') because x/y radius is less than 1', __FILE__, __LINE__);
                             break;
@@ -2336,21 +2336,21 @@ class phpthumb
                         break;
 
                     case 'crop': // Crop
-                        @list($left, $right, $top, $bottom) = explode('|', $parameter);
+                        @[$left, $right, $top, $bottom] = explode('|', $parameter);
                         $phpthumbFilters->Crop($this->gdimg_output, $left, $right, $top, $bottom);
                         break;
 
                     case 'bord': // Border
-                        @list($border_width, $radius_x, $radius_y, $hexcolor_border) = explode('|', $parameter);
+                        @[$border_width, $radius_x, $radius_y, $hexcolor_border] = explode('|', $parameter);
                         $this->is_alpha = true;
                         $phpthumbFilters->ImageBorder($this->gdimg_output, $border_width, $radius_x, $radius_y, $hexcolor_border);
                         break;
 
                     case 'over': // Overlay
-                        @list($filename, $underlay, $margin, $opacity) = explode('|', $parameter);
-                        $underlay = (bool) ($underlay              ? $underlay : false);
-                        $margin   =        ((strlen($margin)  > 0) ? $margin   : ($underlay ? 0.1 : 0.0));
-                        $opacity  =        ((strlen($opacity) > 0) ? $opacity  : 100);
+                        @[$filename, $underlay, $margin, $opacity] = explode('|', $parameter);
+                        $underlay = (bool) ($underlay ? $underlay : false);
+                        $margin   =        ((strlen($margin)  > 0) ? $margin : ($underlay ? 0.1 : 0.0));
+                        $opacity  =        ((strlen($opacity) > 0) ? $opacity : 100);
                         if (($margin > 0) && ($margin < 1)) {
                             $margin = min(0.499, $margin);
                         } elseif (($margin > -1) && ($margin < 0)) {
@@ -2414,13 +2414,13 @@ class phpthumb
                         break;
 
                     case 'wmi': // WaterMarkImage
-                        @list($filename, $alignment, $opacity, $margin['x'], $margin['y'], $rotate_angle) = explode('|', $parameter);
+                        @[$filename, $alignment, $opacity, $margin['x'], $margin['y'], $rotate_angle] = explode('|', $parameter);
                         // $margin can be pixel margin or percent margin if $alignment is text, or max width/height if $alignment is position like "50x75"
-                        $alignment    = ($alignment            ? $alignment            : 'BR');
-                        $opacity      = (strlen($opacity)      ? intval($opacity)      : 50);
+                        $alignment    = ($alignment ? $alignment : 'BR');
+                        $opacity      = (strlen($opacity) ? intval($opacity) : 50);
                         $rotate_angle = (strlen($rotate_angle) ? intval($rotate_angle) : 0);
                         if (!preg_match('/^([0-9\\.\\-]*)x([0-9\\.\\-]*)$/i', $alignment, $matches)) {
-                            $margins = array('x', 'y');
+                            $margins = ['x', 'y'];
                             foreach ($margins as $xy) {
                                 $margin[$xy] = (strlen($margin[$xy]) ? $margin[$xy] : 5);
                                 if (($margin[$xy] > 0) && ($margin[$xy] < 1)) {
@@ -2470,18 +2470,18 @@ class phpthumb
                         break;
 
                     case 'wmt': // WaterMarkText
-                        @list($text, $size, $alignment, $hex_color, $ttffont, $opacity, $margin, $angle, $bg_color, $bg_opacity, $fillextend) = explode('|', $parameter);
-                        $text       = ($text            ? $text       : '');
-                        $size       = ($size            ? $size       : 3);
-                        $alignment  = ($alignment       ? $alignment  : 'BR');
-                        $hex_color  = ($hex_color       ? $hex_color  : '000000');
-                        $ttffont    = ($ttffont         ? $ttffont    : '');
-                        $opacity    = (strlen($opacity) ? $opacity    : 50);
-                        $margin     = (strlen($margin)  ? $margin     : 5);
-                        $angle      = (strlen($angle)   ? $angle      : 0);
-                        $bg_color   = ($bg_color        ? $bg_color   : false);
-                        $bg_opacity = ($bg_opacity      ? $bg_opacity : 0);
-                        $fillextend = ($fillextend      ? $fillextend : '');
+                        @[$text, $size, $alignment, $hex_color, $ttffont, $opacity, $margin, $angle, $bg_color, $bg_opacity, $fillextend] = explode('|', $parameter);
+                        $text       = ($text ? $text : '');
+                        $size       = ($size ? $size : 3);
+                        $alignment  = ($alignment ? $alignment : 'BR');
+                        $hex_color  = ($hex_color ? $hex_color : '000000');
+                        $ttffont    = ($ttffont ? $ttffont : '');
+                        $opacity    = (strlen($opacity) ? $opacity : 50);
+                        $margin     = (strlen($margin) ? $margin : 5);
+                        $angle      = (strlen($angle) ? $angle : 0);
+                        $bg_color   = ($bg_color ? $bg_color : false);
+                        $bg_opacity = ($bg_opacity ? $bg_opacity : 0);
+                        $fillextend = ($fillextend ? $fillextend : '');
 
                         if (basename($ttffont) == $ttffont) {
                             $ttffont = realpath($this->config_ttf_directory.DIRECTORY_SEPARATOR.$ttffont);
@@ -2492,7 +2492,7 @@ class phpthumb
                         break;
 
                     case 'blur': // Blur
-                        @list($radius) = explode('|', $parameter);
+                        @[$radius] = explode('|', $parameter);
                         $radius = ($radius ? $radius : 1);
                         if (phpthumb_functions::gd_version() >= 2) {
                             $phpthumbFilters->Blur($this->gdimg_output, $radius);
@@ -2503,8 +2503,8 @@ class phpthumb
                         break;
 
                     case 'size': // Resize
-                        @list($newwidth, $newheight, $stretch) = explode('|', $parameter);
-                        $newwidth  = (!$newwidth  ? ImageSX($this->gdimg_output) : ((($newwidth  > 0) && ($newwidth  < 1)) ? round($newwidth  * ImageSX($this->gdimg_output)) : round($newwidth)));
+                        @[$newwidth, $newheight, $stretch] = explode('|', $parameter);
+                        $newwidth  = (!$newwidth ? ImageSX($this->gdimg_output) : ((($newwidth  > 0) && ($newwidth  < 1)) ? round($newwidth  * ImageSX($this->gdimg_output)) : round($newwidth)));
                         $newheight = (!$newheight ? ImageSY($this->gdimg_output) : ((($newheight > 0) && ($newheight < 1)) ? round($newheight * ImageSY($this->gdimg_output)) : round($newheight)));
                         $stretch   = ($stretch ? true : false);
                         if ($stretch) {
@@ -2550,9 +2550,9 @@ class phpthumb
                         break;
 
                     case 'usm': // UnSharpMask sharpening
-                        @list($amount, $radius, $threshold) = explode('|', $parameter);
-                        $amount    = ($amount            ? $amount    : 80);
-                        $radius    = ($radius            ? $radius    : 0.5);
+                        @[$amount, $radius, $threshold] = explode('|', $parameter);
+                        $amount    = ($amount ? $amount : 80);
+                        $radius    = ($radius ? $radius : 0.5);
                         $threshold = (strlen($threshold) ? $threshold : 3);
                         if (phpthumb_functions::gd_version() >= 2.0) {
                             ob_start();
@@ -2574,17 +2574,17 @@ class phpthumb
                         break;
 
                     case 'rot': // ROTate
-                        @list($angle, $bgcolor) = explode('|', $parameter);
+                        @[$angle, $bgcolor] = explode('|', $parameter);
                         $phpthumbFilters->ImprovedImageRotate($this->gdimg_output, $angle, $bgcolor);
                         break;
 
                     case 'stc': // Source Transparent Color
-                        @list($hexcolor, $min_limit, $max_limit) = explode('|', $parameter);
+                        @[$hexcolor, $min_limit, $max_limit] = explode('|', $parameter);
                         if (!phpthumb_functions::IsHexColor($hexcolor)) {
                             $this->DebugMessage('Skipping SourceTransparentColor hex color is invalid ('.$hexcolor.')', __FILE__, __LINE__);
                             return false;
                         }
-                        $min_limit = (strlen($min_limit) ? $min_limit :  5);
+                        $min_limit = (strlen($min_limit) ? $min_limit : 5);
                         $max_limit = (strlen($max_limit) ? $max_limit : 10);
                         if ($gdimg_mask = $phpthumbFilters->SourceTransparentColorMask($this->gdimg_output, $hexcolor, $min_limit, $max_limit)) {
                             $this->is_alpha = true;
@@ -2679,11 +2679,11 @@ class phpthumb
     public function CalculateThumbnailDimensions()
     {
         //echo $this->source_width.'x'.$this->source_height.'<hr>';
-        $this->thumbnailCropX = ($this->sx ? (($this->sx >= 1) ? $this->sx : round($this->sx * $this->source_width))  : 0);
+        $this->thumbnailCropX = ($this->sx ? (($this->sx >= 1) ? $this->sx : round($this->sx * $this->source_width)) : 0);
         //echo $this->thumbnailCropX.'<br>';
         $this->thumbnailCropY = ($this->sy ? (($this->sy >= 1) ? $this->sy : round($this->sy * $this->source_height)) : 0);
         //echo $this->thumbnailCropY.'<br>';
-        $this->thumbnailCropW = ($this->sw ? (($this->sw >= 1) ? $this->sw : round($this->sw * $this->source_width))  : $this->source_width);
+        $this->thumbnailCropW = ($this->sw ? (($this->sw >= 1) ? $this->sw : round($this->sw * $this->source_width)) : $this->source_width);
         //echo $this->thumbnailCropW.'<br>';
         $this->thumbnailCropH = ($this->sh ? (($this->sh >= 1) ? $this->sh : round($this->sh * $this->source_height)) : $this->source_height);
         //echo $this->thumbnailCropH.'<hr>';
@@ -2909,7 +2909,7 @@ class phpthumb
                         $this->DebugMessage('not using EXIF thumbnail because $this->h != $this->exif_thumbnail_height ('.$this->h.' != '.$this->exif_thumbnail_height.')', __FILE__, __LINE__);
                         break;
                     }
-                    $CannotBeSetParameters = array('sx', 'sy', 'sh', 'sw', 'far', 'bg', 'bc', 'fltr', 'phpThumbDebug');
+                    $CannotBeSetParameters = ['sx', 'sy', 'sh', 'sw', 'far', 'bg', 'bc', 'fltr', 'phpThumbDebug'];
                     foreach ($CannotBeSetParameters as $parameter) {
                         if ($this->$parameter) {
                             break 2;
@@ -3004,13 +3004,13 @@ class phpthumb
         if ($this->fltr && is_array($this->fltr)) {
             $ParametersString .= '_fltr'.implode('_fltr', $this->fltr);
         }
-        $FilenameParameters1 = array('ar', 'bg', 'bc', 'far', 'sx', 'sy', 'sw', 'sh', 'zc');
+        $FilenameParameters1 = ['ar', 'bg', 'bc', 'far', 'sx', 'sy', 'sw', 'sh', 'zc'];
         foreach ($FilenameParameters1 as $key) {
             if ($this->$key) {
                 $ParametersString .= '_'.$key.$this->$key;
             }
         }
-        $FilenameParameters2 = array('h', 'w', 'wl', 'wp', 'ws', 'hp', 'hs', 'xto', 'ra', 'iar', 'aoe', 'maxb', 'sfn', 'dpi');
+        $FilenameParameters2 = ['h', 'w', 'wl', 'wp', 'ws', 'hp', 'hs', 'xto', 'ra', 'iar', 'aoe', 'maxb', 'sfn', 'dpi'];
         foreach ($FilenameParameters2 as $key) {
             if ($this->$key) {
                 $ParametersString .= '_'.$key.intval($this->$key);
@@ -3067,12 +3067,12 @@ class phpthumb
         $this->DebugMessage('starting ImageCreateFromFilename('.$filename.')', __FILE__, __LINE__);
         if ($filename && ($getimagesizeinfo = @GetImageSize($filename))) {
             if (!$this->SourceImageIsTooLarge($getimagesizeinfo[0], $getimagesizeinfo[1])) {
-                $ImageCreateFromFunction = array(
+                $ImageCreateFromFunction = [
                     1  => 'ImageCreateFromGIF',
                     2  => 'ImageCreateFromJPEG',
                     3  => 'ImageCreateFromPNG',
                     15 => 'ImageCreateFromWBMP',
-                );
+                ];
                 $this->DebugMessage('ImageCreateFromFilename found ($getimagesizeinfo[2]=='.@$getimagesizeinfo[2].')', __FILE__, __LINE__);
                 switch (@$getimagesizeinfo[2]) {
                     case 1:  // GIF
@@ -3269,7 +3269,7 @@ class phpthumb
                 // cannot create image for whatever reason (maybe ImageCreateFromJPEG et al are not available?)
                 // and ImageMagick is not available either, no choice but to output original (not resized/modified) data and exit
                 if ($this->config_error_die_on_source_failure) {
-                    $errormessages = array();
+                    $errormessages = [];
                     $errormessages[] = 'All attempts to create GD image source failed.';
                     if ($this->fatalerror) {
                         $errormessages[] = $this->fatalerror;
@@ -3289,7 +3289,7 @@ class phpthumb
                     }
                     $this->ErrorImage(implode("\n", $errormessages));
                 } else {
-                    $this->DebugMessage('All attempts to create GD image source failed ('.(ini_get('safe_mode') ? 'Safe Mode enabled, ImageMagick unavailable and source image probably too large for GD': ($GDreadSupport ? 'source image probably corrupt' : 'GD does not have read support for "'.$imageHeader.'"')).'), cannot generate thumbnail');
+                    $this->DebugMessage('All attempts to create GD image source failed ('.(ini_get('safe_mode') ? 'Safe Mode enabled, ImageMagick unavailable and source image probably too large for GD' : ($GDreadSupport ? 'source image probably corrupt' : 'GD does not have read support for "'.$imageHeader.'"')).'), cannot generate thumbnail');
                     //$this->DebugMessage('All attempts to create GD image source failed ('.($GDreadSupport ? 'source image probably corrupt' : 'GD does not have read support for "'.$imageHeader.'"').'), outputing raw image', __FILE__, __LINE__);
                     //if (!$this->phpThumbDebug) {
                     //  header($imageHeader);
@@ -3410,12 +3410,12 @@ class phpthumb
             return $this->ErrorImage('phpThumbDebug disabled');
         }
 
-        $FunctionsExistance  = array('exif_thumbnail', 'gd_info', 'image_type_to_mime_type', 'ImageCopyResampled', 'ImageCopyResized', 'ImageCreate', 'ImageCreateFromString', 'ImageCreateTrueColor', 'ImageIsTrueColor', 'ImageRotate', 'ImageTypes', 'version_compare', 'ImageCreateFromGIF', 'ImageCreateFromJPEG', 'ImageCreateFromPNG', 'ImageCreateFromWBMP', 'ImageCreateFromXBM', 'ImageCreateFromXPM', 'ImageCreateFromString', 'ImageCreateFromGD', 'ImageCreateFromGD2', 'ImageCreateFromGD2Part', 'ImageJPEG', 'ImageGIF', 'ImagePNG', 'ImageWBMP');
-        $ParameterNames      = array('src', 'new', 'w', 'h', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'far', 'bg', 'bc', 'file', 'goto', 'err', 'xto', 'ra', 'ar', 'aoe', 'iar', 'maxb');
-        $ConfigVariableNames = array('document_root', 'temp_directory', 'output_format', 'output_maxwidth', 'output_maxheight', 'error_message_image_default', 'error_bgcolor', 'error_textcolor', 'error_fontsize', 'error_die_on_error', 'error_silent_die_on_error', 'error_die_on_source_failure', 'nohotlink_enabled', 'nohotlink_valid_domains', 'nohotlink_erase_image', 'nohotlink_text_message', 'nooffsitelink_enabled', 'nooffsitelink_valid_domains', 'nooffsitelink_require_refer', 'nooffsitelink_erase_image', 'nooffsitelink_text_message', 'high_security_enabled', 'allow_src_above_docroot', 'allow_src_above_phpthumb', 'allow_parameter_file', 'allow_parameter_goto', 'max_source_pixels', 'use_exif_thumbnail_for_speed', 'border_hexcolor', 'background_hexcolor', 'ttf_directory', 'disable_pathinfo_parsing', 'disable_imagecopyresampled');
-        $OtherVariableNames  = array('phpThumbDebug', 'thumbnailQuality', 'thumbnailFormat', 'gdimg_output', 'gdimg_source', 'sourceFilename', 'source_width', 'source_height', 'thumbnailCropX', 'thumbnailCropY', 'thumbnailCropW', 'thumbnailCropH', 'exif_thumbnail_width', 'exif_thumbnail_height', 'exif_thumbnail_type', 'thumbnail_width', 'thumbnail_height', 'thumbnail_image_width', 'thumbnail_image_height');
+        $FunctionsExistance  = ['exif_thumbnail', 'gd_info', 'image_type_to_mime_type', 'ImageCopyResampled', 'ImageCopyResized', 'ImageCreate', 'ImageCreateFromString', 'ImageCreateTrueColor', 'ImageIsTrueColor', 'ImageRotate', 'ImageTypes', 'version_compare', 'ImageCreateFromGIF', 'ImageCreateFromJPEG', 'ImageCreateFromPNG', 'ImageCreateFromWBMP', 'ImageCreateFromXBM', 'ImageCreateFromXPM', 'ImageCreateFromString', 'ImageCreateFromGD', 'ImageCreateFromGD2', 'ImageCreateFromGD2Part', 'ImageJPEG', 'ImageGIF', 'ImagePNG', 'ImageWBMP'];
+        $ParameterNames      = ['src', 'new', 'w', 'h', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'far', 'bg', 'bc', 'file', 'goto', 'err', 'xto', 'ra', 'ar', 'aoe', 'iar', 'maxb'];
+        $ConfigVariableNames = ['document_root', 'temp_directory', 'output_format', 'output_maxwidth', 'output_maxheight', 'error_message_image_default', 'error_bgcolor', 'error_textcolor', 'error_fontsize', 'error_die_on_error', 'error_silent_die_on_error', 'error_die_on_source_failure', 'nohotlink_enabled', 'nohotlink_valid_domains', 'nohotlink_erase_image', 'nohotlink_text_message', 'nooffsitelink_enabled', 'nooffsitelink_valid_domains', 'nooffsitelink_require_refer', 'nooffsitelink_erase_image', 'nooffsitelink_text_message', 'high_security_enabled', 'allow_src_above_docroot', 'allow_src_above_phpthumb', 'allow_parameter_file', 'allow_parameter_goto', 'max_source_pixels', 'use_exif_thumbnail_for_speed', 'border_hexcolor', 'background_hexcolor', 'ttf_directory', 'disable_pathinfo_parsing', 'disable_imagecopyresampled'];
+        $OtherVariableNames  = ['phpThumbDebug', 'thumbnailQuality', 'thumbnailFormat', 'gdimg_output', 'gdimg_source', 'sourceFilename', 'source_width', 'source_height', 'thumbnailCropX', 'thumbnailCropY', 'thumbnailCropW', 'thumbnailCropH', 'exif_thumbnail_width', 'exif_thumbnail_height', 'exif_thumbnail_type', 'thumbnail_width', 'thumbnail_height', 'thumbnail_image_width', 'thumbnail_image_height'];
 
-        $DebugOutput = array();
+        $DebugOutput = [];
         $DebugOutput[] = 'phpThumb() version          = '.$this->phpthumb_version;
         $DebugOutput[] = 'phpversion()                = '.@phpversion();
         $DebugOutput[] = 'PHP_OS                      = '.PHP_OS;
@@ -3540,7 +3540,7 @@ class phpthumb
         }
         $DebugOutput[] = '  * Total processing time: '.number_format(max(array_keys($this->debugtiming)) - min(array_keys($this->debugtiming)), 6);
 
-        $this->f = (isset($_GET['f']) ? $_GET['f'] : $this->f); // debug modes 0-2 don't recognize text mode otherwise
+        $this->f = ($_GET['f'] ?? $this->f); // debug modes 0-2 don't recognize text mode otherwise
         return $this->ErrorImage(implode("\n", $DebugOutput), 700, 500, true);
     }
 
@@ -3554,7 +3554,7 @@ class phpthumb
 
     public function ErrorImage($text, $width=0, $height=0, $forcedisplay=false)
     {
-        $width  = ($width  ? $width  : $this->config_error_image_width);
+        $width  = ($width ? $width : $this->config_error_image_width);
         $height = ($height ? $height : $this->config_error_image_height);
 
         $text = 'phpThumb() v'.$this->phpthumb_version."\n\n".$text;

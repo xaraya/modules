@@ -34,17 +34,17 @@ class AlbumDB
         if (strcmp($tmp, "")) {
             $this->albumOrder = unserialize($tmp);
         } else {
-            $this->albumOrder = array();
+            $this->albumOrder = [];
         }
 
-        $this->albumList = array();
-        $this->brokenAlbums = array();
+        $this->albumList = [];
+        $this->brokenAlbums = [];
         $i = 0;
         $changed = 0;
         while ($i < sizeof($this->albumOrder)) {
             $name = $this->albumOrder[$i];
             if (fs_is_dir("$dir/$name")) {
-                $album = new Album;
+                $album = new Album();
                 if ($album->load($name, $loadphotos)) {
                     array_push($this->albumList, $album);
                 } else {
@@ -64,7 +64,7 @@ class AlbumDB
                     fs_is_dir("$dir/$file") &&
                     strcmp($file, "_vti_cnf") &&
                     !in_array($file, $this->albumOrder)) {
-                    $album = new Album;
+                    $album = new Album();
                     $album->load($file, $loadphotos);
                     array_push($this->albumList, $album);
                     array_push($this->albumOrder, $file);
@@ -252,7 +252,7 @@ class AlbumDB
     public function getVisibleAlbums($user)
     {
         global $gallery;
-        $list = array();
+        $list = [];
         foreach ($this->albumList as $album) {
             if ($user->canReadAlbum($album) && $album->isRoot()) {
                 array_push($list, $album);

@@ -56,7 +56,7 @@ function images_userapi_getimageinfo($args)
 
     if (!empty($fileId) && is_numeric($fileId)) {
         // Get file information from the uploads module
-        $imageInfoArray = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+        $imageInfoArray = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]);
         $imageInfo = end($imageInfoArray);
         if (!empty($imageInfo)) {
             // Check the modified and writable
@@ -97,7 +97,7 @@ function images_userapi_getimageinfo($args)
 
         // Note: we're using base 64 encoded fileId's here
         $id = base64_encode($fileName);
-        $imageInfo = array('fileLocation' => $fileLocation,
+        $imageInfo = ['fileLocation' => $fileLocation,
                            'fileDownload' => (!empty($baseurl) ? $baseurl . '/' . $fileName : $fileName),
                            'fileName'     => $fileName,
                            'fileType'     => $sizeinfo['mime'],
@@ -108,7 +108,7 @@ function images_userapi_getimageinfo($args)
                            'imageWidth'   => $sizeinfo[0],
                            'imageHeight'  => $sizeinfo[1],
                            'imageType'    => $sizeinfo[2],
-                           'imageAttr'    => $sizeinfo[3]);
+                           'imageAttr'    => $sizeinfo[3], ];
 
         return $imageInfo;
     }

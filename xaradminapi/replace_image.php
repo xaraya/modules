@@ -28,7 +28,7 @@ function images_adminapi_replace_image($args)
     extract($args);
 
     if (!empty($fileId) && empty($fileLocation)) {
-        $fileInfo = end(xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+        $fileInfo = end(xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]));
         if (empty($fileInfo)) {
             return;
         } else {
@@ -57,11 +57,11 @@ function images_adminapi_replace_image($args)
         'images',
         'admin',
         'resize_image',
-        array('fileLocation' => $fileLocation,
+        ['fileLocation' => $fileLocation,
                                     'width'  => (!empty($width) ? $width : null),
                                     'height' => (!empty($height) ? $height : null),
                                     'derivName'   => $fileLocation,
-                                    'forceResize' => true)
+                                    'forceResize' => true, ]
     );
     if (!$location) {
         return;
@@ -77,10 +77,10 @@ function images_adminapi_replace_image($args)
         'uploads',
         'user',
         'db_modify_file',
-        array('fileId'   => $fileId,
+        ['fileId'   => $fileId,
     // FIXME: resize() always uses JPEG format for now
                              'fileType' => 'image/jpeg',
-                             'fileSize' => filesize($fileLocation))
+                             'fileSize' => filesize($fileLocation), ]
     )) {
         return;
     }

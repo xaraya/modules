@@ -56,7 +56,7 @@ function & images_userapi_load_image($args)
     if (!empty($fileId) && is_numeric($fileId)) {
         // if we only get the fileId
         if (empty($fileLocation) || !isset($storeType)) {
-            $fileInfoArray = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+            $fileInfoArray = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]);
             $fileInfo = end($fileInfoArray);
             if (empty($fileInfo)) {
                 return null;

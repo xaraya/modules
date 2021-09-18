@@ -46,7 +46,7 @@ function & images_userapi_transform($body)
         // get rid of it
         array_shift($parts);
 
-        list($type, $id) = $parts;
+        [$type, $id] = $parts;
         // get rid of the type and id so all we have left are the arguments now :)
         array_shift($parts);
         array_shift($parts);
@@ -62,7 +62,7 @@ function & images_userapi_transform($body)
                 // with image-resize, all we want to pass back to the content is the url
                 // location of the resized image so it can be dropped in a <img> tag
                 // like so: <img src="#image-resize:23:200::true#" alt="some alt text" />
-                list($width, $height, $constrain) = $parts;
+                [$width, $height, $constrain] = $parts;
                 if (!empty($width)) {
                     $args['width'] = $width;
                 }

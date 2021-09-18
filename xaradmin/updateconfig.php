@@ -99,22 +99,22 @@ function images_admin_updateconfig()
         return;
     }
     if (!empty($basedirs) && is_array($basedirs)) {
-        $newdirs = array();
+        $newdirs = [];
         $idx = 0;
         foreach ($basedirs as $id => $info) {
             if (empty($info['basedir']) && empty($info['baseurl']) && empty($info['filetypes'])) {
                 continue;
             }
-            $newdirs[$idx] = array('basedir' => $info['basedir'],
+            $newdirs[$idx] = ['basedir' => $info['basedir'],
                                    'baseurl' => $info['baseurl'],
                                    'filetypes' => $info['filetypes'],
-                                   'recursive' => (!empty($info['recursive']) ? true : false));
+                                   'recursive' => (!empty($info['recursive']) ? true : false), ];
             $idx++;
         }
         xarModVars::set('images', 'basedirs', serialize($newdirs));
     }
 
-    xarModHooks::call('module', 'updateconfig', 'images', array('module' => 'images'));
+    xarModHooks::call('module', 'updateconfig', 'images', ['module' => 'images']);
     xarController::redirect(xarController::URL('images', 'admin', 'modifyconfig'));
 
     // Return

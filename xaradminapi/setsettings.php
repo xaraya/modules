@@ -21,7 +21,7 @@
 function images_adminapi_setsettings($args)
 {
     if (empty($args) || !is_array($args)) {
-        $args = array();
+        $args = [];
     }
 
     xarModVars::set('images', 'phpthumb-settings', serialize($args));

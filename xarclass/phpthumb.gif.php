@@ -1,4 +1,5 @@
 <?php
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // GIF Util - (C) 2003 Yamasoft (S/C)
 // http://www.yamasoft.com
@@ -223,7 +224,7 @@ class CGIFLZW
     public function LZWCommand(&$data, $bInit)
     {
         if ($bInit) {
-            $this->SetCodeSize = ord($data{0});
+            $this->SetCodeSize = ord($data[0]);
             $data = substr($data, 1);
 
             $this->CodeSize    = $this->SetCodeSize + 1;
@@ -357,12 +358,12 @@ class CGIFLZW
             $this->Buf[0] = $this->Buf[$this->LastByte - 2];
             $this->Buf[1] = $this->Buf[$this->LastByte - 1];
 
-            $Count = ord($data{0});
+            $Count = ord($data[0]);
             $data  = substr($data, 1);
 
             if ($Count) {
                 for ($i = 0; $i < $Count; $i++) {
-                    $this->Buf[2 + $i] = ord($data{$i});
+                    $this->Buf[2 + $i] = ord($data[$i]);
                 }
                 $data = substr($data, $Count);
             } else {
@@ -405,7 +406,7 @@ class CGIFCOLORTABLE
     public function load($lpData, $num)
     {
         $this->m_nColors  = 0;
-        $this->m_arColors = array();
+        $this->m_arColors = [];
 
         for ($i = 0; $i < $num; $i++) {
             $rgb = substr($lpData, $i * 3, 3);
@@ -413,7 +414,7 @@ class CGIFCOLORTABLE
                 return false;
             }
 
-            $this->m_arColors[] = (ord($rgb{2}) << 16) + (ord($rgb{1}) << 8) + ord($rgb{0});
+            $this->m_arColors[] = (ord($rgb[2]) << 16) + (ord($rgb[1]) << 8) + ord($rgb[0]);
             $this->m_nColors++;
         }
 
@@ -601,7 +602,7 @@ class CGIFIMAGEHEADER
             return false;
         }
 
-        $b = ord($lpData{8});
+        $b = ord($lpData[8]);
         $this->m_bLocalClr  = ($b & 0x80) ? true : false;
         $this->m_bInterlace = ($b & 0x40) ? true : false;
         $this->m_bSorted    = ($b & 0x20) ? true : false;
@@ -663,7 +664,7 @@ class CGIFIMAGE
         $datLen = 0;
 
         while (true) {
-            $b = ord($data{0});
+            $b = ord($data[0]);
             $data = substr($data, 1);
             $datLen++;
 
@@ -709,22 +710,22 @@ class CGIFIMAGE
     {
         $extLen = 0;
 
-        $b = ord($data{0});
+        $b = ord($data[0]);
         $data = substr($data, 1);
         $extLen++;
 
         switch ($b) {
         case 0xF9: // Graphic Control
-            $b = ord($data{1});
+            $b = ord($data[1]);
             $this->m_disp   = ($b & 0x1C) >> 2;
             $this->m_bUser  = ($b & 0x02) ? true : false;
             $this->m_bTrans = ($b & 0x01) ? true : false;
             $this->m_nDelay = $this->w2i(substr($data, 2, 2));
-            $this->m_nTrans = ord($data{4});
+            $this->m_nTrans = ord($data[4]);
             break;
 
         case 0xFE: // Comment
-            $this->m_lpComm = substr($data, 1, ord($data{0}));
+            $this->m_lpComm = substr($data, 1, ord($data[0]));
             break;
 
         case 0x01: // Plain text
@@ -735,13 +736,13 @@ class CGIFIMAGE
         }
 
         // SKIP DEFAULT AS DEFS MAY CHANGE
-        $b = ord($data{0});
+        $b = ord($data[0]);
         $data = substr($data, 1);
         $extLen++;
         while ($b > 0) {
             $data = substr($data, $b);
             $extLen += $b;
-            $b    = ord($data{0});
+            $b    = ord($data[0]);
             $data = substr($data, 1);
             $extLen++;
         }
@@ -912,7 +913,7 @@ class CGIF
                     ($x <  ($this->m_img->m_gih->m_nLeft + $this->m_img->m_gih->m_nWidth)) &&
                     ($y <  ($this->m_img->m_gih->m_nTop  + $this->m_img->m_gih->m_nHeight))) {
                     // PART OF IMAGE
-                    if (@$this->m_img->m_bTrans && (ord($data{$nPxl}) == $this->m_img->m_nTrans)) {
+                    if (@$this->m_img->m_bTrans && (ord($data[$nPxl]) == $this->m_img->m_nTrans)) {
                         // TRANSPARENT -> BACKGROUND
                         if ($bgColor == -1) {
                             $bmp .= chr($this->m_gfh->m_nBgColor);
@@ -920,7 +921,7 @@ class CGIF
                             $bmp .= chr($bgColor);
                         }
                     } else {
-                        $bmp .= $data{$nPxl};
+                        $bmp .= $data[$nPxl];
                     }
                 } else {
                     // BACKGROUND
@@ -1011,7 +1012,7 @@ class CGIF
                     ($x <  ($this->m_img->m_gih->m_nLeft + $this->m_img->m_gih->m_nWidth)) &&
                     ($y <  ($this->m_img->m_gih->m_nTop  + $this->m_img->m_gih->m_nHeight))) {
                     // PART OF IMAGE
-                    $bmp .= $data{$nPxl};
+                    $bmp .= $data[$nPxl];
                 } else {
                     // BACKGROUND
                     if ($bgColor == -1) {
@@ -1096,9 +1097,9 @@ class CGIF
         for ($i = 0; $i < $NumColorsInPal; $i++) {
             $ThisImageColor[$i] = ImageColorAllocate(
                 $PlottingIMG,
-                ord($pal{(($i * 3) + 0)}),
-                ord($pal{(($i * 3) + 1)}),
-                ord($pal{(($i * 3) + 2)})
+                ord($pal[(($i * 3) + 0)]),
+                ord($pal[(($i * 3) + 1)]),
+                ord($pal[(($i * 3) + 2)])
             );
         }
 
@@ -1116,10 +1117,10 @@ class CGIF
                     ($x <  ($this->m_img->m_gih->m_nLeft + $this->m_img->m_gih->m_nWidth)) &&
                     ($y <  ($this->m_img->m_gih->m_nTop  + $this->m_img->m_gih->m_nHeight))) {
                     // PART OF IMAGE
-                    if (@$this->m_img->m_bTrans && (ord($data{$nPxl}) == $this->m_img->m_nTrans)) {
+                    if (@$this->m_img->m_bTrans && (ord($data[$nPxl]) == $this->m_img->m_nTrans)) {
                         ImageSetPixel($PlottingIMG, $x, $this->m_gfh->m_nHeight - $y - 1, $ThisImageColor[$this->m_gfh->m_nBgColor]);
                     } else {
-                        ImageSetPixel($PlottingIMG, $x, $this->m_gfh->m_nHeight - $y - 1, $ThisImageColor[ord($data{$nPxl})]);
+                        ImageSetPixel($PlottingIMG, $x, $this->m_gfh->m_nHeight - $y - 1, $ThisImageColor[ord($data[$nPxl])]);
                     }
                 } else {
                     // BACKGROUND

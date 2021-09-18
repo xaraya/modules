@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -27,7 +28,7 @@ class phpthumb_bmp
 
     public function phpthumb_bmp2gd(&$BMPdata, $truecolor=true)
     {
-        $ThisFileInfo = array();
+        $ThisFileInfo = [];
         if ($this->getid3_bmp($BMPdata, $ThisFileInfo, true, true)) {
             $gd = $this->PlotPixelsGD($ThisFileInfo['bmp'], $truecolor);
             return $gd;
@@ -91,7 +92,7 @@ class phpthumb_bmp
     {
 
         // shortcuts
-        $ThisFileInfo['bmp']['header']['raw'] = array();
+        $ThisFileInfo['bmp']['header']['raw'] = [];
         $thisfile_bmp                         = &$ThisFileInfo['bmp'];
         $thisfile_bmp_header                  = &$thisfile_bmp['header'];
         $thisfile_bmp_header_raw              = &$thisfile_bmp_header['raw'];
@@ -396,7 +397,7 @@ class phpthumb_bmp
                         case 1:
                             for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
                                 for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col = $col) {
-                                    $paletteindexbyte = ord($BMPpixelData{$pixeldataoffset++});
+                                    $paletteindexbyte = ord($BMPpixelData[$pixeldataoffset++]);
                                     for ($i = 7; $i >= 0; $i--) {
                                         $paletteindex = ($paletteindexbyte & (0x01 << $i)) >> $i;
                                         $thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -413,7 +414,7 @@ class phpthumb_bmp
                         case 4:
                             for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
                                 for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col = $col) {
-                                    $paletteindexbyte = ord($BMPpixelData{$pixeldataoffset++});
+                                    $paletteindexbyte = ord($BMPpixelData[$pixeldataoffset++]);
                                     for ($i = 1; $i >= 0; $i--) {
                                         $paletteindex = ($paletteindexbyte & (0x0F << (4 * $i))) >> (4 * $i);
                                         $thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -430,7 +431,7 @@ class phpthumb_bmp
                         case 8:
                             for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
                                 for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col++) {
-                                    $paletteindex = ord($BMPpixelData{$pixeldataoffset++});
+                                    $paletteindex = ord($BMPpixelData[$pixeldataoffset++]);
                                     $thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
                                 }
                                 while (($pixeldataoffset % 4) != 0) {
@@ -443,7 +444,7 @@ class phpthumb_bmp
                         case 24:
                             for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
                                 for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col++) {
-                                    $thisfile_bmp['data'][$row][$col] = (ord($BMPpixelData{$pixeldataoffset+2}) << 16) | (ord($BMPpixelData{$pixeldataoffset+1}) << 8) | ord($BMPpixelData{$pixeldataoffset});
+                                    $thisfile_bmp['data'][$row][$col] = (ord($BMPpixelData[$pixeldataoffset+2]) << 16) | (ord($BMPpixelData[$pixeldataoffset+1]) << 8) | ord($BMPpixelData[$pixeldataoffset]);
                                     $pixeldataoffset += 3;
                                 }
                                 while (($pixeldataoffset % 4) != 0) {
@@ -456,7 +457,7 @@ class phpthumb_bmp
                         case 32:
                             for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
                                 for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col++) {
-                                    $thisfile_bmp['data'][$row][$col] = (ord($BMPpixelData{$pixeldataoffset+3}) << 24) | (ord($BMPpixelData{$pixeldataoffset+2}) << 16) | (ord($BMPpixelData{$pixeldataoffset+1}) << 8) | ord($BMPpixelData{$pixeldataoffset});
+                                    $thisfile_bmp['data'][$row][$col] = (ord($BMPpixelData[$pixeldataoffset+3]) << 24) | (ord($BMPpixelData[$pixeldataoffset+2]) << 16) | (ord($BMPpixelData[$pixeldataoffset+1]) << 8) | ord($BMPpixelData[$pixeldataoffset]);
                                     $pixeldataoffset += 4;
                                 }
                                 while (($pixeldataoffset % 4) != 0) {
@@ -695,7 +696,7 @@ class phpthumb_bmp
         $red   = ($color & 0x00FF0000) >> 16;
         $green = ($color & 0x0000FF00) >> 8;
         $blue  = ($color & 0x000000FF);
-        return array($red, $green, $blue);
+        return [$red, $green, $blue];
     }
 
     public function PlotPixelsGD(&$BMPdata, $truecolor=true)
@@ -710,7 +711,7 @@ class phpthumb_bmp
             if (!empty($BMPdata['palette'])) {
                 // create GD palette from BMP palette
                 foreach ($BMPdata['palette'] as $dummy => $color) {
-                    list($r, $g, $b) = $this->IntColor2RGB($color);
+                    [$r, $g, $b] = $this->IntColor2RGB($color);
                     ImageColorAllocate($gd, $r, $g, $b);
                 }
             } else {
@@ -733,7 +734,7 @@ class phpthumb_bmp
                 set_time_limit(30);
             }
             foreach ($colarray as $col => $color) {
-                list($red, $green, $blue) = $this->IntColor2RGB($color);
+                [$red, $green, $blue] = $this->IntColor2RGB($color);
                 if ($truecolor) {
                     $pixelcolor = ImageColorAllocate($gd, $red, $green, $blue);
                 } else {
@@ -771,27 +772,27 @@ class phpthumb_bmp
 
     public function BMPcompressionWindowsLookup($compressionid)
     {
-        static $BMPcompressionWindowsLookup = array(
+        static $BMPcompressionWindowsLookup = [
             0 => 'BI_RGB',
             1 => 'BI_RLE8',
             2 => 'BI_RLE4',
             3 => 'BI_BITFIELDS',
             4 => 'BI_JPEG',
-            5 => 'BI_PNG'
-        );
-        return (isset($BMPcompressionWindowsLookup[$compressionid]) ? $BMPcompressionWindowsLookup[$compressionid] : 'invalid');
+            5 => 'BI_PNG',
+        ];
+        return ($BMPcompressionWindowsLookup[$compressionid] ?? 'invalid');
     }
 
     public function BMPcompressionOS2Lookup($compressionid)
     {
-        static $BMPcompressionOS2Lookup = array(
+        static $BMPcompressionOS2Lookup = [
             0 => 'BI_RGB',
             1 => 'BI_RLE8',
             2 => 'BI_RLE4',
             3 => 'Huffman 1D',
             4 => 'BI_RLE24',
-        );
-        return (isset($BMPcompressionOS2Lookup[$compressionid]) ? $BMPcompressionOS2Lookup[$compressionid] : 'invalid');
+        ];
+        return ($BMPcompressionOS2Lookup[$compressionid] ?? 'invalid');
     }
 
 
@@ -820,7 +821,7 @@ class phpthumb_bmp
         $byteword = strrev($byteword);
         $bytewordlen = strlen($byteword);
         for ($i = 0; $i < $bytewordlen; $i++) {
-            $intvalue += ord($byteword{$i}) * pow(256, ($bytewordlen - 1 - $i));
+            $intvalue += ord($byteword[$i]) * pow(256, ($bytewordlen - 1 - $i));
         }
         return $intvalue;
     }
@@ -835,7 +836,7 @@ class phpthumb_bmp
         $binvalue = '';
         $bytewordlen = strlen($byteword);
         for ($i = 0; $i < $bytewordlen; $i++) {
-            $binvalue .= str_pad(decbin(ord($byteword{$i})), 8, '0', STR_PAD_LEFT);
+            $binvalue .= str_pad(decbin(ord($byteword[$i])), 8, '0', STR_PAD_LEFT);
         }
         return $binvalue;
     }
@@ -850,7 +851,7 @@ class phpthumb_bmp
     {
         $signmult = 1;
         if ($signed) {
-            if ($binstring{0} == '1') {
+            if ($binstring[0] == '1') {
                 $signmult = -1;
             }
             $binstring = substr($binstring, 1);

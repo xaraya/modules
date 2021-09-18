@@ -25,12 +25,12 @@ function images_adminapi_countuploads($args)
     }
 
     // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
-    $typeinfo = xarMod::apiFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
+    $typeinfo = xarMod::apiFunc('mime', 'user', 'get_type', ['typeName' => $typeName]);
     if (empty($typeinfo)) {
         return;
     }
 
-    $filters = array();
+    $filters = [];
     $filters['mimetype'] = $typeinfo['typeId'];
     $filters['subtype']  = null;
     $filters['status']   = null;

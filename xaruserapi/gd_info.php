@@ -17,7 +17,7 @@ function images_userapi_gd_info()
     if (function_exists('gd_info')) {
         $gd_info = gd_info();
     } else {
-        $gd_info = array(
+        $gd_info = [
             'GD Version'          => 'not supported',
             'FreeType Support'    => false,
             'T1Lib Support'       => false,
@@ -26,7 +26,7 @@ function images_userapi_gd_info()
             'JPG Support'         => false,
             'PNG Support'         => false,
             'WBMP Support'        => false,
-            'XBM Support'         => false);
+            'XBM Support'         => false, ];
 
         ob_start();
         phpinfo(INFO_MODULES);

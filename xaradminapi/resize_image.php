@@ -98,7 +98,7 @@ function images_adminapi_resize_image($args)
 
     // if both arguments are specified, give priority to fileId
     if (!empty($fileId)) {
-        $fileInfo = end(xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+        $fileInfo = end(xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]));
         if (empty($fileInfo)) {
             return;
         } else {
@@ -136,9 +136,9 @@ function images_adminapi_resize_image($args)
         $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
 
-    $image = xarMod::apiFunc('images', 'user', 'load_image', array('fileId' => $fileId,
+    $image = xarMod::apiFunc('images', 'user', 'load_image', ['fileId' => $fileId,
                                                                  'fileLocation' => $location,
-                                                                 'thumbsdir' => $thumbsdir));
+                                                                 'thumbsdir' => $thumbsdir, ]);
 
     if (!is_object($image)) {
         $msg = xarML('File not found.');
@@ -151,7 +151,7 @@ function images_adminapi_resize_image($args)
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
-                $image->setPercent(array('wpercent' => $width));
+                $image->setPercent(['wpercent' => $width]);
                 break;
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
@@ -169,7 +169,7 @@ function images_adminapi_resize_image($args)
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
-                $image->setPercent(array('hpercent' => $height));
+                $image->setPercent(['hpercent' => $height]);
                 break;
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:

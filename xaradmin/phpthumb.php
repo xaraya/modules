@@ -1,4 +1,5 @@
 <?php
+
 //////////////////////////////////////////////////////////////
 ///  phpThumb() by James Heinrich <info@silisoftware.com>   //
 //        available at http://phpthumb.sourceforge.net     ///
@@ -42,7 +43,7 @@ function images_admin_phpthumb($args)
 
     // we're defining a processing filter without image here
     if (empty($fileId)) {
-        $data['selimage'] = array();
+        $data['selimage'] = [];
 
     // we're dealing with an uploads file here
     } elseif (is_numeric($fileId)) {
@@ -50,7 +51,7 @@ function images_admin_phpthumb($args)
             'images',
             'admin',
             'getuploads',
-            array('fileId'   => $fileId)
+            ['fileId'   => $fileId]
         );
         if (!empty($data['images'][$fileId])) {
             $data['selimage'] = $data['images'][$fileId];
@@ -63,8 +64,8 @@ function images_admin_phpthumb($args)
             'images',
             'admin',
             'getderivatives',
-            array('thumbsdir' => $data['thumbsdir'],
-                                              'fileId'    => $fileId)
+            ['thumbsdir' => $data['thumbsdir'],
+                                              'fileId'    => $fileId, ]
         );
         foreach ($data['images'] as $image) {
             if ($image['fileId'] == $fileId) {
@@ -171,13 +172,13 @@ function images_admin_phpthumb($args)
     }
 
     // The following URL parameters are (or will be) supported here
-    $paramlist = array('w', 'h', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'zc', 'bc', 'bg', 'fltr', 'xto', 'ra', 'ar', 'aoe', 'far', 'iar', 'maxb');
+    $paramlist = ['w', 'h', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'zc', 'bc', 'bg', 'fltr', 'xto', 'ra', 'ar', 'aoe', 'far', 'iar', 'maxb'];
     // The following URL parameters are not supported here
     //$unsupported = array('src', 'new', 'bgt', 'file', 'goto', 'err', 'down', 'phpThumbDebug', 'hash', 'md5s');
 
     // Remove empty filters
     if (!empty($fltr)) {
-        $newfltr = array();
+        $newfltr = [];
         foreach ($fltr as $info) {
             if (empty($info)) {
                 continue;
@@ -192,7 +193,7 @@ function images_admin_phpthumb($args)
     }
 
     // Available filter names and their number of attributes
-    $filterlist = array('gam' => 1, 'ds' => 1, 'gray' => 0, 'clr' => 2, 'sep' => 2, 'usm' => 3, 'blur' => 1, 'lvl' => 3, 'wb' => 1, 'hist' => 7, 'over' => 4, 'wmi' => 4, 'wmt' => 8, 'flip' => 1, 'elip' => 0, 'mask' => 1, 'bvl' => 3, 'bord' => 4, 'fram' => 5, 'drop' => 4);
+    $filterlist = ['gam' => 1, 'ds' => 1, 'gray' => 0, 'clr' => 2, 'sep' => 2, 'usm' => 3, 'blur' => 1, 'lvl' => 3, 'wb' => 1, 'hist' => 7, 'over' => 4, 'wmi' => 4, 'wmt' => 8, 'flip' => 1, 'elip' => 0, 'mask' => 1, 'bvl' => 3, 'bord' => 4, 'fram' => 5, 'drop' => 4];
 
     // FIXME: make this configurable in TColorPicker !?
     // Get rid of # in front of hex colors
@@ -227,7 +228,7 @@ function images_admin_phpthumb($args)
 
         // Process filters via input form
         if (empty($fltr) && !empty($filter)) {
-            $fltr = array();
+            $fltr = [];
             foreach ($filter as $name => $values) {
                 // skip invalid filter entries
                 if (!isset($filterlist[$name]) || !is_array($values) || count($values) < $filterlist[$name]) {
@@ -261,7 +262,7 @@ function images_admin_phpthumb($args)
             $phpThumb->setSourceFilename($file);
         } elseif (is_numeric($fileId) && defined('_UPLOADS_STORE_DB_DATA') && ($data['selimage']['storeType'] & _UPLOADS_STORE_DB_DATA)) {
             // get the image data from the database
-            $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+            $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', ['fileId' => $fileId]);
             if (!empty($data)) {
                 $src = implode('', $data);
                 unset($data);
@@ -313,11 +314,11 @@ function images_admin_phpthumb($args)
                                 'uploads',
                                 'user',
                                 'db_modify_file',
-                                array('fileId'    => $fileId,
+                                ['fileId'    => $fileId,
                                                      'fileType'  => $fileType,
                                                      'fileSize'  => filesize($save),
                                                      // reset the extrainfo
-                                                     'extrainfo' => '')
+                                                     'extrainfo' => '', ]
                             )) {
                                 return;
                             }
@@ -326,8 +327,8 @@ function images_admin_phpthumb($args)
                                     'uploads',
                                     'user',
                                     'file_dump',
-                                    array('fileSrc' => $save,
-                                                         'fileId' => $fileId)
+                                    ['fileSrc' => $save,
+                                                         'fileId' => $fileId, ]
                                 )) {
                                     return;
                                 }
@@ -337,8 +338,8 @@ function images_admin_phpthumb($args)
                                 'images',
                                 'admin',
                                 'uploads',
-                                array('action' => 'view',
-                                                                'fileId' => $fileId)
+                                ['action' => 'view',
+                                                                'fileId' => $fileId, ]
                             ));
                             return true;
                         } elseif (preg_match('/^[0-9a-f]{32}$/i', $fileId)) {
@@ -347,8 +348,8 @@ function images_admin_phpthumb($args)
                                 'images',
                                 'admin',
                                 'derivatives',
-                                array('action' => 'view',
-                                                                'fileId' => $fileId)
+                                ['action' => 'view',
+                                                                'fileId' => $fileId, ]
                             ));
                             return true;
                         } else {
@@ -357,9 +358,9 @@ function images_admin_phpthumb($args)
                                 'images',
                                 'admin',
                                 'browse',
-                                array('action' => 'view',
+                                ['action' => 'view',
                                                                 'bid'    => $baseId,
-                                                                'fid'    => $fileId)
+                                                                'fid'    => $fileId, ]
                             ));
                             return true;
                         }
@@ -389,7 +390,7 @@ function images_admin_phpthumb($args)
         }
     }
 
-    $previewargs = array();
+    $previewargs = [];
     $previewargs['fid'] = $fileId;
     foreach ($paramlist as $param) {
         if (isset($$param) && $$param !== false) {
@@ -401,7 +402,7 @@ function images_admin_phpthumb($args)
     }
     // Process filters via input form
     if (empty($previewargs['fltr']) && !empty($filter)) {
-        $previewargs['fltr'] = array();
+        $previewargs['fltr'] = [];
         foreach ($filter as $name => $values) {
             // skip invalid filter entries
             if (!isset($filterlist[$name]) || !is_array($values) || count($values) < $filterlist[$name]) {
@@ -445,12 +446,12 @@ function images_admin_phpthumb($args)
 
             // Note: processed images are named md5(filelocation)-[setting].[ext] - see process_image() function
             $add = xarVar::prepForOS($setting);
-            $add = strtr($add, array(' ' => ''));
+            $add = strtr($add, [' ' => '']);
             $affected = xarMod::apiFunc(
                 'images',
                 'admin',
                 'getderivatives',
-                array('filematch' => '^\w+-' . $add)
+                ['filematch' => '^\w+-' . $add]
             );
             // Delete any derivative image using this setting earlier
             if (!empty($affected)) {
@@ -473,7 +474,7 @@ function images_admin_phpthumb($args)
             $previewargs
         );
         // restore | characters in fltr
-        $previewurl = strtr($previewurl, array('%7C' => '|'));
+        $previewurl = strtr($previewurl, ['%7C' => '|']);
         // show parameters
         $data['params'] = preg_replace('/^.*fid=[^&]*&amp;/', '', $previewurl);
         $data['params'] = preg_replace('/&amp;preview=1.*$/', '', $data['params']);
@@ -506,7 +507,7 @@ function images_admin_phpthumb($args)
 
     // preset the different filter attributes for the input form
     if (!empty($fltr) && empty($filter)) {
-        $filter = array();
+        $filter = [];
         foreach ($fltr as $id => $info) {
             if (empty($info)) {
                 continue;
@@ -523,13 +524,13 @@ function images_admin_phpthumb($args)
         }
     }
     if (empty($filter)) {
-        $data['filter'] = array();
+        $data['filter'] = [];
     } else {
         $data['filter'] = $filter;
     }
     foreach ($filterlist as $name => $attr) {
         if (empty($data['filter'][$name])) {
-            $data['filter'][$name] = array();
+            $data['filter'][$name] = [];
         }
         for ($i = count($data['filter'][$name]); $i <= $attr; $i++) {
             $data['filter'][$name][] = '';
@@ -537,7 +538,7 @@ function images_admin_phpthumb($args)
     }
     // preset the fltr fields
     if (empty($fltr)) {
-        $data['fltr'] = array();
+        $data['fltr'] = [];
     }
     for ($i = count($data['fltr']); $i <= 4; $i++) {
         $data['fltr'][] = '';

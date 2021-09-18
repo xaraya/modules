@@ -20,10 +20,10 @@ function images_userapi_getsettings()
 {
     $settings = xarModVars::get('images', 'phpthumb-settings');
     if (empty($settings)) {
-        $settings = array();
-        $settings['JPEG 800 x 600'] = array('w' => 800,
+        $settings = [];
+        $settings['JPEG 800 x 600'] = ['w' => 800,
                                             'h' => 600,
-                                            'f' => 'jpg');
+                                            'f' => 'jpg', ];
         xarModVars::set('images', 'phpthumb-settings', serialize($settings));
     } else {
         $settings = unserialize($settings);

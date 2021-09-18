@@ -27,7 +27,7 @@ function images_adminapi_countderivatives($args)
 
     if (!empty($fileId)) {
         if (!is_array($fileId)) {
-            $fileId = array($fileId);
+            $fileId = [$fileId];
         }
         return count($fileId);
     }
@@ -54,9 +54,9 @@ function images_adminapi_countderivatives($args)
         $filetype = '(jpg|png|gif)';
     }
 
-    $params = array('basedir'   => $thumbsdir,
+    $params = ['basedir'   => $thumbsdir,
                     'filematch' => $filematch,
-                    'filetype'  => $filetype);
+                    'filetype'  => $filetype, ];
 
     $cachekey = md5(serialize($params));
     // get the number of images from temporary cache - see getderivatives()

@@ -35,13 +35,13 @@ function images_user_display($args)
     }
 
     if (is_numeric($fileId)) {
-        $data = array('fileId' => $fileId);
+        $data = ['fileId' => $fileId];
     } else {
         $fileLocation = base64_decode($fileId);
         if (empty($fileLocation) || !file_exists($fileLocation)) {
             return false;
         }
-        $data = array('fileLocation' => $fileLocation);
+        $data = ['fileLocation' => $fileLocation];
     }
 
     $image = xarMod::apiFunc('images', 'user', 'load_image', $data);
@@ -63,7 +63,7 @@ function images_user_display($args)
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
-                $image->setPercent(array('wpercent' => $width));
+                $image->setPercent(['wpercent' => $width]);
                 break;
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
@@ -82,7 +82,7 @@ function images_user_display($args)
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
-                $image->setPercent(array('hpercent' => $height));
+                $image->setPercent(['hpercent' => $height]);
                 break;
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
@@ -134,7 +134,7 @@ function images_user_display($args)
         $fileSize = 0;
 
         // get the image data from the database
-        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', ['fileId' => $fileId]);
         if (!empty($data)) {
             foreach ($data as $chunk) {
                 $fileSize += strlen($chunk);

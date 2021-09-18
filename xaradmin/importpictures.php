@@ -51,13 +51,13 @@ function uploads_admin_importpictures($args)
     $pubdate = time();
     $status  = 2;        //Default to approved
     $ptid    = $Picture_Publication_Type_ID;
-    $cids = array();
+    $cids = [];
 
     $pubtypeid = $Picture_Publication_Type_ID;
     $authorid  = xarSession::getVar('uid');
     $aid       = 0;
 
-    $article = array('title' => $title,
+    $article = ['title' => $title,
                      'summary' => $summary,
                      'body' => $body,
                      'notes' => $notes,
@@ -68,8 +68,8 @@ function uploads_admin_importpictures($args)
                   // for preview
                      'pubtypeid' => $ptid,
                      'authorid' => $authorid,
-                     'aid' => 0
-                     );
+                     'aid' => 0,
+                     ];
 
     // Loop through files and import
     foreach ($prunedFiles as $filename) {
@@ -84,13 +84,7 @@ function uploads_admin_importpictures($args)
         $filepath = $image_import_dir.$filename;
 
         if (is_file($filepath)) {
-            $data = array('ulfile'   => $shortname
-                         ,'filepath' => $filepath
-                         ,'utype'    => 'file'
-                         ,'mod'      => 'uploads'
-                         ,'modid'    => 0
-                         ,'filesize' => filesize($filepath)
-                         ,'type'     => '');
+            $data = ['ulfile'   => $shortname,'filepath' => $filepath,'utype'    => 'file','mod'      => 'uploads','modid'    => 0,'filesize' => filesize($filepath),'type'     => ''];
 
             echo "About to store<br/>";
             $info = xarMod::apiFunc('uploads', 'user', 'store', $data);
@@ -122,8 +116,8 @@ function uploads_admin_importpictures($args)
 function getFileList($import_directory)
 {
     // Recurse through import directories, getting files
-    $DirectoriesToScan = array($import_directory);
-    $DirectoriesScanned = array();
+    $DirectoriesToScan = [$import_directory];
+    $DirectoriesScanned = [];
     while (count($DirectoriesToScan) > 0) {
         foreach ($DirectoriesToScan as $DirectoryKey => $startingdir) {
             if ($dir = @opendir($startingdir)) {
@@ -165,7 +159,7 @@ function pruneFiles($FilesInDir, $image_import_dir)
         $FilesInDir = array_unique($FilesInDir);
         sort($FilesInDir);
 
-        $prunedFiles = array();
+        $prunedFiles = [];
         foreach ($FilesInDir as $filename) {
             // Get items
             $sql = "SELECT  xar_ulid,

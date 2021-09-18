@@ -48,7 +48,7 @@ class Image
         $this->type = $type;
 
         if (!isMovie($this->type)) {
-            list($w, $h) = getDimensions("$dir/$this->name.$this->type");
+            [$w, $h] = getDimensions("$dir/$this->name.$this->type");
             $this->raw_width = $w;
             $this->raw_height = $h;
             $this->width = $w;
@@ -72,7 +72,7 @@ class Image
          */
         if ($this->version < 3) {
             if ($this->resizedName) {
-                list($w, $h) = getDimensions("$dir/$this->resizedName.$this->type");
+                [$w, $h] = getDimensions("$dir/$this->resizedName.$this->type");
                 $this->width = $w;
                 $this->height = $h;
                 $changed = 1;
@@ -82,7 +82,7 @@ class Image
         $filename = "$dir/$this->name.$this->type";
         if (!isMovie($this->type)) {
             if (!$this->raw_width) {
-                list($w, $h) = getDimensions($filename);
+                [$w, $h] = getDimensions($filename);
                 $this->raw_width = $w;
                 $this->raw_height = $h;
                 $changed = 1;
@@ -103,7 +103,7 @@ class Image
 
         /* getting rid of the resized image */
         if (stristr($target, "orig")) {
-            list($w, $h) = getDimensions("$dir/$this->name.$this->type");
+            [$w, $h] = getDimensions("$dir/$this->name.$this->type");
             $this->width = $w;
             $this->height = $h;
             if (fs_file_exists("$dir/$this->resizedName.$this->type")) {
@@ -114,7 +114,7 @@ class Image
         } else {
             $name = $this->name;
             $type = $this->type;
-            
+
             if ($pathToResized) {
                 $ret = copy($pathToResized, "$dir/$name.sized.$this->type");
             } else {
@@ -124,11 +124,11 @@ class Image
                     $target
                 );
             }
-            
+
             #-- resized image is not always a jpeg ---
             if ($ret) {
                 $this->resizedName = "$name.sized";
-                list($w, $h) = getDimensions("$dir/$name.sized.$this->type");
+                [$w, $h] = getDimensions("$dir/$name.sized.$this->type");
                 $this->width = $w;
                 $this->height = $h;
             }
@@ -151,7 +151,7 @@ class Image
         global $gallery;
 
         $name = $this->getName($dir);
-        
+
         $attrs .= " border=0";
         if ($size) {
             if ($this->width > $this->height) {
@@ -195,7 +195,7 @@ class Image
     {
         return $this->name;
     }
-    
+
     public function getPath($dir, $full=0)
     {
         if ($full || !$this->resizedName) {
@@ -241,8 +241,8 @@ class Image
             $width = $this->width;
             $height = $this->height;
         }
-            
-        return array($width, $height);
+
+        return [$width, $height];
     }
 
     public function setThumbRectangle($x, $y, $w, $h)
@@ -255,13 +255,13 @@ class Image
 
     public function getThumbRectangle()
     {
-        return array($this->thumb_x, $this->thumb_y,
-                     $this->thumb_width, $this->thumb_height);
+        return [$this->thumb_x, $this->thumb_y,
+                     $this->thumb_width, $this->thumb_height, ];
     }
 
     public function getRawDimensions()
     {
-        return array($this->raw_width, $this->raw_height);
+        return [$this->raw_width, $this->raw_height];
     }
 }
 

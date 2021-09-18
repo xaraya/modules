@@ -107,7 +107,7 @@ function images_adminapi_process_image($args)
                 $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
                 $add = xarVar::prepForOS($setting);
-                $add = strtr($add, array(' ' => ''));
+                $add = strtr($add, [' ' => '']);
                 $save .= "-$add.$ext";
                 break;
         }
@@ -152,7 +152,7 @@ function images_adminapi_process_image($args)
                 $save = realpath($thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
                 $add = xarVar::prepForOS($setting);
-                $add = strtr($add, array(' ' => ''));
+                $add = strtr($add, [' ' => '']);
                 $save .= "-$add.$ext";
                 break;
         }
@@ -162,7 +162,7 @@ function images_adminapi_process_image($args)
         }
 
         // get the image data from the database
-        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', ['fileId' => $image['fileId']]);
         if (empty($data)) {
             $msg = xarML(
                 "Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
@@ -289,11 +289,11 @@ function images_adminapi_process_image($args)
             'uploads',
             'user',
             'db_modify_file',
-            array('fileId'    => $image['fileId'],
+            ['fileId'    => $image['fileId'],
                                  'fileType'  => 'image/' . $params['f'],
                                  'fileSize'  => filesize($save),
                                  // reset the extrainfo
-                                 'extrainfo' => '')
+                                 'extrainfo' => '', ]
         )) {
             return;
         }
@@ -303,8 +303,8 @@ function images_adminapi_process_image($args)
                 'uploads',
                 'user',
                 'file_dump',
-                array('fileSrc' => $save,
-                                     'fileId'  => $image['fileId'])
+                ['fileSrc' => $save,
+                                     'fileId'  => $image['fileId'], ]
             )) {
                 return;
             }

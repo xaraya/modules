@@ -23,7 +23,7 @@
 function images_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
-    $args = array();
+    $args = [];
 
     // Analyse the different parts of the virtual path
     // $params[1] contains the first part after index.php/example
@@ -32,7 +32,7 @@ function images_userapi_decode_shorturl($params)
     // as possible in trying to decode them...
     if (empty($params[1])) {
         // nothing specified -> we'll go to the main function
-        return array('display', $args);
+        return ['display', $args];
     } elseif (preg_match('/^(\d+)\.(.*)/', $params[1], $matches)) {
 
         // something that starts with a number must be for the display function
@@ -42,6 +42,6 @@ function images_userapi_decode_shorturl($params)
 
         // let the display function check whether this image exists or not
         $args['fileId'] = $fileId;
-        return array('display', $args);
+        return ['display', $args];
     }
 }

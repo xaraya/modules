@@ -31,19 +31,19 @@ function uploads_admin_importgallery($args)
 
 
     // Setup Article Defaults
-    $article = array('title' => '',
+    $article = ['title' => '',
                      'summary' => '',
                      'body' => '',
                      'notes' => '',
                      'pubdate' => time(),
                      'status' => 2,
                      'ptid' => $Picture_Publication_Type_ID,
-                     'cids' => array(),
+                     'cids' => [],
                   // for preview
                      'pubtypeid' => $Picture_Publication_Type_ID,
                      'authorid' => xarSession::getVar('uid'),
-                     'aid' => 0
-                     );
+                     'aid' => 0,
+                     ];
 
 
     // Gallery Classes
@@ -76,7 +76,7 @@ function uploads_admin_importgallery($args)
 
     $outputStuff .= "<h2>Importing Albums</h2>";
 
-    $alumbs_lookup = array();
+    $alumbs_lookup = [];
 
     // Main Album Database file -- lists all albums
     $albumdb = $image_import_dir."/albumdb.dat";
@@ -84,7 +84,7 @@ function uploads_admin_importgallery($args)
     if (!file_exists($albumdb)) {
         $outputStuff .= "Can't find albumdb.dat file at $albumdb<br/>";
 
-        return array('outputStuff'=>$outputStuff);
+        return ['outputStuff'=>$outputStuff];
     }
 
     $x = getSerializedData($albumdb);
@@ -120,12 +120,9 @@ function uploads_admin_importgallery($args)
 
 
             // Store Current Album's information in general album lookup, for child albums to lookup.
-            $alumbs_lookup[$album] = array(
-                                            'title'=>$album_title
-                                           ,'description'=>$album_desc
-                                           ,'parent'=>$album_parent
-                                           ,'cid'=>$album_cid
-                                          );
+            $alumbs_lookup[$album] = [
+                                            'title'=>$album_title,'description'=>$album_desc,'parent'=>$album_parent,'cid'=>$album_cid,
+                                          ];
 
             // Get files to import
             $FilesInDir = galleryTraverse($image_import_dir.'/'.$album);
@@ -143,18 +140,12 @@ function uploads_admin_importgallery($args)
                 $filepath = $image_import_dir.'/'.$album.$file['filename'];
 
                 if (is_file($filepath)) {
-                    $data = array('ulfile'   => $album.$file['filename']
-                                 ,'filepath' => $filepath
-                                 ,'utype'    => 'file'
-                                 ,'mod'      => 'uploads'
-                                 ,'modid'    => 0
-                                 ,'filesize' => filesize($filepath)
-                                 ,'type'     => '');
+                    $data = ['ulfile'   => $album.$file['filename'],'filepath' => $filepath,'utype'    => 'file','mod'      => 'uploads','modid'    => 0,'filesize' => filesize($filepath),'type'     => ''];
 
                     if ($actuallyImport) {
                         $info = xarMod::apiFunc('uploads', 'user', 'store', $data);
                     } else {
-                        $info = array('link'=>''); //dummy for when not importing
+                        $info = ['link'=>'']; //dummy for when not importing
                     }
 //                    $outputStuff .= "Stored<br/>";
                 }
@@ -175,7 +166,7 @@ function uploads_admin_importgallery($args)
                 }
 
                 // Set Category ID
-                $article['cids'] = array($album_cid);
+                $article['cids'] = [$album_cid];
 
 
                 // Setup var to overide the uploads dd property when dd hook is called to place correct link
@@ -196,7 +187,7 @@ function uploads_admin_importgallery($args)
         }
     }
 
-    return array('outputStuff'=>$outputStuff);
+    return ['outputStuff'=>$outputStuff];
 }
 
 function getSerializedData($filename)
@@ -226,11 +217,11 @@ function createCat($Root_Cat_Name, $catpath, $description)
             $path = $cat_name;
         }
 
-        $cid  = xarMod::apiFunc('categories', 'user', 'categoryexists', array('path'=>$path));
+        $cid  = xarMod::apiFunc('categories', 'user', 'categoryexists', ['path'=>$path]);
 //        $outputStuff .= "path: $path [$lastCID/$cid]<br/>";
         if (!$cid) {
             //This one is missing, create it.
-            $args = array();
+            $args = [];
             $args['name'] = $cat_name;
             $args['description'] = $description;
             $args['image'] = '';
@@ -263,13 +254,11 @@ function getGalleryInfo($photodat)
         $outputStuff .= "||</pre>";
     */
 //    echo $contents."<pre>";
-    $fileinfo = array();
+    $fileinfo = [];
     foreach ($x as $item) {
         $filename = $item->image->name.'.'.$item->image->type;
-        $fileinfo[$filename] = array( 'date'    => $item->uploadDate
-                                     ,'caption' => $item->caption
-                                     ,'comments' => $item->comments
-                                     );
+        $fileinfo[$filename] = [ 'date'    => $item->uploadDate,'caption' => $item->caption,'comments' => $item->comments,
+                                     ];
     }
     return $fileinfo;
 }
@@ -278,7 +267,7 @@ function galleryTraverse($import_directory)
 {
     global $outputStuff;
 
-    $FilesInDir = array();
+    $FilesInDir = [];
     if ($dir = @opendir($import_directory)) {
         // Check for Gallery data file.
         $photodat = $import_directory.'/photos.dat';
@@ -298,10 +287,8 @@ function galleryTraverse($import_directory)
                ) {
                 $RealPathName = realpath($import_directory.'/'.$file);
                 if (is_file($RealPathName)) {
-                    $FilesInDir[] = array( 'filename' => substr($RealPathName, strlen($import_directory))
-                                          ,'filepath' => $RealPathName
-                                          ,'fileinfo' => $fileinfo[$file]
-                                         );
+                    $FilesInDir[] = [ 'filename' => substr($RealPathName, strlen($import_directory)),'filepath' => $RealPathName,'fileinfo' => $fileinfo[$file],
+                                         ];
                 }
             } elseif (strpos($file, '.sized.') || strpos($file, '.thumb.') || strpos($file, '.highlight.')) {
                 $RealPathName = realpath($import_directory.'/'.$file);
@@ -333,7 +320,7 @@ function pruneFiles($FilesInDir, $image_import_dir, $album)
 //        $FilesInDir = array_unique($FilesInDir);
         sort($FilesInDir);
 
-        $prunedFiles = array();
+        $prunedFiles = [];
         foreach ($FilesInDir as $file) {
             $filename = $file['filename'];
 //            $outputStuff .= "Checking $filename - ";

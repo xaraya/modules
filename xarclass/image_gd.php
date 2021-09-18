@@ -13,7 +13,7 @@ class Image_GD extends Image_Properties
     {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
-    
+
     /**
      * Concept borrowed from:
      *    http://nyphp.org/content/presentations/GDintro/gd20.php
@@ -23,20 +23,20 @@ class Image_GD extends Image_Properties
      */
     public function resize($forceResize = false)
     {
-        
+
         // If the original height and widht are the same
         // as the new height and width, return true
         if ($this->_owidth == $this->width &&
             $this->_oheight == $this->height) {
             return true;
         }
-        
+
         if (empty($forceResize) && $this->getDerivative()) {
             return true;
         }
-        
+
         $origImage = $this->_open();
-        
+
         if (is_resource($origImage)) {
             if (is_dir($this->_thumbsdir) && is_writable($this->_thumbsdir)) {
                 $this->_tmpFile = tempnam($this->_thumbsdir, 'xarimage-');
@@ -53,14 +53,14 @@ class Image_GD extends Image_Properties
         }
         return true;
     }
-    
+
     public function &_open()
     {
         $origImage = null;
 
         if (!file_exists($this->fileLocation) && !empty($this->_fileId)) {
             // get the image data from the database
-            $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $this->_fileId));
+            $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', ['fileId' => $this->_fileId]);
             if (!empty($data)) {
                 $src = implode('', $data);
                 unset($data);
@@ -97,15 +97,15 @@ class Image_GD extends Image_Properties
 
         return $origImage;
     }
-    
+
     public function rotate()
     {
     }
-    
+
     public function scale()
     {
     }
-    
+
     public function crop()
     {
     }

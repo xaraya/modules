@@ -31,7 +31,7 @@ function images_adminapi_getderivatives($args)
         $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
     if (empty($thumbsdir)) {
-        return array();
+        return [];
     }
     if (empty($filematch)) {
         $filematch = '';
@@ -55,13 +55,13 @@ function images_adminapi_getderivatives($args)
         $filetype = '(jpg|png|gif)';
     }
 
-    $params = array('basedir'   => $thumbsdir,
+    $params = ['basedir'   => $thumbsdir,
                     'filematch' => $filematch,
-                    'filetype'  => $filetype);
+                    'filetype'  => $filetype, ];
 
     if (!empty($fileId)) {
         if (!is_array($fileId)) {
-            $fileId = array($fileId);
+            $fileId = [$fileId];
         }
     } else {
         $cachekey = md5(serialize($params));
@@ -88,8 +88,8 @@ function images_adminapi_getderivatives($args)
             return;
         }
 
-        $imagelist = array();
-        $filenames = array();
+        $imagelist = [];
+        $filenames = [];
         foreach ($files as $file) {
             // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
             if (preg_match('/^(.+?)-(\d+)x(\d+)\.jpg$/', $file, $matches)) {
@@ -100,12 +100,12 @@ function images_adminapi_getderivatives($args)
                     }
                 }
                 $info = stat($thumbsdir . '/' . $file);
-                $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
+                $imagelist[] = ['fileLocation' => $thumbsdir . '/' . $file,
                                      'fileDownload' => xarController::URL(
                                          'images',
                                          'user',
                                          'display',
-                                         array('fileId' => base64_encode($thumbsdir . '/' . $file))
+                                         ['fileId' => base64_encode($thumbsdir . '/' . $file)]
                                      ),
                                      'fileName'     => $matches[1],
                                      'fileType'     => 'image/jpeg',
@@ -113,7 +113,7 @@ function images_adminapi_getderivatives($args)
                                      'fileId'       => $id,
                                      'fileModified' => $info['mtime'],
                                      'width'        => $matches[2],
-                                     'height'       => $matches[3]);
+                                     'height'       => $matches[3], ];
                 $filenames[$matches[1]] = 1;
 
             // Note: processed images are named [filename]-[setting].[ext] - see process_image() function
@@ -126,12 +126,12 @@ function images_adminapi_getderivatives($args)
                 }
                 $statinfo = stat($thumbsdir . '/' . $file);
                 $sizeinfo = getimagesize($thumbsdir . '/' . $file);
-                $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
+                $imagelist[] = ['fileLocation' => $thumbsdir . '/' . $file,
                                      'fileDownload' => xarController::URL(
                                          'images',
                                          'user',
                                          'display',
-                                         array('fileId' => base64_encode($thumbsdir . '/' . $file))
+                                         ['fileId' => base64_encode($thumbsdir . '/' . $file)]
                                      ),
                                      'fileName'     => $matches[1],
                                      'fileType'     => $sizeinfo['mime'],
@@ -140,7 +140,7 @@ function images_adminapi_getderivatives($args)
                                      'fileModified' => $statinfo['mtime'],
                                      'fileSetting'  => $matches[2],
                                      'width'        => $sizeinfo[0],
-                                     'height'       => $sizeinfo[1]);
+                                     'height'       => $sizeinfo[1], ];
                 $filenames[$matches[1]] = 1;
             }
         }
@@ -148,7 +148,7 @@ function images_adminapi_getderivatives($args)
         // CHECKME: keep track of originals for server images too ?
 
         if (empty($fileName) && xarMod::isAvailable('uploads')) {
-            $fileinfo = array();
+            $fileinfo = [];
             foreach (array_keys($filenames) as $file) {
                 // CHECKME: verify this once derivatives can be created in sub-directories of thumbsdir
                 // this is probably the file id for some uploaded/imported file stored in the database
@@ -157,7 +157,7 @@ function images_adminapi_getderivatives($args)
                         'uploads',
                         'user',
                         'db_get_file',
-                        array('fileId' => $matches[2])
+                        ['fileId' => $matches[2]]
                     );
 
                 // this may be the md5 hash of the file location for some uploaded/imported file
@@ -168,7 +168,7 @@ function images_adminapi_getderivatives($args)
                         'uploads',
                         'user',
                         'db_get_file',
-                        array('fileLocationMD5' => $matches[2])
+                        ['fileLocationMD5' => $matches[2]]
                     );
                 }
             }
@@ -190,8 +190,8 @@ function images_adminapi_getderivatives($args)
         }
 
         if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
-            $cacheinfo = array('time' => time(),
-                               'list' => $imagelist);
+            $cacheinfo = ['time' => time(),
+                               'list' => $imagelist, ];
             $cacheinfo = serialize($cacheinfo);
             xarModVars::set('images', 'file.cachederiv.'.$cachekey, $cacheinfo);
             unset($cacheinfo);
@@ -240,7 +240,7 @@ function images_adminapi_getderivatives($args)
         if (count($imagelist) > $numitems) {
             // use array slice on the keys here (at least until PHP 5.0.2)
             $idlist = array_slice(array_keys($imagelist), $startnum-1, $numitems);
-            $newlist = array();
+            $newlist = [];
             foreach ($idlist as $id) {
                 $newlist[$id] = $imagelist[$id];
             }

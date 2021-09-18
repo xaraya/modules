@@ -42,9 +42,9 @@ class AlbumItem
     {
         global $gallery;
         $this->version = $gallery->album_version;
-        $this->extraFields = array();
+        $this->extraFields = [];
     }
-    
+
     public function setUploadDate($uploadDate="")
     { //upload date should only be set at file upload time.
         global $gallery;
@@ -90,7 +90,7 @@ class AlbumItem
             $file = "$dir/$name.$tag";
             $itemCaptureDate = getItemCaptureDate($file);
         }
- 
+
         $this->itemCaptureDate = $itemCaptureDate;
     }
 
@@ -117,7 +117,7 @@ class AlbumItem
         if (!empty($this->exifData) && !$forceRefresh) {
             $status = 0;
         } else {
-            list($status, $exifData) = getExif($file);
+            [$status, $exifData] = getExif($file);
             if ($status == 0) {
                 $this->exifData = $exifData;
                 if (!strcmp($gallery->app->cacheExif, "yes")) {
@@ -127,7 +127,7 @@ class AlbumItem
                 }
             }
         }
-        return array($status, $this->exifData, $needToSave);
+        return [$status, $this->exifData, $needToSave];
     }
 
     public function numComments()
@@ -150,7 +150,7 @@ class AlbumItem
         }
         if ($this->version < 10) {
             if (!isset($this->extraFields) or !is_array($this->extraFields)) {
-                $this->extraFields=array();
+                $this->extraFields=[];
             }
         }
         if ($this->image) {
@@ -248,9 +248,9 @@ class AlbumItem
     public function setHighlight($dir, $bool)
     {
         global $gallery;
-        
+
         $this->highlight = $bool;
-        
+
         /*
          * if it is now the highlight make sure it has a highlight
                  * thumb otherwise get rid of it's thumb (ouch!).
@@ -295,7 +295,7 @@ class AlbumItem
                             $this->image->thumb_height
                         );
                     }
-    
+
                     // Then resize it down
                     if ($ret) {
                         $ret = resize_image(
@@ -315,9 +315,9 @@ class AlbumItem
             }
 
             if ($ret) {
-                list($w, $h) = getDimensions("$dir/$name.highlight.$tag");
+                [$w, $h] = getDimensions("$dir/$name.highlight.$tag");
 
-                $high = new Image;
+                $high = new Image();
                 $high->setFile($dir, "$name.highlight", "$tag");
                 $high->setDimensions($w, $h);
                 $this->highlightImage = $high;
@@ -339,7 +339,7 @@ class AlbumItem
         if ($this->thumbnail) {
             return $this->thumbnail->getDimensions($size);
         } else {
-            return array(0, 0);
+            return [0, 0];
         }
     }
 
@@ -348,7 +348,7 @@ class AlbumItem
         if ($this->image) {
             return $this->image->getDimensions();
         } else {
-            return array(0, 0);
+            return [0, 0];
         }
     }
 
@@ -368,12 +368,12 @@ class AlbumItem
         if (!$retval) {
             return $retval;
         }
-        list($w, $h) = getDimensions("$dir/$name.$type");
+        [$w, $h] = getDimensions("$dir/$name.$type");
         $this->image->setRawDimensions($w, $h);
 
         if ($this->isResized()) {
             rotate_image("$dir/$name.sized.$type", "$dir/$name.sized.$type", $direction);
-            list($w, $h) = getDimensions("$dir/$name.sized.$type");
+            [$w, $h] = getDimensions("$dir/$name.sized.$type");
             $this->image->setDimensions($w, $h);
         }
 
@@ -395,7 +395,7 @@ class AlbumItem
         }
 
         /* Set our image. */
-        $this->image = new Image;
+        $this->image = new Image();
         $this->image->setFile($dir, $name, $tag);
 
         $ret = $this->makeThumbnail($dir, $thumb_size, $pathToThumb);
@@ -411,10 +411,10 @@ class AlbumItem
         if (isMovie($tag)) {
             /* Use a preset thumbnail */
             fs_copy($gallery->app->movieThumbnail, "$dir/$name.thumb.jpg");
-            $this->thumbnail = new Image;
+            $this->thumbnail = new Image();
             $this->thumbnail->setFile($dir, "$name.thumb", "jpg");
 
-            list($w, $h) = getDimensions("$dir/$name.thumb.jpg");
+            [$w, $h] = getDimensions("$dir/$name.thumb.jpg");
             $this->thumbnail->setDimensions($w, $h);
         } else {
             /* Make thumbnail (first crop it spec) */
@@ -445,10 +445,10 @@ class AlbumItem
             }
 
             if ($ret) {
-                $this->thumbnail = new Image;
+                $this->thumbnail = new Image();
                 $this->thumbnail->setFile($dir, "$name.thumb", $tag);
-    
-                list($w, $h) = getDimensions("$dir/$name.thumb.$tag");
+
+                [$w, $h] = getDimensions("$dir/$name.thumb.$tag");
                 $this->thumbnail->setDimensions($w, $h);
 
                 /* if this is the highlight, remake it */

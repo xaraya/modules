@@ -23,18 +23,18 @@ function images_adminapi_getuploads($args)
     extract($args);
 
     if (!empty($fileId)) {
-        $filter = array('fileId' => $fileId);
+        $filter = ['fileId' => $fileId];
     } else {
         if (empty($typeName)) {
             $typeName = 'image';
         }
         // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
-        $typeinfo = xarMod::apiFunc('mime', 'user', 'get_type', array('typeName' => $typeName));
+        $typeinfo = xarMod::apiFunc('mime', 'user', 'get_type', ['typeName' => $typeName]);
         if (empty($typeinfo)) {
             return;
         }
 
-        $filters = array();
+        $filters = [];
         $filters['mimetype'] = $typeinfo['typeId'];
         $filters['subtype']  = null;
         $filters['status']   = null;
@@ -127,7 +127,7 @@ function images_adminapi_getuploads($args)
         if (count($imagelist) > $numitems) {
             // use array slice on the keys here (at least until PHP 5.0.2)
             $idlist = array_slice(array_keys($imagelist), $startnum-1, $numitems);
-            $newlist = array();
+            $newlist = [];
             foreach ($idlist as $id) {
                 $newlist[$id] = $imagelist[$id];
             }

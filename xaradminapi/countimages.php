@@ -36,9 +36,9 @@ function images_adminapi_countimages($args)
 
     // Note: fileId is a base 64 encode of the image location here, or an array of fileId's
     if (!empty($fileId)) {
-        $files = array();
+        $files = [];
         if (!is_array($fileId)) {
-            $fileId = array($fileId);
+            $fileId = [$fileId];
         }
         foreach ($fileId as $id) {
             $file = base64_decode($id);
@@ -65,10 +65,10 @@ function images_adminapi_countimages($args)
             $recursive = true;
         }
 
-        $params = array('basedir'   => $basedir,
+        $params = ['basedir'   => $basedir,
                         'filematch' => $filematch,
                         'filetype'  => $filetype,
-                        'recursive' => $recursive);
+                        'recursive' => $recursive, ];
 
         $cachekey = md5(serialize($params));
         // get the number of images from temporary cache - see getimages()
