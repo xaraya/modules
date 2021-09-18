@@ -40,24 +40,24 @@ class HitcountItemDisplayObserver extends EventObserver implements ixarEventObse
         if (!isset($itemid) || !is_numeric($itemid)) {
             $invalid['itemid'] = 1;
         }
-        
+
         // NOTE: as of Jamaica 2.2.0 it's ok to throw exceptions in hooks, the subject handles them
         if (!empty($invalid)) {
-            $args = array(join(',', $invalid), 'hitcount', 'hooks', 'ItemDelete');
+            $args = [join(',', $invalid), 'hitcount', 'hooks', 'ItemDelete'];
             $msg = 'Invalid #(1) for #(2) module #(2) #(3) observer notify method';
             throw new BadParameterException($args, $msg);
         }
-        
+
         // the subject expects a string to display, return the display gui func
         return xarMod::guiFunc(
             'hitcount',
             'user',
             'display',
-            array(
+            [
                 'modname' => $module,
                 'itemtype' => !empty($itemtype) ? $itemtype : 0,
                 'objectid' => $itemid,
-            )
+            ]
         );
     }
 }

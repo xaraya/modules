@@ -19,7 +19,7 @@
 function hitcount_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     // Name for hitcount database entities
     $hitcount = xarDB::getPrefix() . '_hitcount';

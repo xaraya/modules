@@ -38,10 +38,10 @@ function hitcount_userapi_getmodules($args)
         return;
     }
 
-    $modlist = array();
+    $modlist = [];
     while (!$result->EOF) {
-        list($modid, $itemtype, $numitems, $numhits) = $result->fields;
-        $modlist[$modid][$itemtype] = array('items' => $numitems, 'hits' => $numhits);
+        [$modid, $itemtype, $numitems, $numhits] = $result->fields;
+        $modlist[$modid][$itemtype] = ['items' => $numitems, 'hits' => $numhits];
         $result->MoveNext();
     }
     $result->close();

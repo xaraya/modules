@@ -27,7 +27,7 @@ class HitcountModuleRemoveObserver extends HookObserver implements ixarEventObse
         // get args from subject (array containing objectid, extrainfo)
         $args = $subject->getArgs();
         extract($args);
-        
+
         // validate parameters...
         // NOTE: this isn't strictly necessary, the hook subject will have already
         // taken care of validations and these values can be relied on to be pre-populated
@@ -35,10 +35,10 @@ class HitcountModuleRemoveObserver extends HookObserver implements ixarEventObse
         if (isset($objectid) && !is_string($objectid) || !xarMod::isAvailable($objectid)) {
             $invalid['objectid'] = 1;
         }
-            
+
         // NOTE: as of Jamaica 2.2.0 it's ok to throw exceptions in hooks, the subject handles them
         if (!empty($invalid)) {
-            $args = array(join(',', $invalid), 'hitcount', 'hooks', 'ModuleRemove');
+            $args = [join(',', $invalid), 'hitcount', 'hooks', 'ModuleRemove'];
             $msg = 'Invalid #(1) for #(2) module #(2) #(3) observer notify method';
             throw new BadParameterException($args, $msg);
         }
@@ -50,9 +50,9 @@ class HitcountModuleRemoveObserver extends HookObserver implements ixarEventObse
             'hitcount',
             'admin',
             'deleteall',
-            array(
+            [
                 'objectid' => $objectid,
-            )
+            ]
         );
 
         // @checkme: the api func returns an array of info, only really need bool response ?

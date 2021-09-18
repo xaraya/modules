@@ -82,9 +82,9 @@ function hitcount_adminapi_update($args)
         'hitcount',
         'user',
         'get',
-        array('objectid' => $objectid,
+        ['objectid' => $objectid,
                                   'itemtype' => $itemtype,
-                                  'modname' => $modname)
+                                  'modname' => $modname, ]
     );
 
     // create the item if necessary
@@ -93,9 +93,9 @@ function hitcount_adminapi_update($args)
             'hitcount',
             'admin',
             'create',
-            array('objectid' => $objectid,
+            ['objectid' => $objectid,
                                    'itemtype' => $itemtype,
-                                   'modname' => $modname)
+                                   'modname' => $modname, ]
         );
         if (!isset($hcid)) {
             return; // throw back whatever it was that failed
@@ -107,7 +107,7 @@ function hitcount_adminapi_update($args)
     $hitcounttable = $xartable['hitcount'];
 
     // set to the new hit count
-    $bindvars = array();
+    $bindvars = [];
     if (!empty($hits) && is_numeric($hits)) {
         $bhits = $hits;
     } else {
@@ -119,7 +119,7 @@ function hitcount_adminapi_update($args)
               " WHERE module_id = ?
               AND itemtype = ?
               AND itemid = ?";
-    $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
+    $bindvars = [(int)$modid, (int)$itemtype, (int)$objectid];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

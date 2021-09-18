@@ -40,14 +40,14 @@ class HitcountItemDeleteObserver extends HookObserver implements ixarEventObserv
         if (!isset($itemid) || !is_numeric($itemid)) {
             $invalid['itemid'] = 1;
         }
-        
+
         // NOTE: as of Jamaica 2.2.0 it's ok to throw exceptions in hooks, the subject handles them
         if (!empty($invalid)) {
-            $args = array(join(',', $invalid), 'hitcount', 'hooks', 'ItemDelete');
+            $args = [join(',', $invalid), 'hitcount', 'hooks', 'ItemDelete'];
             $msg = 'Invalid #(1) for #(2) module #(2) #(3) observer notify method';
             throw new BadParameterException($args, $msg);
         }
-        
+
         // call the hitcount delete api function
         // @fixme: the delete func returns (potentially) an empty array
         // there's no way to reliably check deletion was a success
@@ -55,13 +55,13 @@ class HitcountItemDeleteObserver extends HookObserver implements ixarEventObserv
             'hitcount',
             'admin',
             'delete',
-            array(
+            [
                 'modname' => $module,
                 'itemtype' => !empty($itemtype) ? $itemtype : 0,
                 'objectid' => $itemid,
-            )
+            ]
         );
-        
+
         // @checkme: the api func returns an array of info, only really need bool response ?
         if (!is_array($hit)) {
             // @todo: exception here?

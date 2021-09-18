@@ -18,7 +18,7 @@ class HitCountProperty extends NumberBoxProperty
     public $id         = 101;
     public $name       = 'hitcount';
     public $desc       = 'Hit Count';
-    public $reqmodules = array('hitcount');
+    public $reqmodules = ['hitcount'];
 
     public $display_tooltip = 'Number of times this item was displayed';
 
@@ -44,23 +44,23 @@ class HitCountProperty extends NumberBoxProperty
 
     public function getItemValue($itemid)
     {
-        return $this->getHitcount(array('value' => $itemid));
+        return $this->getHitcount(['value' => $itemid]);
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         $data['value'] = $this->getHitcount($data);
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data = array())
+    public function showOutput(array $data = [])
     {
         // the dummy datastore will use the itemid as value for this property !
         $data['value'] = $this->getHitcount($data, 1);
         return parent::showOutput($data);
     }
 
-    private function getHitcount(array $data = array(), $update = 0)
+    private function getHitcount(array $data = [], $update = 0)
     {
         // if we don't have an objectref, return the value as is
         if (empty($this->objectref) || empty($this->objectref->objectid)) {
@@ -80,9 +80,9 @@ class HitCountProperty extends NumberBoxProperty
                         'hitcount',
                         'admin',
                         'update',
-                        array('modname'  => xarMod::getName($this->objectref->moduleid),
+                        ['modname'  => xarMod::getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid)
+                                                            'objectid' => $this->objectref->itemid, ]
                     );
                 } else {
                     // get the hitcount for this item
@@ -90,9 +90,9 @@ class HitCountProperty extends NumberBoxProperty
                         'hitcount',
                         'user',
                         'get',
-                        array('modname'  => xarMod::getName($this->objectref->moduleid),
+                        ['modname'  => xarMod::getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid)
+                                                            'objectid' => $this->objectref->itemid, ]
                     );
                 }
                 if (empty($this->hitcache)) {
@@ -109,12 +109,12 @@ class HitCountProperty extends NumberBoxProperty
                     'hitcount',
                     'user',
                     'getitems',
-                    array('modid'    => $this->objectref->moduleid,
+                    ['modid'    => $this->objectref->moduleid,
                                                         'itemtype' => $this->objectref->itemtype,
-                                                        'itemids'  => $this->objectref->itemids)
+                                                        'itemids'  => $this->objectref->itemids, ]
                 );
                 if (empty($this->hitcache)) {
-                    $this->hitcache = array();
+                    $this->hitcache = [];
                 }
                 /*
                                 // set the hitcount for all the items in the objectref ? No, we'll work via local hitcache
@@ -180,9 +180,9 @@ class HitCountProperty extends NumberBoxProperty
             'hitcount',
             'admin',
             'delete',
-            array('modname'  => xarMod::getName($this->objectref->moduleid),
+            ['modname'  => xarMod::getName($this->objectref->moduleid),
                               'itemtype' => $this->objectref->itemtype,
-                              'objectid' => $itemid)
+                              'objectid' => $itemid, ]
         );
         return true;
     }

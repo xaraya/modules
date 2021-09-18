@@ -24,7 +24,7 @@ function hitcount_admin_hooks()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     return $data;
 }

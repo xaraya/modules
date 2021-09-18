@@ -57,7 +57,7 @@ function hitcount_userapi_getitems($args)
     }
 
     if (!isset($itemids)) {
-        $itemids = array();
+        $itemids = [];
     }
 
     // Security check
@@ -79,7 +79,7 @@ function hitcount_userapi_getitems($args)
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
-    $bindvars = array();
+    $bindvars = [];
     $query = "SELECT itemid, hits, lasthit 
             FROM $hitcounttable
             WHERE module_id = ?
@@ -108,9 +108,9 @@ function hitcount_userapi_getitems($args)
         return;
     }
 
-    $hitlist = array();
+    $hitlist = [];
     while (!$result->EOF) {
-        list($id, $hits) = $result->fields;
+        [$id, $hits] = $result->fields;
         $hitlist[$id] = $hits;
         $result->MoveNext();
     }

@@ -88,7 +88,7 @@ function hitcount_adminapi_delete($args)
                 WHERE module_id = ?
                   AND itemtype = ?
                   AND itemid = ?";
-        $bindvars = array((int)$modid, (int)$itemtype, (int)$itemid);
+        $bindvars = [(int)$modid, (int)$itemtype, (int)$itemid];
         $result = $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;
@@ -98,7 +98,7 @@ function hitcount_adminapi_delete($args)
 
         // Return the extra info
         if (!isset($extrainfo)) {
-            $extrainfo = array();
+            $extrainfo = [];
         }
         return $extrainfo;
 
@@ -113,7 +113,7 @@ function hitcount_adminapi_delete($args)
         $xartable =& xarDB::getTables();
         $hitcounttable = $xartable['hitcount'];
 
-        $bindvars = array();
+        $bindvars = [];
         $query = "DELETE FROM $hitcounttable ";
         if (!empty($modid)) {
             if (!is_numeric($modid)) {

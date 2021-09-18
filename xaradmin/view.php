@@ -40,12 +40,12 @@ function hitcount_admin_view()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     $modlist = xarMod::apiFunc('hitcount', 'user', 'getmodules');
 
     if (empty($modid)) {
-        $data['moditems'] = array();
+        $data['moditems'] = [];
         $data['numitems'] = 0;
         $data['numhits'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
@@ -56,11 +56,11 @@ function hitcount_admin_view()
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             foreach ($itemtypes as $itemtype => $stats) {
-                $moditem = array();
+                $moditem = [];
                 $moditem['numitems'] = $stats['items'];
                 $moditem['numhits'] = $stats['hits'];
                 if ($itemtype == 0) {
@@ -79,15 +79,15 @@ function hitcount_admin_view()
                     'hitcount',
                     'admin',
                     'view',
-                    array('modid' => $modid,
-                                                   'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                   'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 );
                 $moditem['delete'] = xarController::URL(
                     'hitcount',
                     'admin',
                     'delete',
-                    array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 );
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
@@ -110,7 +110,7 @@ function hitcount_admin_view()
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -142,11 +142,11 @@ function hitcount_admin_view()
             'hitcount',
             'admin',
             'view',
-            array('modid' => $modid,
+            ['modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'sort' => $sort,
                                                             'sortorder' => $sortorder,
-                                                            'startnum' => '%%')
+                                                            'startnum' => '%%', ]
         );
         $data['itemsperpage'] = $numstats;
 
@@ -155,13 +155,13 @@ function hitcount_admin_view()
             'hitcount',
             'user',
             'getitems',
-            array('modid' => $modid,
+            ['modid' => $modid,
                                         'itemtype' => $itemtype,
                                         'numitems' => $numstats,
                                         'startnum' => $startnum,
                                         'sort' => $sort,
-                                        'sortorder' => $sortorder
-                                        )
+                                        'sortorder' => $sortorder,
+                                        ]
         );
         $showtitle = xarModVars::get('hitcount', 'showtitle');
         if (!empty($showtitle)) {
@@ -170,24 +170,24 @@ function hitcount_admin_view()
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
-                array('itemtype' => $itemtype,
-                                            'itemids' => $itemids),
+                ['itemtype' => $itemtype,
+                                            'itemids' => $itemids, ],
                 0
             ); // don't throw an exception here
         } else {
-            $itemlinks = array();
+            $itemlinks = [];
         }
-        $data['moditems'] = array();
+        $data['moditems'] = [];
         foreach ($getitems as $itemid => $numhits) {
-            $data['moditems'][$itemid] = array();
+            $data['moditems'][$itemid] = [];
             $data['moditems'][$itemid]['numhits'] = $numhits;
             $data['moditems'][$itemid]['delete'] = xarController::URL(
                 'hitcount',
                 'admin',
                 'delete',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                                    'itemtype' => $itemtype,
-                                                                   'itemid' => $itemid)
+                                                                   'itemid' => $itemid, ]
             );
             if (isset($itemlinks[$itemid])) {
                 $data['moditems'][$itemid]['link'] = $itemlinks[$itemid]['url'];
@@ -200,10 +200,10 @@ function hitcount_admin_view()
             'hitcount',
             'admin',
             'delete',
-            array('modid' => $modid,
-                                          'itemtype' => $itemtype)
+            ['modid' => $modid,
+                                          'itemtype' => $itemtype, ]
         );
-        $data['sortlink'] = array();
+        $data['sortlink'] = [];
         if (empty($sortorder) || $sortorder=='ASC') {
             $sortorder = 'DESC';
         } else {
@@ -217,10 +217,10 @@ function hitcount_admin_view()
             'hitcount',
             'admin',
             'view',
-            array('modid' => $modid,
+            ['modid' => $modid,
                                                            'itemtype' => $itemtype,
-                                                           'sortorder' => $sortorder
-                                                           )
+                                                           'sortorder' => $sortorder,
+                                                           ]
         );
 
 //        }
@@ -231,11 +231,11 @@ function hitcount_admin_view()
             'hitcount',
             'admin',
             'view',
-            array('modid' => $modid,
+            ['modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'sort' => 'numhits',
-                                                           'sortorder' => $sortorder
-                                                            )
+                                                           'sortorder' => $sortorder,
+                                                            ]
         );
         //       }
  //       $data['sortorder'] = $sortorder;

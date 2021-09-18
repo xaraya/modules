@@ -55,7 +55,7 @@ function hitcount_userapi_topitems($args)
             WHERE module_id = ?
               AND itemtype = ?
             ORDER BY hits DESC";
-    $bindvars = array((int)$modid, (int)$itemtype);
+    $bindvars = [(int)$modid, (int)$itemtype];
 
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = 10;
@@ -70,10 +70,10 @@ function hitcount_userapi_topitems($args)
         return;
     }
 
-    $topitems = array();
+    $topitems = [];
     while (!$result->EOF) {
-        list($id, $hits) = $result->fields;
-        $topitems[] = array('itemid' => $id, 'hits' => $hits);
+        [$id, $hits] = $result->fields;
+        $topitems[] = ['itemid' => $id, 'hits' => $hits];
         $result->MoveNext();
     }
     $result->close();

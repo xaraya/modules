@@ -48,7 +48,7 @@ function hitcount_userapi_leftjoin($args)
         $modid = '';
     }
     if (!isset($itemids)) {
-        $itemids = array();
+        $itemids = [];
     }
 
     // Security check
@@ -69,7 +69,7 @@ function hitcount_userapi_leftjoin($args)
     $dbconn = xarDB::getConn();
     $userstable = $xartable['hitcount'];
 
-    $leftjoin = array();
+    $leftjoin = [];
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
     $leftjoin['table'] = $xartable['hitcount'];
@@ -83,7 +83,7 @@ function hitcount_userapi_leftjoin($args)
             $leftjoin['field'] .= $xartable['hitcount'] . '.itemtype = ' . $itemtype;
             $leftjoin['field'] .= ' AND ';
         } elseif (is_array($itemtype) && count($itemtype) > 0) {
-            $seentype = array();
+            $seentype = [];
             foreach ($itemtype as $id) {
                 if (empty($id) || !is_numeric($id)) {
                     continue;
@@ -126,7 +126,7 @@ function hitcount_userapi_leftjoin($args)
     }
 
     // Add available columns in the hitcount table
-    $columns = array('module_id','itemtype','itemid','hits');
+    $columns = ['module_id','itemtype','itemid','hits'];
     foreach ($columns as $column) {
         $leftjoin[$column] = $xartable['hitcount'] . '.' . $column;
     }

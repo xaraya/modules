@@ -32,36 +32,36 @@ function hitcount_init()
     // Create tables
     $query = xarTableDDL::createTable(
         $xartable['hitcount'],
-        array('id'         => array('type'        => 'integer',
+        ['id'         => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'increment'   => true,
-                                                            'primary_key' => true),
+                                                            'primary_key' => true, ],
 // TODO: replace with unique id
-                                   'object_id'  => array('type'        => 'integer',
+                                   'object_id'  => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'module_id'  => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'module_id'  => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'itemtype'   => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'itemtype'   => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'itemid'     => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'itemid'     => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'hits'       => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'hits'       => ['type'        => 'integer',
                                                             'null'        => false,
                                                             'size'        => 'big',
-                                                            'default'     => '0'),
-                                   'lasthit'    => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'lasthit'    => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'))
+                                                            'default'     => '0', ], ]
     );
 
     $result = $dbconn->Execute($query);
@@ -71,9 +71,9 @@ function hitcount_init()
 
     $query = xarTableDDL::createIndex(
         $xartable['hitcount'],
-        array('name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
-                                   'fields' => array('module_id','itemtype', 'itemid'),
-                                   'unique' => false)
+        ['name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
+                                   'fields' => ['module_id','itemtype', 'itemid'],
+                                   'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
@@ -83,9 +83,9 @@ function hitcount_init()
 
     $query = xarTableDDL::createIndex(
         $xartable['hitcount'],
-        array('name'   => 'i_' . xarDB::getPrefix() . '_hititem',
-                                   'fields' => array('itemid'),
-                                   'unique' => false)
+        ['name'   => 'i_' . xarDB::getPrefix() . '_hititem',
+                                   'fields' => ['itemid'],
+                                   'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
@@ -95,9 +95,9 @@ function hitcount_init()
 
     $query = xarTableDDL::createIndex(
         $xartable['hitcount'],
-        array('name'   => 'i_' . xarDB::getPrefix() . '_hits',
-                                   'fields' => array('hits'),
-                                   'unique' => false)
+        ['name'   => 'i_' . xarDB::getPrefix() . '_hits',
+                                   'fields' => ['hits'],
+                                   'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
@@ -129,20 +129,20 @@ function hitcount_init()
     $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[hitcount] LEFT JOIN $xartable[modules] ON $xartable[hitcount].module_id = $xartable[modules].regid";
     $query2 = "SELECT DISTINCT itemtype FROM $xartable[hitcount]";
     $query3 = "SELECT DISTINCT itemid FROM $xartable[hitcount]";
-    $instances = array(
-                        array('header' => 'Module Name:',
+    $instances = [
+                        ['header' => 'Module Name:',
                                 'query' => $query1,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Item Type:',
+                                'limit' => 20,
+                            ],
+                        ['header' => 'Item Type:',
                                 'query' => $query2,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Item ID:',
+                                'limit' => 20,
+                            ],
+                        ['header' => 'Item ID:',
                                 'query' => $query3,
-                                'limit' => 20
-                            )
-                    );
+                                'limit' => 20,
+                            ],
+                    ];
     xarPrivileges::defineInstance('hitcount', 'Item', $instances);
 
     /*********************************************************************
@@ -215,7 +215,7 @@ function hitcount_upgrade($oldversion)
             xarHooks::registerObserver('ItemDelete', 'hitcount');
             //xarHooks::registerObserver('ItemtypeView', 'hitcount');
             xarHooks::registerObserver('ModuleRemove', 'hitcount');
-            
+
             break;
     }
 
@@ -229,5 +229,5 @@ function hitcount_delete()
 {
     // nothing special to do here - rely on standard deinstall to take care of everything
     $module = 'hitcount';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }

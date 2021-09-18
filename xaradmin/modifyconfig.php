@@ -29,7 +29,7 @@ function hitcount_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'hitcount'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'hitcount']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
 
@@ -64,7 +64,7 @@ function hitcount_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             switch ($data['tab']) {
                 case 'general':

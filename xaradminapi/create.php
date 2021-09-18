@@ -95,7 +95,7 @@ function hitcount_adminapi_create($args)
                                        hits,
                                        lasthit)
             VALUES (?,?,?,?,?,?)";
-    $bindvars = array($nextId, $modid, $itemtype, $objectid, $hits, time());
+    $bindvars = [$nextId, $modid, $itemtype, $objectid, $hits, time()];
 
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
@@ -111,7 +111,7 @@ function hitcount_adminapi_create($args)
     // (not that this will be of any used when called via hooks, but
     // who knows where else this might be used)
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
     $extrainfo['hcid'] = $hcid;
     return $extrainfo;

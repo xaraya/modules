@@ -62,7 +62,7 @@ function hitcount_adminapi_deleteall($args)
 
     $query = "DELETE FROM $hitcounttable
             WHERE module_id = ?";
-    $result = $dbconn->Execute($query, array((int)$modid));
+    $result = $dbconn->Execute($query, [(int)$modid]);
     if (!$result) {
         return;
     }
@@ -71,7 +71,7 @@ function hitcount_adminapi_deleteall($args)
 
     // Return the extra info
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
     return $extrainfo;
 }

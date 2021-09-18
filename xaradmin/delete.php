@@ -41,7 +41,7 @@ function hitcount_admin_delete()
 
     // Check for confirmation.
     if (empty($confirm)) {
-        $data = array();
+        $data = [];
         $data['modid'] = $modid;
         $data['itemtype'] = $itemtype;
         $data['itemid'] = $itemid;
@@ -58,7 +58,7 @@ function hitcount_admin_delete()
                     'user',
                     'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(),
+                                         [],
                     0
                 );
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -75,16 +75,16 @@ function hitcount_admin_delete()
     }
 
     if (!xarSec::confirmAuthKey()) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
     }
     if (!xarMod::apiFunc(
         'hitcount',
         'admin',
         'delete',
-        array('modid' => $modid,
+        ['modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
-                             'confirm' => $confirm)
+                             'confirm' => $confirm, ]
     )) {
         return;
     }

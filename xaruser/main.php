@@ -27,8 +27,8 @@ function hitcount_user_main()
     }
 
     $data['title'] = xarML('Modules we are currently counting display hits for : (test)');
-    $data['moditems'] = array();
-    $moduleList = array();
+    $data['moditems'] = [];
+    $moduleList = [];
 
     $numitems = xarModVars::get('hitcount', 'numitems');
     if (empty($numitems)) {
@@ -43,7 +43,7 @@ function hitcount_user_main()
             'user',
             'getitemtypes',
                                  // don't throw an exception if this function doesn't exist
-                                 array(),
+                                 [],
             0
         );
         if (!isset($moduleList[$modinfo['displayname']]['modid'])) {
@@ -53,11 +53,11 @@ function hitcount_user_main()
         $mod =& $moduleList[$modinfo['displayname']];
         $mod['numitems'] = 0;
         $mod['numhits']  = 0;
-        $mod['tophits']  = array();
-        $mod['toplinks'] = array();
+        $mod['tophits']  = [];
+        $mod['toplinks'] = [];
 
         foreach ($itemtypes as $itemtype => $stats) {
-            $moditem = array();
+            $moditem = [];
             $mod['numitems'] += $moditem['numitems'] = $stats['items'];
             $mod['numhits'] += $moditem['numhits'] = $stats['hits'];
             if ($itemtype == 0) {
@@ -69,16 +69,16 @@ function hitcount_user_main()
                     $moditem['link'] = $mytypes[$itemtype]['url'];
                 } else {
                     $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                    $moditem['link'] = xarController::URL($modinfo['name'], 'user', 'view', array('itemtype' => $itemtype));
+                    $moditem['link'] = xarController::URL($modinfo['name'], 'user', 'view', ['itemtype' => $itemtype]);
                 }
             }
             $moditem['tophits'] = xarMod::apiFunc(
                 'hitcount',
                 'user',
                 'topitems',
-                array('modname'  => $modinfo['name'],
+                ['modname'  => $modinfo['name'],
                                                       'itemtype' => $itemtype,
-                                                      'numitems' => $numitems)
+                                                      'numitems' => $numitems, ]
             );
             foreach ($moditem['tophits'] as $tophit) {
                 $mod['tophits']["$tophit[hits]:$tophit[itemid]"]['itemtype'] = $itemtype;
@@ -88,8 +88,8 @@ function hitcount_user_main()
 
 
             if (isset($moditem['tophits']) && count($moditem['tophits']) > 0) {
-                $itemids = array();
-                $itemid2hits = array();
+                $itemids = [];
+                $itemid2hits = [];
                 foreach ($moditem['tophits'] as $tophit) {
                     $itemids[] = $tophit['itemid'];
                     $itemid2hits[$tophit['itemid']] = $tophit['hits'];
@@ -99,8 +99,8 @@ function hitcount_user_main()
                     $modinfo['name'],
                     'user',
                     'getitemlinks',
-                    array('itemtype' => $itemtype,
-                                                           'itemids' => $itemids),
+                    ['itemtype' => $itemtype,
+                                                           'itemids' => $itemids, ],
                     0
                 ); // don't throw an exception here
                 if (!empty($moditem['toplinks'])) {
@@ -111,7 +111,7 @@ function hitcount_user_main()
                         $moditem['toplinks'][$itemid]['hits'] = $itemid2hits[$itemid];
                     }
                 } else {
-                    $moditem['toplinks'] = array();
+                    $moditem['toplinks'] = [];
                 }
 
                 foreach ($moditem['toplinks'] as $itemid => $toplink) {

@@ -10,7 +10,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 $modversion['name'] = 'Hitcount';
 $modversion['id'] = '177';
 $modversion['version'] = '2.2.0';
@@ -28,9 +28,9 @@ $modversion['admin'] = true;
 $modversion['user'] = true;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Utility';
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
+$modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.2.0'
-                                         ),
-                                      );
+                                            'version_ge' => '2.2.0',
+                                         ],
+                                      ];
