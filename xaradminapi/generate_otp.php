@@ -38,12 +38,12 @@ function otp_adminapi_generate_otp($args)
     // Check if we already have a otp sequence generated for this user
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
-    
+
     $q = new Query('SELECT', $tables['otp_otps']);
     $q->eq('user_ident', $args['user_ident']);
     $q->run();
     $result = $q->row();
-    
+
     // We already have a sequence. Check whether it has expired
     if (!empty($result)) {
         if ($result['time_expires'] > time()) {
@@ -57,7 +57,7 @@ function otp_adminapi_generate_otp($args)
             $q->run();
         }
     }
-    
+
     // Make sure we have all the other needed data
     if (!isset($args['save'])) {
         $args['save'] = true;
@@ -71,10 +71,10 @@ function otp_adminapi_generate_otp($args)
     if (!isset($args['algorithm'])) {
         $args['algorithm'] = xarModVars::get('otp', 'algorithm');
     }
-    
+
     // Generate the password
     $one_time = $otp->generateOtp($args['passphrase'], $args['seed'], $args['sequence'], $args['algorithm']);
-    
+
     if ($args['save']) {
         // Add this otp to the database
         $passphrase = $one_time['hex_otp'];
@@ -91,7 +91,7 @@ function otp_adminapi_generate_otp($args)
             $q->run();
         }
     }
-    
+
     // Return it
     return $one_time;
 }

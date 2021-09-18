@@ -16,5 +16,5 @@
  */
     function otp_user_test()
     {
-        return array();
+        return [];
     }

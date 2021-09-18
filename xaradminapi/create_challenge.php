@@ -18,21 +18,21 @@
 function otp_adminapi_create_challenge($args)
 {
     sys::import('modules.otp.xarincludes.php-otp.Otp');
-    
+
     // Get the list of previously used seeds
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['otp_used_seeds']);
     $q->run();
-    $used_seeds = array();
+    $used_seeds = [];
     foreach ($q->output() as $row) {
         $used_seeds[] = $row['seed'];
     }
-    
+
     // Assemble the challenge
     $otp = new Otp();
     $challenge = $otp->createChallenge($seed, $sequence, $algorithm);
-            
+
     // Return it
     return $challenge;
 }

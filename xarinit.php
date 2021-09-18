@@ -27,7 +27,7 @@
         #
         $q = new Query();
         $prefix = xarDB::getPrefix();
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_entries";
         if (!$q->run($query)) {
             return;
@@ -50,7 +50,7 @@
         if (!$q->run($query)) {
             return;
         }
-  
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_otps";
         if (!$q->run($query)) {
             return;
@@ -74,7 +74,7 @@
         if (!$q->run($query)) {
             return;
         }
-    
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_used_seeds";
         if (!$q->run($query)) {
             return;
@@ -86,7 +86,7 @@
         if (!$q->run($query)) {
             return;
         }
-  
+
         # --------------------------------------------------------
         #
         # Set up masks
@@ -118,11 +118,11 @@
         # Create DD objects
         #
         $module = 'otp';
-        $objects = array(
+        $objects = [
                         'otp_entries',
-                         );
+                         ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
 
@@ -130,7 +130,7 @@
         #
         # Set up modvars
         #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'otp'));
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'otp']);
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
@@ -157,5 +157,5 @@
     function otp_delete()
     {
         $this_module = 'otp';
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
     }

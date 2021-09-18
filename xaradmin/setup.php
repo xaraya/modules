@@ -35,28 +35,28 @@ function otp_admin_setup($args)
     try {
         $seed = xarMod::apiFunc('otp', 'admin', 'generate_seed');
     } catch (Exception $e) {
-        return xarTpl::module('otp', 'user', 'errors', array('layout' => 'no_seed_generated'));
+        return xarTpl::module('otp', 'user', 'errors', ['layout' => 'no_seed_generated']);
     }
-    
+
     $user_ident = 'marc@luetolf-carroll.com';
-    
+
     // Generate an initial password
-    $pp_array = xarMod::apiFunc('otp', 'admin', 'generate_otp', array(
+    $pp_array = xarMod::apiFunc('otp', 'admin', 'generate_otp', [
                                                             'user_ident' => $user_ident,
                                                             'passphrase' => $input,
                                                             'seed'       => $seed,
                                                             'sequence'   => $seq,
-                                                            'algorithm'  => $algorithm));
+                                                            'algorithm'  => $algorithm, ]);
     $passphrase = $pp_array['hex_otp'];
 
     // Generate the password array
-    $array = xarMod::apiFunc('otp', 'admin', 'setup', array(
+    $array = xarMod::apiFunc('otp', 'admin', 'setup', [
                                                             'passphrase' => $passphrase,
                                                             'seed' => $seed,
                                                             'seq_number' => $seq,
-                                                            'algorithm' => $algorithm));
+                                                            'algorithm' => $algorithm, ]);
     var_dump($array);
     exit;
-    $data = array();
+    $data = [];
     return $data;
 }

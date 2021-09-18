@@ -22,12 +22,12 @@ function otp_admin_main()
     }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
-        return array();
+        return [];
     } else {
         $redirect = xarModVars::get('otp', 'backend_page');
         if (!empty($redirect)) {
-            $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $truecurrenturl = xarServer::getCurrentURL([], false);
+            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', ['url'=> $redirect,'truecurrenturl'=>$truecurrenturl]);
             xarController::redirect($urldata['redirecturl']);
         } else {
             xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig'));

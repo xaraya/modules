@@ -30,7 +30,7 @@ function otp_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'otp'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'otp']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
@@ -38,11 +38,11 @@ function otp_admin_modifyconfig()
     sys::import('modules.otp.xarincludes.php-otp.Otp');
     $otp = new Otp();
     $available_algorithms = $otp->getAvailableAlgorithms();
-    $data['available_algorithms'] = array();
+    $data['available_algorithms'] = [];
     foreach ($available_algorithms as $row) {
-        $data['available_algorithms'][] = array('id' => $row, 'name' => $row);
+        $data['available_algorithms'][] = ['id' => $row, 'name' => $row];
     }
-    
+
     switch (strtolower($phase)) {
         case 'modify':
         default:
@@ -60,7 +60,7 @@ function otp_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code. AJAX calls ignore this
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             switch ($data['tab']) {
                 case 'general':
@@ -100,7 +100,7 @@ function otp_admin_modifyconfig()
 
             // If this is an AJAX call, end here
             xarController::$request->exitAjax();
-            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
 

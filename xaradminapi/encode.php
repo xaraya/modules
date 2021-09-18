@@ -24,7 +24,7 @@ function otp_adminapi_encode($args)
     if (!is_array($args['code'])) {
         die(xarML('The code passed to the encode function is not an array'));
     }
-    
+
     // The actual encoding
     $code = implode(':', $args['code']);
     $code = base64_encode($code);

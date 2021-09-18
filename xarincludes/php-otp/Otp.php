@@ -23,7 +23,7 @@ class Otp
     /**
      * @var array array of hash algorithms available
      */
-    protected $availableAlgorithms = array();
+    protected $availableAlgorithms = [];
 
     /**
      * @var string default hash algorithm to be used
@@ -38,7 +38,7 @@ class Otp
     /**
      * @var array dictionary to be used for creating of six-word representation of one-time passwords
      */
-    private $dictionary = array();
+    private $dictionary = [];
 
 
     /**
@@ -94,12 +94,12 @@ class Otp
         }
 
         // Create a result array
-        $output = array(
+        $output = [
             'next_sequence' => ($sequenceCount - 1),
             'seed' => strtolower($seed),
             'algorithm' => $algorithm,
             'previous_hex_otp' => $this->reformatHexOtp($otp),
-        );
+        ];
 
         return $output;
     }
@@ -124,7 +124,7 @@ class Otp
     public function reinitializeOtp($userInput, $newSeed, $oldSeeds, $sequenceCount, $algorithm)
     {
         if (is_string($oldSeeds)) {
-            $oldSeeds = array($oldSeeds);
+            $oldSeeds = [$oldSeeds];
         }
         if (!is_array($oldSeeds)) {
             throw new Exception('An array or a string is expected as the "old seeds" argument', 201);
@@ -163,7 +163,7 @@ class Otp
      */
     public function authAgainstHexOtp($userInput, $masterHexOtp, $masterHexOtpType, $sequence, $algorithm)
     {
-        $output = array('result' => false, 'otp' => false);
+        $output = ['result' => false, 'otp' => false];
         $sequence = intval($sequence);
 
         // Check values
@@ -201,11 +201,11 @@ class Otp
             // Alter the result array if the one-time password matches
             if (strcasecmp($hexOtp, $masterHexOtp) === 0) {
                 $output['result'] = true;
-                $output['otp'] = array(
+                $output['otp'] = [
                     'next_sequence' => ($sequence > 0 ? ($sequence - 1) : false),
                     'algorithm' => $algorithm,
                     'previous_hex_otp' => $this->convertOtp($userInput, 'words', 'hex'),
-                );
+                ];
             }
         }
 
@@ -220,11 +220,11 @@ class Otp
             // Alter the result array if the one-time password matches
             if (strcasecmp($hexOtp, $masterHexOtp) === 0) {
                 $output['result'] = true;
-                $output['otp'] = array(
+                $output['otp'] = [
                     'next_sequence' => ($sequence > 0 ? ($sequence - 1) : false),
                     'algorithm' => $algorithm,
                     'previous_hex_otp' => $this->reformatHexOtp($userInput),
-                );
+                ];
             }
         }
 
@@ -284,7 +284,7 @@ class Otp
         }
 
         // Create result array
-        $output = array(
+        $output = [
             'sequence' => $sequence,
             'seed' => $seed,
             'algorithm' => $algorithm,
@@ -294,7 +294,7 @@ class Otp
             'previous_words_otp' => $this->convertOtp($this->binaryOtp($otp, $algorithm), 'bin', 'words'),
             'next_hex_otp' => ($nextOtp ? $this->convertOtp($nextOtp, 'bin', 'hex') : ''),
             'next_words_otp' => ($nextOtp ? $this->convertOtp($nextOtp, 'bin', 'words') : ''),
-        );
+        ];
 
         return $output;
     }
@@ -316,11 +316,11 @@ class Otp
      *                                  'words_otp' => six-word form of the one-time password
      * @throws Exception
      */
-    public function generateOtpList($passPhrase, $seed = null, $excludedSeeds = array(), $sequenceCount = null, $algorithm = null)
+    public function generateOtpList($passPhrase, $seed = null, $excludedSeeds = [], $sequenceCount = null, $algorithm = null)
     {
         $sequenceCount = intval($sequenceCount);
         if (is_string($excludedSeeds)) {
-            $excludedSeeds = array($excludedSeeds);
+            $excludedSeeds = [$excludedSeeds];
         }
         if (!is_array($excludedSeeds)) {
             throw new Exception('An array or a string is expected as the "old seeds" argument', 501);
@@ -355,18 +355,18 @@ class Otp
         }
 
         // Generate list of one-time passwords
-        $output = array();
+        $output = [];
         $seed = strtolower($seed);
         $otp = $seed . $passPhrase;
         for ($x = 0; $x <= $sequenceCount; $x++) {
             $otp = $this->binaryOtp($otp, $algorithm);
-            $output[] = array(
+            $output[] = [
                 'sequence' => $x,
                 'seed' => $seed,
                 'algorithm' => $algorithm,
                 'hex_otp' => $this->convertOtp($otp, 'bin', 'hex'),
                 'words_otp' => $this->convertOtp($otp, 'bin', 'words'),
-            );
+            ];
         }
 
         // Sort the array so that the last computed one-time password comes first
@@ -731,11 +731,11 @@ class Otp
         $challenge = preg_replace('/\s+/', ' ', $challenge);
         $challenge = trim($challenge);
         $parsedString = explode(' ', $challenge);
-        $output = array(
+        $output = [
             'algorithm' => substr($parsedString[0], 4),
             'sequence' => $parsedString[1],
-            'seed' => $parsedString[2]
-        );
+            'seed' => $parsedString[2],
+        ];
 
         return $output;
     }
@@ -980,7 +980,7 @@ class Otp
      * @return string seed containing digits and lowercase a-z characters
      * @throws Exception
      */
-    public function generateSeed($minLength = null, $maxLength = null, $excludedSeeds = array())
+    public function generateSeed($minLength = null, $maxLength = null, $excludedSeeds = [])
     {
         $seed = '';
 
@@ -992,7 +992,7 @@ class Otp
             $maxLength = 16;
         }
         if (!is_array($excludedSeeds)) {
-            $excludedSeeds = array();
+            $excludedSeeds = [];
         }
 
         // Non-numeric values cannot be accepted
@@ -1053,7 +1053,7 @@ class Otp
      */
     protected function getSeedCharPool()
     {
-        $pool = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+        $pool = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         shuffle($pool);
 
         return $pool;
@@ -1074,7 +1074,7 @@ class Otp
         }
 
         // Create an array out of the string of bits
-        $bitArray = array();
+        $bitArray = [];
         for ($x = 0; $x < strlen($bitString); $x++) {
             $bitArray[$x] = substr($bitString, $x, 1);
         }
@@ -1099,7 +1099,7 @@ class Otp
      */
     public function getAvailableAlgorithms()
     {
-        $algorithms = array();
+        $algorithms = [];
 
         // Check for MD4
         if (function_exists('hash') || function_exists('mhash')) {
@@ -1288,7 +1288,7 @@ class Otp
      */
     public function getDefaultDictionary()
     {
-        $dictionary = array(
+        $dictionary = [
             'A', 'ABE', 'ACE', 'ACT', 'AD', 'ADA', 'ADD',
             'AGO', 'AID', 'AIM', 'AIR', 'ALL', 'ALP', 'AM', 'AMY',
             'AN', 'ANA', 'AND', 'ANN', 'ANT', 'ANY', 'APE', 'APS',
@@ -1545,7 +1545,7 @@ class Otp
             'WITH', 'WOLF', 'WONT', 'WOOD', 'WOOL', 'WORD', 'WORE', 'WORK',
             'WORM', 'WORN', 'WOVE', 'WRIT', 'WYNN', 'YALE', 'YANG', 'YANK',
             'YARD', 'YARN', 'YAWL', 'YAWN', 'YEAH', 'YEAR', 'YELL', 'YOGA',
-            'YOKE');
+            'YOKE', ];
 
         return $dictionary;
     }

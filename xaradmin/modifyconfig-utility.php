@@ -41,7 +41,7 @@ function otp_admin_modifyconfig_utility()
         }
         array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
     } else {
-        $hooks['tabs'] = array();
+        $hooks['tabs'] = [];
     }
 
     $regid = xarMod::getRegID($tabmodule);
@@ -85,10 +85,10 @@ function otp_admin_modifyconfig_utility()
                 return;
             }
 
-            $modvars = array(
+            $modvars = [
                             'defaultmastertable',
                             'bar',
-                            );
+                            ];
 
             if ($data['tab'] == 'otp_general') {
                 xarModVars::set('otp', 'items_per_page', $items_per_page);
@@ -107,7 +107,7 @@ function otp_admin_modifyconfig_utility()
                 }
             }
 
-            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig', ['tabmodule' => $tabmodule, 'tab' => $data['tab']]));
             // Return
             return true;
             break;

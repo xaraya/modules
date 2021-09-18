@@ -19,7 +19,7 @@
     function otp_xartables()
     {
         // Initialise table array
-        $xartable = array();
+        $xartable = [];
 
         $xartable['otp_used_seeds']    = xarDB::getPrefix() . '_otp_used_seeds';
         $xartable['otp_otps']          = xarDB::getPrefix() . '_otp_otps';

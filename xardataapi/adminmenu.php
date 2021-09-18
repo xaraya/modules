@@ -18,9 +18,9 @@
 // TODO: turn this into an xml file
     function otp_dataapi_adminmenu()
     {
-        return array(
-            array('includes' => array('main','overview'), 'target' => 'main', 'label' => xarML('Otp Overview')),
-            array('mask' => 'ManageOtp', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')),
-            array('mask' => 'AdminOtp', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Otp configuration'), 'label' => xarML('Modify Config')),
-        );
+        return [
+            ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Otp Overview')],
+            ['mask' => 'ManageOtp', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
+            ['mask' => 'AdminOtp', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Otp configuration'), 'label' => xarML('Modify Config')],
+        ];
     }

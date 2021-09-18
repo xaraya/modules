@@ -31,11 +31,11 @@
     $modversion['user']           = false;
     $modversion['class']          = 'Authentication';
     $modversion['category']       = 'Users & Groups';
-    $modversion['securityschema'] = array();
-    $modversion['dependency']     = array();
-    $modversion['dependencyinfo'] = array(
-                                    0 => array(
+    $modversion['securityschema'] = [];
+    $modversion['dependency']     = [];
+    $modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.2.0'
-                                         ),
-                                          );
+                                            'version_ge' => '2.2.0',
+                                         ],
+                                          ];

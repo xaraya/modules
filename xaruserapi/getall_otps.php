@@ -18,14 +18,14 @@
 function otp_userapi_getall_otps($args)
 {
     extract($args);
-    
+
     // Load the query class
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
-            
+
     // Run the SQL
     $q = new Query('SELECT', $tables['otp_otps']);
-    
+
     // Optional filters
     if (isset($passphrase)) {
         $q->eq('passphrase', $passphrase);
@@ -52,12 +52,12 @@ function otp_userapi_getall_otps($args)
     if (isset($time_expires)) {
         $q->gt('time_expires', $time_expires);
     }
-    
+
     $q->run();
 //    $q->qecho();
-    
+
     // Index by user identification
-    $result = array();
+    $result = [];
     foreach ($q->output() as $row) {
         $result[$row['user_ident']] = $row;
     }
