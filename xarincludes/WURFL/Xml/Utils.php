@@ -21,7 +21,6 @@
  */
 class WURFL_Xml_Utils
 {
-    
     //
     private function __construct()
     {
@@ -29,8 +28,8 @@ class WURFL_Xml_Utils
     private function __clone()
     {
     }
-    
-    
+
+
     /**
      * Returns the file path of the $xmlResource; if the $xmlResource is zipped it is uncompressed first
      * @param string $xmlResource XML Resource file
@@ -43,7 +42,7 @@ class WURFL_Xml_Utils
         }
         return $xmlResource;
     }
-    
+
     /**
      * Returns a XML Resource filename for the uncompressed contents of the provided zipped $filename
      * @param string $filename of zipped XML data
@@ -64,16 +63,16 @@ class WURFL_Xml_Utils
 
         $zippedFile = $zip->statIndex(0);
         $wurflFile = $zippedFile['name'];
-        
+
         //$wurflFile = md5(uniqid(rand(), true));
         //$zip->extractTo($tmpDir, $wurflFile);
-        
+
         $zip->extractTo($tmpDir);
         $zip->close();
-        
+
         return $tmpDir.DIRECTORY_SEPARATOR.$wurflFile;
     }
-    
+
     /**
      * Returns true if the $filename is that of a Zip file
      * @param string $fileName
@@ -83,7 +82,7 @@ class WURFL_Xml_Utils
     {
         return strcmp("zip", substr($fileName, -3)) === 0 ? true : false;
     }
-    
+
     /**
      * Returns true if the ZipArchive extension is loaded
      * @return bool

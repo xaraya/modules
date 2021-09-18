@@ -13,7 +13,6 @@ require_once 'Handlers/UtilsTest.php';
  */
 class WURFL_HandlersTestSuite extends PHPUnit_Framework_TestSuite
 {
-    
     /**
      * Constructs the test suite handler.
      */
@@ -25,7 +24,7 @@ class WURFL_HandlersTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Handlers_MSIEHandlerTest');
         $this->addTestSuite('WURFL_Handlers_UtilsTest');
     }
-    
+
     /**
      * Creates the suite.
      */

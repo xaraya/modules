@@ -30,20 +30,20 @@
 class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "WEBOS";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'hp_tablet_webos_generic',
         'hp_webos_generic',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('webOS', 'hpwOS'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['webOS', 'hpwOS']);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $delimiter_idx = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
@@ -51,15 +51,15 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
             $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3')? 'hp_tablet_webos_generic': 'hp_webos_generic';
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3') ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
     }
-    
+
     public static function getWebOSModelVersion($ua)
     {
         /* Formats:
@@ -73,7 +73,7 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler
             return null;
         }
     }
-    
+
     public static function getWebOSVersion($ua)
     {
         if (preg_match('#(?:hpw|web)OS.(\d)\.#', $ua, $matches)) {

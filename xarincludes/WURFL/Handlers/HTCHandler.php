@@ -30,12 +30,12 @@
 class WURFL_Handlers_HTCHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "HTC";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['HTC', 'XV6875']);
     }
 }

@@ -22,7 +22,6 @@
  */
 class WURFL_UserAgentHandlerChainFactory
 {
-
     /**
      * @var WURFL_UserAgentHandlerChain
      */
@@ -55,19 +54,19 @@ class WURFL_UserAgentHandlerChainFactory
         self::$_userAgentHandlerChain = new WURFL_UserAgentHandlerChain();
 
         $genericNormalizers = self::createGenericNormalizers();
-        
+
         /**** Java Midlets ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_JavaMidletHandler($context, $genericNormalizers));
-        
+
         /**** Smart TVs ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SmartTVHandler($context, $genericNormalizers));
-        
+
         /**** Mobile devices ****/
         $kindleNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Kindle());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KindleHandler($context, $kindleNormalizer));
         $lguplusNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_LGUPLUS());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_LGUPLUSHandler($context, $lguplusNormalizer));
-        
+
         /**** Mobile platforms ****/
         $androidNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Android());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AndroidHandler($context, $androidNormalizer));
@@ -75,14 +74,14 @@ class WURFL_UserAgentHandlerChainFactory
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsPhoneDesktopHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsPhoneHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaOviBrowserHandler($context, $genericNormalizers));
-        
+
         /**** High workload mobile matchers ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SamsungHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_BlackBerryHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SonyEricssonHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MotorolaHandler($context, $genericNormalizers));
-        
+
         /**** Other mobile matchers ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AlcatelHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_BenQHandler($context, $genericNormalizers));
@@ -114,30 +113,30 @@ class WURFL_UserAgentHandlerChainFactory
         $webOSNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_WebOS());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WebOSHandler($context, $webOSNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaMiniHandler($context, $genericNormalizers));
-        
+
         /**** Robots / Crawlers ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_BotCrawlerTranscoderHandler($context, $genericNormalizers));
-        
+
         /**** Desktop Browsers ****/
         $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chrome());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));
-        
+
         $firefoxNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Firefox());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FirefoxHandler($context, $firefoxNormalizer));
-        
+
         $msieNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_MSIE());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MSIEHandler($context, $msieNormalizer));
-        
+
         $operaNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Opera());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaHandler($context, $operaNormalizer));
-        
+
         $safariNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Safari());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SafariHandler($context, $safariNormalizer));
-        
+
         $konquerorNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Konqueror());
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KonquerorHandler($context, $konquerorNormalizer));
-        
-        
+
+
         /**** All other requests ****/
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_CatchAllHandler($context, $genericNormalizers));
     }
@@ -148,7 +147,7 @@ class WURFL_UserAgentHandlerChainFactory
      */
     private static function createGenericNormalizers()
     {
-        return new WURFL_Request_UserAgentNormalizer(array(
+        return new WURFL_Request_UserAgentNormalizer([
             new WURFL_Request_UserAgentNormalizer_Generic_UPLink(),
             new WURFL_Request_UserAgentNormalizer_Generic_BlackBerry(),
             new WURFL_Request_UserAgentNormalizer_Generic_YesWAP(),
@@ -157,6 +156,6 @@ class WURFL_UserAgentHandlerChainFactory
             new WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator(),
             new WURFL_Request_UserAgentNormalizer_Generic_LocaleRemover(),
             new WURFL_Request_UserAgentNormalizer_Generic_UCWEB(),
-        ));
+        ]);
     }
 }

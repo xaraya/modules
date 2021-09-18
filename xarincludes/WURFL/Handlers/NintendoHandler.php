@@ -30,13 +30,13 @@
 class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "NINTENDO";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'nintendo_wii_ver1',
         'nintendo_dsi_ver1',
         'nintendo_ds_ver1',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -45,14 +45,14 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo')) {
             return true;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, ['Nitro', 'Opera']);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         return $this->getDeviceIDFromLD($userAgent);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo Wii')) {
@@ -61,7 +61,7 @@ class WURFL_Handlers_NintendoHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nintendo DSi')) {
             return 'nintendo_dsi_ver1';
         }
-        if ((WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera')))) {
+        if ((WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContainsAll($userAgent, ['Nitro', 'Opera']))) {
             return 'nintendo_ds_ver1';
         }
         return 'nintendo_wii_ver1';

@@ -30,8 +30,8 @@
 class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "ANDROID";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'generic_android',
         'generic_android_ver1_5',
         'generic_android_ver1_6',
@@ -45,11 +45,11 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         'generic_android_ver3_3',
         'generic_android_ver4',
         'generic_android_ver4_1',
-        
+
         'uabait_opera_mini_android_v50',
         'uabait_opera_mini_android_v51',
         'generic_opera_mini_android_version5',
-    
+
         'generic_android_ver1_5_opera_mobi',
         'generic_android_ver1_5_opera_mobi_11',
         'generic_android_ver1_6_opera_mobi',
@@ -64,30 +64,30 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         'generic_android_ver2_3_opera_mobi_11',
         'generic_android_ver4_0_opera_mobi',
         'generic_android_ver4_0_opera_mobi_11',
-    
+
         'generic_android_ver2_1_opera_tablet',
         'generic_android_ver2_2_opera_tablet',
         'generic_android_ver2_3_opera_tablet',
         'generic_android_ver3_0_opera_tablet',
         'generic_android_ver3_1_opera_tablet',
         'generic_android_ver3_2_opera_tablet',
-        
+
         'generic_android_ver2_0_fennec',
         'generic_android_ver2_0_fennec_tablet',
         'generic_android_ver2_0_fennec_desktop',
-        
+
         'generic_android_ver1_6_ucweb',
         'generic_android_ver2_0_ucweb',
         'generic_android_ver2_1_ucweb',
         'generic_android_ver2_2_ucweb',
         'generic_android_ver2_3_ucweb',
-    
+
         'generic_android_ver2_0_netfrontlifebrowser',
         'generic_android_ver2_1_netfrontlifebrowser',
         'generic_android_ver2_2_netfrontlifebrowser',
         'generic_android_ver2_3_netfrontlifebrowser',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -95,7 +95,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         // Look for RIS delimited UAs first
@@ -104,43 +104,43 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
             $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         // Opera Mini
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mini')) {
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, ' Build/')) {
                 $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' Build/');
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance);
             }
-            $prefixes = array(
+            $prefixes = [
                 'Opera/9.80 (J2ME/MIDP; Opera Mini/5' => 'uabait_opera_mini_android_v50',
                 'Opera/9.80 (Android; Opera Mini/5.0' => 'uabait_opera_mini_android_v50',
                 'Opera/9.80 (Android; Opera Mini/5.1' => 'uabait_opera_mini_android_v51',
-            );
+            ];
             foreach ($prefixes as $prefix => $defaultID) {
                 if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, $prefix)) {
                     return $this->getDeviceIDFromRIS($userAgent, strlen($prefix));
                 }
             }
         }
-        
+
         // Opera Mobi
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
             $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         // Opera Tablet
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet')) {
             $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         // Fennec
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['Fennec', 'Firefox'])) {
             $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ')');
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         // UCWEB7
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCWEB7')) {
             // The tolerance is after UCWEB7, not before
@@ -151,7 +151,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
             }
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         // NetFrontLifeBrowser
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser/2.2')) {
             $find = 'NetFrontLifeBrowser/2.2';
@@ -161,7 +161,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
             }
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         // Standard RIS Matching
         $tolerance = min(WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' Build/'), WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' AppleWebKit'));
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
@@ -173,7 +173,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mini')) {
             return 'generic_opera_mini_android_version5';
         }
-        
+
         // Opera Mobi
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
             $android_version = self::getAndroidVersion($userAgent);
@@ -194,7 +194,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return 'generic_android_ver2_0_opera_mobi';
             }
         }
-        
+
         // Opera Tablet
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet')) {
             $android_version = (float)self::getAndroidVersion($userAgent);
@@ -211,7 +211,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return 'generic_android_ver2_1_opera_tablet';
             }
         }
-        
+
         // UCWEB7
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCWEB7')) {
             $android_version_string = str_replace('.', '_', self::getAndroidVersion($userAgent));
@@ -222,7 +222,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return 'generic_android_ver2_0_ucweb';
             }
         }
-        
+
         // Fennec
         $is_fennec = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Fennec');
         $is_firefox = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox');
@@ -240,7 +240,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return WURFL_Constants::NO_MATCH;
             }
         }
-        
+
         // NetFrontLifeBrowser
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser')) {
             // generic_android_ver2_0_netfrontlifebrowser
@@ -252,7 +252,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return 'generic_android_ver2_0_netfrontlifebrowser';
             }
         }
-        
+
         // Generic Android
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Froyo')) {
             return 'generic_android_ver2_2';
@@ -268,14 +268,14 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;
         }
-        
+
         return 'generic_android';
     }
-    
+
     /********* Android Utility Functions ***********/
     public static $defaultAndroidVersion = '2.0';
-    public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1');
-    public static $androidReleaseMap = array(
+    public static $validAndroidVersions = ['1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1'];
+    public static $androidReleaseMap = [
         'Cupcake' => '1.5',
         'Donut' => '1.6',
         'Eclair' => '2.1',
@@ -283,7 +283,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         'Gingerbread' => '2.3',
         'Honeycomb' => '3.0',
         // 'Ice Cream Sandwich' => '4.0',
-    );
+    ];
     /**
      * Get the Android version from the User Agent, or the default Android version is it cannot be determined
      * @param string $ua User Agent
@@ -302,11 +302,11 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return $version;
             }
         }
-        return $use_default? self::$defaultAndroidVersion: null;
+        return $use_default ? self::$defaultAndroidVersion : null;
     }
-    
+
     public static $defaultOperaVersion = '10';
-    public static $validOperaVersions = array('10', '11');
+    public static $validOperaVersions = ['10', '11'];
     /**
      * Get the Opera browser version from an Opera Android user agent
      * @param string $ua User Agent
@@ -322,9 +322,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
                 return $version;
             }
         }
-        return $use_default? self::$defaultOperaVersion: null;
+        return $use_default ? self::$defaultOperaVersion : null;
     }
-    
+
     public static function getAndroidModel($ua, $use_default=true)
     {
         if (!preg_match('#Android [^;]+; xx-xx; (.+?) Build/#', $ua, $matches)) {
@@ -337,7 +337,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         if (strpos('Build/', $model) === 0) {
             return null;
         }
-        
+
         // HTC
         if (strpos($model, 'HTC') !== false) {
             // Normalize "HTC/"
@@ -354,7 +354,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         $model = preg_replace('#(LG-[^/]+)/[vV].*$#', '$1', $model);
         // Serial Number
         $model = preg_replace('#\[[\d]{10}\]#', '', $model);
-        
+
         return trim($model);
     }
 }

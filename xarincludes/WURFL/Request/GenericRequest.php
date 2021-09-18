@@ -34,7 +34,7 @@ class WURFL_Request_GenericRequest
     private $_xhtmlDevice;
     private $_id;
     private $_matchInfo;
-    
+
     /**
      * @param string $userAgent
      * @param string $userAgentProfile
@@ -48,7 +48,7 @@ class WURFL_Request_GenericRequest
         $this->_id = md5($this->userAgent);
         $this->_matchInfo = new WURFL_Request_MatchInfo();
     }
-    
+
     public function __get($name)
     {
         $name = '_'.$name;

@@ -8,7 +8,7 @@ sys::import('xaraya.structures.events.observer');
 class WurflPreDispatchObserver extends EventObserver implements ixarEventObserver
 {
     public $module = 'wurfl';
-    
+
     public function notify(ixarEventSubject $subject)
     {
         // pre request default theme handling
@@ -28,8 +28,8 @@ class WurflPreDispatchObserver extends EventObserver implements ixarEventObserve
             $theme = xarModUserVars::get('themes', 'default_theme');
             // get the list of permitted themes
             $user_themes = xarModVars::get('themes', 'user_themes');
-            $user_themes = !empty($user_themes) ? explode(',', $user_themes) : array();
-    
+            $user_themes = !empty($user_themes) ? explode(',', $user_themes) : [];
+
             // Set the theme if it is valid
             if (!empty($user_themes) && in_array($theme, $user_themes)) {
                 self::setTheme($theme);

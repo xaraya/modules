@@ -21,7 +21,6 @@
  */
 class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
 {
-
     /**
      * Initialize XML Configuration
      */
@@ -46,7 +45,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
     {
         return parent::getFullPath((string)$mainFileElement[0]);
     }
-    
+
     /**
      * Returns an array of full path WURFL patches
      * @param array $patchElements array of SimpleXMLElement objects
@@ -54,7 +53,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      */
     private function wurflPatches($patchElements)
     {
-        $patches = array();
+        $patches = [];
         if ($patchElements) {
             foreach ($patchElements as $patchElement) {
                 $patches[] = parent::getFullPath((string)$patchElement);
@@ -75,7 +74,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
         }
         return false;
     }
-    
+
     /**
      * Returns the mode of operation if set, otherwise null
      * @param array $modeElement array of SimpleXMLElement objects
@@ -95,7 +94,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
         }
         return $this->matchMode;
     }
-    
+
     /**
      * Returns log directory from XML config
      * @param array $logDirElement array of SimpleXMLElement objects
@@ -116,7 +115,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      */
     private function persistence($persistenceElement)
     {
-        $persistence = array();
+        $persistence = [];
         if ($persistenceElement) {
             $persistence['provider'] = (string)$persistenceElement[0]->provider;
             $persistence['params'] = $this->_toArray((string)$persistenceElement[0]->params);
@@ -131,7 +130,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      */
     private function _toArray($params)
     {
-        $paramsArray = array();
+        $paramsArray = [];
 
         foreach (explode(',', $params) as $param) {
             $paramNameValue = explode('=', $param);
@@ -145,12 +144,12 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
         return $paramsArray;
     }
 
- 
+
     /**
      * WURFL XML Schema
      * @var string
      */
-    const WURFL_CONF_SCHEMA = '<?xml version="1.0" encoding="utf-8" ?>
+    public const WURFL_CONF_SCHEMA = '<?xml version="1.0" encoding="utf-8" ?>
 	<element name="wurfl-config" xmlns="http://relaxng.org/ns/structure/1.0">
 		<element name="wurfl">
 			<element name="main-file"><text/></element>

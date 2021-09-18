@@ -36,9 +36,9 @@ class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ['Sanyo', 'SANYO']) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $idx = strpos($userAgent, 'MobilePhone');

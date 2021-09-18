@@ -25,16 +25,15 @@
  */
 class WURFL_Xml_Info
 {
-
     /**
      * Key used in persistence provider to store version-related information
      * @var string
      */
-    const PERSISTENCE_KEY = "WURFL_XML_INFO";
+    public const PERSISTENCE_KEY = "WURFL_XML_INFO";
     private $_version;
     private $_lastUpdated;
     private $_officialURL;
-    
+
     /**
      * @param string $version WURFL Version
      * @param string $lastUpdated WURFL Last Updated data
@@ -46,7 +45,7 @@ class WURFL_Xml_Info
         $this->_lastUpdated = $lastUpdated;
         $this->_officialURL = $officialURL;
     }
-    
+
     /**
      * Returns the value for the given key (version, lastUpdated, officialURL)
      * @param string $name
@@ -57,7 +56,7 @@ class WURFL_Xml_Info
         $name = '_'.$name;
         return $this->$name;
     }
-    
+
     /**
      * @return WURFL_Xml_Info Empty WURFL_Xml_Info object
      */

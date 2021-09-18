@@ -6,18 +6,18 @@ require_once dirname(__FILE__).'/classautoloader.php';
 
 class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
 {
-    const FILE_NAME = "../resources/request.yml";
+    public const FILE_NAME = "../resources/request.yml";
     private $_genericRequestFactory;
-    
-    private $_testData = array();
-    
+
+    private $_testData = [];
+
     public function setUp()
     {
         $userAgentNormalizer = new WURFL_Request_UserAgentNormalizer();
         $this->_genericRequestFactory = new WURFL_Request_GenericRequestFactory($userAgentNormalizer);
         $this->_testData = self::_loadData(WURFLRequestFactoryTest::FILE_NAME);
     }
-    
+
     public function testCreateRequest()
     {
         foreach ($this->_testData as $testData) {
@@ -28,42 +28,42 @@ class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($request->userAgent, $testData ["EXPECTED_USER_AGENT"]);
         }
     }
-    
+
     private static function _loadData($fileName)
     {
         $handle = fopen($fileName, "r");
-        $testData = array();
+        $testData = [];
         $notNullCondition = new NotNullCondition();
         if ($handle) {
             while (! feof($handle)) {
                 $line = fgets($handle, 4096);
                 if (strpos($line, "#") === false && strcmp($line, "\n") != 0) {
                     $values = explode(":", trim($line));
-                    $keys = array("HTTP_USER_AGENT","HTTP_X_DEVICE_USER_AGENT", "HTTP_X_SKYFIRE_VERSION","HTTP_X_BLUECOAT_VIA", "EXPECTED_USER_AGENT");
+                    $keys = ["HTTP_USER_AGENT","HTTP_X_DEVICE_USER_AGENT", "HTTP_X_SKYFIRE_VERSION","HTTP_X_BLUECOAT_VIA", "EXPECTED_USER_AGENT"];
                     $serverData = self::arrayCombine($keys, $values, $notNullCondition);
-                    $testData[] = array("_SERVER" => $serverData, "EXPECTED_USER_AGENT" => $serverData["EXPECTED_USER_AGENT"]);
+                    $testData[] = ["_SERVER" => $serverData, "EXPECTED_USER_AGENT" => $serverData["EXPECTED_USER_AGENT"]];
                 }
             }
             fclose($handle);
         }
-        
+
         return $testData;
     }
-    
-    
+
+
     private static function arrayCombine(array $keys, array $values, NotNullCondition $condition=null)
     {
         if (is_null($condition)) {
             return array_combine($keys, $values);
         }
         $count = count($keys);
-        $combinedArray = array();
+        $combinedArray = [];
         for ($i=0; $i<$count; $i++) {
             if ($condition->check($keys[$i], $values[$i])) {
                 $combinedArray[$keys[$i]] = $values[$i];
             }
         }
-        
+
         return $combinedArray;
     }
 }

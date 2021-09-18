@@ -30,33 +30,33 @@
 class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "APPLE";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'apple_ipod_touch_ver1',
         'apple_ipod_touch_ver2',
         'apple_ipod_touch_ver3',
         'apple_ipod_touch_ver4',
         'apple_ipod_touch_ver5',
-    
+
         'apple_ipad_ver1',
         'apple_ipad_ver1_sub42',
         'apple_ipad_ver1_sub5',
-    
+
         'apple_iphone_ver1',
         'apple_iphone_ver2',
         'apple_iphone_ver3',
         'apple_iphone_ver4',
         'apple_iphone_ver5',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')));
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['iPhone', 'iPod', 'iPad']));
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = strpos($userAgent, '_');
@@ -75,7 +75,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (preg_match('/ (\d)_(\d)[ _]/', $userAgent, $matches)) {

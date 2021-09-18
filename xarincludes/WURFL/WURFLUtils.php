@@ -21,7 +21,6 @@
  */
 class WURFL_WURFLUtils
 {
-
     /**
      * returns the User Agent From $request or empty string if not found one
      *
@@ -40,7 +39,7 @@ class WURFL_WURFLUtils
         if (isset($request['HTTP_USER_AGENT'])) {
             return $request['HTTP_USER_AGENT'];
         }
-        
+
         return '';
     }
 
@@ -60,7 +59,7 @@ class WURFL_WURFLUtils
         if (isset($request["Opt"])) {
             $opt = $request["Opt"];
             $regex = "/ns=\\d+/";
-            $matches = array();
+            $matches = [];
             $namespaceProfile = null;
             if (preg_match($regex, $opt, $matches)) {
                 $namespaceProfile = substr($matches[0], 2) . "-Profile";
@@ -84,7 +83,7 @@ class WURFL_WURFLUtils
         if (!isset($request["accept"])) {
             return false;
         }
-        
+
         $accept = $request["accept"];
         if (isset($accept)) {
             if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
@@ -109,7 +108,7 @@ class WURFL_WURFLUtils
         }
         return false;
     }
-    
+
     /**
      * Recursively merges $array1 with $array2, returning the result
      * @param array $array1

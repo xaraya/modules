@@ -28,7 +28,7 @@
  */
 class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface
 {
-    const PATTERN = "/(Mozilla\/5\.0.*U;)(?:.*)(Safari\/\d{0,3})(?:.*)/";
+    public const PATTERN = "/(Mozilla\/5\.0.*U;)(?:.*)(Safari\/\d{0,3})(?:.*)/";
 
     public function normalize($userAgent)
     {

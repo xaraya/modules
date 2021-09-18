@@ -39,7 +39,7 @@
             }
             array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
         } else {
-            $hooks['tabs'] = array();
+            $hooks['tabs'] = [];
         }
 
         $regid = xarMod::getRegID($tabmodule);
@@ -83,10 +83,10 @@
                     return;
                 }
 
-                $modvars = array(
+                $modvars = [
                                 'defaultmastertable',
                                 'bar',
-                                );
+                                ];
 
                 if ($data['tab'] == 'wurfl_general') {
                     xarModVars::set('wurfl', 'items_per_page', $items_per_page);
@@ -105,7 +105,7 @@
                     }
                 }
 
-                xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig', ['tabmodule' => $tabmodule, 'tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

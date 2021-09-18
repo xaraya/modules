@@ -37,7 +37,6 @@
  */
 class WURFL_WURFLManager
 {
-    
     /**
      * @var WURFL_WURFLService
      */
@@ -46,7 +45,7 @@ class WURFL_WURFLManager
      * @var WURFL_Request_GenericRequestFactory
      */
     private $_requestFactory;
-    
+
     /**
      * Creates a new WURFL Manager object
      * @param WURFL_WURFLService $wurflService
@@ -57,7 +56,7 @@ class WURFL_WURFLManager
         $this->_wurflService = $wurflService;
         $this->_requestFactory = $requestFactory;
     }
-    
+
     /**
      * Return the version info of the loaded wurfl xml file
      *
@@ -77,7 +76,7 @@ class WURFL_WURFLManager
     {
         return $this->_wurflService->getWURFLInfo();
     }
-    
+
     /**
      * Return a device the given WURFL_Request_GenericRequest request(user-agent..)
      *
@@ -96,7 +95,7 @@ class WURFL_WURFLManager
         }
         return $this->_wurflService->getDeviceForRequest($request);
     }
-    
+
     /**
      * Return a device for the given http request(user-agent..)
      *
@@ -112,7 +111,7 @@ class WURFL_WURFLManager
         $request = $this->_requestFactory->createRequest($httpRequest);
         return $this->getDeviceForRequest($request);
     }
-    
+
     /**
      * Returns a device for the given user-agent
      *
@@ -125,11 +124,11 @@ class WURFL_WURFLManager
         if (!isset($userAgent)) {
             $userAgent = '';
         }
-        
+
         $request = $this->_requestFactory->createRequestForUserAgent($userAgent);
         return $this->getDeviceForRequest($request);
     }
-    
+
     /**
      * Return a device for the given device id
      *
@@ -140,7 +139,7 @@ class WURFL_WURFLManager
     {
         return $this->_wurflService->getDevice($deviceID);
     }
-    
+
     /**
      * Returns an array of all wurfl group ids
      *
@@ -150,7 +149,7 @@ class WURFL_WURFLManager
     {
         return $this->_wurflService->getListOfGroups();
     }
-    
+
     /**
      * Returns all capability names for the given $groupID
      *
@@ -161,7 +160,7 @@ class WURFL_WURFLManager
     {
         return $this->_wurflService->getCapabilitiesNameForGroup($groupID);
     }
-    
+
     /**
      * Returns an array of all the fall back devices starting from the given device
      *
@@ -172,7 +171,7 @@ class WURFL_WURFLManager
     {
         return $this->_wurflService->getDeviceHierarchy($deviceID);
     }
-    
+
     /**
      * Returns all the device ids in wurfl
      *

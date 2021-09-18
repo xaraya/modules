@@ -22,7 +22,6 @@
  */
 interface WURFL_Xml_Interface
 {
-    
     /**
      * Parses the given file and returns a WURFL_Xml_ParsingResult
      * object
@@ -31,19 +30,19 @@ interface WURFL_Xml_Interface
      * @return WURFL_Xml_ParsingResult
      */
     public function parse($fileName);
-    
-    const ID = "id";
-    const USER_AGENT = "user_agent";
-    const FALL_BACK = "fall_back";
-    const ACTUAL_DEVICE_ROOT = "actual_device_root";
-    const SPECIFIC = "specific";
-    
-    const DEVICE = "device";
-    
-    const GROUP = "group";
-    const GROUP_ID = "id";
-    
-    const CAPABILITY = "capability";
-    const CAPABILITY_NAME = "name";
-    const CAPABILITY_VALUE = "value";
+
+    public const ID = "id";
+    public const USER_AGENT = "user_agent";
+    public const FALL_BACK = "fall_back";
+    public const ACTUAL_DEVICE_ROOT = "actual_device_root";
+    public const SPECIFIC = "specific";
+
+    public const DEVICE = "device";
+
+    public const GROUP = "group";
+    public const GROUP_ID = "id";
+
+    public const CAPABILITY = "capability";
+    public const CAPABILITY_NAME = "name";
+    public const CAPABILITY_VALUE = "value";
 }

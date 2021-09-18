@@ -30,7 +30,6 @@
 
 interface WURFL_Handlers_Filter
 {
-
     /**
      * The filter() method is used to classify devices based on patterns
      * in their user agents.

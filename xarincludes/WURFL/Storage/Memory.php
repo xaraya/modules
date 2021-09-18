@@ -22,22 +22,22 @@
  */
 class WURFL_Storage_Memory extends WURFL_Storage_Base
 {
-    const IN_MEMORY = "memory";
+    public const IN_MEMORY = "memory";
 
     protected $persistenceIdentifier = "MEMORY_PERSISTENCE_PROVIDER";
 
-    private $defaultParams = array(
-        "namespace" => "wurfl"
-    );
+    private $defaultParams = [
+        "namespace" => "wurfl",
+    ];
 
     private $namespace;
     private $map;
 
-    public function __construct($params=array())
+    public function __construct($params=[])
     {
         $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
         $this->namespace = $currentParams["namespace"];
-        $this->map = array();
+        $this->map = [];
     }
 
     public function save($objectId, $object, $expiration=null)

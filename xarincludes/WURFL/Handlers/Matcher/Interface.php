@@ -21,7 +21,6 @@
  */
 interface WURFL_Handlers_Matcher_Interface
 {
-    
     /**
      * Attempts to find a matching $needle in given $collection within the specified $tolerance
      * @param array $collection Collection of user agents

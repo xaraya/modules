@@ -23,7 +23,7 @@
 class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
 {
     private $found_version_info = false;
-    
+
     public function readNextElement()
     {
         $version = "";
@@ -56,8 +56,8 @@ class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
             }
         } // end of while
     }
-    
-    
+
+
     public function valid()
     {
         // We're finished with the version node, nothing else to do

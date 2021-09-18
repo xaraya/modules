@@ -22,21 +22,21 @@
  */
 class WURFL_Storage_File extends WURFL_Storage_Base
 {
-    private $defaultParams = array(
+    private $defaultParams = [
         "dir" => "/tmp",
         "expiration" => 0,
-    );
+    ];
 
     private $expire;
     private $root;
-    
-    const DIR = "dir";
+
+    public const DIR = "dir";
 
     protected $supports_secondary_caching = true;
-    
+
     public function __construct($params)
     {
-        $currentParams = is_array($params)? array_merge($this->defaultParams, $params): $this->defaultParams;
+        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
         $this->initialize($currentParams);
     }
 
@@ -85,7 +85,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
 
     public function save($key, $value, $expiration=null)
     {
-        $value = new StorageObject($value, (($expiration === null)? $this->expire: $expiration));
+        $value = new StorageObject($value, (($expiration === null) ? $this->expire : $expiration));
         $path = $this->keyPath($key);
         WURFL_FileUtils::write($path, $value);
     }
@@ -99,7 +99,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
 
     private function keyPath($key)
     {
-        return WURFL_FileUtils::join(array($this->root, $this->spread(md5($key))));
+        return WURFL_FileUtils::join([$this->root, $this->spread(md5($key))]);
     }
 
     public function spread($md5, $n = 2)

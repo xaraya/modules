@@ -21,5 +21,5 @@
         }
 
         // success
-        return array(); //true;
+        return []; //true;
     }

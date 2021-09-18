@@ -21,7 +21,7 @@ class Wurfl_RedirectBlockConfig extends Wurfl_RedirectBlock
      * Modify Function to the Blocks Admin
      * @param $data array containing title,content
      */
-    public function configmodify(array $data=array())
+    public function configmodify(array $data=[])
     {
         $data = $this->getContent();
         return $data;
@@ -31,15 +31,15 @@ class Wurfl_RedirectBlockConfig extends Wurfl_RedirectBlock
      * Updates the Block config from the Blocks Admin
      * @param $data array containing title,content
      */
-    public function update(array $data=array())
+    public function update(array $data=[])
     {
-        $vars = array();
-        
+        $vars = [];
+
         // fetch the array of redirects from input
-        if (!xarVar::fetch('redirects', 'array', $redirects, array(), xarVar::NOT_REQUIRED)) {
+        if (!xarVar::fetch('redirects', 'array', $redirects, [], xarVar::NOT_REQUIRED)) {
             return;
         }
-        $newredirects = array();
+        $newredirects = [];
         foreach ($redirects as $redirect) {
             // delete if flag is set not empty
             if (isset($redirect['delete']) && !empty($redirect['delete'])) {
@@ -60,11 +60,11 @@ class Wurfl_RedirectBlockConfig extends Wurfl_RedirectBlock
             if (!xarVar::fetch('redirecttemplate', 'pre:trim:str:1:', $redirecttemplate, '', xarVar::NOT_REQUIRED)) {
                 return;
             }
-            $newredirects[] = array(
+            $newredirects[] = [
                 'ua' => $redirectua,
                 'theme' => $redirecttheme,
                 'template' => $redirecttemplate,
-            );
+            ];
         }
         $vars['redirects'] = $newredirects;
         $this->setContent($vars);

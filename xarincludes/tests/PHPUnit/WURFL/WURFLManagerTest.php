@@ -12,18 +12,18 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
 {
     protected static $wurflManager;
 
-    const DEVICE_CAPABILITY_TEST_DATA_FILE = "../../resources/device-capability.yml";
-    const TEST_DATA_FILE = "../../resources/unit-test.yml";
+    public const DEVICE_CAPABILITY_TEST_DATA_FILE = "../../resources/device-capability.yml";
+    public const TEST_DATA_FILE = "../../resources/unit-test.yml";
 
-    const RESOURCES_DIR = "../../resources";
-    const WURFL_CONFIG_FILE = "../../resources/wurfl-config.xml";
-    const CACHE_DIR = "../../resources/cache";
+    public const RESOURCES_DIR = "../../resources";
+    public const WURFL_CONFIG_FILE = "../../resources/wurfl-config.xml";
+    public const CACHE_DIR = "../../resources/cache";
 
     private static $wurflManagerFactory;
 
     private static $persistenceStorage;
 
-    
+
     public static function setUpBeforeClass()
     {
         self::createWurflManger();
@@ -47,9 +47,9 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
                 ->wurflPatch($resourcesDir . "/android_patch.xml")
                 ->wurflPatch($resourcesDir . "/new_devices.xml");
 
-        $params = array(
+        $params = [
             "dir" => $cacheDir,
-            WURFL_Configuration_Config::EXPIRATION => 0);
+            WURFL_Configuration_Config::EXPIRATION => 0, ];
         $config->persistence("file", $params);
         self::$persistenceStorage = new WURFL_Storage_Memory($params);
         self::$wurflManagerFactory = new WURFL_WURFLManagerFactory($config, self::$persistenceStorage);
@@ -94,7 +94,7 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
 
     public function testGetListOfGroups()
     {
-        $actualGroups = array("product_info", "wml_ui", "chtml_ui", "xhtml_ui", "markup", "cache", "display", "image_format");
+        $actualGroups = ["product_info", "wml_ui", "chtml_ui", "xhtml_ui", "markup", "cache", "display", "image_format"];
         $listOfGroups = self::$wurflManager->getListOfGroups();
         foreach ($actualGroups as $groupId) {
             $this->assertContains($groupId, $listOfGroups);
@@ -118,7 +118,7 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
     public function testGetFallBackDevices($deviceId, $fallBacksId)
     {
         $fallBackDevices = self::$wurflManager->getFallBackDevices($deviceId);
-        return array_map(array($this, 'deviceId'), $fallBackDevices);
+        return array_map([$this, 'deviceId'], $fallBackDevices);
     }
 
     private function deviceId($device)
@@ -133,7 +133,7 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
      */
     public function fallBackDevicesIdProvider($deviceId)
     {
-        return array(array("blackberry_generic_ver2", array("blackberry_generic", "generic_xhtml", "generic")));
+        return [["blackberry_generic_ver2", ["blackberry_generic", "generic_xhtml", "generic"]]];
     }
 
     public static function userAgentDeviceIdsProvider()
@@ -144,6 +144,6 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
 
     public static function groupIdCapabilitiesNameProvider()
     {
-        return array(array("chtml_ui", array("chtml_display_accesskey", "emoji", "chtml_can_display_images_and_text_on_same_line", "chtml_displays_image_in_center", "imode_region", "chtml_make_phone_call_string", "chtml_table_support")));
+        return [["chtml_ui", ["chtml_display_accesskey", "emoji", "chtml_can_display_images_and_text_on_same_line", "chtml_displays_image_in_center", "imode_region", "chtml_make_phone_call_string", "chtml_table_support"]]];
     }
 }

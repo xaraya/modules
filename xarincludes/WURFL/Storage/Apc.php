@@ -22,15 +22,15 @@
  */
 class WURFL_Storage_Apc extends WURFL_Storage_Base
 {
-    const EXTENSION_MODULE_NAME = "apc";
-    private $currentParams = array(
+    public const EXTENSION_MODULE_NAME = "apc";
+    private $currentParams = [
         "namespace" => "wurfl",
-        "expiration" => 0
-    );
+        "expiration" => 0,
+    ];
 
     protected $is_volatile = true;
-    
-    public function __construct($params = array())
+
+    public function __construct($params = [])
     {
         if (is_array($params)) {
             array_merge($this->currentParams, $params);
@@ -46,7 +46,7 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
 
     public function save($objectId, $object, $expiration=null)
     {
-        $value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object, (($expiration === null)? $this->expire(): $expiration));
+        $value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object, (($expiration === null) ? $this->expire() : $expiration));
         if ($value === false) {
             throw new WURFL_Storage_Exception("Error saving variable in APC cache. Cache may be full.");
         }
@@ -55,7 +55,7 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
     public function load($objectId)
     {
         $value = apc_fetch($this->encode($this->apcNameSpace(), $objectId));
-        return ($value !== false)? $value : null;
+        return ($value !== false) ? $value : null;
     }
 
     public function remove($objectId)

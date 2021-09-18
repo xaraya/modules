@@ -24,7 +24,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Kindle implements WURFL_Request
 {
     public function normalize($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', 'Kindle Fire'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, ['Android', 'Kindle Fire'])) {
             $model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
             $version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
             if ($model !== null && $version !== null) {

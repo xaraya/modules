@@ -30,10 +30,10 @@
 
 class WURFL_WURFLManagerFactory
 {
-    const DEBUG = false;
-    const WURFL_LAST_MODIFICATION_TIME = "WURFL_LAST_MODIFICATION_TIME";
-    const WURFL_CURRENT_MODIFICATION_TIME = "WURFL_CURRENT_MODIFICATION_TIME";
-    
+    public const DEBUG = false;
+    public const WURFL_LAST_MODIFICATION_TIME = "WURFL_LAST_MODIFICATION_TIME";
+    public const WURFL_CURRENT_MODIFICATION_TIME = "WURFL_CURRENT_MODIFICATION_TIME";
+
     /**
      * WURFL Configuration
      * @var WURFL_Configuration_Config
@@ -51,7 +51,7 @@ class WURFL_WURFLManagerFactory
      * @var WURFL_Storage_Base
      */
     private $cacheStorage;
-    
+
     /**
      * Create a new WURFL Manager Factory
      * @param WURFL_Configuration_Config $wurflConfig
@@ -62,13 +62,13 @@ class WURFL_WURFLManagerFactory
     {
         $this->wurflConfig = $wurflConfig;
         WURFL_Configuration_ConfigHolder::setWURFLConfig($this->wurflConfig);
-        $this->persistenceStorage = $persistenceStorage? $persistenceStorage: WURFL_Storage_Factory::create($this->wurflConfig->persistence);
-        $this->cacheStorage = $cacheStorage? $cacheStorage: WURFL_Storage_Factory::create($this->wurflConfig->cache);
+        $this->persistenceStorage = $persistenceStorage ? $persistenceStorage : WURFL_Storage_Factory::create($this->wurflConfig->persistence);
+        $this->cacheStorage = $cacheStorage ? $cacheStorage : WURFL_Storage_Factory::create($this->wurflConfig->cache);
         if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
             $this->persistenceStorage->setCacheStorage($this->cacheStorage);
         }
     }
-    
+
     /**
      * Creates a new WURFLManager Object
      * @return WURFL_WURFLManager WURFL Manager object
@@ -81,10 +81,10 @@ class WURFL_WURFLManagerFactory
         if ($this->hasToBeReloaded()) {
             $this->reload();
         }
-        
+
         return $this->wurflManager;
     }
-    
+
     /**
      * Reload the WURFL Data into the persistence provider
      */
@@ -96,7 +96,7 @@ class WURFL_WURFLManagerFactory
         $mtime = filemtime($this->wurflConfig->wurflFile);
         $this->persistenceStorage->save(self::WURFL_LAST_MODIFICATION_TIME, $mtime);
     }
-    
+
     /**
      * Returns true if the WURFL is out of date or otherwise needs to be reloaded
      * @return bool
@@ -110,7 +110,7 @@ class WURFL_WURFLManagerFactory
         $currentModificationTime = filemtime($this->wurflConfig->wurflFile);
         return $currentModificationTime > $lastModificationTime;
     }
-    
+
     /**
      * Invalidates (clears) cache in the cache provider
      * @see WURFL_Cache_CacheProvider::clear()
@@ -119,7 +119,7 @@ class WURFL_WURFLManagerFactory
     {
         $this->cacheStorage->clear();
     }
-    
+
     /**
      * Clears the data in the persistence provider
      * @see WURFL_Storage_Base::clear()
@@ -129,7 +129,7 @@ class WURFL_WURFLManagerFactory
         $this->persistenceStorage->clear();
         $this->wurflManager = null;
     }
-    
+
     /**
      * Initializes the WURFL Manager Factory by assigning cache and persistence providers
      */
@@ -143,7 +143,7 @@ class WURFL_WURFLManagerFactory
         $requestFactory = new WURFL_Request_GenericRequestFactory();
         $this->wurflManager = new WURFL_WURFLManager($wurflService, $requestFactory);
     }
-    
+
     /**
      * Returns a WURFL device repository
      * @param WURFL_Storage_Base $persistenceStorage

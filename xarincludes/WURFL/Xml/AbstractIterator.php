@@ -22,21 +22,20 @@
  */
 abstract class WURFL_Xml_AbstractIterator implements Iterator
 {
-    
     /**
      * @var string filename with path to wurfl.xml or patch file
      */
     private $inputFile;
-    
+
     /**
      * @var XMLReader
      */
     protected $xmlReader;
-    
+
     protected $currentElement;
-    
+
     protected $currentElementId;
-    
+
     /**
      * Loads given XML $inputFile
      * @param string $inputFile
@@ -48,7 +47,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
         }
         $this->inputFile = WURFL_Xml_Utils::getXMLFile($inputFile);
     }
-    
+
     /**
      * Returns the current XML element
      * @return XMLReader Current XML element
@@ -57,7 +56,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
     {
         return $this->currentElement;
     }
-    
+
     /**
      * Prepare for next XML element
      */
@@ -65,7 +64,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
     {
         $this->currentElement = null;
     }
-    
+
     /**
      * Returns the current element id
      * @return string Current element id
@@ -74,7 +73,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
     {
         return $this->currentElementId;
     }
-    
+
     /**
      * Returns true if the current XML element is valid for processing
      * @return bool
@@ -86,7 +85,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
         }
         return $this->currentElement != null;
     }
-    
+
     /**
      * Open the input file and position cursor at the beginning
      * @see $inputFile
@@ -98,7 +97,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
         $this->currentElement = null;
         $this->currentElementId = null;
     }
-    
+
     /**
      * Gets the text value from the current node
      * @return string value
@@ -108,7 +107,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
         $this->xmlReader->read();
         return (string)$this->xmlReader->value;
     }
-    
+
     /**
      * Move the XMLReader pointer to the next element and read data
      */

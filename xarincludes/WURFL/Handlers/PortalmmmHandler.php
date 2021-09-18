@@ -30,7 +30,7 @@
 class WURFL_Handlers_PortalmmmHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "PORTALMMM";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -38,7 +38,7 @@ class WURFL_Handlers_PortalmmmHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "portalmmm");
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         return WURFL_Constants::NO_MATCH;

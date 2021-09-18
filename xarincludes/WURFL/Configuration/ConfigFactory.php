@@ -22,7 +22,6 @@
  */
 class WURFL_Configuration_ConfigFactory
 {
-    
     /**
      * @param string $configFilePath
      * @throws InvalidArgumentException
@@ -38,7 +37,7 @@ class WURFL_Configuration_ConfigFactory
         }
         return new WURFL_Configuration_ArrayConfig($configFilePath);
     }
-    
+
     /**
      * Returns true if the given $fileName is an XML Configuration
      * @param string $fileName
@@ -46,6 +45,6 @@ class WURFL_Configuration_ConfigFactory
      */
     private static function isXmlConfiguration($fileName)
     {
-        return (strcmp("xml", substr($fileName, - 3)) === 0)? true: false;
+        return (strcmp("xml", substr($fileName, - 3)) === 0) ? true : false;
     }
 }

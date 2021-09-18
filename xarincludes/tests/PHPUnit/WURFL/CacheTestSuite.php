@@ -11,8 +11,6 @@ require_once 'Cache/FileCacheProviderTest.php';
  */
 class WURFL_CacheTestSuite extends PHPUnit_Framework_TestSuite
 {
-    
-    
     /**
      * Constructs the test suite handler.
      */
@@ -22,7 +20,7 @@ class WURFL_CacheTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Cache_APCCacheProviderTest');
         $this->addTestSuite('WURFL_Cache_FileCacheProviderTest');
     }
-    
+
     /**
      * Creates the suite.
      */

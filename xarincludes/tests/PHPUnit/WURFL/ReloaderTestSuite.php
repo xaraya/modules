@@ -10,7 +10,6 @@ require_once 'Reloader/DefaultWURFLReloaderTest.php';
  */
 class WURFL_ReloaderTestSuite extends PHPUnit_Framework_TestSuite
 {
-    
     /**
      * Constructs the test suite handler.
      */
@@ -19,7 +18,7 @@ class WURFL_ReloaderTestSuite extends PHPUnit_Framework_TestSuite
         $this->setName('WURFLReloaderTestSuite');
         $this->addTestSuite('WURFL_Reloader_DefaultWURFLReloaderTest');
     }
-    
+
     /**
      * Creates the suite.
      */

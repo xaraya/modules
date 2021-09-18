@@ -21,7 +21,6 @@
  */
 class WURFL_CapabilityService
 {
-
     /**
      * @var WURFL_DeviceRepository
      */
@@ -30,7 +29,7 @@ class WURFL_CapabilityService
      * @var WURFL_Storage_Base
      */
     private $_cacheProvider;
-    
+
     /**
      * Initialize the CapabilityService
      *
@@ -94,7 +93,7 @@ class WURFL_CapabilityService
     {
         return $this->_deviceRepository->getCapabilitiesNameForGroup($groupID);
     }
-    
+
     /**
      * Return a list of fallback devices starting from
      * the given
@@ -116,7 +115,7 @@ class WURFL_CapabilityService
     public function getFallBackListForDevice($deviceID)
     {
         $devices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
-        $fallBacks = array();
+        $fallBacks = [];
         foreach ($devices as $device) {
             $fallBacks[] = $device->id;
         }

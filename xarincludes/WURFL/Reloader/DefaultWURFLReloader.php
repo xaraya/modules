@@ -31,7 +31,7 @@ class WURFL_Reloader_DefaultWURFLReloader implements WURFL_Reloader_Interface
         $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
         $wurflManagerFactory->create();
     }
-    
+
     private function fromFile($wurflConfigurationPath)
     {
         if ($this->endsWith($wurflConfigurationPath, ".xml")) {
@@ -39,7 +39,7 @@ class WURFL_Reloader_DefaultWURFLReloader implements WURFL_Reloader_Interface
         }
         return new WURFL_Configuration_ArrayConfig($wurflConfigurationPath);
     }
-    
+
     private function endsWith($haystack, $needle)
     {
         return strrpos($haystack, $needle) === strlen($haystack)-strlen($needle);

@@ -23,12 +23,11 @@
  */
 class WURFL_UserAgentHandlerChain
 {
-     
     /**
      * @var array of WURFL_Handlers_Handler objects
      */
-    private $_userAgentHandlers = array();
-    
+    private $_userAgentHandlers = [];
+
     /**
      * Adds a WURFL_Handlers_Handler to the chain
      *
@@ -44,7 +43,7 @@ class WURFL_UserAgentHandlerChain
         $this->_userAgentHandlers[] = $handler;
         return $this;
     }
-    
+
     /**
      * @return array An array of all the WURFL_Handlers_Handler objects
      */
@@ -52,7 +51,7 @@ class WURFL_UserAgentHandlerChain
     {
         return $this->_userAgentHandlers;
     }
-    
+
     /**
      * Adds the pair $userAgent, $deviceID to the clusters they belong to.
      *
@@ -65,9 +64,9 @@ class WURFL_UserAgentHandlerChain
         WURFL_Handlers_Utils::reset();
         $this->_userAgentHandlers[0]->filter($userAgent, $deviceID);
     }
-    
-    
-    
+
+
+
     /**
      * Return the the device id for the request
      *
@@ -79,7 +78,7 @@ class WURFL_UserAgentHandlerChain
         WURFL_Handlers_Utils::reset();
         return $this->_userAgentHandlers[0]->match($request);
     }
-    
+
     /**
      * Save the data from each WURFL_Handlers_Handler
      * @see WURFL_Handlers_Handler::persistData()
@@ -90,14 +89,14 @@ class WURFL_UserAgentHandlerChain
             $userAgentHandler->persistData();
         }
     }
-    
+
     /**
      * Collect data
      * @return array data
      */
     public function collectData()
     {
-        $userAgentsWithDeviceId = array();
+        $userAgentsWithDeviceId = [];
         foreach ($this->_userAgentHandlers as $userAgentHandler) {
             /**
              * @see WURFL_Handlers_Handler::getUserAgentsWithDeviceId()

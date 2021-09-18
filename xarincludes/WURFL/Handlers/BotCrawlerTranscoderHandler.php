@@ -30,7 +30,7 @@
 class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';
-    
+
     public function canHandle($userAgent)
     {
         foreach ($this->botCrawlerTranscoder as $key) {
@@ -41,7 +41,7 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
         return false;
     }
 
-    private $botCrawlerTranscoder = array(
+    private $botCrawlerTranscoder = [
         'bot',
         'crawler',
         'spider',
@@ -82,6 +82,6 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
         'servicemonitor',
         'httpunit',
         'hatena',
-        'ichiro'
-    );
+        'ichiro',
+    ];
 }

@@ -29,7 +29,7 @@
 class WURFL_Handlers_KonquerorHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "KONQUEROR";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {

@@ -30,7 +30,7 @@
 class WURFL_Handlers_ToshibaHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "TOSHIBA";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {

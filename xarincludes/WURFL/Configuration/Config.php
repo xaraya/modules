@@ -32,22 +32,22 @@
  */
 abstract class WURFL_Configuration_Config
 {
-    const WURFL = "wurfl";
-    const MAIN_FILE = "main-file";
-    const PATCHES = "patches";
-    const PATCH = "patch";
-    const CACHE = "cache";
-    const PERSISTENCE = "persistence";
-    const PROVIDER = "provider";
-    const PARAMS = "params";
-    const LOG_DIR = "logDir";
-    const ALLOW_RELOAD = "allow-reload";
-    const DIR = "dir";
-    const EXPIRATION = "expiration";
-    const MATCH_MODE = "match-mode";
-    const MATCH_MODE_PERFORMANCE = "performance";
-    const MATCH_MODE_ACCURACY = "accuracy";
-    
+    public const WURFL = "wurfl";
+    public const MAIN_FILE = "main-file";
+    public const PATCHES = "patches";
+    public const PATCH = "patch";
+    public const CACHE = "cache";
+    public const PERSISTENCE = "persistence";
+    public const PROVIDER = "provider";
+    public const PARAMS = "params";
+    public const LOG_DIR = "logDir";
+    public const ALLOW_RELOAD = "allow-reload";
+    public const DIR = "dir";
+    public const EXPIRATION = "expiration";
+    public const MATCH_MODE = "match-mode";
+    public const MATCH_MODE_PERFORMANCE = "performance";
+    public const MATCH_MODE_ACCURACY = "accuracy";
+
     /**
      * @var string Path to the configuration file
      */
@@ -71,11 +71,11 @@ abstract class WURFL_Configuration_Config
     /**
      * @var array
      */
-    protected $persistence = array();
+    protected $persistence = [];
     /**
      * @var array
      */
-    protected $cache = array();
+    protected $cache = [];
     /**
      * @var string
      */
@@ -85,7 +85,7 @@ abstract class WURFL_Configuration_Config
      * @var string
      */
     protected $matchMode = self::MATCH_MODE_ACCURACY;
-    
+
     /**
      * Creates a new WURFL Configuration object from $configFilePath
      * @param string $configFilePath Complete filename of configuration file
@@ -104,7 +104,7 @@ abstract class WURFL_Configuration_Config
      * Initialize the Configuration object
      */
     abstract protected function initialize();
-    
+
     /**
      * Magic Method
      *
@@ -115,7 +115,7 @@ abstract class WURFL_Configuration_Config
     {
         return $this->$name;
     }
-    
+
     /**
      * True if the engine is in High Performance mode
      * @return boolean
@@ -124,7 +124,7 @@ abstract class WURFL_Configuration_Config
     {
         return ($this->matchMode == self::MATCH_MODE_PERFORMANCE);
     }
-    
+
     public static function validMatchMode($mode)
     {
         if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
@@ -132,7 +132,7 @@ abstract class WURFL_Configuration_Config
         }
         return false;
     }
-    
+
     /**
      * @return string Config file including full path and filename
      */
@@ -140,7 +140,7 @@ abstract class WURFL_Configuration_Config
     {
         return $this->configFilePath;
     }
-    
+
     /**
      * @return string Config file directory
      */
@@ -148,7 +148,7 @@ abstract class WURFL_Configuration_Config
     {
         return $this->configurationFileDir;
     }
-    
+
     /**
      * @param string $confLocation
      * @return bool file exists
@@ -158,7 +158,7 @@ abstract class WURFL_Configuration_Config
         $fullFileLocation = $this->getFullPath($confLocation);
         return file_exists($fullFileLocation);
     }
-        
+
     /**
      * Return the full path
      *
@@ -173,8 +173,8 @@ abstract class WURFL_Configuration_Config
         if (realpath($fileName) && !(basename($fileName) === $fileName)) {
             return realpath($fileName);
         }
-        $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
-        
+        $fullName = join(DIRECTORY_SEPARATOR, [$this->configurationFileDir, $fileName]);
+
         if (file_exists($fullName)) {
             return $fullName;
         }

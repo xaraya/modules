@@ -14,8 +14,8 @@ $cacheDir = $resourcesDir.'/storage/cache';
 $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 $wurflConfig->wurflFile($resourcesDir.'/wurfl.zip');
 $wurflConfig->matchMode('performance');
-$wurflConfig->persistence('file', array('dir' => $persistenceDir));
-$wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
+$wurflConfig->persistence('file', ['dir' => $persistenceDir]);
+$wurflConfig->cache('file', ['dir' => $cacheDir, 'expiration' => 36000]);
 $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
 $wurflManager = $wurflManagerFactory->create();
 

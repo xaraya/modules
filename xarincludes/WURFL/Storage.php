@@ -29,17 +29,16 @@
  */
 interface WURFL_Storage
 {
-
     /**
      * @var string Key for storing data expiration times
      */
-    const EXPIRATION = "expiration";
-    const ONE_HOUR = 3600;
-    const ONE_DAY = 86400;
-    const ONE_WEEK = 604800;
-    const ONE_MONTH = 2592000;
-    const ONE_YEAR = 31556926;
-    const NEVER = 0;
+    public const EXPIRATION = "expiration";
+    public const ONE_HOUR = 3600;
+    public const ONE_DAY = 86400;
+    public const ONE_WEEK = 604800;
+    public const ONE_MONTH = 2592000;
+    public const ONE_YEAR = 31556926;
+    public const NEVER = 0;
 
 
     /**

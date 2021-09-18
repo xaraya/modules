@@ -26,7 +26,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request
     {
         return $this->chromeWithMajorVersion($userAgent);
     }
-    
+
     /**
      * Returns Google Chrome's Major version number
      * @param string $userAgent

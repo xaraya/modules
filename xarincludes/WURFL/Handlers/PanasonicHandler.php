@@ -30,7 +30,7 @@
 class WURFL_Handlers_PanasonicHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "PANASONIC";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {

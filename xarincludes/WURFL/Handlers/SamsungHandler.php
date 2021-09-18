@@ -30,28 +30,28 @@
 class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "SAMSUNG";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
-            || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['Samsung', 'SAMSUNG'])
+            || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ['SEC-', 'SPH', 'SGH', 'SCH']);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
+        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ["SEC-", "SAMSUNG-", "SCH"])) {
             $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-        } elseif (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
+        } elseif (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ["Samsung", "SPH", "SGH"])) {
             $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
         } else {
             $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {

@@ -21,7 +21,6 @@
  */
 class WURFL_CapabilitiesHolder
 {
-    
     /**
      * @var WURFL_Xml_ModelDevice
      */
@@ -34,7 +33,7 @@ class WURFL_CapabilitiesHolder
      * @var WURFL_Cache_CacheProvider
      */
     private $_cacheProvider;
-    
+
     /**
      * @param WURFL_Xml_ModelDevice $device
      * @param WURFL_DeviceRepository $deviceRepository
@@ -46,7 +45,7 @@ class WURFL_CapabilitiesHolder
         $this->_deviceRepository = $deviceRepository;
         $this->_cacheProvider = $cacheProvider;
     }
-    
+
     /**
      * Returns the value of a given capability name
      *
@@ -59,7 +58,7 @@ class WURFL_CapabilitiesHolder
         if (isset($this->_device->capabilities[$capabilityName])) {
             return $this->_device->capabilities[$capabilityName];
         }
-                
+
         $key = $this->_device->id . "_" . $capabilityName;
         $capabilityValue = $this->_cacheProvider->get($key);
         if (empty($capabilityValue)) {
@@ -73,7 +72,7 @@ class WURFL_CapabilitiesHolder
 
         return $capabilityValue;
     }
-    
+
     /**
      * Returns all the capabilities value of the current device as <capabilityName, capabilityValue>
      * @return array All capabilities

@@ -29,17 +29,17 @@
  */
 class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler
 {
-    const NEC_KGT_TOLERANCE = 2;
+    public const NEC_KGT_TOLERANCE = 2;
     protected $prefix = "NEC";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ['NEC-', 'KGT']);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "NEC-")) {

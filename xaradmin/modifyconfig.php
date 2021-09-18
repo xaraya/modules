@@ -28,7 +28,7 @@
             return;
         }
 
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'wurfl'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'wurfl']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
         $data['module_settings']->getItem();
 
@@ -70,7 +70,7 @@
                         break;
                 }
 
-                xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

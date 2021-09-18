@@ -30,13 +30,13 @@
 class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "WINDOWSPHONE";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'generic_ms_winmo6_5',
         'generic_ms_phone_os7',
         'generic_ms_phone_os7_5',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -44,13 +44,13 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         // Exact and Recovery match only
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) {

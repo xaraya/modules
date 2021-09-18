@@ -22,7 +22,7 @@
  */
 class WURFL_Storage_Mysql extends WURFL_Storage_Base
 {
-    private $defaultParams = array(
+    private $defaultParams = [
         "host" => "localhost",
         "port" => 3306,
         "db" => "wurfl_persistence_db",
@@ -30,8 +30,8 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         "pass" => "",
         "table" => "wurfl_object_cache",
         "keycolumn" => "key",
-        "valuecolumn" => "value"
-    );
+        "valuecolumn" => "value",
+    ];
 
     private $link;
     private $host;
@@ -92,7 +92,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
             mysql_free_result($test);
         }
     }
-    
+
     public function save($objectId, $object, $expiration=null)
     {
         $object=mysql_real_escape_string(serialize($object));

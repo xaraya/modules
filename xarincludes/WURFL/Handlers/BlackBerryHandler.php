@@ -31,8 +31,8 @@
 class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "BLACKBERRY";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         "2." => "blackberry_generic_ver2",
         "3.2" => "blackberry_generic_ver3_sub2",
         "3.3" => "blackberry_generic_ver3_sub30",
@@ -47,9 +47,9 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         "4.7" => "blackberry_generic_ver4_sub70",
         "4." => "blackberry_generic_ver4",
         "5." => "blackberry_generic_ver5",
-        "6." => "blackberry_generic_ver6"
-    );
-    
+        "6." => "blackberry_generic_ver6",
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -57,7 +57,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, "BlackBerry");
     }
-        
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/4')) {
@@ -69,7 +69,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         // No need for case insensitivity here, BlackBerry was fixed in the normalizer

@@ -21,8 +21,8 @@ $persistenceDir = $resourcesDir.'/storage/persistence';
 $cacheDir = $resourcesDir.'/storage/cache';
 $wurflConfig = new WURFL_Configuration_InMemoryConfig();
 $wurflConfig->wurflFile($resourcesDir.'/wurfl.zip');
-$wurflConfig->persistence('file', array('dir' => $persistenceDir));
-$wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
+$wurflConfig->persistence('file', ['dir' => $persistenceDir]);
+$wurflConfig->cache('file', ['dir' => $cacheDir, 'expiration' => 36000]);
 ///////////////////////////////////////////////////////////////
 // END WURFL API CONFIGURATION
 // Do not edit anything below this line
@@ -31,12 +31,12 @@ $wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
 class ScientiaMobileIntrospector_Controller
 {
     protected $action;
-    protected $http_headers = array();
-    protected $capabilities = array();
+    protected $http_headers = [];
+    protected $capabilities = [];
     protected $matcher_history = false;
-    protected $response = array(
+    protected $response = [
         'success' => false,
-    );
+    ];
     /**
      * @var ScientiaMobileIntrospector_HtmlPageRenderer
      */
@@ -66,7 +66,7 @@ class ScientiaMobileIntrospector_Controller
         // Execute action
         $this->{$this->action}();
     }
-    
+
     public function loadWurfl(WURFL_Configuration_Config $config)
     {
         $config->cache("null");
@@ -134,7 +134,7 @@ class ScientiaMobileIntrospector_Controller
                     break;
                 case 'matcher_history':
                     $value = strtolower($value);
-                    $this->matcher_history = ($value == 'true')? true: false;
+                    $this->matcher_history = ($value == 'true') ? true : false;
                     break;
             }
         }
@@ -151,7 +151,7 @@ class ScientiaMobileIntrospector_Controller
             if (strpos($header, ':') === false) {
                 continue;
             }
-            list($key, $value) = explode(':', $header, 2);
+            [$key, $value] = explode(':', $header, 2);
             // Convert RFC headers (User-Agent) to PHP format (HTTP_USER_AGENT)
             $key = 'HTTP_'.strtoupper(str_replace('-', '_', $key));
             $this->http_headers[$key] = trim($value);
@@ -180,7 +180,7 @@ class ScientiaMobileIntrospector_Controller
         $this->response['id'] = $device->id;
         $this->response['user_agent'] = $request->userAgent;
         if (!empty($this->capabilities)) {
-            $this->response['capabilities'] = array();
+            $this->response['capabilities'] = [];
             foreach ($this->capabilities as $capability) {
                 $this->response['capabilities'][$capability] = $device->getCapability($capability);
             }
@@ -196,16 +196,16 @@ class ScientiaMobileIntrospector_Controller
     {
         $info = $this->wurfl->getWURFLInfo();
         $config = WURFL_Configuration_ConfigHolder::getWURFLConfig();
-        $this->response['info'] = array(
+        $this->response['info'] = [
             'api' => 'PHP API',
             'api_version' => WURFL_Constants::API_VERSION,
             'mode' => 'high-'.$config->matchMode,
             'wurfl_version' => $info->version,
-            'loaded_patches' => is_array($config->wurflPatches)? implode(',', $config->wurflPatches): '',
+            'loaded_patches' => is_array($config->wurflPatches) ? implode(',', $config->wurflPatches) : '',
             'platform' => 'PHP '.PHP_VERSION,
             'app_server' => $_SERVER['SERVER_SOFTWARE'],
             'os' => php_uname(),
-        );
+        ];
         $this->response['success'] = true;
         $this->sendResponse();
     }
@@ -350,6 +350,6 @@ marketing_name</textarea></td>
 }
 
 $controller = new ScientiaMobileIntrospector_Controller($wurflConfig);
-set_exception_handler(array($controller, 'handleException'));
-set_error_handler(array($controller, 'handleError'));
+set_exception_handler([$controller, 'handleException']);
+set_error_handler([$controller, 'handleError']);
 $controller->processRequest($_REQUEST, $_SERVER);

@@ -30,7 +30,7 @@
 class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "SONY_ERICSSON";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -38,7 +38,7 @@ class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Sony');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {

@@ -25,13 +25,12 @@
  */
 class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interface
 {
-    
     /**
      * Instance of WURFL_Handlers_Matcher_LDMatcher
      * @var WURFL_Handlers_Matcher_LDMatcher
      */
     private static $instance;
-    
+
     /**
      * Returns an instance of the RISMatcher singleton
      * @return WURFL_Handlers_RISMatcher
@@ -67,7 +66,7 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
                 $match = $find;
                 $bestDistance = $distance;
             }
-            
+
             $cmp = strcmp($find, $needle);
             if ($cmp < 0) {
                 $low = $mid + 1;
@@ -77,7 +76,7 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
                 break;
             }
         }
-        
+
         if ($bestDistance < $tolerance) {
             return null;
         }

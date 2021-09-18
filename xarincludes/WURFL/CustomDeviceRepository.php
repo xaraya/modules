@@ -22,8 +22,8 @@
  */
 class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
 {
-    const WURFL_USER_AGENTS_CLASSIFIED = "WURFL_USER_AGENTS_CLASSIFIED";
-    
+    public const WURFL_USER_AGENTS_CLASSIFIED = "WURFL_USER_AGENTS_CLASSIFIED";
+
     /**
      * The persistence provider for this device repository
      * @var WURFL_Storage_Base
@@ -33,21 +33,21 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
      * @var array
      */
     private $deviceClassificationNames;
-    
+
     /**
      * Map of groupID => array(capabilitiesNames)
      * @var array
      */
-    private $_groupIDCapabilitiesMap = array();
+    private $_groupIDCapabilitiesMap = [];
     /**
      * @var array
      */
-    private $_capabilitiesName = array();
+    private $_capabilitiesName = [];
     /**
      * @var array
      */
-    private $_deviceCache = array();
-    
+    private $_deviceCache = [];
+
     /**
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
      * @param WURFL_Storage_Base $persistenceStorage
@@ -63,7 +63,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         $this->deviceClassificationNames = $deviceClassificationNames;
         $this->init();
     }
-    
+
     /**
      * Initializes this device repository by loading the base generic device capabilities names and group ID map
      */
@@ -84,17 +84,17 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         }
         return WURFL_Xml_Info::noInfo();
     }
-    
+
     public function getVersion()
     {
         return $this->getWURFLInfo()->version;
     }
-    
+
     public function getLastUpdated()
     {
         return $this->getWURFLInfo()->lastUpdated;
     }
-    
+
     /**
      * Returns a device for the given device ID
      *
@@ -114,39 +114,39 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         }
         return $this->_deviceCache[$deviceId];
     }
-    
+
     /**
      * Returns all devices in the repository
      * @return array
      */
     public function getAllDevices()
     {
-        $devices = array();
+        $devices = [];
         $devicesId = $this->getAllDevicesID();
         foreach ($devicesId as $deviceId) {
             $devices[] = $this->getDevice($deviceId);
         }
-        
+
         return $devices;
     }
-    
+
     /**
      * Returns an array of all the device ids
      * @return array
      */
     public function getAllDevicesID()
     {
-        $devicesId = array();
+        $devicesId = [];
         foreach ($this->deviceClassificationNames as $className) {
             $currentMap = $this->persistenceStorage->load($className);
             if (!is_array($currentMap)) {
-                $currentMap = array();
+                $currentMap = [];
             }
             $devicesId = array_merge($devicesId, array_values($currentMap));
         }
         return $devicesId;
     }
-    
+
     /**
      * Returns the value for the given $deviceId and $capabilityName
      *
@@ -175,7 +175,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         }
         return $capabilityValue;
     }
-    
+
     /**
      * Checks if the capability name specified by $capability is defined in the repository
      *
@@ -186,7 +186,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     {
         return in_array($capability, $this->_capabilitiesName);
     }
-    
+
     /**
      * Returns an associative array of capabilityName => capabilityValue for the given $deviceID
      *
@@ -196,8 +196,8 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     public function getAllCapabilitiesForDevice($deviceID)
     {
         $devices = array_reverse($this->getDeviceHierarchy($deviceID));
-        $capabilities = array();
-        
+        $capabilities = [];
+
         foreach ($devices as $device) {
             if (is_array($device->capabilities)) {
                 $capabilities = array_merge($capabilities, $device->capabilities);
@@ -205,7 +205,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         }
         return $capabilities;
     }
-    
+
     /**
      * Returns an array containing all devices from the root
      * device to the device of the given $deviceId
@@ -215,7 +215,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
      */
     public function getDeviceHierarchy($deviceId)
     {
-        $devices = array();
+        $devices = [];
         while (strcmp($deviceId, "root")) {
             $device = $this->getDevice($deviceId);
             $devices[] = $device;
@@ -223,7 +223,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         }
         return $devices;
     }
-    
+
     /**
      * Returns an array Of group IDs defined in wurfl
      *
@@ -233,7 +233,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
     {
         return array_keys($this->_groupIDCapabilitiesMap);
     }
-    
+
     /**
      * Returns an array of all capability names defined in
      * the given group ID
@@ -249,7 +249,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         }
         return $this->_groupIDCapabilitiesMap [$groupID];
     }
-    
+
     /**
      * Returns the group id that contains the given $capability
      *

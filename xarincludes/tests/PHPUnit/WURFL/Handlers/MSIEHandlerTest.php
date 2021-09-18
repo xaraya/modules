@@ -9,14 +9,14 @@ require_once dirname(__FILE__).'/../classautoloader.php';
 class WURFL_Handlers_MSIEHandlerTest extends PHPUnit_Framework_TestCase
 {
     private $msieHandler;
-    
+
     public function setUp()
     {
         $context = new WURFL_Context(null);
         $userAgentNormalizer = new WURFL_Request_UserAgentNormalizer_Specific_MSIE();
         $this->msieHandler = new WURFL_Handlers_MSIEHandler($context, $userAgentNormalizer);
     }
-    
+
     public function testShoudHandle()
     {
         $userAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)";

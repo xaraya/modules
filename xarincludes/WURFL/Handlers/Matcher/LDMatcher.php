@@ -28,13 +28,12 @@
  */
 class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface
 {
-    
     /**
      * Instance of WURFL_Handlers_Matcher_LDMatcher
      * @var WURFL_Handlers_Matcher_LDMatcher
      */
     private static $instance;
-    
+
     /**
      * Returns an instance of the LDMatcher singleton
      * @return WURFL_Handlers_LDMatcher
@@ -46,7 +45,7 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
         }
         return self::$instance;
     }
-    
+
     public function match(&$collection, $needle, $tolerance)
     {
         $best = $tolerance;

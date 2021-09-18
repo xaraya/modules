@@ -11,8 +11,6 @@ require_once 'Xml/DevicePatcherTest.php';
  */
 class WURFL_XmlTestSuite extends PHPUnit_Framework_TestSuite
 {
-    
-    
     /**
      * Constructs the test suite handler.
      */
@@ -22,7 +20,7 @@ class WURFL_XmlTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Xml_DeviceIteratorTest');
         $this->addTestSuite('WURFL_Xml_DevicePatcherTest');
     }
-    
+
     /**
      * Creates the suite.
      */

@@ -11,13 +11,13 @@ class WURFL_Storage_MemcacheTest extends PHPUnit_Framework_TestCase
 {
     public function testMultipleServerConfiguration()
     {
-        $params=array(
-            "host" => "127.0.0.1;127.0.0.2"
-        );
+        $params=[
+            "host" => "127.0.0.1;127.0.0.2",
+        ];
         $this->checkDeps();
         new WURFL_Storage_Memcache($params);
     }
-    
+
     public function testNeverToExpireItems()
     {
         $this->checkDeps();
@@ -30,31 +30,31 @@ class WURFL_Storage_MemcacheTest extends PHPUnit_Framework_TestCase
     public function testShouldRemoveTheExpiredItem()
     {
         $this->checkDeps();
-        $params = array(WURFL_Configuration_Config::EXPIRATION => 1);
+        $params = [WURFL_Configuration_Config::EXPIRATION => 1];
         $storage = new WURFL_Storage_Memcache($params);
         $storage->save("key", "value");
         sleep(2);
         $this->assertEquals(null, $storage->load("key"));
     }
 
-    
+
     public function testShouldClearAllItems()
     {
         $this->checkDeps();
-        $storage = new WURFL_Storage_Memcache(array());
+        $storage = new WURFL_Storage_Memcache([]);
         $storage->save("key1", "item1");
         $storage->save("key2", "item2");
         $storage->clear();
-        $this->assertThanNoElementsAreInStorage(array("key1", "key2"), $storage);
+        $this->assertThanNoElementsAreInStorage(["key1", "key2"], $storage);
     }
 
-    private function assertThanNoElementsAreInStorage($keys = array(), $storage)
+    private function assertThanNoElementsAreInStorage($keys = [], $storage)
     {
         foreach ($keys as $key) {
             $this->assertNull($storage->load($key));
         }
     }
-    
+
     private function checkDeps()
     {
         if (!extension_loaded('memcache')) {

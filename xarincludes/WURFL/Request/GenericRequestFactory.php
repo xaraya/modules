@@ -22,8 +22,6 @@
  */
 class WURFL_Request_GenericRequestFactory
 {
-
-
     /**
      * Creates Generic Request from the given HTTP Request (normally $_SERVER)
      * @param array $request HTTP Request
@@ -37,7 +35,7 @@ class WURFL_Request_GenericRequestFactory
 
         return new WURFL_Request_GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
     }
-    
+
     /**
      * Create a Generic Request from the given $userAgent
      * @param string $userAgent

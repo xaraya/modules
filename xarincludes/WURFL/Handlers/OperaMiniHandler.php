@@ -35,13 +35,13 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler
         return WURFL_Handlers_Utils::checkIfContains($userAgent, "Opera Mini");
     }
 
-    private $operaMinis = array(
+    private $operaMinis = [
         'Opera Mini/1' => 'generic_opera_mini_version1',
         'Opera Mini/2' => 'generic_opera_mini_version2',
         'Opera Mini/3' => 'generic_opera_mini_version3',
         'Opera Mini/4' => 'generic_opera_mini_version4',
         'Opera Mini/5' => 'generic_opera_mini_version5',
-    );
+    ];
 
     public function applyRecoveryMatch($userAgent)
     {

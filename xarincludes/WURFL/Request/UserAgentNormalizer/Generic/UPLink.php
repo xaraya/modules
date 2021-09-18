@@ -22,7 +22,6 @@
  */
 class WURFL_Request_UserAgentNormalizer_Generic_UPLink implements WURFL_Request_UserAgentNormalizer_Interface
 {
-
     /**
      * This method remove the "UP.Link" substring from user agent string.
      *

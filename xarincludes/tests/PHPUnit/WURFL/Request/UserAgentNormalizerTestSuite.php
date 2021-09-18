@@ -21,7 +21,6 @@ require_once 'UserAgentNormalizer/NovarraGoogleTranslatorTest.php';
  */
 class WURFL_Request_UserAgentNormalizerTestSuite extends PHPUnit_Framework_TestSuite
 {
-    
     /**
      * Constructs the test suite handler.
      */
@@ -40,7 +39,7 @@ class WURFL_Request_UserAgentNormalizerTestSuite extends PHPUnit_Framework_TestS
         $this->addTestSuite('WURFL_Request_UserAgentNormalizer_SerialNumbersTest');
         $this->addTestSuite('WURFL_Request_UserAgentNormalizer_NovarraGoogleTranslatorTest');
     }
-    
+
     /**
      * Creates the suite.
      */

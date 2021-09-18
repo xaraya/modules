@@ -29,17 +29,17 @@
  */
 class WURFL_Handlers_PantechHandler extends WURFL_Handlers_Handler
 {
-    const PANTECH_TOLERANCE = 5;
+    public const PANTECH_TOLERANCE = 5;
     protected $prefix = "PANTECH";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Pantech', 'PT-', 'PANTECH', 'PG-'));
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ['Pantech', 'PT-', 'PANTECH', 'PG-']);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Pantech")) {

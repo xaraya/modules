@@ -22,7 +22,7 @@
  */
 class WURFL_Request_UserAgentNormalizer_Specific_LGUPLUS implements WURFL_Request_UserAgentNormalizer_Interface
 {
-    const LGPLUS_PATTERN = "/Mozilla.*(Windows (?:NT|CE)).*(POLARIS|WV).*lgtelecom;.*;(.*);.*/";
+    public const LGPLUS_PATTERN = "/Mozilla.*(Windows (?:NT|CE)).*(POLARIS|WV).*lgtelecom;.*;(.*);.*/";
 
     public function normalize($userAgent)
     {

@@ -29,7 +29,7 @@
     $modversion['user']           = false;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Content';
-    $modversion['securityschema'] = array();
-    $modversion['dependency']     = array();
-    $modversion['dependencyinfo'] = array(
-                                          );
+    $modversion['securityschema'] = [];
+    $modversion['dependency']     = [];
+    $modversion['dependencyinfo'] = [
+                                          ];

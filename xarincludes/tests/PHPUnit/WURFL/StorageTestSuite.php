@@ -13,7 +13,6 @@ require_once 'Storage/MemoryTest.php';
  */
 class WURFL_StorageTestSuite extends PHPUnit_Framework_TestSuite
 {
-
     /**
      * Constructs the test suite handler.
      */

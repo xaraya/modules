@@ -25,12 +25,12 @@ class WURFL_Logger_NullLogger implements WURFL_Logger_Interface
     {
         //echo $message . "\n";
     }
-    
+
     public function debug($message)
     {
         //echo $message . "\n";
     }
-    
+
     public function info($message)
     {
     }

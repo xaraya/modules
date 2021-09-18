@@ -25,28 +25,28 @@ class WURFL_Constants
     private function __construct()
     {
     }
-    
-    const API_VERSION = "1.4.1";
-    
-    const GENERIC = "generic";
-    const GENERIC_XHTML = "generic_xhtml";
-    const GENERIC_WEB_BROWSER = "generic_web_browser";
-    const GENERIC_MOBILE = "generic_mobile";
 
-    const ACCEPT_HEADER_VND_WAP_XHTML_XML = "application/vnd.wap.xhtml+xml";
-    const ACCEPT_HEADER_XHTML_XML = "application/xhtml+xml";
-    const ACCEPT_HEADER_TEXT_HTML = "application/text+html";
+    public const API_VERSION = "1.4.1";
 
-    const UA = "UA";
-    
-    const MEMCACHE = "memcache";
-    const APC = "apc";
-    const FILE = "file";
-    const NULL_CACHE = "null";
-    const EACCELERATOR = "eaccelerator";
-    const SQLITE = "sqlite";
-    const MYSQL = "mysql";
+    public const GENERIC = "generic";
+    public const GENERIC_XHTML = "generic_xhtml";
+    public const GENERIC_WEB_BROWSER = "generic_web_browser";
+    public const GENERIC_MOBILE = "generic_mobile";
 
-    const NO_MATCH = null;
-    const RIS_DELIMITER = '---';
+    public const ACCEPT_HEADER_VND_WAP_XHTML_XML = "application/vnd.wap.xhtml+xml";
+    public const ACCEPT_HEADER_XHTML_XML = "application/xhtml+xml";
+    public const ACCEPT_HEADER_TEXT_HTML = "application/text+html";
+
+    public const UA = "UA";
+
+    public const MEMCACHE = "memcache";
+    public const APC = "apc";
+    public const FILE = "file";
+    public const NULL_CACHE = "null";
+    public const EACCELERATOR = "eaccelerator";
+    public const SQLITE = "sqlite";
+    public const MYSQL = "mysql";
+
+    public const NO_MATCH = null;
+    public const RIS_DELIMITER = '---';
 }

@@ -30,7 +30,7 @@
 class WURFL_Handlers_BenQHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "BENQ";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {

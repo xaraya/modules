@@ -22,15 +22,14 @@
  */
 class WURFL_Storage_Factory
 {
-    
     /**
      * @var array Default configuration
      */
-    private static $defaultConfiguration = array(
+    private static $defaultConfiguration = [
         "provider" => "memory",
-        "params" => array()
-    );
-    
+        "params" => [],
+    ];
+
     /**
      * Create a configuration based on the default configuration with the differences from $configuration
      * @param array $configuration
@@ -44,7 +43,7 @@ class WURFL_Storage_Factory
         $class = self::className($currentConfiguration);
         return new $class($currentConfiguration["params"]);
     }
-    
+
     /**
      * Return the Storage Provider Class name from the given $configuration by using its 'provider' element
      * @param array $configuration

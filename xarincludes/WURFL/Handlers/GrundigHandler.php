@@ -30,12 +30,12 @@
 class WURFL_Handlers_GrundigHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "GRUNDIG";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Grundig', 'GRUNDIG'));
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, ['Grundig', 'GRUNDIG']);
     }
 }

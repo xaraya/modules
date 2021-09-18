@@ -19,15 +19,15 @@ class WURFL_Storage_MemoryTest extends PHPUnit_Framework_TestCase
 
     public function testShouldClearAllItems()
     {
-        $storage = new WURFL_Storage_Memory(array());
+        $storage = new WURFL_Storage_Memory([]);
         $storage->save("key1", "item1");
         $storage->save("key2", "item2");
         $storage->clear();
-        
-        $this->assertThatNoElementsAreInCache(array("key1", "key2"), $storage);
+
+        $this->assertThatNoElementsAreInCache(["key1", "key2"], $storage);
     }
 
-    private function assertThatNoElementsAreInCache($keys = array(), $storage)
+    private function assertThatNoElementsAreInCache($keys = [], $storage)
     {
         foreach ($keys as $key) {
             $this->assertNull($storage->load($key));

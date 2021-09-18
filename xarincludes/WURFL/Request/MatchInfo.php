@@ -22,7 +22,6 @@
  */
 class WURFL_Request_MatchInfo
 {
-    
     /**
      * @var boolean Response was returned from cache
      */

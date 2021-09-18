@@ -36,21 +36,21 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase
     public function testShouldClearAllItems()
     {
         $this->checkDeps();
-        $storage = new WURFL_Storage_Apc(array());
+        $storage = new WURFL_Storage_Apc([]);
         $storage->save("key1", "item1");
         $storage->save("key2", "item2");
         $storage->clear();
 
-        $this->assertThanNoElementsAreInCache(array("key1", "key2"), $storage);
+        $this->assertThanNoElementsAreInCache(["key1", "key2"], $storage);
     }
 
-    private function assertThanNoElementsAreInCache($keys = array(), $storage)
+    private function assertThanNoElementsAreInCache($keys = [], $storage)
     {
         foreach ($keys as $key) {
             $this->assertNull($storage->load($key));
         }
     }
-    
+
     private function checkDeps()
     {
         if (!extension_loaded('apc') || @apc_cache_info() === false) {

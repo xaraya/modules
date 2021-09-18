@@ -17,7 +17,7 @@ function wurfl_admin_test()
     if (!xarSecurity::check('ManageWurfl')) {
         return;
     }
-    
+
     sys::import('modules.wurfl.wurfl_init');
     $wurflManager = wurfl_init();
     $data['wurflInfo'] = $wurflManager->getWURFLInfo();
@@ -28,7 +28,7 @@ function wurfl_admin_test()
     if (!xarVar::fetch('mode', 'str', $data['mode'], 'performance', xarVar::NOT_REQUIRED)) {
         return;
     }
-    $data['requestingDevice'] = xarMod::apiFunc('wurfl', 'user', 'get_device', array('ua' => $data['ua'], 'mode' => $data['mode']));
+    $data['requestingDevice'] = xarMod::apiFunc('wurfl', 'user', 'get_device', ['ua' => $data['ua'], 'mode' => $data['mode']]);
     if (empty($data['ua'])) {
         $data['ua'] = $_SERVER['HTTP_USER_AGENT'];
     }

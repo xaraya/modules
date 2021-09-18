@@ -25,7 +25,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Reques
     public function normalize($userAgent)
     {
         $userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
-        $skip_normalization = array(
+        $skip_normalization = [
             'Opera Mini',
             'Opera Mobi',
             'Opera Tablet',
@@ -33,7 +33,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Reques
             'Firefox',
             'UCWEB7',
             'NetFrontLifeBrowser/2.2',
-        );
+        ];
         if (!WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, $skip_normalization)) {
             $model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
             $version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);

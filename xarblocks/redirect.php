@@ -21,15 +21,15 @@ class Wurfl_RedirectBlock extends BasicBlock
     protected $show_preview        = true;
     protected $usershared          = true;
     protected $pageshared          = false;
-    
+
     public $redirects              = false;
-        
+
     public function init()
     {
         parent::init();
     }
 
-    
+
     public function upgrade($oldversion)
     {
         // grab existing content
@@ -43,7 +43,7 @@ class Wurfl_RedirectBlock extends BasicBlock
         }
         // replace content with updated array
         $this->content = $data;
-        
+
         return true;
     }
 }

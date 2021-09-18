@@ -25,10 +25,10 @@ $wurflConfig->wurflFile($resourcesDir.'/wurfl.xml');
 $wurflConfig->matchMode('performance');
 
 // Setup WURFL Persistence
-$wurflConfig->persistence('file', array('dir' => $persistenceDir));
+$wurflConfig->persistence('file', ['dir' => $persistenceDir]);
 
 // Setup Caching
-$wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
+$wurflConfig->cache('file', ['dir' => $cacheDir, 'expiration' => 36000]);
 
 // Create a WURFL Manager Factory from the WURFL Configuration
 $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);

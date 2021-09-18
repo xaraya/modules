@@ -22,8 +22,8 @@
  */
 class WURFL_Storage_Memcache extends WURFL_Storage_Base
 {
-    const EXTENSION_MODULE_NAME = "memcache";
-    const DEFAULT_PORT = 11211;
+    public const EXTENSION_MODULE_NAME = "memcache";
+    public const DEFAULT_PORT = 11211;
 
     /**
      * @var memcache
@@ -34,16 +34,16 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
     private $expiration;
     private $namespace;
 
-    private $defaultParams = array(
+    private $defaultParams = [
         "host" => "127.0.0.1",
         "port" => "11211",
         "namespace" => "wurfl",
-        "expiration" => 0
-    );
-    
+        "expiration" => 0,
+    ];
+
     protected $is_volatile = true;
-    
-    public function __construct($params=array())
+
+    public function __construct($params=[])
     {
         $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
         $this->toFields($currentParams);
@@ -88,13 +88,13 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
 
     public function save($objectId, $object, $expiration=null)
     {
-        return $this->memcache->set($this->encode($this->namespace, $objectId), $object, 0, (($expiration === null)? $this->expiration: $expiration));
+        return $this->memcache->set($this->encode($this->namespace, $objectId), $object, 0, (($expiration === null) ? $this->expiration : $expiration));
     }
 
     public function load($objectId)
     {
         $value = $this->memcache->get($this->encode($this->namespace, $objectId));
-        return ($value !== false)? $value: null;
+        return ($value !== false) ? $value : null;
     }
 
 

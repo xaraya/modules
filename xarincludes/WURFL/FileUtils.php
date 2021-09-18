@@ -21,7 +21,6 @@
  */
 class WURFL_FileUtils
 {
-    
     /**
      * Create a directory structure recursiveley
      * @param string $path
@@ -31,7 +30,7 @@ class WURFL_FileUtils
     {
         @mkdir($path, $mode, true);
     }
-    
+
     /**
      * Recursiely remove all files from the given directory NOT including the
      * specified directory itself
@@ -42,7 +41,7 @@ class WURFL_FileUtils
         $files = scandir($path);
         array_shift($files); // remove '.' from array
         array_shift($files); // remove '..' from array
-        
+
         foreach ($files as $file) {
             $file = $path . DIRECTORY_SEPARATOR . $file;
             if (is_dir($file)) {
@@ -53,7 +52,7 @@ class WURFL_FileUtils
             }
         }
     }
-    
+
     /**
      * Alias to rmdirContents()
      * @param string $path Directory to be cleaned out
@@ -63,7 +62,7 @@ class WURFL_FileUtils
     {
         self::rmdirContents($path);
     }
-    
+
     /**
      * Returns the unserialized contents of the given $file
      * @param string $file filename
@@ -81,7 +80,7 @@ class WURFL_FileUtils
         }
         return $value;
     }
-    
+
     /**
      * Serializes and saves $data in the file $path and sets the last modified time to $mtime
      * @param string $path filename to save data in
@@ -94,18 +93,18 @@ class WURFL_FileUtils
             self::mkdir(dirname($path), 0755, true);
         }
         if (file_put_contents($path, serialize($data), LOCK_EX)) {
-            $mtime = ($mtime > 0)? $mtime: time();
+            $mtime = ($mtime > 0) ? $mtime : time();
             @chmod($path, 0777);
             @touch($path, $mtime);
         }
     }
-    
+
     /**
      * Combines given array of $strings into a proper filesystem path
      * @param array $strings Array of (string)path members
      * @return string Proper filesystem path
      */
-    public static function join($strings = array())
+    public static function join($strings = [])
     {
         return implode(DIRECTORY_SEPARATOR, $strings);
     }

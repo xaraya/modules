@@ -22,27 +22,27 @@
  */
 class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
 {
-    private $capabilitiesToSelect = array();
+    private $capabilitiesToSelect = [];
     private $filterCapabilities;
-    
+
     /**
      * @param string $inputFile XML file to be processed
      * @param array $capabilities Capabiities to process
      */
-    public function __construct($inputFile, $capabilities = array())
+    public function __construct($inputFile, $capabilities = [])
     {
         parent::__construct($inputFile);
         foreach ($capabilities as $groupId => $capabilityNames) {
             $trimmedCapNames = $this->removeSpaces($capabilityNames);
-            $capabilitiesAsArray = array();
+            $capabilitiesAsArray = [];
             if (strlen($trimmedCapNames)!= 0) {
                 $capabilitiesAsArray = explode(',', $trimmedCapNames);
             }
             $this->capabilitiesToSelect [$groupId] = $capabilitiesAsArray;
         }
-        $this->filterCapabilities = empty($this->capabilitiesToSelect)? false : true;
+        $this->filterCapabilities = empty($this->capabilitiesToSelect) ? false : true;
     }
-    
+
     /**
      * Removes spaces from the given $subject
      * @param string $subject
@@ -52,53 +52,53 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
     {
         return str_replace(" ", "", $subject);
     }
-    
+
     public function readNextElement()
     {
         $deviceId = $groupId = $userAgent = $fallBack = $actualDeviceRoot = $specific = $groupIDCapabilitiesMap = null;
-        
+
         while ($this->xmlReader->read()) {
             $nodeName = $this->xmlReader->name;
             switch ($this->xmlReader->nodeType) {
                 case XMLReader::ELEMENT:
                     switch ($nodeName) {
                         case WURFL_Xml_Interface::DEVICE:
-                            $groupIDCapabilitiesMap = array();
-                            
+                            $groupIDCapabilitiesMap = [];
+
                             $deviceId = $this->xmlReader->getAttribute(WURFL_Xml_Interface::ID);
                             $userAgent = $this->xmlReader->getAttribute(WURFL_Xml_Interface::USER_AGENT);
                             $fallBack = $this->xmlReader->getAttribute(WURFL_Xml_Interface::FALL_BACK);
                             $actualDeviceRoot = $this->xmlReader->getAttribute(WURFL_Xml_Interface::ACTUAL_DEVICE_ROOT);
                             $specific = $this->xmlReader->getAttribute(WURFL_Xml_Interface::SPECIFIC);
-                            $currentCapabilityNameValue = array();
+                            $currentCapabilityNameValue = [];
                             if ($this->xmlReader->isEmptyElement) {
                                 $this->currentElement = new WURFL_Xml_ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific);
                                 break 3;
                             }
                             break;
-                        
+
                         case WURFL_Xml_Interface::GROUP:
                             $groupId = $this->xmlReader->getAttribute(WURFL_Xml_Interface::GROUP_ID);
                             if ($this->needToReadGroup($groupId)) {
-                                $groupIDCapabilitiesMap[$groupId] = array();
+                                $groupIDCapabilitiesMap[$groupId] = [];
                             } else {
                                 $this->moveToGroupEndElement();
                                 break 2;
                             }
                             break;
-                        
+
                         case WURFL_Xml_Interface::CAPABILITY:
-                            
+
                             $capabilityName = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_NAME);
                             if ($this->neededToReadCapability($groupId, $capabilityName)) {
                                 $capabilityValue = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_VALUE);
                                 $currentCapabilityNameValue[$capabilityName] = $capabilityValue;
                                 $groupIDCapabilitiesMap[$groupId][$capabilityName] = $capabilityValue;
                             }
-                            
+
                             break;
                     }
-                    
+
                     break;
                 case XMLReader::END_ELEMENT:
                     if ($nodeName == WURFL_Xml_Interface::DEVICE) {
@@ -108,7 +108,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
             }
         } // end of while
     }
-    
+
     /**
      * Returns true if the group element needs to be processed
      * @param string $groupId
@@ -121,7 +121,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
         }
         return true;
     }
-    
+
     /**
      * Returns true if the given $groupId's $capabilityName needs to be read
      * @param string $groupId
@@ -144,14 +144,14 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
         }
         return true;
     }
-    
+
     private function moveToGroupEndElement()
     {
         while (!$this->groupEndElement()) {
             $this->xmlReader->read();
         }
     }
-    
+
     /**
      * Returns true if the current element is the ending tag of a group
      * @return bool

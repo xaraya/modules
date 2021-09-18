@@ -12,7 +12,7 @@
  * Check a user agent identiication against the requesting device
  *
  */
-function wurfl_userapi_check_device($args=array())
+function wurfl_userapi_check_device($args=[])
 {
     if (empty($args['agent'])) {
         $args['agent'] = 'generic';
@@ -20,7 +20,7 @@ function wurfl_userapi_check_device($args=array())
     if (empty($args['mode'])) {
         $args['mode'] = 'performance';
     }
-    $requestingDevice = xarMod::apiFunc('wurfl', 'user', 'get_device', array('mode' => $args['mode']));
+    $requestingDevice = xarMod::apiFunc('wurfl', 'user', 'get_device', ['mode' => $args['mode']]);
     $device_id = $requestingDevice->id;
     $check = preg_match("/".$args['agent']."/i", $device_id);
     return $check;

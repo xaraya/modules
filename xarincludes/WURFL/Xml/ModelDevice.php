@@ -22,7 +22,6 @@
  */
 class WURFL_Xml_ModelDevice
 {
-
     /**
      * @var string WURFL device ID
      */
@@ -46,12 +45,12 @@ class WURFL_Xml_ModelDevice
     /**
      * @var array Array of capabilities
      */
-    private $capabilities = array();
+    private $capabilities = [];
     /**
      * @var array Mapping of group IDs to capability names
      */
-    private $groupIdCapabilitiesNameMap = array();
-    
+    private $groupIdCapabilitiesNameMap = [];
+
     /**
      * Creates a WURFL Device based on the provided parameters
      * @param string $id WURFL device ID
@@ -75,7 +74,7 @@ class WURFL_Xml_ModelDevice
             }
         }
     }
- 
+
     /**
      * Magic getter method
      * @param string $name Name of property to get
@@ -85,7 +84,7 @@ class WURFL_Xml_ModelDevice
     {
         return $this->$name;
     }
-    
+
     /**
      * Returns an array of the device capabilities
      * @return array Capabilities
@@ -94,7 +93,7 @@ class WURFL_Xml_ModelDevice
     {
         return $this->capabilities;
     }
-    
+
     /**
      * Returns the group ID to capability name map
      * @return array Group ID to capability name map
@@ -103,7 +102,7 @@ class WURFL_Xml_ModelDevice
     {
         return $this->groupIdCapabilitiesNameMap;
     }
-    
+
     /**
      * Returns the value of the given $capabilityName
      * @param string $capabilityName
@@ -116,7 +115,7 @@ class WURFL_Xml_ModelDevice
         }
         return null;
     }
-    
+
     /**
      * Returns true if the capability exists
      * @param string $capabilityName
@@ -126,14 +125,14 @@ class WURFL_Xml_ModelDevice
     {
         return array_key_exists($capabilityName, $this->capabilities);
     }
-    
+
     /**
      * Returns the capabilities by group name
      * @return array capabilities
      */
     public function getGroupIdCapabilitiesMap()
     {
-        $groupIdCapabilitiesMap = array();
+        $groupIdCapabilitiesMap = [];
         foreach ($this->groupIdCapabilitiesNameMap as $groupId => $capabilitiesName) {
             foreach ($capabilitiesName as $capabilityName) {
                 $groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->capabilities[$capabilityName];
@@ -141,7 +140,7 @@ class WURFL_Xml_ModelDevice
         }
         return $groupIdCapabilitiesMap;
     }
-    
+
     /**
      * Returns true if $groupId is defined
      * @param string $groupId

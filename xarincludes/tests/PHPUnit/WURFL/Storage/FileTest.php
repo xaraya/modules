@@ -9,7 +9,7 @@ require_once dirname(__FILE__).'/../classautoloader.php';
  */
 class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
 {
-    const STORAGE_DIR = "../../../resources/storage";
+    public const STORAGE_DIR = "../../../resources/storage";
 
     public function setUp()
     {
@@ -24,9 +24,9 @@ class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testShouldTryToCreateTheStorage()
     {
         $cachepath = $this->realpath(self::STORAGE_DIR . "/cache");
-        $params = array(
-            "dir" => $cachepath
-        );
+        $params = [
+            "dir" => $cachepath,
+        ];
         new WURFL_Storage_File($params);
         $this->assertStorageDirectoryIsCreated($cachepath);
         WURFL_FileUtils::rmdir($cachepath);
@@ -44,9 +44,9 @@ class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
 
     public function testNeverToExpireItems()
     {
-        $params = array(
+        $params = [
             "dir" => $this->storageDir(),
-            WURFL_Configuration_Config::EXPIRATION => 0);
+            WURFL_Configuration_Config::EXPIRATION => 0, ];
 
         $storage = new WURFL_Storage_File($params);
 
@@ -57,9 +57,9 @@ class WURFL_Storage_FileTest extends PHPUnit_Framework_TestCase
 
     public function testShouldRemoveTheExpiredItem()
     {
-        $params = array(
+        $params = [
             "dir" => $this->storageDir(),
-            WURFL_Configuration_Config::EXPIRATION => 1);
+            WURFL_Configuration_Config::EXPIRATION => 1, ];
 
         $storage = new WURFL_Storage_File($params);
 

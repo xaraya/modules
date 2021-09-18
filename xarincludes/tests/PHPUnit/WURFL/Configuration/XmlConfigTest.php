@@ -17,18 +17,18 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($config->persistence);
 
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
-        $this->assertEquals(array(dirname(__FILE__) . DIRECTORY_SEPARATOR . "browsers.xml"), $config->wurflPatches);
+        $this->assertEquals([dirname(__FILE__) . DIRECTORY_SEPARATOR . "browsers.xml"], $config->wurflPatches);
 
         $this->assertEquals(true, $config->allowReload);
 
         $cacheDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . "cache";
         $persistence = $config->persistence;
         $this->assertEquals("file", $persistence ["provider"]);
-        $this->assertEquals(array(WURFL_Configuration_Config::DIR => $cacheDir), $persistence ["params"]);
+        $this->assertEquals([WURFL_Configuration_Config::DIR => $cacheDir], $persistence ["params"]);
 
         $cache = $config->cache;
         $this->assertEquals("file", $cache ["provider"]);
-        $this->assertEquals(array(WURFL_Configuration_Config::DIR => $cacheDir, WURFL_Configuration_Config::EXPIRATION => 36000), $cache ["params"]);
+        $this->assertEquals([WURFL_Configuration_Config::DIR => $cacheDir, WURFL_Configuration_Config::EXPIRATION => 36000], $cache ["params"]);
     }
 
 
@@ -39,20 +39,20 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($config->persistence);
 
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
-        $this->assertEquals(array(dirname(__FILE__) . DIRECTORY_SEPARATOR . "browsers.xml"), $config->wurflPatches);
+        $this->assertEquals([dirname(__FILE__) . DIRECTORY_SEPARATOR . "browsers.xml"], $config->wurflPatches);
 
         $this->assertEquals(true, $config->allowReload);
 
         $persistence = $config->persistence;
 
         $this->assertEquals("apc", $persistence ["provider"]);
-        $this->assertEquals(array("namespace" => "wurflpersist"), $persistence ["params"]);
+        $this->assertEquals(["namespace" => "wurflpersist"], $persistence ["params"]);
 
         $cache = $config->cache;
         $this->assertEquals("apc", $cache ["provider"]);
-        $this->assertEquals(array(
+        $this->assertEquals([
             "namespace" => "wurfl",
-            "expiration" => 86400), $cache ["params"]);
+            "expiration" => 86400, ], $cache ["params"]);
     }
 
 
@@ -62,12 +62,12 @@ class WURFL_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
         $config = new WURFL_Configuration_XmlConfig($configPath);
 
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
-        $this->assertEquals(array(), $config->wurflPatches);
+        $this->assertEquals([], $config->wurflPatches);
         $this->assertEquals(false, $config->allowReload);
 
         $persistence = $config->persistence;
         $this->assertEquals("apc", $persistence ["provider"]);
-        $this->assertEquals(array("namespace" => "wurflpersist"), $persistence ["params"]);
+        $this->assertEquals(["namespace" => "wurflpersist"], $persistence ["params"]);
 
         $cache = $config->cache;
         $this->assertTrue(empty($cache));

@@ -30,11 +30,11 @@
 class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "KDDI";
-    
-    public static $constantIDs = array(
-        'opwv_v62_generic'
-    );
-    
+
+    public static $constantIDs = [
+        'opwv_v62_generic',
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -42,7 +42,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'KDDI-');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
@@ -52,7 +52,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         return "opwv_v62_generic";

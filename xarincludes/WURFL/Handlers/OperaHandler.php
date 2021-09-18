@@ -29,8 +29,8 @@
 class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "OPERA";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'opera',
         'opera_7',
         'opera_8',
@@ -38,8 +38,8 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
         'opera_10',
         'opera_11',
         'opera_12',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
@@ -47,14 +47,14 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $opera_idx = strpos($userAgent, 'Opera');
         $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $opera_idx);
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         $opera_version = self::getOperaVersion($userAgent);
@@ -68,7 +68,7 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
         }
         return 'opera';
     }
-    
+
     public static function getOperaVersion($userAgent)
     {
         if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {

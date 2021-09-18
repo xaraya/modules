@@ -28,33 +28,32 @@
  */
 abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Handlers_Matcher
 {
-    
     /**
      * The next User Agent Handler
      * @var WURFL_Handlers_Handler
      */
     private $nextHandler;
-    
+
     /**
      * @var WURFL_Request_UserAgentNormalizer
      */
     private $userAgentNormalizer;
-    
+
     /**
      * @var string Prefix for this User Agent Handler
      */
     protected $prefix;
-    
+
     /**
      * @var array Array of user agents with device IDs
      */
     protected $userAgentsWithDeviceID;
-    
+
     /**
      * @var WURFL_Storage_Base
      */
     protected $persistenceProvider;
-    
+
     /**
      * @var WURFL_Logger_Interface
      */
@@ -63,12 +62,12 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @var WURFL_Logger_Interface
      */
     protected $undetectedDeviceLogger;
-    
+
     /**
      * @var array Array of WURFL IDs that are hard-coded in this matcher
      */
-    public static $constantIDs = array();
-    
+    public static $constantIDs = [];
+
     /**
      * @param WURFL_Context $wurflContext
      * @param WURFL_Request_UserAgentNormalizer_Interface $userAgentNormalizer
@@ -82,11 +81,11 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         $this->logger = $wurflContext->logger;
         //$this->undtectedDeviceLogger = $wurflContext->undetectedDeviceLogger;
-        
+
 
         $this->persistenceProvider = $wurflContext->persistenceProvider;
     }
-    
+
     /**
      * Sets the next Handler
      *
@@ -96,7 +95,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     {
         $this->nextHandler = $handler;
     }
-    
+
     /**
      * Alias for getPrefix()
      * @return string Prefix
@@ -106,14 +105,14 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     {
         return $this->getPrefix();
     }
-    
+
     /**
      * Returns true if this handler can handle the given $userAgent
      * @param string $userAgent
      * @return bool
      */
     abstract public function canHandle($userAgent);
-    
+
     //********************************************************
     //
     //	 Classification of the User Agents
@@ -136,7 +135,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return null;
     }
-    
+
     /**
      * Updates the map containing the classified user agents.  These are stored in the associative
      * array userAgentsWithDeviceID like user_agent => deviceID.
@@ -152,7 +151,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     {
         $this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
     }
-    
+
     /**
      * Normalizes the given $userAgent using this handler's User Agent Normalizer.
      * If you need to normalize the user agent you need to override the function in
@@ -166,7 +165,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     {
         return $this->userAgentNormalizer->normalize($userAgent);
     }
-    
+
     //********************************************************
     //	Persisting The classified user agents
     //
@@ -182,7 +181,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
             $this->persistenceProvider->save($this->getPrefix(), $this->userAgentsWithDeviceID);
         }
     }
-    
+
     /**
      * Returns a list of User Agents with their Device IDs
      * @return array User agents and device IDs
@@ -194,7 +193,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return $this->userAgentsWithDeviceID;
     }
-    
+
     //********************************************************
     //	Matching
     //
@@ -212,14 +211,14 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         if ($this->canHandle($userAgent)) {
             return $this->applyMatch($request);
         }
-        
+
         if (isset($this->nextHandler)) {
             return $this->nextHandler->match($request);
         }
-        
+
         return WURFL_Constants::GENERIC;
     }
-    
+
     /**
      * Template method to apply matching system to user agent
      *
@@ -231,28 +230,28 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         $class_name = get_class($this);
         $request->matchInfo->matcher = $class_name;
         $start_time = microtime(true);
-        
+
         $userAgent = $this->normalizeUserAgent($request->userAgent);
         $request->matchInfo->normalized_user_agent = $userAgent;
         $this->logger->debug("START: Matching For  " . $userAgent);
-        
+
         // Get The data associated with this current handler
         $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
         if (!is_array($this->userAgentsWithDeviceID)) {
-            $this->userAgentsWithDeviceID = array();
+            $this->userAgentsWithDeviceID = [];
         }
         $deviceID = null;
         // Start with an Exact match
         $request->matchInfo->matcher_history .= "$class_name(exact),";
         $request->matchInfo->match_type = 'exact';
         $deviceID = $this->applyExactMatch($userAgent);
-        
+
         // Try with the conclusive Match
         if ($this->isBlankOrGeneric($deviceID)) {
             $request->matchInfo->matcher_history .= "$class_name(conclusive),";
             $this->logger->debug("$this->prefix :Applying Conclusive Match for ua: $userAgent");
             $deviceID = $this->applyConclusiveMatch($userAgent);
-        
+
             // Try with recovery match
             if ($this->isBlankOrGeneric($deviceID)) {
                 // Log the ua and the ua profile
@@ -261,14 +260,14 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
                 $request->matchInfo->matcher_history .= "$class_name(recovery),";
                 $this->logger->debug("$this->prefix :Applying Recovery Match for ua: $userAgent");
                 $deviceID = $this->applyRecoveryMatch($userAgent);
-                
+
                 // Try with catch all recovery Match
                 if ($this->isBlankOrGeneric($deviceID)) {
                     $request->matchInfo->match_type = 'recovery-catchall';
                     $request->matchInfo->matcher_history .= "$class_name(recovery-catchall),";
                     $this->logger->debug("$this->prefix :Applying Catch All Recovery Match for ua: $userAgent");
                     $deviceID = $this->applyRecoveryCatchAllMatch($userAgent);
-                    
+
                     // All attempts to match have failed
                     if ($this->isBlankOrGeneric($deviceID)) {
                         $request->matchInfo->match_type = 'none';
@@ -294,7 +293,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     {
         return ($deviceID === null || strcmp($deviceID, "generic") === 0 || strlen(trim($deviceID)) == 0);
     }
-    
+
     public function applyExactMatch($userAgent)
     {
         if (array_key_exists($userAgent, $this->userAgentsWithDeviceID)) {
@@ -302,7 +301,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     /**
      * Attempt to find a conclusive match for the given $userAgent
      * @param string $userAgent
@@ -317,7 +316,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     /**
      * Find a matching WURFL device from the given $userAgent. Override this method to give an alternative way to do the matching
      *
@@ -329,7 +328,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
         return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
-    
+
     public function getDeviceIDFromRIS($userAgent, $tolerance)
     {
         $match = WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
@@ -338,7 +337,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function getDeviceIDFromLD($userAgent, $tolerance=null)
     {
         $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
@@ -347,7 +346,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     /**
      * Applies Recovery Match
      * @param string $userAgent
@@ -356,7 +355,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     public function applyRecoveryMatch($userAgent)
     {
     }
-    
+
     /**
      * Applies Catch-All match
      * @param string $userAgent
@@ -369,14 +368,14 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         $mobile = WURFL_Handlers_Utils::isMobileBrowser($userAgent);
         $desktop = WURFL_Handlers_Utils::isDesktopBrowser($userAgent);
-        
+
         if (!$desktop) {
             $deviceId = WURFL_Handlers_Utils::getMobileCatchAllId($userAgent);
             if ($deviceId !== WURFL_Constants::NO_MATCH) {
                 return $deviceId;
             }
         }
-        
+
         if ($mobile) {
             return WURFL_Constants::GENERIC_MOBILE;
         }
@@ -385,7 +384,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         return WURFL_Constants::GENERIC;
     }
-    
+
     /**
      * Returns the prefix for this Handler, like BLACKBERRY_DEVICEIDS for the
      * BlackBerry Handler.  The "BLACKBERRY_" portion comes from the individual
@@ -396,7 +395,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     {
         return $this->prefix . "_DEVICEIDS";
     }
-    
+
     public function getNiceName()
     {
         $class_name = get_class($this);
@@ -404,7 +403,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         preg_match('/^WURFL_Handlers_(.+)Handler$/', $class_name, $matches);
         return $matches[1];
     }
-    
+
     /**
      * Returns true if given $deviceId exists
      * @param string $deviceId

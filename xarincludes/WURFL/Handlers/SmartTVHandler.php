@@ -30,26 +30,26 @@
 class WURFL_Handlers_SmartTVHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "SMARTTV";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'generic_smarttv_browser',
         'generic_smarttv_googletv_browser',
         'generic_smarttv_appletv_browser',
         'generic_smarttv_boxeebox_browser',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         return WURFL_Handlers_Utils::isSmartTV($userAgent);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         // TODO: Evaluate effectiveness of matching full-length in Conclusive matcher via RIS VS Exact match
         $tolerance = strlen($userAgent);
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'SmartTV')) {

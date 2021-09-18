@@ -22,19 +22,18 @@
  */
 class WURFL_Configuration_ConfigHolder
 {
-    
     /**
      * @var WURFL_Configuration_Config
      */
     private static $_wurflConfig = null;
-    
+
     private function __construct()
     {
     }
     private function __clone()
     {
     }
-    
+
     /**
      * Returns a Configuration object
      * @return WURFL_Configuration_Config
@@ -46,7 +45,7 @@ class WURFL_Configuration_ConfigHolder
         }
         return self::$_wurflConfig;
     }
-    
+
     /**
      * Sets the Configuration object
      * @param WURFL_Configuration_Config $wurflConfig

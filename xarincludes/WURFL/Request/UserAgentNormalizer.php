@@ -22,24 +22,23 @@
  */
 class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface
 {
-
     /**
      * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects
      * @var array
      */
-    protected $_userAgentNormalizers = array();
-    
+    protected $_userAgentNormalizers = [];
+
     /**
      * Set the User Agent Normalizers
      * @param array $normalizers Array of WURFL_Request_UserAgentNormalizer objects
      */
-    public function __construct($normalizers = array())
+    public function __construct($normalizers = [])
     {
         if (is_array($normalizers)) {
             $this->_userAgentNormalizers = $normalizers;
         }
     }
-    
+
     /**
      * Adds a new UserAgent Normalizer to the chain
      * @param WURFL_Request_UserAgentNormalizer_Interface $normalizer
@@ -51,7 +50,7 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
         $userAgentNormalizers[] = $normalizer;
         return new WURFL_Request_UserAgentNormalizer($userAgentNormalizers);
     }
-    
+
     /**
      * Return the number of normalizers currently registered
      * @return int count
@@ -60,7 +59,7 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
     {
         return count($this->_userAgentNormalizers);
     }
-    
+
     /**
      * Normalize the given $userAgent by passing down the chain
      * of normalizers

@@ -16,16 +16,13 @@ require_once 'WURFL/Issues/IssuesTest.php';
  */
 class WURFLTestsSuite extends PHPUnit_Framework_TestSuite
 {
-    
-    
-    
     /**
      * Constructs the test suite handler.
      */
     public function __construct()
     {
         $this->setName('WURFLTestsSuite');
-        
+
         $this->addTestSuite('WURFL_ConfigurationTestSuite');
         $this->addTestSuite('WURFL_XmlTestSuite');
         $this->addTestSuite('WURFL_WURFLManagerTest');
@@ -35,7 +32,7 @@ class WURFLTestsSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Issues_IssuesTest');
         $this->addTestSuite('WURFL_ReloaderTestSuite');
     }
-    
+
     /**
      * Creates the suite.
      */

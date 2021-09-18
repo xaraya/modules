@@ -30,11 +30,11 @@
 class WURFL_Handlers_ReksioHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "REKSIO";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'generic_reksio',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -42,7 +42,7 @@ class WURFL_Handlers_ReksioHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Reksio');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         return 'generic_reksio';

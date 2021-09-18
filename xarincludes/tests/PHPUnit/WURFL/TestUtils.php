@@ -4,7 +4,6 @@
  */
 class WURFL_TestUtils
 {
-    
     /**
      * Load Test File containing user-agent -> deviceids associations
      *
@@ -16,48 +15,48 @@ class WURFL_TestUtils
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException("File path $filePath does not exist!!!");
         }
-                
-        $testData = array();
+
+        $testData = [];
         $file_handle = fopen($filePath, "r");
-        
+
         while (! feof($file_handle)) {
             $line = fgets($file_handle);
             self::updateTestData($testData, $line);
         }
         fclose($file_handle);
-        
+
         return $testData;
     }
-    
-    
+
+
     public static function loadUserAgentsAsArray($filePath)
     {
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException("File path $filePath does not exist!!!");
         }
-        
-        $testData = array();
+
+        $testData = [];
         $file_handle = fopen($filePath, "r");
-        
+
         while (! feof($file_handle)) {
             $line = fgets($file_handle);
             $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
             if ($isTestData) {
-                $userAgentArray = array();
+                $userAgentArray = [];
                 $userAgentArray[] = $line;
                 $testData[] = $userAgentArray;
             }
         }
         fclose($file_handle);
-        
+
         return $testData;
     }
-    
-        
-    
+
+
+
     public static function loadTestData($fileName)
     {
-        $testData = array();
+        $testData = [];
         $file_handle = fopen($fileName, "r");
         while (!feof($file_handle)) {
             $line = fgets($file_handle);
@@ -69,8 +68,8 @@ class WURFL_TestUtils
 
         return $testData;
     }
-    
-    
+
+
     private static function updateTestData(&$testData, $line)
     {
         $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);

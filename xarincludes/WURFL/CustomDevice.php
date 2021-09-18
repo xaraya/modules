@@ -43,17 +43,16 @@
  */
 class WURFL_CustomDevice
 {
-    
     /**
      * @var array Array of WURFL_Xml_ModelDevice objects
      */
     private $modelDevices;
-    
+
     /**
      * @var WURFL_Request_MatchInfo
      */
     private $matchInfo;
-    
+
     /**
      * @param array $modelDevices Array of WURFL_Xml_ModelDevice objects
      * @param WURFL_Request_MatchInfo $matchInfo
@@ -67,7 +66,7 @@ class WURFL_CustomDevice
         $this->modelDevices = $modelDevices;
         $this->matchInfo = $matchInfo;
     }
-    
+
     /**
      * Magic Method
      *
@@ -91,7 +90,7 @@ class WURFL_CustomDevice
         }
         throw new WURFL_WURFLException("the field " . $name . " is not defined");
     }
-    
+
     /**
      * Device is a specific or actual WURFL device as defined by its capabilities
      * @return bool
@@ -105,7 +104,7 @@ class WURFL_CustomDevice
         }
         return false;
     }
-    
+
     /**
      * Returns the value of a given capability name
      * for the current device
@@ -132,7 +131,7 @@ class WURFL_CustomDevice
         }
         return "";
     }
-    
+
     /**
      * Returns the nearest actual device root in the fall back tree.  If this device is a device root itself,
      * it is returned.  Some devices have no device roots in their fall back tree, like generic_android, since
@@ -153,7 +152,7 @@ class WURFL_CustomDevice
         }
         return null;
     }
-    
+
     /**
      * Returns the match info for this device
      * @return WURFL_Request_MatchInfo
@@ -162,7 +161,7 @@ class WURFL_CustomDevice
     {
         return $this->matchInfo;
     }
-    
+
     /**
      * Returns an array with all the fall back devices, from the matched device to the root device ('generic')
      * @return array
@@ -171,7 +170,7 @@ class WURFL_CustomDevice
     {
         return $this->modelDevices;
     }
-    
+
     /**
      * @param string $capabilityName
      * @return bool true if capability is defined
@@ -181,7 +180,7 @@ class WURFL_CustomDevice
     {
         return $this->modelDevices[count($this->modelDevices)-1]->isCapabilityDefined($capabilityName);
     }
-    
+
     /**
      * Returns capabilities and their values for the current device
      * @return array Device capabilities array
@@ -189,7 +188,7 @@ class WURFL_CustomDevice
      */
     public function getAllCapabilities()
     {
-        $capabilities = array();
+        $capabilities = [];
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }

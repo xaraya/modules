@@ -22,7 +22,6 @@
  */
 class WURFL_Logger_LoggerFactory
 {
-    
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
      * @param WURFL_Configuration_Config $wurflConfig
@@ -35,7 +34,7 @@ class WURFL_Logger_LoggerFactory
         }
         return new WURFL_Logger_NullLogger();
     }
-    
+
     /**
      * Creates Logger for general logging (not undetected devices)
      * @param WURFL_Configuration_Config $wurflConfig
@@ -48,7 +47,7 @@ class WURFL_Logger_LoggerFactory
         }
         return new WURFL_Logger_NullLogger();
     }
-    
+
     /**
      * Creates a new file logger
      * @param WURFL_Configuration_Config $wurflConfig
@@ -60,7 +59,7 @@ class WURFL_Logger_LoggerFactory
         $logFileName = self::createLogFile($wurflConfig->logDir, $fileName);
         return new WURFL_Logger_FileLogger($logFileName);
     }
-    
+
     /**
      * Returns true if $wurflConfig specifies a Logger
      * @param WURFL_Configuration_Config $wurflConfig
@@ -73,7 +72,7 @@ class WURFL_Logger_LoggerFactory
         }
         return !is_null($wurflConfig->logDir) && is_writable($wurflConfig->logDir);
     }
-    
+
     /**
      * Creates a new log file in given $logDir with given $fileName
      * @param string $logDir

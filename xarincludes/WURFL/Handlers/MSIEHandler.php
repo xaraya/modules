@@ -29,8 +29,8 @@
 class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "MSIE";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'msie',
         'msie_4',
         'msie_5',
@@ -39,22 +39,22 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
         'msie_7',
         'msie_8',
         'msie_9',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['Opera', 'armv', 'MOTO', 'BREW'])) {
             return false;
         }
         return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
-        $matches = array();
+        $matches = [];
         if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $userAgent, $matches)) {
             if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance()) {
                 return WURFL_Constants::GENERIC_WEB_BROWSER;
@@ -77,7 +77,7 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
                     return 'msie_4';
                     break;
                 case 5:
-                    return ($matches[2]==5)? 'msie_5_5': 'msie_5';
+                    return ($matches[2]==5) ? 'msie_5_5' : 'msie_5';
                     break;
                 default:
                     return 'msie';

@@ -29,11 +29,11 @@
 class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "CHROME";
-    
-    public static $constantIDs = array(
-        'google_chrome'
-    );
-    
+
+    public static $constantIDs = [
+        'google_chrome',
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
@@ -41,13 +41,13 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Chrome');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::indexOfOrLength('/', $userAgent, strpos($userAgent, 'Chrome'));
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         return 'google_chrome';

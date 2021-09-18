@@ -24,13 +24,13 @@
  */
 class WURFL_Request_UserAgentNormalizer_Specific_Konqueror implements WURFL_Request_UserAgentNormalizer_Interface
 {
-    const KONQUEROR = "Konqueror";
-    
+    public const KONQUEROR = "Konqueror";
+
     public function normalize($userAgent)
     {
         return $this->konquerorWithMajorVersion($userAgent);
     }
-    
+
     /**
      * Return KDE Konquerer major version
      * @param string $userAgent

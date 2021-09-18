@@ -25,7 +25,6 @@
  */
 class WURFL_Context
 {
-    
     /**
      * @var WURFL_Storage_Base
      */
@@ -38,26 +37,26 @@ class WURFL_Context
      * @var WURFL_Logger_Interface
      */
     private $_logger;
-    
+
     public function __construct($persistenceProvider, $cacheProvider = null, $logger = null)
     {
         $this->_persistenceProvider = $persistenceProvider;
-        $this->_cacheProvider = is_null($cacheProvider)? new WURFL_Storage_Null(): $cacheProvider;
-        $this->_logger = is_null($logger)? new WURFL_Logger_NullLogger(): $logger;
+        $this->_cacheProvider = is_null($cacheProvider) ? new WURFL_Storage_Null() : $cacheProvider;
+        $this->_logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
     }
-    
+
     public function cacheProvider($cacheProvider)
     {
-        $this->_cacheProvider = is_null($cacheProvider)? new WURFL_Storage_Null(): $cacheProvider;
+        $this->_cacheProvider = is_null($cacheProvider) ? new WURFL_Storage_Null() : $cacheProvider;
         return $this;
     }
-    
+
     public function logger($logger)
     {
-        $this->_logger = is_null($logger)? new WURFL_Logger_NullLogger(): $logger;
+        $this->_logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
         return $this;
     }
-    
+
     public function __get($name)
     {
         $name = '_'.$name;

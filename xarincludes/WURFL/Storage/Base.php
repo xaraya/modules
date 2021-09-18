@@ -30,14 +30,14 @@
  */
 abstract class WURFL_Storage_Base implements WURFL_Storage
 {
-    const APPLICATION_PREFIX = "WURFL_";
-    const WURFL_LOADED = "WURFL_WURFL_LOADED";
+    public const APPLICATION_PREFIX = "WURFL_";
+    public const WURFL_LOADED = "WURFL_WURFL_LOADED";
 
     /**
      * @var WURFL_Storage_Base
      */
     private $cache;
-    
+
     protected $is_volatile = false;
     protected $supports_secondary_caching = false;
 
@@ -45,7 +45,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
      * Creates a new WURFL_Storage_Base
      * @param array $params
      */
-    public function __construct($params = array())
+    public function __construct($params = [])
     {
     }
 
@@ -94,7 +94,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
     {
         return $this->is_volatile;
     }
-    
+
     /**
      * This storage provider supports a caching layer in front of it, for example, the File provider
      * supports a volatile cache like Memcache in front of it, whereas APC does not.
@@ -104,7 +104,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
     {
         return $this->supports_secondary_caching;
     }
-    
+
     /**
      * This storage provider can be used as a secondary cache
      * @param WURFL_Storage_Base $cache
@@ -118,7 +118,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
          */
         return ($this->supports_secondary_caching && get_class($this) != get_class($cache));
     }
-    
+
     /**
      * Sets the cache provider for the persistence provider; this is used to
      * cache data in a volatile storage system like APC in front of a slow
@@ -133,7 +133,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
         }
         $this->cache = $cache;
     }
-    
+
     protected function cacheSave($objectId, $object)
     {
         if ($this->cache === null) {
@@ -141,7 +141,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
         }
         $this->cache->save('FCACHE_'.$objectId, $object);
     }
-    
+
     protected function cacheLoad($objectId)
     {
         if ($this->cache === null) {
@@ -149,7 +149,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
         }
         return $this->cache->load('FCACHE_'.$objectId);
     }
-    
+
     protected function cacheRemove($objectId)
     {
         if ($this->cache === null) {
@@ -157,7 +157,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
         }
         $this->cache->remove('FCACHE_'.$objectId);
     }
-    
+
     protected function cacheClear()
     {
         if ($this->cache === null) {
@@ -165,7 +165,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
         }
         $this->cache->clear();
     }
-    
+
     /**
      * Checks if WURFL is Loaded
      * @return bool
@@ -193,7 +193,7 @@ abstract class WURFL_Storage_Base implements WURFL_Storage
      */
     protected function encode($namespace, $input)
     {
-        return join(":", array(self::APPLICATION_PREFIX, $namespace, $input));
+        return join(":", [self::APPLICATION_PREFIX, $namespace, $input]);
     }
 
     /**

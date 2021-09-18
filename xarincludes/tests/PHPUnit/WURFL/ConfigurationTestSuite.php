@@ -12,7 +12,6 @@ require_once 'Configuration/InMemoryConfigTest.php';
  */
 class WURFL_ConfigurationTestSuite extends PHPUnit_Framework_TestSuite
 {
-    
     /**
      * Constructs the test suite handler.
      */
@@ -23,7 +22,7 @@ class WURFL_ConfigurationTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('WURFL_Configuration_ArrayConfigTest');
         $this->addTestSuite('WURFL_Configuration_InMemoryConfigTest');
     }
-    
+
     /**
      * Creates the suite.
      */

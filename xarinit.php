@@ -44,7 +44,7 @@
         #
         # Set up modvars
         #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'wurfl'));
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'wurfl']);
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
@@ -81,8 +81,8 @@
     function wurfl_delete()
     {
         $this_module = 'wurfl';
-        xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
-        
+        xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
+
         // Unregister all mapper event subjects
         xarMapperEvents::unregisterSubject('PreDispatch');
         xarMapperEvents::unregisterSubject('PostDispatch');
@@ -96,6 +96,6 @@
         // Register default mapper event observers
         xarMapperEvents::registerObserver('PreDispatch', 'themes');
         xarMapperEvents::registerObserver('PostDispatch', 'themes');
-        
+
         return true;
     }

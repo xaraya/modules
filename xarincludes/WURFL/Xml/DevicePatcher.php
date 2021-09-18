@@ -22,7 +22,6 @@
  */
 class WURFL_Xml_DevicePatcher
 {
-    
     /**
      * Patch an existing $device with a $patchingDevice
      * @param WURFL_Xml_ModelDevice $device
@@ -37,7 +36,7 @@ class WURFL_Xml_DevicePatcher
         $groupIdCapabilitiesMap = WURFL_WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());
         return new WURFL_Xml_ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     }
-    
+
     /**
      * Returns true if $device and $patchingDevice have the same device id
      * @param WURFL_Xml_ModelDevice $device
@@ -48,7 +47,7 @@ class WURFL_Xml_DevicePatcher
     {
         return (strcmp($patchingDevice->id, $device->id) === 0);
     }
-    
+
     /**
      * Returns true if a $patchingDevice can be used to patch $device
      * @param WURFL_Xml_ModelDevice $device

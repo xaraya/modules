@@ -21,7 +21,6 @@
  */
 class WURFL_Device
 {
-    
     /**
      * @var WURFL_Xml_ModelDevice
      */
@@ -30,7 +29,7 @@ class WURFL_Device
      * @var WURFL_CapabilitiesHolder
      */
     private $_capabilitiesHolder;
-    
+
     /**
      * Creates a new WURFL_Device using the given $modelDevice and $capabilitiesHolder
      * @param WURFL_Xml_ModelDevice $modelDevice
@@ -41,7 +40,7 @@ class WURFL_Device
         $this->_modelDevice = $modelDevice;
         $this->_capabilitiesHolder = $capabilitiesHolder;
     }
-    
+
     /**
      * Magic Method
      *
@@ -67,7 +66,7 @@ class WURFL_Device
 
         throw new WURFL_WURFLException("the field " . $name . " is not defined");
     }
-    
+
     /**
      * Returns the value of a given capability name
      * for the current device
@@ -83,7 +82,7 @@ class WURFL_Device
         }
         return $this->_capabilitiesHolder->getCapability($capabilityName);
     }
-    
+
     /**
      * Returns all the value of the capabilities of the current device
      * @return array All device capabilities

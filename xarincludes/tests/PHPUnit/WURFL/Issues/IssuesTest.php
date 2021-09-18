@@ -7,7 +7,7 @@ require_once dirname(__FILE__).'/../classautoloader.php';
 
 class WURFL_Issues_IssuesTest extends PHPUnit_Framework_TestCase
 {
-    const RESOURCES_DIR = "../../../resources";
+    public const RESOURCES_DIR = "../../../resources";
 
     protected static $wurflManager;
 
@@ -46,13 +46,13 @@ class WURFL_Issues_IssuesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($deviceId, $deviceFound->id, $userAgent);
     }
 
-    const ISSUES_FILE = "issues.txt";
+    public const ISSUES_FILE = "issues.txt";
 
     public static function issuesProvider()
     {
         $fullTestFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::ISSUES_FILE;
         $lines = file($fullTestFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $map = array();
+        $map = [];
         foreach ($lines as $line) {
             if (strpos($line, "#") !== 0) {
                 $map [] = explode("=", $line);
@@ -100,9 +100,9 @@ class WURFL_Issues_IssuesTest extends PHPUnit_Framework_TestCase
      */
     public static function issue17UnrecognizedDevices()
     {
-        return array(
-            array("SAMSUNG-SGH-J700i/J700IXAIA2 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Browser/6.2.3.3.c.1.101 (GUI) MMP/2.0", "samsung_sgh_j700i_ver1"),
-            array("Nokia3220 UP.Browser/7.0.2.3.119 (GUI) MMP/2.0 Push/PO", "nokia_3220_ver1"));
+        return [
+            ["SAMSUNG-SGH-J700i/J700IXAIA2 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Browser/6.2.3.3.c.1.101 (GUI) MMP/2.0", "samsung_sgh_j700i_ver1"],
+            ["Nokia3220 UP.Browser/7.0.2.3.119 (GUI) MMP/2.0 Push/PO", "nokia_3220_ver1"], ];
     }
 
     public function testIssue117()

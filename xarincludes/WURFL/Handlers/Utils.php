@@ -22,17 +22,16 @@
  */
 class WURFL_Handlers_Utils
 {
-    
     /**
      * The worst allowed match tolerance
      * @var unknown_type
      */
-    const WORST_MATCH = 7;
-    
+    public const WORST_MATCH = 7;
+
     /**
      * @var array Collection of mobile browser keywords
      */
-    private static $mobileBrowsers = array(
+    private static $mobileBrowsers = [
         'midp',
         'mobile',
         'android',
@@ -76,9 +75,9 @@ class WURFL_Handlers_Utils
         'lgtelecom',
         ' gt-',
         'ventana',
-    );
-    
-    private static $smartTVBrowsers = array(
+    ];
+
+    private static $smartTVBrowsers = [
         'googletv',
         'boxee',
         'sonydtv',
@@ -86,9 +85,9 @@ class WURFL_Handlers_Utils
         'smarttv',
         'dlna',
         'netcast.tv',
-    );
-    
-    private static $desktopBrowsers = array(
+    ];
+
+    private static $desktopBrowsers = [
         'wow64',
         '.net clr',
         'gtb7',
@@ -98,13 +97,13 @@ class WURFL_Handlers_Utils
         'funwebproducts',
         'aol 9.',
         'gtb8',
-    );
-    
+    ];
+
     /**
      * Keyword => deviceID pair collection used for Catch-All matching
      * @var array Array of (string)keyword => (string)deviceID
      */
-    private static $mobileCatchAllIds = array(
+    private static $mobileCatchAllIds = [
          // Openwave
         'UP.Browser/7.2' => 'opwv_v72_generic',
         'UP.Browser/7' => 'opwv_v7_generic',
@@ -130,10 +129,10 @@ class WURFL_Handlers_Utils
         'NetFront/3.5' => 'generic_netfront_ver3_5',
         'NetFront/4.0' => 'generic_netfront_ver4_0',
         'NetFront/4.1' => 'generic_netfront_ver4_1',
-        
+
         // CoreMedia
         'CoreMedia' => 'apple_iphone_coremedia_ver1',
-        
+
         // Windows CE
         'Windows CE' => 'generic_ms_mobile',
 
@@ -154,8 +153,8 @@ class WURFL_Handlers_Utils
         // DoCoMo
         'DoCoMo' => 'docomo_generic_jap_ver1',
         'KDDI' => 'docomo_generic_jap_ver1',
-    );
-    
+    ];
+
     /**
      * Alias of WURFL_Handlers_Matcher_RISMatcher::match()
      * @param array $collection
@@ -168,7 +167,7 @@ class WURFL_Handlers_Utils
     {
         return WURFL_Handlers_Matcher_RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
-    
+
     /**
      * Alias of WURFL_Handlers_Matcher_LDMatcher::match()
      * @param array $collection
@@ -181,7 +180,7 @@ class WURFL_Handlers_Utils
     {
         return WURFL_Handlers_Matcher_LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
-    
+
     /**
      * Char index of the first instance of $string found in $target, starting at $startingIndex;
      * if no match is found, the length of the string is returned
@@ -196,7 +195,7 @@ class WURFL_Handlers_Utils
         $pos = strpos($string, $target, $startingIndex);
         return $pos === false ? $length : $pos;
     }
-    
+
     /**
      * Lowest char index of the first instance of any of the $needles found in $userAgent, starting at $startIndex;
      * if no match is found, the length of the string is returned
@@ -205,9 +204,9 @@ class WURFL_Handlers_Utils
      * @param int $startIndex Char index for start of search
      * @return int Char index of left-most match or length of string
      */
-    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex)
+    public static function indexOfAnyOrLength($userAgent, $needles = [], $startIndex)
     {
-        $positions = array();
+        $positions = [];
         foreach ($needles as $needle) {
             $pos = strpos($userAgent, $needle, $startIndex);
             if ($pos !== false) {
@@ -217,14 +216,14 @@ class WURFL_Handlers_Utils
         sort($positions);
         return count($positions) > 0 ? $positions [0] : strlen($userAgent);
     }
-    
+
     public static function reset()
     {
         self::$_is_desktop_browser = null;
         self::$_is_mobile_browser = null;
         self::$_is_smarttv = null;
     }
-    
+
     /**
      * Returns true if the give $userAgent is from a mobile device
      * @param string $userAgent
@@ -246,7 +245,7 @@ class WURFL_Handlers_Utils
         return self::$_is_mobile_browser;
     }
     private static $_is_mobile_browser;
-    
+
     /**
      * Returns true if the give $userAgent is from a desktop device
      * @param string $userAgent
@@ -268,7 +267,7 @@ class WURFL_Handlers_Utils
         return self::$_is_desktop_browser;
     }
     private static $_is_desktop_browser;
-    
+
     /**
      * Returns true if the give $userAgent is from a mobile device
      * @param string $userAgent
@@ -283,7 +282,7 @@ class WURFL_Handlers_Utils
         }
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     /**
      * Is the given user agent very likely to be a desktop browser
      * @param string $userAgent
@@ -333,7 +332,7 @@ class WURFL_Handlers_Utils
         }
         return false;
     }
-    
+
     /**
      * Returns true if the give $userAgent is from a mobile device
      * @param string $userAgent
@@ -355,7 +354,7 @@ class WURFL_Handlers_Utils
         return self::$_is_smarttv;
     }
     private static $_is_smarttv;
-    
+
     /**
      * Returns true if the give $userAgent is from a spam bot or crawler
      * @param string $userAgent
@@ -366,7 +365,7 @@ class WURFL_Handlers_Utils
         //$spamOrCrawlers = array("FunWebProducts", "Spam");
         return self::checkIfContains($userAgent, "Spam") || self::checkIfContains($userAgent, "FunWebProducts");
     }
-    
+
     /**
      *
      * Returns the position of third occurrence of a ;(semi-column) if it exists
@@ -382,7 +381,7 @@ class WURFL_Handlers_Utils
         }
         return $thirdSemiColumnIndex;
     }
-    
+
     /**
      * The nth($ordinal) occurance of $needle in $haystack or -1 if no match is found
      * @param string $haystack
@@ -396,11 +395,11 @@ class WURFL_Handlers_Utils
         if (is_null($haystack) || empty($haystack)) {
             throw new InvalidArgumentException("haystack must not be null or empty");
         }
-        
+
         if (! is_integer($ordinal)) {
             throw new InvalidArgumentException("ordinal must be a positive ineger");
         }
-        
+
         $found = 0;
         $index = - 1;
         do {
@@ -411,10 +410,10 @@ class WURFL_Handlers_Utils
             }
             $found ++;
         } while ($found < $ordinal);
-        
+
         return $index;
     }
-    
+
     /**
      * First occurance of a / character
      * @param string $string Haystack
@@ -423,9 +422,9 @@ class WURFL_Handlers_Utils
     public static function firstSlash($string)
     {
         $firstSlash = strpos($string, "/");
-        return ($firstSlash !== false)? $firstSlash: strlen($string);
+        return ($firstSlash !== false) ? $firstSlash : strlen($string);
     }
-    
+
     /**
      * Second occurance of a / character
      * @param string $string Haystack
@@ -439,7 +438,7 @@ class WURFL_Handlers_Utils
         }
         return strpos(substr($string, $firstSlash + 1), "/") + $firstSlash;
     }
-    
+
     /**
      * First occurance of a space character
      * @param string $string Haystack
@@ -448,9 +447,9 @@ class WURFL_Handlers_Utils
     public static function firstSpace($string)
     {
         $firstSpace = strpos($string, " ");
-        return ($firstSpace === false)? strlen($string) : $firstSpace;
+        return ($firstSpace === false) ? strlen($string) : $firstSpace;
     }
-    
+
     /**
      * First occurance of a ; character or length
      * @param string $string Haystack
@@ -460,7 +459,7 @@ class WURFL_Handlers_Utils
     {
         return self::firstMatchOrLength($string, ";");
     }
-    
+
     /**
      * First occurance of $toMatch string or length
      * @param string $string Haystack
@@ -470,9 +469,9 @@ class WURFL_Handlers_Utils
     public static function firstMatchOrLength($string, $toMatch)
     {
         $firstMatch = strpos($string, $toMatch);
-        return ($firstMatch === false) ? strlen($string): $firstMatch;
+        return ($firstMatch === false) ? strlen($string) : $firstMatch;
     }
-    
+
     /**
      * Returns true if $haystack contains $needle
      * @param string $haystack Haystack
@@ -483,7 +482,7 @@ class WURFL_Handlers_Utils
     {
         return (strpos($haystack, $needle) !== false);
     }
-    
+
     /**
      * Returns true if $haystack contains any of the (string)needles in $needles
      * @param string $haystack Haystack
@@ -499,14 +498,14 @@ class WURFL_Handlers_Utils
         }
         return false;
     }
-    
+
     /**
      * Returns true if $haystack contains all of the (string)needles in $needles
      * @param string $haystack Haystack
      * @param array $needles Array of (string)needles
      * @return bool
      */
-    public static function checkIfContainsAll($haystack, $needles=array())
+    public static function checkIfContainsAll($haystack, $needles=[])
     {
         foreach ($needles as $needle) {
             if (!self::checkIfContains($haystack, $needle)) {
@@ -515,7 +514,7 @@ class WURFL_Handlers_Utils
         }
         return true;
     }
-    
+
     /**
      * Returns true if $haystack contains $needle without regard for case
      * @param string $haystack Haystack
@@ -526,7 +525,7 @@ class WURFL_Handlers_Utils
     {
         return stripos($haystack, $needle) !== false;
     }
-    
+
     /**
      * Returns true if $haystack starts with $needle
      * @param string $haystack Haystack
@@ -537,7 +536,7 @@ class WURFL_Handlers_Utils
     {
         return strpos($haystack, $needle) === 0;
     }
-    
+
     /**
      * Returns true if $haystack starts with any of the $needles
      * @param string $haystack Haystack
@@ -553,10 +552,10 @@ class WURFL_Handlers_Utils
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * Removes the locale portion from the userAgent
      * @param string $userAgent

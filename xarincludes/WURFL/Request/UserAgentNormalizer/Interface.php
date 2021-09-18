@@ -21,7 +21,6 @@
  */
 interface WURFL_Request_UserAgentNormalizer_Interface
 {
-    
     /**
      * Return the normalized user agent
      * @param string $userAgent

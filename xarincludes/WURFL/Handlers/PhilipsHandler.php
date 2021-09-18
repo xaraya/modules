@@ -30,7 +30,7 @@
 class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "PHILIPS";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {

@@ -30,12 +30,12 @@
 class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "DOCOMO";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'docomo_generic_jap_ver1',
         'docomo_generic_jap_ver2',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -43,7 +43,7 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "DoCoMo");
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, '/', 2);
@@ -53,11 +53,11 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         $versionIndex = 7;
         $version = $userAgent[$versionIndex];
-        return ($version == '2')? 'docomo_generic_jap_ver2': 'docomo_generic_jap_ver1';
+        return ($version == '2') ? 'docomo_generic_jap_ver2' : 'docomo_generic_jap_ver1';
     }
 }

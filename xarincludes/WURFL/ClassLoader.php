@@ -21,7 +21,7 @@
  */
 class WURFL_ClassLoader
 {
-    const CLASS_PREFIX = "WURFL_";
+    public const CLASS_PREFIX = "WURFL_";
     private static $classPath;
     /**
      * Loads a Class given the class name
@@ -49,4 +49,4 @@ class WURFL_ClassLoader
 }
 
 // register class loader
-spl_autoload_register(array('WURFL_ClassLoader', 'loadClass'));
+spl_autoload_register(['WURFL_ClassLoader', 'loadClass']);

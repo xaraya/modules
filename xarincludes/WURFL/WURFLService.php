@@ -23,7 +23,6 @@
  */
 class WURFL_WURFLService
 {
-    
     /**
      * @var WURFL_DeviceRepository
      */
@@ -36,14 +35,14 @@ class WURFL_WURFLService
      * @var WURFL_Storage
      */
     private $_cacheProvider;
-    
+
     public function __construct(WURFL_DeviceRepository $deviceRepository, WURFL_UserAgentHandlerChain $userAgentHandlerChain, WURFL_Storage $cacheProvider)
     {
         $this->_deviceRepository = $deviceRepository;
         $this->_userAgentHandlerChain = $userAgentHandlerChain;
         $this->_cacheProvider = $cacheProvider;
     }
-    
+
     /**
      * Returns the version info about the loaded WURFL
      * @return WURFL_Xml_Info WURFL Version info
@@ -53,7 +52,7 @@ class WURFL_WURFLService
     {
         return $this->_deviceRepository->getWURFLInfo();
     }
-    
+
     /**
      * Returns the Device for the given WURFL_Request_GenericRequest
      *
@@ -65,7 +64,7 @@ class WURFL_WURFLService
         $deviceId = $this->deviceIdForRequest($request);
         return $this->getWrappedDevice($deviceId, $request->matchInfo);
     }
-    
+
     /**
      * Retun a WURFL_Xml_ModelDevice for the given device id
      *
@@ -76,7 +75,7 @@ class WURFL_WURFLService
     {
         return $this->getWrappedDevice($deviceID);
     }
-    
+
     /**
      * Returns all devices ID present in WURFL
      *
@@ -86,7 +85,7 @@ class WURFL_WURFLService
     {
         return $this->_deviceRepository->getAllDevicesID();
     }
-    
+
     /**
      * Returns an array of all the fall back devices starting from
      * the given device
@@ -98,20 +97,20 @@ class WURFL_WURFLService
     {
         return $this->_deviceRepository->getDeviceHierarchy($deviceID);
     }
-    
+
     public function getListOfGroups()
     {
         return $this->_deviceRepository->getListOfGroups();
     }
-    
-    
+
+
     public function getCapabilitiesNameForGroup($groupId)
     {
         return $this->_deviceRepository->getCapabilitiesNameForGroup($groupId);
     }
-    
+
     // ******************** private functions *****************************
-    
+
 
     /**
      * Returns the device id for the device that matches the $request
@@ -131,7 +130,7 @@ class WURFL_WURFLService
         }
         return $deviceId;
     }
-    
+
     /**
      * Wraps the model device with WURFL_Xml_ModelDevice.  This function takes the
      * Device ID and returns the WURFL_CustomDevice with all capabilities.

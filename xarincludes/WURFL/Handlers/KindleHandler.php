@@ -30,21 +30,21 @@
 class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "KINDLE";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'amazon_kindle_ver1',
         'amazon_kindle2_ver1',
         'amazon_kindle3_ver1',
         'amazon_kindle_fire_ver1',
         'generic_amazon_android_kindle',
         'generic_amazon_kindle',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['Kindle', 'Silk']);
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $search = 'Kindle/';
@@ -64,10 +64,10 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
             $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
+
         return WURFL_Constants::NO_MATCH;
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Kindle/1')) {
@@ -79,7 +79,7 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler
         if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Kindle/3')) {
             return 'amazon_kindle3_ver1';
         }
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Kindle Fire', 'Silk'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['Kindle Fire', 'Silk'])) {
             return 'amazon_kindle_fire_ver1';
         }
         return 'generic_amazon_kindle';

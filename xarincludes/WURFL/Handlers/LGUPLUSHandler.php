@@ -30,19 +30,19 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "LGUPLUS";
 
-    public static $constantIDs = array(
+    public static $constantIDs = [
         'generic_lguplus_rexos_facebook_browser',
         'generic_lguplus_rexos_webviewer_browser',
         'generic_lguplus_winmo_facebook_browser',
         'generic_lguplus_android_webkit_browser',
-    );
+    ];
 
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ["LGUPLUS", "lgtelecom"]);
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -51,12 +51,12 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
     }
 
 
-    private $lgupluses = array(
-        "generic_lguplus_rexos_facebook_browser" => array("Windows NT 5", "POLARIS"),
-        "generic_lguplus_rexos_webviewer_browser" => array("Windows NT 5"),
-        "generic_lguplus_winmo_facebook_browser" => array("Windows CE", "POLARIS"),
-        "generic_lguplus_android_webkit_browser" => array("Android", "AppleWebKit")
-    );
+    private $lgupluses = [
+        "generic_lguplus_rexos_facebook_browser" => ["Windows NT 5", "POLARIS"],
+        "generic_lguplus_rexos_webviewer_browser" => ["Windows NT 5"],
+        "generic_lguplus_winmo_facebook_browser" => ["Windows CE", "POLARIS"],
+        "generic_lguplus_android_webkit_browser" => ["Android", "AppleWebKit"],
+    ];
 
     public function applyRecoveryMatch($userAgent)
     {

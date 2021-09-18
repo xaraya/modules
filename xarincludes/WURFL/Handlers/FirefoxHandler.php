@@ -29,8 +29,8 @@
 class WURFL_Handlers_FirefoxHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "FIREFOX";
-    
-    public static $constantIDs = array(
+
+    public static $constantIDs = [
         'firefox',
         'firefox_1',
         'firefox_2',
@@ -44,27 +44,27 @@ class WURFL_Handlers_FirefoxHandler extends WURFL_Handlers_Handler
         'firefox_10_0',
         'firefox_11_0',
         'firefox_12_0',
-    );
-    
+    ];
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Tablet', 'Sony', 'Novarra', 'Opera'))) {
+        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, ['Tablet', 'Sony', 'Novarra', 'Opera'])) {
             return false;
         }
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox');
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.'));
     }
-    
+
     public function applyRecoveryMatch($userAgent)
     {
-        $matches = array();
+        $matches = [];
         if (preg_match('/Firefox\/(\d+)\.\d/', $userAgent, $matches)) {
             $firefox_version = $matches[1];
             if ((int)$firefox_version <= 3) {

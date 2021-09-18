@@ -29,7 +29,6 @@
  */
 interface WURFL_Handlers_Matcher
 {
-    
     /**
      * Returns a matching device id for the given request,
      * if no matching device is found will return "generic"

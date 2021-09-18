@@ -22,7 +22,6 @@
  */
 interface WURFL_Logger_Interface
 {
-    
     /**
      * Send specified $message to the log with INFO level
      * @param string $message

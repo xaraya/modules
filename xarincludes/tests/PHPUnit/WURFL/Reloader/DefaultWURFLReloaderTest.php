@@ -8,8 +8,8 @@ require_once dirname(__FILE__).'/../classautoloader.php';
  */
 class WURFL_Reloader_DefaultWURFLReloaderTest extends PHPUnit_Framework_TestCase
 {
-    const WURFL_CONFIG_FILE = "../../../resources/wurfl-config-reloading.xml";
-    
+    public const WURFL_CONFIG_FILE = "../../../resources/wurfl-config-reloading.xml";
+
     protected function setUp()
     {
         parent::setUp();
@@ -25,8 +25,8 @@ class WURFL_Reloader_DefaultWURFLReloaderTest extends PHPUnit_Framework_TestCase
         $wurflReloader = new WURFL_Reloader_DefaultWURFLReloader();
         $wurflReloader->reload($configurationFilePath);
     }
-    
-    
+
+
     /**
      * @test
      *
@@ -37,7 +37,7 @@ class WURFL_Reloader_DefaultWURFLReloaderTest extends PHPUnit_Framework_TestCase
         $wurflReloader = new WURFL_Reloader_DefaultWURFLReloader();
         $wurflReloader->reload($configurationFilePath);
     }
-    
+
     protected function tearDown()
     {
         parent::tearDown();

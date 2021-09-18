@@ -22,14 +22,13 @@
  */
 class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
 {
-
     /**
      * Instantiate an In-Memory Configuration
      */
     public function __construct()
     {
     }
-    
+
     /**
      * @param string $wurflFile
      * @return WURFL_Configuration_InMemoryConfig $this
@@ -39,7 +38,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
         $this->wurflFile = $wurflFile;
         return $this;
     }
-    
+
     /**
      * @param string $wurflPatch
      * @return WURFL_Configuration_InMemoryConfig $this
@@ -55,9 +54,9 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
      * @param array $params
      * @return WURFL_Configuration_InMemoryConfig $this
      */
-    public function persistence($provider, $params = array())
+    public function persistence($provider, $params = [])
     {
-        $this->persistence = array_merge(array("provider"=> $provider), array("params" => $params));
+        $this->persistence = array_merge(["provider"=> $provider], ["params" => $params]);
         return $this;
     }
     /**
@@ -66,9 +65,9 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
      * @param array $params
      * @return WURFL_Configuration_InMemoryConfig $this
      */
-    public function cache($provider, $params = array())
+    public function cache($provider, $params = [])
     {
-        $this->cache = array_merge(array("provider"=> $provider), array("params" => $params));
+        $this->cache = array_merge(["provider"=> $provider], ["params" => $params]);
         return $this;
     }
     /**
@@ -91,7 +90,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
         $this->allowReload = $reload;
         return $this;
     }
-    
+
     /**
      * Sets the API match mode
      * @param string $mode
@@ -105,7 +104,7 @@ class WURFL_Configuration_InMemoryConfig extends WURFL_Configuration_Config
         $this->matchMode = $mode;
         return $this;
     }
-    
+
     protected function initialize()
     {
     }

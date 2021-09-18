@@ -30,7 +30,7 @@
 class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = "MITSUBISHI";
-    
+
     public function canHandle($userAgent)
     {
         if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) {
@@ -38,7 +38,7 @@ class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler
         }
         return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mitsu");
     }
-    
+
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);

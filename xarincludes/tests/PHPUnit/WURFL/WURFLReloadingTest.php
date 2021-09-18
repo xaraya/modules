@@ -13,7 +13,7 @@ class WURFL_WURFLReloadingTest extends PHPUnit_Framework_TestCase
     private $wurflManager;
     private $wurflManagerFactory;
 
-    const WURFL_CONFIG_FILE = "../../resources/wurfl-config.xml";
+    public const WURFL_CONFIG_FILE = "../../resources/wurfl-config.xml";
     public function setUp()
     {
         $configurationFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_CONFIG_FILE;
@@ -21,12 +21,12 @@ class WURFL_WURFLReloadingTest extends PHPUnit_Framework_TestCase
         $this->wurflManagerFactory = new WURFL_WURFLManagerFactory($config);
         $this->wurflManager = $this->wurflManagerFactory->create();
     }
-    
+
     public function tearDown()
     {
         $this->wurflManagerFactory->remove();
     }
-    
+
     public function testShouldReloadWURFLIfWURFLFileTimeStampChanges()
     {
         $configurationFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_CONFIG_FILE;

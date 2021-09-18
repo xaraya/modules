@@ -8,7 +8,7 @@ sys::import('xaraya.structures.events.observer');
 class WurflPostDispatchObserver extends EventObserver implements ixarEventObserver
 {
     public $module = 'wurfl';
-    
+
     public function notify(ixarEventSubject $subject)
     {
         // post request default page template handling
@@ -16,7 +16,7 @@ class WurflPostDispatchObserver extends EventObserver implements ixarEventObserv
         if (xarTpl::getPageTemplateName() != 'default') {
             return $set;
         }
-        
+
         $set = true;
         $request = xarController::getRequest();
         if (!xarUser::isLoggedIn() && $request->getType() == 'user') {
