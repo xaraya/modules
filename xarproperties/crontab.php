@@ -18,7 +18,7 @@ class CrontabProperty extends DataProperty
     public $id   = 30126;
     public $name = 'crontab';
     public $desc = 'Crontab';
-    public $reqmodules = array('scheduler');
+    public $reqmodules = ['scheduler'];
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -34,39 +34,39 @@ class CrontabProperty extends DataProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
-            list($isvalid, $minutes) = $this->fetchValue($name . '_minute');
-            list($isvalid, $hours) = $this->fetchValue($name . '_hour');
-            list($isvalid, $days) = $this->fetchValue($name . '_day');
-            list($isvalid, $months) = $this->fetchValue($name . '_month');
-            list($isvalid, $weekdays) = $this->fetchValue($name . '_weekday');
+            [$isvalid, $minutes] = $this->fetchValue($name . '_minute');
+            [$isvalid, $hours] = $this->fetchValue($name . '_hour');
+            [$isvalid, $days] = $this->fetchValue($name . '_day');
+            [$isvalid, $months] = $this->fetchValue($name . '_month');
+            [$isvalid, $weekdays] = $this->fetchValue($name . '_weekday');
         }
         if (!isset($minutes) ||!isset($hours) ||!isset($days) ||!isset($months) ||!isset($weekdays)) {
             $this->objectref->missingfields[] = $this->name;
             return null;
         }
-        $value = array(
+        $value = [
             'minutes' => $minutes,
             'hours' => $hours,
             'days' => $days,
             'months' => $months,
             'weekdays' => $weekdays,
             'nextrun' => 0,
-        );
+        ];
         return $this->validateValue($value);
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         $value = $this->getValue();
         if (empty($value)) {
-            $this->setValue(array(
+            $this->setValue([
                 'minutes' => '',
                 'hours' => '',
                 'days' => '',
                 'months' => '',
                 'weekdays' => '',
                 'nextrun' => 0,
-            ));
+            ]);
         }
         if (empty($data['value'])) {
             $data['value'] = $this->getValue();
@@ -78,18 +78,18 @@ class CrontabProperty extends DataProperty
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data = array())
+    public function showOutput(array $data = [])
     {
         $value = $this->getValue();
         if (empty($value)) {
-            $this->setValue(array(
+            $this->setValue([
                 'minutes' => '',
                 'hours' => '',
                 'days' => '',
                 'months' => '',
                 'weekdays' => '',
                 'nextrun' => 0,
-            ));
+            ]);
         }
         if (empty($data['value'])) {
             $data['value'] = $this->getValue();
@@ -105,28 +105,28 @@ class CrontabProperty extends DataProperty
     {
         return unserialize($this->value);
     }
-    
+
     public function setValue($value=null)
     {
         $this->value = serialize($value);
     }
-    
-    public function showHidden(array $data = array())
+
+    public function showHidden(array $data = [])
     {
         $data['name']     = !empty($data['name']) ? $data['name'] : $this->propertyprefix . $this->id;
-        $data['id']       = !empty($data['id'])   ? $data['id']   : $this->propertyprefix . $this->id;
+        $data['id']       = !empty($data['id']) ? $data['id'] : $this->propertyprefix . $this->id;
 
-        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
+        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
         $value = $this->getValue();
         if (empty($value)) {
-            $this->setValue(array(
+            $this->setValue([
                 'minutes' => '',
                 'hours' => '',
                 'days' => '',
                 'months' => '',
                 'weekdays' => '',
                 'nextrun' => 0,
-            ));
+            ]);
         }
         if (empty($data['value'])) {
             $data['value'] = $this->getValue();

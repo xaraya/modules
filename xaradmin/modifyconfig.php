@@ -30,7 +30,7 @@ function scheduler_admin_modifyconfig()
 
     switch (strtolower($data['tab'])) {
         case 'general':
-            $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'scheduler'));
+            $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'scheduler']);
             $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons');
             $data['module_settings']->getItem();
         break;
@@ -43,7 +43,7 @@ function scheduler_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
 
             switch (strtolower($data['tab'])) {
@@ -54,16 +54,24 @@ function scheduler_admin_modifyconfig()
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
-                    
-                    if (!xarVarFetch('interval',   'int',      $interval,  xarModVars::get('scheduler', 'interval'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('debugmode',  'checkbox', $debugmode, xarModVars::get('scheduler', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
 
-                    $modvars = array(
+                    if (!xarVarFetch('interval', 'int', $interval, xarModVars::get('scheduler', 'interval'), XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+                    if (!xarVarFetch('debugmode', 'checkbox', $debugmode, xarModVars::get('scheduler', 'debugmode'), XARVAR_NOT_REQUIRED)) {
+                        return;
+                    }
+
+                    $modvars = [
                                     'interval',
                                     'debugmode',
-                                    );
+                                    ];
 
-                    foreach ($modvars as $var) if (isset($$var)) xarModVars::set('scheduler', $var, $$var);
+                    foreach ($modvars as $var) {
+                        if (isset($$var)) {
+                            xarModVars::set('scheduler', $var, $$var);
+                        }
+                    }
                 break;
             }
         break;

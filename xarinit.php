@@ -35,64 +35,64 @@ function scheduler_init()
         // *_scheduler_jobs
         $query = xarTableDDL::createTable(
             $xartable['scheduler_jobs'],
-            array('id' =>          array('type'        => 'integer',
+            ['id' =>          ['type'        => 'integer',
                                                               'unsigned'    => true,
                                                               'null'        => false,
                                                               'increment'   => true,
-                                                              'primary_key' => true),
-                                        'module' =>      array('type'       => 'varchar',
+                                                              'primary_key' => true, ],
+                                        'module' =>      ['type'       => 'varchar',
                                                                'size'       => 64,
                                                                'null'       => false,
-                                                               'default'    => ''),
-                                        'type' =>        array('type'       => 'varchar',
+                                                               'default'    => '', ],
+                                        'type' =>        ['type'       => 'varchar',
                                                                'size'       => 64,
                                                                'null'       => false,
-                                                               'default'    => ''),
-                                        'function' =>    array('type'       => 'varchar',
+                                                               'default'    => '', ],
+                                        'function' =>    ['type'       => 'varchar',
                                                                'size'       => 64,
                                                                'null'       => false,
-                                                               'default'    => ''),
-                                        'parameters' =>  array('type'       => 'varchar',
+                                                               'default'    => '', ],
+                                        'parameters' =>  ['type'       => 'varchar',
                                                                'size'       => 255,
                                                                'null'       => false,
-                                                               'default'    => ''),
-                                        'startdate' =>   array('type'        => 'integer',
+                                                               'default'    => '', ],
+                                        'startdate' =>   ['type'        => 'integer',
                                                               'unsigned'    => true,
                                                               'null'        => false,
-                                                              'default'     => '0'),
-                                        'enddate' =>     array('type'        => 'integer',
+                                                              'default'     => '0', ],
+                                        'enddate' =>     ['type'        => 'integer',
                                                               'unsigned'    => true,
                                                               'null'        => false,
-                                                              'default'     => '0'),
-                                        'job_trigger' => array('type'        => 'integer',
+                                                              'default'     => '0', ],
+                                        'job_trigger' => ['type'        => 'integer',
                                                               'size'        => 'tiny',
                                                               'unsigned'    => true,
                                                               'null'        => false,
-                                                              'default'     => '0'),
-                                        'sourcetype' =>  array('type'        => 'integer',
+                                                              'default'     => '0', ],
+                                        'sourcetype' =>  ['type'        => 'integer',
                                                               'size'        => 'tiny',
                                                               'unsigned'    => true,
                                                               'null'        => false,
-                                                              'default'     => '0'),
-                                        'lastrun' =>     array('type'        => 'integer',
+                                                              'default'     => '0', ],
+                                        'lastrun' =>     ['type'        => 'integer',
                                                               'unsigned'    => true,
                                                               'null'        => false,
-                                                              'default'     => '0'),
-                                        'job_interval' =>array('type'    => 'varchar',
+                                                              'default'     => '0', ],
+                                        'job_interval' =>['type'    => 'varchar',
                                                               'size'        => 4,
                                                               'null'        => false,
-                                                              'default'     => ''),
-                                        'result' =>      array('type'       => 'varchar',
+                                                              'default'     => '', ],
+                                        'result' =>      ['type'       => 'varchar',
                                                                'size'       => 128,
                                                                'null'       => false,
-                                                               'default'    => ''),
-                                        'source' =>      array('type'       => 'varchar',
+                                                               'default'    => '', ],
+                                        'source' =>      ['type'       => 'varchar',
                                                                'size'       => 128,
                                                                'null'       => false,
-                                                               'default'    => ''),
-                                        'crontab' =>      array('type'       => 'text',
+                                                               'default'    => '', ],
+                                        'crontab' =>      ['type'       => 'text',
                                                                'size'       => 'medium',
-                                                               'null'       => false))
+                                                               'null'       => false, ], ]
         );
         $dbconn->Execute($query);
 
@@ -129,14 +129,14 @@ function scheduler_init()
     # Create DD objects
 #
     // First pull in this module's properties as we use at least one in the objects below
-    PropertyRegistration::importPropertyTypes(false, array('modules/scheduler/xarproperties'));
+    PropertyRegistration::importPropertyTypes(false, ['modules/scheduler/xarproperties']);
 
     $module = 'scheduler';
-    $objects = array(
+    $objects = [
                    'scheduler_jobs',
-                    );
+                    ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
     // Initialisation successful
@@ -157,8 +157,8 @@ function scheduler_upgrade($oldversion)
                 'blocks',
                 'admin',
                 'register_block_type',
-                array('modName' => 'scheduler',
-                                     'blockType' => 'trigger')
+                ['modName' => 'scheduler',
+                                     'blockType' => 'trigger', ]
             )) {
                 return;
             }
@@ -225,7 +225,7 @@ function scheduler_upgrade($oldversion)
 
                 $query = "INSERT INTO $table
                             VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-                $bindvars = array($id,
+                $bindvars = [$id,
                                   $trigger,
                                   $checktype,
                                   $job['lastrun'],
@@ -234,7 +234,7 @@ function scheduler_upgrade($oldversion)
                                   $job['type'],
                                   $job['func'],
                                   $job['result'],
-                                  $checkvalue);
+                                  $checkvalue, ];
                 if (isset($job['config'])) {
                     $bindvars[] = $job['config'];
                 } else {
@@ -271,5 +271,5 @@ function scheduler_upgrade($oldversion)
  */
 function scheduler_delete()
 {
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'scheduler'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'scheduler']);
 }

@@ -19,11 +19,11 @@ function scheduler_admin_search()
         return;
     }
 
-    $data = array();
-    $data['found'] = array();
+    $data = [];
+    $data['found'] = [];
 
-    $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
-    $activemodules = array();
+    $items = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_ACTIVE]]);
+    $activemodules = [];
     foreach ($items as $item) {
         $activemodules[$item['name']] = 1;
     }
@@ -44,9 +44,9 @@ function scheduler_admin_search()
             }
             while (($file = readdir($dh2)) !== false) {
                 if (preg_match('/^(\w+)\.php$/', $file, $matches)) {
-                    $data['found'][] = array('module' => $dir, // not really, but let's not be difficult
+                    $data['found'][] = ['module' => $dir, // not really, but let's not be difficult
                                              'type' => 'scheduler',
-                                             'func' => $matches[1]);
+                                             'func' => $matches[1], ];
                 }
             }
             closedir($dh2);

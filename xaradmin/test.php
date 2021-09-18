@@ -29,7 +29,7 @@ function scheduler_admin_test()
     if (empty($itemid)) {
         return xarResponse::NotFound();
     }
-    
+
     // Security Check
     if (!xarSecurity::check('AdminScheduler')) {
         return;
@@ -49,16 +49,16 @@ function scheduler_admin_test()
 
     // Get the job details
     sys::import('modules.dynamicdata.class.objects.master');
-    $job = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
-    $job->getItem(array('itemid' => $itemid));
-    
+    $job = DataObjectMaster::getObject(['name' => 'scheduler_jobs']);
+    $job->getItem(['itemid' => $itemid]);
+
     // Run the job
     $result = xarMod::apiFunc(
         $job->properties['module']->value,
         $job->properties['type']->value,
         $job->properties['function']->value
     );
-                            
+
     // Go back to the view page
     xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     return true;

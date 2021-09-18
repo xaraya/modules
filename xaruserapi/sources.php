@@ -18,12 +18,12 @@
  */
 function scheduler_userapi_sources()
 {
-    $triggers = array(
+    $triggers = [
                        1 => xarML('Localhost'),
                        2 => xarML('IP address (direct connection)'),
                        3 => xarML('IP address (behind proxy)'),
-                       4 => xarML('Host name')
-                      );
+                       4 => xarML('Host name'),
+                      ];
 
     return $triggers;
 }

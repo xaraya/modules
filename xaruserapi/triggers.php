@@ -18,12 +18,12 @@
  */
 function scheduler_userapi_triggers()
 {
-    $triggers = array(
+    $triggers = [
                        0 => xarML('Disabled'),
                        1 => xarML('External scheduler'),
                        2 => xarML('Scheduler block'),
                     //   3 => xarML('Event handler') not currently used
-                      );
+                      ];
 
     return $triggers;
 }

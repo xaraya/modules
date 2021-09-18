@@ -16,13 +16,13 @@
  * @param  $args array specifying the custom interval
  * @return int timestamp
  */
-function scheduler_userapi_nextrun($args = array())
+function scheduler_userapi_nextrun($args = [])
 {
     if (empty($args)) {
         return 1;
     }
 
-    $newminutes = array();
+    $newminutes = [];
     if (isset($args['minute']) && $args['minute'] !== '') {
         $oldminutes = explode(',', $args['minute']);
         foreach ($oldminutes as $minute) {
@@ -42,7 +42,7 @@ function scheduler_userapi_nextrun($args = array())
     }
     sort($newminutes, SORT_NUMERIC);
 
-    $newhours = array();
+    $newhours = [];
     if (isset($args['hour']) && $args['hour'] !== '') {
         $oldhours = explode(',', $args['hour']);
         foreach ($oldhours as $hour) {
@@ -62,7 +62,7 @@ function scheduler_userapi_nextrun($args = array())
     }
     sort($newhours, SORT_NUMERIC);
 
-    $newdays = array();
+    $newdays = [];
     if (!empty($args['day'])) {
         $olddays = explode(',', $args['day']);
         foreach ($olddays as $day) {
@@ -80,7 +80,7 @@ function scheduler_userapi_nextrun($args = array())
     // we don't pre-fill the days here
     sort($newdays, SORT_NUMERIC);
 
-    $newmonths = array();
+    $newmonths = [];
     if (!empty($args['month'])) {
         $oldmonths = explode(',', $args['month']);
         foreach ($oldmonths as $month) {
@@ -100,7 +100,7 @@ function scheduler_userapi_nextrun($args = array())
     }
     sort($newmonths, SORT_NUMERIC);
 
-    $newweekdays = array();
+    $newweekdays = [];
     if (isset($args['weekday']) && $args['weekday'] !== '') {
         $oldweekdays = explode(',', $args['weekday']);
         foreach ($oldweekdays as $weekday) {

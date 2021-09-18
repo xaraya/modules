@@ -39,7 +39,7 @@ class Scheduler_TriggerBlockAdmin extends Scheduler_TriggerBlock implements iBlo
      */
     public function update()
     {
-        $vars = array();
+        $vars = [];
         if (!xarVar::fetch('showstatus', 'checkbox', $vars['showstatus'], 0, xarVar::DONT_SET)) {
             return;
         }

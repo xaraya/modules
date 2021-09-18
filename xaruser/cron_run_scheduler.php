@@ -1,4 +1,5 @@
 <?php
+
 // This file will call required URL of the scheduler module to trigger scheduler from outside
 // for testing purpose let's first call http://eventhubsacramento.com/writeinlog.php
 
@@ -9,7 +10,7 @@ writeInLog();
 function writeInLog()
 {
     // Call the scheduler using the default route (to make sure the URL is solvable)
-    $url = xarController::URL('scheduler', 'user', 'test', array(), null, null, array(), 'default');
+    $url = xarController::URL('scheduler', 'user', 'test', [], null, null, [], 'default');
     $content = getUrlContent($url);
     echo $content;
 }
@@ -17,7 +18,7 @@ function writeInLog()
 function callScheduler()
 {
     // Call the scheduler using the default route (to make sure the URL is solvable)
-    $url = xarController::URL('scheduler', 'user', 'main', array(), null, null, array(), 'default');
+    $url = xarController::URL('scheduler', 'user', 'main', [], null, null, [], 'default');
     $content = getUrlContent($url);
     echo $content;
 }
@@ -31,7 +32,7 @@ function getUrlContent($url, $loop = 0, $delay = 0)
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        
+
         $file_contents = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpCode['http_code'] < "300") {

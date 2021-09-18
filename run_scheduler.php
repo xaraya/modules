@@ -20,7 +20,7 @@
 /**
  * Redefine the paths to the Xaraya directories
  */
-$systemConfiguration = array();
+$systemConfiguration = [];
 $systemConfiguration['rootDir'] = '../../../';          // The path from here to the Xaraya root directory
 $systemConfiguration['libDir'] = 'lib/';                // The path to the lib directory relative to root
 $systemConfiguration['webDir'] = '';                    // The path to the web directory relative to root

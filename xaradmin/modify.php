@@ -26,15 +26,15 @@ function scheduler_admin_modify()
     if (!xarVar::fetch('itemid', 'id', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     if (empty($data['itemid'])) {
         xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
         return true;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'scheduler_jobs']);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     if (!empty($confirm)) {
         if (!xarSec::confirmAuthKey()) {
@@ -46,19 +46,19 @@ function scheduler_admin_modify()
         if (!$isvalid) {
             var_dump($data['object']->getInvalids());
             exit;
-            xarController::redirect(xarController::URL('scheduler', 'admin', 'modify', array('itemid' => $itemid)));
+            xarController::redirect(xarController::URL('scheduler', 'admin', 'modify', ['itemid' => $itemid]));
         }
-        
-        $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
+
+        $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
 
         xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
         return true;
-        
-        if (!xarVar::fetch('config', 'isset', $config, array(), xarVar::NOT_REQUIRED)) {
+
+        if (!xarVar::fetch('config', 'isset', $config, [], xarVar::NOT_REQUIRED)) {
             return;
         }
         if (empty($config)) {
-            $config = array();
+            $config = [];
         }
         if ($interval == '0c' && !empty($config['crontab'])) {
             $config['crontab']['nextrun'] = xarMod::apiFunc(
@@ -77,20 +77,20 @@ function scheduler_admin_modify()
 
     // Prefill the configuration array
     if (empty($data['config'])) {
-        $data['config'] = array(
+        $data['config'] = [
                                 'params' => '',
                                 'startdate' => '',
                                 'enddate' => '',
-                                'crontab' => array('minute' => '',
+                                'crontab' => ['minute' => '',
                                                    'hour' => '',
                                                    'day' => '',
                                                    'month' => '',
                                                    'weekday' => '',
-                                                   'nextrun' => ''),
+                                                   'nextrun' => '', ],
                                 // not supported yet
-                                'runas' => array('user' => '',
-                                                 'pass' => ''),
-                               );
+                                'runas' => ['user' => '',
+                                                 'pass' => '', ],
+                               ];
     }
 
     return $data;

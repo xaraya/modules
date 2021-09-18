@@ -21,7 +21,7 @@
  */
 function scheduler_xartables()
 {
-    $tables = array();
+    $tables = [];
     $tables['scheduler_jobs'] = xarDB::getPrefix() . '_scheduler_jobs';
     return $tables;
 }

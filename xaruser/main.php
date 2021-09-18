@@ -22,8 +22,7 @@ function scheduler_user_main()
 
     $interval = xarModVars::get('scheduler', 'interval');		// The interval is set in modifyconfig
     if (!empty($interval)) {
-        if (!empty($lastrun) && $lastrun >= $now - $interval )  // Make sure the defined interval has passed
-        {
+        if (!empty($lastrun) && $lastrun >= $now - $interval) {  // Make sure the defined interval has passed
             $diff = time() - $lastrun;
             $data['message'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
             return $data;
@@ -31,12 +30,12 @@ function scheduler_user_main()
         // Update the last run time
         xarModVars::set('scheduler', 'lastrun', $now);
     }
-    
-    xarModVars::set('scheduler','running',1);
-    $data['output'] = xarMod::apiFunc('scheduler','user','runjobs');
-    xarModVars::delete('scheduler','running');
-    
-	if (xarModVars::get('scheduler','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+
+    xarModVars::set('scheduler', 'running', 1);
+    $data['output'] = xarMod::apiFunc('scheduler', 'user', 'runjobs');
+    xarModVars::delete('scheduler', 'running');
+
+    if (xarModVars::get('scheduler', 'debugmode') && in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
         // Show the output to administrators
         return $data;
     } else {

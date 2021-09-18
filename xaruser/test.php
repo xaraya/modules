@@ -23,7 +23,7 @@ function scheduler_user_test()
 function callScheduler()
 {
     // Call the scheduler using the default route (to make sure the URL is solvable)
-    $url = xarController::URL('scheduler', 'user', 'main', array(), null, null, array(), 'default');
+    $url = xarController::URL('scheduler', 'user', 'main', [], null, null, [], 'default');
     $content = getUrlContent($url);
     return true;
 }
@@ -31,7 +31,7 @@ function callScheduler()
 function writeInLog()
 {
     $date = date('d.m.Y h:i:s');
-    
+
     // The Xaraya log (if enabled)
     xarLog::message('Entered in scheduler_user_test');
     xarLog::message('Current Date time');

@@ -26,14 +26,14 @@ function scheduler_userapi_get($args)
     if ((empty($itemid) || !is_numeric($itemid)) && (empty($module) || !is_string($module)) && (empty($type) || !is_string($type)) && (empty($func) || !is_string($func))) {
         throw new Exception(xarML('No itemid or URL parameters passed'));
     }
-    
+
     sys::import('modules.dynamicdata.class.objects.master');
     if (!empty($itemid)) {
-        $object = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
-        $object->getItem(array('itemid' => $args['itemid']));
+        $object = DataObjectMaster::getObject(['name' => 'scheduler_jobs']);
+        $object->getItem(['itemid' => $args['itemid']]);
         $job = $object->getFieldValues();
     } else {
-        $object = DataObjectMaster::getObjectList(array('name' => 'scheduler_jobs'));
+        $object = DataObjectMaster::getObjectList(['name' => 'scheduler_jobs']);
         $object->dataquery->eq('module', $module);
         $object->dataquery->eq('type', $type);
         $object->dataquery->eq('function', $func);

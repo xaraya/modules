@@ -33,12 +33,12 @@ function scheduler_admin_delete()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $job = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
+    $job = DataObjectMaster::getObject(['name' => 'scheduler_jobs']);
 
     // Check for confirmation
     if (empty($confirm)) {
         // No confirmation yet - get the item
-        $job->getItem(array('itemid' => $itemid));
+        $job->getItem(['itemid' => $itemid]);
 
         if (empty($job)) {
             $msg = xarML(
@@ -64,7 +64,7 @@ function scheduler_admin_delete()
         return;
     }
 
-    $job->deleteItem(array('itemid' => $itemid));
+    $job->deleteItem(['itemid' => $itemid]);
     // Pass to API
     xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     return true;

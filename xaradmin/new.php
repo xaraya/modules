@@ -26,16 +26,16 @@ function scheduler_admin_new()
     if (!xarVar::fetch('addjob', 'str', $addjob, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'scheduler_jobs']);
 
     if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/', $addjob, $matches)) {
         $data['object']->properties['module']->value = $matches[1];
         $data['object']->properties['type']->value = $matches[2];
         $data['object']->properties['function']->value = $matches[3];
     }
-    
+
     if (!empty($confirm)) {
         $isvalid = $data['object']->checkInput();
 
@@ -50,7 +50,7 @@ function scheduler_admin_new()
             exit;
             xarController::redirect(xarController::URL('scheduler', 'admin', 'new'));
         }
-        
+
         $itemid = $data['object']->createItem();
         xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
         return true;

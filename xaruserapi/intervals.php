@@ -18,7 +18,7 @@
  */
 function scheduler_userapi_intervals()
 {
-    $intervals = array(
+    $intervals = [
                        '0t' => xarML('never'),
                        '1t' => xarML('every trigger'),
                        '0c' => xarML('see crontab'),
@@ -53,7 +53,7 @@ function scheduler_userapi_intervals()
                        '4m' => xarML('every #(1) months', 4),
                        '5m' => xarML('every #(1) months', 5),
                        '6m' => xarML('every #(1) months', 6),
-                      );
+                      ];
 
     return $intervals;
 }

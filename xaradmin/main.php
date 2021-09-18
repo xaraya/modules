@@ -20,7 +20,7 @@ function scheduler_admin_main()
     }
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
-        return array();
+        return [];
     } else {
         xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
     }

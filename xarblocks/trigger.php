@@ -25,7 +25,7 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
@@ -37,7 +37,7 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
      * Display func.
      * @param $data array containing title,content
      */
-    public function display(array $data=array())
+    public function display(array $data=[])
     {
         $vars = $this->getContent();
         /*
