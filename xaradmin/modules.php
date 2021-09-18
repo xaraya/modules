@@ -24,9 +24,9 @@ function xarcachemanager_admin_modules($args)
         return;
     }
 
-    $data = array();
+    $data = [];
     if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$moduleCacheIsEnabled) {
-        $data['modules'] = array();
+        $data['modules'] = [];
         return $data;
     }
 
@@ -37,17 +37,17 @@ function xarcachemanager_admin_modules($args)
             return;
         }
 
-        xarVar::fetch('docache', 'isset', $docache, array());
-        xarVar::fetch('usershared', 'isset', $usershared, array());
-        xarVar::fetch('params', 'isset', $params, array());
-        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
+        xarVar::fetch('docache', 'isset', $docache, []);
+        xarVar::fetch('usershared', 'isset', $usershared, []);
+        xarVar::fetch('params', 'isset', $params, []);
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, []);
 
-        $newmodules = array();
+        $newmodules = [];
         // loop over something that should return values for every module
         foreach ($cacheexpire as $name => $expirelist) {
-            $newmodules[$name] = array();
+            $newmodules[$name] = [];
             foreach ($expirelist as $func => $expire) {
-                $newmodules[$name][$func] = array();
+                $newmodules[$name][$func] = [];
                 // flip from docache in template to nocache in settings
                 if (!empty($docache[$name]) && !empty($docache[$name][$func])) {
                     $newmodules[$name][$func]['nocache'] = 0;
@@ -66,8 +66,8 @@ function xarcachemanager_admin_modules($args)
                 }
                 if (!empty($expire)) {
                     $expire = xarCache_Manager::convertseconds(
-                        array('starttime' => $expire,
-                                                    'direction' => 'to')
+                        ['starttime' => $expire,
+                                                    'direction' => 'to', ]
                     );
                 } elseif ($expire === '0') {
                     $expire = 0;

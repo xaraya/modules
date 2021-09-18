@@ -37,13 +37,13 @@ function xarcachemanager_adminapi_getblocks($args)
 
     // Get all block instances
     $blocks = xarMod::apiFunc('blocks', 'user', 'getall');
-    $bid2key = array();
+    $bid2key = [];
     foreach ($blocks as $key => $block) {
         $bid2key[$block['bid']] = $key;
     }
 
     while (!$result->EOF) {
-        list($bid, $nocache, $pageshared, $usershared, $cacheexpire) = $result->fields;
+        [$bid, $nocache, $pageshared, $usershared, $cacheexpire] = $result->fields;
         $result->MoveNext();
         if (!isset($bid2key[$bid])) {
             continue;
@@ -65,8 +65,8 @@ function xarcachemanager_adminapi_getblocks($args)
                 'xarcachemanager',
                 'admin',
                 'convertseconds',
-                array('starttime' => $cacheexpire,
-                                                'direction' => 'from')
+                ['starttime' => $cacheexpire,
+                                                'direction' => 'from', ]
             );
         }
 
@@ -84,8 +84,8 @@ function xarcachemanager_adminapi_getblocks($args)
                     'blocks',
                     'user',
                     'read_type_init',
-                    array('module' => $block['module'],
-                                                  'type' => $block['type'])
+                    ['module' => $block['module'],
+                                                  'type' => $block['type'], ]
                 );
                 if (!empty($initresult) && is_array($initresult)) {
                     if (isset($initresult['nocache'])) {

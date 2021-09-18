@@ -40,11 +40,11 @@ function xarcachemanager_admin_flushcache($args)
     $cachetypes = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachetypes');
 
     if (empty($confirm)) {
-        $data = array();
+        $data = [];
 
         $data['message']    = false;
         $data['cachetypes'] = $cachetypes;
-        $data['cachekeys'] = array();
+        $data['cachekeys'] = [];
         foreach (array_keys($cachetypes) as $type) {
             $data['cachekeys'][$type] = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachekeys', $type);
         }
@@ -71,7 +71,7 @@ function xarcachemanager_admin_flushcache($args)
 
             // get the caching config settings from the config file
             $data['settings'] = xarCache_Manager::get_config(
-                array('from' => 'file', 'tpl_prep' => true)
+                ['from' => 'file', 'tpl_prep' => true]
             );
 
             // see if we need to delete an individual item instead of flushing the key
@@ -94,9 +94,9 @@ function xarcachemanager_admin_flushcache($args)
                 }
 
                 // get cache storage
-                $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
+                $cachestorage = xarCache::getStorage(['storage'  => $data['settings'][$storage],
                                                            'type'     => $type,
-                                                           'cachedir' => $outputCacheDir));
+                                                           'cachedir' => $outputCacheDir, ]);
                 if (empty($cachestorage)) {
                     continue;
                 }
@@ -125,14 +125,14 @@ function xarcachemanager_admin_flushcache($args)
         }
 
         $return_url = xarController::URL('xarcachemanager', 'admin', 'flushcache');
-        $data['returnlink'] = array('url'   => $return_url,
+        $data['returnlink'] = ['url'   => $return_url,
                                     'title' => xarMLS::translate('Return to the cache key selector'),
-                                    'label' => xarMLS::translate('Back'));
+                                    'label' => xarMLS::translate('Back'), ];
 
         $data['message'] = true;
     }
 
-    $data['cachesize'] = array();
+    $data['cachesize'] = [];
     foreach (array_keys($cachetypes) as $type) {
         $cachesize = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachesize', $type);
         if (!empty($cachesize)) {

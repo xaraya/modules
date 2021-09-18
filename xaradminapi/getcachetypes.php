@@ -25,17 +25,17 @@ function xarcachemanager_adminapi_getcachetypes()
     }
 
     // list of currently supported cache types
-    $typelist = array('page', 'block', 'module', 'object');
+    $typelist = ['page', 'block', 'module', 'object'];
 
     // get the caching config settings from the config file
     $settings = xarCache_Manager::get_config(
-        array('from' => 'file')
+        ['from' => 'file']
     );
 
     // map the settings to the right cache type
-    $cachetypes = array();
+    $cachetypes = [];
     foreach ($typelist as $type) {
-        $cachetypes[$type] = array();
+        $cachetypes[$type] = [];
         foreach (array_keys($settings) as $setting) {
             if (preg_match("/^$type\.(.+)$/i", $setting, $matches)) {
                 $info = $matches[1];

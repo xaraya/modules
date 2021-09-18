@@ -25,13 +25,13 @@ $modversion['author']         = 'jsb | mikespub';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = true;
 $modversion['user']           = false;
-$modversion['securityschema'] = array('xarCacheManager::' => '::');
+$modversion['securityschema'] = ['xarCacheManager::' => '::'];
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
+$modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
                                             'version_ge' => '2.1.0',
                                             'version_le' => '2.99.99',
-                                         ),
-                                      );
+                                         ],
+                                      ];

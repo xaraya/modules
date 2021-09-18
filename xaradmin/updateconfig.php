@@ -92,7 +92,7 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVar::fetch('modulesizelimit', 'float:0.25:', $modulesizelimit, 2, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('modulefunctions', 'isset', $modulefunctions, array(), xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('modulefunctions', 'isset', $modulefunctions, [], xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -111,7 +111,7 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVar::fetch('objectsizelimit', 'float:0.25:', $objectsizelimit, 2, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('objectmethods', 'isset', $objectmethods, array(), xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('objectmethods', 'isset', $objectmethods, [], xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -210,26 +210,26 @@ function xarcachemanager_admin_updateconfig()
 
     //turn hh:mm:ss back into seconds
     $pageexpiretime = xarCache_Manager::convertseconds(
-        array('starttime' => $pageexpiretime,
-                                        'direction' => 'to')
+        ['starttime' => $pageexpiretime,
+                                        'direction' => 'to', ]
     );
     $blockexpiretime = xarCache_Manager::convertseconds(
-        array('starttime' => $blockexpiretime,
-                                       'direction' => 'to')
+        ['starttime' => $blockexpiretime,
+                                       'direction' => 'to', ]
     );
     $moduleexpiretime = xarCache_Manager::convertseconds(
-        array('starttime' => $moduleexpiretime,
-                                       'direction' => 'to')
+        ['starttime' => $moduleexpiretime,
+                                       'direction' => 'to', ]
     );
     $objectexpiretime = xarCache_Manager::convertseconds(
-        array('starttime' => $objectexpiretime,
-                                       'direction' => 'to')
+        ['starttime' => $objectexpiretime,
+                                       'direction' => 'to', ]
     );
 
     // updated the config.caching settings
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
-    $configSettings = array();
+    $configSettings = [];
     $configSettings['Output.DefaultTheme'] = $cachetheme;
     $configSettings['Output.SizeLimit'] = $cachesizelimit;
     $configSettings['Output.CookieName'] = xarConfigVars::get(null, 'Site.Session.CookieName');
@@ -280,8 +280,8 @@ function xarcachemanager_admin_updateconfig()
     xarModVars::set('xarcachemanager', 'DefaultObjectCacheMethods', serialize($objectmethods));
 
     xarCache_Manager::save_config(
-        array('configSettings' => $configSettings,
-                        'cachingConfigFile' => $cachingConfigFile)
+        ['configSettings' => $configSettings,
+                        'cachingConfigFile' => $cachingConfigFile, ]
     );
 
     // see if we need to flush the cache when a new comment is added for some item
@@ -321,9 +321,9 @@ function xarcachemanager_admin_updateconfig()
         $outputCacheDir = xarCache::getOutputCacheDir();
 
         // get the cache storage for block caching
-        $cachestorage = xarCache::getStorage(array('storage'  => $blockcachestorage,
+        $cachestorage = xarCache::getStorage(['storage'  => $blockcachestorage,
                                                    'type'     => 'block',
-                                                   'cachedir' => $outputCacheDir));
+                                                   'cachedir' => $outputCacheDir, ]);
         if (!empty($cachestorage)) {
             $cachestorage->flushCached('base-');
             // CHECKME: no longer used ?

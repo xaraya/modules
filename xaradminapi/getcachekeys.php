@@ -23,7 +23,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
 
 function xarcachemanager_adminapi_getcachekeys($type = '')
 {
-    $cachekeys = array();
+    $cachekeys = [];
 
     // get cache type settings
     $cachetypes = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachetypes');
@@ -44,9 +44,9 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     }
 
     // get cache storage
-    $cachestorage = xarCache::getStorage(array('storage'  => $storage,
+    $cachestorage = xarCache::getStorage(['storage'  => $storage,
                                                'type'     => $type,
-                                               'cachedir' => $outputCacheDir));
+                                               'cachedir' => $outputCacheDir, ]);
     if (empty($cachestorage)) {
         return $cachekeys;
     }

@@ -22,7 +22,7 @@ function xarcachemanager_adminapi_getobjects($args)
     extract($args);
 
     // Get all object cache settings
-    $objectsettings = array();
+    $objectsettings = [];
     $serialsettings = xarModVars::get('dynamicdata', 'objectcache_settings');
     if (!empty($serialsettings)) {
         $objectsettings = unserialize($serialsettings);
@@ -36,7 +36,7 @@ function xarcachemanager_adminapi_getobjects($args)
 
     // CHECKME: do we want to support settings for non-objects (like tables) ?
 
-    $objectconfig = array();
+    $objectconfig = [];
     foreach (array_keys($objects) as $id) {
         // TODO: filter on visibility, dummy datastores etc. ?
         if ($objects[$id]['objectid'] < 4 ||
@@ -47,7 +47,7 @@ function xarcachemanager_adminapi_getobjects($args)
         // use the object name as key for easy lookup in xarObjectCache
         $name = $objects[$id]['name'];
         $objectconfig[$name] = $objects[$id];
-        $objectconfig[$name]['cachesettings'] = array();
+        $objectconfig[$name]['cachesettings'] = [];
         if (isset($objectsettings[$name])) {
             foreach ($objectsettings[$name] as $method => $settings) {
                 if ($settings['cacheexpire'] > 0) {
@@ -55,8 +55,8 @@ function xarcachemanager_adminapi_getobjects($args)
                         'xarcachemanager',
                         'admin',
                         'convertseconds',
-                        array('starttime' => $settings['cacheexpire'],
-                                                                     'direction' => 'from')
+                        ['starttime' => $settings['cacheexpire'],
+                                                                     'direction' => 'from', ]
                     );
                 }
                 $objectconfig[$name]['cachesettings'][$method] = $settings;
@@ -67,7 +67,7 @@ function xarcachemanager_adminapi_getobjects($args)
             if (isset($objectconfig[$name]['cachesettings'][$method])) {
                 continue;
             }
-            $settings = array();
+            $settings = [];
             // flip from docache in config to nocache in settings
             if (!empty($docache)) {
                 $settings['nocache'] = 0;

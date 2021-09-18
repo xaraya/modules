@@ -24,9 +24,9 @@ function xarcachemanager_admin_blocks($args)
         return;
     }
 
-    $data = array();
+    $data = [];
     if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$blockCacheIsEnabled) {
-        $data['blocks'] = array();
+        $data['blocks'] = [];
         return $data;
     }
 
@@ -37,15 +37,15 @@ function xarcachemanager_admin_blocks($args)
             return;
         }
 
-        xarVar::fetch('docache', 'isset', $docache, array());
-        xarVar::fetch('pageshared', 'isset', $pageshared, array());
-        xarVar::fetch('usershared', 'isset', $usershared, array());
-        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
+        xarVar::fetch('docache', 'isset', $docache, []);
+        xarVar::fetch('pageshared', 'isset', $pageshared, []);
+        xarVar::fetch('usershared', 'isset', $usershared, []);
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, []);
 
-        $newblocks = array();
+        $newblocks = [];
         // loop over something that should return values for every block
         foreach ($cacheexpire as $bid => $expire) {
-            $newblocks[$bid] = array();
+            $newblocks[$bid] = [];
             $newblocks[$bid]['bid'] = $bid;
             // flip from docache in template to nocache in settings
             if (!empty($docache[$bid])) {
@@ -65,8 +65,8 @@ function xarcachemanager_admin_blocks($args)
             }
             if (!empty($expire)) {
                 $expire = xarCache_Manager::convertseconds(
-                    array('starttime' => $expire,
-                                                'direction' => 'to')
+                    ['starttime' => $expire,
+                                                'direction' => 'to', ]
                 );
             } elseif ($expire === '0') {
                 $expire = 0;
@@ -93,7 +93,7 @@ function xarcachemanager_admin_blocks($args)
                                                   theuser,
                                                   expire)
                         VALUES (?,?,?,?,?)";
-            $bindvars = array($block['bid'], $block['nocache'], $block['pageshared'], $block['usershared'], $block['cacheexpire']);
+            $bindvars = [$block['bid'], $block['nocache'], $block['pageshared'], $block['usershared'], $block['cacheexpire']];
             $result =& $dbconn->Execute($query, $bindvars);
             if (!$result) {
                 return;

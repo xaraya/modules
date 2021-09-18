@@ -21,7 +21,7 @@ function xarcachemanager_init()
 {
     // set up the config.caching file and output cache directory structure
     $varCacheDir = sys::varpath() . '/cache';
-    if (!xarcachemanager_fs_setup(array('varCacheDir' => $varCacheDir))) {
+    if (!xarcachemanager_fs_setup(['varCacheDir' => $varCacheDir])) {
         return false;
     }
 
@@ -88,7 +88,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'articles', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'articles', 'hookModName' => 'xarcachemanager']
         );
     }
     // Enable xarcachemanager hooks for base
@@ -97,7 +97,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'base', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'base', 'hookModName' => 'xarcachemanager']
         );
     }
     // Enable xarcachemanager hooks for blocks
@@ -106,7 +106,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'blocks', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'blocks', 'hookModName' => 'xarcachemanager']
         );
     }
     // Enable xarcachemanager hooks for categories
@@ -115,7 +115,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'categories', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'categories', 'hookModName' => 'xarcachemanager']
         );
     }
     // Enable xarcachemanager hooks for roles
@@ -124,7 +124,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'roles', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'roles', 'hookModName' => 'xarcachemanager']
         );
     }
     // Enable xarcachemanager hooks for privileges
@@ -133,7 +133,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'privileges', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'privileges', 'hookModName' => 'xarcachemanager']
         );
     }
     // Enable xarcachemanager hooks for dynamicdata
@@ -142,7 +142,7 @@ function xarcachemanager_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'dynamicdata', 'hookModName' => 'xarcachemanager')
+            ['callerModName' => 'dynamicdata', 'hookModName' => 'xarcachemanager']
         );
     }
 
@@ -177,7 +177,7 @@ function xarcachemanager_upgrade($oldversion)
     $varCacheDir = sys::varpath() . '/cache';
     $defaultConfigFile = sys::code() . 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
-    
+
     // check to see if we've got the necessary permissions to upgrade
     if ((!file_exists($cachingConfigFile) && !is_writable($varCacheDir)) ||
         (file_exists($cachingConfigFile) && !is_writable($cachingConfigFile))) {
@@ -189,7 +189,7 @@ function xarcachemanager_upgrade($oldversion)
         throw new Exception($msg);
         return false;
     }
-    
+
     sys::import('modules.xarcachemanager.class.cache_manager');
     // parse the current distribution config file so we have default values
     include_once($defaultConfigFile);
@@ -202,8 +202,8 @@ function xarcachemanager_upgrade($oldversion)
             include($cachingConfigFile);
             $cachingConfiguration['Output.SizeLimit'] = $cachingConfiguration['Output.SizeLimit'] * 1048576;
             xarCache_Manager::save_config(
-                array('configSettings' => $cachingConfiguration,
-                      'cachingConfigFile' => $cachingConfigFile)
+                ['configSettings' => $cachingConfiguration,
+                      'cachingConfigFile' => $cachingConfigFile, ]
             );
                       // no break
         case 0.2:
@@ -212,8 +212,8 @@ function xarcachemanager_upgrade($oldversion)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
                 $configSettings = xarCache_Manager::get_config(
-                    array('from' => 'file',
-                                                      'cachingConfigFile' => $cachingConfigFile)
+                    ['from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 if (isset($configSettings['Page.DefaultTheme'])) {
                     $configSettings['Output.DefaultTheme'] = $configSettings['Page.DefaultTheme'];
@@ -221,8 +221,8 @@ function xarcachemanager_upgrade($oldversion)
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
                 xarCache_Manager::save_config(
-                    array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                    ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
                 );
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
@@ -244,14 +244,14 @@ function xarcachemanager_upgrade($oldversion)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
                 $configSettings = xarCache_Manager::get_config(
-                    array('from' => 'file',
-                                                      'cachingConfigFile' => $cachingConfigFile)
+                    ['from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
                 xarCache_Manager::save_config(
-                    array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                    ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
                 );
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
@@ -270,44 +270,44 @@ function xarcachemanager_upgrade($oldversion)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
                 $configSettings = xarCache_Manager::get_config(
-                    array('from' => 'file',
-                                                      'cachingConfigFile' => $cachingConfigFile)
+                    ['from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
                 xarCache_Manager::save_config(
-                    array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                    ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
                 );
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
 
             // set up the new output sub-directorys
-            if (!xarcachemanager_fs_setup(array('varCacheDir' => $varCacheDir))) {
+            if (!xarcachemanager_fs_setup(['varCacheDir' => $varCacheDir])) {
                 return false;
             }
-            
+
             // since we've moved around where output will be cached, flush everything out
 
             // no break
         case '0.3.2':
             // Code to upgrade from the 0.3.2 version (base block level caching)
             // Double check the file system setup
-            if (!xarcachemanager_fs_setup(array('varCacheDir' => $varCacheDir))) {
+            if (!xarcachemanager_fs_setup(['varCacheDir' => $varCacheDir])) {
                 return false;
             }
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
                 $configSettings = xarCache_Manager::get_config(
-                    array('from' => 'file',
-                                                      'cachingConfigFile' => $cachingConfigFile)
+                    ['from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
                 xarCache_Manager::save_config(
-                    array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                    ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
                 );
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
@@ -321,37 +321,37 @@ function xarcachemanager_upgrade($oldversion)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
                 $configSettings = xarCache_Manager::get_config(
-                    array('from' => 'file',
-                                                      'cachingConfigFile' => $cachingConfigFile)
+                    ['from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
                 xarCache_Manager::save_config(
-                    array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                    ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
                 );
             } else {
                 // as of version 0.3.3 we can restore the config from modvars
                 $configSettings = xarCache_Manager::get_config(
-                    array('from' => 'db',
-                                                      'cachingConfigFile' => $cachingConfigFile)
+                    ['from' => 'db',
+                                                      'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 copy($defaultConfigFile, $cachingConfigFile);
                 xarCache_Manager::save_config(
-                    array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                    ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
                 );
             }
             // no break
         case '0.3.4':
             $configSettings = xarCache_Manager::get_config(
-                array('from' => 'db',
-                                                  'cachingConfigFile' => $cachingConfigFile)
+                ['from' => 'db',
+                                                  'cachingConfigFile' => $cachingConfigFile, ]
             );
             copy($defaultConfigFile, $cachingConfigFile);
             xarCache_Manager::save_config(
-                array('configSettings' => $configSettings,
-                          'cachingConfigFile' => $cachingConfigFile)
+                ['configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile, ]
             );
                           // no break
         case '0.3.5':
@@ -463,19 +463,19 @@ function xarcachemanager_delete()
 function xarcachemanager_fs_setup($args)
 {
     extract($args);
-    
+
     // default var cache directory
     if (!isset($varCacheDir)) {
         $varCacheDir = sys::varpath() . '/cache';
     }
-    
+
     // output cache directory
     $cacheOutputDir = $varCacheDir . '/output';
-    
+
     // caching config files
     $defaultConfigFile = sys::code() . 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir .'/config.caching.php';
-    
+
     // confirm that the things are ready to be set up
     if (is_writable($varCacheDir)) {
         if (!file_exists($cachingConfigFile)) {
@@ -503,7 +503,7 @@ function xarcachemanager_fs_setup($args)
             return false;
         }
     }
-    
+
     // confirm the caching config file is good to go
     if (!is_writable($cachingConfigFile)) {
         $msg=xarMLS::translate('The #(1) file must be writable by the web server for 
@@ -511,14 +511,14 @@ function xarcachemanager_fs_setup($args)
         throw new Exception($msg);
         return false;
     }
-    
+
     // set up the directories
-    $outputCacheDirs = array($cacheOutputDir);
-    $additionalDirs = array('page', 'block', 'module', 'object');
+    $outputCacheDirs = [$cacheOutputDir];
+    $additionalDirs = ['page', 'block', 'module', 'object'];
     foreach ($additionalDirs as $addDir) {
         $outputCacheDirs[] = $cacheOutputDir . '/' . $addDir;
     }
-    
+
     foreach ($outputCacheDirs as $setupDir) {
         // check if the directory already exists
         if (is_dir($setupDir)) {
@@ -557,7 +557,7 @@ function xarcachemanager_rmdirr($dirname)
     if (is_file($dirname)) {
         return unlink($dirname);
     }
-    
+
     // loop through the folder
     $dir = dir($dirname);
     while (false !== $entry = $dir->read()) {
@@ -565,7 +565,7 @@ function xarcachemanager_rmdirr($dirname)
         if ($entry == '.' || $entry == '..') {
             continue;
         }
-        
+
         // Deep delete directories
         if (is_dir("$dirname/$entry")) {
             xarcachemanager_rmdirr("$dirname/$entry");
@@ -573,7 +573,7 @@ function xarcachemanager_rmdirr($dirname)
             unlink("$dirname/$entry");
         }
     }
-    
+
     // clean up
     $dir->close();
     return rmdir($dirname);
@@ -597,43 +597,43 @@ function xarcachemanager_create_cache_data()
 
         $query = xarTableDDL::createTable(
             $cachedatatable,
-            array('xar_id'   => array('type'        => 'integer',
+            ['xar_id'   => ['type'        => 'integer',
                                                             'null'        => false,
                                                             'default'     => '0',
                                                             'increment'   => true,
-                                                            'primary_key' => true),
+                                                            'primary_key' => true, ],
                                         // cache type : page, block, template, module, ...
-                                        'xar_type' => array('type'        => 'varchar',
+                                        'xar_type' => ['type'        => 'varchar',
                                                             'size'        => 20,
                                                             'null'        => false,
-                                                            'default'     => ''),
+                                                            'default'     => '', ],
                                         // cache key
-                                        'xar_key'  => array('type'        => 'varchar',
+                                        'xar_key'  => ['type'        => 'varchar',
                                                             'size'        => 127,
                                                             'null'        => false,
-                                                            'default'     => ''),
+                                                            'default'     => '', ],
                                         // cache code
-                                        'xar_code' => array('type'        => 'varchar',
+                                        'xar_code' => ['type'        => 'varchar',
                                                             'size'        => 32,
                                                             'null'        => false,
-                                                            'default'     => ''),
+                                                            'default'     => '', ],
                                         // last modified time
-                                        'xar_time' => array('type'        => 'integer',
+                                        'xar_time' => ['type'        => 'integer',
                                                             'null'        => false,
-                                                            'default'     => '0'),
+                                                            'default'     => '0', ],
                                         // size of the cached data (e.g. for clean-up or gzip)
-                                        'xar_size' => array('type'        => 'integer',
+                                        'xar_size' => ['type'        => 'integer',
                                                             'null'        => false,
-                                                            'default'     => '0'),
+                                                            'default'     => '0', ],
                                         // check for the cached data (e.g. crc for gzip, or md5 for ...)
-                                        'xar_check' => array('type'        => 'varchar',
+                                        'xar_check' => ['type'        => 'varchar',
                                                              'size'        => 32,
                                                              'null'        => false,
-                                                             'default'     => ''),
+                                                             'default'     => '', ],
                                         // the actual cached data
-                                        'xar_data'  => array('type'        => 'text',
+                                        'xar_data'  => ['type'        => 'text',
                                                              'size'        => 'medium', // 16 MB
-                                                             'null'        => false))
+                                                             'null'        => false, ], ]
         );
         if (empty($query)) {
             return;
@@ -646,10 +646,10 @@ function xarcachemanager_create_cache_data()
         // TODO: verify if separate indexes work better here or not (varchar)
         $query = xarTableDDL::createIndex(
             $cachedatatable,
-            array('name'   => 'i_' . xarDB::getPrefix() . '_cachedata_combo',
-                                        'fields' => array('xar_type',
+            ['name'   => 'i_' . xarDB::getPrefix() . '_cachedata_combo',
+                                        'fields' => ['xar_type',
                                                           'xar_key',
-                                                          'xar_code'))
+                                                          'xar_code', ], ]
         );
         // TODO: verify if we can make this index unique despite concurrent saves
         //                                    'unique' => 'true'));

@@ -22,7 +22,7 @@ function xarcachemanager_adminapi_getmodules($args)
     extract($args);
 
     // Get all module cache settings
-    $modulesettings = array();
+    $modulesettings = [];
     $serialsettings = xarModVars::get('modules', 'modulecache_settings');
     if (!empty($serialsettings)) {
         $modulesettings = unserialize($serialsettings);
@@ -35,10 +35,10 @@ function xarcachemanager_adminapi_getmodules($args)
     $modules = xarMod::apiFunc('modules', 'admin', 'getlist');
 
     // Get all module functions (user GUI)
-    $modulefunctions = array();
+    $modulefunctions = [];
     foreach ($modules as $module) {
         $name = $module['name'];
-        $modulefunctions[$name] = array();
+        $modulefunctions[$name] = [];
         // find the caching configuration from the mapper file (if it exists)
         $mapperfile = realpath(sys::code() . 'modules/' . $module['directory'] . '/xarmapper.php');
         if ($mapperfile) {
@@ -77,9 +77,9 @@ function xarcachemanager_adminapi_getmodules($args)
                     $modulefunctions[$name][] = $func;
                     // initialize the module settings from the function file if necessary
                     if (empty($modulesettings[$name][$func])) {
-                        $settings = array();
+                        $settings = [];
                         // try to find all xarVar::fetch() parameters in this function
-                        $params = array();
+                        $params = [];
                         $content = implode('', file($thisfile));
                         if (preg_match_all("/xarVar::fetch\(\s*'([^']+)'/", $content, $params)) {
                             // add the parameters discovered in the function file
@@ -106,7 +106,7 @@ function xarcachemanager_adminapi_getmodules($args)
         }
     }
 
-    $moduleconfig = array();
+    $moduleconfig = [];
     foreach ($modules as $module) {
         // use the module name as key for easy lookup in xarModuleCache
         $name = $module['name'];
@@ -117,7 +117,7 @@ function xarcachemanager_adminapi_getmodules($args)
             continue;
         }
         $moduleconfig[$name] = $module;
-        $moduleconfig[$name]['cachesettings'] = array();
+        $moduleconfig[$name]['cachesettings'] = [];
         if (isset($modulesettings[$name])) {
             foreach ($modulesettings[$name] as $func => $settings) {
                 if ($settings['cacheexpire'] > 0) {
@@ -125,8 +125,8 @@ function xarcachemanager_adminapi_getmodules($args)
                         'xarcachemanager',
                         'admin',
                         'convertseconds',
-                        array('starttime' => $settings['cacheexpire'],
-                                                                     'direction' => 'from')
+                        ['starttime' => $settings['cacheexpire'],
+                                                                     'direction' => 'from', ]
                     );
                 }
                 $moduleconfig[$name]['cachesettings'][$func] = $settings;
@@ -136,7 +136,7 @@ function xarcachemanager_adminapi_getmodules($args)
             if (isset($moduleconfig[$name]['cachesettings'][$func])) {
                 continue;
             }
-            $settings = array();
+            $settings = [];
             if (preg_match('/\w+hook$/', $func)) {
                 // default hook parameters
                 $settings['params'] = 'objectid,extrainfo';

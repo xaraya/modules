@@ -19,7 +19,7 @@
 function xarcachemanager_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     // Set the table names
     $xartable['cache_blocks'] = xarDB::getPrefix() . '_cache_blocks'; // cfr. blocks module

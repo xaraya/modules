@@ -22,7 +22,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
  */
 function xarcachemanager_adminapi_getcachedirs($dir = false)
 {
-    $cachedirs = array();
+    $cachedirs = [];
 
     if ($dir && is_dir($dir)) {
         if (substr($dir, -1) != "/") {

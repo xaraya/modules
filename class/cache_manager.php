@@ -15,7 +15,7 @@
 
 class xarCache_Manager extends xarObject
 {
-    public static function init(array $args = array())
+    public static function init(array $args = [])
     {
     }
 
@@ -52,7 +52,7 @@ class xarCache_Manager extends xarObject
 
         // Make sure the caching configuration array is initialized
         // so we don't run into possible errors later.
-        $cachingConfiguration = array();
+        $cachingConfiguration = [];
 
         switch ($from) {
 
@@ -88,13 +88,13 @@ class xarCache_Manager extends xarObject
                     }
 
                     $sql="SELECT $module_varstable.xar_name, $module_varstable.xar_value FROM $module_varstable WHERE $module_varstable.xar_modid = ?";
-                    $result =& $dbconn->Execute($sql, array($modBaseInfo['systemid']));
+                    $result =& $dbconn->Execute($sql, [$modBaseInfo['systemid']]);
                     if (!$result) {
                         return;
                     }
 
                     while (!$result->EOF) {
-                        list($name, $value) = $result->fields;
+                        [$name, $value] = $result->fields;
                         $result->MoveNext();
                         if (substr($value, 0, 6) == 'array-') {
                             $value = substr($value, 6);
@@ -191,7 +191,7 @@ class xarCache_Manager extends xarObject
                     $keyslist = array_keys($configValue);
                     // support basic associative array too
                     if (!is_numeric($keyslist[0])) {
-                        $keyValue = array();
+                        $keyValue = [];
                         foreach ($keyslist as $key) {
                             $keyValue[] = $key . "' => '" . $configValue[$key];
                         }
@@ -231,8 +231,8 @@ class xarCache_Manager extends xarObject
         $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
         $configSettings = self::get_config(
-            array('from' => 'db',
-                                          'cachingConfigFile' => $cachingConfigFile)
+            ['from' => 'db',
+                                          'cachingConfigFile' => $cachingConfigFile, ]
         );
 
         // Confirm the cache directory is writable
@@ -263,7 +263,7 @@ class xarCache_Manager extends xarObject
         }
         copy($defaultConfigFile, $cachingConfigFile);
         self::save_config(
-            array('configSettings' => $configSettings)
+            ['configSettings' => $configSettings]
         );
 
         return true;
@@ -285,7 +285,7 @@ class xarCache_Manager extends xarObject
 
         $keyslist = str_replace('.', '', array_keys($cachingConfiguration));
         $valueslist = array_values($cachingConfiguration);
-        $settings = array();
+        $settings = [];
 
         $arraysize = sizeof($keyslist);
         for ($i=0;$i<$arraysize;$i++) {

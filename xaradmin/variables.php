@@ -24,9 +24,9 @@ function xarcachemanager_admin_variables($args)
         return;
     }
 
-    $data = array();
+    $data = [];
     if (!xarCache::$variableCacheIsEnabled) {
-        $data['variables'] = array();
+        $data['variables'] = [];
         return $data;
     }
 
@@ -37,13 +37,13 @@ function xarcachemanager_admin_variables($args)
             return;
         }
 
-        xarVar::fetch('docache', 'isset', $docache, array());
-        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
+        xarVar::fetch('docache', 'isset', $docache, []);
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, []);
 
-        $newvariables = array();
+        $newvariables = [];
         // loop over something that should return values for every variable
         foreach ($cacheexpire as $name => $expire) {
-            $newvariables[$name] = array();
+            $newvariables[$name] = [];
             $newvariables[$name]['name'] = $name;
             // flip from docache in template to nocache in settings
             if (!empty($docache[$name])) {
@@ -53,8 +53,8 @@ function xarcachemanager_admin_variables($args)
             }
             if (!empty($expire)) {
                 $expire = xarCache_Manager::convertseconds(
-                    array('starttime' => $expire,
-                                                'direction' => 'to')
+                    ['starttime' => $expire,
+                                                'direction' => 'to', ]
                 );
             } elseif ($expire === '0') {
                 $expire = 0;

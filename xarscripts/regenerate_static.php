@@ -14,7 +14,7 @@
 /**
  * Load the layout file so we know where to find the Xaraya directories
  */
-$systemConfiguration = array();
+$systemConfiguration = [];
 include 'var/layout.system.php';
 if (!isset($systemConfiguration['rootDir'])) {
     $systemConfiguration['rootDir'] = '../';

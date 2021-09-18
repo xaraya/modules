@@ -42,9 +42,9 @@ function xarcachemanager_adminapi_getcachesize($type = '')
     }
 
     // get cache storage
-    $cachestorage = xarCache::getStorage(array('storage'  => $storage,
+    $cachestorage = xarCache::getStorage(['storage'  => $storage,
                                                'type'     => $type,
-                                               'cachedir' => $outputCacheDir));
+                                               'cachedir' => $outputCacheDir, ]);
     if (empty($cachestorage)) {
         return $cachesize;
     }

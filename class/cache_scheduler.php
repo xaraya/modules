@@ -15,7 +15,7 @@
 
 class xarCache_Scheduler extends xarObject
 {
-    public static function init(array $args = array())
+    public static function init(array $args = [])
     {
     }
 
@@ -43,15 +43,15 @@ class xarCache_Scheduler extends xarObject
             $wait = 2;
         }
         // avoid the current page just in case...
-        $avoid = xarServer::getCurrentURL(array(), false);
+        $avoid = xarServer::getCurrentURL([], false);
 
         $level = 0;
-        $seen = array();
-        $todo = array($starturl);
+        $seen = [];
+        $todo = [$starturl];
 
         // breadth-first
         while ($level <= $maxlevel && count($todo) > 0) {
-            $found = array();
+            $found = [];
             foreach ($todo as $url) {
                 $seen[$url] = 1;
 
@@ -60,7 +60,7 @@ class xarCache_Scheduler extends xarObject
                     'base',
                     'user',
                     'getfile',
-                    array('url' => $url)
+                    ['url' => $url]
                 );
                 if (empty($page)) {
                     continue;
@@ -71,7 +71,7 @@ class xarCache_Scheduler extends xarObject
                     'base',
                     'user',
                     'extractlinks',
-                    array('content' => $page)
+                    ['content' => $page]
                 );
                 foreach ($links as $link) {
                     $found[$link] = 1;
@@ -82,7 +82,7 @@ class xarCache_Scheduler extends xarObject
                     sleep($wait);
                 }
             }
-            $todo = array();
+            $todo = [];
             foreach (array_keys($found) as $link) {
                 if (!isset($seen[$link]) && $link != $avoid) {
                     $todo[] = $link;

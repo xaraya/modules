@@ -16,7 +16,7 @@ sys::import('modules.xarcachemanager.class.cache_manager');
 
 class xarCache_Hooks extends xarObject
 {
-    public static function init(array $args = array())
+    public static function init(array $args = [])
     {
     }
 
@@ -28,7 +28,7 @@ class xarCache_Hooks extends xarObject
      */
     public static function regenstatic($nolimit = null)
     {
-        $urls = array();
+        $urls = [];
         $outputCacheDir = sys::varpath() . '/cache/output/';
 
         // make sure output caching is really enabled, and that we are caching pages
@@ -39,9 +39,9 @@ class xarCache_Hooks extends xarObject
         // flush the static pages
         xarPageCache::flushCached('static');
 
-        $configKeys = array('Page.SessionLess');
+        $configKeys = ['Page.SessionLess'];
         $sessionlessurls = xarCache_Manager::get_config(
-            array('keys' => $configKeys, 'from' => 'file', 'viahook' => true)
+            ['keys' => $configKeys, 'from' => 'file', 'viahook' => true]
         );
 
         $urls = $sessionlessurls['Page.SessionLess'];
@@ -59,7 +59,7 @@ class xarCache_Hooks extends xarObject
         foreach ($urls as $url) {
             // Make sure the url isn't empty before calling getfile()
             if (strlen(trim($url))) {
-                xarMod::apiFunc('base', 'user', 'getfile', array('url' => $url, 'superrors' => true));
+                xarMod::apiFunc('base', 'user', 'getfile', ['url' => $url, 'superrors' => true]);
             }
             if (!$nolimit && time() > $timelimit) {
                 break;
@@ -95,7 +95,7 @@ class xarCache_Hooks extends xarObject
             return;
         }
         if (!isset($extrainfo) || !is_array($extrainfo)) {
-            $extrainfo = array();
+            $extrainfo = [];
         }
 
         if (!xarCache::$outputCacheIsEnabled) {
@@ -170,8 +170,8 @@ class xarCache_Hooks extends xarObject
             case 'dynamicdata':
                 // get the objectname
                 sys::import('modules.dynamicdata.class.objects.master');
-                $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => $modid,
-                                                                    'itemtype' => $itemtype));
+                $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
+                                                                    'itemtype' => $itemtype, ]);
             // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarOutputCache::$pageCacheIsEnabled) {
@@ -328,22 +328,22 @@ class xarCache_Hooks extends xarObject
                  FROM $blocksettings WHERE blockinstance_id = $itemid ";
         $result =& $dbconn->Execute($query);
         if ($result && !$result->EOF) {
-            list($noCache, $pageShared, $userShared, $blockCacheExpireTime) = $result->fields;
+            [$noCache, $pageShared, $userShared, $blockCacheExpireTime] = $result->fields;
         } else {
             $noCache = 0;
             $pageShared = 0;
             $userShared = 0;
             $blockCacheExpireTime = null;
             // Get the instance details.
-            $instance = xarMod::apiFunc('blocks', 'user', 'get', array('bid' => $itemid));
+            $instance = xarMod::apiFunc('blocks', 'user', 'get', ['bid' => $itemid]);
             // Try loading some defaults from the block init array (cfr. articles/random)
             if (!empty($instance) && !empty($instance['module']) && !empty($instance['type'])) {
                 $initresult = xarMod::apiFunc(
                     'blocks',
                     'user',
                     'read_type_init',
-                    array('module' => $instance['module'],
-                                                  'type' => $instance['type'])
+                    ['module' => $instance['module'],
+                                                  'type' => $instance['type'], ]
                 );
                 if (!empty($initresult) && is_array($initresult)) {
                     if (isset($initresult['nocache'])) {
@@ -363,18 +363,18 @@ class xarCache_Hooks extends xarObject
         }
         if (!empty($blockCacheExpireTime)) {
             $blockCacheExpireTime = xarCache_Manager::convertseconds(
-                array('starttime' => $blockCacheExpireTime,
-                                                         'direction' => 'from')
+                ['starttime' => $blockCacheExpireTime,
+                                                         'direction' => 'from', ]
             );
         }
         return xarTpl::module(
             'xarcachemanager',
             'admin',
             'modifyhook',
-            array('noCache' => $noCache,
+            ['noCache' => $noCache,
                                   'pageShared' => $pageShared,
                                   'userShared' => $userShared,
-                                  'cacheExpire' => $blockCacheExpireTime)
+                                  'cacheExpire' => $blockCacheExpireTime, ]
         );
     }
 
@@ -405,7 +405,7 @@ class xarCache_Hooks extends xarObject
             return;
         }
         if (!isset($extrainfo) || !is_array($extrainfo)) {
-            $extrainfo = array();
+            $extrainfo = [];
         }
 
         // When called via hooks, modname wil be empty, but we get it from the
@@ -466,8 +466,8 @@ class xarCache_Hooks extends xarObject
                     }
                     if (!empty($cacheexpire)) {
                         $cacheexpire = xarCache_Manager::convertseconds(
-                            array('starttime' => $cacheexpire,
-                                  'direction' => 'to')
+                            ['starttime' => $cacheexpire,
+                                  'direction' => 'to', ]
                         );
                     }
 
@@ -488,7 +488,7 @@ class xarCache_Hooks extends xarObject
                                                           theuser,
                                                           expire)
                                 VALUES (?,?,?,?,?)";
-                    $bindvars = array($objectid, $nocache, $pageshared, $usershared, $cacheexpire);
+                    $bindvars = [$objectid, $nocache, $pageshared, $usershared, $cacheexpire];
                     $result =& $dbconn->Execute($query, $bindvars);
                 }
 
@@ -528,8 +528,8 @@ class xarCache_Hooks extends xarObject
             case 'dynamicdata':
                 // get the objectname
                 sys::import('modules.dynamicdata.class.objects.master');
-                $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => $modid,
-                                                                    'itemtype' => $itemtype));
+                $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
+                                                                    'itemtype' => $itemtype, ]);
             // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
@@ -610,7 +610,7 @@ class xarCache_Hooks extends xarObject
             return;
         }
         if (!isset($extrainfo) || !is_array($extrainfo)) {
-            $extrainfo = array();
+            $extrainfo = [];
         }
 
         // When called via hooks, modname wil be empty, but we get it from the
@@ -696,8 +696,8 @@ class xarCache_Hooks extends xarObject
             case 'dynamicdata':
                 // get the objectname
                 sys::import('modules.dynamicdata.class.objects.master');
-                $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => $modid,
-                                                                    'itemtype' => $itemtype));
+                $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
+                                                                    'itemtype' => $itemtype, ]);
             // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
@@ -772,7 +772,7 @@ class xarCache_Hooks extends xarObject
         extract($args);
 
         if (!isset($extrainfo) || !is_array($extrainfo)) {
-            $extrainfo = array();
+            $extrainfo = [];
         }
 
         if (!xarCache::$outputCacheIsEnabled) {

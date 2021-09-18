@@ -22,7 +22,7 @@ function xarcachemanager_admin_queries($args)
         return;
     }
 
-    $data = array();
+    $data = [];
 
     xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
@@ -31,7 +31,7 @@ function xarcachemanager_admin_queries($args)
             return;
         }
 
-        xarVar::fetch('expire', 'isset', $expire, array());
+        xarVar::fetch('expire', 'isset', $expire, []);
         foreach ($expire as $module => $querylist) {
             if ($module == 'core') {
                 // define some way to store configuration options for the core

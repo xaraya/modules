@@ -22,7 +22,7 @@ function xarcachemanager_adminapi_getvariables($args)
     extract($args);
 
     // Get all variable cache settings
-    $variablesettings = array();
+    $variablesettings = [];
     $serialsettings = xarModVars::get('dynamicdata', 'variablecache_settings');
     if (!empty($serialsettings)) {
         $variablesettings = unserialize($serialsettings);
@@ -32,9 +32,9 @@ function xarcachemanager_adminapi_getvariables($args)
     //$variables = xarMod::apiFunc('dynamicdata', 'user', 'getvariables');
     $variables = array_keys(xarVariableCache::getCacheSettings());
 
-    $variableconfig = array();
+    $variableconfig = [];
     foreach ($variables as $name) {
-        $settings = array();
+        $settings = [];
         $settings['name'] = $name;
         if (isset($variablesettings[$name])) {
             $settings = $variablesettings[$name];
@@ -43,8 +43,8 @@ function xarcachemanager_adminapi_getvariables($args)
                     'xarcachemanager',
                     'admin',
                     'convertseconds',
-                    array('starttime' => $settings['cacheexpire'],
-                                                                 'direction' => 'from')
+                    ['starttime' => $settings['cacheexpire'],
+                                                                 'direction' => 'from', ]
                 );
             } else {
                 $settings['cacheexpire'] = '';

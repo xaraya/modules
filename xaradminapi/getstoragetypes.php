@@ -24,34 +24,34 @@ function xarcachemanager_adminapi_getstoragetypes()
         return $storagetypes;
     }
 
-    $storagetypes = array();
-    $storagetypes['filesystem']   = array('name'    => 'filesystem',
+    $storagetypes = [];
+    $storagetypes['filesystem']   = ['name'    => 'filesystem',
                                           'label'   => 'Filesystem',
-                                          'enabled' => true);
-    $storagetypes['database']     = array('name'    => 'database',
+                                          'enabled' => true, ];
+    $storagetypes['database']     = ['name'    => 'database',
                                           'label'   => 'Database',
-                                          'enabled' => true);
-    $storagetypes['apcu']         = array('name'    => 'apcu',
+                                          'enabled' => true, ];
+    $storagetypes['apcu']         = ['name'    => 'apcu',
                                           'label'   => 'APC User Cache (APCu)',
-                                          'enabled' => function_exists('apcu_fetch') ? true : false);
-    $storagetypes['doctrine']     = array('name'    => 'doctrine',
+                                          'enabled' => function_exists('apcu_fetch') ? true : false, ];
+    $storagetypes['doctrine']     = ['name'    => 'doctrine',
                                           'label'   => 'Doctrine Cache (via composer)',
-                                          'enabled' => class_exists('Doctrine\\Common\\Cache\\CacheProvider') ? true : false);
-    $storagetypes['eaccelerator'] = array('name'    => 'eaccelerator',
+                                          'enabled' => class_exists('Doctrine\\Common\\Cache\\CacheProvider') ? true : false, ];
+    $storagetypes['eaccelerator'] = ['name'    => 'eaccelerator',
                                           'label'   => 'eAccelerator',
-                                          'enabled' => function_exists('eaccelerator_get') ? true : false);
-    $storagetypes['memcached']    = array('name'    => 'memcached',
+                                          'enabled' => function_exists('eaccelerator_get') ? true : false, ];
+    $storagetypes['memcached']    = ['name'    => 'memcached',
                                           'label'   => 'Memcached Server(s)',
-                                          'enabled' => class_exists('Memcache') ? true : false);
-    $storagetypes['mmcache']      = array('name'    => 'mmcache',
+                                          'enabled' => class_exists('Memcache') ? true : false, ];
+    $storagetypes['mmcache']      = ['name'    => 'mmcache',
                                           'label'   => 'Turck MMCache',
-                                          'enabled' => function_exists('mmcache_get') ? true : false);
-    $storagetypes['xcache']       = array('name'    => 'xcache',
+                                          'enabled' => function_exists('mmcache_get') ? true : false, ];
+    $storagetypes['xcache']       = ['name'    => 'xcache',
                                           'label'   => 'XCache',
-                                          'enabled' => function_exists('xcache_get') ? true : false);
-    $storagetypes['dummy']        = array('name'    => 'dummy',
+                                          'enabled' => function_exists('xcache_get') ? true : false, ];
+    $storagetypes['dummy']        = ['name'    => 'dummy',
                                           'label'   => 'Dummy Storage',
-                                          'enabled' => false);
+                                          'enabled' => false, ];
 
     // return the storage types and their settings
     return $storagetypes;

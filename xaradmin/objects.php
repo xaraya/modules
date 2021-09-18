@@ -24,9 +24,9 @@ function xarcachemanager_admin_objects($args)
         return;
     }
 
-    $data = array();
+    $data = [];
     if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$objectCacheIsEnabled) {
-        $data['objects'] = array();
+        $data['objects'] = [];
         return $data;
     }
 
@@ -37,16 +37,16 @@ function xarcachemanager_admin_objects($args)
             return;
         }
 
-        xarVar::fetch('docache', 'isset', $docache, array());
-        xarVar::fetch('usershared', 'isset', $usershared, array());
-        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, array());
+        xarVar::fetch('docache', 'isset', $docache, []);
+        xarVar::fetch('usershared', 'isset', $usershared, []);
+        xarVar::fetch('cacheexpire', 'isset', $cacheexpire, []);
 
-        $newobjects = array();
+        $newobjects = [];
         // loop over something that should return values for every object
         foreach ($cacheexpire as $name => $expirelist) {
-            $newobjects[$name] = array();
+            $newobjects[$name] = [];
             foreach ($expirelist as $method => $expire) {
-                $newobjects[$name][$method] = array();
+                $newobjects[$name][$method] = [];
                 // flip from docache in template to nocache in settings
                 if (!empty($docache[$name]) && !empty($docache[$name][$method])) {
                     $newobjects[$name][$method]['nocache'] = 0;
@@ -60,8 +60,8 @@ function xarcachemanager_admin_objects($args)
                 }
                 if (!empty($expire)) {
                     $expire = xarCache_Manager::convertseconds(
-                        array('starttime' => $expire,
-                                                    'direction' => 'to')
+                        ['starttime' => $expire,
+                                                    'direction' => 'to', ]
                     );
                 } elseif ($expire === '0') {
                     $expire = 0;

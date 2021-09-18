@@ -15,7 +15,7 @@
 
 class xarCache_Admin extends xarObject
 {
-    public static function init(array $args = array())
+    public static function init(array $args = [])
     {
     }
 
@@ -54,7 +54,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_stats()
      */
-    public static function stats(array $args = array())
+    public static function stats(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'stats', $args);
     }
@@ -62,7 +62,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_view()
      */
-    public static function view(array $args = array())
+    public static function view(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'view', $args);
     }
@@ -70,7 +70,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_pages()
      */
-    public static function pages(array $args = array())
+    public static function pages(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'pages', $args);
     }
@@ -78,7 +78,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_blocks()
      */
-    public static function blocks(array $args = array())
+    public static function blocks(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'blocks', $args);
     }
@@ -86,7 +86,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_modules()
      */
-    public static function modules(array $args = array())
+    public static function modules(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'modules', $args);
     }
@@ -94,7 +94,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_objects()
      */
-    public static function objects(array $args = array())
+    public static function objects(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'objects', $args);
     }
@@ -102,7 +102,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_variables()
      */
-    public static function variables(array $args = array())
+    public static function variables(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'variables', $args);
     }
@@ -110,7 +110,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_queries()
      */
-    public static function queries(array $args = array())
+    public static function queries(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'queries', $args);
     }
@@ -118,7 +118,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_modifyhook()
      */
-    public static function modifyhook(array $args = array())
+    public static function modifyhook(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'modifyhook', $args);
     }
@@ -126,7 +126,7 @@ class xarCache_Admin extends xarObject
     /**
      * @uses xarcachemanager_admin_flushcache()
      */
-    public static function flushcache(array $args = array())
+    public static function flushcache(array $args = [])
     {
         return xarMod::guiFunc('xarcachemanager', 'admin', 'flushcache', $args);
     }

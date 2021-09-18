@@ -27,7 +27,7 @@ function xarcachemanager_admin_modifyconfig()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     $varCacheDir = sys::varpath() . '/cache';
 
@@ -51,29 +51,29 @@ function xarcachemanager_admin_modifyconfig()
     } else {
         $data['blockCachingEnabled'] = 0;
     }
-    
+
     // is module level output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.modulelevel')) {
         $data['moduleCachingEnabled'] = 1;
     } else {
         $data['moduleCachingEnabled'] = 0;
     }
-    
+
     // is object level output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.objectlevel')) {
         $data['objectCachingEnabled'] = 1;
     } else {
         $data['objectCachingEnabled'] = 0;
     }
-    
-    $data['CookieName'] =  (xarConfigVars::get(null, 'Site.Session.CookieName') != '')? xarConfigVars::get(null, 'Site.Session.CookieName'): 'XARAYASID';
-    $data['cookieupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', array('tab'=>'security'));
+
+    $data['CookieName'] =  (xarConfigVars::get(null, 'Site.Session.CookieName') != '') ? xarConfigVars::get(null, 'Site.Session.CookieName') : 'XARAYASID';
+    $data['cookieupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', ['tab'=>'security']);
     $data['defaultlocale'] = xarMLS::getSiteLocale();
-    $data['localeupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', array('tab'=>'locales'));
+    $data['localeupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', ['tab'=>'locales']);
 
     // get the caching config settings from the config file
     $data['settings'] = xarCache_Manager::get_config(
-        array('from' => 'file', 'tpl_prep' => true)
+        ['from' => 'file', 'tpl_prep' => true]
     );
 
     // set some default values
@@ -135,7 +135,7 @@ function xarcachemanager_admin_modifyconfig()
     }
     // set new cache defaults for module functions
     if (empty($data['settings']['ModuleCacheFunctions'])) {
-        $data['settings']['ModuleCacheFunctions'] = array('main' => 1, 'view' => 1, 'display' => 0);
+        $data['settings']['ModuleCacheFunctions'] = ['main' => 1, 'view' => 1, 'display' => 0];
     }
     xarModVars::set('xarcachemanager', 'DefaultModuleCacheFunctions', serialize($data['settings']['ModuleCacheFunctions']));
 
@@ -153,7 +153,7 @@ function xarcachemanager_admin_modifyconfig()
     }
     // set new cache defaults for object methods
     if (empty($data['settings']['ObjectCacheMethods'])) {
-        $data['settings']['ObjectCacheMethods'] = array('view' => 1, 'display' => 1);
+        $data['settings']['ObjectCacheMethods'] = ['view' => 1, 'display' => 1];
     }
     xarModVars::set('xarcachemanager', 'DefaultObjectCacheMethods', serialize($data['settings']['ObjectCacheMethods']));
 
@@ -166,20 +166,20 @@ function xarcachemanager_admin_modifyconfig()
 
     // reformat seconds as hh:mm:ss
     $data['settings']['PageTimeExpiration'] = xarCache_Manager::convertseconds(
-        array('starttime' => $data['settings']['PageTimeExpiration'],
-                                                                   'direction' => 'from')
+        ['starttime' => $data['settings']['PageTimeExpiration'],
+                                                                   'direction' => 'from', ]
     );
     $data['settings']['BlockTimeExpiration'] = xarCache_Manager::convertseconds(
-        array('starttime' => $data['settings']['BlockTimeExpiration'],
-                                                                   'direction' => 'from')
+        ['starttime' => $data['settings']['BlockTimeExpiration'],
+                                                                   'direction' => 'from', ]
     );
     $data['settings']['ModuleTimeExpiration'] = xarCache_Manager::convertseconds(
-        array('starttime' => $data['settings']['ModuleTimeExpiration'],
-                                                                   'direction' => 'from')
+        ['starttime' => $data['settings']['ModuleTimeExpiration'],
+                                                                   'direction' => 'from', ]
     );
     $data['settings']['ObjectTimeExpiration'] = xarCache_Manager::convertseconds(
-        array('starttime' => $data['settings']['ObjectTimeExpiration'],
-                                                                   'direction' => 'from')
+        ['starttime' => $data['settings']['ObjectTimeExpiration'],
+                                                                   'direction' => 'from', ]
     );
 
     // get the themes list
@@ -190,7 +190,7 @@ function xarcachemanager_admin_modifyconfig()
         'getlist',
         $filter
     );
-        
+
     // get the storage types supported on this server
     $data['storagetypes'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getstoragetypes');
 

@@ -38,7 +38,7 @@ function xarcachemanager_admin_view($args)
         xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'stats'));
         return;
     } elseif (empty($key)) {
-        xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => $tab)));
+        xarResponse::Redirect(xarController::URL('xarcachemanager', 'admin', 'stats', ['tab' => $tab]));
         return;
     }
 
@@ -49,11 +49,11 @@ function xarcachemanager_admin_view($args)
     // Get the output cache directory so you can view items even if output caching is disabled
     $outputCacheDir = xarCache::getOutputCacheDir();
 
-    $data = array();
+    $data = [];
 
     // get the caching config settings from the config file
     $data['settings'] = xarCache_Manager::get_config(
-        array('from' => 'file', 'tpl_prep' => true)
+        ['from' => 'file', 'tpl_prep' => true]
     );
 
     $data['PageCachingEnabled'] = 0;
@@ -89,16 +89,16 @@ function xarcachemanager_admin_view($args)
     $data['tab'] = $tab;
     $data['key'] = $key;
     $data['code'] = $code;
-    $data['lines'] = array();
+    $data['lines'] = [];
     $data['title']  = '';
     $data['link']  = '';
-    $data['styles'] = array();
-    $data['script'] = array();
+    $data['styles'] = [];
+    $data['script'] = [];
     if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
         // get cache storage
-        $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
+        $cachestorage = xarCache::getStorage(['storage'  => $data['settings'][$storage],
                                                    'type'     => $tab,
-                                                   'cachedir' => $outputCacheDir));
+                                                   'cachedir' => $outputCacheDir, ]);
         // specify suffix if necessary
         if (!empty($code)) {
             $cachestorage->setCode($code);
@@ -128,6 +128,6 @@ function xarcachemanager_admin_view($args)
     }
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSec::genAuthKey();
-    $data['return_url'] = xarController::URL('xarcachemanager', 'admin', 'stats', array('tab' => $tab));
+    $data['return_url'] = xarController::URL('xarcachemanager', 'admin', 'stats', ['tab' => $tab]);
     return $data;
 }

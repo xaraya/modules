@@ -16,7 +16,7 @@
  */
 function xarcachemanager_admin_overview()
 {
-    $data=array();
+    $data=[];
     //just return to main function that displays the overview
     return xarTpl::module('xarcachemanager', 'admin', 'main', $data, 'main');
 }
