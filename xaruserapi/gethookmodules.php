@@ -35,18 +35,18 @@ function crispbb_userapi_gethookmodules($args)
 
     $query .= " GROUP BY moduleid, itemtype";
 
-    $result = $dbconn->Execute($query, array());
+    $result = $dbconn->Execute($query, []);
     if (!$result) {
         return;
     }
 
-    $modlist = array();
+    $modlist = [];
     while (!$result->EOF) {
-        list($modid, $itemtype, $numlinks, $numitems, $numtopics) = $result->fields;
+        [$modid, $itemtype, $numlinks, $numitems, $numtopics] = $result->fields;
         if (!isset($modlist[$modid])) {
-            $modlist[$modid] = array();
+            $modlist[$modid] = [];
         }
-        $modlist[$modid][$itemtype] = array('numitems' => $numitems, 'numtopics' => $numtopics, 'numlinks' => $numlinks);
+        $modlist[$modid][$itemtype] = ['numitems' => $numitems, 'numtopics' => $numtopics, 'numlinks' => $numlinks];
         $result->MoveNext();
     }
     $result->close();

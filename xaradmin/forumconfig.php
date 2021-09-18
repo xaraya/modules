@@ -48,7 +48,7 @@ function crispbb_admin_forumconfig($args)
         return;
     }
 
-    $invalid = array();
+    $invalid = [];
     $now = time();
 
     $pageTitle = '';
@@ -56,8 +56,8 @@ function crispbb_admin_forumconfig($args)
         case 'forum':
             default:
             sys::import('modules.dynamicdata.class.objects.master');
-            $data['settings'] = DataObjectMaster::getObject(array('name' => 'crispbb_forum_settings'));
-            $fieldlist = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval', 'iconfolder', 'icondefault');
+            $data['settings'] = DataObjectMaster::getObject(['name' => 'crispbb_forum_settings']);
+            $fieldlist = ['topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval', 'iconfolder', 'icondefault'];
             $data['settings']->setFieldlist($fieldlist);
             $data['settings']->tplmodule = 'crispbb';
             $data['settings']->layout = 'normal';
@@ -72,14 +72,14 @@ function crispbb_admin_forumconfig($args)
                             'crispbb',
                             'user',
                             'gettopicicons',
-                            array('iconfolder' => $iconfolder, 'shownone' => true)
+                            ['iconfolder' => $iconfolder, 'shownone' => true]
                         );
                         $data['settings']->properties['icondefault']->options = $iconlist;
                         $isvalid = $data['settings']->checkInput();
                     }
                 }
                 // get the property values back from the object
-                $settings = array();
+                $settings = [];
                 foreach ($data['settings']->properties as $name => $value) {
                     if (!in_array($name, $fieldlist)) {
                         continue;
@@ -89,7 +89,7 @@ function crispbb_admin_forumconfig($args)
                 // passed validation, call static updateSettings method to store new settings
                 if ($isvalid) {
                     if (!xarSec::confirmAuthKey()) {
-                        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                     }
                     xarModVars::set('crispbb', 'forumsettings', serialize($settings));
                     if (empty($data['return_url'])) {
@@ -101,7 +101,7 @@ function crispbb_admin_forumconfig($args)
                 // failed validation, pass input back to form
                 $data['values'] = $settings;
             } else {
-                $data['values'] = xarMod::apiFunc('crispbb', 'user', 'getsettings', array('setting' => 'fsettings'));
+                $data['values'] = xarMod::apiFunc('crispbb', 'user', 'getsettings', ['setting' => 'fsettings']);
             }
             // propagate any new property values
             // CHANGEME: this is a convenience function, any property updates in new releases
@@ -117,12 +117,12 @@ function crispbb_admin_forumconfig($args)
                     'crispbb',
                     'user',
                     'gettopicicons',
-                    array('iconfolder' => $data['values']['iconfolder'], 'shownone' => true)
+                    ['iconfolder' => $data['values']['iconfolder'], 'shownone' => true]
                 );
                 $data['settings']->properties['icondefault']->options = $iconlist;
                 $data['iconlist'] = $iconlist;
             } else {
-                $data['iconlist'] = array();
+                $data['iconlist'] = [];
             }
 
             $pageTitle = xarML('Default Forum Configuration');
@@ -148,13 +148,13 @@ function crispbb_admin_forumconfig($args)
                 'crispbb',
                 'user',
                 'getitemtype',
-                array('fid' => 0, 'component' => $component)
+                ['fid' => 0, 'component' => $component]
             );
             // get all the hooks available
             $hooklist = xarMod::apiFunc('modules', 'admin', 'gethooklist');
             // hook modules must have at least one of these hook functions
-            $hooktypes = array('new','create','modify','update','display','delete','transform');
-            $hooksettings = array();
+            $hooktypes = ['new','create','modify','update','display','delete','transform'];
+            $hooksettings = [];
             foreach ($hooklist as $hookMod => $hookData) {
                 // make sure we only get modules with useful hook functions
                 $hashooktypes = false;
@@ -213,16 +213,16 @@ function crispbb_admin_forumconfig($args)
                 }
                 $hookModid = xarMod::getRegId($hookMod);
                 $hookModinfo = xarMod::getInfo($hookModid);
-                $hooksettings[$hookMod] = array(
+                $hooksettings[$hookMod] = [
                     'status' => $hookStatus,
                     'output' => '',
                     'message' => $hookMessage,
                     'ishooked' => $ishooked,
-                    'displayname' => $hookModinfo['displayname']
-                );
+                    'displayname' => $hookModinfo['displayname'],
+                ];
             }
             if ($phase == 'update') {
-                $hookargs = array();
+                $hookargs = [];
                 if (empty($invalid)) {
                     if (!xarSec::confirmAuthKey()) {
                         return;
@@ -242,11 +242,11 @@ function crispbb_admin_forumconfig($args)
                                     'modules',
                                     'admin',
                                     'enablehooks',
-                                    array(
+                                    [
                                         'callerModName' => 'crispbb',
                                         'callerItemType' => $itemtype,
-                                        'hookModName' => $checkmod
-                                    )
+                                        'hookModName' => $checkmod,
+                                    ]
                                 );
                                 $isupdated = true;
                             }
@@ -258,11 +258,11 @@ function crispbb_admin_forumconfig($args)
                                     'modules',
                                     'admin',
                                     'disablehooks',
-                                    array(
+                                    [
                                         'callerModName' => 'crispbb',
                                         'callerItemType' => $itemtype,
-                                        'hookModName' => $checkmod
-                                    )
+                                        'hookModName' => $checkmod,
+                                    ]
                                 );
                                 $isupdated = true;
                             }
@@ -281,7 +281,7 @@ function crispbb_admin_forumconfig($args)
                     xarSession::setVar('crispbb_statusmsg', xarML('Default #(1) hooks configuration updated', $component));
                     // if no returnurl specified, return to forumconfig, this sublink
                     if (empty($data['return_url'])) {
-                        $data['return_url'] = xarController::URL('crispbb', 'admin', 'forumconfig', array('sublink' => $sublink));
+                        $data['return_url'] = xarController::URL('crispbb', 'admin', 'forumconfig', ['sublink' => $sublink]);
                     }
                     xarController::redirect($data['return_url']);
                     return true;
@@ -292,7 +292,7 @@ function crispbb_admin_forumconfig($args)
                 'module',
                 'modifyconfig',
                 'crispbb',
-                array('module' => 'crispbb', 'itemtype' => $itemtype)
+                ['module' => 'crispbb', 'itemtype' => $itemtype]
             );
             // change categories display to empty
             if (isset($hooks['categories'])) {
@@ -307,14 +307,14 @@ function crispbb_admin_forumconfig($args)
         break;
 
         case 'privileges':
-            if (!xarVar::fetch('privs', 'list', $privs, array(), xarVar::NOT_REQUIRED)) {
+            if (!xarVar::fetch('privs', 'list', $privs, [], xarVar::NOT_REQUIRED)) {
                 return;
             }
             $presets = xarMod::apiFunc(
                 'crispbb',
                 'user',
                 'getpresets',
-                array('preset' => 'privactionlabels,fprivileges,privleveloptions')
+                ['preset' => 'privactionlabels,fprivileges,privleveloptions']
             );
             $defaults = $presets['fprivileges'];
             $actionlabels = $presets['privactionlabels'];
@@ -323,7 +323,7 @@ function crispbb_admin_forumconfig($args)
                     'crispbb',
                     'user',
                     'getsettings',
-                    array('setting' => 'fprivileges')
+                    ['setting' => 'fprivileges']
                 );
             }
             // format privs for storage
@@ -360,11 +360,11 @@ function crispbb_admin_forumconfig($args)
                                     'crispbb',
                                     'admin',
                                     'update',
-                                    array(
+                                    [
                                         'fid' => $fid,
                                         'fprivileges' => $privs,
-                                        'nohooks' => true
-                                    )
+                                        'nohooks' => true,
+                                    ]
                                 )) {
                                     return;
                                 }
@@ -375,7 +375,7 @@ function crispbb_admin_forumconfig($args)
                     xarSession::setVar('crispbb_statusmsg', xarML('Default privileges configuration updated'));
                     // if no returnurl specified, return to forumconfig
                     if (empty($data['return_url'])) {
-                        $data['return_url'] = xarController::URL('crispbb', 'admin', 'forumconfig', array('sublink' => 'privileges'));
+                        $data['return_url'] = xarController::URL('crispbb', 'admin', 'forumconfig', ['sublink' => 'privileges']);
                     }
                     xarController::redirect($data['return_url']);
                     return true;
@@ -416,12 +416,12 @@ function crispbb_admin_forumconfig($args)
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'forumconfig',
-            'current_sublink' => $sublink
-        )
+            'current_sublink' => $sublink,
+        ]
     );
 
     xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));

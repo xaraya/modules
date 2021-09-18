@@ -23,19 +23,19 @@ function crispbb_userapi_getitemtypes($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $itemtypestable = $xartable['crispbb_itemtypes'];
-    $fields = array('id', 'fid', 'component');
-    $select = array();
+    $fields = ['id', 'fid', 'component'];
+    $select = [];
     foreach ($fields as $required => $field) {
         $select[] = $itemtypestable .'.'. $field;
     }
     $from = $itemtypestable;
     if (empty($fieldlist)) {
-        $fieldlist = array('fname');
+        $fieldlist = ['fname'];
     }
     $join = '';
-    $wheres = array();
+    $wheres = [];
     if (!empty($fieldlist)) {
-        $forumfields = array('fname', 'fdesc');
+        $forumfields = ['fname', 'fdesc'];
         $forumstable = $xartable['crispbb_forums'];
         $dojoin = false;
         foreach ($fieldlist as $fieldname) {
@@ -56,7 +56,7 @@ function crispbb_userapi_getitemtypes($args)
 
     $query .= ' FROM ' . $from;
 
-    $bindvars = array();
+    $bindvars = [];
     if (!empty($itemtype) && is_numeric($itemtype)) {
         $wheres[] = $itemtypestable.".id = ?";
         $bindvars[] = $itemtype;
@@ -65,7 +65,7 @@ function crispbb_userapi_getitemtypes($args)
         $wheres[] = $itemtypestable.".fid = ?";
         $bindvars[] = $fid;
     }
-    $components = array('forum','topics','posts');
+    $components = ['forum','topics','posts'];
     if (!empty($component) && in_array($component, $components)) {
         $wheres[] = $itemtypestable.".component = ?";
         $bindvars[] = $component;
@@ -81,10 +81,10 @@ function crispbb_userapi_getitemtypes($args)
     if (!$result) {
         return;
     }
-    $itemtypes = array();
+    $itemtypes = [];
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
-        $item = array();
+        $item = [];
         foreach ($fields as $key => $field) {
             $value = array_shift($data);
             if ($field == 'cid') {
@@ -104,10 +104,10 @@ function crispbb_userapi_getitemtypes($args)
         } else {
             if ($item['component'] == 'forum') {
                 $label = $item['fname'];
-                $url = xarController::URL('crispbb', 'user', 'view', array('id' => $item['fid']));
+                $url = xarController::URL('crispbb', 'user', 'view', ['id' => $item['fid']]);
             } else {
                 $label = xarML('All #(1) in #(2)', ucfirst($item['component']), $item['fname']);
-                $url = xarController::URL('crispbb', 'user', 'view', array('id' => $item['fid']));
+                $url = xarController::URL('crispbb', 'user', 'view', ['id' => $item['fid']]);
             }
         }
         $item['label'] = xarVar::prepForDisplay($label);
@@ -125,9 +125,9 @@ function crispbb_userapi_getitemtypes($args)
         $hooklist = xarHooks::getObserverModules();
         //$hooklist = xarMod::apiFunc('crispbb', 'user', 'gethooklist');
         $cachedhooks = xarSession::getVar('crispbb_cachedhooks');
-        $cachedhooks = !empty($cachedhooks) ? unserialize($cachedhooks) : array();
+        $cachedhooks = !empty($cachedhooks) ? unserialize($cachedhooks) : [];
         xarSession::delVar('crispbb_cachedhooks');
-        $hookcache = array();
+        $hookcache = [];
         foreach ($hooklist as $hookmod => $hookdata) {
             // module hooked to all items in crispbb?
             $hookcache[$hookmod][0] = xarModHooks::isHooked($hookmod, 'crispbb', 0);
@@ -139,11 +139,11 @@ function crispbb_userapi_getitemtypes($args)
                         'modules',
                         'admin',
                         'disablehooks',
-                        array(
+                        [
                             'callerModName' => 'crispbb',
                             'callerItemType' => 0,
-                            'hookModName' => $hookmod
-                        )
+                            'hookModName' => $hookmod,
+                        ]
                     );
                     $isupdated = true;
                 } else {
@@ -151,7 +151,7 @@ function crispbb_userapi_getitemtypes($args)
                 }
             }
             // array to store All {component} itemtypes
-            $types = array();
+            $types = [];
             // loop through each of our itemtypes
             foreach ($itemtypes as $k => $v) {
                 // module hooked to this itemtype?
@@ -171,11 +171,11 @@ function crispbb_userapi_getitemtypes($args)
                                         'modules',
                                         'admin',
                                         'disablehooks',
-                                        array(
+                                        [
                                             'callerModName' => 'crispbb',
                                             'callerItemType' => $k,
-                                            'hookModName' => $hookmod
-                                        )
+                                            'hookModName' => $hookmod,
+                                        ]
                                     );
                                     $hookcache[$hookmod][$k] = false;
                                     $isupdated = true;
@@ -191,11 +191,11 @@ function crispbb_userapi_getitemtypes($args)
                                             'modules',
                                             'admin',
                                             'enablehooks',
-                                            array(
+                                            [
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
-                                                'hookModName' => $hookmod
-                                            )
+                                                'hookModName' => $hookmod,
+                                            ]
                                         );
                                         $isupdated = true;
                                     }
@@ -207,11 +207,11 @@ function crispbb_userapi_getitemtypes($args)
                                             'modules',
                                             'admin',
                                             'disablehooks',
-                                            array(
+                                            [
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
-                                                'hookModName' => $hookmod
-                                            )
+                                                'hookModName' => $hookmod,
+                                            ]
                                         );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
@@ -227,11 +227,11 @@ function crispbb_userapi_getitemtypes($args)
                                             'modules',
                                             'admin',
                                             'disablehooks',
-                                            array(
+                                            [
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
-                                                'hookModName' => $hookmod
-                                            )
+                                                'hookModName' => $hookmod,
+                                            ]
                                         );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
@@ -250,11 +250,11 @@ function crispbb_userapi_getitemtypes($args)
                                             'modules',
                                             'admin',
                                             'disablehooks',
-                                            array(
+                                            [
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
-                                                'hookModName' => $hookmod
-                                            )
+                                                'hookModName' => $hookmod,
+                                            ]
                                         );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
@@ -267,11 +267,11 @@ function crispbb_userapi_getitemtypes($args)
                                             'modules',
                                             'admin',
                                             'enablehooks',
-                                            array(
+                                            [
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
-                                                'hookModName' => $hookmod
-                                            )
+                                                'hookModName' => $hookmod,
+                                            ]
                                         );
                                         $isupdated = true;
                                     }
@@ -285,11 +285,11 @@ function crispbb_userapi_getitemtypes($args)
                                         'modules',
                                         'admin',
                                         'disablehooks',
-                                        array(
+                                        [
                                             'callerModName' => 'crispbb',
                                             'callerItemType' => $k,
-                                            'hookModName' => $hookmod
-                                        )
+                                            'hookModName' => $hookmod,
+                                        ]
                                     );
                                     $hookcache[$hookmod][$k] = false;
                                     $isupdated = true;
@@ -303,11 +303,11 @@ function crispbb_userapi_getitemtypes($args)
                                             'modules',
                                             'admin',
                                             'disablehooks',
-                                            array(
+                                            [
                                                 'callerModName' => 'crispbb',
                                                 'callerItemType' => $k,
-                                                'hookModName' => $hookmod
-                                            )
+                                                'hookModName' => $hookmod,
+                                            ]
                                         );
                                         $hookcache[$hookmod][$k] = false;
                                         $isupdated = true;
@@ -324,7 +324,7 @@ function crispbb_userapi_getitemtypes($args)
         // we need to check if the hooks are currently being updated by the modules module
         // if any changes were made, the admin hooks display will be out of synch
         // first we check if the current request module, type and func is modules admin hooks
-        list($modname, $modtype, $modfunc) = xarController::$request->getInfo();
+        [$modname, $modtype, $modfunc] = xarController::$request->getInfo();
         if ($modtype == 'admin' && $modfunc == 'hooks') {
             // we tag a flag onto the redirected url, so we can keep track on redirects
             if (!xarVar::fetch('hookupdate', 'isset', $hookupdate, 0, xarVar::NOT_REQUIRED)) {
@@ -339,7 +339,7 @@ function crispbb_userapi_getitemtypes($args)
                     return;
                 }
                 // and finally we redirect to the function
-                xarController::redirect(xarController::URL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
+                xarController::redirect(xarController::URL($modname, 'admin', 'hooks', ['hook' => $hookarg, 'hookupdate' => $hookupdate++]));
                 return;
             }
         }

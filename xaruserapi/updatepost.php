@@ -30,7 +30,7 @@
 function crispbb_userapi_updatepost($args)
 {
     extract($args);
-    $invalid = array();
+    $invalid = [];
     if (!isset($pid) || empty($pid) || !is_numeric($pid)) {
         $invalid[] = 'pid';
     }
@@ -90,7 +90,7 @@ function crispbb_userapi_updatepost($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'userapi', 'updatepost', 'crispBB');
+        $vars = [join(', ', $invalid), 'userapi', 'updatepost', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -98,8 +98,8 @@ function crispbb_userapi_updatepost($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $poststable = $xartable['crispbb_posts'];
-    $set = array();
-    $bindvars = array();
+    $set = [];
+    $bindvars = [];
     if (isset($tid)) {
         $set[] = 'tid = ?';
         $bindvars[] = $tid;
@@ -162,7 +162,7 @@ function crispbb_userapi_updatepost($args)
             'crispbb',
             'user',
             'getpost',
-            array('pid' => $pid)
+            ['pid' => $pid]
         );
         $poststype = $post['poststype'];
     }

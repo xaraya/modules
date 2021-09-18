@@ -21,7 +21,7 @@ function crispbb_userapi_deletehook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (empty($modname)) {
@@ -35,7 +35,7 @@ function crispbb_userapi_deletehook($args)
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'userapi', 'deletehook', 'crispBB');
+        $vars = ['module name', 'userapi', 'deletehook', 'crispBB'];
         //throw new BadParameterException($vars, $msg);
         // don't throw an error here, life in hooks goes on...
         return $extrainfo;
@@ -53,7 +53,7 @@ function crispbb_userapi_deletehook($args)
         $itemid = $objectid;
     } else {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('object ID', 'userapi', 'deletehook', 'crispBB');
+        $vars = ['object ID', 'userapi', 'deletehook', 'crispBB'];
         //throw new BadParameterException($vars, $msg);
         // life goes on in hook modules, so just return false
         return $extrainfo;

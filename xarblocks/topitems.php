@@ -31,9 +31,9 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
-    
+
     public $numitems            = 5;
-    public $fids                = array();
+    public $fids                = [];
     public $sort                = 'ptime';
     public $order               = 'DESC';
 
@@ -46,11 +46,11 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $vars = $this->getContent();
         // Defaults
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
-        $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
+        $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : [];
 
-        $sorts = array();
-        $sorts['ptime'] = array('id' => 'ptime', 'name' => xarML('Last post time'));
-        $sorts['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of hits'));
+        $sorts = [];
+        $sorts['ptime'] = ['id' => 'ptime', 'name' => xarML('Last post time')];
+        $sorts['numhits'] = ['id' => 'numhits', 'name' => xarML('Number of hits')];
         if (xarMod::isAvailable('ratings')) {
             //$sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
@@ -72,13 +72,13 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
             'crispbb',
             'user',
             'gettopics',
-            array(
+            [
                 'fid' => $vars['fids'],
                 'sort' => $vars['sort'],
                 'order' => $vars['order'],
-                'tstatus' => array(0,1,2,4),
-                'numitems' => $vars['numitems']
-            )
+                'tstatus' => [0,1,2,4],
+                'numitems' => $vars['numitems'],
+            ]
         );
 
         return $vars;
@@ -88,17 +88,17 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
      * Modify Function to the Blocks Admin
      * @param $data array containing title,content
      */
-    public function modify(array $data=array())
+    public function modify(array $data=[])
     {
         $data = $this->getContent();
 
         // Defaults
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
-        $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
+        $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : [];
 
-        $sorts = array();
-        $sorts['ptime'] = array('id' => 'ptime', 'name' => xarML('Last post time'));
-        $sorts['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of hits'));
+        $sorts = [];
+        $sorts['ptime'] = ['id' => 'ptime', 'name' => xarML('Last post time')];
+        $sorts['numhits'] = ['id' => 'numhits', 'name' => xarML('Number of hits')];
         if (xarMod::isAvailable('ratings')) {
             //sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
@@ -120,7 +120,7 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
             'crispbb',
             'user',
             'getpresets',
-            array('preset' => 'sortorderoptions')
+            ['preset' => 'sortorderoptions']
         );
         $data['sortoptions'] = $sorts;
         $data['orderoptions'] = $presets['sortorderoptions'];
@@ -133,12 +133,12 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
      * Updates the Block config from the Blocks Admin
      * @param $data array containing title,content
      */
-    public function update(array $data=array())
+    public function update(array $data=[])
     {
-        $vars = array();
+        $vars = [];
 
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
-        $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
+        $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : [];
 
         if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, xarVar::NOT_REQUIRED)) {
             return;

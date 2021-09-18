@@ -23,7 +23,7 @@ function crispbb_admin_ordercats($args)
 {
     // Xaraya security
     if (!xarSecurity::check('AdminCrispBB', 0) || !xarSecurity::check('ManageCategories', 0)) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
     extract($args);
     if (!xarVar::fetch('itemid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) {
@@ -37,7 +37,7 @@ function crispbb_admin_ordercats($args)
     }
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
-    $categories = xarMod::apiFunc('categories', 'user', 'getchildren', array('cids' => array($basecid)));
+    $categories = xarMod::apiFunc('categories', 'user', 'getchildren', ['cids' => [$basecid]]);
     $cids = array_keys($categories);
     if (empty($itemid) || !in_array($itemid, $cids)) {
         $invalid[] = 'itemid';
@@ -47,15 +47,15 @@ function crispbb_admin_ordercats($args)
     }
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) function #(3) in module #(4)';
-        $vars = array(join(', ', $invalid), 'admin', 'ordercats', 'crispBB');
+        $vars = [join(', ', $invalid), 'admin', 'ordercats', 'crispBB'];
         throw new BadParameterException($vars, $msg);
     }
     // Confirm authorisation code.
     if (!xarSec::confirmAuthKey()) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
     }
-    $cids = array($itemid);
-    $refs = array();
+    $cids = [$itemid];
+    $refs = [];
     $i = 0;
     foreach ($categories as $refcat => $catinfo) {
         $refs[$i] = $catinfo;
@@ -97,7 +97,7 @@ function crispbb_admin_ordercats($args)
     //Look at bug #997
 
     $old_cids = $cids;
-    $cids = array();
+    $cids = [];
     foreach ($old_cids as $key => $cid) {
         //Empty -> Creating Cats (ALL OF THEM should have empty cids!)
         if (empty($cid)) {
@@ -156,7 +156,7 @@ function crispbb_admin_ordercats($args)
                 'categories',
                 'admin',
                 'updatecat',
-                array(
+                [
                     'cid'         => $cid,
                     'name'        => $name[$cid],
                     'description' => $description[$cid],
@@ -164,8 +164,8 @@ function crispbb_admin_ordercats($args)
                     'moving'      => $moving[$cid],
                     'refcid'      => $refcid[$cid],
                     'inorout'     => $inorout,
-                    'rightorleft' => $rightorleft
-                )
+                    'rightorleft' => $rightorleft,
+                ]
             )) {
                 return;
             }

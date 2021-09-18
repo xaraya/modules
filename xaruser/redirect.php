@@ -39,7 +39,7 @@ function crispbb_user_redirect($args)
     }
 
     $return_func = 'forum_index'; // default return action
-    $return_args = array();
+    $return_args = [];
 
     if (isset($forumjump)) {
         if (!empty($forumjump)) { // return to target forum

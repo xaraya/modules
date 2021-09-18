@@ -39,27 +39,27 @@ function crispbb_admin_modify($args)
 
     // Get the forums object
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
+    $data['forum'] = DataObjectMaster::getObject(['name' => 'crispbb_forums']);
 
     // We only need some properties
-    $fieldlist = array('fname','fdesc','fstatus','ftype','fprivileges','category');
+    $fieldlist = ['fname','fdesc','fstatus','ftype','fprivileges','category'];
     $data['forum']->setFieldlist($fieldlist);
-    
+
     // Get the specific form and do a privilages check
     $data['forum']->userAction = 'editforum';
-    $itemid = $data['forum']->getItem(array('itemid' => $fid));
-    
+    $itemid = $data['forum']->getItem(['itemid' => $fid]);
+
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
 
     // CHECKME: remove this?
     if ($itemid != $fid) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
     }
 
     // CrispBB security
     if (empty($data['forum']->userLevel)) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     $data['forum']->getItemLinks();
@@ -67,7 +67,7 @@ function crispbb_admin_modify($args)
     $userLevel = $data['forum']->userLevel;
     $secLevels = $data['forum']->fprivileges;
 
-    $invalid = array();
+    $invalid = [];
     $pageTitle = $data['forum']->properties['fname']->value;
     $now = time();
 
@@ -75,13 +75,13 @@ function crispbb_admin_modify($args)
         case 'edit':
             $ftype = $data['forum']->properties['ftype']->value;
             if ($ftype == 1) {
-                $settingsfields = array('redirected');
+                $settingsfields = ['redirected'];
                 $layout = 'redirected';
             } else {
-                $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault');
+                $settingsfields = ['topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault'];
                 $layout = 'normal';
             }
-            $data['settings'] = DataObjectMaster::getObject(array('name' => 'crispbb_forum_settings'));
+            $data['settings'] = DataObjectMaster::getObject(['name' => 'crispbb_forum_settings']);
             $data['settings']->setFieldlist($settingsfields);
             $data['settings']->tplmodule = 'crispbb';
             $data['settings']->layout = $layout;
@@ -91,7 +91,7 @@ function crispbb_admin_modify($args)
                 'crispbb',
                 'user',
                 'getpresets',
-                array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions')
+                ['preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions']
             );
 
             // handle update
@@ -100,14 +100,14 @@ function crispbb_admin_modify($args)
                 $cids = $data['forum']->properties['category']->categories;
                 if (is_array($cids) && in_array($basecid, $cids)) {
                     $isvalid = false;
-                    $data['forum']->properties['category']->categories = array();
+                    $data['forum']->properties['category']->categories = [];
                     $data['forum']->properties['category']->invalid = xarML("Forums cannot be added to the base forum category");
                 }
                 $andvalid = false;
                 if (!empty($settingsfields)) {
                     $data['settings']->setFieldList($settingsfields);
                 }
-                $andvalid = $data['settings']->checkInput(array(), true);
+                $andvalid = $data['settings']->checkInput([], true);
                 // see if user switched forum types
                 if ($data['forum']->properties['ftype']->value == $ftype) {
                     if (in_array('icondefault', $settingsfields)) {
@@ -116,7 +116,7 @@ function crispbb_admin_modify($args)
                             'crispbb',
                             'user',
                             'gettopicicons',
-                            array('iconfolder' => $iconfolder, 'shownone' => true)
+                            ['iconfolder' => $iconfolder, 'shownone' => true]
                         );
                         $data['settings']->properties['icondefault']->options = $iconlist;
                         $andvalid = $data['settings']->checkInput();
@@ -124,41 +124,41 @@ function crispbb_admin_modify($args)
                 } else {
                     $andvalid = false;
                     if ($data['forum']->properties['ftype']->value == 1) {
-                        $settingsfields = array('redirected');
+                        $settingsfields = ['redirected'];
                         $layout = 'redirected';
                     } else {
-                        $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault');
+                        $settingsfields = ['topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault'];
                         $layout = 'normal';
                     }
                     $data['settings']->setFieldList($settingsfields);
                     $data['settings']->layout = $layout;
-                    $andvalid = $data['settings']->checkInput(array(), true);
+                    $andvalid = $data['settings']->checkInput([], true);
                 }
-                $settings = array();
+                $settings = [];
                 foreach ($data['settings']->properties as $name => $value) {
                     $settings[$name] = $data['settings']->properties[$name]->value;
                 }
                 // @TODO: make these properties somehow
                 foreach ($presets['ftransfields'] as $field => $option) {
                     if (!isset($settings['ftransforms'][$field])) {
-                        $settings['ftransforms'][$field] = array();
+                        $settings['ftransforms'][$field] = [];
                     }
                 }
                 foreach ($presets['ttransfields'] as $field => $option) {
                     if (!isset($settings['ttransforms'][$field])) {
-                        $settings['ttransforms'][$field] = array();
+                        $settings['ttransforms'][$field] = [];
                     }
                 }
                 foreach ($presets['ptransfields'] as $field => $option) {
                     if (!isset($settings['ptransforms'][$field])) {
-                        $settings['ptransforms'][$field] = array();
+                        $settings['ptransforms'][$field] = [];
                     }
                 }
                 if ($isvalid && $andvalid) {
                     if (!xarSec::confirmAuthKey()) {
                         return;
                     }
-                    $extra = array('fsettings' => serialize($settings));
+                    $extra = ['fsettings' => serialize($settings)];
                     $data['forum']->updateHooks(true);
                     $data['forum']->updateItem($extra);
                     xarSession::setVar('crispbb_statusmsg', xarML('#(1) settings updated', $pageTitle));
@@ -167,7 +167,7 @@ function crispbb_admin_modify($args)
                             'crispbb',
                             'admin',
                             'modify',
-                            array('fid' => $fid, 'sublink' => 'edit')
+                            ['fid' => $fid, 'sublink' => 'edit']
                         );
                     }
                     xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
@@ -176,7 +176,7 @@ function crispbb_admin_modify($args)
                 $data['values'] = $settings;
             }
             // handle form
-            $item = array();
+            $item = [];
             $item['module'] = 'crispbb';
             $item['itemtype'] = $data['forum']->itemtype;
             $item['itemid'] = $fid;
@@ -204,12 +204,12 @@ function crispbb_admin_modify($args)
                     'crispbb',
                     'user',
                     'gettopicicons',
-                    array('iconfolder' => $data['values']['iconfolder'], 'shownone' => true)
+                    ['iconfolder' => $data['values']['iconfolder'], 'shownone' => true]
                 );
                 $data['settings']->properties['icondefault']->options = $iconlist;
                 $data['iconlist'] = $iconlist;
             } else {
-                $data['iconlist'] = array();
+                $data['iconlist'] = [];
             }
 
 
@@ -246,19 +246,19 @@ function crispbb_admin_modify($args)
                 'crispbb',
                 'user',
                 'getitemtype',
-                array('fid' => $fid, 'component' => $component)
+                ['fid' => $fid, 'component' => $component]
             );
             $mastertype = xarMod::apiFunc(
                 'crispbb',
                 'user',
                 'getitemtype',
-                array('fid' => 0, 'component' => $component)
+                ['fid' => 0, 'component' => $component]
             );
             // get all the hooks available
             $hooklist = xarMod::apiFunc('modules', 'admin', 'gethooklist');
             // hook modules must have at least one of these hook functions
-            $hooktypes = array('new','create','modify','update','display','delete','transform');
-            $hooksettings = array();
+            $hooktypes = ['new','create','modify','update','display','delete','transform'];
+            $hooksettings = [];
             foreach ($hooklist as $hookMod => $hookData) {
                 // make sure we only get modules with useful hook functions
                 $hashooktypes = false;
@@ -325,13 +325,13 @@ function crispbb_admin_modify($args)
                 }
                 $hookModid = xarMod::getRegId($hookMod);
                 $hookModinfo = xarMod::getInfo($hookModid);
-                $hooksettings[$hookMod] = array(
+                $hooksettings[$hookMod] = [
                     'status' => $hookStatus,
                     'output' => '',
                     'message' => $hookMessage,
                     'ishooked' => $ishooked,
-                    'displayname' => $hookModinfo['displayname']
-                );
+                    'displayname' => $hookModinfo['displayname'],
+                ];
             }
             if ($phase == 'update') {
                 if (empty($invalid)) {
@@ -353,11 +353,11 @@ function crispbb_admin_modify($args)
                                     'modules',
                                     'admin',
                                     'enablehooks',
-                                    array(
+                                    [
                                         'callerModName' => 'crispbb',
                                         'callerItemType' => $itemtype,
-                                        'hookModName' => $checkmod
-                                    )
+                                        'hookModName' => $checkmod,
+                                    ]
                                 );
                                 $isupdated = true;
                             }
@@ -369,11 +369,11 @@ function crispbb_admin_modify($args)
                                     'modules',
                                     'admin',
                                     'disablehooks',
-                                    array(
+                                    [
                                         'callerModName' => 'crispbb',
                                         'callerItemType' => $itemtype,
-                                        'hookModName' => $checkmod
-                                    )
+                                        'hookModName' => $checkmod,
+                                    ]
                                 );
                                 $isupdated = true;
                             }
@@ -393,7 +393,7 @@ function crispbb_admin_modify($args)
                             'crispbb',
                             'admin',
                             'modify',
-                            array('fid' => $fid, 'sublink' => $sublink)
+                            ['fid' => $fid, 'sublink' => $sublink]
                         );
                     }
                     xarController::redirect($return_url);
@@ -404,7 +404,7 @@ function crispbb_admin_modify($args)
                 'module',
                 'modifyconfig',
                 'crispbb',
-                array('module' => 'crispbb', 'itemtype' => $itemtype)
+                ['module' => 'crispbb', 'itemtype' => $itemtype]
             );
             if (isset($hooks['categories'])) {
                 unset($hooks['categories']);
@@ -426,14 +426,14 @@ function crispbb_admin_modify($args)
                 xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
                 return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
             }
-            if (!xarVar::fetch('privs', 'list', $privs, array(), xarVar::NOT_REQUIRED)) {
+            if (!xarVar::fetch('privs', 'list', $privs, [], xarVar::NOT_REQUIRED)) {
                 return;
             }
             $presets = xarMod::apiFunc(
                 'crispbb',
                 'user',
                 'getpresets',
-                array('preset' => 'privactionlabels,fprivileges,privleveloptions')
+                ['preset' => 'privactionlabels,fprivileges,privleveloptions']
             );
             $defaults = $presets['fprivileges'];
             if (empty($privs)) {
@@ -457,20 +457,20 @@ function crispbb_admin_modify($args)
                 if ($resetprivs) {
                     $privs = $defaults;
                 }
-                $fieldlist = array('fprivileges');
+                $fieldlist = ['fprivileges'];
                 $data['forum']->setFieldList($fieldlist);
                 if (empty($invalid)) {
                     if (!xarSec::confirmAuthKey()) {
                         return;
                     }
-                    $extra = array('fprivileges' => serialize($privs));
+                    $extra = ['fprivileges' => serialize($privs)];
                     $data['forum']->updateHooks(false);
                     $data['forum']->updateItem($extra);
                     // update the status message
                     xarSession::setVar('crispbb_statusmsg', xarML('Forum privileges updated'));
                     // if no returnurl specified, return to forumconfig
                     if (empty($return_url)) {
-                        $return_url = xarController::URL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'privileges'));
+                        $return_url = xarController::URL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'privileges']);
                     }
                     xarController::redirect($return_url);
                     return true;
@@ -504,7 +504,7 @@ function crispbb_admin_modify($args)
                 'crispbb',
                 'user',
                 'getpresets',
-                array('preset' => 'privactionlabels,privleveloptions')
+                ['preset' => 'privactionlabels,privleveloptions']
             );
             $data['actions'] = $presets['privactionlabels'];
             $data['levels'] = $presets['privleveloptions'];
@@ -518,14 +518,14 @@ function crispbb_admin_modify($args)
         'crispbb',
         'admin',
         'getmenulinks',
-        array('current_mod' => 'crispbb',
+        ['current_mod' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'modify',
             'current_sublink' => $sublink,
             'fid' => $fid,
             //'catid' => $data['catid'],
-            'secLevels' => $secLevels
-    )
+            'secLevels' => $secLevels,
+    ]
     );
     $data['pageTitle'] = $pageTitle;
     $data['hookoutput'] = !empty($hooks) ? $hooks : '';

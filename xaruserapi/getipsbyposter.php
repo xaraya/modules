@@ -38,14 +38,14 @@ function crispbb_userapi_getipsbyposter($args)
     $posterstable = $xartable['crispbb_posters'];
     $rolesdef = xarMod::apiFunc('roles', 'user', 'leftjoin');
 
-    $select = array();
+    $select = [];
     $from = $poststable;
-    $where = array();
-    $groupby = array();
-    $orderby = array();
-    $bindvars = array();
+    $where = [];
+    $groupby = [];
+    $orderby = [];
+    $bindvars = [];
 
-    $fields = array('phostname','powner');
+    $fields = ['phostname','powner'];
     $select[] = 'DISTINCT ' . $poststable . '.phostname';
     $select[] = $poststable . '.powner';
     if (!empty($uid) && is_numeric($uid)) {
@@ -53,7 +53,7 @@ function crispbb_userapi_getipsbyposter($args)
         $bindvars[] = $uid;
     }
     // get user info from roles
-    $rolesfields = array('name','uname','id','date_reg');
+    $rolesfields = ['name','uname','id','date_reg'];
     foreach ($rolesfields as $rfield) {
         $select[] = $rolesdef['table'] . '.' . $rfield;
         $fields[] = $rfield;
@@ -107,10 +107,10 @@ function crispbb_userapi_getipsbyposter($args)
     if (!$result) {
         return;
     }
-    $posters = array();
+    $posters = [];
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
-        $poster = array();
+        $poster = [];
         foreach ($fields as $key => $field) {
             $value = array_shift($data);
             if ($field == 'lastseen') {

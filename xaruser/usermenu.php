@@ -47,7 +47,7 @@ function example_user_usermenu($args)
             $icon = 'modules/example/xarimages/preferences.gif';
 
             /* Now lets send the data to the template which name we choose here. */
-            $data = xarTpl::module('example', 'user', 'usermenu_icon', array('iconbasic' => $icon));
+            $data = xarTpl::module('example', 'user', 'usermenu_icon', ['iconbasic' => $icon]);
 
             return $data;
 
@@ -69,10 +69,10 @@ function example_user_usermenu($args)
             $value = xarModUserVars::get('example', 'itemsperpage');
             /* Now lets send the data to the template which name we choose here.
              */
-            $data = xarTpl::module('example', 'user', 'usermenu_form', array('authid' => $authid,
+            $data = xarTpl::module('example', 'user', 'usermenu_form', ['authid' => $authid,
                     'name' => $name,
                     'uid' => $uid,
-                    'value' => $value));
+                    'value' => $value, ]);
 
             return $data;
 
@@ -102,7 +102,7 @@ function example_user_usermenu($args)
                 'roles',
                 'user',
                 'account',
-                array('moduleload' => 'example')
+                ['moduleload' => 'example']
             ));
 
             return;

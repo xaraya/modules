@@ -56,45 +56,45 @@ function crispbb_init()
         if (!$q->run($query)) {
             return;
         }
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'fstatus' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'fowner' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'forder' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'lasttid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'ftype' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numtopics' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numreplies' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numtopicsubs' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numreplysubs' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numtopicdels' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numreplydels' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'fname' => array('type' => 'varchar','size' => 100,'null' => false, 'charset' => $charset),
-            'fdesc' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
-            'fsettings' => array('type' => 'text', 'charset' => $charset),
-            'fprivileges' => array('type' => 'text', 'charset' => $charset)
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'fstatus' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'fowner' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'forder' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'lasttid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'ftype' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numtopics' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numreplies' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numtopicsubs' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numreplysubs' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numtopicdels' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numreplydels' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'fname' => ['type' => 'varchar','size' => 100,'null' => false, 'charset' => $charset],
+            'fdesc' => ['type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset],
+            'fsettings' => ['type' => 'text', 'charset' => $charset],
+            'fprivileges' => ['type' => 'text', 'charset' => $charset],
+        ];
         $query = xarTableDDL::createTable($forumstable, $fields);
         $dbconn->Execute($query);
 
         // fstatus
-        $index = array('name' => $prefix . '_crispbb_forums_fstatus',
-                       'fields' => array('fstatus')
-                       );
+        $index = ['name' => $prefix . '_crispbb_forums_fstatus',
+                       'fields' => ['fstatus'],
+                       ];
         $query = xarTableDDL::createIndex($forumstable, $index);
         $dbconn->Execute($query);
 
         // forder
-        $index = array('name' => $prefix . '_crispbb_forums_forder',
-                       'fields' => array('forder')
-                       );
+        $index = ['name' => $prefix . '_crispbb_forums_forder',
+                       'fields' => ['forder'],
+                       ];
         $query = xarTableDDL::createIndex($forumstable, $index);
         $dbconn->Execute($query);
 
         // fname
-        $index = array('name' => $prefix . '_crispbb_forums_fname',
-                       'fields' => array('fname')
-                       );
+        $index = ['name' => $prefix . '_crispbb_forums_fname',
+                       'fields' => ['fname'],
+                       ];
         $query = xarTableDDL::createIndex($forumstable, $index);
         $dbconn->Execute($query);
 
@@ -103,19 +103,19 @@ function crispbb_init()
         if (!$q->run($query)) {
             return;
         }
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
-            'component' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'fid' => ['type' => 'integer', 'unsigned' => true, 'null' => false],
+            'component' => ['type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset],
+        ];
         $query = xarTableDDL::createTable($itemtypestable, $fields);
         $dbconn->Execute($query);
 
         // itemtypes, every entry must be unique
-        $index = array('name' => $prefix . '_crispbb_itemtypes_combo',
-                       'fields' => array('fid', 'component'),
+        $index = ['name' => $prefix . '_crispbb_itemtypes_combo',
+                       'fields' => ['fid', 'component'],
                        'unique' => true,
-                       );
+                       ];
         $query = xarTableDDL::createIndex($itemtypestable, $index);
         $dbconn->Execute($query);
 
@@ -124,42 +124,42 @@ function crispbb_init()
         if (!$q->run($query)) {
             return;
         }
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
-            'ttype' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'tstatus' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'towner' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
-            'topicstype' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'firstpid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'lastpid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numreplies' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numsubs' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numdels' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'ttitle' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
-            'tsettings' => array('type' => 'text', 'charset' => $charset),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'fid' => ['type' => 'integer', 'unsigned' => true, 'null' => false],
+            'ttype' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'tstatus' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'towner' => ['type' => 'integer', 'unsigned' => true, 'null' => false],
+            'topicstype' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'firstpid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'lastpid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numreplies' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numsubs' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numdels' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'ttitle' => ['type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset],
+            'tsettings' => ['type' => 'text', 'charset' => $charset],
+        ];
         $query = xarTableDDL::createTable($topicstable, $fields);
         $dbconn->Execute($query);
 
         // fid
-        $index = array('name' => $prefix . '_crispbb_topics_fid',
-                       'fields' => array('fid')
-                       );
+        $index = ['name' => $prefix . '_crispbb_topics_fid',
+                       'fields' => ['fid'],
+                       ];
         $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
         // ttype
-        $index = array('name' => $prefix . '_crispbb_topics_ttype',
-                       'fields' => array('ttype')
-                       );
+        $index = ['name' => $prefix . '_crispbb_topics_ttype',
+                       'fields' => ['ttype'],
+                       ];
         $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
         // tstatus
-        $index = array('name' => $prefix . '_crispbb_topics_tstatus',
-                       'fields' => array('tstatus')
-                       );
+        $index = ['name' => $prefix . '_crispbb_topics_tstatus',
+                       'fields' => ['tstatus'],
+                       ];
         $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
@@ -172,9 +172,9 @@ function crispbb_init()
         $dbconn->Execute($query);
         */
         // ttitle
-        $index = array('name' => $prefix . '_crispbb_topics_ttitle',
-                       'fields' => array('ttitle')
-                       );
+        $index = ['name' => $prefix . '_crispbb_topics_ttitle',
+                       'fields' => ['ttitle'],
+                       ];
         $query = xarTableDDL::createIndex($topicstable, $index);
         $dbconn->Execute($query);
 
@@ -183,46 +183,46 @@ function crispbb_init()
         if (!$q->run($query)) {
             return;
         }
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'tid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'ptime' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'pstatus' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'powner' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'poststype' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'phostname' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
-            'pdesc' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
-            'ptext' => array('type' => 'text', 'charset' => $charset),
-            'psettings' => array('type' => 'text', 'charset' => $charset),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'tid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'ptime' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'pstatus' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'powner' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'poststype' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'phostname' => ['type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset],
+            'pdesc' => ['type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset],
+            'ptext' => ['type' => 'text', 'charset' => $charset],
+            'psettings' => ['type' => 'text', 'charset' => $charset],
+        ];
         $query = xarTableDDL::createTable($poststable, $fields);
         $dbconn->Execute($query);
 
         // tid
-        $index = array('name' => $prefix . '_crispbb_posts_tid',
-                       'fields' => array('tid')
-                       );
+        $index = ['name' => $prefix . '_crispbb_posts_tid',
+                       'fields' => ['tid'],
+                       ];
         $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // ptime
-        $index = array('name' => $prefix . '_crispbb_posts_ptime',
-                       'fields' => array('ptime')
-                       );
+        $index = ['name' => $prefix . '_crispbb_posts_ptime',
+                       'fields' => ['ptime'],
+                       ];
         $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // pstatus
-        $index = array('name' => $prefix . '_crispbb_posts_pstatus',
-                       'fields' => array('pstatus')
-                       );
+        $index = ['name' => $prefix . '_crispbb_posts_pstatus',
+                       'fields' => ['pstatus'],
+                       ];
         $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
         // powner
-        $index = array('name' => $prefix . '_crispbb_posts_powner',
-                       'fields' => array('powner')
-                       );
+        $index = ['name' => $prefix . '_crispbb_posts_powner',
+                       'fields' => ['powner'],
+                       ];
         $query = xarTableDDL::createIndex($poststable, $index);
         $dbconn->Execute($query);
 
@@ -231,41 +231,41 @@ function crispbb_init()
         if (!$q->run($query)) {
             return;
         }
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'moduleid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'tid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'moduleid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'itemtype' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'itemid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'tid' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+        ];
         $query = xarTableDDL::createTable($hookstable, $fields);
         $dbconn->Execute($query);
 
         // moduleid
-        $index = array('name' => $prefix . '_crispbb_hooks_moduleid',
-                       'fields' => array('moduleid')
-                       );
+        $index = ['name' => $prefix . '_crispbb_hooks_moduleid',
+                       'fields' => ['moduleid'],
+                       ];
         $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // itemtype
-        $index = array('name' => $prefix . '_crispbb_hooks_itemtype',
-                       'fields' => array('itemtype')
-                       );
+        $index = ['name' => $prefix . '_crispbb_hooks_itemtype',
+                       'fields' => ['itemtype'],
+                       ];
         $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // itemid
-        $index = array('name' => $prefix . '_crispbb_hooks_itemid',
-                       'fields' => array('itemid')
-                       );
+        $index = ['name' => $prefix . '_crispbb_hooks_itemid',
+                       'fields' => ['itemid'],
+                       ];
         $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
         // tid
-        $index = array('name' => $prefix . '_crispbb_hooks_tid',
-                       'fields' => array('tid')
-                       );
+        $index = ['name' => $prefix . '_crispbb_hooks_tid',
+                       'fields' => ['tid'],
+                       ];
         $query = xarTableDDL::createIndex($hookstable, $index);
         $dbconn->Execute($query);
 
@@ -275,16 +275,16 @@ function crispbb_init()
             return;
         }
         // @TODO: this could be waaaaay more useful (ranking, karma, etc)
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-            'numtopics' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-            'numreplies' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'],
+            'numtopics' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+            'numreplies' => ['type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'],
+        ];
         $query = xarTableDDL::createTable($posterstable, $fields);
         $dbconn->Execute($query);
-        $index = array('name' => $prefix . '_crispbb_posters_id',
-                       'fields' => array('id')
-                       );
+        $index = ['name' => $prefix . '_crispbb_posters_id',
+                       'fields' => ['id'],
+                       ];
         $query = xarTableDDL::createIndex($posterstable, $index);
         $dbconn->Execute($query);
 
@@ -300,7 +300,7 @@ function crispbb_init()
 #
     # Create DD objects
 #
-    $objects = array(
+    $objects = [
                 'crispbb_forums',
                 'crispbb_topics',
                 'crispbb_posts',
@@ -309,9 +309,9 @@ function crispbb_init()
                 //'crispbb_user_settings',
                 'crispbb_forum_settings',
                 'crispbb_posters',
-                );
+                ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -320,11 +320,11 @@ function crispbb_init()
     # Create Base Itemtypes
 #
 
-    $itemtypes = DataObjectMaster::getObject(array('name' => 'crispbb_itemtypes'));
-    $components = array('forum', 'topics', 'posts');
+    $itemtypes = DataObjectMaster::getObject(['name' => 'crispbb_itemtypes']);
+    $components = ['forum', 'topics', 'posts'];
     foreach ($components as $component) {
         $itemtypes->properties['id']->value = 0;
-        $basetypes[$component] = $itemtypes->createItem(array('fid' => 0, 'component' => $component));
+        $basetypes[$component] = $itemtypes->createItem(['fid' => 0, 'component' => $component]);
     }
     # --------------------------------------------------------
 #
@@ -340,17 +340,17 @@ function crispbb_init()
     }
     if (empty($basecid)) {
         sys::import('modules.dynamicdata.class.objects.master');
-        $categories = DataObjectMaster::getObject(array('name' => 'categories'));
-        $fieldValues = array(
+        $categories = DataObjectMaster::getObject(['name' => 'categories']);
+        $fieldValues = [
                 'name' => $catName,
                 'description' => xarML('crispBB Root Category'),
                 'parent_id' => 1,
-        );
+        ];
         $basecid = $categories->createItem($fieldValues);
     }
-    
+
     // Save the base category in a modvar
-    xarModVars::set('crispbb', 'base_categories', serialize(array($basecid)));
+    xarModVars::set('crispbb', 'base_categories', serialize([$basecid]));
 
     # --------------------------------------------------------
 #
@@ -358,9 +358,9 @@ function crispbb_init()
 #
 
     // Module settings (storage for forums and module default settings)
-    xarModVars::set($module, 'ftracking', serialize(array()));
-    xarModVars::set($module, 'forumsettings', serialize(array()));
-    xarModVars::set($module, 'privilegesettings', serialize(array()));
+    xarModVars::set($module, 'ftracking', serialize([]));
+    xarModVars::set($module, 'forumsettings', serialize([]));
+    xarModVars::set($module, 'privilegesettings', serialize([]));
 
     // The tracker class takes care of creating the tracker object
     sys::import('modules.crispbb.class.tracker');
@@ -383,7 +383,7 @@ function crispbb_init()
 #
     # Set up configuration modvars (common)
 #
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => $module));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => $module]);
     $module_settings->initialize();
 
     # --------------------------------------------------------
@@ -395,8 +395,8 @@ function crispbb_init()
         'blocks',
         'admin',
         'register_block_type',
-        array('modName' => $module,
-                'blockType' => 'topitems')
+        ['modName' => $module,
+                'blockType' => 'topitems', ]
     )) {
         return;
     }
@@ -406,8 +406,8 @@ function crispbb_init()
         'blocks',
         'admin',
         'register_block_type',
-        array('modName' => $module,
-                'blockType' => 'userpanel')
+        ['modName' => $module,
+                'blockType' => 'userpanel', ]
     )) {
         return;
     }
@@ -415,23 +415,23 @@ function crispbb_init()
 #
     # Create privilege instances
 #
-    $instances = array(
-                       array('header' => 'external', // this keyword indicates an external "wizard"
+    $instances = [
+                       ['header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarController::URL($module, 'admin', 'privileges'),
-                             'limit'  => 0
-                            )
-                    );
+                             'limit'  => 0,
+                            ],
+                    ];
     xarPrivileges::defineInstance($module, 'Forum', $instances);
 
     $info = xarMod::getBaseInfo($module);
     $sysid = $info['systemid'];
     $query = "SELECT DISTINCT instances.title FROM $tables[block_instances] as instances LEFT JOIN $tables[block_types] as btypes ON btypes.id = instances.type_id WHERE module_id = $sysid";
-    $instances = array(
-                        array('header' => 'crispBB Block Title:',
+    $instances = [
+                        ['header' => 'crispBB Block Title:',
                                 'query' => $query,
-                                'limit' => 20
-                            )
-                    );
+                                'limit' => 20,
+                            ],
+                    ];
     xarPrivileges::defineInstance($module, 'Block', $instances);
 
     # --------------------------------------------------------
@@ -512,11 +512,11 @@ function crispbb_init()
         'modules',
         'admin',
         'enablehooks',
-        array(
+        [
             'callerModName' => $module,
             'callerItemType' => $basetypes['topics'],
-            'hookModName' => 'hitcount'
-        )
+            'hookModName' => 'hitcount',
+        ]
     );
 
     // enable waiting content hook for base module
@@ -524,7 +524,7 @@ function crispbb_init()
         'modules',
         'admin',
         'enablehooks',
-        array('callerModName' => 'base', 'hookModName' => $module)
+        ['callerModName' => 'base', 'hookModName' => $module]
     );
 
     // hook search
@@ -533,7 +533,7 @@ function crispbb_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'search', 'hookModName' => $module)
+            ['callerModName' => 'search', 'hookModName' => $module]
         );
     }
 
@@ -679,8 +679,8 @@ function crispbb_delete()
         'blocks',
         'admin',
         'unregister_block_type',
-        array('modName' => $module,
-                'blockType' => 'topitems')
+        ['modName' => $module,
+                'blockType' => 'topitems', ]
     )) {
         return;
     }
@@ -689,8 +689,8 @@ function crispbb_delete()
         'blocks',
         'admin',
         'unregister_block_type',
-        array('modName' => $module,
-                'blockType' => 'userpanel')
+        ['modName' => $module,
+                'blockType' => 'userpanel', ]
     )) {
         return;
     }
@@ -709,9 +709,9 @@ function crispbb_delete()
     }
 
     // Remove the crispbb category links
-    xarMod::apiFunc('categories', 'admin', 'unlinkcids', array('modid' => xarMod::getRegID('crispbb'), 'itemtype' => 1));
-    
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+    xarMod::apiFunc('categories', 'admin', 'unlinkcids', ['modid' => xarMod::getRegID('crispbb'), 'itemtype' => 1]);
+
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 
     /* Deletion successful*/
     return true;

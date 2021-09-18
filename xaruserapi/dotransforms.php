@@ -24,7 +24,7 @@
 function crispbb_userapi_dotransforms($args)
 {
     extract($args);
-    $invalid = array();
+    $invalid = [];
     if (empty($itemtype) || !is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
     }
@@ -33,16 +33,16 @@ function crispbb_userapi_dotransforms($args)
     }
 
     if (!empty($invalid)) {
-        return array();
+        return [];
     }
 
     if (!isset($ignore) || empty($ignore) || !is_array($ignore)) {
-        $ignore = array();
+        $ignore = [];
     }
 
     $transhooks = xarModHooks::getList('crispbb', 'item', 'transform', $itemtype);
 
-    $transformed = array();
+    $transformed = [];
 
     foreach ($transforms as $field => $hooks) {
         if (isset($args[$field])) {
@@ -62,19 +62,19 @@ function crispbb_userapi_dotransforms($args)
                     if (!xarMod::apiLoad($transform['module'], $transform['type'])) {
                         return;
                     } //return;
-                    $extrainfo = array(
+                    $extrainfo = [
                         'module' => 'crispbb',
                         'itemtype' => $itemtype,
                         'itemid' => 0,
-                        'transform' => array($field),
-                        $field => $text
-                    );
+                        'transform' => [$field],
+                        $field => $text,
+                    ];
                     $res = xarMod::apiFunc(
                         $transform['module'],
                         $transform['type'],
                         $transform['func'],
-                        array('objectid' => 0,
-                                               'extrainfo' => $extrainfo)
+                        ['objectid' => 0,
+                                               'extrainfo' => $extrainfo, ]
                     );
                     if (!isset($res)) {
                         return;
@@ -86,7 +86,7 @@ function crispbb_userapi_dotransforms($args)
         }
     }
 
-    $cleanup = array('ttitle', 'tdesc', 'pdesc', 'fname');
+    $cleanup = ['ttitle', 'tdesc', 'pdesc', 'fname'];
     foreach ($transformed as $field => $text) {
         if (!in_array($field, $cleanup)) {
             continue;

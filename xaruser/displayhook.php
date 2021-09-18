@@ -27,7 +27,7 @@ function crispbb_user_displayhook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (empty($modname)) {
@@ -41,7 +41,7 @@ function crispbb_user_displayhook($args)
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'user', 'displayhook', 'crispBB');
+        $vars = ['module name', 'user', 'displayhook', 'crispBB'];
         //throw new BadParameterException($vars, $msg);
         // don't throw an error here, life in hooks goes on...
         return;
@@ -59,21 +59,21 @@ function crispbb_user_displayhook($args)
         $itemid = $objectid;
     } else {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('object ID', 'user', 'displayhook', 'crispBB');
+        $vars = ['object ID', 'user', 'displayhook', 'crispBB'];
         //throw new BadParameterException($vars, $msg);
         // life goes on in hook modules, so just return false
         return;
     }
 
-    $data = array();
+    $data = [];
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $hookstable = $xartable['crispbb_hooks'];
 
-    $select = array();
-    $where = array();
-    $bindvars = array();
+    $select = [];
+    $where = [];
+    $bindvars = [];
     $select[] = $hookstable . '.tid';
     $from = $hookstable;
     $where[] = $hookstable . '.moduleid = ?';
@@ -97,12 +97,12 @@ function crispbb_user_displayhook($args)
     }
     if ($result->EOF) {
     } else {
-        list($tid) = $result->fields;
+        [$tid] = $result->fields;
     }
     $result->Close();
 
     if (!empty($tid)) {
-        $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'privcheck' => true));
+        $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $tid, 'privcheck' => true]);
         if ($topic == 'BAD_DATA' || $topic == 'NO_PRIVILEGES') {
             return;
         }
@@ -119,17 +119,17 @@ function crispbb_user_displayhook($args)
     if (empty($string) || !is_string($string)) {
         $string = xarModVars::get('crispbb', 'crispbb_hooks');
     }
-    $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
+    $settings = !empty($string) && is_string($string) ? unserialize($string) : [];
 
     $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : null;
-    $data['postsperpage'] = isset($settings['postsperpage']) ? $settings['postsperpage'] : 0;
-    $data['quickreply'] = isset($settings['quickreply']) ? $settings['quickreply'] : false;
+    $data['postsperpage'] = $settings['postsperpage'] ?? 0;
+    $data['quickreply'] = $settings['quickreply'] ?? false;
 
     if (empty($topic)) {
         if (empty($data['fid'])) {
             return;
         }
-        $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $data['fid'], 'privcheck' => true));
+        $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $data['fid'], 'privcheck' => true]);
         if ($forum == 'NO_PRIVILEGES' || $forum == 'BAD_DATA') {
             return;
         }
@@ -138,14 +138,14 @@ function crispbb_user_displayhook($args)
                 'crispbb',
                 'user',
                 'newtopic',
-                array(
+                [
                     'fid' => $data['fid'],
                     'modname' => $modname,
                     'itemtype' => $itemtype,
                     'itemid' => $itemid,
                     //'return_url' => xarServer::getCurrentURL(),
-                    'authid' => xarSec::genAuthKey('crispbb')
-                )
+                    'authid' => xarSec::genAuthKey('crispbb'),
+                ]
             );
         }
     }

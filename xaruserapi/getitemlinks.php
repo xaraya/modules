@@ -19,7 +19,7 @@
  */
 function crispbb_userapi_getitemlinks($args)
 {
-    $itemlinks = array();
+    $itemlinks = [];
 
     $secLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');
     if (empty($secLevel)) {
@@ -31,7 +31,7 @@ function crispbb_userapi_getitemlinks($args)
             'crispbb',
             'user',
             'getitemtypes',
-            array('itemtype' => $args['itemtype'])
+            ['itemtype' => $args['itemtype']]
         );
         if (!empty($itemtypes)) {
             $thistype = reset($itemtypes);
@@ -46,14 +46,14 @@ function crispbb_userapi_getitemlinks($args)
     }
 
     if (empty($args['itemids']) || !is_array($args['itemids'])) {
-        $args['itemids'] = array();
+        $args['itemids'] = [];
     }
 
     switch ($component) {
         case 'forum':
             default:
             $bycat = empty($args['itemids']) ? true : null;
-            $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', array('fid' => $args['itemids'], 'bycat' => $bycat));
+            $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', ['fid' => $args['itemids'], 'bycat' => $bycat]);
             if (!empty($forums)) {
                 if (empty($bycat)) {
                     foreach ($forums as $foundfid => $forum) {
@@ -63,13 +63,13 @@ function crispbb_userapi_getitemlinks($args)
                         if (empty($forum['forumviewurl'])) {
                             continue;
                         }
-                        $itemlinks[$foundfid] = array(
+                        $itemlinks[$foundfid] = [
                             'url' => $forum['forumviewurl'],
                             'title' => $forum['fdesc'],
                             'label' => xarVar::prepForDisplay($forum['fname']),
                             'id' => $foundfid,
-                            'name' => $forum['fname']
-                            );
+                            'name' => $forum['fname'],
+                            ];
                     }
                 } else {
                     // get forum categories
@@ -77,7 +77,7 @@ function crispbb_userapi_getitemlinks($args)
                         'crispbb',
                         'user',
                         'getitemtype',
-                        array('fid' => 0, 'component' => 'forum')
+                        ['fid' => 0, 'component' => 'forum']
                     );
                     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
                     $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
@@ -85,14 +85,14 @@ function crispbb_userapi_getitemlinks($args)
                         'categories',
                         'user',
                         'getchildren',
-                        array('cid' => $parentcat)
+                        ['cid' => $parentcat]
                     );
                     foreach ($categories as $cid => $cat) {
                         $secLevel = xarMod::apiFunc(
                             'crispbb',
                             'user',
                             'getseclevel',
-                            array('catid' => $cid)
+                            ['catid' => $cid]
                         );
                         if (empty($secLevel)) {
                             continue;
@@ -105,13 +105,13 @@ function crispbb_userapi_getitemlinks($args)
                                 if (empty($forum['forumviewurl'])) {
                                     continue;
                                 }
-                                $itemlinks[$foundfid] = array(
+                                $itemlinks[$foundfid] = [
                                 'url' => $forum['forumviewurl'],
                                 'title' => $forum['fdesc'],
                                 'label' => xarVar::prepForDisplay($forum['fname']),
                                 'id' => $foundfid,
-                                'name' => $forum['fname']
-                            );
+                                'name' => $forum['fname'],
+                            ];
                             }
                         }
                     }
@@ -119,7 +119,7 @@ function crispbb_userapi_getitemlinks($args)
             }
             break;
         case 'topics':
-            $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics', array('tid' => $args['itemids']));
+            $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics', ['tid' => $args['itemids']]);
             if (!empty($topics)) {
                 foreach ($topics as $foundtid => $topic) {
                     if (empty($topic['viewtopicurl'])) {
@@ -127,18 +127,18 @@ function crispbb_userapi_getitemlinks($args)
                     } else {
                         $url = $topic['viewtopicurl'];
                     }
-                    $itemlinks[$foundtid] = array(
+                    $itemlinks[$foundtid] = [
                         'url' => $url,
                         'title' => $topic['ttitle'],
                         'label' => xarVar::prepForDisplay($topic['ttitle']),
                         'id' => $foundtid,
-                        'name' => $topic['ttitle']
-                        );
+                        'name' => $topic['ttitle'],
+                        ];
                 }
             }
             break;
         case 'posts':
-            $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', array('pid' => $args['itemids']));
+            $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', ['pid' => $args['itemids']]);
             if (!empty($posts)) {
                 foreach ($posts as $foundpid => $post) {
                     if (empty($post['viewreplyurl'])) {
@@ -146,13 +146,13 @@ function crispbb_userapi_getitemlinks($args)
                     } else {
                         $url = $post['viewreplyurl'];
                     }
-                    $itemlinks[$foundpid] = array(
+                    $itemlinks[$foundpid] = [
                         'url' => $url,
                         'title' => $post['ttitle'],
                         'label' => xarVar::prepForDisplay($post['ttitle']),
                         'id' => $post['tid'],
-                        'name' => $topic['ttitle']
-                    );
+                        'name' => $topic['ttitle'],
+                    ];
                 }
             }
             break;

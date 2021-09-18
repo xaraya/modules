@@ -30,7 +30,7 @@ function crispbb_userapi_showreplies($args)
         $template_override = $template;
     }
 
-    $data = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid));
+    $data = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $tid]);
 
 
     if (!isset($numitems)) {
@@ -51,21 +51,21 @@ function crispbb_userapi_showreplies($args)
     if (!isset($endtime)) {
         $endtime = null;
     }
-    $item = array();
+    $item = [];
     $item['module'] = 'crispbb';
     $item['itemtype'] = $data['topicstype'];
     $item['itemid'] = $tid;
     $item['tid'] = $tid;
-    $item['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+    $item['returnurl'] = xarController::URL('crispbb', 'user', 'display', ['tid' => $tid, 'startnum' => $startnum]);
     xarVar::setCached('Hooks.hitcount', 'save', true);
     $hooks = xarModHooks::call('item', 'display', $tid, $item);
 
-    $data['hookoutput'] = !empty($hooks) && is_array($hooks) ? $hooks : array();
+    $data['hookoutput'] = !empty($hooks) && is_array($hooks) ? $hooks : [];
     $posts = xarMod::apiFunc(
         'crispbb',
         'user',
         'getposts',
-        array(
+        [
             'tid' => $tid,
             'sort' => $sort,
             'order' => $order,
@@ -73,8 +73,8 @@ function crispbb_userapi_showreplies($args)
             'numitems' => $numitems,
             'starttime' => $starttime,
             'endtime' => $endtime,
-            'pstatus' => array(0,1)
-       )
+            'pstatus' => [0,1],
+       ]
     );
 
 
@@ -83,13 +83,13 @@ function crispbb_userapi_showreplies($args)
             'crispbb',
             'user',
             'gettopicicons',
-            array('iconfolder' => $data['iconfolder'])
+            ['iconfolder' => $data['iconfolder']]
         );
         $data['iconlist'] = $iconlist;
     } else {
-        $data['iconlist'] = array();
+        $data['iconlist'] = [];
     }
-    $seenposters = array();
+    $seenposters = [];
     foreach ($posts as $pid => $post) {
         $item = $post;
         if (!empty($post['towner'])) {
@@ -111,14 +111,14 @@ function crispbb_userapi_showreplies($args)
             } else {
                 $item['topicicon'] = '';
             }
-            $hookitem = array();
+            $hookitem = [];
             $hookitem['module'] = 'crispbb';
             $hookitem['itemtype'] = $post['poststype'];
             $hookitem['itemid'] = $post['pid'];
             $hookitem['pid'] = $post['pid'];
-            $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+            $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', ['tid' => $tid, 'startnum' => $startnum]);
             $posthooks = xarModHooks::call('item', 'display', $post['pid'], $hookitem);
-            $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
+            $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : [];
             unset($posthooks);
         }
         if ($data['fstatus'] == 0) { // open forum
@@ -127,8 +127,8 @@ function crispbb_userapi_showreplies($args)
         $posts[$pid] = $item;
     }
 
-    $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
-    $posterlist = xarMod::apiFunc('crispbb', 'user', 'getposters', array('uidlist' => $uidlist, 'showstatus' => true));
+    $uidlist = !empty($seenposters) ? array_keys($seenposters) : [];
+    $posterlist = xarMod::apiFunc('crispbb', 'user', 'getposters', ['uidlist' => $uidlist, 'showstatus' => true]);
 
     $data['posts'] = $posts;
     $data['uidlist'] = $uidlist;

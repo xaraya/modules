@@ -30,33 +30,33 @@ function crispbb_user_forum_index()
         }
     }
 
-    $data = array();
+    $data = [];
     $now = time();
     $uid = xarUser::getVar('id');
-    $tstatus = array(0,1,3,4); // open, closed, submitted, moved, locked topics
+    $tstatus = [0,1,3,4]; // open, closed, submitted, moved, locked topics
 
     // Get the forums
     $forums = xarMod::apiFunc(
         'crispbb',
         'user',
         'getforums',
-        array(
+        [
             'catid' => $catid,
             'bycat' => true,
             'tstatus' => $tstatus,
-            'privcheck' => true
-            )
+            'privcheck' => true,
+            ]
     );
     // if the error was no privs, we should have an error message
     if (!empty($forums['error']) && $forums['error'] == 'NO_PRIVILEGES') {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     // Logged in user
     if (xarUser::isLoggedIn()) {
         // Start Tracking
         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
-        $data['readurl'] = xarController::URL('crispbb', 'user', 'forum_index', array('action' => 'read'));
+        $data['readurl'] = xarController::URL('crispbb', 'user', 'forum_index', ['action' => 'read']);
     } else {
         $data['readurl'] = '';
     }
@@ -66,7 +66,7 @@ function crispbb_user_forum_index()
         'crispbb',
         'user',
         'getitemtype',
-        array('fid' => 0, 'component' => 'forum')
+        ['fid' => 0, 'component' => 'forum']
     );
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
@@ -75,14 +75,14 @@ function crispbb_user_forum_index()
             'categories',
             'user',
             'getcatinfo',
-            array('cid' => $catid)
+            ['cid' => $catid]
         );
     } else {
         $categories = xarMod::apiFunc(
             'categories',
             'user',
             'getchildren',
-            array('cid' => $parentcat)
+            ['cid' => $parentcat]
         );
     }
 
@@ -90,10 +90,10 @@ function crispbb_user_forum_index()
         'crispbb',
         'user',
         'getseclevel',
-        array('catid' => $catid)
+        ['catid' => $catid]
     );
-    $seenposters = array();
-    $seenLevels = array();
+    $seenposters = [];
+    $seenLevels = [];
     $totaltopics = 0;
     $totalreplies = 0;
     if (!empty($categories)) {
@@ -102,7 +102,7 @@ function crispbb_user_forum_index()
                 'crispbb',
                 'user',
                 'getseclevel',
-                array('catid' => $cid)
+                ['catid' => $cid]
             );
             if (empty($catLevel)) { // No privs
                 unset($categories[$cid]);
@@ -114,7 +114,7 @@ function crispbb_user_forum_index()
             $catinfo = $category;
             $numforums = isset($forums[$cid]) ? count($forums[$cid]) : 0;
             $catinfo['numforums'] = $numforums;
-            $catinfo['viewurl'] = xarController::URL('crispbb', 'user', 'forum_index', array('catid' => $cid));
+            $catinfo['viewurl'] = xarController::URL('crispbb', 'user', 'forum_index', ['catid' => $cid]);
             $categories[$cid] = $catinfo;
             if (!empty($numforums)) {
                 foreach ($forums[$cid] as $fid => $forum) {
@@ -156,17 +156,17 @@ function crispbb_user_forum_index()
                         $seenposters[$finfo['powner']] = 1;
                     }
                     if (!empty($finfo['privs']['approvetopics'])) {
-                        $unnapproved = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => 2, 'fid' => $fid));
+                        $unnapproved = xarMod::apiFunc('crispbb', 'user', 'counttopics', ['tstatus' => 2, 'fid' => $fid]);
                         if (!empty($unnapproved)) {
                             $finfo['modtopicsurl'] = xarController::URL(
                                 'crispbb',
                                 'user',
                                 'moderate',
-                                array(
+                                [
                                     'component' => 'topics',
                                     'fid' => $finfo['fid'],
-                                    'tstatus' => 2
-                                )
+                                    'tstatus' => 2,
+                                ]
                             );
                         }
                     }
@@ -182,9 +182,9 @@ function crispbb_user_forum_index()
         }
     }
 
-    $posteruids = !empty($seenposters) ? array_keys($seenposters) : array();
+    $posteruids = !empty($seenposters) ? array_keys($seenposters) : [];
     // TODO: use crispbb getposters api function for this
-    $posterlist = xarMod::apiFunc('crispbb', 'user', 'getposters', array('uidlist' => $posteruids, 'showstatus' => true));
+    $posterlist = xarMod::apiFunc('crispbb', 'user', 'getposters', ['uidlist' => $posteruids, 'showstatus' => true]);
     $data['posterlist'] = $posterlist;
     $data['categories'] = $categories;
     $data['forums'] = $forums;
@@ -192,9 +192,9 @@ function crispbb_user_forum_index()
     $data['totaltopics'] = $totaltopics;
     $data['totalreplies'] = $totalreplies;
     if (empty($minLevel) || empty($seenLevels[$minLevel]['locktopics'])) {
-        $tstatus = array(0,1,3);
+        $tstatus = [0,1,3];
     }
-    $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
+    $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', ['tstatus' => $tstatus, 'noreplies' => true]);
 
     $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
     $data['fids'] = implode(',', array_keys($data['forumoptions']));

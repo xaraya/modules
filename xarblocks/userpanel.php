@@ -88,7 +88,7 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
      * Modify Function to the Blocks Admin
      * @param $data array containing title,content
      */
-    public function modify(array $data=array())
+    public function modify(array $data=[])
     {
         $data = $this->getContent();
 
@@ -99,9 +99,9 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
      * Updates the Block config from the Blocks Admin
      * @param $data array containing title,content
      */
-    public function update(array $data=array())
+    public function update(array $data=[])
     {
-        $vars = array();
+        $vars = [];
         if (!xarVar::fetch('showusername', 'checkbox', $vars['showusername'], false, xarVar::NOT_REQUIRED)) {
             return;
         }

@@ -28,13 +28,13 @@ function crispbb_userapi_updateposter($args)
         'crispbb',
         'user',
         'countposts',
-        array('powner' => $uid, 'pstatus' => 0, 'tstatus' => array(0,1))
+        ['powner' => $uid, 'pstatus' => 0, 'tstatus' => [0,1]]
     );
     $numtopics = xarMod::apiFunc(
         'crispbb',
         'user',
         'counttopics',
-        array('towner' => $uid, 'tstatus' => array(0,1))
+        ['towner' => $uid, 'tstatus' => [0,1]]
     );
     $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
 
@@ -50,7 +50,7 @@ function crispbb_userapi_updateposter($args)
         'crispbb',
         'user',
         'getposter',
-        array('uid' => $uid)
+        ['uid' => $uid]
     )) {
         // create poster
         $query = "INSERT INTO $posterstable (
@@ -59,7 +59,7 @@ function crispbb_userapi_updateposter($args)
                   numreplies
                   )
                 VALUES (?,?,?)";
-        $bindvars = array();
+        $bindvars = [];
         $bindvars[] = $uid;
         $bindvars[] = $numtopics;
         $bindvars[] = $numreplies;
@@ -69,8 +69,8 @@ function crispbb_userapi_updateposter($args)
         }
     } else {
         // update poster
-        $set = array();
-        $bindvars = array();
+        $set = [];
+        $bindvars = [];
         $set[] = 'numtopics = ?';
         $bindvars[] = $numtopics;
         $set[] = 'numreplies = ?';

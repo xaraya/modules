@@ -24,16 +24,16 @@ function crispbb_admin_overview()
         return;
     }
 
-    $data = array();
+    $data = [];
     $data['menulinks'] = xarMod::apiFunc(
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
-            'current_func' => 'overview'
-        )
+            'current_func' => 'overview',
+        ]
     );
     $modid = xarMod::getRegID('crispbb');
     $modinfo = xarMod::getInfo($modid);

@@ -29,7 +29,7 @@ function crispbb_admin_modifyconfighook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (empty($modname)) {
@@ -43,7 +43,7 @@ function crispbb_admin_modifyconfighook($args)
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'admin', 'modifyconfighook', 'crispBB');
+        $vars = ['module name', 'admin', 'modifyconfighook', 'crispBB'];
         // throw new BadParameterException($vars, $msg);
         // don't throw an error here, life in hooks goes on...
         return;
@@ -65,23 +65,23 @@ function crispbb_admin_modifyconfighook($args)
     if (empty($string) || !is_string($string)) {
         $string = xarModVars::get('crispbb', 'crispbb_hooks');
     }
-    $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
+    $settings = !empty($string) && is_string($string) ? unserialize($string) : [];
 
-    $data = array();
+    $data = [];
     $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : null;
-    $data['postsperpage'] = isset($settings['postsperpage']) ? $settings['postsperpage'] : 0;
-    $data['quickreply'] = isset($settings['quickreply']) ? $settings['quickreply'] : false;
+    $data['postsperpage'] = $settings['postsperpage'] ?? 0;
+    $data['quickreply'] = $settings['quickreply'] ?? false;
 
-    $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', array('privcheck' => true, 'ftype' => 0));
+    $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', ['privcheck' => true, 'ftype' => 0]);
 
     // no privs (shouldn't happen), or no forums (might)
     if (isset($forums['NO_PRIVILEGES']) || isset($forums['BAD_DATA'])) {
         return;
     }
 
-    $foptions = array();
+    $foptions = [];
     foreach ($forums as $forum) {
-        $foptions[$forum['fid']] = array('id' => $forum['fid'], 'name' => $forum['transformed_fname']);
+        $foptions[$forum['fid']] = ['id' => $forum['fid'], 'name' => $forum['transformed_fname']];
     }
     $data['foptions'] = $foptions;
     return xarTpl::module('crispbb', 'admin', 'modifyconfighook', $data);

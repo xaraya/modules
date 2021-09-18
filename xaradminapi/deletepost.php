@@ -21,12 +21,12 @@ function crispbb_adminapi_deletepost($args)
     extract($args);
     if (!isset($pid) || !is_numeric($pid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('post ID', 'admin', 'deletepost', 'crispbb');
+        $vars = ['post ID', 'admin', 'deletepost', 'crispbb'];
         throw new BadParameterException($vars, $msg);
         return;
     }
 
-    $post = xarMod::apiFunc('crispbb', 'user', 'getpost', array('pid' => $pid));
+    $post = xarMod::apiFunc('crispbb', 'user', 'getpost', ['pid' => $pid]);
 
     if (empty($post['purgereplyurl'])) {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');
@@ -43,7 +43,7 @@ function crispbb_adminapi_deletepost($args)
 
     // remove post
     $query = "DELETE FROM $poststable WHERE id = " . $pid;
-    $result = $dbconn->Execute($query, array());
+    $result = $dbconn->Execute($query, []);
     if (!$result) {
         return;
     }

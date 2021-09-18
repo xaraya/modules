@@ -24,7 +24,7 @@ function crispbb_userapi_encode_shorturl($args)
         return;
     }
 
-    $path = array();
+    $path = [];
     $get = $args;
 
     // This module name.
@@ -45,10 +45,10 @@ function crispbb_userapi_encode_shorturl($args)
 
     // if there's a lot of links, transforming titles can be expensive
     // we cache the retrieved items for use in the current request to save on db hits
-    static $forums = array();
-    static $topics = array();
-    static $posts = array();
-    static $cats = array();
+    static $forums = [];
+    static $topics = [];
+    static $posts = [];
+    static $cats = [];
 
     $path[] = $module; // ../crispbb (or ../aliasname)
 
@@ -62,7 +62,7 @@ function crispbb_userapi_encode_shorturl($args)
             $path[] = 'read';
         }
         if (empty($forum)) {
-            $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $fid, 'nolinks' => true, 'privcheck' => true));
+            $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $fid, 'nolinks' => true, 'privcheck' => true]);
             $forums[$fid] = $forum;
         }
         if ($forum != 'NO_PRIVILEGES' && $forum != 'BAD_DATA') {
@@ -85,7 +85,7 @@ function crispbb_userapi_encode_shorturl($args)
             $topic = $topics[$tid];
         }
         if (empty($topic)) {
-            $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'nolinks' => true, 'privcheck' => true));
+            $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $tid, 'nolinks' => true, 'privcheck' => true]);
             $topics[$tid] = $topic;
         }
         if ($topic != 'NO_PRIVILEGES' && $topic != 'BAD_DATA') {
@@ -137,7 +137,7 @@ function crispbb_userapi_encode_shorturl($args)
             $post = $posts[$pid];
         }
         if (empty($post)) {
-            $post = xarMod::apiFunc('crispbb', 'user', 'getpost', array('pid' => $pid, 'nolinks' => true, 'privcheck' => true));
+            $post = xarMod::apiFunc('crispbb', 'user', 'getpost', ['pid' => $pid, 'nolinks' => true, 'privcheck' => true]);
             $posts[$pid] = $post;
         }
 
@@ -166,7 +166,7 @@ function crispbb_userapi_encode_shorturl($args)
                 $catinfo = $cats[$catid];
             }
             if (empty($catinfo)) {
-                $catinfo = xarMod::apiFunc('categories', 'user', 'getcatinfo', array('cid' => $catid));
+                $catinfo = xarMod::apiFunc('categories', 'user', 'getcatinfo', ['cid' => $catid]);
                 $cats[$catid] = $catinfo;
             }
             if (!empty($catinfo['name'])) {
@@ -213,7 +213,7 @@ function crispbb_userapi_encode_shorturl($args)
         unset($get['func']);
         $path[] = 'moderate';
     }
-    return array('path' => $path, 'get' => $get);
+    return ['path' => $path, 'get' => $get];
 }
 function crispbb_encode_shorturl_cleantitle($string='')
 {

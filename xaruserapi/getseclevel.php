@@ -26,13 +26,13 @@ function crispbb_userapi_getseclevel($args)
         $fid = 'All';
     }
 
-    static $levels = array();
+    static $levels = [];
 
     if (isset($levels[$catid][$fid])) {
         return $levels[$catid][$fid];
     }
 
-    $privs = array('View','Read','Post','Moderate','Add','Edit','Delete','Admin');
+    $privs = ['View','Read','Post','Moderate','Add','Edit','Delete','Admin'];
 
     $level = 0;
 

@@ -30,7 +30,7 @@
 function crispbb_userapi_updatetopic($args)
 {
     extract($args);
-    $invalid = array();
+    $invalid = [];
     if (!isset($tid) || empty($tid) || !is_numeric($tid)) {
         $invalid[] = 'tid';
     }
@@ -98,7 +98,7 @@ function crispbb_userapi_updatetopic($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'userapi', 'updatetopic', 'crispBB');
+        $vars = [join(', ', $invalid), 'userapi', 'updatetopic', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -106,8 +106,8 @@ function crispbb_userapi_updatetopic($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $topicstable = $xartable['crispbb_topics'];
-    $set = array();
-    $bindvars = array();
+    $set = [];
+    $bindvars = [];
 
     if (isset($fid)) {
         $set[] = 'fid = ?';
@@ -155,10 +155,10 @@ function crispbb_userapi_updatetopic($args)
         'crispbb',
         'user',
         'countposts',
-        array(
+        [
             'tid' => $tid,
-            'pstatus' => 0
-        )
+            'pstatus' => 0,
+        ]
     );
     $set[] = 'numreplies = ?';
     $bindvars[] = !empty($numreplies) ? $numreplies-1 : 0;
@@ -166,10 +166,10 @@ function crispbb_userapi_updatetopic($args)
         'crispbb',
         'user',
         'countposts',
-        array(
+        [
             'tid' => $tid,
-            'pstatus' => 2
-        )
+            'pstatus' => 2,
+        ]
     );
     $set[] = 'numsubs = ?';
     $bindvars[] = $numsubs;
@@ -177,10 +177,10 @@ function crispbb_userapi_updatetopic($args)
         'crispbb',
         'user',
         'countposts',
-        array(
+        [
             'tid' => $tid,
-            'pstatus' => 5
-        )
+            'pstatus' => 5,
+        ]
     );
     $set[] = 'numdels = ?';
     $bindvars[] = $numdels;
@@ -201,7 +201,7 @@ function crispbb_userapi_updatetopic($args)
     }
 
     if (empty($topicstype)) {
-        $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid));
+        $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $tid]);
         if (!$topic) {
             return;
         }

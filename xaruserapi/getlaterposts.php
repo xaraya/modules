@@ -21,7 +21,7 @@ function crispbb_userapi_getlaterposts($args)
 {
     // If we don't have a topic ID, return nothing
     if (!isset($args['tid'])) {
-        return array();
+        return [];
     }
     // Make sure we have a timestamp
     if (!isset($args['ts'])) {
@@ -34,27 +34,27 @@ function crispbb_userapi_getlaterposts($args)
 
     $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['crispbb_posts']);
-    
+
     // For now, just return the ID and time fields
 //    $q->addfield('id');
 //    $q->addfield('ptime');
-    
+
     // Only those posts that belong to this topic
     $q->eq('tid', $args['tid']);
-    
+
     // Only posts with timestamps later than or equal to the timestamp passed
     if ($args['include_ts']) {
         $q->ge('ptime', $args['ts']);
     } else {
         $q->gt('ptime', $args['ts']);
     }
-    
+
     // Set an ordering by time
     $q->setorder('ptime', 'ASC');
-    
+
     // Run the query
     $q->run();
-    
-    
+
+
     return $q->output();
 }

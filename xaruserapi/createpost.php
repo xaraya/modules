@@ -30,7 +30,7 @@ function crispbb_userapi_createpost($args)
 {
     extract($args);
 
-    $invalid = array();
+    $invalid = [];
 
     if (!isset($tid) || empty($tid) || !is_numeric($tid)) {
         $invalid[] = 'tid';
@@ -50,7 +50,7 @@ function crispbb_userapi_createpost($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'user', 'createpost', 'crispBB');
+        $vars = [join(', ', $invalid), 'user', 'createpost', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -79,7 +79,7 @@ function crispbb_userapi_createpost($args)
     }
 
     if (!isset($psettings) || !is_array($psettings) || empty($psettings)) {
-        $psettings = array();
+        $psettings = [];
     }
 
     $dbconn = xarDB::getConn();
@@ -102,7 +102,7 @@ function crispbb_userapi_createpost($args)
               )
             VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array();
+    $bindvars = [];
     $bindvars[] = $nextId;
     $bindvars[] = $tid;
     $bindvars[] = $powner;
@@ -142,11 +142,11 @@ function crispbb_userapi_createpost($args)
         'crispbb',
         'user',
         'updatetopic',
-        array(
+        [
             'tid' => $tid,
             'lastpid' => $pid,
-            'nohooks' => true
-        )
+            'nohooks' => true,
+        ]
     )) {
         return;
     }
@@ -158,7 +158,7 @@ function crispbb_userapi_createpost($args)
 
     // update the forum
     if (empty($fid)) {
-        $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid));
+        $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $tid]);
         $fid = $topic['fid'];
     }
 
@@ -166,18 +166,18 @@ function crispbb_userapi_createpost($args)
         'crispbb',
         'admin',
         'update',
-        array(
+        [
             'fid' => $fid,
             'lasttid' => $tid,
-            'nohooks' => true
-        )
+            'nohooks' => true,
+        ]
     )) {
         return;
     }
 
     // let the tracker know the forum was updated
     $fstring = xarModVars::get('crispbb', 'ftracking');
-    $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
+    $ftracking = (!empty($fstring)) ? unserialize($fstring) : [];
     $ftracking[$fid] = $ptime;
     xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
     // return the new forum id

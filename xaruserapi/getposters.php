@@ -39,21 +39,21 @@ function crispbb_userapi_getposters($args)
     $posterstable = $xartable['crispbb_posters'];
     $rolesdef = xarMod::apiFunc('roles', 'user', 'leftjoin');
 
-    $select = array();
+    $select = [];
     $from = $posterstable;
-    $where = array();
-    $groupby = array();
-    $orderby = array();
-    $bindvars = array();
+    $where = [];
+    $groupby = [];
+    $orderby = [];
+    $bindvars = [];
 
-    $fields = array('id', 'numtopics', 'numreplies');
+    $fields = ['id', 'numtopics', 'numreplies'];
 
     foreach ($fields as $afield) {
         $select[] = $posterstable . '.' . $afield;
     }
 
     // get user info from roles
-    $rolesfields = array('name','uname','date_reg');
+    $rolesfields = ['name','uname','date_reg'];
     foreach ($rolesfields as $rfield) {
         $select[] = $rolesdef['table'] . '.' . $rfield;
         $fields[] = $rfield;
@@ -110,14 +110,14 @@ function crispbb_userapi_getposters($args)
 
     // get user by uid, we accept any of powner|towner|uid
     if (isset($powner) && is_numeric($powner)) {
-        $uidlist = array($powner);
+        $uidlist = [$powner];
     } elseif (isset($towner) && is_numeric($towner)) {
-        $uidlist = array($towner);
+        $uidlist = [$towner];
     } elseif (isset($uid) && is_numeric($uid)) {
-        $uidlist = array($uid);
+        $uidlist = [$uid];
     }
     if (!empty($uidlist) && is_array($uidlist)) {
-        $seenuids = array();
+        $seenuids = [];
         foreach ($uidlist as $id) {
             if (empty($id) || !is_numeric($id)) {
                 continue;
@@ -150,10 +150,10 @@ function crispbb_userapi_getposters($args)
     if (!$result) {
         return;
     }
-    $posters = array();
+    $posters = [];
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
-        $poster = array();
+        $poster = [];
         foreach ($fields as $key => $field) {
             $value = array_shift($data);
             if ($field == 'lastseen') {

@@ -33,7 +33,7 @@ function crispbb_adminapi_create($args)
     // @TODO: Deprecate this
     extract($args);
 
-    $invalid = array();
+    $invalid = [];
 
     if (!isset($fname) || !is_string($fname) || empty($fname) || strlen($fname) > 100) {
         $invalid[] = 'fname';
@@ -45,7 +45,7 @@ function crispbb_adminapi_create($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'admin', 'create', 'crispBB');
+        $vars = [join(', ', $invalid), 'admin', 'create', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -62,14 +62,14 @@ function crispbb_adminapi_create($args)
         'crispbb',
         'user',
         'getpresets',
-        array('preset' => 'fsettings,fprivileges')
+        ['preset' => 'fsettings,fprivileges']
     );
     if (empty($fsettings) || !is_array($fsettings)) {
         $fsettings = xarMod::apiFunc(
             'crispbb',
             'user',
             'getsettings',
-            array('setting' => 'fsettings')
+            ['setting' => 'fsettings']
         );
     }
 
@@ -78,7 +78,7 @@ function crispbb_adminapi_create($args)
             'crispbb',
             'user',
             'getsettings',
-            array('setting' => 'fprivileges')
+            ['setting' => 'fprivileges']
         );
     }
 
@@ -106,7 +106,7 @@ function crispbb_adminapi_create($args)
               )
             VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array();
+    $bindvars = [];
     $bindvars[] = $nextId;
     $bindvars[] = $fname;
     $bindvars[] = $fdesc;
@@ -130,7 +130,7 @@ function crispbb_adminapi_create($args)
         'crispbb',
         'admin',
         'update',
-        array('fid' => $fid, 'forder' => $fid, 'nohooks' => true)
+        ['fid' => $fid, 'forder' => $fid, 'nohooks' => true]
     )) {
         return;
     }
@@ -140,26 +140,26 @@ function crispbb_adminapi_create($args)
         'crispbb',
         'admin',
         'createitemtype',
-        array('fid' => $fid, 'component' => 'forum')
+        ['fid' => $fid, 'component' => 'forum']
     );
     $topicstype = xarMod::apiFunc(
         'crispbb',
         'admin',
         'createitemtype',
-        array('fid' => $fid, 'component' => 'topics')
+        ['fid' => $fid, 'component' => 'topics']
     );
     $poststype = xarMod::apiFunc(
         'crispbb',
         'admin',
         'createitemtype',
-        array('fid' => $fid, 'component' => 'posts')
+        ['fid' => $fid, 'component' => 'posts']
     );
 
     $mastertype = xarMod::apiFunc(
         'crispbb',
         'user',
         'getitemtype',
-        array('fid' => 0, 'component' => 'forum')
+        ['fid' => 0, 'component' => 'forum']
     );
 
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
@@ -191,7 +191,7 @@ function crispbb_adminapi_create($args)
 
     // let the tracker know this forum was created
     $fstring = xarModVars::get('crispbb', 'ftracking');
-    $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
+    $ftracking = (!empty($fstring)) ? unserialize($fstring) : [];
     $ftracking[$fid] = time();
     xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
 

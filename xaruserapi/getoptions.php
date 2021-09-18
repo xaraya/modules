@@ -22,7 +22,7 @@
 function crispbb_userapi_getoptions($args)
 {
     extract($args);
-    $data = array();
+    $data = [];
     if (empty($options)) {
         return $data;
     }
@@ -34,7 +34,7 @@ function crispbb_userapi_getoptions($args)
     }
 
     foreach ($options as $option) {
-        $items = array();
+        $items = [];
         switch ($option) {
             case 'fprivileges':
 

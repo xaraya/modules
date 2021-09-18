@@ -22,7 +22,7 @@ function crispbb_adminapi_updateconfighook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
     // only forum admins see the modifyconfighook
     // don't throw an error here, life in hooks goes on...
@@ -39,7 +39,7 @@ function crispbb_adminapi_updateconfighook($args)
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'hooksapi', 'updateconfig', 'tracker');
+        $vars = ['module name', 'hooksapi', 'updateconfig', 'tracker'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -53,7 +53,7 @@ function crispbb_adminapi_updateconfighook($args)
         }
     }
 
-    $settings = array();
+    $settings = [];
 
     if (!xarVar::fetch('crispbb_fid', 'id', $settings['fid'], null, xarVar::NOT_REQUIRED)) {
         return;

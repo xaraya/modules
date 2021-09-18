@@ -46,12 +46,12 @@ function crispbb_admin_modifyhooks($args)
 
     $pageTitle = xarML('Manage Hooks');
 
-    $data = array();
+    $data = [];
 
     $modlist = xarMod::apiFunc('crispbb', 'user', 'gethookmodules');
 
     if (empty($modid)) {
-        $data['moditems'] = array();
+        $data['moditems'] = [];
         $data['numitems'] = 0;
         $data['numlinks'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
@@ -62,11 +62,11 @@ function crispbb_admin_modifyhooks($args)
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             foreach ($itemtypes as $itemtype => $stats) {
-                $moditem = array();
+                $moditem = [];
                 $moditem['numitems'] = $stats['numitems'];
                 $moditem['numtopics'] = $stats['numtopics'];
                 $moditem['numlinks'] = $stats['numlinks'];
@@ -86,15 +86,15 @@ function crispbb_admin_modifyhooks($args)
                     'crispbb',
                     'admin',
                     'modifyhooks',
-                    array('modid' => $modid,
-                                                   'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                   'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 );
                 $moditem['delete'] = xarController::URL(
                     'crispbb',
                     'admin',
                     'unlinkhooks',
-                    array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 );
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
@@ -120,7 +120,7 @@ function crispbb_admin_modifyhooks($args)
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -155,10 +155,10 @@ function crispbb_admin_modifyhooks($args)
                     'crispbb',
                     'admin',
                     'modifyhooks',
-                    array('modid' => $modid,
+                    ['modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'sort' => $sort,
-                                                            'startnum' => '%%')
+                                                            'startnum' => '%%', ]
                 ),
                 $numstats
             );
@@ -171,21 +171,21 @@ function crispbb_admin_modifyhooks($args)
             'crispbb',
             'user',
             'gettopics',
-            array(
+            [
                 'startnum' => $startnum,
                 'numitems' => $numstats,
                 'hookmodid' => $modid,
                 'hooktype' => $itemtype,
-                'tstatus' => array(0,1,2,4,5)
-            )
+                'tstatus' => [0,1,2,4,5],
+            ]
         );
         $data['topics'] = $topics;
         $data['unlinkhooksurl'] = xarController::URL(
             'crispbb',
             'admin',
             'unlinkhooks',
-            array('modid' => $modid,
-                                          'itemtype' => $itemtype)
+            ['modid' => $modid,
+                                          'itemtype' => $itemtype, ]
         );
     }
 
@@ -193,12 +193,12 @@ function crispbb_admin_modifyhooks($args)
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'modifyhooks',
             'current_sublink' => $sublink,
-        )
+        ]
     );
 
     // store function name for use by admin-main as an entry point

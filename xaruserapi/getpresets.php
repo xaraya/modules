@@ -23,7 +23,7 @@
 function crispbb_userapi_getpresets($args)
 {
     extract($args);
-    $presets = array();
+    $presets = [];
 
     if (!empty($preset) && is_string($preset)) {
         $preset = explode(',', $preset);
@@ -31,63 +31,63 @@ function crispbb_userapi_getpresets($args)
 
     if (!empty($preset) && is_array($preset)) {
         foreach ($preset as $key) {
-            $items = array();
+            $items = [];
             switch ($key) {
                 case 'topicsortoptions':
                     // admin functions : forumconfig, new, modify
-                    $items['ttitle'] = array('id' => 'ttitle', 'name' => xarML('Topic Title'));
-                    $items['ptime'] = array('id' => 'ptime', 'name' => xarML('Last Post Time'));
-                    $items['ttime'] = array('id' => 'ttitle', 'name' => xarML('Topic Start Time'));
-                    $items['numreplies'] = array('id' => 'numreplies', 'name' => xarML('Number of Replies'));
-                    $items['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of Views'));
-                    $items['towner'] = array('id' => 'towner', 'name' => xarML('Topic Starter'));
+                    $items['ttitle'] = ['id' => 'ttitle', 'name' => xarML('Topic Title')];
+                    $items['ptime'] = ['id' => 'ptime', 'name' => xarML('Last Post Time')];
+                    $items['ttime'] = ['id' => 'ttitle', 'name' => xarML('Topic Start Time')];
+                    $items['numreplies'] = ['id' => 'numreplies', 'name' => xarML('Number of Replies')];
+                    $items['numhits'] = ['id' => 'numhits', 'name' => xarML('Number of Views')];
+                    $items['towner'] = ['id' => 'towner', 'name' => xarML('Topic Starter')];
                     if (xarMod::isAvailable('ratings')) {
-                        $items['numratings'] = array('id' => 'numratings', 'name' => xarML('Topic Rating'));
+                        $items['numratings'] = ['id' => 'numratings', 'name' => xarML('Topic Rating')];
                     }
                 break;
 
                 case 'tstatusoptions':
-                    $items[0] = array('id' => '0', 'name' => xarML('Open'));
-                    $items[1] = array('id' => '1', 'name' => xarML('Closed'));
-                    $items[2] = array('id' => '2', 'name' => xarML('Submitted'));
-                    $items[3] = array('id' => '3', 'name' => xarML('Moved'));
-                    $items[4] = array('id' => '4', 'name' => xarML('Locked'));
-                    $items[5] = array('id' => '5', 'name' => xarML('Deleted'));
+                    $items[0] = ['id' => '0', 'name' => xarML('Open')];
+                    $items[1] = ['id' => '1', 'name' => xarML('Closed')];
+                    $items[2] = ['id' => '2', 'name' => xarML('Submitted')];
+                    $items[3] = ['id' => '3', 'name' => xarML('Moved')];
+                    $items[4] = ['id' => '4', 'name' => xarML('Locked')];
+                    $items[5] = ['id' => '5', 'name' => xarML('Deleted')];
                 break;
 
                 case 'ttypeoptions':
-                    $items[0] = array('id' => '0', 'name' => xarML('Normal'));
-                    $items[1] = array('id' => '1', 'name' => xarML('Sticky'));
-                    $items[2] = array('id' => '2', 'name' => xarML('Announcement'));
-                    $items[3] = array('id' => '3', 'name' => xarML('FAQ'));
+                    $items[0] = ['id' => '0', 'name' => xarML('Normal')];
+                    $items[1] = ['id' => '1', 'name' => xarML('Sticky')];
+                    $items[2] = ['id' => '2', 'name' => xarML('Announcement')];
+                    $items[3] = ['id' => '3', 'name' => xarML('FAQ')];
                 break;
 
                 case 'forumstatusoptions':
-                    $items[0] = array('id' => '0', 'name' => xarML('Open'));
-                    $items[1] = array('id' => '1', 'name' => xarML('Closed'));
+                    $items[0] = ['id' => '0', 'name' => xarML('Open')];
+                    $items[1] = ['id' => '1', 'name' => xarML('Closed')];
                 break;
 
                 case 'ftypeoptions':
-                    $items[0] = array('id' => '0', 'name' => xarML('Default'));
-                    $items[1] = array('id' => '1', 'name' => xarML('Redirected'));
+                    $items[0] = ['id' => '0', 'name' => xarML('Default')];
+                    $items[1] = ['id' => '1', 'name' => xarML('Redirected')];
                 break;
 
                 case 'pstatusoptions':
-                    $items[0] = array('id' => '0', 'name' => xarML('Open'));
-                    $items[2] = array('id' => '2', 'name' => xarML('Submitted'));
-                    $items[5] = array('id' => '5', 'name' => xarML('Deleted'));
+                    $items[0] = ['id' => '0', 'name' => xarML('Open')];
+                    $items[2] = ['id' => '2', 'name' => xarML('Submitted')];
+                    $items[5] = ['id' => '5', 'name' => xarML('Deleted')];
                 break;
 
                 case 'privleveloptions':
                     // used in forumconfig
-                    $items[100] = array('id' => 100, 'name' => xarML('View'));
-                    $items[200] = array('id' => 200, 'name' => xarML('Read'));
-                    $items[300] = array('id' => 300, 'name' => xarML('Post'));
-                    $items[400] = array('id' => 400, 'name' => xarML('Moderate'));
-                    $items[500] = array('id' => 500, 'name' => xarML('Add'));
-                    $items[600] = array('id' => 600, 'name' => xarML('Edit'));
-                    $items[700] = array('id' => 700, 'name' => xarML('Delete'));
-                    $items[800] = array('id' => 800, 'name' => xarML('Admin'));
+                    $items[100] = ['id' => 100, 'name' => xarML('View')];
+                    $items[200] = ['id' => 200, 'name' => xarML('Read')];
+                    $items[300] = ['id' => 300, 'name' => xarML('Post')];
+                    $items[400] = ['id' => 400, 'name' => xarML('Moderate')];
+                    $items[500] = ['id' => 500, 'name' => xarML('Add')];
+                    $items[600] = ['id' => 600, 'name' => xarML('Edit')];
+                    $items[700] = ['id' => 700, 'name' => xarML('Delete')];
+                    $items[800] = ['id' => 800, 'name' => xarML('Admin')];
                 break;
 
                 case 'privactionlabels':
@@ -124,14 +124,14 @@ function crispbb_userapi_getpresets($args)
 
                 case 'sortorderoptions':
                     // used in forumconfig
-                    $items['ASC'] = array('id' => 'ASC', 'name' => xarML('ASC'));
-                    $items['DESC'] = array('id' => 'DESC', 'name' => xarML('DESC'));
+                    $items['ASC'] = ['id' => 'ASC', 'name' => xarML('ASC')];
+                    $items['DESC'] = ['id' => 'DESC', 'name' => xarML('DESC')];
                 break;
 
                 case 'pagedisplayoptions':
                     // used in forumconfig
-                    $items[0] = array('id' => 0, 'name' => xarML('on first page only'));
-                    $items[1] = array('id' => 1, 'name' => xarML('on all pages'));
+                    $items[0] = ['id' => 0, 'name' => xarML('on first page only')];
+                    $items[1] = ['id' => 1, 'name' => xarML('on all pages')];
                 break;
 
                 case 'fsettings':
@@ -159,19 +159,19 @@ function crispbb_userapi_getpresets($args)
                     $items['postbuffer'] = 0;
                     $items['topicview'] = 'flat';
                     $items['showimages'] = true;
-                    $items['ftransforms'] = array();
-                    $items['ttransforms'] = array();
-                    $items['ptransforms'] = array();
+                    $items['ftransforms'] = [];
+                    $items['ttransforms'] = [];
+                    $items['ptransforms'] = [];
                     $items['topicapproval'] = 0;
                     $items['replyapproval'] = 0;
-                    $items['redirected'] = array();
-                    $items['newsgroup'] = array();
-                    $items['members'] = array();
+                    $items['redirected'] = [];
+                    $items['newsgroup'] = [];
+                    $items['members'] = [];
                 break;
 
                 case 'fprivileges':
                     // View options
-                    $view = array();
+                    $view = [];
                     $view['viewforum'] = 2;
                     $items[100] = $view;
 
@@ -220,7 +220,7 @@ function crispbb_userapi_getpresets($args)
                     $items[500] = $add;
 
                     // Edit options
-                    $edit = array();
+                    $edit = [];
                     // if you can edit a forum, you automatically have privs for all previous levels
                     foreach ($add as $k => $v) {
                         $edit[$k] = 2;
@@ -238,17 +238,17 @@ function crispbb_userapi_getpresets($args)
                 break;
 
                 case 'ftransfields':
-                    $items['fname'] = array('id' => 'fname', 'name' => xarML('Forum Name'));
-                    $items['fdesc'] = array('id' => 'fdesc', 'name' => xarML('Forum Description'));
+                    $items['fname'] = ['id' => 'fname', 'name' => xarML('Forum Name')];
+                    $items['fdesc'] = ['id' => 'fdesc', 'name' => xarML('Forum Description')];
                 break;
                 case 'ttransfields':
-                    $items['ttitle'] = array('id' => 'ttitle', 'name' => xarML('Topic Title'));
-                    $items['tdesc'] = array('id' => 'tdesc', 'name' => xarML('Topic Description'));
-                    $items['ttext'] = array('id' => 'ttext', 'name' => xarML('Topic Text'));
+                    $items['ttitle'] = ['id' => 'ttitle', 'name' => xarML('Topic Title')];
+                    $items['tdesc'] = ['id' => 'tdesc', 'name' => xarML('Topic Description')];
+                    $items['ttext'] = ['id' => 'ttext', 'name' => xarML('Topic Text')];
                 break;
                 case 'ptransfields':
-                    $items['pdesc'] = array('id' => 'pdesc', 'name' => xarML('Post Description'));
-                    $items['ptext'] = array('id' => 'ptext', 'name' => xarML('Post Text'));
+                    $items['pdesc'] = ['id' => 'pdesc', 'name' => xarML('Post Description')];
+                    $items['ptext'] = ['id' => 'ptext', 'name' => xarML('Post Text')];
                 break;
             }
             $presets[$key] = $items;

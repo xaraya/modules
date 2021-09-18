@@ -24,7 +24,7 @@ function crispbb_userapi_getpost($args)
 
     if (count($posts) <> 1) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('parameters', 'user', 'getpost', 'crispBB');
+        $vars = ['parameters', 'user', 'getpost', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }

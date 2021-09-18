@@ -32,10 +32,10 @@ function crispbb_user_modifyreply($args)
         return;
     }
 
-    $data = xarMod::apiFunc('crispbb', 'user', 'getpost', array('pid' => $pid, 'privcheck' => true));
+    $data = xarMod::apiFunc('crispbb', 'user', 'getpost', ['pid' => $pid, 'privcheck' => true]);
 
     if ($data == 'NO_PRIVILEGES' || empty($data['editreplyurl'])) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
     /* TODO: eval this in here
     if (!empty($data['floodcontrol']) && empty($errorMsg)) {
@@ -61,15 +61,15 @@ function crispbb_user_modifyreply($args)
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
     $uid = xarUser::getVar('id');
-    $errorMsg = array();
-    $invalid = array();
+    $errorMsg = [];
+    $invalid = [];
     $now = time();
 
     $categories[$data['catid']] = xarMod::apiFunc(
         'categories',
         'user',
         'getcatinfo',
-        array('cid' => $data['catid'])
+        ['cid' => $data['catid']]
     );
 
     $data['categories'] = $categories;
@@ -81,7 +81,7 @@ function crispbb_user_modifyreply($args)
         'crispbb',
         'user',
         'getpresets',
-        array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions')
+        ['preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions']
     );
     $poststype = $data['poststype'];
     // transforms
@@ -100,7 +100,7 @@ function crispbb_user_modifyreply($args)
             'crispbb',
             'user',
             'gettopicicons',
-            array('iconfolder' => $data['iconfolder'], 'shownone' => true)
+            ['iconfolder' => $data['iconfolder'], 'shownone' => true]
         );
         $data['iconlist'] = $iconlist;
     }
@@ -196,12 +196,12 @@ function crispbb_user_modifyreply($args)
             }
         }
 
-        $transargs = array();
+        $transargs = [];
         $transargs['itemtype'] = $poststype;
         $transargs['transforms'] = $data['ptransforms'];
         $transargs['pdesc'] = $pdesc;
         $transargs['ptext'] = $ptext;
-        $ignore = array();
+        $ignore = [];
         if (!$hashtml) {
             $ignore['html'] = 1;
         }
@@ -230,7 +230,7 @@ function crispbb_user_modifyreply($args)
         } elseif ($ptlen > $data['topicpostmax']) {
             $invalid['ptext'] = xarML('Post can not be more than #(1) characters', $data['topicpostmax']);
         }
-        $psettings = array();
+        $psettings = [];
         $psettings['topicicon'] = $topicicon;
         $psettings['htmldeny'] = empty($privs['html']) || $htmldeny ? true : false;
         $psettings['bbcodedeny'] = empty($privs['bbcode']) || $bbcodedeny ? true : false;
@@ -238,20 +238,20 @@ function crispbb_user_modifyreply($args)
 
         if (empty($invalid) && !$preview) {
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             if (!xarMod::apiFunc(
                 'crispbb',
                 'user',
                 'updatepost',
-                array(
+                [
                     'pid' => $pid,
                     'pdesc' => $pdesc,
                     'ptext' => $ptext,
                     'psettings' => $psettings,
                     'poststype' => $data['poststype'],
-                    'fid' => $data['fid']
-                )
+                    'fid' => $data['fid'],
+                ]
             )) {
                 return;
             }
@@ -259,7 +259,7 @@ function crispbb_user_modifyreply($args)
                 'crispbb',
                 'user',
                 'updateposter',
-                array('uid' => $data['powner'])
+                ['uid' => $data['powner']]
             )) {
                 return;
             }
@@ -268,7 +268,7 @@ function crispbb_user_modifyreply($args)
                     'crispbb',
                     'user',
                     'display',
-                    array('tid' => $data['tid'], 'pid' => $pid)
+                    ['tid' => $data['tid'], 'pid' => $pid]
                 );
             }
             if (!empty($data['postbuffer'])) {
@@ -276,7 +276,7 @@ function crispbb_user_modifyreply($args)
                     'crispbb',
                     'user',
                     'display',
-                    array('tid' => $data['tid'], 'pid' => $pid)
+                    ['tid' => $data['tid'], 'pid' => $pid]
                 );
                 xarVar::setCached('Meta.refresh', 'url', $return_url);
                 xarVar::setCached('Meta.refresh', 'time', $data['postbuffer']);
@@ -308,7 +308,7 @@ function crispbb_user_modifyreply($args)
     $data['powner'] = $uid;
     xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
     // call hooks
-    $item = array();
+    $item = [];
     $item['module'] = 'crispbb';
     $item['itemtype'] = $poststype;
     $item['itemid'] = $pid;
@@ -316,10 +316,10 @@ function crispbb_user_modifyreply($args)
     $item['pdesc'] = $data['pdesc'];
     $hooks = xarModHooks::call('item', 'modify', $pid, $item);
 
-    $data['hookoutput'] = !empty($hooks) ? $hooks : array();
+    $data['hookoutput'] = !empty($hooks) ? $hooks : [];
 
-    $formaction =  xarModHooks::call('item', 'formaction', '', array(), 'crispbb', $poststype);
-    $formdisplay = xarModHooks::call('item', 'formdisplay', '', array(), 'crispbb', $poststype);
+    $formaction =  xarModHooks::call('item', 'formaction', '', [], 'crispbb', $poststype);
+    $formdisplay = xarModHooks::call('item', 'formdisplay', '', [], 'crispbb', $poststype);
     $data['formaction'] = !empty($formaction) && is_array($formaction) ? join('', $formaction) : '';
     $data['formdisplay'] = !empty($formdisplay) && is_array($formdisplay) ? join('', $formdisplay) : '';
 

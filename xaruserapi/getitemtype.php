@@ -32,12 +32,12 @@ function crispbb_userapi_getitemtype($args)
         'crispbb',
         'user',
         'getitemtypes',
-        array('fid' => $fid, 'component' => $component)
+        ['fid' => $fid, 'component' => $component]
     );
 
     if (count($itemtypes) <> 1) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('itemtype', 'user', 'getitemtype', 'crispBB');
+        $vars = ['itemtype', 'user', 'getitemtype', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }

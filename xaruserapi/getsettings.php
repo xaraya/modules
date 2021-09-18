@@ -29,7 +29,7 @@ function crispbb_userapi_getsettings($args)
         return;
     }
 
-    $settings = array();
+    $settings = [];
 
     switch ($setting) {
         case 'fsettings':
@@ -37,7 +37,7 @@ function crispbb_userapi_getsettings($args)
                 'crispbb',
                 'user',
                 'getpresets',
-                array('preset' => 'fsettings')
+                ['preset' => 'fsettings']
             );
             $string = xarModVars::get('crispbb', 'forumsettings');
             if (!empty($string) && is_string($string)) {
@@ -66,7 +66,7 @@ function crispbb_userapi_getsettings($args)
                 'crispbb',
                 'user',
                 'getpresets',
-                array('preset' => 'fprivileges')
+                ['preset' => 'fprivileges']
             );
             $string = xarModVars::get('crispbb', 'privilegesettings');
             if (!empty($string) && is_string($string)) {
@@ -103,7 +103,7 @@ function crispbb_userapi_getsettings($args)
                     'crispbb',
                     'user',
                     'getpresets',
-                    array('preset' => 'usettings')
+                    ['preset' => 'usettings']
                 );
                 $settings = $presets['usettings'];
             }

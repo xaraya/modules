@@ -25,17 +25,17 @@ function crispbb_user_newtopic($args)
         return;
     }
 
-    $data = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $fid, 'privcheck' => true));
+    $data = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $fid, 'privcheck' => true]);
 
     if ($data == 'NO_PRIVILEGES' || empty($data['newtopicurl'])) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
     $uid = xarUser::getVar('id');
-    $errorMsg = array();
-    $invalid = array();
+    $errorMsg = [];
+    $invalid = [];
     $now = time();
 
     if (!empty($data['floodcontrol']) && empty($errorMsg)) {
@@ -43,20 +43,20 @@ function crispbb_user_newtopic($args)
             'crispbb',
             'user',
             'getposts',
-            array(
+            [
                 'fid' => $fid,
                 'powner' => $uid,
                 'sort' => 'ptime',
                 'order' => 'DESC',
-                'numitems' => 1
-            )
+                'numitems' => 1,
+            ]
         );
         if (!empty($lastpost)) {
             $lastpost = reset($lastpost);
             if ($lastpost['ptime'] > $now-$data['floodcontrol']) {
                 $errorMsg = $data;
                 $errorMsg['message'] = xarML('This forum requires that you wait at least #(1) seconds between posts.', $data['floodcontrol']);
-                $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'view', array('fid' => $fid));
+                $errorMsg['return_url'] = xarController::URL('crispbb', 'user', 'view', ['fid' => $fid]);
                 $errorMsg['type'] = 'FLOOD_CONTROL';
                 $errorMsg['pageTitle'] = xarML('Flood Control');
                 xarTpl::setPageTitle(xarVar::prepForDisplay($errorMsg['pageTitle']));
@@ -125,7 +125,7 @@ function crispbb_user_newtopic($args)
         'categories',
         'user',
         'getcatinfo',
-        array('cid' => $data['catid'])
+        ['cid' => $data['catid']]
     );
 
     $data['categories'] = $categories;
@@ -134,16 +134,16 @@ function crispbb_user_newtopic($args)
         'crispbb',
         'user',
         'getitemtype',
-        array('fid' => $fid, 'component' => 'topics')
+        ['fid' => $fid, 'component' => 'topics']
     );
 
     $presets = xarMod::apiFunc(
         'crispbb',
         'user',
         'getpresets',
-        array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions')
+        ['preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions']
     );
-    $ttypeoptions = array();
+    $ttypeoptions = [];
     $ttypeoptions[] = $presets['ttypeoptions'][0];
     if (!empty($privs['stickies'])) {
         $ttypeoptions[1] = $presets['ttypeoptions'][1];
@@ -161,7 +161,7 @@ function crispbb_user_newtopic($args)
         $invalid['ttype'] = xarML('You can not post FAQs');
     }
     $data['ttypeoptions'] = $ttypeoptions;
-    $tstatusoptions = array();
+    $tstatusoptions = [];
     if (empty($data['topicapproval'])) {
         $tstatusoptions[0] = $presets['tstatusoptions'][0];
         if (!empty($privs['closetopics'])) {
@@ -278,13 +278,13 @@ function crispbb_user_newtopic($args)
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-            $vars = array('module name', 'user', 'newtopic', 'crispBB');
+            $vars = ['module name', 'user', 'newtopic', 'crispBB'];
             throw new BadParameterException($vars, $msg);
             return;
         }
         if (empty($itemid)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-            $vars = array('item id', 'user', 'newtopic', 'crispBB');
+            $vars = ['item id', 'user', 'newtopic', 'crispBB'];
             throw new BadParameterException($vars, $msg);
             return;
         }
@@ -297,14 +297,14 @@ function crispbb_user_newtopic($args)
         if (empty($string) || !is_string($string)) {
             $string = xarModVars::get('crispbb', 'crispbb_hooks');
         }
-        $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
+        $settings = !empty($string) && is_string($string) ? unserialize($string) : [];
         if (empty($settings['fid']) || $settings['fid'] != $fid) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-            $vars = array('fid', 'user', 'newtopic', 'crispBB');
+            $vars = ['fid', 'user', 'newtopic', 'crispBB'];
             throw new BadParameterException($vars, $msg);
             return;
         }
-        $itemlinks = xarMod::apiFunc($modname, 'user', 'getitemlinks', array('itemids' => array($itemid), ), 0);
+        $itemlinks = xarMod::apiFunc($modname, 'user', 'getitemlinks', ['itemids' => [$itemid], ], 0);
         if (!empty($itemlinks[$itemid])) {
             $ttitle = $itemlinks[$itemid]['label'];
             $linkurl = $itemlinks[$itemid]['url'];
@@ -313,11 +313,11 @@ function crispbb_user_newtopic($args)
             $ttitle = $modinfo['displayname'];
             if (!empty($itemtype)) {
                 $ttitle .= ' ';
-                $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes', array(), 0);
+                $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes', [], 0);
                 $ttitle .= !empty($mytypes[$itemtype]['label']) ? $mytypes[$itemtype]['label'] : $itemtype;
             }
             $ttitle .= ' ' . $itemid;
-            $linkurl = xarController::URL($modname, 'user', 'display', array('itemtype' => $itemtype, 'itemid' => $itemid));
+            $linkurl = xarController::URL($modname, 'user', 'display', ['itemtype' => $itemtype, 'itemid' => $itemid]);
         }
         $ptext = xarML('This topic is a discussion of');
         if ($hasbbcode) {
@@ -331,13 +331,13 @@ function crispbb_user_newtopic($args)
         $phase = 'update';
     }
 
-    $transargs = array();
+    $transargs = [];
     $transargs['itemtype'] = $topicstype;
     $transargs['transforms'] = $data['ttransforms'];
     $transargs['ttitle'] = $ttitle;
     $transargs['tdesc'] = $pdesc;
     $transargs['ttext'] = $ptext;
-    $ignore = array();
+    $ignore = [];
     if (!$hashtml) {
         $ignore['html'] = 1;
     }
@@ -374,24 +374,24 @@ function crispbb_user_newtopic($args)
         } elseif ($ptlen > $data['topicpostmax']) {
             $invalid['ptext'] = xarML('Post can not be more than #(1) characters', $data['topicpostmax']);
         }
-        $tsettings = array();
+        $tsettings = [];
         $tsettings['topicicon'] = $topicicon;
         $tsettings['htmldeny'] = empty($privs['html']) || $htmldeny ? true : false;
         $tsettings['bbcodedeny'] = empty($privs['bbcode']) || $bbcodedeny ? true : false;
         $tsettings['smiliesdeny'] = empty($privs['smilies']) || $smiliesdeny ? true : false;
         $tsettings['approvereplies'] = $data['approvereplies'];
-        $psettings = array();
+        $psettings = [];
         $psettings = $tsettings;
 
         if (empty($invalid) && !$preview) {
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             if (!$tid = xarMod::apiFunc(
                 'crispbb',
                 'user',
                 'createtopic',
-                array(
+                [
                     'fid' => $fid,
                     'ttitle' => $ttitle,
                     'pdesc' => $pdesc,
@@ -402,8 +402,8 @@ function crispbb_user_newtopic($args)
                     'topicstype' => $topicstype,
                     'tsettings' => $tsettings,
                     'psettings' => $psettings,
-                    'ptime' => $now
-                )
+                    'ptime' => $now,
+                ]
             )) {
                 return;
             }
@@ -418,7 +418,7 @@ function crispbb_user_newtopic($args)
                     'crispbb',
                     'user',
                     'gettopics',
-                    array('fid' => $fid, 'starttime' => $lastreadforum)
+                    ['fid' => $fid, 'starttime' => $lastreadforum]
                 );
                 if (!empty($topicssince)) {
                     $tids = array_keys($topicssince);
@@ -439,7 +439,7 @@ function crispbb_user_newtopic($args)
                 'crispbb',
                 'user',
                 'updateposter',
-                array('uid' => $uid)
+                ['uid' => $uid]
             )) {
                 return;
             }
@@ -450,8 +450,8 @@ function crispbb_user_newtopic($args)
                     'crispbb',
                     'user',
                     'createhook',
-                    array('modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid
-                    )
+                    ['modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid,
+                    ]
                 )) {
                     return;
                 }
@@ -459,7 +459,7 @@ function crispbb_user_newtopic($args)
                     'crispbb',
                     'user',
                     'newreply',
-                    array('modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid)
+                    ['modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid]
                 );
             /*
             // preserve the return url (links to the hooked module item)
@@ -474,7 +474,7 @@ function crispbb_user_newtopic($args)
                         'crispbb',
                         'user',
                         'view',
-                        array('fid' => $fid)
+                        ['fid' => $fid]
                     );
                     $data['postbuffer'] = 5;
                     $pageTitle = xarML('Topic Submitted');
@@ -485,7 +485,7 @@ function crispbb_user_newtopic($args)
                         'crispbb',
                         'user',
                         'display',
-                        array('tid' => $tid)
+                        ['tid' => $tid]
                     );
                     $pageTitle = xarML('Topic Posted');
                     $data['tid'] = $tid;
@@ -502,7 +502,7 @@ function crispbb_user_newtopic($args)
             }
 
             if (empty($return_url)) {
-                $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
+                $return_url = xarController::URL('crispbb', 'user', 'display', ['tid' => $tid]);
             }
             xarController::redirect($return_url);
             return true;
@@ -517,7 +517,7 @@ function crispbb_user_newtopic($args)
             'crispbb',
             'user',
             'gettopicicons',
-            array('iconfolder' => $data['iconfolder'], 'shownone' => true)
+            ['iconfolder' => $data['iconfolder'], 'shownone' => true]
         );
         if (empty($iconlist[$topicicon])) {
             $topicicon = $data['icondefault'];
@@ -548,18 +548,18 @@ function crispbb_user_newtopic($args)
     $data['levels'] = $presets['privleveloptions'];
     $data['privs'] = $privs;
     // call hooks
-    $item = array();
+    $item = [];
     $item['module'] = 'crispbb';
     $item['itemtype'] = $topicstype;
     $hooks = xarModHooks::call('item', 'new', '', $item);
 
-    $data['hookoutput'] = !empty($hooks) ? $hooks : array();
+    $data['hookoutput'] = !empty($hooks) ? $hooks : [];
     $data['return_url'] = $return_url;
     xarVar::setCached('Blocks.crispbb', 'fid', $fid);
     xarVar::setCached('Blocks.crispbb', 'catid', $data['catid']);
 
-    $formaction =  xarModHooks::call('item', 'formaction', '', array(), 'crispbb', $data['topicstype']);
-    $formdisplay = xarModHooks::call('item', 'formdisplay', '', array(), 'crispbb', $data['topicstype']);
+    $formaction =  xarModHooks::call('item', 'formaction', '', [], 'crispbb', $data['topicstype']);
+    $formdisplay = xarModHooks::call('item', 'formdisplay', '', [], 'crispbb', $data['topicstype']);
     $data['formaction'] = !empty($formaction) && is_array($formaction) ? join('', $formaction) : '';
     $data['formdisplay'] = !empty($formdisplay) && is_array($formdisplay) ? join('', $formdisplay) : '';
 

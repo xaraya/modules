@@ -22,12 +22,12 @@
 function crispbb_admin_modifycat($args)
 {
     if (!xarSecurity::check('AdminCrispBB') || !xarSecurity::check('ManageCategories')) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     extract($args);
 
-    $data = array();
+    $data = [];
     if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -39,16 +39,16 @@ function crispbb_admin_modifycat($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories', 'categoriesobject')));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => xarModVars::get('categories', 'categoriesobject')]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     if ($phase == 'update') {
         $isvalid = $data['object']->checkInput();
         if ($isvalid) {
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
-            $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
+            $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
             if (empty($data['return_url'])) {
                 $data['return_url'] = xarController::URL('crispbb', 'admin', 'categories');
             }
@@ -62,11 +62,11 @@ function crispbb_admin_modifycat($args)
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'modifycat',
-        )
+        ]
     );
 
     return $data;

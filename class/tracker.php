@@ -1,4 +1,5 @@
 <?php
+
 class Tracker extends xarObject
 {
     private $id;                // current user
@@ -8,7 +9,7 @@ class Tracker extends xarObject
     private $timeonline = 0;    // total time online
     private $visitstart = 0;    // time current visit began
     private $visitend = 0;      // time last visit ended
-    private $tracker = array(); // forum specific values
+    private $tracker = []; // forum specific values
     // user must have been away for x minutes for a visit to be considered new
     private $filter = 15;
 
@@ -74,14 +75,14 @@ class Tracker extends xarObject
     public function markRead($fid, $tid = 0)
     {
         if (empty($tid)) {
-            $this->tracker[$fid] = array();
+            $this->tracker[$fid] = [];
         }
         $this->tracker[$fid][$tid]['lastread'] = $this->now;
     }
 
     public function seenTids($fid)
     {
-        $tids = array();
+        $tids = [];
         if (!empty($this->tracker[$fid])) {
             foreach (array_keys($this->tracker[$fid]) as $tid) {
                 if (empty($tid)) {
@@ -129,7 +130,7 @@ class Tracker extends xarObject
         if (!xarUser::isLoggedIn()) {
             return false;
         }
-        return array(
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'uname' => $this->uname,
@@ -139,8 +140,8 @@ class Tracker extends xarObject
             'visitstart' => $this->visitstart,
             'visitend' => $this->visitend,
             'now' => $this->now,
-            'onlinestamp' => $this->now - $this->timeonline
-        );
+            'onlinestamp' => $this->now - $this->timeonline,
+        ];
     }
 
     public function __wakeup()
@@ -154,6 +155,6 @@ class Tracker extends xarObject
     {
         // set last visit before saving
         $this->visitend = $this->now;
-        return array('id','lastvisit', 'numvisits', 'timeonline', 'tracker', 'visitstart', 'visitend');
+        return ['id','lastvisit', 'numvisits', 'timeonline', 'tracker', 'visitstart', 'visitend'];
     }
 }

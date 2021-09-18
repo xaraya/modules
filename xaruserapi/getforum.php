@@ -24,7 +24,7 @@ function crispbb_userapi_getforum($args)
 
     if (count($forums) <> 1) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('parameters', 'user', 'getforum', 'crispBB');
+        $vars = ['parameters', 'user', 'getforum', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }

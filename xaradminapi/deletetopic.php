@@ -21,12 +21,12 @@ function crispbb_adminapi_deletetopic($args)
     extract($args);
     if (!isset($tid) || !is_numeric($tid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('topic ID', 'admin', 'deletetopic', 'crispbb');
+        $vars = ['topic ID', 'admin', 'deletetopic', 'crispbb'];
         throw new BadParameterException($vars, $msg);
         return;
     }
 
-    $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid));
+    $topic = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $tid]);
 
     if (empty($topic['purgetopicurl'])) {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');
@@ -37,8 +37,8 @@ function crispbb_adminapi_deletetopic($args)
         return xarTpl::module('crispbb', 'user', 'error', $errorMsg);
     }
 
-    $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', array('tid' => $tid, 'pstatus' => array(0,1,5)));
-    $pids = !empty($posts) ? array_keys($posts) : array();
+    $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', ['tid' => $tid, 'pstatus' => [0,1,5]]);
+    $pids = !empty($posts) ? array_keys($posts) : [];
 
 
     $dbconn = xarDB::getConn();
@@ -50,11 +50,11 @@ function crispbb_adminapi_deletetopic($args)
     // remove posts
     if (!empty($pids)) {
         $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
-        $result = $dbconn->Execute($query, array());
+        $result = $dbconn->Execute($query, []);
         if (!$result) {
             return;
         }
-        $item = array();
+        $item = [];
         $item['module'] = 'crispbb';
         foreach ($posts as $pid => $post) {
             $item['itemtype'] = $post['poststype'];
@@ -66,13 +66,13 @@ function crispbb_adminapi_deletetopic($args)
     // remove topic
     // first from topics table
     $query = "DELETE FROM $topicstable WHERE id = " . $tid;
-    $result = $dbconn->Execute($query, array());
+    $result = $dbconn->Execute($query, []);
     if (!$result) {
         return;
     }
     // then from hooks table
     $query = "DELETE FROM $hookstable WHERE tid = " . $tid;
-    $result = $dbconn->Execute($query, array());
+    $result = $dbconn->Execute($query, []);
     if (!$result) {
         return;
     }

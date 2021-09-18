@@ -84,7 +84,7 @@ function crispbb_admin_privileges($args)
     }
 
     // define the new instance
-    $newinstance = array();
+    $newinstance = [];
     $newinstance[] = empty($catid) ? 'All' : $catid;
     $newinstance[] = empty($fid) ? 'All' : $fid;
 
@@ -109,7 +109,7 @@ function crispbb_admin_privileges($args)
             'privileges',
             'admin',
             'modifyprivilege',
-            array('id' => $pid)
+            ['id' => $pid]
         ));
         return true;
     }
@@ -121,7 +121,7 @@ function crispbb_admin_privileges($args)
         'crispbb',
         'user',
         'getitemtype',
-        array('fid' => 0, 'component' => 'forum')
+        ['fid' => 0, 'component' => 'forum']
     );
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
@@ -129,13 +129,13 @@ function crispbb_admin_privileges($args)
         'categories',
         'user',
         'getchildren',
-        array('cid' => $parentcat)
+        ['cid' => $parentcat]
     );
     $numitems = xarML('probably');
 
 
 
-    $data = array(
+    $data = [
                     'catid' => $catid,
                     'fid' => $fid,
                     'forums' => $forums,
@@ -149,7 +149,7 @@ function crispbb_admin_privileges($args)
                   'extlevel'     => $extlevel,
                   'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
                   'pparentid'    => $pparentid,
-                 );
+                 ];
 
     return $data;
 }

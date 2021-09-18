@@ -19,7 +19,7 @@
  */
 function crispbb_userapi_decode_shorturl($params)
 {
-    $args = array();
+    $args = [];
     $module = 'crispbb';
     /* Check and see if we have a module alias */
     $aliasisset = xarModVars::get($module, 'useModuleAlias');
@@ -36,55 +36,55 @@ function crispbb_userapi_decode_shorturl($params)
 
     // forum index
     if (empty($params[1]) || (preg_match('/^index/i', $params[1]))) {
-        return array('forum_index', $args);
+        return ['forum_index', $args];
     // forum category
     } elseif (preg_match('/^c(_?[0-9 +-]+)/', $params[1], $matches)) {
         $catid = $matches[1];
         $args['catid'] = $catid;
-        return array('forum_index', $args);
+        return ['forum_index', $args];
     // search forums
     } elseif (preg_match('/^search/i', $params[1]) && empty($params[2])) {
-        return array('search', $args);
+        return ['search', $args];
     } elseif (preg_match('/^redirect/i', $params[1]) && empty($params[2])) {
-        return array('redirect', $args);
+        return ['redirect', $args];
     } elseif (preg_match('/^updatetopic/i', $params[1]) && empty($params[2])) {
-        return array('updatetopic', $args);
+        return ['updatetopic', $args];
     } elseif (preg_match('/^updatereply/i', $params[1]) && empty($params[2])) {
-        return array('updatereply', $args);
+        return ['updatereply', $args];
     } elseif (preg_match('/^newtopic/i', $params[1]) && empty($params[2])) {
-        return array('newtopic', $args);
+        return ['newtopic', $args];
     } elseif (preg_match('/^modifytopic/i', $params[1]) && empty($params[2])) {
-        return array('modifytopic', $args);
+        return ['modifytopic', $args];
     } elseif (preg_match('/^newreply/i', $params[1]) && empty($params[2])) {
-        return array('newreply', $args);
+        return ['newreply', $args];
     } elseif (preg_match('/^modifyreply/i', $params[1]) && empty($params[2])) {
-        return array('modifyreply', $args);
+        return ['modifyreply', $args];
     } elseif (preg_match('/^movetopic/i', $params[1]) && empty($params[2])) {
-        return array('movetopic', $args);
+        return ['movetopic', $args];
     } elseif (preg_match('/^splittopic/i', $params[1]) && empty($params[2])) {
-        return array('splittopic', $args);
+        return ['splittopic', $args];
     } elseif (preg_match('/^stats/i', $params[1]) && empty($params[2])) {
-        return array('stats', $args);
+        return ['stats', $args];
     } elseif (preg_match('/^moderate/i', $params[1]) && empty($params[2])) {
-        return array('moderate', $args);
+        return ['moderate', $args];
     } elseif (preg_match('/^read/i', $params[1]) && !empty($params[3])) {
         if (preg_match('/^f(_?[0-9 +-]+)/', $params[3], $matches)) {
             $fid = $matches[1];
             $args['action'] = 'read';
             $args['fid'] = $fid;
         }
-        return array('forum_index', $args);
+        return ['forum_index', $args];
     } elseif (preg_match('/^f(_?[0-9 +-]+)/', $params[1], $matches1)) {
         $fid = $matches1[1];
         $args['fid'] = $fid;
         if (!empty($params[2])) {
             if (preg_match('/^newtopic/i', $params[2])) {
-                return array('newtopic', $args);
+                return ['newtopic', $args];
             } elseif (preg_match('/^moderate/i', $params[2])) {
-                return array('moderate', $args);
+                return ['moderate', $args];
             }
         }
-        return array('view', $args);
+        return ['view', $args];
     // topic id
     } elseif (preg_match('/^t(_?[0-9 +-]+)/', $params[1], $matches1)) {
         $tid = $matches1[1];
@@ -95,40 +95,40 @@ function crispbb_userapi_decode_shorturl($params)
                 $args['pid'] = $pid;
                 if (!empty($params[3])) {
                     if (preg_match('/^edit/i', $params[3])) {
-                        return array('modifyreply', $args);
+                        return ['modifyreply', $args];
                     } elseif (preg_match('/^split/i', $params[3])) {
                         $args['startpid'] = $pid;
-                        return array('splittopic', $args);
+                        return ['splittopic', $args];
                     } elseif (preg_match('/^delete/i', $params[3])) {
                         $args['pstatus'] = 5;
-                        return array('updatereply', $args);
+                        return ['updatereply', $args];
                     }
                 }
-                return array('display', $args);
+                return ['display', $args];
             // topic id
             } elseif (preg_match('/^edit/i', $params[2])) {
-                return array('modifytopic', $args);
+                return ['modifytopic', $args];
             } elseif (preg_match('/^newreply/i', $params[2])) {
-                return array('newreply', $args);
+                return ['newreply', $args];
             } elseif (preg_match('/^move/i', $params[2])) {
-                return array('movetopic', $args);
+                return ['movetopic', $args];
             } elseif (preg_match('/^split/i', $params[2])) {
-                return array('splittopic', $args);
+                return ['splittopic', $args];
             } elseif (preg_match('/^delete/i', $params[2])) {
                 $args['tstatus'] = 5;
-                return array('updatetopic', $args);
+                return ['updatetopic', $args];
             } elseif (preg_match('/^open/i', $params[2]) || preg_match('/^unlock/i', $params[2]) || preg_match('/^undelete/i', $params[2])) {
                 $args['tstatus'] = 0;
-                return array('updatetopic', $args);
+                return ['updatetopic', $args];
             } elseif (preg_match('/^close/i', $params[2])) {
                 $args['tstatus'] = 1;
-                return array('updatetopic', $args);
+                return ['updatetopic', $args];
             } elseif (preg_match('/^lock/i', $params[2])) {
                 $args['tstatus'] = 4;
-                return array('updatetopic', $args);
+                return ['updatetopic', $args];
             }
         }
-        return array('display', $args);
+        return ['display', $args];
     } elseif (preg_match('/^(\w+)/', $params[1], $matches) && !empty($params[2])) {
         // look for a param identifying component
         if (preg_match('/^f(_?[0-9 +-]+)/', $params[2], $matches1)) {
@@ -136,12 +136,12 @@ function crispbb_userapi_decode_shorturl($params)
             $args['fid'] = $fid;
             if (!empty($params[3])) {
                 if (preg_match('/^newtopic/i', $params[3])) {
-                    return array('newtopic', $args);
+                    return ['newtopic', $args];
                 } elseif (preg_match('/^moderate/i', $params[3])) {
-                    return array('moderate', $args);
+                    return ['moderate', $args];
                 }
             }
-            return array('view', $args);
+            return ['view', $args];
         // topic id
         } elseif (preg_match('/^t(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $tid = $matches1[1];
@@ -152,50 +152,50 @@ function crispbb_userapi_decode_shorturl($params)
                     $args['pid'] = $pid;
                     if (!empty($params[4])) {
                         if (preg_match('/^edit/i', $params[4])) {
-                            return array('modifyreply', $args);
+                            return ['modifyreply', $args];
                         } elseif (preg_match('/^split/i', $params[4])) {
                             $args['startpid'] = $pid;
-                            return array('splittopic', $args);
+                            return ['splittopic', $args];
                         } elseif (preg_match('/^delete/i', $params[4])) {
                             $args['pstatus'] = 5;
-                            return array('updatereply', $args);
+                            return ['updatereply', $args];
                         }
                     }
-                    return array('display', $args);
+                    return ['display', $args];
                 // topic id
                 } elseif (preg_match('/^edit/i', $params[3])) {
-                    return array('modifytopic', $args);
+                    return ['modifytopic', $args];
                 } elseif (preg_match('/^newreply/i', $params[3])) {
-                    return array('newreply', $args);
+                    return ['newreply', $args];
                 } elseif (preg_match('/^move/i', $params[3])) {
-                    return array('movetopic', $args);
+                    return ['movetopic', $args];
                 } elseif (preg_match('/^split/i', $params[3])) {
-                    return array('splittopic', $args);
+                    return ['splittopic', $args];
                 } elseif (preg_match('/^delete/i', $params[3])) {
                     $args['tstatus'] = 5;
-                    return array('updatetopic', $args);
+                    return ['updatetopic', $args];
                 } elseif (preg_match('/^open/i', $params[3]) || preg_match('/^unlock/i', $params[3]) || preg_match('/^undelete/i', $params[3])) {
                     $args['tstatus'] = 0;
-                    return array('updatetopic', $args);
+                    return ['updatetopic', $args];
                 } elseif (preg_match('/^close/i', $params[3])) {
                     $args['tstatus'] = 1;
-                    return array('updatetopic', $args);
+                    return ['updatetopic', $args];
                 } elseif (preg_match('/^lock/i', $params[3])) {
                     $args['tstatus'] = 4;
-                    return array('updatetopic', $args);
+                    return ['updatetopic', $args];
                 } elseif (preg_match('/^moderate/i', $params[3])) {
-                    return array('moderate', $args);
+                    return ['moderate', $args];
                 }
             }
-            return array('display', $args);
+            return ['display', $args];
         } elseif (preg_match('/^p(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $pid = $matches1[1];
             $args['pid'] = $pid;
-            return array('displayreply', $args);
+            return ['displayreply', $args];
         } elseif (preg_match('/^c(_?[0-9 +-]+)/', $params[2], $matches1)) {
             $catid = $matches1[1];
             $args['catid'] = $catid;
-            return array('forum_index', $args);
+            return ['forum_index', $args];
             // search forums
         }
     }

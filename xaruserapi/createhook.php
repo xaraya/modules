@@ -21,12 +21,12 @@ function crispbb_userapi_createhook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('object ID', 'userapi', 'createhook', 'crispBB');
+        $vars = ['object ID', 'userapi', 'createhook', 'crispBB'];
         //throw new BadParameterException($vars, $msg);
         return $extrainfo;
     }
@@ -43,7 +43,7 @@ function crispbb_userapi_createhook($args)
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'userapi', 'createhook', 'crispBB');
+        $vars = ['module name', 'userapi', 'createhook', 'crispBB'];
         //throw new BadParameterException($vars, $msg);
         return $extrainfo;
     }
@@ -65,9 +65,9 @@ function crispbb_userapi_createhook($args)
     if (empty($string) || !is_string($string)) {
         $string = xarModVars::get('crispbb', 'crispbb_hooks');
     }
-    $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
+    $settings = !empty($string) && is_string($string) ? unserialize($string) : [];
 
-    $data = array();
+    $data = [];
     $data['fid'] = !empty($settings['fid']) ? $settings['fid'] : null;
     $data['postsperpage'] = !empty($settings['postsperpage']) ? $settings['postsperpage'] : 0;
     $data['quickreply'] = !empty($settings['quickreply']) ? $settings['quickreply'] : false;
@@ -80,7 +80,7 @@ function crispbb_userapi_createhook($args)
         if (empty($data['newaction'])) {
             return $extrainfo;
         }
-        $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $data['fid'], 'privcheck' => true));
+        $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $data['fid'], 'privcheck' => true]);
         if ($forum == 'BAD_DATA' || $forum == 'NO_PRIVILEGES') {
             return $extrainfo;
         }
@@ -124,7 +124,7 @@ function crispbb_userapi_createhook($args)
               )
             VALUES (?,?,?,?,?)";
 
-    $bindvars = array();
+    $bindvars = [];
     $bindvars[] = $nextId;
     $bindvars[] = $modid;
     $bindvars[] = $itemtype;

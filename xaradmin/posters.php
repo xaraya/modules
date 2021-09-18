@@ -45,24 +45,24 @@ function crispbb_admin_posters($args)
             'crispbb',
             'user',
             'getipsbyposter',
-            array(
+            [
                 'uid' => $uid,
                 'startnum' => $startnum,
                 'numitems' => $numitems,
-                'showstatus' => true
-            )
+                'showstatus' => true,
+            ]
         );
     } else {
         $posters = xarMod::apiFunc(
             'crispbb',
             'user',
             'getposters',
-            array(
+            [
                 'ip' => $ip,
                 'startnum' => $startnum,
                 'numitems' => $numitems,
-                'showstatus' => true
-            )
+                'showstatus' => true,
+            ]
         );
     }
 
@@ -70,10 +70,10 @@ function crispbb_admin_posters($args)
         'crispbb',
         'user',
         'countposters',
-        array(
+        [
             'ip' => $ip,
-            'powner' => $uid
-        )
+            'powner' => $uid,
+        ]
     );
 
     $data['items'] = $posters;
@@ -88,7 +88,7 @@ function crispbb_admin_posters($args)
     $data['pager'] = xarTplPager::getPager(
         $startnum,
         $totalposters,
-        xarController::URL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
+        xarController::URL('crispbb', 'admin', 'posters', ['ip' => $ip, 'uid' => $uid, 'startnum' => '%%']),
         $numitems
     );
     $pageTitle = xarML('Forum Posters');
@@ -99,12 +99,12 @@ function crispbb_admin_posters($args)
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'posters',
-            'current_sublink' => null
-        )
+            'current_sublink' => null,
+        ]
     );
     return $data;
 }

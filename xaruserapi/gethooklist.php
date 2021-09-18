@@ -52,7 +52,7 @@ function crispbb_userapi_gethooklist($args)
 
     // TODO: allow finer selection of hooks based on type etc., and
     //       filter out irrelevant ones (like module remove, search...)
-    $bindvars = array();
+    $bindvars = [];
     $query = "SELECT DISTINCT h.s_type, h.object, h.action, h.t_area, h.t_type,
                               h.t_func, h.t_file, h.s_module_id, h.t_module_id,
                               t.name
@@ -71,9 +71,9 @@ function crispbb_userapi_gethooklist($args)
     $result = $stmt->executeQuery($bindvars);
 
     // hooklist will hold the available hooks
-    $hooklist = array();
+    $hooklist = [];
     while ($result->next()) {
-        list($itemType, $object, $action, $area, $tmodType, $tmodFunc, $tmodFile, $smodId, $tmodId, $tmodName) = $result->fields;
+        [$itemType, $object, $action, $area, $tmodType, $tmodFunc, $tmodFile, $smodId, $tmodId, $tmodName] = $result->fields;
 
         // Avoid single-space item types e.g. for mssql
         if (!empty($itemType)) {
@@ -81,15 +81,15 @@ function crispbb_userapi_gethooklist($args)
         }
 
         if (!isset($hooklist[$tmodName])) {
-            $hooklist[$tmodName] = array();
+            $hooklist[$tmodName] = [];
         }
         if (!isset($hooklist[$tmodName]["$object:$action:$area"])) {
-            $hooklist[$tmodName]["$object:$action:$area"] = array();
+            $hooklist[$tmodName]["$object:$action:$area"] = [];
         }
         // if the smodName has a value the hook is active
         if (!empty($smodId)) {
             if (!isset($hooklist[$tmodName]["$object:$action:$area"][$smodId])) {
-                $hooklist[$tmodName]["$object:$action:$area"][$smodId] = array();
+                $hooklist[$tmodName]["$object:$action:$area"][$smodId] = [];
             }
             if (empty($itemType)) {
                 $itemType = 0;

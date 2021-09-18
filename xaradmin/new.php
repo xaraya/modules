@@ -43,66 +43,66 @@ function crispbb_admin_new($args)
     }
 
     if (!xarSecurity::check('AddCrispBB', 0)) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     // get the forum object
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
-    $forumfields = array('fname','fdesc','fstatus','ftype','category');
+    $data['forum'] = DataObjectMaster::getObject(['name' => 'crispbb_forums']);
+    $forumfields = ['fname','fdesc','fstatus','ftype','category'];
     $data['forum']->setFieldlist($forumfields);
 
     // Get the base categories ofthis module
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $basecid = count($basecats) > 0 ? $basecats[0] : 0;
-    
+
     if (!empty($basecid)) {
         $categories = xarMod::apiFunc(
             'categories',
             'user',
             'getchildren',
-            array('cid' => $basecid)
+            ['cid' => $basecid]
         );
         if (!empty($catid) && isset($categories[$catid])) {
             // pre-select the category if we found one
-            $data['forum']->properties['category']->categories = array($catid);
+            $data['forum']->properties['category']->categories = [$catid];
         }
     }
     $data['basecid'] = $basecid;
-    $data['basecatinfo'] = !empty($basecid) ? $basecats[0] : array();
-    $data['categories'] = !empty($categories) ? $categories : array();
+    $data['basecatinfo'] = !empty($basecid) ? $basecats[0] : [];
+    $data['categories'] = !empty($categories) ? $categories : [];
 
     // present different settings fields and layout depending on the type of forum :)
     $ftype = $data['forum']->properties['ftype']->value;
     if ($ftype == 1) {
-        $settingsfields = array('redirected');
+        $settingsfields = ['redirected'];
         $layout = 'redirected';
     } else {
-        $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval', 'iconfolder', 'icondefault');
+        $settingsfields = ['topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval', 'iconfolder', 'icondefault'];
         $layout = 'normal';
     }
-    $data['settings'] = DataObjectMaster::getObject(array('name' => 'crispbb_forum_settings'));
+    $data['settings'] = DataObjectMaster::getObject(['name' => 'crispbb_forum_settings']);
     $data['settings']->setFieldlist($settingsfields);
     $data['settings']->tplmodule = 'crispbb';
     $data['settings']->layout = $layout;
 
     // get the master forum itemtype
     // @TODO: use getObject instead of getObjectList
-    $itemtypes = DataObjectMaster::getObjectList(array('name' => 'crispbb_itemtypes'));
-    $filter = array('where' => 'fid eq 0 and component eq "forum"');
+    $itemtypes = DataObjectMaster::getObjectList(['name' => 'crispbb_itemtypes']);
+    $filter = ['where' => 'fid eq 0 and component eq "forum"'];
     $forumtypes = $itemtypes->getItems($filter);
     $itemtype = count($forumtypes) == 1 ? key($forumtypes) : null;
 
     // fetch default settings for a new forum
-    $fprivileges = xarMod::apiFunc('crispbb', 'user', 'getsettings', array('setting' => 'fprivileges'));
+    $fprivileges = xarMod::apiFunc('crispbb', 'user', 'getsettings', ['setting' => 'fprivileges']);
     $presets = xarMod::apiFunc(
         'crispbb',
         'user',
         'getpresets',
-        array('preset' => 'ftransfields,ttransfields,ptransfields')
+        ['preset' => 'ftransfields,ttransfields,ptransfields']
     );
 
-    $invalid = array();
+    $invalid = [];
     $now = time();
 
     if (!$confirm) { // @CHECKME: still necessary?
@@ -114,11 +114,11 @@ function crispbb_admin_new($args)
         $cids = $data['forum']->properties['category']->categories;
         if (is_array($cids) && in_array($basecid, $cids)) {
             $isvalid = false;
-            $data['forum']->properties['category']->categories = array();
+            $data['forum']->properties['category']->categories = [];
             $data['forum']->properties['category']->invalid = xarML("Forums cannot be added to the base forum category");
         }
 
-        $andvalid = $data['settings']->checkInput(array(), true);
+        $andvalid = $data['settings']->checkInput([], true);
         // see if user switched forum types
         if ($data['forum']->properties['ftype']->value == $ftype) {
             if (!$andvalid) {
@@ -129,7 +129,7 @@ function crispbb_admin_new($args)
                         'crispbb',
                         'user',
                         'gettopicicons',
-                        array('iconfolder' => $iconfolder, 'shownone' => true)
+                        ['iconfolder' => $iconfolder, 'shownone' => true]
                     );
                     $data['settings']->properties['icondefault']->options = $iconlist;
                     $andvalid = $data['settings']->checkInput();
@@ -138,42 +138,42 @@ function crispbb_admin_new($args)
         } else {
             $andvalid = false;
             if ($data['forum']->properties['ftype']->value == 1) {
-                $settingsfields = array('redirected');
+                $settingsfields = ['redirected'];
                 $layout = 'redirected';
             } else {
-                $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault');
+                $settingsfields = ['topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault'];
                 $layout = 'normal';
             }
             $data['settings']->setFieldList($settingsfields);
             $data['settings']->layout = $layout;
-            $andvalid = $data['settings']->checkInput(array(), true);
+            $andvalid = $data['settings']->checkInput([], true);
         }
-        $settings = array();
+        $settings = [];
         foreach ($data['settings']->properties as $name => $value) {
             $settings[$name] = $data['settings']->properties[$name]->value;
         }
         // @TODO: make these properties somehow
         foreach ($presets['ftransfields'] as $field => $option) {
             if (!isset($settings['ftransforms'][$field])) {
-                $settings['ftransforms'][$field] = array();
+                $settings['ftransforms'][$field] = [];
             }
         }
         foreach ($presets['ttransfields'] as $field => $option) {
             if (!isset($settings['ttransforms'][$field])) {
-                $settings['ttransforms'][$field] = array();
+                $settings['ttransforms'][$field] = [];
             }
         }
         foreach ($presets['ptransfields'] as $field => $option) {
             if (!isset($settings['ptransforms'][$field])) {
-                $settings['ptransforms'][$field] = array();
+                $settings['ptransforms'][$field] = [];
             }
         }
         // only update if both the forum and settings objects are valid
         if ($isvalid && $andvalid) {
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
-            $extra = array();
+            $extra = [];
             $extra['fsettings'] = serialize($settings);
             $extra['fprivileges'] = serialize($fprivileges);
             if (empty($data['forum']->properties['fowner']->value)) {
@@ -196,7 +196,7 @@ function crispbb_admin_new($args)
                     'crispbb',
                     'admin',
                     'modify',
-                    array('fid' => $fid, 'sublink' => 'edit')
+                    ['fid' => $fid, 'sublink' => 'edit']
                 );
             }
             xarController::redirect($returnurl);
@@ -204,7 +204,7 @@ function crispbb_admin_new($args)
         }
     }
     if (empty($settings)) {
-        $settings = array();
+        $settings = [];
         foreach (array_keys($data['settings']->properties) as $name) {
             $settings[$name] = $data['settings']->properties[$name]->value;
         }
@@ -217,31 +217,31 @@ function crispbb_admin_new($args)
             'crispbb',
             'user',
             'gettopicicons',
-            array('iconfolder' => $data['values']['iconfolder'], 'shownone' => true)
+            ['iconfolder' => $data['values']['iconfolder'], 'shownone' => true]
         );
         $data['settings']->properties['icondefault']->options = $iconlist;
         $data['iconlist'] = $iconlist;
     } else {
-        $data['iconlist'] = array();
+        $data['iconlist'] = [];
     }
 
-    $secLevels = empty($secLevels) ? xarMod::apiFunc('crispbb', 'user', 'getsettings', array('setting' => 'fprivileges')) : $secLevels;
+    $secLevels = empty($secLevels) ? xarMod::apiFunc('crispbb', 'user', 'getsettings', ['setting' => 'fprivileges']) : $secLevels;
     // populate the menulinks for this function
     $data['menulinks'] = xarMod::apiFunc(
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'new',
             'current_sublink' => $sublink,
             'catid' => !empty($cids) ? reset($cids) : null,
-            'secLevels' => $secLevels
-        )
+            'secLevels' => $secLevels,
+        ]
     );
 
-    $item = array();
+    $item = [];
     $item['module'] = 'crispbb';
     $item['itemtype'] = $itemtype; // All itemtypes
     $hooks = xarModHooks::call('item', 'new', '', $item);

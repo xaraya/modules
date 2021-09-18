@@ -18,27 +18,27 @@
 function crispbb_admin_waitingcontent()
 {
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
-    $subtopics = array();
+    $subtopics = [];
     foreach ($forums as $fid => $forum) {
         $subtopics = xarMod::apiFunc(
             'crispbb',
             'user',
             'counttopics',
-            array('fid' => $fid,'tstatus' => 2)
+            ['fid' => $fid,'tstatus' => 2]
         );
         if (empty($subtopics) || empty($forum['privs']['approvetopics'])) {
             unset($forums[$fid]);
             continue;
         }
         $forums[$fid]['subtopics'] = $subtopics;
-        $forums[$fid]['modforumurl'] = xarController::URL('crispbb', 'user', 'moderate', array('fid' => $fid, 'component' => 'topics', 'tstatus' => 2));
+        $forums[$fid]['modforumurl'] = xarController::URL('crispbb', 'user', 'moderate', ['fid' => $fid, 'component' => 'topics', 'tstatus' => 2]);
         unset($subtopics);
     }
     $topics = xarMod::apiFunc(
         'crispbb',
         'user',
         'gettopics',
-        array('numsubs' => true, 'submitted' => true)
+        ['numsubs' => true, 'submitted' => true]
     );
 
     foreach ($topics as $tid => $topic) {
@@ -46,8 +46,8 @@ function crispbb_admin_waitingcontent()
             unset($topics[$tid]);
             continue;
         }
-        $topics[$tid]['modtopicurl'] = xarController::URL('crispbb', 'user', 'moderate', array('tid' => $tid,
-            'component' => 'posts', 'pstatus' => 2));
+        $topics[$tid]['modtopicurl'] = xarController::URL('crispbb', 'user', 'moderate', ['tid' => $tid,
+            'component' => 'posts', 'pstatus' => 2, ]);
     }
 
     $newversion = xarModVars::get('crispbb', 'latestversion');
@@ -56,8 +56,8 @@ function crispbb_admin_waitingcontent()
     $oldversion = $modinfo['version'];
     $isupdated = false;
     if (!empty($newversion)) {
-        list($maj, $min, $mic) = explode('.', $newversion);
-        list($omaj, $omin, $omic) = explode('.', $oldversion);
+        [$maj, $min, $mic] = explode('.', $newversion);
+        [$omaj, $omin, $omic] = explode('.', $oldversion);
         if ($maj > $omaj) { // new major version
             $isupdated = $newversion;
         } elseif ($maj == $omaj) { // same major version
@@ -75,7 +75,7 @@ function crispbb_admin_waitingcontent()
         return '';
     }
 
-    $data = array();
+    $data = [];
     $data['topics'] = $topics;
     $data['forums'] = $forums;
     $data['isupdated'] = $isupdated;

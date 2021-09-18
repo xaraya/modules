@@ -22,12 +22,12 @@
 function crispbb_admin_deletecat($args)
 {
     if (!xarSecurity::check('AdminCrispBB')) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     extract($args);
 
-    $data = array();
+    $data = [];
     if (!xarVar::fetch('itemid', 'int:1', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -39,17 +39,17 @@ function crispbb_admin_deletecat($args)
     }
     // secondary sec check on categories module
     if (!xarSecurity::check('ManageCategories', 0, "All:$data[itemid]")) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories', 'categoriesobject')));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => xarModVars::get('categories', 'categoriesobject')]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     if ($confirm) {
         if (!xarSec::confirmAuthKey()) {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         }
-        $data['object']->deleteItem(array('itemid' => $data['itemid']));
+        $data['object']->deleteItem(['itemid' => $data['itemid']]);
         if (empty($data['return_url'])) {
             $data['return_url'] = xarController::URL('crispbb', 'admin', 'categories');
         }
@@ -61,11 +61,11 @@ function crispbb_admin_deletecat($args)
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'deletecat',
-        )
+        ]
     );
 
     $data['layout'] = 'confirm';

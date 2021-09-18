@@ -26,8 +26,8 @@ function crispbb_userapi_counttopics($args)
     $poststable = $xartable['crispbb_posts'];
     $hookstable = $xartable['crispbb_hooks'];
 
-    $where = array();
-    $bindvars = array();
+    $where = [];
+    $bindvars = [];
 
     if (isset($hid) || isset($moduleid) || isset($itemtype) || isset($itemid)) {
         $from = $hookstable;
@@ -49,7 +49,7 @@ function crispbb_userapi_counttopics($args)
         if (is_numeric($fid)) {
             $where[] = $forumstable . '.id = ' . $fid;
         } elseif (is_array($fid) && count($fid) > 0) {
-            $seenfid = array();
+            $seenfid = [];
             foreach ($fid as $id) {
                 if (empty($id) || !is_numeric($id)) {
                     continue;
@@ -70,7 +70,7 @@ function crispbb_userapi_counttopics($args)
         if (is_numeric($tstatus)) {
             $where[] = $topicstable . '.tstatus = ' . $tstatus;
         } elseif (is_array($tstatus) && count($tstatus) > 0) {
-            $seentstatus = array();
+            $seentstatus = [];
             foreach ($tstatus as $id) {
                 if (!is_numeric($id)) {
                     continue;
@@ -91,7 +91,7 @@ function crispbb_userapi_counttopics($args)
         if (is_numeric($ttype)) {
             $where[] = $topicstable . '.ttype = ' . $ttype;
         } elseif (is_array($ttype) && count($ttype) > 0) {
-            $seenttype = array();
+            $seenttype = [];
             foreach ($ttype as $id) {
                 if (!is_numeric($id)) {
                     continue;
@@ -130,7 +130,7 @@ function crispbb_userapi_counttopics($args)
         if (is_numeric($pstatus)) {
             $where[] = $poststable . '.pstatus = ' . $pstatus;
         } elseif (is_array($pstatus) && count($pstatus) > 0) {
-            $seenpstatus = array();
+            $seenpstatus = [];
             foreach ($pstatus as $id) {
                 if (!is_numeric($id)) {
                     continue;
@@ -149,13 +149,13 @@ function crispbb_userapi_counttopics($args)
 
     if (!empty($q)) {
         if (empty($searchfields)) {
-            $searchfields = array();
+            $searchfields = [];
         }
         $search = $q;
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
 
-        $normal = array();
-        $find = array();
+        $normal = [];
+        $find = [];
 
         // 0. Check for "'equal whole string' searchType"
         if (!empty($searchtype) && $searchtype == 'equal whole string') {
@@ -171,9 +171,9 @@ function crispbb_userapi_counttopics($args)
             if (!empty($fulltext)) {
                 $fulltextfields = explode(',', $fulltext);
             } else {
-                $fulltextfields = array();
+                $fulltextfields = [];
             }
-            $matchfields = array();
+            $matchfields = [];
             foreach ($fulltextfields as $field) {
                 if (empty($leftjoin[$field])) {
                     continue;
@@ -197,7 +197,7 @@ function crispbb_userapi_counttopics($args)
                 $searchtype = '';
             } else {
                 // we're done here
-                $searchfields = array();
+                $searchfields = [];
                 $search = '';
             }
         }
@@ -268,7 +268,7 @@ function crispbb_userapi_counttopics($args)
     if (!$result) {
         return;
     }
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
 
     return $numitems;

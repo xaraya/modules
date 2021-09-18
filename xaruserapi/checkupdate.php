@@ -75,24 +75,24 @@ function crispbb_userapi_checkupdate($args)
             'base',
             'user',
             'getfile',
-            array(
+            [
         'url' => $url,
         'cached' => $cached,
         'refresh' => $refresh,
         'extension' => $extension,
         'cachedir' => $cachedir,
-        'superrors' => $superrors
-      )
+        'superrors' => $superrors,
+      ]
         );
     }
 
     // if we got no response we either got postargs or getfile failed, try curl
     if ((!isset($response) || empty($response) || $response==false) && function_exists('curl_init')) {
-        $headers = array(
+        $headers = [
       'X-crispBB-Client: '.$client,
       'X-crispBB-Client-Version: '.$clientver,
       'X-crispBB-Client-URL: '.$clienturl,
-      'Exist: ');
+      'Exist: ', ];
         $ch = curl_init($url);
 
         /*
@@ -121,7 +121,7 @@ function crispbb_userapi_checkupdate($args)
         if (intval($responseInfo['http_code'])!=200) {
             if (!$superrors) {
                 $msg = 'URL #(1) returned response #(2)';
-                $vars = array($url, $responseInfo['http_code']);
+                $vars = [$url, $responseInfo['http_code']];
                 throw new BadParameterException($vars, $msg);
                 return;
             }
@@ -132,7 +132,7 @@ function crispbb_userapi_checkupdate($args)
             if (!$fp) {
                 if (!$superrors) {
                     $msg = 'Error saving URL #(1) to cache file #(2)';
-                    $vars = array($url, $file);
+                    $vars = [$url, $file];
                     throw new BadParameterException($vars, $msg);
                 }
                 return;
@@ -141,7 +141,7 @@ function crispbb_userapi_checkupdate($args)
             if (!$size || $size < strlen($response)) {
                 if (!$superrors) {
                     $msg = 'URL #(1) truncated to #(2) bytes when saving to cache file #(3)';
-                    $vars = array($url, $size, $file);
+                    $vars = [$url, $size, $file];
                     throw new BadParameterException($vars, $msg);
                 }
                 return;
@@ -167,8 +167,8 @@ function crispbb_userapi_checkupdate($args)
     $isupdated = false;
 
     if (!empty($newversion)) {
-        list($maj, $min, $mic) = explode('.', $newversion);
-        list($omaj, $omin, $omic) = explode('.', $version);
+        [$maj, $min, $mic] = explode('.', $newversion);
+        [$omaj, $omin, $omic] = explode('.', $version);
         if ($maj > $omaj) { // new major version
             $isupdated = $newversion;
         } elseif ($maj == $omaj) { // same major version

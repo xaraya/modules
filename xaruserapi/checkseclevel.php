@@ -59,7 +59,7 @@ function crispbb_userapi_checkseclevel($args)
         'crispbb',
         'user',
         'getseclevel',
-        array('catid' => $catid, 'fid' => $fid)
+        ['catid' => $catid, 'fid' => $fid]
     );
 
     // no privileges for current instance

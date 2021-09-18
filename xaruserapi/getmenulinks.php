@@ -21,9 +21,9 @@ function crispbb_userapi_getmenulinks()
 {
     $secLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');
     if (empty($secLevel)) {
-        return array();
+        return [];
     }
-    static $menulinks = array();
+    static $menulinks = [];
 
     if (empty($menulinks)) {
         $menulinks = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');

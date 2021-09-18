@@ -26,10 +26,10 @@ function crispbb_userapi_countposters($args)
     $poststable = $xartable['crispbb_posts'];
     //$hookstable = $xartable['crispbb_hooks'];
 
-    $select = array();
-    $where = array();
-    $orderby = array();
-    $bindvars = array();
+    $select = [];
+    $where = [];
+    $orderby = [];
+    $bindvars = [];
 
     $from = $poststable;
 
@@ -59,7 +59,7 @@ function crispbb_userapi_countposters($args)
     if (!$result) {
         return;
     }
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
 
     return $numitems;

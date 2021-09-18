@@ -25,8 +25,8 @@
 function crispbb_adminapi_createitemtype($args)
 {
     extract($args);
-    $invalid = array();
-    $components = array('forum', 'topics', 'posts');
+    $invalid = [];
+    $components = ['forum', 'topics', 'posts'];
     if (!isset($fid) || !is_numeric($fid)) {
         $invalid[] = 'fid';
     }
@@ -36,7 +36,7 @@ function crispbb_adminapi_createitemtype($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'admin', 'createitemtype', 'crispBB');
+        $vars = [join(', ', $invalid), 'admin', 'createitemtype', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -51,7 +51,7 @@ function crispbb_adminapi_createitemtype($args)
         component
         )
         VALUES (?,?,?)";
-    $bindvars = array($nextId, $fid, $component);
+    $bindvars = [$nextId, $fid, $component];
     $result = $dbconn->Execute($query, $bindvars);
 
     if (!$result) {

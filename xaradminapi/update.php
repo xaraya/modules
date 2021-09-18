@@ -31,7 +31,7 @@
 function crispbb_adminapi_update($args)
 {
     extract($args);
-    $invalid = array();
+    $invalid = [];
 
     if (!isset($fid) || empty($fid) || !is_numeric($fid)) {
         $invalid[] = 'fid';
@@ -93,7 +93,7 @@ function crispbb_adminapi_update($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'adminapi', 'update', 'crispBB');
+        $vars = [join(', ', $invalid), 'adminapi', 'update', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -101,9 +101,9 @@ function crispbb_adminapi_update($args)
     if (!empty($cids) && count($cids) > 0) {
         $cids = array_values(preg_grep('/\d+/', $cids));
     } elseif (!empty($catid) && is_numeric($catid)) {
-        $cids = array($catid);
+        $cids = [$catid];
     } else {
-        $cids = array();
+        $cids = [];
     }
 
     if (empty($cids)) {
@@ -120,11 +120,11 @@ function crispbb_adminapi_update($args)
             $foundcid = $cid;
             break;
         }
-        $forumLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel', array('fid' => $fid, 'catid' => $foundcid));
+        $forumLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel', ['fid' => $fid, 'catid' => $foundcid]);
         if ($forumLevel < 600) { // gotta have at least edit (600) privs
             $allowed = false;
         } elseif ($forumLevel < 800) { // has edit or delete privs
-            $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $fid));
+            $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $fid]);
             $privs = $forum['fprivileges'][$forumLevel];
             // has edit or delete privs for this forum
             if (!empty($privs['editforum']) || !empty($privs['deleteforum'])) {
@@ -148,8 +148,8 @@ function crispbb_adminapi_update($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $forumstable = $xartable['crispbb_forums'];
-    $set = array();
-    $bindvars = array();
+    $set = [];
+    $bindvars = [];
     if (isset($fname)) {
         $set[] = 'fname = ?';
         $bindvars[] = $fname;
@@ -196,10 +196,10 @@ function crispbb_adminapi_update($args)
         'crispbb',
         'user',
         'counttopics',
-        array(
+        [
             'fid' => $fid,
-            'tstatus' => array(0,1)
-        )
+            'tstatus' => [0,1],
+        ]
     );
     $set[] = 'numtopics = ?';
     $bindvars[] = $numtopics;
@@ -208,11 +208,11 @@ function crispbb_adminapi_update($args)
         'crispbb',
         'user',
         'countposts',
-        array(
+        [
             'fid' => $fid,
-            'tstatus' => array(0,1),
-            'pstatus' => 0
-        )
+            'tstatus' => [0,1],
+            'pstatus' => 0,
+        ]
     );
     $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
     $set[] = 'numreplies = ?';
@@ -222,10 +222,10 @@ function crispbb_adminapi_update($args)
         'crispbb',
         'user',
         'counttopics',
-        array(
+        [
             'fid' => $fid,
-            'tstatus' => 2
-        )
+            'tstatus' => 2,
+        ]
     );
     $set[] = 'numtopicsubs = ?';
     $bindvars[] = $numtopicsubs;
@@ -234,10 +234,10 @@ function crispbb_adminapi_update($args)
         'crispbb',
         'user',
         'counttopics',
-        array(
+        [
             'fid' => $fid,
-            'tstatus' => 5
-        )
+            'tstatus' => 5,
+        ]
     );
     $set[] = 'numtopicdels = ?';
     $bindvars[] = $numtopicdels;
@@ -246,11 +246,11 @@ function crispbb_adminapi_update($args)
         'crispbb',
         'user',
         'countposts',
-        array(
+        [
             'fid' => $fid,
-            'tstatus' => array(0,1),
-            'pstatus' => 2
-        )
+            'tstatus' => [0,1],
+            'pstatus' => 2,
+        ]
     );
     $set[] = 'numreplysubs = ?';
     $bindvars[] = $numreplysubs;
@@ -259,11 +259,11 @@ function crispbb_adminapi_update($args)
         'crispbb',
         'user',
         'countposts',
-        array(
+        [
             'fid' => $fid,
-            'tstatus' => array(0,1),
-            'pstatus' => 5
-        )
+            'tstatus' => [0,1],
+            'pstatus' => 5,
+        ]
     );
     $set[] = 'numreplydels = ?';
     $bindvars[] = $numreplydels;
@@ -288,7 +288,7 @@ function crispbb_adminapi_update($args)
             'crispbb',
             'user',
             'getitemtype',
-            array('fid' => $fid, 'component' => 'forum')
+            ['fid' => $fid, 'component' => 'forum']
         );
     }
 

@@ -24,7 +24,7 @@ function crispbb_userapi_getposter($args)
 
     if (count($posters) > 1) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('parameters', 'user', 'getposter', 'crispBB');
+        $vars = ['parameters', 'user', 'getposter', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     } elseif (!empty($posters)) {

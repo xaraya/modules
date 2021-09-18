@@ -1,11 +1,12 @@
 <?php
+
 class LinkCache extends xarServer
 {
     private static $hasShortUrls;
-    private static $cachedLinks = array();
-    private static $cachedParams = array();
+    private static $cachedLinks = [];
+    private static $cachedParams = [];
 
-    public static function getCachedURL($modName = 'crispbb', $modType = 'user', $funcName = 'forum_index', $args = array(), $generateXMLURL = null, $fragment = null, $entrypoint = array())
+    public static function getCachedURL($modName = 'crispbb', $modType = 'user', $funcName = 'forum_index', $args = [], $generateXMLURL = null, $fragment = null, $entrypoint = [])
     {
         // build the key
         $key = $modName.$modType.$funcName;

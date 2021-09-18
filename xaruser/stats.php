@@ -23,27 +23,27 @@ function crispbb_user_stats($args)
 {
     extract($args);
 
-    $data = array();
+    $data = [];
     $now = time();
     $uid = xarUser::getVar('id');
-    $tstatus = array(0,1); // open, closed
+    $tstatus = [0,1]; // open, closed
 
     //get forums
     $forums = xarMod::apiFunc(
         'crispbb',
         'user',
         'getforums',
-        array(
+        [
             'tstatus' => $tstatus,
             'privcheck' => true,
             'sort' => 'totals',
             'order' => 'DESC',
-            'ftype' => 0
-            )
+            'ftype' => 0,
+            ]
     );
     // if the error was no privs, we should have an error message
     if (!empty($forums['error'])) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
 
     $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
@@ -53,7 +53,7 @@ function crispbb_user_stats($args)
         'crispbb',
         'user',
         'getitemtype',
-        array('fid' => 0, 'component' => 'forum')
+        ['fid' => 0, 'component' => 'forum']
     );
     $basecats = xarMod::apiFunc('crispbb', 'user', 'getcatbases');
     $parentcat = count($basecats) > 0 ? $basecats[0] : 0;
@@ -61,7 +61,7 @@ function crispbb_user_stats($args)
         'categories',
         'user',
         'getchildren',
-        array('cid' => $parentcat)
+        ['cid' => $parentcat]
     );
     if (!empty($categories)) {
         foreach ($categories as $cid => $category) {
@@ -69,7 +69,7 @@ function crispbb_user_stats($args)
                 'crispbb',
                 'user',
                 'getseclevel',
-                array('catid' => $cid)
+                ['catid' => $cid]
             );
             if ($catLevel < 200) { // No privs
                 unset($categories[$cid]);
@@ -81,13 +81,13 @@ function crispbb_user_stats($args)
     $data['totalcats'] = count($categories);
     $data['totalforums'] = count($forums);
     $fids = array_keys($forums);
-    $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('fid' => $fids, 'tstatus' => $tstatus));
-    $totalposts = xarMod::apiFunc('crispbb', 'user', 'countposts', array('fid' => $fids, 'tstatus' => $tstatus, 'pstatus' => 0));
+    $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', ['fid' => $fids, 'tstatus' => $tstatus]);
+    $totalposts = xarMod::apiFunc('crispbb', 'user', 'countposts', ['fid' => $fids, 'tstatus' => $tstatus, 'pstatus' => 0]);
     $data['totalposts'] = $totalposts - $data['totaltopics'];
-    $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('fid' => $fids, 'tstatus' => $tstatus, 'noreplies' => true));
-    $data['totalusers'] = xarMod::apiFunc('roles', 'user', 'countall', array('include_anonymous' => false, 'include_myself' => false));
-    $allactive = xarMod::apiFunc('roles', 'user', 'countallactive', array('include_anonymous' => true, 'include_myself' => false));
-    $loggedin = xarMod::apiFunc('roles', 'user', 'countallactive', array('include_anonymous' => false, 'include_myself' => false));
+    $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', ['fid' => $fids, 'tstatus' => $tstatus, 'noreplies' => true]);
+    $data['totalusers'] = xarMod::apiFunc('roles', 'user', 'countall', ['include_anonymous' => false, 'include_myself' => false]);
+    $allactive = xarMod::apiFunc('roles', 'user', 'countallactive', ['include_anonymous' => true, 'include_myself' => false]);
+    $loggedin = xarMod::apiFunc('roles', 'user', 'countallactive', ['include_anonymous' => false, 'include_myself' => false]);
     $data['totalonline'] = $loggedin;
     $data['totalguests'] = $allactive - $loggedin;
 
@@ -100,14 +100,14 @@ function crispbb_user_stats($args)
                 'roles',
                 'user',
                 'get',
-                array('uname' => $lastuid)
+                ['uname' => $lastuid]
             );
         } else {
             $lastuser = xarMod::apiFunc(
                 'roles',
                 'user',
                 'get',
-                array('uid' => $lastuid)
+                ['uid' => $lastuid]
             );
         }
         // Check return
@@ -116,16 +116,16 @@ function crispbb_user_stats($args)
         }
     }
 
-    $lastpost = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1, 'pstatus' => 0));
-    $data['lastpost'] = !empty($lastpost) ? reset($lastpost) : array();
+    $lastpost = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1, 'pstatus' => 0]);
+    $data['lastpost'] = !empty($lastpost) ? reset($lastpost) : [];
 
     $data['topforums'] = array_slice($forums, 0, 10, true);
 
-    $data['topstarters'] = xarMod::apiFunc('crispbb', 'user', 'getposters', array('sort' => 'numtopics', 'numitems' => 10));
-    $data['topposters'] = xarMod::apiFunc('crispbb', 'user', 'getposters', array('sort' => 'numreplies', 'numitems' => 10, 'fids' => $fids, 'tstatus' => $tstatus));
-    $data['topreplies'] = xarMod::apiFunc('crispbb', 'user', 'gettopics', array('fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'numreplies', 'order' => 'DESC', 'numitems' => 10));
+    $data['topstarters'] = xarMod::apiFunc('crispbb', 'user', 'getposters', ['sort' => 'numtopics', 'numitems' => 10]);
+    $data['topposters'] = xarMod::apiFunc('crispbb', 'user', 'getposters', ['sort' => 'numreplies', 'numitems' => 10, 'fids' => $fids, 'tstatus' => $tstatus]);
+    $data['topreplies'] = xarMod::apiFunc('crispbb', 'user', 'gettopics', ['fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'numreplies', 'order' => 'DESC', 'numitems' => 10]);
 
-    $data['tophits'] = xarMod::apiFunc('crispbb', 'user', 'gettopics', array('fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'numhits', 'order' => 'DESC', 'numitems' => 10));
+    $data['tophits'] = xarMod::apiFunc('crispbb', 'user', 'gettopics', ['fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'numhits', 'order' => 'DESC', 'numitems' => 10]);
 
     $pageTitle = xarML('Forum Statistics');
 

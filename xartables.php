@@ -22,7 +22,7 @@
  */
 function crispbb_xartables()
 {
-    $tables = array();
+    $tables = [];
     $prefix = xarDB::getPrefix();
     $tables['crispbb_itemtypes']    = $prefix . '_crispbb_itemtypes';
     $tables['crispbb_forums']       = $prefix . '_crispbb_forums';

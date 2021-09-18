@@ -22,7 +22,7 @@
 function crispbb_admin_order($args)
 {
     if (!xarSecurity::check('AdminCrispBB', 0)) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
     }
     if (!xarVar::fetch('fid', 'int:1', $itemid, 0, xarVar::NOT_REQUIRED)) {
         return;
@@ -51,15 +51,15 @@ function crispbb_admin_order($args)
     }
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) function #(3) in module #(4)';
-        $vars = array(join(', ', $invalid), 'admin', 'order', 'crispBB');
+        $vars = [join(', ', $invalid), 'admin', 'order', 'crispBB'];
         throw new BadParameterException($vars, $msg);
     }
     if (!xarSec::confirmAuthKey()) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
     }
-    $forums = DataObjectMaster::getObjectList(array('name' => 'crispbb_forums'));
+    $forums = DataObjectMaster::getObjectList(['name' => 'crispbb_forums']);
     $forums->setCategories($catid);
-    $filter = array('sort' => 'forder ASC', 'catid' => $catid);
+    $filter = ['sort' => 'forder ASC', 'catid' => $catid];
     $forums->getItems($filter);
 
     $fids = array_keys($forums->items);
@@ -79,17 +79,17 @@ function crispbb_admin_order($args)
     }
 
     if (isset($oldorder) && isset($neworder)) {
-        $object = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
-        $fieldlist = array('forder');
+        $object = DataObjectMaster::getObject(['name' => 'crispbb_forums']);
+        $fieldlist = ['forder'];
         $object->setFieldlist($fieldlist);
 
-        $object->getItem(array('itemid' => $itemid));
+        $object->getItem(['itemid' => $itemid]);
         $object->properties['forder']->setValue($neworder);
-        $object->updateItem(array('itemid' => $itemid));
+        $object->updateItem(['itemid' => $itemid]);
 
-        $object->getItem(array('itemid' => $swapid));
+        $object->getItem(['itemid' => $swapid]);
         $object->properties['forder']->setValue($oldorder);
-        $object->updateItem(array('itemid' => $swapid));
+        $object->updateItem(['itemid' => $swapid]);
     }
 
     if (empty($return_url)) {

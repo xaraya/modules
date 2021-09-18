@@ -88,12 +88,12 @@ function crispbb_user_search()
     }
 
     $now = time();
-    $data = array();
-    $search = array();
-    $results = array();
+    $data = [];
+    $search = [];
+    $results = [];
     $condition = '';
-    $reqfields = array('ttitle', 'pdesc', 'ptext');
-    list($current_module) = xarController::$request->getInfo();
+    $reqfields = ['ttitle', 'pdesc', 'ptext'];
+    [$current_module] = xarController::$request->getInfo();
     $data['searchactive'] = $current_module == 'search' ? true : false;
 
     sys::import('modules.crispbb.class.tracker');
@@ -130,7 +130,7 @@ function crispbb_user_search()
     }
 
     if (!empty($author) && strlen($author) <> 0) {
-        $user = xarMod::apiFunc('roles', 'user', 'get', array('name' => $author));
+        $user = xarMod::apiFunc('roles', 'user', 'get', ['name' => $author]);
         if (!empty($user)) {
             if ($component == 'topics') {
                 $towner = $user['id'];
@@ -190,7 +190,7 @@ function crispbb_user_search()
             'roles',
             'user',
             'get',
-            array('id' => $towner)
+            ['id' => $towner]
         );
         if (empty($user['id'])) {
             unset($towner);
@@ -203,7 +203,7 @@ function crispbb_user_search()
             'roles',
             'user',
             'get',
-            array('id' => $powner)
+            ['id' => $powner]
         );
         if (empty($user['id'])) {
             unset($powner);
@@ -224,7 +224,7 @@ function crispbb_user_search()
             $search['endtime'] = $endtime;
         }
         if (!empty($fids)) {
-            $searchfids = array();
+            $searchfids = [];
             $fidkeys = explode(',', $fids);
             foreach ($fidkeys as $reqfid) {
                 $searchfids[$reqfid] = 1;
@@ -239,7 +239,7 @@ function crispbb_user_search()
         if (!empty($searchfields)) {
             $search['searchfields'] = explode(',', $searchfields);
         }
-        $search['tstatus'] = array(0,1);
+        $search['tstatus'] = [0,1];
         $search['pstatus'] = 0;
         switch ($component) {
             case 'topics':
@@ -310,8 +310,8 @@ function crispbb_user_search()
 
         $condition = 'Search for ' . $condition;
         if (!$data['searchactive'] && !empty($results)) {
-            $seenposters = array();
-            $iconlists = array();
+            $seenposters = [];
+            $iconlists = [];
             if ($component == 'topics') {
                 foreach ($results as $key => $topic) {
                     $item = $topic;
@@ -329,7 +329,7 @@ function crispbb_user_search()
                     if (!empty($tracker)) {
                         $lastreadforum = $tracker->lastRead($item['fid']);
 
-                        $item['unreadurl'] = !empty($item['privs']['readforum']) ? xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
+                        $item['unreadurl'] = !empty($item['privs']['readforum']) ? xarController::URL('crispbb', 'user', 'display', ['tid' => $item['tid'], 'action' => 'unread']) : '';
                         // has topic been updated since this forum was marked read?
                         if ($lastreadforum < $item['ptime']) {
                             // has user read this topic since forum was marked read?
@@ -374,7 +374,7 @@ function crispbb_user_search()
                     }
                     $item['timeimage'] = $timeimage;
                     if (!empty($topic['topicicon']) && (!empty($topic['iconfolder']))) {
-                        $iconlist = array();
+                        $iconlist = [];
                         if (isset($iconlists[$item['fid']])) {
                             $iconlist = $iconlists[$item['fid']];
                         }
@@ -383,7 +383,7 @@ function crispbb_user_search()
                                 'crispbb',
                                 'user',
                                 'gettopicicons',
-                                array('iconfolder' => $topic['iconfolder'])
+                                ['iconfolder' => $topic['iconfolder']]
                             );
                             $iconlists[$item['fid']] = $iconlist;
                         }
@@ -395,12 +395,12 @@ function crispbb_user_search()
                     }
                     $results[$item['tid']] = $item;
                 }
-                $posteruids = !empty($seenposters) ? array_keys($seenposters) : array();
+                $posteruids = !empty($seenposters) ? array_keys($seenposters) : [];
                 $data['uidlist'] = $posteruids;
-                $data['posterlist'] = xarMod::apiFunc('crispbb', 'user', 'getposters', array('uidlist' => $posteruids, 'showstatus' => true));
+                $data['posterlist'] = xarMod::apiFunc('crispbb', 'user', 'getposters', ['uidlist' => $posteruids, 'showstatus' => true]);
                 $data['showforum'] = true;
             } else {
-                $seenposters = array();
+                $seenposters = [];
                 xarVar::setCached('Hooks.hitcount', 'save', true);
                 foreach ($results as $pid => $post) {
                     $item = $post;
@@ -411,26 +411,26 @@ function crispbb_user_search()
                         $seenposters[$post['powner']] = 1;
                     }
                     if ($post['firstpid'] == $pid) {
-                        $hookitem = array();
+                        $hookitem = [];
                         $hookitem['module'] = 'crispbb';
                         $hookitem['itemtype'] = $post['topicstype'];
                         $hookitem['itemid'] = $post['tid'];
                         $hookitem['tid'] = $post['tid'];
-                        $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
+                        $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', ['tid' => $item['tid'], 'startnum' => $startnum]);
                         $item['hookoutput'] = xarModHooks::call('item', 'display', $post['tid'], $hookitem);
                     } else {
-                        $hookitem = array();
+                        $hookitem = [];
                         $hookitem['module'] = 'crispbb';
                         $hookitem['itemtype'] = $post['poststype'];
                         $hookitem['itemid'] = $post['pid'];
                         $hookitem['pid'] = $post['pid'];
-                        $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
+                        $hookitem['returnurl'] = xarController::URL('crispbb', 'user', 'display', ['tid' => $item['tid'], 'startnum' => $startnum]);
                         $posthooks = xarModHooks::call('item', 'display', $post['pid'], $hookitem);
-                        $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
+                        $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : [];
                         unset($posthooks);
                     }
                     if (!empty($post['topicicon']) && (!empty($post['iconfolder']))) {
-                        $iconlist = array();
+                        $iconlist = [];
                         if (isset($iconlists[$item['fid']])) {
                             $iconlist = $iconlists[$item['fid']];
                         }
@@ -448,9 +448,9 @@ function crispbb_user_search()
                     $results[$pid] = $item;
                 }
 
-                $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
+                $uidlist = !empty($seenposters) ? array_keys($seenposters) : [];
                 $data['uidlist'] = $uidlist;
-                $data['posterlist'] = xarMod::apiFunc('crispbb', 'user', 'getposters', array('uidlist' => $uidlist, 'showstatus' => true));
+                $data['posterlist'] = xarMod::apiFunc('crispbb', 'user', 'getposters', ['uidlist' => $uidlist, 'showstatus' => true]);
             }
         }
     }
@@ -465,7 +465,7 @@ function crispbb_user_search()
     $data['q'] = !empty($q) ? $q : '';
 
     if (!empty($totalitems)) {
-        $pageargs = array();
+        $pageargs = [];
         if (!empty($q)) {
             $pageargs['q'] = $q;
         }
@@ -507,7 +507,7 @@ function crispbb_user_search()
         return xarTpl::module('crispbb', 'user', 'searchhook', $data);
     } else {
         xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Search Forums')));
-        $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('noreplies' => true, 'tstatus' => array(0,1,2,4)));
+        $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', ['noreplies' => true, 'tstatus' => [0,1,2,4]]);
         $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getmenulinks');
         $data['condition'] = xarVar::prepForDisplay(xarML($condition));
         if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', xarVar::NOT_REQUIRED)) {

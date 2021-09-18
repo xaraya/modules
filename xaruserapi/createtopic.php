@@ -30,7 +30,7 @@ function crispbb_userapi_createtopic($args)
 {
     extract($args);
 
-    $invalid = array();
+    $invalid = [];
 
     if (!isset($fid) || empty($fid) || !is_numeric($fid)) {
         $invalid[] = 'fid';
@@ -50,7 +50,7 @@ function crispbb_userapi_createtopic($args)
         }
     }
     if (!isset($topicstype) || empty($topicstype) || !is_numeric($topicstype)) {
-        $topicstype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => $fid, 'component' => 'topics'));
+        $topicstype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', ['fid' => $fid, 'component' => 'topics']);
         if (empty($topicstype)) {
             $invalid[] = 'topicstype';
         }
@@ -58,7 +58,7 @@ function crispbb_userapi_createtopic($args)
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'user', 'createtopic', 'crispBB');
+        $vars = [join(', ', $invalid), 'user', 'createtopic', 'crispBB'];
         throw new BadParameterException($vars, $msg);
         return;
     }
@@ -76,7 +76,7 @@ function crispbb_userapi_createtopic($args)
     }
 
     if (!isset($tsettings) || empty($tsettings) || !is_array($tsettings)) {
-        $tsettings = array();
+        $tsettings = [];
     }
 
     $dbconn = xarDB::getConn();
@@ -97,7 +97,7 @@ function crispbb_userapi_createtopic($args)
               )
             VALUES (?,?,?,?,?,?,?,?)";
 
-    $bindvars = array();
+    $bindvars = [];
     $bindvars[] = $nextId;
     $bindvars[] = $fid;
     $bindvars[] = $ttype;
@@ -142,18 +142,18 @@ function crispbb_userapi_createtopic($args)
             'crispbb',
             'user',
             'getitemtype',
-            array('fid' => $fid, 'component' => 'posts')
+            ['fid' => $fid, 'component' => 'posts']
         );
 
         if (!isset($psettings) || !is_array($psettings) || empty($psettings)) {
-            $psettings = array();
+            $psettings = [];
         }
 
         if (!$pid = xarMod::apiFunc(
             'crispbb',
             'user',
             'createpost',
-            array(
+            [
                 'tid' => $tid,
                 'powner' => $powner,
                 'pstatus' => $pstatus,
@@ -163,8 +163,8 @@ function crispbb_userapi_createtopic($args)
                 'ptext' => $ptext,
                 'psettings' => $psettings,
                 'fid' => $fid,
-                'tstatus' => $tstatus
-            )
+                'tstatus' => $tstatus,
+            ]
         )) {
             return;
         }
@@ -176,11 +176,11 @@ function crispbb_userapi_createtopic($args)
         'crispbb',
         'user',
         'updatetopic',
-        array(
+        [
             'tid' => $tid,
             'firstpid' => $pid,
-            'nohooks' => true
-        )
+            'nohooks' => true,
+        ]
     )) {
         return;
     }

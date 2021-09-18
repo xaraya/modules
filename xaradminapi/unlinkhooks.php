@@ -35,13 +35,13 @@ function crispbb_adminapi_unlinkhooks($args)
     $hookstable = $xartable['crispbb_hooks'];
 
     // Delete the link
-    $bindvars = array();
+    $bindvars = [];
     $query = "DELETE FROM $hookstable";
 
     if (!empty($modid)) {
         if (!is_numeric($modid)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-            $vars = array('module id', 'admin', 'unlinkhooks', 'crispbb');
+            $vars = ['module id', 'admin', 'unlinkhooks', 'crispbb'];
             throw new BadParameterException($vars, $msg);
             return;
         }

@@ -26,7 +26,7 @@ function crispbb_admin_modifyconfig()
     if (!xarSecurity::check('AdminCrispBB')) {
         return;
     }
-    $data = array();
+    $data = [];
     if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -52,7 +52,7 @@ function crispbb_admin_modifyconfig()
             'crispbb',
             'user',
             'checkupdate',
-            array('version' => $modinfo['version'])
+            ['version' => $modinfo['version']]
         );
         // set for waiting content
         if ($hasupdate) {
@@ -61,11 +61,11 @@ function crispbb_admin_modifyconfig()
     }
 
     // Add the standard module settings
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'crispbb'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'crispbb']);
     $data['module_settings']->setFieldList('use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls', 'frontend_page, backend_page');
     $data['module_settings']->getItem();
-    $invalid = array();
+    $invalid = [];
 
     switch (strtolower($phase)) {
         case 'modify':
@@ -105,13 +105,13 @@ function crispbb_admin_modifyconfig()
         $isvalid = $data['module_settings']->checkInput();
         if ($isvalid) {
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             $currentalias = xarModVars::get('crispbb', 'module_alias_name');
-            
+
             // Update the module settings
             $itemid = $data['module_settings']->updateItem();
-            
+
             $module = 'crispbb';
             $newalias = trim(xarModVars::get('crispbb', 'module_alias_name'));
             if (empty($newalias)) {
@@ -153,7 +153,7 @@ function crispbb_admin_modifyconfig()
                 'module',
                 'updateconfig',
                 'crispbb',
-                array('module' => 'crispbb')
+                ['module' => 'crispbb']
             );
             // update the status message
             xarSession::setVar('crispbb_statusmsg', xarML('Module configuration updated'));
@@ -171,12 +171,12 @@ function crispbb_admin_modifyconfig()
         'crispbb',
         'admin',
         'getmenulinks',
-        array(
+        [
             'current_module' => 'crispbb',
             'current_type' => 'admin',
             'current_func' => 'modifyconfig',
-            'current_sublink' => $sublink
-        )
+            'current_sublink' => $sublink,
+        ]
     );
 
     // Update the display controls
@@ -188,7 +188,7 @@ function crispbb_admin_modifyconfig()
     $data['showquickreply'] = xarModVars::get('crispbb', 'showquickreply');
     $data['showpermissions'] = xarModVars::get('crispbb', 'showpermissions');
     $data['showsortbox'] = xarModVars::get('crispbb', 'showsortbox');
-    
+
     // uUpdate he version check
     $data['version'] = $modinfo['version'];
     $data['newversion'] = !empty($hasupdate) ? $hasupdate : null;

@@ -66,26 +66,26 @@ function crispbb_user_moderate($args)
         'crispbb',
         'user',
         'getforums',
-        array('tstatus' => array(1,2,3,4,5), 'privcheck' => true)
+        ['tstatus' => [1,2,3,4,5], 'privcheck' => true]
     );
     if (isset($forums['error'])) {
         if ($forums['error'] == 'BAD_DATA') {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         } else {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
         }
     }
 
     $uid = xarUser::getVar('id');
     $now = time();
-    $invalid = array();
+    $invalid = [];
     $pageTitle = xarML('Moderate');
     $numitems = 10;
     $presets = xarMod::apiFunc(
         'crispbb',
         'user',
         'getpresets',
-        array('preset' => 'tstatusoptions,pstatusoptions,sortorderoptions')
+        ['preset' => 'tstatusoptions,pstatusoptions,sortorderoptions']
     );
     $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
 
@@ -103,14 +103,14 @@ function crispbb_user_moderate($args)
             if (!xarVar::fetch('tids', 'str', $tidkeys, '', xarVar::NOT_REQUIRED)) {
                 return;
             }
-            
+
             // The tids are a comma separated list, turn them into an array
             $tidkeyarray = explode(',', $tidkeys);
-            $tids = array();
+            $tids = [];
             foreach ($tidkeyarray as $key) {
                 $tids[$key] = 1;
             }
-            
+
             if ($modaction != 'move') {
                 # --------------------------------------------------------
                 # We are performing an action on a topic that is not a move
@@ -118,17 +118,17 @@ function crispbb_user_moderate($args)
                 if (!xarVar::fetch('tstatus', 'int', $tstatus, 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                $forumoptions = array();
+                $forumoptions = [];
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
                     //if (empty($fval['modforumurl'])) continue;
                     if (empty($fid)) {
                         $fid = $fkey;
                     }
-                    $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
+                    $forumoptions[$fkey] = ['id' => $fkey, 'name' => $fval['fname']];
                 }
                 if (empty($forumoptions[$fid])) {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                 }
                 $data = $forums[$fid];
 
@@ -136,8 +136,8 @@ function crispbb_user_moderate($args)
                     # --------------------------------------------------------
                     # Check for valid data for the current action
 #
-                    $seentids = !empty($tids) ? array_keys($tids) : array();
-                    
+                    $seentids = !empty($tids) ? array_keys($tids) : [];
+
                     if (empty($seentids) || !is_array($seentids)) {
                         $invalid['tids'] = xarML('No topics selected for this action');
                     }
@@ -145,7 +145,7 @@ function crispbb_user_moderate($args)
                         'crispbb',
                         'user',
                         'gettopics',
-                        array('tid' => $seentids, 'fid' => $fid, 'numsubs' => true)
+                        ['tid' => $seentids, 'fid' => $fid, 'numsubs' => true]
                     );
 
                     if (empty($topics)) {
@@ -163,7 +163,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $tcheck, 'priv' => 'closetopics')
+                                    ['check' => $tcheck, 'priv' => 'closetopics']
                                 )) {
                                     $allowed = false;
                                 }
@@ -173,7 +173,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $tcheck, 'priv' => 'approvetopics')
+                                    ['check' => $tcheck, 'priv' => 'approvetopics']
                                 )) {
                                     $allowed = false;
                                 }
@@ -187,7 +187,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $tcheck, 'priv' => 'locktopics')
+                                    ['check' => $tcheck, 'priv' => 'locktopics']
                                 )) {
                                     $allowed = false;
                                 }
@@ -198,7 +198,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $tcheck, 'priv' => 'deletetopics')
+                                    ['check' => $tcheck, 'priv' => 'deletetopics']
                                 )) {
                                     $allowed = false;
                                 }
@@ -208,7 +208,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $tcheck, 'priv' => 'editforum')
+                                    ['check' => $tcheck, 'priv' => 'editforum']
                                 )) {
                                     $allowed = false;
                                 }
@@ -218,7 +218,7 @@ function crispbb_user_moderate($args)
 
                     // A failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                     }
 
                     if (empty($invalid)) {
@@ -241,7 +241,7 @@ function crispbb_user_moderate($args)
                         if (!xarSec::confirmAuthKey()) {
                             return;
                         }
-                        $seenposters = array();
+                        $seenposters = [];
                         // Perform the action on each topic in turn
                         foreach ($topics as $tid => $topic) {
                             switch ($modaction) {
@@ -250,11 +250,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => 0,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -264,11 +264,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => 1,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -278,11 +278,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => 0,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -291,32 +291,32 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'getposts',
-                                        array(
+                                        [
                                             'numitems' => 1,
                                             'fid' => $topic['fid'],
                                             'sort' => 'ptime',
                                             'order' => 'DESC',
-                                            'tstatus' => array(0,1,2,4),
-                                            'pstatus' => 0
-                                    )
+                                            'tstatus' => [0,1,2,4],
+                                            'pstatus' => 0,
+                                    ]
                                     );
-                                    $lasttopic = !empty($lasttopic) && is_array($lasttopic) ? reset($lasttopic) : array();
+                                    $lasttopic = !empty($lasttopic) && is_array($lasttopic) ? reset($lasttopic) : [];
                                     if (!xarMod::apiFunc(
                                         'crispbb',
                                         'admin',
                                         'update',
-                                        array(
+                                        [
                                             'fid' => $topic['fid'],
                                             'lasttid' => $lasttopic['tid'],
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
                                     if ($lasttopic['tid'] == $topic['tid']) {
                                         // Update the forum tracker
                                         $fstring = xarModVars::get('crispbb', 'ftracking');
-                                        $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
+                                        $ftracking = (!empty($fstring)) ? unserialize($fstring) : [];
                                         $ftracking[$topic['fid']] = $topic['ptime'];
                                         xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
                                     }
@@ -327,11 +327,11 @@ function crispbb_user_moderate($args)
                                                 'crispsubs',
                                                 'user',
                                                 'createhook',
-                                                array(
+                                                [
                                                     'modname' => 'crispbb',
                                                     'itemtype' => $topic['topicstype'],
-                                                    'objectid' => $tid
-                                                )
+                                                    'objectid' => $tid,
+                                                ]
                                             );
                                         }
                                     }
@@ -352,11 +352,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => 0,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -366,11 +366,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => 4,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -384,12 +384,12 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => 5,
                                             'tsettings' => $tsettings,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -407,11 +407,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatetopic',
-                                        array(
+                                        [
                                             'tid' => $topic['tid'],
                                             'tstatus' => $oldtstatus,
-                                            'nohooks' => true
-                                        )
+                                            'nohooks' => true,
+                                        ]
                                     )) {
                                         return;
                                     }
@@ -422,8 +422,8 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'admin',
                                         'deletetopic',
-                                        array(
-                                            'tid' => $topic['tid'])
+                                        [
+                                            'tid' => $topic['tid'], ]
                                     )) {
                                         return;
                                     }
@@ -439,7 +439,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'updateposter',
-                                    array('uid' => $seenuid)
+                                    ['uid' => $seenuid]
                                 )) {
                                     return;
                                 }
@@ -450,25 +450,25 @@ function crispbb_user_moderate($args)
                             'crispbb',
                             'user',
                             'getposts',
-                            array(
+                            [
                                 'fid' => $fid,
-                                'tstatus' => array(0,1,2,4),
-                                'pstatus' => array(0),
+                                'tstatus' => [0,1,2,4],
+                                'pstatus' => [0],
                                 'sort' => 'ptime',
                                 'order' => 'DESC',
                                 'numitems' => 1,
-                        )
+                        ]
                         );
-                        $lastpost = !empty($lastpost) ? reset($lastpost) : array();
+                        $lastpost = !empty($lastpost) ? reset($lastpost) : [];
                         if (!xarMod::apiFunc(
                             'crispbb',
                             'admin',
                             'update',
-                            array(
+                            [
                                 'fid' => $fid,
                                 'lasttid' => !empty($lastpost['tid']) ? $lastpost['tid'] : 0,
-                                'nohooks' => true
-                            )
+                                'nohooks' => true,
+                            ]
                         )) {
                             return;
                         }
@@ -482,14 +482,14 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'display',
-                                    array('tid' => $seentids[0])
+                                    ['tid' => $seentids[0]]
                                 );
                             } else {
                                 $return_url = xarController::URL(
                                     'crispbb',
                                     'user',
                                     'moderate',
-                                    array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus)
+                                    ['component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus]
                                 );
                             }
                         }
@@ -502,7 +502,7 @@ function crispbb_user_moderate($args)
                         'crispbb',
                         'user',
                         'moderate',
-                        array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus)
+                        ['component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus]
                     ));
                 }
                 // Pass the data to the form template
@@ -511,7 +511,7 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'gettopics',
-                    array(
+                    [
                         'tstatus'  => $tstatus,
                         'fid'      => $fid,
                         'numitems' => $numitems,
@@ -520,17 +520,17 @@ function crispbb_user_moderate($args)
                         'order'    => strtoupper($order),
                         'numsubs'  => true,
                         'numdels'  => true,
-                    )
+                    ]
                 );
-                $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'fid' => $fid));
+                $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', ['tstatus' => $tstatus, 'fid' => $fid]);
                 $data['pager'] = xarTplPager::getPager(
                     $startnum,
                     $data['totaltopics'],
-                    xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    xarController::URL('crispbb', 'user', 'moderate', ['component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order]),
                     $numitems
                 );
-                $modactions = array();
-                $check = array();
+                $modactions = [];
+                $check = [];
                 $check['fid'] = $data['fid'];
                 $check['catid'] = $data['catid'];
                 $check['fstatus'] = $data['fstatus'];
@@ -543,12 +543,12 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'closetopics')
+                    ['check' => $check, 'priv' => 'closetopics']
                 )) {
                     if ($tstatus == 1) {
-                        $modactions[] = array('id' => 'open', 'name' => xarML('Open'));
+                        $modactions[] = ['id' => 'open', 'name' => xarML('Open')];
                     } elseif ($tstatus < 3) {
-                        $modactions[] = array('id' => 'close', 'name' => xarML('Close'));
+                        $modactions[] = ['id' => 'close', 'name' => xarML('Close')];
                     }
                 } else {
                     unset($tstatusoptions[1]);
@@ -558,10 +558,10 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'approvetopics')
+                    ['check' => $check, 'priv' => 'approvetopics']
                 )) {
                     if ($tstatus == 2) {
-                        $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
+                        $modactions[] = ['id' => 'approve', 'name' => xarML('Approve')];
                     }
                 } else {
                     unset($tstatusoptions[2]);
@@ -571,10 +571,10 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'movetopics')
+                    ['check' => $check, 'priv' => 'movetopics']
                 )) {
                     if ($tstatus != 5 && $tstatus != 3) {
-                        $modactions[] = array('id' => 'move', 'name' => xarML('Move'));
+                        $modactions[] = ['id' => 'move', 'name' => xarML('Move')];
                     }
                 } else {
                     unset($tstatusoptions[3]);
@@ -584,12 +584,12 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'locktopics')
+                    ['check' => $check, 'priv' => 'locktopics']
                 )) {
                     if ($tstatus == 4) {
-                        $modactions[] = array('id' => 'unlock', 'name' => xarML('Unlock'));
+                        $modactions[] = ['id' => 'unlock', 'name' => xarML('Unlock')];
                     } elseif ($tstatus != 5 && $tstatus != 3) {
-                        $modactions[] = array('id' => 'lock', 'name' => xarML('Lock'));
+                        $modactions[] = ['id' => 'lock', 'name' => xarML('Lock')];
                     }
                 } else {
                     unset($tstatusoptions[4]);
@@ -599,12 +599,12 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'deletetopics')
+                    ['check' => $check, 'priv' => 'deletetopics']
                 )) {
                     if ($tstatus == 5) {
-                        $modactions[] = array('id' => 'undelete', 'name' => xarML('Un-delete'));
+                        $modactions[] = ['id' => 'undelete', 'name' => xarML('Un-delete')];
                     } else {
-                        $modactions[] = array('id' => 'delete', 'name' => xarML('Delete'));
+                        $modactions[] = ['id' => 'delete', 'name' => xarML('Delete')];
                     }
                 } else {
                     unset($tstatusoptions[5]);
@@ -614,9 +614,9 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'editforum')
+                    ['check' => $check, 'priv' => 'editforum']
                 )) {
-                    $modactions[] = array('id' => 'purge', 'name' => xarML('Purge'));
+                    $modactions[] = ['id' => 'purge', 'name' => xarML('Purge')];
                 }
                 $data['tids'] = $tidkeys;
                 $data['modactions'] = $modactions;
@@ -639,7 +639,7 @@ function crispbb_user_moderate($args)
                 if (!xarVar::fetch('shadow', 'checkbox', $shadow, false, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                $forumoptions = array();
+                $forumoptions = [];
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
                     if (empty($fval['privs']['movetopics'])) {
@@ -648,21 +648,21 @@ function crispbb_user_moderate($args)
                     if (empty($fid)) {
                         $fid = $fkey;
                     }
-                    $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
+                    $forumoptions[$fkey] = ['id' => $fkey, 'name' => $fval['fname']];
                 }
                 if (empty($forumoptions[$fid]) || (!empty($movefid) && empty($forumoptions[$movefid]))) {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                 }
                 $data = $forums[$fid];
 
-                $seentids = !empty($tids) ? array_keys($tids) : array();
+                $seentids = !empty($tids) ? array_keys($tids) : [];
 
                 if (!empty($seentids) && is_array($seentids)) {
                     $topics = xarMod::apiFunc(
                         'crispbb',
                         'user',
                         'gettopics',
-                        array('tid' => $seentids)
+                        ['tid' => $seentids]
                     );
                 }
                 if (empty($topics)) {
@@ -696,7 +696,7 @@ function crispbb_user_moderate($args)
                     $allowed = true;
                     // check permissions
                     if ($mergetid && !empty($movetid)) { // check against topic we're merging with
-                        $checkt = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $movetid, 'privcheck' => true));
+                        $checkt = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $movetid, 'privcheck' => true]);
                         if ($checkt == 'NO_PRIVILEGES') {
                             $allowed = false;
                         } else {
@@ -704,13 +704,13 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'checkseclevel',
-                                array('check' => $checkt, 'priv' => 'movetopics')
+                                ['check' => $checkt, 'priv' => 'movetopics']
                             )) {
                                 $allowed = false;
                             }
                         }
                     } elseif (!empty($movefid) && $movefid != $fid) {
-                        $checkf = !empty($forums[$movefid]) ? $forums[$movefid] : array();
+                        $checkf = !empty($forums[$movefid]) ? $forums[$movefid] : [];
                         if (empty($checkf)) {
                             $allowed = false;
                         } else {
@@ -719,7 +719,7 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'checkseclevel',
-                                array('check' => $checkf, 'priv' => 'movetopics')
+                                ['check' => $checkf, 'priv' => 'movetopics']
                             )) {
                                 $allowed = false;
                             }
@@ -728,7 +728,7 @@ function crispbb_user_moderate($args)
 
                     // A failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                     }
 
                     if (empty($invalid)) {
@@ -744,8 +744,8 @@ function crispbb_user_moderate($args)
                             $data['mergetid'] = $mergetid;
                             $data['shadow'] = $shadow;
                             $data['movetid'] = $movetid;
-                            $data['targettid'] = !empty($checkt) ? $checkt : array();
-                            $data['targetfid'] = !empty($checkf) ? $checkf : array();
+                            $data['targettid'] = !empty($checkt) ? $checkt : [];
+                            $data['targetfid'] = !empty($checkf) ? $checkf : [];
                             $data['shadow'] = $shadow;
                             $data['component'] = $component;
                             $data['pageTitle'] = xarML('Confirm Action');
@@ -756,7 +756,7 @@ function crispbb_user_moderate($args)
                         # Finally, perform the requested action
 #
                         if (!xarSec::confirmAuthKey()) {
-                            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                         }
 
                         if ($mergetid) {
@@ -767,12 +767,12 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'getposts',
-                                array(
+                                [
                                     'tid' => $seentids,
-                                    'pstatus' => array(0,1),
+                                    'pstatus' => [0,1],
                                     'sort' => 'ptime',
-                                    'order' => 'ASC'
-                                )
+                                    'order' => 'ASC',
+                                ]
                             );
                             // Can't have posts with times older than the topic start
                             $mintime = $target['ttime'];
@@ -792,31 +792,31 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'updatepost',
-                                    array(
+                                    [
                                         'pid' => $newpost['pid'],
                                         'tid' => $target['tid'],
                                         'ptime' => $newpost['ptime'],
                                         'poststype' => $newpost['poststype'],
-                                        'nohooks' => true
-                                    )
+                                        'nohooks' => true,
+                                    ]
                                 )) {
                                     return;
                                 }
                                 $mintime = $newpost['ptime'];
                             }
                             // get the lastpost for the topic we merged into
-                            $lastpost = xarMod::apiFunc('crispbb', 'user', 'getposts', array('tid' => $target['tid'], 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1));
-                            $lastpost = !empty($lastpost) ? reset($lastpost) : array();
+                            $lastpost = xarMod::apiFunc('crispbb', 'user', 'getposts', ['tid' => $target['tid'], 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1]);
+                            $lastpost = !empty($lastpost) ? reset($lastpost) : [];
                             // update the lastpid
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'updatetopic',
-                                array(
+                                [
                                     'tid' => $lastpost['tid'],
                                     'lastpid' => $lastpost['pid'],
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
@@ -824,57 +824,57 @@ function crispbb_user_moderate($args)
                             foreach ($topics as $tid => $topic) {
                                 // mark topic merged
                                 $tsettings = $data['tsettings'];
-                                $merged = array(
+                                $merged = [
                                     'tid' => $target['tid'],
                                     'time' => $now,
                                     'by' => $uid,
-                                    'nohooks' => true
-                                    );
+                                    'nohooks' => true,
+                                    ];
                                 $tsettings['merged'][] = $merged;
                                 // TODO: really these should be purged, need admin privs for that though
                                 if (!xarMod::apiFunc(
                                     'crispbb',
                                     'user',
                                     'updatetopic',
-                                    array(
+                                    [
                                         'tid' => $topic['tid'],
                                         'tstatus' => 9, // for now set an unused tstatus
                                         'tsettings' => $tsettings,
-                                        'nohooks' => true
-                                    )
+                                        'nohooks' => true,
+                                    ]
                                 )) {
                                     return;
                                 }
                             }
                             // Get the last reply in the forum topics were moved from
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $fid, 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $fid, 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             // update the forum the topics were moved from
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid' => $fid,
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             // Get the last reply in the forum topics were moved to
-                            $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+                            $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lastreply = !empty($lastreply) ? reset($lastreply) : [];
                             // update the forum the topics were moved to
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid' => $target['fid'],
                                     'lasttid' => !empty($lastreply['tid']) ? $lastreply['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
@@ -883,10 +883,10 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'moderate',
-                                    array(
+                                    [
                                         'component' => 'topics',
                                         'fid' => $fid,
-                                    )
+                                    ]
                                 );
                             }
                             return xarController::redirect($return_url);
@@ -895,29 +895,29 @@ function crispbb_user_moderate($args)
                             $target = $checkf;
                             foreach ($topics as $tid => $topic) {
                                 $tsettings = $topic['tsettings'];
-                                $moved = array(
+                                $moved = [
                                     'tid' => $tid,
                                     'tofid' => $target['fid'],
                                     'fromfid' => $topic['fid'],
                                     'time' => $now,
-                                    'by' => $uid
-                                    );
+                                    'by' => $uid,
+                                    ];
                                 $tsettings['moved'][] = $moved;
                                 if (!xarMod::apiFunc(
                                     'crispbb',
                                     'user',
                                     'updatetopic',
-                                    array(
+                                    [
                                         'tid' => $topic['tid'],
                                         'tsettings' => $tsettings,
                                         'fid' => $target['fid'],
-                                        'nohooks' => true
-                                    )
+                                        'nohooks' => true,
+                                    ]
                                 )) {
                                     return;
                                 }
                                 if ($shadow) {
-                                    $item = array();
+                                    $item = [];
                                     $item['fid'] = $topic['fid'];
                                     $item['ttitle'] = xarML('Moved --- #(1)', $topic['ttitle']);
                                     $item['pdesc'] = $topic['pdesc'];
@@ -933,42 +933,42 @@ function crispbb_user_moderate($args)
                                     // creating a shadow updates the forum last tid, this may be wrong
                                     // the forum update will rectify that, but we need to reset the tracker
                                     $fstring = xarModVars::get('crispbb', 'ftracking');
-                                    $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
+                                    $ftracking = (!empty($fstring)) ? unserialize($fstring) : [];
                                     $ftracking[$topic['fid']] = $tracker->lastUpdate($topic['fid']);
                                     xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
                                 }
                             }
-                            
+
                             // Get the last reply in the forum topics were moved from
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $fid, 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $fid, 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             // update the forum the topics were moved from
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid' => $fid,
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
-                                
+
                             // Get the last reply in the forum topics were moved to
-                            $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+                            $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lastreply = !empty($lastreply) ? reset($lastreply) : [];
                             // update the forum the topics were moved from
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid' => $target['fid'],
                                     'lasttid' => !empty($lastreply['tid']) ? $lastreply['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
@@ -977,10 +977,10 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'moderate',
-                                    array(
+                                    [
                                         'component' => 'topics',
                                         'fid' => $fid,
-                                    )
+                                    ]
                                 );
                             }
                             return xarController::redirect($return_url);
@@ -993,28 +993,28 @@ function crispbb_user_moderate($args)
                         'crispbb',
                         'user',
                         'gettopics',
-                        array(
+                        [
                             'fid' => $movefid,
                             'numitems' => $numitems,
                             'startnum' => $startnum,
-                            'tstatus' => array(0,1,2,4),
+                            'tstatus' => [0,1,2,4],
                             'sort' => $sort,
                             'order' => $order,
-                        )
+                        ]
                     );
                     $data['fnumtopics'] = xarMod::apiFunc(
                         'crispbb',
                         'user',
                         'counttopics',
-                        array(
+                        [
                             'fid' => $movefid,
-                            'tstatus' => array(0,1,2,4),
-                        )
+                            'tstatus' => [0,1,2,4],
+                        ]
                     );
                     $data['pager'] = xarTplPager::getPager(
                         $startnum,
                         $data['fnumtopics'],
-                        xarController::URL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
+                        xarController::URL('crispbb', 'user', 'moderate', ['component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%']),
                         $numitems
                     );
                 }
@@ -1047,7 +1047,7 @@ function crispbb_user_moderate($args)
 
             // The pids are a comma separated list, turn them into an array
             $pidkeyarray = explode(',', $pidkeys);
-            $pids = array();
+            $pids = [];
             foreach ($pidkeyarray as $key) {
                 $pids[$key] = 1;
             }
@@ -1056,9 +1056,9 @@ function crispbb_user_moderate($args)
                 'crispbb',
                 'user',
                 'gettopic',
-                array('tid' => $tid, 'privcheck' => true, 'numsubs' => true)
+                ['tid' => $tid, 'privcheck' => true, 'numsubs' => true]
             );
-                
+
             // Send the topic data we are coming from to the template
             $data['fromtid'] = $data['tid'];
             $data['fromttitle'] = $data['ttitle'];
@@ -1068,21 +1068,21 @@ function crispbb_user_moderate($args)
             }
             if (!is_array($data)) {
                 if ($data == 'BAD_DATA') {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                 } else {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                 }
             }
-            $forumoptions = array();
+            $forumoptions = [];
             //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
             foreach ($forums as $fkey => $fval) {
                 if (empty($fval['modforumurl'])) {
                     continue;
                 }
-                $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
+                $forumoptions[$fkey] = ['id' => $fkey, 'name' => $fval['fname']];
             }
             if (empty($forumoptions[$data['fid']])) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
             }
 
             if (empty($pids)) {
@@ -1097,7 +1097,7 @@ function crispbb_user_moderate($args)
                 }
                 if ($phase == 'update') {
                     // do validations for current action
-                    $seenpids = array();
+                    $seenpids = [];
                     if (!empty($pids) && is_array($pids)) {
                         foreach ($pids as $seenpid => $checked) {
                             if (empty($seenpid) || empty($checked)) {
@@ -1105,7 +1105,7 @@ function crispbb_user_moderate($args)
                             }
                             $seenpids[$seenpid] = 1;
                         }
-                        $seenpids = !empty($seenpids) ? array_keys($seenpids) : array();
+                        $seenpids = !empty($seenpids) ? array_keys($seenpids) : [];
                     }
                     if (empty($seenpids) || !is_array($seenpids)) {
                         $invalid['pids'] = xarML('No posts selected for this action');
@@ -1114,7 +1114,7 @@ function crispbb_user_moderate($args)
                         'crispbb',
                         'user',
                         'getposts',
-                        array('pid' => $seenpids, 'tid' => $tid)
+                        ['pid' => $seenpids, 'tid' => $tid]
                     );
 
                     if (empty($posts)) {
@@ -1131,7 +1131,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $pcheck, 'priv' => 'approvereplies')
+                                    ['check' => $pcheck, 'priv' => 'approvereplies']
                                 )) {
                                     $allowed = false;
                                 }
@@ -1145,7 +1145,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $pcheck, 'priv' => 'deletereplies')
+                                    ['check' => $pcheck, 'priv' => 'deletereplies']
                                 )) {
                                     $allowed = false;
                                 }
@@ -1155,7 +1155,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'checkseclevel',
-                                    array('check' => $pcheck, 'priv' => 'editforum')
+                                    ['check' => $pcheck, 'priv' => 'editforum']
                                 )) {
                                     $allowed = false;
                                 }
@@ -1165,7 +1165,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                     }
 
                     if (empty($invalid)) {
@@ -1185,9 +1185,9 @@ function crispbb_user_moderate($args)
                         # Finally, perform the requested action
 #
                         if (!xarSec::confirmAuthKey()) {
-                            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                         }
-                        $seenposters = array();
+                        $seenposters = [];
                         // perform action on each post in turn
                         foreach ($posts as $pid => $post) {
                             switch ($modaction) {
@@ -1197,11 +1197,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatepost',
-                                        array(
+                                        [
                                             'pid' => $post['pid'],
                                             'pstatus' => 0,
-                                            'nohooks' => true
-                                    )
+                                            'nohooks' => true,
+                                    ]
                                     )) {
                                         return;
                                     }
@@ -1212,19 +1212,19 @@ function crispbb_user_moderate($args)
                                             'crispbb',
                                             'user',
                                             'getitemtype',
-                                            array('fid' => $post['fid'], 'componenent' => 'topics')
+                                            ['fid' => $post['fid'], 'componenent' => 'topics']
                                         );
                                         if (xarModHooks::isHooked('crispsubs', 'crispbb', $topicstype)) {
                                             xarMod::apiFunc(
                                                 'crispsubs',
                                                 'user',
                                                 'updatehook',
-                                                array(
+                                                [
                                                     'modname' => 'crispbb',
                                                     'itemtype' => $topicstype,
                                                     'objectid' => $post['tid'],
-                                                    'objecturl' => $post['viewreplyurl']
-                                                )
+                                                    'objecturl' => $post['viewreplyurl'],
+                                                ]
                                             );
                                         }
                                     }
@@ -1234,11 +1234,11 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'user',
                                         'updatepost',
-                                        array(
+                                        [
                                             'pid' => $post['pid'],
                                             'pstatus' => 5,
-                                            'nohooks' => true
-                                    )
+                                            'nohooks' => true,
+                                    ]
                                     )) {
                                         return;
                                     }
@@ -1248,9 +1248,9 @@ function crispbb_user_moderate($args)
                                         'crispbb',
                                         'admin',
                                         'deletepost',
-                                        array(
-                                            'pid' => $post['pid']
-                                    )
+                                        [
+                                            'pid' => $post['pid'],
+                                    ]
                                     )) {
                                         return;
                                     }
@@ -1266,7 +1266,7 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'updateposter',
-                                    array('uid' => $seenuid)
+                                    ['uid' => $seenuid]
                                 )) {
                                     return;
                                 }
@@ -1277,25 +1277,25 @@ function crispbb_user_moderate($args)
                             'crispbb',
                             'user',
                             'getposts',
-                            array(
+                            [
                                 'tid' => $tid,
                                 'sort' => 'ptime',
                                 'order' => 'desc',
-                                'tstatus' => array(0,1,2,4),
+                                'tstatus' => [0,1,2,4],
                                 'pstatus' => 0,
-                                'numitems' => 1
-                        )
+                                'numitems' => 1,
+                        ]
                         );
-                        $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+                        $lastreply = !empty($lastreply) ? reset($lastreply) : [];
                         if (!xarMod::apiFunc(
                             'crispbb',
                             'user',
                             'updatetopic',
-                            array(
+                            [
                                 'tid' => $tid,
                                 'lastpid' => $lastreply['pid'],
-                                'nohooks' => true
-                            )
+                                'nohooks' => true,
+                            ]
                         )) {
                             return;
                         }
@@ -1304,36 +1304,36 @@ function crispbb_user_moderate($args)
                             'crispbb',
                             'user',
                             'getposts',
-                            array(
+                            [
                                 'fid' => $data['fid'],
                                 'sort' => 'ptime',
                                 'order' => 'desc',
-                                'tstatus' => array(0,1,2,4),
+                                'tstatus' => [0,1,2,4],
                                 'numitems' => 1,
-                                'pstatus' => 0
-                        )
+                                'pstatus' => 0,
+                        ]
                         );
-                        $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                        $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                         if (!xarMod::apiFunc(
                             'crispbb',
                             'admin',
                             'update',
-                            array(
+                            [
                                 'fid' => $data['fid'],
                                 'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                'nohooks' => true
-                            )
+                                'nohooks' => true,
+                            ]
                         )) {
                             return;
                         }
                         if (empty($return_url)) {
-                            $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
+                            $return_url = xarController::URL('crispbb', 'user', 'display', ['tid' => $tid]);
                         }
                         xarController::redirect($return_url);
                         return true;
                     }
                 }
-                $pstatuses = array(0);
+                $pstatuses = [0];
                 if (!empty($data['privs']['approvereplies'])) {
                     $pstatuses[] = 2;
                 }
@@ -1344,16 +1344,16 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'getposts',
-                    array(
+                    [
                         'tid' => $tid,
                         'sort' => $sort,
                         'order' => $order,
                         'pstatus' => $pstatus,
                         'startnum' => $startnum,
-                        'numitems' => $numitems
-                    )
+                        'numitems' => $numitems,
+                    ]
                 );
-                $seenposters = array();
+                $seenposters = [];
                 foreach ($posts as $apid => $apost) {
                     $item = $apost;
                     if (!empty($apost['towner'])) {
@@ -1370,11 +1370,11 @@ function crispbb_user_moderate($args)
                     $posts[$apid] = $item;
                 }
                 $data['posts'] = $posts;
-                $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
-                $posterlist = xarMod::apiFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
+                $uidlist = !empty($seenposters) ? array_keys($seenposters) : [];
+                $posterlist = xarMod::apiFunc('roles', 'user', 'getall', ['uidlist' => $uidlist]);
                 $data['posterlist'] = $posterlist;
                 $data['uidlist'] = $uidlist;
-                $modactions = array();
+                $modactions = [];
                 $check = $data;
                 $pstatusoptions = $presets['pstatusoptions'];
                 // topic approvers
@@ -1382,10 +1382,10 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'approvereplies')
+                    ['check' => $check, 'priv' => 'approvereplies']
                 )) {
                     if ($pstatus == 2) {
-                        $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
+                        $modactions[] = ['id' => 'approve', 'name' => xarML('Approve')];
                     }
                 } else {
                     unset($pstatusoptions[2]);
@@ -1395,9 +1395,9 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'splittopics')
+                    ['check' => $check, 'priv' => 'splittopics']
                 )) {
-                    $modactions[] = array('id' => 'split', 'name' => xarML('Split'));
+                    $modactions[] = ['id' => 'split', 'name' => xarML('Split')];
                 } else {
                     unset($pstatusoptions[5]);
                 }
@@ -1406,12 +1406,12 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'deletetopics')
+                    ['check' => $check, 'priv' => 'deletetopics']
                 )) {
                     if ($pstatus != 5) {
-                        $modactions[] = array('id' => 'delete', 'name' => xarML('Delete'));
+                        $modactions[] = ['id' => 'delete', 'name' => xarML('Delete')];
                     } else {
-                        $modactions[] = array('id' => 'undelete', 'name' => xarML('Un-delete'));
+                        $modactions[] = ['id' => 'undelete', 'name' => xarML('Un-delete')];
                     }
                 } else {
                     unset($pstatusoptions[5]);
@@ -1421,29 +1421,29 @@ function crispbb_user_moderate($args)
                     'crispbb',
                     'user',
                     'checkseclevel',
-                    array('check' => $check, 'priv' => 'editforum')
+                    ['check' => $check, 'priv' => 'editforum']
                 )) {
-                    $modactions[] = array('id' => 'purge', 'name' => xarML('Purge'));
+                    $modactions[] = ['id' => 'purge', 'name' => xarML('Purge')];
                 }
                 $data['modactions'] = $modactions;
                 $data['pstatusoptions'] = $pstatusoptions;
                 $data['pstatus'] = $pstatus;
                 $data['layout'] = $layout;
-                $data['layouts'] = array(
-                    array('id' => 'list', 'name' => xarML('List View')),
-                    array('id' => 'replies', 'name' => xarML('Show Replies'))
-                    );
-                $data['psortfields'] = array(
-                    array('id' => 'pid', 'name' => xarML('Post Id')),
-                    array('id' => 'ptime', 'name' => xarML('Post Time')),
-                    array('id' => 'powner', 'name' => xarML('Poster Name'))
-                    );
+                $data['layouts'] = [
+                    ['id' => 'list', 'name' => xarML('List View')],
+                    ['id' => 'replies', 'name' => xarML('Show Replies')],
+                    ];
+                $data['psortfields'] = [
+                    ['id' => 'pid', 'name' => xarML('Post Id')],
+                    ['id' => 'ptime', 'name' => xarML('Post Time')],
+                    ['id' => 'powner', 'name' => xarML('Poster Name')],
+                    ];
                 $data['sortorders'] = $presets['sortorderoptions'];
-                $data['totalposts'] = xarMod::apiFunc('crispbb', 'user', 'countposts', array('pstatus' => $pstatus, 'tid' => $tid));
+                $data['totalposts'] = xarMod::apiFunc('crispbb', 'user', 'countposts', ['pstatus' => $pstatus, 'tid' => $tid]);
                 $data['pager'] = xarTplPager::getPager(
                     $startnum,
                     $data['totalposts'],
-                    xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    xarController::URL('crispbb', 'user', 'moderate', ['component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order]),
                     $numitems
                 );
             # --------------------------------------------------------
@@ -1466,7 +1466,7 @@ function crispbb_user_moderate($args)
                     return;
                 }
 
-                $forumoptions = array();
+                $forumoptions = [];
                 //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
                 foreach ($forums as $fkey => $fval) {
                     if (empty($mergetid)) {
@@ -1478,13 +1478,13 @@ function crispbb_user_moderate($args)
                             continue;
                         }
                     }
-                    $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
+                    $forumoptions[$fkey] = ['id' => $fkey, 'name' => $fval['fname']];
                 }
                 if (empty($forumoptions[$data['fid']]) || (!empty($movefid) && empty($forumoptions[$movefid]))) {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                 }
 
-                $seenpids = array();
+                $seenpids = [];
                 if (!empty($pids) && is_array($pids)) {
                     foreach ($pids as $seenpid => $checked) {
                         if (empty($seenpid) || empty($checked)) {
@@ -1492,7 +1492,7 @@ function crispbb_user_moderate($args)
                         }
                         $seenpids[$seenpid] = 1;
                     }
-                    $seenpids = !empty($seenpids) ? array_keys($seenpids) : array();
+                    $seenpids = !empty($seenpids) ? array_keys($seenpids) : [];
                 }
 
                 if (!empty($seenpids) && is_array($seenpids)) {
@@ -1500,7 +1500,7 @@ function crispbb_user_moderate($args)
                         'crispbb',
                         'user',
                         'getposts',
-                        array('pid' => $seenpids, 'tid' => $tid)
+                        ['pid' => $seenpids, 'tid' => $tid]
                     );
                 }
 
@@ -1539,7 +1539,7 @@ function crispbb_user_moderate($args)
                     $allowed = true;
                     // check permissions
                     if ($mergetid && !empty($movetid)) { // check against topic we're merging with
-                        $checkt = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $movetid, 'privcheck' => true));
+                        $checkt = xarMod::apiFunc('crispbb', 'user', 'gettopic', ['tid' => $movetid, 'privcheck' => true]);
                         if ($checkt == 'NO_PRIVILEGES') {
                             $allowed = false;
                         } else {
@@ -1547,13 +1547,13 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'checkseclevel',
-                                array('check' => $checkt, 'priv' => 'movetopics')
+                                ['check' => $checkt, 'priv' => 'movetopics']
                             )) {
                                 $allowed = false;
                             }
                         }
                     } elseif (!empty($movefid)) {
-                        $checkf = !empty($forums[$movefid]) ? $forums[$movefid] : array();
+                        $checkf = !empty($forums[$movefid]) ? $forums[$movefid] : [];
                         if (empty($checkf)) {
                             $allowed = false;
                         } else {
@@ -1562,7 +1562,7 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'checkseclevel',
-                                array('check' => $checkf, 'priv' => 'movetopics')
+                                ['check' => $checkf, 'priv' => 'movetopics']
                             )) {
                                 $allowed = false;
                             }
@@ -1571,7 +1571,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'no_privileges'));
+                        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'no_privileges']);
                     }
                     if (empty($invalid)) {
                         if (!$confirm) {
@@ -1587,8 +1587,8 @@ function crispbb_user_moderate($args)
 //                            $data['movetid'] = $movetid;
                             $data['ttitle'] = $ttitle;
                             $data['pdesc'] = $pdesc;
-                            $data['targettid'] = !empty($checkt) ? $checkt : array();
-                            $data['targetfid'] = !empty($checkf) ? $checkf : array();
+                            $data['targettid'] = !empty($checkt) ? $checkt : [];
+                            $data['targetfid'] = !empty($checkf) ? $checkf : [];
                             $data['component'] = $component;
                             $data['pageTitle'] = xarML('Confirm Action');
                             $data['return_url'] = $return_url;
@@ -1598,7 +1598,7 @@ function crispbb_user_moderate($args)
                         # Finally, perform the requested action
 #
                         if (!xarSec::confirmAuthKey()) {
-                            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                         }
 
                         if ($mergetid) {
@@ -1611,25 +1611,25 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'getpost',
-                                array(
+                                [
                                     'pid' => array_keys($posts),
                                     'sort' => 'ptime',
-                                    'order' => 'ASC'
-                                )
+                                    'order' => 'ASC',
+                                ]
                             );
-                                
+
                             // Get all the posts in the current topic later than the first one
                             $newposts = xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'getlaterposts',
-                                array(
+                                [
                                     'tid'         => $firstpost['tid'],
                                     'ts'          => $firstpost['ptime'],
-                                    'include_ts'  => 1
-                                )
+                                    'include_ts'  => 1,
+                                ]
                             );
-                            
+
                             // Check that we don't have posts with times older than the topic start
                             $mintime = $target['ttime'];
                             foreach ($newposts as $newpid => $newpost) {
@@ -1648,106 +1648,106 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'updatepost',
-                                    array(
+                                    [
                                         'pid' => $newpost['id'],
                                         'tid' => $target['tid'],
                                         'ptime' => $newpost['ptime'],
                                         'poststype' => $newpost['poststype'],
-                                        'nohooks' => true
-                                    )
+                                        'nohooks' => true,
+                                    ]
                                 )) {
                                     return;
                                 }
                                 $mintime = $newpost['ptime'];
                             }
-                            
+
                             // Get the last post remaining in the old topic
                             $lastreply = xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'getposts',
-                                array(
+                                [
                                     'tid' => $tid,
                                     'numitems' => 1,
                                     'sort' => 'ptime',
-                                    'order' => 'DESC'
-                                )
+                                    'order' => 'DESC',
+                                ]
                             );
-                            $lastreply = !empty($lastreply) ? reset($lastreply) : array();
-                            
+                            $lastreply = !empty($lastreply) ? reset($lastreply) : [];
+
                             // Update the topic that posts were moved from
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'updatetopic',
-                                array(
+                                [
                                     'tid'     => $tid,
                                     'lastpid' => $lastreply['pid'],
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             unset($lastreply);
-                            
+
                             // Update the forum that posts were moved from
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid'     => $data['fid'],
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             unset($lasttopic);
-                            
+
                             // Get the last post remaining in the new topic
                             $lastreply = xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'getposts',
-                                array(
+                                [
                                     'tid'      => $target['tid'],
                                     'numitems' => 1,
                                     'sort'     => 'ptime',
-                                    'order'    => 'DESC'
-                                )
+                                    'order'    => 'DESC',
+                                ]
                             );
-                            $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+                            $lastreply = !empty($lastreply) ? reset($lastreply) : [];
 
                             // Update the topic that the posts were moved to
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'updatetopic',
-                                array(
+                                [
                                     'tid'     => $target['tid'],
                                     'lastpid' => $lastreply['pid'],
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             unset($lastreply);
-                            
+
                             // Update the forum that the posts were moved to
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => $target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid'     => $target['fid'],
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
@@ -1764,19 +1764,19 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'getpost',
-                                array(
+                                [
                                     'pid'   => array_keys($posts),
                                     'sort'  => 'ptime',
-                                    'order' => 'ASC'
-                                )
+                                    'order' => 'ASC',
+                                ]
                             );
-                                
+
                             // Create a new topic in the traget forum that is the first post of those being split
                             if (!$newtid = xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'createtopic',
-                                array(
+                                [
                                     'ttitle'    => $ttitle,
                                     'pdesc'     => $pdesc,
                                     'tstatus'   => 0,
@@ -1784,8 +1784,8 @@ function crispbb_user_moderate($args)
                                     'towner'    => $newpost['powner'],
                                     'firstpid'  => $newpost['pid'],
                                     'fid'       => $target['fid'],
-                                    'ttype'     => 0
-                                )
+                                    'ttype'     => 0,
+                                ]
                             )) {
                                 return;
                             }
@@ -1795,11 +1795,11 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'getlaterposts',
-                                array(
+                                [
                                     'tid'         => $newpost['tid'],
                                     'ts'          => $newpost['ptime'],
-                                    'include_ts'  => 1
-                                )
+                                    'include_ts'  => 1,
+                                ]
                             );
 
                             // Update the split posts to reflect the new tid
@@ -1808,11 +1808,11 @@ function crispbb_user_moderate($args)
                                     'crispbb',
                                     'user',
                                     'updatepost',
-                                    array(
+                                    [
                                         'pid'     => $splitpost['id'],
                                         'tid'     => $newtid,
-                                        'nohooks' => true
-                                    )
+                                        'nohooks' => true,
+                                    ]
                                 )) {
                                     return;
                                 }
@@ -1853,73 +1853,73 @@ function crispbb_user_moderate($args)
                                 'crispbb',
                                 'user',
                                 'updatetopic',
-                                array(
+                                [
                                     'tid'     => $newtid,
                                     'lastpid' => $lastpid,
-                                    'nohooks' => true
-                               )
+                                    'nohooks' => true,
+                               ]
                             )) {
                                 return;
                             }
-                               
+
                             // Update the last topic id for the forum the new topic we have created
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => (int)$target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => (int)$target['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid'     => $target['fid'],
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             unset($lasttopic);
-                            
+
                             // Update the last post pid for the topic that the posts were split from
-                            $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', array('tid' => $tid, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1));
-                            $lastreply = !empty($lastreply) ? reset($lastreply) : array();
+                            $lastreply = xarMod::apiFunc('crispbb', 'user', 'getposts', ['tid' => $tid, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1]);
+                            $lastreply = !empty($lastreply) ? reset($lastreply) : [];
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'user',
                                 'updatetopic',
-                                array(
+                                [
                                     'tid'     => $tid,
                                     'lastpid' => $lastreply['pid'],
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             unset($lastreply);
-                            
+
                             // Update the forum that the posts were moved from
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => (int)$data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => array(0,1,2,4), 'pstatus' => array(0,1)));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'getposts', ['fid' => (int)$data['fid'], 'numitems' => 1, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => [0,1,2,4], 'pstatus' => [0,1]]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             if (!xarMod::apiFunc(
                                 'crispbb',
                                 'admin',
                                 'update',
-                                array(
+                                [
                                     'fid'     => $data['fid'],
                                     'lasttid' => !empty($lasttopic['tid']) ? $lasttopic['tid'] : 0,
-                                    'nohooks' => true
-                                )
+                                    'nohooks' => true,
+                                ]
                             )) {
                                 return;
                             }
                             unset($lasttopic);
                         }
-                        
+
                         // For all actions get the next page and jump to it
                         if (empty($return_url)) {
                             if (!empty($newtid)) {
-                                $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $newtid));
+                                $return_url = xarController::URL('crispbb', 'user', 'display', ['tid' => $newtid]);
                             } else {
-                                $return_url = xarController::URL('crispbb', 'user', 'display', array('tid' => $tid));
+                                $return_url = xarController::URL('crispbb', 'user', 'display', ['tid' => $tid]);
                             }
                         }
                         xarController::redirect($return_url);
@@ -1941,28 +1941,28 @@ function crispbb_user_moderate($args)
                         'crispbb',
                         'user',
                         'gettopics',
-                        array(
+                        [
                             'fid' => $movefid,
                             'numitems' => $numitems,
                             'startnum' => $startnum,
-                            'tstatus' => array(0,1,2,4),
+                            'tstatus' => [0,1,2,4],
                             'sort' => $sort,
                             'order' => $order,
-                        )
+                        ]
                     );
                     $data['fnumtopics'] = xarMod::apiFunc(
                         'crispbb',
                         'user',
                         'counttopics',
-                        array(
+                        [
                             'fid' => $movefid,
-                            'tstatus' => array(0,1,2,4),
-                        )
+                            'tstatus' => [0,1,2,4],
+                        ]
                     );
                     $data['pager'] = xarTplPager::getPager(
                         $startnum,
                         $data['fnumtopics'],
-                        xarController::URL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pidkeys, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
+                        xarController::URL('crispbb', 'user', 'moderate', ['component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pidkeys, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%']),
                         $numitems
                     );
                 }

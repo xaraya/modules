@@ -23,13 +23,13 @@
 function crispbb_userapi_getforums($args)
 {
     extract($args);
-    $startnum = isset($startnum) ? $startnum : 1;
-    $numitems = isset($numitems) ? $numitems : -1;
+    $startnum = $startnum ?? 1;
+    $numitems = $numitems ?? -1;
     if (empty($cids) && !empty($catid)) {
-        $cids = array($catid);
+        $cids = [$catid];
     }
     if (empty($cids)) {
-        $cids = array();
+        $cids = [];
     }
 
     $bycat = isset($bycat) ? true : false;
@@ -39,7 +39,7 @@ function crispbb_userapi_getforums($args)
         if (!xarVar::fetch('theme', 'enum:RSS:rss:atom:xml:json', $systheme, '', xarVar::NOT_REQUIRED)) return;
     }
     */
-    
+
     $xartable =& xarDB::getTables();
 
     /*  Replace current code with this?
@@ -149,9 +149,9 @@ function crispbb_userapi_getforums($args)
     */
     $dbconn = xarDB::getConn();
     $forumstable = $xartable['crispbb_forums'];
-    $fields = array('id', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges', 'numtopics', 'numreplies');
-    $select = array();
-    $where = array();
+    $fields = ['id', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges', 'numtopics', 'numreplies'];
+    $select = [];
+    $where = [];
     foreach ($fields as $k => $fieldname) {
         $select[] = $forumstable . '.' . $fieldname;
     }
@@ -159,7 +159,7 @@ function crispbb_userapi_getforums($args)
     $addme =0;
 
     // join on forum category
-    $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin', array('cids' => $cids, 'modid' => xarMod::getRegID('crispbb')));
+    $categoriesdef = xarMod::apiFunc('categories', 'user', 'leftjoin', ['cids' => $cids, 'modid' => xarMod::getRegID('crispbb')]);
 
     if (!empty($categoriesdef)) {
         $fields[] = 'catid';
@@ -179,7 +179,7 @@ function crispbb_userapi_getforums($args)
             $where[] = $categoriesdef['where'];
         }
     }
-    $typefields = array('id');
+    $typefields = ['id'];
     $itemtypestable = $xartable['crispbb_itemtypes'];
     foreach ($typefields as $k => $fieldname) {
         $select[] = $itemtypestable . '.' . $fieldname;
@@ -193,7 +193,7 @@ function crispbb_userapi_getforums($args)
     $where[] = $itemtypestable . '.component' . ' = "forum"';
 
     $topicstable = $xartable['crispbb_topics'];
-    $topicsfields = array('ttitle', 'towner', 'tstatus', 'tsettings', 'topicstype', 'lastpid');
+    $topicsfields = ['ttitle', 'towner', 'tstatus', 'tsettings', 'topicstype', 'lastpid'];
     foreach ($topicsfields as $k => $fieldname) {
         $select[] = $topicstable . '.' . $fieldname;
         $fields[] = $fieldname;
@@ -208,7 +208,7 @@ function crispbb_userapi_getforums($args)
 
     $poststable = $xartable['crispbb_posts'];
 
-    $postsfields = array('ptime', 'powner', 'poststype');
+    $postsfields = ['ptime', 'powner', 'poststype'];
     /* TODO
     if (!empty($systheme)) {
         $postsfields[] = 'ptext';
@@ -240,7 +240,7 @@ function crispbb_userapi_getforums($args)
     $fields[] = 'tdesc';
     $fields[] = 'ttime';
 
-    $bindvars = array();
+    $bindvars = [];
     if (!empty($itemtype) && is_numeric($itemtype)) {
         $where[] = $itemtypestable.".id = ?";
         $bindvars[] = $itemtype;
@@ -249,7 +249,7 @@ function crispbb_userapi_getforums($args)
         if (is_numeric($fid)) {
             $where[] = $forumstable . '.id = ' . $fid;
         } elseif (is_array($fid) && count($fid) > 0) {
-            $seenfid = array();
+            $seenfid = [];
             foreach ($fid as $id) {
                 if (empty($id) || !is_numeric($id)) {
                     continue;
@@ -269,7 +269,7 @@ function crispbb_userapi_getforums($args)
         if (is_numeric($fstatus)) {
             $where[] = $forumstable . '.fstatus = ' . $fstatus;
         } elseif (is_array($fstatus) && count($fstatus) > 0) {
-            $seenfstatus = array();
+            $seenfstatus = [];
             foreach ($fstatus as $id) {
                 if (empty($id) || !is_numeric($id)) {
                     continue;
@@ -289,7 +289,7 @@ function crispbb_userapi_getforums($args)
         if (is_numeric($ftype)) {
             $where[] = $forumstable . '.ftype = ' . $ftype;
         } elseif (is_array($ftype) && count($ftype) > 0) {
-            $seenftype = array();
+            $seenftype = [];
             foreach ($ftype as $id) {
                 if (empty($id) || !is_numeric($id)) {
                     continue;
@@ -321,24 +321,24 @@ function crispbb_userapi_getforums($args)
     if (!$result) {
         return;
     }
-    $forums = array();
+    $forums = [];
     // module defaults
     $presets = xarMod::apiFunc(
         'crispbb',
         'user',
         'getpresets',
-        array('preset' => 'fsettings,fprivileges,ftransfields,ttransfields,ptransfields')
+        ['preset' => 'fsettings,fprivileges,ftransfields,ttransfields,ptransfields']
     );
     $loggedin = xarUser::isLoggedIn();
     $checkfailed = false;
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
-        $forum = array();
+        $forum = [];
         foreach ($fields as $key => $field) {
             $value = array_shift($data);
             if ($field == 'fsettings') {
                 // forum settings
-                $fsettings = !empty($value) && is_string($value) ? unserialize($value) : array();
+                $fsettings = !empty($value) && is_string($value) ? unserialize($value) : [];
                 // add in any new presets from defaults
                 foreach ($presets['fsettings'] as $p => $pv) {
                     if (!isset($fsettings[$p])) {
@@ -357,7 +357,7 @@ function crispbb_userapi_getforums($args)
                 unset($fsettings);
             } elseif ($field == 'fprivileges') {
                 // forum privileges
-                $fprivileges = !empty($value) && is_string($value) ? unserialize($value) : array();
+                $fprivileges = !empty($value) && is_string($value) ? unserialize($value) : [];
                 // add in any new presets from defaults
                 foreach ($presets['fprivileges'] as $level => $actions) {
                     foreach ($actions as $action => $value) {
@@ -377,7 +377,7 @@ function crispbb_userapi_getforums($args)
                 $forum[$field] = $fprivileges;
                 unset($fprivileges);
             } elseif ($field == 'tsettings' || $field == 'psettings') {
-                $value = !empty($value) && is_string($value) ? unserialize($value) : array();
+                $value = !empty($value) && is_string($value) ? unserialize($value) : [];
                 $forum[$field] = $value;
             } else {
                 if ($field == 'id') {
@@ -392,7 +392,7 @@ function crispbb_userapi_getforums($args)
             'crispbb',
             'user',
             'checkseclevel',
-            array('check' => $forum, 'priv' => 'viewforum')
+            ['check' => $forum, 'priv' => 'viewforum']
         )) {
             $checkfailed = true;
             continue;
@@ -405,9 +405,9 @@ function crispbb_userapi_getforums($args)
         if (empty($nolinks)) { // allow turn off links (shorturls throws a loop without it)
             // forum viewers
             if ($forum['ftype'] != 1) {
-                $forum['viewforumurl'] = xarController::URL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+                $forum['viewforumurl'] = xarController::URL('crispbb', 'user', 'view', ['fid' => $forum['fid']]);
                 // TODO: deprecate this, use viewforumurl instead
-                $forum['forumviewurl'] = xarController::URL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+                $forum['forumviewurl'] = xarController::URL('crispbb', 'user', 'view', ['fid' => $forum['fid']]);
             } else {
                 $redirecturl = !empty($forum['redirected']) ? $forum['redirected'] : '';
                 if (!empty($redirecturl)) {
@@ -415,7 +415,7 @@ function crispbb_userapi_getforums($args)
                     $forum['forumviewurl'] = $redirecturl;
                 }
             }
-            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'readforum'))) {
+            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', ['check' => $forum, 'priv' => 'readforum'])) {
                 // forum readers
                 if ($forum['ftype'] != 1) { // forum not redirected
                     // first we check the tstatus for topics user can't see
@@ -425,24 +425,24 @@ function crispbb_userapi_getforums($args)
                         if ($forum['tstatus'] == 3) {
                             // we don't want to show a moved topic here
                             $reset = true;
-                        } elseif ($forum['tstatus'] == 4 && !xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'locktopics'))) {
+                        } elseif ($forum['tstatus'] == 4 && !xarMod::apiFunc('crispbb', 'user', 'checkseclevel', ['check' => $forum, 'priv' => 'locktopics'])) {
                             // need locktopics priv to see locked topics
                             $reset = true;
-                        } elseif ($forum['tstatus'] == 2 && !xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'approvetopics'))) {
+                        } elseif ($forum['tstatus'] == 2 && !xarMod::apiFunc('crispbb', 'user', 'checkseclevel', ['check' => $forum, 'priv' => 'approvetopics'])) {
                             // need approvetopics priv to see submitted topics
                             $reset = true;
                         }
                         if ($reset) {
-                            $tstatuses = array(0,1);
-                            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'approvetopics'))) {
+                            $tstatuses = [0,1];
+                            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', ['check' => $forum, 'priv' => 'approvetopics'])) {
                                 $tstatuses[] = 2;
                             }
-                            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'locktopics'))) {
+                            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', ['check' => $forum, 'priv' => 'locktopics'])) {
                                 $tstatuses[] = 4;
                             }
                             // get a topic this user can see
-                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'gettopics', array('fid' => $forum['fid'], 'tstatus' => $tstatuses, 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1));
-                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            $lasttopic = xarMod::apiFunc('crispbb', 'user', 'gettopics', ['fid' => $forum['fid'], 'tstatus' => $tstatuses, 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1]);
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : [];
                             if (!empty($lasttopic)) {
                                 // replace the last topic
                                 $forum['lasttid'] = $lasttopic['tid'];
@@ -456,9 +456,9 @@ function crispbb_userapi_getforums($args)
                                     'crispbb',
                                     'user',
                                     'counttopics',
-                                    array('fid' => $forum['fid'], 'tstatus' => $tstatuses)
+                                    ['fid' => $forum['fid'], 'tstatus' => $tstatuses]
                                 );
-                                $forum['numreplies'] = xarMod::apiFunc('crispbb', 'user', 'countposts', array('fid' => $forum['fid'], 'tstatus' => $tstatuses));
+                                $forum['numreplies'] = xarMod::apiFunc('crispbb', 'user', 'countposts', ['fid' => $forum['fid'], 'tstatus' => $tstatuses]);
                             } else {
                                 // no topic to display
                                 $forum['lasttid'] = '';
@@ -481,45 +481,45 @@ function crispbb_userapi_getforums($args)
                             'crispbb',
                             'user',
                             'display',
-                            array('tid' => $forum['lasttid'])
+                            ['tid' => $forum['lasttid']]
                         );
                         $forum['lastreplyurl'] = xarController::URL(
                             'crispbb',
                             'user',
                             'display',
-                            array('tid' => $forum['lasttid'], 'action' => 'lastreply')
+                            ['tid' => $forum['lasttid'], 'action' => 'lastreply']
                         );
                         $forum['townerurl'] = xarController::URL(
                             'roles',
                             'user',
                             'display',
-                            array('uid' => $forum['towner'])
+                            ['uid' => $forum['towner']]
                         );
                         $forum['pownerurl'] = xarController::URL(
                             'roles',
                             'user',
                             'display',
-                            array('uid' => $forum['powner'])
+                            ['uid' => $forum['powner']]
                         );
                         if ($loggedin) {
                             $forum['lastunreadurl'] = xarController::URL(
                                 'crispbb',
                                 'user',
                                 'display',
-                                array('tid' => $forum['lasttid'], 'action' => 'unread')
+                                ['tid' => $forum['lasttid'], 'action' => 'unread']
                             );
                         }
                         $forum['townerurl'] = xarController::URL(
                             'roles',
                             'user',
                             'display',
-                            array('uid' => $forum['towner'])
+                            ['uid' => $forum['towner']]
                         );
                         $forum['pownerurl'] = xarController::URL(
                             'roles',
                             'user',
                             'display',
-                            array('uid' => $forum['powner'])
+                            ['uid' => $forum['powner']]
                         );
                     }
                 }
@@ -530,27 +530,27 @@ function crispbb_userapi_getforums($args)
                             'crispbb',
                             'user',
                             'view',
-                            array('fid' => $forum['fid'], 'action' => 'read')
+                            ['fid' => $forum['fid'], 'action' => 'read']
                         );
                         // TODO: deprecate this, use readforumurl instead
                         $forum['forumreadurl'] = xarController::URL(
                             'crispbb',
                             'user',
                             'view',
-                            array('fid' => $forum['fid'], 'action' => 'read')
+                            ['fid' => $forum['fid'], 'action' => 'read']
                         );
                         // forum posters
                         if (xarMod::apiFunc(
                             'crispbb',
                             'user',
                             'checkseclevel',
-                            array('check' => $forum, 'priv' => 'newtopic')
+                            ['check' => $forum, 'priv' => 'newtopic']
                         )) {
                             $forum['newtopicurl'] = xarController::URL(
                                 'crispbb',
                                 'user',
                                 'newtopic',
-                                array('fid' => $forum['fid'])
+                                ['fid' => $forum['fid']]
                             );
                         }
                         // forum moderators
@@ -558,20 +558,20 @@ function crispbb_userapi_getforums($args)
                             'crispbb',
                             'user',
                             'checkseclevel',
-                            array('check' => $forum, 'priv' => 'ismoderator')
+                            ['check' => $forum, 'priv' => 'ismoderator']
                         )) {
                             $forum['modforumurl'] = xarController::URL(
                                 'crispbb',
                                 'user',
                                 'moderate',
-                                array('component' => 'topics', 'fid' => $forum['fid'])
+                                ['component' => 'topics', 'fid' => $forum['fid']]
                             );
                             // TODO: deprecate this, use modforumurl instead
                             $forum['admintopicsurl'] = xarController::URL(
                                 'crispbb',
                                 'admin',
                                 'topics',
-                                array('fid' => $forum['fid'])
+                                ['fid' => $forum['fid']]
                             );
                         }
                     }
@@ -580,13 +580,13 @@ function crispbb_userapi_getforums($args)
                         'crispbb',
                         'user',
                         'checkseclevel',
-                        array('check' => $forum, 'priv' => 'addforum')
+                        ['check' => $forum, 'priv' => 'addforum']
                     )) {
                         $forum['addforumurl'] = xarController::URL(
                             'crispbb',
                             'admin',
                             'modify',
-                            array('fid' => $forum['fid'])
+                            ['fid' => $forum['fid']]
                         );
                     }
                     // forum config editors
@@ -594,38 +594,38 @@ function crispbb_userapi_getforums($args)
                         'crispbb',
                         'user',
                         'checkseclevel',
-                        array('check' => $forum, 'priv' => 'editforum')
+                        ['check' => $forum, 'priv' => 'editforum']
                     )) {
                         $forum['editforumurl'] = xarController::URL(
                             'crispbb',
                             'admin',
                             'modify',
-                            array('fid' => $forum['fid'], 'sublink' => 'edit')
+                            ['fid' => $forum['fid'], 'sublink' => 'edit']
                         );
                         if ($forum['ftype'] != 1) {
                             $forum['hooksforumurl'] = xarController::URL(
                                 'crispbb',
                                 'admin',
                                 'modify',
-                                array('fid' => $forum['fid'], 'sublink' => 'forumhooks')
+                                ['fid' => $forum['fid'], 'sublink' => 'forumhooks']
                             );
                             $forum['hookstopicsurl'] = xarController::URL(
                                 'crispbb',
                                 'admin',
                                 'modify',
-                                array('fid' => $forum['fid'], 'sublink' => 'topichooks')
+                                ['fid' => $forum['fid'], 'sublink' => 'topichooks']
                             );
                             $forum['hookspostsurl'] = xarController::URL(
                                 'crispbb',
                                 'admin',
                                 'modify',
-                                array('fid' => $forum['fid'], 'sublink' => 'posthooks')
+                                ['fid' => $forum['fid'], 'sublink' => 'posthooks']
                             );
                             $forum['privsforumurl'] = xarController::URL(
                                 'crispbb',
                                 'admin',
                                 'modify',
-                                array('fid' => $forum['fid'], 'sublink' => 'privileges')
+                                ['fid' => $forum['fid'], 'sublink' => 'privileges']
                             );
                         }
                     }
@@ -634,13 +634,13 @@ function crispbb_userapi_getforums($args)
                         'crispbb',
                         'user',
                         'checkseclevel',
-                        array('check' => $forum, 'priv' => 'deleteforum')
+                        ['check' => $forum, 'priv' => 'deleteforum']
                     )) {
                         $forum['deleteforumurl'] = xarController::URL(
                             'crispbb',
                             'admin',
                             'delete',
-                            array('fid' => $forum['fid'])
+                            ['fid' => $forum['fid']]
                         );
                     }
                 }
@@ -652,33 +652,33 @@ function crispbb_userapi_getforums($args)
                     'roles',
                     'user',
                     'display',
-                    array('uid' => $forum['towner'])
+                    ['uid' => $forum['towner']]
                 );
                 $forum['pownerurl'] = xarController::URL(
                     'roles',
                     'user',
                     'display',
-                    array('uid' => $forum['powner'])
+                    ['uid' => $forum['powner']]
                 );
             }
             // end links
         }
         foreach ($presets['ftransfields'] as $field => $option) {
             if (!isset($forum['ftransforms'][$field])) {
-                $forum['ftransforms'][$field] = array();
+                $forum['ftransforms'][$field] = [];
             }
         }
         foreach ($presets['ttransfields'] as $field => $option) {
             if (!isset($forum['ttransforms'][$field])) {
-                $forum['ttransforms'][$field] = array();
+                $forum['ttransforms'][$field] = [];
             }
         }
         foreach ($presets['ptransfields'] as $field => $option) {
             if (!isset($forum['ptransforms'][$field])) {
-                $forum['ptransforms'][$field] = array();
+                $forum['ptransforms'][$field] = [];
             }
         }
-        $transargs = array();
+        $transargs = [];
         $transargs['itemtype'] = $forum['itemtype'];
         $transargs['transforms'] = $forum['ftransforms'];
         $transargs['fname'] = $forum['fname'];
@@ -688,12 +688,12 @@ function crispbb_userapi_getforums($args)
         $forum['transformed_fdesc'] = $transformed['fdesc'];
         unset($transformed);
         if (!empty($forum['ttitle'])) {
-            $transargs = array();
+            $transargs = [];
             $transargs['itemtype'] = $forum['topicstype'];
             $transargs['transforms'] = $forum['ttransforms'];
             $transargs['ttitle'] = $forum['ttitle'];
             $transargs['tdesc'] = $forum['tdesc'];
-            $ignore = array();
+            $ignore = [];
             if (!empty($forum['tsettings']['htmldeny'])) {
                 $ignore['html'] = 1;
             }

@@ -43,7 +43,7 @@ function crispbb_admin_unlinkhooks()
 
     $pageTitle = xarML('Delete Associations');
 
-    $data = array();
+    $data = [];
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -62,7 +62,7 @@ function crispbb_admin_unlinkhooks()
                     'user',
                     'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(),
+                                         [],
                     0
                 );
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -78,12 +78,12 @@ function crispbb_admin_unlinkhooks()
             'crispbb',
             'admin',
             'getmenulinks',
-            array(
+            [
                 'current_module' => 'crispbb',
                 'current_type' => 'admin',
                 'current_func' => 'unlinkhooks',
                 'current_sublink' => '',
-            )
+            ]
         );
         xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
         // Return the template variables defined in this function
@@ -97,10 +97,10 @@ function crispbb_admin_unlinkhooks()
         'crispbb',
         'admin',
         'unlinkhooks',
-        array('modid' => $modid,
+        ['modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
-                             'confirm' => $confirm)
+                             'confirm' => $confirm, ]
     )) {
         return;
     }
@@ -108,7 +108,7 @@ function crispbb_admin_unlinkhooks()
         'crispbb',
         'admin',
         'modifyhooks',
-        array('modid' => $modid, 'itemtype' => $itemtype)
+        ['modid' => $modid, 'itemtype' => $itemtype]
     ));
     return true;
 }
