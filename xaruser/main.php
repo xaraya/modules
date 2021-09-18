@@ -24,5 +24,5 @@
 
 //        xarController::redirect(xarController::URL('eav', 'user', 'view'));
         // success
-        return array(); //true;
+        return []; //true;
     }

@@ -8,14 +8,14 @@ function eav_admin_display_attribute($args)
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'eav_attributes_def']);
     if (!isset($data['object'])) {
         return;
     }
     //if (!$data['object']->checkAccess('display'))
     //return xarResponse::Forbidden(xarML('Display #(1) is forbidden', $data['object']->label));
 
-    $data['object']->getItem(array('itemid' => $data['itemid']));
-    
+    $data['object']->getItem(['itemid' => $data['itemid']]);
+
     return $data;
 }

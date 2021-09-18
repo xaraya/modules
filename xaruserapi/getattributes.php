@@ -13,12 +13,12 @@
 /**
  * Get attributes for a specific object
  */
-function eav_userapi_getattributes(array $args=array())
+function eav_userapi_getattributes(array $args=[])
 {
     if (!isset($args['object_id'])) {
         throw new BadParameterException('object_id');
     }
-    
+
     sys::import('xaraya.structures.query');
     $tables =& xarDB::getTables();
 
@@ -28,16 +28,16 @@ function eav_userapi_getattributes(array $args=array())
     $q->run();
 
     sys::import('modules.dynamicdata.class.properties.master');
-    $properties = array();
-    $attributes = array();
+    $properties = [];
+    $attributes = [];
     foreach ($q->output() as $row) {
         if (in_array($row['type'], array_keys($properties))) {
             $propobject = $properties[$row['type']];
         } else {
-            $propobject = DataPropertyMaster::getProperty(array('type' => $row['type']));
+            $propobject = DataPropertyMaster::getProperty(['type' => $row['type']]);
             $properties[$row['type']] = $propobject;
         }
-        $row['value'] = xarMod::apiFunc('eav', 'admin', 'getvalue', array('property' => $propobject, 'values' => $row));
+        $row['value'] = xarMod::apiFunc('eav', 'admin', 'getvalue', ['property' => $propobject, 'values' => $row]);
         unset($row['default_tinyint']);
         unset($row['default_integer']);
         unset($row['default_decimal']);

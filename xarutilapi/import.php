@@ -21,7 +21,7 @@
  * @return array object id on success, null on failure
  */
 sys::import('modules.dynamicdata.class.objects.master');
-function eav_utilapi_import(array $args=array())
+function eav_utilapi_import(array $args=[])
 {
     extract($args);
 
@@ -47,11 +47,11 @@ function eav_utilapi_import(array $args=array())
         }
     }
 
-    $objectcache = array();
-    $objectmaxid = array();
+    $objectcache = [];
+    $objectmaxid = [];
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
-    $name2id = array();
+    $name2id = [];
     foreach ($proptypes as $propid => $proptype) {
         $name2id[$proptype['name']] = $propid;
     }
@@ -71,17 +71,17 @@ function eav_utilapi_import(array $args=array())
     sys::import('xaraya.validations');
     $boolean = ValueValidations::get('bool');
     $integer = ValueValidations::get('int');
-    
+
     if ($roottag == 'object') {
         //FIXME: this unconditionally CLEARS the incoming parameter!!
-        $args = array();
+        $args = [];
         // Get the object's name
         $args['name'] = (string)($xmlobject->attributes()->name);
         $args['objectid'] = $value = (string)$xmlobject->{'object'}[0];
         xarLog::message('DD: importing ' . $args['name']);
 
         // check if the object exists
-        $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
+        $data['object'] = DataObjectMaster::getObjectList(['name' => 'eav_entities']);
         $info = $data['object']->getObjectInfo($args);
         $dupexists = false;
         foreach ($data['object']->getItems() as $items) {
@@ -92,27 +92,27 @@ function eav_utilapi_import(array $args=array())
         }
         if ($dupexists && !$overwrite) {
             $msg = 'Duplicate definition for #(1) #(2)';
-            $vars = array('object',xarVar::prepForDisplay($args['name']));
+            $vars = ['object',xarVar::prepForDisplay($args['name'])];
             throw new DuplicateException(null, $args['name']);
         }
         //Add entities after import
-        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_entities'));
+        $data['object'] = DataObjectMaster::getObject(['name' => 'eav_entities']);
         $objectproperties = array_keys($data['object']->properties);
         foreach ($objectproperties as $property) {
             if (isset($xmlobject->{$property}[0])) {
                 $value = (string)$xmlobject->{$property}[0];
                 $objectname = (string)$xmlobject->{'object'}[0];
-                $info = $data['object']->getObjectInfo(array('name' => $objectname));
+                $info = $data['object']->getObjectInfo(['name' => $objectname]);
                 try {
                     if ($property == "object") {
-                        $integer->validate($info['objectid'], array());
+                        $integer->validate($info['objectid'], []);
                         $value = $info['objectid'];
                     } else {
-                        $integer->validate($value, array());
+                        $integer->validate($value, []);
                     }
                 } catch (Exception $e) {
                     try {
-                        $integer->validate($value, array());
+                        $integer->validate($value, []);
                     } catch (Exception $e) {
                     }
                 }
@@ -126,32 +126,32 @@ function eav_utilapi_import(array $args=array())
             //unset($args['id']);
             $id = $data['object']->createItem($args);
         }
-        
+
         //Add attributes after import
-        $dataproperty = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
+        $dataproperty = DataObjectMaster::getObject(['name' => 'eav_attributes_def']);
         $propertyproperties = array_keys($dataproperty->properties);
         $propertieshead = $xmlobject->properties;
-        
+
         foreach ($propertieshead->children() as $property) {
-            $propertyargs = array();
+            $propertyargs = [];
             $propertyname = (string)($property->attributes()->name);
             $propertyargs['name'] = $propertyname;
-          
+
             foreach ($propertyproperties as $prop) {
                 if (isset($property->{$prop}[0])) {
                     $value = (string)$property->{$prop}[0];
                     try {
-                        $boolean->validate($value, array());
+                        $boolean->validate($value, []);
                     } catch (Exception $e) {
                         try {
-                            $integer->validate($value, array());
+                            $integer->validate($value, []);
                         } catch (Exception $e) {
                         }
                     }
                     $propertyargs[$prop] = $value;
                 }
             }
-            
+
             // Backwards Compatibility with old definitions
             if (!isset($propertyargs['configuration']) && isset($property->{'validation'}[0])) {
                 $propertyargs['configuration'] = (string)$property->{'validation'}[0];
@@ -171,7 +171,7 @@ function eav_utilapi_import(array $args=array())
             //TODO - Need to check for Update attribute when Override exist selected
             if (!$dupexists) {
                 $id = $dataproperty->createItem($propertyargs);
-            
+
                 // Code to import attribute defination xar_eav_attributes
                 sys::import('xaraya.structures.query');
                 $tables =& xarDB::getTables();
@@ -187,7 +187,7 @@ function eav_utilapi_import(array $args=array())
                     $q->addfield('timeupdated', (string)$property->{'timeupdated'}[0]);
                     $q->addfield('seq', (string)$property->{'seq'}[0]);
                     $q->addfield('status', (string)$property->{'status'}[0]);
-    
+
                     if (!$q->run()) {
                         return;
                     }

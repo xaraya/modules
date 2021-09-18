@@ -30,7 +30,7 @@
             return;
         }
 
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'eav'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'eav']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, madule_alias_name, use_module_icons, enable_short_urls');
         $data['module_settings']->getItem();
 
@@ -72,7 +72,7 @@
                         break;
                 }
 
-                xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

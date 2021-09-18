@@ -23,7 +23,7 @@
         }
         if (isset($property_id)) {
             sys::import('modules.dynamicdata.class.properties.master');
-            $property = DataPropertyMaster::getProperty(array('type' => $property_id));
+            $property = DataPropertyMaster::getProperty(['type' => $property_id]);
         }
         $type = $property->basetype;
 
@@ -34,6 +34,6 @@
             case 'integer': $field = 'default_integer'; break;
             case 'number': $field = 'default_tinyint'; break;
         }
-        
+
         return $field;
     }

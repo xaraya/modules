@@ -13,7 +13,7 @@
 /**
  * Add attributes to an obnject
  */
-function eav_admin_add_attribute(array $args=array())
+function eav_admin_add_attribute(array $args=[])
 {
     if (!xarSecurity::check('ManageEAV')) {
         return;
@@ -34,14 +34,14 @@ function eav_admin_add_attribute(array $args=array())
 
     //if (empty($data['objectid'])) return xarResponse::NotFound();
     sys::import('modules.dynamicdata.class.objects.master');
-    
+
     if (!empty($data['objectname'])) {
-        $info = DataObjectMaster::getObjectInfo(array('name' => $data['objectname']));
+        $info = DataObjectMaster::getObjectInfo(['name' => $data['objectname']]);
         $data['objectid'] = $info['objectid'];
     }
-    
+
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('objectid' => $data['objectid']));
+    $data['object'] = DataObjectMaster::getObject(['objectid' => $data['objectid']]);
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSec::genAuthKey();
@@ -52,7 +52,7 @@ function eav_admin_add_attribute(array $args=array())
         'eav',
         'user',
         'getattributes',
-        array('object_id' => $data['objectid'])
+        ['object_id' => $data['objectid']]
     );
 
     $isprimary = 0;
@@ -64,11 +64,11 @@ function eav_admin_add_attribute(array $args=array())
         }
     }
 
-    $data['fieldtypeprop'] =& DataPropertyMaster::getProperty(array('type' => 'fieldtype'));
-    $data['fieldstatusprop'] =& DataPropertyMaster::getProperty(array('type' => 'fieldstatus'));
+    $data['fieldtypeprop'] =& DataPropertyMaster::getProperty(['type' => 'fieldtype']);
+    $data['fieldstatusprop'] =& DataPropertyMaster::getProperty(['type' => 'fieldstatus']);
 
     // We have to specify this here, the js expects non xml urls and the => makes the template invalied
-    $data['urlform'] = xarController::URL('dynamicdata', 'admin', 'form', array('objectid' => $data['objectid'], 'theme' => 'print'), false);
+    $data['urlform'] = xarController::URL('dynamicdata', 'admin', 'form', ['objectid' => $data['objectid'], 'theme' => 'print'], false);
 
     return $data;
 }

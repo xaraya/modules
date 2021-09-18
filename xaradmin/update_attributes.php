@@ -52,17 +52,17 @@ function eav_admin_update_attributes()
     }
 
     if (!xarSec::confirmAuthKey()) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array('objectid' => $objectid));
+    $object = DataObjectMaster::getObject(['objectid' => $objectid]);
 
-    $fields = xarMod::apiFunc('eav', 'user', 'getattributes', array('object_id' => $objectid));
+    $fields = xarMod::apiFunc('eav', 'user', 'getattributes', ['object_id' => $objectid]);
 
     sys::import('xaraya.structures.query');
     $tables =& xarDB::getTables();
-    
+
     $i = 0;
     # --------------------------------------------------------
     # Update the current attributes
@@ -71,8 +71,8 @@ function eav_admin_update_attributes()
         $id = $field['id'];
         $i++;
         if (empty($eav_label[$id])) {
-            $property = DataPropertyMaster::getProperty(array('type' => $field['type']));
-            $res = $property->removeFromObject(array('object_id' => $objectid));
+            $property = DataPropertyMaster::getProperty(['type' => $field['type']]);
+            $res = $property->removeFromObject(['object_id' => $objectid]);
             // delete property (and corresponding data) in xaradminapi.php
             $q = new Query('DELETE', $tables['eav_attributes']);
             $q->eq('id', $id);
@@ -97,7 +97,7 @@ function eav_admin_update_attributes()
             }
             $eav_status[$id] = $display_eav_status[$id] + $input_eav_status[$id];
 
-            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', array('property_id' => (int)$eav_type[$id]));
+            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', ['property_id' => (int)$eav_type[$id]]);
 
             $q = new Query('UPDATE', $tables['eav_attributes']);
             $q->addfield('name', $eav_name[$id]);
@@ -137,7 +137,7 @@ function eav_admin_update_attributes()
             return;
         }
         $definition = $q->row();
-        
+
         // Insert it in the attributes table
         $q = new Query('INSERT', $tables['eav_attributes']);
         $q->addfield('name', $definition['name']);
@@ -172,7 +172,7 @@ function eav_admin_update_attributes()
             }
             $eav_status[0] = $display_eav_status[0] + $input_eav_status[0];
 
-            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', array('property_id' => $eav_type[0]));
+            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', ['property_id' => $eav_type[0]]);
 
             $q = new Query('INSERT', $tables['eav_attributes']);
             $q->addfield('name', $name);
@@ -194,7 +194,7 @@ function eav_admin_update_attributes()
         'eav',
         'admin',
         'add_attribute',
-        array('objectid'    => $objectid)
+        ['objectid'    => $objectid]
     ));
     return true;
 }

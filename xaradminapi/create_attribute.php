@@ -13,12 +13,12 @@
 /**
  * create a new attribute for an object
  */
-function eav_adminapi_create_attribute(array $args=array())
+function eav_adminapi_create_attribute(array $args=[])
 {
     extract($args);
 
     // Required arguments
-    $invalid = array();
+    $invalid = [];
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
     }
@@ -28,7 +28,7 @@ function eav_adminapi_create_attribute(array $args=array())
 
     if (count($invalid) > 0) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'admin', 'createproperty', 'DynamicData');
+        $vars = [join(', ', $invalid), 'admin', 'createproperty', 'DynamicData'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -39,10 +39,10 @@ function eav_adminapi_create_attribute(array $args=array())
         'dynamicdata',
         'user',
         'getprop',
-        array('objectid' => 2)
+        ['objectid' => 2]
     ); // the properties
 
-    $values = array();
+    $values = [];
     // the acceptable arguments correspond to the property names !
     foreach ($fields as $name => $field) {
         if (isset($args[$name])) {
@@ -51,7 +51,7 @@ function eav_adminapi_create_attribute(array $args=array())
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $propertyobject = DataObjectMaster::getObject(array('name' => 'properties'));
+    $propertyobject = DataObjectMaster::getObject(['name' => 'properties']);
     $propid = $propertyobject->createItem($values);
     return $propid;
 }

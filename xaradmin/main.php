@@ -22,7 +22,7 @@
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
-            return array();
+            return [];
         } else {
             xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig'));
         }

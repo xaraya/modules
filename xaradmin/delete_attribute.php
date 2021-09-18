@@ -10,7 +10,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
-   
+
     sys::import('modules.dynamicdata.class.objects.master');
     function eav_admin_delete_attribute()
     {
@@ -28,14 +28,14 @@
             return;
         }
 
-        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
-        
+        $data['object'] = DataObjectMaster::getObject(['name' => 'eav_attributes_def']);
+
         // Get that specific item of the object
-        $data['object']->getItem(array('itemid' => $data['itemid']));
+        $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'eav';
         $data['authid'] = xarSec::genAuthKey('eav');
-        
+
         if ($data['confirm']) {
             // Check for a valid confirmation key
             if (!xarSec::confirmAuthKey()) {

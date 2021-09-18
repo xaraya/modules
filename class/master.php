@@ -21,7 +21,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 class EAVObjectMaster extends DataObjectMaster
 {
-    public static function getObject(array $args=array())
+    public static function getObject(array $args=[])
     {
         $args['propertyprefix'] = 'eav_';
         if (!isset($args['objectid'])) {
@@ -35,7 +35,7 @@ class EAVObjectMaster extends DataObjectMaster
         return parent::getObject($args);
     }
 
-    public static function getObjectList(array $args=array())
+    public static function getObjectList(array $args=[])
     {
         $args['propertyprefix'] = 'eav_';
         if (!isset($args['objectid'])) {

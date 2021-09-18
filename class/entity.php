@@ -20,19 +20,19 @@ class Entity extends DataObject
     public function loader(DataObjectDescriptor $descriptor)
     {
         parent::loader($descriptor);
-        $propertyargs = xarMod::apiFunc('eav', 'user', 'getattributes', array('object_id' => $this->parent_id));
+        $propertyargs = xarMod::apiFunc('eav', 'user', 'getattributes', ['object_id' => $this->parent_id]);
         foreach ($propertyargs as $row) {
             $row['propertyprefix'] = 'eav_';
             DataPropertyMaster::addProperty($row, $this);
         }
     }
 
-    public function getItem(array $args = array())
+    public function getItem(array $args = [])
     {
         if (!isset($args['itemid'])) {
             throw new EmptyParameterException('itemid');
         }
-        
+
         // Load the value for each property from the database
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
@@ -51,16 +51,16 @@ class Entity extends DataObject
                 }
             }
         }
-        
+
         // This will pass the itemid value to any other properties (e.g. virtual source properties)
         $this->itemid = $args['itemid'];
         return true;
     }
-    
-    public function getItems_inert(array $args = array())
+
+    public function getItems_inert(array $args = [])
     {
         if (empty($args['itemids'])) {
-            return array();
+            return [];
         }
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
@@ -85,8 +85,8 @@ class Entity extends DataObject
         }
         return $this->items;
     }
-    
-    public function createItem(array $args = array())
+
+    public function createItem(array $args = [])
     {
         if (!isset($args['itemid'])) {
             throw new MissingParameterException('itemid');
@@ -111,7 +111,7 @@ class Entity extends DataObject
             }
             $q->clearfields();
         }
-        
+
         foreach ($this->getFieldList() as $fieldname) {
             if (method_exists($this->properties[$fieldname], 'createvalue')) {
                 $this->properties[$fieldname]->createValue($args['itemid']);
@@ -120,8 +120,8 @@ class Entity extends DataObject
 
         return true;
     }
-    
-    public function updateItem(array $args = array())
+
+    public function updateItem(array $args = [])
     {
         if (!isset($args['itemid'])) {
             throw new MissingParameterException('itemid');
@@ -179,8 +179,8 @@ class Entity extends DataObject
 
         return true;
     }
-    
-    public function deleteItem(array $args = array())
+
+    public function deleteItem(array $args = [])
     {
         if (!isset($args['itemid'])) {
             throw new MissingParameterException('itemid');

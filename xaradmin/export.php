@@ -17,7 +17,7 @@
  */
 sys::import('modules.dynamicdata.class.objects.master');
 //sys::import('modules.eav.class.master');
-function eav_admin_export(array $args=array())
+function eav_admin_export(array $args=[])
 {
     // Security
     if (!xarSecurity::check('ManageEAV')) {
@@ -49,23 +49,23 @@ function eav_admin_export(array $args=array())
     }
 
     $modulename = 'eav';
-    $data = array();
+    $data = [];
     $data['menutitle'] = xarML('EAV Data Utilities');
     //Fill object dropdown
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'eav_entities']);
     $items = $data['object']->getItems();
     if (empty($items)) {
         $data['errormessage'] = xarML('No entitites exist.');
         return $data;
     }
-    $options = array();
+    $options = [];
     foreach ($items as $item) {
         $object = DataObjectMaster::getObjectInfo(
-            array('moduleid' => $item['module'],
-                                      'objectid' => $item['object'])
+            ['moduleid' => $item['module'],
+                                      'objectid' => $item['object'], ]
         );
         $objectname = $object['name'];
-        array_push($options, array('id' => $item['object'], 'name' => $objectname));
+        array_push($options, ['id' => $item['object'], 'name' => $objectname]);
     }
     if (!empty($options) && count($options) >= 0) {
         $data['options'] = $options;
@@ -75,11 +75,11 @@ function eav_admin_export(array $args=array())
     if (empty($objectid)) {
         $objectid = $options[0]['id'];
     }
-    $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
+    $myobject = DataObjectMaster::getObject(['objectid' => $objectid,
                                                    'name'     => $name,
                                                    'itemid'   => $itemid,
-                                                    'allprops' => true));
-    
+                                                    'allprops' => true, ]);
+
     if (!isset($myobject) || empty($myobject->label)) {
         $data['label'] = xarML('Unknown Object');
         $data['xml'] = '';
@@ -105,24 +105,24 @@ function eav_admin_export(array $args=array())
             'eav',
             'util',
             'export',
-            array('objectref' => &$myobject, "objectid" => $objectid)
+            ['objectref' => &$myobject, "objectid" => $objectid]
         );
-        
+
 
         $data['formlink'] = xarController::URL(
             'eav',
             'admin',
             'export',
-            array('objectid' => $myobject->objectid,
-                                            'itemid'   => 'all')
+            ['objectid' => $myobject->objectid,
+                                            'itemid'   => 'all', ]
         );
         $data['filelink'] = xarController::URL(
             'eav',
             'admin',
             'export',
-            array('objectid' => $myobject->objectid,
+            ['objectid' => $myobject->objectid,
                                             'itemid'   => 'all',
-                                            'tofile'   => 1)
+                                            'tofile'   => 1, ]
         );
 
         if (!empty($myobject->datastores) && count($myobject->datastores) == 1 && !empty($myobject->datastores['_dynamic_data_'])) {
@@ -130,15 +130,15 @@ function eav_admin_export(array $args=array())
                 'eav',
                 'admin',
                 'export',
-                array('objectid' => $myobject->objectid,
-                                                   'convert'  => 1)
+                ['objectid' => $myobject->objectid,
+                                                   'convert'  => 1, ]
             );
             if (!empty($convert)) {
                 if (!xarMod::apiFunc(
                     'eav',
                     'util',
                     'maketable',
-                    array('objectref' => &$myobject)
+                    ['objectref' => &$myobject]
                 )) {
                     return;
                 }
@@ -160,13 +160,13 @@ function eav_admin_export(array $args=array())
     // export all items (better save this to file, e.g. in var/cache/...)
     } elseif ($itemid == 'all') {
         $data['label'] = xarML('Export Data for all #(1) Items', $myobject->label);
-        
-        $mylist = DataObjectMaster::getObjectList(array('objectid' => $objectid,
-                                                'moduleid' => $moduleid,
-                                                'itemtype' => $itemtype));
 
-        $mylist->getItems(array('getvirtuals' => 1));
-      
+        $mylist = DataObjectMaster::getObjectList(['objectid' => $objectid,
+                                                'moduleid' => $moduleid,
+                                                'itemtype' => $itemtype, ]);
+
+        $mylist->getItems(['getvirtuals' => 1]);
+
         if (empty($tofile)) {
             $xml .= "<items>\n";
             foreach ($mylist->items as $itemid => $item) {

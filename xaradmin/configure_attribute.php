@@ -13,7 +13,7 @@
 /**
  * Configure an attribute of an eav object
  */
-function eav_admin_configure_attribute(array $args=array())
+function eav_admin_configure_attribute(array $args=[])
 {
     // Security
     if (!xarSecurity::check('ManageEAV')) {
@@ -47,8 +47,8 @@ function eav_admin_configure_attribute(array $args=array())
     }
 
     // Get the object corresponding to this attribute
-    $attribute = DataObjectMaster::getObject(array('name'   => 'eav_attributes',
-                                                  'itemid' => $itemid));
+    $attribute = DataObjectMaster::getObject(['name'   => 'eav_attributes',
+                                                  'itemid' => $itemid, ]);
     if (empty($attribute)) {
         return;
     }
@@ -64,7 +64,7 @@ function eav_admin_configure_attribute(array $args=array())
 
     // Check security of the parent object
     $parentobjectid = $attribute->properties['object_id']->value;
-    $parentobject = DataObjectMaster::getObject(array('objectid' => $parentobjectid));
+    $parentobject = DataObjectMaster::getObject(['objectid' => $parentobjectid]);
     if (empty($parentobject)) {
         return;
     }
@@ -73,7 +73,7 @@ function eav_admin_configure_attribute(array $args=array())
     }
     unset($parentobject);
 
-    $data = array();
+    $data = [];
     // Get a new property of the right type
     $data['type'] = $attribute->properties['type']->value;
     $id = $attribute->properties['configuration']->id;
@@ -82,9 +82,9 @@ function eav_admin_configure_attribute(array $args=array())
     // Pass the actual id for the property here
     $data['id']         = $id;
     // Pass the original invalid value here
-    $data['invalid']    = !empty($invalid) ? $invalid :'';
+    $data['invalid']    = !empty($invalid) ? $invalid : '';
     $property = DataPropertyMaster::getProperty($data);
-    $data['propertytype'] = DataPropertyMaster::getProperty(array('type' => $data['type']));
+    $data['propertytype'] = DataPropertyMaster::getProperty(['type' => $data['type']]);
     if (empty($property)) {
         return;
     }
@@ -95,7 +95,7 @@ function eav_admin_configure_attribute(array $args=array())
         }
 
         // Pass the current value as configuration rule
-        $data['configuration'] = isset($configuration) ? $configuration : '';
+        $data['configuration'] = $configuration ?? '';
 
         $isvalid = $property->updateConfiguration($data);
 
@@ -104,7 +104,7 @@ function eav_admin_configure_attribute(array $args=array())
                 // store the updated configuration rule back in the value
                 $attribute->properties['configuration']->value = $property->configuration;
                 if (!xarSec::confirmAuthKey()) {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                 }
 
                 $newid = $attribute->updateItem();
@@ -113,7 +113,7 @@ function eav_admin_configure_attribute(array $args=array())
                 }
 
                 if (empty($exit)) {
-                    $return_url = xarController::URL('eav', 'admin', 'configure_attribute', array('itemid' => $itemid));
+                    $return_url = xarController::URL('eav', 'admin', 'configure_attribute', ['itemid' => $itemid]);
                     xarController::redirect($return_url);
                     return true;
                 }
@@ -128,7 +128,7 @@ function eav_admin_configure_attribute(array $args=array())
                         'eav',
                         'admin',
                         'add_attribute',
-                        array('objectid' => $parentobjectid)
+                        ['objectid' => $parentobjectid]
                     );
                 }
                 xarController::redirect($return_url);
@@ -169,7 +169,7 @@ function eav_admin_configure_attribute(array $args=array())
  */
 function eav_config_propval($proptype)
 {
-    $data = array();
+    $data = [];
     if (empty($proptype)) {
         xarTpl::setPageTitle(xarML('Sample Configuration for DataProperty Types'));
         return $data;
@@ -196,7 +196,7 @@ function eav_config_propval($proptype)
         }
 
         // pass the current value as configuration rule
-        $data['configuration'] = isset($configuration) ? $configuration : '';
+        $data['configuration'] = $configuration ?? '';
 
         $isvalid = $property->updateConfiguration($data);
 
@@ -224,7 +224,7 @@ function eav_config_propval($proptype)
     $data['proptype'] = $proptype;
     $data['propertytype'] = $property;
     $data['propinfo'] =& $property;
-    $object = & DataPropertyMaster::getProperty(array('type' => $proptype));
+    $object = & DataPropertyMaster::getProperty(['type' => $proptype]);
     $data['propertytype'] = $object;
 
     xarTpl::setPageTitle(xarML('Sample Configuration for DataProperty Type #(1)', $proptype));

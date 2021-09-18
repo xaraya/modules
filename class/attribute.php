@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class Attribute extends DataObject
 {
-    private $valuefields = array('tinyint', 'integer', 'decimal', 'string', 'text');
+    private $valuefields = ['tinyint', 'integer', 'decimal', 'string', 'text'];
 
     public function __construct(DataObjectDescriptor $descriptor)
     {
@@ -23,12 +23,12 @@ class Attribute extends DataObject
         $this->adjustStates();
     }
 
-    public function getItem(array $args = array())
+    public function getItem(array $args = [])
     {
         $itemid = parent::getItem($args);
     }
-    
-    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
+
+    public function checkInput(array $args = [], $suppress=0, $priority='dd')
     {
         $this->properties['property_id']->checkInput();
         echo $this->properties['property_id']->value;
@@ -42,30 +42,30 @@ class Attribute extends DataObject
         return parent::checkInput();
     }
 
-    public function createItem(array $args = array())
+    public function createItem(array $args = [])
     {
         $this->adjustStates();
         return parent::createItem($args);
     }
-    
-    public function updateItem(array $args = array())
+
+    public function updateItem(array $args = [])
     {
         $this->adjustStates();
         return parent::updateItem($args);
     }
-    
-    public function deleteItem(array $args = array())
+
+    public function deleteItem(array $args = [])
     {
         $this->adjustStates();
         return parent::deleteItem($args);
     }
-    
+
     private function adjustStates($propertytype=0)
     {
         if (empty($propertytype)) {
             $propertytype = $this->properties['property_id']->value;
         }
-        $property = DataPropertyMaster::getProperty(array('type' => $propertytype));
+        $property = DataPropertyMaster::getProperty(['type' => $propertytype]);
         foreach ($this->valuefields as $field) {
             if ($property->basetype == $field) {
                 continue;

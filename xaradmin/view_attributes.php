@@ -20,7 +20,7 @@
             return;
         }
 
-        $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_attributes_def'));
+        $data['object'] = DataObjectMaster::getObjectList(['name' => 'eav_attributes_def']);
 
         if (!isset($data['object'])) {
             return;

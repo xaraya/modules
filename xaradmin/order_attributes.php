@@ -40,13 +40,13 @@ function eav_admin_order_attributes()
 
     if (empty($direction)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('direction', 'admin', 'orderprops', 'dynamicdata');
+        $vars = ['direction', 'admin', 'orderprops', 'dynamicdata'];
         throw new BadParameterException($vars, $msg);
     }
 
     if (empty($itemid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('itemid', 'admin', 'orderprops', 'dynamicdata');
+        $vars = ['itemid', 'admin', 'orderprops', 'dynamicdata'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -54,10 +54,10 @@ function eav_admin_order_attributes()
         'eav',
         'user',
         'getattributes',
-        array('object_id' => $object_id,
-                                         'allprops' => true)
+        ['object_id' => $object_id,
+                                         'allprops' => true, ]
     );
-    $orders = array();
+    $orders = [];
     $currentpos = null;
     foreach ($fields as $fname => $field) {
         if ($field['id'] == $itemid) {
@@ -103,8 +103,8 @@ function eav_admin_order_attributes()
         'eav',
         'admin',
         'add_attribute',
-        array('objectid'    => $object_id,
-        )
+        ['objectid'    => $object_id,
+        ]
     ));
     return true;
 }

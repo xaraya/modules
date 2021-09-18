@@ -23,10 +23,10 @@
         if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_entities'));
-        
+        $data['object'] = DataObjectMaster::getObject(['name' => 'eav_entities']);
+
         if ($data['confirm']) {
-    
+
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
             if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
                 return;
@@ -36,10 +36,10 @@
             if (!xarSec::confirmAuthKey()) {
                 return;
             }
-        
+
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
-        
+
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
                 return xarTpl::module('eav', 'admin', 'new_entity', $data);

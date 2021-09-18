@@ -27,7 +27,7 @@
         #
         $q = new Query();
         $prefix = xarDB::getPrefix();
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_entities";
         if (!$q->run($query)) {
             return;
@@ -47,7 +47,7 @@
         }
         $q = new Query();
         $prefix = xarDB::getPrefix();
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_attributes_def";
         if (!$q->run($query)) {
             return;
@@ -73,7 +73,7 @@
         if (!$q->run($query)) {
             return;
         }
-  
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_attributes";
         if (!$q->run($query)) {
             return;
@@ -101,7 +101,7 @@
         if (!$q->run($query)) {
             return;
         }
-  
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_data";
         if (!$q->run($query)) {
             return;
@@ -154,14 +154,14 @@
         # Create DD objects
         #
         $module = 'eav';
-        $objects = array(
+        $objects = [
                         'eav_entities',
                         'eav_attributes_def',
                         'eav_attributes',
                         'eav_empty',
-                         );
+                         ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
 
@@ -170,7 +170,7 @@
         # Set up modvars
         #
         xarModVars::set('eav', 'use_module_icons', true);
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'eav'));
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'eav']);
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
@@ -194,5 +194,5 @@
     function eav_delete()
     {
         $this_module = 'eav';
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
     }

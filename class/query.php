@@ -39,7 +39,7 @@ class EAVQuery extends Query
         }
         // Find the objectid from Object name
         if (!is_numeric($objectname)) {
-            $objectInfo = DataObjectMaster::getObjectInfo(array('name' => $objectname));
+            $objectInfo = DataObjectMaster::getObjectInfo(['name' => $objectname]);
             $object_id = $objectInfo['objectid'];
             if (empty($object_id)) {
                 return false;
@@ -90,11 +90,11 @@ class EAVQuery extends Query
         if (!parent::run()) {
             return;
         }
-        $columns = array();
-        $columnnames = array();
-        $colummids = array();
+        $columns = [];
+        $columnnames = [];
+        $colummids = [];
         foreach (parent::output() as $column) {
-            $columns[$column['columnid']] = array('name' => $column['name'], 'label' => $column['label'], 'type' =>$column['type']);
+            $columns[$column['columnid']] = ['name' => $column['name'], 'label' => $column['label'], 'type' =>$column['type']];
             $columnnames[$column['name']] = $column['columnid'];
             $colummids[] = $column['columnid'];
         }
@@ -129,7 +129,7 @@ class EAVQuery extends Query
     {
         $rows = $this->output();
         if (empty($rows)) {
-            return array();
+            return [];
         }
         return $rows[$row];
     }
@@ -147,7 +147,7 @@ class EAVQuery extends Query
         $this->fieldsempty = 0;
         parent::eq($this->initalias . '.attribute_id',$this->columnnames[$field]);
     } */
-    
+
 //    function addfields($fields)
 //    {
 //        foreach ($fields as $field) $this->addfield($field);
@@ -173,7 +173,7 @@ class EAVQuery extends Query
         //$this->adjunctclause($field1);
         parent::eq($field1, $field2);
     }
- 
+
     public function ne($field1, $field2, $active=1)
     {
         $this->adjunctclause($field1);

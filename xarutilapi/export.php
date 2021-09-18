@@ -17,12 +17,12 @@
  *
  * @author mikespub <mikespub@xaraya.com>
  */
-function eav_utilapi_export(array $args=array())
+function eav_utilapi_export(array $args=[])
 {
-    $myobject = DataObjectMaster::getObject(array('name' => 'objects'));
+    $myobject = DataObjectMaster::getObject(['name' => 'objects']);
     extract($args);
     if (isset($args['objectref'])) {
-        $myobject->getItem(array('itemid' => $args['objectref']->objectid));
+        $myobject->getItem(['itemid' => $args['objectref']->objectid]);
     } else {
         if (empty($objectid)) {
             $objectid = null;
@@ -37,7 +37,7 @@ function eav_utilapi_export(array $args=array())
             $itemid = null;
         }
 
-        $myobject->getItem(array('itemid' => $itemid));
+        $myobject->getItem(['itemid' => $itemid]);
     }
 
     if (!isset($myobject) || empty($myobject->label)) {
@@ -45,11 +45,11 @@ function eav_utilapi_export(array $args=array())
     }
 
     // get the list of properties for a EAV
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'eav_entities']);
     $object_properties = $data['object']->getItems();
-      
-    $property_properties = xarMod::apiFunc('eav', 'user', 'getattributes', array('object_id' => $objectid));
-    
+
+    $property_properties = xarMod::apiFunc('eav', 'user', 'getattributes', ['object_id' => $objectid]);
+
     $proptypes = DataPropertyMaster::getPropertyTypes();
 
     $prefix = xarDB::getPrefix();
@@ -60,7 +60,7 @@ function eav_utilapi_export(array $args=array())
     $xml .= '<object name="'.$myobject->properties['name']->value.'">'."\n";
     foreach ($object_properties as $objectProperties) {
         foreach ($objectProperties as $name => $value) {
-            $args=array();
+            $args=[];
             $args['objectid'] = $objectProperties['object'];
             $info = $data['object']->getObjectInfo($args);
             if ($name == "object") {
@@ -73,11 +73,11 @@ function eav_utilapi_export(array $args=array())
 
     //Attribute defination
     $xml .= "  <properties>\n";
-    $properties = DataPropertyMaster::getProperties(array('objectid' => $myobject->properties['objectid']->value));
+    $properties = DataPropertyMaster::getProperties(['objectid' => $myobject->properties['objectid']->value]);
     foreach ($property_properties as $key => $value) {
         $xml .= '    <property name="'.$value['name'].'">' . "\n";
         foreach ($value as $subkey => $subvalue) {
-            $args=array();
+            $args=[];
             $args['objectid'] = $value['object_id'];
             $info = $data['object']->getObjectInfo($args);
             if ($subkey == "object_id") {

@@ -24,11 +24,11 @@
         if (!isset($values)) {
             throw new Exception(xarML('Missing values for eav_adminapi_getvalue'));
         }
-        
+
         if (isset($property)) {
             $type = $property->basetype;
         }
-        
+
         switch ($type) {
             case 'string': $value = $values['default_string']; break;
             case 'text': $value = $values['default_text']; break;
@@ -36,6 +36,6 @@
             case 'integer': $value = $values['default_integer']; break;
             case 'number': $value = $values['default_tinyint']; break;
         }
-        
+
         return $value;
     }

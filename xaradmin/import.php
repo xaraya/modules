@@ -16,7 +16,7 @@
  */
 
 sys::import('modules.dynamicdata.class.objects.master');
-function eav_admin_import(array $args=array())
+function eav_admin_import(array $args=[])
 {
     // Security
     if (!xarSecurity::check('AdminDynamicData')) {
@@ -48,7 +48,7 @@ function eav_admin_import(array $args=array())
     extract($args);
 
     $data['warning'] = '';
-    $data['options'] = array();
+    $data['options'] = [];
 
     if (empty($basedir)) {
         $basedir = sys::code() . 'modules/eav';
@@ -61,10 +61,10 @@ function eav_admin_import(array $args=array())
         'dynamicdata',
         'admin',
         'browse',
-        array('basedir' => $basedir,
-                                 'filetype' => $filetype)
+        ['basedir' => $basedir,
+                                 'filetype' => $filetype, ]
     );
-    
+
     if (!isset($files) || count($files) < 1) {
         $data['warning'] = xarML('There are currently no XML files available for import in "#(1)"', $basedir);
         return $data;
@@ -72,7 +72,7 @@ function eav_admin_import(array $args=array())
 
     if (empty($refresh) && (!empty($import) || !empty($xml))) {
         if (!xarSec::confirmAuthKey()) {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         }
 
         if (empty($keepitemid)) {
@@ -94,16 +94,16 @@ function eav_admin_import(array $args=array())
                     'eav',
                     'util',
                     'import',
-                    array('file' => $basedir . '/' . $file,
+                    ['file' => $basedir . '/' . $file,
                                             'keepitemid' => $keepitemid,
                                             'overwrite' =>  $overwrite,
                                             'prefix' => $data['prefix'],
-                                            )
+                                            ]
                 );
             } catch (DuplicateException $e) {
-                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', ['layout' => 'duplicate_name', 'name' => $e->getMessage()]);
             } catch (Exception $e) {
-                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', ['layout' => 'bad_definition', 'name' => $e->getMessage()]);
             }
         } else {
             try {
@@ -111,16 +111,16 @@ function eav_admin_import(array $args=array())
                     'eav',
                     'util',
                     'import',
-                    array('xml' => $xml,
+                    ['xml' => $xml,
                                             'keepitemid' => $keepitemid,
                                             'overwrite' =>  $overwrite,
                                             'prefix' => $data['prefix'],
-                                            )
+                                            ]
                 );
             } catch (DuplicateException $e) {
-                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'duplicate_name', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', ['layout' => 'duplicate_name', 'name' => $e->getMessage()]);
             } catch (Exception $e) {
-                return xarTpl::module('dynamicdata', 'user', 'errors', array('layout' => 'bad_definition', 'name' => $e->getMessage()));
+                return xarTpl::module('dynamicdata', 'user', 'errors', ['layout' => 'bad_definition', 'name' => $e->getMessage()]);
             }
         }
         if (empty($objectname)) {
@@ -131,7 +131,7 @@ function eav_admin_import(array $args=array())
             'eav',
             'admin',
             'add_attribute',
-            array('objectname' => $objectname)
+            ['objectname' => $objectname]
         ));
         return true;
     }
@@ -139,8 +139,8 @@ function eav_admin_import(array $args=array())
     natsort($files);
     array_unshift($files, '');
     foreach ($files as $file) {
-        $data['options'][] = array('id' => $file,
-                                    'name' => $file);
+        $data['options'][] = ['id' => $file,
+                                    'name' => $file, ];
     }
 
     xarTpl::setPageTemplateName('admin');
