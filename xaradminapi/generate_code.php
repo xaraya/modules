@@ -15,17 +15,16 @@
 function reminders_adminapi_generate_code($args)
 {
     // Support both objects and arrays
-	if (!empty($args['object'])) {
-		// Get the raw values of this object
-		$fields = $args['object']->getFieldValues(array(), 1);
-	} else {
-		$fields = $args['array'];
-	}
+    if (!empty($args['object'])) {
+        // Get the raw values of this object
+        $fields = $args['object']->getFieldValues([], 1);
+    } else {
+        $fields = $args['array'];
+    }
 
-	// CHECKME: think of something better here
-	// Should use the item's data?
-	$code = MD5(xarUser::getVar('id') . time());
+    // CHECKME: think of something better here
+    // Should use the item's data?
+    $code = MD5(xarUser::getVar('id') . time());
 
     return $code;
 }
-?>

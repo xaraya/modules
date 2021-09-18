@@ -31,22 +31,21 @@
     $modversion['user']           = true;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Miscellaneous';
-    $modversion['securityschema'] = array();
-    $modversion['dependency']     = array();
-	$modversion['dependencyinfo'] = array(
-									0 => array(
-											'name' => 'Xaraya Core',
-											'version_ge' => '2.4.0'
-										 ),
-									189 => array(
-											'name' => 'scheduler',
-											'displayname' => 'Scheduler module',
-											'minversion' => '2.0.0'
-										 ),
-									30064 => array(
-											'name' => 'mailer',
-											'displayname' => 'Mailer module',
-											'minversion' => '1.0.0'
-										 ),
-									);
-?>
+    $modversion['securityschema'] = [];
+    $modversion['dependency']     = [];
+    $modversion['dependencyinfo'] = [
+                                    0 => [
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.4.0',
+                                         ],
+                                    189 => [
+                                            'name' => 'scheduler',
+                                            'displayname' => 'Scheduler module',
+                                            'minversion' => '2.0.0',
+                                         ],
+                                    30064 => [
+                                            'name' => 'mailer',
+                                            'displayname' => 'Mailer module',
+                                            'minversion' => '1.0.0',
+                                         ],
+                                    ];

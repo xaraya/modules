@@ -19,7 +19,7 @@
  * @return integer exitcode to gateway script
  * @todo what do we do with security here?
  */
-function reminders_cliapi_process(array $args=array())
+function reminders_cliapi_process(array $args=[])
 {
     xarLog::message("Reminders: processing the reminders queue", xarLog::LEVEL_DEBUG);
     extract($args);
@@ -40,9 +40,9 @@ function reminders_cliapi_process(array $args=array())
         echo "Authentication failed\n";
         return 1;
     }
-    
+
     // Authentication OK. Run the reminders process
     xarMod::apiFunc('reminders', 'admin', 'process');
-    
+
     return true;
 }

@@ -18,7 +18,7 @@ function reminders_userapi_get_email_dates($args)
 {
     if (isset($args['array'])) {
         // We have an array of item values ("an item") from a dataobject
-        $dates = array();
+        $dates = [];
         for ($i=1;$i<=10;$i++) {
             // Ignore dates with values 0
             if ($args['array']['reminder_' . $i] == 0) {

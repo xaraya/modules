@@ -27,7 +27,7 @@ function reminders_init()
 #
     $q = new Query();
     $prefix = xarDB::getPrefix();
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_entries";
     if (!$q->run($query)) {
         return;
@@ -89,7 +89,9 @@ function reminders_init()
     }
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_history";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_reminders_history (
         id                integer unsigned NOT NULL auto_increment,
         entry_id          integer unsigned NOT NULL default 0, 
@@ -99,9 +101,11 @@ function reminders_init()
         timecreated       integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
     )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
     # Set up masks
 #
@@ -132,13 +136,13 @@ function reminders_init()
     # Create DD objects
 #
     $module = 'reminders';
-    $objects = array(
+    $objects = [
                      'reminders_emails',
                      'reminders_entries',
                      'reminders_history',
-                     );
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -146,13 +150,13 @@ function reminders_init()
 #
     # Set up modvars
 #
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'reminders'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'reminders']);
     $module_settings->initialize();
 
     // Add variables like this next one when creating utility modules
     // This variable is referenced in the xaradmin/modifyconfig-utility.php file
     // This variable is referenced in the xartemplates/includes/defaults.xd file
-    xarModVars::set('reminders', 'defaultmastertable','reminders_history');
+    xarModVars::set('reminders', 'defaultmastertable', 'reminders_history');
     xarModVars::set('reminders', 'debugmode', false);
     xarModVars::set('reminders', 'save_history', false);
 
@@ -193,5 +197,5 @@ function reminders_delete()
     $q->run();
 
     // Remove everything else concerning the module
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
 }

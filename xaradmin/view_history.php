@@ -17,12 +17,13 @@
 
 function reminders_admin_view_history()
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurityCheck('ManageReminders')) {
+        return;
+    }
 
     $modulename = 'reminders';
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_history'));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'reminders_history']);
     return $data;
 }
-?>

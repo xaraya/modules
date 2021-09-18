@@ -14,7 +14,7 @@
 
 function reminders_adminapi_get_warning_period_time($args)
 {
-    $days = array(
+    $days = [
             A0          => 0,
             A1_day      => 1,
             A2_days     => 2,
@@ -30,7 +30,7 @@ function reminders_adminapi_get_warning_period_time($args)
             A3_months   => 90,
             A6_months   => 180,
             A1_year     => 365,
-            );
+            ];
     if ($args['timeframe'] = 'seconds') {
         foreach ($days as $k => $v) {
             $days[$k] = $v * 86400;

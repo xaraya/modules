@@ -18,9 +18,9 @@
 // TODO: turn this into an xml file
 function reminders_dataapi_adminmenu()
 {
-    return array(
-        array('includes' => array('main','overview'), 'target' => 'main', 'label' => xarML('Reminders Overview')),
-        array('mask' => 'ManageReminders', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')),
-        array('mask' => 'AdminReminders', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Reminders configuration'), 'label' => xarML('Modify Config')),
-    );
+    return [
+        ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Reminders Overview')],
+        ['mask' => 'ManageReminders', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
+        ['mask' => 'AdminReminders', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Reminders configuration'), 'label' => xarML('Modify Config')],
+    ];
 }

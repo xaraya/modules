@@ -41,7 +41,7 @@ function reminders_admin_modifyconfig_utility()
         }
         array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
     } else {
-        $hooks['tabs'] = array();
+        $hooks['tabs'] = [];
     }
 
     $regid = xarMod::getRegID($tabmodule);
@@ -85,10 +85,10 @@ function reminders_admin_modifyconfig_utility()
                 return;
             }
 
-            $modvars = array(
+            $modvars = [
                             'defaultmastertable',
                             'bar',
-                            );
+                            ];
 
             if ($data['tab'] == 'reminders_general') {
                 xarModVars::set('reminders', 'items_per_page', $items_per_page);
@@ -107,7 +107,7 @@ function reminders_admin_modifyconfig_utility()
                 }
             }
 
-            xarController::redirect(xarController::URL('reminders', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('reminders', 'admin', 'modifyconfig', ['tabmodule' => $tabmodule, 'tab' => $data['tab']]));
             // Return
             return true;
             break;

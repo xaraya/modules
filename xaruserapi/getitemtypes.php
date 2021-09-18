@@ -16,14 +16,14 @@
  */
 function reminders_userapi_getitemtypes($args)
 {
-    $itemtypes = array();
+    $itemtypes = [];
 
-    $itemtypes[1] = array('label' => xarML('Native Reminders'),
+    $itemtypes[1] = ['label' => xarML('Native Reminders'),
                           'title' => xarML('View Reminders'),
-                          'url'   => xarController::URL('reminders', 'user', 'view')
-                         );
+                          'url'   => xarController::URL('reminders', 'user', 'view'),
+                         ];
 
-    $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30227, 'native' => false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', ['moduleid' => 30227, 'native' => false]);
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
@@ -31,7 +31,7 @@ function reminders_userapi_getitemtypes($args)
     return array_combine($keys,$values);
     */
 
-    $types = array();
+    $types = [];
     foreach ($itemtypes as $key => $value) {
         $types[$key] = $value;
     }

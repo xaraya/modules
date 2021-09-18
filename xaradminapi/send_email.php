@@ -10,76 +10,76 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
- 
+
 function reminders_adminapi_send_email($data)
 {
     # --------------------------------------------------------
 #
     # Get some properties for use in the template
 #
-    $data['name'] = DataPropertyMaster::getProperty(array('name' => 'name'));
-    $data['checkbox'] = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
-    $data['date'] = DataPropertyMaster::getProperty(array('name' => 'date'));
-    $data['number'] = DataPropertyMaster::getProperty(array('name' => 'number'));
-    $data['integerbox'] = DataPropertyMaster::getProperty(array('name' => 'integerbox'));
-    $data['floatbox'] = DataPropertyMaster::getProperty(array('name' => 'floatbox'));
-    $data['textbox'] = DataPropertyMaster::getProperty(array('name' => 'textbox'));
-    $data['textarea'] = DataPropertyMaster::getProperty(array('name' => 'textarea'));
+    $data['name'] = DataPropertyMaster::getProperty(['name' => 'name']);
+    $data['checkbox'] = DataPropertyMaster::getProperty(['name' => 'checkbox']);
+    $data['date'] = DataPropertyMaster::getProperty(['name' => 'date']);
+    $data['number'] = DataPropertyMaster::getProperty(['name' => 'number']);
+    $data['integerbox'] = DataPropertyMaster::getProperty(['name' => 'integerbox']);
+    $data['floatbox'] = DataPropertyMaster::getProperty(['name' => 'floatbox']);
+    $data['textbox'] = DataPropertyMaster::getProperty(['name' => 'textbox']);
+    $data['textarea'] = DataPropertyMaster::getProperty(['name' => 'textarea']);
 
     # --------------------------------------------------------
 #
     # Send the participant an email with the attachments
 #
 
-    $result = array();
-    $attachments = array();
+    $result = [];
+    $attachments = [];
     $data['name']->value = $data['info']['name_1'];
-    
+
     // Set a placeholder name if we don't have one
     if (empty($data['name']->value)) {
-        $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
+        $data['name']->setValue([['id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname')]]);
     }
-    
-	// Get the name and address of the chosen participant
-	$recipientname    = $data['name']->getValue();
-	$recipientaddress = $data['info']['address_1'];
 
-	// Add a CC if there is one
-	if (!empty($data['info']['address_1'])) {
-	    $data['name']->value = $data['info']['name_1'];
-	    $ccname = $data['name']->getValue();
-    	$ccaddress = array($data['info']['address_1'] => $ccname);
-	} else {
-    	$ccaddress = array();
-	}
+    // Get the name and address of the chosen participant
+    $recipientname    = $data['name']->getValue();
+    $recipientaddress = $data['info']['address_1'];
+
+    // Add a CC if there is one
+    if (!empty($data['info']['address_1'])) {
+        $data['name']->value = $data['info']['name_1'];
+        $ccname = $data['name']->getValue();
+        $ccaddress = [$data['info']['address_1'] => $ccname];
+    } else {
+        $ccaddress = [];
+    }
     // Maybe we'll add a BCC at some point
-    $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
+    $bccaddress = $data['copy_emails'] ? [xarUser::getVar('email')] : [];
 
     $data['reminder_text'] = trim($data['info']['message']);
     $data['entry_id']      = (int)$data['info']['id'];
     $data['code']          = $data['info']['code'];
     $data['due_date']      = (int)$data['info']['due_date'];
-    
+
     // Get today's date
     $datetime = new XarDateTime();
     $datetime->settoday();
     $today = $datetime->getTimestamp();
 
     if ($data['due_date'] == $today) {
-    	// If today is the due date, then this is the last email
-		$data['remaining'] = 0;
+        // If today is the due date, then this is the last email
+        $data['remaining'] = 0;
     } else {
-		// Otherwise, get the number of remaining emails to send
-		$remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['info']));
-		// By default we also send an email on the due date
-		$data['remaining'] = count($remaining) + 1;
+        // Otherwise, get the number of remaining emails to send
+        $remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', ['array' => $data['info']]);
+        // By default we also send an email on the due date
+        $data['remaining'] = count($remaining) + 1;
     }
 
     unset($data['info']);
 
     try {
         // Set the paramenters for the send function
-        $args = array('sendername'       => xarModVars::get('reminders', 'defaultsendername'),
+        $args = ['sendername'       => xarModVars::get('reminders', 'defaultsendername'),
                       'senderaddress'    => xarModVars::get('reminders', 'defaultsenderaddress'),
                       'recipientname'    => $recipientname,
                       'recipientaddress' => $recipientaddress,
@@ -87,7 +87,7 @@ function reminders_adminapi_send_email($data)
                       'bccaddresses'     => $bccaddress,
                       'attachments'      => $attachments,
                       'data'             => $data,
-                    );
+                    ];
 
         // Check if we have a subject/message or a message ID
         if (empty($data['params']['subject']) && empty($data['params']['message_body'])) {
@@ -102,8 +102,8 @@ function reminders_adminapi_send_email($data)
             // We have a message ID
             $args['id'] = (int)$data['params']['message_id'];
             // Get the message template
-            $object = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
-            $object->getItem(array('itemid' => $args['id']));
+            $object = DataObjectMaster::getObject(['name' => 'mailer_mails']);
+            $object->getItem(['itemid' => $args['id']]);
             // The subject can be overwritten
             $args['subject'] = $object->properties['subject']->value;
             if (!empty($data['params']['subject'])) {
@@ -135,25 +135,24 @@ function reminders_adminapi_send_email($data)
             $args['mail_type'] = 2;
         }
         // Send the email
-        $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
-        
+        $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $args);
+
         // Save to the database if called for
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
-			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
-			$history->createItem(array(
-									'entry_id' => $data['entry_id'],
-									'message'  => $data['reminder_text'],
-									'address'  => $recipientaddress,
-									'due_date' => $data['due_date'],
-								));
+            $history = DataObjectMaster::getObject(['name' => 'reminders_history']);
+            $history->createItem([
+                                    'entry_id' => $data['entry_id'],
+                                    'message'  => $data['reminder_text'],
+                                    'address'  => $recipientaddress,
+                                    'due_date' => $data['due_date'],
+                                ]);
         }
-      
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
     }
     $result['name'] = $recipientname;
     $result['email'] = $recipientaddress;
-    
+
     // if we are testing, then add the test name and email
     if ($data['test']) {
         // If we are testing, then send to this user

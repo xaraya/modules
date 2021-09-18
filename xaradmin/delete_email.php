@@ -28,14 +28,14 @@ function reminders_admin_delete_email()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'reminders';
     $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
-    
+
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -43,7 +43,7 @@ function reminders_admin_delete_email()
 
         // Delete the item
         $item = $data['object']->deleteItem();
-            
+
         // Jump to the next page
         xarController::redirect(xarController::URL('reminders', 'admin', 'view_emails'));
         return true;
