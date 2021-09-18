@@ -22,7 +22,7 @@
         }
 
         // Set a return url
-        xarSession::setVar('ddcontext.' . 'payments', array('return_url' => xarServer::getCurrentURL()));
+        xarSession::setVar('ddcontext.' . 'payments', ['return_url' => xarServer::getCurrentURL()]);
 
-        return array();
+        return [];
     }

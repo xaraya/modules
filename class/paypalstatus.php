@@ -16,13 +16,13 @@ class paypalstatus
     public function displayStatus()
     {
         $status = "<table border = '1'>";
-        
+
         foreach ($_POST as $key => $value) {
             $status .=  "<tr><td>".$key."</td><td>".$value."</td></tr>";
         }
-        
+
         $status .= "</table>";
-        
+
         return $status;
     }
 }

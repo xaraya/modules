@@ -14,7 +14,7 @@
  * Create an invoice with a Swiss orange payment slip
  *
  */
- 
+
 // Make sure we have the required libraries
 $filepath = sys::lib() . 'tcpdf/tcpdf.php';
 if (!file_exists($filepath)) {
@@ -36,7 +36,7 @@ $filepath = sys::lib() . 'SwissPaymentSlip/src/SwissPaymentSlip/SwissPaymentSlip
 if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the SwissPaymentSlipData library'));
 }
-    
+
 // Import necessary classes
 sys::import('tcpdf/tcpdf');
 sys::import('SwissPaymentSlip.src.SwissPaymentSlip.SwissPaymentSlip.SwissPaymentSlip');

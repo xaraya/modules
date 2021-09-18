@@ -56,7 +56,7 @@ function payments_admin_multiops()
 
 
     // doin stuff with items
-    $listing = DataObjectMaster::getObject(array('name' => $object));
+    $listing = DataObjectMaster::getObject(['name' => $object]);
     if (!empty($listing->filepath)) {
         include_once($listing->filepath);
     }
@@ -67,10 +67,10 @@ function payments_admin_multiops()
                 continue;
             }
             //get the listing
-            $item = $listing->getItem(array('itemid' => $val));
+            $item = $listing->getItem(['itemid' => $val]);
             $thenumber = $listing->properties['number']->value;
             $listing->properties['number']->initialization_transform = true;
-            if (!$listing->updateItem(array('state' => $operation, 'number' => $thenumber))) {
+            if (!$listing->updateItem(['state' => $operation, 'number' => $thenumber])) {
                 return;
             }
         }
@@ -83,8 +83,8 @@ function payments_admin_multiops()
                 continue;
             }
             //get the listing
-            $item = $listing->getItem(array('itemid' => $val));
-            if (!$listing->updateItem(array('state' => $operation))) {
+            $item = $listing->getItem(['itemid' => $val]);
+            if (!$listing->updateItem(['state' => $operation])) {
                 return;
             }
         }
@@ -95,7 +95,7 @@ function payments_admin_multiops()
                 continue;
             }
             //get the listing
-            $item = $listing->getItem(array('itemid' => $val));
+            $item = $listing->getItem(['itemid' => $val]);
             if (!$listing->deleteItem()) {
                 return;
             }

@@ -20,7 +20,7 @@ sys::import('modules.payments.class.dta');
 class DTA_TA837 extends DTA
 {
     protected $transactionType = 837;
-    
+
     public function setPaymentType($paymentType=0)
     {
         $this->paymentType = $paymentType;

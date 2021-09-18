@@ -21,7 +21,7 @@
         if (!xarSecurity::check('SubmitPayments')) {
             return;
         }
-        
+
         //Psspl:Implemented the code for return url.
         //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
         if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, xarVar::DONT_SET)) {
@@ -40,7 +40,7 @@
                 return;
             }
         }
-        
+
         /*
         //Psspl:Implemented the code for return url.
         $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));
@@ -53,18 +53,18 @@
         try {
             $data['return_url'] = unserialize($return_url);
         } catch (Exception $e) {
-            $data['return_url'] = array();
+            $data['return_url'] = [];
         }
-        
+
         $data['authid'] = xarSec::genAuthKey();
-        
+
         $authid=$data['authid'];
-        
+
         //Psspl : added time for more security and resolving error in paypal of unique transaction ID.
         $authid .= time();
-        
+
         xarSession::setVar('AUTHID', $authid);
-        
+
         //Psspl: Fetched the gateway id from the module variables
         $gatewayid=xarModVars::get('payments', 'gateway');
         //Psspl:IF the input is not good repropose the previous page.
@@ -72,16 +72,16 @@
         //       combobox from the payment_relation table
         $strCcType="";
         //Psspl:define array type.
-        $ar1=array();
-        $relalionObject=DataObjectMaster::getObjectList(array('name' => 'payments_relation'));
+        $ar1=[];
+        $relalionObject=DataObjectMaster::getObjectList(['name' => 'payments_relation']);
         $data['properties2']=$relalionObject->getProperties();
-        $data['items2']=$relalionObject->getItems(array('where' => "gateway_id eq $gatewayid"));
+        $data['items2']=$relalionObject->getItems(['where' => "gateway_id eq $gatewayid"]);
         foreach ($data['items2'] as $key1=>$value1) {
             foreach ($value1 as $k1 => $v1) {
                 if ($k1=='paymentmethod_id') {
-                    $object1=DataObjectMaster::getObjectList(array('name' => 'payments_paymentmethods'));
+                    $object1=DataObjectMaster::getObjectList(['name' => 'payments_paymentmethods']);
                     $data['properties1']=$object1->getProperties();
-                    $data['items3']=$object1->getItems(array('where' => "id eq $v1"));
+                    $data['items3']=$object1->getItems(['where' => "id eq $v1"]);
                     foreach ($data['items3'] as $key=>$value) {
                         foreach ($value as $k => $v) {
                             if ($k=='id') {
@@ -113,7 +113,7 @@
         }
 
         // Get the payment information
-        $paymentobject = DataObjectMaster::getObject(array('name' => 'payments_ccpayments'));
+        $paymentobject = DataObjectMaster::getObject(['name' => 'payments_ccpayments']);
         $fields = unserialize(xarSession::GetVar('paymentfields'));
         //Psspl:set the fieldvalues previously selected.
         if (($fields != null || $fields != '') && $MakeChanges) {
@@ -125,7 +125,7 @@
 
         // Get the order information
         $orderobjectname = xarModVars::get('payments', 'orderobject');
-        $orderobject = DataObjectMaster::getObject(array('name' => $orderobjectname));
+        $orderobject = DataObjectMaster::getObject(['name' => $orderobjectname]);
         if (!$MakeChanges) {
             // Check for an order object, suppress exception if not found
             $isvalid = $orderobject->checkInput();
@@ -134,11 +134,11 @@
                 //Psspl:Added the code for saferpay gateway support.
                 if ($gatewayid == PAYMENT_GATEWAY_SAFERPAY) {
                     $data['object'] = $data['order_object'];
-                    
+
                     $data['MakeChanges']=null;
-                    
+
                     xarSession::setVar('error_message', "");
-                    
+
                     return xarTpl::module('payments', 'user', 'amount', $data);
                 }
                 $data['order_properties'] = $orderobject->getProperties();
@@ -165,14 +165,14 @@
         xarSession::SetVar('paymentfields', serialize($paymentfields));
         $orderfields = $orderobject->getFieldValues();
         xarSession::SetVar('orderfields', serialize($orderfields));
-        
+
         //Psspl: modified the code for storing return url into session.
 //        xarSession::setVar('return_url',serialize($data['return_url']));
-        
+
         // Check for demo mode
         $demousers = unserialize(xarModVars::get('payments', 'demousers'));
         if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUser::getVar('uname'), $demousers)) {
-            return xarTpl::module('payments', 'user', 'demomode1', array('returnurl' => ''));
+            return xarTpl::module('payments', 'user', 'demomode1', ['returnurl' => '']);
         }
 
         //Psspl:Added the code for paypal gateway.
@@ -186,11 +186,11 @@
             xarSession::SetVar('paymentfields', serialize($paymentfields));
             $orderfields = $orderobject->getFieldValues();
             $orderfields['amount'] = $orderfields['net_amount'];
-            
+
             xarSession::SetVar('orderfields', serialize($orderfields));
             //Psspl: modified the code for storing return url into session.
 //            xarSession::setVar('return_url',serialize($data['return_url']));
-            
+
             if ($gatewayid == PAYMENT_GATEWAY_PAYPAL) {
                 xarSession::setVar('PAYPAL_FLAG', 'Inactive');
             }
@@ -207,21 +207,21 @@
                     return xarTpl::module('payments', 'user', 'amount', $data);
                 }
             }
-            
-            $object = DataObjectMaster::getObject(array('name' => 'payments_gateways'));
+
+            $object = DataObjectMaster::getObject(['name' => 'payments_gateways']);
             $module_id = xarMod::getRegID(xarMod::getName());
-            $object->getItem(array('itemid' => xarModItemVars::get('payments', 'gateway', $module_id)));
+            $object->getItem(['itemid' => xarModItemVars::get('payments', 'gateway', $module_id)]);
             $data['gateway'] = $object->getFieldValues();
 
             if (xarModVars::get('payments', 'runpayments')) {
                 //sys::import('modules.payments.class.' . $data['gateway']['class']);
                 include_once(sys::code().$data['gateway']['class_path']);
                 if (class_exists($data['gateway']['class'])) {
-                    $objgateway = new $data['gateway']['class'];
+                    $objgateway = new $data['gateway']['class']();
                     xarSession::setVar('gateway', $data['gateway']['class']);
                     if ($data['gateway']['id'] == PAYMENT_GATEWAY_PAYPAL or $data['gateway']['id'] == PAYMENT_GATEWAY_SAFERPAY or $data['gateway']['id'] = PAYMENT_GATEWAY_GESTPAY) {
                         // ICETODO hardcoded
-                        $args = array();
+                        $args = [];
                         switch ($orderfields['amount']) {
                             case 30:
                             $args['title'] = xarML('Attestation');
@@ -236,7 +236,7 @@
                             $args['description'] = xarML('Family Package Subscription');
                             break;
                         }
-                        
+
                         //$authid=$data['authid'];
                         //xarSession::setVar('AUTHID',$authid);
                         $response = $objgateway->update_status();
@@ -255,7 +255,7 @@
                         }
                     }
                     if (xarSession::getVar('error_message')) {
-                        xarController::redirect(xarController::URL('payments', 'user', 'phase1', array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1,'errorFlag'=>1)));
+                        xarController::redirect(xarController::URL('payments', 'user', 'phase1', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1,'errorFlag'=>1]));
                         return true;
                     }
                 } else {

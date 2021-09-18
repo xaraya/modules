@@ -29,27 +29,27 @@ function payments_user_clone_transaction()
     if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::DONT_SET)) {
         return;
     }
-    
+
     if (empty($itemid)) {
         xarController::redirect(xarController::URL('payment', 'user', 'view_transactions'));
         return true;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $dateobject = DataPropertyMaster::getProperty(array('name' => 'date'));
+    $dateobject = DataPropertyMaster::getProperty(['name' => 'date']);
     $dateobject->checkInput('newdate');
 
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
-    $data['object']->getItem(array('itemid' => $itemid));
-    
+    $data['object'] = DataObjectMaster::getObject(['name' => 'payments_transactions']);
+    $data['object']->getItem(['itemid' => $itemid]);
+
     if ($confirm) {
         // Set up the $args to be passed to the clone object.
-        $args = array(
+        $args = [
             'itemid' => 0,
             'transaction_date' => $dateobject->value,
             'created' => time(),
             'processed' => 0,
-        );
+        ];
 
         // Add info for the log entry
         $script = implode('_', xarController::$request->getInfo());
@@ -61,7 +61,7 @@ function payments_user_clone_transaction()
         if (!empty($return_url)) {
             xarController::redirect($return_url);
         } else {
-            xarController::redirect(xarController::URL('payments', 'user', 'modify_transaction', array('itemid' => $cloneid)));
+            xarController::redirect(xarController::URL('payments', 'user', 'modify_transaction', ['itemid' => $cloneid]));
         }
         return true;
     }

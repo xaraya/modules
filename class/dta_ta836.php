@@ -20,7 +20,7 @@ sys::import('modules.payments.class.dta');
 class DTA_TA836 extends DTA
 {
     protected $transactionType = 836;
-    
+
     public function setPaymentType($paymentType=0)
     {
         $this->paymentType = $paymentType;
@@ -28,7 +28,7 @@ class DTA_TA836 extends DTA
 
     public function setClient($line1, $line2, $line3, $line4)
     {
-        $client = array();
+        $client = [];
         array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 35, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 35, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line2)), 35, $this->fillChar));

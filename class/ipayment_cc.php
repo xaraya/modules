@@ -20,12 +20,12 @@
   //Psspl:Define the Error_heading and Error_message.
   define('MODULE_PAYMENT_IPAYMENT_CC_ERROR_HEADING', 'There has been an error processing your credit card');
   define('MODULE_PAYMENT_IPAYMENT_CC_ERROR_MESSAGE', 'Please check your credit card details!');
-  
+
   class iPayment_cc extends BasicPayment
   {
       public $enabled;
       public $gateway_url;
-      public $authnet_values = array();
+      public $authnet_values = [];
 
       // class constructor
       public function __construct()
@@ -35,17 +35,17 @@
           $this->gateway_url = 'https://ipayment.de/merchant/99999/processor.php';
       }
 
-      public function getParams(array $args=array())
+      public function getParams(array $args=[])
       {
-          $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways_config'));
+          $object = DataObjectMaster::getObjectList(['name' => 'payments_gateways_config']);
           $object->getProperties();
-          $items = $object->getItems(array('where' => 'configuration_group_id eq 7'));
-          $aryParams = array();
+          $items = $object->getItems(['where' => 'configuration_group_id eq 7']);
+          $aryParams = [];
           foreach ($items as $key => $val) {
               switch ($val['configuration_key']) {
               case MODULE_PAYMENT_IPAYMENT_CC_ACCOUNT_NUMBER:
                 //$this->gateway_url = 'https://ipayment.de/merchant/' . $val['configuration_value'] . '/processor.php';
-                $accountId = isset($args['accountid']) ? $args['accountid'] : $val['configuration_value'];
+                $accountId = $args['accountid'] ?? $val['configuration_value'];
                 $this->gateway_url = 'https://ipayment.de/merchant/' . $accountId . '/processor.php';
                 break;
               case MODULE_PAYMENT_IPAYMENT_CC_USER_ID:
@@ -76,7 +76,7 @@
           //Psspl:Removed the hard coded currancy type.
           //$aryParams["trx_currency"] = "USD";
           $aryParams["trx_paymenttyp"] = "cc";
-        
+
           $fields = unserialize(xarSession::GetVar('paymentfields'));
           if (is_array($fields)) {
               //Psspl:Added the input curracy type.
@@ -88,7 +88,7 @@
               $aryParams["addr_name"] = $fields['name'];
               //$aryParams["trx_amount"] = round($fields['amount']);
           }
-        
+
           //Psspl : added the code for getting amount and currency information.
           $fields = unserialize(xarSession::GetVar('orderfields'));
           if (is_array($fields)) {
@@ -100,22 +100,22 @@
           if (!xarVar::fetch('allowEdit_Payment', 'int', $allowEdit_Payment, null, xarVar::DONT_SET)) {
               return;
           }
-        
+
           $redirect_url = xarController::URL('payments', 'user', 'phase4');
           //$aryParams["redirect_url"] = "http://" . $_ENV['HTTP_HOST'] . $_ENV['ORIG_PATH_INFO'] . "?module=payments&func=phase4&allowEdit_Payment=$allowEdit_Payment";
-          $aryParams["redirect_url"] = xarController::URL('payments', 'user', 'phase4', array('allowEdit_Payment' => $allowEdit_Payment));
+          $aryParams["redirect_url"] = xarController::URL('payments', 'user', 'phase4', ['allowEdit_Payment' => $allowEdit_Payment]);
           $aryParams["redirect_url"] = str_replace('&', '%26', $aryParams["redirect_url"]);
-        
+
           //Psspl:Added the Silent error URL.
           //$aryParams["silent_error_url"] = "http://" . $_ENV['HTTP_HOST'] . $_ENV['ORIG_PATH_INFO'] . "?module=payments&func=phase4&allowEdit_Payment=$allowEdit_Payment";
-          $aryParams["silent_error_url"] = xarController::URL('payments', 'user', 'phase4', array('allowEdit_Payment' => $allowEdit_Payment));
+          $aryParams["silent_error_url"] = xarController::URL('payments', 'user', 'phase4', ['allowEdit_Payment' => $allowEdit_Payment]);
           $aryParams["redirect_url"] = str_replace('&', '%26', $aryParams["redirect_url"]);
 
           return $aryParams;
       }
-    
+
       // class methods
-      public function update_status(array $args=array())
+      public function update_status(array $args=[])
       {
           $status = false;
           $this->authnet_values = $this->getParams($args);
@@ -142,7 +142,7 @@
             "cc_checkcode=" . $this->authnet_values['cc_checkcode'] . "&" .
             "redirect_url=" . urlencode($this->authnet_values['redirect_url']));
       }
-    
+
       public function javascript_validation()
       {
           return false;

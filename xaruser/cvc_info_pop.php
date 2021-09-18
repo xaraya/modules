@@ -18,5 +18,5 @@
         }
         echo xarTpl::module('payments', 'user', 'cvc_info_pop');
         exit();
-        return array();
+        return [];
     }

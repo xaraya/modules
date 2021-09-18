@@ -15,12 +15,12 @@
 /**
  * Class that
  */
- 
+
 sys::import('modules.dynamicdata.class.objects.base');
 
 class ISO20022 extends DataObject
 {
-    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
+    public function checkInput(array $args = [], $suppress=0, $priority='dd')
     {
         // Run checkInput of the parent: get and check the values
         $isvalid = parent::checkInput($args, $suppress, $priority);
@@ -28,9 +28,9 @@ class ISO20022 extends DataObject
         if ($isvalid) {
             // Sanitize some property values
             $string = $this->properties['bic']->value;
-            $this->properties['bic']->value = xarMod::apiFunc('payments', 'admin', 'sanitize_swift', array('string' => $string));
+            $this->properties['bic']->value = xarMod::apiFunc('payments', 'admin', 'sanitize_swift', ['string' => $string]);
         }
-        
+
         return $isvalid;
     }
 }

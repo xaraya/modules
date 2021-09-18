@@ -27,32 +27,32 @@ function payments_user_clone_debit_account()
     if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::DONT_SET)) {
         return;
     }
-    
+
     if (empty($itemid)) {
         xarController::redirect(xarController::URL('ledgerar', 'user', 'view_debit_accounts'));
         return true;
     }
 
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_debit_account'));
-    $data['object']->getItem(array('itemid' => $itemid));
-    
+    $data['object'] = DataObjectMaster::getObject(['name' => 'payments_debit_account']);
+    $data['object']->getItem(['itemid' => $itemid]);
+
     if ($confirm) {
         // Get the name for the clone
         if (empty($newname)) {
             $newname = $object->properties['name']->value . "_copy";
         }
         $newname = str_ireplace(" ", "_", $newname);
-            
+
         // Check if this object already exists
-        $testobject = DataObjectMaster::getObjectList(array('name' => 'payments_debit_account'));
-        $items = $testobject->getItems(array('where' => "name = '" . $newname . "'"));
+        $testobject = DataObjectMaster::getObjectList(['name' => 'payments_debit_account']);
+        $items = $testobject->getItems(['where' => "name = '" . $newname . "'"]);
         if (count($items)) {
-            return xarTpl::module('payments', 'user', 'errors', array('layout' => 'duplicate_account_name', 'newname' => $newname));
+            return xarTpl::module('payments', 'user', 'errors', ['layout' => 'duplicate_account_name', 'newname' => $newname]);
         }
-        
+
         // Create the clone
         $data['object']->properties['name']->setValue($newname);
-        $cloneid = $data['object']->createItem(array('itemid' => 0));
+        $cloneid = $data['object']->createItem(['itemid' => 0]);
 
         if (!empty($return_url)) {
             xarController::redirect($return_url);

@@ -35,7 +35,7 @@
           }
       }
 
-      public function update_status(array $args=array())
+      public function update_status(array $args=[])
       {
           global $order;
 
@@ -63,20 +63,20 @@
           global $order;
 
           for ($i=1; $i<13; $i++) {
-              $expires_month[] = array('id' => sprintf('%02d', $i), 'text' => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)));
+              $expires_month[] = ['id' => sprintf('%02d', $i), 'text' => strftime('%B', mktime(0, 0, 0, $i, 1, 2000))];
           }
 
           $today = getdate();
           for ($i=$today['year']; $i < $today['year']+10; $i++) {
-              $expires_year[] = array('id' => strftime('%y', mktime(0, 0, 0, 1, 1, $i)), 'text' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)));
+              $expires_year[] = ['id' => strftime('%y', mktime(0, 0, 0, 1, 1, $i)), 'text' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))];
           }
 
-          $confirmation = array('fields' => array(array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_OWNER,
-                                                    'field' => tep_draw_input_field('cc_owner', $order->billing['firstname'] . ' ' . $order->billing['lastname'])),
-                                              array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_NUMBER,
-                                                    'field' => tep_draw_input_field('cc_number_nh-dns')),
-                                              array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_EXPIRES,
-                                                    'field' => tep_draw_pull_down_menu('cc_expires_month', $expires_month) . '&nbsp;' . tep_draw_pull_down_menu('cc_expires_year', $expires_year))));
+          $confirmation = ['fields' => [['title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_OWNER,
+                                                    'field' => tep_draw_input_field('cc_owner', $order->billing['firstname'] . ' ' . $order->billing['lastname']), ],
+                                              ['title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_NUMBER,
+                                                    'field' => tep_draw_input_field('cc_number_nh-dns'), ],
+                                              ['title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_EXPIRES,
+                                                    'field' => tep_draw_pull_down_menu('cc_expires_month', $expires_month) . '&nbsp;' . tep_draw_pull_down_menu('cc_expires_year', $expires_year), ], ]];
 
           return $confirmation;
       }
@@ -139,8 +139,8 @@
       {
           global $HTTP_GET_VARS;
 
-          $error = array('title' => MODULE_PAYMENT_CC_TEXT_ERROR,
-                     'error' => stripslashes(urldecode($HTTP_GET_VARS['error'])));
+          $error = ['title' => MODULE_PAYMENT_CC_TEXT_ERROR,
+                     'error' => stripslashes(urldecode($HTTP_GET_VARS['error'])), ];
 
           return $error;
       }
@@ -170,6 +170,6 @@
 
       public function keys()
       {
-          return array('MODULE_PAYMENT_CC_STATUS', 'MODULE_PAYMENT_CC_EMAIL', 'MODULE_PAYMENT_CC_ZONE', 'MODULE_PAYMENT_CC_ORDER_STATUS_ID', 'MODULE_PAYMENT_CC_SORT_ORDER');
+          return ['MODULE_PAYMENT_CC_STATUS', 'MODULE_PAYMENT_CC_EMAIL', 'MODULE_PAYMENT_CC_ZONE', 'MODULE_PAYMENT_CC_ORDER_STATUS_ID', 'MODULE_PAYMENT_CC_SORT_ORDER'];
       }
   }

@@ -31,28 +31,28 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Commerce';
-$modversion['dependency']     = array();
-$modversion['securityschema'] = array();
-$modversion['dependency'] = array(
-                                  30064
-                                  );
-$modversion['dependencyinfo'] = array(
-                                0 => array(
+$modversion['dependency']     = [];
+$modversion['securityschema'] = [];
+$modversion['dependency'] = [
+                                  30064,
+                                  ];
+$modversion['dependencyinfo'] = [
+                                0 => [
                                         'name' => 'Xaraya Core',
-                                        'version_ge' => '2.4.0'
-                                     ),
-                                      );
-$modversion['propertyinfo'] = array(
-                                    30059 => array(
+                                        'version_ge' => '2.4.0',
+                                     ],
+                                      ];
+$modversion['propertyinfo'] = [
+                                    30059 => [
                                         'name' => 'datetime',
-                                        ),
-                                    30099 => array(
+                                        ],
+                                    30099 => [
                                         'name' => 'pager',
-                                        ),
-                                    30100 => array(
+                                        ],
+                                    30100 => [
                                         'name' => 'listing',
-                                        ),
-                                    30143 => array(
+                                        ],
+                                    30143 => [
                                         'name' => 'iban',
-                                        ),
-                                    );
+                                        ],
+                                    ];

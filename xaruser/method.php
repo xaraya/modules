@@ -20,7 +20,7 @@
         $module_id = xarSession::getVar('clientmodule');
         $gateway = xarModVars::get('payments', 'gateway', $module_id);
         if (empty($gateway)) {
-            return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_gateway'));
+            return xarTpl::module('payments', 'user', 'errors', ['layout' => 'no_gateway']);
         }
 
         // Check for the anonymous user
@@ -62,17 +62,17 @@
         // if no billing destination address was selected, use the customers own address as default
 
         // verify the selected billing address
-        $object = DataObjectMaster::getObjectList(array('name' => 'payments_paymentmethods'));
+        $object = DataObjectMaster::getObjectList(['name' => 'payments_paymentmethods']);
         $data['properties'] = $object->getProperties();
-        $data['items'] = $object->getItems(array('where' => 'state eq 3'));
+        $data['items'] = $object->getItems(['where' => 'state eq 3']);
 
         $data['authid'] = xarSec::genAuthKey();
         //Psspl: Added dummy data in order object to show on confirmation page.
         //Remove this code when it goes to production.
         $orderobjectname = xarModVars::get('payments', 'orderobject');
         if (!empty($orderobjectid)) {
-            $orderobject = DataObjectMaster::getObject(array('name' => $orderobjectname));
-            $orderobject->getItem(array('itemid' => 1));
+            $orderobject = DataObjectMaster::getObject(['name' => $orderobjectname]);
+            $orderobject->getItem(['itemid' => 1]);
             $orderobject->properties['id']->value = $data['authid'];
             $orderobject->properties['amount']->value = '10.0';
             $itemid = $orderobject->createItem();

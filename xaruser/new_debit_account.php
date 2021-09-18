@@ -34,7 +34,7 @@ function payments_user_new_debit_account()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
     $data['tplmodule'] = 'payments';
 
     # --------------------------------------------------------
@@ -49,11 +49,11 @@ function payments_user_new_debit_account()
     }
 
     if (!empty($object)) {
-        $sourceobject = DataObjectMaster::getObject(array('name' => $objectname));
-        $sourceobject->getItem(array('itemid' => $itemid));
-    
+        $sourceobject = DataObjectMaster::getObject(['name' => $objectname]);
+        $sourceobject->getItem(['itemid' => $itemid]);
+
         // If we have data, transfer it to the new object
-        $sourcefields = $sourceobject->getFieldValues(array(), 1);
+        $sourcefields = $sourceobject->getFieldValues([], 1);
         if (!empty($sourcefields)) {
             if (isset($sourcefields['name'])) {
                 $data['object']->properties['name']->value = $sourcefields['name'];
@@ -74,7 +74,7 @@ function payments_user_new_debit_account()
     # The create button was clicked
 #
     if ($data['confirm']) {
-    
+
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
         if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
@@ -84,17 +84,17 @@ function payments_user_new_debit_account()
         if (!xarSec::confirmAuthKey()) {
             return;
         }
-        
+
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
-        
+
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTpl::module('payments', 'user', 'new_debit_account', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
-            
+
             // Jump to the next page
             xarController::redirect(xarController::URL('payments', 'user', 'view_debit_accounts'));
             return true;

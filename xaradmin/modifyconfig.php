@@ -48,7 +48,7 @@
             $hooks['tabs'] = array();
         }*/
 
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'payments'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'payments']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
         $data['module_settings']->getItem();
 
@@ -59,8 +59,8 @@
                 switch ($data['tab']) {
                     case 'payments_general':
                     default:
-                    $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways'));
-                    $data['items'] = $object->getItems(array('where' => 'state eq 3'));
+                    $object = DataObjectMaster::getObjectList(['name' => 'payments_gateways']);
+                    $data['items'] = $object->getItems(['where' => 'state eq 3']);
                     break;
                 }
 
@@ -114,7 +114,7 @@
                     return;
                 }
 
-                $modvars = array(
+                $modvars = [
                                 'customerobject',
                                 'orderobject',
                                 'gateway',
@@ -129,7 +129,7 @@
                                 'payments_active',
                                 'message_id',
                                 'message_prefix',
-                                );
+                                ];
 
                 if ($data['tab'] == 'payments_general') {
                     $isvalid = $data['module_settings']->checkInput();
@@ -158,12 +158,12 @@
                     return;
                 }
                 $demousers = explode(',', $demousers);
-                $validdemousers = array();
+                $validdemousers = [];
                 foreach ($demousers as $demouser) {
                     if (empty($demouser)) {
                         continue;
                     }
-                    $user = xarMod::apiFunc('roles', 'user', 'get', array('uname' => trim($demouser)));
+                    $user = xarMod::apiFunc('roles', 'user', 'get', ['uname' => trim($demouser)]);
                     if (!empty($user)) {
                         $validdemousers[$user['uname']] = $user['uname'];
                     }
@@ -171,7 +171,7 @@
                 xarModVars::set('payments', 'enable_demomode', $enable_demomode);
                 xarModVars::set('payments', 'demousers', serialize($validdemousers));
 
-                xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig', ['tabmodule' => $tabmodule, 'tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

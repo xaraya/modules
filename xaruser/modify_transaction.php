@@ -14,7 +14,7 @@
  * Modify an item of the payments_transaction object
  *
  */
-    
+
 function payments_user_modify_transaction()
 {
     if (!xarSecurity::check('EditPayments')) {
@@ -36,8 +36,8 @@ function payments_user_modify_transaction()
     # Get the payment transactions object
 #
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'payments_transactions']);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
     $data['tplmodule'] = 'payments';
 
     // Allow overiding the payment type from the form
@@ -46,7 +46,7 @@ function payments_user_modify_transaction()
         return;
     }
     $data['object']->properties['payment_type']->value = $data['payment_type'];
-    
+
     # --------------------------------------------------------
 #
     # Check if we are passing an api item
@@ -55,11 +55,11 @@ function payments_user_modify_transaction()
         return;
     }
 
-    $info = array();
+    $info = [];
     if (!empty($api)) {
         $function = rawurldecode($api);
         eval("\$info = $function;");
-        
+
         foreach ($info as $key => $value) {
             if (isset($data['object']->properties[$key])) {
                 $data['object']->properties[$key]->value = $value;
@@ -72,16 +72,16 @@ function payments_user_modify_transaction()
     # Get the debit account information
 #
     // All the debit accounts we will display
-    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', array('sender_object' => $data['object']->properties['sender_object']->value,
+    $data['debit_accounts'] = xarMod::apiFunc('payments', 'user', 'get_debit_accounts', ['sender_object' => $data['object']->properties['sender_object']->value,
                                                                                               'sender_itemid' => $data['object']->properties['sender_itemid']->value,
-                                                                                        ));
+                                                                                        ]);
 
     if (empty($data['debit_accounts'])) {
-        return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_sender'));
+        return xarTpl::module('payments', 'user', 'errors', ['layout' => 'no_sender']);
     }
-    
+
     // The debit account for this transaction
-    $debit_account = array();
+    $debit_account = [];
     foreach ($data['debit_accounts'] as $account) {
         if ($account['sender_itemid'] == $data['object']->properties['sender_itemid']->value) {
             $debit_account = $account;
@@ -91,12 +91,12 @@ function payments_user_modify_transaction()
     if (empty($debit_account)) {
         die(xarML('Debit account not found'));
     }
-    
+
     // Set the debtor name
     $data['object']->properties['sender_account']->value = $debit_account['account_holder'];
-        
+
     // Set the debtor address
-    $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', array('address' => $debit_account['address']));
+    $lines = xarMod::apiFunc('payments', 'admin', 'unpack_address', ['address' => $debit_account['address']]);
     if (!empty($lines[3])) {
         $lines[2] .= " " . $lines[3];
     }
@@ -125,7 +125,7 @@ function payments_user_modify_transaction()
     # The update button was clicked
 #
     if ($data['confirm']) {
-    
+
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -153,24 +153,24 @@ function payments_user_modify_transaction()
                 $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
             break;
         }
-        
+
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
-        
+
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTpl::module('payments', 'user', 'modify_transaction', $data);
         } else {
             // Good data: create the item
-            $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
-            
+            $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
+
             // Update the entry in the matchings table
             $tables = xarDB::getTables();
             $q = new Query('UPDATE', $tables['payments_matchings']);
             $q->eq('payment_id', $itemid);
             $q->addfield('settled_amount', $data['object']->properties['amount']->value);
             $q->run();
-            
+
             // Jump to the next page
             xarController::redirect(xarController::URL('payments', 'user', 'view_transactions'));
             return true;

@@ -14,28 +14,28 @@ sys::import('modules.payments.class.basicpayment');
 
 class GestPay extends BasicPayment
 {
-    const MODULE_PAYMENT_GESTPAYGW_ERROR_TITLE  = 'There has been an error processing your credit card';
-    const MODULE_PAYMENT_GESTPAYGW_ERROR_HTTP_FAILURE = 'Http Failure';
-        
+    public const MODULE_PAYMENT_GESTPAYGW_ERROR_TITLE  = 'There has been an error processing your credit card';
+    public const MODULE_PAYMENT_GESTPAYGW_ERROR_HTTP_FAILURE = 'Http Failure';
+
     public $title;
-        
+
     public $description;
-        
+
     public $gateway_url;
-        
+
     public $live;
-        
+
     public $error_flag;
-        
+
     public $error_msg;
     public $payinit_url;
     public $curlInfo;
     public $http_code;
-    public $authnet_values = array();
+    public $authnet_values = [];
     public $ric_filepath;
     public $OTP_arr;
     public $OTP_reorder;
-    
+
     public function __construct()
     {
         $this->live = false;
@@ -48,45 +48,45 @@ class GestPay extends BasicPayment
     }
 
     // class methods
-    public function update_status(array $args=array())
+    public function update_status(array $args=[])
     {
         $this->authnet_values = $this->getParams($args);
-               
+
         $this->pre_confirmation_check();
         xarSession::setVar('GESTPAY_FLAG', 'ACTIVE');
-        
+
         return true;
     }
-    
-    public function getParams(array $args=array())
+
+    public function getParams(array $args=[])
     {
-        $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways_config'));
+        $object = DataObjectMaster::getObjectList(['name' => 'payments_gateways_config']);
         $object->getProperties();
-        $items = $object->getItems(array('where' => 'configuration_group_id eq 9'));
-        $aryParams = array();
-              
+        $items = $object->getItems(['where' => 'configuration_group_id eq 9']);
+        $aryParams = [];
+
         foreach ($items as $key => $val) {
             switch ($val['configuration_key']) {
                 case 'GESTPAY_SHOP_LOGIN':   $aryParams['SHOPLOGIN'] = isset($args['shoplogin']) ? urlencode($args['shoplogin']) : urlencode($val['configuration_value']);
                                               break;
-                case 'GESTPAY_RIC_FILEPATH': $aryParams['RIC_FILEPATH'] = isset($args['ric_filepath']) ? $args['ric_filepath'] : $val['configuration_value'];
+                case 'GESTPAY_RIC_FILEPATH': $aryParams['RIC_FILEPATH'] = $args['ric_filepath'] ?? $val['configuration_value'];
                                               break;
                 case 'GESTPAY_OTP_REORDER': $this->OTP_reorder = $val['configuration_value'];
                                               break;
                 default:                      break;
             }
         }
-                      
+
         $fields = unserialize(xarSession::getVar('orderfields'));
-                      
+
         if (is_array($fields)) {
-            $aryParams["CURRENCY"] = isset($args['currency']) ? $args['currency'] : $fields['currency'];
+            $aryParams["CURRENCY"] = $args['currency'] ?? $fields['currency'];
             $aryParams["CURRENCY"] = $this->getCurrencyCode($aryParams["CURRENCY"]);
             $aryParams["AMOUNT"] = $fields['amount'];
         }
-            
+
         $aryParams["ORDERID"] = xarSession::getVar('AUTHID');
-        
+
         //Code to take the OTP from the .ric file
         $this->ric_filepath = sys::root()."/html/".$aryParams['RIC_FILEPATH'];  // Get the full file path.
         $this->ric_filepath = trim(str_replace("\\", "/", $this->ric_filepath));
@@ -97,10 +97,10 @@ class GestPay extends BasicPayment
             $this->OTP_arr = file($this->ric_filepath); //Get the file contents into an array of OTPs
             $aryParams["OTP"] = trim(array_shift($this->OTP_arr)); // Take out first OTP
         }
-                      
+
         return $aryParams;
     }
-    
+
     public function getCurrencyCode($currency)
     {
         switch ($currency) {
@@ -112,20 +112,20 @@ class GestPay extends BasicPayment
 
     public function get_b_params_string()
     {
-        $b_params=array(
+        $b_params=[
                         "PAY1_SHOPTRANSACTIONID" => $this->authnet_values['ORDERID'],
                         "PAY1_UICCODE" => $this->authnet_values['CURRENCY'],
                         "PAY1_AMOUNT" => $this->authnet_values['AMOUNT'],
-                        "PAY1_OTP" => $this->authnet_values['OTP']
-                        );
-        
+                        "PAY1_OTP" => $this->authnet_values['OTP'],
+                        ];
+
         $b = $separator = "";
-        
-        while (list($key, $val) = each($b_params)) {
+
+        while ([$key, $val] = each($b_params)) {
             $b .= $separator."$key=$val";
             $separator = "*P1*";
         }
-        
+
         return $b;
     }
 
@@ -139,14 +139,14 @@ class GestPay extends BasicPayment
             case 'de': return 5;
         }
     }
-    
+
     public function getQueryParameter()
     {
         $strAttributes = 'a=' . $this->authnet_values['SHOPLOGIN'] . '&b=' . $this->get_b_params_string();
-                               
+
         return $strAttributes;
     }
-    
+
     //Pre-confirmation check if transaction information is right before sending it to the payment server.
     public function pre_confirmation_check()
     {
@@ -158,16 +158,16 @@ class GestPay extends BasicPayment
         $query = "SELECT name, email FROM " . $prefix . "_roles WHERE id = $adminid";
         $result = $dbconn->Execute($query);
         if ($result) {
-            list($recipient_name, $recipient_email) = $result->fields;
+            [$recipient_name, $recipient_email] = $result->fields;
         }
-            
+
         //Set error messages to null.
         $this->error_msg = "";
         xarSession::setVar('error_message', "");
         $this->error_flag = 1;
         $ErrorCode = "0";
         $ErrorDescription = "";
-        
+
         if (empty($this->authnet_values['SHOPLOGIN'])) {
             $ErrorCode = "546";
             $ErrorDescription = "Shop ID not valid";
@@ -192,19 +192,19 @@ class GestPay extends BasicPayment
             $ErrorCode = "101";
             $ErrorDescription = "Internal Error (101) processing the payment. Please contact the system administrator";
             $this->error_flag = 0;
-            
+
             //Send OTP Exhausted email to admin
             try {
-                $send_mail = xarMod::apiFunc('mailer', 'user', 'send', array('name'             => 'OTP Exhausted Email',
+                $send_mail = xarMod::apiFunc('mailer', 'user', 'send', ['name'             => 'OTP Exhausted Email',
                                                                          'locale'           => xarModUserVars::get('roles', 'locale', xarUser::getVar('id')),
                                                                          'sendername'       => xarUser::getVar('name'),
                                                                          'senderaddress'    => xarUser::getVar('email'),
                                                                          'recipientname'    => $recipient_name,
-                                                                         'recipientaddress' => $recipient_email));
+                                                                         'recipientaddress' => $recipient_email, ]);
             } catch (exception $e) {
             }
         }
-        
+
         if (!$this->error_flag) {
             $this->error_msg = self::MODULE_PAYMENT_GESTPAYGW_ERROR_TITLE;
             $this->error_msg .= "<br/>Error Code :  $ErrorCode";
@@ -212,7 +212,7 @@ class GestPay extends BasicPayment
 
             $error_message = $this->get_error();
             xarSession::setVar('error_message', $error_message);
-            
+
             return $this->error_flag;
         }
 
@@ -222,34 +222,34 @@ class GestPay extends BasicPayment
         if ($OTP_count <= $this->OTP_reorder) {
             //Send OTP Re-Order email to admin
             try {
-                $send_mail = xarMod::apiFunc('mailer', 'user', 'send', array('name'             => 'OTP Re-order Email',
+                $send_mail = xarMod::apiFunc('mailer', 'user', 'send', ['name'             => 'OTP Re-order Email',
                                                                          'locale'           => xarModUserVars::get('roles', 'locale', xarUser::getVar('id')),
                                                                          'sendername'       => xarUser::getVar('name'),
                                                                          'senderaddress'    => xarUser::getVar('email'),
                                                                          'recipientname'    => $recipient_name,
                                                                          'recipientaddress' => $recipient_email,
-                                                                         'data'             => array('OTP_count' => $OTP_count)));
+                                                                         'data'             => ['OTP_count' => $OTP_count], ]);
             } catch (exception $e) {
             }
         }
 
         //Replace the contents of file after removing the OTP.
         file_put_contents($this->ric_filepath, $this->OTP_arr);
-                
+
         $strAttributes = $this->getQueryParameter();
 
         $url = $this->gateway_url.'?'.$strAttributes;
-        
+
         $this->process_url($url);
-        
+
         return true;
     }
-    
+
     public function get_error()
     {
         $this->error .= "<br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
         $this->error .= $this->error_msg."</td></tr></table>";
-        
+
         return $this->error;
     }
 
@@ -258,14 +258,14 @@ class GestPay extends BasicPayment
         //send the validated transaction to the GestPay site.
         header("Location:$transaction_url");
     }
-    
+
     public function displayStatus()
     {
-        $status_arr = array();
+        $status_arr = [];
         $argv = parse_str($_SERVER['QUERY_STRING']);
-        
+
         $status = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
-        
+
         if (isset($a)) {
             $status  .=  "<tr><td class=\"v\">Shop Login</td>";
             $status  .=  "<td class=\"v\">$a</td></tr>";
@@ -273,22 +273,22 @@ class GestPay extends BasicPayment
 
         $separator = "*P1*";
         $param_b = explode($separator, $b);
-        
+
         foreach ($param_b as $trans_param) {
             $trans_param_arr[] = explode("=", $trans_param);
         }
-        
+
         foreach ($trans_param_arr as $value) {
             switch ($value[0]) {
-            
+
                 case 'PAY1_TRANSACTIONRESULT': $status  .=  "<tr><td class=\"v\">Transaction Result</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-            
+
                 case 'PAY1_SHOPTRANSACTIONID': $status  .=  "<tr><td class=\"v\">Shop Transaction ID</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                                                
+
                 case 'PAY1_BANKTRANSACTIONID': $status  .=  "<tr><td class=\"v\">Bank Transaction ID</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
@@ -296,11 +296,11 @@ class GestPay extends BasicPayment
                 case 'PAY1_UICCODE': $status  .=  "<tr><td class=\"v\">Currency Code</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                                
+
                 case 'PAY1_AMOUNT': $status  .=  "<tr><td class=\"v\">Amount</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                      
+
                 case 'PAY1_AUTHORIZATIONCODE': $status  .=  "<tr><td class=\"v\">Transaction Authorization Code</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
@@ -308,65 +308,65 @@ class GestPay extends BasicPayment
                 case 'PAY1_ERRORCODE': $status  .=  "<tr><td class=\"v\">Transaction Error Code</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                   
+
                 case 'PAY1_ERRORDESCRIPTION': $status  .=  "<tr><td class=\"v\">Transaction Error Description</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                                                                
+
                 case 'PAY1_CHNAME': $status  .=  "<tr><td class=\"v\">Buyer's Name</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                                
+
                 case 'PAY1_CHEMAIL': $status  .=  "<tr><td class=\"v\">buyer's Email</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                   
+
                 case 'PAY1_ALERTCODE': $status  .=  "<tr><td class=\"v\">Transaction Alert Code</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                               
+
                 case 'PAY1_ALERTDESCRIPTION': $status  .=  "<tr><td class=\"v\">Transaction Alert Description</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                   
+
                 case 'PAY1_CARDNUMBER': $status  .=  "<tr><td class=\"v\">Buyer's Card Number</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                  
+
                 case 'PAY1_EXPMONTH': $status  .=  "<tr><td class=\"v\">Buyer's Card Expiry Month</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                  
+
                 case 'PAY1_EXPYEAR': $status  .=  "<tr><td class=\"v\">Buyer's Card Expiry Year</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                 
+
                 case 'PAY1_COUNTRY': $status  .=  "<tr><td class=\"v\">Buyer's Card Issuing Bank Nationality</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                   
+
                 case 'PAY1_VBVRISP': $status  .=  "<tr><td class=\"v\">VBVRISP</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                 
+
                 case 'PAY1_VBV': $status  .=  "<tr><td class=\"v\">VBV</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                  
+
                 case 'PAY1_IDLANGUAGE': $status  .=  "<tr><td class=\"v\">Language ID</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
-                                                
+
                 case 'PAY1_OTP': $status  .=  "<tr><td class=\"v\">One Time Password (OTP)</td>";
                                                 $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
                                                 break;
             }
         }
         $status  .=  "</table>";
-               
+
         return $status;
     }
-      
+
     public function displayfailurestatus()
     {
         $argv = parse_str($_SERVER['QUERY_STRING']);
@@ -389,7 +389,7 @@ class GestPay extends BasicPayment
         $this->error .= "<br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
         $this->error .= $this->error_msg."</td></tr></table>";
         xarSession::setVar('error_message', $this->error_msg);
-        
+
         return $this->error;
     }
 }

@@ -18,5 +18,5 @@
         }
         echo xarTpl::module('payments', 'user', 'amex_info_pop');
         exit();
-        return array();
+        return [];
     }

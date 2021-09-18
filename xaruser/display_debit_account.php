@@ -14,7 +14,7 @@
  * Display an item of the payments_debit_account object
  *
  */
-    
+
 function payments_user_display_debit_account()
 {
     if (!xarSecurity::check('EditPayments')) {
@@ -29,8 +29,8 @@ function payments_user_display_debit_account()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'payments';
     return $data;

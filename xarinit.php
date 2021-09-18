@@ -101,7 +101,7 @@
         if (!$q->run($query)) {
             return;
         }
-        
+
         // Psspl: Added the create table statement for gateway and
         //        credit card type relation
         $query = "DROP TABLE IF EXISTS " . $prefix . "_payments_relation";
@@ -117,7 +117,7 @@
         if (!$q->run($query)) {
             return;
         }
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_payments_orders";
         if (!$q->run($query)) {
             return;
@@ -134,7 +134,7 @@
         if (!$q->run($query)) {
             return;
         }
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_payments_dta_types";
         if (!$q->run($query)) {
             return;
@@ -286,7 +286,7 @@
                 }
                 */
         }
-        
+
         # --------------------------------------------------------
         #
         # Set up masks
@@ -334,7 +334,7 @@
         xarModVars::set('payments', 'allowanonpay', 0);
         xarModVars::set('payments', 'payments_active', 1);
         xarModVars::set('payments', 'enable_demomode', 0);
-        xarModVars::set('payments', 'demousers', serialize(array()));
+        xarModVars::set('payments', 'demousers', serialize([]));
         xarModVars::set('payments', 'message_id', 0);                   // Used to generate a unique ID for ebanking messages
         xarModVars::set('payments', 'message_prefix', 'Payment');       // Used to generate a unique ID for ebanking messages
     # --------------------------------------------------------
@@ -342,9 +342,9 @@
     # Create DD objects
     #
         sys::import('modules.dynamicdata.class.properties.registration');
-        PropertyRegistration::importPropertyTypes(false, $dirs = array('modules/payments/xarproperties'));
+        PropertyRegistration::importPropertyTypes(false, $dirs = ['modules/payments/xarproperties']);
         $module = 'payments';
-        $objects = array(
+        $objects = [
                          'payments_gateways',
                          'payments_paymentmethods',
                          'payments_ccpayments',
@@ -354,8 +354,8 @@
                          'payments_dta_types',
                          'payments_dta',
                          'payments_debit_account',
-                         );
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+                         ];
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
 
@@ -402,7 +402,7 @@
         try {
             $dd_objects = unserialize(xarModVars::get($this_module, $this_module . '_objects'));
             foreach ($dd_objects as $key => $value) {
-                $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', array('objectid' => $value));
+                $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', ['objectid' => $value]);
             }
         } catch (Exception $e) {
         }
@@ -416,7 +416,7 @@
                 'categories',
                 'admin',
                 'deletecat',
-                array('cid' => xarModVars::get($this_module, 'basecategory'))
+                ['cid' => xarModVars::get($this_module, 'basecategory')]
             );
         } catch (Exception $e) {
         }

@@ -30,8 +30,8 @@ function payments_user_view_transactions($args)
     #  Set the time frame
 #
     sys::import('modules.dynamicdata.class.properties.master');
-    $timeframe = DataPropertyMaster::getProperty(array('name' => 'timeframe'));
-    
+    $timeframe = DataPropertyMaster::getProperty(['name' => 'timeframe']);
+
     // The period gets saved for user convenience
     if (!xarVar::fetch('refresh', 'int', $data['refresh'], 0, xarVar::NOT_REQUIRED)) {
         return;
@@ -44,9 +44,9 @@ function payments_user_view_transactions($args)
     }
     #------------------------------------------------------------
 
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'payments_transactions'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'payments_transactions']);
     $q = $data['object']->dataquery;
-    
+
     // If we are using the ledger modules...
     if (xarMod::isAvailable('ledgerba')) {
         $q->like('sender_object', 'ledgerba_mandant');

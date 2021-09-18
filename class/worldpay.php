@@ -10,9 +10,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
-  
+
   sys::import('modules.payments.class.basicpayment');
-  
+
   class WorldPay extends BasicPayment
   {
       public function __construct()
@@ -35,7 +35,7 @@
           $this->form_action_url = 'https://select.worldpay.com/wcc/purchase';
       }
 
-      public function update_status(array $args=array())
+      public function update_status(array $args=[])
       {
           global $order;
 
@@ -59,7 +59,7 @@
 
       public function selection()
       {
-          return array('id' => $this->code, 'module' => $this->title, 'description' => $this->info);
+          return ['id' => $this->code, 'module' => $this->title, 'description' => $this->info];
       }
 
       public function process_button()
@@ -145,6 +145,6 @@
 
       public function keys()
       {
-          return array('MODULE_PAYMENT_WORLDPAY_STATUS', 'MODULE_PAYMENT_WORLDPAY_ID', 'MODULE_PAYMENT_WORLDPAY_MODE', 'MODULE_PAYMENT_WORLDPAY_ALLOWED', 'MODULE_PAYMENT_WORLDPAY_USEPREAUTH', 'MODULE_PAYMENT_WORLDPAY_PREAUTH', 'MODULE_PAYMENT_WORLDPAY_ZONE', 'MODULE_PAYMENT_WORLDPAY_SORT_ORDER', 'MODULE_PAYMENT_WORLDPAY_ORDER_STATUS_ID');
+          return ['MODULE_PAYMENT_WORLDPAY_STATUS', 'MODULE_PAYMENT_WORLDPAY_ID', 'MODULE_PAYMENT_WORLDPAY_MODE', 'MODULE_PAYMENT_WORLDPAY_ALLOWED', 'MODULE_PAYMENT_WORLDPAY_USEPREAUTH', 'MODULE_PAYMENT_WORLDPAY_PREAUTH', 'MODULE_PAYMENT_WORLDPAY_ZONE', 'MODULE_PAYMENT_WORLDPAY_SORT_ORDER', 'MODULE_PAYMENT_WORLDPAY_ORDER_STATUS_ID'];
       }
   }

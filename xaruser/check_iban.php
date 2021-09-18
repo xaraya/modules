@@ -27,15 +27,15 @@ function payments_user_check_iban()
     if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     sys::import('modules.payments.class.iban');
     $data['ibanobject'] = new IBAN($data['iban']);
-    
+
     if ($data['confirm']) {
         if (empty($data['iban'])) {
             return $data;
         }
     }
-    
+
     return $data;
 }

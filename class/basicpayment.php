@@ -17,12 +17,12 @@
         public $title;
         public $description;
         public $status;
-        
+
         public function __construct()
         {
         }
 
-        public function update_status(array $args=array())
+        public function update_status(array $args=[])
         {
             return false;
         }
@@ -96,7 +96,7 @@
     interface iPayment
     {
         public function __construct();
-        public function update_status(array $args=array());
+        public function update_status(array $args=[]);
         public function javascript_validation();
         public function selection();
         public function pre_confirmation_check();

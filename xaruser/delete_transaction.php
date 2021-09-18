@@ -14,7 +14,7 @@
 /**
  * Delete a transaction
  */
- 
+
 function payments_user_delete_transaction()
 {
     // Xaraya security
@@ -40,7 +40,7 @@ function payments_user_delete_transaction()
         $idlist = $itemid;
     }
     $ids = explode(',', trim($idlist, ','));
-    
+
     if (empty($idlist)) {
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
@@ -55,30 +55,30 @@ function payments_user_delete_transaction()
     /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $course_item = DataObjectMaster::getObject(array('name' => 'payments_transactions'));
+    $course_item = DataObjectMaster::getObject(['name' => 'payments_transactions']);
     if (!$confirmed) {
         $data['idlist'] = $idlist;
         if (is_array($ids)) {
             $data['lang_title'] = xarML("Delete Payments");
         } else {
-            $ids = array($ids);
+            $ids = [$ids];
             $data['lang_title'] = xarML("Delete Payment");
         }
         $data['authid'] = xarSec::genAuthKey();
         if (count($ids) == 1) {
-            $course_item->getItem(array('itemid' => current($ids)));
+            $course_item->getItem(['itemid' => current($ids)]);
             $data['object'] = $course_item;
         } else {
-            $items = array();
+            $items = [];
             foreach ($ids as $i) {
-                $course_item->getItem(array('itemid' => $i));
+                $course_item->getItem(['itemid' => $i]);
                 $item = $course_item->getFieldValues();
                 $item['name'] = $item['name'];
                 $items[] = $item;
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarController::URL('payments', 'user', 'delete_payment', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('payments', 'user', 'delete_payment', ['idlist' => $idlist]);
         return $data;
     } else {
         if (!xarSec::confirmAuthKey()) {
@@ -86,7 +86,7 @@ function payments_user_delete_transaction()
         }
         $script = implode('_', xarController::$request->getInfo());
         foreach ($ids as $id) {
-            $itemid = $course_item->deleteItem(array('itemid' => $id, 'script' => $script));
+            $itemid = $course_item->deleteItem(['itemid' => $id, 'script' => $script]);
             $data['message'] = "Course item deleted [ID $id]";
         }
 

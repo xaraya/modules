@@ -36,7 +36,7 @@
           $this->form_action_url = 'https://www.secpay.com/java-bin/ValCard';
       }
 
-      public function update_status(array $args=array())
+      public function update_status(array $args=[])
       {
           global $order;
 
@@ -61,8 +61,8 @@
 
       public function selection()
       {
-          return array('id' => $this->code,
-                   'module' => $this->title);
+          return ['id' => $this->code,
+                   'module' => $this->title, ];
       }
 
       public function process_button()
@@ -147,8 +147,8 @@
               $error = MODULE_PAYMENT_SECPAY_TEXT_ERROR_MESSAGE;
           }
 
-          return array('title' => MODULE_PAYMENT_SECPAY_TEXT_ERROR,
-                   'error' => $error);
+          return ['title' => MODULE_PAYMENT_SECPAY_TEXT_ERROR,
+                   'error' => $error, ];
       }
 
       public function check()
@@ -178,6 +178,6 @@
 
       public function keys()
       {
-          return array('MODULE_PAYMENT_SECPAY_STATUS', 'MODULE_PAYMENT_SECPAY_MERCHANT_ID', 'MODULE_PAYMENT_SECPAY_CURRENCY', 'MODULE_PAYMENT_SECPAY_TEST_STATUS', 'MODULE_PAYMENT_SECPAY_ZONE', 'MODULE_PAYMENT_SECPAY_ORDER_STATUS_ID', 'MODULE_PAYMENT_SECPAY_SORT_ORDER');
+          return ['MODULE_PAYMENT_SECPAY_STATUS', 'MODULE_PAYMENT_SECPAY_MERCHANT_ID', 'MODULE_PAYMENT_SECPAY_CURRENCY', 'MODULE_PAYMENT_SECPAY_TEST_STATUS', 'MODULE_PAYMENT_SECPAY_ZONE', 'MODULE_PAYMENT_SECPAY_ORDER_STATUS_ID', 'MODULE_PAYMENT_SECPAY_SORT_ORDER'];
       }
   }

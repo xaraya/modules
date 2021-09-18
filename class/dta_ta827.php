@@ -55,10 +55,10 @@ class DTA_TA827 extends DTA
     {
         return '';
     }
-    
+
     public function toString()
     {
-        $record = array();
+        $record = [];
         // Segment 01
         array_push($record, $this->getSegment01());
 

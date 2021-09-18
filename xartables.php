@@ -19,7 +19,7 @@
 function payments_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     $xartable['payments_gateways']        = xarDB::getPrefix() . '_payments_gateways';
     $xartable['payments_paymentmethods']  = xarDB::getPrefix() . '_payments_paymentmethods';

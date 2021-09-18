@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
   sys::import('modules.payments.class.basicpayment');
-  
+
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_LOGIN_ID', 'AUTHORIZENET_CC_AIM_LOGIN_ID');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_TRAN_KEY', 'AUTHORIZENET_CC_AIM_TRANSACTION_KEY');
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_MD5_HASH', 'AUTHORIZENET_CC_AIM_MD5_HASH');
@@ -30,24 +30,24 @@
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_INVALID_AMOUNT', 'Please enter a valid amount.');
   //Psspl:Added the Code for Http_failure.
   define('MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_HTTP_FAILURE', 'Http Failure');
-  
+
   class authorizenet_cc_aim extends BasicPayment
   {
       //Psspl:Added the Code initializing  Http_failure variable.
       public $enabled;
-       
+
       public $live;
-       
+
       public $gateway_url;
-       
+
       public $cc_aim_curl;
-       
+
       public $http_code;
-       
+
       public $curlInfo;
-       
+
       public $respose_reson_text;
-      public $authnet_values = array();
+      public $authnet_values = [];
 
       // class constructor
       public function __construct()
@@ -57,12 +57,12 @@
           //$this->authnet_values = $this->getParams();
       }
 
-      public function getParams(array $args=array())
+      public function getParams(array $args=[])
       {
-          $object = DataObjectMaster::getObjectList(array('name' => 'payments_gateways_config'));
+          $object = DataObjectMaster::getObjectList(['name' => 'payments_gateways_config']);
           $object->getProperties();
-          $items = $object->getItems(array('where' => 'configuration_group_id eq 8'));
-          $aryParams = array();
+          $items = $object->getItems(['where' => 'configuration_group_id eq 8']);
+          $aryParams = [];
           foreach ($items as $key => $val) {
               switch ($val['configuration_key']) {
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_LOGIN_ID:
@@ -106,7 +106,7 @@
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_CURL:
                   //$this->cc_aim_curl = $val['configuration_value'];
-                  $this->cc_aim_curl = isset($args['cc_aim_curl']) ? $args['cc_aim_curl'] : $val['configuration_value'];
+                  $this->cc_aim_curl = $args['cc_aim_curl'] ?? $val['configuration_value'];
                 break;
               case MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ORDER_STATUS_ID:
               default:
@@ -120,7 +120,7 @@
           $aryParams["x_method"] = "CC";
           $aryParams["x_relay_response"] = "FALSE";
           $aryParams["x_trans_id"] = xarSession::getVar('AUTHID');
-        
+
           $fields = unserialize(xarSession::GetVar('paymentfields'));
           if (is_array($fields)) {
               $aryParams["x_card_num"] = $fields['number'];
@@ -130,18 +130,18 @@
               //Psspl:Comment the code for resolving orderobject issue.
             //$aryParams["x_amount"] = isset($fields['amount'])?$fields['amount']:"0.1";
           }
-        
+
           $fields = unserialize(xarSession::GetVar('orderfields'));
           if (is_array($fields)) {
-              $aryParams["x_amount"] = isset($fields['amount'])?$fields['amount']:"0.1";
+              $aryParams["x_amount"] = $fields['amount'] ?? "0.1";
               //$aryParams["x_currency_code"] = $fields['currency'];
           }
-        
+
           return $aryParams;
       }
-    
+
       // class methods
-      public function update_status(array $args=array())
+      public function update_status(array $args=[])
       {
           $status = false;
           $this->authnet_values = $this->getParams($args);
@@ -160,7 +160,7 @@
                       $regs[$key] =$value;
                   }
               } else {
-                  $regs = array('-1', '-1', '-1');
+                  $regs = ['-1', '-1', '-1'];
               }
               $this->error = false;
 
@@ -173,7 +173,7 @@
                 case '5':
                     $this->error = 'invalid_amount';
                     break;
-                
+
                 case '7':
                     $this->error = 'invalid_expiration_date';
                     break;
@@ -187,22 +187,22 @@
                 case '28':
                     $this->error = 'declined';
                     break;
-                    
+
                 case '78':
                     $this->error = 'cvc';
                     break;
-                       
-                        
+
+
                 default:
                     $this->error = 'general';
                     break;
             }
               }
-       
+
               if ($this->error != false) {
                   //Psspl:Modified code for resolving the issue of regs[3].
                   //regs array not set when http failure error occurs.
-                  $this->respose_reson_text = isset($regs[3])?$regs[3]:'';
+                  $this->respose_reson_text = $regs[3] ?? '';
                   $error_message = $this->get_error();
                   //$error_message .= "$regs[3]";
                   xarSession::setVar('error_message', $error_message);
@@ -256,7 +256,7 @@
 
           return $result;
       }
-    
+
       public function generateResponse($resp)
       {
           $output = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
@@ -291,14 +291,14 @@
                   //  We found the x_delim_char and accounted for it . . . now do something with it
                   //  get one portion of the response at a time
                   $pstr = substr($text, 0, $p);
-        
+
                   //  this prepares the text and returns one value of the submitted
                 //  and processed name/value pairs at a time
                 //  for AIM-specific interpretations of the responses
                 //  please consult the AIM Guide and look up
                 //  the section called Gateway Response API
                 $pstr_trimmed = substr($pstr, 0, -1); // removes "," at the end
-        
+
                 if ($pstr_trimmed=="") {
                     $pstr_trimmed="NO VALUE RETURNED";
                 }
@@ -662,7 +662,7 @@
           }
           return $output .= "</table>";
       }
-    
+
       public function javascript_validation()
       {
           return false;
@@ -707,7 +707,7 @@
       {
           //Psspl:Implemented the code for error handling.
           $error_message = MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_GENERAL;
-        
+
           switch ($this->error) {
             //Psspl:Added the Code for Http_failure menu.
             case 'HTTP_FAILURE':
@@ -715,7 +715,7 @@
                 $dump=var_export($this->curlInfo, true);
                 $error_message .="<br>Curl info message=$dump";
                 break;
-            
+
             case 'invalid_amount':
                 $error_message = MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_INVALID_AMOUNT;
                 break;
@@ -746,7 +746,7 @@
           //Psspl:Gives the curl_info status.
           //$dump=var_export($this->curlInfo,true);
           //$error_message .="<br>Curl info message=$dump";
-        
+
           $this->error ="<B>".MODULE_PAYMENT_AUTHORIZENET_CC_AIM_ERROR_TITLE;
           $this->error.="</B><br /><table border='0.5' width='100%' bgcolor='#160'><tr><td width=100%'>";
           $this->error.=$error_message."</td></tr></table>";

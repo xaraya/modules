@@ -30,16 +30,16 @@
         }
 
         // Set a return url
-        xarSession::setVar('ddcontext.' . 'payments', array('return_url' => xarServer::getCurrentURL()));
+        xarSession::setVar('ddcontext.' . 'payments', ['return_url' => xarServer::getCurrentURL()]);
 
         // Get the available dropdown options
-        $object = DataObjectMaster::getObjectList(array('objectid' => 1));
+        $object = DataObjectMaster::getObjectList(['objectid' => 1]);
         $data['objectname'] = xarModVars::get('payments', 'defaultmastertable');
         $items = $object->getItems();
-        $options = array();
+        $options = [];
         foreach ($items as $item) {
             if (strpos($item['name'], 'payments') !== false) {
-                $options[] = array('id' => $item['name'], 'name' => $item['name']);
+                $options[] = ['id' => $item['name'], 'name' => $item['name']];
             }
         }
         $data['options'] = $options;

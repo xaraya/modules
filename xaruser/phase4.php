@@ -18,13 +18,13 @@
         if (!xarSecurity::check('ReadPayments')) {
             return;
         }
-        
+
         //Psspl:Implemented the code for return url.
         //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
         if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, xarVar::DONT_SET)) {
             return;
         }
-        
+
         /*
         //Psspl:Implemented the code for return url.
         $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));
@@ -36,14 +36,14 @@
         try {
             $data['return_url'] = unserialize($return_url);
         } catch (Exception $e) {
-            $data['return_url'] = array();
+            $data['return_url'] = [];
         }
-        
-        
+
+
         //Psspl: modified the code for return url.
         $data['return_url'] = unserialize(xarSession::GetVar('return_url'));
         xarSession::delVar('return_url');
-        
+
         // Check for demo mode
         $demousers = unserialize(xarModVars::get('payments', 'demousers'));
         if (xarModVars::get('payments', 'enable_demomode') && in_array(xarUser::getVar('uname'), $demousers)) {
@@ -132,7 +132,7 @@
                 $error_message.=  $ret_additionalmsg."</td></tr></table>";
                 xarSession::setVar('error_message', $error_message);
                 //Psspl: modified the code for allowEdit_payment.
-                xarController::redirect(xarController::URL('payments', 'user', 'onestep', array('paymentmethod'=>$trx_paymentmethod,'MakeChanges'=>1,'errorFlag'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
+                xarController::redirect(xarController::URL('payments', 'user', 'onestep', ['paymentmethod'=>$trx_paymentmethod,'MakeChanges'=>1,'errorFlag'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
                 return true;
             } else {
                 $output = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
@@ -232,26 +232,26 @@
         } else {
             $data['status'] = "No gateway found" . $gateway;
         }
-        
+
         // Update the order information
         $data['orderobject'] = null;
         $orderobjectname = xarModVars::get('payments', 'orderobject');
-        $orderobject = DataObjectMaster::getObject(array('name' => $orderobjectname));
+        $orderobject = DataObjectMaster::getObject(['name' => $orderobjectname]);
         $fields = unserialize(xarSession::GetVar('orderfields'));
         $orderobject->setFieldValues($fields);
-        $orderobject->updateItem(array('itemid' => $fields['id']));
-        
+        $orderobject->updateItem(['itemid' => $fields['id']]);
+
         // Remove the session vars we used
-        xarSession::setVar('orderfields', serialize(array()));
-        xarSession::setVar('paymentfields', serialize(array()));
-            
+        xarSession::setVar('orderfields', serialize([]));
+        xarSession::setVar('paymentfields', serialize([]));
+
         if (!empty($data['return_url']['success_return'])) {
-            
+
             //Psspl:Implemented the code for calling success return API function.
             $success_return = explode(",", $data['return_url']['success_return']);
-             
-            xarMod::apiFunc($success_return[0], $success_return[1], $success_return[2], array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
-            
+
+            xarMod::apiFunc($success_return[0], $success_return[1], $success_return[2], ['status' => $data['status'], 'success_return_link' => $data['return_url']['success_return_link']]);
+
             return true;
         }
         //Psspl : Added code for success return link.

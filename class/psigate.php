@@ -10,9 +10,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
-  
+
   sys::import('modules.payments.class.basicpayment');
-  
+
   class PsiGate extends BasicPayment
   {
       public function __construct()
@@ -36,7 +36,7 @@
           $this->form_action_url = 'https://order.psigate.com/psigate.asp';
       }
 
-      public function update_status(array $args=array())
+      public function update_status(array $args=[])
       {
           global $order;
 
@@ -82,25 +82,25 @@
 
           if (MODULE_PAYMENT_PSIGATE_INPUT_MODE == 'Local') {
               for ($i=1; $i<13; $i++) {
-                  $expires_month[] = array('id' => sprintf('%02d', $i), 'text' => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)));
+                  $expires_month[] = ['id' => sprintf('%02d', $i), 'text' => strftime('%B', mktime(0, 0, 0, $i, 1, 2000))];
               }
 
               $today = getdate();
               for ($i=$today['year']; $i < $today['year']+10; $i++) {
-                  $expires_year[] = array('id' => strftime('%y', mktime(0, 0, 0, 1, 1, $i)), 'text' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)));
+                  $expires_year[] = ['id' => strftime('%y', mktime(0, 0, 0, 1, 1, $i)), 'text' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))];
               }
 
-              $selection = array('id' => $this->code,
+              $selection = ['id' => $this->code,
                            'module' => $this->title,
-                           'fields' => array(array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_OWNER,
-                                                   'field' => $order->billing['firstname'] . ' ' . $order->billing['lastname']),
-                                             array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_NUMBER,
-                                                   'field' => tep_draw_input_field('psigate_cc_number')),
-                                             array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_EXPIRES,
-                                                   'field' => tep_draw_pull_down_menu('psigate_cc_expires_month', $expires_month) . '&nbsp;' . tep_draw_pull_down_menu('psigate_cc_expires_year', $expires_year))));
+                           'fields' => [['title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_OWNER,
+                                                   'field' => $order->billing['firstname'] . ' ' . $order->billing['lastname'], ],
+                                             ['title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_NUMBER,
+                                                   'field' => tep_draw_input_field('psigate_cc_number'), ],
+                                             ['title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_EXPIRES,
+                                                   'field' => tep_draw_pull_down_menu('psigate_cc_expires_month', $expires_month) . '&nbsp;' . tep_draw_pull_down_menu('psigate_cc_expires_year', $expires_year), ], ], ];
           } else {
-              $selection = array('id' => $this->code,
-                           'module' => $this->title);
+              $selection = ['id' => $this->code,
+                           'module' => $this->title, ];
           }
 
           return $selection;
@@ -151,13 +151,13 @@
           global $HTTP_POST_VARS, $order;
 
           if (MODULE_PAYMENT_PSIGATE_INPUT_MODE == 'Local') {
-              $confirmation = array('title' => $this->title . ': ' . $this->cc_card_type,
-                              'fields' => array(array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_OWNER,
-                                                      'field' => $order->billing['firstname'] . ' ' . $order->billing['lastname']),
-                                                array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_NUMBER,
-                                                      'field' => substr($this->cc_card_number, 0, 4) . str_repeat('X', (strlen($this->cc_card_number) - 8)) . substr($this->cc_card_number, -4)),
-                                                array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_EXPIRES,
-                                                      'field' => strftime('%B, %Y', mktime(0, 0, 0, $HTTP_POST_VARS['psigate_cc_expires_month'], 1, '20' . $HTTP_POST_VARS['psigate_cc_expires_year'])))));
+              $confirmation = ['title' => $this->title . ': ' . $this->cc_card_type,
+                              'fields' => [['title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_OWNER,
+                                                      'field' => $order->billing['firstname'] . ' ' . $order->billing['lastname'], ],
+                                                ['title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_NUMBER,
+                                                      'field' => substr($this->cc_card_number, 0, 4) . str_repeat('X', (strlen($this->cc_card_number) - 8)) . substr($this->cc_card_number, -4), ],
+                                                ['title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_EXPIRES,
+                                                      'field' => strftime('%B, %Y', mktime(0, 0, 0, $HTTP_POST_VARS['psigate_cc_expires_month'], 1, '20' . $HTTP_POST_VARS['psigate_cc_expires_year'])), ], ], ];
 
               return $confirmation;
           } else {
@@ -252,8 +252,8 @@
               $error = MODULE_PAYMENT_PSIGATE_TEXT_ERROR_MESSAGE;
           }
 
-          return array('title' => MODULE_PAYMENT_PSIGATE_TEXT_ERROR,
-                   'error' => $error);
+          return ['title' => MODULE_PAYMENT_PSIGATE_TEXT_ERROR,
+                   'error' => $error, ];
       }
 
       public function check()
@@ -285,6 +285,6 @@
 
       public function keys()
       {
-          return array('MODULE_PAYMENT_PSIGATE_STATUS', 'MODULE_PAYMENT_PSIGATE_MERCHANT_ID', 'MODULE_PAYMENT_PSIGATE_TRANSACTION_MODE', 'MODULE_PAYMENT_PSIGATE_TRANSACTION_TYPE', 'MODULE_PAYMENT_PSIGATE_INPUT_MODE', 'MODULE_PAYMENT_PSIGATE_CURRENCY', 'MODULE_PAYMENT_PSIGATE_ZONE', 'MODULE_PAYMENT_PSIGATE_ORDER_STATUS_ID', 'MODULE_PAYMENT_PSIGATE_SORT_ORDER');
+          return ['MODULE_PAYMENT_PSIGATE_STATUS', 'MODULE_PAYMENT_PSIGATE_MERCHANT_ID', 'MODULE_PAYMENT_PSIGATE_TRANSACTION_MODE', 'MODULE_PAYMENT_PSIGATE_TRANSACTION_TYPE', 'MODULE_PAYMENT_PSIGATE_INPUT_MODE', 'MODULE_PAYMENT_PSIGATE_CURRENCY', 'MODULE_PAYMENT_PSIGATE_ZONE', 'MODULE_PAYMENT_PSIGATE_ORDER_STATUS_ID', 'MODULE_PAYMENT_PSIGATE_SORT_ORDER'];
       }
   }

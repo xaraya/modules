@@ -18,28 +18,28 @@
         if (!xarSecurity::check('SubmitPayments')) {
             return;
         }
-        
+
         //Psspl:Implemented the code for return url.
         //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
         if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'], null, xarVar::DONT_SET)) {
             return;
         }
-        
+
         // Check if a product id was passed
         if (!xarVar::fetch('product_id', 'int', $data['product_id'], null, xarVar::DONT_SET)) {
             return;
         }
         //Psspl:Implemented the code for return url.
-        $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));
+        $return_url_property = DataPropertyMaster::getProperty(['name' => 'array']);
         $return_url_property->initialization_associative_array = 1;
         $return_url_property->checkInput('return_url');
         $data['return_url'] = $return_url_property->value;
-        
+
         // Check for gateway
         $module_id = xarSession::getVar('clientmodule');
         $gatewayid = xarModVars::get('payments', 'gateway', $module_id);
         if (empty($gatewayid)) {
-            return xarTpl::module('payments', 'user', 'errors', array('layout' => 'no_gateway'));
+            return xarTpl::module('payments', 'user', 'errors', ['layout' => 'no_gateway']);
         }
 
         // Check for the anonymous user
@@ -63,24 +63,24 @@
                 return;
             }
         }
-          
+
         $data['authid'] = xarSec::genAuthKey();
-        
+
         //Psspl:If the input is not good repropose the previous page.
         //Psspl: Added code for filling the credit card type
         //       combobox from the payment_relation table
         $strCcType="";
         //Psspl:define array type.
-        $ar1=array();
-        $relalionObject=DataObjectMaster::getObjectList(array('name' => 'payments_relation'));
+        $ar1=[];
+        $relalionObject=DataObjectMaster::getObjectList(['name' => 'payments_relation']);
         $data['properties2']=$relalionObject->getProperties();
-        $data['items2']=$relalionObject->getItems(array('where' => "gateway_id eq $gatewayid"));
+        $data['items2']=$relalionObject->getItems(['where' => "gateway_id eq $gatewayid"]);
         foreach ($data['items2'] as $key1=>$value1) {
             foreach ($value1 as $k1 => $v1) {
                 if ($k1=='paymentmethod_id') {
-                    $object1=DataObjectMaster::getObjectList(array('name' => 'payments_paymentmethods'));
+                    $object1=DataObjectMaster::getObjectList(['name' => 'payments_paymentmethods']);
                     $data['properties1']=$object1->getProperties();
-                    $data['items3']=$object1->getItems(array('where' => "id eq $v1"));
+                    $data['items3']=$object1->getItems(['where' => "id eq $v1"]);
                     foreach ($data['items3'] as $key=>$value) {
                         foreach ($value as $k => $v) {
                             if ($k=='id') {
@@ -110,9 +110,9 @@
         if (!$q->run($query)) {
             return;
         }
-        
+
         // Get the payment information
-        $paymentobject = DataObjectMaster::getObject(array('name' => 'payments_ccpayments'));
+        $paymentobject = DataObjectMaster::getObject(['name' => 'payments_ccpayments']);
         if (!$MakeChanges) {
             // If this is the first time we're here, display an empty form
         } else {
@@ -127,7 +127,7 @@
         }
         $data['payment_object'] = $paymentobject;
         $data['payment_properties'] = $paymentobject->getProperties();
-        
+
 
         // Get the order information
         // Add any parameters to be passed
@@ -135,11 +135,11 @@
         if (isset($product_id)) {
             $args['product_id'] = $product_id;
         }
-        
+
         $orderobject = DataObjectMaster::getObject($args);
         if (!$MakeChanges) {
             // Check for an order object, suppress exception if not found
-            $isvalid = $orderobject->checkInput(array(), 1);
+            $isvalid = $orderobject->checkInput([], 1);
             if (!$isvalid) {
                 // No values available, use defaults
                 $orderobject->properties['id']->setValue(0);
@@ -157,6 +157,6 @@
         }
         $data['order_object'] = $orderobject;
         $data['order_properties'] = $orderobject->getProperties();
-        
+
         return $data;
     }

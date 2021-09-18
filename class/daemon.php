@@ -14,16 +14,16 @@
 class PaymentsDaemon extends xarObject
 {
     private static $instance;
-    
-    public $items_per_page       = array();
-    
+
+    public $items_per_page       = [];
+
     public $name                 = '';          // The user's name
     public $email                = '';          // The user's email
-    public $mandanten            = array();     // The mandanten this user can access
+    public $mandanten            = [];     // The mandanten this user can access
     public $current_mandant      = 0;           // The current mandant ID this user is working in
-    public $mandant_settings     = array();     // The field values of the user's current mandant
-    public $current_period       = array();     // The current period this user is working in
-    public $previous_period      = array();     // The previous period this user is working in
+    public $mandant_settings     = [];     // The field values of the user's current mandant
+    public $current_period       = [];     // The current period this user is working in
+    public $previous_period      = [];     // The previous period this user is working in
     public $current_standard_period = 1;        // The current standard period this user is working in
     public $previous_standard_period = 2;       // The previous standard period this user is working in
 
@@ -32,43 +32,43 @@ class PaymentsDaemon extends xarObject
         // If this is a registered user, then set the name and email immediately
         // Otherwise this is done later
         if (xarUser::getVar('id') != _XAR_ID_UNREGISTERED) {
-            $user = xarMod::apiFunc('roles', 'user', 'get', array('id' => xarUser::getVar('id')));
+            $user = xarMod::apiFunc('roles', 'user', 'get', ['id' => xarUser::getVar('id')]);
             $this->setName($user['name']);
             $this->setEmail($user['email']);
         }
 
-        $this->current_period = array(
-                                    'ac' => array(0,0,-400),
-                                    'al' => array(0,0,-400),
-                                    'ap' => array(0,0,-400),
-                                    'ar' => array(0,0,-400),
-                                    'ba' => array(0,0,-400),
-                                    'ca' => array(0,0,-400),
-                                    'gl' => array(0,0,-400),
-                                    'py' => array(0,0,-400),
-                                    'se' => array(0,0,-400),
-                                    'so' => array(0,0,-400),
-                                );
-        $this->previous_period = array(
-                                    'ac' => array(0,0,-450),
-                                    'al' => array(0,0,-450),
-                                    'ap' => array(0,0,-450),
-                                    'ar' => array(0,0,-450),
-                                    'ba' => array(0,0,-450),
-                                    'ca' => array(0,0,-450),
-                                    'gl' => array(0,0,-450),
-                                    'py' => array(0,0,-450),
-                                    'se' => array(0,0,-450),
-                                    'so' => array(0,0,-450),
-                                );
-        
+        $this->current_period = [
+                                    'ac' => [0,0,-400],
+                                    'al' => [0,0,-400],
+                                    'ap' => [0,0,-400],
+                                    'ar' => [0,0,-400],
+                                    'ba' => [0,0,-400],
+                                    'ca' => [0,0,-400],
+                                    'gl' => [0,0,-400],
+                                    'py' => [0,0,-400],
+                                    'se' => [0,0,-400],
+                                    'so' => [0,0,-400],
+                                ];
+        $this->previous_period = [
+                                    'ac' => [0,0,-450],
+                                    'al' => [0,0,-450],
+                                    'ap' => [0,0,-450],
+                                    'ar' => [0,0,-450],
+                                    'ba' => [0,0,-450],
+                                    'ca' => [0,0,-450],
+                                    'gl' => [0,0,-450],
+                                    'py' => [0,0,-450],
+                                    'se' => [0,0,-450],
+                                    'so' => [0,0,-450],
+                                ];
+
         // First time for an admin, then set the company to the default company
         if (xarRoles::isParent('Administrators', xarUser::getVar('uname'))) {
             $this->setMandant((int)xarModVars::get('ledgerba', 'default_mandant'));
         } else {
             // For other users get the allowed companies
             $role_definition = xarMod::apiFunc('ledgerba', 'user', 'get_role_definition');
-        
+
             // Set the user to the first one encountered
             try {
                 $mandanten = unserialize($role_definition['mandanten']);
@@ -78,7 +78,7 @@ class PaymentsDaemon extends xarObject
             }
         }
     }
-    
+
     public function __wakeup()
     {
         // Do whatever
@@ -119,7 +119,7 @@ class PaymentsDaemon extends xarObject
     {
         return $this->__destruct();
     }
-    
+
     public function delete()
     {
         if (xarUser::getVar('id') == _XAR_ID_UNREGISTERED) {
@@ -129,7 +129,7 @@ class PaymentsDaemon extends xarObject
         }
         return true;
     }
-    
+
     public function __clone()
     {
         throw new ForbiddenOperationException('__clone', 'Not allowed to #(1) this singleton');
@@ -152,7 +152,7 @@ class PaymentsDaemon extends xarObject
             if (empty(self::$instance)) {
                 $c = __CLASS__;
                 // this is the one and only time the __construct() method will be run
-                self::$instance = new $c;
+                self::$instance = new $c();
             }
         }
         return self::$instance;
@@ -177,7 +177,7 @@ class PaymentsDaemon extends xarObject
     {
         // Make sure this period exists for now and the future
         if (!isset($this->current_period[$ledger])) {
-            $this->current_period[$ledger] = array(0,0,-400);
+            $this->current_period[$ledger] = [0,0,-400];
         }
 
         $period = $this->current_period[$ledger];
@@ -187,24 +187,24 @@ class PaymentsDaemon extends xarObject
     {
         // Make sure this period exists for now and the future
         if (!isset($this->previous_period[$ledger])) {
-            $this->previous_period[$ledger] = array(0,0,-450);
+            $this->previous_period[$ledger] = [0,0,-450];
         }
-        
+
         $period = $this->previous_period[$ledger];
         return $period;
     }
     public function getCurrentStandardPeriod()
     {
         sys::import('modules.dynamicdata.class.objects.master');
-        $period = DataObjectMaster::getObject(array('name' => 'ledgerba_periods'));
-        $period->getItem(array('itemid' => $this->current_standard_period));
+        $period = DataObjectMaster::getObject(['name' => 'ledgerba_periods']);
+        $period->getItem(['itemid' => $this->current_standard_period]);
         return $period;
     }
     public function getPreviousStandardPeriod()
     {
         sys::import('modules.dynamicdata.class.objects.master');
-        $period = DataObjectMaster::getObject(array('name' => 'ledgerba_periods'));
-        $period->getItem(array('itemid' => $this->previous_standard_period));
+        $period = DataObjectMaster::getObject(['name' => 'ledgerba_periods']);
+        $period->getItem(['itemid' => $this->previous_standard_period]);
         return $period;
     }
 
@@ -236,8 +236,8 @@ class PaymentsDaemon extends xarObject
             return true;
         }
         // Force a refresh
-        $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', array('mandant_id' => $id));
-        $this->mandant_settings = $mandant->getFieldValues(array(), 1);
+        $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', ['mandant_id' => $id]);
+        $this->mandant_settings = $mandant->getFieldValues([], 1);
         $this->current_mandant = $id;
         return true;
     }
@@ -282,13 +282,13 @@ class PaymentsDaemon extends xarObject
      */
     public function saveSettings($type='', $settings)
     {
-        $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', array('mandant_id' => $id));
+        $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', ['mandant_id' => $id]);
         $field = $type . "_settings";
         $settingvalue = serialize($settings);
-        $mandant->updateItem(array($field => $settingvalue));
+        $mandant->updateItem([$field => $settingvalue]);
         return true;
     }
-    
+
     /**
      *  Get a specific setting of the current mandant
      */
@@ -303,7 +303,7 @@ class PaymentsDaemon extends xarObject
         }
         return $settings;
     }
-    
+
     /**
      *  Set a specific setting of the current mandant
      */
@@ -318,14 +318,14 @@ class PaymentsDaemon extends xarObject
         $settings = $this->getMandantSettings($type);
 //        if (!isset($settings[$setting])) throw new Exception(xarML('The setting #(1) does not exist', $setting));
         $settings[$setting] = $value;
-        $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', array('mandant_id' => $this->current_mandant));
+        $mandant = xarMod::apiFunc('ledgerba', 'user', 'get_mandant', ['mandant_id' => $this->current_mandant]);
         $field = $type . "_settings";
         $fieldValues = serialize($settings);
-        $mandant->updateItem(array($field => $fieldValues));
-        $this->mandant_settings = $mandant->getFieldValues(array(), 1);
+        $mandant->updateItem([$field => $fieldValues]);
+        $this->mandant_settings = $mandant->getFieldValues([], 1);
         return true;
     }
-    
+
     /**
      *  Get the mandanten available to this user
      */
@@ -342,7 +342,7 @@ class PaymentsDaemon extends xarObject
      *  - the number of item on a listings page
      *  - the mandant we are configuring
      */
-    public function checkInput($fields=array())
+    public function checkInput($fields=[])
     {
         if (empty($fields)) {
             // The number of items displayed in listings on a page

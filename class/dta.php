@@ -20,10 +20,10 @@ sys::import('xaraya.structures.datetime');
 
 class DTA
 {
-    const CRLF                      = "\r\n";
-    
+    public const CRLF                      = "\r\n";
+
     protected $fillChar             = ' ';
-    
+
     // Header fields
     protected $processingDay        = '000000';
     protected $recipientClearingNr;
@@ -34,7 +34,7 @@ class DTA
     protected $transactionType;
     protected $paymentType          = '0';
     protected $processingFlag       = '0';
-    
+
     // Record fields
     protected $debitAccount;
     protected $paymentAmount;
@@ -42,12 +42,12 @@ class DTA
     protected $recipient;
     protected $paymentReason;
     protected $conversionRate;
-    
+
     // Record fields for 890
     private $paymentAmountNumeric;
     protected $totalAmount;
-    
-    
+
+
     protected function concatenateRecord($record)
     {
         $string = '';
@@ -165,7 +165,7 @@ class DTA
 
     public function setClient($line1, $line2, $line3, $line4)
     {
-        $client = array();
+        $client = [];
         array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 24, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 24, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line2)), 24, $this->fillChar));
@@ -175,7 +175,7 @@ class DTA
 
     public function setRecipient($account, $line1, $line2, $line3, $line4)
     {
-        $recipient = array();
+        $recipient = [];
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 24))), 24, $this->fillChar));
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line3, 0, 24))), 24, $this->fillChar));
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line2, 0, 24))), 24, $this->fillChar));
@@ -184,9 +184,9 @@ class DTA
         $this->recipient = $recipient;
     }
 
-    public function setPaymentReason($lines=array())
+    public function setPaymentReason($lines=[])
     {
-        $reason = array();
+        $reason = [];
         foreach ($lines as $line) {
             $line = trim($line);
             if (strlen($line) > 28) {
@@ -418,15 +418,15 @@ class DTA
 
     protected function replaceChars($string)
     {
-        $replace_chars = array(
+        $replace_chars = [
          'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
          'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
          'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
          'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'ae',
          'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
          'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'oe', 'ø'=>'o', 'ù'=>'u',
-         'ü'=>'ue','ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f'
-         );
+         'ü'=>'ue','ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
+         ];
         return strtr($string, $replace_chars);
     }
 }

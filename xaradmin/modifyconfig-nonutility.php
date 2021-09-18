@@ -78,7 +78,7 @@
                         break;
                 }
 
-                xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

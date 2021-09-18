@@ -20,7 +20,7 @@ $filepath = sys::lib() . 'php-iban/trunk/php-iban.php';
 if (!file_exists($filepath)) {
     throw new Exception(xarML('Could not load the php-iban library'));
 }
-    
+
 sys::import('php-iban.trunk.php-iban');
 
 class IBAN
@@ -117,7 +117,6 @@ class IBAN
 # IBANCountry
 class IBANCountry
 {
-
     # constructor with code
     public function __construct($code = '')
     {

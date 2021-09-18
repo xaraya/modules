@@ -23,13 +23,13 @@ function payments_adminapi_get_message_identifier($args)
         $id = (int)xarModVars::get('payments', 'message_id');
     }
     xarModVars::set('payments', 'message_id', $id + 1);
-    
+
     $prefix = xarModVars::get('payments', 'message_prefix');
     if (!empty($prefix)) {
         $identifier = $prefix . "-" . $id;
     } else {
         $identifier = $id;
     }
-    $identifier = xarMod::apiFunc('payments', 'admin', 'check_swift_char', array('string' => $identifier));
+    $identifier = xarMod::apiFunc('payments', 'admin', 'check_swift_char', ['string' => $identifier]);
     return $identifier;
 }

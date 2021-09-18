@@ -19,7 +19,7 @@
 
 class DTA_File
 {
-    private $transactions = array();
+    private $transactions = [];
     private $transactionCounter = 0;
     private $creationDate;
     private $ident;
@@ -100,7 +100,7 @@ class DTA_File
 
         $filename = 'DTAExport_' . time() . ".txt";
         file_put_contents('DTAExport_' . time() . ".txt", $output);
-        
+
         header('Content-type: text/plain');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         echo $output;

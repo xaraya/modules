@@ -25,10 +25,10 @@ class DTA_TA826 extends DTA
     {
         $this->processingDay = $this->transformDate($timestamp);
     }
-    
+
     public function setClient($line1, $line2, $line3, $line4)
     {
-        $client = array();
+        $client = [];
         array_push($client, str_pad(strtoupper($this->replaceChars($line4)), 20, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line3)), 20, $this->fillChar));
         array_push($client, str_pad(strtoupper($this->replaceChars($line2)), 20, $this->fillChar));
@@ -38,7 +38,7 @@ class DTA_TA826 extends DTA
 
     public function setRecipient($account, $line1, $line2, $line3, $line4)
     {
-        $recipient = array();
+        $recipient = [];
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line4, 0, 20))), 20, $this->fillChar));
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line3, 0, 20))), 20, $this->fillChar));
         array_push($recipient, str_pad(strtoupper($this->replaceChars(substr($line2, 0, 20))), 20, $this->fillChar));
@@ -47,9 +47,9 @@ class DTA_TA826 extends DTA
         $this->recipient = $recipient;
     }
 
-    public function setPaymentReason($lines=array())
+    public function setPaymentReason($lines=[])
     {
-        $reason = array();
+        $reason = [];
         foreach ($lines as $line) {
             $line = trim($line);
             if (strlen($line) > 27) {
@@ -75,10 +75,10 @@ class DTA_TA826 extends DTA
         $segment03 = str_pad($segment03, 128, $this->fillChar);
         return $segment03;
     }
-    
+
     public function toString()
     {
-        $record = array();
+        $record = [];
         // Segment 01
         array_push($record, $this->getSegment01());
 

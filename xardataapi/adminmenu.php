@@ -18,9 +18,9 @@
 // TODO: turn this into an xml file
     function payments_dataapi_adminmenu()
     {
-        return array(
-            array('includes' => array('main','overview'), 'target' => 'main', 'label' => xarML('Payments Overview')),
-            array('mask' => 'ManagePayments', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the Payments master tables'), 'label' => xarML('Master Tables')),
-            array('mask' => 'AdminPayments', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Payments configuration'), 'label' => xarML('Modify Configuration')),
-        );
+        return [
+            ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Payments Overview')],
+            ['mask' => 'ManagePayments', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the Payments master tables'), 'label' => xarML('Master Tables')],
+            ['mask' => 'AdminPayments', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Payments configuration'), 'label' => xarML('Modify Configuration')],
+        ];
     }

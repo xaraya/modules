@@ -28,7 +28,7 @@ class DTA_TA890 extends DTA
 
     public function toString()
     {
-        $record = array();
+        $record = [];
         $segment01 = '01'
                 . $this->getHeader()
                 . $this->getTotalAmount()
