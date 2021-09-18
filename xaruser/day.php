@@ -23,9 +23,9 @@ function calendar_user_day()
 {
     $data = xarMod::apiFunc('calendar', 'user', 'getUserDateTimeInfo');
     $DayEvents = new Calendar_Day($data['cal_year'], $data['cal_month'], $data['cal_day'], CALENDAR_FIRST_DAY_OF_WEEK);
-    $args = array(
+    $args = [
         'day' => &$Day,
-    );
+    ];
     $day_endts = $DayEvents->getTimestamp() + xarModVars::get('calendar', 'day_end') + 3600;
 //        $events = xarMod::apiFunc('icalendar','user','getevents',$args);
 
@@ -39,7 +39,7 @@ function calendar_user_day()
     $events = $q->output();
 
     // Do some calculations to complete the entries' info
-    $slots = array();
+    $slots = [];
 
     // Loop through the events
     $eventcount = count($events);
@@ -55,14 +55,14 @@ function calendar_user_day()
                     $events[$slot[0]]['neighbors'] = $slotcount;
                 }
                 $thisslot = $i;
-                $slots = array(0 => array($j,$events[$j]['end_time']));
+                $slots = [0 => [$j,$events[$j]['end_time']]];
                 $placed = true;
                 break;
             }
         }
         if (!$placed) {
             $thisslot = $slotcount;
-            $slots[] = array($j,$events[$j]['end_time']);
+            $slots[] = [$j,$events[$j]['end_time']];
         }
         $events[$j]['place'] = $thisslot;
     }

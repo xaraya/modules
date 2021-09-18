@@ -19,10 +19,10 @@ function calendar_properties_autoload($class)
 {
     $class = strtolower($class);
 
-    $class_array = array(
+    $class_array = [
         'calendardisplayproperty'       => 'modules.calendar.xarproperties.calendardisplay',
-    );
-    
+    ];
+
     if (isset($class_array[$class])) {
         sys::import($class_array[$class]);
         return true;

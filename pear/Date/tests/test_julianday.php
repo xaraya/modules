@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -41,11 +42,15 @@
  */
 
 if ('@include_path@' != '@'.'include_path'.'@') {
-    ini_set('include_path', ini_get('include_path')
+    ini_set(
+        'include_path',
+        ini_get('include_path')
             . PATH_SEPARATOR . '.'
     );
 } else {
-    ini_set('include_path', realpath(dirname(__FILE__) . '/../')
+    ini_set(
+        'include_path',
+        realpath(dirname(__FILE__) . '/../')
             . PATH_SEPARATOR . '.' . PATH_SEPARATOR
             . ini_get('include_path')
     );
@@ -68,7 +73,8 @@ require_once 'Date.php';
  *
  * @return void
  */
-function compare($expect, $actual, $test_name) {
+function compare($expect, $actual, $test_name)
+{
     if (is_array($expect)) {
         if (count(array_diff($actual, $expect))) {
             echo "$test_name failed.  Expect:\n";
@@ -4497,6 +4503,3 @@ compare('0000 12 31', Date_Calc::DaysToDate(1721425, "%Y %m %d"), '1721425');
 compare(1721425, Date_Calc::DateToDays(31, 12, 0), '0000 12 31');
 compare('0001 01 01', Date_Calc::DaysToDate(1721426, "%Y %m %d"), '1721426');
 compare(1721426, Date_Calc::DateToDays(1, 1, 1), '0001 01 01');
-
-
-?>

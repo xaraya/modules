@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -66,7 +67,7 @@ class Calendar_Util_Uri
      * @var array
      * @access private
      */
-    var $uris = array();
+    public $uris = [];
 
     /**
      * String to separate fragments with.
@@ -75,7 +76,7 @@ class Calendar_Util_Uri
      * @var string (default XHTML &amp;)
      * @access public
      */
-    var $separator = '&amp;';
+    public $separator = '&amp;';
 
     /**
      * To output a "scalar" string - variable names omitted.
@@ -83,7 +84,7 @@ class Calendar_Util_Uri
      * @var boolean (default false)
      * @access public
      */
-    var $scalar = false;
+    public $scalar = false;
 
     /**
      * Constructs Calendar_Decorator_Uri
@@ -98,7 +99,7 @@ class Calendar_Util_Uri
      *
      * @access public
      */
-    function Calendar_Util_Uri($y, $m=null, $d=null, $h=null, $i=null, $s=null)
+    public function Calendar_Util_Uri($y, $m=null, $d=null, $h=null, $i=null, $s=null)
     {
         $this->setFragments($y, $m, $d, $h, $i, $s);
     }
@@ -116,14 +117,26 @@ class Calendar_Util_Uri
      * @return void
      * @access public
      */
-    function setFragments($y, $m=null, $d=null, $h=null, $i=null, $s=null) 
+    public function setFragments($y, $m=null, $d=null, $h=null, $i=null, $s=null)
     {
-        if (!is_null($y)) $this->uris['Year']   = $y;
-        if (!is_null($m)) $this->uris['Month']  = $m;
-        if (!is_null($d)) $this->uris['Day']    = $d;
-        if (!is_null($h)) $this->uris['Hour']   = $h;
-        if (!is_null($i)) $this->uris['Minute'] = $i;
-        if (!is_null($s)) $this->uris['Second'] = $s;
+        if (!is_null($y)) {
+            $this->uris['Year']   = $y;
+        }
+        if (!is_null($m)) {
+            $this->uris['Month']  = $m;
+        }
+        if (!is_null($d)) {
+            $this->uris['Day']    = $d;
+        }
+        if (!is_null($h)) {
+            $this->uris['Hour']   = $h;
+        }
+        if (!is_null($i)) {
+            $this->uris['Minute'] = $i;
+        }
+        if (!is_null($s)) {
+            $this->uris['Second'] = $s;
+        }
     }
 
     /**
@@ -135,7 +148,7 @@ class Calendar_Util_Uri
      * @return string
      * @access public
      */
-    function prev($Calendar, $unit)
+    public function prev($Calendar, $unit)
     {
         $method = 'prev'.$unit;
         $stamp  = $Calendar->{$method}('timestamp');
@@ -151,7 +164,7 @@ class Calendar_Util_Uri
      * @return string
      * @access public
      */
-    function this($Calendar, $unit)
+    public function this($Calendar, $unit)
     {
         $method = 'this'.$unit;
         $stamp  = $Calendar->{$method}('timestamp');
@@ -167,7 +180,7 @@ class Calendar_Util_Uri
      * @return string
      * @access public
      */
-    function next($Calendar, $unit)
+    public function next($Calendar, $unit)
     {
         $method = 'next'.$unit;
         $stamp  = $Calendar->{$method}('timestamp');
@@ -184,7 +197,7 @@ class Calendar_Util_Uri
      * @return string build uri string
      * @access private
      */
-    function buildUriString($Calendar, $method, $stamp)
+    public function buildUriString($Calendar, $method, $stamp)
     {
         $uriString = '';
         $cE = & $Calendar->getEngine();
@@ -201,4 +214,3 @@ class Calendar_Util_Uri
         return $uriString;
     }
 }
-?>

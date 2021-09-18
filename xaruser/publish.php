@@ -47,8 +47,8 @@ function calendar_user_publish($args)
             'calendar',
             'user',
             'get',
-            array('calid' => $calid,
-                                          'calname' => $calname)
+            ['calid' => $calid,
+                                          'calname' => $calname, ]
         );
         if (!isset($calendars)) {
             return;
@@ -107,7 +107,7 @@ function calendar_user_publish($args)
             }
         }
     }
-    $data = array();
+    $data = [];
     $data['calendars'] = xarMod::apiFunc('calendar', 'user', 'getall');
 
     return $data;

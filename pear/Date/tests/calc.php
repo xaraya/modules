@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -42,11 +43,15 @@
  */
 
 if ('@include_path@' != '@'.'include_path'.'@') {
-    ini_set('include_path', ini_get('include_path')
+    ini_set(
+        'include_path',
+        ini_get('include_path')
             . PATH_SEPARATOR . '.'
     );
 } else {
-    ini_set('include_path', realpath(dirname(__FILE__) . '/../')
+    ini_set(
+        'include_path',
+        realpath(dirname(__FILE__) . '/../')
             . PATH_SEPARATOR . '.' . PATH_SEPARATOR
             . ini_get('include_path')
     );
@@ -68,7 +73,8 @@ require_once 'Date/Calc.php';
  *
  * @return void
  */
-function compare($expect, $actual, $test_name) {
+function compare($expect, $actual, $test_name)
+{
     if (is_array($expect)) {
         if (count(array_diff($actual, $expect))) {
             echo "$test_name failed.  Expect:\n";
@@ -122,7 +128,7 @@ compare('Nov', Date_Calc::getMonthAbbrname('11'), 'getMonthAbbrname str');
 compare('Saturday', Date_Calc::getWeekdayFullname('01', '01', '2005'), 'getWeekdayFullname str');
 compare('Sat', Date_Calc::getWeekdayAbbrname('01', '01', '2005'), 'getWeekdayAbbrname str');
 
-$exp = array(
+$exp = [
     'January',
     'February',
     'March',
@@ -134,19 +140,19 @@ $exp = array(
     'September',
     'October',
     'November',
-    'December'
-);
+    'December',
+];
 compare($exp, Date_Calc::getMonthNames(), 'getMonthNames');
 
-$exp = array(
+$exp = [
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
-    'Sunday'
-);
+    'Sunday',
+];
 compare($exp, Date_Calc::getWeekDays(), 'getWeekDays');
 
 compare(3, Date_Calc::dayOfWeek(22, 11, 2000), 'dayOfWeek');
@@ -173,7 +179,7 @@ compare(5, Date_Calc::weeksInMonth(11, 2000), 'weeksInMonth');
 compare(5, Date_Calc::weeksInMonth('11', '2000'), 'weeksInMonth str');
 
 
-$exp = array(
+$exp = [
     '19000226',
     '19000227',
     '19000228',
@@ -181,10 +187,10 @@ $exp = array(
     '19000302',
     '19000303',
     '19000304',
-);
+];
 compare($exp, Date_Calc::getCalendarWeek(27, 2, 1900), 'getCalendarWeek 1');
 
-$exp = array(
+$exp = [
     '20000228',
     '20000229',
     '20000301',
@@ -192,31 +198,31 @@ $exp = array(
     '20000303',
     '20000304',
     '20000305',
-);
+];
 compare($exp, Date_Calc::getCalendarWeek(28, 2, 2000), 'getCalendarWeek 2');
 
-$exp = array(
+$exp = [
     '20001127',
     '20001128',
     '20001129',
     '20001130',
     '20001201',
     '20001202',
-    '20001203'
-);
+    '20001203',
+];
 compare($exp, Date_Calc::getCalendarWeek(27, 11, 2000), 'getCalendarWeek 3');
 compare($exp, Date_Calc::getCalendarWeek('27', '11', '2000'), 'getCalendarWeek 3 str');
 
-$exp = array(
-    array(
+$exp = [
+    [
         '20001030',
         '20001031',
         '20001101',
         '20001102',
         '20001103',
         '20001104',
-    ),
-    array(
+    ],
+    [
         '20001105',
         '20001106',
         '20001107',
@@ -224,8 +230,8 @@ $exp = array(
         '20001109',
         '20001110',
         '20001111',
-    ),
-    array(
+    ],
+    [
         '20001112',
         '20001113',
         '20001114',
@@ -233,8 +239,8 @@ $exp = array(
         '20001116',
         '20001117',
         '20001118',
-    ),
-    array(
+    ],
+    [
         '20001119',
         '20001121',
         '20001122',
@@ -242,17 +248,17 @@ $exp = array(
         '20001124',
         '20001125',
         '20001126',
-    ),
-    array(
+    ],
+    [
         '20001127',
         '20001128',
         '20001129',
         '20001130',
         '20001201',
         '20001202',
-        '20001203'
-    )
-);
+        '20001203',
+    ],
+];
 compare($exp, Date_Calc::getCalendarMonth(11, 2000), 'getCalendarMonth');
 compare($exp, Date_Calc::getCalendarMonth('11', '2000'), 'getCalendarMonth str');
 

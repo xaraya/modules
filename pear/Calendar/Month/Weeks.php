@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -82,14 +83,14 @@ class Calendar_Month_Weeks extends Calendar_Month
      * @var Calendar_Table_Helper
      * @access private
      */
-    var $tableHelper;
+    public $tableHelper;
 
     /**
      * First day of the week
      * @access private
      * @var string
      */
-    var $firstDay;
+    public $firstDay;
 
     /**
      * Constructs Calendar_Month_Weeks
@@ -100,7 +101,7 @@ class Calendar_Month_Weeks extends Calendar_Month
      *
      * @access public
      */
-    function Calendar_Month_Weeks($y, $m, $firstDay=null)
+    public function Calendar_Month_Weeks($y, $m, $firstDay=null)
     {
         parent::Calendar_Month($y, $m, $firstDay);
     }
@@ -114,7 +115,7 @@ class Calendar_Month_Weeks extends Calendar_Month
      * @return boolean
      * @access public
      */
-    function build($sDates = array())
+    public function build($sDates = [])
     {
         include_once CALENDAR_ROOT.'Table/Helper.php';
         $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
@@ -128,7 +129,11 @@ class Calendar_Month_Weeks extends Calendar_Month
             )
         ) {
             $this->children[$i] = new Calendar_Week(
-                $this->year, $this->month, $d, $this->tableHelper->getFirstDay());
+                $this->year,
+                $this->month,
+                $d,
+                $this->tableHelper->getFirstDay()
+            );
         }
         //used to set empty days
         $this->children[1]->setFirst(true);
@@ -149,12 +154,11 @@ class Calendar_Month_Weeks extends Calendar_Month
      * @return void
      * @access private
      */
-    function setSelection($sDates)
+    public function setSelection($sDates)
     {
         foreach ($sDates as $sDate) {
             if ($this->year == $sDate->thisYear()
-                && $this->month == $sDate->thisMonth())
-            {
+                && $this->month == $sDate->thisMonth()) {
                 $key = $sDate->thisWeek('n_in_month');
                 if (isset($this->children[$key])) {
                     $this->children[$key]->setSelected();
@@ -163,4 +167,3 @@ class Calendar_Month_Weeks extends Calendar_Month
         }
     }
 }
-?>

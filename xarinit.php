@@ -177,8 +177,8 @@ function calendar_init()
     # --------------------------------------------------------
     #  Register block types
 #
-    xarMod::apiFunc('blocks', 'admin', 'register_block_type', array('modName' => 'calendar','blockType' => 'calnav'));
-    xarMod::apiFunc('blocks', 'admin', 'register_block_type', array('modName' => 'calendar','blockType' => 'month'));
+    xarMod::apiFunc('blocks', 'admin', 'register_block_type', ['modName' => 'calendar','blockType' => 'calnav']);
+    xarMod::apiFunc('blocks', 'admin', 'register_block_type', ['modName' => 'calendar','blockType' => 'month']);
 
     //TODO::Register our blocklayout tags to allow using Objects in the templates
     //<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI"/>
@@ -207,12 +207,12 @@ function calendar_init()
     # Create DD objects
 #
     $module = 'calendar';
-    $objects = array(
+    $objects = [
                    'calendar_calendar',
                    'calendar_event',
-                     );
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -232,10 +232,10 @@ function calendar_upgrade($oldversion)
             $xartable =& xarDB::getTables();
             $calfilestable = $xartable['calendars_files'];
             sys::import('xaraya.tableddl');
-            $fields = array(
-                'xar_calendars_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true),
-                'xar_files_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true)
-                );
+            $fields = [
+                'xar_calendars_id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true],
+                'xar_files_id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true],
+                ];
             $query = xarTableDDL::createTable($calfilestable, $fields);
             if (empty($query)) {
                 return;
@@ -247,10 +247,10 @@ function calendar_upgrade($oldversion)
 
             $filestable = $xartable['calfiles'];
             sys::import('xaraya.tableddl');
-            $fields = array(
-                'xar_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-                'xar_path' => array('type' => 'varchar', 'size' => '255', 'null' => true)
-                );
+            $fields = [
+                'xar_id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+                'xar_path' => ['type' => 'varchar', 'size' => '255', 'null' => true],
+                ];
             $query = xarTableDDL::createTable($filestable, $fields);
             if (empty($query)) {
                 return;
@@ -260,22 +260,22 @@ function calendar_upgrade($oldversion)
                 return;
             }
 
-            $index = array(
+            $index = [
                 'name'      => 'i_' . xarDB::getPrefix() . '_calendars_files_calendars_id',
-                'fields'    => array('xar_calendars_id'),
-                'unique'    => false
-            );
+                'fields'    => ['xar_calendars_id'],
+                'unique'    => false,
+            ];
             $query = xarTableDDL::createIndex($calfilestable, $index);
             $result = $dbconn->Execute($query);
             if (!$result) {
                 return;
             }
 
-            $index = array(
+            $index = [
                 'name'      => 'i_' . xarDB::getPrefix() . '_calendars_files_files_id',
-                'fields'    => array('xar_files_id'),
-                'unique'    => false
-            );
+                'fields'    => ['xar_files_id'],
+                'unique'    => false,
+            ];
             $query = xarTableDDL::createIndex($calfilestable, $index);
             $result = $dbconn->Execute($query);
             if (!$result) {
@@ -297,9 +297,9 @@ function calendar_delete()
     #
     # Remove block types
     #
-    if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'calendar', 'blockType'=> 'month'))) {
+    if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type', ['modName'  => 'calendar', 'blockType'=> 'month'])) {
         return;
     }
 
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'calendar'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'calendar']);
 }

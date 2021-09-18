@@ -45,12 +45,12 @@
             return;
         }
 
-        $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
-                                             'itemid'   => $itemid));
+        $myobject = DataObjectMaster::getObject(['objectid' => $objectid,
+                                             'itemid'   => $itemid, ]);
         $isvalid = $myobject->checkInput();
 
         // recover any session var information
-        $data = xarMod::apiFunc('dynamicdata', 'user', 'getcontext', array('module' => $tplmodule));
+        $data = xarMod::apiFunc('dynamicdata', 'user', 'getcontext', ['module' => $tplmodule]);
         extract($data);
 
         if (!empty($preview) || !$isvalid) {
@@ -67,14 +67,14 @@
             // Makes this hooks call explictly from DD
             //$modinfo = xarMod::getInfo($myobject->moduleid);
             $modinfo = xarMod::getInfo(182);
-            $item = array();
+            $item = [];
             foreach (array_keys($myobject->properties) as $name) {
                 $item[$name] = $myobject->properties[$name]->value;
             }
             $item['module'] = $modinfo['name'];
             $item['itemtype'] = $myobject->itemtype;
             $item['itemid'] = $myobject->itemid;
-            $hooks = array();
+            $hooks = [];
             $hooks = xarModHooks::call('item', 'new', $myobject->itemid, $item, $modinfo['name']);
             $data['hooks'] = $hooks;
 
@@ -87,7 +87,7 @@
         $itemid = $myobject->createItem();
 
         // If we are here then the create is valid: reset the session var
-        xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
+        xarSession::setVar('ddcontext.' . $tplmodule, ['tplmodule' => $tplmodule]);
 
         if (empty($itemid)) {
             return;
@@ -105,10 +105,10 @@
                 'dynamicdata',
                 'admin',
                 'view',
-                array(
+                [
                                           'itemid' => $myobject->objectid,
-                                          'tplmodule' => $tplmodule
-                                          )
+                                          'tplmodule' => $tplmodule,
+                                          ]
             ));
         }
         return true;

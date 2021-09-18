@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -74,14 +75,14 @@ class Calendar_Day extends Calendar
      * @access private
      * @var boolean
      */
-    var $first = false;
+    public $first = false;
 
     /**
      * Marks the Day at the end of a week
      * @access private
      * @var boolean
      */
-    var $last = false;
+    public $last = false;
 
 
     /**
@@ -89,7 +90,7 @@ class Calendar_Day extends Calendar
      * @access private
      * @var boolean
      */
-    var $empty = false;
+    public $empty = false;
 
     /**
      * Constructs Calendar_Day
@@ -100,7 +101,7 @@ class Calendar_Day extends Calendar
      *
      * @access public
      */
-    function Calendar_Day($y, $m, $d)
+    public function Calendar_Day($y, $m, $d)
     {
         parent::Calendar($y, $m, $d);
     }
@@ -113,7 +114,7 @@ class Calendar_Day extends Calendar
      * @return boolean
      * @access public
      */
-    function build($sDates = array())
+    public function build($sDates = [])
     {
         include_once CALENDAR_ROOT.'Hour.php';
 
@@ -136,13 +137,12 @@ class Calendar_Day extends Calendar
      * @return void
      * @access private
      */
-    function setSelection($sDates)
+    public function setSelection($sDates)
     {
         foreach ($sDates as $sDate) {
             if ($this->year == $sDate->thisYear()
                 && $this->month == $sDate->thisMonth()
-                && $this->day == $sDate->thisDay())
-            {
+                && $this->day == $sDate->thisDay()) {
                 $key = (int)$sDate->thisHour();
                 if (isset($this->children[$key])) {
                     $sDate->setSelected();
@@ -161,7 +161,7 @@ class Calendar_Day extends Calendar
      * @return void
      * @access private
      */
-    function setFirst($state = true)
+    public function setFirst($state = true)
     {
         $this->first = $state;
     }
@@ -175,7 +175,7 @@ class Calendar_Day extends Calendar
      * @return void
      * @access private
      */
-    function setLast($state = true)
+    public function setLast($state = true)
     {
         $this->last = $state;
     }
@@ -187,7 +187,7 @@ class Calendar_Day extends Calendar
      * @return boolean
      * @access public
      */
-    function isFirst() 
+    public function isFirst()
     {
         return $this->first;
     }
@@ -199,7 +199,7 @@ class Calendar_Day extends Calendar
      * @return boolean
      * @access public
      */
-    function isLast()
+    public function isLast()
     {
         return $this->last;
     }
@@ -213,7 +213,7 @@ class Calendar_Day extends Calendar
      * @return void
      * @access private
      */
-    function setEmpty ($state = true)
+    public function setEmpty($state = true)
     {
         $this->empty = $state;
     }
@@ -224,9 +224,8 @@ class Calendar_Day extends Calendar
      * @return boolean
      * @access public
      */
-    function isEmpty()
+    public function isEmpty()
     {
         return $this->empty;
     }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -41,11 +42,15 @@
  */
 
 if ('@include_path@' != '@'.'include_path'.'@') {
-    ini_set('include_path', ini_get('include_path')
+    ini_set(
+        'include_path',
+        ini_get('include_path')
             . PATH_SEPARATOR . '.'
     );
 } else {
-    ini_set('include_path', realpath(dirname(__FILE__) . '/../')
+    ini_set(
+        'include_path',
+        realpath(dirname(__FILE__) . '/../')
             . PATH_SEPARATOR . '.' . PATH_SEPARATOR
             . ini_get('include_path')
     );
@@ -68,7 +73,8 @@ require_once 'Date.php';
  *
  * @return void
  */
-function compare($expect, $actual, $test_name) {
+function compare($expect, $actual, $test_name)
+{
     if (is_array($expect)) {
         if (count(array_diff($actual, $expect))) {
             echo "$test_name failed.  Expect:\n";
@@ -224,8 +230,3 @@ compare('1987-07-10 00.00.00', $od->formatLikeSQL('YYYY-MM-DD HH.MI.SS'), 'Midda
 $od = new Date("19870709T11:59:59.999999");
 $od->round(DATE_PRECISION_DAY);
 compare('1987-07-09 00.00.00', $od->formatLikeSQL('YYYY-MM-DD HH.MI.SS'), 'Midday test 2');
-
-
-
-
-?>

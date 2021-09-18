@@ -32,7 +32,7 @@
          * @returns $blockinfo array
          */
 
-        public function display(array $data=array())
+        public function display(array $data=[])
         {
             $data = parent::display($data);
             if (empty($data)) {

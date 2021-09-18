@@ -11,7 +11,7 @@
         public $day =1;
         public $firstDay = false;
 
-        public function build($events=array())
+        public function build($events=[])
         {
             /*include_once CALENDAR_ROOT . 'Day.php';
             include_once CALENDAR_ROOT .  'Table/Helper.php';
@@ -110,7 +110,7 @@
         public function fetch()
         {
             if (empty($this->calendar->children)) {
-                return array();
+                return [];
             }
             $child = each($this->calendar->children);
             if ($child) {

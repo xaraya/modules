@@ -11,9 +11,10 @@
 
 require_once "Date.php";
 
-function echo_code($ps_date) {
-  echo '<span class="code">' . $ps_date . "</span><br />\n";
-  }
+function echo_code($ps_date)
+{
+    echo '<span class="code">' . $ps_date . "</span><br />\n";
+}
 
 
 $date = new Date();
@@ -114,13 +115,15 @@ echo_code($date2->format2("DD/MM/YYYY HH.MI.SSTZO"));
 <h4>Compare two times for equality:</h4>
 <?php
 
-if ($date2->before($date))
-  echo "second date is earlier (because Unix time ignores the part-second)<br />\n";
+if ($date2->before($date)) {
+    echo "second date is earlier (because Unix time ignores the part-second)<br />\n";
+}
 
 $date->trunc(DATE_PRECISION_SECOND);
 
-if ($date2->equals($date))
-  echo "dates are now the same<br />\n";
+if ($date2->equals($date)) {
+    echo "dates are now the same<br />\n";
+}
 
 
 ?>

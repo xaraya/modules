@@ -21,8 +21,8 @@ class CalendarDisplayProperty extends DataProperty
     public $id         = 30081;
     public $name       = 'calendardisplay';
     public $desc       = 'Calendar Display';
-    public $reqmodules = array('calendar');
-    
+    public $reqmodules = ['calendar'];
+
     public $timeframe  = 'week';
     public $owner;
 
@@ -36,7 +36,7 @@ class CalendarDisplayProperty extends DataProperty
         $this->owner = xarUser::getVar('id');
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         if (empty($data['role_id'])) {
             $data['role_id'] = $this->owner;
@@ -74,7 +74,7 @@ class CalendarDisplayProperty extends DataProperty
         }
         sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
     }
-    
+
     public function setup($timeframe, $role_id)
     {
         $data = xarMod::apiFunc('calendar', 'user', 'getUserDateTimeInfo');
@@ -116,7 +116,7 @@ class CalendarDisplayProperty extends DataProperty
                 $end_time = $Year->getTimestamp();
                 $Year = new Calendar_Year($data['cal_year']);
                 $start_time = $Year->getTimestamp();
-                
+
                 $events = $this->getEvents($start_time, $end_time, $role_id);
 
                 $YearDecorator = new YearEvent_Decorator($Year);

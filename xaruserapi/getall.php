@@ -30,7 +30,7 @@ function calendar_userapi_getall($args)
         $startnum = 1;
     }
 
-    $calendars = array();
+    $calendars = [];
 
     // Security check
 //    if (!xarSecurity::check('ViewCalendars')) return;
@@ -62,13 +62,11 @@ function calendar_userapi_getall($args)
     }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($cid,
+        [$cid,
              $cname,
-             $cpath) = $result->fields;
-        $calendars[] = array(  'cid' => $cid
-                       ,'cname' => $cname
-                       ,'cpath' => $cpath
-                     );
+             $cpath] = $result->fields;
+        $calendars[] = [  'cid' => $cid,'cname' => $cname,'cpath' => $cpath,
+                     ];
     }
     $result->Close();
     return $calendars;

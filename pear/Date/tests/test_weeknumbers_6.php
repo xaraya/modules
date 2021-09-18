@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -41,11 +42,15 @@
  */
 
 if ('@include_path@' != '@'.'include_path'.'@') {
-    ini_set('include_path', ini_get('include_path')
+    ini_set(
+        'include_path',
+        ini_get('include_path')
             . PATH_SEPARATOR . '.'
     );
 } else {
-    ini_set('include_path', realpath(dirname(__FILE__) . '/../')
+    ini_set(
+        'include_path',
+        realpath(dirname(__FILE__) . '/../')
             . PATH_SEPARATOR . '.' . PATH_SEPARATOR
             . ini_get('include_path')
     );
@@ -70,7 +75,8 @@ require_once 'Date.php';
  *
  * @return void
  */
-function compare($expect, $actual, $test_name) {
+function compare($expect, $actual, $test_name)
+{
     if (is_array($expect)) {
         if (count(array_diff($actual, $expect))) {
             echo "$test_name failed.  Expect:\n";
@@ -3520,6 +3526,3 @@ compare('02', $date->formatLikeSQL('W1'), 'W1 (372)');
 compare('02', $date->formatLikeSQL('W4'), 'W4 (372)');
 compare('02', $date->formatLikeSQL('W7'), 'W7 (372)');
 compare('01', $date->formatLikeSQL('IW'), 'IW (372)');
-
-
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -42,11 +43,15 @@
  */
 
 if ('@include_path@' != '@'.'include_path'.'@') {
-    ini_set('include_path', ini_get('include_path')
+    ini_set(
+        'include_path',
+        ini_get('include_path')
             . PATH_SEPARATOR . '.'
     );
 } else {
-    ini_set('include_path', realpath(dirname(__FILE__) . '/../')
+    ini_set(
+        'include_path',
+        realpath(dirname(__FILE__) . '/../')
             . PATH_SEPARATOR . '.' . PATH_SEPARATOR
             . ini_get('include_path')
     );
@@ -68,7 +73,8 @@ require_once 'Date.php';
  *
  * @return void
  */
-function compare($expect, $actual, $test_name) {
+function compare($expect, $actual, $test_name)
+{
     if (is_array($expect)) {
         if (count(array_diff($actual, $expect))) {
             echo "$test_name failed.  Expect:\n";
@@ -519,5 +525,3 @@ compare('Thu, 29 Nov 2007 23:13:46 +0100', $date->formatLikeDate(DATE_RFC2822), 
 compare('2007-11-29T23:13:46+01:00', $date->formatLikeDate(DATE_RFC3339), 'DATE_RFC3339 [' . DATE_RFC3339 . '] (formatLikeDate)');
 compare('Thu, 29 Nov 2007 23:13:46 +0100', $date->formatLikeDate(DATE_RSS), 'DATE_RSS [' . DATE_RSS . '] (formatLikeDate)');
 compare('2007-11-29T23:13:46+01:00', $date->formatLikeDate(DATE_W3C), 'DATE_W3C [' . DATE_W3C . '] (formatLikeDate)');
-
-?>

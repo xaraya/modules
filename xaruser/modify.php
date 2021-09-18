@@ -27,10 +27,10 @@
         if (!xarVar::fetch('page', 'str:1', $data['page'], 'week', xarVar::NOT_REQUIRED)) {
             return;
         }
-        xarSession::setVar('ddcontext.calendar', array('page' => $data['page'],
-                                                        ));
-        $data['object'] = DataobjectMaster::getObject(array('name' => 'calendar_event'));
-        $data['object']->getItem(array('itemid' => $data['itemid']));
+        xarSession::setVar('ddcontext.calendar', ['page' => $data['page'],
+                                                        ]);
+        $data['object'] = DataobjectMaster::getObject(['name' => 'calendar_event']);
+        $data['object']->getItem(['itemid' => $data['itemid']]);
         $data['tplmodule'] = 'calendar';
         $data['authid'] = xarSec::genAuthKey();
         return $data;

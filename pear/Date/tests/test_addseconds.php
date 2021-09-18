@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -41,11 +42,15 @@
  */
 
 if ('@include_path@' != '@'.'include_path'.'@') {
-    ini_set('include_path', ini_get('include_path')
+    ini_set(
+        'include_path',
+        ini_get('include_path')
             . PATH_SEPARATOR . '.'
     );
 } else {
-    ini_set('include_path', realpath(dirname(__FILE__) . '/../')
+    ini_set(
+        'include_path',
+        realpath(dirname(__FILE__) . '/../')
             . PATH_SEPARATOR . '.' . PATH_SEPARATOR
             . ini_get('include_path')
     );
@@ -68,7 +73,8 @@ require_once 'Date.php';
  *
  * @return void
  */
-function compare($expect, $actual, $test_name) {
+function compare($expect, $actual, $test_name)
+{
     if (is_array($expect)) {
         if (count(array_diff($actual, $expect))) {
             echo "$test_name failed.  Expect:\n";
@@ -88,8 +94,10 @@ if (php_sapi_name() != 'cli') {
 }
 
 
-$date = new Date("1972-07-01 00:59:58.987654",
-                 true); // count leap seconds
+$date = new Date(
+    "1972-07-01 00:59:58.987654",
+    true
+); // count leap seconds
 $date->setTZbyID("Europe/London");
 
 $datetest = new Date($date);
@@ -438,7 +446,3 @@ compare("05/12/1969 00.00.28.98765", $datetest->formatLikeSQL("DD/MM/YYYY HH.MI.
 $datetest = new Date($date);
 $datetest->addSeconds(-1170028800, true);
 compare("04/12/1968 00.00.28.98765", $datetest->formatLikeSQL("DD/MM/YYYY HH.MI.SS.FFFFF"), "-1170028800");
-
-
-
-?>

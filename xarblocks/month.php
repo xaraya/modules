@@ -27,7 +27,7 @@ class Calendar_MonthBlock extends BasicBlock
     public $targettype          = 'user';
     public $targetfunc          = 'month';
 
-    public function display(array $data=array())
+    public function display(array $data=[])
     {
         $data = parent::display($data);
 

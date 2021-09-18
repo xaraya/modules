@@ -13,7 +13,7 @@
 
 function calendar_userapi_decode_shorturl(&$params)
 {
-    $args = array();
+    $args = [];
     $func = null;
     // the function is based on the date
     if (isset($params[1]) && preg_match('/(^[\d]{4,8})$/', $params[1])) {
@@ -31,12 +31,12 @@ function calendar_userapi_decode_shorturl(&$params)
 
     // if we don't have a function, call the default view
     if (!isset($func)) {
-        return array('main', $args);
+        return ['main', $args];
     } elseif ($func == 'publish') {
         if (!empty($params[2]) && preg_match('/^([\w -]+)\.ics$/', $params[2], $matches)) {
             $args['calname'] = $matches[1];
         }
-        return array('publish',$args);
+        return ['publish',$args];
     }
 
     // check out the next set of parameters (
@@ -51,5 +51,5 @@ function calendar_userapi_decode_shorturl(&$params)
     }
 
     // return the decoded information
-    return array($func,$args);
+    return [$func,$args];
 }

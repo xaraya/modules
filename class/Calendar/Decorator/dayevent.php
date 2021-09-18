@@ -11,7 +11,7 @@
         public $day;
         public $firstDay = false;
 
-        public function build($events=array())
+        public function build($events=[])
         {
             require_once CALENDAR_ROOT.'Hour.php';
 
@@ -86,7 +86,7 @@
         public function fetch()
         {
             if (empty($this->children)) {
-                return array();
+                return [];
             }
             $child = each($this->children);
             if ($child) {

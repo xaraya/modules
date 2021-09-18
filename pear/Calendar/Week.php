@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -81,49 +82,49 @@ class Calendar_Week extends Calendar
      * @var Calendar_Table_Helper
      * @access private
      */
-    var $tableHelper;
+    public $tableHelper;
 
     /**
      * Stores the timestamp of the first day of this week
      * @access private
      * @var object
      */
-    var $thisWeek;
+    public $thisWeek;
 
     /**
      * Stores the timestamp of first day of previous week
      * @access private
      * @var object
      */
-    var $prevWeek;
+    public $prevWeek;
 
     /**
      * Stores the timestamp of first day of next week
      * @access private
      * @var object
      */
-    var $nextWeek;
+    public $nextWeek;
 
     /**
      * Used by build() to set empty days
      * @access private
      * @var boolean
      */
-    var $firstWeek = false;
+    public $firstWeek = false;
 
     /**
      * Used by build() to set empty days
      * @access private
      * @var boolean
      */
-    var $lastWeek = false;
+    public $lastWeek = false;
 
     /**
      * First day of the week (0=sunday, 1=monday...)
      * @access private
      * @var boolean
      */
-    var $firstDay = 1;
+    public $firstDay = 1;
 
     /**
      * Constructs Week
@@ -135,7 +136,7 @@ class Calendar_Week extends Calendar
      *
      * @access public
      */
-    function Calendar_Week($y, $m, $d, $firstDay = null)
+    public function Calendar_Week($y, $m, $d, $firstDay = null)
     {
         include_once CALENDAR_ROOT.'Table/Helper.php';
         parent::Calendar($y, $m, $d);
@@ -143,23 +144,23 @@ class Calendar_Week extends Calendar
         $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
         $this->thisWeek    = $this->tableHelper->getWeekStart($y, $m, $d, $this->firstDay);
         $this->prevWeek    = $this->tableHelper->getWeekStart(
-            $y, 
-            $m, 
+            $y,
+            $m,
             $d - $this->cE->getDaysInWeek(
                 $this->thisYear(),
                 $this->thisMonth(),
                 $this->thisDay()
-            ), 
+            ),
             $this->firstDay
         );
         $this->nextWeek = $this->tableHelper->getWeekStart(
-            $y, 
-            $m, 
+            $y,
+            $m,
             $d + $this->cE->getDaysInWeek(
                 $this->thisYear(),
                 $this->thisMonth(),
                 $this->thisDay()
-            ), 
+            ),
             $this->firstDay
         );
     }
@@ -173,30 +174,33 @@ class Calendar_Week extends Calendar
      * @return void
      * @access public
      */
-    function setTimestamp($ts)
+    public function setTimestamp($ts)
     {
         parent::setTimestamp($ts);
         $this->thisWeek = $this->tableHelper->getWeekStart(
-            $this->year, $this->month, $this->day, $this->firstDay
+            $this->year,
+            $this->month,
+            $this->day,
+            $this->firstDay
         );
         $this->prevWeek = $this->tableHelper->getWeekStart(
-            $this->year, 
-            $this->month, 
+            $this->year,
+            $this->month,
             $this->day - $this->cE->getDaysInWeek(
                 $this->thisYear(),
                 $this->thisMonth(),
                 $this->thisDay()
-            ), 
+            ),
             $this->firstDay
         );
         $this->nextWeek = $this->tableHelper->getWeekStart(
-            $this->year, 
-            $this->month, 
+            $this->year,
+            $this->month,
             $this->day + $this->cE->getDaysInWeek(
                 $this->thisYear(),
                 $this->thisMonth(),
                 $this->thisDay()
-            ), 
+            ),
             $this->firstDay
         );
     }
@@ -209,7 +213,7 @@ class Calendar_Week extends Calendar
      * @return boolean
      * @access public
      */
-    function build($sDates = array())
+    public function build($sDates = [])
     {
         include_once CALENDAR_ROOT.'Day.php';
         $year  = $this->cE->stampToYear($this->thisWeek);
@@ -258,7 +262,7 @@ class Calendar_Week extends Calendar
      * @return void
      * @access private
      */
-    function setFirst($state = true)
+    public function setFirst($state = true)
     {
         $this->firstWeek = $state;
     }
@@ -271,7 +275,7 @@ class Calendar_Week extends Calendar
      * @return void
      * @access private
      */
-    function setLast($state = true)
+    public function setLast($state = true)
     {
         $this->lastWeek = $state;
     }
@@ -284,7 +288,7 @@ class Calendar_Week extends Calendar
      * @return void
      * @access private
      */
-    function setSelection($sDates)
+    public function setSelection($sDates)
     {
         foreach ($sDates as $sDate) {
             foreach ($this->children as $key => $child) {
@@ -311,7 +315,7 @@ class Calendar_Week extends Calendar
      * @return int e.g. 2003 or timestamp
      * @access public
      */
-    function thisYear($format = 'int')
+    public function thisYear($format = 'int')
     {
         if (null !== $this->thisWeek) {
             $tmp_cal = new Calendar();
@@ -341,7 +345,7 @@ class Calendar_Week extends Calendar
      * @return mixed
      * @access public
      */
-    function prevWeek($format = 'n_in_month')
+    public function prevWeek($format = 'n_in_month')
     {
         switch (strtolower($format)) {
         case 'int':
@@ -351,7 +355,8 @@ class Calendar_Week extends Calendar
             return $this->cE->getWeekNInYear(
                 $this->cE->stampToYear($this->prevWeek),
                 $this->cE->stampToMonth($this->prevWeek),
-                $this->cE->stampToDay($this->prevWeek));
+                $this->cE->stampToDay($this->prevWeek)
+            );
         case 'array':
             return $this->toArray($this->prevWeek);
         case 'object':
@@ -371,7 +376,7 @@ class Calendar_Week extends Calendar
      * @return mixed
      * @access public
      */
-    function thisWeek($format = 'n_in_month')
+    public function thisWeek($format = 'n_in_month')
     {
         switch (strtolower($format)) {
         case 'int':
@@ -383,18 +388,21 @@ class Calendar_Week extends Calendar
                 return $this->cE->getWeeksInMonth(
                     $this->thisYear(),
                     $this->thisMonth(),
-                    $this->firstDay);
+                    $this->firstDay
+                );
             }
             return $this->cE->getWeekNInMonth(
                 $this->thisYear(),
                 $this->thisMonth(),
                 $this->thisDay(),
-                $this->firstDay);
+                $this->firstDay
+            );
         case 'n_in_year':
             return $this->cE->getWeekNInYear(
                 $this->cE->stampToYear($this->thisWeek),
                 $this->cE->stampToMonth($this->thisWeek),
-                $this->cE->stampToDay($this->thisWeek));
+                $this->cE->stampToDay($this->thisWeek)
+            );
         case 'array':
             return $this->toArray($this->thisWeek);
         case 'object':
@@ -414,7 +422,7 @@ class Calendar_Week extends Calendar
      * @return mixed
      * @access public
      */
-    function nextWeek($format = 'n_in_month')
+    public function nextWeek($format = 'n_in_month')
     {
         switch (strtolower($format)) {
         case 'int':
@@ -424,7 +432,8 @@ class Calendar_Week extends Calendar
             return $this->cE->getWeekNInYear(
                 $this->cE->stampToYear($this->nextWeek),
                 $this->cE->stampToMonth($this->nextWeek),
-                $this->cE->stampToDay($this->nextWeek));
+                $this->cE->stampToDay($this->nextWeek)
+            );
         case 'array':
             return $this->toArray($this->nextWeek);
         case 'object':
@@ -443,7 +452,7 @@ class Calendar_Week extends Calendar
      * @return Calendar_Table_Helper
      * @access protected
      */
-    function & getHelper()
+    public function & getHelper()
     {
         return $this->tableHelper;
     }
@@ -454,7 +463,7 @@ class Calendar_Week extends Calendar
      * @return void
      * @access private
      */
-    function findFirstDay()
+    public function findFirstDay()
     {
         if (!count($this->children) > 0) {
             $this->build();
@@ -467,4 +476,3 @@ class Calendar_Week extends Calendar
         }
     }
 }
-?>

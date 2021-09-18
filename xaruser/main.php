@@ -20,8 +20,8 @@ function calendar_user_main()
 
     $redirect = xarModVars::get('calendar', 'frontend_page');
     if (!empty($redirect)) {
-        $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $truecurrenturl = xarServer::getCurrentURL([], false);
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', ['url'=> $redirect,'truecurrenturl'=>$truecurrenturl]);
         xarController::redirect($urldata['redirecturl']);
     } else {
         xarController::redirect(xarController::URL('calendar', 'user', 'week'));

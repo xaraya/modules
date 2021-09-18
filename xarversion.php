@@ -28,20 +28,20 @@ $modversion['admin']          = true;
 $modversion['user']           = true;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
+$modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.4.0'
-                                         ),
-                                    8 => array(
+                                            'version_ge' => '2.4.0',
+                                         ],
+                                    8 => [
                                             'name' => 'icalendar',
                                             'displayname' => 'icalendar',
-                                            'minversion' => '1.0.0'
-                                         ),
-                                );
-$modversion['securityschema'] = array('calendar::event'     => 'Event Title::Event ID',
+                                            'minversion' => '1.0.0',
+                                         ],
+                                ];
+$modversion['securityschema'] = ['calendar::event'     => 'Event Title::Event ID',
                                       'calendar::category'  => 'Category Name::Category ID',
                                       'calendar::topic'     => 'Topic Name::Topic ID',
                                       'calendar::user'      => 'User Name::User ID',
                                       'calendar::sharing'   => 'User Name::User ID',
-                                      'calendar::'          => '::');
+                                      'calendar::'          => '::', ];

@@ -34,10 +34,10 @@ function calendar_user_test()
     $ical_out = ob_get_contents();
     ob_end_clean();
 
-    $data = array(
+    $data = [
         'ical'=>$ical_out,
-        'profile'=>$t->getOutput()
-    );
+        'profile'=>$t->getOutput(),
+    ];
 
     return $data;
 }

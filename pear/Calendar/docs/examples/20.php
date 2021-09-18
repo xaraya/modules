@@ -7,8 +7,8 @@
 //if you use ISO-8601 dates, switch to PearDate engine
 define('CALENDAR_ENGINE', 'PearDate');
 
-if ( !@include 'Calendar/Calendar.php' ) {
-    define('CALENDAR_ROOT','../../');
+if (!@include 'Calendar/Calendar.php') {
+    define('CALENDAR_ROOT', '../../');
 }
 
 require_once CALENDAR_ROOT . 'Month/Weekdays.php';
@@ -18,17 +18,20 @@ require_once CALENDAR_ROOT . 'Decorator.php';
 // accepts multiple entries
 class DiaryEvent extends Calendar_Decorator
 {
-    var $entries = array();
+    public $entries = [];
 
-    function DiaryEvent($calendar) {
+    public function DiaryEvent($calendar)
+    {
         Calendar_Decorator::Calendar_Decorator($calendar);
     }
 
-    function addEntry($entry) {
+    public function addEntry($entry)
+    {
         $this->entries[] = $entry;
     }
 
-    function getEntry() {
+    public function getEntry()
+    {
         $entry = each($this->entries);
         if ($entry) {
             return $entry['value'];
@@ -42,26 +45,26 @@ class DiaryEvent extends Calendar_Decorator
 class MonthPayload_Decorator extends Calendar_Decorator
 {
     //Calendar engine
-    var $cE;
-    var $tableHelper;
+    public $cE;
+    public $tableHelper;
 
-    var $year;
-    var $month;
-    var $firstDay = false;
+    public $year;
+    public $month;
+    public $firstDay = false;
 
-    function build($events=array())
+    public function build($events=[])
     {
         require_once CALENDAR_ROOT . 'Day.php';
         require_once CALENDAR_ROOT .  'Table/Helper.php';
 
-        $this->tableHelper = & new Calendar_Table_Helper($this, $this->firstDay);
-        $this->cE = & $this->getEngine();
+        $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
+        $this->cE = $this->getEngine();
         $this->year  = $this->thisYear();
         $this->month = $this->thisMonth();
 
         $daysInMonth = $this->cE->getDaysInMonth($this->year, $this->month);
         for ($i=1; $i<=$daysInMonth; $i++) {
-            $Day = new Calendar_Day(2000,1,1); // Create Day with dummy values
+            $Day = new Calendar_Day(2000, 1, 1); // Create Day with dummy values
             $Day->setTimeStamp($this->cE->dateToStamp($this->year, $this->month, $i));
             $this->children[$i] = new DiaryEvent($Day);
         }
@@ -75,7 +78,7 @@ class MonthPayload_Decorator extends Calendar_Decorator
         return true;
     }
 
-    function setSelection($events)
+    public function setSelection($events)
     {
         $daysInMonth = $this->cE->getDaysInMonth($this->year, $this->month);
         for ($i=1; $i<=$daysInMonth; $i++) {
@@ -93,7 +96,7 @@ class MonthPayload_Decorator extends Calendar_Decorator
         }
     }
 
-    function fetch()
+    public function fetch()
     {
         $child = each($this->children);
         if ($child) {
@@ -107,29 +110,29 @@ class MonthPayload_Decorator extends Calendar_Decorator
 
 // Calendar instance used to get the dates in the preferred format:
 // you can switch Calendar Engine and the example still works
-$cal = new Calendar;
+$cal = new Calendar();
 
-$events = array();
+$events = [];
 //add some events
-$events[] = array(
+$events[] = [
     'start' => $cal->cE->dateToStamp(2004, 6, 1, 10),
     'end'   => $cal->cE->dateToStamp(2004, 6, 1, 12),
-    'desc'  => 'Important meeting'
-);
-$events[] = array(
+    'desc'  => 'Important meeting',
+];
+$events[] = [
     'start' => $cal->cE->dateToStamp(2004, 6, 1, 21),
     'end'   => $cal->cE->dateToStamp(2004, 6, 1, 23, 59),
-    'desc'  => 'Dinner with the boss'
-);
-$events[] = array(
+    'desc'  => 'Dinner with the boss',
+];
+$events[] = [
     'start' => $cal->cE->dateToStamp(2004, 6, 5),
     'end'   => $cal->cE->dateToStamp(2004, 6, 10, 23, 59),
-    'desc'  => 'Holidays!'
-);
+    'desc'  => 'Holidays!',
+];
 
 
 
-$Month = & new Calendar_Month_Weekdays(2004, 6);
+$Month = new Calendar_Month_Weekdays(2004, 6);
 $MonthDecorator = new MonthPayload_Decorator($Month);
 $MonthDecorator->build($events);
 
@@ -204,7 +207,6 @@ ul {
 </tr>
 <?php
 while ($Day = $MonthDecorator->fetch()) {
-
     if ($Day->isFirst()) {
         echo "<tr>\n";
     }

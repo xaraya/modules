@@ -26,7 +26,7 @@ echo "<hr>Creating: new Calendar_Day(date('Y'), date('n'), date('d'));<br />";
 $Calendar = new Calendar_Day(date('Y'), date('n'), date('d'));
 
 // Decorate
-$Textual = & new Calendar_Decorator_Textual($Calendar);
+$Textual = new Calendar_Decorator_Textual($Calendar);
 
 echo '<hr>Previous month is: '.$Textual->prevMonthName('two').'<br />';
 echo 'This month is: '.$Textual->thisMonthName('short').'<br />';
@@ -39,7 +39,7 @@ echo "Creating: new Calendar_Month_Weekdays(date('Y'), date('n'), 6); - Saturday
 $Calendar = new Calendar_Month_Weekdays(date('Y'), date('n'), 6);
 
 // Decorate
-$Textual = & new Calendar_Decorator_Textual($Calendar);
+$Textual = new Calendar_Decorator_Textual($Calendar);
 ?>
 <p>Rendering calendar....</p>
 <table>

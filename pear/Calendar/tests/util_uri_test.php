@@ -16,7 +16,7 @@ class TestOfUtilUri extends UnitTestCase {
     }
     
     function setUp() {
-        $this->MockCal = & new Mock_Calendar_Day($this);
+        $this->MockCal = new Mock_Calendar_Day($this);
         $this->MockCal->setReturnValue('getEngine',new Mock_Calendar_Engine($this));
     }
     

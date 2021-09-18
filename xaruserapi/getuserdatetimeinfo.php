@@ -16,7 +16,7 @@ function calendar_userapi_getUserDateTimeInfo()
     // dates come in as YYYYMMDD
     xarVar::fetch('cal_date', 'str:4:8', $cal_date, xarLocale::formatDate('%Y%m%d'));
 
-    $data = array();
+    $data = [];
     $data['cal_date'] =& $cal_date;
 
     if (!preg_match('/([\d]{4,4})([\d]{2,2})?([\d]{2,2})?/', $cal_date, $match)) {

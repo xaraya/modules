@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -90,14 +91,14 @@ class Calendar_Month_Weekdays extends Calendar_Month
      * @var Calendar_Table_Helper
      * @access private
      */
-    var $tableHelper;
+    public $tableHelper;
 
     /**
      * First day of the week
      * @access private
      * @var string
      */
-    var $firstDay;
+    public $firstDay;
 
     /**
      * Constructs Calendar_Month_Weekdays
@@ -108,7 +109,7 @@ class Calendar_Month_Weekdays extends Calendar_Month
      *
      * @access public
      */
-    function Calendar_Month_Weekdays($y, $m, $firstDay=null)
+    public function Calendar_Month_Weekdays($y, $m, $firstDay=null)
     {
         parent::Calendar_Month($y, $m, $firstDay);
     }
@@ -126,7 +127,7 @@ class Calendar_Month_Weekdays extends Calendar_Month
      * @see Calendar_Day_Base::isFirst()
      * @see Calendar_Day_Base::isLast()
      */
-    function build($sDates = array())
+    public function build($sDates = [])
     {
         include_once CALENDAR_ROOT.'Table/Helper.php';
         $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
@@ -144,15 +145,16 @@ class Calendar_Month_Weekdays extends Calendar_Month
      * @return void
      * @access private
      */
-    function buildEmptyDaysBefore()
+    public function buildEmptyDaysBefore()
     {
         $eBefore = $this->tableHelper->getEmptyDaysBefore();
         for ($i=0; $i < $eBefore; $i++) {
             $stamp = $this->cE->dateToStamp($this->year, $this->month, -$i);
             $Day = new Calendar_Day(
-                                $this->cE->stampToYear($stamp),
-                                $this->cE->stampToMonth($stamp),
-                                $this->cE->stampToDay($stamp));
+                $this->cE->stampToYear($stamp),
+                $this->cE->stampToMonth($stamp),
+                $this->cE->stampToDay($stamp)
+            );
             $Day->setEmpty();
             $Day->adjust();
             array_unshift($this->children, $Day);
@@ -165,7 +167,7 @@ class Calendar_Month_Weekdays extends Calendar_Month
      * @return void
      * @access private
      */
-    function shiftDays()
+    public function shiftDays()
     {
         if (isset($this->children[0])) {
             array_unshift($this->children, null);
@@ -179,7 +181,7 @@ class Calendar_Month_Weekdays extends Calendar_Month
      * @return void
      * @access private
      */
-    function buildEmptyDaysAfter()
+    public function buildEmptyDaysAfter()
     {
         $eAfter = $this->tableHelper->getEmptyDaysAfter();
         $sDOM   = $this->tableHelper->getNumTableDaysInMonth();
@@ -198,7 +200,7 @@ class Calendar_Month_Weekdays extends Calendar_Month
      * @return void
      * @access private
      */
-    function setWeekMarkers()
+    public function setWeekMarkers()
     {
         $dIW = $this->cE->getDaysInWeek(
             $this->thisYear(),
@@ -212,4 +214,3 @@ class Calendar_Month_Weekdays extends Calendar_Month
         }
     }
 }
-?>

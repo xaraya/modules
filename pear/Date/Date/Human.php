@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
 
 // {{{ Header
@@ -103,7 +104,7 @@ class Date_Human
      * @access   public
      * @static
      */
-    function gregorianToHuman($day = 0, $month = 0, $year = 0)
+    public function gregorianToHuman($day = 0, $month = 0, $year = 0)
     {
         /*
          * Check to see if any of the arguments are empty
@@ -176,11 +177,11 @@ class Date_Human
         /*
          * Return an associative array of the values
          */
-        return array("hdom" => $humanDayOfMonth,
+        return ["hdom" => $humanDayOfMonth,
                      "hdow" => $humanDayOfWeek,
                      "hwom" => $humanWeekOfMonth,
                      "hwoy" => $humanWeekOfYear,
-                     "hmoy" => $humanMonthOfYear );
+                     "hmoy" => $humanMonthOfYear, ];
     }
 
     // }}}
@@ -197,7 +198,7 @@ class Date_Human
      * @access   public
      * @static
      */
-    function humanToGregorian($day, $month, $year = 0)
+    public function humanToGregorian($day, $month, $year = 0)
     {
         /*
          * Check to see if the year has been passed through.
@@ -240,4 +241,3 @@ class Date_Human
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

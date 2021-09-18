@@ -22,7 +22,7 @@
 
         $start_time = $WeekEvents->thisWeek;
         $end_time = $WeekEvents->nextWeek;
-        
+
         $q = new Query('SELECT');
         $a[] = $q->plt('start_time', $start_time);
         $a[] = $q->pge('start_time + duration', $start_time);

@@ -1,268 +1,312 @@
 <?php
+
 // $Id: decorator_test.php 300729 2010-06-24 12:05:53Z quipo $
 
 require_once('simple_include.php');
 require_once('calendar_include.php');
 
-Mock::generate('Calendar_Engine_Interface','Mock_Calendar_Engine');
-Mock::generate('Calendar_Second','Mock_Calendar_Second');
-Mock::generate('Calendar_Week','Mock_Calendar_Week');
-Mock::generate('Calendar_Day','Mock_Calendar_Day');
+Mock::generate('Calendar_Engine_Interface', 'Mock_Calendar_Engine');
+Mock::generate('Calendar_Second', 'Mock_Calendar_Second');
+Mock::generate('Calendar_Week', 'Mock_Calendar_Week');
+Mock::generate('Calendar_Day', 'Mock_Calendar_Day');
 
-class TestOfDecorator extends UnitTestCase {
-    var $mockengine;
-    var $mockcal;
-    var $decorator;
-    function TestOfDecorator() {
+class TestOfDecorator extends UnitTestCase
+{
+    public $mockengine;
+    public $mockcal;
+    public $decorator;
+    public function TestOfDecorator()
+    {
         $this->UnitTestCase('Test of Calendar_Decorator');
     }
-    function setUp() {
+    public function setUp()
+    {
         $this->mockengine = new Mock_Calendar_Engine($this);
         $this->mockcal = new Mock_Calendar_Second($this);
-        $this->mockcal->setReturnValue('prevYear',2002);
-        $this->mockcal->setReturnValue('thisYear',2003);
-        $this->mockcal->setReturnValue('nextYear',2004);
-        $this->mockcal->setReturnValue('prevMonth',9);
-        $this->mockcal->setReturnValue('thisMonth',10);
-        $this->mockcal->setReturnValue('nextMonth',11);
-        $this->mockcal->setReturnValue('prevDay',14);
-        $this->mockcal->setReturnValue('thisDay',15);
-        $this->mockcal->setReturnValue('nextDay',16);
-        $this->mockcal->setReturnValue('prevHour',12);
-        $this->mockcal->setReturnValue('thisHour',13);
-        $this->mockcal->setReturnValue('nextHour',14);
-        $this->mockcal->setReturnValue('prevMinute',29);
-        $this->mockcal->setReturnValue('thisMinute',30);
-        $this->mockcal->setReturnValue('nextMinute',31);
-        $this->mockcal->setReturnValue('prevSecond',44);
-        $this->mockcal->setReturnValue('thisSecond',45);
-        $this->mockcal->setReturnValue('nextSecond',46);
-        $this->mockcal->setReturnValue('getEngine',$this->mockengine);
-        $this->mockcal->setReturnValue('getTimestamp',12345);
-
+        $this->mockcal->setReturnValue('prevYear', 2002);
+        $this->mockcal->setReturnValue('thisYear', 2003);
+        $this->mockcal->setReturnValue('nextYear', 2004);
+        $this->mockcal->setReturnValue('prevMonth', 9);
+        $this->mockcal->setReturnValue('thisMonth', 10);
+        $this->mockcal->setReturnValue('nextMonth', 11);
+        $this->mockcal->setReturnValue('prevDay', 14);
+        $this->mockcal->setReturnValue('thisDay', 15);
+        $this->mockcal->setReturnValue('nextDay', 16);
+        $this->mockcal->setReturnValue('prevHour', 12);
+        $this->mockcal->setReturnValue('thisHour', 13);
+        $this->mockcal->setReturnValue('nextHour', 14);
+        $this->mockcal->setReturnValue('prevMinute', 29);
+        $this->mockcal->setReturnValue('thisMinute', 30);
+        $this->mockcal->setReturnValue('nextMinute', 31);
+        $this->mockcal->setReturnValue('prevSecond', 44);
+        $this->mockcal->setReturnValue('thisSecond', 45);
+        $this->mockcal->setReturnValue('nextSecond', 46);
+        $this->mockcal->setReturnValue('getEngine', $this->mockengine);
+        $this->mockcal->setReturnValue('getTimestamp', 12345);
     }
-    function tearDown() {
-        unset ( $this->engine );
-        unset ( $this->mockcal );
+    public function tearDown()
+    {
+        unset($this->engine);
+        unset($this->mockcal);
     }
-    function testPrevYear() {
-        $this->mockcal->expectOnce('prevYear',array('int'));
+    public function testPrevYear()
+    {
+        $this->mockcal->expectOnce('prevYear', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(2002,$Decorator->prevYear());
+        $this->assertEqual(2002, $Decorator->prevYear());
     }
-    function testThisYear() {
-        $this->mockcal->expectOnce('thisYear',array('int'));
+    public function testThisYear()
+    {
+        $this->mockcal->expectOnce('thisYear', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(2003,$Decorator->thisYear());
+        $this->assertEqual(2003, $Decorator->thisYear());
     }
-    function testNextYear() {
-        $this->mockcal->expectOnce('nextYear',array('int'));
+    public function testNextYear()
+    {
+        $this->mockcal->expectOnce('nextYear', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(2004,$Decorator->nextYear());
+        $this->assertEqual(2004, $Decorator->nextYear());
     }
-    function testPrevMonth() {
-        $this->mockcal->expectOnce('prevMonth',array('int'));
+    public function testPrevMonth()
+    {
+        $this->mockcal->expectOnce('prevMonth', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(9,$Decorator->prevMonth());
+        $this->assertEqual(9, $Decorator->prevMonth());
     }
-    function testThisMonth() {
-        $this->mockcal->expectOnce('thisMonth',array('int'));
+    public function testThisMonth()
+    {
+        $this->mockcal->expectOnce('thisMonth', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(10,$Decorator->thisMonth());
+        $this->assertEqual(10, $Decorator->thisMonth());
     }
-    function testNextMonth() {
-        $this->mockcal->expectOnce('nextMonth',array('int'));
+    public function testNextMonth()
+    {
+        $this->mockcal->expectOnce('nextMonth', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(11,$Decorator->nextMonth());
+        $this->assertEqual(11, $Decorator->nextMonth());
     }
-    function testPrevWeek() {
-        $mockweek = & new Mock_Calendar_Week($this);
-        $mockweek->setReturnValue('prevWeek',1);
-        $mockweek->expectOnce('prevWeek',array('n_in_month'));
-        $Decorator =& new Calendar_Decorator($mockweek);
-        $this->assertEqual(1,$Decorator->prevWeek());
+    public function testPrevWeek()
+    {
+        $mockweek = new Mock_Calendar_Week($this);
+        $mockweek->setReturnValue('prevWeek', 1);
+        $mockweek->expectOnce('prevWeek', ['n_in_month']);
+        $Decorator = new Calendar_Decorator($mockweek);
+        $this->assertEqual(1, $Decorator->prevWeek());
     }
-    function testThisWeek() {
-        $mockweek = & new Mock_Calendar_Week($this);
-        $mockweek->setReturnValue('thisWeek',2);
-        $mockweek->expectOnce('thisWeek',array('n_in_month'));
-        $Decorator =& new Calendar_Decorator($mockweek);
-        $this->assertEqual(2,$Decorator->thisWeek());
+    public function testThisWeek()
+    {
+        $mockweek = new Mock_Calendar_Week($this);
+        $mockweek->setReturnValue('thisWeek', 2);
+        $mockweek->expectOnce('thisWeek', ['n_in_month']);
+        $Decorator = new Calendar_Decorator($mockweek);
+        $this->assertEqual(2, $Decorator->thisWeek());
     }
-    function testNextWeek() {
-        $mockweek = & new Mock_Calendar_Week($this);
-        $mockweek->setReturnValue('nextWeek',3);
-        $mockweek->expectOnce('nextWeek',array('n_in_month'));
-        $Decorator =& new Calendar_Decorator($mockweek);
-        $this->assertEqual(3,$Decorator->nextWeek());
+    public function testNextWeek()
+    {
+        $mockweek = new Mock_Calendar_Week($this);
+        $mockweek->setReturnValue('nextWeek', 3);
+        $mockweek->expectOnce('nextWeek', ['n_in_month']);
+        $Decorator = new Calendar_Decorator($mockweek);
+        $this->assertEqual(3, $Decorator->nextWeek());
     }
-    function testPrevDay() {
-        $this->mockcal->expectOnce('prevDay',array('int'));
+    public function testPrevDay()
+    {
+        $this->mockcal->expectOnce('prevDay', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(14,$Decorator->prevDay());
+        $this->assertEqual(14, $Decorator->prevDay());
     }
-    function testThisDay() {
-        $this->mockcal->expectOnce('thisDay',array('int'));
+    public function testThisDay()
+    {
+        $this->mockcal->expectOnce('thisDay', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(15,$Decorator->thisDay());
+        $this->assertEqual(15, $Decorator->thisDay());
     }
-    function testNextDay() {
-        $this->mockcal->expectOnce('nextDay',array('int'));
+    public function testNextDay()
+    {
+        $this->mockcal->expectOnce('nextDay', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(16,$Decorator->nextDay());
+        $this->assertEqual(16, $Decorator->nextDay());
     }
-    function testPrevHour() {
-        $this->mockcal->expectOnce('prevHour',array('int'));
+    public function testPrevHour()
+    {
+        $this->mockcal->expectOnce('prevHour', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(12,$Decorator->prevHour());
+        $this->assertEqual(12, $Decorator->prevHour());
     }
-    function testThisHour() {
-        $this->mockcal->expectOnce('thisHour',array('int'));
+    public function testThisHour()
+    {
+        $this->mockcal->expectOnce('thisHour', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(13,$Decorator->thisHour());
+        $this->assertEqual(13, $Decorator->thisHour());
     }
-    function testNextHour() {
-        $this->mockcal->expectOnce('nextHour',array('int'));
+    public function testNextHour()
+    {
+        $this->mockcal->expectOnce('nextHour', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(14,$Decorator->nextHour());
+        $this->assertEqual(14, $Decorator->nextHour());
     }
-    function testPrevMinute() {
-        $this->mockcal->expectOnce('prevMinute',array('int'));
+    public function testPrevMinute()
+    {
+        $this->mockcal->expectOnce('prevMinute', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(29,$Decorator->prevMinute());
+        $this->assertEqual(29, $Decorator->prevMinute());
     }
-    function testThisMinute() {
-        $this->mockcal->expectOnce('thisMinute',array('int'));
+    public function testThisMinute()
+    {
+        $this->mockcal->expectOnce('thisMinute', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(30,$Decorator->thisMinute());
+        $this->assertEqual(30, $Decorator->thisMinute());
     }
-    function testNextMinute() {
-        $this->mockcal->expectOnce('nextMinute',array('int'));
+    public function testNextMinute()
+    {
+        $this->mockcal->expectOnce('nextMinute', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(31,$Decorator->nextMinute());
+        $this->assertEqual(31, $Decorator->nextMinute());
     }
-    function testPrevSecond() {
-        $this->mockcal->expectOnce('prevSecond',array('int'));
+    public function testPrevSecond()
+    {
+        $this->mockcal->expectOnce('prevSecond', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(44,$Decorator->prevSecond());
+        $this->assertEqual(44, $Decorator->prevSecond());
     }
-    function testThisSecond() {
-        $this->mockcal->expectOnce('thisSecond',array('int'));
+    public function testThisSecond()
+    {
+        $this->mockcal->expectOnce('thisSecond', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(45,$Decorator->thisSecond());
+        $this->assertEqual(45, $Decorator->thisSecond());
     }
-    function testNextSecond() {
-        $this->mockcal->expectOnce('nextSecond',array('int'));
+    public function testNextSecond()
+    {
+        $this->mockcal->expectOnce('nextSecond', ['int']);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(46,$Decorator->nextSecond());
+        $this->assertEqual(46, $Decorator->nextSecond());
     }
-    function testGetEngine() {
+    public function testGetEngine()
+    {
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertIsA($Decorator->getEngine(),'Mock_Calendar_Engine');
+        $this->assertIsA($Decorator->getEngine(), 'Mock_Calendar_Engine');
     }
-    function testSetTimestamp() {
-        $this->mockcal->expectOnce('setTimestamp',array('12345'));
+    public function testSetTimestamp()
+    {
+        $this->mockcal->expectOnce('setTimestamp', ['12345']);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->setTimestamp('12345');
     }
-    function testGetTimestamp() {
+    public function testGetTimestamp()
+    {
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual(12345,$Decorator->getTimestamp());
+        $this->assertEqual(12345, $Decorator->getTimestamp());
     }
-    function testSetSelected() {
-        $this->mockcal->expectOnce('setSelected',array(true));
+    public function testSetSelected()
+    {
+        $this->mockcal->expectOnce('setSelected', [true]);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->setSelected();
     }
-    function testIsSelected() {
-        $this->mockcal->setReturnValue('isSelected',true);
+    public function testIsSelected()
+    {
+        $this->mockcal->setReturnValue('isSelected', true);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $this->assertTrue($Decorator->isSelected());
     }
-    function testAdjust() {
-        $this->mockcal->expectOnce('adjust',array());
+    public function testAdjust()
+    {
+        $this->mockcal->expectOnce('adjust', []);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->adjust();
     }
-    function testToArray() {
-        $this->mockcal->expectOnce('toArray',array(12345));
-        $testArray = array('foo'=>'bar');
-        $this->mockcal->setReturnValue('toArray',$testArray);
+    public function testToArray()
+    {
+        $this->mockcal->expectOnce('toArray', [12345]);
+        $testArray = ['foo'=>'bar'];
+        $this->mockcal->setReturnValue('toArray', $testArray);
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual($testArray,$Decorator->toArray(12345));
+        $this->assertEqual($testArray, $Decorator->toArray(12345));
     }
-    function testReturnValue() {
-        $this->mockcal->expectOnce('returnValue',array('a','b','c','d'));
-        $this->mockcal->setReturnValue('returnValue','foo');
+    public function testReturnValue()
+    {
+        $this->mockcal->expectOnce('returnValue', ['a','b','c','d']);
+        $this->mockcal->setReturnValue('returnValue', 'foo');
         $Decorator = new Calendar_Decorator($this->mockcal);
-        $this->assertEqual('foo',$Decorator->returnValue('a','b','c','d'));
+        $this->assertEqual('foo', $Decorator->returnValue('a', 'b', 'c', 'd'));
     }
-    function testSetFirst() {
-        $mockday = & new Mock_Calendar_Day($this);
-        $mockday->expectOnce('setFirst',array(true));
-        $Decorator =& new Calendar_Decorator($mockday);
+    public function testSetFirst()
+    {
+        $mockday = new Mock_Calendar_Day($this);
+        $mockday->expectOnce('setFirst', [true]);
+        $Decorator = new Calendar_Decorator($mockday);
         $Decorator->setFirst();
     }
-    function testSetLast() {
-        $mockday = & new Mock_Calendar_Day($this);
-        $mockday->expectOnce('setLast',array(true));
-        $Decorator =& new Calendar_Decorator($mockday);
+    public function testSetLast()
+    {
+        $mockday = new Mock_Calendar_Day($this);
+        $mockday->expectOnce('setLast', [true]);
+        $Decorator = new Calendar_Decorator($mockday);
         $Decorator->setLast();
     }
-    function testIsFirst() {
-        $mockday = & new Mock_Calendar_Day($this);
-        $mockday->setReturnValue('isFirst',TRUE);
-        $Decorator =& new Calendar_Decorator($mockday);
+    public function testIsFirst()
+    {
+        $mockday = new Mock_Calendar_Day($this);
+        $mockday->setReturnValue('isFirst', true);
+        $Decorator = new Calendar_Decorator($mockday);
         $this->assertTrue($Decorator->isFirst());
     }
-    function testIsLast() {
-        $mockday = & new Mock_Calendar_Day($this);
-        $mockday->setReturnValue('isLast',TRUE);
-        $Decorator =& new Calendar_Decorator($mockday);
+    public function testIsLast()
+    {
+        $mockday = new Mock_Calendar_Day($this);
+        $mockday->setReturnValue('isLast', true);
+        $Decorator = new Calendar_Decorator($mockday);
         $this->assertTrue($Decorator->isLast());
     }
-    function testSetEmpty() {
-        $mockday = & new Mock_Calendar_Day($this);
-        $mockday->expectOnce('setEmpty',array(true));
-        $Decorator =& new Calendar_Decorator($mockday);
+    public function testSetEmpty()
+    {
+        $mockday = new Mock_Calendar_Day($this);
+        $mockday->expectOnce('setEmpty', [true]);
+        $Decorator = new Calendar_Decorator($mockday);
         $Decorator->setEmpty();
     }
-    function testIsEmpty() {
-        $mockday = & new Mock_Calendar_Day($this);
-        $mockday->setReturnValue('isEmpty',TRUE);
-        $Decorator =& new Calendar_Decorator($mockday);
+    public function testIsEmpty()
+    {
+        $mockday = new Mock_Calendar_Day($this);
+        $mockday->setReturnValue('isEmpty', true);
+        $Decorator = new Calendar_Decorator($mockday);
         $this->assertTrue($Decorator->isEmpty());
     }
-    function testBuild() {
-        $testArray=array('foo'=>'bar');
-        $this->mockcal->expectOnce('build',array($testArray));
+    public function testBuild()
+    {
+        $testArray=['foo'=>'bar'];
+        $this->mockcal->expectOnce('build', [$testArray]);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->build($testArray);
     }
-    function testFetch() {
-        $this->mockcal->expectOnce('fetch',array());
+    public function testFetch()
+    {
+        $this->mockcal->expectOnce('fetch', []);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->fetch();
     }
-    function testFetchAll() {
-        $this->mockcal->expectOnce('fetchAll',array());
+    public function testFetchAll()
+    {
+        $this->mockcal->expectOnce('fetchAll', []);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->fetchAll();
     }
-    function testSize() {
-        $this->mockcal->expectOnce('size',array());
+    public function testSize()
+    {
+        $this->mockcal->expectOnce('size', []);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->size();
     }
-    function testIsValid() {
-        $this->mockcal->expectOnce('isValid',array());
+    public function testIsValid()
+    {
+        $this->mockcal->expectOnce('isValid', []);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->isValid();
     }
-    function testGetValidator() {
-        $this->mockcal->expectOnce('getValidator',array());
+    public function testGetValidator()
+    {
+        $this->mockcal->expectOnce('getValidator', []);
         $Decorator = new Calendar_Decorator($this->mockcal);
         $Decorator->getValidator();
     }
 }
-?>

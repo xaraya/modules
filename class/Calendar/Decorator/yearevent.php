@@ -11,7 +11,7 @@
         public $day = 1;
         public $firstDay = false;
 
-        public function build($events=array(), $firstDay = null)
+        public function build($events=[], $firstDay = null)
         {
             $this->year = $this->calendar->year;
             require_once CALENDAR_ROOT.'Factory.php';
@@ -24,7 +24,7 @@
                 $this->children[$i] = $MonthDecorator->calendar;
             }
             $this->calendar->children = $this->children;
-            
+
             return true;
         }
     }

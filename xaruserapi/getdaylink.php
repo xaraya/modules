@@ -29,7 +29,7 @@ function calendar_userapi_getDayLink($date=null)
     $year = substr($date, 0, 4);
     $month = substr($date, 4, 2);
     $day = substr($date, 6, 2);
-    
-    $link = xarController::URL('calendar', 'user', 'day', array('cal_date'=>$date));
+
+    $link = xarController::URL('calendar', 'user', 'day', ['cal_date'=>$date]);
     return $link;
 }

@@ -36,7 +36,7 @@ function calendar_admin_updateconfig()
     if (!xarVar::fetch('minical_view', 'isset', $minical_view, 'Week', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('default_cal', 'isset', $default_cal, array(), xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('default_cal', 'isset', $default_cal, [], xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -159,7 +159,7 @@ function calendar_admin_updateconfig()
         'module',
         'updateconfig',
         'calendar',
-        array('module' => 'calendar')
+        ['module' => 'calendar']
     );
 
     // This function generated no output, and so now it is complete we redirect

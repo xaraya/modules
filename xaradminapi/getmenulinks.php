@@ -13,22 +13,22 @@
 
 function calendar_adminapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
     if (xarSecurity::check('AdminCalendar', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'calendar',
             'admin',
             'view'
         ),
                               'title' => xarML('Manage the Master Tables  of this module'),
-                              'label' => xarML('Master Tables'));
-        $menulinks[] = array('url'   => xarController::URL(
+                              'label' => xarML('Master Tables'), ];
+        $menulinks[] = ['url'   => xarController::URL(
             'calendar',
             'admin',
             'modifyconfig'
         ),
                               'title' => xarML('Modify the configuration settings'),
-                              'label' => xarML('Modify Config'));
+                              'label' => xarML('Modify Config'), ];
 
         /*
             $menulinks[] = Array(

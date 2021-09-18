@@ -46,7 +46,7 @@ function calendar_userapi_get($args)
     // Security check
 //    if (!xarSecurity::check('ViewCalendars')) return;
 
-    $calendars = array();
+    $calendars = [];
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $caltable = $xartable['calendars'];
@@ -79,13 +79,11 @@ function calendar_userapi_get($args)
     }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($cid,
+        [$cid,
              $cname,
-             $cpath) = $result->fields;
-        $calendars[] = array(  'cid' => $cid
-                       ,'cname' => $cname
-                       ,'cpath' => $cpath
-                     );
+             $cpath] = $result->fields;
+        $calendars[] = [  'cid' => $cid,'cname' => $cname,'cpath' => $cpath,
+                     ];
     }
     $result->Close();
     return $calendars;

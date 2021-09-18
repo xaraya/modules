@@ -2,32 +2,45 @@
 /**
 * Description: shows how to perform validation with PEAR::Calendar
 */
-function getmicrotime(){
-    list($usec, $sec) = explode(' ', microtime());
+function getmicrotime()
+{
+    [$usec, $sec] = explode(' ', microtime());
     return ((float)$usec + (float)$sec);
 }
 $start = getmicrotime();
 
-if ( !@include 'Calendar/Calendar.php' ) {
+if (!@include 'Calendar/Calendar.php') {
     define('CALENDAR_ROOT', '../../');
 }
 require_once CALENDAR_ROOT.'Second.php';
 
-if (!isset($_GET['y'])) $_GET['y'] = date('Y');
-if (!isset($_GET['m'])) $_GET['m'] = date('n');
-if (!isset($_GET['d'])) $_GET['d'] = date('j');
-if (!isset($_GET['h'])) $_GET['h'] = date('H');
-if (!isset($_GET['i'])) $_GET['i'] = date('i');
-if (!isset($_GET['s'])) $_GET['s'] = date('s');
+if (!isset($_GET['y'])) {
+    $_GET['y'] = date('Y');
+}
+if (!isset($_GET['m'])) {
+    $_GET['m'] = date('n');
+}
+if (!isset($_GET['d'])) {
+    $_GET['d'] = date('j');
+}
+if (!isset($_GET['h'])) {
+    $_GET['h'] = date('H');
+}
+if (!isset($_GET['i'])) {
+    $_GET['i'] = date('i');
+}
+if (!isset($_GET['s'])) {
+    $_GET['s'] = date('s');
+}
 
-$Unit = & new Calendar_Second($_GET['y'], $_GET['m'], $_GET['d'], $_GET['h'], $_GET['i'], $_GET['s']);
+$Unit = new Calendar_Second($_GET['y'], $_GET['m'], $_GET['d'], $_GET['h'], $_GET['i'], $_GET['s']);
 
 echo '<p><b>Result:</b> '.$Unit->thisYear().'-'.$Unit->thisMonth().'-'.$Unit->thisDay().
         ' '.$Unit->thisHour().':'.$Unit->thisMinute().':'.$Unit->thisSecond();
 if ($Unit->isValid()) {
     echo ' is valid!</p>';
 } else {
-    $V= & $Unit->getValidator();
+    $V= $Unit->getValidator();
     echo ' is invalid:</p>';
     while ($error = $V->fetch()) {
         echo $error->toString() .'<br />';

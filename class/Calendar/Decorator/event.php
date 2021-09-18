@@ -27,8 +27,8 @@ class Event extends Calendar_Decorator
     public $month;
     public $day;
 
-    public $entry   = array();
-    public $entries = array();
+    public $entry   = [];
+    public $entries = [];
 
     public function __construct(Calendar $calendar)
     {   // set the author

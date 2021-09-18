@@ -28,8 +28,8 @@ function calendar_user_display()
     if (!xarVar::fetch('page', 'str:1', $data['page'], 'week', xarVar::NOT_REQUIRED)) {
         return;
     }
-    $data['object'] = DataobjectMaster::getObject(array('name' => 'calendar_event'));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataobjectMaster::getObject(['name' => 'calendar_event']);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
     $data['tplmodule'] = 'calendar';
     $data['authid'] = xarSec::genAuthKey();
     return $data;

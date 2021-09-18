@@ -230,7 +230,7 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
         }
 
         $cal_date = xarLocale::formatDate('%Y%m%d', $stamp);
-        $uriString = xarController::URL('calendar', 'user', $method, array('cal_date'=>$cal_date));
+        $uriString = xarController::URL('calendar', 'user', $method, ['cal_date'=>$cal_date]);
 //        $uriString = xarServer::getCurrentURL(array('cal_date'=>$cal_date));
         return $uriString;
     }

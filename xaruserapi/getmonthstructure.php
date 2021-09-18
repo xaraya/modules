@@ -11,7 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-function calendar_userapi_getmonthstructure($args=array())
+function calendar_userapi_getmonthstructure($args=[])
 {
     extract($args);
     unset($args);
@@ -21,11 +21,11 @@ function calendar_userapi_getmonthstructure($args=array())
     if (!isset($year)) {
         return;
     }
-    
+
     xarVar::validate('int:1:12', $month);
     xarVar::validate('int::', $year);
     xarVar::fetch('cal_sdow', 'int:0:6', $cal_sdow, 0);
-    
+
     $c = xarMod::apiFunc('calendar', 'user', 'factory', 'calendar');
     $c->setStartDayOfWeek($cal_sdow);
     // echo the content to the screen

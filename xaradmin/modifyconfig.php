@@ -18,7 +18,7 @@ function calendar_admin_modifyconfig()
     if (!xarSecurity::check('AdminCalendar')) {
         return;
     }
-    
+
     if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
@@ -26,7 +26,7 @@ function calendar_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'calendar'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'calendar']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls', 'use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
@@ -72,7 +72,7 @@ function calendar_admin_modifyconfig()
             }
 
             sys::import('modules.dynamicdata.class.properties.master');
-            $timeproperty = DataPropertyMaster::getProperty(array('type' => 'formattedtime'));
+            $timeproperty = DataPropertyMaster::getProperty(['type' => 'formattedtime']);
             $day_start = $timeproperty->checkInput('day_start') ? $timeproperty->getValue() : xarModVars::get('calendar', 'day_start');
             $day_end = $timeproperty->checkInput('day_end') ? $timeproperty->getValue() : xarModVars::get('calendar', 'day_end');
 
@@ -100,7 +100,7 @@ function calendar_admin_modifyconfig()
             xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
             xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
 
-            xarController::redirect(xarController::URL('calendar', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('calendar', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
     }

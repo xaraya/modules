@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 //
 // +----------------------------------------------------------------------+
@@ -66,5 +67,3 @@ printf("Adding 3 days: %s\n", $tmp->getDate(DATE_FORMAT_ISO));
 $tmp->copy($date);
 $tmp->addSpan(new Date_Span('3:10:20:05'));
 printf("Adding 3 days, 10 hours, 20 minutes and 5 seconds: %s\n", $tmp->getDate(DATE_FORMAT_ISO));
-
-?>

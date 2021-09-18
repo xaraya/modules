@@ -22,8 +22,8 @@ class Event extends Calendar_Decorator
     public $repeatonnum;       // repeat on 1st,2nd,3rd,4th,Last
     public $repeatonday;       //
 
-    public $entry   = array();
-    public $entries = array();
+    public $entry   = [];
+    public $entries = [];
 
     public function __construct(Calendar $calendar)
     {   // set the author

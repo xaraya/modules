@@ -37,7 +37,7 @@ class TestOfTableHelper extends UnitTestCase {
     }
     function testGetFirstDay() {
         for ( $i = 0; $i <= 7; $i++ ) {
-            $Helper = & new Calendar_Table_Helper($this->mockcal,$i);
+            $Helper = new Calendar_Table_Helper($this->mockcal,$i);
             $this->assertEqual($Helper->getFirstDay(),$i);
         }
     }

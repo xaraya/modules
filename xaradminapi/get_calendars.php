@@ -30,11 +30,11 @@
 function calendar_adminapi_get_calendars()
 {
     // Initialise the array that will hold the menu configuration
-    $cals = array();
+    $cals = [];
 
     $curdir = sys::varpath() . '/calendar';
 
-    $ics_array = array();
+    $ics_array = [];
 
     if ($dir = @opendir($curdir)) {
         while (($file = @readdir($dir)) !== false) {

@@ -18,7 +18,7 @@ function calendar_admin_delete_calendar()
         'calendar',
         'user',
         'get',
-        array('calid' => $calid)
+        ['calid' => $calid]
     );
     if (!isset($calendar) || $calendar == false) {
         $msg = xarML(
@@ -30,7 +30,7 @@ function calendar_admin_delete_calendar()
     }
 
     // Security check
-    $input = array();
+    $input = [];
     $input['calendar'] = $calendar;
     $input['mask'] = 'DeleteCalendars';
 
@@ -43,7 +43,7 @@ function calendar_admin_delete_calendar()
     */
     // Check for confirmation
     if (!$confirm) {
-        $data = array();
+        $data = [];
 
         // Specify for which item you want confirmation
         $data['calid'] = $calid;
@@ -56,7 +56,7 @@ function calendar_admin_delete_calendar()
             'calendar',
             'user',
             'display',
-            array('calid' => $calid)
+            ['calid' => $calid]
         );
 
         // Add some other data you'll want to display in the template
@@ -80,7 +80,7 @@ function calendar_admin_delete_calendar()
         'calendar',
         'admin',
         'delete_calendar',
-        array('calid' => $calid)
+        ['calid' => $calid]
     )) {
         return;
     }

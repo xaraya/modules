@@ -65,14 +65,14 @@ function calendar_user_delete($args)
         return;
     }
 
-    $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
+    $myobject = DataObjectMaster::getObject(['objectid' => $objectid,
                                          'name'       => $name,
                                          'join'       => $join,
                                          'table'      => $table,
                                          'itemid'     => $itemid,
                                          'tplmodule'  => $tplmodule,
                                          'template'   => $template,
-                                         'extend'     => false));  //Note: this means we only delete this extension, not the parent
+                                         'extend'     => false, ]);  //Note: this means we only delete this extension, not the parent
     if (empty($myobject)) {
         return;
     }
@@ -84,7 +84,7 @@ function calendar_user_delete($args)
     }
 
     // recover any session var information and remove it from the var
-    $data = array_merge($data, xarMod::apiFunc('dynamicdata', 'user', 'getcontext', array('module' => $tplmodule)));
+    $data = array_merge($data, xarMod::apiFunc('dynamicdata', 'user', 'getcontext', ['module' => $tplmodule]));
     //xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
     extract($data);
 
@@ -117,9 +117,9 @@ function calendar_user_delete($args)
             'calendar',
             'user',
             $default,
-            array(
-                                      'page' => $default
-                                      )
+            [
+                                      'page' => $default,
+                                      ]
         ));
     }
     return true;

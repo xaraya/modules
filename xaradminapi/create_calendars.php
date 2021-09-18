@@ -60,9 +60,9 @@ function calendar_adminapi_create_calendars($args)
 
     $result = $dbconn->Execute(
         $query,
-        array(
-            $nextId, $role_id, $mod_id, $calname
-        )
+        [
+            $nextId, $role_id, $mod_id, $calname,
+        ]
     );
     if (!$result) {
         return;
@@ -87,9 +87,9 @@ function calendar_adminapi_create_calendars($args)
                 ) VALUES (?, ?)';
         $result = $dbconn->Execute(
             $query,
-            array(
-                $nextID,$fileuri
-            )
+            [
+                $nextID,$fileuri,
+            ]
         );
 
         // Get ID of row inserted.
@@ -101,9 +101,9 @@ function calendar_adminapi_create_calendars($args)
                     ) VALUES (?, ?)';
         $result = $dbconn->Execute(
             $query,
-            array(
-                $calendid,$fileid
-            )
+            [
+                $calendid,$fileid,
+            ]
         );
     }
     return $calendid;

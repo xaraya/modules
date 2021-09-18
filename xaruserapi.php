@@ -59,7 +59,7 @@ if (!defined('CALENDAR_MODULE_INCLUDES')) {
 function calendar_userapi_currentView()
 {
     xarVar::fetch('func', 'str::', $func, 'main', xarVar::NOT_REQUIRED);
-    $valid = array('day','week','month','year');
+    $valid = ['day','week','month','year'];
     $func = strtolower($func);
     if (!in_array($func, $valid)) {
         return xarModVars::get('calendar', 'default_view');
@@ -69,7 +69,7 @@ function calendar_userapi_currentView()
 }
 
 
-function calendar_userapi_buildURL($args=array())
+function calendar_userapi_buildURL($args=[])
 {
     extract($args);
     unset($args);
@@ -78,7 +78,7 @@ function calendar_userapi_buildURL($args=array())
         'calendar',
         'user',
         $cal_view,
-        array('cal_date'=>$cal_date)
+        ['cal_date'=>$cal_date]
     );
 }
 
@@ -89,10 +89,10 @@ function calendar_userapi_currentMonthURL()
         'calendar',
         'user',
         'buildURL',
-        array(
+        [
                     'cal_view'=>'month',
-                    'cal_date'=>xarLocale::formatDate('%Y%m%d')
-                    )
+                    'cal_date'=>xarLocale::formatDate('%Y%m%d'),
+                    ]
     );
 }
 
@@ -102,10 +102,10 @@ function calendar_userapi_currentWeekURL()
         'calendar',
         'user',
         'buildURL',
-        array(
+        [
                     'cal_view'=>'week',
-                    'cal_date'=>xarLocale::formatDate('%Y%m%d')
-                    )
+                    'cal_date'=>xarLocale::formatDate('%Y%m%d'),
+                    ]
     );
 }
 
@@ -115,10 +115,10 @@ function calendar_userapi_currentDayURL()
         'calendar',
         'user',
         'buildURL',
-        array(
+        [
                     'cal_view'=>'day',
-                    'cal_date'=>xarLocale::formatDate('%Y%m%d')
-                    )
+                    'cal_date'=>xarLocale::formatDate('%Y%m%d'),
+                    ]
     );
 }
 
@@ -128,9 +128,9 @@ function calendar_userapi_currentYearURL()
         'calendar',
         'user',
         'buildURL',
-        array(
+        [
                     'cal_view'=>'year',
-                    'cal_date'=>xarLocale::formatDate('%Y%m')
-                    )
+                    'cal_date'=>xarLocale::formatDate('%Y%m'),
+                    ]
     );
 }

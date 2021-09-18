@@ -8,11 +8,11 @@
 class Calendar
 {
     public $startDayOfWeek;
-    public $monthNamesLong = array();
-    public $monthNamesShort = array();
-    public $dayNamesLong = array();
-    public $dayNamesMedium = array();
-    public $dayNamesShort = array();
+    public $monthNamesLong = [];
+    public $monthNamesShort = [];
+    public $dayNamesLong = [];
+    public $dayNamesMedium = [];
+    public $dayNamesShort = [];
 
     /**
      *    constructor
@@ -27,7 +27,7 @@ class Calendar
         $localeData =& xarLocale::loadData();
         //echo '<pre>'; print_r($localeData); echo '</pre>';
         // long month names from locale.xml
-        $this->monthNamesLong = array(
+        $this->monthNamesLong = [
             $localeData["/dateSymbols/months/1/full"],
             $localeData["/dateSymbols/months/2/full"],
             $localeData["/dateSymbols/months/3/full"],
@@ -39,11 +39,11 @@ class Calendar
             $localeData["/dateSymbols/months/9/full"],
             $localeData["/dateSymbols/months/10/full"],
             $localeData["/dateSymbols/months/11/full"],
-            $localeData["/dateSymbols/months/12/full"]
-        );
+            $localeData["/dateSymbols/months/12/full"],
+        ];
 
         // short month names from locale.xml
-        $this->monthNamesShort = array(
+        $this->monthNamesShort = [
             $localeData["/dateSymbols/months/1/short"],
             $localeData["/dateSymbols/months/2/short"],
             $localeData["/dateSymbols/months/3/short"],
@@ -55,39 +55,39 @@ class Calendar
             $localeData["/dateSymbols/months/9/short"],
             $localeData["/dateSymbols/months/10/short"],
             $localeData["/dateSymbols/months/11/short"],
-            $localeData["/dateSymbols/months/12/short"]
-        );
+            $localeData["/dateSymbols/months/12/short"],
+        ];
 
         // long day names from locale.xml
-        $this->dayNamesLong = array(
+        $this->dayNamesLong = [
             $localeData["/dateSymbols/weekdays/1/full"],
             $localeData["/dateSymbols/weekdays/2/full"],
             $localeData["/dateSymbols/weekdays/3/full"],
             $localeData["/dateSymbols/weekdays/4/full"],
             $localeData["/dateSymbols/weekdays/5/full"],
             $localeData["/dateSymbols/weekdays/6/full"],
-            $localeData["/dateSymbols/weekdays/7/full"]
-        );
+            $localeData["/dateSymbols/weekdays/7/full"],
+        ];
 
         // short day names from locale.xml
-        $this->dayNamesMedium = array(
+        $this->dayNamesMedium = [
             $localeData["/dateSymbols/weekdays/1/short"],
             $localeData["/dateSymbols/weekdays/2/short"],
             $localeData["/dateSymbols/weekdays/3/short"],
             $localeData["/dateSymbols/weekdays/4/short"],
             $localeData["/dateSymbols/weekdays/5/short"],
             $localeData["/dateSymbols/weekdays/6/short"],
-            $localeData["/dateSymbols/weekdays/7/short"]
-        );
+            $localeData["/dateSymbols/weekdays/7/short"],
+        ];
 
         // returns just the first letter from the shortDayNames
-        $this->dayNamesShort = array(substr($this->dayNamesMedium[0], 0, 1),
+        $this->dayNamesShort = [substr($this->dayNamesMedium[0], 0, 1),
                                      substr($this->dayNamesMedium[1], 0, 1),
                                      substr($this->dayNamesMedium[2], 0, 1),
                                      substr($this->dayNamesMedium[3], 0, 1),
                                      substr($this->dayNamesMedium[4], 0, 1),
                                      substr($this->dayNamesMedium[5], 0, 1),
-                                     substr($this->dayNamesMedium[6], 0, 1));
+                                     substr($this->dayNamesMedium[6], 0, 1), ];
     }
 
     /**
@@ -138,7 +138,7 @@ class Calendar
         $year  = substr($d, 0, 4);
         $month = substr($d, 4, 2);
 
-        $month_array = array();
+        $month_array = [];
         $numDays = gmdate('t', gmmktime(0, 0, 0, $month, 1, $year));
         $dowFirstDay = gmdate('w', gmmktime(0, 0, 0, $month, 1, $year));
         $dowLastDay = gmdate('w', gmmktime(0, 0, 0, $month, $numDays, $year));
@@ -190,7 +190,7 @@ class Calendar
             $y = xarMod::apiFunc('calendar', 'user', 'createUserDateTime', 'Y');
         }
 
-        $year_array = array();
+        $year_array = [];
         // year month loops
         for ($i=1;$i<=12;$i++) {
             $m = sprintf('%02d', $i);
@@ -256,7 +256,7 @@ class Calendar
         if ($sdow == 0) {
             return $this->dayNamesLong;
         }
-        $ordered_array = array();
+        $ordered_array = [];
         for ($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesLong[$sdow];
             if (++$sdow > 6) {
@@ -271,7 +271,7 @@ class Calendar
         if ($sdow == 0) {
             return $this->dayNamesMedium;
         }
-        $ordered_array = array();
+        $ordered_array = [];
         for ($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesMedium[$sdow];
             if (++$sdow > 6) {
@@ -286,7 +286,7 @@ class Calendar
         if ($sdow == 0) {
             return $this->dayNamesShort;
         }
-        $ordered_array = array();
+        $ordered_array = [];
         for ($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesShort[$sdow];
             if (++$sdow > 6) {

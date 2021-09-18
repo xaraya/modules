@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -91,7 +92,7 @@ class Calendar_Factory
      * @access public
      * @static
      */
-    function create($type, $y = 2000, $m = 1, $d = 1, $h = 0, $i = 0, $s = 0)
+    public function create($type, $y = 2000, $m = 1, $d = 1, $h = 0, $i = 0, $s = 0)
     {
         $firstDay = defined('CALENDAR_FIRST_DAY_OF_WEEK') ? CALENDAR_FIRST_DAY_OF_WEEK : 1;
         switch ($type) {
@@ -136,8 +137,13 @@ class Calendar_Factory
             return new Calendar_Year($y);
         default:
             include_once 'PEAR.php';
-            PEAR::raiseError('Calendar_Factory::create() unrecognised type: '.$type,
-                null, PEAR_ERROR_TRIGGER, E_USER_NOTICE, 'Calendar_Factory::create()');
+            PEAR::raiseError(
+                'Calendar_Factory::create() unrecognised type: '.$type,
+                null,
+                PEAR_ERROR_TRIGGER,
+                E_USER_NOTICE,
+                'Calendar_Factory::create()'
+            );
             return false;
         }
     }
@@ -152,7 +158,7 @@ class Calendar_Factory
      * @access public
      * @static
      */
-    function & createByTimestamp($type, $stamp)
+    public function & createByTimestamp($type, $stamp)
     {
         $cE  = & Calendar_Engine_Factory::getEngine();
         $y   = $cE->stampToYear($stamp);
@@ -165,4 +171,3 @@ class Calendar_Factory
         return $cal;
     }
 }
-?>

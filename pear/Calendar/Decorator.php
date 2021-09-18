@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -69,14 +70,14 @@ class Calendar_Decorator
      * @var object
      * @access private
      */
-    var $calendar;
+    public $calendar;
 
     /**
      * Constructs the Calendar_Decorator
      *
      * @param object &$calendar subclass to Calendar to decorate
      */
-    function Calendar_Decorator(&$calendar)
+    public function Calendar_Decorator(&$calendar)
     {
         $this->calendar = & $calendar;
     }
@@ -90,7 +91,7 @@ class Calendar_Decorator
      * @return void
      * @access public
      */
-    function setTimestamp($ts)
+    public function setTimestamp($ts)
     {
         $this->calendar->setTimestamp($ts);
     }
@@ -102,7 +103,7 @@ class Calendar_Decorator
      * @return int $ts timestamp
      * @access public
      */
-    function getTimestamp()
+    public function getTimestamp()
     {
         return $this->calendar->getTimeStamp();
     }
@@ -115,7 +116,7 @@ class Calendar_Decorator
      * @return void
      * @access public
      */
-    function setSelected($state = true)
+    public function setSelected($state = true)
     {
         $this->calendar->setSelected($state = true);
     }
@@ -126,7 +127,7 @@ class Calendar_Decorator
      * @return boolean
      * @access public
      */
-    function isSelected()
+    public function isSelected()
     {
         return $this->calendar->isSelected();
     }
@@ -137,7 +138,7 @@ class Calendar_Decorator
      * @return void
      * @access public
      */
-    function adjust()
+    public function adjust()
     {
         $this->calendar->adjust();
     }
@@ -150,7 +151,7 @@ class Calendar_Decorator
      * @return array
      * @access public
      */
-    function toArray($stamp = null)
+    public function toArray($stamp = null)
     {
         return $this->calendar->toArray($stamp);
     }
@@ -166,7 +167,7 @@ class Calendar_Decorator
      * @return mixed
      * @access private
      */
-    function returnValue($returnType, $format, $stamp, $default)
+    public function returnValue($returnType, $format, $stamp, $default)
     {
         return $this->calendar->returnValue($returnType, $format, $stamp, $default);
     }
@@ -180,7 +181,7 @@ class Calendar_Decorator
      * @return void
      * @access private
      */
-    function setFirst($state = true)
+    public function setFirst($state = true)
     {
         if (method_exists($this->calendar, 'setFirst')) {
             $this->calendar->setFirst($state);
@@ -196,7 +197,7 @@ class Calendar_Decorator
      * @return void
      * @access private
      */
-    function setLast($state = true)
+    public function setLast($state = true)
     {
         if (method_exists($this->calendar, 'setLast')) {
             $this->calendar->setLast($state);
@@ -210,7 +211,7 @@ class Calendar_Decorator
      * @return boolean
      * @access public
      */
-    function isFirst()
+    public function isFirst()
     {
         if (method_exists($this->calendar, 'isFirst')) {
             return $this->calendar->isFirst();
@@ -224,7 +225,7 @@ class Calendar_Decorator
      * @return boolean
      * @access public
      */
-    function isLast()
+    public function isLast()
     {
         if (method_exists($this->calendar, 'isLast')) {
             return $this->calendar->isLast();
@@ -240,7 +241,7 @@ class Calendar_Decorator
      * @return void
      * @access private
      */
-    function setEmpty ($state = true)
+    public function setEmpty($state = true)
     {
         if (method_exists($this->calendar, 'setEmpty')) {
             $this->calendar->setEmpty($state);
@@ -253,7 +254,7 @@ class Calendar_Decorator
      * @return boolean
      * @access public
      */
-    function isEmpty()
+    public function isEmpty()
     {
         if (method_exists($this->calendar, 'isEmpty')) {
             return $this->calendar->isEmpty();
@@ -269,7 +270,7 @@ class Calendar_Decorator
      * @access public
      * @abstract
      */
-    function build($sDates = array())
+    public function build($sDates = [])
     {
         $this->calendar->build($sDates);
     }
@@ -283,7 +284,7 @@ class Calendar_Decorator
      * @return mixed either an object subclass of Calendar or false
      * @access public
      */
-    function fetch()
+    public function fetch()
     {
         return $this->calendar->fetch();
     }
@@ -294,7 +295,7 @@ class Calendar_Decorator
      * @return array
      * @access public
      */
-    function fetchAll()
+    public function fetchAll()
     {
         return $this->calendar->fetchAll();
     }
@@ -305,7 +306,7 @@ class Calendar_Decorator
      * @return int
      * @access public
      */
-    function size()
+    public function size()
     {
         return $this->calendar->size();
     }
@@ -317,7 +318,7 @@ class Calendar_Decorator
      * @return boolean
      * @access public
      */
-    function isValid()
+    public function isValid()
     {
         return $this->calendar->isValid();
     }
@@ -328,7 +329,7 @@ class Calendar_Decorator
      * @return Calendar_Validator
      * @access public
      */
-    function & getValidator()
+    public function & getValidator()
     {
         $validator = $this->calendar->getValidator();
         return $validator;
@@ -341,7 +342,7 @@ class Calendar_Decorator
      * @return object implementing Calendar_Engine_Inteface
      * @access private
      */
-    function & getEngine()
+    public function & getEngine()
     {
         $engine = $this->calendar->getEngine();
         return $engine;
@@ -355,7 +356,7 @@ class Calendar_Decorator
      * @return int e.g. 2002 or timestamp
      * @access public
      */
-    function prevYear($format = 'int')
+    public function prevYear($format = 'int')
     {
         return $this->calendar->prevYear($format);
     }
@@ -368,7 +369,7 @@ class Calendar_Decorator
      * @return int e.g. 2003 or timestamp
      * @access public
      */
-    function thisYear($format = 'int')
+    public function thisYear($format = 'int')
     {
         return $this->calendar->thisYear($format);
     }
@@ -381,7 +382,7 @@ class Calendar_Decorator
      * @return int e.g. 2004 or timestamp
      * @access public
      */
-    function nextYear($format = 'int')
+    public function nextYear($format = 'int')
     {
         return $this->calendar->nextYear($format);
     }
@@ -394,7 +395,7 @@ class Calendar_Decorator
      * @return int e.g. 4 or Unix timestamp
      * @access public
       */
-    function prevMonth($format = 'int')
+    public function prevMonth($format = 'int')
     {
         return $this->calendar->prevMonth($format);
     }
@@ -407,7 +408,7 @@ class Calendar_Decorator
      * @return int e.g. 5 or timestamp
      * @access public
      */
-    function thisMonth($format = 'int')
+    public function thisMonth($format = 'int')
     {
         return $this->calendar->thisMonth($format);
     }
@@ -420,7 +421,7 @@ class Calendar_Decorator
      * @return int e.g. 6 or timestamp
      * @access public
      */
-    function nextMonth($format = 'int')
+    public function nextMonth($format = 'int')
     {
         return $this->calendar->nextMonth($format);
     }
@@ -433,16 +434,20 @@ class Calendar_Decorator
      * @return int e.g. 4 or Unix timestamp
      * @access public
       */
-    function prevWeek($format = 'n_in_month')
+    public function prevWeek($format = 'n_in_month')
     {
-        if ( method_exists($this->calendar, 'prevWeek')) {
+        if (method_exists($this->calendar, 'prevWeek')) {
             return $this->calendar->prevWeek($format);
         } else {
             include_once 'PEAR.php';
             PEAR::raiseError(
                 'Cannot call prevWeek on Calendar object of type: '.
-                get_class($this->calendar), 133, PEAR_ERROR_TRIGGER,
-                E_USER_NOTICE, 'Calendar_Decorator::prevWeek()');
+                get_class($this->calendar),
+                133,
+                PEAR_ERROR_TRIGGER,
+                E_USER_NOTICE,
+                'Calendar_Decorator::prevWeek()'
+            );
             return false;
         }
     }
@@ -455,16 +460,20 @@ class Calendar_Decorator
      * @return int e.g. 5 or timestamp
      * @access public
      */
-    function thisWeek($format = 'n_in_month')
+    public function thisWeek($format = 'n_in_month')
     {
-        if ( method_exists($this->calendar, 'thisWeek')) {
+        if (method_exists($this->calendar, 'thisWeek')) {
             return $this->calendar->thisWeek($format);
         } else {
             include_once 'PEAR.php';
             PEAR::raiseError(
                 'Cannot call thisWeek on Calendar object of type: '.
-                get_class($this->calendar), 133, PEAR_ERROR_TRIGGER,
-                E_USER_NOTICE, 'Calendar_Decorator::thisWeek()');
+                get_class($this->calendar),
+                133,
+                PEAR_ERROR_TRIGGER,
+                E_USER_NOTICE,
+                'Calendar_Decorator::thisWeek()'
+            );
             return false;
         }
     }
@@ -477,16 +486,20 @@ class Calendar_Decorator
      * @return int e.g. 6 or timestamp
      * @access public
      */
-    function nextWeek($format = 'n_in_month')
+    public function nextWeek($format = 'n_in_month')
     {
-        if ( method_exists($this->calendar, 'nextWeek')) {
+        if (method_exists($this->calendar, 'nextWeek')) {
             return $this->calendar->nextWeek($format);
         } else {
             include_once 'PEAR.php';
             PEAR::raiseError(
                 'Cannot call thisWeek on Calendar object of type: '.
-                get_class($this->calendar), 133, PEAR_ERROR_TRIGGER,
-                E_USER_NOTICE, 'Calendar_Decorator::nextWeek()');
+                get_class($this->calendar),
+                133,
+                PEAR_ERROR_TRIGGER,
+                E_USER_NOTICE,
+                'Calendar_Decorator::nextWeek()'
+            );
             return false;
         }
     }
@@ -499,7 +512,7 @@ class Calendar_Decorator
      * @return int e.g. 10 or timestamp
      * @access public
      */
-    function prevDay($format = 'int')
+    public function prevDay($format = 'int')
     {
         return $this->calendar->prevDay($format);
     }
@@ -512,7 +525,7 @@ class Calendar_Decorator
      * @return int e.g. 11 or timestamp
      * @access public
      */
-    function thisDay($format = 'int')
+    public function thisDay($format = 'int')
     {
         return $this->calendar->thisDay($format);
     }
@@ -525,7 +538,7 @@ class Calendar_Decorator
      * @return int e.g. 12 or timestamp
      * @access public
      */
-    function nextDay($format = 'int')
+    public function nextDay($format = 'int')
     {
         return $this->calendar->nextDay($format);
     }
@@ -538,7 +551,7 @@ class Calendar_Decorator
      * @return int e.g. 13 or timestamp
      * @access public
      */
-    function prevHour($format = 'int')
+    public function prevHour($format = 'int')
     {
         return $this->calendar->prevHour($format);
     }
@@ -551,7 +564,7 @@ class Calendar_Decorator
      * @return int e.g. 14 or timestamp
      * @access public
      */
-    function thisHour($format = 'int')
+    public function thisHour($format = 'int')
     {
         return $this->calendar->thisHour($format);
     }
@@ -564,7 +577,7 @@ class Calendar_Decorator
      * @return int e.g. 14 or timestamp
      * @access public
      */
-    function nextHour($format = 'int')
+    public function nextHour($format = 'int')
     {
         return $this->calendar->nextHour($format);
     }
@@ -577,7 +590,7 @@ class Calendar_Decorator
      * @return int e.g. 23 or timestamp
      * @access public
      */
-    function prevMinute($format = 'int')
+    public function prevMinute($format = 'int')
     {
         return $this->calendar->prevMinute($format);
     }
@@ -590,7 +603,7 @@ class Calendar_Decorator
      * @return int e.g. 24 or timestamp
      * @access public
      */
-    function thisMinute($format = 'int')
+    public function thisMinute($format = 'int')
     {
         return $this->calendar->thisMinute($format);
     }
@@ -603,7 +616,7 @@ class Calendar_Decorator
      * @return int e.g. 25 or timestamp
      * @access public
      */
-    function nextMinute($format = 'int')
+    public function nextMinute($format = 'int')
     {
         return $this->calendar->nextMinute($format);
     }
@@ -616,7 +629,7 @@ class Calendar_Decorator
      * @return int e.g. 43 or timestamp
      * @access public
      */
-    function prevSecond($format = 'int')
+    public function prevSecond($format = 'int')
     {
         return $this->calendar->prevSecond($format);
     }
@@ -629,7 +642,7 @@ class Calendar_Decorator
      * @return int e.g. 44 or timestamp
      * @access public
      */
-    function thisSecond($format = 'int')
+    public function thisSecond($format = 'int')
     {
         return $this->calendar->thisSecond($format);
     }
@@ -642,9 +655,8 @@ class Calendar_Decorator
      * @return int e.g. 45 or timestamp
      * @access public
      */
-    function nextSecond($format = 'int')
+    public function nextSecond($format = 'int')
     {
         return $this->calendar->nextSecond($format);
     }
 }
-?>

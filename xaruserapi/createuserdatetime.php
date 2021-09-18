@@ -23,7 +23,7 @@
 function &calendar_userapi_createUserDateTime($format='Ymd')
 {
     return gmdate($format);
-    
+
     /*
     if(xarUserLoggedIn()) {
         // $tzoffest = user's timezone offset

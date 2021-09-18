@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -22,8 +23,9 @@
 require_once 'Date.php';
 require_once 'PHPUnit/Autoload.php';
 
-class myDate extends Date {
-    function myDate($date)
+class myDate extends Date
+{
+    public function myDate($date)
     {
         $this->Date($date);
     }
@@ -35,102 +37,138 @@ class myDate extends Date {
  * @package Date
  * @author Marshall Roch <mroch@php.net>
  */
-class Date_Test extends PHPUnit_Framework_TestCase {
+class Date_Test extends PHPUnit_Framework_TestCase
+{
+    public $time;
 
-    var $time;
-
-    function setUp()
+    public function setUp()
     {
         $this->time = new Date("2003-10-04 14:03:24Z");
     }
 
-    function tearDown()
+    public function tearDown()
     {
         unset($this->time);
     }
 
-    function testDateNull()
+    public function testDateNull()
     {
         $time = new Date();
         $this->assertEquals(
             date('Y-m-d H:i:s'),
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $time->year, $time->month, $time->day,
-                $time->hour, $time->minute, $time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $time->year,
+                $time->month,
+                $time->day,
+                $time->hour,
+                $time->minute,
+                $time->second
+            )
         );
     }
 
-    function testAbstraction()
+    public function testAbstraction()
     {
         $d = new Date();
         $my = new myDate($d);
-        $this->assertEquals($d->getDate(),$my->getDate());
+        $this->assertEquals($d->getDate(), $my->getDate());
     }
 
-    function testDateCopy()
+    public function testDateCopy()
     {
         $temp = new Date($this->time);
         $this->assertEquals($temp, $this->time);
     }
 
-    function testDateISO()
+    public function testDateISO()
     {
         $temp = new Date("2003-10-04 14:03:24");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateISOBasic()
+    public function testDateISOBasic()
     {
         $temp = new Date("20031004T140324");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateISOExtended()
+    public function testDateISOExtended()
     {
         $temp = new Date("2003-10-04T14:03:24");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateISOTimestamp()
+    public function testDateISOTimestamp()
     {
         $temp = new Date("20031004140324");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateUnixtime()
+    public function testDateUnixtime()
     {
         $temp = new Date();
         $temp->setTZbyID("UTC");
         $temp->setDate(strtotime("2003-10-04 14:03:24Z"));
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateUnixtime2()
+    public function testDateUnixtime2()
     {
         $temp = new Date();
         $temp->setTZbyID("UTC-05:30");
@@ -138,13 +176,19 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $temp->convertTZbyID("UTC");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateUnixtime3()
+    public function testDateUnixtime3()
     {
         $temp = new Date();
         $temp->setTZbyID("America/Chicago");
@@ -152,13 +196,19 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $temp->convertTZbyID("UTC");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testDateUnixtime4()
+    public function testDateUnixtime4()
     {
         $temp = new Date();
         $temp->setTZbyID("Europe/London");
@@ -166,68 +216,104 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $temp->setTZbyID("UTC");
         $this->assertEquals(
             '2003-10-04 15:03:24', // Preserves London local time (15.03)
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $temp->year, $temp->month, $temp->day,
-                $temp->hour, $temp->minute, $temp->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $temp->year,
+                $temp->month,
+                $temp->day,
+                $temp->hour,
+                $temp->minute,
+                $temp->second
+            )
         );
     }
 
-    function testSetDateISO()
+    public function testSetDateISO()
     {
         $this->time->setDate("2003-10-04 14:03:24");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetDateISOBasic()
+    public function testSetDateISOBasic()
     {
         $this->time->setDate("20031004T140324");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetDateISOExtended()
+    public function testSetDateISOExtended()
     {
         $this->time->setDate("2003-10-04T14:03:24");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetDateTimestamp()
+    public function testSetDateTimestamp()
     {
         $this->time->setDate("20031004140324");
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetDateUnixtime()
+    public function testSetDateUnixtime()
     {
         $this->time->setDate(strtotime("2003-10-04 14:03:24Z"));
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetDateUnixtime2()
+    public function testSetDateUnixtime2()
     {
         $hs_oldtz = $this->time->getTZID();
         $this->time->setTZbyID("UTC-05:30");
@@ -235,13 +321,19 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $this->time->convertTZbyID($hs_oldtz);
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetDateUnixtime3()
+    public function testSetDateUnixtime3()
     {
         $hs_oldtz = $this->time->getTZID();
         $this->time->setTZbyID("America/Chicago");
@@ -249,43 +341,49 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $this->time->convertTZbyID($hs_oldtz);
         $this->assertEquals(
             '2003-10-04 14:03:24',
-            sprintf('%04d-%02d-%02d %02d:%02d:%02d',
-                $this->time->year, $this->time->month, $this->time->day,
-                $this->time->hour, $this->time->minute, $this->time->second)
+            sprintf(
+                '%04d-%02d-%02d %02d:%02d:%02d',
+                $this->time->year,
+                $this->time->month,
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testGetDateISO()
+    public function testGetDateISO()
     {
         $date = $this->time->getDate(DATE_FORMAT_ISO);
         $this->assertEquals('2003-10-04 14:03:24', $date);
     }
 
-    function testGetDateISOBasic()
+    public function testGetDateISOBasic()
     {
         $date = $this->time->getDate(DATE_FORMAT_ISO_BASIC);
         $this->assertEquals('20031004T140324Z', $date);
     }
 
-    function testGetDateISOExtended()
+    public function testGetDateISOExtended()
     {
         $date = $this->time->getDate(DATE_FORMAT_ISO_EXTENDED);
         $this->assertEquals('2003-10-04T14:03:24Z', $date);
     }
 
-    function testGetDateTimestamp()
+    public function testGetDateTimestamp()
     {
         $date = $this->time->getDate(DATE_FORMAT_TIMESTAMP);
         $this->assertEquals('20031004140324', $date);
     }
 
-    function testGetDateUnixtime()
+    public function testGetDateUnixtime()
     {
         $date = $this->time->getDate(DATE_FORMAT_UNIXTIME);
         $this->assertEquals(strtotime('2003-10-04 14:03:24Z'), $date);
     }
 
-    function testGetDateUnixtime2()
+    public function testGetDateUnixtime2()
     {
         $hs_oldtz = $this->time->getTZID();
         $this->time->convertTZbyID("UTC-05:30");
@@ -294,7 +392,7 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $this->time->convertTZbyID($hs_oldtz);
     }
 
-    function testGetDateUnixtime3()
+    public function testGetDateUnixtime3()
     {
         $hs_oldtz = $this->time->getTZID();
         $this->time->convertTZbyID("America/Chicago");
@@ -303,9 +401,9 @@ class Date_Test extends PHPUnit_Framework_TestCase {
         $this->time->convertTZbyID($hs_oldtz);
     }
 
-    function testFormatLikeStrftime()
+    public function testFormatLikeStrftime()
     {
-        $codes = array(
+        $codes = [
             'a' => 'Sat',
             'A' => 'Saturday',
             'b' => 'Oct',
@@ -333,17 +431,18 @@ class Date_Test extends PHPUnit_Framework_TestCase {
             'U' => '39',
             'y' => '03',
             'Y' => '2003',
-            '%' => '%'
-        );
+            '%' => '%',
+        ];
 
         foreach ($codes as $code => $expected) {
             $this->assertEquals(
-                "$code: $expected", $this->time->formatLikeStrftime("$code: %$code")
+                "$code: $expected",
+                $this->time->formatLikeStrftime("$code: %$code")
             );
         }
     }
 
-    function testToUTCbyOffset()
+    public function testToUTCbyOffset()
     {
         $this->time->setTZbyID('EST');
         $this->time->toUTC();
@@ -352,5 +451,4 @@ class Date_Test extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($temp, $this->time);
     }
-
 }

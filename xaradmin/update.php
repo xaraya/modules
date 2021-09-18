@@ -41,10 +41,10 @@
         if (!xarSec::confirmAuthKey()) {
             return;
         }
-        $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
+        $myobject = DataObjectMaster::getObject(['objectid' => $objectid,
                                              'join'     => $join,
                                              'table'    => $table,
-                                             'itemid'   => $itemid));
+                                             'itemid'   => $itemid, ]);
         $itemid = $myobject->getItem();
         // if we're editing a dynamic property, save its property type to cache
         // for correct processing of the configuration rule (ValidationProperty)
@@ -52,10 +52,10 @@
             xarVar::setCached('dynamicdata', 'currentproptype', $myobject->properties['type']);
         }
 
-        $isvalid = $myobject->checkInput(array(), 0, 'dd');
+        $isvalid = $myobject->checkInput([], 0, 'dd');
 
         // recover any session var information
-        $data = xarMod::apiFunc('dynamicdata', 'user', 'getcontext', array('module' => $tplmodule));
+        $data = xarMod::apiFunc('dynamicdata', 'user', 'getcontext', ['module' => $tplmodule]);
         extract($data);
 
         if (!empty($preview) || !$isvalid) {
@@ -73,14 +73,14 @@
             // Makes this hooks call explictly from DD
             // $modinfo = xarMod::getInfo($myobject->moduleid);
             $modinfo = xarMod::getInfo(182);
-            $item = array();
+            $item = [];
             foreach (array_keys($myobject->properties) as $name) {
                 $item[$name] = $myobject->properties[$name]->value;
             }
             $item['module'] = $modinfo['name'];
             $item['itemtype'] = $myobject->itemtype;
             $item['itemid'] = $myobject->itemid;
-            $hooks = array();
+            $hooks = [];
             $hooks = xarModHooks::call('item', 'modify', $myobject->itemid, $item, $modinfo['name']);
             $data['hooks'] = $hooks;
 
@@ -95,7 +95,7 @@
         } // throw back
 
         // If we are here then the update is valid: reset the session var
-        xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
+        xarSession::setVar('ddcontext.' . $tplmodule, ['tplmodule' => $tplmodule]);
 
         $item = $myobject->getFieldValues();
         $item['module'] = 'calendar';
@@ -110,17 +110,17 @@
                 'dynamicdata',
                 'admin',
                 'modifyprop',
-                array('itemid' => $objectid)
+                ['itemid' => $objectid]
             ));
         } else {
             xarController::redirect(xarController::URL(
                 'dynamicdata',
                 'admin',
                 'view',
-                array(
+                [
                                           'itemid' => $objectid,
-                                          'tplmodule' => $tplmodule
-                                          )
+                                          'tplmodule' => $tplmodule,
+                                          ]
             ));
         }
         return true;

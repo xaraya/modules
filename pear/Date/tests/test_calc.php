@@ -1,4 +1,5 @@
 <?php
+
 require_once "Date/Calc.php";
 
 /**
@@ -35,17 +36,16 @@ $failed_test_data   = false;
  * Bugs #19788
  */
 $failed_test_19788  = false;
-$pass1  = array(1998, 2, 1)==Date_Calc::isoWeekDate(5,1,1998)?true:false;
-$pass2  = array(1998, 2, 2)==Date_Calc::isoWeekDate(6,1,1998)?true:false;
-$pass3  = array(2004, 2, 1)==Date_Calc::isoWeekDate(5,1,2004)?true:false;
-$pass4  = array(2004, 2, 2)==Date_Calc::isoWeekDate(6,1,2004)?true:false;
-if( !($pass1 && $pass2 && $pass3 && $pass4) ){
+$pass1  = [1998, 2, 1]==Date_Calc::isoWeekDate(5, 1, 1998) ? true : false;
+$pass2  = [1998, 2, 2]==Date_Calc::isoWeekDate(6, 1, 1998) ? true : false;
+$pass3  = [2004, 2, 1]==Date_Calc::isoWeekDate(5, 1, 2004) ? true : false;
+$pass4  = [2004, 2, 2]==Date_Calc::isoWeekDate(6, 1, 2004) ? true : false;
+if (!($pass1 && $pass2 && $pass3 && $pass4)) {
     $failed_test_19788   = true;
 }
 
-if($failed_test_19788 || $failed_test_data){
+if ($failed_test_19788 || $failed_test_data) {
     echo "Bug #19788: failed\n";
 } else {
     echo "Bug #19788: OK\n";
 }
-?>

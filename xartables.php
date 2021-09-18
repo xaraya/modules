@@ -13,7 +13,7 @@
 
 function calendar_xartables()
 {
-    $xartables = array();
+    $xartables = [];
     $prefix = xarDB::getPrefix() . '_calendar';
 
     $xartables['calendar_calendar'] = $prefix . '_calendar';

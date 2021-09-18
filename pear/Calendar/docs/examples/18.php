@@ -12,12 +12,12 @@ require_once CALENDAR_ROOT.'Decorator/Wrapper.php';
 
 class MyBoldDecorator extends Calendar_Decorator
 {
-    function MyBoldDecorator(&$Calendar)
+    public function MyBoldDecorator(&$Calendar)
     {
         parent::Calendar_Decorator($Calendar);
     }
 
-    function thisDay()
+    public function thisDay()
     {
         return '<b>'.parent::thisDay().'</b>';
     }
@@ -25,7 +25,7 @@ class MyBoldDecorator extends Calendar_Decorator
 
 $Month = new Calendar_Month(date('Y'), date('n'));
 
-$Wrapper = & new Calendar_Decorator_Wrapper($Month);
+$Wrapper = new Calendar_Decorator_Wrapper($Month);
 $Wrapper->build();
 
 echo '<h2>The Wrapper decorator</h2>';
@@ -33,4 +33,3 @@ echo '<i>Day numbers are rendered in bold</i><br /> <br />';
 while ($DecoratedDay = $Wrapper->fetch('MyBoldDecorator')) {
     echo $DecoratedDay->thisDay().'<br />';
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -29,97 +30,153 @@ require_once 'PHPUnit/Autoload.php';
  * @package Date
  * @author Leandro Lucarella <llucax@php.net>
  */
-class Date_SpanTest extends PHPUnit_Framework_TestCase {
+class Date_SpanTest extends PHPUnit_Framework_TestCase
+{
+    public $time;
 
-    var $time;
-
-    function setUp() {
+    public function setUp()
+    {
         $this->time = new Date_Span(97531);
     }
 
-    function tearDown() {
+    public function tearDown()
+    {
         unset($this->time);
     }
 
-    function testSetFromArray() {
-        $this->time->setFromArray(array(5, 48.5, 28.5, 31));
+    public function testSetFromArray()
+    {
+        $this->time->setFromArray([5, 48.5, 28.5, 31]);
         $this->assertEquals(
             '7:0:59:1',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetFromString() {
+    public function testSetFromString()
+    {
         $this->time->setFromString('5:00:59:31');
         $this->assertEquals(
             '5:0:59:31',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetFromSeconds() {
+    public function testSetFromSeconds()
+    {
         $this->time->setFromSeconds(434344);
         $this->assertEquals(
             '5:0:39:4',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetFromMinutes() {
+    public function testSetFromMinutes()
+    {
         $this->time->setFromMinutes(7860.0166666666);
         $this->assertEquals(
             '5:11:0:1',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetFromHours() {
+    public function testSetFromHours()
+    {
         $this->time->setFromHours(50.12345);
         $this->assertEquals(
             '2:2:7:24',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetFromDays() {
+    public function testSetFromDays()
+    {
         $this->time->setFromDays(pi());
         $this->assertEquals(
             '3:3:23:54',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testSetFromDateDiff() {
+    public function testSetFromDateDiff()
+    {
         $this->time->setFromDateDiff(
             new Date('2004-03-10 01:15:59'),
             new Date('2003-03-10 00:10:50')
         );
         $this->assertEquals(
             '366:1:5:9',
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            )
         );
     }
 
-    function testCopy() {
+    public function testCopy()
+    {
         $time = new Date_Span();
         $time->copy($this->time);
         $this->assertEquals(
-            sprintf('%d:%d:%d:%d', $this->time->day, $this->time->hour,
-                $this->time->minute, $this->time->second),
-            sprintf('%d:%d:%d:%d', $time->day, $time->hour,
-                $time->minute, $time->second)
+            sprintf(
+                '%d:%d:%d:%d',
+                $this->time->day,
+                $this->time->hour,
+                $this->time->minute,
+                $this->time->second
+            ),
+            sprintf(
+                '%d:%d:%d:%d',
+                $time->day,
+                $time->hour,
+                $time->minute,
+                $time->second
+            )
         );
     }
 
-    function testFormat() {
-        $codes = array(
+    public function testFormat()
+    {
+        $codes = [
             'C' => '1, 03:05:31',
             'd' => '1.1288310185185',
             'D' => '1',
@@ -142,26 +199,28 @@ class Date_SpanTest extends PHPUnit_Framework_TestCase {
             't' => "\t",
             'T' => '03:05:31',
             '%' => '%',
-        );
+        ];
         foreach ($codes as $code => $expected) {
             $this->assertEquals(
-                "$code: $expected", $this->time->format("$code: %$code")
+                "$code: $expected",
+                $this->time->format("$code: %$code")
             );
         }
     }
 
-    function testAdd() {
+    public function testAdd()
+    {
         $this->time->add(new Date_Span(6000));
         $result = $this->time->toSeconds();
         $expected = 103531;
         $this->assertEquals($expected, $result);
     }
 
-    function testSubtract() {
+    public function testSubtract()
+    {
         $this->time->subtract(new Date_Span(6000));
         $result = $this->time->toSeconds();
         $expected = 91531;
         $this->assertEquals($expected, $result);
     }
-
 }

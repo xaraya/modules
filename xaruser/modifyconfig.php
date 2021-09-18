@@ -18,8 +18,8 @@ function calendar_user_modifyconfig()
 {
     xarVar::fetch('cal_sdow', 'int:0:6', $cal_sdow, xarModUserVars::get('calendar', 'cal_sdow'));
     xarVar::fetch('default_view', 'int:0:6', $default_view, xarModUserVars::get('calendar', 'default_view'));
-    return array(
+    return [
         'cal_sdow'=>$cal_sdow,
-        'default_view'=>$default_view
-        );
+        'default_view'=>$default_view,
+        ];
 }

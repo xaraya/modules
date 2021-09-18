@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
@@ -77,7 +78,7 @@ class Calendar_Year extends Calendar
      *
      * @access public
      */
-    function Calendar_Year($y)
+    public function Calendar_Year($y)
     {
         parent::Calendar($y);
     }
@@ -102,7 +103,7 @@ class Calendar_Year extends Calendar
      * @return boolean
      * @access public
      */
-    function build($sDates = array(), $firstDay = null)
+    public function build($sDates = [], $firstDay = null)
     {
         include_once CALENDAR_ROOT.'Factory.php';
         $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
@@ -124,7 +125,7 @@ class Calendar_Year extends Calendar
      * @return void
      * @access private
      */
-    function setSelection($sDates) 
+    public function setSelection($sDates)
     {
         foreach ($sDates as $sDate) {
             if ($this->year == $sDate->thisYear()) {
@@ -137,4 +138,3 @@ class Calendar_Year extends Calendar
         }
     }
 }
-?>
