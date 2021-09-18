@@ -33,28 +33,28 @@ function scraper_adminapi_scrape($args)
     }
 
     // Get the URL and code for this ID
-    $charge = DataObjectMaster::getObject(array('name' => 'scraper_urls'));
-    $charge->getItem(array('itemid' => $args['id']));
-    
+    $charge = DataObjectMaster::getObject(['name' => 'scraper_urls']);
+    $charge->getItem(['itemid' => $args['id']]);
+
     // Create a Goutte client
     $client = new Client();
-    
+
     // Add any initialization options here
-    $guzzleClient = new GuzzleClient(array(
+    $guzzleClient = new GuzzleClient([
 //        'timeout' => 60,
-    ));
+    ]);
     $client->setClient($guzzleClient);
-    
+
     // Add the URL
     // IMPORTANT: by convention the crawling object should always be called "$crawler"
     $crawler = $client->request('GET', $charge->properties['url']->value);
-    
+
     // Execute the scraping code
     $code = $charge->properties['code']->value;
     eval($code);
     // By convention we will return an array
     if (empty($data)) {
-        $data = array();
+        $data = [];
     }
 
     return $data;

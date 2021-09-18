@@ -32,14 +32,14 @@ function scraper_admin_delete_url()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'scraper';
     $data['authid'] = xarSec::genAuthKey('scraper');
 
     if ($data['confirm']) {
-    
+
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -47,7 +47,7 @@ function scraper_admin_delete_url()
 
         // Delete the item
         $item = $data['object']->deleteItem();
-            
+
         // Jump to the next page
         xarController::redirect(xarController::URL('scraper', 'admin', 'view_urls'));
         return true;

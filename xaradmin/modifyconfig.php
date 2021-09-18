@@ -30,7 +30,7 @@ function scraper_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'scraper'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'scraper']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
@@ -51,7 +51,7 @@ function scraper_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code. AJAX calls ignore this
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             switch ($data['tab']) {
                 case 'general':
@@ -69,9 +69,9 @@ function scraper_admin_modifyconfig()
                         return;
                     }
 
-                    $modvars = array(
+                    $modvars = [
                                     'debugmode',
-                                    );
+                                    ];
 
                     foreach ($modvars as $var) {
                         if (isset($$var)) {
@@ -87,7 +87,7 @@ function scraper_admin_modifyconfig()
 
             // If this is an AJAX call, end here
             xarController::$request->exitAjax();
-            xarController::redirect(xarController::URL('scraper', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('scraper', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
 

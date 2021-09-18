@@ -16,5 +16,5 @@
  */
 function scraper_user_test()
 {
-    return array();
+    return [];
 }

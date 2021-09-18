@@ -27,7 +27,7 @@ function scraper_init()
 #
     $q = new Query();
     $prefix = xarDB::getPrefix();
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_scraper_urls";
     if (!$q->run($query)) {
         return;
@@ -80,11 +80,11 @@ function scraper_init()
     # Create DD objects
 #
     $module = 'scraper';
-    $objects = array(
+    $objects = [
                     'scraper_urls',
-                     );
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -92,7 +92,7 @@ function scraper_init()
 #
     # Set up modvars
 #
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'scraper'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'scraper']);
     $module_settings->initialize();
 
     // Add variables like this next one when creating utility modules
@@ -117,5 +117,5 @@ function scraper_upgrade()
 function scraper_delete()
 {
     $this_module = 'scraper';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
 }

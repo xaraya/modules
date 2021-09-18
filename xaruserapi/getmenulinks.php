@@ -17,16 +17,16 @@
 
 function scraper_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     if (xarSecurity::check('ViewScraper', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'scraper',
             'user',
             'main'
         ),
                               'title' => xarML(''),
-                              'label' => xarML(''));
+                              'label' => xarML(''), ];
     }
 
     return $menulinks;

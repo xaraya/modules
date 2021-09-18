@@ -19,7 +19,7 @@
 function scraper_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     $xartable['scraper_tags']          = xarDB::getPrefix() . '_scraper_tags';
 

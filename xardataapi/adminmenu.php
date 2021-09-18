@@ -18,9 +18,9 @@
 // TODO: turn this into an xml file
 function scraper_dataapi_adminmenu()
 {
-    return array(
-        array('includes' => array('main','overview'), 'target' => 'main', 'label' => xarML('Scraper Overview')),
-        array('mask' => 'ManageScraper', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')),
-        array('mask' => 'AdminScraper', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Scraper configuration'), 'label' => xarML('Modify Config')),
-    );
+    return [
+        ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Scraper Overview')],
+        ['mask' => 'ManageScraper', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
+        ['mask' => 'AdminScraper', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Scraper configuration'), 'label' => xarML('Modify Config')],
+    ];
 }
