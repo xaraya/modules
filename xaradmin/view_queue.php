@@ -21,7 +21,7 @@ function pubsub_admin_view_queue($args)
     if (!xarSecurity::check('ManagePubSub')) {
         return;
     }
-    
+
     extract($args);
     if (!xarVar::fetch('action', 'str', $action, '')) {
         return;
@@ -31,16 +31,16 @@ function pubsub_admin_view_queue($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'pubsub_process']);
 
     if (!empty($action) && ($action == 'process')) {
         // Confirm authorisation code
         if (!xarSec::confirmAuthKey()) {
             return;
         }
-        
+
         $result = xarMod::apiFunc('pubsub', 'admin', 'process_queue');
-        
+
         // Notify the admin if required
         if (xarModVars::get('pubsub', 'sendnotice_queue')) {
             $admin = xarRoles::getRole(xarModVars::get('roles', 'admin'));
@@ -52,16 +52,16 @@ function pubsub_admin_view_queue($args)
             $args['mail_data']['title']        = date('r');
             $args['mail_data']['name']         = $admin->properties['name']->value;
 
-            $mailargs = array(
+            $mailargs = [
                       'name'             => 'pubsub_admin',
                       'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
                       'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
                       'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
                       'recipientname'    => $admin->properties['name']->value,
                       'recipientaddress' => $admin->properties['email']->value,
-                      'bccaddresses'     => array(),
+                      'bccaddresses'     => [],
                       'data'             => $args['mail_data'],
-            );
+            ];
             $data['result'] = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
         }
 

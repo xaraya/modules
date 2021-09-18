@@ -37,11 +37,11 @@ function pubsub_admin_addsubscriber()
         return;
     }
 
-    $sub_args = array();
+    $sub_args = [];
     $sub_args['modid']    = $sub_module;
     $sub_args['cid']      = $sub_category;
     $sub_args['itemtype'] = $sub_itemtype;
-    $sub_args['actionid'] = $sub_htmlmail ? 2:1 ;
+    $sub_args['actionid'] = $sub_htmlmail ? 2 : 1 ;
 
     if (strstr($sub_email, "\n")) {
         $emails = explode("\n", $sub_email);

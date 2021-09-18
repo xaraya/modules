@@ -28,7 +28,7 @@ function pubsub_userapi_unsubscribe($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($modid)) {
         $invalid[] = 'modid';
     }
@@ -63,7 +63,7 @@ function pubsub_userapi_unsubscribe($args)
                  AND $pubsubsubscriptionstable.userid = ?
                  AND $pubsubeventstable.cid = ?";
 
-    $bindvars = array((int)$modid, (int)$userid, (int)$cid);
+    $bindvars = [(int)$modid, (int)$userid, (int)$cid];
     if (isset($extra)) {
         $query .= " AND $pubsubeventstable.extra = ?";
         array_push($bindvars, $extra);
@@ -73,13 +73,13 @@ function pubsub_userapi_unsubscribe($args)
         return;
     }
 
-    list($pubsubid) = $result->fields;
+    [$pubsubid] = $result->fields;
 
     if (!xarMod::apiFunc(
         'pubsub',
         'user',
         'deluser',
-        array('pubsubid' => $pubsubid)
+        ['pubsubid' => $pubsubid]
     )) {
         $msg = xarML(
             'Bad return from #(1) in function #(2)() in module #(3)',

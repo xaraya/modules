@@ -112,12 +112,12 @@ function pubsub_adminapi_updatehook($args)
         'pubsub',
         'admin',
         'processevent',
-        array('modid' => $modid,
+        ['modid' => $modid,
                              'itemtype' => $itemtype,
                              'cid' => $cid,
                              'extra' => $extra,
                              'objectid' => $objectid,
-                             'template_id' => $templateid)
+                             'template_id' => $templateid, ]
     )) {
         // oops - but life goes on in hook functions :)
         return $extrainfo;

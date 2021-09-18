@@ -26,7 +26,7 @@ function pubsub_userapi_gettemplate($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -57,17 +57,17 @@ function pubsub_userapi_gettemplate($args)
                      compiled
               FROM $pubsubtemplatestable
               WHERE id = ?";
-    $result = $dbconn->Execute($query, array((int)$id));
+    $result = $dbconn->Execute($query, [(int)$id]);
     if (!$result) {
         return;
     }
 
-    $info = array();
+    $info = [];
     if ($result->EOF) {
         return $info;
     }
 
-    list($info['id'], $info['name'], $info['template'], $info['compiled']) = $result->fields;
+    [$info['id'], $info['name'], $info['template'], $info['compiled']] = $result->fields;
     $result->Close();
 
     return $info;

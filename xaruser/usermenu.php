@@ -37,20 +37,20 @@ function pubsub_user_usermenu($args)
                 'pubsub',
                 'user',
                 'getsubscriptions',
-                array('userid' => xarUser::getVar('id'))
+                ['userid' => xarUser::getVar('id')]
             );
             if (!isset($items)) {
                 return;
             }
             // get the itemtype descriptions if available
-            $todo = array();
+            $todo = [];
             foreach ($items as $id => $item) {
                 if (!empty($item['itemtype'])) {
                     $todo[$item['modname']] = 1;
                 }
             }
             if (count($todo) > 0) {
-                $itemtypes = array();
+                $itemtypes = [];
                 foreach ($todo as $modname => $val) {
                     // Get the list of all item types for this module (if any)
                     $mytypes = xarMod::apiFunc(
@@ -58,7 +58,7 @@ function pubsub_user_usermenu($args)
                         'user',
                         'getitemtypes',
                                              // don't throw an exception if this function doesn't exist
-                                             array(),
+                                             [],
                         0
                     );
                     if (!empty($mytypes)) {
@@ -77,8 +77,8 @@ function pubsub_user_usermenu($args)
                 'pubsub',
                 'user',
                 'usermenu',
-                array('action' => 'list',
-                                      'items' => $items)
+                ['action' => 'list',
+                                      'items' => $items, ]
             );
             break;
 
@@ -90,7 +90,7 @@ function pubsub_user_usermenu($args)
                 'pubsub',
                 'user',
                 'getsubscriptions',
-                array('userid' => xarUser::getVar('id'))
+                ['userid' => xarUser::getVar('id')]
             );
             if (!isset($items)) {
                 return;
@@ -108,7 +108,7 @@ function pubsub_user_usermenu($args)
                 'pubsub',
                 'user',
                 'deluser',
-                array('pubsubid' => $pubsubid)
+                ['pubsubid' => $pubsubid]
             )) {
                 $msg = xarML(
                     'Bad return from #(1) in function #(2)() in module #(3)',
@@ -122,7 +122,7 @@ function pubsub_user_usermenu($args)
                  'pubsub',
                  'user',
                  'usermenu',
-                 array('action' => 'list')
+                 ['action' => 'list']
              ));
              return true;
 

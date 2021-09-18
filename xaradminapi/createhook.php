@@ -122,12 +122,12 @@ function pubsub_adminapi_createhook($args)
         'pubsub',
         'admin',
         'processevent',
-        array('modid' => $modid,
+        ['modid' => $modid,
                              'itemtype' => $itemtype,
                              'cid' => $cid,
                              'extra' => $extra,
                              'objectid' => $objectid,
-                             'templateid' => $templateid)
+                             'templateid' => $templateid, ]
     )) {
         // oops - but life goes on in hook functions :)
         return $extrainfo;

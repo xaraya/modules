@@ -26,7 +26,7 @@ function pubsub_adminapi_delevent($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($eventid) || !is_numeric($eventid)) {
         $invalid[] = 'eventid';
     }
@@ -53,7 +53,7 @@ function pubsub_adminapi_delevent($args)
     // Delete item from events table
     $query = "DELETE FROM $pubsubeventstable
             WHERE eventid = ?";
-    $dbconn->Execute($query, array((int)$eventid));
+    $dbconn->Execute($query, [(int)$eventid]);
     if (!$result) {
         return;
     }

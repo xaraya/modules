@@ -28,7 +28,7 @@ function pubsub_userapi_adduser($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($eventid) || !is_numeric($eventid)) {
         $invalid[] = 'eventid';
     }
@@ -86,7 +86,7 @@ function pubsub_userapi_adduser($args)
               subdate,
               email)
             VALUES (?,?,?,?," . time() . ",?)";
-    $bindvars = array($nextId, $eventid, $userid, $actionid, $email);
+    $bindvars = [$nextId, $eventid, $userid, $actionid, $email];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

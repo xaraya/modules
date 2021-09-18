@@ -21,7 +21,7 @@
  */
 function pubsub_userapi_getsubscribers($args)
 {
-    $subscriptions = array();
+    $subscriptions = [];
     /*
      * lets get...
      *  - username (need to get from db)
@@ -31,7 +31,7 @@ function pubsub_userapi_getsubscribers($args)
 
      */
     extract($args);
-    $events = array();
+    $events = [];
     if (empty($eventid) || !is_numeric($eventid)) {
         return $events;
     }
@@ -67,8 +67,8 @@ function pubsub_userapi_getsubscribers($args)
     }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($username, $modname, $modid, $itemtype, $cid, $subdate, $pubsubid, $email, $userid
-           ) = $result->fields;
+        [$username, $modname, $modid, $itemtype, $cid, $subdate, $pubsubid, $email, $userid
+           ] = $result->fields;
         if (xarSecurity::check('AdminPubSub', 0)) {
             if ($userid == -1) {
                 $emailinfo = explode(' ', $email, 2);
@@ -82,15 +82,8 @@ function pubsub_userapi_getsubscribers($args)
                 $displayname = '';
             }
 
-            $subscriptions[] = array('username'  => $username
-                                  ,'displayname' => $displayname
-                                  ,'modname'   => $modname
-                                  ,'modid'     => $modid
-                                  ,'itemtype'  => $itemtype
-                                  ,'cid'       => $cid
-                                  ,'subdate'   => $subdate
-                                  ,'pubsubid'  => $pubsubid
-                                  );
+            $subscriptions[] = ['username'  => $username,'displayname' => $displayname,'modname'   => $modname,'modid'     => $modid,'itemtype'  => $itemtype,'cid'       => $cid,'subdate'   => $subdate,'pubsubid'  => $pubsubid,
+                                  ];
         }
     }
 

@@ -29,7 +29,7 @@ function pubsub_adminapi_runjobdigest($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -69,7 +69,7 @@ function pubsub_adminapi_runjobdigest($args)
               LEFT JOIN $pubsubeventstable
               ON $pubsubsubscriptionstable.eventid = $pubsubeventstable.eventid
               WHERE pubsubid = ?";
-    $result   = $dbconn->Execute($query, array((int)$pubsubid));
+    $result   = $dbconn->Execute($query, [(int)$pubsubid]);
     if (!$result) {
         return;
     }
@@ -78,7 +78,7 @@ function pubsub_adminapi_runjobdigest($args)
         return;
     }
 
-    list($actionid, $userid, $eventid, $modid, $itemtype, $email) = $result->fields;
+    [$actionid, $userid, $eventid, $modid, $itemtype, $email] = $result->fields;
 
     if ($userid != -1) {
         $info = xarUser::getVar('email', $userid);
@@ -120,7 +120,7 @@ function pubsub_adminapi_runjobdigest($args)
         $query = "SELECT compiled
                   FROM $pubsubtemplatestable
                   WHERE id = ?";
-        $result   = $dbconn->Execute($query, array((int)$id));
+        $result   = $dbconn->Execute($query, [(int)$id]);
         if (!$result) {
             return;
         }
@@ -143,7 +143,7 @@ function pubsub_adminapi_runjobdigest($args)
             throw new Exception($msg);
         }
 
-        $tplData = array();
+        $tplData = [];
         $tplData['userid'] = $userid;
         $tplData['name'] = $name;
         $tplData['module'] = $modname;
@@ -155,8 +155,8 @@ function pubsub_adminapi_runjobdigest($args)
             $modname,
             'user',
             'getitemlinks',
-            array('itemtype' => $itemtype,
-                                         'itemids' => array($objectid)),
+            ['itemtype' => $itemtype,
+                                         'itemids' => [$objectid], ],
             0
         ); // don't throw an exception here
         if (!empty($itemlinks) && !empty($itemlinks[$objectid])) {
@@ -201,18 +201,18 @@ function pubsub_adminapi_runjobdigest($args)
             $message .= "\n" . xarML(' Link: #(1)', $tplData['link']);
         }
         // TODO: make configurable too ?
-        $piece = array('email'=>$info,'content'=>$message,'name'=>$name);
+        $piece = ['email'=>$info,'content'=>$message,'name'=>$name];
     } else {
         // invalid action - update queue accordingly
         xarMod::apiFunc(
             'pubsub',
             'admin',
             'updatejob',
-            array('id' => $id,
+            ['id' => $id,
                                 'pubsub_id' => $pubsub_id,
                                 'object_id' => $object_id,
                                 'template_id' => $template_id,
-                                'status' => 'error')
+                                'status' => 'error', ]
         );
         $msg = xarML(
             'Invalid #(1) action',

@@ -24,7 +24,7 @@
 function pubsub_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     $xartable['pubsub_events']        = xarDB::getPrefix() . '_pubsub_events';
     $xartable['pubsub_subscriptions'] = xarDB::getPrefix() . '_pubsub_subscriptions';

@@ -41,24 +41,24 @@ function pubsub_admin_view_subscriptions()
         }
     */
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_subscriptions'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'pubsub_subscriptions']);
     $q = $data['object']->dataquery;
-    
+
     // Only active domains
     $q->eq('subscriptions.state', 3);
-    
+
     // If an event ID was passed, then filter on it
     if (!empty($eventid)) {
         $q->eq('subscriptions.event', $eventid);
     }
-    
+
     return $data;
 
-    $data['items'] = array();
+    $data['items'] = [];
     $data['authid'] = xarSec::genAuthKey();
 
     if ($unsub && $pubsubid) {
-        if (!xarMod::apiFunc('pubsub', 'user', 'deluser', array('pubsubid' => $pubsubid))) {
+        if (!xarMod::apiFunc('pubsub', 'user', 'deluser', ['pubsubid' => $pubsubid])) {
             $msg = xarML(
                 'Bad return from #(1) in function #(2)() in module #(3)',
                 'deluser',
@@ -69,7 +69,7 @@ function pubsub_admin_view_subscriptions()
         }
     }
 
-    $info = xarMod::apiFunc('pubsub', 'user', 'getevent', array('eventid' => $eventid));
+    $info = xarMod::apiFunc('pubsub', 'user', 'getevent', ['eventid' => $eventid]);
     if (empty($info)) {
         $msg = xarML(
             'Invalid #(1) for function #(2)() in module #(3)',
@@ -80,7 +80,7 @@ function pubsub_admin_view_subscriptions()
         throw new Exception($msg);
     }
 
-    $data['items'] = array();
+    $data['items'] = [];
     $data['namelabel'] = xarVar::prepForDisplay(xarML('Publish / Subscribe Administration'));
     $data['catname'] = xarVar::prepForDisplay($info['catname']);
     $data['cid'] = $info['cid'];
@@ -98,11 +98,11 @@ function pubsub_admin_view_subscriptions()
     }
 
     // The user API function is called
-    $subscriptions = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', array('eventid'=>$eventid));
+    $subscriptions = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', ['eventid'=>$eventid]);
 
     $data['items'] = $subscriptions;
 
-    $data['returnurl'] = xarController::URL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
+    $data['returnurl'] = xarController::URL('pubsub', 'user', 'view_subscriptions', ['eventid'=>$eventid]);
 
     // TODO: add a pager (once it exists in BL)
     $data['pager'] = '';

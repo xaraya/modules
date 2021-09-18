@@ -21,8 +21,8 @@ class ModulesModActivateObserver extends EventObserver implements ixarEventObser
         // refresh prop cache
         // checkme: move this to dd ?
         $modInfo = xarMod::getBaseInfo($modName);
-        PropertyRegistration::importPropertyTypes(true, array('modules/' . $modInfo['directory'] . '/xarproperties'));
+        PropertyRegistration::importPropertyTypes(true, ['modules/' . $modInfo['directory'] . '/xarproperties']);
         // let any hooks know the module was activated
-        xarHooks::notify('ModuleActivate', array('objectid' => $modName, 'module' => $modName));
+        xarHooks::notify('ModuleActivate', ['objectid' => $modName, 'module' => $modName]);
     }
 }

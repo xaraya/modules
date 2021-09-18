@@ -65,7 +65,7 @@ function pubsub_adminapi_checkevent($args)
               WHERE modid = ?
               AND   itemtype = ?
               AND   cid = ?";
-    $bindvars = array((int)$modid, (int)$itemtype, (int)$cid);
+    $bindvars = [(int)$modid, (int)$itemtype, (int)$cid];
     if (isset($extra)) {
         $query .= ' AND extra = ?';
         array_push($bindvars, $extra);
@@ -77,7 +77,7 @@ function pubsub_adminapi_checkevent($args)
 
     // if event already exists then just return the event id;
     if (!$result->EOF) {
-        list($id) = $result->fields;
+        [$id] = $result->fields;
         return $id;
     }
 
@@ -102,7 +102,7 @@ function pubsub_adminapi_checkevent($args)
               groupdescr)
             VALUES (?,?,?,?,?,?)";
 
-    $bindvars = array((int)$id, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr);
+    $bindvars = [(int)$id, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr];
     $result = $dbconn->Execute($query, $bindvars);
 
     if (!$result) {

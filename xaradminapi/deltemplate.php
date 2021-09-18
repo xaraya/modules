@@ -25,7 +25,7 @@ function pubsub_adminapi_deltemplate($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -52,7 +52,7 @@ function pubsub_adminapi_deltemplate($args)
     // Delete item
     $query = "DELETE FROM $pubsubtemplatestable
               WHERE id = ?";
-    $result = $dbconn->Execute($query, array((int)$id));
+    $result = $dbconn->Execute($query, [(int)$id]);
     if (!$result) {
         return;
     }

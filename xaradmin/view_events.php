@@ -24,9 +24,9 @@ function pubsub_admin_view_events()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_events'));
-    
-    $data['items'] = array();
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'pubsub_events']);
+
+    $data['items'] = [];
     $data['authid'] = xarSec::genAuthKey();
 
 

@@ -25,7 +25,7 @@ function pubsub_userapi_getsubscriptions($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($userid) || !is_numeric($userid)) {
         $invalid[] = 'userid';
     }
@@ -72,15 +72,15 @@ function pubsub_userapi_getsubscriptions($args)
                  AND $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
                  AND $pubsubsubscriptionstable.userid =  ?";
 
-    $result = $dbconn->Execute($query, array((int)$userid));
+    $result = $dbconn->Execute($query, [(int)$userid]);
     if (!$result) {
         return;
     }
 
-    $items = array();
+    $items = [];
     while (!$result->EOF) {
-        $item = array();
-        list($item['eventid'],
+        $item = [];
+        [$item['eventid'],
              $item['modname'],
              $item['modid'],
              $item['itemtype'],
@@ -88,7 +88,7 @@ function pubsub_userapi_getsubscriptions($args)
              $item['cid'],
              $item['extra'],
              $item['pubsubid'],
-             $item['actionid']) = $result->fields;
+             $item['actionid']] = $result->fields;
         $items[$item['pubsubid']] = $item;
         $result->MoveNext();
     }

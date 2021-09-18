@@ -17,7 +17,7 @@
 /**
  * Delete a subscription
  */
- 
+
 function pubsub_admin_delete_subscription()
 {
     // Xaraya security
@@ -41,7 +41,7 @@ function pubsub_admin_delete_subscription()
         $idlist = $data['itemid'];
     }
     $ids = explode(',', trim($idlist, ','));
-    
+
     $data['message'] = '';
     $data['itemid']  = $data['itemid'];
     $data['tplmodule'] = 'pubsub';
@@ -49,30 +49,30 @@ function pubsub_admin_delete_subscription()
     /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $subscription = DataObjectMaster::getObject(array('name' => 'pubsub_subscriptions'));
+    $subscription = DataObjectMaster::getObject(['name' => 'pubsub_subscriptions']);
     if (!$data['confirm']) {
         $data['idlist'] = $idlist;
         if (is_array($ids)) {
             $data['lang_title'] = xarML("Delete Subscriptions");
         } else {
-            $ids = array($ids);
+            $ids = [$ids];
             $data['lang_title'] = xarML("Delete Subscription");
         }
         $data['authid'] = xarSec::genAuthKey();
         if (count($ids) == 1) {
-            $subscription->getItem(array('itemid' => current($ids)));
+            $subscription->getItem(['itemid' => current($ids)]);
             $data['object'] = $subscription;
         } else {
-            $items = array();
+            $items = [];
             foreach ($ids as $i) {
-                $subscription->getItem(array('itemid' => $i));
+                $subscription->getItem(['itemid' => $i]);
                 $item = $subscription->getFieldValues();
                 $item['name'] = $item['name'];
                 $items[] = $item;
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarController::URL('pubsub', 'admin', 'delete_subscription', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('pubsub', 'admin', 'delete_subscription', ['idlist' => $idlist]);
 
         return $data;
     } else {
@@ -81,8 +81,8 @@ function pubsub_admin_delete_subscription()
         }
         $script = implode('_', xarController::$request->getInfo());
         foreach ($ids as $id) {
-            $itemid = $subscription->getItem(array('itemid' => $id));
-            $itemid = $subscription->updateItem(array('itemid' => $id, 'state' => 0));
+            $itemid = $subscription->getItem(['itemid' => $id]);
+            $itemid = $subscription->updateItem(['itemid' => $id, 'state' => 0]);
         }
 
         // Jump to the next page

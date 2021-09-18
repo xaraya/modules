@@ -61,12 +61,8 @@ function pubsub_user_modifysubscription()
                 'pubsub',
                 'user',
                 'unsubscribe',
-                array('modid'   => $modid
-                               ,'itemtype'=> $itemtype
-                               ,'cid'     => $cid
-                               ,'extra'   => $extra
-                               ,'userid'  => $userid
-                               )
+                ['modid'   => $modid,'itemtype'=> $itemtype,'cid'     => $cid,'extra'   => $extra,'userid'  => $userid,
+                               ]
             );
             break;
         case 1:
@@ -74,13 +70,8 @@ function pubsub_user_modifysubscription()
                 'pubsub',
                 'user',
                 'subscribe',
-                array('modid'     => $modid
-                               ,'itemtype'  => $itemtype
-                               ,'cid'       => $cid
-                               ,'extra'     => $extra
-                               ,'groupdescr'=> $groupdescr
-                               ,'userid'    => $userid
-                               )
+                ['modid'     => $modid,'itemtype'  => $itemtype,'cid'       => $cid,'extra'     => $extra,'groupdescr'=> $groupdescr,'userid'    => $userid,
+                               ]
             );
             break;
         default:

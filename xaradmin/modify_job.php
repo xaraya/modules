@@ -26,7 +26,7 @@ function pubsub_admin_modify_job()
         return;
     }
     xarTpl::setPageTitle('Modify Job');
-    
+
     if (!xarVar::fetch('name', 'str', $name, 'pubsub_process', xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -37,14 +37,14 @@ function pubsub_admin_modify_job()
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'pubsub';
     $data['authid'] = xarSec::genAuthKey('pubsub');
 
     if ($data['confirm']) {
-    
+
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -52,14 +52,14 @@ function pubsub_admin_modify_job()
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
-        
+
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTpl::module('pubsub', 'admin', 'modify_process', $data);
         } else {
             // Good data: create the item
-            $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
-            
+            $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
+
             // Jump to the next page
             xarController::redirect(xarController::URL('pubsub', 'admin', 'view_queue'));
             return true;

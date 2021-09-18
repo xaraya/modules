@@ -27,6 +27,6 @@ class ModulesModRemoveObserver extends EventObserver implements ixarEventObserve
             xarModVars::set('modules', 'defaultmodule', 'base');
         }
         // let any hooks know the module is being removed
-        xarHooks::notify('ModuleRemove', array('objectid' => $modName, 'module' => $modName));
+        xarHooks::notify('ModuleRemove', ['objectid' => $modName, 'module' => $modName]);
     }
 }

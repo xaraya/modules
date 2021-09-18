@@ -30,41 +30,41 @@ function pubsub_admin_view_templates()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'pubsub_templates']);
 
-    $data['templates'] = array();
+    $data['templates'] = [];
     // get the list of available templates
     $templates = xarMod::apiFunc('pubsub', 'user', 'getalltemplates');
     foreach ($templates as $id => $templatename) {
-        $data['templates'][$id] = array('name' => $templatename,
+        $data['templates'][$id] = ['name' => $templatename,
                                         'view' => xarController::URL(
                                             'pubsub',
                                             'admin',
                                             'view_templates',
-                                            array('action' => 'display',
-                                                                  'id' => $id)
+                                            ['action' => 'display',
+                                                                  'id' => $id, ]
                                         ),
                                         'edit' => xarController::URL(
                                             'pubsub',
                                             'admin',
                                             'view_templates',
-                                            array('action' => 'modify',
-                                                                  'id' => $id)
+                                            ['action' => 'modify',
+                                                                  'id' => $id, ]
                                         ),
                                         'delete' => xarController::URL(
                                             'pubsub',
                                             'admin',
                                             'view_templates',
-                                            array('action' => 'delete',
-                                                                    'id' => $id)
-                                        )
-                                       );
+                                            ['action' => 'delete',
+                                                                    'id' => $id, ]
+                                        ),
+                                       ];
     }
     $data['new'] = xarController::URL(
         'pubsub',
         'admin',
         'view_templates',
-        array('action' => 'new')
+        ['action' => 'new']
     );
 
     xarVar::fetch('id', 'int', $id, 0, xarVar::NOT_REQUIRED);
@@ -74,7 +74,7 @@ function pubsub_admin_view_templates()
             'pubsub',
             'user',
             'gettemplate',
-            array('id' => $id)
+            ['id' => $id]
         );
         if (empty($info)) {
             return;
@@ -86,7 +86,7 @@ function pubsub_admin_view_templates()
     switch ($action) {
         case 'display':
         // TODO: adapt if/when we support more template variables in runjob()
-            $tplData = array('userid' => xarUser::getVar('id'),
+            $tplData = ['userid' => xarUser::getVar('id'),
                              'name' => xarUser::getVar('uname'),
                              'module' => 'example',
                              'itemtype' => 0,
@@ -96,8 +96,8 @@ function pubsub_admin_view_templates()
                                  'example',
                                  'user',
                                  'display',
-                                 array('exid' => 123)
-                             ));
+                                 ['exid' => 123]
+                             ), ];
             $preview = xarTpl::string($info['compiled'], $tplData);
             $data['preview'] = xarVar::prepHTMLDisplay($preview);
             $data['action'] = 'display';
@@ -106,7 +106,7 @@ function pubsub_admin_view_templates()
         case 'new':
             $data['name'] = '';
         // TODO: adapt if/when we support more template variables in runjob()
-            $templatevariables = array('#$userid#','#$name#','#$module#','#$itemtype#','#$itemid#','#$title#','#$link#');
+            $templatevariables = ['#$userid#','#$name#','#$module#','#$itemtype#','#$itemid#','#$title#','#$link#'];
             $data['template'] = join("<br/>\n", $templatevariables);
             $data['id'] = 0;
             $data['submitbutton'] = xarML('Create Template');
@@ -127,8 +127,8 @@ function pubsub_admin_view_templates()
                 'pubsub',
                 'admin',
                 'addtemplate',
-                array('name' => $name,
-                                     'template' => $template)
+                ['name' => $name,
+                                     'template' => $template, ]
             )) {
                 return;
             }
@@ -155,9 +155,9 @@ function pubsub_admin_view_templates()
                 'pubsub',
                 'admin',
                 'updatetemplate',
-                array('id' => $id,
+                ['id' => $id,
                                      'name' => $name,
-                                     'template' => $template)
+                                     'template' => $template, ]
             )) {
                 return;
             }
@@ -178,7 +178,7 @@ function pubsub_admin_view_templates()
                 'pubsub',
                 'admin',
                 'deltemplate',
-                array('id' => $id)
+                ['id' => $id]
             )) {
                 return;
             }
@@ -191,7 +191,7 @@ function pubsub_admin_view_templates()
                 return;
             }
             foreach ($templates as $id => $templatename) {
-                $info = xarMod::apiFunc('pubsub', 'user', 'gettemplate', array('id' => $id));
+                $info = xarMod::apiFunc('pubsub', 'user', 'gettemplate', ['id' => $id]);
                 if (empty($info)) {
                     continue;
                 }
@@ -217,8 +217,8 @@ function pubsub_admin_view_templates()
         'pubsub',
         'admin',
         'view_templates',
-        array('action' => 'recompile',
-                                         'authid' => $data['authid'])
+        ['action' => 'recompile',
+                                         'authid' => $data['authid'], ]
     );
 
     return $data;

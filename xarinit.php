@@ -52,7 +52,7 @@ function pubsub_init()
     if (!$q->run($query)) {
         return;
     }
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_subscriptions";
     if (!$q->run($query)) {
         return;
@@ -74,7 +74,7 @@ function pubsub_init()
     if (!$q->run($query)) {
         return;
     }
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_process";
     if (!$q->run($query)) {
         return;
@@ -97,7 +97,7 @@ function pubsub_init()
     if (!$q->run($query)) {
         return;
     }
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_templates";
     if (!$q->run($query)) {
         return;
@@ -119,20 +119,20 @@ function pubsub_init()
     if (!$q->run($query)) {
         return;
     }
-    
+
     # --------------------------------------------------------
 #
     # Create DD objects
 #
     $module = 'pubsub';
-    $objects = array(
+    $objects = [
                     'pubsub_events',
                     'pubsub_subscriptions',
                     'pubsub_templates',
                     'pubsub_process',
-                     );
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -323,6 +323,6 @@ function pubsub_delete()
     $q = new Query('DELETE', $tables['mailer_mails']);
     $q->eq('module_id', xarMod::getRegid($module));
     $q->run();
-    
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }

@@ -17,7 +17,7 @@
  * @returns bool
  */
 
-function pubsub_schedulerapi_process_queue(array $args=array())
+function pubsub_schedulerapi_process_queue(array $args=[])
 {
     $result = xarMod::apiFunc('pubsub', 'admin', 'process_queue', $args);
 

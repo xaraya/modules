@@ -24,7 +24,7 @@ function pubsub_adminapi_addtemplate($args)
 {
     // Get arguments from argument array
     extract($args);
-    $invalid = array();
+    $invalid = [];
     if (!isset($template) || !is_string($template)) {
         $invalid[] = 'template';
     }
@@ -56,7 +56,7 @@ function pubsub_adminapi_addtemplate($args)
               FROM $pubsubtemplatestable
               WHERE name = ?";
 
-    $result = $dbconn->Execute($query, array($name));
+    $result = $dbconn->Execute($query, [$name]);
     if (!$result) {
         return;
     }
@@ -83,7 +83,7 @@ function pubsub_adminapi_addtemplate($args)
               template,
               compiled)
             VALUES (?,?,?,?)";
-    $bindvars = array($nextId, $name, $template, $compiled);
+    $bindvars = [$nextId, $name, $template, $compiled];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

@@ -17,7 +17,7 @@
 /**
  * Delete an event
  */
- 
+
 function pubsub_admin_delete_event()
 {
     // Xaraya security
@@ -41,7 +41,7 @@ function pubsub_admin_delete_event()
         $idlist = $data['itemid'];
     }
     $ids = explode(',', trim($idlist, ','));
-    
+
     $data['message'] = '';
     $data['itemid']  = $data['itemid'];
     $data['tplmodule'] = 'pubsub';
@@ -49,30 +49,30 @@ function pubsub_admin_delete_event()
     /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $event = DataObjectMaster::getObject(array('name' => 'pubsub_events'));
+    $event = DataObjectMaster::getObject(['name' => 'pubsub_events']);
     if (!$data['confirm']) {
         $data['idlist'] = $idlist;
         if (is_array($ids)) {
             $data['lang_title'] = xarML("Delete Events");
         } else {
-            $ids = array($ids);
+            $ids = [$ids];
             $data['lang_title'] = xarML("Delete Event");
         }
         $data['authid'] = xarSec::genAuthKey();
         if (count($ids) == 1) {
-            $event->getItem(array('itemid' => current($ids)));
+            $event->getItem(['itemid' => current($ids)]);
             $data['object'] = $event;
         } else {
-            $items = array();
+            $items = [];
             foreach ($ids as $i) {
-                $event->getItem(array('itemid' => $i));
+                $event->getItem(['itemid' => $i]);
                 $item = $event->getFieldValues();
                 $item['name'] = $item['name'];
                 $items[] = $item;
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarController::URL('pubsub', 'admin', 'delete_event', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('pubsub', 'admin', 'delete_event', ['idlist' => $idlist]);
 
         return $data;
     } else {
@@ -81,9 +81,9 @@ function pubsub_admin_delete_event()
         }
         $script = implode('_', xarController::$request->getInfo());
         foreach ($ids as $id) {
-            $itemid = $event->getItem(array('itemid' => $id));
+            $itemid = $event->getItem(['itemid' => $id]);
 //        	$itemid = $event->updateItem(array('itemid' => $id, 'state' => 0));
-            $itemid = $event->deleteItem(array('itemid' => $id, 'state' => 0));
+            $itemid = $event->deleteItem(['itemid' => $id, 'state' => 0]);
         }
 
         // Jump to the next page

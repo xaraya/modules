@@ -26,7 +26,7 @@ function pubsub_adminapi_deljob($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -54,7 +54,7 @@ function pubsub_adminapi_deljob($args)
     // Delete item
     $query = "DELETE FROM $pubsubprocesstable
               WHERE id = ?";
-    $result = $dbconn->Execute($query, array((int)$id));
+    $result = $dbconn->Execute($query, [(int)$id]);
     if (!$result) {
         return;
     }

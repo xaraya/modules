@@ -25,7 +25,7 @@
 function pubsub_adminapi_runjob($args)
 {
     // This holds the templatess we have already found
-    static $templates = array();
+    static $templates = [];
 
     // Get the template
     $template_name = '';
@@ -34,21 +34,21 @@ function pubsub_adminapi_runjob($args)
     if (empty($args['template_id'])) {
         $args['template_id'] = 1;
     }
-    
+
     if (!empty($args['template_id'])) {
         sys::import('modules.dynamicdata.class.properties.master');
-        $template_object = DataObjectMaster::getObject(array('name' => 'pubsub_templates'));
-        $template_object->getItem(array('itemid' => $args['template_id']));
+        $template_object = DataObjectMaster::getObject(['name' => 'pubsub_templates']);
+        $template_object->getItem(['itemid' => $args['template_id']]);
         $template_name = 'pubsub_' . $template_object->properties['name']->value;
     }
 
     // Get the mailer_mails object and all templares from the pubsub module
-    $mailer_object = DataObjectMaster::getObjectList(array('name' => 'mailer_mails'));
-    
+    $mailer_object = DataObjectMaster::getObjectList(['name' => 'mailer_mails']);
+
     // Set the body to active so it will be picked up by the query
     $mailer_object->properties['body']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
     $mailer_object->setFieldList();
-    
+
     // Get the template(s)
     $mailer_object->dataquery->eq('mails.module_id', xarMod::getRegid('pubsub'));
     $mailer_object->dataquery->eq('mails.name', $template_name);
@@ -69,20 +69,20 @@ function pubsub_adminapi_runjob($args)
     }
 
     // Send an email to each of the subscribers of this event
-    $data['results'] = array();
+    $data['results'] = [];
     foreach ($args['recipients'] as $key => $value) {
         $args['mail_data']['name'] = $value;
         try {
-            $mailargs = array(
+            $mailargs = [
                       'name'             => $template_name,
                       'sendername'       => $args['sendername'],
                       'senderaddress'    => $args['senderaddress'],
                       'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
                       'recipientname'    => $value,
                       'recipientaddress' => $key,
-                      'bccaddresses'     => array(),
+                      'bccaddresses'     => [],
                       'data'             => $args['mail_data'],
-            );
+            ];
             $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
         } catch (Exception $e) {
             $result['exception'] = $e->getMessage();
@@ -100,9 +100,9 @@ function pubsub_adminapi_runjob($args)
                 xarLog::message($message, xarLog::LEVEL_DEBUG);
             }
         }
-        $data['results'] = array_merge($data['results'], array($result));
+        $data['results'] = array_merge($data['results'], [$result]);
     }
-    
+
     return $data['results'];
 
 
@@ -110,7 +110,7 @@ function pubsub_adminapi_runjob($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -151,7 +151,7 @@ function pubsub_adminapi_runjob($args)
               LEFT JOIN $pubsubeventstable
               ON $pubsubsubscriptionstable.eventid = $pubsubeventstable.eventid
               WHERE pubsubid = ?";
-    $result   = $dbconn->Execute($query, array((int)$pubsubid));
+    $result   = $dbconn->Execute($query, [(int)$pubsubid]);
     if (!$result) {
         return;
     }
@@ -160,7 +160,7 @@ function pubsub_adminapi_runjob($args)
         return;
     }
 
-    list($actionid, $userid, $eventid, $modid, $itemtype, $email) = $result->fields;
+    [$actionid, $userid, $eventid, $modid, $itemtype, $email] = $result->fields;
 
     if ($userid != -1) {
         $info = xarUser::getVar('email', $userid);
@@ -202,7 +202,7 @@ function pubsub_adminapi_runjob($args)
         $query = "SELECT compiled, template
                   FROM $pubsubtemplatestable
                   WHERE id = ?";
-        $result   = $dbconn->Execute($query, array((int)$id));
+        $result   = $dbconn->Execute($query, [(int)$id]);
         if (!$result) {
             return;
         }
@@ -222,7 +222,7 @@ function pubsub_adminapi_runjob($args)
         // Close the result
         $result->Close();
 
-        $tplData = array();
+        $tplData = [];
         $tplData['userid'] = $userid;
         $tplData['name'] = $name;
         $tplData['module'] = $modname;
@@ -235,8 +235,8 @@ function pubsub_adminapi_runjob($args)
             $modname,
             'user',
             'getitemlinks',
-            array('itemtype' => $itemtype,
-                                         'itemids' => array($objectid)),
+            ['itemtype' => $itemtype,
+                                         'itemids' => [$objectid], ],
             0
         ); // don't throw an exception here
         if (!empty($itemlinks) && !empty($itemlinks[$objectid])) {
@@ -312,14 +312,14 @@ function pubsub_adminapi_runjob($args)
                 'mail',
                 'admin',
                 'sendhtmlmail',
-                array('info'     => $info,
+                ['info'     => $info,
                                       'name'     => $name,
                                       'subject'  => $subject,
                                       'message'  => $textmessage,
                                       'htmlmessage' => $htmlmessage,
                                       'from'     => $fmail,
                                       'fromname' => $fname,
-                                      'usetemplates' => false)
+                                      'usetemplates' => false, ]
             )) {
                 return;
             }
@@ -329,31 +329,31 @@ function pubsub_adminapi_runjob($args)
                 'mail',
                 'admin',
                 'sendmail',
-                array('info'     => $info,
+                ['info'     => $info,
                                       'name'     => $name,
                                       'subject'  => $subject,
                                       'message'  => $textmessage,
                                       'htmlmessage' => $htmlmessage,
                                       'from'     => $fmail,
                                       'fromname' => $fname,
-                                      'usetemplates' => false)
+                                      'usetemplates' => false, ]
             )) {
                 return;
             }
         }
         // delete job from queue now it has run
-        xarMod::apiFunc('pubsub', 'admin', 'deljob', array('id' => $id));
+        xarMod::apiFunc('pubsub', 'admin', 'deljob', ['id' => $id]);
     } else {
         // invalid action - update queue accordingly
         xarMod::apiFunc(
             'pubsub',
             'admin',
             'updatejob',
-            array('id' => $id,
+            ['id' => $id,
                             'pubsub_id' => $pubsub_id,
                             'object_id' => $object_id,
                             'template_id' => $template_id,
-                            'status' => 'error')
+                            'status' => 'error', ]
         );
         $msg = xarML(
             'Invalid #(1) action',

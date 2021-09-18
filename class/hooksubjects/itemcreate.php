@@ -27,8 +27,8 @@ sys::import('xaraya.structures.hooks.apisubject');
 class ModulesItemCreateSubject extends ApiHookSubject
 {
     protected $subject = 'ItemCreate';
-    
-    public function __construct($args=array())
+
+    public function __construct($args=[])
     {
         // pass args to parent constructor, it validates module and extrainfo values
         parent::__construct($args);

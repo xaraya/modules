@@ -60,24 +60,24 @@ function pubsub_userapi_getevent($args)
            LEFT JOIN $categoriestable
                   ON $pubsubeventstable.cid = $categoriestable.cid
                WHERE eventid = ?";
-    $result = $dbconn->Execute($query, array((int)$eventid));
+    $result = $dbconn->Execute($query, [(int)$eventid]);
     if (!$result) {
         return;
     }
 
-    $info = array();
+    $info = [];
 
     if ($result->EOF) {
         return false;
     }
 
-    list($info['modid'],
+    [$info['modid'],
          $info['modname'],
          $info['itemtype'],
          $info['cid'],
          $info['extra'],
          $info['groupdescr'],
-         $info['catname']) = $result->fields;
+         $info['catname']] = $result->fields;
 
     return $info;
 }

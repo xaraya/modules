@@ -106,12 +106,12 @@ function pubsub_adminapi_deletehook($args)
         'pubsub',
         'admin',
         'processevent',
-        array('modid' => $modid,
+        ['modid' => $modid,
                              'itemtype' => $itemtype,
                              'cid' => $cid,
                              'extra' => $extra,
                              'objectid' => $objectid,
-                             'template_id' => $template_id)
+                             'template_id' => $template_id, ]
     )) {
         // oops - but life goes on in hook functions :)
         return $extrainfo;

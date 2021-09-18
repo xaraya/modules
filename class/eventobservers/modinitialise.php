@@ -19,6 +19,6 @@ class ModulesModInitialiseObserver extends EventObserver implements ixarEventObs
     {
         $modName = $subject->getArgs();
         // our only job is to let any hooks know the module was initialised
-        xarHooks::notify('ModuleInit', array('objectid' => $modName, 'module' => $modName));
+        xarHooks::notify('ModuleInit', ['objectid' => $modName, 'module' => $modName]);
     }
 }

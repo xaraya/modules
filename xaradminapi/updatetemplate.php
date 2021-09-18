@@ -28,7 +28,7 @@ function pubsub_adminapi_updatetemplate($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -67,7 +67,7 @@ function pubsub_adminapi_updatetemplate($args)
                   compiled = ?,
                   name = ?
               WHERE id = ?";
-    $bindvars = array($template, $compiled, $name, (int)$id);
+    $bindvars = [$template, $compiled, $name, (int)$id];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

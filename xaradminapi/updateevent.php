@@ -29,7 +29,7 @@ function pubsub_adminapi_updateevent($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($eventid) || !is_numeric($eventid)) {
         $invalid[] = 'eventid';
     }
@@ -71,7 +71,7 @@ function pubsub_adminapi_updateevent($args)
                   itemtype = ?,
                   groupdescr = ?
               WHERE eventid = ?";
-    $bindvars = array((int)$module, $itemtype, $groupdescr, (int)$eventid);
+    $bindvars = [(int)$module, $itemtype, $groupdescr, (int)$eventid];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

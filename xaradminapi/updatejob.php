@@ -30,7 +30,7 @@ function pubsub_adminapi_updatejob($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -72,7 +72,7 @@ function pubsub_adminapi_updatejob($args)
                   objectid = ?,
                   status = ?
             WHERE id = ?";
-    $bindvars = array((int)$pubsubid, (int)$objectid, $status, $id);
+    $bindvars = [(int)$pubsubid, (int)$objectid, $status, $id];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

@@ -27,7 +27,7 @@ function pubsub_userapi_deluser($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($pubsubid) || !is_numeric($pubsubid)) {
         $invalid[] = 'pubsubid';
     }
@@ -55,7 +55,7 @@ function pubsub_userapi_deluser($args)
     // Delete item
     $query = "DELETE FROM $pubsubsubscriptionstable
               WHERE pubsubid = ?";
-    $dbconn->Execute($query, array((int)$pubsubid));
+    $dbconn->Execute($query, [(int)$pubsubid]);
 
     return true;
 } // END delUser

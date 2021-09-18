@@ -25,5 +25,5 @@ function pubsub_admin_main()
     }
 //        xarController::redirect(xarController::URL('pubsub', 'admin', 'viewall'));
     // Return the template variables defined in this function
-    return array();
+    return [];
 }

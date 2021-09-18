@@ -34,7 +34,7 @@ function pubsub_user_remove($args)
 {
     extract($args);
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($eventid) || !is_numeric($eventid)) {
         $invalid[] = 'eventid';
     }
@@ -52,7 +52,7 @@ function pubsub_user_remove($args)
         'pubsub',
         'user',
         'deluser',
-        array('eventid' => $eventid)
+        ['eventid' => $eventid]
     )) {
         return;
     } // throw back
@@ -69,7 +69,7 @@ function pubsub_user_remove($args)
 function pubsub_user_subscribed($args)
 {
     extract($args);
-    $invalid = array();
+    $invalid = [];
     if (!isset($actionid) || !is_numeric($actionid)) {
         $invalid[] = 'actionid';
     }

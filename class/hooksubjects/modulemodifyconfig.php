@@ -33,7 +33,7 @@ sys::import('xaraya.structures.hooks.guisubject');
 class ModulesModuleModifyconfigSubject extends GuiHookSubject
 {
     public $subject = 'ModuleModifyconfig';
-    public function __construct($args=array())
+    public function __construct($args=[])
     {
         // pass args to parent constructor, it validates module and extrainfo values
         parent::__construct($args);

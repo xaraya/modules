@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_user_submit_form($args)
 {
@@ -18,14 +19,14 @@ function pubsub_user_submit_form($args)
     if (!xarVar::fetch('returnurl', 'str', $returnurl, false)) {
         return;
     }
-    
+
     // Set some default values
-    $default_values = array(
+    $default_values = [
         'event'   => $event_id,
         'user_id' => $userid,
         'email'   => $email,
-    );
-    
+    ];
+
     if (!empty($email)) {
         //check if email already available
         sys::import('xaraya.structures.query');
@@ -38,18 +39,18 @@ function pubsub_user_submit_form($args)
         $result  = $q->output();
 
         if (empty($result)) {
-            $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+            $data['object'] = DataObjectMaster::getObject(['name' => $name]);
             $data['object']->setFieldValues($default_values, 1);
-            
+
             // Good data: create the item
             $itemid = $data['object']->createItem();
-            
+
             //send to notify_new_user
             xarMod::apiFunc('pubsub', 'user', 'notify_new_user', $default_values['email']);
-            
+
             // If this is an AJAX call, end here
             xarController::$request->exitAjax();
-            
+
             // Jump to the next page
             xarController::redirect(xarServer::getCurrentURL());
         } else {

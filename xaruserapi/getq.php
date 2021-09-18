@@ -76,7 +76,7 @@ function pubsub_userapi_getq($args)
 
     if (!empty($status) && is_string($status)) {
         $query .= " WHERE $pubsubprocesstable.status = ?";
-        $bindvars = array($status);
+        $bindvars = [$status];
         $result = $dbconn->Execute($query, $bindvars);
     } else {
         $result = $dbconn->Execute($query);
@@ -85,13 +85,13 @@ function pubsub_userapi_getq($args)
         return;
     }
 
-    $queue = array();
+    $queue = [];
     while (!$result->EOF) {
-        $info = array();
-        list($info['id'],$info['pubsubid'],$info['objectid'],$info['template_id'],$info['status'],
+        $info = [];
+        [$info['id'],$info['pubsubid'],$info['objectid'],$info['template_id'],$info['status'],
              $info['eventid'],$info['userid'],$info['actionid'],$info['subdate'],$info['email'],
              $info['modid'],$info['itemtype'],$info['cid'],$info['extra'],
-             $info['templatename'], $info['modname'], $info['username'], $info['catname']) = $result->fields;
+             $info['templatename'], $info['modname'], $info['username'], $info['catname']] = $result->fields;
         $queue[] = $info;
         $result->MoveNext();
     }

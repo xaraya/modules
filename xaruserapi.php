@@ -26,7 +26,7 @@ function pubsub_userapi_updatesubscription($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($pubsubid) || !is_numeric($pubsubid)) {
         $invalid[] = 'pubsubid';
     }
@@ -58,7 +58,7 @@ function pubsub_userapi_updatesubscription($args)
     $query = "UPDATE $pubsubsubscriptionstable
               SET actionid = ?
               WHERE pubsubid = ?";
-    $bindvars=array($actionid, $pubsubid);
+    $bindvars=[$actionid, $pubsubid];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
@@ -80,7 +80,7 @@ function pubsub_userapi_delsubscriptions($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($userid) || !is_numeric($userid)) {
         $invalid[] = 'userid';
     }
@@ -104,7 +104,7 @@ function pubsub_userapi_delsubscriptions($args)
     // Delete item
     $query = "DELETE FROM $pubsubsubscriptionstable
               WHERE userid = ?";
-    $bindvars=array($userid);
+    $bindvars=[$userid];
     $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

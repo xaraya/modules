@@ -21,7 +21,7 @@ class PubsubBaseObserver extends HookObserver implements ixarEventObserver
     public function getTemplate($extrainfo)
     {
         sys::import('modules.dynamicdata.class.properties.master');
-        $templates = DataObjectMaster::getObjectList(array('name' => 'pubsub_templates'));
+        $templates = DataObjectMaster::getObjectList(['name' => 'pubsub_templates']);
         $q = $templates->dataquery;
         if (!empty($extrainfo['object'])) {
             $q->eq('object_id', $extrainfo['object_id']);

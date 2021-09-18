@@ -22,7 +22,7 @@
 function pubsub_userapi_getall($args)
 {
     extract($args);
-    $events = array();
+    $events = [];
     if (!xarSecurity::check('AdminPubSub', 0)) {
         return $events;
     }
@@ -65,15 +65,10 @@ function pubsub_userapi_getall($args)
     }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $modname, $itemtype, $catname, $cid, $numsubscriptions) = $result->fields;
+        [$id, $modname, $itemtype, $catname, $cid, $numsubscriptions] = $result->fields;
         if (xarSecurity::check('AdminPubSub', 0)) {
-            $events[] = array('id'        => $id
-                             ,'modname'        => $modname
-                             ,'itemtype'       => $itemtype
-                             ,'catname'        => $catname
-                             ,'cid'            => $cid
-                             ,'numsubscriptions' => $numsubscriptions
-                             );
+            $events[] = ['id'        => $id,'modname'        => $modname,'itemtype'       => $itemtype,'catname'        => $catname,'cid'            => $cid,'numsubscriptions' => $numsubscriptions,
+                             ];
         }
     }
 

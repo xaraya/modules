@@ -58,7 +58,7 @@ class PubsubItemUpdateObserver extends PubsubBaseObserver implements ixarEventOb
             'pubsub',
             'admin',
             'processevent',
-            array('module_id'   => $extrainfo['module_id'],
+            ['module_id'   => $extrainfo['module_id'],
                              'itemtype'    => $extrainfo['itemtype'],
                              'cid'         => $extrainfo['cid'],
                              'itemid'      => $extrainfo['itemid'],
@@ -67,10 +67,10 @@ class PubsubItemUpdateObserver extends PubsubBaseObserver implements ixarEventOb
                              'template_id' => $template_id,
                              'event_type'  => 'itemupdate',
                              'url'         => $extrainfo['url'],
-                             'state'       => 2
-                             )
+                             'state'       => 2,
+                             ]
         );
-                         
+
         // The subject expects an array of extrainfo: whether or not the event was created, we go on.
         return $extrainfo;
     }

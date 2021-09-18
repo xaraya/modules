@@ -44,7 +44,7 @@ function pubsub_user_subscribe()
     $returnurl = rawurldecode($returnurl);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($returnurl) || !is_string($returnurl)) {
         $invalid[] = 'returnurl';
     }
@@ -78,10 +78,10 @@ function pubsub_user_subscribe()
         'pubsub',
         'admin',
         'checkevent',
-        array('modid' => $modid,
+        ['modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'cid' => $cid,
-                                   'groupdescr' => $groupdescr)
+                                   'groupdescr' => $groupdescr, ]
     );
     if (empty($eventid)) {
         return;
@@ -93,9 +93,9 @@ function pubsub_user_subscribe()
         'pubsub',
         'user',
         'adduser',
-        array('eventid' => $eventid,
+        ['eventid' => $eventid,
                               'actionid' => 1,
-                              'userid' => $userid)
+                              'userid' => $userid, ]
     )) {
         $msg = xarML(
             'Bad return from #(1) in function #(2)() in module #(3)',

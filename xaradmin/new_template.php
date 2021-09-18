@@ -28,7 +28,7 @@ function pubsub_admin_new_template()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
     if (empty($data['object'])) {
         return;
     }
@@ -50,7 +50,7 @@ function pubsub_admin_new_template()
         } else {
             // Good data: create the item
             $item = $data['object']->createItem();
-            
+
             // Jump to the next page
             xarController::redirect(xarController::URL('pubsub', 'admin', 'view_templates'));
             return true;

@@ -53,24 +53,24 @@ function pubsub_adminapi_process_queue_digest($args)
 
     // set count to 1 so that the scheduler knows we're doing OK :)
     $count = 1;
-    $digest = array();
-    $name = array();
-    $handle = array();
-    $handlecount = array();
-    $handleverify = array();
+    $digest = [];
+    $name = [];
+    $handle = [];
+    $handlecount = [];
+    $handleverify = [];
 
     // now start building the digest
     while (!$result->EOF) {
-        list($id, $pubsub_id, $object_id, $template_id) = $result->fields;
+        [$id, $pubsub_id, $object_id, $template_id] = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
         $message= xarMod::apiFunc(
             'pubsub',
             'admin',
             'runjobdigest',
-            array('id' => $id,
+            ['id' => $id,
                             'pubsub_id' => $pubsub_id,
                             'object_id' => $object_id,
-                            'template_id' => $template_id)
+                            'template_id' => $template_id, ]
         );
         if (!isset($digest[$message['email']])) {
             $digest[$message['email']] = $message['content'] ;
@@ -96,7 +96,7 @@ function pubsub_adminapi_process_queue_digest($args)
     $subject = xarML('New articles from').' '.$sitename;
 
     foreach ($digest as $email => $content) {
-        $tplData = array();
+        $tplData = [];
         $tplData['contents'] = $content;
 
         $html = xarTpl::string($compiled, $tplData);
@@ -105,12 +105,12 @@ function pubsub_adminapi_process_queue_digest($args)
             'mail',
             'admin',
             'sendmail',
-            array('info'     => $email,
+            ['info'     => $email,
                                  'name'     => $name[$email],
                                  'subject'  => $subject,
                                  'message'  => $plaintext,
                                  'from'     => $fmail,
-                                 'fromname' => $fname)
+                                 'fromname' => $fname, ]
         )) {
             return;
         }
@@ -130,7 +130,7 @@ function pubsub_adminapi_process_queue_digest($args)
             'pubsub',
             'admin',
             'deljob',
-            array('id' => $id)
+            ['id' => $id]
         );
 //        }
     }

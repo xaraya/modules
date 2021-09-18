@@ -17,13 +17,13 @@
 function pubsub_userapi_notify_new_user($args)
 {
     // Send Welcome mail to the subscribed user
-                
-    $mail_data = array();
+
+    $mail_data = [];
     $mail_data['header']       = xarML('Thanks to subscribing at #(1)', xarModVars::get('themes', 'SiteName'));
     $mail_data['footer']       = xarML('Xaraya #(1) Module', UCFirst(xarMod::getName()));
     $mail_data['title']        = date('r');
 
-    $mailargs = array(
+    $mailargs = [
                   'name'             => 'pubsub_welcome',
                   'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
                   'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
@@ -31,15 +31,15 @@ function pubsub_userapi_notify_new_user($args)
                   'recipientname'    => xarModVars::get('themes', 'SiteName'),
                   'recipientaddress' => $user['email'],
                   'data'             => $args['mail_data'],
-    );
-    
+    ];
+
     $result = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
-        
+
     // Notify the admin if required
     if (xarModVars::get('pubsub', 'sendnotice_subscription')) {
         $admin = xarRoles::getRole(xarModVars::get('roles', 'admin'));
 
-        $mail_data = array();
+        $mail_data = [];
         $mail_data['message_type'] = 'subscription';
         $mail_data['count']        = $result;
         $mail_data['header']       = xarML('Notification from #(1)', xarModVars::get('themes', 'SiteName'));
@@ -47,16 +47,16 @@ function pubsub_userapi_notify_new_user($args)
         $mail_data['title']        = date('r');
         $mail_data['name']         = $admin->properties['name']->value;
 
-        $mailargs = array(
+        $mailargs = [
                   'name'             => 'pubsub_admin',
                   'sendername'       => xarModVars::get('pubsub', 'defaultsendername'),
                   'senderaddress'    => xarModVars::get('pubsub', 'defaultsenderaddress'),
                   'subject'          => xarML('Notifications from #(1)', xarModVars::get('themes', 'SiteName')),
                   'recipientname'    => $admin->properties['name']->value,
                   'recipientaddress' => $admin->properties['email']->value,
-                  'bccaddresses'     => array(),
+                  'bccaddresses'     => [],
                   'data'             => $args['mail_data'],
-        );
+        ];
         $result = xarMod::apiFunc('mailer', 'user', 'send', $mailargs);
     }
 }

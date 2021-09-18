@@ -37,11 +37,11 @@ function pubsub_admin_display_job()
         return;
     }
 
-    
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
-    
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
+
     $data['tplmodule'] = 'pubsub';
-    
+
     return $data;
 }

@@ -34,13 +34,13 @@ function pubsub_user_displayicon($args)
     }
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     /**
      * Validate parameters
      */
-    $invalid = array();
+    $invalid = [];
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $invalid[] = 'extrainfo';
     } elseif (isset($extrainfo['cid'])) {
@@ -69,7 +69,7 @@ function pubsub_user_displayicon($args)
         }
     } else {
         // May only subscribe to categories, no category, pubsub does nothing.
-        return array('donotdisplay' => true);
+        return ['donotdisplay' => true];
     }
 
     if (count($invalid) > 0) {
@@ -102,7 +102,7 @@ function pubsub_user_displayicon($args)
 
     // if pubsub isn't hooked to this module & itemtype, don't show subscription either
     if (!xarModHooks::isHooked('pubsub', $modname, $itemtype)) {
-        return array('donotdisplay'=>true);
+        return ['donotdisplay'=>true];
     }
 
     /// check for unsubscribe
@@ -124,7 +124,7 @@ function pubsub_user_displayicon($args)
                  AND $pubsubeventstable.eventid = $pubsubsubscriptionstable.eventid
                  AND $pubsubsubscriptionstable.userid = ?";
 
-    $bindvars = array((int)$modid, (int)$itemtype, (int)$cid, (int)$userid);
+    $bindvars = [(int)$modid, (int)$itemtype, (int)$cid, (int)$userid];
     if (isset($extra)) {
         $query .= " AND $pubsubeventstable.extra = ?";
         array_push($bindvars, $extra);
@@ -142,14 +142,8 @@ function pubsub_user_displayicon($args)
         $data['subscribe'] = 0;
     }
 
-    $data['subdata'] = array('modname' => $modname
-                             ,'modid'   => $modid
-                             ,'itemtype' => $itemtype
-                             ,'cid'     => $cid
-                             ,'extra'   => isset($extra) ? $extra : null
-                             ,'returnurl' => $returnurl
-                             ,'subaction' => $data['subscribe']
-                             );
+    $data['subdata'] = ['modname' => $modname,'modid'   => $modid,'itemtype' => $itemtype,'cid'     => $cid,'extra'   => $extra ?? null,'returnurl' => $returnurl,'subaction' => $data['subscribe'],
+                             ];
 
     $data['subURL'] = xarController::URL('pubsub', 'user', 'modifysubscription', $data['subdata']);
     $data['subTEXT'] = xarML('Subscribe');

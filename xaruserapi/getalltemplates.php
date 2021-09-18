@@ -20,7 +20,7 @@
  */
 function pubsub_userapi_getalltemplates($args)
 {
-    $templates = array();
+    $templates = [];
     if (!xarSecurity::check('AdminPubSub')) {
         return;
     }
@@ -39,7 +39,7 @@ function pubsub_userapi_getalltemplates($args)
     }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $name) = $result->fields;
+        [$id, $name] = $result->fields;
         $templates[$id] = $name;
     }
 

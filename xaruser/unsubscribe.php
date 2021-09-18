@@ -47,7 +47,7 @@ function pubsub_user_unsubscribe($args)
 
     extract($args);
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($returnurl) || !is_string($returnurl)) {
         $invalid[] = 'returnurl';
     }
@@ -86,19 +86,19 @@ function pubsub_user_unsubscribe($args)
                  AND $pubsubsubscriptionstable.userid = ?
                  AND $pubsubeventstable.cid = ?";
 
-    $bindvars = array((int)$modid, $itemtype, (int)$userid, $cid);
+    $bindvars = [(int)$modid, $itemtype, (int)$userid, $cid];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result || $result->EOF) {
         return;
     }
 
-    list($pubsubid) = $result->fields;
+    [$pubsubid] = $result->fields;
 
     if (!xarMod::apiFunc(
         'pubsub',
         'user',
         'deluser',
-        array('pubsubid' => $pubsubid)
+        ['pubsubid' => $pubsubid]
     )) {
         $msg = xarML(
             'Bad return from #(1) in function #(2)() in module #(3)',

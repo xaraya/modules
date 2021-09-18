@@ -32,7 +32,7 @@ function pubsub_userapi_subscribe($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($modid)) {
         $invalid[] = 'modid';
     }
@@ -78,11 +78,11 @@ function pubsub_userapi_subscribe($args)
         'pubsub',
         'admin',
         'checkevent',
-        array('modid' => $modid,
+        ['modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'cid' => $cid,
                                    'extra' => $extra,
-                                   'groupdescr' => $groupdescr)
+                                   'groupdescr' => $groupdescr, ]
     );
     if (empty($eventid)) {
         return;
@@ -94,11 +94,8 @@ function pubsub_userapi_subscribe($args)
         'pubsub',
         'user',
         'adduser',
-        array('eventid' => $eventid
-                             ,'actionid' => $actionid
-                             ,'userid' => $userid
-                             ,'email' => $email
-                              )
+        ['eventid' => $eventid,'actionid' => $actionid,'userid' => $userid,'email' => $email,
+                              ]
     )) {
         $msg = xarML(
             'Bad return from #(1) in function #(2)() in module #(3)',
