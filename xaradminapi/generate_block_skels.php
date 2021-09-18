@@ -28,8 +28,8 @@ function translations_adminapi_generate_block_skels($args)
     // Argument check
     assert('isset($blockid) && isset($locale)');
 
-    $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', array('type_id' => $blockid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
-    
+    $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', ['type_id' => $blockid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE]);
+
     $blockname = $blockinfo['type'];
     $blockdir = $blockinfo['type'];
 
@@ -47,13 +47,13 @@ function translations_adminapi_generate_block_skels($args)
     $startTime = $time[1] + $time[0];
 
     // Load core translations
-    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($core_backend)) {
         return;
     }
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) block, you must first generate skels for the core.', $blockname);
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype'=>'core')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype'=>'core'])];
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) {
@@ -61,12 +61,12 @@ function translations_adminapi_generate_block_skels($args)
     }
 
     // Parse files
-    $transEntriesCollection = array();
-    $transKeyEntriesCollection = array();
+    $transEntriesCollection = [];
+    $transKeyEntriesCollection = [];
 
-    $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', array('blockdir'=>$blockdir));
+    $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', ['blockdir'=>$blockdir]);
 
-    $block_contexts_list = array();
+    $block_contexts_list = [];
     foreach ($subnames as $subname) {
         $block_contexts_list[] = 'blocks:'.$blockname.'::'.$subname;
         $filename = sys::code() . "blocks/$blockdir/$subname.php";
@@ -80,10 +80,10 @@ function translations_adminapi_generate_block_skels($args)
         }
     }
 
-    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', array('blockdir'=>$blockdir));
+    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$blockdir]);
     xarLog::variable('dirnames', $dirnames);
     foreach ($dirnames as $dirname) {
-        ${$dirname . "names"} = array();
+        ${$dirname . "names"} = [];
         if (!preg_match('!^templates!i', $dirname, $matches)) {
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             $xtype = 'php';
@@ -95,7 +95,7 @@ function translations_adminapi_generate_block_skels($args)
             'translations',
             'admin',
             'get_block_files',
-            array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern)
+            ['blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern]
         );
         xarLog::variable('subnames', $subnames);
         foreach ($subnames as $subname) {
@@ -117,7 +117,7 @@ function translations_adminapi_generate_block_skels($args)
 
     $subnames[] = 'common';
     // Load previously made translations
-    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($backend)) {
         return;
     }
@@ -129,7 +129,7 @@ function translations_adminapi_generate_block_skels($args)
             }
         }
         foreach ($block_contexts_list as $block_context) {
-            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $block_context);
+            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $block_context);
             if ($backend->hasContext('blocks:'.$ctxtype1, $ctxname1)) {
                 if (!$backend->loadContext('blocks:'.$ctxtype1, $ctxname1)) {
                     return;
@@ -140,14 +140,14 @@ function translations_adminapi_generate_block_skels($args)
 
     // Load KEYS
     $filename = sys::code() . "blocks/$blockdir/KEYS";
-    $KEYS = array();
+    $KEYS = [];
     if (file_exists($filename)) {
         $lines = file($filename);
         foreach ($lines as $line) {
-            if ($line{0} == '#') {
+            if ($line[0] == '#') {
                 continue;
             }
-            list($key, $value) = explode('=', $line);
+            [$key, $value] = explode('=', $line);
             $key = trim($key);
             $value = trim($value);
             $KEYS[$key] = $value;
@@ -165,7 +165,7 @@ function translations_adminapi_generate_block_skels($args)
         $genLocale = $locale;
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'ReferencesGenerator', 'locale' => $genLocale]);
     if (!isset($gen)) {
         return;
     }
@@ -175,7 +175,7 @@ function translations_adminapi_generate_block_skels($args)
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
-            list($ctxtype1, $ctxname1) = explode('::', $subname);
+            [$ctxtype1, $ctxname1] = explode('::', $subname);
         } else {
             $ctxtype1 = '';
             $ctxname1 = $subname;
@@ -183,7 +183,7 @@ function translations_adminapi_generate_block_skels($args)
 
         $fileAlreadyOpen = false;
 
-        $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
+        $statistics[$subname] = ['entries'=>0, 'keyEntries'=>0];
 
         // Avoid creating entries for the same locale
         if ($locale != 'en_US.utf-8') {
@@ -261,13 +261,13 @@ function translations_adminapi_generate_block_skels($args)
 
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }
 
 /* PRIVATE FUNCTIONS */
 function block_translations_gather_common_entries($transEntriesCollection)
 {
-    $commonEntries = array();
+    $commonEntries = [];
     $subnames = array_keys($transEntriesCollection);
     foreach ($subnames as $subname) {
         foreach ($transEntriesCollection[$subname] as $string => $references) {
@@ -280,7 +280,7 @@ function block_translations_gather_common_entries($transEntriesCollection)
                 if (isset($transEntriesCollection[$other_subname][$string])) {
                     // Found a duplicated ML string
                     if (!isset($commonEntries[$string])) {
-                        $commonEntries[$string] = array();
+                        $commonEntries[$string] = [];
                     }
 
                     if (!$refs_inserted) {

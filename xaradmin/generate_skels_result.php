@@ -39,7 +39,7 @@ function translations_admin_generate_skels_result()
         return;
     }
     $locale = translations_working_locale();
-    $args = array('locale'=>$locale);
+    $args = ['locale'=>$locale];
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
         $res = xarMod::apiFunc('translations', 'admin', 'generate_core_skels', $args);
@@ -49,16 +49,16 @@ function translations_admin_generate_skels_result()
             if ($dnTypeAll) {
 
                 // Get all modules
-                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_INSTALLED)));
+                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_INSTALLED]]);
                 if (!isset($installed)) {
                     return;
                 }
-                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_UNINITIALISED)));
+                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_UNINITIALISED]]);
                 if (!isset($uninstalled)) {
                     return;
                 }
                 // Add modules to the list
-                $modlist = array();
+                $modlist = [];
                 foreach ($uninstalled as $term) {
                     $modlist[] = $term['regid'];
                 }

@@ -95,7 +95,7 @@ function translations_admin_translate_update()
     $siteCharset = $parsedSiteLocale['charset'];
     if ($siteCharset != $workingCharset) {
         sys::import('xaraya.transforms.xarCharset');
-        $newEncoding = new xarCharset;
+        $newEncoding = new xarCharset();
     }
 
     for ($i = 0; $i < $numEntries; $i++) {
@@ -112,7 +112,7 @@ function translations_admin_translate_update()
             $gen->addEntry($e['string'], $e['references'], $translation);
         }
     }
-    while (list($key, $translation) = $backend->enumKeyTranslations()) {
+    while ([$key, $translation] = $backend->enumKeyTranslations()) {
         unset($translation);
         if (!xarVar::fetch('key'.$key, 'str::', $translation, '', xarVar::POST_ONLY)) {
             return;
@@ -134,11 +134,11 @@ function translations_admin_translate_update()
         'translations',
         'admin',
         'translate_subtype',
-        array(
+        [
            'dnType' => $dnType,
            'dnName' => $dnName,
            'extid' => $extid,
-           'defaultcontext'=>$subtype.':'.$subname)
+           'defaultcontext'=>$subtype.':'.$subname, ]
     ));
     return true;
 }

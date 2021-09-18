@@ -19,20 +19,20 @@ function translations_admin_choose_a_module()
         return;
     }
 
-    $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_INSTALLED)));
+    $installed = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_INSTALLED]]);
     if (!isset($installed)) {
         return;
     }
-    $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_UNINITIALISED)));
+    $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_UNINITIALISED]]);
     if (!isset($uninstalled)) {
         return;
     }
 
-    $modlist1 = array();
+    $modlist1 = [];
     foreach ($uninstalled as $term) {
         $modlist1[$term['name']] = $term;
     }
-    $modlist2 = array();
+    $modlist2 = [];
     foreach ($installed as $term) {
         $modlist2[$term['name']] = $term;
     }

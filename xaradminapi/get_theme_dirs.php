@@ -15,7 +15,7 @@
 //  This function returns an array containing all the xt files
 //  in a given directory
 
-$staticNames = array();
+$staticNames = [];
 
 function searchFiles($path, $prefix, $force=0)
 {
@@ -33,7 +33,7 @@ function searchFiles($path, $prefix, $force=0)
         'translations',
         'admin',
         'get_theme_files',
-        array('themedir'=>"$path",'pattern'=>$pattern)
+        ['themedir'=>"$path",'pattern'=>$pattern]
     );
     if (count($subnames) > 0) {
         $staticNames[] = $path2;

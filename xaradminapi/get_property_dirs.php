@@ -23,8 +23,8 @@ function translations_adminapi_get_property_dirs($args)
     // Argument check
     assert('isset($propertydir)');
 
-    $names = array();
-    $dropit = array(
+    $names = [];
+    $dropit = [
         'xardocs',
         'xarimages',
         'xarclass',
@@ -33,7 +33,7 @@ function translations_adminapi_get_property_dirs($args)
         'xartests',
         'xarjava',
         'xarjavascript',
-        'xarstyles');
+        'xarstyles', ];
     if (file_exists(sys::code() . "properties/$propertydir")) {
         $dd = opendir(sys::code() . "properties/$propertydir");
         while ($filename = readdir($dd)) {

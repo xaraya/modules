@@ -30,7 +30,7 @@ function translations_admin_release_result()
     }
 
     $locale = translations_release_locale();
-    $args = array('locale'=>$locale);
+    $args = ['locale'=>$locale];
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
         $res = xarMod::apiFunc('translations', 'admin', 'release_core_trans', $args);

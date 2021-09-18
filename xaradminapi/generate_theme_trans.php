@@ -53,17 +53,17 @@ function translations_adminapi_generate_theme_trans($args)
         $ref_locale = $locale;
     }
 
-    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $ref_locale]);
     if (!isset($backend)) {
         return;
     }
     if (!$backend->bindDomain(xarMLS::DNTYPE_THEME, $themename)) {
         $msg = xarML('Before generating translations you must first generate skels.');
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'theme')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype' => 'theme'])];
         throw new Exception($msg);
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'TranslationsGenerator', 'locale' => $locale]);
     if (!isset($gen)) {
         return;
     }
@@ -78,14 +78,14 @@ function translations_adminapi_generate_theme_trans($args)
     //    $theme_contexts_list[] = 'themes:'.$themename.'::'.$subname;
     //}
 
-    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', array('themedir'=>$themedir));
+    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', ['themedir'=>$themedir]);
     $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
     foreach ($dirnames as $dirname) {
         $subnames = xarMod::apiFunc(
             'translations',
             'admin',
             'get_theme_files',
-            array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern)
+            ['themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern]
         );
         foreach ($subnames as $subname) {
             $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
@@ -93,7 +93,7 @@ function translations_adminapi_generate_theme_trans($args)
     }
 
     foreach ($theme_contexts_list as $theme_context) {
-        list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $theme_context);
+        [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $theme_context);
         $ctxType = 'themes:'.$ctxtype1;
         $ctxName = $ctxname1;
 
@@ -110,12 +110,12 @@ function translations_adminapi_generate_theme_trans($args)
             $sName = $ctxName;
         }
 
-        $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
-        while (list($string, $translation) = $backend->enumTranslations()) {
+        $statistics[$sName] = ['entries'=>0, 'keyEntries'=>0];
+        while ([$string, $translation] = $backend->enumTranslations()) {
             $statistics[$sName]['entries']++;
             $gen->addEntry($string, $translation);
         }
-        while (list($key, $translation) = $backend->enumKeyTranslations()) {
+        while ([$key, $translation] = $backend->enumKeyTranslations()) {
             $statistics[$sName]['keyEntries']++;
             $gen->addKeyEntry($key, $translation);
         }
@@ -126,5 +126,5 @@ function translations_adminapi_generate_theme_trans($args)
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
 
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }

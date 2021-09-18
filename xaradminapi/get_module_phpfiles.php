@@ -23,7 +23,7 @@ function translations_adminapi_get_module_phpfiles($args)
     // Argument check
     assert('isset($moddir)');
 
-    $names = array();
+    $names = [];
     if (file_exists(sys::code() . "modules/$moddir")) {
         $dd = opendir(sys::code() . "modules/$moddir");
         while ($filename = readdir($dd)) {

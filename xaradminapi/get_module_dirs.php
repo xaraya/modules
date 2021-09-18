@@ -24,8 +24,8 @@ function translations_adminapi_get_module_dirs($args)
     // Argument check
     assert('isset($moddir)');
 
-    $names = array();
-    $dropit = array(
+    $names = [];
+    $dropit = [
         'xardocs',
         'xarimages',
         'xarclass',
@@ -34,7 +34,7 @@ function translations_adminapi_get_module_dirs($args)
         'xartests',
         'xarjava',
         'xarjavascript',
-        'xarstyles');
+        'xarstyles', ];
     if (file_exists(sys::code() . "modules/$moddir")) {
         $dd = opendir(sys::code() . "modules/$moddir");
         while ($filename = readdir($dd)) {

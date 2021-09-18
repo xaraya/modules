@@ -25,6 +25,6 @@ $modversion['author'] = 'Marco Canini';
 $modversion['contact'] = '';
 $modversion['admin'] = true;
 $modversion['user'] = true;
-$modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');
+$modversion['securityschema'] = ['translations::' => 'Locale string:Backend name:Module name'];
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';

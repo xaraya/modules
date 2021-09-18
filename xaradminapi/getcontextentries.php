@@ -67,20 +67,20 @@ function translations_adminapi_getcontextentries($args)
     $siteCharset = $parsedSiteLocale['charset'];
     if ($siteCharset != $workingCharset) {
         sys::import('xaraya.transforms.xarCharset');
-        $newEncoding = new xarCharset;
+        $newEncoding = new xarCharset();
     }
 
     $numEntries = 0;
     $numEmptyEntries = 0;
-    $entries = array();
-    while (list($string, $translation) = $backend->enumTranslations()) {
+    $entries = [];
+    while ([$string, $translation] = $backend->enumTranslations()) {
         if ($siteCharset != $workingCharset) {
             $translation = $newEncoding->convert($translation, $workingCharset, $siteCharset, 0);
         }
-        $entry = array(
+        $entry = [
             'string' => htmlspecialchars($string),
             'translation' => htmlspecialchars($translation),
-            'tid' => $backend->getTransientId($string));
+            'tid' => $backend->getTransientId($string), ];
         $e = $backend->getEntry($string);
         $entry['references'] = translations_grab_source_code($e['references'], $maxReferences);
         if (count($e['references']) > $maxReferences) {
@@ -98,14 +98,14 @@ function translations_adminapi_getcontextentries($args)
 
     $numKeyEntries = 0;
     $numEmptyKeyEntries = 0;
-    $keyEntries = array();
-    while (list($key, $translation) = $backend->enumKeyTranslations()) {
+    $keyEntries = [];
+    while ([$key, $translation] = $backend->enumKeyTranslations()) {
         if ($siteCharset != $workingCharset) {
             $translation = $newEncoding->convert($translation, $workingCharset, $siteCharset, 0);
         }
-        $keyEntry = array(
+        $keyEntry = [
             'key' => htmlspecialchars($key),
-            'translation' => htmlspecialchars($translation));
+            'translation' => htmlspecialchars($translation), ];
         $e = $backend->getEntryByKey($key);
         $keyEntry['references'] = translations_grab_source_code($e['references'], $maxReferences);
         if (count($e['references']) > $maxReferences) {
@@ -126,18 +126,18 @@ function translations_adminapi_getcontextentries($args)
         }
     }
 
-    return array(
+    return [
         'entries'=>$entries,
         'numEntries'=> $numEntries,
         'numEmptyEntries'=>$numEmptyEntries,
         'keyEntries'=>$keyEntries,
         'numKeyEntries'=> $numKeyEntries,
-        'numEmptyKeyEntries'=> $numEmptyKeyEntries,);
+        'numEmptyKeyEntries'=> $numEmptyKeyEntries,];
 }
 
 function translations_grab_source_code($references, $maxReferences = null)
 {
-    $result = array();
+    $result = [];
     //static $files = array(); <-- this just takes too much memory
     $showContext = xarModVars::get('translations', 'showcontext');
     if (!$showContext) {
@@ -145,8 +145,8 @@ function translations_grab_source_code($references, $maxReferences = null)
         return $result;
     }
 
-    $files = array();
-    $result = array();
+    $files = [];
+    $result = [];
     $currentFileData = '';
     $currentFileName = '';
     $referencesCount = count($references);
@@ -163,14 +163,14 @@ function translations_grab_source_code($references, $maxReferences = null)
                 $currentFileData = file($ref['file']);
             } else {
                 // FIXME need more information about outdated references
-                $currentFileData = array();
+                $currentFileData = [];
             }
         }
         $j = $ref['line'] - ($maxCodeLines/2) - 1;
         if ($j < 0) {
             $j = 0;
         }
-        $source = array('pre'=>'', 'code'=>'', 'post'=>'');
+        $source = ['pre'=>'', 'code'=>'', 'post'=>''];
         $linesCount = count($currentFileData);
         for ($c = 0; $c < $maxCodeLines && $j < $linesCount; $c++, $j++) {
             if ($j < $ref['line'] - 1) {

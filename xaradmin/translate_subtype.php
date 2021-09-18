@@ -50,18 +50,18 @@ function translations_admin_translate_subtype()
             return;
         }
     } else {
-        list($subtype1, $subtype2, $subname) = explode(':', $defaultcontext);
+        [$subtype1, $subtype2, $subname] = explode(':', $defaultcontext);
         $subtype = $subtype1.':'.$subtype2;
     }
 
-    $args = array();
+    $args = [];
     $args['dntype'] = $dnType;
     $args['dnname'] = $dnName;
     $args['subtype'] = $subtype;
     $args['subname'] = $subname;
     $entries = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
 
-    $args = array();
+    $args = [];
     $args['dntype'] = $dnType;
     $args['dnname'] = $dnName;
     $args['subtype'] = 'modules:';
@@ -76,7 +76,7 @@ function translations_admin_translate_subtype()
     $entries['fuzzyNumEmptyKeyEntries'] = $fuzzyEntries['numEmptyKeyEntries'];
 
     $data = $entries;
-    $data['action'] = xarController::URL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
+    $data['action'] = xarController::URL('translations', 'admin', 'translate_update', ['subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']]);
 
     $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
     $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname);

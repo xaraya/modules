@@ -21,7 +21,7 @@ function translations_adminapi_get_block_phpfiles($args)
     // Argument check
     assert('isset($blockdir)');
 
-    $names = array();
+    $names = [];
     if (file_exists(sys::code() . "blocks/$blockdir")) {
         $dd = opendir(sys::code() . "blocks/$blockdir");
         while ($filename = readdir($dd)) {

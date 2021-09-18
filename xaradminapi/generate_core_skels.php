@@ -41,8 +41,8 @@ function translations_adminapi_generate_core_skels($args)
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
-    $transEntriesCollection = array();
-    $transKeyEntriesCollection = array();
+    $transEntriesCollection = [];
+    $transKeyEntriesCollection = [];
 
     $filename = 'index.php';
 
@@ -53,7 +53,7 @@ function translations_adminapi_generate_core_skels($args)
     $transKeyEntries = $parser->getTransKeyEntries();
 
     // Load core translations
-    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($core_backend)) {
         return;
     }
@@ -72,7 +72,7 @@ function translations_adminapi_generate_core_skels($args)
         $genLocale = $locale;
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'ReferencesGenerator', 'locale' => $genLocale]);
     if (!isset($gen)) {
         return;
     }
@@ -83,7 +83,7 @@ function translations_adminapi_generate_core_skels($args)
         return;
     }
 
-    $statistics['core'] = array('entries'=>0, 'keyEntries'=>0);
+    $statistics['core'] = ['entries'=>0, 'keyEntries'=>0];
 
     // Avoid creating entries for the same locale (en_US.utf-8)
     // NOTE from voll: I comment this IF because we don't have translation anyway
@@ -126,5 +126,5 @@ function translations_adminapi_generate_core_skels($args)
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
 
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }

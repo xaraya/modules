@@ -27,7 +27,7 @@ function translations_adminapi_generate_object_trans($args)
     // Argument check
     assert('isset($objectid) && isset($locale)');
 
-    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('objectid' => $objectid));
+    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['objectid' => $objectid]);
     if (!is_object($object)) {
         return;
     }
@@ -54,17 +54,17 @@ function translations_adminapi_generate_object_trans($args)
         $ref_locale = $locale;
     }
 
-    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $ref_locale]);
     if (!isset($backend)) {
         return;
     }
     if (!$backend->bindDomain(xarMLS::DNTYPE_THEME, $themename)) {
         $msg = xarML('Before generating translations you must first generate skels.');
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'object')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype' => 'object'])];
         throw new Exception($msg);
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'TranslationsGenerator', 'locale' => $locale]);
     if (!isset($gen)) {
         return;
     }
@@ -81,7 +81,7 @@ function translations_adminapi_generate_object_trans($args)
             $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
             continue;
         }
-        
+
         if (!$property->translatable) {
             $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         } else {
@@ -92,7 +92,7 @@ function translations_adminapi_generate_object_trans($args)
     }
 
     foreach ($object_contexts_list as $object_context) {
-        list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $object_context);
+        [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $object_context);
         $ctxType = 'objects:'.$ctxtype1;
         $ctxName = $ctxname1;
 
@@ -109,12 +109,12 @@ function translations_adminapi_generate_object_trans($args)
             $sName = $ctxName;
         }
 
-        $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
-        while (list($string, $translation) = $backend->enumTranslations()) {
+        $statistics[$sName] = ['entries'=>0, 'keyEntries'=>0];
+        while ([$string, $translation] = $backend->enumTranslations()) {
             $statistics[$sName]['entries']++;
             $gen->addEntry($string, $translation);
         }
-        while (list($key, $translation) = $backend->enumKeyTranslations()) {
+        while ([$key, $translation] = $backend->enumKeyTranslations()) {
             $statistics[$sName]['keyEntries']++;
             $gen->addKeyEntry($key, $translation);
         }
@@ -125,5 +125,5 @@ function translations_adminapi_generate_object_trans($args)
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
 
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }

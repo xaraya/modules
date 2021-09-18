@@ -13,8 +13,8 @@
 
 class TPLParser
 {
-    public $transEntries    = array();
-    public $transKeyEntries = array();
+    public $transEntries    = [];
+    public $transKeyEntries = [];
 
     public function __construct()
     {
@@ -41,17 +41,17 @@ class TPLParser
             $msg = xarML('Cannot open the file #(1)', $filename);
             throw new Exception($msg);
         }
-        
+
         $filestring = file_get_contents($filename);
         $filestring = preg_replace("/&xar([\-A-Za-z\d.]{2,41});/", "xar-entity", $filestring);
         $reader = new XMLReader();
         $reader->xml($filestring);
-        $nodes = array();
+        $nodes = [];
         $i = 0;
 
         while ($reader->read()) {
             $i++;
-            
+
             // Ignore certain nodes
             if ($reader->name == "xar:set" ||
                 $reader->name == "xar:comment" ||
@@ -62,7 +62,7 @@ class TPLParser
                 }
                 $i++;
             }
-            
+
             if ($reader->nodeType == XMLReader::TEXT) {
                 $string = $reader->value;
             } elseif ($reader->name == "xar:mlstring") {
@@ -78,8 +78,8 @@ class TPLParser
             if (substr($string, 0, 1) == '#') {
                 continue;
             }
-               
-            $this->transEntries[$string][] = array('line' => $i, 'file' => $this->filename);
+
+            $this->transEntries[$string][] = ['line' => $i, 'file' => $this->filename];
         }
         $reader->close();
     }

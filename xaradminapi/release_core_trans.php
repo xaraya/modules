@@ -36,7 +36,7 @@ function translations_adminapi_release_core_trans($args)
     $dirpath = "var/locales/$locale/php/core/";
     if (!file_exists($dirpath.'core.php')) {
         $msg = xarML('Before releasing translations package you must first generate translations.');
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'core')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype' => 'core'])];
         throw new Exception($msg);
     }
 

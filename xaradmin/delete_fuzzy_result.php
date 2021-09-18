@@ -34,7 +34,7 @@ function translations_admin_delete_fuzzy_result()
         'translations',
         'admin',
         'create_backend_instance',
-        array('interface' => 'ReferencesBackend', 'locale' => $locale)
+        ['interface' => 'ReferencesBackend', 'locale' => $locale]
     );
     if (!isset($backend)) {
         return;
@@ -52,9 +52,9 @@ function translations_admin_delete_fuzzy_result()
         'translations',
         'admin',
         'translate',
-        array('dnType' => $dnType,
+        ['dnType' => $dnType,
               'dnName' => $dnName,
-              'extid' => $extid)
+              'extid' => $extid, ]
     ));
 
     return true;

@@ -30,7 +30,7 @@ function translations_admin_property_overview()
     $q->eq('id', $id);
     $q->run();
     $data = $q->row();
-    
+
     $data['dnType'] = xarMLS::DNTYPE_PROPERTY;
     $data['dnName'] = $data['name'];
     $data['propertyid'] = $id;

@@ -23,8 +23,8 @@ function translations_adminapi_get_block_dirs($args)
     // Argument check
     assert('isset($blockdir)');
 
-    $names = array();
-    $dropit = array(
+    $names = [];
+    $dropit = [
         'xardocs',
         'xarimages',
         'xarclass',
@@ -33,7 +33,7 @@ function translations_adminapi_get_block_dirs($args)
         'xartests',
         'xarjava',
         'xarjavascript',
-        'xarstyles');
+        'xarstyles', ];
     if (file_exists(sys::code() . "blocks/$blockdir")) {
         $dd = opendir(sys::code() . "blocks/$blockdir");
         while ($filename = readdir($dd)) {

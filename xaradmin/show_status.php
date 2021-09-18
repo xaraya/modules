@@ -32,8 +32,8 @@ function translations_admin_show_status()
     if (!xarSecurity::check('ReadTranslations')) {
         return;
     }
-   
-    $data = array();
+
+    $data = [];
 
     // core
     $tmp = translations_create_trabar(xarMLS::DNTYPE_CORE, 'xaraya', 0, 'core', 'core');
@@ -41,10 +41,10 @@ function translations_admin_show_status()
     unset($tmp);
 
     // Get the modules
-    if (!($mods = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ANY))))) {
+    if (!($mods = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_ANY]]))) {
         return;
     }
-    $modentries = array();
+    $modentries = [];
     $mod_totalentries = 0;
     $mod_untranslated = 0;
     $mod_keytotalentries = 0;
@@ -81,8 +81,8 @@ function translations_admin_show_status()
     $q->eq('modid', 0);
     $q->run();
     $properties = $q->output();
-    
-    $propertyentries = array();
+
+    $propertyentries = [];
     $property_totalentries = 0;
     $property_untranslated =0;
     $property_keytotalentries = 0;
@@ -112,9 +112,9 @@ function translations_admin_show_status()
     }
 
     // Get the blocks
-    $blocks = xarMod::apiFunc('blocks', 'types', 'getitems', array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
+    $blocks = xarMod::apiFunc('blocks', 'types', 'getitems', ['module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE]);
 
-    $blockentries = array();
+    $blockentries = [];
     $block_totalentries = 0;
     $block_untranslated =0;
     $block_keytotalentries = 0;
@@ -144,11 +144,11 @@ function translations_admin_show_status()
     }
 
     // Get the themes
-    if (!($themes = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => xarTheme::STATE_ANY))))) {
+    if (!($themes = xarMod::apiFunc('themes', 'admin', 'getthemelist', ['filter' => ['State' => xarTheme::STATE_ANY]]))) {
         return;
     }
 
-    $themeentries = array();
+    $themeentries = [];
     $theme_totalentries = 0;
     $theme_untranslated =0;
     $theme_keytotalentries = 0;

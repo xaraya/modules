@@ -19,7 +19,7 @@ function translations_admin_choose_a_theme()
         return;
     }
 
-    if (!($themelist = xarMod::apiFunc('themes', 'admin', 'getthemelist', array('filter' => array('State' => xarTheme::STATE_ANY))))) {
+    if (!($themelist = xarMod::apiFunc('themes', 'admin', 'getthemelist', ['filter' => ['State' => xarTheme::STATE_ANY]]))) {
         return;
     }
 

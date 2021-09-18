@@ -18,18 +18,18 @@
  */
 function translations_adminapi_getmenulinks()
 {
-    $menuLinks[] = array('url'   => xarController::URL('translations', 'admin', 'start'),
+    $menuLinks[] = ['url'   => xarController::URL('translations', 'admin', 'start'),
                          'title' => xarML('Work on translations'),
-                         'label' => xarML('Translate'));
-    $menuLinks[] = array('url'   => xarController::URL('translations', 'admin', 'bulk'),
+                         'label' => xarML('Translate'), ];
+    $menuLinks[] = ['url'   => xarController::URL('translations', 'admin', 'bulk'),
                          'title' => xarML('Perform bulk operations'),
-                         'label' => xarML('Bulk'));
-    $menuLinks[] = array('url'   => xarController::URL('translations', 'admin', 'show_status'),
+                         'label' => xarML('Bulk'), ];
+    $menuLinks[] = ['url'   => xarController::URL('translations', 'admin', 'show_status'),
                          'title' => xarML('Show the progress status of the locale currently being translated'),
-                         'label' => xarML('Progress report'));
-    $menuLinks[] = array('url'   => xarController::URL('translations', 'admin', 'modifyconfig'),
+                         'label' => xarML('Progress report'), ];
+    $menuLinks[] = ['url'   => xarController::URL('translations', 'admin', 'modifyconfig'),
                          'title' => xarML('Modify translation configuration Values'),
-                         'label' => xarML('Modify Config'));
+                         'label' => xarML('Modify Config'), ];
 
     return $menuLinks;
 }

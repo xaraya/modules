@@ -23,7 +23,7 @@ function translations_admin_object_overview()
         return;
     }
 
-    $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid' => $objectid));
+    $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobject', ['objectid' => $objectid]);
     if (!is_object($tplData['object'])) {
         return;
     }

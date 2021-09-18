@@ -48,13 +48,13 @@ function translations_adminapi_generate_theme_skels($args)
     $startTime = $time[1] + $time[0];
 
     // Load core translations
-    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($core_backend)) {
         return;
     }
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) theme, you must first generate skels for the core.', $themename);
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype'=>'core')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype'=>'core'])];
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) {
@@ -62,11 +62,11 @@ function translations_adminapi_generate_theme_skels($args)
     }
 
     // Parse files
-    $transEntriesCollection = array();
-    $transKeyEntriesCollection = array();
-    $theme_contexts_list = array();
+    $transEntriesCollection = [];
+    $transKeyEntriesCollection = [];
+    $theme_contexts_list = [];
 
-    $files = xarMod::apiFunc('translations', 'admin', 'get_files', array('themedir'=>$themedir));
+    $files = xarMod::apiFunc('translations', 'admin', 'get_files', ['themedir'=>$themedir]);
 
     $prefix = 'themes/'.$themename;
     foreach ($files as $file) {
@@ -91,7 +91,7 @@ function translations_adminapi_generate_theme_skels($args)
 
     $subnames[] = 'common';
     // Load previously made translations
-    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($backend)) {
         return;
     }
@@ -103,7 +103,7 @@ function translations_adminapi_generate_theme_skels($args)
             }
         }
         foreach ($theme_contexts_list as $theme_context) {
-            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $theme_context);
+            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $theme_context);
             if ($backend->hasContext('themes:'.$ctxtype1, $ctxname1)) {
                 if (!$backend->loadContext('themes:'.$ctxtype1, $ctxname1)) {
                     return;
@@ -114,14 +114,14 @@ function translations_adminapi_generate_theme_skels($args)
 
     // Load KEYS
     $filename = "themes/$themedir/KEYS";
-    $KEYS = array();
+    $KEYS = [];
     if (file_exists($filename)) {
         $lines = file($filename);
         foreach ($lines as $line) {
-            if ($line{0} == '#') {
+            if ($line[0] == '#') {
                 continue;
             }
-            list($key, $value) = explode('=', $line);
+            [$key, $value] = explode('=', $line);
             $key = trim($key);
             $value = trim($value);
             $KEYS[$key] = $value;
@@ -139,7 +139,7 @@ function translations_adminapi_generate_theme_skels($args)
         $genLocale = $locale;
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'ReferencesGenerator', 'locale' => $genLocale]);
     if (!isset($gen)) {
         return;
     }
@@ -149,13 +149,13 @@ function translations_adminapi_generate_theme_skels($args)
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
-            list($ctxtype1, $ctxname1) = explode('::', $subname);
+            [$ctxtype1, $ctxname1] = explode('::', $subname);
         } else {
             $ctxtype1 = '';
             $ctxname1 = $subname;
         }
 
-        $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
+        $statistics[$subname] = ['entries'=>0, 'keyEntries'=>0];
 
         $fileAlreadyOpen = false;
         // Avoid creating entries for the same locale
@@ -235,13 +235,13 @@ function translations_adminapi_generate_theme_skels($args)
 
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }
 
 /* PRIVATE FUNCTIONS */
 function theme_translations_gather_common_entries($transEntriesCollection)
 {
-    $commonEntries = array();
+    $commonEntries = [];
     $subnames = array_keys($transEntriesCollection);
     foreach ($subnames as $subname) {
         foreach ($transEntriesCollection[$subname] as $string => $references) {
@@ -254,7 +254,7 @@ function theme_translations_gather_common_entries($transEntriesCollection)
                 if (isset($transEntriesCollection[$other_subname][$string])) {
                     // Found a duplicated ML string
                     if (!isset($commonEntries[$string])) {
-                        $commonEntries[$string] = array();
+                        $commonEntries[$string] = [];
                     }
 
                     if (!$refs_inserted) {

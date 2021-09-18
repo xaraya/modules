@@ -23,7 +23,7 @@
 function translations_admin_updateconfig()
 {
     if (!xarSec::confirmAuthKey()) {
-        return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
     }
 
     // Security Check
@@ -49,7 +49,7 @@ function translations_admin_updateconfig()
                 return;
             }
 
-            $localesList = array();
+            $localesList = [];
             foreach ($active as $activelocale) {
                 $localesList[] = $activelocale;
             }
@@ -100,10 +100,10 @@ function translations_admin_updateconfig()
         $cacheTemplates = true;
 
         // Call updateconfig hooks
-        xarModHooks::call('module', 'updateconfig', 'translations', array('module' => 'translations'));
+        xarModHooks::call('module', 'updateconfig', 'translations', ['module' => 'translations']);
     }
 
-    xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+    xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
 
     return true;
 }

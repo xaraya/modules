@@ -20,7 +20,7 @@ function translations_adminapi_get_theme_files($args)
     // Argument check
     assert('isset($themedir) && isset($pattern)');
 
-    $names = array();
+    $names = [];
     if (file_exists($themedir)) {
         $dd = opendir($themedir);
         while ($filename = readdir($dd)) {

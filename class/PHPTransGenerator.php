@@ -19,7 +19,7 @@ class PHPTranslationsGenerator
     public $isUTF8;
     public $fileName;
     public $baseDir;
-    
+
     public function __construct($locale)
     {
         $this->locale = $locale;
@@ -160,7 +160,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir, 0777);
             }
 
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', array('moddir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -177,7 +177,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir, 0777);
             }
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', array('propertydir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -194,7 +194,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir, 0777);
             }
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', array('blockdir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -211,7 +211,7 @@ class PHPTranslationsGenerator
                 mkdir($this->baseDir, 0777);
             }
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', array('themedir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', ['themedir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -239,7 +239,7 @@ class PHPTranslationsGenerator
         $this->fileName = $this->baseDir;
 
         if (!mb_ereg("^[a-z]+:$", $ctxType)) {
-            list($prefix, $directory) = explode(':', $ctxType);
+            [$prefix, $directory] = explode(':', $ctxType);
             if ($directory != "") {
                 $this->fileName .= $directory . "/";
             }
@@ -274,8 +274,8 @@ class PHPTranslationsGenerator
                 $translation = mb_convert_encoding($translation, $this->outCharset, 'utf-8');
             }
         }
-        $string = str_replace(array("\\","'"), array("\\\\","\\'"), $string);
-        $translation = str_replace(array("\\","'"), array("\\\\","\\'"), $translation);
+        $string = str_replace(["\\","'"], ["\\\\","\\'"], $string);
+        $translation = str_replace(["\\","'"], ["\\\\","\\'"], $translation);
         fwrite($this->fp, "\$xarML_PHPBackend_entries['".$string."'] = '".$translation."';\n");
     }
 
@@ -289,7 +289,7 @@ class PHPTranslationsGenerator
                 $translation = mb_convert_encoding($translation, $this->outCharset, 'utf-8');
             }
         }
-        $translation = str_replace(array("\\","'"), array("\\\\","\\'"), $translation);
+        $translation = str_replace(["\\","'"], ["\\\\","\\'"], $translation);
         $quote_translation = (strpos($translation, "\\") === false) ? "'" : "\"";
         fwrite($this->fp, "\$xarML_PHPBackend_keyEntries['".$key."'] = '".$translation."';\n");
     }

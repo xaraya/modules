@@ -23,7 +23,7 @@ function translations_admin_block_overview()
         return;
     }
 
-    $data = xarMod::apiFunc('blocks', 'types', 'getitem', array('type_id' => $id, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
+    $data = xarMod::apiFunc('blocks', 'types', 'getitem', ['type_id' => $id, 'type_state' => xarBlock::TYPE_STATE_ACTIVE]);
     $data['dnType'] = xarMLS::DNTYPE_BLOCK;
     $data['dnName'] = $data['type'];
     $data['blockid'] = $id;

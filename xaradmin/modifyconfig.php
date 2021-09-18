@@ -27,7 +27,7 @@ function translations_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'mailer'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'mailer']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
@@ -36,7 +36,7 @@ function translations_admin_modifyconfig()
         throw new Exception('The locale directory was not found.');
     }
     $dd = opendir($localehome);
-    $locales = array();
+    $locales = [];
     while ($filename = readdir($dd)) {
         if (is_dir($localehome . "/" . $filename) && file_exists($localehome . "/" . $filename . "/locale.xml")) {
             $locales[] = $filename;
@@ -51,7 +51,7 @@ function translations_admin_modifyconfig()
         } else {
             $active = false;
         }
-        $data['locales'][] = array('name' => $locale, 'active' => $active);
+        $data['locales'][] = ['name' => $locale, 'active' => $active];
     }
 
     $data['translationsBackend'] = xarConfigVars::get(null, 'Site.MLS.TranslationsBackend');
@@ -81,7 +81,7 @@ function translations_admin_modifyconfig()
                 } else {
                     $itemid = $data['module_settings']->updateItem();
                 }
-                xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

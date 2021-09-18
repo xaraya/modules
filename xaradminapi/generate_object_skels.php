@@ -31,7 +31,7 @@ function translations_adminapi_generate_object_skels($args)
     // Argument check
     assert('isset($objectid) && isset($locale)');
 
-    $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('objectid' => $objectid));
+    $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['objectid' => $objectid]);
     if (!is_object($tplData['object'])) {
         return;
     }
@@ -50,13 +50,13 @@ function translations_adminapi_generate_object_skels($args)
     $startTime = $time[1] + $time[0];
 
     // Load core translations
-    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $core_backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($core_backend)) {
         return;
     }
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) object, you must first generate skels for the core.', $objectname);
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype'=>'core')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype'=>'core'])];
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) {
@@ -64,9 +64,9 @@ function translations_adminapi_generate_object_skels($args)
     }
 
     // Get the properties that are translatable
-    $transEntriesCollection = array();
-    $transKeyEntriesCollection = array();
-    $object_contexts_list = array();
+    $transEntriesCollection = [];
+    $transKeyEntriesCollection = [];
+    $object_contexts_list = [];
 
     // Disable any properties that re not translatable
     foreach ($tplData['object']->properties as $name => $property) {
@@ -75,7 +75,7 @@ function translations_adminapi_generate_object_skels($args)
             $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
             continue;
         }
-        
+
         if (!$property->translatable) {
             $tplData['object']->properties[$name]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         } else {
@@ -90,7 +90,7 @@ function translations_adminapi_generate_object_skels($args)
     // Get the items of translatable properties
     $items = $tplData['object']->getItems();
 
-    $translation_enries = array();
+    $translation_enries = [];
     $prefix = 'objects/'.$objectname;
     foreach ($items as $item) {
         foreach ($item as $key => $element) {
@@ -98,18 +98,18 @@ function translations_adminapi_generate_object_skels($args)
             if ($key == 'id') {
                 continue;
             }
-            
-            $transEntriesCollection[$objectname.'::'.$key][$element][] = array('line' => $item['id'], 'file' => $objectname.'::'.$key);
-            $transKeyEntriesCollection[$objectname.'::'.$key] = array();
+
+            $transEntriesCollection[$objectname.'::'.$key][$element][] = ['line' => $item['id'], 'file' => $objectname.'::'.$key];
+            $transKeyEntriesCollection[$objectname.'::'.$key] = [];
         }
     }
-        
+
     $transEntriesCollection = object_translations_gather_common_entries($transEntriesCollection);
     $transKeyEntriesCollection = object_translations_gather_common_entries($transKeyEntriesCollection);
 
     $subnames[] = 'common';
     // Load previously made translations
-    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $locale]);
     if (!isset($backend)) {
         return;
     }
@@ -121,7 +121,7 @@ function translations_adminapi_generate_object_skels($args)
             }
         }
         foreach ($object_contexts_list as $object_context) {
-            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $object_context);
+            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $object_context);
             if ($backend->hasContext('objects:'.$ctxtype1, $ctxname1)) {
                 if (!$backend->loadContext('objects:'.$ctxtype1, $ctxname1)) {
                     return;
@@ -132,14 +132,14 @@ function translations_adminapi_generate_object_skels($args)
 
     // Load KEYS
     $filename = "objects/$objectname/KEYS";
-    $KEYS = array();
+    $KEYS = [];
     if (file_exists($filename)) {
         $lines = file($filename);
         foreach ($lines as $line) {
-            if ($line{0} == '#') {
+            if ($line[0] == '#') {
                 continue;
             }
-            list($key, $value) = explode('=', $line);
+            [$key, $value] = explode('=', $line);
             $key = trim($key);
             $value = trim($value);
             $KEYS[$key] = $value;
@@ -157,7 +157,7 @@ function translations_adminapi_generate_object_skels($args)
         $genLocale = $locale;
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'ReferencesGenerator', 'locale' => $genLocale]);
     if (!isset($gen)) {
         return;
     }
@@ -167,13 +167,13 @@ function translations_adminapi_generate_object_skels($args)
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
-            list($ctxtype1, $ctxname1) = explode('::', $subname);
+            [$ctxtype1, $ctxname1] = explode('::', $subname);
         } else {
             $ctxtype1 = '';
             $ctxname1 = $subname;
         }
 
-        $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
+        $statistics[$subname] = ['entries'=>0, 'keyEntries'=>0];
 
         $fileAlreadyOpen = false;
         // Avoid creating entries for the same locale
@@ -188,11 +188,11 @@ function translations_adminapi_generate_object_skels($args)
 
                 // There is no core translation: up the number of entries
                 $statistics[$subname]['entries']++;
-                
+
                 // Get previous translation, it's empty if not yet translated
                 $translation = $backend->translate($string);
                 $marked = $backend->markEntry($string);
-                
+
                 if (!$fileAlreadyOpen) {
                     if (!$gen->create('objects:'.$ctxtype1, $ctxname1)) {
                         return;
@@ -255,13 +255,13 @@ function translations_adminapi_generate_object_skels($args)
 
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }
 
 /* PRIVATE FUNCTIONS */
 function object_translations_gather_common_entries($transEntriesCollection)
 {
-    $commonEntries = array();
+    $commonEntries = [];
     $subnames = array_keys($transEntriesCollection);
     foreach ($subnames as $subname) {
         foreach ($transEntriesCollection[$subname] as $string => $references) {
@@ -274,7 +274,7 @@ function object_translations_gather_common_entries($transEntriesCollection)
                 if (isset($transEntriesCollection[$other_subname][$string])) {
                     // Found a duplicated ML string
                     if (!isset($commonEntries[$string])) {
-                        $commonEntries[$string] = array();
+                        $commonEntries[$string] = [];
                     }
 
                     if (!$refs_inserted) {

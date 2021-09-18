@@ -17,7 +17,7 @@ function translations_adminapi_get_object_properties($args)
     extract($args);
 
     // Disable any properties that re not translatable
-    $translatable = array();
+    $translatable = [];
     foreach ($object->properties as $name => $property) {
         if ($property->translatable) {
             $translatable[] = $name;

@@ -15,7 +15,7 @@
  */
 function translations_admin_overview()
 {
-    $data=array();
+    $data=[];
     //just return to main function that displays the overview
     return xarTpl::module('translations', 'admin', 'main', $data, 'main');
 }

@@ -160,7 +160,7 @@ class XMLTranslationsSkelsGenerator
                 mkdir($this->baseDir, 0777);
             }
 
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', array('moddir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -177,7 +177,7 @@ class XMLTranslationsSkelsGenerator
                 mkdir($this->baseDir, 0777);
             }
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', array('propertydir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -194,7 +194,7 @@ class XMLTranslationsSkelsGenerator
                 mkdir($this->baseDir, 0777);
             }
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', array('blockdir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -211,7 +211,7 @@ class XMLTranslationsSkelsGenerator
                 mkdir($this->baseDir, 0777);
             }
             //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', array('themedir'=>$dnName));
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', ['themedir'=>$dnName]);
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) {
                     continue;
@@ -269,7 +269,7 @@ class XMLTranslationsSkelsGenerator
         }
         return fopen($path, $mode);
     }
-    
+
     public function open($contextType, $contextName)
     {
         assert('!empty($this->baseDir)');
@@ -339,7 +339,7 @@ class XMLTranslationsSkelsGenerator
         // Replace any special characters with entities
         $string = xarVar::prepForDisplay($string);
         $translation = xarVar::prepForDisplay($translation);
-        
+
         fwrite($this->fp, "<entry>");
         fwrite($this->fp, "\n\t<string>".$string."</string>");
         fwrite($this->fp, "\n\t<translation>".$translation."</translation>");

@@ -18,7 +18,7 @@ function translations_admin_choose_a_block()
         return;
     }
 
-    if (!$blocklist = xarMod::apiFunc('blocks', 'types', 'getitems', array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE))) {
+    if (!$blocklist = xarMod::apiFunc('blocks', 'types', 'getitems', ['module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE])) {
         return;
     }
 

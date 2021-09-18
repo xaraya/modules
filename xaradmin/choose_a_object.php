@@ -20,7 +20,7 @@ function translations_admin_choose_a_object()
         return;
     }
 
-    if (!($objectlist = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'objects')))) {
+    if (!($objectlist = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'objects']))) {
         return;
     }
     $items = $objectlist->getItems();

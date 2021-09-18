@@ -17,7 +17,7 @@ function translations_admin_choose_a_property()
     if (!xarSecurity::check('AdminTranslations')) {
         return;
     }
-    
+
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
@@ -25,7 +25,7 @@ function translations_admin_choose_a_property()
     $q->eq('modid', 0);
     $q->run();
     $propertylist = $q->output();
-    
+
     $data = translations_create_druidbar(CHOOSE, xarMLS::DNTYPE_PROPERTY, '', 0);
     $data['propertylist'] = $propertylist;
     $data['dnType'] = xarMLS::DNTYPE_PROPERTY;

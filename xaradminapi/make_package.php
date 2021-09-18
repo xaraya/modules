@@ -18,7 +18,7 @@ function translations_adminapi_make_package($args)
 
     // Argument check
     assert('isset($basefilename) && isset($version) && isset($dirpath) && isset($locale)');
- 
+
     if (!$archiver_path = xarMod::apiFunc('translations', 'admin', 'archiver_path')) {
         return;
     }

@@ -13,11 +13,11 @@
 
 class PHPParser
 {
-    public $transEntries = array();
-    public $transKeyEntries = array();
-    public $includedFiles = array();
-    public $parsedFiles = array();
-    public $notToParseFiles = array();
+    public $transEntries = [];
+    public $transKeyEntries = [];
+    public $includedFiles = [];
+    public $parsedFiles = [];
+    public $notToParseFiles = [];
 
     public $_fd;
     public $_offs;
@@ -40,13 +40,13 @@ class PHPParser
 
     public function __construct()
     {
-        $this->tokenarray = array("xarML('", "xarMLS::translateByKey('", 'xarML("', 'xarMLS::translateByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', "include_once '", "include '", "require_once '", "require '", 'include_once "', 'include "', 'require_once "', 'require "', 'include_once(', 'include(', 'require_once(', 'require(');
-        $this->endtokenarray = array(array("')","',"), array("')","',"), array('")','",'), array('")','",'), array('}'), array('}'), array('}'), array('}'), array("';"), array("';"), array("';"), array("';"), array('";'), array('";'), array('";'), array('";'), array(');'), array(');'), array(');'), array(');'));
-        $this->tokenarraytype = array('function', 'function', 'function', 'function', 'ML_dont_parse', 'ML_include', 'ML_add_string', 'ML_add_key', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include');
-        $this->iskeytokenarray = array(0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        $this->strslasharray = array(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        $this->strlentokenarray = array(7, 12, 7, 12, 14, 11, 14, 11, 14, 9, 14, 9, 14, 9, 14, 9, 13, 8, 13, 8);
-        $this->strlenendtokenarray = array(2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
+        $this->tokenarray = ["xarML('", "xarMLS::translateByKey('", 'xarML("', 'xarMLS::translateByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', "include_once '", "include '", "require_once '", "require '", 'include_once "', 'include "', 'require_once "', 'require "', 'include_once(', 'include(', 'require_once(', 'require('];
+        $this->endtokenarray = [["')","',"], ["')","',"], ['")','",'], ['")','",'], ['}'], ['}'], ['}'], ['}'], ["';"], ["';"], ["';"], ["';"], ['";'], ['";'], ['";'], ['";'], [');'], [');'], [');'], [');']];
+        $this->tokenarraytype = ['function', 'function', 'function', 'function', 'ML_dont_parse', 'ML_include', 'ML_add_string', 'ML_add_key', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include'];
+        $this->iskeytokenarray = [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        $this->strslasharray = [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        $this->strlentokenarray = [7, 12, 7, 12, 14, 11, 14, 11, 14, 9, 14, 9, 14, 9, 14, 9, 13, 8, 13, 8];
+        $this->strlenendtokenarray = [2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
     }
 
     public function getTransEntries()
@@ -112,14 +112,14 @@ class PHPParser
                         }
                         if ($this->iskeytokenarray[$token]) {
                             if (!isset($this->transKeyEntries[$this->_string])) {
-                                $this->transKeyEntries[$this->_string] = array();
+                                $this->transKeyEntries[$this->_string] = [];
                             }
-                            $this->transKeyEntries[$this->_string][] = array('line' => $this->_line, 'file' => $this->filename);
+                            $this->transKeyEntries[$this->_string][] = ['line' => $this->_line, 'file' => $this->filename];
                         } else {
                             if (!isset($this->transEntries[$this->_string])) {
-                                $this->transEntries[$this->_string] = array();
+                                $this->transEntries[$this->_string] = [];
                             }
-                            $this->transEntries[$this->_string][] = array('line' => $this->_line, 'file' => $this->filename);
+                            $this->transEntries[$this->_string][] = ['line' => $this->_line, 'file' => $this->filename];
                         }
                         break;
                     case 'ML_dont_parse':
@@ -133,16 +133,16 @@ class PHPParser
                     case 'ML_add_string':
                         $this->_string = trim($this->_string, " \t'");
                         if (!isset($this->transEntries[$this->_string])) {
-                            $this->transEntries[$this->_string] = array();
+                            $this->transEntries[$this->_string] = [];
                         }
-                        $this->transEntries[$this->_string][] = array('line' => $line, 'file' => $filename);
+                        $this->transEntries[$this->_string][] = ['line' => $line, 'file' => $filename];
                         break;
                     case 'ML_add_key':
                         $this->_string = trim($this->_string, " \t'");
                         if (!isset($this->transKeyEntries[$this->_string])) {
-                            $this->transKeyEntries[$this->_string] = array();
+                            $this->transKeyEntries[$this->_string] = [];
                         }
-                        $this->transKeyEntries[$this->_string][] = array('line' => $line, 'file' => $filename);
+                        $this->transKeyEntries[$this->_string][] = ['line' => $line, 'file' => $filename];
                         break;
                     case 'include':
                         $this->_string = trim($this->_string, " \t\"'");
@@ -184,7 +184,7 @@ class PHPParser
 
         $this->parsedFiles[$filename] = true;
         $includedFiles = $this->includedFiles;
-        $this->includedFiles = array();
+        $this->includedFiles = [];
 
         foreach ($includedFiles as $ifilename => $t) {
             if (!isset($this->parsedFiles[$ifilename]) &&

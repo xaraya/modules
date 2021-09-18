@@ -14,10 +14,10 @@
 function translations_userapi_getmenulinks($args)
 {
     if (xarSecurity::check('ReadTranslations', 0) == true) {
-        $menulinks[] = array(
-            'url'   => xarController::URL('translations', 'user', 'show_status', array('action' => 'post')),
+        $menulinks[] = [
+            'url'   => xarController::URL('translations', 'user', 'show_status', ['action' => 'post']),
             'title' => xarML('Show the progress status of the locale currently being translated'),
-            'label' => xarML('Progress report'));
+            'label' => xarML('Progress report'), ];
     } else {
         $menulinks = '';
     }

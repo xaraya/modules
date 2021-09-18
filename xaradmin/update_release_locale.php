@@ -32,11 +32,11 @@ function translations_admin_update_release_locale()
     if (!xarVar::fetch('extid', 'int', $extid)) {
         return;
     }
-            
+
     translations_release_locale($locale);
-    xarController::redirect(xarController::URL('translations', 'admin', 'generate_trans_info', array(
+    xarController::redirect(xarController::URL('translations', 'admin', 'generate_trans_info', [
         'dnType' => $dnType,
         'dnName' => $dnName,
-        'extid'  => $extid)));
+        'extid'  => $extid, ]));
     return true;
 }

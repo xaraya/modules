@@ -37,7 +37,7 @@ define('DOWNLOAD', 7);
 // TODO make code more elegant (waiting for full features realization)
 function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
 {
-    $urlarray = array('dnType'=>$dnType, 'dnName'=>$dnName, 'extid'=>$extid);
+    $urlarray = ['dnType'=>$dnType, 'dnName'=>$dnName, 'extid'=>$extid];
     $stepCount = 0;
 
     switch ($dnType) {
@@ -168,13 +168,13 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
 
         break;
     }
-    $steps=array();
+    $steps=[];
 
-    $steps= array(
+    $steps= [
         'stepLabels'=>$stepLabels,
         'stepURLs'=>$stepURLs,
         'currentStep'=>$currentStep,
-        'stepCount'=>$stepCount);
+        'stepCount'=>$stepCount, ];
     return $steps;
 }
 
@@ -188,7 +188,7 @@ define('RELEASE', 5);
 
 function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
 {
-    $urlarray = array('dnType'=>$dnType, 'dnName'=>$dnName, 'extid'=>$extid);
+    $urlarray = ['dnType'=>$dnType, 'dnName'=>$dnName, 'extid'=>$extid];
     // Overview | Generate skels | Translate | Delete fuzzy | Generate translations | Release package
     $opLabels[OVERVIEW] = xarML('Overview');
     switch ($dnType) {
@@ -223,7 +223,7 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
     $opURLs[RELEASE] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
     // Enables See module details & Generate translations skels
-    $enabledOps = array(true, true, false, false, false);
+    $enabledOps = [true, true, false, false, false];
 
     $locale = translations_working_locale();
     $args['interface'] = 'ReferencesBackend';
@@ -248,8 +248,8 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
             $enabledOps[RELEASE] = false;
         }
     }
-    $opsData =array();
-    $opsData = array('opLabels'=>$opLabels, 'opURLs'=>$opURLs, 'enabledOps'=>$enabledOps, 'currentOp'=>$currentOp);
+    $opsData =[];
+    $opsData = ['opLabels'=>$opLabels, 'opURLs'=>$opURLs, 'enabledOps'=>$enabledOps, 'currentOp'=>$currentOp];
     return $opsData;
 }
 
@@ -267,11 +267,11 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
     $currentTra = -1;
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $subtypes = array();
-        $subnames = array();
-        $entrydata = array();
+        $subtypes = [];
+        $subnames = [];
+        $entrydata = [];
 
-        $args = array();
+        $args = [];
         $args['dntype'] = xarMLS::DNTYPE_CORE;
         $args['dnname'] = 'xaraya';
         $args['subtype'] = 'core:';
@@ -301,12 +301,12 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $module_contexts_list[] = 'modules:'.$modname.'::common';
 
-        $subnames = xarMod::apiFunc('translations', 'admin', 'get_module_phpfiles', array('moddir'=>$moddir));
+        $subnames = xarMod::apiFunc('translations', 'admin', 'get_module_phpfiles', ['moddir'=>$moddir]);
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
         }
 
-        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', array('moddir'=>$moddir));
+        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$moddir]);
 
         foreach ($dirnames as $dirname) {
             if (!preg_match('%templates%i', $dirname, $matches)) {
@@ -318,19 +318,19 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
                 'translations',
                 'admin',
                 'get_module_files',
-                array('moddir' => sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern)
+                ['moddir' => sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern]
             );
 
             foreach ($subnames as $subname) {
                 $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
             }
         }
-        $subtypes = array();
-        $subnames = array();
-        $entrydata = array();
+        $subtypes = [];
+        $subnames = [];
+        $entrydata = [];
         foreach ($module_contexts_list as $module_context) {
-            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $module_context);
-            $args = array();
+            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $module_context);
+            $args = [];
             $ctxtype2 = 'modules:'.$ctxtype1;
             $args['dntype'] = xarMLS::DNTYPE_MODULE;
             $args['dnname'] = $dnname1;
@@ -354,7 +354,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $q->eq('id', $extid);
         $q->run();
         $propertyinfo = $q->row();
-        
+
         $propertyname = $propertyinfo['name'];
         $propertydir = $propertyinfo['name'];
 
@@ -363,12 +363,12 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $property_contexts_list[] = 'properties:'.$propertyname.'::common';
 
-        $subnames = xarMod::apiFunc('translations', 'admin', 'get_property_phpfiles', array('propertydir'=>$propertydir));
+        $subnames = xarMod::apiFunc('translations', 'admin', 'get_property_phpfiles', ['propertydir'=>$propertydir]);
         foreach ($subnames as $subname) {
             $property_contexts_list[] = 'properties:'.$propertyname.'::'.$subname;
         }
 
-        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', array('propertydir'=>$propertydir));
+        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$propertydir]);
         foreach ($dirnames as $dirname) {
             if (!preg_match('!^templates!i', $dirname, $matches)) {
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
@@ -379,19 +379,19 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
                 'translations',
                 'admin',
                 'get_property_files',
-                array('propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern)
+                ['propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern]
             );
             foreach ($subnames as $subname) {
                 $property_contexts_list[] = 'properties:'.$propertyname.':'.$dirname.':'.$subname;
             }
         }
 
-        $subtypes = array();
-        $subnames = array();
-        $entrydata = array();
+        $subtypes = [];
+        $subnames = [];
+        $entrydata = [];
         foreach ($property_contexts_list as $property_context) {
-            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $property_context);
-            $args = array();
+            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $property_context);
+            $args = [];
             $ctxtype2 = 'properties:'.$ctxtype1;
             $args['dntype'] = xarMLS::DNTYPE_PROPERTY;
             $args['dnname'] = $dnname1;
@@ -408,8 +408,8 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         case xarMLS::DNTYPE_BLOCK:
 
-        $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', array('type_id' => $extid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
-        
+        $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', ['type_id' => $extid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE]);
+
         $blockname = $blockinfo['type'];
         $blockdir = $blockinfo['type'];
 
@@ -418,12 +418,12 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $block_contexts_list[] = 'blocks:'.$blockname.'::common';
 
-        $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', array('blockdir'=>$blockdir));
+        $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', ['blockdir'=>$blockdir]);
         foreach ($subnames as $subname) {
             $block_contexts_list[] = 'blocks:'.$blockname.'::'.$subname;
         }
 
-        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', array('blockdir'=>$blockdir));
+        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$blockdir]);
         foreach ($dirnames as $dirname) {
             if (!preg_match('!^templates!i', $dirname, $matches)) {
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
@@ -434,19 +434,19 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
                 'translations',
                 'admin',
                 'get_block_files',
-                array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern)
+                ['blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern]
             );
             foreach ($subnames as $subname) {
                 $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
             }
         }
 
-        $subtypes = array();
-        $subnames = array();
-        $entrydata = array();
+        $subtypes = [];
+        $subnames = [];
+        $entrydata = [];
         foreach ($block_contexts_list as $block_context) {
-            list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $block_context);
-            $args = array();
+            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $block_context);
+            $args = [];
             $ctxtype2 = 'blocks:'.$ctxtype1;
             $args['dntype'] = xarMLS::DNTYPE_BLOCK;
             $args['dnname'] = $dnname1;
@@ -473,14 +473,14 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $selectedsubtype = $subtype;
         $selectedsubname = $subname;
 
-        $theme_contexts_list[] = array(
+        $theme_contexts_list[] = [
                                     'dntype' => xarMLS::DNTYPE_THEME,
                                     'dnname' => $themename,
                                     'subtype' => 'themes:',
-                                    'subname' => 'common');
+                                    'subname' => 'common', ];
 
-        $files = xarMod::apiFunc('translations', 'admin', 'get_files', array('themedir'=>$themedir));
-    
+        $files = xarMod::apiFunc('translations', 'admin', 'get_files', ['themedir'=>$themedir]);
+
         $prefix = 'themes/'.$themename;
         foreach ($files as $file) {
             $dirname = dirname($file);
@@ -490,16 +490,16 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
                 throw new Exception('mismatch: ' . $prefix . " " . $dirname);
             }
             $subname = basename($file, '.xt');
-            $theme_contexts_list[] = array(
+            $theme_contexts_list[] = [
                                         'dntype' => xarMLS::DNTYPE_THEME,
                                         'dnname' => $themename,
                                         'subtype' => 'themes:' . $dirname,
-                                        'subname' => $subname);
+                                        'subname' => $subname, ];
         }
 
-        $subtypes = array();
-        $subnames = array();
-        $entrydata = array();
+        $subtypes = [];
+        $subnames = [];
+        $entrydata = [];
         foreach ($theme_contexts_list as $theme_context) {
             $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $theme_context);
             if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
@@ -513,9 +513,9 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         case xarMLS::DNTYPE_OBJECT:
         $objectid = $extid;
         sys::import('modules.dynamicdata.class.objects.master');
-        $object = DataObjectMaster::getObject(array('objectid' => $objectid));
+        $object = DataObjectMaster::getObject(['objectid' => $objectid]);
 
-        if (!$objectinfo = DataObjectMaster::getObjectInfo(array('objectid' => $objectid))) {
+        if (!$objectinfo = DataObjectMaster::getObjectInfo(['objectid' => $objectid])) {
             return;
         }
 
@@ -525,27 +525,27 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $selectedsubtype = $subtype;
         $selectedsubname = $subname;
 
-        $object_contexts_list[] = array(
+        $object_contexts_list[] = [
                                     'dntype'  => xarMLS::DNTYPE_OBJECT,
                                     'dnname'  => 'object',
                                     'subtype' => 'objects:',
-                                    'subname' => 'common');
+                                    'subname' => 'common', ];
 
-        $propertynames = xarMod::apiFunc('translations', 'admin', 'get_object_properties', array('object' => $object));
+        $propertynames = xarMod::apiFunc('translations', 'admin', 'get_object_properties', ['object' => $object]);
 
         $prefix = 'objects/'.$objectname;
         foreach ($propertynames as $name) {
             $subname = $name;
-            $object_contexts_list[] = array(
+            $object_contexts_list[] = [
                                         'dntype'  => xarMLS::DNTYPE_OBJECT,
                                         'dnname'  => $objectname,
                                         'subtype' => 'objects:'.$objectname,
-                                        'subname' => $subname);
+                                        'subname' => $subname, ];
         }
 
-        $subtypes = array();
-        $subnames = array();
-        $entrydata = array();
+        $subtypes = [];
+        $subnames = [];
+        $entrydata = [];
         foreach ($object_contexts_list as $object_context) {
             $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $object_context);
             if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
@@ -556,11 +556,11 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
         break;
     }
-    $subData = array('subtypes'=>$subtypes,
+    $subData = ['subtypes'=>$subtypes,
                  'subnames'=>$subnames,
                  'entrydata'=>$entrydata,
                  'selectedsubtype'=>$selectedsubtype,
-                 'selectedsubname'=>$selectedsubname);
+                 'selectedsubname'=>$selectedsubname, ];
     return $subData;
 }
 

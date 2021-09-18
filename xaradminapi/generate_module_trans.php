@@ -53,17 +53,17 @@ function translations_adminapi_generate_module_trans($args)
         $ref_locale = $locale;
     }
 
-    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance', ['interface' => 'ReferencesBackend', 'locale' => $ref_locale]);
     if (!isset($backend)) {
         return;
     }
     if (!$backend->bindDomain(xarMLS::DNTYPE_MODULE, $modname)) {
         $msg = xarML('Before generating translations you must first generate skels.');
-        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'module')));
+        $link = [xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', ['dntype' => 'module'])];
         throw new Exception($msg);
     }
 
-    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    $gen = xarMod::apiFunc('translations', 'admin', 'create_generator_instance', ['interface' => 'TranslationsGenerator', 'locale' => $locale]);
     if (!isset($gen)) {
         return;
     }
@@ -73,12 +73,12 @@ function translations_adminapi_generate_module_trans($args)
 
     $module_contexts_list[] = 'modules:'.$modname.'::common';
 
-    $subnames = xarMod::apiFunc('translations', 'admin', 'get_module_phpfiles', array('moddir'=>$moddir));
+    $subnames = xarMod::apiFunc('translations', 'admin', 'get_module_phpfiles', ['moddir'=>$moddir]);
     foreach ($subnames as $subname) {
         $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
     }
 
-    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', array('moddir'=>$moddir));
+    $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$moddir]);
     foreach ($dirnames as $dirname) {
         if (!preg_match('!^templates!i', $dirname, $matches)) {
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
@@ -89,7 +89,7 @@ function translations_adminapi_generate_module_trans($args)
             'translations',
             'admin',
             'get_module_files',
-            array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern)
+            ['moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern]
         );
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
@@ -97,7 +97,7 @@ function translations_adminapi_generate_module_trans($args)
     }
 
     foreach ($module_contexts_list as $module_context) {
-        list($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':', $module_context);
+        [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $module_context);
         $ctxType = 'modules:'.$ctxtype1;
         $ctxName = $ctxname1;
 
@@ -114,12 +114,12 @@ function translations_adminapi_generate_module_trans($args)
             $sName = $ctxName;
         }
 
-        $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
-        while (list($string, $translation) = $backend->enumTranslations()) {
+        $statistics[$sName] = ['entries'=>0, 'keyEntries'=>0];
+        while ([$string, $translation] = $backend->enumTranslations()) {
             $statistics[$sName]['entries']++;
             $gen->addEntry($string, $translation);
         }
-        while (list($key, $translation) = $backend->enumKeyTranslations()) {
+        while ([$key, $translation] = $backend->enumKeyTranslations()) {
             $statistics[$sName]['keyEntries']++;
             $gen->addKeyEntry($key, $translation);
         }
@@ -130,5 +130,5 @@ function translations_adminapi_generate_module_trans($args)
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
 
-    return array('time' => $endTime - $startTime, 'statistics' => $statistics);
+    return ['time' => $endTime - $startTime, 'statistics' => $statistics];
 }
