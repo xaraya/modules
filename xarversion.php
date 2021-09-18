@@ -30,15 +30,15 @@
     $modversion['user']           = false;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Users & Groups';
-    $modversion['securityschema'] = array();
+    $modversion['securityschema'] = [];
 //    $modversion['dependency'] = array(30012);
 //    $modversion['dependency'] = array(30012, 30046, 30057, 30205);
-    $modversion['dependencyinfo'] = array(
-                                        0 => array(
+    $modversion['dependencyinfo'] = [
+                                        0 => [
                                                 'name' => 'core',
-                                                'version_ge' => '2.2.0'
-                                             ),
+                                                'version_ge' => '2.2.0',
+                                             ],
 //                                          30012 => 'math',
 //                                          30057 => 'authentication',
 //                                          30205 => 'registration',
-                                          );
+                                          ];

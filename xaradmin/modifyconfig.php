@@ -30,7 +30,7 @@
             return;
         }
 
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'realms'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'realms']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
         $data['module_settings']->getItem();
 
@@ -63,7 +63,7 @@
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
-                        
+
                         if (!xarVar::fetch('link_role', 'checkbox', $link_role, false, xarVar::NOT_REQUIRED)) {
                             return;
                         }
@@ -82,7 +82,7 @@
                         break;
                 }
 
-                xarController::redirect(xarController::URL('realms', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('realms', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

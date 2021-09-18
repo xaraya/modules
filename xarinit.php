@@ -28,7 +28,7 @@
         #
         $q = new Query();
         $prefix = xarDB::getPrefix();
-        
+
         # --------------------------------------------------------
         #
         # Table structure for users
@@ -113,19 +113,19 @@
         # Create DD objects
         #
         $module = 'realms';
-        $objects = array(
+        $objects = [
                     'realms_realms',
                     'realms_members',
-                         );
+                         ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
         # --------------------------------------------------------
         #
         # Set up modvars
         #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'realms'));
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'realms']);
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
@@ -167,13 +167,13 @@
 
     function realms_delete()
     {
-        $groupobject = DataObject::getObjectList(array('name' => 'realms_realms'));
+        $groupobject = DataObject::getObjectList(['name' => 'realms_realms']);
         $items = $groupobject->getItems();
-        $groupobject = DataObject::getObject(array('name' => 'realms_realms'));
+        $groupobject = DataObject::getObject(['name' => 'realms_realms']);
         foreach ($items as $item) {
-            $groupobject->deleteItem(array('itemid' =>$item['id']));
+            $groupobject->deleteItem(['itemid' =>$item['id']]);
         }
 
         $this_module = 'realms';
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
     }

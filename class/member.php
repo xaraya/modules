@@ -14,7 +14,6 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class Member extends DataObject
 {
-
 #---------------------------------------------------------
     # Constructor
 #
@@ -26,11 +25,11 @@ class Member extends DataObject
     #---------------------------------------------------------
     # Create, update, delete, purge
 #
-    public function createItem(array $args = array())
+    public function createItem(array $args = [])
     {
         // If the flag is set not to link, remove the roles source from this object
         if ($this->properties['role_link']->value) {
-            $fields = array(
+            $fields = [
                 'name'          => $this->properties['name']->getValue(),
                 'role_type'     => xarRoles::ROLES_USERTYPE,
                 'uname'         => $this->properties['uname']->value,
@@ -40,8 +39,8 @@ class Member extends DataObject
                 'valcode'       => 'createdbyprogram',
                 'state'         => $this->properties['state']->value,
                 'authmodule'    => xarMod::getID('realms'),
-            );
-            $roleobject = DataObject::getObject(array('name' => 'roles_users'));
+            ];
+            $roleobject = DataObject::getObject(['name' => 'roles_users']);
             $roleid = $roleobject->createItem($fields);
             $this->properties['role_id']->value = $roleid;
         }
@@ -52,7 +51,7 @@ class Member extends DataObject
         return $itemid;
     }
 
-    public function updateItem(array $args = array())
+    public function updateItem(array $args = [])
     {
         /* For now do not let the member update a role
         if ($this->properties['role_link']->value) {
@@ -69,14 +68,14 @@ class Member extends DataObject
         }
         */
         $this->properties['role_link']->value = !empty($this->properties['role_id']->value);
-        
+
         // Update the member item
         $itemid = parent::updateItem($args);
 
         return $itemid;
     }
 
-    public function deleteItem(array $args = array())
+    public function deleteItem(array $args = [])
     {
         if (!empty($args['itemid'])) {
             $this->itemid = $args['itemid'];

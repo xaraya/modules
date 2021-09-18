@@ -20,7 +20,7 @@
     function realms_xartables()
     {
         // Initialise table array
-        $xartable = array();
+        $xartable = [];
 
         $xartable['realms_realms']          = xarDB::getPrefix() . '_realms_realms';
         $xartable['realms_members']         = xarDB::getPrefix() . '_realms_members';

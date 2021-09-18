@@ -25,5 +25,5 @@
 
 //        xarController::redirect(xarController::URL('realms', 'user', 'view'));
         // success
-        return array(); //true;
+        return []; //true;
     }

@@ -19,9 +19,9 @@
     function realms_adminapi_getrealmid($args)
     {
         extract($args);
-        
+
         $xartable =& xarDB::getTables();
-        
+
         $q = new Query('SELECT', $xartable[$tablename]);
         $q->eq('id', $itemid);
         $q->addfield('realm_id');

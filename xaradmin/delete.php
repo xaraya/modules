@@ -16,7 +16,7 @@
  *
  */
     sys::import('modules.dynamicdata.class.objects.master');
-    
+
     function realms_admin_delete()
     {
         if (!xarSecurity::check('ManageRealms')) {
@@ -33,14 +33,14 @@
             return;
         }
 
-        $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-        $data['object']->getItem(array('itemid' => $data['itemid']));
+        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+        $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'realms';
         $data['authid'] = xarSec::genAuthKey('realms');
 
         if ($data['confirm']) {
-        
+
             // Check for a valid confirmation key
             if (!xarSec::confirmAuthKey()) {
                 return;
@@ -48,7 +48,7 @@
 
             // Delete the item
             $item = $data['object']->deleteItem();
-                
+
             // Jump to the next page
             xarController::redirect(xarController::URL('realms', 'admin', 'view'));
             return true;

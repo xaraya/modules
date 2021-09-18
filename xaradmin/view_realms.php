@@ -22,7 +22,7 @@
         }
 
         // Get the object containing the members
-        $data['realms'] = DataObjectMaster::getObjectList(array('name' => 'realms_realms'));
+        $data['realms'] = DataObjectMaster::getObjectList(['name' => 'realms_realms']);
 
         // Kludge
         sys::import('xaraya.structures.query');

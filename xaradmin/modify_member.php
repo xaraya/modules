@@ -16,7 +16,7 @@
  *
  */
     sys::import('modules.dynamicdata.class.objects.master');
-    
+
     function realms_admin_modify_member()
     {
         if (!xarSecurity::check('EditRealms')) {
@@ -33,13 +33,13 @@
             return;
         }
 
-        $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-        $data['object']->getItem(array('itemid' => $data['itemid']));
+        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+        $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'realms';
 
         if ($data['confirm']) {
-        
+
             // Check for a valid confirmation key
             if (!xarSec::confirmAuthKey()) {
                 return;
@@ -53,8 +53,8 @@
                 return xarTpl::module('realms', 'admin', 'modify_member', $data);
             } else {
                 // Good data: create the item
-                $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
-                
+                $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
+
                 // Jump to the next page
                 xarController::redirect(xarController::URL('realms', 'admin', 'view_members'));
                 return true;

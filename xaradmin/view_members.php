@@ -27,16 +27,16 @@
         }
 
         // Get the available dropdown options
-        $realms = DataObjectMaster::getObjectList(array('name' => 'realms_realms'));
+        $realms = DataObjectMaster::getObjectList(['name' => 'realms_realms']);
         $items = $realms->getItems();
-        $options = array();
+        $options = [];
         foreach ($items as $item) {
-            $options[] = array('id' => $item['id'], 'name' => $item['name']);
+            $options[] = ['id' => $item['id'], 'name' => $item['name']];
         }
         $data['options'] = $options;
 
         // Get the object containing the members
-        $data['members'] = DataObjectMaster::getObjectList(array('name' => 'realms_members'));
+        $data['members'] = DataObjectMaster::getObjectList(['name' => 'realms_members']);
 
         // Kludge
         sys::import('xaraya.structures.query');

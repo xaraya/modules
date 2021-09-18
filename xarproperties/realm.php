@@ -22,7 +22,7 @@ class RealmProperty extends ObjectRefProperty
     public $id         = 30096;
     public $name       = 'realm';
     public $desc       = 'Realm Dropdown';
-    public $reqmodules = array('realms');
+    public $reqmodules = ['realms'];
 
     public $initialization_firstline    = '0,All Realms';
     public $initialization_refobject    = 'realms_realms';    // Name of the object we want to reference
@@ -36,7 +36,7 @@ class RealmProperty extends ObjectRefProperty
         $this->template = 'realm';
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         if (!isset($data['value'])) {
             $data['value'] = $this->value;
@@ -59,7 +59,7 @@ class RealmProperty extends ObjectRefProperty
         return parent::showInput($data);
     }
 
-    public function showOutput(array $args = array())
+    public function showOutput(array $args = [])
     {
         if (!isset($data['value'])) {
             $data['value'] = $this->value;

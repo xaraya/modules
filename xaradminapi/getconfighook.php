@@ -20,15 +20,15 @@
     {
         extract($args);
         if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = array();
+            $extrainfo['tabs'] = [];
         }
         $module = 'realms';
-        $tabinfo = array(
+        $tabinfo = [
                 'module'  => $module,
                 'configarea'  => 'general',
                 'configtitle'  => xarML('Realms'),
-                'configcontent' => ''
-        );
+                'configcontent' => '',
+        ];
         $extrainfo['tabs'][] = $tabinfo;
         return $extrainfo;
     }

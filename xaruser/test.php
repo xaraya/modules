@@ -17,5 +17,5 @@
  */
     function realms_user_test()
     {
-        return array();
+        return [];
     }

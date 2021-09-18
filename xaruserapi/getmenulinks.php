@@ -18,16 +18,16 @@
 
 function realms_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     if (xarSecurity::check('ViewRealms', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'realms',
             'user',
             'main'
         ),
                               'title' => xarML(''),
-                              'label' => xarML(''));
+                              'label' => xarML(''), ];
     }
 
     return $menulinks;

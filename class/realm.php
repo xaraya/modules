@@ -16,7 +16,6 @@ sys::import('modules.dynamicdata.class.objects.list');
 
 class Realm extends DataObject
 {
-
 #---------------------------------------------------------
     # Constructor
 #
@@ -28,7 +27,7 @@ class Realm extends DataObject
     #---------------------------------------------------------
     # Create, update, delete, purge
 #
-    public function createItem(array $args = array())
+    public function createItem(array $args = [])
     {
         /*
                 // Create a group in roles for this realm
@@ -57,7 +56,7 @@ class Realm extends DataObject
         return $itemid;
     }
 
-    public function deleteItem(array $args = array())
+    public function deleteItem(array $args = [])
     {
         if (!empty($args['itemid'])) {
             $this->itemid = $args['itemid'];
