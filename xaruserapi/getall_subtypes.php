@@ -30,15 +30,15 @@ function mime_userapi_getall_subtypes($args)
 {
     extract($args);
 
-    $where = array();
-    $bind = array();
+    $where = [];
+    $bind = [];
 
     // The complete mime name can be passed in (type/subtype) and this
     // will be split up here for convenience.
     if (isset($mimeName) && is_string($mimeName)) {
         $parts = explode('/', strtolower(trim($mimeName)), 2);
         if (count($parts) == 2) {
-            list($typeName, $subtypeName) = $parts;
+            [$typeName, $subtypeName] = $parts;
         }
     }
 
@@ -99,7 +99,7 @@ function mime_userapi_getall_subtypes($args)
         return;
     }
 
-    $subtypeInfo = array();
+    $subtypeInfo = [];
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 

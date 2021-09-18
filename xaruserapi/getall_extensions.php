@@ -58,7 +58,7 @@ function mime_userapi_getall_extensions($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result | $result->EOF) {
-        return array();
+        return [];
     }
 
     while (!$result->EOF) {

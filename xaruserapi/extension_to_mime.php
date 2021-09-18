@@ -39,7 +39,7 @@ function mime_userapi_extension_to_mime($args)
     } else {
         $fileName = strtolower($fileName);
         $parts = explode('.', $fileName);
-        
+
         // if there is only one part, then there was no '.'
         // seperator, hence no extension. So we fallback
         // to analyze_file()
@@ -49,14 +49,14 @@ function mime_userapi_extension_to_mime($args)
                 'mime',
                 'user',
                 'get_extension',
-                array('extensionName' => $extension)
+                ['extensionName' => $extension]
             );
             if (!empty($extensionInfo)) {
                 $mimeType = xarMod::apiFunc(
                     'mime',
                     'user',
                     'get_mimetype',
-                    array('subtypeId' => $extensionInfo['subtypeId'])
+                    ['subtypeId' => $extensionInfo['subtypeId']]
                 );
                 if (!empty($mimeType)) {
                     return $mimeType;

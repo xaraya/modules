@@ -51,7 +51,7 @@ function mime_userapi_add_type($args)
                  )
             VALUES (?, ?)";
 
-    $bindvars = array($typeId, (string) $typeName);
+    $bindvars = [$typeId, (string) $typeName];
 
     $result = $dbconn->Execute($sql, $bindvars);
 

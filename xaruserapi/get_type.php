@@ -54,11 +54,11 @@ function mime_userapi_get_type($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result || $result->EOF) {
-        return array();
+        return [];
     }
 
     $row = $result->GetRowAssoc(false);
 
-    return array('typeId'   => (int)$row['id'],
-                 'typeName' => $row['name']);
+    return ['typeId'   => (int)$row['id'],
+                 'typeName' => $row['name'], ];
 }

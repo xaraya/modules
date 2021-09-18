@@ -55,12 +55,12 @@ function mime_userapi_get_extension($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result || $result->EOF) {
-        return array();
+        return [];
     }
 
     $row = $result->GetRowAssoc(false);
 
-    return array('subtypeId'     => $row['subtype_id'],
+    return ['subtypeId'     => $row['subtype_id'],
                  'extensionId'   => $row['id'],
-                 'extensionName' => $row['name']);
+                 'extensionName' => $row['name'], ];
 }

@@ -71,9 +71,9 @@ function mime_userapi_analyze_file($args)
         $parts = explode('.', $altFileName);
         if (is_array($parts) && count($parts)) {
             $extension = basename(end($parts));
-            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', ['extensionName' => $extension]);
             if (is_array($typeInfo) && count($typeInfo)) {
-                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', ['subtypeId' => $typeInfo['subtypeId']]);
                 return $mimeType;
             } else {
                 return 'application/octet-stream';
@@ -132,7 +132,7 @@ function mime_userapi_analyze_file($args)
                         'mime',
                         'user',
                         'get_mimetype',
-                        array('subtypeId' => $magicInfo['subtypeId'])
+                        ['subtypeId' => $magicInfo['subtypeId']]
                     );
                     if (!empty($mimeType)) {
                         return $mimeType;
@@ -144,9 +144,9 @@ function mime_userapi_analyze_file($args)
         $parts = explode('.', $altFileName);
         if (is_array($parts) && count($parts)) {
             $extension = basename(end($parts));
-            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', ['extensionName' => $extension]);
             if (is_array($typeInfo) && count($typeInfo)) {
-                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', ['subtypeId' => $typeInfo['subtypeId']]);
                 return $mimeType;
             }
         }
@@ -164,7 +164,7 @@ function mime_userapi_analyze_file($args)
         // get rid of printable characters so we can
         // use ctype_print to check for printable characters
         // which, in a binary file, there shouldn't be any
-        $value = str_replace(array("\n","\r","\t"), '', $value);
+        $value = str_replace(["\n","\r","\t"], '', $value);
 
         // if there are non-printable characters,
         // then the file is of application/octet-stream

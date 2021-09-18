@@ -69,7 +69,7 @@ function mime_userapi_add_subtype($args)
                  )
             VALUES (?, ?, ?, ?)";
 
-    $bindvars = array($subtypeId, (string)$subtypeName, (int)$typeId, (string)$subtypeDesc);
+    $bindvars = [$subtypeId, (string)$subtypeName, (int)$typeId, (string)$subtypeDesc];
 
     $result = $dbconn->Execute($sql, $bindvars);
 

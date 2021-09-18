@@ -57,14 +57,14 @@ function mime_userapi_get_magic($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result || $result->EOF) {
-        return array();
+        return [];
     }
 
     $row = $result->GetRowAssoc(false);
 
-    return array('subtypeId'   => $row['subtype_id'],
+    return ['subtypeId'   => $row['subtype_id'],
                  'magicId'     => $row['id'],
                  'magicValue'  => $row['value'],
                  'magicOffset' => $row['offset'],
-                 'magicLength' => $row['length']);
+                 'magicLength' => $row['length'], ];
 }

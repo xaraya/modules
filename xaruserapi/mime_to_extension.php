@@ -48,7 +48,7 @@ function mime_userapi_mime_to_extension($args)
     $q->join('mst.id', 'me.subtype_id');
     $q->eq('mt.name', $typeparts[0]);
     $q->eq('mst.name', $typeparts[1]);
-    
+
     $q->addfield('mt.name AS type_name');
     $q->addfield('mst.name AS subtype_name');
     $q->addfield('me.name AS extension');

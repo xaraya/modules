@@ -58,7 +58,7 @@ function mime_userapi_array_search_r($args)
     foreach ($haystack as $key => $value) {
         if (is_array($value)) {
             $indent++;
-            $match = mime_userapi_array_search_r(array('needle' => $needle, 'haystack' => $value));
+            $match = mime_userapi_array_search_r(['needle' => $needle, 'haystack' => $value]);
         } else {
             if ($value === $needle) {
                 $match[$indent] = $value;
@@ -72,7 +72,7 @@ function mime_userapi_array_search_r($args)
         }
     }
     $indent--;
-    
+
     if ($indent <= 0) {
         if (is_array($match)) {
             array_reverse($match);

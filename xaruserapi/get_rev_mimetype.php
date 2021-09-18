@@ -20,38 +20,38 @@
   *  @param  string     the mime type we want to lookup id's for
   *  returns array      An array of (subtypeId, subtypeName) or an empty array
   */
-  
+
 function mime_userapi_get_rev_mimetype($args)
 {
     extract($args);
-    
+
     if (empty($mimeType)) {
         // if not found return 0 for the id of both type / subtype
-        return array('typeId' => 0, 'subtypeId' => 0);
+        return ['typeId' => 0, 'subtypeId' => 0];
     }
     if (is_numeric($mimeType)) {
         // Do a lookup
-        $types = DataObjectMaster::getObject(array('name' => 'mime_types'));
-        $types->getItem(array('itemid' => $mimeType));
+        $types = DataObjectMaster::getObject(['name' => 'mime_types']);
+        $types->getItem(['itemid' => $mimeType]);
         $mimeType = $types->properties['name']->value;
     }
-    
+
     $mimeType = explode('/', $mimeType);
 
-    $typeInfo = xarMod::apiFunc('mime', 'user', 'get_type', array('typeName' => $mimeType[0]));
+    $typeInfo = xarMod::apiFunc('mime', 'user', 'get_type', ['typeName' => $mimeType[0]]);
     if (!isset($typeInfo['typeId'])) {
         // if not found return 0 for the id of both type / subtype
-        return array('typeId' => 0, 'subtypeId' => 0);
+        return ['typeId' => 0, 'subtypeId' => 0];
     } else {
         $typeId =& $typeInfo['typeId'];
     }
-    
-    $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', array('subtypeName' => $mimeType[1]));
-    
+
+    $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeName' => $mimeType[1]]);
+
     if (!isset($subtypeInfo['subtypeId'])) {
         // if not found return 0 for the subtypeId
-        return array('typeId' => $typeId, 'subtypeId' => 0);
+        return ['typeId' => $typeId, 'subtypeId' => 0];
     } else {
-        return array('typeId' => $typeId, 'subtypeId' => $subtypeInfo['subtypeId']);
+        return ['typeId' => $typeId, 'subtypeId' => $subtypeInfo['subtypeId']];
     }
 }

@@ -27,33 +27,33 @@ function mime_init()
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
-    $fields['mime_type'] = array(
-        'id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'name'        => array('type'=>'varchar',  'null'=>false,  'size'=>255),
-        'state'       => array('type' => 'integer', 'null' => false, 'default' => 3),
-    );
+    $fields['mime_type'] = [
+        'id'          => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+        'name'        => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+        'state'       => ['type' => 'integer', 'null' => false, 'default' => 3],
+    ];
 
-    $fields['mime_subtype'] = array(
-        'id'            => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'name'          => array('type'=>'varchar',  'null'=>false,  'size'=>255),
-        'type_id'       => array('type'=>'integer',  'null'=>false),
-        'description'   => array('type'=>'varchar',  'null'=>true,  'size'=>255),
-        'state'         => array('type' => 'integer', 'null' => false, 'default' => 3),
-    );
+    $fields['mime_subtype'] = [
+        'id'            => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+        'name'          => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+        'type_id'       => ['type'=>'integer',  'null'=>false],
+        'description'   => ['type'=>'varchar',  'null'=>true,  'size'=>255],
+        'state'         => ['type' => 'integer', 'null' => false, 'default' => 3],
+    ];
 
-    $fields['mime_extension'] = array(
-        'id'            => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'subtype_id'    => array('type'=>'integer',  'null'=>false),
-        'name'          => array('type'=>'varchar',  'null'=>false,  'size'=>10)
-    );
+    $fields['mime_extension'] = [
+        'id'            => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+        'subtype_id'    => ['type'=>'integer',  'null'=>false],
+        'name'          => ['type'=>'varchar',  'null'=>false,  'size'=>10],
+    ];
 
-    $fields['mime_magic'] = array(
-        'id'         => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'subtype_id' => array('type'=>'integer',  'null'=>false),
-        'value'      => array('type'=>'varchar',  'null'=>false, 'size'=>255),
-        'length'     => array('type'=>'integer',  'null'=>false),
-        'offset'     => array('type'=>'integer',  'null'=>false)
-    );
+    $fields['mime_magic'] = [
+        'id'         => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+        'subtype_id' => ['type'=>'integer',  'null'=>false],
+        'value'      => ['type'=>'varchar',  'null'=>false, 'size'=>255],
+        'length'     => ['type'=>'integer',  'null'=>false],
+        'offset'     => ['type'=>'integer',  'null'=>false],
+    ];
 
     // Create all the tables and, if there are errors
     // just make a note of them for now - we don't want
@@ -112,14 +112,14 @@ function mime_init()
     # Create DD objects
     #
     $module = 'mime';
-    $objects = array(
+    $objects = [
                         'mime_types',
                         'mime_subtypes',
                         'mime_magic',
                         'mime_extensions',
-                         );
+                         ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -162,5 +162,5 @@ function mime_upgrade($oldversion)
 function mime_delete()
 {
     $module = 'mime';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }

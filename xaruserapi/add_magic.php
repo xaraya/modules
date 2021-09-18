@@ -84,7 +84,7 @@ function mime_userapi_add_magic($args)
                  )
             VALUES (?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $magicId, $subtypeId, (string) $magicValue, (int) $magicOffset, (int) $magicLength);
+    $bindvars = [(int) $magicId, $subtypeId, (string) $magicValue, (int) $magicOffset, (int) $magicLength];
 
     $result = $dbconn->Execute($sql, $bindvars);
 

@@ -29,7 +29,7 @@
 function mime_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     $mime_type      = xarDB::getPrefix() . '_mime_type';
     $mime_subtype   = xarDB::getPrefix() . '_mime_subtype';

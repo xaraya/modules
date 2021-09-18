@@ -61,7 +61,7 @@ function mime_userapi_add_extension($args)
                    name
                  )
             VALUES (?, ?, ?)";
-    $bindvars = array((int) $subtypeId, $extensionId, (string) strtolower($extensionName));
+    $bindvars = [(int) $subtypeId, $extensionId, (string) strtolower($extensionName)];
 
     $result = $dbconn->Execute($sql, $bindvars);
 

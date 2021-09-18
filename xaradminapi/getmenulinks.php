@@ -19,5 +19,5 @@
 
     function mime_adminapi_getmenulinks()
     {
-        return xarMod::apiFunc('base', 'admin', 'menuarray', array('module' => 'mime'));
+        return xarMod::apiFunc('base', 'admin', 'menuarray', ['module' => 'mime']);
     }

@@ -48,12 +48,12 @@ function mime_userapi_getall_types($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) {
-        return array();
+        return [];
     }
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
     while (!$result->EOF) {
