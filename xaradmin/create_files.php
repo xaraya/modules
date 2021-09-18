@@ -18,11 +18,11 @@
         if (!xarSecurity::check('ManageSitemapper')) {
             return;
         }
-        
+
         // Get the link data
-        $object = DataObjectMaster::getObjectList(array('name' => 'sitemapper_links'));
+        $object = DataObjectMaster::getObjectList(['name' => 'sitemapper_links']);
         $where = 'state = 3';
-        $data['items'] = $object->getItems(array('where' => $where));
+        $data['items'] = $object->getItems(['where' => $where]);
 
         if (empty($items)) {
 
@@ -33,7 +33,7 @@
             $tplInputString .= '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplInputString .= xarModVars::get('sitemapper', 'template');
             $tplInputString .= '</xar:template>';
-            
+
             // Run the template and its data through the compiler
             try {
                 $tplString = $blCompiler->compilestring($tplInputString);
@@ -53,7 +53,7 @@
             try {
                 file_put_contents($filename . ".xml", $tplString);
             } catch (Exception $e) {
-                return xarTpl::module('sitemapper', 'user', 'errors', array('layout' => 'no_permission'));
+                return xarTpl::module('sitemapper', 'user', 'errors', ['layout' => 'no_permission']);
             }
         }
         if (xarModVars::get('sitemapper', 'file_create_zip')) {
@@ -64,9 +64,9 @@
             try {
                 file_put_contents($filename . ".gz", gzencode($tplString));
             } catch (Exception $e) {
-                return xarTpl::module('sitemapper', 'user', 'errors', array('layout' => 'no_permission'));
+                return xarTpl::module('sitemapper', 'user', 'errors', ['layout' => 'no_permission']);
             }
         }
-        
+
         return $data;
     }

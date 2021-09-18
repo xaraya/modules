@@ -30,11 +30,11 @@
     $modversion['user']           = false;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Miscellaneous';
-    $modversion['dependency']     = array();
-    $modversion['securityschema'] = array();
-    $modversion['dependencyinfo'] = array(
-                                        0 => array(
+    $modversion['dependency']     = [];
+    $modversion['securityschema'] = [];
+    $modversion['dependencyinfo'] = [
+                                        0 => [
                                                 'name' => 'Xaraya Core',
-                                                'version_ge' => '2.2.0'
-                                             ),
-                                          );
+                                                'version_ge' => '2.2.0',
+                                             ],
+                                          ];

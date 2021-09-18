@@ -18,28 +18,28 @@
             return;
         }
         if ($data['regenerate']) {
-            $object = DataObjectMaster::getObjectList(array('name' => 'sitemapper_sources'));
+            $object = DataObjectMaster::getObjectList(['name' => 'sitemapper_sources']);
             $where = 'state = 3';
-            $data['items'] = $object->getItems(array('where' => $where));
+            $data['items'] = $object->getItems(['where' => $where]);
             // Run through all the sources entries and get the locations to be included in the file
-            $data['locations'] = array();
-            
+            $data['locations'] = [];
+
             foreach ($data['items'] as $key => $source) {
-            
+
                 // Ignore modules that are not active
                 if (!xarMod::isAvailable($source['module'])) {
                     continue;
                 }
-                
+
                 // Get the links of this source
                 switch ($source['source_type']) {
-                
+
                     // Single page
                     case 1:
                         $linkdata = xarController::URL($source['module'], $source['display_type'], $source['display_function']);
                         if (is_array($linkdata)) {
                             // Need a special function here for each module
-                            $locationdata = array();
+                            $locationdata = [];
                             if (isset($linkdata['url'])) {
                                 $locationdata['url'] = $linkdata['url'];
                             }
@@ -53,12 +53,12 @@
                             $data['locations'][] = $link;
                         }
                     break;
-                    
+
                     // Multiple pages
                     case 2:
                         $linkdata = xarMod::apiFunc($source['module'], $source['gen_type'], $source['gen_function']);
                         foreach ($linkdata as $link) {
-                            $locationdata = array();
+                            $locationdata = [];
                             if (isset($link['url'])) {
                                 $locationdata['url'] = $link['url'];
                             }
@@ -70,14 +70,14 @@
                     break;
                 }
             }
-            
+
             // Empty the table
             sys::import('xaraya.structures.query');
             $tables =& xarDB::getTables();
             $q = new Query('DELETE', $tables['sitemapper_links']);
             $q->run();
-            
-            $object = DataObjectMaster::getObject(array('name' => 'sitemapper_links'));
+
+            $object = DataObjectMaster::getObject(['name' => 'sitemapper_links']);
             $defaultfields = $object->getFieldValues();
             foreach ($data['locations'] as $location) {
                 if (isset($location['url'])) {
@@ -87,7 +87,7 @@
                     $defaultfields['last_modified'] = (int)$location['modified'];
                 }
                 $object->setFieldValues($defaultfields);
-                $object->createItem(array('itemid' => 0));
+                $object->createItem(['itemid' => 0]);
             }
         } else {
         }

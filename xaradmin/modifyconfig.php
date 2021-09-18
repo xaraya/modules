@@ -27,21 +27,21 @@ function sitemapper_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'sitemapper'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'sitemapper']);
     $data['module_settings']->setFieldList('items_per_page,, use_module_alias, use_module_icons');
     $data['module_settings']->getItem();
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $engines = DataObjectMaster::getObjectList(array('name' => 'sitemapper_engines'));
-    $data['engines'] = $engines->getItems(array('where' => 'state = 3'));
+    $engines = DataObjectMaster::getObjectList(['name' => 'sitemapper_engines']);
+    $data['engines'] = $engines->getItems(['where' => 'state = 3']);
     $modules_available = xarMod::apiFunc('modules', 'admin', 'getitems');
-    
+
     // Resort so that we get the regids in the checkboxlist
-    $data['modules_available'] = array();
+    $data['modules_available'] = [];
     foreach ($modules_available as $row) {
-        $data['modules_available'][] = array('id' => $row['regid'], 'name' => $row['name']);
+        $data['modules_available'][] = ['id' => $row['regid'], 'name' => $row['name']];
     }
-    
+
     switch (strtolower($phase)) {
         case 'modify':
         default:
@@ -61,7 +61,7 @@ function sitemapper_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             switch ($data['tab']) {
                 case 'general':
@@ -91,12 +91,12 @@ function sitemapper_admin_modifyconfig()
                     xarModVars::set('sitemapper', 'zip_filename', $zip_filename);
 
                     // Get a chekcbox list sys::import('modules.dynamicdata.class.properties.master');
-                    $checkbox_list = DataPropertyMaster::getProperty(array('name' => 'checkboxlist'));
-                    
+                    $checkbox_list = DataPropertyMaster::getProperty(['name' => 'checkboxlist']);
+
                     // Get the value for the engines to submit to
                     $checkbox_list->checkInput('submit_engines');
                     xarModVars::set('sitemapper', 'submit_engines', $checkbox_list->value);
-            
+
                     // Get the value for the engines to submit to
                     $checkbox_list->checkInput('modules_to_map');
                     xarModVars::set('sitemapper', 'modules_to_map', $checkbox_list->value);

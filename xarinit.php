@@ -65,7 +65,7 @@
         if (!$q->run($query)) {
             return;
         }
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_engines";
         if (!$q->run($query)) {
             return;
@@ -125,7 +125,7 @@
         #
         # Set up configuration modvars (general)
         #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'sitemapper'));
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'sitemapper']);
         $module_settings->initialize();
 
         # --------------------------------------------------------
@@ -165,14 +165,14 @@
         # Create DD objects
         #
         $module = 'sitemapper';
-        $objects = array(
+        $objects = [
 //                       'sitemapper_maps',
                        'sitemapper_engines',
                        'sitemapper_sources',
                        'sitemapper_links',
-                         );
+                         ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
 
@@ -189,7 +189,7 @@
         // Only change the next line. No need for anything else
         $module = 'sitemapper';
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module])) {
             return false;
         }
 

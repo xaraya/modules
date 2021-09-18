@@ -18,7 +18,7 @@
     function sitemapper_xartables()
     {
         // Initialise table array
-        $xartable = array();
+        $xartable = [];
 
         $xartable['sitemapper_links'] = xarDB::getPrefix() . '_sitemapper_links';
         $xartable['sitemapper_maps'] = xarDB::getPrefix() . '_sitemapper_maps';
