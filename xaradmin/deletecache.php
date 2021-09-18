@@ -37,7 +37,7 @@ function sitetools_admin_deletecache($args)
     if (!xarSecurity::check('DeleteSiteTools')) {
         return;
     }
-    $data[]=array();
+    $data[]=[];
     /* Check for confirmation. */
     if (empty($confirm)) {
         /* No confirmation yet - display a suitable form to obtain confirmation
@@ -78,12 +78,12 @@ function sitetools_admin_deletecache($args)
                     return $msg;
                 } else { /* making a few assumptions about structure of adodb cache subdirs and files here */
                     $handle=opendir($adopath);
-                    $skip_array = array('.','..','SCCS','index.htm','index.html');
+                    $skip_array = ['.','..','SCCS','index.htm','index.html'];
                     while (false !== ($file = readdir($handle))) {
                         if (!in_array($file, $skip_array)) {
                             $subhandle=opendir("{$adopath}/{$file}");
                             /* iansym::these are the files we do not want to delete */
-                            $skip_array2 = array('.','..','SCCS');
+                            $skip_array2 = ['.','..','SCCS'];
                             while (false !== ($sfile = readdir($subhandle))) {
                                 /* check the skip array and delete files that are not in it */
                                 if (!in_array($sfile, $skip_array2)) {
@@ -114,7 +114,7 @@ function sitetools_admin_deletecache($args)
                 } else {
                     $handle=opendir($rsspath);
                     /* iansym::these are the files we do not want to delete */
-                    $skip_array = array('.','..','SCCS','index.htm','index.html');
+                    $skip_array = ['.','..','SCCS','index.htm','index.html'];
                     while (false !== ($file = readdir($handle))) {
                         /* check the skip array and delete files that are not in it */
                         if (!in_array($file, $skip_array)) {
@@ -143,7 +143,7 @@ function sitetools_admin_deletecache($args)
                 } else {
                     $handle=opendir($templpath);
                     /* iansym::these are the files we do not want to delete */
-                    $skip_array = array('.','..','index.htm','index.html','SCCS');
+                    $skip_array = ['.','..','index.htm','index.html','SCCS'];
                     while (false !== ($file = readdir($handle))) {
                         /* check the skip array and delete files that are not in it */
                         if (!in_array($file, $skip_array)) {

@@ -21,7 +21,7 @@ function sitetools_adminapi_getlinkfields($args)
 {
     extract($args);
 
-    $modules = array();
+    $modules = [];
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
 
@@ -30,7 +30,7 @@ function sitetools_adminapi_getlinkfields($args)
         $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
         $fieldformats = xarMod::apiFunc('articles', 'user', 'getpubfieldformats');
         foreach ($pubtypes as $pubid => $pubtype) {
-            $fields = array();
+            $fields = [];
             foreach ($pubtype['config'] as $field => $info) {
                 if (empty($info['label'])) {
                     continue;
@@ -46,9 +46,9 @@ function sitetools_adminapi_getlinkfields($args)
                         } else {
                             $type = $info['format'];
                         }
-                        $fields[] = array('name' => $info['label'],
+                        $fields[] = ['name' => $info['label'],
                                           'field' => 'articles.' . $pubid . '.' . $field,
-                                          'type' => $type);
+                                          'type' => $type, ];
                         break;
                     default:
                         break;
@@ -58,8 +58,8 @@ function sitetools_adminapi_getlinkfields($args)
                 'dynamicdata',
                 'user',
                 'getobject',
-                array('module' => 'articles',
-                                          'itemtype' => $pubid)
+                ['module' => 'articles',
+                                          'itemtype' => $pubid, ]
             );
             if (!empty($object) && count($object->properties) > 0) {
                 foreach ($object->properties as $name => $property) {
@@ -70,9 +70,9 @@ function sitetools_adminapi_getlinkfields($args)
                         //case 'imagelist':
                         case 'urlicon':
                         case 'urltitle':
-                            $fields[] = array('name' => $property->label,
+                            $fields[] = ['name' => $property->label,
                                               'field' => 'articles.' . $pubid . '.' . $name,
-                                              'type' => $proptypes[$property->type]['label']);
+                                              'type' => $proptypes[$property->type]['label'], ];
                             break;
                         default:
                             break;
@@ -91,10 +91,10 @@ function sitetools_adminapi_getlinkfields($args)
         'dynamicdata',
         'user',
         'getobject',
-        array('module' => 'roles')
+        ['module' => 'roles']
     );
     if (!empty($rolesobject) && count($rolesobject->properties) > 0) {
-        $fields = array();
+        $fields = [];
         foreach ($rolesobject->properties as $name => $property) {
             switch ($proptypes[$property->type]['name']) {
                 case 'url':
@@ -103,9 +103,9 @@ function sitetools_adminapi_getlinkfields($args)
                 //case 'imagelist':
                 case 'urlicon':
                 case 'urltitle':
-                    $fields[] = array('name' => $property->label,
+                    $fields[] = ['name' => $property->label,
                                       'field' => 'roles.0.' . $name,
-                                      'type' => $proptypes[$property->type]['label']);
+                                      'type' => $proptypes[$property->type]['label'], ];
                     break;
                 default:
                     break;

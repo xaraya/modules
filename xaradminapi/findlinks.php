@@ -45,7 +45,7 @@ function sitetools_adminapi_findlinks($args)
         return;
     }
 
-    $count = array();
+    $count = [];
 
     $server = xarServer::getHost();
 
@@ -58,8 +58,8 @@ function sitetools_adminapi_findlinks($args)
         foreach ($fields['articles'] as $ptid => $fieldlist) {
             $descr = $pubtypes[$ptid]['descr'];
             $count[$descr] = 0;
-            $articlefields = array();
-            $dynamicfields = array();
+            $articlefields = [];
+            $dynamicfields = [];
             // get the list of defined columns for articles
             $columns = array_keys($pubtypes[$ptid]['config']);
             foreach ($fieldlist as $field) {
@@ -70,7 +70,7 @@ function sitetools_adminapi_findlinks($args)
                 }
             }
             if (count($articlefields) > 0) {
-                $where = array();
+                $where = [];
                 foreach ($articlefields as $field) {
                     $where[] = $field . " ne ''";
                 }
@@ -86,11 +86,11 @@ function sitetools_adminapi_findlinks($args)
                     'articles',
                     'user',
                     'getall',
-                    array('ptid' => $ptid,
+                    ['ptid' => $ptid,
                                              'fields' => $getfields,
-                                             'where' => $whereclause)
+                                             'where' => $whereclause, ]
                 );
-                $serialized = array();
+                $serialized = [];
                 foreach ($articlefields as $field) {
                     if ($pubtypes[$ptid]['config'][$field]['format'] == 'urltitle') {
                         $serialized[$field] = 1;
@@ -101,7 +101,7 @@ function sitetools_adminapi_findlinks($args)
                         'articles',
                         'user',
                         'display',
-                        array('aid' => $item['aid'])
+                        ['aid' => $item['aid']]
                     );
                     foreach ($articlefields as $field) {
                         if (empty($item[$field])) {
@@ -122,7 +122,7 @@ function sitetools_adminapi_findlinks($args)
                         $id = $dbconn->GenId($linkstable);
                         $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                        $bindvars = array($id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url);
+                        $bindvars = [$id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url];
                         $result =& $dbconn->Execute($query, $bindvars);
                         if (!$result) {
                             return;
@@ -132,20 +132,20 @@ function sitetools_adminapi_findlinks($args)
                 }
             }
             if (count($dynamicfields) > 0) {
-                $where = array();
+                $where = [];
                 foreach ($dynamicfields as $field) {
                     $where[] = $field . " ne ''";
                 }
                 $whereclause = join(' or ', $where);
-                $object = new Dynamic_Object_List(array('moduleid' => $modid,
+                $object = new Dynamic_Object_List(['moduleid' => $modid,
                                                         'itemtype' => $ptid,
                                                         'fieldlist' => $fieldlist,
-                                                        'where' => $whereclause));
-                $object->joinTable(array('table' => $articlestable,
+                                                        'where' => $whereclause, ]);
+                $object->joinTable(['table' => $articlestable,
                                          'key' => 'aid',
-                                         'fields' => array('aid','title')));
+                                         'fields' => ['aid','title'], ]);
                 $items = $object->getItems();
-                $serialized = array();
+                $serialized = [];
                 foreach ($dynamicfields as $field) {
                     if ($object->properties[$field]->type == 41) { // urltitle
                         $serialized[$field] = 1;
@@ -156,7 +156,7 @@ function sitetools_adminapi_findlinks($args)
                         'articles',
                         'user',
                         'display',
-                        array('aid' => $item['aid'])
+                        ['aid' => $item['aid']]
                     );
                     foreach ($dynamicfields as $field) {
                         if (empty($item[$field])) {
@@ -177,7 +177,7 @@ function sitetools_adminapi_findlinks($args)
                         $id = $dbconn->GenId($linkstable);
                         $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                        $bindvars = array($id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url);
+                        $bindvars = [$id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url];
                         $result =& $dbconn->Execute($query, $bindvars);
                         if (!$result) {
                             return;
@@ -194,23 +194,23 @@ function sitetools_adminapi_findlinks($args)
         $modid = xarMod::getRegID('roles');
         $rolestable = $xartable['roles'];
         // only 1 itemtype for now, but groups might have separate DD fields later on
-        $descr = array(0 => xarML('Users'),
-                       1 => xarML('Groups'));
+        $descr = [0 => xarML('Users'),
+                       1 => xarML('Groups'), ];
         foreach ($fields['roles'] as $itemtype => $fieldlist) {
-            $where = array();
+            $where = [];
             foreach ($fieldlist as $field) {
                 $where[] = $field . " ne ''";
             }
             $whereclause = join(' or ', $where);
-            $object = new Dynamic_Object_List(array('moduleid' => $modid,
+            $object = new Dynamic_Object_List(['moduleid' => $modid,
                                                     'itemtype' => $itemtype,
                                                     'fieldlist' => $fieldlist,
-                                                    'where' => $whereclause));
-            $object->joinTable(array('table' => $rolestable,
+                                                    'where' => $whereclause, ]);
+            $object->joinTable(['table' => $rolestable,
                                      'key' => 'uid',
-                                     'fields' => array('uid','name')));
+                                     'fields' => ['uid','name'], ]);
             $items = $object->getItems();
-            $serialized = array();
+            $serialized = [];
             foreach ($fieldlist as $field) {
                 if ($object->properties[$field]->type == 41) { // urltitle
                     $serialized[$field] = 1;
@@ -222,7 +222,7 @@ function sitetools_adminapi_findlinks($args)
                     'roles',
                     'user',
                     'display',
-                    array('uid' => $itemid)
+                    ['uid' => $itemid]
                 );
                 foreach ($fieldlist as $field) {
                     if (empty($item[$field])) {
@@ -243,7 +243,7 @@ function sitetools_adminapi_findlinks($args)
                     $id = $dbconn->GenId($linkstable);
                     $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                    $bindvars = array($id, $item[$field], 0, $modid, $itemtype, $itemid, $item['name'], $url);
+                    $bindvars = [$id, $item[$field], 0, $modid, $itemtype, $itemid, $item['name'], $url];
                     $result =& $dbconn->Execute($query, $bindvars);
                     if (!$result) {
                         return;

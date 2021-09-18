@@ -33,9 +33,9 @@ function sitetools_init()
      * the physical field name.  The element contains another array specifying the
      * data type and associated parameters
      */
-    $fields = array('xar_stid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-                    'xar_stgained' => array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2)
-                );
+    $fields = ['xar_stid' => ['type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true],
+                    'xar_stgained' => ['type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2],
+                ];
 
     $query = xarTableDDL::createTable($sitetoolstable, $fields);
     if (empty($query)) {
@@ -51,38 +51,38 @@ function sitetools_init()
     $linkstable = $xartable['sitetools_links'];
     $query = xarTableDDL::createTable(
         $linkstable,
-        array('xar_id'         => array('type'        => 'integer',
+        ['xar_id'         => ['type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
-                                                            'primary_key' => true),
-                                   'xar_link'       => array('type'        => 'varchar',
+                                                            'primary_key' => true, ],
+                                   'xar_link'       => ['type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
-                                                            'default'     => ''),
-                                   'xar_status'     => array('type'        => 'integer',
+                                                            'default'     => '', ],
+                                   'xar_status'     => ['type'        => 'integer',
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'xar_moduleid'   => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'xar_moduleid'   => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'xar_itemtype'   => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'xar_itemtype'   => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'xar_itemid'     => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'xar_itemid'     => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'xar_itemtitle'  => array('type'        => 'varchar',
+                                                            'default'     => '0', ],
+                                   'xar_itemtitle'  => ['type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
-                                                            'default'     => ''),
-                                   'xar_itemlink'   => array('type'        => 'varchar',
+                                                            'default'     => '', ],
+                                   'xar_itemlink'   => ['type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
-                                                            'default'     => ''),
-                                  )
+                                                            'default'     => '', ],
+                                  ]
     );
 
     if (empty($query)) {
@@ -96,11 +96,11 @@ function sitetools_init()
     }
 
     /* allow several entries for the same link here */
-    $index = array(
+    $index = [
         'name'      => 'i_' . xarDB::getPrefix() . '_sitetools_links_link',
-        'fields'    => array('xar_link'),
-        'unique'    => false
-    );
+        'fields'    => ['xar_link'],
+        'unique'    => false,
+    ];
     $query = xarTableDDL::createIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
@@ -108,11 +108,11 @@ function sitetools_init()
     }
 
     /* allow several links for the same module item */
-    $index = array(
+    $index = [
         'name'      => 'i_' . xarDB::getPrefix() . '_sitetools_links_combo',
-        'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
-        'unique'    => false
-    );
+        'fields'    => ['xar_moduleid','xar_itemtype','xar_itemid'],
+        'unique'    => false,
+    ];
     $query = xarTableDDL::createIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
@@ -120,11 +120,11 @@ function sitetools_init()
     }
 
     /* allow many entries with the same status here */
-    $index = array(
+    $index = [
         'name'      => 'i_' . xarDB::getPrefix() . '_sitetools_links_status',
-        'fields'    => array('xar_status'),
-        'unique'    => false
-    );
+        'fields'    => ['xar_status'],
+        'unique'    => false,
+    ];
     $query = xarTableDDL::createIndex($linkstable, $index);
     $result =& $dbconn->Execute($query);
     if (!$result) {
@@ -136,7 +136,7 @@ function sitetools_init()
         'dynamicdata',
         'util',
         'import',
-        array('file' => sys::code() . 'modules/sitetools/sitetools_links.xml')
+        ['file' => sys::code() . 'modules/sitetools/sitetools_links.xml']
     );
     if (empty($objectid)) {
         return;
@@ -202,39 +202,39 @@ function sitetools_upgrade($oldversion)
             $linkstable = $xartable['sitetools_links'];
             $query = xarTableDDL::createTable(
                 $linkstable,
-                array('xar_id'         => array('type'        => 'integer',
+                ['xar_id'         => ['type'        => 'integer',
                                                                     'null'       => false,
                                                                     'increment'  => true,
-                                                                    'primary_key' => true),
-                                           'xar_link'       => array('type'        => 'varchar',
+                                                                    'primary_key' => true, ],
+                                           'xar_link'       => ['type'        => 'varchar',
                                                                     'size'        => 254,
                                                                     'null'        => false,
-                                                                    'default'     => ''),
-                                           'xar_status'     => array('type'        => 'integer',
+                                                                    'default'     => '', ],
+                                           'xar_status'     => ['type'        => 'integer',
                                                                     'null'        => false,
-                                                                    'default'     => '0'),
+                                                                    'default'     => '0', ],
         /* TODO: replace with unique id*/
-                                           'xar_moduleid'   => array('type'        => 'integer',
+                                           'xar_moduleid'   => ['type'        => 'integer',
                                                                     'unsigned'    => true,
                                                                     'null'        => false,
-                                                                    'default'     => '0'),
-                                           'xar_itemtype'   => array('type'        => 'integer',
+                                                                    'default'     => '0', ],
+                                           'xar_itemtype'   => ['type'        => 'integer',
                                                                     'unsigned'    => true,
                                                                     'null'        => false,
-                                                                    'default'     => '0'),
-                                           'xar_itemid'     => array('type'        => 'integer',
+                                                                    'default'     => '0', ],
+                                           'xar_itemid'     => ['type'        => 'integer',
                                                                     'unsigned'    => true,
                                                                     'null'        => false,
-                                                                    'default'     => '0'),
-                                           'xar_itemtitle'  => array('type'        => 'varchar',
+                                                                    'default'     => '0', ],
+                                           'xar_itemtitle'  => ['type'        => 'varchar',
                                                                     'size'        => 254,
                                                                     'null'        => false,
-                                                                    'default'     => ''),
-                                           'xar_itemlink'   => array('type'        => 'varchar',
+                                                                    'default'     => '', ],
+                                           'xar_itemlink'   => ['type'        => 'varchar',
                                                                     'size'        => 254,
                                                                     'null'        => false,
-                                                                    'default'     => ''),
-                                          )
+                                                                    'default'     => '', ],
+                                          ]
             );
 
             if (empty($query)) {
@@ -248,11 +248,11 @@ function sitetools_upgrade($oldversion)
             }
 
             /* allow several entries for the same link here */
-            $index = array(
+            $index = [
                 'name'      => 'i_' . xarDB::getPrefix() . '_sitetools_links_link',
-                'fields'    => array('xar_link'),
-                'unique'    => false
-            );
+                'fields'    => ['xar_link'],
+                'unique'    => false,
+            ];
             $query = xarTableDDL::createIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
@@ -260,11 +260,11 @@ function sitetools_upgrade($oldversion)
             }
 
             /* allow several links for the same module item */
-            $index = array(
+            $index = [
                 'name'      => 'i_' . xarDB::getPrefix() . '_sitetools_links_combo',
-                'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
-                'unique'    => false
-            );
+                'fields'    => ['xar_moduleid','xar_itemtype','xar_itemid'],
+                'unique'    => false,
+            ];
             $query = xarTableDDL::createIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
@@ -272,11 +272,11 @@ function sitetools_upgrade($oldversion)
             }
 
             /* allow many entries with the same status here */
-            $index = array(
+            $index = [
                 'name'      => 'i_' . xarDB::getPrefix() . '_sitetools_links_status',
-                'fields'    => array('xar_status'),
-                'unique'    => false
-            );
+                'fields'    => ['xar_status'],
+                'unique'    => false,
+            ];
             $query = xarTableDDL::createIndex($linkstable, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) {
@@ -288,7 +288,7 @@ function sitetools_upgrade($oldversion)
                 'dynamicdata',
                 'util',
                 'import',
-                array('file' => 'modules/sitetools/sitetools_links.xml')
+                ['file' => 'modules/sitetools/sitetools_links.xml']
             );
             if (empty($objectid)) {
                 return;
@@ -339,7 +339,7 @@ function sitetools_delete()
             'dynamicdata',
             'admin',
             'deleteobject',
-            array('objectid' => $objectid)
+            ['objectid' => $objectid]
         );
         xarModVars::delete('sitetools', 'objectid_links');
     }

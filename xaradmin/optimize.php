@@ -39,15 +39,15 @@ function sitetools_admin_optimize()
         return $data;
     }
     /* If we get here it means that the user has confirmed the action */
-    $data=array();
+    $data=[];
     /* Confirm authorisation code. */
     if (!xarSec::confirmAuthKey()) {
         return;
     }
 
     /* Start optimization api */
-    $data=array();
-    $tabledata=array();
+    $data=[];
+    $tabledata=[];
     $total_gain=0;
     $total_kbs=0;
     //optimize and get data for each table's result
@@ -81,7 +81,7 @@ function sitetools_admin_optimize()
         'sitetools',
         'admin',
         'create',
-        array('totalgain' => $data['totalgain'])
+        ['totalgain' => $data['totalgain']]
     );
 
     if (!isset($optid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {

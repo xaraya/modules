@@ -14,7 +14,7 @@
 function sitetools_adminapi_menu()
 {
     // Initialise the array that will hold the menu configuration
-    $menu = array();
+    $menu = [];
     // Specify the menu title to be used in your blocklayout template
     $menu['menutitle'] = xarML('SiteTools Administration');
     // Specify the menu labels to be used in your blocklayout template

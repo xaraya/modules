@@ -43,7 +43,7 @@ function sitetools_admin_backup($args)
         return;
     }
 
-    $data=array();
+    $data=[];
     /*setup variables */
     $data['usegz']=$usegz;
     $data['screen']=$screen;
@@ -79,7 +79,7 @@ function sitetools_admin_backup($args)
          * of this action from the user
          * setup option links
          */
-        $data['backupops']=array();
+        $data['backupops']=[];
         $data['backupops']['complete'] = xarML('Full backup - complete inserts');
         $data['backupops']['standard'] = xarML('Full backup - standard inserts');
         $data['backupops']['partial'] =  xarML('Partial - select tables, complete inserts');
@@ -91,7 +91,7 @@ function sitetools_admin_backup($args)
     } elseif ($startbackup) {
         $confirm='';
         if ($startbackup =='partial') {
-            $tabledata=array();
+            $tabledata=[];
             $tabledata=xarMod::apiFunc('sitetools', 'admin', 'gettabledata');
             if ($tabledata == false) {
                 /* Throw back any system exceptions (e.g. database failure) */
@@ -109,7 +109,7 @@ function sitetools_admin_backup($args)
                 return $status;
             }
             /* set javascript header */
-            xarMod::apiFunc('base', 'javascript', 'modulefile', array('filename'=>'sitetools_admin_backup.js'));
+            xarMod::apiFunc('base', 'javascript', 'modulefile', ['filename'=>'sitetools_admin_backup.js']);
 
             $data['dbtables']    = $tabledata['dbtables'];
             $tabletotal          = $tabledata['tabletotal'];
@@ -125,17 +125,17 @@ function sitetools_admin_backup($args)
         }
         @set_time_limit(600);
 
-        $bkupdata=array();
+        $bkupdata=[];
         $bkupdata= xarMod::apiFunc(
             'sitetools',
             'admin',
             'backupdb',
-            array('usegz'          => $data['usegz'],
+            ['usegz'          => $data['usegz'],
                                       'startbackup'    => $data['startbackup'],
                                       'screen'         => $data['screen'],
                                       'SelectedTables' => $SelectedTables,
                                       'dbname'         => $dbname,
-                                      'dbtype'         => $dbtype)
+                                      'dbtype'         => $dbtype, ]
         );
 
 
@@ -180,13 +180,13 @@ function sitetools_admin_backup($args)
             'sitetools',
             'admin',
             'downloadbkup',
-            array('savefile' => $data['bkname'])
+            ['savefile' => $data['bkname']]
         );
         $data['deleteurl']= xarController::URL(
             'sitetools',
             'admin',
             'downloaddel',
-            array('savefile' => $data['bkname'])
+            ['savefile' => $data['bkname']]
         );
     }
 

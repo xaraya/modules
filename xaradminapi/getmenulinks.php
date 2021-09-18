@@ -18,65 +18,65 @@
  */
 function sitetools_adminapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     /* Security Check */
     if (xarSecurity::check('AdminSiteTools', 0)) {
         /* The main menu will look for this array and return it for a tree view of the module*/
 
-        $menulinks[] = array('url' => xarController::URL(
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'optimize'
         ),
             'title' => xarML('Optimize a database'),
-            'label' => xarML('Optimize database'));
+            'label' => xarML('Optimize database'), ];
 
-        $menulinks[] = array('url' => xarController::URL(
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'backup'
         ),
             'title' => xarML('Backup a database'),
-            'label' => xarML('Backup database'));
-        $menulinks[] = array('url' => xarController::URL(
+            'label' => xarML('Backup database'), ];
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'terminal'
         ),
             'title' => xarML('Access Database SQL via a simple web terminal'),
-            'label' => xarML('SQL Terminal'));
-        $menulinks[] = array('url' => xarController::URL(
+            'label' => xarML('SQL Terminal'), ];
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'cacheview'
         ),
             'title' => xarML('Browse template cache files'),
-            'label' => xarML('Browse template cache'));
+            'label' => xarML('Browse template cache'), ];
 
-        $menulinks[] = array('url' => xarController::URL(
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'deletecache'
         ),
             'title' => xarML('Clear template, rss and adodb cache files'),
-            'label' => xarML('Flush template cache'));
+            'label' => xarML('Flush template cache'), ];
 
-        $menulinks[] = array('url' => xarController::URL(
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'links'
         ),
             'title' => xarML('Check URLs and images in articles, roles, ...'),
-            'label' => xarML('Check links'));
+            'label' => xarML('Check links'), ];
 
-        $menulinks[] = array('url' => xarController::URL(
+        $menulinks[] = ['url' => xarController::URL(
             'sitetools',
             'admin',
             'modifyconfig'
         ),
             'title' => xarML('Modify the configuration for the module'),
-            'label' => xarML('Modify Config'));
+            'label' => xarML('Modify Config'), ];
     }
 
     /* The final thing that we need to do in this function is return the values back

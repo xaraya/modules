@@ -34,15 +34,15 @@ class dbSiteTools_mysql extends dbSiteTools
         if (@mysql_num_rows($result)) {
             while ($row = mysql_fetch_array($result)) {
                 if ($version>='4.1') {
-                    $rowdata[]=array('rowname' => $row[0],
+                    $rowdata[]=['rowname' => $row[0],
                                     'totaldata'  => $row[6],
                                     'totalidx'   => $row[8],
-                                    'gain'       => $row[9]);
+                                    'gain'       => $row[9], ];
                 } else {
-                    $rowdata[]=array('rowname' => $row[0],
+                    $rowdata[]=['rowname' => $row[0],
                                     'totaldata'  => $row[5],
                                     'totalidx'   => $row[7],
-                                    'gain'       => $row[8]);
+                                    'gain'       => $row[8], ];
                 }
                 $local_query = 'OPTIMIZE TABLE '.$row[0];
                 $resultat  = mysql_query($local_query);
@@ -52,8 +52,8 @@ class dbSiteTools_mysql extends dbSiteTools
         if (!$resultat) {
             return false;
         }
-                                                                                           
-        $rowinfo = array();
+
+        $rowinfo = [];
         foreach ($rowdata as $datum) {
             $total = $datum['totaldata'] + $datum['totalidx'];
             $total = $total/1024;
@@ -62,9 +62,9 @@ class dbSiteTools_mysql extends dbSiteTools
             $total_gain += $gain;
             $total_kbs  += $total;
             $gain  = round($gain, 3);
-            $rowinfo['rowdata'][]=array('total' => $total,
+            $rowinfo['rowdata'][]=['total' => $total,
                                         'gain'  => $gain,
-                                        'tablename' => $datum['rowname']);
+                                        'tablename' => $datum['rowname'], ];
         }
         $rowinfo['total_gain']=$total_gain;
         $rowinfo['total_kbs']=$total_kbs;
@@ -78,7 +78,7 @@ class dbSiteTools_mysql extends dbSiteTools
         $tables = mysql_list_tables($this->dbname);
         if (is_resource($tables)) {
             $tablecounter = 0;
-            while (list($tablename) = mysql_fetch_array($tables)) {
+            while ([$tablename] = mysql_fetch_array($tables)) {
                 $SelectedTables["$this->dbname"][] = $tablename;
             }
         }
@@ -139,7 +139,7 @@ class dbSiteTools_mysql extends dbSiteTools
         }
         return $overallrows;
     }
-    
+
     public function _backup($bkvars)
     {
         $SelectedTables =$bkvars['SelectedTables'];
@@ -161,8 +161,8 @@ class dbSiteTools_mysql extends dbSiteTools
         foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
             for ($t = 0; $t < count($SelectedTables["$this->dbname"]); $t++) {
-                $fieldnames     = array();
-                $structurelines = array();
+                $fieldnames     = [];
+                $structurelines = [];
                 $result = mysql_query('SHOW FIELDS FROM '.$SelectedTables["$this->dbname"]["$t"]);
                 while ($row = mysql_fetch_array($result)) {
                     $structureline  = $row['Field'];
@@ -190,9 +190,9 @@ class dbSiteTools_mysql extends dbSiteTools
                     $fieldnames[] = $row['Field'];
                 }
                 mysql_free_result($result);
-                $tablekeys    = array();
-                $uniquekeys   = array();
-                $fulltextkeys = array();
+                $tablekeys    = [];
+                $uniquekeys   = [];
+                $fulltextkeys = [];
                 $result = mysql_query('SHOW KEYS FROM '.$SelectedTables["$this->dbname"]["$t"]);
                 while ($row = mysql_fetch_array($result)) {
                     $uniquekeys[$row['Key_name']] = false;
@@ -213,7 +213,7 @@ class dbSiteTools_mysql extends dbSiteTools
                         $structureline .= 'PRIMARY ';
                     } else {
                         $structureline .= ($fulltextkeys[$keyname] ? 'FULLTEXT ' : '');
-                        $structureline .= ($uniquekeys[$keyname]   ? 'UNIQUE '   : '');
+                        $structureline .= ($uniquekeys[$keyname] ? 'UNIQUE ' : '');
                     }
                     $structureline .= 'KEY'.(($keyname == 'PRIMARY') ? '' : ' '.$keyname);
                     $structureline .= ' ('.implode(',', $keyfieldnames).')';

@@ -22,7 +22,7 @@ class dbSiteTools_postgres extends dbSiteTools
 {
     public function _optimize()
     {
-        $rowinfo = array();
+        $rowinfo = [];
 
         // Do something
 

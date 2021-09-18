@@ -25,14 +25,14 @@ function sitetools_admin_terminal()
     if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
-    $output = array();
+    $output = [];
     if ($term_input != '') {
         /* Pass verbatim to database; */
         $dbconn = xarDB::getConn();
         $result =& $dbconn->Execute($term_input);
         if (!$result) {
             $error = xarCurrentError();
-            $output[] = array("Error" => $error->getShort());
+            $output[] = ["Error" => $error->getShort()];
             xarErrorFree();
         } else {
             if (is_object($result)) {
@@ -42,7 +42,7 @@ function sitetools_admin_terminal()
                     $result->MoveNext();
                 }
             } else {
-                $output[] = array(xarML("Success"));
+                $output[] = [xarML("Success")];
             }
         }
     }
@@ -51,5 +51,5 @@ function sitetools_admin_terminal()
     $data['term_output'] = $output;
     $data['term_input'] = $term_input;
     return $data;
-    return array();
+    return [];
 }

@@ -41,7 +41,7 @@ function sitetools_admin_cacheview($args)
     $cachedir  = xarModVars::get('sitetools', 'templcachepath');
     $cachefile = xarModVars::get('sitetools', 'templcachepath').'/CACHEKEYS';
     $scriptcache=xarModVars::get('sitetools', 'templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
-    $data=array();
+    $data=[];
     $data['popup']=false;
     /* Check for confirmation. */
     $data['authid'] = xarSec::genAuthKey();
@@ -50,16 +50,16 @@ function sitetools_admin_cacheview($args)
         $data['showfiles']=false;
         /* Generate a one-time authorisation code for this operation */
         $data['items']='';
-        $cachelist=array();
-        $cachenames=array();
+        $cachelist=[];
+        $cachenames=[];
 
         /* put all the names of the templates and hashed cache file into an array */
         umask();
         $count=0;
         $cachekeyfile=file($cachefile);
         $fd = fopen($cachefile, 'r');
-        while (list($line_num, $line) = each($cachekeyfile)) {
-            $cachelist[]=array(explode(": ", $line));
+        while ([$line_num, $line] = each($cachekeyfile)) {
+            $cachelist[]=[explode(": ", $line)];
             ++$count;
         }
         $data['count']=$count;
@@ -74,11 +74,11 @@ function sitetools_admin_cacheview($args)
                     'sitetools',
                     'admin',
                     'cacheview',
-                    array('action'=>'show','templn'=>$templn,'hashn'=>$hashn)
+                    ['action'=>'show','templn'=>$templn,'hashn'=>$hashn]
                 );
-                $cachenames[$hashn]=array('hashn'=>$hashn,
+                $cachenames[$hashn]=['hashn'=>$hashn,
                                    'templn'=>$templn,
-                                   'fullnurl'=>$fullnurl);
+                                   'fullnurl'=>$fullnurl, ];
             }
         }
         /*      var=$scriptcache;
@@ -92,14 +92,14 @@ function sitetools_admin_cacheview($args)
     } elseif ($action=='show') {
         $data['showfiles']= true;
         $hashfile=$cachedir.'/'.$hashn.'.php';
-        $newfile=array();
-        $filetxt=array();
+        $newfile=[];
+        $filetxt=[];
         $newfile = file($hashfile);
         $i=0;
         foreach ($newfile as $line_num => $line) {
             ++$i;
-            $filetxt[]=array('lineno' =>(int)$i,
-                          'linetxt'=>htmlspecialchars($line));
+            $filetxt[]=['lineno' =>(int)$i,
+                          'linetxt'=>htmlspecialchars($line), ];
         }
         $data['templn']=$templn;
         $data['hashfile']=$hashfile;

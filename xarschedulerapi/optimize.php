@@ -36,7 +36,7 @@ function sitetools_schedulerapi_optimize($args)
         'sitetools',
         'admin',
         'optimizedb',
-        array('dbname' => $dbname)
+        ['dbname' => $dbname]
     );
 
     $total_gain= $tabledata['total_gain'];
@@ -46,7 +46,7 @@ function sitetools_schedulerapi_optimize($args)
         'sitetools',
         'admin',
         'create',
-        array('totalgain' => $total_gain)
+        ['totalgain' => $total_gain]
     );
 
     return true;

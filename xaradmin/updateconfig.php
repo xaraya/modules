@@ -67,7 +67,7 @@ function sitetools_admin_updateconfig()
     xarModVars::set('sitetools', 'defaultbktype', $defaultbktype);
 
     if (xarMod::isAvailable('scheduler')) {
-        if (!xarVar::fetch('interval', 'isset', $interval, array(), xarVar::NOT_REQUIRED)) {
+        if (!xarVar::fetch('interval', 'isset', $interval, [], xarVar::NOT_REQUIRED)) {
             return;
         }
         /* for each of the functions specified in the template */
@@ -77,9 +77,9 @@ function sitetools_admin_updateconfig()
                 'scheduler',
                 'user',
                 'get',
-                array('module' => 'sitetools',
+                ['module' => 'sitetools',
                                        'type' => 'scheduler',
-                                       'func' => $func)
+                                       'func' => $func, ]
             );
             if (empty($job) || empty($job['interval'])) {
                 if (!empty($howoften)) {
@@ -88,10 +88,10 @@ function sitetools_admin_updateconfig()
                         'scheduler',
                         'admin',
                         'create',
-                        array('module' => 'sitetools',
+                        ['module' => 'sitetools',
                                         'type' => 'scheduler',
                                         'func' => $func,
-                                        'interval' => $howoften)
+                                        'interval' => $howoften, ]
                     );
                 }
             } elseif (empty($howoften)) {
@@ -100,9 +100,9 @@ function sitetools_admin_updateconfig()
                     'scheduler',
                     'admin',
                     'delete',
-                    array('module' => 'sitetools',
+                    ['module' => 'sitetools',
                                     'type' => 'scheduler',
-                                    'func' => $func)
+                                    'func' => $func, ]
                 );
             } elseif ($howoften != $job['interval']) {
                 /* update the scheduler job */
@@ -110,10 +110,10 @@ function sitetools_admin_updateconfig()
                     'scheduler',
                     'admin',
                     'update',
-                    array('module' => 'sitetools',
+                    ['module' => 'sitetools',
                                     'type' => 'scheduler',
                                     'func' => $func,
-                                    'interval' => $howoften)
+                                    'interval' => $howoften, ]
                 );
             }
         }
@@ -123,7 +123,7 @@ function sitetools_admin_updateconfig()
         'module',
         'updateconfig',
         'sitetools',
-        array('module' => 'sitetools')
+        ['module' => 'sitetools']
     );
 
     /* This function generated no output, and so now it is complete we redirect

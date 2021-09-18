@@ -37,7 +37,7 @@ class dbSiteTools
         } else {
             $this->dbname=$dbname;
         }
-        $this->_database_info =array($this->dbtype,$this->dbconn,$this->dbname);
+        $this->_database_info =[$this->dbtype,$this->dbconn,$this->dbname];
     }
 
     public function selecttables($dbname='')

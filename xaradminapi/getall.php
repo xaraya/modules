@@ -25,7 +25,7 @@ function sitetools_adminapi_getall($args)
         $numitems = -1;
     }
 
-    $invalid = array();
+    $invalid = [];
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
     }
@@ -50,7 +50,7 @@ function sitetools_adminapi_getall($args)
     if (!xarSecurity::check('AdminSiteTools')) {
         return;
     }
-    $items = array();
+    $items = [];
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -67,10 +67,10 @@ function sitetools_adminapi_getall($args)
         return;
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($stid, $stgain) = $result->fields;
+        [$stid, $stgain] = $result->fields;
         if (xarSecurity::check('AdminSiteTools')) {
-            $items[] = array('stid' => $stid,
-                             'stgain' => $stgain);
+            $items[] = ['stid' => $stid,
+                             'stgain' => $stgain, ];
         }
     }
     // All successful database queries produce a result set, and that result

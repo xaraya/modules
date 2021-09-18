@@ -54,8 +54,8 @@ class dbSiteTools_sqlite extends dbSiteTools
         if (!$resultat) {
             return false;
         }
-                                                                                           
-        $rowinfo = array();
+
+        $rowinfo = [];
         foreach ($rowdata as $datum) {
             $total = $datum['totaldata'] + $datum['totalidx'];
             $total = $total/1024;
@@ -64,9 +64,9 @@ class dbSiteTools_sqlite extends dbSiteTools
             $total_gain += $gain;
             $total_kbs  += $total;
             $gain  = round($gain, 3);
-            $rowinfo['rowdata'][]=array('total' => $total,
+            $rowinfo['rowdata'][]=['total' => $total,
                                         'gain'  => $gain,
-                                        'tablename' => $datum['rowname']);
+                                        'tablename' => $datum['rowname'], ];
         }
         $rowinfo['total_gain']=$total_gain;
         $rowinfo['total_kbs']=$total_kbs;
@@ -80,7 +80,7 @@ class dbSiteTools_sqlite extends dbSiteTools
         $tables = mysql_list_tables($this->dbname);
         if (is_resource($tables)) {
             $tablecounter = 0;
-            while (list($tablename) = mysql_fetch_array($tables)) {
+            while ([$tablename] = mysql_fetch_array($tables)) {
                 $SelectedTables["$this->dbname"][] = $tablename;
             }
         }
@@ -141,7 +141,7 @@ class dbSiteTools_sqlite extends dbSiteTools
         }
         return $overallrows;
     }
-    
+
     public function _backup($bkvars)
     {
         $SelectedTables =$bkvars['SelectedTables'];
@@ -163,8 +163,8 @@ class dbSiteTools_sqlite extends dbSiteTools
         foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
             for ($t = 0; $t < count($SelectedTables["$this->dbname"]); $t++) {
-                $fieldnames     = array();
-                $structurelines = array();
+                $fieldnames     = [];
+                $structurelines = [];
                 $result = mysql_query('SHOW FIELDS FROM '.$SelectedTables["$this->dbname"]["$t"]);
                 while ($row = mysql_fetch_array($result)) {
                     $structureline  = $row['Field'];
@@ -192,9 +192,9 @@ class dbSiteTools_sqlite extends dbSiteTools
                     $fieldnames[] = $row['Field'];
                 }
                 mysql_free_result($result);
-                $tablekeys    = array();
-                $uniquekeys   = array();
-                $fulltextkeys = array();
+                $tablekeys    = [];
+                $uniquekeys   = [];
+                $fulltextkeys = [];
                 $result = mysql_query('SHOW KEYS FROM '.$SelectedTables["$this->dbname"]["$t"]);
                 while ($row = mysql_fetch_array($result)) {
                     $uniquekeys[$row['Key_name']] = false;
@@ -215,7 +215,7 @@ class dbSiteTools_sqlite extends dbSiteTools
                         $structureline .= 'PRIMARY ';
                     } else {
                         $structureline .= ($fulltextkeys[$keyname] ? 'FULLTEXT ' : '');
-                        $structureline .= ($uniquekeys[$keyname]   ? 'UNIQUE '   : '');
+                        $structureline .= ($uniquekeys[$keyname] ? 'UNIQUE ' : '');
                     }
                     $structureline .= 'KEY'.(($keyname == 'PRIMARY') ? '' : ' '.$keyname);
                     $structureline .= ' ('.implode(',', $keyfieldnames).')';

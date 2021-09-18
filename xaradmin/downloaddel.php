@@ -38,7 +38,7 @@ function sitetools_admin_downloaddel($args)
         xarErrorFree();
         return $status;
     }
-    $info=array();
+    $info=[];
     /*check the file exists */
     $pathtofile=xarModVars::get('sitetools', 'backuppath');
 

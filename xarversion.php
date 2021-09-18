@@ -26,12 +26,12 @@ $modversion['author']         = 'jojodee';
 $modversion['contact']        = 'http://xaraya.athomeandabout.com';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array('SiteTools::' => '::');
+$modversion['securityschema'] = ['SiteTools::' => '::'];
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Miscellaneous';
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
+$modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
                                             'version_ge' => '2.4.0',
-                                         ),
-                                      );
+                                         ],
+                                      ];

@@ -23,7 +23,7 @@
 function sitetools_xartables()
 {
     /* Initialise table array */
-    $xarTables = array();
+    $xarTables = [];
     /* Get the name for the example item table.  This is not necessary
      * but helps in the following statements and keeps them readable
      */

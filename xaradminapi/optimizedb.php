@@ -25,14 +25,14 @@ function sitetools_adminapi_optimizedb($dbname, $dbtype='')
 
     // Security check  - allow scheduler api funcs to run as anon bug #2802
     // if (!xarSecurity::check('AdminSiteTools')) return;
-    $items=array();
+    $items=[];
 
     if (($dbname='') || (empty($dbname))) {
         $dbconn = xarDB::getConn();
         $dbname= xarDB::getName();
     }
 
-    $rowinfo=array();//bug #2595
+    $rowinfo=[];//bug #2595
     // Instantiation of SiteTools class
 
     sys::import('modules.sitetools.xarclass.dbSiteTools_'.$dbtype);

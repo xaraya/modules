@@ -45,23 +45,23 @@ function sitetools_admin_modifyconfig()
     $data['deftemplpath'] = sys::varpath()."/cache/templates";
 
     /* scheduler functions available in sitetools at the moment */
-    $schedulerapi = array('optimize','backup');
+    $schedulerapi = ['optimize','backup'];
     /* Define for each job type */
     $data['schedule']['optimize']=xarML('Run Optimize Job');
     $data['schedule']['backup']=xarML('Run Backup Job');
 
     if (xarMod::isAvailable('scheduler')) {
         $data['intervals'] = xarMod::apiFunc('scheduler', 'user', 'intervals');
-        $data['interval'] = array();
+        $data['interval'] = [];
         foreach ($schedulerapi as $func) {
             // see if we have a scheduler job running to execute this function
             $job = xarMod::apiFunc(
                 'scheduler',
                 'user',
                 'get',
-                array('module' => 'sitetools',
+                ['module' => 'sitetools',
                                        'type' => 'scheduler',
-                                       'func' => $func)
+                                       'func' => $func, ]
             );
             if (empty($job) || empty($job['interval'])) {
                 $data['interval'][$func] = '';
@@ -70,15 +70,15 @@ function sitetools_admin_modifyconfig()
             }
         }
     } else {
-        $data['intervals'] = array();
-        $data['interval'] = array();
+        $data['intervals'] = [];
+        $data['interval'] = [];
     }
 
     $hooks = xarModHooks::call(
         'module',
         'modifyconfig',
         'sitetools',
-        array('module' => 'sitetools')
+        ['module' => 'sitetools']
     );
     if (empty($hooks)) {
         $data['hooks'] = '';

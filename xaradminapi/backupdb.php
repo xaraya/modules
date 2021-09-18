@@ -21,7 +21,7 @@ function sitetools_adminapi_backupdb($args)
     // Security check - allow scheduler api funcs to run as anon bug #2802
     //if (!xarSecurity::check('AdminSiteTools')) return;
 
-    $items=array();
+    $items=[];
     $items['startbackup']=$startbackup;
     $items['usegz']=$usegz;
     //Assign missing or empty variables
@@ -86,12 +86,12 @@ function sitetools_adminapi_backupdb($args)
     $tempbackupfilename = $dbname.'.xar_backup.temp.sql'.($GZ_enabled ? '.gz' : '');
     $xarbackupversion   = '0.2.0'; //TO DO: get actual version from var
     $items['gz-enabled']=$GZ_enabled;
-    $runningstatus=array();
+    $runningstatus=[];
 
     if (!function_exists('getmicrotime')) {
         function getmicrotime()
         {
-            list($usec, $sec) = explode(' ', microtime());
+            [$usec, $sec] = explode(' ', microtime());
             return ((float) $usec + (float) $sec);
         }
     }
@@ -123,7 +123,7 @@ function sitetools_adminapi_backupdb($args)
             $tables = mysql_list_tables($dbname);
             if ($tables) {
                 $tablecounter = 0;
-                while (list($tablename) = mysql_fetch_array($tables)) {
+                while ([$tablename] = mysql_fetch_array($tables)) {
                     $SelectedTables["$dbname"][] = $tablename;
                 }
             }
@@ -168,7 +168,7 @@ function sitetools_adminapi_backupdb($args)
         $runningstatus[]['message']='<p>'.xarML('Checking tables for database ').'<b>'.$dbname."</b></p>";
 
         //Let's check the tables and return errors
-        $TableErrors = array();
+        $TableErrors = [];
         $TableErrors = $bkitems-> checktables($SelectedTables);
         /* Move to class
 
@@ -235,7 +235,7 @@ function sitetools_adminapi_backupdb($args)
         //Switch to backup class
         //Pass $SelectedTables
         //Pass all our vars in an array
-        $bkvars = array('SelectedTables' => $SelectedTables,
+        $bkvars = ['SelectedTables' => $SelectedTables,
                            'GZ_enabled' => $GZ_enabled,
                            'number_of_cols' => $number_of_cols,
                            'overallrows'    => $overallrows,
@@ -249,7 +249,7 @@ function sitetools_adminapi_backupdb($args)
                            'buffer_size' =>$buffer_size,
                         'runningstatus' =>$runningstatus,
                         'starttime' => $starttime,
-                        'screen'    => $screen);
+                        'screen'    => $screen, ];
 
         $runningstatus = $bkitems-> backup($bkvars);
         /*

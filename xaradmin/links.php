@@ -30,7 +30,7 @@ function sitetools_admin_links()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     $data['checked'] = xarModVars::get('sitetools', 'links_checked');
     if (!xarVar::fetch('startnum', 'str:1:', $data['startnum'], '1', xarVar::NOT_REQUIRED)) {
@@ -117,7 +117,7 @@ function sitetools_admin_links()
 
     @set_time_limit(120);
 
-    if (!xarVar::fetch('todo', 'isset', $todo, array(), xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('todo', 'isset', $todo, [], xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!xarVar::fetch('skiplocal', 'isset', $skiplocal, 0, xarVar::NOT_REQUIRED)) {
@@ -131,7 +131,7 @@ function sitetools_admin_links()
     }
 
     // build up field list per module & itemtype
-    $fields = array();
+    $fields = [];
     foreach ($todo as $field => $val) {
         if (empty($val)) {
             continue;
@@ -140,10 +140,10 @@ function sitetools_admin_links()
             continue;
         }
         if (!isset($fields[$matches[1]])) {
-            $fields[$matches[1]] = array();
+            $fields[$matches[1]] = [];
         }
         if (!isset($fields[$matches[1]][$matches[2]])) {
-            $fields[$matches[1]][$matches[2]] = array();
+            $fields[$matches[1]][$matches[2]] = [];
         }
         $fields[$matches[1]][$matches[2]][] = $matches[3];
     }
@@ -152,8 +152,8 @@ function sitetools_admin_links()
         'sitetools',
         'admin',
         'findlinks',
-        array('fields' => $fields,
-                                         'skiplocal' => $skiplocal)
+        ['fields' => $fields,
+                                         'skiplocal' => $skiplocal, ]
     );
     if (!isset($data['count'])) {
         return;
@@ -204,8 +204,8 @@ function sitetools_admin_startcheck()
         'sitetools',
         'admin',
         'checklinks',
-        array('skiplocal' => $skiplocal,
+        ['skiplocal' => $skiplocal,
                         'method' => $emthod,
-                        'follow' => $follow)
+                        'follow' => $follow, ]
     );
 }

@@ -26,23 +26,23 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
         $dbname= xarDB::getName();
     }
 
-    $items =array();
+    $items =[];
 
     switch ($dbtype) {
 
     default:
-            $dbtables=array();
+            $dbtables=[];
             $dbconn = xarDB::getConn();
             $dbname= xarDB::getName();
             $tables = mysql_list_tables($dbname);
             $i=0;
             if ($tables) {
-                while (list($tablename) = mysql_fetch_array($tables)) {
+                while ([$tablename] = mysql_fetch_array($tables)) {
                     $i++;
                     $SQLquery = 'SELECT COUNT(*) AS num FROM '.$tablename;
                     $result = mysql_query($SQLquery);
                     $row = mysql_fetch_array($result);
-                    $dbtables[] = array('tablenum'=>$i, 'tablename'=>$tablename, 'tablerecs'=>$row['num']);
+                    $dbtables[] = ['tablenum'=>$i, 'tablename'=>$tablename, 'tablerecs'=>$row['num']];
                 }
             } else {
                 echo "No table query results";

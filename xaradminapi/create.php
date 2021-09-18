@@ -21,7 +21,7 @@ function sitetools_adminapi_create($args)
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then set an appropriate error
     // message and return
-    $invalid = array();
+    $invalid = [];
     if (!isset($totalgain)) {
         $$totalgain = 0;
     }
@@ -59,7 +59,7 @@ function sitetools_adminapi_create($args)
               xar_stid,
               xar_stgained)
               VALUES (?,?)";
-    $bindvars = array($nextId, $totalgain);
+    $bindvars = [$nextId, $totalgain];
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
