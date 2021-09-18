@@ -20,17 +20,17 @@
     $modversion['user']           = false;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Miscellaneous';
-    $modversion['dependency']     = array();
-    $modversion['securityschema'] = array();
-$modversion['dependency'] = array(
+    $modversion['dependency']     = [];
+    $modversion['securityschema'] = [];
+$modversion['dependency'] = [
 //                                  14,
 //                                  30046,
-                                  );
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
+                                  ];
+$modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0'
-                                         ),
+                                            'version_ge' => '2.1.0',
+                                         ],
 //                                      14  => 'comments',
 //                                      30046  => 'listings',
-                                      );
+                                      ];

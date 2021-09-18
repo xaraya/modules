@@ -9,19 +9,19 @@
             return;
         }
 
-        $items = xarMod::apiFunc('themes', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
-        
+        $items = xarMod::apiFunc('themes', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_ACTIVE]]);
+
         if (!$data['confirm']) {
-            $data['items'] = array();
+            $data['items'] = [];
             foreach ($items as $item) {
-                $data['items'][] = array('id' => $item['regid'], 'name' => $item['name']);
+                $data['items'][] = ['id' => $item['regid'], 'name' => $item['name']];
             }
         } else {
             if ($item != 0) {
-                $items = array(xarTheme::getInfo($item));
+                $items = [xarTheme::getInfo($item)];
             }
             $reader = new XMLReader();
-            $checked_themes = array();
+            $checked_themes = [];
             foreach ($items as $item) {
                 $basedir = 'themes/' . $item['name'];
                 $files = get_theme_files($basedir, 'xt');
@@ -33,7 +33,7 @@
             $reader->close();
             $data['items'] = $checked_themes;
         }
-        
+
         // We want to use the admin page template
         xarTpl::setPageTemplateName('admin');
         return $data;
@@ -41,7 +41,7 @@
 
     function get_theme_files($directory, $filter=false)
     {
-        $directory_tree = array();
+        $directory_tree = [];
 
         // if the path has a slash at the end we remove it here
         if (substr($directory, -1) == '/') {
@@ -50,12 +50,12 @@
 
         // if the path is not valid or is not a directory ...
         if (!file_exists($directory) || !is_dir($directory)) {
-            return array();
+            return [];
         }
 
         // Directories called abeyance are to be ignored
         if (basename($directory) == 'abeyance') {
-            return array();
+            return [];
         }
 
         if (is_readable($directory)) {
@@ -104,7 +104,7 @@
 
         // if the path is not readable ...
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -118,7 +118,7 @@
             $msg = xarML('Cannot open the file #(1)', $filename);
             throw new Exception($msg);
         }
-        
+
         $filestring = file_get_contents($filename);
         $filestring = preg_replace("/&xar([\-A-Za-z\d.]{2,41});/", "xar-entity", $filestring);
 //        try {

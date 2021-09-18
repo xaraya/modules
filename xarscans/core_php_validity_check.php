@@ -7,7 +7,7 @@
         }
 
         if (!$data['confirm']) {
-            $data = array();
+            $data = [];
         } else {
             $basedir = sys::lib() . 'xaraya/';
             $files = get_core_php_files($basedir, 'php');
@@ -23,7 +23,7 @@
 
                 include_once($file);
             }
-            $data['items'] = array(array('name' => 'core files in the xaraya directory'));
+            $data['items'] = [['name' => 'core files in the xaraya directory']];
         }
         xarTpl::setPageTemplateName('admin');
         return $data;
@@ -31,7 +31,7 @@
 
     function get_core_php_files($directory, $filter=false)
     {
-        $directory_tree = array();
+        $directory_tree = [];
 
         // if the path has a slash at the end we remove it here
         if (substr($directory, -1) == '/') {
@@ -40,12 +40,12 @@
 
         // if the path is not valid or is not a directory ...
         if (!file_exists($directory) || !is_dir($directory)) {
-            return array();
+            return [];
         }
 
         // Directories called abeyance are to be ignored
         if (basename($directory) == 'abeyance') {
-            return array();
+            return [];
         }
 
         if (is_readable($directory)) {
@@ -94,6 +94,6 @@
 
         // if the path is not readable ...
         } else {
-            return array();
+            return [];
         }
     }

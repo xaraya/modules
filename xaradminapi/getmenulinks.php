@@ -6,5 +6,5 @@
 
     function xarayatesting_adminapi_getmenulinks()
     {
-        return xarMod::apiFunc('base', 'admin', 'menuarray', array('module' => 'xarayatesting'));
+        return xarMod::apiFunc('base', 'admin', 'menuarray', ['module' => 'xarayatesting']);
     }

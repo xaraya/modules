@@ -5,14 +5,14 @@ sys::import('modules.xarayatesting.class.xarUnitTest');
 class testxarVar extends xarTestCase
 {
     public $myBLC;
-    
+
     public function setup()
     {
         include_once 'xarCore.php';
         include_once 'xarVar.php';
         include_once 'xarServer.php';
     }
-    
+
     public function testCleanUntrusted()
     {
         // TODO: define more input and make them all pass

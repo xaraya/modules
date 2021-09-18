@@ -9,19 +9,19 @@
             return;
         }
 
-        $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_ACTIVE)));
+        $items = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_ACTIVE]]);
 
         if (!$data['confirm']) {
-            $data['items'] = array();
+            $data['items'] = [];
             foreach ($items as $item) {
-                $data['items'][] = array('id' => $item['regid'], 'name' => $item['name']);
+                $data['items'][] = ['id' => $item['regid'], 'name' => $item['name']];
             }
         } else {
             if ($item != 0) {
-                $items = array(xarMod::getInfo($item, $type = 'module'));
+                $items = [xarMod::getInfo($item, $type = 'module')];
             }
-            $checked_modules = array();
-            $data['error_files'] = array();
+            $checked_modules = [];
+            $data['error_files'] = [];
             foreach ($items as $item) {
                 $basedir = sys::code() . 'modules/' . $item['name'];
                 $files = get_module_php_files($basedir, 'php');
@@ -43,7 +43,7 @@
 
     function get_module_php_files($directory, $filter=false)
     {
-        $directory_tree = array();
+        $directory_tree = [];
 
         // if the path has a slash at the end we remove it here
         if (substr($directory, -1) == '/') {
@@ -52,12 +52,12 @@
 
         // if the path is not valid or is not a directory ...
         if (!file_exists($directory) || !is_dir($directory)) {
-            return array();
+            return [];
         }
 
         // Directories called abeyance are to be ignored
         if (basename($directory) == 'abeyance') {
-            return array();
+            return [];
         }
 
         if (is_readable($directory)) {
@@ -106,6 +106,6 @@
 
         // if the path is not readable ...
         } else {
-            return array();
+            return [];
         }
     }

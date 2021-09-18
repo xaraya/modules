@@ -12,7 +12,7 @@ class testEvt extends xarTestCase
         include_once 'xarEvt.php';
         include_once 'xarMLS.php';
     }
-    
+
     public function precondition()
     {
         // Abort on bogus file: must not exist

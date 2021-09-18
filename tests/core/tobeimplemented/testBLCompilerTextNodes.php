@@ -3,7 +3,7 @@
 class testBLCompilerTextNodes1 extends xarTestCase
 {
     public $myBLC;
-    
+
     public function setup()
     {
         $GLOBALS['xarDebug'] = false;
@@ -11,7 +11,7 @@ class testBLCompilerTextNodes1 extends xarTestCase
         $xslFile = 'blocklayout/xslt/xar2php.xsl';
         $this->myBLC = XarayaCompiler::instance();
     }
-    
+
     public function precondition()
     {
         // not needed here
@@ -22,7 +22,7 @@ class testBLCompilerTextNodes1 extends xarTestCase
     {
         // not needed here
     }
-    
+
     public function testHTMLComments()
     {
         $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
@@ -34,7 +34,7 @@ class testBLCompilerTextNodes1 extends xarTestCase
         $this->actual   = "Hex ".bin2hex($out);
         return $this->assertSame($out, $expected, "HTML comments are removed in the transform");
     }
-    
+
     public function testxarComments()
     {
         $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
@@ -125,7 +125,7 @@ class testBLCompilerTextNodes1 extends xarTestCase
         $this->actual   = "Hex ".bin2hex($out);
         return $this->assertSame($out, $expected, "The open form of a tag in general is untouched");
     }
-    
+
     public function testGeneralTagClosedForm()
     {
         $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';

@@ -32,7 +32,7 @@
          * Define a default suite which normally holds tests which are not
          * put into another testsuite explicitly
          */
-        $suites= array();
+        $suites= [];
         $suites[] = new xarTestSuite();
         $suite=&$suites[0];
 
@@ -74,7 +74,7 @@
     }
     function get_files($start_path)
     {
-        static $paths = array();
+        static $paths = [];
         $rdi = new RecursiveDirectoryIterator($start_path);
         foreach (new RecursiveIteratorIterator($rdi) as $path) {
             array_push($paths, (string) $path);

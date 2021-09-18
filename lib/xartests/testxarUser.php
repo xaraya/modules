@@ -5,7 +5,7 @@ sys::import('modules.xarayatesting.class.xarUnitTest');
 class testxarUser extends xarTestCase
 {
     public $myBLC;
-    
+
     public function setup()
     {
         include_once 'xarCore.php';
@@ -17,7 +17,7 @@ class testxarUser extends xarTestCase
         include_once 'xarSession.php';
         include_once 'xarServer.php';
     }
-    
+
     public function testEmptyUserVar()
     {
         return $this->assertNull(xarUser::getVar(''), "Passing empty user var should return null");

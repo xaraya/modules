@@ -8,7 +8,7 @@
         if (!xarVar::fetch('name', 'str:1', $name, 'xarayatesting_tests', xarVar::NOT_REQUIRED)) {
             return;
         }
-        $myobject = DataObjectMaster::getObject(array('name' => $name));
+        $myobject = DataObjectMaster::getObject(['name' => $name]);
         $return_url = xarServer::getCurrentURL();
-        return array('return_url'=>$return_url, 'object'=>$myobject);
+        return ['return_url'=>$return_url, 'object'=>$myobject];
     }

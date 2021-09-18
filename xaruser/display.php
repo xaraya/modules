@@ -15,12 +15,12 @@ function xarayatesting_user_display($args)
         return;
     }
 
-    $object = DataObjectMaster::getObject(array('name' => $name,
-                                         'tplmodule' => $tplmodule));
+    $object = DataObjectMaster::getObject(['name' => $name,
+                                         'tplmodule' => $tplmodule, ]);
     if (!isset($object)) {
         return;
     }
-    $object->getItem(array('itemid'   => $itemid));
+    $object->getItem(['itemid'   => $itemid]);
 
     $data['object'] =& $object;
     return $data;

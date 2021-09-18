@@ -14,7 +14,7 @@
 
         public function testGetmenulinksWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('base', 'admin', 'getmenulinks');
             $this->actual = xarMod::apiFunc('base', 'admin', 'getmenulinks', $args);
             return $this->AssertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -38,7 +38,7 @@
 
         public function testGetmodulesettingsValidModuleParam()
         {
-            $args = array('module' => 'roles');
+            $args = ['module' => 'roles'];
             $this->expected = '[object]';
             $this->actual = xarMod::apiFunc('base', 'admin', 'getmodulesettings', $args);
             $res = $this->assertTrue(is_object($this->actual), "Call with valid module param returns object");
@@ -47,7 +47,7 @@
 
         public function testGetmodulesettingsBadModuleParam()
         {
-            $args = array('module' => 'nosuchname');
+            $args = ['module' => 'nosuchname'];
             $this->expected = '[object]';
             $this->actual = xarMod::apiFunc('base', 'admin', 'getmodulesettings', $args);
             $res = $this->assertTrue(is_object($this->actual), "Call with invalid module param returns object");
@@ -73,7 +73,7 @@
         public function testGetusersettingsNoItemidParam()
         {
             try {
-                $args = array('module' => 'roles');
+                $args = ['module' => 'roles'];
                 $this->expected = '[exception]';
                 $this->actual   = xarMod::apiFunc('base', 'admin', 'getusersettings', $args);
                 $res = $this->assertSame($this->actual, $this->expected, "Call with module param and no itemid param throws an exception");
@@ -86,7 +86,7 @@
         public function testGetusersettingsNoModuleParam()
         {
             try {
-                $args = array('itemid' => 1);
+                $args = ['itemid' => 1];
                 $this->expected = '[exception]';
                 $this->actual   = xarMod::apiFunc('base', 'admin', 'getusersettings', $args);
                 $res = $this->assertSame($this->actual, $this->expected, "Call with itemid param and no module param throws an exception");
@@ -98,7 +98,7 @@
 
         public function testGetusersettingsValidParams()
         {
-            $args = array('module' => 'roles', 'itemid' => 1);
+            $args = ['module' => 'roles', 'itemid' => 1];
             $this->expected = '[object]';
             $this->actual = xarMod::apiFunc('base', 'admin', 'getusersettings', $args);
             $res = $this->assertTrue(is_object($this->actual), "Call with valid module and itemid params returns object");
@@ -107,7 +107,7 @@
 
         public function testGetusersettingsBadModuleParam()
         {
-            $args = array('module' => 'nosuchname', 'itemid' => 1);
+            $args = ['module' => 'nosuchname', 'itemid' => 1];
             $this->expected = '[null]';
             $this->actual   = xarMod::apiFunc('base', 'admin', 'getusersettings', $args);
             $res = $this->assertTrue(is_null($this->actual), "Call with valid itemid param and bad module param returns null");
@@ -142,7 +142,7 @@
 
         public function testLoadadminmenuarrayWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('base', 'admin', 'loadadminmenuarray');
             $this->actual = xarMod::apiFunc('base', 'admin', 'loadadminmenuarray', $args);
             return $this->AssertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -161,7 +161,7 @@
 
         public function testMenuarrayWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('base', 'admin', 'menuarray');
             $this->actual = xarMod::apiFunc('base', 'admin', 'menuarray', $args);
             return $this->AssertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -180,7 +180,7 @@
 
         public function testWaitingcontentWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('base', 'admin', 'waitingcontent');
             $this->actual = xarMod::apiFunc('base', 'admin', 'waitingcontent', $args);
             return $this->AssertSame($this->actual, $this->expected, 'Call with params returns the same array as without');

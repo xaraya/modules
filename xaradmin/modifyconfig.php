@@ -19,7 +19,7 @@
             return;
         }
 
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'xarayatesting'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'xarayatesting']);
         $data['module_settings']->setFieldList('items_per_page,');
         $data['module_settings']->getItem();
 
@@ -42,7 +42,7 @@
             case 'update':
                 // Confirm authorisation code
                 if (!xarSec::confirmAuthKey()) {
-                    return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                    return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
                 }
                 switch ($data['tab']) {
                     case 'general':

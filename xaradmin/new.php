@@ -9,7 +9,7 @@
             return;
         }
 
-        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'xarayatesting'));
+        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'xarayatesting']);
         $data['tplmodule'] = 'xarayatesting';
         return $data;
     }

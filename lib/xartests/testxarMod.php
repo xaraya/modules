@@ -14,12 +14,12 @@ class testxarMod extends xarTestCase
         include_once 'xarEvt.php';
         include_once 'xarMLS.php';
     }
-    
+
     public function testInit()
     {
         return $this->assertTrue(xarMod_init('', ''), "Module System Initialisation");
     }
-    
+
     public function testGetFileInfo()
     {
         $savedir=getcwd();

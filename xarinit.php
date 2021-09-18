@@ -66,7 +66,7 @@
         #
         # Set up configuration modvars (general)
         #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'xarayatesting'));
+        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'xarayatesting']);
         $module_settings->initialize();
 
         # --------------------------------------------------------
@@ -91,11 +91,11 @@
         # Create DD objects
         #
         $module = 'xarayatesting';
-        $objects = array(
+        $objects = [
 //                       'xarayatesting_tests',
-                         );
+                         ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
 
@@ -134,7 +134,7 @@
         try {
             $dd_objects = unserialize(xarModVars::get($this_module, $this_module . '_objects'));
             foreach ($dd_objects as $key => $value) {
-                $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', array('objectid' => $value));
+                $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', ['objectid' => $value]);
             }
         } catch (Exception $e) {
         }
@@ -148,7 +148,7 @@
                 'categories',
                 'admin',
                 'deletecat',
-                array('cid' => xarModVars::get($this_module, 'basecategory'))
+                ['cid' => xarModVars::get($this_module, 'basecategory')]
             );
         } catch (Exception $e) {
         }

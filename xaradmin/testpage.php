@@ -27,9 +27,9 @@
         }
 
         // Get the modules we can test
-        $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_INSTALLED)));
-        $data['coremodules'] = array();
-        $data['modules'] = array();
+        $installed = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_INSTALLED]]);
+        $data['coremodules'] = [];
+        $data['modules'] = [];
         foreach ($installed as $module) {
             if (!isset($module['class'])) {
 //                if (file_exists(sys::code() . 'modules/'. $module['name'] . '/xartest.php'))
@@ -42,7 +42,7 @@
                 }
             }
         }
-        $suites = array();
+        $suites = [];
         try {
             if (substr($data['tab'], 0, 7) == 'modules') {
                 $modulename = substr($data['tab'], 12);
@@ -56,13 +56,13 @@
             $data['message'] = xarML('No test file found at #(1)', $location);
         }
 
-        $data['suites'] = array();
+        $data['suites'] = [];
         foreach ($suites as $torun) {
             $torun->run();
             $data['suites'][] = $torun;
         }
         return $data;
-        
+
         $testfilter['output']='html';
         $show_results = true;
 
@@ -72,7 +72,7 @@
          * Define a default suite which normally holds tests which are not
          * put into another testsuite explicitly
          */
-        $suites= array();
+        $suites= [];
 
         /**
          * Include all files found in the UT_TESTSDIR directories

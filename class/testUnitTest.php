@@ -13,7 +13,6 @@ $tmp=new xarTestSuite('Unit testing framework');
  **/
 class testUnitTestAssert extends xarTestCase
 {
-    
     // Checking for the pass
     public function testTrue()
     {
@@ -45,7 +44,7 @@ class testUnitTestAssert extends xarTestCase
     }
     public function testEmpty()
     {
-        return $this->assertEmpty(array(), "assertEmpty on empty array");
+        return $this->assertEmpty([], "assertEmpty on empty array");
     }
     public function testRegExp()
     {
@@ -127,7 +126,7 @@ class testUnitTestAssert extends xarTestCase
     }
     public function testEmptyNotEmpty()
     {
-        $res = $this->assertEmpty(array('empty'=> 'nope'), "assertEmpty on non empty array");
+        $res = $this->assertEmpty(['empty'=> 'nope'], "assertEmpty on non empty array");
         if ($res["value"] === false) {
             $res["value"] = true;
         } else {
@@ -145,19 +144,19 @@ $tmp->AddTestCase('testUnitTestAssert', 'Test the assertion functions for unit t
  */
 class testTestMethods extends xarTestCase
 {
-    public $mymethodlist=array();
+    public $mymethodlist=[];
 
     public function setup()
     {
         $this->mymethodlist[]="testmethodlist";
         $this->mymethodlist[]="testplaceholder";
     }
-    
+
     public function teardown()
     {
         // As each test runs in it individual environment
         // we need to reset the array
-        $this->mymethodlist=array();
+        $this->mymethodlist=[];
     }
 
     public function testMethodList()
@@ -192,15 +191,15 @@ class noTestCase
 class testTestSuites extends xarTestCase
 {
     public $mytestsuite;
-    
+
     public $invalidsuite = 'thissuitedoesnotexist';
-    public $empty = array();
-    
+    public $empty = [];
+
     public function setup()
     {
         $this->mytestsuite = new xarTestSuite();
     }
-    
+
     public function precondition()
     {
         // bogus class must not accidently exist
@@ -213,13 +212,13 @@ class testTestSuites extends xarTestCase
         }
         return true;
     }
-    
+
     public function teardown()
     {
         $this->mytestsuite = '';
         $this->invalidsuite = '';
     }
-    
+
     public function testinvalidsuite()
     {
         $this->mytestsuite->AddTestCase($this->invalidsuite, 'This is invalid');

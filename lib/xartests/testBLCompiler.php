@@ -5,7 +5,7 @@ sys::import('modules.xarayatesting.class.xarUnitTest');
 class testBLCompiler1 extends xarTestCase
 {
     public $myBLC;
-    
+
     public function setup()
     {
         $GLOBALS['xarDebug'] = false;
@@ -13,9 +13,9 @@ class testBLCompiler1 extends xarTestCase
         include_once 'xarVar.php';
         include_once 'xarException.php';
         include_once 'XarayaCompiler.php';
-        $this->myBLC = new xarTpl__Compiler;
+        $this->myBLC = new xarTpl__Compiler();
     }
-    
+
     public function precondition()
     {
         // Abort on bogus file: must not exist
@@ -33,18 +33,18 @@ class testBLCompiler1 extends xarTestCase
     {
         // not needed here
     }
-    
-    
+
+
     public function testnotNull()
     {
         return $this->assertNotNull($this->myBLC, "BL Compiler Instantiation");
     }
-    
+
     public function testnoData()
     {
         return $this->assertNull($this->myBLC->compileFile('doesntexist'), "Don't compile on bogus file");
     }
-    
+
     public function testCompilenotnull()
     {
         return $this->assertnotNull($this->myBLC->compileFile('xartests/test.xt'), "Return not null on compile of a valid file");

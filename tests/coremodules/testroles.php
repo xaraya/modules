@@ -47,7 +47,7 @@
 
         public function testGetgroupmenulinksWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'admin', 'getgroupmenulinks');
             $this->actual =xarMod::apiFunc('roles', 'admin', 'getgroupmenulinks', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -66,7 +66,7 @@
 
         public function testGetmenulinksWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'admin', 'getmenulinks');
             $this->actual = xarMod::apiFunc('roles', 'admin', 'getmenulinks', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -91,7 +91,7 @@
         public function testGetmessageincludestringBadTemplateParam()
         {
             try {
-                $args = array('template' => 'someinvalidtemplate');
+                $args = ['template' => 'someinvalidtemplate'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring', $args);
                 $res =  $this->assertSame($this->actual, $this->expected, 'Call with an invalid template param throws an exception');
@@ -104,7 +104,7 @@
         public function testGetmessageincludestringBadModuleParam()
         {
             try {
-                $args = array('module' => 'someinvalidmodule', 'template' => 'message-vars');
+                $args = ['module' => 'someinvalidmodule', 'template' => 'message-vars'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring', $args);
                 $res =  $this->assertSame($this->actual, $this->expected, 'Call with an invalid module param throws an exception');
@@ -116,7 +116,7 @@
 
         public function testGetmessageincludestring()
         {
-            $args = array('module' => 'mail', 'template' => 'message-vars');
+            $args = ['module' => 'mail', 'template' => 'message-vars'];
             $this->expected = '[string]';
             $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring', $args);
             return $this->assertTrue(is_string($this->actual), 'Call with valid module name and template params returns a string');
@@ -141,7 +141,7 @@
         public function testGetmessagestringsBadTemplateParam()
         {
             try {
-                $args = array('template' => 'someinvalidtemplate');
+                $args = ['template' => 'someinvalidtemplate'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings', $args);
                 $res =  $this->assertSame($this->actual, $this->expected, 'Call with an invalid template param throws an exception');
@@ -154,7 +154,7 @@
         public function testGetmessagestringsBadModuleParam()
         {
             try {
-                $args = array('module' => 'someinvalidmodule', 'template' => 'welcome');
+                $args = ['module' => 'someinvalidmodule', 'template' => 'welcome'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings', $args);
                 $res =  $this->assertSame($this->actual, $this->expected, 'Call with an invalid module param throws an exception');
@@ -166,7 +166,7 @@
 
         public function testGetmessagestrings()
         {
-            $args = array('module' => 'roles', 'template' => 'welcome');
+            $args = ['module' => 'roles', 'template' => 'welcome'];
             $this->expected = '[array]';
             $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings', $args);
             return $this->assertTrue(is_array($this->actual), 'Call with valid module name and template params returns an array');
@@ -185,7 +185,7 @@
 
         public function testMenuWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'admin', 'menu');
             $this->actual = xarMod::apiFunc('roles', 'admin', 'menu', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -272,7 +272,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $args = array('state' => Roles_Master::ROLES_RSTATE_ACTIVE, 'id' => 12345678);
+                $args = ['state' => Roles_Master::ROLES_RSTATE_ACTIVE, 'id' => 12345678];
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'stateupdate', $args);
                 $res = $this->assertSame($this->actual, $this->expected, "Call with bad id param throws an exception");
                 return $res;
@@ -335,7 +335,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $args = array('state' => 3);
+                $args = ['state' => 3];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual), "Call with state param returns integer");
                 return $res;
@@ -347,7 +347,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $args = array('include_anonymous' => false);
+                $args = ['include_anonymous' => false];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual), "Call with include_anonymous param returns integer");
                 return $res;
@@ -359,7 +359,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $args = array('selection' => ' AND uname = "Admin"');
+                $args = ['selection' => ' AND uname = "Admin"'];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual), "Call with selection param returns integer");
                 return $res;
@@ -371,7 +371,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $args = array('selection' => 'something');
+                $args = ['selection' => 'something'];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertSame($this->actual, $this->expected, "Call with bad selection param throws an exception");
                 return $res;
@@ -399,7 +399,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $args = array('include_anonymous' => false);
+                $args = ['include_anonymous' => false];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countallactive', $args);
                 $res = $this->assertTrue(is_numeric($this->actual), "Call with include_anonymous param returns integer");
                 return $res;
@@ -411,7 +411,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $args = array('selection' => ' AND a.uname = "Admin"');
+                $args = ['selection' => ' AND a.uname = "Admin"'];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual), "Call with selection param returns integer");
                 return $res;
@@ -423,7 +423,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $args = array('selection' => 'something');
+                $args = ['selection' => 'something'];
                 $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertSame($this->actual, $this->expected, "Call with bad selection param throws an exception");
                 return $res;
@@ -444,7 +444,7 @@
         }
         public function testCountgroupsWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'user', 'countgroups');
             $this->actual = xarMod::apiFunc('roles', 'user', 'countgroups', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same as without');
@@ -462,7 +462,7 @@
         }
         public function testCountitemsWithParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'user', 'countitems');
             $this->actual = xarMod::apiFunc('roles', 'user', 'countitems', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same as without');
@@ -491,7 +491,7 @@
         }
         public function testEncode_shorturlfuncParam()
         {
-            $args = array('func' => 'view');
+            $args = ['func' => 'view'];
             $this->expected = '[array]';
             $this->actual = xarMod::apiFunc('roles', 'user', 'encode_shorturl', $args);
             return $this->assertTrue(is_array($this->actual), 'Call with func param returns array');
@@ -515,7 +515,7 @@
         public function testGetIdParam()
         {
             try {
-                $args = array('id' => 3);
+                $args = ['id' => 3];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with id param returns array");
@@ -527,7 +527,7 @@
         public function testGetBadIdParam()
         {
             try {
-                $args = array('id' => 'foo');
+                $args = ['id' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad id param throws exception");
@@ -539,7 +539,7 @@
         public function testGetNameParam()
         {
             try {
-                $args = array('name' => 'Administrator');
+                $args = ['name' => 'Administrator'];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with name param returns array");
@@ -551,7 +551,7 @@
         public function testGetBadNameParam()
         {
             try {
-                $args = array('name' => 'someunknowname');
+                $args = ['name' => 'someunknowname'];
                 $this->expected = false;
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad name param returns false");
@@ -563,7 +563,7 @@
         public function testGetUnameParam()
         {
             try {
-                $args = array('uname' => 'Admin');
+                $args = ['uname' => 'Admin'];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with uname param returns array");
@@ -575,7 +575,7 @@
         public function testGetBadUnameParam()
         {
             try {
-                $args = array('uname' => 'someunknowuname');
+                $args = ['uname' => 'someunknowuname'];
                 $this->expected = false;
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad uname param returns false");
@@ -587,7 +587,7 @@
         public function testGetEmailParam()
         {
             try {
-                $args = array('email' => xarModVars::get('mail', 'adminmail'));
+                $args = ['email' => xarModVars::get('mail', 'adminmail')];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with email param returns array");
@@ -599,7 +599,7 @@
         public function testGetBadEmailParam()
         {
             try {
-                $args = array('email' => 'invalid@emailaddress.com');
+                $args = ['email' => 'invalid@emailaddress.com'];
                 $this->expected = false;
                 $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad email param returns false");
@@ -627,7 +627,7 @@
         public function testGetIdParam()
         {
             try {
-                $args = array('id' => xarModUserVars::get('id'));
+                $args = ['id' => xarModUserVars::get('id')];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getactive', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with id param returns array");
@@ -639,7 +639,7 @@
         public function testGetBadIdParam()
         {
             try {
-                $args = array('id' => 'foo');
+                $args = ['id' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getactive', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad id param throws exception");
@@ -713,7 +713,7 @@
         public function testGetIdParam()
         {
             try {
-                $args = array('id' => xarModUserVars::get('id'));
+                $args = ['id' => xarModUserVars::get('id')];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getancestors', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with id param returns array");
@@ -725,7 +725,7 @@
         public function testGetBadIdParam()
         {
             try {
-                $args = array('id' => 'foo');
+                $args = ['id' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getancestors', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad id param throws exception");
@@ -774,7 +774,7 @@
         public function testGetIdParam()
         {
             try {
-                $args = array('id' => xarModUserVars::get('id'));
+                $args = ['id' => xarModUserVars::get('id')];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getdeleteduser', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with id param returns array");
@@ -786,7 +786,7 @@
         public function testGetBadIdParam()
         {
             try {
-                $args = array('id' => 'foo');
+                $args = ['id' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getdeleteduser', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad id param throws exception");
@@ -814,7 +814,7 @@
         public function testGetitemlinksItemidsParam()
         {
             try {
-                $args = array('itemids' => array(xarModUserVars::get('id')));
+                $args = ['itemids' => [xarModUserVars::get('id')]];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getitemlinks', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with itemids param returns array");
@@ -836,7 +836,7 @@
         }
         public function testGetitemtypesParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'user', 'getitemtypes');
             $this->actual =xarMod::apiFunc('roles', 'user', 'getitemtypes', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -854,7 +854,7 @@
         }
         public function testGetmenulinksParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'user', 'getmenulinks');
             $this->actual =xarMod::apiFunc('roles', 'user', 'getmenulinks', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -878,7 +878,7 @@
         public function testGetprimaryparentItemidParam()
         {
             try {
-                $args = array('itemid' => xarModUserVars::get('id'));
+                $args = ['itemid' => xarModUserVars::get('id')];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getprimaryparent', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with itemid param returns array");
@@ -890,7 +890,7 @@
         public function testGetprimaryparentBadItemidParam()
         {
             try {
-                $args = array('itemid' => 'foo');
+                $args = ['itemid' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getprimaryparent', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad itemid param throws exception");
@@ -912,7 +912,7 @@
         }
         public function testGetstatesParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->expected = xarMod::apiFunc('roles', 'user', 'getstates');
             $this->actual =xarMod::apiFunc('roles', 'user', 'getstates', $args);
             return $this->assertSame($this->actual, $this->expected, 'Call with params returns the same array as without');
@@ -936,7 +936,7 @@
         public function testGetuserhomeItemidParam()
         {
             try {
-                $args = array('itemid' => xarModUserVars::get('id'));
+                $args = ['itemid' => xarModUserVars::get('id')];
                 $this->expected = '[string]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getuserhome', $args);
                 $res = $this->assertTrue(is_string($this->actual), "Call with itemid param returns string");
@@ -948,7 +948,7 @@
         public function testGetuserhomeBadItemidParam()
         {
             try {
-                $args = array('itemid' => 'foo');
+                $args = ['itemid' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getuserhome', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad itemid param throws exception");
@@ -976,7 +976,7 @@
         public function testGetIdParam()
         {
             try {
-                $args = array('id' => xarModUserVars::get('id'));
+                $args = ['id' => xarModUserVars::get('id')];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'getusers', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with id param returns array");
@@ -1023,7 +1023,7 @@
         }
         public function testMakepassParams()
         {
-            $args = array('foo' => 'bar');
+            $args = ['foo' => 'bar'];
             $this->actual =xarMod::apiFunc('roles', 'user', 'makepass', $args);
             return $this->assertTrue(is_string($this->actual), 'Call with params returns string');
         }
@@ -1046,7 +1046,7 @@
         public function testParseuserhomeUrlParam()
         {
             try {
-                $args = array('url' => '/');
+                $args = ['url' => '/'];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'parseuserhome', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with url param returns array");
@@ -1058,7 +1058,7 @@
         public function testParseuserhomeTruecurrenturlParam()
         {
             try {
-                $args = array('truecurrenturl' => '/');
+                $args = ['truecurrenturl' => '/'];
                 $this->expected = '[array]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'parseuserhome', $args);
                 $res = $this->assertTrue(is_array($this->actual), "Call with truecurrenturl param returns array");
@@ -1086,7 +1086,7 @@
         public function testRemovememberBadIdParam()
         {
             try {
-                $args = array('id' => 'foo');
+                $args = ['id' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'removemember', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad id param throws exception");
@@ -1098,7 +1098,7 @@
         public function testRemovememberBadGidParam()
         {
             try {
-                $args = array('gid' => 'foo');
+                $args = ['gid' => 'foo'];
                 $this->expected = '[exception]';
                 $this->actual = xarMod::apiFunc('roles', 'user', 'removemember', $args);
                 $res = $this->assertSame($this->expected, $this->actual, "Call with bad gid param throws exception");

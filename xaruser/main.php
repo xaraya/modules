@@ -14,5 +14,5 @@
         if ((bool)xarModVars::get('modules', 'disableoverview') == true) {
             xarController::redirect(xarController::URL('xarayatesting', 'user', 'testpage'));
         }
-        return array();
+        return [];
     }

@@ -6,7 +6,7 @@ class testEvt1 extends xarTestCase
     {
         $GLOBALS['xarDebug'] = false;
     }
-    
+
     public function precondition()
     {
         // Abort on bogus file: must not exist

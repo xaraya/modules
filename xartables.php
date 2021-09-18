@@ -8,7 +8,7 @@
     function xarayatesting_xartables()
     {
         // Initialise table array
-        $xartable = array();
+        $xartable = [];
 
         $xartable['xarayatesting'] = xarDB::getPrefix() . '_xarayatesting_tests';
 

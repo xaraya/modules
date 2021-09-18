@@ -30,8 +30,8 @@ define('UT_OUTLENGTH', 80);            // width of the text output in text repor
 class xarTestSuite
 {
     public $name;                // Name of this testsuite
-    public $testcases = array(); // array which holds all testcases
-    
+    public $testcases = []; // array which holds all testcases
+
     /**
      * Constructor just sets the name attribute
      */
@@ -39,7 +39,7 @@ class xarTestSuite
     {
         $this->name=$name;
     }
-    
+
     /**
      * Add a testcase object to the testsuite
      */
@@ -83,11 +83,11 @@ class xarTestSuite
         chdir($dir);
         return $toreturn;
     }
-    
+
     public function report($type, $show_results=true)
     {
         $report = new xarTestReport($type);
-        $report->instance->present(array($this), $show_results);
+        $report->instance->present([$this], $show_results);
     }
 }
 
@@ -98,13 +98,13 @@ class xarTestSuite
 class xarTestReport
 {
     public $instance;
-    
+
     /**
      * Abstract presentation function, this should be implemented in
      * the subclasses
      *
      */
-    public function present(array $testsuites=array(), $show_results=true)
+    public function present(array $testsuites=[], $show_results=true)
     {
     }
 
@@ -143,7 +143,6 @@ class xarTestReport
 
 class xarTextTestReport extends xarTestReport
 {
-    
     // Constructor must be here, otherwise we get into a loop
     public function __construct()
     {
@@ -154,7 +153,7 @@ class xarTextTestReport extends xarTestReport
     }
 
     // Presentation function
-    public function present(array $testsuites=array(), $show_results=true)
+    public function present(array $testsuites=[], $show_results=true)
     {
         foreach ($testsuites as $testsuite) {
             // Only include suites with testcases
@@ -174,10 +173,10 @@ class xarTextTestReport extends xarTestReport
                             }
                             if (!empty($result->message)) {
                                 echo " |- ". str_pad($result->message, UT_OUTLENGTH, ".", STR_PAD_RIGHT) .
-                                    (get_class($result)=="xarTestSuccess"?"Passed":"FAILED") . "\n";
+                                    (get_class($result)=="xarTestSuccess" ? "Passed" : "FAILED") . "\n";
                             } else {
                                 echo " |- ". str_pad("WARNING: invalid result in $key()", UT_OUTLENGTH, ".", STR_PAD_RIGHT) .
-                                    (get_class($result)=="xarTestSuccess"?"Passed":"FAILED") . "\n";
+                                    (get_class($result)=="xarTestSuccess" ? "Passed" : "FAILED") . "\n";
                             }
                         }
                     }
@@ -199,7 +198,7 @@ class xarHTMLTestReport extends xarTestReport
     }
 
     // Presentation function
-    public function present(array $testsuites=array(), $show_results=true)
+    public function present(array $testsuites=[], $show_results=true)
     {
         foreach ($testsuites as $testsuite) {
             // Only include suites with testcases
@@ -245,7 +244,7 @@ class xarHTMLTestReport extends xarTestReport
 class xarTestCase extends xarTestAssert
 {
     public $name;             // Name of this testcase
-    public $tests = array();  // xarTest objects
+    public $tests = [];  // xarTest objects
     public $_basedir;         // from which directory should tests be running
     public $expected;         // the expected output from the test
     public $actual;           // the actual output of the test
@@ -292,13 +291,13 @@ class xarTestCase extends xarTestAssert
 
     public function pass($msg='Passed')
     {
-        $res = array('value' => true, 'msg' => $msg);
+        $res = ['value' => true, 'msg' => $msg];
         return $res;
     }
 
     public function fail($msg='Failed')
     {
-        $res = array('value' => false, 'msg' => $msg);
+        $res = ['value' => false, 'msg' => $msg];
         return $res;
     }
 
@@ -337,7 +336,7 @@ class xarTest
         $testcase= $this->_parentobject;
         $testmethod=$this->_testmethod;
         $testcase->setup();
-        
+
         // Run the actual testmethod
         $result=$testcase->$testmethod();
         if ($testcase->precondition()) {
@@ -396,10 +395,9 @@ class xarTestException extends xarTestResult
         $this->message=$result['msg'];
     }
 }
-    
+
 class xarTestAssert
 {
-    
     // Abstract functions which should be implemented in subclasses
     // function fail($msg='no message') {}
     // function pass($msg='no message') {}
@@ -412,10 +410,10 @@ class xarTestAssert
                 ksort($actual);
                 ksort($expected);
             }
-            
+
             $actual   = serialize($actual);
             $expected = serialize($expected);
-            
+
             if (serialize($actual) == serialize($expected)) {
                 return $this->pass($msg);
             }
@@ -437,7 +435,7 @@ class xarTestAssert
         return $this->fail($msg);
     }
 
-    
+
     public function assertNotNull($object, $msg='Test for Not Null')
     {
         if ($object !== null) {
@@ -472,7 +470,7 @@ class xarTestAssert
         }
         return $this->fail($msg);
     }
-    
+
 
     public function assertTrue($condition, $msg='Test for True')
     {

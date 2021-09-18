@@ -3,7 +3,7 @@
 class testxarUser1 extends xarTestCase
 {
     public $myBLC;
-    
+
     public function testEmptyUserVar()
     {
         return $this->assertNull(xarUser::getVar(''), "Passing empty user var should return null");

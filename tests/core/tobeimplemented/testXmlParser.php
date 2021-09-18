@@ -34,7 +34,7 @@ class testW3TestSuite1 extends xarTestCase
     public $xmlconf;
     public $xmltest;
     public $savedir;
-    public $errors=array();
+    public $errors=[];
     public $testcases;
     public $xmltestbase;
 
@@ -68,10 +68,10 @@ class testW3TestSuite1 extends xarTestCase
         chdir($this->savedir);
     }
 
-  
+
     public function testParseValidFromW3TestSuite()
     {
-        $this->errors=array();
+        $this->errors=[];
         $testcounter=0;
         foreach ($this->testcases as $testcase) {
             $dir = $testcase['attributes']['http://www.w3.org/XML/1998/namespace:base'];
@@ -94,7 +94,7 @@ class testW3TestSuite1 extends xarTestCase
         }
         $msgtoreturn="Valid documents should parse without errors (".count($this->errors)."/$testcounter)";
         //if(!empty($this->errors)) $msgtoreturn .= "\n" . implode("\n",$this->errors);
-        
+
         return $this->AssertTrue(empty($this->errors), $msgtoreturn);
     }
 
@@ -104,7 +104,7 @@ class testW3TestSuite1 extends xarTestCase
 
     public function _testParseNotWellFormedFromW3TestSuite()
     {
-        $this->errors=array();
+        $this->errors=[];
         $testcounter=0;
         $errorcounter=0;
         foreach ($this->testcases as $test) {
@@ -124,7 +124,7 @@ class testW3TestSuite1 extends xarTestCase
                 }
             }
         }
-        
+
         $msgtoreturn="Not well formed documents should give errors ($errorcounter/$testcounter)";
         //if(!empty($this->errors)) $msgtoreturn .= "\n" . implode("\n",$this->errors);
         return $this->AssertTrue(empty($this->errors), $msgtoreturn);
@@ -132,7 +132,7 @@ class testW3TestSuite1 extends xarTestCase
 
     public function _testParseInvalidFromW3TestSuite()
     {
-        $this->errors=array();
+        $this->errors=[];
         $testcounter=0;
         $errorcounter=0;
         foreach ($this->testcases as $test) {
@@ -151,7 +151,7 @@ class testW3TestSuite1 extends xarTestCase
                 }
             }
         }
-        
+
         $msgtoreturn="Invalid documents should give errors ($errorcounter/".$testcounter.")";
         //if(!empty($this->errors)) $msgtoreturn .= "\n" . implode("\n",$this->errors);
         return $this->AssertTrue(empty($this->errors), $msgtoreturn);
