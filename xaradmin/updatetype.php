@@ -46,11 +46,11 @@ function xarpages_admin_updatetype($args)
             'xarpages',
             'admin',
             'updatetype',
-            array(
+            [
                 'ptid'  => $ptid,
                 'name'  => $name,
-                'desc'  => $desc
-            )
+                'desc'  => $desc,
+            ]
         )) {
             return;
         }
@@ -60,10 +60,10 @@ function xarpages_admin_updatetype($args)
             'xarpages',
             'admin',
             'createtype',
-            array(
+            [
                 'name'  => $name,
-                'desc'  => $desc
-            )
+                'desc'  => $desc,
+            ]
         );
         if (!$ptid) {
             return;

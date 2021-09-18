@@ -45,7 +45,7 @@ function xarpages_adminapi_createpage($args)
         'xarpages',
         'user',
         'gettype',
-        array('ptid' => $itemtype)
+        ['ptid' => $itemtype]
     );
 
     if (empty($pagetype)) {
@@ -67,11 +67,11 @@ function xarpages_adminapi_createpage($args)
     $tablename = $xartable['xarpages_pages'];
 
     // Data for the query.
-    $bind = array();
-    $cols = array();
+    $bind = [];
+    $cols = [];
 
     // Include the optional parameters.
-    foreach (array('desc', 'template', 'page_template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
+    foreach (['desc', 'template', 'page_template', 'theme', 'encode_url', 'decode_url', 'function', 'status'] as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = 'xar_' . $colname;
@@ -95,7 +95,7 @@ function xarpages_adminapi_createpage($args)
         'insertprep',
         array_merge(
             $args,
-            array('tablename' => $tablename, 'idname' => 'xar_pid')
+            ['tablename' => $tablename, 'idname' => 'xar_pid']
         )
     );
 

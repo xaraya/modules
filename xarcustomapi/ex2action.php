@@ -31,23 +31,23 @@ function pageform_ex2action_validate(&$inobj)
 
     // CHECK NEW USER ARGS
     $isvalid = true;
-    
+
     // check email (if not already flagged)
     if (!empty($invalids['email'])) {
         // better message than the default property one
         $invalids['email'] = "Please enter a valid email address";
     } else {
-        $invalids['email'] = xarMod::apiFunc('registration', 'user', 'checkvar', array('type'=>'email', 'var'=>$values['email']));
+        $invalids['email'] = xarMod::apiFunc('registration', 'user', 'checkvar', ['type'=>'email', 'var'=>$values['email']]);
         if (!empty($invalids['email'])) {
             $isvalid = true;
         }
     }
-    
+
     // check passwords
     if (empty($invalids['password'])) {
-        $invalids['password'] = xarMod::apiFunc('registration', 'user', 'checkvar', array('type'=>'pass1', 'var'=>$values['password'] ));
+        $invalids['password'] = xarMod::apiFunc('registration', 'user', 'checkvar', ['type'=>'pass1', 'var'=>$values['password'] ]);
         if (empty($invalids['password'])) {
-            $invalids['password_again'] = xarMod::apiFunc('registration', 'user', 'checkvar', array('type'=>'pass2', 'var'=>array($values['password'],$values['password_again']) ));
+            $invalids['password_again'] = xarMod::apiFunc('registration', 'user', 'checkvar', ['type'=>'pass2', 'var'=>[$values['password'],$values['password_again']] ]);
         }
     }
     if (!empty($invalids['password'])) {
@@ -56,7 +56,7 @@ function pageform_ex2action_validate(&$inobj)
 
     // put local values back into object for return
     $isvalid = pageform_arrays2obj($values, $invalids, $inobj);
-    
+
     return $isvalid;
 }
 
@@ -77,32 +77,32 @@ function pageform_ex2action_process(&$inobj, &$outobj)
     // extract object fields into local arrays
     pageform_obj2arrays($inobj, $values, $invalids);
     pageform_obj2arrays($outobj, $outvalues, $outinvalids);
-    
+
     // CREATE USER
     // determine state of this create user
     $state = xarMod::apiFunc('registration', 'user', 'createstate');
-    
+
     $email = $values['email'];
     $pass = $values['password'];
     $username = $email;
-    
+
     // find a unique user name (not used for log in)
     //do {
     //  $username = time();
     //  $inval = xarMod::apiFunc('registration','user','checkvar', array('type'=>'username', 'var'=>$username));
     //} while (!empty($inval));
-    
-    
+
+
     // actually create the user
     $uid = xarMod::apiFunc(
         'registration',
         'user',
         'createuser',
-        array(  'username'  => $username,
+        [  'username'  => $username,
                 'realname'  => $email,
                 'email'     => $email,
                 'pass'      => $pass,
-                'state'     => $state )
+                'state'     => $state, ]
     );
     if (!$uid) {
         $outvalues['message'] = 'Cannot create new user account';
@@ -112,18 +112,18 @@ function pageform_ex2action_process(&$inobj, &$outobj)
             'registration',
             'user',
             'createnotify',
-            array(  'username'  => $username,
+            [  'username'  => $username,
                     'realname'  => $email,
                     'email'     => $email,
                     'pass'      => $pass,
                     'uid'       => $uid,
-                    'state'     => $state)
+                    'state'     => $state, ]
         );
         if (!$ret) {
             $outvalues['message'] = 'Error sending email notifications';
         } else {
             // log in
-            xarMod::apiFunc('authsystem', 'user', 'login', array( 'uname' => $username, 'pass' => $pass, 'rememberme' => 0));
+            xarMod::apiFunc('authsystem', 'user', 'login', [ 'uname' => $username, 'pass' => $pass, 'rememberme' => 0]);
             $outvalues['message'] = "user account successfully created. username [$username] uid [$uid]";
         }
     }
@@ -131,6 +131,6 @@ function pageform_ex2action_process(&$inobj, &$outobj)
     // put local values back into objects for return
     pageform_arrays2obj($values, $invalids, $inobj);
     pageform_arrays2obj($outvalues, $outinvalids, $outobj);
-    
+
     return true;
 }

@@ -126,7 +126,7 @@ function xarpages_init()
         'i_' . xarDB::getPrefix() . '_xarpages_type_name',
         $typestable,
         'xar_name',
-        array('UNIQUE' => true)
+        ['UNIQUE' => true]
     );
     if (!$result) {
         return;
@@ -158,18 +158,18 @@ function xarpages_init()
     // page, so that should not be a problem.
     // Note page names beginning with '@' are system pages - not editable by a user
     // with any permissions.
-    $instances = array(
-        array(
+    $instances = [
+        [
             'header' => 'Page Name',
             'query' => 'SELECT xar_name FROM (SELECT DISTINCT xar_name, xar_left FROM ' . $pagestable . ' ORDER BY xar_left) AS temp',
-            'limit' => 50
-        ),
-        array(
+            'limit' => 50,
+        ],
+        [
             'header' => 'Page Type',
             'query' => 'SELECT xar_name FROM ' . $typestable . ' WHERE xar_name NOT LIKE \'@%\' ORDER BY xar_name',
-            'limit' => 50
-        )
-    );
+            'limit' => 50,
+        ],
+    ];
     xarPrivileges::defineInstance(
         'xarpages',
         'Page',
@@ -253,13 +253,13 @@ function xarpages_init()
 
     // Set up component 'Pagetype'.
     // Each pagetype a unique page name.
-    $instances = array(
-        array(
+    $instances = [
+        [
             'header' => 'Page Type',
             'query' => 'SELECT xar_name FROM ' . $typestable . ' WHERE xar_name NOT LIKE \'@%\' ORDER BY xar_name',
-            'limit' => 50
-        )
-    );
+            'limit' => 50,
+        ],
+    ];
     xarPrivileges::defineInstance(
         'xarpages',
         'Pagetype',
@@ -317,7 +317,7 @@ function xarpages_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'xarpages', 'hookModName' => 'dynamicdata')
+            ['callerModName' => 'xarpages', 'hookModName' => 'dynamicdata']
         );
     }
 
@@ -326,15 +326,15 @@ function xarpages_init()
     // type is created.
 
     // Register block types.
-    foreach (array('menu', 'crumb') as $blocktype) {
+    foreach (['menu', 'crumb'] as $blocktype) {
         if (!xarMod::apiFunc(
             'blocks',
             'admin',
             'register_block_type',
-            array(
+            [
                 'modName' => 'xarpages',
-                'blockType'=> $blocktype
-            )
+                'blockType'=> $blocktype,
+            ]
         )) {
             return;
         }
@@ -409,7 +409,7 @@ function xarpages_upgrade($oldversion)
                     $indexname,
                     $typestable,
                     'xar_name',
-                    array('UNIQUE' => true)
+                    ['UNIQUE' => true]
                 );
                 if (!$result) {
                     return;
@@ -439,10 +439,10 @@ function xarpages_upgrade($oldversion)
                 'blocks',
                 'admin',
                 'register_block_type',
-                array(
+                [
                     'modName' => 'xarpages',
-                    'blockType'=> 'menu'
-                )
+                    'blockType'=> 'menu',
+                ]
             )) {
                 return;
             }
@@ -461,7 +461,7 @@ function xarpages_upgrade($oldversion)
                 . ' WHERE xar_module = ? AND xar_name = ?';
 
             // Loop for each mask to change.
-            $masks = array(
+            $masks = [
                 'ReadPage' => 'ReadXarpagesPage',
                 'ModeratePage' => 'ModerateXarpagesPage',
                 'EditPage' => 'EditXarpagesPage',
@@ -470,13 +470,13 @@ function xarpages_upgrade($oldversion)
                 'AdminPage' => 'AdminXarpagesPage',
                 'ModeratePagetype' => 'ModerateXarpagesPagetype',
                 'EditPagetype' => 'EditXarpagesPagetype',
-                'AdminPagetype' => 'AdminXarpagesPagetype'
-            );
+                'AdminPagetype' => 'AdminXarpagesPagetype',
+            ];
 
             foreach ($masks as $old_mask => $new_mask) {
                 // Update the mask.
                 // TODO: not sure what affect this has cross-realm.
-                $dbconn->execute($query_masks, array($new_mask, 'xarpages', $old_mask));
+                $dbconn->execute($query_masks, [$new_mask, 'xarpages', $old_mask]);
             }
 
             // no break
@@ -494,10 +494,10 @@ function xarpages_upgrade($oldversion)
                 'blocks',
                 'admin',
                 'register_block_type',
-                array(
+                [
                     'modName' => 'xarpages',
-                    'blockType'=> 'crumb'
-                )
+                    'blockType'=> 'crumb',
+                ]
             )) {
                 return;
             }

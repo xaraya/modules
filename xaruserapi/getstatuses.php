@@ -12,19 +12,19 @@
 
 function xarpages_userapi_getstatuses($args)
 {
-    return array(
-        'ACTIVE' => array(
+    return [
+        'ACTIVE' => [
             'status' => 'ACTIVE', 'name' => xarML('Active'),
-            'desc' => xarML('The page is active and displayable (online)')
-        ),
-        'INACTIVE' => array('status' => 'INACTIVE', 'name' => xarML('Inactive'),
-            'desc' => xarML('The page is inactive (offline)')
-        ),
-        'TEMPLATE' => array('status' => 'TEMPLATE', 'name' => xarML('Template'),
-            'desc' => xarML('The page is used as a template for creating new pages')
-        ),
-        'EMPTY' => array('status' => 'EMPTY', 'name' => xarML('Empty'),
-            'desc' => xarML('The page is active but as a placeholder for other pages, and not directly displayable')
-        )
-    );
+            'desc' => xarML('The page is active and displayable (online)'),
+        ],
+        'INACTIVE' => ['status' => 'INACTIVE', 'name' => xarML('Inactive'),
+            'desc' => xarML('The page is inactive (offline)'),
+        ],
+        'TEMPLATE' => ['status' => 'TEMPLATE', 'name' => xarML('Template'),
+            'desc' => xarML('The page is used as a template for creating new pages'),
+        ],
+        'EMPTY' => ['status' => 'EMPTY', 'name' => xarML('Empty'),
+            'desc' => xarML('The page is active but as a placeholder for other pages, and not directly displayable'),
+        ],
+    ];
 }

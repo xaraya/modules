@@ -24,7 +24,7 @@ function xarpages_userapi_transformhook($args)
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
             $keys = array_flip($extrainfo['transform']);
         } else {
-            $keys = array();
+            $keys = [];
         }
 
         // Loop through elements to transform.

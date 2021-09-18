@@ -15,7 +15,7 @@ function xarpages_decodeapi_example($args)
     array_shift($args);
 
     // Initialise the array to return.
-    $get = array();
+    $get = [];
 
     $arg = array_shift($args);
 

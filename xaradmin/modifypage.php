@@ -32,7 +32,7 @@ function xarpages_admin_modifypage($args)
         return;
     }
 
-    $data = array();
+    $data = [];
 
     $data['return_url'] = $return_url;
 
@@ -48,7 +48,7 @@ function xarpages_admin_modifypage($args)
             'xarpages',
             'user',
             'getpage',
-            array('pid' => $pid)
+            ['pid' => $pid]
         );
 
         // Check we have minimum privs to edit this page.
@@ -68,7 +68,7 @@ function xarpages_admin_modifypage($args)
             'xarpages',
             'user',
             'getpagestree',
-            array('left_exclude' => array($data['page']['left'], $data['page']['right']))
+            ['left_exclude' => [$data['page']['left'], $data['page']['right']]]
         );
 
         $data['func'] = 'modify';
@@ -77,11 +77,11 @@ function xarpages_admin_modifypage($args)
             'item',
             'modify',
             $pid,
-            array(
+            [
                 'module' => 'xarpages',
                 'itemtype' => $data['page']['itemtype'],
-                'itemid' => $data['page']['pid']
-            )
+                'itemid' => $data['page']['pid'],
+            ]
         );
     } else {
         // Adding a new page
@@ -121,7 +121,7 @@ function xarpages_admin_modifypage($args)
                 'xarpages',
                 'user',
                 'gettypes',
-                array('key' => 'ptid')
+                ['key' => 'ptid']
             );
 
             // Check privileges of each page type: are we allowed to create
@@ -146,7 +146,7 @@ function xarpages_admin_modifypage($args)
                 'xarpages',
                 'user',
                 'getpages',
-                array('itemtype' => $ptid, 'status' => 'TEMPLATE')
+                ['itemtype' => $ptid, 'status' => 'TEMPLATE']
             );
             if (count($templates) > 0) {
                 $template = reset($templates);
@@ -159,11 +159,11 @@ function xarpages_admin_modifypage($args)
                 'item',
                 'new',
                 '',
-                array('module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => '')
+                ['module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => '']
             );
 
             // Default data for the page form.
-            $data['page'] = array(
+            $data['page'] = [
                 'left' => 0,
                 'right' => 0,
                 'name'=>'',
@@ -176,8 +176,8 @@ function xarpages_admin_modifypage($args)
                 'alias' => 0,
                 'template' => '',
                 'page_template' => '',
-                'pagetype' => xarMod::apiFunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
-            );
+                'pagetype' => xarMod::apiFunc('xarpages', 'user', 'gettype', ['ptid' => $ptid]),
+            ];
 
             // If we have a template, then set a few values up to initialise the new page form.
             if (!empty($template)) {
@@ -216,19 +216,19 @@ function xarpages_admin_modifypage($args)
     // Get lists of files in the various custom APIs.
     // Dynamicdata is a prerequisite for this module, so no need to check
     // whether it is available before using its API.
-    $custom_apis = array();
-    foreach (array('encode', 'decode', 'func') as $api) {
+    $custom_apis = [];
+    foreach (['encode', 'decode', 'func'] as $api) {
         $data['custom_apis'][$api] = xarMod::apiFunc(
             'xarpages',
             'user',
             'browse_files',
-            array(
+            [
                 'module'=>'xarpages',
                 'basedir'=>'xar'.$api.'api',
                 'levels' => 1,
                 'match_glob' => '*.php',
-                'strip_re'=>'/.php$/'
-            )
+                'strip_re'=>'/.php$/',
+            ]
         );
     }
 
@@ -236,7 +236,7 @@ function xarpages_admin_modifypage($args)
     // TODO: create a property for doing this, as it can get a bit complex, and
     // is often needed, especially in respect of images.
     // Start with the default templates.
-    $template_list = array();
+    $template_list = [];
 
     // The template will be prefixed by 'page-' and then the name of the page type.
     $template_prefix = 'page-' . $data['page']['pagetype']['name'] . '-';
@@ -245,13 +245,13 @@ function xarpages_admin_modifypage($args)
         'xarpages',
         'user',
         'browse_files',
-        array(
+        [
             'module'=>'xarpages',
             'basedir'=>'xartemplates',
             'levels' => 1,
             'match_glob' => $template_prefix . '*.x[td]',
-            'strip_re'=>'/^'.$template_prefix.'|.x[td]$/'
-        )
+            'strip_re'=>'/^'.$template_prefix.'|.x[td]$/',
+        ]
     );
     if (!empty($templates)) {
         foreach ($templates as $template) {
@@ -260,21 +260,21 @@ function xarpages_admin_modifypage($args)
     }
 
     // Loop through the themes, and fetch any templates there.
-    $themes = xarMod::apiFunc('themes', 'admin', 'getlist', array('state' => xarTheme::STATE_ACTIVE));
+    $themes = xarMod::apiFunc('themes', 'admin', 'getlist', ['state' => xarTheme::STATE_ACTIVE]);
     foreach ($themes as $theme) {
         // Check for templates for this module in the theme.
         $templates = xarMod::apiFunc(
             'xarpages',
             'user',
             'browse_files',
-            array(
+            [
                 // TODO: find a way to avoid messing around with directory assumptions here.
                 // Idealy this module should not need to know anything about this file structure.
                 'basedir' => 'themes/' . $theme['osdirectory'] . '/modules/' . $modinfo['directory'],
                 'levels' => 1,
                 'match_glob' => $template_prefix . '*.xt',
-                'strip_re'=>'/^'.$template_prefix.'|.xt$/'
-            )
+                'strip_re'=>'/^'.$template_prefix.'|.xt$/',
+            ]
         );
         if (!empty($templates)) {
             foreach ($templates as $template) {

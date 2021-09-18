@@ -19,10 +19,10 @@
 
 function xarpages_crumbblock_init()
 {
-    return array(
+    return [
         'include_root' => false,
-        'root_pids' => array()
-    );
+        'root_pids' => [],
+    ];
 }
 
 /**
@@ -31,7 +31,7 @@ function xarpages_crumbblock_init()
 
 function xarpages_crumbblock_info()
 {
-    return array(
+    return [
         'text_type' => 'Content',
         'text_type_long' => 'Xarpages Crumbtrail Block',
         'module' => 'xarpages',
@@ -40,8 +40,8 @@ function xarpages_crumbblock_info()
         'form_content' => false,
         'form_refresh' => false,
         'show_preview' => true,
-        'notes' => 'Provides an ancestry trail of the current page in the hierarchy'
-    );
+        'notes' => 'Provides an ancestry trail of the current page in the hierarchy',
+    ];
 }
 
 /**
@@ -68,7 +68,7 @@ function xarpages_crumbblock_display($blockinfo)
     if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
         $root_pids = $vars['root_pids'];
     } else {
-        $root_pids = array();
+        $root_pids = [];
     }
 
     // To start with, we need to know the current page.
@@ -103,7 +103,7 @@ function xarpages_crumbblock_display($blockinfo)
         // If the cached tree does not contain the current page,
         // then we cannot use it.
         if (!isset($pagedata['pages'][$pid])) {
-            $pagedata = array();
+            $pagedata = [];
         }
     }
 
@@ -111,11 +111,11 @@ function xarpages_crumbblock_display($blockinfo)
     if (empty($pagedata)) {
         return;
     }
-    
+
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
     if (!empty($root_pids)) {
-        if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+        if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', ['pid' => $pid, 'tree_roots' => $root_pids])) {
             return;
         }
     }
@@ -131,7 +131,7 @@ function xarpages_crumbblock_display($blockinfo)
         'xarpages',
         'user',
         'addcurrentpageflags',
-        array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
+        ['pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids]
     );
 
     // If we don't want to include the root page in the crumbs, then shift it off now.

@@ -13,7 +13,7 @@ function xarpages_encodeapi_example($args)
     extract($args);
 
     // Initialise the return values.
-    $path = array();
+    $path = [];
     $get = $args;
 
     // Check if the cid is set
@@ -25,8 +25,8 @@ function xarpages_encodeapi_example($args)
         unset($get['cid']);
     }
 
-    return array(
+    return [
         'path' => $path,
-        'get' => $get
-    );
+        'get' => $get,
+    ];
 }

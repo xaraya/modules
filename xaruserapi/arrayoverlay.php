@@ -16,7 +16,7 @@ function xarpages_userapi_arrayoverlay($args)
         $array_base = $args['base'];
         $array_top = $args['top'];
     } else {
-        list($array_base, $array_top) = $args;
+        [$array_base, $array_top] = $args;
     }
 
     if (!is_array($array_base) || !is_array($array_top)) {
@@ -28,7 +28,7 @@ function xarpages_userapi_arrayoverlay($args)
             if (!isset($array_base[$key_top])) {
                 $array_base[$key_top] = $value_top;
             } else {
-                $array_base[$key_top] = xarpages_userapi_arrayoverlay(array($array_base[$key_top], $value_top));
+                $array_base[$key_top] = xarpages_userapi_arrayoverlay([$array_base[$key_top], $value_top]);
             }
         }
     }

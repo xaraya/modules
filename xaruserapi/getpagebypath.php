@@ -47,16 +47,16 @@ function xarpages_userapi_getpagebypath($args)
 
         // Expand the params into an array we can merge in later.
         $params = explode('&', $params);
-        $params2 = array();
+        $params2 = [];
         foreach ($params as $param) {
-            list($p, $v) = explode('=', $param);
+            [$p, $v] = explode('=', $param);
             if (!empty($p) && isset($v)) {
                 $params2[$p] = $v;
             }
         }
         $params = $params2;
     } else {
-        $params = array();
+        $params = [];
     }
 
 
@@ -85,20 +85,20 @@ function xarpages_userapi_getpagebypath($args)
         'xarpages',
         'user',
         'getpages',
-        array(
+        [
             'tree_contains_name' => $pagename,
             'tree_ancestors' => true,
             'dd_flag' => false,
-            'key' => 'pid'
-        )
+            'key' => 'pid',
+        ]
     );
 
     // Scan the pages so we have arrays of ancestors we can scan.
     // Create expanded string paths from the pages, and match strings.
-    $all_paths = array();
+    $all_paths = [];
 
-    $depthstack = array();
-    $pathstack = array();
+    $depthstack = [];
+    $pathstack = [];
     foreach ($pages as $pid => $page) {
         //
         if (!empty($depthstack)) {
@@ -140,7 +140,7 @@ function xarpages_userapi_getpagebypath($args)
         // A page was found.
         // If DD data is needed for the matched page, then fetch it.
         if (!empty($dd_flag)) {
-            $dd_data = xarMod::apiFunc('xarpages', 'user', 'getpagedd', array('pages' => array($page_id => $page)));
+            $dd_data = xarMod::apiFunc('xarpages', 'user', 'getpagedd', ['pages' => [$page_id => $page]]);
             $page['dd'] = $dd_data[$page_id];
         }
 

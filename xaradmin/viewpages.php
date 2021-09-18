@@ -31,7 +31,7 @@ function xarpages_admin_viewpages($args)
         'xarpages',
         'user',
         'getpagestree',
-        array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
+        ['key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains]
     );
 
     if (empty($data['pages'])) {
@@ -64,10 +64,10 @@ function xarpages_admin_viewpages($args)
 
     $pages = array_reverse($data['pages'], true);
 
-    $pagestree = array();
+    $pagestree = [];
 
     $parentid = 'x';
-    $children = array(0 => array());
+    $children = [0 => []];
 
     // convert the flat tree structure into a nested one for display
     foreach ($pages as $tmppage) {
@@ -79,7 +79,7 @@ function xarpages_admin_viewpages($args)
                 ksort($children[$parent], SORT_NUMERIC);
                 $tmppage['children'] = $children[$pid];
             } else {
-                $children[$parent] = array();
+                $children[$parent] = [];
                 if (isset($children[$pid])) {
                     ksort($children[$pid], SORT_NUMERIC);
                     $tmpcat['children'] = $children[$pid];

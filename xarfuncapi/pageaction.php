@@ -61,7 +61,7 @@ function xarpages_funcapi_pageaction($args)
     if (empty($in_object)) {
         // create empty one
         $objectid = $pages[$form_pid]['dd']['data'];
-        $in_object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$objectid ));
+        $in_object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', ['objectid'=>$objectid ]);
     } else {
         // clear invalids, we'll be checking them again now
         _pageform_resetinvalids($in_object);
@@ -143,7 +143,7 @@ function xarpages_funcapi_pageaction($args)
                 // create empty one
                 $objectid = $pages[$nextform_pid]['dd']['data'];
                 //$out_object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
-                $out_object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$objectid ));
+                $out_object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', ['objectid'=>$objectid ]);
             }
 
             // copy any common named values from in to out (especially if they're the same object ids!)

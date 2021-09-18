@@ -32,7 +32,7 @@ function xarpages_admin_deletepage($args)
         'xarpages',
         'user',
         'getpage',
-        array('pid' => $pid)
+        ['pid' => $pid]
     );
 
     if (empty($page)) {
@@ -48,14 +48,14 @@ function xarpages_admin_deletepage($args)
 
     // Check for confirmation
     if (empty($confirm)) {
-        $data = array('page' => $page, 'return_url' => $return_url);
+        $data = ['page' => $page, 'return_url' => $return_url];
         $data['authkey'] = xarSec::genAuthKey();
 
         $data['count'] = xarMod::apiFunc(
             'xarpages',
             'user',
             'getpages',
-            array('count' => true, 'left_range' => array($page['left']+1, $page['right']-1))
+            ['count' => true, 'left_range' => [$page['left']+1, $page['right']-1]]
         );
 
         // Return output
@@ -72,7 +72,7 @@ function xarpages_admin_deletepage($args)
         'xarpages',
         'admin',
         'deletepage',
-        array('pid' => $pid)
+        ['pid' => $pid]
     )
     ) {
         return;

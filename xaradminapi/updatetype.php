@@ -22,7 +22,7 @@ function xarpages_adminapi_updatetype($args)
     }
 
     // Get current information on the page type
-    $type = xarMod::apiFunc('xarpages', 'user', 'gettype', array('ptid' => $ptid));
+    $type = xarMod::apiFunc('xarpages', 'user', 'gettype', ['ptid' => $ptid]);
 
     if (empty($type)) {
         $msg = xarML('The page type "#(1)" does not exist', $ptid);
@@ -42,11 +42,11 @@ function xarpages_adminapi_updatetype($args)
 
     // Data for the query.
     // Allow columns to be optional.
-    $bind = array();
-    $cols = array();
+    $bind = [];
+    $cols = [];
 
     // Include the optional parameters.
-    foreach (array('name', 'desc') as $colname) {
+    foreach (['name', 'desc'] as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = 'xar_' . $colname . ' = ?';
@@ -72,7 +72,7 @@ function xarpages_adminapi_updatetype($args)
         'item',
         'update',
         $ptid,
-        array('module' => 'xarpages', 'itemtype' => $type_itemtype)
+        ['module' => 'xarpages', 'itemtype' => $type_itemtype]
     );
 
     // Call config hooks (for page type as an itemtype)
@@ -80,7 +80,7 @@ function xarpages_adminapi_updatetype($args)
         'module',
         'updateconfig',
         'xarpages',
-        array('itemtype' => $ptid, 'module' => 'xarpages')
+        ['itemtype' => $ptid, 'module' => 'xarpages']
     );
 
 

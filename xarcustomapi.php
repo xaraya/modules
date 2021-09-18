@@ -11,11 +11,11 @@ class xarpages_customapi_multiform_master
 
     // The raw values from the form object.
     // Can be altered by the validation functions.
-    public $values = array();
+    public $values = [];
 
     // Invalids array (messages for each property that is invalid).
     // Can be altered by the validation functions.
-    public $invalids = array();
+    public $invalids = [];
 
     // Next page ID
     // This is the page the user should go to next, if the 'next' button
@@ -28,12 +28,12 @@ class xarpages_customapi_multiform_master
     // Work data array, used to pass information form one form to another,
     // through the processing functions (only available for writing to the
     // processing functions).
-    public $workdata = array();
+    public $workdata = [];
 
     // The accumulated form data so far.
     // Read-only for both validation and processing functions.
     // Can be referenced for inter-page validation rules.
-    public $formdata = array();
+    public $formdata = [];
 
     // Set if this is the last processing step.
     // After this step, the session will be cleared before jumping to the last page.
@@ -86,8 +86,8 @@ class xarpages_customapi_multiform_master
     // and place them into the object arrays
     public function extract_formobject()
     {
-        $this->values = array();
-        $this->invalids = array();
+        $this->values = [];
+        $this->invalids = [];
 
         if (!empty($this->formobject->properties)) {
             foreach ($this->formobject->properties as $name => $property) {
@@ -103,7 +103,7 @@ class xarpages_customapi_multiform_master
     // and place them back into the form object.
     public function compact_formobject()
     {
-        $property_names = array();
+        $property_names = [];
         if (!empty($this->formobject->properties)) {
             foreach ($this->formobject->properties as $name => $property) {
                 if (isset($this->invalids[$name])) {
@@ -122,7 +122,7 @@ class xarpages_customapi_multiform_master
     // Allows processing functions to jump to a page by name.
     public function pagename_to_pid($pagename)
     {
-        $page = xarMod::apiFunc('xarpages', 'user', 'getpage', array('name' => $pagename));
+        $page = xarMod::apiFunc('xarpages', 'user', 'getpage', ['name' => $pagename]);
 
         if (!empty($page)) {
             $pid = $page['pid'];
@@ -140,7 +140,7 @@ class xarpages_customapi_multiform_master
     // Any array passed into the finish function, will be saved in the
     // session for use outside the form sequence. It allows, for example,
     // final confirmation details to be passed out to a 'thankyou' page.
-    public function finish($args = array())
+    public function finish($args = [])
     {
         // Save any 'passdata'.
         // This can be retrieved *one time only* using the API function:

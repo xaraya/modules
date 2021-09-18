@@ -10,7 +10,7 @@ function xarpages_user_display($args)
     if (isset($args['pid'])) {
         $pid = $args['pid'];
     }
-    
+
     // Fetch the page ID.
     // This may have been calculated from a path in the
     // short URL decode function.
@@ -32,7 +32,7 @@ function xarpages_user_display($args)
             'xarpages',
             'user',
             'getpage',
-            array('pid' => $pid, 'status' => 'ACTIVE,EMPTY')
+            ['pid' => $pid, 'status' => 'ACTIVE,EMPTY']
         );
 
         // If no page found, try the 'notfound' page.
@@ -47,7 +47,7 @@ function xarpages_user_display($args)
                     'xarpages',
                     'user',
                     'getpage',
-                    array('pid' => $pid, 'status' => 'ACTIVE')
+                    ['pid' => $pid, 'status' => 'ACTIVE']
                 );
             }
         }
@@ -84,7 +84,7 @@ function xarpages_user_display($args)
                 'xarpages',
                 'user',
                 'getpage',
-                array('pid' => $pid, 'status' => 'ACTIVE')
+                ['pid' => $pid, 'status' => 'ACTIVE']
             );
         }
     }
@@ -100,7 +100,7 @@ function xarpages_user_display($args)
                 'xarpages',
                 'user',
                 'getpage',
-                array('pid' => $pid, 'status' => 'ACTIVE')
+                ['pid' => $pid, 'status' => 'ACTIVE']
             );
         }
     }
@@ -108,7 +108,7 @@ function xarpages_user_display($args)
     if (empty($current_page)) {
         // Give up: we could not find the requested page, the notfound page nor the error page.
         // Return the dafault display template.
-        return array();
+        return [];
     }
 
     // TODO: allow relevent privileges to over-ride the status,
@@ -119,12 +119,12 @@ function xarpages_user_display($args)
         'xarpages',
         'user',
         'getpagestree',
-        array(
+        [
             'tree_contains_pid' => $pid,
             'dd_flag' => true,
             'key' => 'pid',
-            'status' => 'ACTIVE,EMPTY'
-        )
+            'status' => 'ACTIVE,EMPTY',
+        ]
     );
 
     // If we don't have permission to display pages within this tree
@@ -138,7 +138,7 @@ function xarpages_user_display($args)
         // involve some kind of loop, attempting to fetch the tree for
         // the current page, then the privs page, falling back to the
         // error page, and finally to array() i.e. no page.
-        return array();
+        return [];
     }
 
     // If the selected page is EMPTY, scan its children to find
@@ -178,7 +178,7 @@ function xarpages_user_display($args)
         'xarpages',
         'user',
         'addcurrentpageflags',
-        array('pagedata' => $data, 'pid' => $pid)
+        ['pagedata' => $data, 'pid' => $pid]
     );
 
     // Do transforms on the DD data.
@@ -212,13 +212,13 @@ function xarpages_user_display($args)
     // i.e. all ancestors and the current page layered over each other.
     // TODO: we could save each step here in an array indexed by pid or key -
     // just have a hunch it would be useful, but not sure how at this stage.
-    $inherited = array();
+    $inherited = [];
     foreach ($data['ancestors'] as $ancestor) {
         $inherited = xarMod::apiFunc(
             'xarpages',
             'user',
             'arrayoverlay',
-            array($inherited, $ancestor)
+            [$inherited, $ancestor]
         );
     }
     $data['inherited'] =& $inherited;
@@ -295,7 +295,7 @@ function xarpages_user_display($args)
         'xarpages',
         'user',
         'display',
-        array('pid' => $pid)
+        ['pid' => $pid]
     );
     // All hook data in the 'hooks' element.
     $data['hooks'] = xarModHooks::call('item', 'display', $pid, $item);

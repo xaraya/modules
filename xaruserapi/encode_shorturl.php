@@ -16,7 +16,7 @@ function xarpages_userapi_encode_shorturl($args)
     }
 
     // The components of the path.
-    $path = array();
+    $path = [];
     $get = $args;
 
     // Get the page tree that includes this page.
@@ -32,7 +32,7 @@ function xarpages_userapi_encode_shorturl($args)
             'xarpages',
             'user',
             'getpages',
-            array('dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/)
+            ['dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/]
         );
     }
 
@@ -93,5 +93,5 @@ function xarpages_userapi_encode_shorturl($args)
 
     // Return the path and unconsumed parameters separately.
     // Requires xarMod.php from Xaraya 1.0 RC1 or higher to work.
-    return array('path' => $path, 'get' => $get);
+    return ['path' => $path, 'get' => $get];
 }

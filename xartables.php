@@ -24,11 +24,11 @@
 function xarpages_xartables()
 {
     // Initialise table array.
-    $xarTables = array();
+    $xarTables = [];
     $basename = 'xarpages';
 
     // Loop for each table.
-    foreach (array('pages', 'types') as $table) {
+    foreach (['pages', 'types'] as $table) {
         // Set the table name.
         $xarTables[$basename . '_' . $table] = xarDB::getPrefix() . '_' . $basename . '_' . $table;
     }

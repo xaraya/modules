@@ -21,7 +21,7 @@ function xarpages_treeapi_insertprep($args)
     extract($args);
 
     // TODO: validate params: insertpoint, offset, tablename, idname
-    
+
     // Default operation is 'before' - i.e. put the new item in the place
     // of the insertpoint and move everything to the right one place.
     if (!xarVar::validate('enum:before:after:firstchild:lastchild', $offset, true)) {
@@ -51,11 +51,11 @@ function xarpages_treeapi_insertprep($args)
         'xarpages',
         'tree',
         'getleftright',
-        array(
+        [
             'tablename' => $tablename,
             'idname' => $idname,
-            'id' => $insertpoint
-        )
+            'id' => $insertpoint,
+        ]
     );
     if (!$result) {
         return;
@@ -84,7 +84,7 @@ function xarpages_treeapi_insertprep($args)
     $query = 'UPDATE ' . $tablename
         . ' SET xar_left = xar_left + 2 '
         . ' WHERE xar_left >= ?';
-    $result = $dbconn->execute($query, array($shift));
+    $result = $dbconn->execute($query, [$shift]);
     if (!$result) {
         return;
     }
@@ -92,15 +92,15 @@ function xarpages_treeapi_insertprep($args)
     $query = 'UPDATE ' . $tablename
         . ' SET xar_right = xar_right + 2 '
         . ' WHERE xar_right >= ?';
-    $result = $dbconn->execute($query, array($shift));
+    $result = $dbconn->execute($query, [$shift]);
     if (!$result) {
         return;
     }
 
     // Return the new parent/left/right values
-    return array(
+    return [
         'parent' => $parent,
         'left' => $shift,
-        'right' => $shift + 1
-    );
+        'right' => $shift + 1,
+    ];
 }

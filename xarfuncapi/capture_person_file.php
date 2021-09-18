@@ -18,7 +18,7 @@
 function xarpages_funcapi_capture_person_file($args)
 {
     // Do only some general trimming of the form data.
-    $details = array();
+    $details = [];
     xarVar::fetch('firstname', 'pre:trim:left:60:passthru:str:0', $details['firstname'], '', xarVar::NOT_REQUIRED);
     xarVar::fetch('surname', 'pre:trim:left:60:passthru:str:0', $details['surname'], '', xarVar::NOT_REQUIRED);
     xarVar::fetch('email', 'pre:trim:left:60:lower:passthru:email', $details['email'], '', xarVar::NOT_REQUIRED);
@@ -48,8 +48,8 @@ function xarpages_funcapi_capture_person_file($args)
 
     // Remove any '|'s or non-printable characters.
     foreach ($details as $key => $value) {
-        $value = str_replace(array('|', '"'), '', $value);
-        $details[$key] = preg_replace(array('/[\\ca-\\cz\\x7f]/'), '', $value);
+        $value = str_replace(['|', '"'], '', $value);
+        $details[$key] = preg_replace(['/[\\ca-\\cz\\x7f]/'], '', $value);
     }
 
     // Format the output.

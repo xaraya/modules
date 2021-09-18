@@ -90,7 +90,7 @@ function xarpages_funcapi_multiform($args)
     $multiform_key_name = 'mk';
 
     // All page template and form data is placed in the 'multiform' array.
-    $multiform = array();
+    $multiform = [];
 
     // Next and previous pages - start with the assumption that there are none.
     $prev_page_pid = 0;
@@ -113,7 +113,7 @@ function xarpages_funcapi_multiform($args)
 
     // Check which button has been used to submit (if any).
     $user_action_requested = 'none';
-    foreach (array('next', 'prev', 'cont') as $check_submit_button) {
+    foreach (['next', 'prev', 'cont'] as $check_submit_button) {
         unset($submit_button_value);
         xarVar::fetch('multiform_submit_' . $check_submit_button, 'str', $submit_button_value, '', xarVar::NOT_REQUIRED);
         if (!empty($submit_button_value)) {
@@ -167,7 +167,7 @@ function xarpages_funcapi_multiform($args)
             // and go to the first page.
             // Set the redirect_url rather than the redirect_pid, so we can ensure the session
             // key is not added to the redirect.
-            $redirect_url = xarController::URL('xarpages', 'user', 'display', array('pid' => $current_page['pid']), false);
+            $redirect_url = xarController::URL('xarpages', 'user', 'display', ['pid' => $current_page['pid']], false);
         } else {
             // Set this to be the last page, then go to the master page.
             $redirect_pid = $master_page['pid'];
@@ -203,7 +203,7 @@ function xarpages_funcapi_multiform($args)
                 'dynamicdata',
                 'user',
                 'getobject',
-                array('objectid' => $formobjectid)
+                ['objectid' => $formobjectid]
             );
 
             if (empty($formobject)) {
@@ -253,10 +253,10 @@ function xarpages_funcapi_multiform($args)
                     'xarpages',
                     'multiform',
                     'passdata',
-                    array(
+                    [
                         'reason_detail' => xarML('This session has already been 
-                            completed or cancelled.')
-                    )
+                            completed or cancelled.'),
+                    ]
                 );
             } else {
                 // The session key matches. We can now process the submitted form.
@@ -307,11 +307,11 @@ function xarpages_funcapi_multiform($args)
                             'xarpages',
                             'multiform',
                             'passdata',
-                            array(
+                            [
                                 'reason_detail' => xarML('To prevent multiple 
                                     submission of data, you cannot return to  
-                                    this page once it has been submitted.')
-                            )
+                                    this page once it has been submitted.'),
+                            ]
                         );
                     }
                 } elseif ($user_action_requested == 'none') {
@@ -353,13 +353,13 @@ function xarpages_funcapi_multiform($args)
                             'xarpages',
                             'multiform',
                             'getvalobject',
-                            array(
+                            [
                                 'name' => $master_page['name'],
                                 'formobject' => $formobject,
                                 'workdata' => $session_vars['workdata'],
                                 'formdata' => $session_vars['formdata'],
                                 'multiform_key_name' => $multiform_key_name,
-                            )
+                            ]
                         );
                         if (!empty($init_object)) {
                             // We have a validation object.
@@ -367,7 +367,7 @@ function xarpages_funcapi_multiform($args)
                             $custom_init_method = 'initialise_' . $current_page['name'];
                             if (method_exists($init_object, $custom_init_method)) {
                                 // Call the validation method. We don't care about return values.
-                                $init_result = call_user_func(array(&$init_object, $custom_init_method), array());
+                                $init_result = call_user_func([&$init_object, $custom_init_method], []);
 
                                 // Compact the form object within the validation object (put the arrays back
                                 // onto the form object).
@@ -422,12 +422,12 @@ function xarpages_funcapi_multiform($args)
                             'xarpages',
                             'multiform',
                             'getvalobject',
-                            array(
+                            [
                                 'name' => $master_page['name'],
                                 'formobject' => $formobject,
                                 'workdata' => $session_vars['workdata'],
                                 'formdata' => $session_vars['formdata'],
-                            )
+                            ]
                         );
                         if (!empty($validation_object)) {
                             // We have a validation object.
@@ -435,7 +435,7 @@ function xarpages_funcapi_multiform($args)
                             $custom_validate_method = 'validate_' . $current_page['name'];
                             if (method_exists($validation_object, $custom_validate_method)) {
                                 // Call the validation method.
-                                $custom_isvalid = call_user_func(array(&$validation_object, $custom_validate_method), array());
+                                $custom_isvalid = call_user_func([&$validation_object, $custom_validate_method], []);
 
                                 // Compact the form object within the validation object (put the arrays back
                                 // onto the form object).
@@ -465,12 +465,12 @@ function xarpages_funcapi_multiform($args)
                             'xarpages',
                             'multiform',
                             'getvalobject',
-                            array(
+                            [
                                 'name' => $master_page['name'],
                                 'formobject' => $formobject,
                                 'workdata' => $session_vars['workdata'],
                                 'formdata' => $session_vars['formdata'],
-                            )
+                            ]
                         );
 
                         if (!empty($processing_object)) {
@@ -480,7 +480,7 @@ function xarpages_funcapi_multiform($args)
                             $custom_process_method = 'process_' . $current_page['name'];
                             if (method_exists($processing_object, $custom_process_method)) {
                                 // Call the processing method.
-                                $process_success = call_user_func(array(&$processing_object, $custom_process_method), array());
+                                $process_success = call_user_func([&$processing_object, $custom_process_method], []);
 
                                 // Compact the form object within the validation object (put the arrays back
                                 // onto the form object).
@@ -511,12 +511,12 @@ function xarpages_funcapi_multiform($args)
                                             'xarpages',
                                             'multiform',
                                             'passdata',
-                                            array(
+                                            [
                                                 'reason_detail' => xarML(
                                                     'Unexpected error: #(1)',
                                                     $processing_object->reason_detail
-                                                )
-                                            )
+                                                ),
+                                            ]
                                         );
                                     }
                                 }
@@ -565,12 +565,12 @@ function xarpages_funcapi_multiform($args)
 
                     if ($form_isvalid && $user_action_requested == 'next') {
                         // Add (or update) this page to the history array.
-                        $history = array(
+                        $history = [
                             'pid' => $current_page['pid'],
                             'name' => $current_page['name'],
                             'isvalid' => $form_isvalid,
                             'revisit' => true,
-                        );
+                        ];
 
                         if (!empty($dd['milestone_page'])) {
                             // This is a milestone page, which means we can never come back to it once
@@ -622,7 +622,7 @@ function xarpages_funcapi_multiform($args)
             // means that every page must contain a POST or GET session key; it is not sufficient
             // to just provide a link (e.g. 'skip') to the next page.
 
-            $session_key = xarMod::apiFunc('xarpages', 'multiform', 'sessionkey', array('set' => true));
+            $session_key = xarMod::apiFunc('xarpages', 'multiform', 'sessionkey', ['set' => true]);
             $session_vars = xarMod::apiFunc('xarpages', 'multiform', 'sessionvar');
 
             $redirect_pid = $entry_page_pid;
@@ -674,7 +674,7 @@ function xarpages_funcapi_multiform($args)
         // A page ID has been set somewhere above.
         // We must include the session key if it is set, otherwise the page
         // at the other end will fail its session check.
-        $redirect_args = array('pid' => $redirect_pid);
+        $redirect_args = ['pid' => $redirect_pid];
         // Don't include the session key if there is a redirect reason.
         if (!empty($session_key) && empty($redirect_reason)) {
             $redirect_args[$multiform_key_name] = $session_key;
@@ -692,7 +692,7 @@ function xarpages_funcapi_multiform($args)
         // Put an entry onto the end of the history, so we are allowed to come into that page.
         // This is a simple entry, more a stub, ready to hold the full page details when we get to it.
         if (!isset($session_vars['history'][$redirect_pid])) {
-            $session_vars['history'][$redirect_pid] = array('revisit' => true, 'pid' => $redirect_pid);
+            $session_vars['history'][$redirect_pid] = ['revisit' => true, 'pid' => $redirect_pid];
         }
     }
 
@@ -714,7 +714,7 @@ function xarpages_funcapi_multiform($args)
         // If the use presses the browser 'back' button on the 'thankyou' page, they will
         // end up back at the start of the sequence again.
         if (!empty($last_page_flag)) {
-            xarMod::apiFunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
+            xarMod::apiFunc('xarpages', 'multiform', 'sessionkey', ['reset' => true]);
         }
 
         // Set the redirect URL.
@@ -737,14 +737,14 @@ function xarpages_funcapi_multiform($args)
 
     // Check for customised submit labels.
     // They consist of three comma-separated strings in the order: previous,save,next
-    $submit_labels = array(
+    $submit_labels = [
         'prev' => xarML('<< Previous'),
         'save' => xarML('Save'),
         'next' => xarML('Next >>'),
-    );
+    ];
     if (!empty($dd['submit_labels']) && xarVar::validate('strlist:,:pre:trim:str', $dd['submit_labels'])) {
         $custom_labels = explode(',', $dd['submit_labels']);
-        foreach (array('prev', 'save', 'next') as $key => $value) {
+        foreach (['prev', 'save', 'next'] as $key => $value) {
             // If a label is left out, then hide that button.
             // The label 'default' can be used to preserve the default button.
             if (isset($custom_labels[$key]) && $custom_labels[$key] != 'default') {

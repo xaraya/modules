@@ -23,8 +23,8 @@ function xarpages_userapi_getpages($args)
     $xartable =& xarDB::getTables();
     $dbconn =& xarDB::getConn();
 
-    $where = array();
-    $bind = array();
+    $where = [];
+    $bind = [];
 
     // Default dynamic data retrieval to true.
     if (!isset($dd_flag)) {
@@ -58,7 +58,7 @@ function xarpages_userapi_getpages($args)
         $where[] = 'tpages.xar_pid = ?';
         $bind[] = (int)$pid;
     } elseif (!empty($pids)) {
-        $addwhere = array();
+        $addwhere = [];
         foreach ($pids as $mypid) {
             if (!empty($mypid) && is_numeric($mypid)) {
                 $addwhere[] = '?';
@@ -124,7 +124,7 @@ function xarpages_userapi_getpages($args)
     }
 
     $query .= ' FROM ' . $xartable['xarpages_pages'] . ' AS tpages';
-    
+
     // If the request is to fetch a tree that *contains* a particular
     // page, then add the extra sub-queries in here.
 
@@ -170,29 +170,29 @@ function xarpages_userapi_getpages($args)
         if ($result->EOF) {
             $pages = 0;
         } else {
-            list($pages) = $result->fields;
+            [$pages] = $result->fields;
         }
     } else {
         $index = 0;
-        $id2key = array();
-        $pages = array();
+        $id2key = [];
+        $pages = [];
 
         // Get all the page type details.
         $pagetypes = xarMod::apiFunc(
             'xarpages',
             'user',
             'gettypes',
-            array('key' => 'ptid', 'dd_flag' => $dd_flag)
+            ['key' => 'ptid', 'dd_flag' => $dd_flag]
         );
 
         while (!$result->EOF) {
-            list(
+            [
                 $pid, $name, $desc, $itemtype,
                 $parent_pid, $left, $right,
                 $template, $status,
                 $encode_url, $decode_url,
                 $theme, $function, $page_template
-            ) = $result->fields;
+            ] = $result->fields;
 
             // Fetch the next record as soon as we have the value, so
             // we can skip pages more easily.
@@ -261,7 +261,7 @@ function xarpages_userapi_getpages($args)
                 }
             }
 
-            $pages[$$key] = array(
+            $pages[$$key] = [
                 'pid' => $pid,
                 'key' => $$key,
                 'name' => $name,
@@ -281,13 +281,13 @@ function xarpages_userapi_getpages($args)
                 'function' => $function,
                 'pagetype' => &$pagetypes[$itemtype],
                 'viewpriv' => (empty($overview_only_left) ? 'READ' : 'OVERVIEW'),
-            );
+            ];
             $index += 1;
         }
 
         if ($dd_flag && !empty($pages)) {
             // Get the DD properties for the page tree.
-            $dd_data = xarMod::apiFunc('xarpages', 'user', 'getpagedd', array('pages' => $pages));
+            $dd_data = xarMod::apiFunc('xarpages', 'user', 'getpagedd', ['pages' => $pages]);
 
             // Merge the DD data into the main page tree.
             // TODO: an easier way to merge arrays? This just seems clumsy.

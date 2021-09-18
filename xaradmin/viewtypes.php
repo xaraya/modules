@@ -26,12 +26,12 @@ function xarpages_admin_viewtypes($args)
         'xarpages',
         'user',
         'gettypes',
-        array('key' => 'index', 'dd_flag' => false)
+        ['key' => 'index', 'dd_flag' => false]
     );
 
     if (empty($types)) {
-        $types = array();
+        $types = [];
     }
 
-    return array('types' => $types);
+    return ['types' => $types];
 }

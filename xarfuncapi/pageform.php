@@ -49,10 +49,10 @@ function xarpages_funcapi_pageform($args)
             _pageform_unsetobject($pf, $current_page['name']);
         }
     }
-    
+
     // prev, action (next), and skip  page pid's
     $args['pageform'] = _pageform_getnav($args, $pf);
-    
+
     // resuse (append) existing object if one
     $object = _pageform_getobject($pf, $current_page['name']);
 
@@ -66,7 +66,7 @@ function xarpages_funcapi_pageform($args)
     if (empty($object)) {
         // create empty one
         //$object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$dd['data'] ));
-        $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$dd['data'] ));
+        $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', ['objectid'=>$dd['data'] ]);
 
         // reset values with user function
         if (!empty($dd['reset_php'])) {
@@ -75,9 +75,9 @@ function xarpages_funcapi_pageform($args)
             // TO DO: reset_func
         }
     }
-    
+
     // required fields, eg in case javascripts want it
-    $requiredarr= array();
+    $requiredarr= [];
     /*
         if (!empty($dd['required'])) {
             $required = explode(',', $dd['required']);
@@ -114,6 +114,6 @@ function _pageform_reset(&$inobj, $php)
 
     // return reslults and double check validation
     pageform_arrays2obj($values, $invalids, $inobj);
-    
+
     return 1;
 }

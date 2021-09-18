@@ -24,19 +24,19 @@ $modversion['author']         = 'Jason Judge';
 $modversion['contact']        = 'http://www.academe.co.uk/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array();
+$modversion['securityschema'] = [];
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependencyinfo']   = array(
-                                    0 => array(
+$modversion['dependencyinfo']   = [
+                                    0 => [
                                             'name' => 'core',
-                                            'version_ge' => '1.2.0-b1'
-                                         ),
-                                    147 => array(
+                                            'version_ge' => '1.2.0-b1',
+                                         ],
+                                    147 => [
                                             'name' => 'categories',
-                                            'version_ge' => '2.4.0'
-                                        )
-                                );
+                                            'version_ge' => '2.4.0',
+                                        ],
+                                ];
 
 if (false) {
     xarML('Xarpages');

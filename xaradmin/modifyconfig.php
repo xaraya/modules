@@ -16,7 +16,7 @@
 function xarpages_admin_modifyconfig($args)
 {
     extract($args);
-    $data = array();
+    $data = [];
 
     // Need admin priv to modify config.
     if (!xarSecurity::check('AdminXarpagesPage')) {
@@ -24,7 +24,7 @@ function xarpages_admin_modifyconfig($args)
     }
 
     // Get the tree of all pages.
-    $data['tree'] = xarMod::apiFunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
+    $data['tree'] = xarMod::apiFunc('xarpages', 'user', 'getpagestree', ['dd_flag' => false]);
 
     // Implode the names for each page into a path for display.
     foreach ($data['tree']['pages'] as $key => $page) {
@@ -59,7 +59,7 @@ function xarpages_admin_modifyconfig($args)
         }
 
         // Get the special pages.
-        foreach (array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
+        foreach (['defaultpage', 'errorpage', 'notfoundpage', 'noprivspage'] as $special_name) {
             unset($special_id);
             if (!xarVar::fetch($special_name, 'id', $special_id, 0, xarVar::NOT_REQUIRED)) {
                 return;
@@ -93,7 +93,7 @@ function xarpages_admin_modifyconfig($args)
     }
 
     // Check any problem aliases
-    $problem_aliases = xarMod::apiFunc('xarpages', 'user', 'getaliases', array('mincount' => 2));
+    $problem_aliases = xarMod::apiFunc('xarpages', 'user', 'getaliases', ['mincount' => 2]);
     $data['problem_aliases'] = $problem_aliases;
 
     $data['authid'] = xarSec::genAuthKey();
@@ -107,7 +107,7 @@ function xarpages_admin_modifyconfig($args)
         'module',
         'modifyconfig',
         'xarpages',
-        array('module' => 'xarpages', 'itemtype' => $type_itemtype)
+        ['module' => 'xarpages', 'itemtype' => $type_itemtype]
     );
 
     // Clear out any empty hooks.

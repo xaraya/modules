@@ -11,11 +11,11 @@ function xarpages_userapi_getpagestree($args)
 
     // Return if no pages found.
     if (empty($pages)) {
-        return array('pages' => array(), 'children' => array());
+        return ['pages' => [], 'children' => []];
     }
 
     // Inititalise the return value.
-    $tree = array();
+    $tree = [];
 
     // Create a children list, so the tree can be walked recursively by page key index.
     // Three forms are available, useful in different circumstances:
@@ -26,19 +26,19 @@ function xarpages_userapi_getpagestree($args)
     // Note the pages version contains linked references to each page, to save memory
     // and allow changes made to the main 'pages' array to be visible in the 'pages'
     // children array.
-    $children_pids = array();
-    $children_keys = array();
-    $children_names = array();
-    $children_pages = array();
-    $depthstack = array();
-    $pathstack = array();
+    $children_pids = [];
+    $children_keys = [];
+    $children_names = [];
+    $children_pages = [];
+    $depthstack = [];
+    $pathstack = [];
 
     // Create some additional arrays to help navigate the [flat] pages array.
     foreach ($pages as $key => $page) {
         // Put links in the pages themselves.
         // Ensure each page has at least an empty array of child keys.
         if (!isset($pages[$key]['child_keys'])) {
-            $pages[$key]['child_keys'] = array();
+            $pages[$key]['child_keys'] = [];
         }
         // Each page has a children array, based on the array keys.
         // If this page has a parent, then add this key to that parent page.
@@ -50,9 +50,9 @@ function xarpages_userapi_getpagestree($args)
         // Add an entry to the children array of pages.
         // Create a new 'parent' page if it does not exist.
         if (!isset($children_keys[$page['parent_key']])) {
-            $children_keys[$page['parent_key']] = array();
-            $children_names[$page['parent_key']] = array();
-            $children_pages[$page['parent_key']] = array();
+            $children_keys[$page['parent_key']] = [];
+            $children_names[$page['parent_key']] = [];
+            $children_pages[$page['parent_key']] = [];
         }
 
         // Don't allow item 0 to loop back onto itself.
@@ -96,11 +96,11 @@ function xarpages_userapi_getpagestree($args)
 
     $tree['pages'] =& $pages;
 
-    $tree['child_refs'] = array(
+    $tree['child_refs'] = [
         'keys' => $children_keys,
         'names' => $children_names,
-        'pages' => $children_pages
-    );
+        'pages' => $children_pages,
+    ];
 
     return $tree;
 }

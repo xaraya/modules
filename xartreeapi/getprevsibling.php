@@ -29,7 +29,7 @@ function xarpages_treeapi_getprevsibling($args)
                     node.$idname = ?";
         // return result
         if (!$result->EOF) {
-            list($pid) = $result->fields;
+            [$pid] = $result->fields;
         }
         if (isset($pid)) {
             return $pid;

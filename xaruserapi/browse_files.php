@@ -57,15 +57,15 @@ function xarpages_userapi_browse_files($args)
 
     // An array of directories to skip.
     if (!xarVar::validate('list:string:1', $skipdirs, true)) {
-        $skipdirs = array();
+        $skipdirs = [];
     }
 
     // Always skip current and parent directory.
-    $skipdirs += array('.', '..');
+    $skipdirs += ['.', '..'];
 
     // Skip common configuration control directories
     if (!empty($skipdirscc)) {
-        $skipdirs += array('SCCS', 'sccs', 'CVS', 'cvs');
+        $skipdirs += ['SCCS', 'sccs', 'CVS', 'cvs'];
     }
 
     // Other flags.
@@ -93,7 +93,7 @@ function xarpages_userapi_browse_files($args)
             $rootdir = './modules/' . $modinfo['directory'];
         }
     }
-    
+
     // Get the base directory.
     // A relative base directory will be added to the [non-empty] root directory.
     // An absolute base directory will override the root directory.
@@ -116,14 +116,14 @@ function xarpages_userapi_browse_files($args)
     }
 
     // Now we have the absolute base pathname. Start the search.
-    $filelist = array();
-    $scandir = array();
+    $filelist = [];
+    $scandir = [];
 
     // Start the file scan on the base directory.
-    array_push($scandir, array(1, ''));
+    array_push($scandir, [1, '']);
 
     while (!empty($scandir)) {
-        list($thislevel, $thisdir) = array_shift($scandir);
+        [$thislevel, $thisdir] = array_shift($scandir);
         if ($dh = @opendir($basedir . $thisdir)) {
             while (($filename = @readdir($dh)) !== false) {
                 // Got a file or directory.
@@ -168,7 +168,7 @@ function xarpages_userapi_browse_files($args)
 
                     if ($thislevel < $levels && is_readable($thisfile)) {
                         // We have not maxed out on the levels yet, so go deeper (only if dir is readable).
-                        array_push($scandir, array($thislevel + 1, $thisdir . '/' . $filename));
+                        array_push($scandir, [$thislevel + 1, $thisdir . '/' . $filename]);
                     }
 
                     // Go to the next file if we don't want to log the directory in the result set.
@@ -187,7 +187,7 @@ function xarpages_userapi_browse_files($args)
                 if (!empty($strip_re)) {
                     $filename = @preg_replace($strip_re, '', $filename);
                 }
-                
+
                 // If we have got this far, then we have a file or directory to return.
                 switch (strtolower($retpath)) {
                     case 'abs':

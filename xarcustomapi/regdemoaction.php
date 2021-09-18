@@ -22,7 +22,7 @@ function pageform_regdemoaction_process(&$inobj, &$outobj)
     // determine state of this create user
     $state = xarMod::apiFunc('registration', 'user', 'createstate');
     //echo "state [$state]"; die();
-    
+
     // actually create the user
     $email = $inprop['email']->getValue();
     $pass = $inprop['password']->getValue();
@@ -30,11 +30,11 @@ function pageform_regdemoaction_process(&$inobj, &$outobj)
         'registration',
         'user',
         'createuser',
-        array(  'username'  => $email,
+        [  'username'  => $email,
                 'realname'  => $email,
                 'email'     => $email,
                 'pass'      => $pass,
-                'state'     => $state )
+                'state'     => $state, ]
     );
     if (!$uid) {
         $outprop['message']->invalid = 'Cannot create new user account';
@@ -46,12 +46,12 @@ function pageform_regdemoaction_process(&$inobj, &$outobj)
         'registration',
         'user',
         'createnotify',
-        array(  'username'  => $email,
+        [  'username'  => $email,
                 'realname'  => $email,
                 'email'     => $email,
                 'pass'      => $pass,
                 'uid'       => $uid,
-                'state'     => $state)
+                'state'     => $state, ]
     );
     if (!$ret) {
         $outprop['message']->invalid = 'Error sending email notifications';

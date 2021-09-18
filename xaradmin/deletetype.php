@@ -34,7 +34,7 @@ function xarpages_admin_deletetype($args)
         'xarpages',
         'user',
         'gettype',
-        array('ptid' => $ptid)
+        ['ptid' => $ptid]
     );
 
     if (empty($type)) {
@@ -45,7 +45,7 @@ function xarpages_admin_deletetype($args)
 
     // Check for confirmation
     if (empty($confirm)) {
-        $data = array('type' => $type);
+        $data = ['type' => $type];
         $data['authkey'] = xarSec::genAuthKey();
 
         // Get a count of pages that will also be deleted.
@@ -53,7 +53,7 @@ function xarpages_admin_deletetype($args)
             'xarpages',
             'user',
             'getpages',
-            array('count' => true, 'itemtype' => $type['ptid'])
+            ['count' => true, 'itemtype' => $type['ptid']]
         );
 
         // Return output
@@ -70,7 +70,7 @@ function xarpages_admin_deletetype($args)
         'xarpages',
         'admin',
         'deletetype',
-        array('ptid' => $ptid)
+        ['ptid' => $ptid]
     )
     ) {
         return;

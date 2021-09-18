@@ -37,7 +37,7 @@ function xarpages_adminapi_deletetype($args)
         'xarpages',
         'user',
         'getpages',
-        array('dd_flag' => false, 'itemtype' => $ptid)
+        ['dd_flag' => false, 'itemtype' => $ptid]
     );
 
     if (is_array($pages)) {
@@ -48,7 +48,7 @@ function xarpages_adminapi_deletetype($args)
                 'xarpages',
                 'admin',
                 'deletepage',
-                array('pid' => $page['pid'])
+                ['pid' => $page['pid']]
             )) {
                 return;
             }
@@ -61,7 +61,7 @@ function xarpages_adminapi_deletetype($args)
 
     $query = 'DELETE FROM ' . $xartable['xarpages_types'] . ' WHERE xar_ptid = ?';
 
-    $result = $dbconn->Execute($query, array((int)$ptid));
+    $result = $dbconn->Execute($query, [(int)$ptid]);
     if (!$result) {
         return;
     }
@@ -73,7 +73,7 @@ function xarpages_adminapi_deletetype($args)
         'item',
         'delete',
         $type['ptid'],
-        array('module' => 'xarpages', 'itemtype' => $type_itemtype)
+        ['module' => 'xarpages', 'itemtype' => $type_itemtype]
     );
 
     // Delete the page type as a type.

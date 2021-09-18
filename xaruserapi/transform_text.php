@@ -40,7 +40,7 @@ function xarpages_userapi_transform_text($args)
     }
 
     // Convert newline/carriage return pairs to newlines
-    $text_in = str_replace(array("\n\r", "\r\n"), "\n", $text_in);
+    $text_in = str_replace(["\n\r", "\r\n"], "\n", $text_in);
 
     // Check if we need to limit the word count.
     if (!empty($maxwords) && is_numeric($maxwords) && $maxwords > 0 && str_word_count($text_in) > $maxwords) {
@@ -133,7 +133,7 @@ function ievents_userapi_transform_smart_html($text)
     $text = preg_replace('!(</(?:table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6])>)!', "$1\n\n", $text);
 
     // Cross-platform newlines
-    $text = str_replace(array("\r\n", "\r"), "\n", $text);
+    $text = str_replace(["\r\n", "\r"], "\n", $text);
 
     // Take care of duplicaten newlines - turns runs of two or more into just two (treated as paragraphs)
     $text = preg_replace("/\n\n+/", "\n\n", $text);

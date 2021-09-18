@@ -23,7 +23,7 @@ function xarpages_adminapi_deletepage($args)
         'xarpages',
         'user',
         'getpage',
-        array('pid' => $pid, 'dd_flag' => false)
+        ['pid' => $pid, 'dd_flag' => false]
     );
     if (empty($page)) {
         // No need to raise an error, as the page may already have been deleted.
@@ -47,7 +47,7 @@ function xarpages_adminapi_deletepage($args)
 
     // If the page was used as a special page anywhere, then reset that too,
     // so we don't have any special page orphans.
-    foreach (array('default', 'error', 'notfound') as $special) {
+    foreach (['default', 'error', 'notfound'] as $special) {
         if (xarModVars::get('xarpages', $special . 'page') == $pid) {
             xarModVars::set('xarpages', $special . 'page', 0);
         }
@@ -72,22 +72,22 @@ function xarpages_adminapi_deletepage($args)
 
     // Get a list of pages we are going to delete.
     $query = 'SELECT xar_pid FROM ' . $table . ' WHERE xar_left BETWEEN ? AND ?';
-    $result = $dbconn->Execute($query, array($left, $right));
+    $result = $dbconn->Execute($query, [$left, $right]);
     if (!$result) {
         return;
     }
 
-    $pids = array();
+    $pids = [];
     while (!$result->EOF) {
-        list($pid) = $result->fields;
+        [$pid] = $result->fields;
         $pids[] = $pid;
         $result->MoveNext();
     }
-    
+
     // Now the deletion query.
     $query = 'DELETE FROM ' . $table . ' WHERE xar_left BETWEEN ? AND ?';
 
-    $result = $dbconn->Execute($query, array($left, $right));
+    $result = $dbconn->Execute($query, [$left, $right]);
     if (!$result) {
         return;
     }
@@ -107,12 +107,12 @@ function xarpages_adminapi_deletepage($args)
 
     $result = $dbconn->Execute(
         $query,
-        array(
+        [
             (int)$left,
             (int)$deslocation_inside,
             (int)$left,
-            (int)$deslocation_inside
-        )
+            (int)$deslocation_inside,
+        ]
     );
     if (!$result) {
         return;
@@ -124,7 +124,7 @@ function xarpages_adminapi_deletepage($args)
             'item',
             'delete',
             $pid,
-            array('module' => 'xarpages', 'itemtype' => $page['itemtype'])
+            ['module' => 'xarpages', 'itemtype' => $page['itemtype']]
         );
     }
 

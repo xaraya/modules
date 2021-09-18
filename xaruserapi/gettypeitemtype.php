@@ -17,7 +17,7 @@ function xarpages_userapi_gettypeitemtype($args)
         'xarpages',
         'user',
         'gettype',
-        array('name' => '@pagetype', 'dd_flag' => false, 'include_system' => true)
+        ['name' => '@pagetype', 'dd_flag' => false, 'include_system' => true]
     );
 
     if (!empty($pagetype)) {
@@ -28,7 +28,7 @@ function xarpages_userapi_gettypeitemtype($args)
             'xarpages',
             'admin',
             'createtype',
-            array('name' => '@pagetype', 'desc' => 'System generated \'pagetype\' type')
+            ['name' => '@pagetype', 'desc' => 'System generated \'pagetype\' type']
         );
     }
 

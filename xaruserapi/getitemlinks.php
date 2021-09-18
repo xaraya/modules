@@ -14,7 +14,7 @@ function xarpages_userapi_getitemlinks($args)
 {
     extract($args);
 
-    $itemlinks = array();
+    $itemlinks = [];
     if (empty($itemtype)) {
         $itemtype = null;
     }
@@ -27,12 +27,12 @@ function xarpages_userapi_getitemlinks($args)
         'xarpages',
         'user',
         'getpages',
-        array(
+        [
             'itemtype' => $itemtype,
             'pids'     => $itemids,
             'key'      => 'pid',
-            'dd_flag'  => false
-        )
+            'dd_flag'  => false,
+        ]
     );
 
     if (empty($pages)) {
@@ -46,17 +46,17 @@ function xarpages_userapi_getitemlinks($args)
             if (!isset($page[$field])) {
                 continue;
             }
-            $itemlinks[$itemid] = array(
-                'url' => xarController::URL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
+            $itemlinks[$itemid] = [
+                'url' => xarController::URL('xarpages', 'user', 'display', ['pid' => $page['pid']]),
                 'title' => xarML('Display Page'),
-                'label' => xarVar::prepForDisplay($page[$field])
-            );
+                'label' => xarVar::prepForDisplay($page[$field]),
+            ];
         }
         return $itemlinks;
     }
 
     // If we had a list of itemids, return only those pages.
-    $itemid2key = array();
+    $itemid2key = [];
     foreach ($pages as $key => $page) {
         $itemid2key[$page['pid']] = $key;
     }
@@ -68,11 +68,11 @@ function xarpages_userapi_getitemlinks($args)
         if (!isset($page[$field])) {
             continue;
         }
-        $itemlinks[$itemid] = array(
-            'url'   => xarController::URL('xarpages', 'user', 'display', array('pid' => $page['pid'])),
+        $itemlinks[$itemid] = [
+            'url'   => xarController::URL('xarpages', 'user', 'display', ['pid' => $page['pid']]),
             'title' => xarML('Display Page'),
-            'label' => xarVar::prepForDisplay($page[$field])
-        );
+            'label' => xarVar::prepForDisplay($page[$field]),
+        ];
     }
 
     return $itemlinks;

@@ -14,7 +14,7 @@
 function xarpages_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
-    $args = array();
+    $args = [];
     $func = 'main';
 
     // Analyse the different parts of the virtual path
@@ -35,7 +35,7 @@ function xarpages_userapi_decode_shorturl($params)
             'xarpages',
             'user',
             'getpage',
-            array('name' => strtolower($params[0]), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
+            ['name' => strtolower($params[0]), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid']
         );
     }
 
@@ -46,7 +46,7 @@ function xarpages_userapi_decode_shorturl($params)
             'xarpages',
             'user',
             'getpage',
-            array('name' => strtolower($params[0]), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
+            ['name' => strtolower($params[0]), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid']
         );
     }
 
@@ -67,12 +67,12 @@ function xarpages_userapi_decode_shorturl($params)
             'xarpages',
             'user',
             'getpagestree',
-            array(
-                'left_range' => array($rootpage['left'], $rootpage['right']),
+            [
+                'left_range' => [$rootpage['left'], $rootpage['right']],
                 'dd_flag' => false,
                 'key' => 'pid',
-                'status' => 'ACTIVE,EMPTY'
-            )
+                'status' => 'ACTIVE,EMPTY',
+            ]
         );
 
         // TODO: Cache the tree away for use in the main module (perhaps getpagestree can go that?).
@@ -80,7 +80,7 @@ function xarpages_userapi_decode_shorturl($params)
 
         // Walk the page tree, matching as many path components as possible.
         $pid = $rootpage['pid'];
-        
+
         while (isset($params[0]) && isset($tree['child_refs']['names'][$pid]) && array_key_exists(strtolower($params[0]), $tree['child_refs']['names'][$pid])) {
             $params[0] = strtolower($params[0]);
             $pid = $tree['child_refs']['names'][$pid][$params[0]];
@@ -110,7 +110,7 @@ function xarpages_userapi_decode_shorturl($params)
             }
         }
 
-        return array($func, $args);
+        return [$func, $args];
     }
 
     // default: return nothing -> no short URL decoded

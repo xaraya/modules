@@ -18,13 +18,13 @@ function xarpages_treeapi_moveitem($args)
     $xartable =& xarDB::getTables();
 
     // Obtain current information on the reference item
-    $refitem = xarMod::apiFunc('xarpages', 'user', 'getpage', array('pid' => $refid));
+    $refitem = xarMod::apiFunc('xarpages', 'user', 'getpage', ['pid' => $refid]);
     $query = 'SELECT xar_left, xar_right, xar_parent'
         . ' FROM ' . $tablename
         . ' WHERE ' . $idname . ' = ?';
 
     // Run the query (reference item).
-    $result = $dbconn->execute($query, array($refid));
+    $result = $dbconn->execute($query, [$refid]);
     if (!$result) {
         return;
     }
@@ -34,10 +34,10 @@ function xarpages_treeapi_moveitem($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     }
-    list($ref_left, $ref_right, $ref_parent) = $result->fields;
+    [$ref_left, $ref_right, $ref_parent] = $result->fields;
 
     // Run the query (item to be moved).
-    $result = $dbconn->execute($query, array((int)$itemid));
+    $result = $dbconn->execute($query, [(int)$itemid]);
     if (!$result) {
         return;
     }
@@ -47,7 +47,7 @@ function xarpages_treeapi_moveitem($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     }
-    list($item_left, $item_right, $item_parent) = $result->fields;
+    [$item_left, $item_right, $item_parent] = $result->fields;
 
     // Checking if the reference ID is of a child or itself
     if ($ref_left >= $item_left && $ref_left <= $item_right) {
@@ -126,7 +126,7 @@ function xarpages_treeapi_moveitem($args)
             . ' SET xar_parent = ?'
             . ' WHERE ' .$idname. ' = ?';
 
-        $result = $dbconn->execute($query, array((int)$parent_id, (int)$itemid));
+        $result = $dbconn->execute($query, [(int)$parent_id, (int)$itemid]);
         if (!$result) {
             return;
         }

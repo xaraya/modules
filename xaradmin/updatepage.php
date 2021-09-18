@@ -127,7 +127,7 @@ function xarpages_admin_updatepage($args)
             'xarpages',
             'admin',
             'updatepage',
-            array(
+            [
                 'pid'           => $pid,
                 'name'          => $name,
                 'desc'          => $desc,
@@ -142,8 +142,8 @@ function xarpages_admin_updatepage($args)
                 'offset'        => $position,
                 'alias'         => $alias,
                 'status'        => $status,
-                'status_recurse' => $status_recurse
-            )
+                'status_recurse' => $status_recurse,
+            ]
         )) {
             return;
         }
@@ -153,7 +153,7 @@ function xarpages_admin_updatepage($args)
             'xarpages',
             'admin',
             'createpage',
-            array(
+            [
                 'name'          => $name,
                 'desc'          => $desc,
                 'template'      => $template,
@@ -166,8 +166,8 @@ function xarpages_admin_updatepage($args)
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
-                'status'        => $status
-            )
+                'status'        => $status,
+            ]
         );
         if (!$pid) {
             return;
@@ -182,17 +182,17 @@ function xarpages_admin_updatepage($args)
                     'xarpages',
                     'admin',
                     'modifypage',
-                    array(
+                    [
                         'batch' => 1,
                         'creating' => 1,
                         'ptid' => $ptid,
                         'insertpoint' => $refpid,
-                        'position' => $position
-                    )
+                        'position' => $position,
+                    ]
                 )
             );
         } else {
-            xarController::redirect(xarController::URL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
+            xarController::redirect(xarController::URL('xarpages', 'admin', 'modifypage', ['pid' => $pid]));
         }
     } else {
         if (!empty($return_url)) {

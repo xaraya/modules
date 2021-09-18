@@ -45,10 +45,10 @@ function xarpages_menublock_modify($blockinfo)
         $vars['start_level'] = 0;
     }
     if (!isset($vars['root_pids'])) {
-        $vars['root_pids'] = array();
+        $vars['root_pids'] = [];
     }
     if (!isset($vars['prune_pids'])) {
-        $vars['prune_pids'] = array();
+        $vars['prune_pids'] = [];
     }
 
     // Get a list of all pages for the drop-downs.
@@ -57,7 +57,7 @@ function xarpages_menublock_modify($blockinfo)
         'xarpages',
         'user',
         'getpagestree',
-        array('dd_flag' => false, 'key' => 'pid')
+        ['dd_flag' => false, 'key' => 'pid']
     );
 
     // Implode the names for each page into a path for display.
@@ -126,12 +126,12 @@ function xarpages_menublock_update($blockinfo)
 
     // The root pages define sections of the page landscape that this block applies to.
     if (!isset($vars['root_pids'])) {
-        $vars['root_pids'] = array();
+        $vars['root_pids'] = [];
     }
     if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_root_pid)) {
         $vars['root_pids'][] = $new_root_pid;
     }
-    if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
+    if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, [], xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['root_pids'] = array_flip($vars['root_pids']);
         foreach ($remove_root_pid as $remove) {
@@ -147,12 +147,12 @@ function xarpages_menublock_update($blockinfo)
 
     // The pruning pages define sections of the page landscape that this block applies to.
     if (!isset($vars['prune_pids'])) {
-        $vars['prune_pids'] = array();
+        $vars['prune_pids'] = [];
     }
     if (xarVar::fetch('new_prune_pid', 'int:0', $new_prune_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_prune_pid)) {
         $vars['prune_pids'][] = $new_prune_pid;
     }
-    if (xarVar::fetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_prune_pid)) {
+    if (xarVar::fetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, [], xarVar::NOT_REQUIRED) && !empty($remove_prune_pid)) {
         // Easier to check with the keys and values flipped.
         $vars['prune_pids'] = array_flip($vars['prune_pids']);
         foreach ($remove_prune_pid as $remove) {

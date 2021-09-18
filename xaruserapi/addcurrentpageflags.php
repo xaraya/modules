@@ -24,7 +24,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     }
 
     if (empty($root_pids) || !is_array($root_pids)) {
-        $root_pids = array();
+        $root_pids = [];
     }
 
     // Set up a bunch of flags against pages to allow hierarchical menus
@@ -59,7 +59,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     // TODO: stop at a non-ACTIVE page. Non-ACTIVE pages act as blockers
     // in the hierarchy.
     // Ancestors will include self - filter out in the template if required.
-    $pagedata['ancestors'] = array();
+    $pagedata['ancestors'] = [];
     $this_pid = $pid;
 
     // TODO: allow a 'virtual root' to stop before we reach the real root page. Used
@@ -67,7 +67,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     // do not fall into this range.
     // This *could* happen if a root page is set to INACTIVE and a child page is
     // set as a module alias.
-    $ancestor_pids = array();
+    $ancestor_pids = [];
     while (true) {
         // Set flag for menus.
         $pagedata['pages'][$this_pid]['is_ancestor'] = true;
@@ -107,7 +107,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     }
 
     // Create a 'children' array for children of the current page.
-    $pagedata['children'] = array();
+    $pagedata['children'] = [];
     if (!empty($pagedata['current_page']['child_keys'])) {
         foreach ($pagedata['current_page']['child_keys'] as $key => $child) {
             // Set flag for menus. The flag 'is_child' means the page is a
@@ -123,7 +123,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     // The root page will have no siblings, as we want to keep this in
     // a single tree.
     // Siblings will include self - filter out in the template if necessary.
-    $pagedata['siblings'] = array();
+    $pagedata['siblings'] = [];
     if (!empty($pagedata['current_page']['parent_key'])) {
         // Loop though all children of the parent.
         foreach ($pagedata['pages'][$pagedata['current_page']['parent_key']]['child_keys'] as $key => $child) {

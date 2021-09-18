@@ -23,8 +23,8 @@ function xarpages_userapi_gettypes($args)
     $xartable =& xarDB::getTables();
     $dbconn =& xarDB::getConn();
 
-    $where = array();
-    $bind = array();
+    $where = [];
+    $bind = [];
 
     // Default dynamic data retrieval to true.
     if (!isset($dd_flag)) {
@@ -59,20 +59,20 @@ function xarpages_userapi_gettypes($args)
         return;
     }
 
-    $types = array();
+    $types = [];
     $itemtype = 0;
     $index = 0;
-    
+
     while (!$result->EOF) {
-        list($ptid, $name, $desc) = $result->fields;
+        [$ptid, $name, $desc] = $result->fields;
 
         // Only return the system page types if specifically requested.
         if ($name[0] != '@' || !empty($include_system)) {
-            $types[$$key] = array(
+            $types[$$key] = [
                 'ptid' => (int)$ptid,
                 'name' => $name,
-                'desc' => $desc
-            );
+                'desc' => $desc,
+            ];
         }
 
         // The '@pagetype' page type is the itemtype for page types.
@@ -91,7 +91,7 @@ function xarpages_userapi_gettypes($args)
     // fetch some DD data for each user-defined page type.
     if ($dd_flag && !empty($itemtype) && xarModHooks::isHooked('dynamicdata', 'xarpages', $itemtype)) {
         // Collect the item IDs together
-        $item_ids = array();
+        $item_ids = [];
         foreach ($types as $type_key => $type) {
             if ($type['name'][0] != '@') {
                 $item_ids[$type['ptid']] = $type_key;
@@ -104,7 +104,7 @@ function xarpages_userapi_gettypes($args)
                 'dynamicdata',
                 'user',
                 'getitems',
-                array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($item_ids))
+                ['module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($item_ids)]
             );
 
             // Move the DD fields to the types array.

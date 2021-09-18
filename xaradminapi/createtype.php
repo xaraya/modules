@@ -38,11 +38,11 @@ function xarpages_adminapi_createtype($args)
     $tablename = $xartable['xarpages_types'];
 
     // Data for the query.
-    $bind = array();
-    $cols = array();
+    $bind = [];
+    $cols = [];
 
     // Include the optional parameters.
-    foreach (array('desc') as $colname) {
+    foreach (['desc'] as $colname) {
         if (isset($$colname)) {
             $bind[] = (string)$$colname;
             $cols[] = 'xar_' . $colname;
@@ -70,13 +70,13 @@ function xarpages_adminapi_createtype($args)
 
     // If there is a suitable XML definition file available, then
     // use it to create the DD hook object.
-    $files = array();
+    $files = [];
     $basedir = 'modules/xarpages/xardata';
     $xml_files = xarMod::apiFunc(
         'dynamicdata',
         'admin',
         'browse',
-        array('basedir' => $basedir, 'filetype' => 'xml')
+        ['basedir' => $basedir, 'filetype' => 'xml']
     );
     if (!empty($xml_files)) {
         foreach ($xml_files as $xml_file) {
@@ -90,14 +90,14 @@ function xarpages_adminapi_createtype($args)
                 'dynamicdata',
                 'util',
                 'import',
-                array('file' => $basedir . '/' . $files[$name], 'keepitemid' => false)
+                ['file' => $basedir . '/' . $files[$name], 'keepitemid' => false]
             );
 
             // If the object was created correctly, then update its itemtype.
             // We also need to change the itemtype of all its properties.
             if (!empty($objectid)) {
                 Dynamic_Object_Master::updateObject(
-                    array('objectid' => $objectid, 'itemtype' => $ptid)
+                    ['objectid' => $objectid, 'itemtype' => $ptid]
                 );
 
                 // Synchronise the object properties with the change in itemtype.
@@ -108,11 +108,11 @@ function xarpages_adminapi_createtype($args)
                     'dynamicdata',
                     'admin',
                     'syncprops',
-                    array(
+                    [
                         'objectid' => $objectid,
                         'moduleid' => xarMod::getRegId('xarpages'),
-                        'itemtype' => $ptid
-                    )
+                        'itemtype' => $ptid,
+                    ]
                 );
             }
         }
@@ -131,11 +131,11 @@ function xarpages_adminapi_createtype($args)
             'item',
             'create',
             $ptid,
-            array(
+            [
                 'itemtype' => $type_itemtype,
                 'module' => 'xarpages',
-                'urlparam' => 'ptid'
-            )
+                'urlparam' => 'ptid',
+            ]
         );
     }
 

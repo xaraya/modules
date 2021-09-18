@@ -26,7 +26,7 @@ function _pageform_getobject($pf, $pagename)
     }
     $objectid = $var[$pagename . '_objectid'];
     //$object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
-    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid'=>$objectid ));
+    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', ['objectid'=>$objectid ]);
     $ser = $var[$pagename];
     $vals = unserialize($ser);
     $object->checkInput($vals); // really just want to do a set value, not validate, oh well TODO:write a loop instead
@@ -49,18 +49,18 @@ function _pageform_setobject($pf, $pagename, $object)
 {
     $vals = $object->getfieldvalues();
     $ser = serialize($vals);
-    
+
     $invals = _pageform_getinvalids($object); // should be ->getInvalids()
     $serinvals = serialize($invals);
-    
+
     $var = xarSession::getVar($pf);
-    
+
     $var[$pagename] = $ser;
     $var[$pagename . '_objectid'] = $object->objectid;
     $var[$pagename . '_invalids'] = $serinvals;
 
     xarSession::setVar($pf, $var);
-    
+
     return $pf;
 }
 
@@ -88,7 +88,7 @@ function _pageform_unsetobject($pf, $pagename)
 */
 function _pageform_getinvalids(& $object)
 {
-    $invalids = array();
+    $invalids = [];
     $properties = $object->getProperties();
     foreach ($properties as $property) {
         $invalids[ $property->name ] = $property->invalid;
@@ -175,7 +175,7 @@ function _pageform_getnav($args, $pf, $isaction = 0)
     // cancel is the first page
     $nav['cancel_pid'] = $keys[0];
     $nav['cancel_url'] = _pageform_url($nav['cancel_pid']); // no session key on cancel
-    
+
     // if on first page, and its not a form, just return now
     if ($currentpid == $keys[0]) {
         $firsttype = $pages[$nav['cancel_pid']]['pagetype']['name'];
@@ -193,7 +193,7 @@ function _pageform_getnav($args, $pf, $isaction = 0)
         $nav['form_pid'] = $currentpid;
     }
     $nav['form_url'] = _pageform_url($nav['form_pid'], $pf);
-    
+
     // action is the next page (or current if we're on the action)
     if ($isaction) {
         $nav['action_pid'] = $currentpid;
@@ -216,7 +216,7 @@ function _pageform_getnav($args, $pf, $isaction = 0)
     }
     $nav['back_pid'] = $keys[$idx];
     $nav['back_url'] = _pageform_url($nav['back_pid'], $pf);
-    
+
     // nextform (skip) is the next form (null if none)
     $idx = $indexes[ $nav['form_pid'] ] + 2;
     if (!empty($keys[$idx])) {
@@ -237,9 +237,9 @@ function _pageform_getnav($args, $pf, $isaction = 0)
 function _pageform_url($pid, $pf = null)
 {
     if (!empty($pf)) {
-        $url = xarController::URL('xarpages', 'user', 'display', array('pid'=>$pid, 'pf'=>$pf));
+        $url = xarController::URL('xarpages', 'user', 'display', ['pid'=>$pid, 'pf'=>$pf]);
     } else {
-        $url = xarController::URL('xarpages', 'user', 'display', array('pid'=>$pid));
+        $url = xarController::URL('xarpages', 'user', 'display', ['pid'=>$pid]);
     }
     return $url;
 }
@@ -257,8 +257,8 @@ function _pageform_url($pid, $pf = null)
 function pageform_obj2arrays($obj, &$values, &$invalids)
 {
     $isvalid = 1;
-    $values = array();
-    $invalids = array();
+    $values = [];
+    $invalids = [];
 
     foreach ($obj->properties as $prop) {
         $values[$prop->name] = $prop->value;

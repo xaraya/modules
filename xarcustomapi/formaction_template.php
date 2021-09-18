@@ -37,7 +37,7 @@ function pageform_formaction_template_validate(&$inobj)
 
     // CHECK NEW USER ARGS
     $isvalid = true;
-    
+
     // Check foobar property (if not already flagged)
     if (!empty($invalids['foobar'])) {
         // Better message than the default property one
@@ -52,10 +52,10 @@ function pageform_formaction_template_validate(&$inobj)
             $values['foobar'] .= 'bar';
         }
     }
-    
+
     // Put local values back into object for return
     $isvalid = pageform_arrays2obj($values, $invalids, $inobj);
-    
+
     return $isvalid;
 }
 
@@ -98,6 +98,6 @@ function pageform_formaction_template_process(&$inobj, &$outobj)
     if (!$isvalid1 || !$isvalid2) {
         $return = $return_invalid;
     }
-    
+
     return $return;
 }

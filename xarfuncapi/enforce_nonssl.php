@@ -10,7 +10,7 @@
 function xarpages_funcapi_enforce_nonssl($args)
 {
     // Get the current URL.
-    $url = xarServer::getCurrentURL(array(), false);
+    $url = xarServer::getCurrentURL([], false);
 
     // If we are on an SSL page then redirect.
     if (strpos(strtolower($url), 'https://') === 0) {

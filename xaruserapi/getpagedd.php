@@ -13,20 +13,20 @@ function xarpages_userapi_getpagedd($args)
         return;
     }
 
-    $itemtypes = array();
+    $itemtypes = [];
 
     // Collect information.
     // Organize the item IDs into itemtypes.
     foreach ($pages as $key => $page) {
         if (!isset($itemtypes[$page['ptid']])) {
-            $itemtypes[$page['ptid']] = array();
+            $itemtypes[$page['ptid']] = [];
         }
         // The key is the item ID and the value is the key to the
         // source item records, which may or may not be the item ID.
         $itemtypes[$page['ptid']][$page['pid']] = $key;
     }
 
-    $result = array();
+    $result = [];
 
     // Loop for each item type, fetching the item DD records for all items
     // within each item type in one go.
@@ -40,7 +40,7 @@ function xarpages_userapi_getpagedd($args)
             'dynamicdata',
             'user',
             'getitems',
-            array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($items))
+            ['module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($items)]
         );
 
         // Copy the dd records into the result array, using the

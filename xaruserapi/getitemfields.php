@@ -12,7 +12,7 @@ function xarpages_userapi_getitemfields($args)
 {
     extract($args);
 
-    $itemfields = array();
+    $itemfields = [];
 
     /*
         $itemfields['pid']  = array(
@@ -22,17 +22,17 @@ function xarpages_userapi_getitemfields($args)
         );
     */
 
-    $itemfields['name'] = array(
+    $itemfields['name'] = [
         'name'  => 'name',
         'label' => xarML('Name'),
-        'type'  => 'textbox'
-    );
+        'type'  => 'textbox',
+    ];
 
-    $itemfields['desc'] = array(
+    $itemfields['desc'] = [
         'name'  => 'desc',
         'label' => xarML('Description'),
-        'type'  => 'textarea_small'
-    );
+        'type'  => 'textarea_small',
+    ];
 
     // TODO: add other static xarpages fields here if relevant
     // JJ: I'd like to see how this works in practice before adding the further

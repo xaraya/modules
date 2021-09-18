@@ -52,7 +52,7 @@ function xarpages_multiformapi_getmasterpage($args)
 
         // Get a list of descendant pages that make up the form sequence.
         // This is a linearised list of descendants of the master page, arranged left-to-right.
-        $page_sequence = array();
+        $page_sequence = [];
         foreach ($args['pages'] as $pid => $page) {
             if ($page['left'] > $master_page['right']) {
                 break;
@@ -76,7 +76,7 @@ function xarpages_multiformapi_getmasterpage($args)
  * The special value 'reset'=>true will reset the session vars.
  */
 
-function &xarpages_multiformapi_sessionvar($args = array())
+function &xarpages_multiformapi_sessionvar($args = [])
 {
     // Everything is stored under here, as an associative array.
     $session_var_name = 'xarpages_multiform_sessionvars';
@@ -100,13 +100,13 @@ function &xarpages_multiformapi_sessionvar($args = array())
         // - flag to indicate whether the user is allowed to revisit the page
         // The history array will be ordered in the order in which pages were first encountered.
         // This is important for the history
-        $session_var = array(
+        $session_var = [
             'session_key' => '',
             'expires' => 0,
-            'history' => array(), // History of pages visited
-            'formdata' => array(), // Collected form data from (and shared between) all pages
-            'workdata' => array(), // Working data for the process functions; used to pass data between pages
-        );
+            'history' => [], // History of pages visited
+            'formdata' => [], // Collected form data from (and shared between) all pages
+            'workdata' => [], // Working data for the process functions; used to pass data between pages
+        ];
         xarSession::setVar($session_var_name, $session_var);
     }
 
@@ -131,8 +131,8 @@ function xarpages_multiformapi_sessionkey($args)
     // If 'reset' is set, then completely remove the key.
     if (!empty($args['set'])) {
         // If we are setting a new session key, then clear out the old session first.
-        $session_vars = xarpages_multiformapi_sessionvar(array('reset'=>true));
-        
+        $session_vars = xarpages_multiformapi_sessionvar(['reset'=>true]);
+
         // Create a new random key then store it in the session
         $session_key = md5(rand(1, getrandmax()) . time());
         $session_vars['session_key'] = $session_key;
@@ -182,7 +182,7 @@ function xarpages_multiformapi_getvalobject($args)
  * has been cleared).
  */
 
-function xarpages_multiformapi_passdata($args = array())
+function xarpages_multiformapi_passdata($args = [])
 {
     // Everything is stored under here, as an associative array.
     $session_var_name = 'xarpages_multiform_passvars';
@@ -223,7 +223,7 @@ function xarpages_multiformapi_get_object_populated($args)
 
     // Page name
     if (!empty($pagename)) {
-        $page = xarMod::apiFunc('xarpages', 'user', 'getpage', array('name' => $pagename));
+        $page = xarMod::apiFunc('xarpages', 'user', 'getpage', ['name' => $pagename]);
 
         // No page found.
         if (empty($page)) {
@@ -248,7 +248,7 @@ function xarpages_multiformapi_get_object_populated($args)
         'dynamicdata',
         'user',
         'getobject',
-        array('objectid' => $objectid)
+        ['objectid' => $objectid]
     );
 
     // No object found

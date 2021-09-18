@@ -26,7 +26,7 @@ function xarpages_admin_modifytype($args)
         return;
     }
 
-    $data = array();
+    $data = [];
 
     // Get the itemtype of the page type.
     $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
@@ -39,7 +39,7 @@ function xarpages_admin_modifytype($args)
             'xarpages',
             'user',
             'gettype',
-            array('ptid' => $ptid, 'dd_flag' => false)
+            ['ptid' => $ptid, 'dd_flag' => false]
         );
 
         if (empty($type)) {
@@ -61,7 +61,7 @@ function xarpages_admin_modifytype($args)
             'item',
             'modify',
             $type['ptid'],
-            array('module' => 'xarpages', 'itemtype' => $type_itemtype)
+            ['module' => 'xarpages', 'itemtype' => $type_itemtype]
         );
 
         // Do config hooks for the page type as an item type.
@@ -69,18 +69,18 @@ function xarpages_admin_modifytype($args)
             'module',
             'modifyconfig',
             'xarpages',
-            array('module' => 'xarpages', 'itemtype' => $type['ptid'])
+            ['module' => 'xarpages', 'itemtype' => $type['ptid']]
         );
     } else {
         // Adding a new page type.
 
         // Get some example page types from the xardata directory.
-        $files = array();
+        $files = [];
         $xml_files = xarMod::apiFunc(
             'dynamicdata',
             'admin',
             'browse',
-            array('basedir' => 'modules/xarpages/xardata', 'filetype' => 'xml')
+            ['basedir' => 'modules/xarpages/xardata', 'filetype' => 'xml']
         );
         if (!empty($xml_files)) {
             $files[''] = xarML('-- Predefined --');
@@ -98,11 +98,11 @@ function xarpages_admin_modifytype($args)
         }
 
         // Default data for the page type form.
-        $type = array(
+        $type = [
             'ptid' => null,
             'name' => '',
-            'desc' => ''
-        );
+            'desc' => '',
+        ];
 
         $data['func'] = 'create';
         $data['ptid'] = null;
@@ -112,7 +112,7 @@ function xarpages_admin_modifytype($args)
             'item',
             'new',
             '',
-            array('module' => 'xarpages', 'itemtype' => $type_itemtype)
+            ['module' => 'xarpages', 'itemtype' => $type_itemtype]
         );
     }
 

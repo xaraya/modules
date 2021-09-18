@@ -102,7 +102,7 @@ function sniffer()
     $version_parts = preg_split('/[.]/', $version);
 
     $platform = 'Other';
-    $platforms = array('Win', 'Mac', 'Linux');
+    $platforms = ['Win', 'Mac', 'Linux'];
     foreach ($platforms as $check) {
         if (strstr($http_agent, $check)) {
             $platform = $check;
@@ -110,12 +110,12 @@ function sniffer()
         }
     }
 
-    return array(
+    return [
         'agent' => $agent,
         'version' => $version,
         'version_parts' => $version_parts,
-        'platform' => $platform
-    );
+        'platform' => $platform,
+    ];
 }
 
 /* Start */
@@ -175,221 +175,221 @@ if (is_dir(realpath(dirname(__FILE__) . '/../xarimages'))) {
 /* Send the main CSS */
 echo <<< ENDCSS
 
-/* Auto-generated for "$sniff[agent]" version "$sniff[version]" */
+    /* Auto-generated for "$sniff[agent]" version "$sniff[version]" */
 
-/* Reset some of the defaults that the theme adds. */
-div.${container_class} li, div.${container_class} ul {
-   margin: 0;
-   padding: 0;
-   text-indent: 0;
-}
-div.${container_class} ul, div.${container_class} li {
-    line-height: 120%;
-}
-div.${container_class} ul {
-    list-style-position: default;
-}
-
-
-/***************************
- * Layout styles 
- */
-
-div.${container_class} {
-   width: ${top_width}; /* 174px */
-   padding: 2px;
-   border-width: 1px;
-   /* Style is formatting really, but there is no width without a style */
-   border-style: solid;
-}
-
-/* All anchors are 174px wide external, with a 1px border, and pixel of 
- vertical (and collapsable) margin.
- Internal padding and width varies with the level, but always adds up to 172px
- */
-div.${container_class} a, div.${container_class} h2 {
-   display: block;
-   padding: 2px 0;
-   margin: 0px 0px;
-   width: ${top_width}px; /* 172px Will be overridden in all cases */
-   border-width: ${anchor_border}px;
-   border-style: solid;
-}
+    /* Reset some of the defaults that the theme adds. */
+    div.${container_class} li, div.${container_class} ul {
+       margin: 0;
+       padding: 0;
+       text-indent: 0;
+    }
+    div.${container_class} ul, div.${container_class} li {
+        line-height: 120%;
+    }
+    div.${container_class} ul {
+        list-style-position: default;
+    }
 
 
-/* Remove default styles for lists */
-div.${container_class} ul {
-   list-style-type: none;
-}
+    /***************************
+     * Layout styles 
+     */
 
-/* Level 1 anchors: 20px to LHS */
-div.${container_class} ul.side-menu1 a, div.${container_class} ul.side-menu1 h2 {
-   width: ${anchor1_width}px; /* 148px */
-   padding-right: 4px;
-   padding-left: 20px;
-}
+    div.${container_class} {
+       width: ${top_width}; /* 174px */
+       padding: 2px;
+       border-width: 1px;
+       /* Style is formatting really, but there is no width without a style */
+       border-style: solid;
+    }
 
-/* Level 2: same indent as level 1, more padding to RHS */
-div.${container_class} ul.side-menu2 a, div.${container_class} ul.side-menu2 h2 {
-   width: ${anchor2_width}px; /* 132px */
-   padding-right: 20px;
-   padding-left: 20px;
-}
-
-/* Level 3: 10px more padding on left than level 2 */
-div.${container_class} ul.side-menu3 a, div.${container_class} ul.side-menu3 h2 {
-   width: ${anchor3_width}px; /* 136px */
-   padding-left: 30px;
-   padding-right: 6px;
-}
-
-/* Level 4: 8px more padding on left than level 3 */
-div.${container_class} ul.side-menu4 a, div.${container_class} ul.side-menu4 h2 {
-   width: ${anchor4_width}px; /* 126px */
-   padding-left: 40px;
-   padding-right: 6px;
-}
+    /* All anchors are 174px wide external, with a 1px border, and pixel of 
+     vertical (and collapsable) margin.
+     Internal padding and width varies with the level, but always adds up to 172px
+     */
+    div.${container_class} a, div.${container_class} h2 {
+       display: block;
+       padding: 2px 0;
+       margin: 0px 0px;
+       width: ${top_width}px; /* 172px Will be overridden in all cases */
+       border-width: ${anchor_border}px;
+       border-style: solid;
+    }
 
 
+    /* Remove default styles for lists */
+    div.${container_class} ul {
+       list-style-type: none;
+    }
 
-/***************************
- * Static formatting styles
- * This do not affect the sizes
- * or positions of any of the
- * elements.
- * The positioning will, howver,
- * affect the placing of the
- * background image bullets.
- * Ideally this section should be
- * in a different file so the colours
- * can be overridden without affecting
- * other styles.
- */
+    /* Level 1 anchors: 20px to LHS */
+    div.${container_class} ul.side-menu1 a, div.${container_class} ul.side-menu1 h2 {
+       width: ${anchor1_width}px; /* 148px */
+       padding-right: 4px;
+       padding-left: 20px;
+    }
 
-div.${container_class} {
-   font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 80%;
-   border-color: #00FFFF;
-   border-style: solid;
-   background-color: #00FFFF;
-}
+    /* Level 2: same indent as level 1, more padding to RHS */
+    div.${container_class} ul.side-menu2 a, div.${container_class} ul.side-menu2 h2 {
+       width: ${anchor2_width}px; /* 132px */
+       padding-right: 20px;
+       padding-left: 20px;
+    }
 
-div.${container_class} h2 {
-   font-size: 98%;
-}
-   
-div.${container_class} li {
-   background-repeat: no-repeat;
-    ${msie_whitespace_fix}
-}
+    /* Level 3: 10px more padding on left than level 2 */
+    div.${container_class} ul.side-menu3 a, div.${container_class} ul.side-menu3 h2 {
+       width: ${anchor3_width}px; /* 136px */
+       padding-left: 30px;
+       padding-right: 6px;
+    }
 
-/* Default font style and colours for the menu links */
-div.${container_class} a, div.${container_class} h2 {
-   text-align: left;
-   text-decoration: none;
-   font-weight: bold;
-   color: #666;
-   border-color: #00ffff;
-}
-
-/* A blue tinge to the links after the first level */
-div.${container_class} ul.side-menu2 a, div.${container_class} ul.side-menu2 h2 {
-   color: #669;
-}
-/* Disable bold after the second level */
-div.${container_class} ul.side-menu3 a {
-   font-weight: normal;
-}
-
-/* Menu background colours - lighter blue for deeper levels */
-div.${container_class} ul.side-menu1 li {
-   background-color: #00FFFF;
-}
-div.${container_class} ul.side-menu1 li a {
-    border-color: #00FFFF;
-}
-div.${container_class} ul.side-menu2 li {
-   background-color: #AAFFFF;
-}
-div.${container_class} ul.side-menu2 li a {
-    border-color: #AAFFFF;
-}
-div.${container_class} ul.side-menu3 li {
-   background-color: #CCFFFF;
-}
-div.${container_class} ul.side-menu3 li a {
-   border-color: #CCFFFF;
-}
-/* Selected menu item: background colour white - font and border set on the anchor */
-div.${container_class} ul.side-menu1 li.selected,
-div.${container_class} ul.side-menu2 li.selected,
-div.${container_class} ul.side-menu3 li.selected,
-div.${container_class} ul.side-menu4 li.selected {
-   background-color: #ffffff;
-}
-
-/* Current page has a highlighted border and bolder text */
-div.${container_class} li a.selected {
-   border-color: #333333;
-   border-style: dotted;
-   color: #600;
-   /*font-style: italic;*/
-   font-weight: bold;
-}
-
-/* Bullets for level 1:
- [] = no children; blue = not selected; red = selected
- >  = closed, has children; blue
- v  = open, has children; blue = not selected; red = selected
-*/
-
-/* Default bullet - assuming no children. */
-div.${container_class} ul.side-menu1 li {
-   background-position: 0px 0.25em;
-   background-image: url(${image_path}/bull1.gif);
-}
-/* Closed, with children */
-div.${container_class} ul.side-menu1 li.closed {
-   background-position: 0px 0.25em;
-   background-image: url(${image_path}/bull1-closed.gif);
-}
-/* Open - not selected */
-div.${container_class} ul.side-menu1 li.open {
-   background-position: 0px 0.25em;
-   background-image: url(${image_path}/bull1-open.gif);
-}
-
-/* Level 2 - no bullets (try some small bullets) */
-div.${container_class} ul.side-menu1 ul.side-menu2 li {
-   /*background-image: none;*/
-   background-position: 4px 0.5em;
-   background-image: url(${image_path}/bull4.gif);
-}
-
-/* Level 3 - simple square bullets */
-div.${container_class} ul.side-menu2 ul.side-menu3 li {
-   background-position: 20px 0.5em;
-   background-image: url(${image_path}/bull3.gif);
-}
-
-/* Level 4 - simple round bullets */
-div.${container_class} ul.side-menu3 ul.side-menu4 li {
-   background-position: 30px 0.5em;
-   background-image: url(${image_path}/bull4.gif);
-}
+    /* Level 4: 8px more padding on left than level 3 */
+    div.${container_class} ul.side-menu4 a, div.${container_class} ul.side-menu4 h2 {
+       width: ${anchor4_width}px; /* 126px */
+       padding-left: 40px;
+       padding-right: 6px;
+    }
 
 
-/***************************
- * Dynamic formatting styles
- */
 
-/* Darken the text and border when hovering */
-/* Need to include ul.side-menu1 for specificity */
-div.${container_class} ul.side-menu1 li a:hover {
-   border-color: #600;
-   color: #600;
-   text-decoration: none;
-}
+    /***************************
+     * Static formatting styles
+     * This do not affect the sizes
+     * or positions of any of the
+     * elements.
+     * The positioning will, howver,
+     * affect the placing of the
+     * background image bullets.
+     * Ideally this section should be
+     * in a different file so the colours
+     * can be overridden without affecting
+     * other styles.
+     */
 
-/* MSIE MAC may need all anchors floated to the left - we will treat that as dead browser for now */
-ENDCSS;
+    div.${container_class} {
+       font-family: Verdana, Arial, Helvetica, sans-serif;
+       font-size: 80%;
+       border-color: #00FFFF;
+       border-style: solid;
+       background-color: #00FFFF;
+    }
+
+    div.${container_class} h2 {
+       font-size: 98%;
+    }
+       
+    div.${container_class} li {
+       background-repeat: no-repeat;
+        ${msie_whitespace_fix}
+    }
+
+    /* Default font style and colours for the menu links */
+    div.${container_class} a, div.${container_class} h2 {
+       text-align: left;
+       text-decoration: none;
+       font-weight: bold;
+       color: #666;
+       border-color: #00ffff;
+    }
+
+    /* A blue tinge to the links after the first level */
+    div.${container_class} ul.side-menu2 a, div.${container_class} ul.side-menu2 h2 {
+       color: #669;
+    }
+    /* Disable bold after the second level */
+    div.${container_class} ul.side-menu3 a {
+       font-weight: normal;
+    }
+
+    /* Menu background colours - lighter blue for deeper levels */
+    div.${container_class} ul.side-menu1 li {
+       background-color: #00FFFF;
+    }
+    div.${container_class} ul.side-menu1 li a {
+        border-color: #00FFFF;
+    }
+    div.${container_class} ul.side-menu2 li {
+       background-color: #AAFFFF;
+    }
+    div.${container_class} ul.side-menu2 li a {
+        border-color: #AAFFFF;
+    }
+    div.${container_class} ul.side-menu3 li {
+       background-color: #CCFFFF;
+    }
+    div.${container_class} ul.side-menu3 li a {
+       border-color: #CCFFFF;
+    }
+    /* Selected menu item: background colour white - font and border set on the anchor */
+    div.${container_class} ul.side-menu1 li.selected,
+    div.${container_class} ul.side-menu2 li.selected,
+    div.${container_class} ul.side-menu3 li.selected,
+    div.${container_class} ul.side-menu4 li.selected {
+       background-color: #ffffff;
+    }
+
+    /* Current page has a highlighted border and bolder text */
+    div.${container_class} li a.selected {
+       border-color: #333333;
+       border-style: dotted;
+       color: #600;
+       /*font-style: italic;*/
+       font-weight: bold;
+    }
+
+    /* Bullets for level 1:
+     [] = no children; blue = not selected; red = selected
+     >  = closed, has children; blue
+     v  = open, has children; blue = not selected; red = selected
+    */
+
+    /* Default bullet - assuming no children. */
+    div.${container_class} ul.side-menu1 li {
+       background-position: 0px 0.25em;
+       background-image: url(${image_path}/bull1.gif);
+    }
+    /* Closed, with children */
+    div.${container_class} ul.side-menu1 li.closed {
+       background-position: 0px 0.25em;
+       background-image: url(${image_path}/bull1-closed.gif);
+    }
+    /* Open - not selected */
+    div.${container_class} ul.side-menu1 li.open {
+       background-position: 0px 0.25em;
+       background-image: url(${image_path}/bull1-open.gif);
+    }
+
+    /* Level 2 - no bullets (try some small bullets) */
+    div.${container_class} ul.side-menu1 ul.side-menu2 li {
+       /*background-image: none;*/
+       background-position: 4px 0.5em;
+       background-image: url(${image_path}/bull4.gif);
+    }
+
+    /* Level 3 - simple square bullets */
+    div.${container_class} ul.side-menu2 ul.side-menu3 li {
+       background-position: 20px 0.5em;
+       background-image: url(${image_path}/bull3.gif);
+    }
+
+    /* Level 4 - simple round bullets */
+    div.${container_class} ul.side-menu3 ul.side-menu4 li {
+       background-position: 30px 0.5em;
+       background-image: url(${image_path}/bull4.gif);
+    }
+
+
+    /***************************
+     * Dynamic formatting styles
+     */
+
+    /* Darken the text and border when hovering */
+    /* Need to include ul.side-menu1 for specificity */
+    div.${container_class} ul.side-menu1 li a:hover {
+       border-color: #600;
+       color: #600;
+       text-decoration: none;
+    }
+
+    /* MSIE MAC may need all anchors floated to the left - we will treat that as dead browser for now */
+    ENDCSS;

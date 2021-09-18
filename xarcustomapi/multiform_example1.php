@@ -27,7 +27,7 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
     // ex1page1 -> ex1page2 -> ex1page3 -> ex1page4
     // Pages 1 to 3 are of type 'multiform' and page 4 is of type 'html'.
     //
-    
+
     // The initialise method is called before the form is displayed.
     public function initialise_ex1page1($args)
     {

@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 
@@ -35,13 +36,13 @@ function xarpages_funcapi_facet($args)
     //    inverted - an inverted category list, used for looking up categories.
     // Facets are indexed by the root category id
     // They are static so we can keep coming back to them while generating URLs.
-    static $facets = array();
+    static $facets = [];
 
     // Current filter, cids indexed by root cid (i.e. the facet ID).
-    static $filter_cids = array();
+    static $filter_cids = [];
 
     // Inverted category/facet ID lookup. Gives the facet root for every category.
-    static $cids_to_facets = array();
+    static $cids_to_facets = [];
 
     //
     // URL mode. Return existing facet filters as a URL 'filter' parameter string.
@@ -50,7 +51,7 @@ function xarpages_funcapi_facet($args)
     // is the cids_to_factes list).
     // We already have the 'filter_cids' with all the current filter values.
     //
-    
+
     if (!empty($args['add']) || !empty($args['remove']) || !empty($args['show'])) {
         $filter = $filter_cids;
 
@@ -93,20 +94,20 @@ function xarpages_funcapi_facet($args)
     if (!empty($args['current_page']['dd']['forced_cids'])) {
         $forced_cids = explode(',', $args['current_page']['dd']['forced_cids']);
     } else {
-        $forced_cids = array();
+        $forced_cids = [];
     }
 
     // Module ID
     $modid = xarMod::getRegId('articles');
 
     // List of facets for which there are filters in operation.
-    $filter_facets = array();
+    $filter_facets = [];
 
     // List of facets for which there are sub-categories that can be selected.
-    $subcat_facets = array();
+    $subcat_facets = [];
 
     // List of pubtypes for which we have edit privileges.
-    $edit_privs = array();
+    $edit_privs = [];
 
     // TODO: also determine any category bases that we specifically want to exclude from the navigation.
     // They may be there for categorisation in other ways.
@@ -126,14 +127,14 @@ function xarpages_funcapi_facet($args)
     // level than the root categories for the publications.
 
     // Mapping of forced cids - lists cids that will get moved up to a 'forced' cid.
-    $forced_cids_map = array();
+    $forced_cids_map = [];
     if (!empty($forced_cids)) {
         foreach ($forced_cids as $forced_cid) {
             $forced_ancestors = xarMod::apiFunc(
                 'categories',
                 'user',
                 'getancestors',
-                array('cid' => $forced_cid, 'return_itself' => false, 'order' => 'root')
+                ['cid' => $forced_cid, 'return_itself' => false, 'order' => 'root']
             );
             foreach ($forced_ancestors as $forced_ancestor) {
                 $forced_cids_map[$forced_ancestor['cid']] = $forced_cid;
@@ -158,7 +159,7 @@ function xarpages_funcapi_facet($args)
                 'categories',
                 'user',
                 'countcatbases',
-                array('module' => 'articles', 'itemtype' => $ptid)
+                ['module' => 'articles', 'itemtype' => $ptid]
             );
 
             if ($itemtype_base_cids_count > 0) {
@@ -167,7 +168,7 @@ function xarpages_funcapi_facet($args)
                         'categories',
                         'user',
                         'getcatbase',
-                        array('modid' => $modid, 'itemtype' => $ptid, 'bid' => $i)
+                        ['modid' => $modid, 'itemtype' => $ptid, 'bid' => $i]
                     );
                     $itemtype_base_cid = (int)$itemtype_base_cat['cid'];
 
@@ -183,7 +184,7 @@ function xarpages_funcapi_facet($args)
                     }
 
                     // TODO: security check here?
-                    $facets[$itemtype_base_cid] = array();
+                    $facets[$itemtype_base_cid] = [];
                     $facets[$itemtype_base_cid]['root'] = $itemtype_base_cid;
                     $facets[$itemtype_base_cid]['base'] = $facets[$itemtype_base_cid]['root'];
                 }
@@ -200,10 +201,10 @@ function xarpages_funcapi_facet($args)
     if (!empty($global_edit_privs)) {
         // We have edit privs on all these pubtypes, so show the draft (aka submitted) articles too.
         // 1 = rejected (we don't want those)
-        $status_list = array(0, 2, 3);
+        $status_list = [0, 2, 3];
     } else {
         // Default is 'Posted'.
-        $status_list = array(2, 3);
+        $status_list = [2, 3];
     }
 
     ////////////////////////////////
@@ -211,7 +212,7 @@ function xarpages_funcapi_facet($args)
     //
 
     // Get the filter category IDs from the URL.
-    xarVar::fetch('filter', 'strlist:,+ :id', $filter, array(), xarVar::NOT_REQUIRED);
+    xarVar::fetch('filter', 'strlist:,+ :id', $filter, [], xarVar::NOT_REQUIRED);
     if (!is_array($filter)) {
         $filter = explode(',', $filter);
     }
@@ -241,7 +242,7 @@ function xarpages_funcapi_facet($args)
     // Place the filter categories into their relevant factets.
     // This includes validation of the filters and fetching their ancestor paths.
     //
-    
+
     // Get the crumbtrail lists for each selected category, i.e. filters already in place.
     //$cids_crumbs = array();
     if (!empty($filter)) {
@@ -253,7 +254,7 @@ function xarpages_funcapi_facet($args)
                 'categories',
                 'user',
                 'getancestors',
-                array('cid' => $filter_cid, 'return_itself' => true, 'order' => 'root')
+                ['cid' => $filter_cid, 'return_itself' => true, 'order' => 'root']
             );
 
             if (!empty($ancestors)) {
@@ -318,20 +319,20 @@ function xarpages_funcapi_facet($args)
     //
 
     if (!empty($facets)) {
-        $articles_fetch_array = array();
+        $articles_fetch_array = [];
 
         if (!empty($aid)) {
             // aid searching overrides all the other criteria.
-            $articles_fetch_array = array(
-                'aids' => array($aid),
+            $articles_fetch_array = [
+                'aids' => [$aid],
                 // Restricted list for the summaries.
-            );
+            ];
         } elseif (!empty($filter_cids) || !empty($forced_cids) || !empty($q) || !empty($latest)) {
-            $articles_fetch_array = array(
+            $articles_fetch_array = [
                 'cids' => ((!empty($filter_cids) || !empty($forced_cids)) ? explode(',', '_' . implode(',_', array_merge($forced_cids, $filter_cids))) : null),
                 'andcids' => true,
                 'search' => $q,
-            );
+            ];
 
             if (!empty($latest)) {
                 // Fetch stuff posted in the last N days.
@@ -340,9 +341,9 @@ function xarpages_funcapi_facet($args)
         }
 
         // Need to specify search fields as notes are not included by default.
-        $articles_fetch_array['searchfields'] = array('aid', 'title', 'summary', 'body', 'notes');
+        $articles_fetch_array['searchfields'] = ['aid', 'title', 'summary', 'body', 'notes'];
 
-        $articles_fetch_array['fields'] = array('title', 'summary', 'body', 'notes', 'status', 'cids', 'dynamicdata');
+        $articles_fetch_array['fields'] = ['title', 'summary', 'body', 'notes', 'status', 'cids', 'dynamicdata'];
         $articles_fetch_array['ptid'] = $ptids;
         $articles_fetch_array['status'] = $status_list;
     }
@@ -360,7 +361,7 @@ function xarpages_funcapi_facet($args)
 
     if (!empty($facets)) {
         // Get the base cids.
-        $base_cids = array();
+        $base_cids = [];
         foreach ($facets as $facet) {
             $base_cids[] = $facet['base'];
         }
@@ -369,12 +370,12 @@ function xarpages_funcapi_facet($args)
         // TODO: need to go via the articles module so that the query string can be included.
         // TODO: need to include filter.
         // 'OR' the base cids, since we want counts under *any* of these categories.
-        $deepcount_params = array(
+        $deepcount_params = [
             'modid' => $modid,
             'itemtype' => $ptids,
             'groupby' => 'category',
             'catid' => '_' . implode('-_', $base_cids),
-        );
+        ];
 
         // If the filter is active, then send the filter query to the deep count too.
         // Link to the articles table here too, so we can apply the query-string
@@ -382,12 +383,12 @@ function xarpages_funcapi_facet($args)
         // Not only that, it also must include statuses etc.
         // This will only work on MySQL 5+
         if (!empty($filter_cids) || !empty($forced_cids)) {
-            $filter_params = array(
+            $filter_params = [
                 'modid' => $modid,
                 'itemtype' => $ptids,
                 'groupby' => 'category',
                 'catid' => '_' . implode('+_', array_merge($forced_cids, $filter_cids)),
-            );
+            ];
 
             // Fetch the categories query parts.
             $catfilterdef = xarMod::apiFunc('categories', 'user', 'leftjoin', $filter_params);
@@ -453,15 +454,15 @@ function xarpages_funcapi_facet($args)
                 'categories',
                 'user',
                 'getcat',
-                array(
+                [
                     'cid' => $facet['base'],
                     'return_itself' => true,
                     // Depth is < 4, i.e. three levels returned: current, children and their children.
                     // FIXME: actually depth is relative to the ultimate base cids, and not the cid we start at.
                     //'maximum_depth' => 4,
                     'getchildren' => true,
-                    'indexby' => 'cid'
-                )
+                    'indexby' => 'cid',
+                ]
             );
             //var_dump($facet_cats);
 
@@ -518,10 +519,10 @@ function xarpages_funcapi_facet($args)
     // Fetch any articles that match the current selection.
     //
 
-    $articles = array();
+    $articles = [];
     $article_count = 0;
-    $all_categories = array();
-    $all_categories_cids = array();
+    $all_categories = [];
+    $all_categories_cids = [];
     if (!empty($facets)) {
         $article_count = xarMod::apiFunc('articles', 'user', 'countitems', $articles_fetch_array);
 
@@ -552,7 +553,7 @@ function xarpages_funcapi_facet($args)
 
                 // Do transform hooks on the article, while we are looping through them.
                 $transform_article = $articles[$article_key]; // Why not $article_value?
-                $transform_article['transform'] = array('summary', 'body');
+                $transform_article['transform'] = ['summary', 'body'];
                 $transform_article['itemtype'] = $transform_article['pubtypeid'];
                 $transform_article['itemid'] = $transform_article['aid'];
                 $articles[$article_key] = xarModHooks::call('item', 'transform', $article_value['aid'], $transform_article, 'articles');
@@ -563,7 +564,7 @@ function xarpages_funcapi_facet($args)
                         'articles',
                         'admin',
                         'modify',
-                        array('aid' => $article_value['aid'], 'return_url' => xarServer::getCurrentURL(array(), false))
+                        ['aid' => $article_value['aid'], 'return_url' => xarServer::getCurrentURL([], false)]
                     );
                 }
             }
@@ -573,7 +574,7 @@ function xarpages_funcapi_facet($args)
                     'categories',
                     'user',
                     'getcatinfo',
-                    array('cids' => $all_categories_cids)
+                    ['cids' => $all_categories_cids]
                 );
             }
 
@@ -581,7 +582,7 @@ function xarpages_funcapi_facet($args)
             // This makes things easier in the templates.
             foreach ($articles as $article_key => $article_value) {
                 if (!empty($article_value['cids'])) {
-                    $articles[$article_key]['cats'] = array();
+                    $articles[$article_key]['cats'] = [];
                     // Categories are present.
                     foreach ($article_value['cids'] as $art_cid) {
                         if (isset($all_categories[$art_cid])) {
@@ -605,14 +606,14 @@ function xarpages_funcapi_facet($args)
             $pager = xarTplPager::getPager(
                 $startnum,
                 $article_count,
-                xarServer::getCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
+                xarServer::getCurrentURL(['startnum' => '%%', 'numitems' => $numitems]),
                 $numitems
             );
         } else {
             $pager = xarTplPager::getPager(
                 $startnum,
                 $article_count,
-                xarServer::getCurrentURL(array('startnum' => '%%')),
+                xarServer::getCurrentURL(['startnum' => '%%']),
                 $numitems
             );
         }

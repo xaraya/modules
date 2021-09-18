@@ -10,7 +10,7 @@
 
 function xarpages_userapi_getitemtypes($args)
 {
-    $itemtypes = array();
+    $itemtypes = [];
 
     // Get publication types
     $pagetypes = xarMod::apiFunc('xarpages', 'user', 'gettypes');
@@ -24,11 +24,11 @@ function xarpages_userapi_getitemtypes($args)
             $desc_line1 = $pagetype['name'];
         }
 
-        $itemtypes[$pagetype['ptid']] = array(
+        $itemtypes[$pagetype['ptid']] = [
             'label' => xarVar::prepForDisplay($desc_line1),
             'title' => xarVar::prepForDisplay(xarML('Display #(1)', $desc_line1)),
-            'url'   => xarController::URL('xarpages', 'user', 'display', array('ptid' => $pagetype['ptid']))
-        );
+            'url'   => xarController::URL('xarpages', 'user', 'display', ['ptid' => $pagetype['ptid']]),
+        ];
     }
     return $itemtypes;
 }

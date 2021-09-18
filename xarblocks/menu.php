@@ -17,15 +17,15 @@
 
 function xarpages_menublock_init()
 {
-    return array(
+    return [
         'multi_homed' => true,
         'current_source' => 'AUTO', // Other values: 'DEFAULT'
         'default_pid' => 0, // 0 == 'None'
-        'root_pids' => array(),
-        'prune_pids' => array(),
+        'root_pids' => [],
+        'prune_pids' => [],
         'max_level' => 0,
         'start_level' => 0,
-    );
+    ];
 }
 
 /**
@@ -34,7 +34,7 @@ function xarpages_menublock_init()
 
 function xarpages_menublock_info()
 {
-    return array(
+    return [
         'text_type' => 'Content',
         'text_type_long' => 'Xarpages Menu Block',
         'module' => 'xarpages',
@@ -43,8 +43,8 @@ function xarpages_menublock_info()
         'form_content' => false,
         'form_refresh' => false,
         'show_preview' => true,
-        'notes' => 'no notes'
-    );
+        'notes' => 'no notes',
+    ];
 }
 
 /**
@@ -87,13 +87,13 @@ function xarpages_menublock_display($blockinfo)
     if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
         $root_pids = $vars['root_pids'];
     } else {
-        $root_pids = array();
+        $root_pids = [];
     }
 
     if (!empty($vars['prune_pids']) && is_array($vars['prune_pids'])) {
         $prune_pids = $vars['prune_pids'];
     } else {
-        $prune_pids = array();
+        $prune_pids = [];
     }
 
     // To start with, we need to know the current page.
@@ -131,7 +131,7 @@ function xarpages_menublock_display($blockinfo)
         // If the cached tree does not contain the current page,
         // then we cannot use it.
         if (!isset($pagedata['pages'][$pid])) {
-            $pagedata = array();
+            $pagedata = [];
         }
     }
 
@@ -143,7 +143,7 @@ function xarpages_menublock_display($blockinfo)
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
     if (!empty($root_pids)) {
-        if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+        if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', ['pid' => $pid, 'tree_roots' => $root_pids])) {
             // Not under a root.
             // If the mode is AUTO then leave the menu blank.
             if ($vars['current_source'] == 'AUTO' || $vars['current_source'] == 'DEFAULT' || empty($vars['default_pid'])) {
@@ -151,7 +151,7 @@ function xarpages_menublock_display($blockinfo)
             } else {
                 // Use the default page instead.
                 $pid = $vars['default_pid'];
-                $pagedata = array();
+                $pagedata = [];
             }
         }
     }
@@ -163,12 +163,12 @@ function xarpages_menublock_display($blockinfo)
             'xarpages',
             'user',
             'getpagestree',
-            array(
+            [
                 'tree_contains_pid' => $pid,
                 'dd_flag' => true,
                 'key' => 'pid',
-                'status' => 'ACTIVE,EMPTY'
-            )
+                'status' => 'ACTIVE,EMPTY',
+            ]
         );
 
         // If $pagedata is empty, then we have an invalid ID or
@@ -241,7 +241,7 @@ function xarpages_menublock_display($blockinfo)
                 }
 
                 // Reset any of the pruning point's children.
-                $pagedata['pages'][$prune_pid]['child_keys'] = array();
+                $pagedata['pages'][$prune_pid]['child_keys'] = [];
                 $pagedata['pages'][$prune_pid]['has_children'] = false;
                 //var_dump($pagedata);
             }
@@ -254,7 +254,7 @@ function xarpages_menublock_display($blockinfo)
         'xarpages',
         'user',
         'addcurrentpageflags',
-        array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
+        ['pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids]
     );
 
     // If not multi-homed, then create a 'root root' page - a virtual page
@@ -263,10 +263,10 @@ function xarpages_menublock_display($blockinfo)
     // root page passed into them, and always start with the children of
     // that root page.
     if (empty($vars['multi_homed'])) {
-        $pagedata['pages'][0] = array(
-            'child_keys' => array($pagedata['root_page']['key']),
-            'has_children' => true, 'is_ancestor' => true
-        );
+        $pagedata['pages'][0] = [
+            'child_keys' => [$pagedata['root_page']['key']],
+            'has_children' => true, 'is_ancestor' => true,
+        ];
         unset($pagedata['root_page']);
         $pagedata['root_page'] =& $pagedata['pages'][0];
     }

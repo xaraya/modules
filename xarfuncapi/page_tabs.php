@@ -67,13 +67,13 @@ function xarpages_funcapi_page_tabs($args)
         'xarpages',
         'func',
         $c_template,
-        array(
+        [
             'sections' => $sections,
             'section_count' => $section_count,
             'section_titles' => $section_titles,
             'tab' => $tab,
-            'header' => $header
-        )
+            'header' => $header,
+        ]
     );
 
     // if the 'new_body' is not empty, then use it to replace the current body.

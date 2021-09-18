@@ -34,7 +34,7 @@ function xarpages_adminapi_updatepage($args)
     }
 
     // Get current information on the page
-    $page = xarMod::apiFunc('xarpages', 'user', 'getpage', array('pid' => $pid));
+    $page = xarMod::apiFunc('xarpages', 'user', 'getpage', ['pid' => $pid]);
 
     if (empty($page)) {
         $msg = xarML('The page does not exist');
@@ -71,8 +71,8 @@ function xarpages_adminapi_updatepage($args)
     if (!empty($alias)) {
         // Use the current name if passed in, else use the existing name.
         // Only set if the alias is not currently being used by this or any other module.
-        if (xarModAlias::resolve(isset($name) ? $name : $page['name']) != '') {
-            xarModAlias::set((isset($name) ? $name : $page['name']), 'xarpages');
+        if (xarModAlias::resolve($name ?? $page['name']) != '') {
+            xarModAlias::set(($name ?? $page['name']), 'xarpages');
         }
     }
 
@@ -87,13 +87,13 @@ function xarpages_adminapi_updatepage($args)
             'xarpages',
             'tree',
             'moveitem',
-            array(
+            [
                 'tablename' => $tablename,
                 'idname' => 'xar_pid',
                 'refid' => $insertpoint,
                 'itemid' => $pid,
-                'offset' => $offset
-            )
+                'offset' => $offset,
+            ]
         )) {
             return;
         }
@@ -101,11 +101,11 @@ function xarpages_adminapi_updatepage($args)
 
     // Data for the query.
     // Allow columns to be optional.
-    $bind = array();
-    $cols = array();
+    $bind = [];
+    $cols = [];
 
     // Include the optional parameters.
-    foreach (array('name', 'desc', 'page_template', 'template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
+    foreach (['name', 'desc', 'page_template', 'template', 'theme', 'encode_url', 'decode_url', 'function', 'status'] as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = (string)$$colname;
             $cols[] = 'xar_' . $colname . ' = ?';
@@ -133,10 +133,10 @@ function xarpages_adminapi_updatepage($args)
             . ' AND xar_left BETWEEN ? AND ?';
         $result = $dbconn->execute(
             $query,
-            array(
+            [
                 (string)$status, (string)$status,
-                (int)$page['left'], (int)$page['right']
-            )
+                (int)$page['left'], (int)$page['right'],
+            ]
         );
         if (!$result) {
             return;

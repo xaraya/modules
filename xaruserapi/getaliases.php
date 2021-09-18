@@ -21,7 +21,7 @@ function xarpages_userapi_getaliases($args)
         . ' FROM ' . $xartable['xarpages_pages']
         . ' GROUP BY xar_name';
 
-    $bind = array();
+    $bind = [];
 
     if ($mincount > 1) {
         $query .= ' HAVING COUNT(xar_name) >= ?';
@@ -33,10 +33,10 @@ function xarpages_userapi_getaliases($args)
         return;
     }
 
-    $return = array();
+    $return = [];
 
     while (!$result->EOF) {
-        list($name, $name_count) = $result->fields;
+        [$name, $name_count] = $result->fields;
 
         if (xarModAlias::resolve($name) == 'xarpages') {
             $return[$name] = $name_count;
