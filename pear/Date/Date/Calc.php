@@ -600,8 +600,7 @@ class Date_Calc
         $pn_year,
         $pn_hour,
         $pn_minute
-    )
-    {
+    ) {
         if ($pn_hour < 23 || $pn_minute < 59) {
             return 60;
         } else {
@@ -770,8 +769,7 @@ class Date_Calc
         $pn_year,
         $pn_hour,
         $pn_minute
-    )
-    {
+    ) {
         if ($pn_minutes == 0) {
             return [(int) $pn_year,
                          (int) $pn_month,
@@ -848,8 +846,7 @@ class Date_Calc
         $pn_minute,
         $pn_second,
         $pb_countleap = DATE_COUNT_LEAP_SECONDS
-    )
-    {
+    ) {
         if ($pn_seconds == 0) {
             return [(int) $pn_year,
                          (int) $pn_month,
@@ -1454,8 +1451,7 @@ class Date_Calc
         $pn_month,
         $pn_year,
         $ps_format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -1590,8 +1586,7 @@ class Date_Calc
         $pn_month,
         $pn_year,
         $ps_format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -1649,8 +1644,7 @@ class Date_Calc
         $pn_month,
         $pn_year,
         $ps_format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -2111,8 +2105,7 @@ class Date_Calc
         $pn_month = 0,
         $pn_year = null,
         $pn_firstdayofweek = DATE_CALC_BEGIN_WEEKDAY
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -2193,8 +2186,7 @@ class Date_Calc
         $pn_month = 0,
         $pn_year = null,
         $pn_firstdayofweek = DATE_CALC_BEGIN_WEEKDAY
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -2391,8 +2383,7 @@ class Date_Calc
         $pn_month = 0,
         $pn_year = null,
         $length = 3
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -2675,8 +2666,7 @@ class Date_Calc
         $pn_month = 0,
         $pn_year = null,
         $pn_firstdayofweek = DATE_CALC_BEGIN_WEEKDAY
-    )
-    {
+    ) {
         if (is_null($pn_year)) {
             $pn_year = Date_Calc::dateNow('%Y');
         }
@@ -2909,8 +2899,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -2954,8 +2943,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3050,8 +3038,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3087,8 +3074,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3124,8 +3110,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3171,8 +3156,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3258,8 +3242,7 @@ class Date_Calc
         $year = null,
         $format = DATE_CALC_FORMAT,
         $onorbefore = false
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3338,8 +3321,7 @@ class Date_Calc
         $year = null,
         $format = DATE_CALC_FORMAT,
         $onorafter = false
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3380,8 +3362,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         return Date_Calc::prevDayOfWeek(
             $dow,
             $day,
@@ -3417,8 +3398,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         return Date_Calc::nextDayOfWeek(
             $dow,
             $day,
@@ -3454,8 +3434,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3497,8 +3476,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3540,8 +3518,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3594,8 +3571,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3611,10 +3587,10 @@ class Date_Calc
                 " ",
                 Date_Calc::daysToDate(
                     Date_Calc::dateToDays(
-                            $day,
-                            $month,
-                            $year
-                        ) + 7,
+                        $day,
+                        $month,
+                        $year
+                    ) + 7,
                     '%Y %m %d'
                 )
             );
@@ -3722,8 +3698,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3767,8 +3742,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3809,8 +3783,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3854,8 +3827,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3900,8 +3872,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -3945,8 +3916,7 @@ class Date_Calc
         $month = 0,
         $year = null,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if (is_null($year)) {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -4016,8 +3986,7 @@ class Date_Calc
         $month,
         $year,
         $format = DATE_CALC_FORMAT
-    )
-    {
+    ) {
         if ((is_numeric($week) && ($week < 1 || $week > 5)) ||
             (!is_numeric($week) && $week != "last")
             ) {
@@ -4394,8 +4363,7 @@ class Date_Calc
         $pn_minute = 0,
         $pn_second = 0,
         $pb_countleap = DATE_COUNT_LEAP_SECONDS
-    )
-    {
+    ) {
         if ($pn_precision <= DATE_PRECISION_YEAR) {
             $hn_month  = 0;
             $hn_day    = 0;
@@ -4646,8 +4614,7 @@ class Date_Calc
         $pn_minute,
         $pn_second,
         $pb_countleap = DATE_COUNT_LEAP_SECONDS
-    )
-    {
+    ) {
         return Date_Calc::round(
             DATE_PRECISION_SECOND + $pn_precision,
             $pn_day,

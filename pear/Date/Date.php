@@ -476,8 +476,7 @@ class Date
     public function Date(
         $date = null,
         $pb_countleapseconds = DATE_COUNT_LEAP_SECONDS
-    )
-    {
+    ) {
         $this->ob_countleapseconds = $pb_countleapseconds;
 
         if (is_a($date, 'Date')) {
@@ -719,8 +718,7 @@ class Date
         $date,
         $format = DATE_FORMAT_ISO,
         $pb_repeatedhourdefault = false
-    )
-    {
+    ) {
         if ($format == DATE_FORMAT_UNIXTIME) {
             if (is_numeric($date)) {
                 // Assume Unix time-stamp:
@@ -903,8 +901,7 @@ class Date
     public function round(
         $pn_precision = DATE_PRECISION_DAY,
         $pb_correctinvalidtime = DATE_CORRECTINVALIDTIME_DEFAULT
-    )
-    {
+    ) {
         if ($pn_precision <= DATE_PRECISION_DAY) {
             [$hn_year,
                  $hn_month,
@@ -1065,8 +1062,7 @@ class Date
     public function roundSeconds(
         $pn_precision = 0,
         $pb_correctinvalidtime = DATE_CORRECTINVALIDTIME_DEFAULT
-    )
-    {
+    ) {
         $this->round(
             DATE_PRECISION_SECOND + $pn_precision,
             $pb_correctinvalidtime
@@ -1128,8 +1124,7 @@ class Date
     public function trunc(
         $pn_precision = DATE_PRECISION_DAY,
         $pb_correctinvalidtime = DATE_CORRECTINVALIDTIME_DEFAULT
-    )
-    {
+    ) {
         if ($pn_precision <= DATE_PRECISION_DAY) {
             if ($pn_precision <= DATE_PRECISION_YEAR) {
                 $hn_month      = 0;
@@ -1254,8 +1249,7 @@ class Date
     public function truncSeconds(
         $pn_precision = 0,
         $pb_correctinvalidtime = DATE_CORRECTINVALIDTIME_DEFAULT
-    )
-    {
+    ) {
         $this->trunc(
             DATE_PRECISION_SECOND + $pn_precision,
             $pb_correctinvalidtime
@@ -1813,8 +1807,7 @@ class Date
         $pb_ordinal = false,
         $ps_capitalization = "SP",
         $ps_locale = "en_GB"
-    )
-    {
+    ) {
         include_once "Numbers/Words.php";
         $hs_words = Numbers_Words::toWords($pn_num, $ps_locale);
         if (Pear::isError($hs_words)) {
@@ -1945,8 +1938,7 @@ class Date
         $ps_locale = "en_GB",
         $ps_thousandsep = null,
         $pn_padtype = STR_PAD_LEFT
-    )
-    {
+    ) {
         $hs_code1 = substr($ps_format, 0, 2);
         $hs_code2 = substr($ps_format, 2, 2);
 
@@ -5873,8 +5865,7 @@ class Date
         $pn_minute,
         $pn_second,
         $pn_partsecond
-    )
-    {
+    ) {
         if ($pn_offset == 0) {
             return [(int) $pn_year,
                          (int) $pn_month,
@@ -5995,8 +5986,7 @@ class Date
         $pn_partsecond,
         $pb_repeatedhourdefault = false,
         $pb_correctinvalidtime = DATE_CORRECTINVALIDTIME_DEFAULT
-    )
-    {
+    ) {
         settype($pn_day, "int");
         settype($pn_month, "int");
         settype($pn_year, "int");
@@ -6144,8 +6134,7 @@ class Date
         $pn_minute,
         $pn_second,
         $pn_partsecond
-    )
-    {
+    ) {
         settype($pn_day, "int");
         settype($pn_month, "int");
         settype($pn_year, "int");
@@ -6618,8 +6607,7 @@ class Date
         $pn_minute,
         $pm_second,
         $pb_repeatedhourdefault = false
-    )
-    {
+    ) {
         if (!Date_Calc::isValidDate($d, $m, $y)) {
             return PEAR::raiseError(
                 "'" .
