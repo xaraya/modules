@@ -33,7 +33,7 @@ function uploads_userapi_process_files($args)
 {
     extract($args);
 
-    $storeList = array();
+    $storeList = [];
 
     if (!isset($action)) {
         $msg = xarML("Missing parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
@@ -57,11 +57,11 @@ function uploads_userapi_process_files($args)
                 @touch($upload_directory . '/index.html');
             } else {
                 // CHECKME: fall back to common uploads directory, or fail ?
-                $upload_directory = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+                $upload_directory = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
             }
         }
     } else {
-        $upload_directory = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+        $upload_directory = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
     }
 
     // Check for override of upload obfuscation and set accordingly
@@ -83,7 +83,7 @@ function uploads_userapi_process_files($args)
         //$allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
 
             // Rearange the uploads array so we can pass the uploads one by one
-            $uploadarray = array();
+            $uploadarray = [];
             foreach ($upload['name'] as $key => $value) {
                 $uploadarray[$key]['name'] = $value;
             }
@@ -99,8 +99,8 @@ function uploads_userapi_process_files($args)
             foreach ($upload['size'] as $key => $value) {
                 $uploadarray[$key]['size'] = $value;
             }
-            
-            $fileList = array();
+
+            $fileList = [];
             foreach ($uploadarray as $upload) {
                 if (isset($upload['name']) && !empty($upload['name'])) {
                     // make sure we look in the right directory :-)
@@ -110,17 +110,17 @@ function uploads_userapi_process_files($args)
                         $dirfilter = null;
                     }
                     // Note: we don't check on fileSize here (it wasn't taken into account before)
-                    $fileTest = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name'],
+                    $fileTest = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileName' => $upload['name'],
                                                                                       // make sure we look in the right directory :-)
-                                                                                      'fileLocation' => $dirfilter));
+                                                                                      'fileLocation' => $dirfilter, ]);
                     if (count($fileTest)) {
                         $file = end($fileTest);
                         // if we don't allow duplicates
                         if (empty($allow_duplicate)) {
                             // specify the error message
-                            $file['errors'] = array();
-                            $file['errors'][] = array('errorMesg' => xarML('Filename already exists'),
-                                                      'errorId'   => _UPLOADS_ERROR_BAD_FORMAT);
+                            $file['errors'] = [];
+                            $file['errors'][] = ['errorMesg' => xarML('Filename already exists'),
+                                                      'errorId'   => _UPLOADS_ERROR_BAD_FORMAT, ];
                             // set the fileId to null for templates etc.
                             $file['fileId'] = null;
                             // add the existing file to the list and break off
@@ -144,9 +144,9 @@ function uploads_userapi_process_files($args)
                         'uploads',
                         'user',
                         'prepare_uploads',
-                        array('savePath'  => $upload_directory,
+                        ['savePath'  => $upload_directory,
                                                  'obfuscate' => $upload_obfuscate,
-                                                 'fileInfo'  => $upload)
+                                                 'fileInfo'  => $upload, ]
                     ));
                 }
             }
@@ -159,9 +159,9 @@ function uploads_userapi_process_files($args)
                 // current working directory for the user, set by import_chdir() when using the get_files() GUI
                 $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
 
-                $fileList = xarMod::apiFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => true));
+                $fileList = xarMod::apiFunc('uploads', 'user', 'import_get_filelist', ['fileLocation' => $cwd, 'descend' => true]);
             } else {
-                $list = array();
+                $list = [];
                 // file list coming from validatevalue() or the get_files() GUI
                 foreach ($fileList as $location => $fileInfo) {
                     if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
@@ -169,7 +169,7 @@ function uploads_userapi_process_files($args)
                             'uploads',
                             'user',
                             'import_get_filelist',
-                            array('fileLocation' => $location, 'descend' => true)
+                            ['fileLocation' => $location, 'descend' => true]
                         );
                         unset($fileList[$location]);
                     }
@@ -204,9 +204,9 @@ function uploads_userapi_process_files($args)
                         'uploads',
                         'user',
                         'import_external_ftp',
-                        array('savePath'  => $upload_directory,
+                        ['savePath'  => $upload_directory,
                                                     'obfuscate' => $upload_obfuscate,
-                                                    'uri'       => $uri)
+                                                    'uri'       => $uri, ]
                     );
                     break;
                 case 'https':
@@ -215,9 +215,9 @@ function uploads_userapi_process_files($args)
                         'uploads',
                         'user',
                         'import_external_http',
-                        array('savePath'  => $upload_directory,
+                        ['savePath'  => $upload_directory,
                                                     'obfuscate' => $upload_obfuscate,
-                                                    'uri'       => $uri)
+                                                    'uri'       => $uri, ]
                     );
                     break;
                 case 'file':
@@ -228,7 +228,7 @@ function uploads_userapi_process_files($args)
                         'uploads',
                         'user',
                         'import_external_file',
-                        array('uri'       => $uri)
+                        ['uri'       => $uri]
                     );
                     break;
                 case 'gopher':
@@ -260,8 +260,8 @@ function uploads_userapi_process_files($args)
             'uploads',
             'user',
             'file_store',
-            array('fileInfo'  => $fileInfo,
-                                            'storeType' => $storeType)
+            ['fileInfo'  => $fileInfo,
+                                            'storeType' => $storeType, ]
         );
     }
     return $storeList;

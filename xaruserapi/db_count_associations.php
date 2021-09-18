@@ -30,8 +30,8 @@ function uploads_userapi_db_count_associations($args)
 {
     extract($args);
 
-    $whereList = array();
-    $bindvars = array();
+    $whereList = [];
+    $bindvars = [];
 
     if (isset($fileId)) {
         if (is_array($fileId)) {
@@ -102,9 +102,9 @@ function uploads_userapi_db_count_associations($args)
             return false;
         }
 
-        $count = array();
+        $count = [];
         while (!$result->EOF) {
-            list($file, $total) = $result->fields;
+            [$file, $total] = $result->fields;
             $count[$file] = $total;
 
             $result->MoveNext();

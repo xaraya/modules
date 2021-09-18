@@ -43,7 +43,7 @@ function uploads_admin_get_files()
 
     switch ($args['action']) {
         case _UPLOADS_GET_UPLOAD:
-            $uploads = DataPropertyMaster::getProperty(array('name' => 'uploads'));
+            $uploads = DataPropertyMaster::getProperty(['name' => 'uploads']);
             $uploads->initialization_initial_method = $args['action'];
             $uploads->checkInput('upload');
             $args['upload'] = $uploads->propertydata;
@@ -82,7 +82,7 @@ function uploads_admin_get_files()
                     'uploads',
                     'user',
                     'file_get_metadata',
-                    array('fileLocation' => "$cwd/$file")
+                    ['fileLocation' => "$cwd/$file"]
                 );
             }
             $args['getAll'] = $file_all;
@@ -94,7 +94,7 @@ function uploads_admin_get_files()
                 return;
             }
 
-            $cwd = xarMod::apiFunc('uploads', 'user', 'import_chdir', array('dirName' => isset($inode) ? $inode : null));
+            $cwd = xarMod::apiFunc('uploads', 'user', 'import_chdir', ['dirName' => $inode ?? null]);
 
             $data['storeType']['DB_FULL']     = _UPLOADS_STORE_DB_FULL;
             $data['storeType']['FSDB']        = _UPLOADS_STORE_FSDB;
@@ -110,7 +110,7 @@ function uploads_admin_get_files()
                 'uploads',
                 'user',
                 'import_get_filelist',
-                array('fileLocation' => $cwd, 'onlyNew' => true)
+                ['fileLocation' => $cwd, 'onlyNew' => true]
             );
 
             $data['curDir'] = str_replace(xarModVars::get('uploads', 'imports_directory'), '', $cwd);
@@ -127,7 +127,7 @@ function uploads_admin_get_files()
     }
     $list = xarMod::apiFunc('uploads', 'user', 'process_files', $args);
     if (is_array($list) && count($list)) {
-        return xarTpl::module('uploads', 'admin', 'addfile-status', array('fileList' => $list), null);
+        return xarTpl::module('uploads', 'admin', 'addfile-status', ['fileList' => $list], null);
     } else {
         xarController::redirect(xarController::URL('uploads', 'admin', 'get_files'));
         return;

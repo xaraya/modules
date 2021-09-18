@@ -33,8 +33,8 @@ function uploads_userapi_db_delete_association($args)
 {
     extract($args);
 
-    $whereList = array();
-    $bindvars = array();
+    $whereList = [];
+    $bindvars = [];
 
     if (!isset($fileId)) {
     } elseif (is_array($fileId)) {

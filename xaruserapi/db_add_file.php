@@ -87,7 +87,7 @@ function uploads_userapi_db_add_file($args)
     }
 
     if (!isset($fileType)) {
-        $fileType = xarMod::apiFunc('mime', 'user', 'analyze_file', array('fileName' => $fileLocation, 'altFileName'=>$fileName));
+        $fileType = xarMod::apiFunc('mime', 'user', 'analyze_file', ['fileName' => $fileLocation, 'altFileName'=>$fileName]);
         if (empty($fileType)) {
             $fileType = 'application/octet-stream';
         }
@@ -124,7 +124,7 @@ function uploads_userapi_db_add_file($args)
                       )
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array( $file_id,
+    $bindvars = [ $file_id,
                       (int) $userId,
                       (string) $fileName,
                       (string) $fileLocation,
@@ -132,7 +132,7 @@ function uploads_userapi_db_add_file($args)
                       (int) $fileSize,
                       (int) $store_type,
                       (string) $fileType,
-                      (string) $extrainfo);
+                      (string) $extrainfo, ];
 
     $result = &$dbconn->Execute($sql, $bindvars);
 

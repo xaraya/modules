@@ -42,22 +42,22 @@ function uploads_userapi_import_external_file($args)
         'uploads',
         'user',
         'import_get_filelist',
-        array('fileLocation' => $uri['path'],
-                                     'descend' => $descend)
+        ['fileLocation' => $uri['path'],
+                                     'descend' => $descend, ]
     );
 
     if (empty($fileList) || (is_array($fileList) && !count($fileList))) {
-        return array();
+        return [];
     }
 
-    $list = array();
+    $list = [];
     foreach ($fileList as $location => $fileInfo) {
         if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
             $list += xarMod::apiFunc(
                 'uploads',
                 'user',
                 'import_get_filelist',
-                array('fileLocation' => $location, 'descend' => true)
+                ['fileLocation' => $location, 'descend' => true]
             );
             unset($fileList[$location]);
         }

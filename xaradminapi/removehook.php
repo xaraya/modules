@@ -28,7 +28,7 @@ function uploads_adminapi_removehook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     // When called via hooks, we should get the real module name from objectid
@@ -52,7 +52,7 @@ function uploads_adminapi_removehook($args)
         'uploads',
         'admin',
         'db_delete_association',
-        array('modid' => $modid)
+        ['modid' => $modid]
     )) {
         // Return the extra info
         return $extrainfo;

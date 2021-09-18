@@ -20,7 +20,7 @@
 function uploads_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     // Get the name for the uploads item table.  This is not necessary
     // but helps in the following statements and keeps them readable

@@ -28,7 +28,7 @@ function uploads_adminapi_updatehook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {

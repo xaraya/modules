@@ -34,7 +34,7 @@ function uploads_userapi_db_modify_file($args)
 {
     extract($args);
 
-    $update_fields = array();
+    $update_fields = [];
 
     if (!isset($fileId)) {
         $msg = xarML(

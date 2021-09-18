@@ -64,18 +64,18 @@ function uploads_admin_modifyconfig()
         'module',
         'modifyconfig',
         'uploads',
-        array('module'   => 'uploads',
-                                   'itemtype' => 1)
+        ['module'   => 'uploads',
+                                   'itemtype' => 1, ]
     ); // Files
 
     if (empty($hooks)) {
-        $data['hooks'] = array();
+        $data['hooks'] = [];
     } else {
         $data['hooks'] = $hooks;
     }
-    
+
     // Check the validaty of directories
-    $location = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+    $location = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
     $data['uploads_directory_message'] = "";
     if (!file_exists($location) || !is_dir($location)) {
         $data['uploads_directory_message'] = xarML('Not a valid directory');
@@ -83,7 +83,7 @@ function uploads_admin_modifyconfig()
         $data['uploads_directory_message'] = xarML('Not a writable directory');
     }
 
-    $location = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
+    $location = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'imports_directory']);
     $data['imports_directory_message'] = "";
     if (!file_exists($location) || !is_dir($location)) {
         $data['imports_directory_message'] = xarML('Not a valid directory');
@@ -92,7 +92,7 @@ function uploads_admin_modifyconfig()
     }
 
     // Define the module settings
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'uploads'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'uploads']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons');
     $data['module_settings']->getItem();
 

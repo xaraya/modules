@@ -51,14 +51,14 @@ function uploads_admin_purge_rejected($args)
             'uploads',
             'user',
             'db_get_file',
-            array('fileStatus' => _UPLOADS_STATUS_REJECTED)
+            ['fileStatus' => _UPLOADS_STATUS_REJECTED]
         );
 
         if (empty($fileList)) {
             xarController::redirect(xarController::URL('uploads', 'admin', 'view'));
             return;
         } else {
-            $result = xarMod::apiFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
+            $result = xarMod::apiFunc('uploads', 'user', 'purge_files', ['fileList' => $fileList]);
             if (!$result) {
                 $msg = xarML('Unable to purge rejected files!');
                 throw new Exception($msg);
@@ -69,10 +69,10 @@ function uploads_admin_purge_rejected($args)
             'uploads',
             'user',
             'db_get_file',
-            array('fileStatus' => _UPLOADS_STATUS_REJECTED)
+            ['fileStatus' => _UPLOADS_STATUS_REJECTED]
         );
         if (empty($fileList)) {
-            $data['fileList']   = array();
+            $data['fileList']   = [];
         } else {
             $data['fileList']   = $fileList;
         }

@@ -26,7 +26,7 @@ function uploads_userapi_db_count_data($args)
 {
     extract($args);
 
-    $where = array();
+    $where = [];
 
     if (!isset($fileId)) {
         $msg = xarML(
@@ -57,7 +57,7 @@ function uploads_userapi_db_count_data($args)
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return (integer) 0;
+        return (int) 0;
     }
 
     $row = $result->GetRowAssoc(false);

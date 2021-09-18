@@ -120,25 +120,25 @@ function uploads_admin_view()
                 }
             } else {
                 $args['fileType']   = $filter['fileType'];
-                $args['inverse']    = (isset($inverse) ? $inverse : false);
+                $args['inverse']    = ($inverse ?? false);
                 $args['curStatus']  = $filter['fileStatus'];
             }
         }
 
         switch ($action) {
             case _UPLOADS_STATUS_APPROVED:
-                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_APPROVED));
+                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'    => _UPLOADS_STATUS_APPROVED]);
                     break;
             case _UPLOADS_STATUS_SUBMITTED:
-                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
+                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'    => _UPLOADS_STATUS_SUBMITTED]);
                     break;
             case _UPLOADS_STATUS_REJECTED:
-                xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
+                xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'   => _UPLOADS_STATUS_REJECTED]);
                 if (xarModVars::get('uploads', 'file.auto-purge')) {
                     if (xarModVars::get('uploads', 'file.delete-confirmation')) {
-                        return xarMod::guiFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => false, 'authid' => xarSec::genAuthKey('uploads')));
+                        return xarMod::guiFunc('uploads', 'admin', 'purge_rejected', ['confirmation' => false, 'authid' => xarSec::genAuthKey('uploads')]);
                     } else {
-                        return xarMod::guiFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => true, 'authid' => xarSec::genAuthKey('uploads')));
+                        return xarMod::guiFunc('uploads', 'admin', 'purge_rejected', ['confirmation' => true, 'authid' => xarSec::genAuthKey('uploads')]);
                     }
                 }
                 break;
@@ -158,7 +158,7 @@ function uploads_admin_view()
     }
 
     if (!isset($filter) || count($filter) <= 0) {
-        $filter = array();
+        $filter = [];
         $filter['startnum'] = $startnum;
         $filter['numitems'] = $numitems;
         $filter['sort']     = $sort;
@@ -176,7 +176,7 @@ function uploads_admin_view()
             'uploads',
             'user',
             'db_count_associations',
-            array('fileId' => array_keys($items))
+            ['fileId' => array_keys($items)]
         );
     }
 
@@ -184,7 +184,7 @@ function uploads_admin_view()
         $data['diskUsage']['stored_size_filtered'] = xarMod::apiFunc('uploads', 'user', 'db_diskusage', $filter);
         $data['diskUsage']['stored_size_total']    = xarMod::apiFunc('uploads', 'user', 'db_diskusage');
 
-        $data['uploadsdir'] = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+        $data['uploadsdir'] = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
         $data['diskUsage']['device_free']  = @disk_free_space($data['uploadsdir']);
         $data['diskUsage']['device_total'] = @disk_total_space($data['uploadsdir']);
         $data['diskUsage']['device_used']  = $data['diskUsage']['device_total'] - $data['diskUsage']['device_free'];
@@ -235,9 +235,9 @@ function uploads_admin_view()
                 'uploads',
                 'admin',
                 'view',
-                array('startnum' => '%%',
+                ['startnum' => '%%',
                                                         'numitems' => (empty($skipnum) ? $numitems : null),
-                                                        'sort'     => $sort)
+                                                        'sort'     => $sort, ]
             ),
             $numitems
         );

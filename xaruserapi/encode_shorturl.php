@@ -36,7 +36,7 @@ function uploads_userapi_encode_shorturl($args)
     if (!isset($fileId) || empty($fileId)) {
         return;
     } else {
-        $fileName = xarMod::apiFunc('uploads', 'user', 'db_get_filename', array('fileId' => $fileId));
+        $fileName = xarMod::apiFunc('uploads', 'user', 'db_get_filename', ['fileId' => $fileId]);
 
         if (!isset($fileName) || empty($fileName)) {
             // fileId is nonexistant...

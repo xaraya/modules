@@ -45,10 +45,10 @@ function uploads_user_save_attachments($args)
         'ratings',
         'user',
         'rate',
-        array('modname'    => $modname,
+        ['modname'    => $modname,
                                     'itemtype'   => $itemtype,
                                     'objectid'   => $objectid,
-                                    'rating'     => $rating)
+                                    'rating'     => $rating, ]
     );
 
     xarController::redirect($returnurl);

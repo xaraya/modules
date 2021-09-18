@@ -19,12 +19,12 @@ function uploads_userapi_normalize_filesize($args)
     } elseif (is_numeric($args)) {
         $fileSize = $args;
     } else {
-        return array('long' => 0, 'short' => 0);
+        return ['long' => 0, 'short' => 0];
     }
 
     $size = $fileSize;
 
-    $range = array('', 'KB', 'MB', 'GB', 'TB', 'PB');
+    $range = ['', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
     for ($i = 0; $size >= 1024 && $i < count($range); $i++) {
         $size /= 1024;
@@ -32,5 +32,5 @@ function uploads_userapi_normalize_filesize($args)
 
     $short = round($size, 2).' '.$range[$i];
 
-    return array('long' => number_format($fileSize), 'short' => $short);
+    return ['long' => number_format($fileSize), 'short' => $short];
 }

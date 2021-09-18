@@ -57,7 +57,7 @@ function uploads_userapi_import_get_filelist($args)
     }
 
     if ((isset($search) && isset($exclude)) && $search == $exclude) {
-        return array();
+        return [];
     }
 
     if (!isset($search)) {
@@ -75,14 +75,14 @@ function uploads_userapi_import_get_filelist($args)
 
     // if search and exclude are the same, we would get no results
     // so return no results.
-    $fileList = array();
+    $fileList = [];
 
     if (!isset($fileLocation)) {
-        return xarController::redirect(xarController::URL('uploads', 'user', 'errors', array('layout' => 'dir_not_set')));
+        return xarController::redirect(xarController::URL('uploads', 'user', 'errors', ['layout' => 'dir_not_set']));
     }
 
     if (!file_exists($fileLocation)) {
-        return xarController::redirect(xarController::URL('uploads', 'user', 'errors', array('layout' => 'dir_not_found','location' => $fileLocation)));
+        return xarController::redirect(xarController::URL('uploads', 'user', 'errors', ['layout' => 'dir_not_found','location' => $fileLocation]));
     }
 
     if (is_file($fileLocation)) {
@@ -116,7 +116,7 @@ function uploads_userapi_import_get_filelist($args)
                     'uploads',
                     'user',
                     'db_get_file',
-                    array('fileLocation' => $fileLocation)
+                    ['fileLocation' => $fileLocation]
                 );
                 if (count($file)) {
                     break;
@@ -131,8 +131,8 @@ function uploads_userapi_import_get_filelist($args)
                             'uploads',
                             'user',
                             'file_get_metadata',
-                            array('fileLocation' => $fileLocation,
-                                             'analyze'      => $analyze)
+                            ['fileLocation' => $fileLocation,
+                                             'analyze'      => $analyze, ]
                         );
             }
             break;
@@ -171,7 +171,7 @@ function uploads_userapi_import_get_filelist($args)
                                     'uploads',
                                     'user',
                                     'db_get_file',
-                                    array('fileLocation' => $fileName)
+                                    ['fileLocation' => $fileName]
                                 );
                                 if (count($file)) {
                                     continue;
@@ -184,8 +184,8 @@ function uploads_userapi_import_get_filelist($args)
                                     'uploads',
                                     'user',
                                     'file_get_metadata',
-                                    array('fileLocation' => $fileName,
-                                                              'analyze'      => $analyze)
+                                    ['fileLocation' => $fileName,
+                                                              'analyze'      => $analyze, ]
                                 );
                                 $fileList["$file[inodeType]:$fileName"] = $file;
                             }
@@ -197,11 +197,11 @@ function uploads_userapi_import_get_filelist($args)
                                     'uploads',
                                     'user',
                                     'import_get_filelist',
-                                    array('fileLocation' => $dirName,
+                                    ['fileLocation' => $dirName,
                                                           'descend' => true,
                                                           'analyze' => $analyze,
                                                           'exclude' => $exclude,
-                                                          'search' => $search)
+                                                          'search' => $search, ]
                                 );
                                 $fileList += $files;
                             } else {
@@ -211,8 +211,8 @@ function uploads_userapi_import_get_filelist($args)
                                         'uploads',
                                         'user',
                                         'file_get_metadata',
-                                        array('fileLocation' => $dirName,
-                                                                  'analyze'      => $analyze)
+                                        ['fileLocation' => $dirName,
+                                                                  'analyze'      => $analyze, ]
                                     );
                                     $fileList["$files[inodeType]:$inode"] = $files;
                                 }
@@ -240,8 +240,8 @@ function uploads_userapi_import_get_filelist($args)
 
     if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
         // get the cache list again, in case someone else filled it by now
-        $cacheinfo = array('time' => time(),
-                           'list' => $fileList);
+        $cacheinfo = ['time' => time(),
+                           'list' => $fileList, ];
         $cacheinfo = serialize($cacheinfo);
         xarModVars::set('uploads', 'file.cachelist.'.$cachekey, $cacheinfo);
     }

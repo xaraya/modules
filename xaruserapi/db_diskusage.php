@@ -33,7 +33,7 @@ function uploads_userapi_db_diskusage($args)
 {
     extract($args);
 
-    $where = array();
+    $where = [];
 
     if (!isset($inverse)) {
         $inverse = false;
@@ -99,9 +99,9 @@ function uploads_userapi_db_diskusage($args)
             'categories',
             'user',
             'leftjoin',
-            array('modid' => xarMod::getRegID('uploads'),
+            ['modid' => xarMod::getRegID('uploads'),
                                             'itemtype' => 1,
-                                            'catid' => $catid)
+                                            'catid' => $catid, ]
         );
         if (empty($categoriesdef)) {
             return;
@@ -133,7 +133,7 @@ function uploads_userapi_db_diskusage($args)
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return (integer) 0;
+        return (int) 0;
     }
 
     $row = $result->GetRowAssoc(false);

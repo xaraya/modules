@@ -11,7 +11,7 @@
  * @link http://www.xaraya.com/index.php/release/eid/666
  * @author Uploads Module Development Team
  */
- 
+
 function uploads_admin_newhook($args)
 {
     // TODO: do you really want to generate some input field here or not ?

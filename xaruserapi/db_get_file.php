@@ -50,7 +50,7 @@ function uploads_userapi_db_get_file($args)
         throw new Exception($msg);
     }
 
-    $where = array();
+    $where = [];
 
     if (!isset($inverse)) {
         $inverse = false;
@@ -59,21 +59,21 @@ function uploads_userapi_db_get_file($args)
     if (isset($fileId)) {
         if (is_array($fileId)) {
             // ignore IDs which are not numbers, like filenames
-            $ids = array();
+            $ids = [];
             foreach ($fileId as $id) {
                 if (is_numeric($id)) {
                     $ids[] = $id;
                 }
             }
             if (empty($ids)) {
-                return array();
+                return [];
             }
             $where[] = 'xar_fileEntry_id IN (' . implode(',', $ids) . ')';
         } elseif (!empty($fileId) && is_numeric($fileId)) {
             $where[] = "xar_fileEntry_id = $fileId";
         } else {
             // fileId == 0 so return an empty array.
-            return array();
+            return [];
         }
     }
 
@@ -190,9 +190,9 @@ function uploads_userapi_db_get_file($args)
             'categories',
             'user',
             'leftjoin',
-            array('modid' => xarMod::getRegID('uploads'),
+            ['modid' => xarMod::getRegID('uploads'),
                                             'itemtype' => 1,
-                                            'catid' => $catid)
+                                            'catid' => $catid, ]
         );
         if (empty($categoriesdef)) {
             return;
@@ -276,11 +276,11 @@ function uploads_userapi_db_get_file($args)
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
-    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
-    $uploadDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'imports_directory']);
+    $uploadDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
 
     // remove the '/' from the path
     $importDir = str_replace('/$', '', $importDir);
@@ -294,11 +294,11 @@ function uploads_userapi_db_get_file($args)
         $base_directory = './';
     }
 
-    $revcache = array();
-    $imgcache = array();
-    $usercache = array();
+    $revcache = [];
+    $imgcache = [];
+    $usercache = [];
 
-    $fileList = array();
+    $fileList = [];
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
@@ -314,15 +314,15 @@ function uploads_userapi_db_get_file($args)
         $fileInfo['fileStatus']    = $row['xar_status'];
         $fileInfo['fileType']      = $row['xar_mime_type'];
         if (!isset($revcache[$fileInfo['fileType']])) {
-            $revcache[$fileInfo['fileType']] = xarMod::apiFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
+            $revcache[$fileInfo['fileType']] = xarMod::apiFunc('mime', 'user', 'get_rev_mimetype', ['mimeType' => $fileInfo['fileType']]);
         }
         $fileInfo['fileTypeInfo']  = $revcache[$fileInfo['fileType']];
         $fileInfo['storeType']     = $row['xar_store_type'];
         if (!isset($imgcache[$fileInfo['fileType']])) {
-            $imgcache[$fileInfo['fileType']] = xarMod::apiFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
+            $imgcache[$fileInfo['fileType']] = xarMod::apiFunc('mime', 'user', 'get_mime_image', ['mimeType' => $fileInfo['fileType']]);
         }
         $fileInfo['mimeImage']     = $imgcache[$fileInfo['fileType']];
-        $fileInfo['fileDownload']  = xarController::URL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
+        $fileInfo['fileDownload']  = xarController::URL('uploads', 'user', 'download', ['fileId' => $fileInfo['fileId']]);
         $fileInfo['fileURL']       = $fileInfo['fileDownload'];
         $fileInfo['DownloadLabel'] = xarML('Download file: #(1)', $fileInfo['fileName']);
         if (!empty($fileInfo['fileLocation']) && file_exists($fileInfo['fileLocation'])) {
@@ -362,7 +362,7 @@ function uploads_userapi_db_get_file($args)
             $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
         }
 
-        $instance = array();
+        $instance = [];
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
         $instance[2] = xarSession::getVar('uid');

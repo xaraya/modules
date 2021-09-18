@@ -41,7 +41,7 @@ function uploads_userapi_import_external_ftp($args)
     }
 
     if (!isset($savePath)) {
-        $savePath = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+        $savePath = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
     }
 
     // if no port, use the default port (21)
@@ -68,7 +68,7 @@ function uploads_userapi_import_external_ftp($args)
     // TODO: handle duplicates - cfr. prepare_uploads()
 
     // Attempt to 'best guess' the mimeType
-    $mimeType = xarMod::apiFunc('mime', 'user', 'extension_to_mime', array('fileName' => basename($uri['path'])));
+    $mimeType = xarMod::apiFunc('mime', 'user', 'extension_to_mime', ['fileName' => basename($uri['path'])]);
 
     // create the URI in the event we don't have the FTP library
     $ftpURI = "$uri[scheme]://$uri[user]:".urlencode($uri['pass'])."@$uri[host]:$uri[port]$uri[path]";
@@ -156,7 +156,7 @@ function uploads_userapi_import_external_ftp($args)
                         'mime',
                         'user',
                         'analyze_file',
-                        array('fileName' => $fileInfo['fileLocation'])
+                        ['fileName' => $fileInfo['fileLocation']]
                     );
                     $fileInfo['size'] = filesize($tmpName);
                 }
@@ -208,7 +208,7 @@ function uploads_userapi_import_external_ftp($args)
                         'mime',
                         'user',
                         'analyze_file',
-                        array('fileName' => $fileInfo['fileLocation'])
+                        ['fileName' => $fileInfo['fileLocation']]
                     );
                     $fileInfo['fileSize'] = filesize($tmpName);
                 }
@@ -235,15 +235,15 @@ function uploads_userapi_import_external_ftp($args)
             $errorObj = xarCurrentError();
 
             if (is_object($errorObj)) {
-                $fileError = array('errorMesg' => $errorObj->getShort(),
-                                   'errorId'   => $errorObj->getID());
+                $fileError = ['errorMesg' => $errorObj->getShort(),
+                                   'errorId'   => $errorObj->getID(), ];
             } else {
-                $fileError = array('errorMesg' => 'Unknown Error!',
-                                   'errorId'   => _UPLOADS_ERROR_UNKNOWN);
+                $fileError = ['errorMesg' => 'Unknown Error!',
+                                   'errorId'   => _UPLOADS_ERROR_UNKNOWN, ];
             }
 
             if (!isset($fileInfo['errors'])) {
-                $fileInfo['errors'] = array();
+                $fileInfo['errors'] = [];
             }
 
             $fileInfo['errors'][] = $fileError;
@@ -262,7 +262,7 @@ function uploads_userapi_import_external_ftp($args)
                 'uploads',
                 'user',
                 'file_obfuscate_name',
-                array('fileName' => $fileInfo['fileName'])
+                ['fileName' => $fileInfo['fileName']]
             );
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         } else {
@@ -272,5 +272,5 @@ function uploads_userapi_import_external_ftp($args)
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
     }
-    return array($fileInfo['fileLocation'] => $fileInfo);
+    return [$fileInfo['fileLocation'] => $fileInfo];
 }

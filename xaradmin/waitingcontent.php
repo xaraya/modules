@@ -27,7 +27,7 @@ function uploads_admin_waitingcontent()
         'uploads',
         'user',
         'db_count',
-        array('fileStatus' => 1)
+        ['fileStatus' => 1]
     );
     $data['count_submitted'] = $count_submitted;
     return $data;

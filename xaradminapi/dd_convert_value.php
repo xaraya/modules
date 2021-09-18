@@ -46,7 +46,7 @@ function uploads_adminapi_dd_convert_value($args)
         $args['import'] = 'file://' . $basePath . '/' . $basedir . $value;
         $args['action'] = _UPLOADS_GET_EXTERNAL;
         $list = xarMod::apiFunc('uploads', 'user', 'process_files', $args);
-        $storeList = array();
+        $storeList = [];
         foreach ($list as $file => $fileInfo) {
             if (!isset($fileInfo['errors'])) {
                 $storeList[] = $fileInfo['fileId'];

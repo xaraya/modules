@@ -29,11 +29,11 @@ function uploads_user_upload()
         'uploads',
         'user',
         'process_files',
-        array('importFrom' => $importFrom)
+        ['importFrom' => $importFrom]
     );
 
     if (is_array($list) && count($list)) {
-        return array('fileList' => $list);
+        return ['fileList' => $list];
     } else {
         xarController::redirect(xarController::URL('uploads', 'user', 'uploadform'));
     }

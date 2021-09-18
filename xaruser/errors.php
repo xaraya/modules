@@ -17,7 +17,7 @@ function uploads_user_errors()
     if (!xarSecurity::check('ViewUploads')) {
         return;
     }
-    
+
     if (!xarVar::fetch('layout', 'str:1:100', $data['layout'], '', xarVar::NOT_REQUIRED)) {
         return;
     }

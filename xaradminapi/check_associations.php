@@ -46,12 +46,12 @@ function uploads_adminapi_check_associations($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) {
-        return array();
+        return [];
     }
 
-    $list = array();
+    $list = [];
     while (!$result->EOF) {
-        list($fileId, $modid, $itemtype, $itemid) = $result->fields;
+        [$fileId, $modid, $itemtype, $itemid] = $result->fields;
         // simple item - file array
         if (!isset($list[$fileId])) {
             $list[$fileId] = 0;

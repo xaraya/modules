@@ -49,7 +49,7 @@ function uploads_adminapi_showinput($args)
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
     if (xarMod::apiFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', ['value' =>$value]);
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -62,24 +62,24 @@ function uploads_adminapi_showinput($args)
         }
     }
 
-    $data = array();
+    $data = [];
 
     xarMod::apiLoad('uploads', 'user');
 
     if (isset($methods) && count($methods) == 4) {
-        $data['methods'] = array(
-            'trusted'  => $methods['trusted']  ? true : false,
+        $data['methods'] = [
+            'trusted'  => $methods['trusted'] ? true : false,
             'external' => $methods['external'] ? true : false,
-            'upload'   => $methods['upload']   ? true : false,
-            'stored'   => $methods['stored']   ? true : false
-        );
+            'upload'   => $methods['upload'] ? true : false,
+            'stored'   => $methods['stored'] ? true : false,
+        ];
     } else {
-        $data['methods'] = array(
-            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? true : false,
+        $data['methods'] = [
+            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted') ? true : false,
             'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? true : false,
-            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? true : false,
-            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? true : false
-        );
+            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload') ? true : false,
+            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored') ? true : false,
+        ];
     }
 
     $descend = true;
@@ -111,15 +111,15 @@ function uploads_adminapi_showinput($args)
             'uploads',
             'user',
             'import_get_filelist',
-            array('fileLocation' => $trusted_dir,
+            ['fileLocation' => $trusted_dir,
                                                     'descend'      => $descend,
                                                     // no need to analyze the mime type here
                                                     'analyze'      => false,
                                                     // cache the results if configured
-                                                    'cacheExpire'  => $cacheExpire)
+                                                    'cacheExpire'  => $cacheExpire, ]
         );
     } else {
-        $data['fileList']     = array();
+        $data['fileList']     = [];
     }
     if ($data['methods']['stored']) {
         // if there is an override['upload']['path'], try to use that
@@ -131,7 +131,7 @@ function uploads_adminapi_showinput($args)
                     'user',
                     'db_get_file',
                     // find all files located under that upload directory
-                    array('fileLocation' => $upload_directory . '/%')
+                    ['fileLocation' => $upload_directory . '/%']
                 );
             } else {
                 // Note: the parent directory must already exist
@@ -140,7 +140,7 @@ function uploads_adminapi_showinput($args)
                     // create dummy index.html in case it's web-accessible
                     @touch($upload_directory . '/index.html');
                     // the upload directory is still empty for the moment
-                    $data['storedList']   = array();
+                    $data['storedList']   = [];
                 } else {
                     // CHECKME: fall back to common uploads directory, or fail here ?
                     //  $data['storedList']   = xarMod::apiFunc('uploads', 'user', 'db_getall_files');
@@ -151,7 +151,7 @@ function uploads_adminapi_showinput($args)
             $data['storedList']   = xarMod::apiFunc('uploads', 'user', 'db_getall_files');
         }
     } else {
-        $data['storedList']   = array();
+        $data['storedList']   = [];
     }
 
     // used to allow selection of multiple files
@@ -169,13 +169,13 @@ function uploads_adminapi_showinput($args)
                 'uploads',
                 'user',
                 'db_get_file',
-                array('fileId' => $aList)
+                ['fileId' => $aList]
             );
             $list = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'showoutput',
-                array('value' => $value, 'style' => 'icon', 'multiple' => $multiple)
+                ['value' => $value, 'style' => 'icon', 'multiple' => $multiple]
             );
 
             foreach ($aList as $fileId) {
@@ -196,5 +196,5 @@ function uploads_adminapi_showinput($args)
         $data['invalid'] = $invalid;
     }
     // TODO: different formats ?
-    return (isset($list) ? $list : '') . xarTpl::module('uploads', 'user', 'attach_files', $data, null);
+    return ($list ?? '') . xarTpl::module('uploads', 'user', 'attach_files', $data, null);
 }

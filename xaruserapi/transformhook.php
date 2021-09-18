@@ -49,19 +49,19 @@ function & uploads_userapi_transform($body)
     while (preg_match('/#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#/i', $body, $matches)) {
         $replacement=null;
         array_shift($matches);
-        list($type, $id) = $matches;
+        [$type, $id] = $matches;
         switch ($type) {
             case 'ulid':
                 // DEPRECATED
             case 'file':
                 //$replacement = "index.php?module=uploads&func=download&fileId=$id";
-                $list = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $list = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $id]);
                 $replacement = xarTpl::module(
                     'uploads',
                     'user',
                     'attachment-list',
-                    array('Attachments' => $list,
-                                                   'style' => 'transform')
+                    ['Attachments' => $list,
+                                                   'style' => 'transform', ]
                 );
                 break;
             case 'ulidd':
@@ -71,31 +71,31 @@ function & uploads_userapi_transform($body)
                     'uploads',
                     'user',
                     'showoutput',
-                    array('value' => $id)
+                    ['value' => $id]
                 );
                 break;
             case 'ulfn': // ULFN is DEPRECATED
             case 'fileLinkedIcon':
-                $list = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $list = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $id]);
                 $replacement = xarTpl::module(
                     'uploads',
                     'user',
                     'attachment-list',
-                    array('Attachments' => $list)
+                    ['Attachments' => $list]
                 );
                 break;
             case 'fileIcon':
-                $file = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $file = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $id]);
                 $file = end($file);
                 $replacement = $file['mimeImage'];
                 break;
             case 'fileURL':
-                $file = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $file = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $id]);
                 $file = end($file);
                 $replacement = $file['fileDownload'];
                 break;
             case 'fileName':
-                $file = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $file = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $id]);
                 $file = end($file);
                 $replacement = $file['fileName'];
                 break;

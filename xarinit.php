@@ -75,7 +75,7 @@ function uploads_init()
     $mimetypes =& $data['filters']['mimetypes'];
     $mimetypes += xarMod::apiFunc('mime', 'user', 'getall_types');
 
-    xarModVars::set('uploads', 'view.filter', serialize(array('data' => $data,'filter' => $filter)));
+    xarModVars::set('uploads', 'view.filter', serialize(['data' => $data,'filter' => $filter]));
     unset($mimetypes);
 
     xarModVars::set('uploads', 'items_per_page', 200);
@@ -93,17 +93,17 @@ function uploads_init()
 
     sys::import('xaraya.tableddl');
 
-    $file_entry_fields = array(
-        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>false,  'increment'=>true,'primary_key'=>true),
-        'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>false),
-        'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>false),
-        'xar_location'     => array('type'=>'varchar', 'size'=>255,   'null'=>false),
-        'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>false,  'default'=>'0'),
-        'xar_filesize'     => array('type'=>'integer', 'size'=>'big',    'null'=>false),
-        'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>false),
-        'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>false,  'default' => 'application/octet-stream'),
-        'xar_extrainfo'    => array('type'=>'text')
-    );
+    $file_entry_fields = [
+        'xar_fileEntry_id' => ['type'=>'integer', 'size'=>'big', 'null'=>false,  'increment'=>true,'primary_key'=>true],
+        'xar_user_id'      => ['type'=>'integer', 'size'=>'big', 'null'=>false],
+        'xar_filename'     => ['type'=>'varchar', 'size'=>128,   'null'=>false],
+        'xar_location'     => ['type'=>'varchar', 'size'=>255,   'null'=>false],
+        'xar_status'       => ['type'=>'integer', 'size'=>'tiny','null'=>false,  'default'=>'0'],
+        'xar_filesize'     => ['type'=>'integer', 'size'=>'big',    'null'=>false],
+        'xar_store_type'   => ['type'=>'integer', 'size'=>'tiny',     'null'=>false],
+        'xar_mime_type'    => ['type'=>'varchar', 'size' =>128,  'null'=>false,  'default' => 'application/octet-stream'],
+        'xar_extrainfo'    => ['type'=>'text'],
+    ];
 
 
     // Create the Table - the function will return the SQL is successful or
@@ -111,23 +111,23 @@ function uploads_init()
     $query   =  xarTableDDL::createTable($file_entry_table, $file_entry_fields);
     $result  =& $dbconn->Execute($query);
 
-    $file_data_fields = array(
-        'xar_fileData_id'  => array('type'=>'integer','size'=>'big','null'=>false,'increment'=>true, 'primary_key'=>true),
-        'xar_fileEntry_id' => array('type'=>'integer','size'=>'big','null'=>false),
-        'xar_fileData'     => array('type'=>'blob','size'=>'medium','null'=>false)
-    );
+    $file_data_fields = [
+        'xar_fileData_id'  => ['type'=>'integer','size'=>'big','null'=>false,'increment'=>true, 'primary_key'=>true],
+        'xar_fileEntry_id' => ['type'=>'integer','size'=>'big','null'=>false],
+        'xar_fileData'     => ['type'=>'blob','size'=>'medium','null'=>false],
+    ];
 
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
     $query  =  xarTableDDL::createTable($file_data_table, $file_data_fields);
     $result =& $dbconn->Execute($query);
 
-    $file_assoc_fields = array(
-        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>false),
-        'xar_modid'        => array('type'=>'integer', 'size'=>'big', 'null'=>false),
-        'xar_itemtype'     => array('type'=>'integer', 'size'=>'big', 'null'=>false, 'default'=>'0'),
-        'xar_objectid'       => array('type'=>'integer', 'size'=>'big', 'null'=>false, 'default'=>'0'),
-    );
+    $file_assoc_fields = [
+        'xar_fileEntry_id' => ['type'=>'integer', 'size'=>'big', 'null'=>false],
+        'xar_modid'        => ['type'=>'integer', 'size'=>'big', 'null'=>false],
+        'xar_itemtype'     => ['type'=>'integer', 'size'=>'big', 'null'=>false, 'default'=>'0'],
+        'xar_objectid'       => ['type'=>'integer', 'size'=>'big', 'null'=>false, 'default'=>'0'],
+    ];
 
 
     // Create the Table - the function will return the SQL is successful or
@@ -223,5 +223,5 @@ function uploads_delete()
     */
 
     $module = 'uploads';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }

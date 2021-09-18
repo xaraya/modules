@@ -51,7 +51,7 @@ function uploads_user_purge_rejected($args)
             'uploads',
             'user',
             'db_get_file',
-            array('fileStatus' => _UPLOADS_STATUS_REJECTED)
+            ['fileStatus' => _UPLOADS_STATUS_REJECTED]
         );
 
         if (empty($fileList)) {
@@ -62,7 +62,7 @@ function uploads_user_purge_rejected($args)
                 'uploads',
                 'user',
                 'purge_files',
-                array('fileList'   => $fileList)
+                ['fileList'   => $fileList]
             );
             if (!$result) {
                 $msg = xarML('Unable to purge rejected files!');
@@ -74,10 +74,10 @@ function uploads_user_purge_rejected($args)
             'uploads',
             'user',
             'db_get_file',
-            array('fileStatus' => _UPLOADS_STATUS_REJECTED)
+            ['fileStatus' => _UPLOADS_STATUS_REJECTED]
         );
         if (empty($fileList)) {
-            $data['fileList']   = array();
+            $data['fileList']   = [];
         } else {
             $data['fileList']   = $fileList;
         }

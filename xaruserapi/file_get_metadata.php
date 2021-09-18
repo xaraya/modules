@@ -46,7 +46,7 @@ function uploads_userapi_file_get_metadata($args)
             $type = _INODE_TYPE_FILE;
             $size = filesize($file);
             if ($analyze) {
-                $mime = xarMod::apiFunc('mime', 'user', 'analyze_file', array('fileName' => $file));
+                $mime = xarMod::apiFunc('mime', 'user', 'analyze_file', ['fileName' => $file]);
             } else {
                 $mime = 'application/octet';
             }
@@ -65,12 +65,12 @@ function uploads_userapi_file_get_metadata($args)
         // CHECKME: use 'imports' name like in db_get_file() ?
         $relative_path = str_replace(xarModVars::get('uploads', 'imports_directory'), '/trusted', $file);
 
-        $fileInfo = array('inodeType'    => $type,
+        $fileInfo = ['inodeType'    => $type,
                           'fileName'     => $name,
                           'fileLocation' => $file,
                           'relativePath' => $relative_path,
                           'fileType'     => $mime,
-                          'fileSize'     => $size);
+                          'fileSize'     => $size, ];
 
         return $fileInfo;
     } else {

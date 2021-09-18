@@ -53,7 +53,7 @@ function uploads_userapi_db_get_users($args)
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
     while (!$result->EOF) {

@@ -66,7 +66,7 @@ function uploads_admin_updateconfig()
         }
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'uploads'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'uploads']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons');
     $data['module_settings']->getItem();
     $isvalid = $data['module_settings']->checkInput();
@@ -111,8 +111,8 @@ function uploads_admin_updateconfig()
         'module',
         'updateconfig',
         'uploads',
-        array('module'   => 'uploads',
-                          'itemtype' => 1)
+        ['module'   => 'uploads',
+                          'itemtype' => 1, ]
     ); // Files
 
     xarController::redirect(xarController::URL('uploads', 'admin', 'modifyconfig'));

@@ -76,7 +76,7 @@ function uploads_userapi_db_add_association($args)
                VALUES
                       ( ?, ?, ?, ? )";
 
-    $bindvars = array((int)$fileId,(int)$modid,(int)$itemtype,(int)$itemid);
+    $bindvars = [(int)$fileId,(int)$modid,(int)$itemtype,(int)$itemid];
     $result = &$dbconn->Execute($sql, $bindvars);
 
     if (!$result) {

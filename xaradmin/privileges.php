@@ -63,7 +63,7 @@ function uploads_admin_privileges($args)
         return;
     }
 
-    $userNameList = array();
+    $userNameList = [];
 
     if (!empty($extinstance)) {
         $parts = explode(':', $extinstance);
@@ -98,7 +98,7 @@ function uploads_admin_privileges($args)
     if (empty($subtype) || $subtype == 'All' || !is_numeric($subtype)) {
         $subtype = 0;
     } else {
-        $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', array('subtypeId' => $subtype));
+        $subtypeInfo = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeId' => $subtype]);
 
         if (empty($subtypeInfo) || $subtypeInfo['typeId'] != $mimetype) {
             $subtype = 0;
@@ -119,7 +119,7 @@ function uploads_admin_privileges($args)
                 'roles',
                 'user',
                 'get',
-                array('uname' => $userName)
+                ['uname' => $userName]
             );
             if (!empty($user)) {
                 $userNameList[$user['uid']]['userId'] = $user['uid'];
@@ -143,7 +143,7 @@ function uploads_admin_privileges($args)
             'roles',
             'user',
             'get',
-            array('uid' => $userId)
+            ['uid' => $userId]
         );
         if (!empty($user)) {
             $userNameList[$user['uid']]['userId'] = $user['uid'];
@@ -161,7 +161,7 @@ function uploads_admin_privileges($args)
     if (empty($fileId) || $fileId == 'All' || !is_numeric($fileId)) {
         $fileId = 0;
     } else {
-        $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+        $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]);
 
         if (isset($fileInfo[$fileId])) {
             $fileTypeInfo =& $fileInfo[$fileId]['fileTypeInfo'];
@@ -186,11 +186,11 @@ function uploads_admin_privileges($args)
     $filters['subtype']  = $subtype;
 
     // define the new instance
-    $newinstance    = array();
-    $newinstance[]  = empty($mimetype)   ? 'All' : $mimetype;
-    $newinstance[]  = empty($subtype)    ? 'All' : $subtype;
-    $newinstance[]  = empty($userId)     ? 'All' : $userId;
-    $newinstance[]  = empty($fileId)     ? 'All' : $fileId;
+    $newinstance    = [];
+    $newinstance[]  = empty($mimetype) ? 'All' : $mimetype;
+    $newinstance[]  = empty($subtype) ? 'All' : $subtype;
+    $newinstance[]  = empty($userId) ? 'All' : $userId;
+    $newinstance[]  = empty($fileId) ? 'All' : $fileId;
 
     if (!empty($apply)) {
         // create/update the privilege
@@ -204,7 +204,7 @@ function uploads_admin_privileges($args)
             'privileges',
             'admin',
             'modifyprivilege',
-            array('pid' => $pid)
+            ['pid' => $pid]
         ));
         return true;
     }
@@ -227,7 +227,7 @@ function uploads_admin_privileges($args)
         'uploads',
         'user',
         'db_get_users',
-        array('mimeType' => $filter['fileType'])
+        ['mimeType' => $filter['fileType']]
     );
 
     // Set up default 'All' option for users

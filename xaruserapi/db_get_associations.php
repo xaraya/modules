@@ -29,8 +29,8 @@ function uploads_userapi_db_get_associations($args)
 {
     extract($args);
 
-    $whereList = array();
-    $bindvars = array();
+    $whereList = [];
+    $bindvars = [];
 
     if (isset($fileId)) {
         $whereList[] = ' (xar_fileEntry_id = ?) ';
@@ -76,15 +76,15 @@ function uploads_userapi_db_get_associations($args)
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
-        return array();
+        return [];
     }
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
-    $fileList = array();
+    $fileList = [];
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 

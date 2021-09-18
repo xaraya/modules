@@ -20,14 +20,14 @@
  */
 function uploads_userapi_getitemtypes($args)
 {
-    $itemtypes = array();
+    $itemtypes = [];
 
     // Files
     $id = 1;
-    $itemtypes[$id] = array('label' => xarML('Files'),
+    $itemtypes[$id] = ['label' => xarML('Files'),
                             'title' => xarML('View All Files'),
-                            'url'   => xarController::URL('uploads', 'admin', 'view')
-                           );
+                            'url'   => xarController::URL('uploads', 'admin', 'view'),
+                           ];
 
     // TODO: Assoc, VDir and other future tables ?
 

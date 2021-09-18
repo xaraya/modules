@@ -29,7 +29,7 @@ function uploads_user_display_attachments($args)
         return;
     }
 
-    $data = array();
+    $data = [];
 
     $objectid = (isset($objectid)) ? $objectid : 0;
     ;
@@ -57,7 +57,7 @@ function uploads_user_display_attachments($args)
 
     $args['modName']  = $modname;
     $args['modid']    = xarMod::getRegId($modname);
-    $args['itemtype'] = isset($itemtype) ? $itemtype : 0;
+    $args['itemtype'] = $itemtype ?? 0;
     $args['itemid']   = $objectid;
 
     // save the current attachment info for use later on if the
@@ -68,14 +68,14 @@ function uploads_user_display_attachments($args)
     $associations = xarMod::apiFunc('uploads', 'user', 'db_get_associations', $args);
 
     if (!empty($associations)) {
-        $fileIds = array();
+        $fileIds = [];
         foreach ($associations as $assoc) {
             $fileIds[] = $assoc['fileId'];
         }
 
-        $Attachments = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileIds));
+        $Attachments = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileIds]);
     } else {
-        $Attachments = array();
+        $Attachments = [];
     }
 
     $data = $args;

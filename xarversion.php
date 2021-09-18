@@ -46,10 +46,10 @@ $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Utility';
 $modversion['category']     = 'Global';
-$modversion['dependency'] = array(
-                                  999
-                                  );
-$modversion['dependencyinfo'] = array(
+$modversion['dependency'] = [
+                                  999,
+                                  ];
+$modversion['dependencyinfo'] = [
                                       999 => 'mime',
-                                      934 => 'jquery'
-                                      );
+                                      934 => 'jquery',
+                                      ];

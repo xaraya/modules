@@ -41,7 +41,7 @@ function uploads_userapi_import_external_http($args)
     }
 
     if (!isset($savePath)) {
-        $savePath = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'uploads_directory'));
+        $savePath = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'uploads_directory']);
     }
 
     // if no port, use the default port (21)
@@ -138,7 +138,7 @@ function uploads_userapi_import_external_http($args)
                     'mime',
                     'user',
                     'analyze_file',
-                    array('fileName' => $fileInfo['fileLocation'])
+                    ['fileName' => $fileInfo['fileLocation']]
                 );
 
                 $fileInfo['fileSize'] = filesize($tmpName);
@@ -161,15 +161,15 @@ function uploads_userapi_import_external_http($args)
             $errorObj = xarCurrentError();
 
             if (is_object($errorObj)) {
-                $fileError = array('errorMesg' => $errorObj->getShort(),
-                                   'errorId'   => $errorObj->getID());
+                $fileError = ['errorMesg' => $errorObj->getShort(),
+                                   'errorId'   => $errorObj->getID(), ];
             } else {
-                $fileError = array('errorMesg' => 'Unknown Error!',
-                                   'errorId'   => _UPLOADS_ERROR_UNKNOWN);
+                $fileError = ['errorMesg' => 'Unknown Error!',
+                                   'errorId'   => _UPLOADS_ERROR_UNKNOWN, ];
             }
 
             if (!isset($fileInfo['errors'])) {
-                $fileInfo['errors'] = array();
+                $fileInfo['errors'] = [];
             }
 
             $fileInfo['errors'][] = $fileError;
@@ -188,7 +188,7 @@ function uploads_userapi_import_external_http($args)
                 'uploads',
                 'user',
                 'file_obfuscate_name',
-                array('fileName' => $fileInfo['fileName'])
+                ['fileName' => $fileInfo['fileName']]
             );
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         } else {
@@ -198,5 +198,5 @@ function uploads_userapi_import_external_http($args)
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
     }
-    return array($fileInfo['fileLocation'] => $fileInfo);
+    return [$fileInfo['fileLocation'] => $fileInfo];
 }

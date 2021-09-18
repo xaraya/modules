@@ -57,10 +57,10 @@ function uploads_admin_assoc()
                 'uploads',
                 'admin',
                 'rescan_associations',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                           'itemtype' => $itemtype,
                                           'itemid' => $itemid,
-                                          'fileId' => $fileId)
+                                          'fileId' => $fileId, ]
             );
             if (!$result) {
                 return;
@@ -83,10 +83,10 @@ function uploads_admin_assoc()
                     'uploads',
                     'admin',
                     'delete_associations',
-                    array('modid' => $modid,
+                    ['modid' => $modid,
                                               'itemtype' => $itemtype,
                                               'itemid' => $itemid,
-                                              'fileId' => $fileId)
+                                              'fileId' => $fileId, ]
                 );
                 if (!$result) {
                     return;
@@ -97,7 +97,7 @@ function uploads_admin_assoc()
         }
     }
 
-    $data = array();
+    $data = [];
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['itemid'] = $itemid;
@@ -110,11 +110,11 @@ function uploads_admin_assoc()
         'uploads',
         'user',
         'db_group_associations',
-        array('fileId' => $fileId)
+        ['fileId' => $fileId]
     );
 
     if (empty($modid)) {
-        $data['moditems'] = array();
+        $data['moditems'] = [];
         $data['numitems'] = 0;
         $data['numlinks'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
@@ -125,11 +125,11 @@ function uploads_admin_assoc()
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             foreach ($itemtypes as $itemtype => $stats) {
-                $moditem = array();
+                $moditem = [];
                 $moditem['numitems'] = $stats['items'];
                 $moditem['numfiles'] = $stats['files'];
                 $moditem['numlinks'] = $stats['links'];
@@ -149,27 +149,27 @@ function uploads_admin_assoc()
                     'uploads',
                     'admin',
                     'assoc',
-                    array('modid' => $modid,
+                    ['modid' => $modid,
                                                    'itemtype' => empty($itemtype) ? null : $itemtype,
-                                                   'fileId' => $fileId)
+                                                   'fileId' => $fileId, ]
                 );
                 $moditem['rescan'] = xarController::URL(
                     'uploads',
                     'admin',
                     'assoc',
-                    array('action' => 'rescan',
+                    ['action' => 'rescan',
                                                      'modid' => $modid,
                                                      'itemtype' => empty($itemtype) ? null : $itemtype,
-                                                     'fileId' => $fileId)
+                                                     'fileId' => $fileId, ]
                 );
                 $moditem['delete'] = xarController::URL(
                     'uploads',
                     'admin',
                     'assoc',
-                    array('action' => 'delete',
+                    ['action' => 'delete',
                                                      'modid' => $modid,
                                                      'itemtype' => empty($itemtype) ? null : $itemtype,
-                                                     'fileId' => $fileId)
+                                                     'fileId' => $fileId, ]
                 );
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
@@ -180,22 +180,22 @@ function uploads_admin_assoc()
             'uploads',
             'admin',
             'assoc',
-            array('action' => 'rescan',
-                                          'fileId' => $fileId)
+            ['action' => 'rescan',
+                                          'fileId' => $fileId, ]
         );
         $data['delete'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
-            array('action' => 'delete',
-                                          'fileId' => $fileId)
+            ['action' => 'delete',
+                                          'fileId' => $fileId, ]
         );
         if (!empty($fileId)) {
             $data['fileinfo'] = xarMod::apiFunc(
                 'uploads',
                 'user',
                 'db_get_file',
-                array('fileId' => $fileId)
+                ['fileId' => $fileId]
             );
         }
     } else {
@@ -214,7 +214,7 @@ function uploads_admin_assoc()
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -256,11 +256,11 @@ function uploads_admin_assoc()
                     'uploads',
                     'admin',
                     'assoc',
-                    array('modid' => $modid,
+                    ['modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'fileId' => $fileId,
                                                             'sort' => $sort,
-                                                            'startnum' => '%%')
+                                                            'startnum' => '%%', ]
                 ),
                 $numstats
             );
@@ -271,13 +271,13 @@ function uploads_admin_assoc()
             'uploads',
             'user',
             'db_list_associations',
-            array('modid' => $modid,
+            ['modid' => $modid,
                                         'itemtype' => $itemtype,
                                         'itemid' => $itemid,
                                         'numitems' => $numstats,
                                         'startnum' => $startnum,
                                         'sort' => $sort,
-                                        'fileId' => $fileId)
+                                        'fileId' => $fileId, ]
         );
         //$showtitle = xarModVars::get('uploads','showtitle');
         $showtitle = true;
@@ -287,20 +287,20 @@ function uploads_admin_assoc()
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
-                array('itemtype' => $itemtype,
-                                            'itemids' => $itemids),
+                ['itemtype' => $itemtype,
+                                            'itemids' => $itemids, ],
                 0
             ); // don't throw an exception here
         } else {
-            $itemlinks = array();
+            $itemlinks = [];
         }
-        $seenfileid = array();
+        $seenfileid = [];
         if (!empty($fileId)) {
             $seenfileid[$fileId] = 1;
         }
-        $data['moditems'] = array();
+        $data['moditems'] = [];
         foreach ($getitems as $itemid => $filelist) {
-            $data['moditems'][$itemid] = array();
+            $data['moditems'][$itemid] = [];
             $data['moditems'][$itemid]['numlinks'] = count($filelist);
             $data['moditems'][$itemid]['filelist'] = $filelist;
             foreach ($filelist as $id) {
@@ -310,21 +310,21 @@ function uploads_admin_assoc()
                 'uploads',
                 'admin',
                 'assoc',
-                array('action' => 'rescan',
+                ['action' => 'rescan',
                                                                    'modid' => $modid,
                                                                    'itemtype' => $itemtype,
                                                                    'itemid' => $itemid,
-                                                                   'fileId' => $fileId)
+                                                                   'fileId' => $fileId, ]
             );
             $data['moditems'][$itemid]['delete'] = xarController::URL(
                 'uploads',
                 'admin',
                 'assoc',
-                array('action' => 'delete',
+                ['action' => 'delete',
                                                                    'modid' => $modid,
                                                                    'itemtype' => $itemtype,
                                                                    'itemid' => $itemid,
-                                                                   'fileId' => $fileId)
+                                                                   'fileId' => $fileId, ]
             );
             if (isset($itemlinks[$itemid])) {
                 $data['moditems'][$itemid]['link'] = $itemlinks[$itemid]['url'];
@@ -338,30 +338,30 @@ function uploads_admin_assoc()
                 'uploads',
                 'user',
                 'db_get_file',
-                array('fileId' => array_keys($seenfileid))
+                ['fileId' => array_keys($seenfileid)]
             );
         } else {
-            $data['fileinfo'] = array();
+            $data['fileinfo'] = [];
         }
         $data['rescan'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
-            array('action' => 'rescan',
+            ['action' => 'rescan',
                                           'modid' => $modid,
                                           'itemtype' => $itemtype,
-                                          'fileId' => $fileId)
+                                          'fileId' => $fileId, ]
         );
         $data['delete'] = xarController::URL(
             'uploads',
             'admin',
             'assoc',
-            array('action' => 'delete',
+            ['action' => 'delete',
                                           'modid' => $modid,
                                           'itemtype' => $itemtype,
-                                          'fileId' => $fileId)
+                                          'fileId' => $fileId, ]
         );
-        $data['sortlink'] = array();
+        $data['sortlink'] = [];
         if (empty($sort) || $sort == 'itemid') {
             $data['sortlink']['itemid'] = '';
         } else {
@@ -369,9 +369,9 @@ function uploads_admin_assoc()
                 'uploads',
                 'admin',
                 'assoc',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                            'itemtype' => $itemtype,
-                                                           'fileId' => $fileId)
+                                                           'fileId' => $fileId, ]
             );
         }
         if (!empty($sort) && $sort == 'numlinks') {
@@ -381,10 +381,10 @@ function uploads_admin_assoc()
                 'uploads',
                 'admin',
                 'assoc',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'fileId' => $fileId,
-                                                            'sort' => 'numlinks')
+                                                            'sort' => 'numlinks', ]
             );
         }
 

@@ -141,7 +141,7 @@ function uploads_userapi_file_push($args)
         // FIXME: <rabbitt> if we happen to be pushing a really big file, this
         //        method of grabbing it from the database and pushing will consume
         //        WAY too much memory. Think of an alternate method
-        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        $data = xarMod::apiFunc('uploads', 'user', 'db_get_file_data', ['fileId' => $fileId]);
         echo implode('', $data);
 
         // Headers -can- be sent after the actual data

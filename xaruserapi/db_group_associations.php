@@ -41,7 +41,7 @@ function uploads_userapi_db_group_associations($args)
 
     // TODO: see if we can't do this some other way in SQLite
 
-        $bindvars = array();
+        $bindvars = [];
         // Get links
         $sql = "SELECT xar_modid, xar_itemtype, COUNT(*)
                 FROM $fileassoctable";
@@ -56,13 +56,13 @@ function uploads_userapi_db_group_associations($args)
             return;
         }
 
-        $modlist = array();
+        $modlist = [];
         while (!$result->EOF) {
-            list($modid, $itemtype, $numlinks) = $result->fields;
+            [$modid, $itemtype, $numlinks] = $result->fields;
             if (!isset($modlist[$modid])) {
-                $modlist[$modid] = array();
+                $modlist[$modid] = [];
             }
-            $modlist[$modid][$itemtype] = array('items' => 0, 'files' => 0, 'links' => $numlinks);
+            $modlist[$modid][$itemtype] = ['items' => 0, 'files' => 0, 'links' => $numlinks];
             $result->MoveNext();
         }
         $result->close();
@@ -83,7 +83,7 @@ function uploads_userapi_db_group_associations($args)
         }
 
         while (!$result->EOF) {
-            list($modid, $itemtype, $numitems) = $result->fields;
+            [$modid, $itemtype, $numitems] = $result->fields;
             $modlist[$modid][$itemtype]['items'] = $numitems;
             $result->MoveNext();
         }
@@ -105,13 +105,13 @@ function uploads_userapi_db_group_associations($args)
         }
 
         while (!$result->EOF) {
-            list($modid, $itemtype, $numfiles) = $result->fields;
+            [$modid, $itemtype, $numfiles] = $result->fields;
             $modlist[$modid][$itemtype]['files'] = $numfiles;
             $result->MoveNext();
         }
         $result->close();
     } else {
-        $bindvars = array();
+        $bindvars = [];
         // Get items
         $sql = "SELECT xar_modid, xar_itemtype, COUNT(*), COUNT(DISTINCT xar_objectid), COUNT(DISTINCT xar_fileEntry_id)
                 FROM $fileassoctable";
@@ -126,13 +126,13 @@ function uploads_userapi_db_group_associations($args)
             return;
         }
 
-        $modlist = array();
+        $modlist = [];
         while (!$result->EOF) {
-            list($modid, $itemtype, $numlinks, $numitems, $numfiles) = $result->fields;
+            [$modid, $itemtype, $numlinks, $numitems, $numfiles] = $result->fields;
             if (!isset($modlist[$modid])) {
-                $modlist[$modid] = array();
+                $modlist[$modid] = [];
             }
-            $modlist[$modid][$itemtype] = array('items' => $numitems, 'files' => $numfiles, 'links' => $numlinks);
+            $modlist[$modid][$itemtype] = ['items' => $numitems, 'files' => $numfiles, 'links' => $numlinks];
             $result->MoveNext();
         }
         $result->close();

@@ -24,10 +24,10 @@ function uploads_userapi_getitemlinks($args)
 {
     extract($args);
 
-    $itemlinks = array();
+    $itemlinks = [];
 
     // get cids for security check in getall
-    $fileList = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $itemids));
+    $fileList = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $itemids]);
 
     if (!isset($fileList) || empty($fileList)) {
         return $itemlinks;
@@ -40,9 +40,9 @@ function uploads_userapi_getitemlinks($args)
 
         $file = $fileList[$itemid];
 
-        $itemlinks[$itemid] = array('url'   => xarController::URL('uploads', 'user', 'download', array('fileId' => $file['fileId'])),
+        $itemlinks[$itemid] = ['url'   => xarController::URL('uploads', 'user', 'download', ['fileId' => $file['fileId']]),
                                     'title' => $file['DownloadLabel'],
-                                    'label' => xarVar::prepForDisplay($file['fileName']));
+                                    'label' => xarVar::prepForDisplay($file['fileName']), ];
     }
     return $itemlinks;
 }

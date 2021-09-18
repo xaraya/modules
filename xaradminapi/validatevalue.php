@@ -58,7 +58,7 @@ function uploads_adminapi_validatevalue($args)
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
     if (xarMod::apiFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', ['value' =>$value]);
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -75,7 +75,7 @@ function uploads_adminapi_validatevalue($args)
 
     if (isset($methods) && count($methods) > 0) {
         $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-        $typeCheck .= (isset($methods['external']) && $methods['external'])  ? ':' . _UPLOADS_GET_EXTERNAL : '';
+        $typeCheck .= (isset($methods['external']) && $methods['external']) ? ':' . _UPLOADS_GET_EXTERNAL : '';
         $typeCheck .= (isset($methods['trusted']) && $methods['trusted']) ? ':' . _UPLOADS_GET_LOCAL : '';
         $typeCheck .= (isset($methods['upload']) && $methods['upload']) ? ':' . _UPLOADS_GET_UPLOAD : '';
         $typeCheck .= ':-2'; // clear value
@@ -123,7 +123,7 @@ function uploads_adminapi_validatevalue($args)
                 if (!empty($moduleid) && !empty($itemid)) {
                     uploads_sync_associations($moduleid, $itemtype, $itemid);
                 }
-                return array(true,null);
+                return [true,null];
             }
 
             $args['import'] = $import;
@@ -143,7 +143,7 @@ function uploads_adminapi_validatevalue($args)
                     'uploads',
                     'user',
                     'file_get_metadata',
-                    array('fileLocation' => "$file")
+                    ['fileLocation' => "$file"]
                 );
                 if (isset($args['fileList']["$file"]['fileSize']['long'])) {
                     $args['fileList']["$file"]['fileSize'] = $args['fileList']["$file"]['fileSize']['long'];
@@ -164,7 +164,7 @@ function uploads_adminapi_validatevalue($args)
                 if (!empty($moduleid) && !empty($itemid)) {
                     uploads_sync_associations($moduleid, $itemtype, $itemid);
                 }
-                return array(true,null);
+                return [true,null];
             }
 
             // We prepend a semicolon onto the list of fileId's so that
@@ -177,27 +177,27 @@ function uploads_adminapi_validatevalue($args)
                 uploads_sync_associations($moduleid, $itemtype, $itemid, $fileList);
             }
 
-            return array(true,$value);
+            return [true,$value];
             break;
         case '-1':
-            return array(true,$value);
+            return [true,$value];
             break;
         case '-2':
             // clear stored value
-            return array(true, null);
+            return [true, null];
             break;
         default:
             if (isset($value)) {
-                if (strlen($value) && $value{0} == ';') {
-                    return array(true,$value);
+                if (strlen($value) && $value[0] == ';') {
+                    return [true,$value];
                 } else {
-                    return array(false,null);
+                    return [false,null];
                 }
             } else {
                 // If we have managed to get here then we have a NULL value
                 // and $action was most likely either null or something unexpected
                 // So let's keep things that way :-)
-                return array(true,null);
+                return [true,null];
             }
             break;
     }
@@ -208,7 +208,7 @@ function uploads_adminapi_validatevalue($args)
         }
 
         $list = xarMod::apiFunc('uploads', 'user', 'process_files', $args);
-        $storeList = array();
+        $storeList = [];
         foreach ($list as $file => $fileInfo) {
             if (!isset($fileInfo['errors'])) {
                 $storeList[] = $fileInfo['fileId'];
@@ -228,20 +228,20 @@ function uploads_adminapi_validatevalue($args)
                 uploads_sync_associations($moduleid, $itemtype, $itemid, $storeList);
             }
         } else {
-            return array(false,null);
+            return [false,null];
         }
     } else {
-        return array(false,null);
+        return [false,null];
     }
 
-    return array(true,$value);
+    return [true,$value];
 }
 
 /**
  * Utility function to synchronise file associations on validation
  * (for create/update of DD extra fields + update of DD objects and articles)
  */
-function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $filelist = array())
+function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $filelist = [])
 {
     // see if we have anything to work with
     if (empty($moduleid) || empty($itemid)) {
@@ -259,9 +259,9 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
         'uploads',
         'user',
         'db_get_associations',
-        array('modid'    => $moduleid,
+        ['modid'    => $moduleid,
                                  'itemtype' => $itemtype,
-                                 'itemid'   => $itemid)
+                                 'itemid'   => $itemid, ]
     );
 
     // see what we need to add or delete
@@ -270,7 +270,7 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
         $del = array_diff(array_keys($assoc), $filelist);
     } else {
         $add = $filelist;
-        $del = array();
+        $del = [];
     }
 
     foreach ($add as $id) {
@@ -281,10 +281,10 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
             'uploads',
             'user',
             'db_add_association',
-            array('fileId'   => $id,
+            ['fileId'   => $id,
                             'modid'    => $moduleid,
                             'itemtype' => $itemtype,
-                            'itemid'   => $itemid)
+                            'itemid'   => $itemid, ]
         );
     }
     foreach ($del as $id) {
@@ -295,10 +295,10 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
             'uploads',
             'user',
             'db_delete_association',
-            array('fileId'   => $id,
+            ['fileId'   => $id,
                             'modid'    => $moduleid,
                             'itemtype' => $itemtype,
-                            'itemid'   => $itemid)
+                            'itemid'   => $itemid, ]
         );
     }
 }

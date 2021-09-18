@@ -45,9 +45,9 @@ function uploads_user_file_properties($args)
         throw new Exception($msg);
     }
 
-    $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]);
     if (empty($fileInfo) || !count($fileInfo)) {
-        $data['fileInfo']   = array();
+        $data['fileInfo']   = [];
         $data['error']      = xarML('File not found!');
     } else {
         // the file should be the first indice in the array
@@ -65,8 +65,8 @@ function uploads_user_file_properties($args)
                 'item',
                 'modify',
                 $fileId,
-                array('module'    => 'uploads',
-                                                   'itemtype'  => 1)
+                ['module'    => 'uploads',
+                                                   'itemtype'  => 1, ]
             );
         } else {
             $data['allowedit'] = 0;
@@ -85,7 +85,7 @@ function uploads_user_file_properties($args)
                     );
                     throw new Exception($msg);
                 }
-                xarController::redirect(xarController::URL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
+                xarController::redirect(xarController::URL('uploads', 'user', 'file_properties', ['fileId' => $fileId]));
                 return;
             } else {
                 xarErrorHandled();
@@ -101,7 +101,7 @@ function uploads_user_file_properties($args)
             // get rid of everything in the buffer
             ob_end_clean();
 
-            $storeType  = array('long' => '', 'short' => $fileInfo['storeType']);
+            $storeType  = ['long' => '', 'short' => $fileInfo['storeType']];
             $storeType['long'] = 'Database File Entry';
 
             if (_UPLOADS_STORE_FILESYSTEM & $fileInfo['storeType']) {
@@ -119,7 +119,7 @@ function uploads_user_file_properties($args)
             $fileInfo['storeType'] = $storeType;
             unset($storeType);
 
-            $fileInfo['size'] = xarMod::apiFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
+            $fileInfo['size'] = xarMod::apiFunc('uploads', 'user', 'normalize_filesize', ['fileSize' => $fileInfo['fileSize']]);
 
             if (mb_ereg('^image', $fileInfo['fileType'])) {
                 // let the images module handle it
@@ -164,7 +164,7 @@ function uploads_user_file_properties($args)
                 'uploads',
                 'user',
                 'db_count_associations',
-                array('fileId' => $fileId)
+                ['fileId' => $fileId]
             );
 
             $data['fileInfo'] = $fileInfo;

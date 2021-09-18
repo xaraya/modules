@@ -31,15 +31,15 @@ function uploads_userapi_process_filters($args)
     $subtypes  =& $data['filters']['subtypes'];
     $statuses  =& $data['filters']['status'];
 
-    $data['filters']['inverse'] = isset($inverse) ? $inverse : false;
-    $filter['inverse']  = isset($inverse) ? $inverse : false;
+    $data['filters']['inverse'] = $inverse ?? false;
+    $filter['inverse']  = $inverse ?? false;
 
     unset($options);
     /**
      *  Grab the mimetypes and setup the selected one
      */
     if (isset($mimetype) && $mimetype > 0) {
-        $selected_mimetype = xarMod::apiFunc('mime', 'user', 'get_type', array('typeId' => $mimetype));
+        $selected_mimetype = xarMod::apiFunc('mime', 'user', 'get_type', ['typeId' => $mimetype]);
     }
 
     // if selected mimetype isn't set, empty or has an array count of
@@ -55,12 +55,12 @@ function uploads_userapi_process_filters($args)
      */
     if (isset($selected_mimetype)) {
         if (isset($subtype) && $subtype > 0) {
-            $selected_subtype = xarMod::apiFunc('mime', 'user', 'get_subtype', array('subtypeId' => $subtype));
+            $selected_subtype = xarMod::apiFunc('mime', 'user', 'get_subtype', ['subtypeId' => $subtype]);
         }
 
         // add the rest of the types to the array
         // array returns is in form of: array[typeId]{[subtypeId], [subtypeName]}
-        $subtypes = $subtypes + xarMod::apiFunc('mime', 'user', 'getall_subtypes', array('typeId' => $selected_mimetype['typeId']));
+        $subtypes = $subtypes + xarMod::apiFunc('mime', 'user', 'getall_subtypes', ['typeId' => $selected_mimetype['typeId']]);
 
         // if selected subtype isn't set, empty or has an array count of
         // zero, then we set
@@ -119,9 +119,9 @@ function uploads_userapi_process_filters($args)
             break;
     }
     unset($statuses);
-    $data['catid'] = isset($catid) ? $catid : null;
-    $filter['catid'] = isset($catid) ? $catid : null;
-    $filterInfo = array('data' => $data, 'filter' => $filter);
+    $data['catid'] = $catid ?? null;
+    $filter['catid'] = $catid ?? null;
+    $filterInfo = ['data' => $data, 'filter' => $filter];
 
 
     if ($storeOptions) {

@@ -40,7 +40,7 @@ function uploads_adminapi_rescan_associations($args)
 
     // 2. get the upload-related property types
     $proptypes = xarMod::apiFunc('dynamicdata', 'user', 'getproptypes');
-    $proptypelist = array();
+    $proptypelist = [];
     foreach ($proptypes as $typeid => $proptype) {
         if ($proptype['name'] == 'uploads' || $proptype['name'] == 'fileupload' || $proptype['name'] == 'textupload') {
             $proptypelist[$typeid] = $proptype['name'];
@@ -49,17 +49,17 @@ function uploads_adminapi_rescan_associations($args)
 
     // 3. get the list of dynamic objects we're interesting in
     if (!empty($modid)) {
-        $objectinfolist = array();
+        $objectinfolist = [];
         $objectinfolist[] = DataObjectMaster::getObjectInfo(
-            array('modid' => $modid,
-                                         'itemtype' => isset($itemtype) ? $itemtype : null)
+            ['modid' => $modid,
+                                         'itemtype' => $itemtype ?? null, ]
         );
     } else {
         $objectinfolist = xarMod::apiFunc('dynamicdata', 'user', 'getobjects');
     }
 
     // 4. for each dynamic object
-    $modnames = array();
+    $modnames = [];
     foreach ($objectinfolist as $objectinfo) {
         if (empty($objectinfo['objectid'])) {
             continue;
@@ -80,8 +80,8 @@ function uploads_adminapi_rescan_associations($args)
         $object = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', $objectinfo);
 
         // 7. build the list of properties we're interested in
-        $proplist = array();
-        $wherelist = array();
+        $proplist = [];
+        $wherelist = [];
         foreach (array_keys($object->properties) as $propname) {
             $proptype = $object->properties[$propname]->type;
             if (!isset($proptypelist[$proptype])) {
@@ -103,9 +103,9 @@ function uploads_adminapi_rescan_associations($args)
         }
 
         // 8. get the items and properties we're interested in
-        $object->getItems(array('itemids'   => !empty($args['itemid']) ? array($args['itemid']) : null,
+        $object->getItems(['itemids'   => !empty($args['itemid']) ? [$args['itemid']] : null,
                                 'fieldlist' => array_keys($proplist),
-                                'where'     => join(' and ', $wherelist)));
+                                'where'     => join(' and ', $wherelist), ]);
         if (empty($object->items)) {
             continue;
         }
@@ -124,10 +124,10 @@ function uploads_adminapi_rescan_associations($args)
                             'uploads',
                             'user',
                             'db_add_association',
-                            array('modid'    => $modid,
+                            ['modid'    => $modid,
                                             'itemtype' => $itemtype,
                                             'itemid'   => $itemid,
-                                            'fileId'   => $file)
+                                            'fileId'   => $file, ]
                         );
                     }
                 } else {
@@ -142,10 +142,10 @@ function uploads_adminapi_rescan_associations($args)
                             'uploads',
                             'user',
                             'db_add_association',
-                            array('modid'    => $modid,
+                            ['modid'    => $modid,
                                             'itemtype' => $itemtype,
                                             'itemid'   => $itemid,
-                                            'fileId'   => $file)
+                                            'fileId'   => $file, ]
                         );
                     }
                 }
@@ -170,7 +170,7 @@ function uploads_adminapi_rescan_associations($args)
         if (!xarModHooks::isHooked('uploads', 'articles', $pubtypeid)) {
             continue;
         }
-        $fieldlist = array();
+        $fieldlist = [];
         foreach ($pubtypeinfo['config'] as $fieldname => $fieldinfo) {
             if ($fieldinfo['format'] == 'fileupload' || $fieldinfo['format'] == 'textupload') {
                 $fieldlist[] = $fieldname;
@@ -183,9 +183,9 @@ function uploads_adminapi_rescan_associations($args)
             'articles',
             'user',
             'getall',
-            array('aids'   => !empty($args['itemid']) ? array($args['itemid']) : null,
+            ['aids'   => !empty($args['itemid']) ? [$args['itemid']] : null,
                                         'ptid'   => $pubtypeid,
-                                        'fields' => $fieldlist)
+                                        'fields' => $fieldlist, ]
         );
         if (empty($articles)) {
             continue;
@@ -206,10 +206,10 @@ function uploads_adminapi_rescan_associations($args)
                             'uploads',
                             'user',
                             'db_add_association',
-                            array('modid'    => $artmodid,
+                            ['modid'    => $artmodid,
                                             'itemtype' => $pubtypeid,
                                             'itemid'   => $article['aid'],
-                                            'fileId'   => $file)
+                                            'fileId'   => $file, ]
                         );
                     }
                 } else {
@@ -224,10 +224,10 @@ function uploads_adminapi_rescan_associations($args)
                             'uploads',
                             'user',
                             'db_add_association',
-                            array('modid'    => $artmodid,
+                            ['modid'    => $artmodid,
                                             'itemtype' => $pubtypeid,
                                             'itemid'   => $article['aid'],
-                                            'fileId'   => $file)
+                                            'fileId'   => $file, ]
                         );
                     }
                 }

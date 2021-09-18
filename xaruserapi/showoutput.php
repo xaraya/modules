@@ -32,12 +32,12 @@ function uploads_userapi_showoutput($args)
         $multiple = false;
     }
 
-    $data = array();
+    $data = [];
 
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
     if (xarMod::apiFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+        $newValue = xarMod::apiFunc('uploads', 'admin', 'dd_convert_value', ['value' =>$value]);
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -54,14 +54,14 @@ function uploads_userapi_showoutput($args)
     // so we get rid of it with array_filter :-)
     $value = array_filter(explode(';', $value));
     if (!$multiple) {
-        $value = array(current($value));
+        $value = [current($value)];
     }
 
     // make sure to remove any indices which are empty
     $value = array_filter($value);
 
     if (empty($value)) {
-        return array();
+        return [];
     }
 
 
@@ -70,7 +70,7 @@ function uploads_userapi_showoutput($args)
 
     if (isset($style) && $style = 'icon') {
         if (is_array($value) && count($value)) {
-            $data['Attachments'] = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+            $data['Attachments'] = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $value]);
         } else {
             $data['Attachments'] = '';
         }
@@ -79,6 +79,6 @@ function uploads_userapi_showoutput($args)
         return xarTpl::module('uploads', 'user', 'attachment-list', $data, null);
     } else {
         // return a raw array for now
-        return xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+        return xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $value]);
     }
 }

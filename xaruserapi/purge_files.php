@@ -38,15 +38,15 @@ function uploads_userapi_purge_files($args)
 
     foreach ($fileList as $fileName => $fileInfo) {
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM) {
-            xarMod::apiFunc('uploads', 'user', 'file_delete', array('fileName' => $fileInfo['fileLocation']));
+            xarMod::apiFunc('uploads', 'user', 'file_delete', ['fileName' => $fileInfo['fileLocation']]);
         }
 
         if ($fileInfo['storeType'] & _UPLOADS_STORE_DB_DATA) {
-            xarMod::apiFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileInfo['fileId']));
+            xarMod::apiFunc('uploads', 'user', 'db_delete_file_data', ['fileId' => $fileInfo['fileId']]);
         }
 
         // go ahead and delete the file from the database.
-        xarMod::apiFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileInfo['fileId']));
+        xarMod::apiFunc('uploads', 'user', 'db_delete_file', ['fileId' => $fileInfo['fileId']]);
     }
 
     return true;

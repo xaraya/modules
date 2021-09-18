@@ -35,7 +35,7 @@ function uploads_userapi_import_chdir($args)
     } else {
         $cwd = sys::root() . "/" . xarModUserVars::get('uploads', 'path.imports-cwd');
     }
-    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', array('directory' => 'imports_directory'));
+    $importDir = xarMod::apiFunc('uploads', 'user', 'db_get_dir', ['directory' => 'imports_directory']);
 
     if (!empty($dirName)) {
         if ($dirName == '...') {

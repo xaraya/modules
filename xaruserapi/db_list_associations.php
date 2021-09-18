@@ -30,11 +30,11 @@ function uploads_userapi_db_list_associations($args)
     extract($args);
 
     if (empty($modid)) {
-        return array();
+        return [];
     }
 
-    $whereList = array();
-    $bindvars = array();
+    $whereList = [];
+    $bindvars = [];
 
     if (isset($fileId)) {
         $whereList[] = ' (xar_fileEntry_id = ?) ';
@@ -88,20 +88,20 @@ function uploads_userapi_db_list_associations($args)
     }
 
     if (!$result) {
-        return array();
+        return [];
     }
 
     // if no record found, return an empty array
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
-    $list = array();
+    $list = [];
     while (!$result->EOF) {
-        list($modid, $itemtype, $itemid, $fileId) = $result->fields;
+        [$modid, $itemtype, $itemid, $fileId] = $result->fields;
         // simple item - file array
         if (!isset($list[$itemid])) {
-            $list[$itemid] = array();
+            $list[$itemid] = [];
         }
         $list[$itemid][] = (int) $fileId;
         $result->MoveNext();

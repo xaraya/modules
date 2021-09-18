@@ -17,21 +17,21 @@ function uploads_adminapi_dd_configure($confString = null)
     // Default to multiple selection
     $multiple = true;
     // Grab the sitewide defaults for the methods
-    $methods = array(
-            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? true : false,
+    $methods = [
+            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted') ? true : false,
             'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? true : false,
-            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? true : false,
-            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? true : false
-            );
+            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload') ? true : false,
+            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored') ? true : false,
+            ];
     $basedir = null;
     $importdir = null;
 
     if (!isset($confString) || empty($confString)) {
-        $conf = array();
+        $conf = [];
     } elseif (stristr($confString, ';')) {
         $conf = explode(';', $confString);
     } else {
-        $conf = array($confString);
+        $conf = [$confString];
     }
     foreach ($conf as $item) {
         $item = trim($item);
@@ -67,7 +67,7 @@ function uploads_adminapi_dd_configure($confString = null)
 
                         // grab the modifier if there was one
                         preg_match('/^(\-|\+)?([a-z0-9_-]*)/i', $method, $matches);
-                        list($full, $modifier, $method) = $matches;
+                        [$full, $modifier, $method] = $matches;
                         // If modifier == '-' then we are specifically
                         // turning off this file import method,
                         // otherwise, leave it as on

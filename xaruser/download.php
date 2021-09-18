@@ -25,20 +25,20 @@ function uploads_user_download()
         return;
     }
 
-    $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarMod::apiFunc('uploads', 'user', 'db_get_file', ['fileId' => $fileId]);
 
     if (empty($fileName) && (empty($fileInfo) || !count($fileInfo))) {
         xarController::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
         return true;
     }
-    
+
     if (!empty($fileName)) {
         $fileInfo = xarSession::getVar($fileName);
-        
+
         try {
             $result = xarMod::apiFunc('uploads', 'user', 'file_push', $fileInfo);
         } catch (Exception $e) {
-            return xarTpl::module('uploads', 'user', 'errors', array('layout' => 'not_accessible'));
+            return xarTpl::module('uploads', 'user', 'errors', ['layout' => 'not_accessible']);
         }
 
         // Let any hooked modules know that we've just pushed a file
@@ -49,10 +49,10 @@ function uploads_user_download()
         // File has been pushed to the client, now shut down.
         exit();
     } else {
-    
+
         // the file should be the first indice in the array
         $fileInfo = end($fileInfo);
-    
+
         // Check whether download is permitted
         switch (xarModVars::get('uploads', 'permit_download')) {
             // No download permitted
@@ -71,7 +71,7 @@ function uploads_user_download()
                 }
                 $funcparts = explode(',', $rawfunction);
                 try {
-                    $permitted = xarMod::apiFunc($funcparts[0], $funcparts[1], $funcparts[2], array('fileInfo' => $fileInfo));
+                    $permitted = xarMod::apiFunc($funcparts[0], $funcparts[1], $funcparts[2], ['fileInfo' => $fileInfo]);
                 } catch (Exception $e) {
                     $permitted = false;
                 }
@@ -84,54 +84,54 @@ function uploads_user_download()
         if (!$permitted) {
             return xarResponse::NotFound();
         }
-        
+
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
         $instance[2] = xarSession::getVar('uid');
         $instance[3] = $fileId;
-    
+
         $instance = implode(':', $instance);
-    
+
         // If you are an administrator OR the file is approved, continue
         if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurity::check('EditUploads', 0, 'File', $instance)) {
-            return xarTpl::module('uploads', 'user', 'errors', array('layout' => 'no_permission'));
+            return xarTpl::module('uploads', 'user', 'errors', ['layout' => 'no_permission']);
         }
 
         if (xarSecurity::check('ViewUploads', 1, 'File', $instance)) {
             if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
                 if (!file_exists($fileInfo['fileLocation'])) {
-                    return xarTpl::module('uploads', 'user', 'errors', array('layout' => 'not_accessible'));
+                    return xarTpl::module('uploads', 'user', 'errors', ['layout' => 'not_accessible']);
                 }
             } elseif ($fileInfo['storeType'] & _UPLOADS_STORE_DB_FULL) {
-                if (!xarMod::apiFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileInfo['fileId']))) {
-                    return xarTpl::module('uploads', 'user', 'errors', array('layout' => 'not_accessible'));
+                if (!xarMod::apiFunc('uploads', 'user', 'db_count_data', ['fileId' => $fileInfo['fileId']])) {
+                    return xarTpl::module('uploads', 'user', 'errors', ['layout' => 'not_accessible']);
                 }
             }
-    
+
             $result = xarMod::apiFunc('uploads', 'user', 'file_push', $fileInfo);
-    
+
             /*
             if (!$result || xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
                 // now just return and let the error bubble up
                 return FALSE;
             }
             */
-    
+
             // Let any hooked modules know that we've just pushed a file
             // the hitcount module in particular needs to know to save the fact
             // that we just pushed a file and not display the count
             xarVar::setCached('Hooks.hitcount', 'save', 1);
-    
+
             // Note: we're ignoring the output from the display hooks here
             xarModHooks::call(
                 'item',
                 'display',
                 $fileId,
-                array('module'    => 'uploads',
+                ['module'    => 'uploads',
                                    'itemtype'  => 1, // Files
-                                   'returnurl' => xarController::URL('uploads', 'user', 'download', array('fileId' => $fileId)))
+                                   'returnurl' => xarController::URL('uploads', 'user', 'download', ['fileId' => $fileId]), ]
             );
-    
+
             // File has been pushed to the client, now shut down.
             exit();
         } else {

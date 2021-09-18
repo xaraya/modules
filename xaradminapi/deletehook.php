@@ -27,7 +27,7 @@ function uploads_adminapi_deletehook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
@@ -62,9 +62,9 @@ function uploads_adminapi_deletehook($args)
         'uploads',
         'admin',
         'db_delete_association',
-        array('itemid' => $objectid,
+        ['itemid' => $objectid,
                             'itemtype' => $itemtype,
-                            'modid' => $modid)
+                            'modid' => $modid, ]
     )) {
         // Return the extra info
         return $extrainfo;
