@@ -61,18 +61,18 @@ function workflow_init()
     // Create table workflow_activities
     $table = $xartable['workflow_activities'];
 
-    $fields = array(
-        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>true),
-        $qte.'normalized_name'.$qte   => array('type'=>'varchar','size'=>80,'null'=>true),
-        $qte.'pId'.$qte               => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'type'.$qte              => array('type'=>'varchar','size'=>20,'null'=>true),
-        $qte.'isAutoRouted'.$qte      => array('type'=>'char','size'=>1,'null'=>true),
-        $qte.'flowNum'.$qte           => array('type'=>'integer','null'=>true),
-        $qte.'isInteractive'.$qte     => array('type'=>'char','size'=>1,'null'=>true),
-        $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>true),
-        $qte.'description'.$qte       => array('type'=>'text','null'=>true)
-    );
+    $fields = [
+        $qte.'activityId'.$qte        => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'name'.$qte              => ['type'=>'varchar','size'=>80,'null'=>true],
+        $qte.'normalized_name'.$qte   => ['type'=>'varchar','size'=>80,'null'=>true],
+        $qte.'pId'.$qte               => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'type'.$qte              => ['type'=>'varchar','size'=>20,'null'=>true],
+        $qte.'isAutoRouted'.$qte      => ['type'=>'char','size'=>1,'null'=>true],
+        $qte.'flowNum'.$qte           => ['type'=>'integer','null'=>true],
+        $qte.'isInteractive'.$qte     => ['type'=>'char','size'=>1,'null'=>true],
+        $qte.'lastModif'.$qte         => ['type'=>'integer','null'=>true],
+        $qte.'description'.$qte       => ['type'=>'text','null'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -97,10 +97,10 @@ function workflow_init()
     // Create table workflow_activity_roles
     $table = $xartable['workflow_activity_roles'];
 
-    $fields = array(
-        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true),
-        $qte.'roleId'.$qte            => array('type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true)
-    );
+    $fields = [
+        $qte.'activityId'.$qte        => ['type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true],
+        $qte.'roleId'.$qte            => ['type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -130,14 +130,14 @@ function workflow_init()
     // Create table workflow_instance_activities
     $table = $xartable['workflow_instance_activities'];
 
-    $fields = array(
-        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true),
-        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true),
-        $qte.'started'.$qte           => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'ended'.$qte             => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>true),
-        $qte.'status'.$qte            => array('type'=>'varchar','size'=>20,'null'=>true)
-    );
+    $fields = [
+        $qte.'instanceId'.$qte        => ['type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true],
+        $qte.'activityId'.$qte        => ['type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true],
+        $qte.'started'.$qte           => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'ended'.$qte             => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'user'.$qte              => ['type'=>'varchar','size'=>200,'null'=>true],
+        $qte.'status'.$qte            => ['type'=>'varchar','size'=>20,'null'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -170,17 +170,17 @@ function workflow_init()
     // Create table workflow_instance_comments
     $table = $xartable['workflow_instance_comments'];
 
-    $fields = array(
-        $qte.'cId'.$qte               => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>true),
-        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>true),
-        $qte.'hash'.$qte              => array('type'=>'varchar','size'=>32,'null'=>true),
-        $qte.'title'.$qte             => array('type'=>'varchar','size'=>250,'null'=>true),
-        $qte.'comment'.$qte           => array('type'=>'text','null'=>true),
-        $qte.'activity'.$qte          => array('type'=>'varchar','size'=>80,'null'=>true),
-        $qte.'timestamp'.$qte         => array('type'=>'integer','null'=>true)
-    );
+    $fields = [
+        $qte.'cId'.$qte               => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'instanceId'.$qte        => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'user'.$qte              => ['type'=>'varchar','size'=>200,'null'=>true],
+        $qte.'activityId'.$qte        => ['type'=>'integer','null'=>true],
+        $qte.'hash'.$qte              => ['type'=>'varchar','size'=>32,'null'=>true],
+        $qte.'title'.$qte             => ['type'=>'varchar','size'=>250,'null'=>true],
+        $qte.'comment'.$qte           => ['type'=>'text','null'=>true],
+        $qte.'activity'.$qte          => ['type'=>'varchar','size'=>80,'null'=>true],
+        $qte.'timestamp'.$qte         => ['type'=>'integer','null'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -213,18 +213,18 @@ function workflow_init()
     // Create table workflow_instances
     $table = $xartable['workflow_instances'];
 
-    $fields = array(
-        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'pId'.$qte               => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'started'.$qte           => array('type'=>'integer','null'=>true),
-        $qte.'owner'.$qte             => array('type'=>'varchar','size'=>200,'null'=>true),
-        $qte.'nextActivity'.$qte      => array('type'=>'integer','null'=>true),
-        $qte.'nextUser'.$qte          => array('type'=>'varchar','size'=>200,'null'=>true),
-        $qte.'ended'.$qte             => array('type'=>'integer','null'=>true),
-        $qte.'status'.$qte            => array('type'=>'varchar','size'=>20,'null'=>true),
-        $qte.'properties'.$qte        => array('type'=>'blob','null'=>true),
-        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>false,'default'=>'')
-    );
+    $fields = [
+        $qte.'instanceId'.$qte        => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'pId'.$qte               => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'started'.$qte           => ['type'=>'integer','null'=>true],
+        $qte.'owner'.$qte             => ['type'=>'varchar','size'=>200,'null'=>true],
+        $qte.'nextActivity'.$qte      => ['type'=>'integer','null'=>true],
+        $qte.'nextUser'.$qte          => ['type'=>'varchar','size'=>200,'null'=>true],
+        $qte.'ended'.$qte             => ['type'=>'integer','null'=>true],
+        $qte.'status'.$qte            => ['type'=>'varchar','size'=>20,'null'=>true],
+        $qte.'properties'.$qte        => ['type'=>'blob','null'=>true],
+        $qte.'name'.$qte              => ['type'=>'varchar','size'=>80,'null'=>false,'default'=>''],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -256,16 +256,16 @@ function workflow_init()
     // Create table workflow_processes
     $table = $xartable['workflow_processes'];
 
-    $fields = array(
-        $qte.'pId'.$qte               => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>true),
-        $qte.'isValid'.$qte           => array('type'=>'char','size'=>1,'null'=>true),
-        $qte.'isActive'.$qte          => array('type'=>'char','size'=>1,'null'=>true),
-        $qte.'version'.$qte           => array('type'=>'varchar','size'=>12,'null'=>true),
-        $qte.'description'.$qte       => array('type'=>'text','null'=>true),
-        $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>true),
-        $qte.'normalized_name'.$qte   => array('type'=>'varchar','size'=>80,'null'=>true)
-    );
+    $fields = [
+        $qte.'pId'.$qte               => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'name'.$qte              => ['type'=>'varchar','size'=>80,'null'=>true],
+        $qte.'isValid'.$qte           => ['type'=>'char','size'=>1,'null'=>true],
+        $qte.'isActive'.$qte          => ['type'=>'char','size'=>1,'null'=>true],
+        $qte.'version'.$qte           => ['type'=>'varchar','size'=>12,'null'=>true],
+        $qte.'description'.$qte       => ['type'=>'text','null'=>true],
+        $qte.'lastModif'.$qte         => ['type'=>'integer','null'=>true],
+        $qte.'normalized_name'.$qte   => ['type'=>'varchar','size'=>80,'null'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -294,13 +294,13 @@ function workflow_init()
     // Create table workflow_roles
     $table = $xartable['workflow_roles'];
 
-    $fields = array(
-        $qte.'roleId'.$qte            => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'pId'.$qte               => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>true),
-        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>true),
-        $qte.'description'.$qte       => array('type'=>'text','null'=>true)
-    );
+    $fields = [
+        $qte.'roleId'.$qte            => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'pId'.$qte               => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'lastModif'.$qte         => ['type'=>'integer','null'=>true],
+        $qte.'name'.$qte              => ['type'=>'varchar','size'=>80,'null'=>true],
+        $qte.'description'.$qte       => ['type'=>'text','null'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -327,11 +327,11 @@ function workflow_init()
     // Create table workflow_transitions
     $table = $xartable['workflow_transitions'];
 
-    $fields = array(
-        $qte.'pId'.$qte               => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'actFromId'.$qte         => array('type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true),
-        $qte.'actToId'.$qte           => array('type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true)
-    );
+    $fields = [
+        $qte.'pId'.$qte               => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'actFromId'.$qte         => ['type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true],
+        $qte.'actToId'.$qte           => ['type'=>'integer','null'=>false,'default'=>'0','primary_key'=>true],
+    ];
 
 
     // Create the table DDL
@@ -359,11 +359,11 @@ function workflow_init()
     // Create table workflow_user_roles
     $table = $xartable['workflow_user_roles'];
 
-    $fields = array(
-        $qte.'pId'.$qte               => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'roleId'.$qte            => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>false,'default'=>'','primary_key'=>true)
-    );
+    $fields = [
+        $qte.'pId'.$qte               => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'roleId'.$qte            => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'user'.$qte              => ['type'=>'varchar','size'=>200,'null'=>false,'default'=>'','primary_key'=>true],
+    ];
 
 
     // Create the table DDL
@@ -396,17 +396,17 @@ function workflow_init()
     // Create table workflow_workitems
     $table = $xartable['workflow_workitems'];
 
-    $fields = array(
-        $qte.'itemId'.$qte            => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'orderId'.$qte           => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>false,'default'=>'0'),
-        $qte.'type'.$qte              => array('type'=>'varchar','size'=>20,'null'=>true),
-        $qte.'properties'.$qte        => array('type'=>'blob','null'=>true),
-        $qte.'started'.$qte           => array('type'=>'integer','null'=>true),
-        $qte.'ended'.$qte             => array('type'=>'integer','null'=>true),
-        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>true)
-    );
+    $fields = [
+        $qte.'itemId'.$qte            => ['type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true],
+        $qte.'instanceId'.$qte        => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'orderId'.$qte           => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'activityId'.$qte        => ['type'=>'integer','null'=>false,'default'=>'0'],
+        $qte.'type'.$qte              => ['type'=>'varchar','size'=>20,'null'=>true],
+        $qte.'properties'.$qte        => ['type'=>'blob','null'=>true],
+        $qte.'started'.$qte           => ['type'=>'integer','null'=>true],
+        $qte.'ended'.$qte             => ['type'=>'integer','null'=>true],
+        $qte.'user'.$qte              => ['type'=>'varchar','size'=>200,'null'=>true],
+    ];
 
     // Create the table DDL
     $query = xarTableDDL::createTable($table, $fields);
@@ -478,12 +478,12 @@ function workflow_init()
     */
 
     // define privilege instances and masks
-    $instances = array(
-                       array('header' => 'external', // this keyword indicates an external "wizard"
+    $instances = [
+                       ['header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarController::URL('workflow', 'admin', 'privileges'),
-                             'limit'  => 0
-                            )
-                    );
+                             'limit'  => 0,
+                            ],
+                    ];
     xarPrivileges::defineInstance('workflow', 'Item', $instances);
 
     // TODO: tweak this - allow viewing workflow of "your own items" someday ?
@@ -525,7 +525,7 @@ function workflow_delete()
 
     sys::import('xaraya.tableddl');
 
-    $mytables = array(
+    $mytables = [
                       'workflow_activities',
                       'workflow_activity_roles',
                       'workflow_instance_activities',
@@ -536,7 +536,7 @@ function workflow_delete()
                       'workflow_transitions',
                       'workflow_user_roles',
                       'workflow_workitems',
-                     );
+                     ];
 
     foreach ($mytables as $mytable) {
         // Generate the SQL to drop the table using the API

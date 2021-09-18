@@ -26,7 +26,7 @@ function workflow_userapi_run_activity($args)
 
     // Common setup for Galaxia environment (possibly include more than once here !)
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-run_activity.php
     include(GALAXIA_LIBRARY.'/api.php');

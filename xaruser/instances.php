@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -63,7 +64,7 @@ function workflow_user_instances()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-user_instances.php
 
@@ -101,7 +102,7 @@ function workflow_user_instances()
     }
 
     $where = '';
-    $wheres = array();
+    $wheres = [];
 
     if (isset($_REQUEST['filter_status']) && $_REQUEST['filter_status']) {
         $wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
@@ -177,18 +178,18 @@ function workflow_user_instances()
     $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
     $tplData['all_procs'] =&  $processes['data'];
 
-    $all_statuses = array(
+    $all_statuses = [
     'aborted',
     'active',
-    'exception'
-);
+    'exception',
+];
 
     $tplData['statuses'] =  $all_statuses;
 
     //$section = 'workflow';
     //include_once ('tiki-section_options.php');
 
-    $sameurl_elements = array(
+    $sameurl_elements = [
     'offset',
     'sort_mode',
     'where',
@@ -200,16 +201,16 @@ function workflow_user_instances()
     'processId',
     'filter_process',
     'filter_owner',
-    'filter_activity'
-);
+    'filter_activity',
+];
 
     $tplData['mid'] =  'tiki-g-user_instances.tpl';
 
     // Missing variables
-    $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
-    $tplData['filter_status'] = isset($_REQUEST['filter_status']) ? $_REQUEST['filter_status'] : '';
-    $tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUEST['filter_act_status'] : '';
-    $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
+    $tplData['filter_process'] = $_REQUEST['filter_process'] ?? '';
+    $tplData['filter_status'] = $_REQUEST['filter_status'] ?? '';
+    $tplData['filter_act_status'] = $_REQUEST['filter_act_status'] ?? '';
+    $tplData['filter_user'] = $_REQUEST['filter_user'] ?? '';
     $tplData['userId'] = $user;
     $tplData['user'] = xarUser::getVar('name', $user);
 
@@ -217,7 +218,7 @@ function workflow_user_instances()
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/
-    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     $tplData['maxRecords'] = $maxRecords;
     return $tplData;
 }

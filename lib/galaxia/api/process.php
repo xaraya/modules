@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
 /**
  * Workflow process class
@@ -57,7 +58,7 @@ class Process extends Base
         assert('$value === true or $value===false');
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-        $this->query($query, array($value ? 'y' : 'n',$this->pId));
+        $this->query($query, [$value ? 'y' : 'n',$this->pId]);
         $msg = sprintf(tra('Process %d has been (de)-activated'), $this->pId);
         // Object
         $this->active = $value;
@@ -77,7 +78,7 @@ class Process extends Base
         $this->deactivate();
 
         $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
-        $this->query($query, array('n',$this->pId));
+        $this->query($query, ['n',$this->pId]);
         $this->valid = false;
     }
     public function validate()
@@ -91,7 +92,7 @@ class Process extends Base
     private function getProcess($pId)
     {
         $query = "select * from ".self::tbl('processes')."where `pId`=?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, [$pId]);
         if (!$result->numRows()) {
             return false;
         }
@@ -156,7 +157,7 @@ class Process extends Base
     {
         // Get the activity data
         $query = "select * from ".self::tbl('activities')."where `pId`=? and `name`=?";
-        $result = $this->query($query, array($this->pId,$actname));
+        $result = $this->query($query, [$this->pId,$actname]);
         if (!$result->numRows()) {
             return false;
         }
@@ -171,7 +172,7 @@ class Process extends Base
     **/
     public function hasActivity($name)
     {
-        $bindvars = array($this->pId, $this->getNormalizedName());
+        $bindvars = [$this->pId, $this->getNormalizedName()];
         $query    = "SELECT COUNT(*) FROM ".self::tbl('activities')." WHERE pId=? AND normalized_name=?";
         return ($this->getOne($query, $bindvars) > 0);
     }
@@ -185,8 +186,8 @@ class Process extends Base
     public function &getActivities()
     {
         $query = "select activityId from ".self::tbl('activities')."where pId=?";
-        $result = $this->query($query, array($this->pId));
-        $ret = array();
+        $result = $this->query($query, [$this->pId]);
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = WorkFlowActivity::get($res['activityId']);
         }
@@ -204,15 +205,15 @@ class Process extends Base
         // @todo get rid of this temporary trick to get an object which has a $db
         $dummy = new Base();
         $name = self::normalize($name, $version);
-        return $dummy->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?", array($name));
+        return $dummy->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?", [$name]);
     }
 
     public function removeRoles()
     {
         $query = "delete from ".self::tbl('roles')." where pId=?";
-        $this->query($query, array($this->pId));
+        $this->query($query, [$this->pId]);
         $query = "delete from ".self::tbl('user_roles')." where pId=?";
-        $this->query($query, array($this->pId));
+        $this->query($query, [$this->pId]);
     }
 
     public function removeActivity($actId)
@@ -222,20 +223,20 @@ class Process extends Base
 
         // This removes the actual activity
         $query = "delete from ".self::tbl('activities')." where pId=? and activityId=?";
-        $this->query($query, array($this->pId, $actId));
+        $this->query($query, [$this->pId, $actId]);
 
         // @todo This is activity->removeTransitions
         $query = "select actFromId,actToId from ".self::tbl('transitions')." where actFromId=? or actToId=?";
-        $result = $this->query($query, array($actId, $actId));
+        $result = $this->query($query, [$actId, $actId]);
         while ($res = $result->fetchRow()) {
             // @todo This is activity->removeTransition(from,to)
             $query = "delete from ".self::tbl('transitions')." where actFromId=? and actToId=?";
-            $this->query($query, array($res['actFromId'], $res['actToId']));
+            $this->query($query, [$res['actFromId'], $res['actToId']]);
         }
 
         // @todo This is activity->removeRoles
         $query = "delete from ".self::tbl('activity_roles')." where activityId=?";
-        $this->query($query, array($actId));
+        $this->query($query, [$actId]);
         // And we have to remove the user and compiled files
         // for this activity
         $procname = $this->getNormalizedName();

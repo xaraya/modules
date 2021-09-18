@@ -26,7 +26,7 @@ function workflow_userapi_showinstances($args)
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     include(GALAXIA_LIBRARY.'/gui.php');
 
@@ -36,7 +36,7 @@ function workflow_userapi_showinstances($args)
 
     // TODO: keep track of instances from anonymous visitors via session ?
 
-    $wheres = array();
+    $wheres = [];
     if (!empty($args['status'])) {
         if (strpos($args['status'], ',')) {
             $statuslist = explode(',', $args['status']);
@@ -96,9 +96,9 @@ function workflow_userapi_showinstances($args)
     if (!empty($seenlist)) {
         $seen = explode(';', $seenlist);
     } else {
-        $seen = array();
+        $seen = [];
     }
-    $tplData['items'] = array();
+    $tplData['items'] = [];
     foreach ($items['data'] as $index => $info) {
         if (in_array($info['instanceId'], $seen)) {
             continue;
@@ -136,7 +136,7 @@ function workflow_userapi_showinstances($args)
         if (!empty($args['actionlist'])) {
             $tplData['actionlist'] = explode(',', $args['actionlist']);
         } else {
-            $tplData['actionlist'] = array();
+            $tplData['actionlist'] = [];
         }
     }
 

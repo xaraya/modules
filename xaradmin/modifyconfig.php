@@ -28,25 +28,25 @@ function workflow_admin_modifyconfig()
         return;
     }
 
-    $data = array();
-    $data['settings'] = array();
+    $data = [];
+    $data['settings'] = [];
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'blocks'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'blocks']);
     $data['module_settings']->getItem();
 
     $create = xarModVars::get('workflow', 'default.create');
     $update = xarModVars::get('workflow', 'default.update');
     $delete = xarModVars::get('workflow', 'default.delete');
-    $data['settings']['default'] = array('label' => xarML('Default configuration'),
+    $data['settings']['default'] = ['label' => xarML('Default configuration'),
                                          'create' => $create,
                                          'update' => $update,
-                                         'delete' => $delete);
+                                         'delete' => $delete, ];
 
     $hookedmodules = xarMod::apiFunc(
         'modules',
         'admin',
         'gethookedmodules',
-        array('hookModName' => 'workflow')
+        ['hookModName' => 'workflow']
     );
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
@@ -58,7 +58,7 @@ function workflow_admin_modifyconfig()
                     'user',
                     'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(),
+                                         [],
                     0
                 );
                 foreach ($value as $itemtype => $val) {
@@ -79,12 +79,12 @@ function workflow_admin_modifyconfig()
                         $link = $mytypes[$itemtype]['url'];
                     } else {
                         $type = xarML('type #(1)', $itemtype);
-                        $link = xarController::URL($modname, 'user', 'view', array('itemtype' => $itemtype));
+                        $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                     }
-                    $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                    $data['settings']["$modname.$itemtype"] = ['label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                     'create' => $create,
                                                                     'update' => $update,
-                                                                    'delete' => $delete);
+                                                                    'delete' => $delete, ];
                 }
             } else {
                 $create = xarModVars::get('workflow', "$modname.create");
@@ -100,10 +100,10 @@ function workflow_admin_modifyconfig()
                     $delete = '';
                 }
                 $link = xarController::URL($modname, 'user', 'main');
-                $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                $data['settings'][$modname] = ['label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                     'create' => $create,
                                                     'update' => $update,
-                                                    'delete' => $delete);
+                                                    'delete' => $delete, ];
             }
         }
     }
@@ -117,13 +117,13 @@ function workflow_admin_modifyconfig()
 
     // get the name of all processes
     $all_procs = $processMonitor->monitor_list_all_processes('pId_asc', "isActive='y'");
-    $pid2name = array();
+    $pid2name = [];
     foreach ($all_procs as $info) {
         $pid2name[$info['pId']] = $info['name'] . ' ' . $info['version'];
     }
 
     // build a list of activity ids and names
-    $data['activities'] = array();
+    $data['activities'] = [];
     $data['activities'][0] = '';
     foreach ($activities['data'] as $info) {
         if (isset($pid2name[$info['pId']])) {
@@ -135,7 +135,7 @@ function workflow_admin_modifyconfig()
     $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='standalone' and isInteractive='n'");
 
     // build a list of activity ids and names
-    $data['standalone'] = array();
+    $data['standalone'] = [];
     foreach ($activities['data'] as $info) {
         if (isset($pid2name[$info['pId']])) {
             $data['standalone'][$info['activityId']] = $pid2name[$info['pId']] . ' - ' . $info['name'];
@@ -150,12 +150,12 @@ function workflow_admin_modifyconfig()
     if (!empty($serialjobs)) {
         $data['jobs'] = unserialize($serialjobs);
     } else {
-        $data['jobs'] = array();
+        $data['jobs'] = [];
     }
-    $data['jobs'][] = array('activity' => '',
+    $data['jobs'][] = ['activity' => '',
                             'interval' => '',
                             'lastrun' => '',
-                            'result' => '');
+                            'result' => '', ];
 
     if (xarMod::isAvailable('scheduler')) {
         $data['intervals'] = xarMod::apiFunc('scheduler', 'user', 'intervals');
@@ -164,9 +164,9 @@ function workflow_admin_modifyconfig()
             'scheduler',
             'user',
             'get',
-            array('module' => 'workflow',
+            ['module' => 'workflow',
                                    'type' => 'scheduler',
-                                   'func' => 'activities')
+                                   'func' => 'activities', ]
         );
         if (empty($job) || empty($job['interval'])) {
             $data['interval'] = '';
@@ -174,7 +174,7 @@ function workflow_admin_modifyconfig()
             $data['interval'] = $job['interval'];
         }
     } else {
-        $data['intervals'] = array();
+        $data['intervals'] = [];
         $data['interval'] = '';
     }
 

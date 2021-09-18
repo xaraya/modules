@@ -1,4 +1,5 @@
 <?php
+
 //Code to be executed before the end activity
 // If we didn't retrieve the instance before
 if (empty($instance->instanceId)) {

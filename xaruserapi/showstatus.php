@@ -27,7 +27,7 @@ function workflow_userapi_showstatus($args)
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     include(GALAXIA_LIBRARY.'/processmonitor.php');
 
@@ -82,7 +82,7 @@ function workflow_userapi_showstatus($args)
     } else {
         $sort_mode = 'started_asc';
     }
-    $items = $processMonitor->monitor_list_instances($startnum - 1, $numitems, $sort_mode, '', $where, array());
+    $items = $processMonitor->monitor_list_instances($startnum - 1, $numitems, $sort_mode, '', $where, []);
 
     // filter out instances the user doesn't want to see
     if (xarUser::isLoggedIn()) {
@@ -93,9 +93,9 @@ function workflow_userapi_showstatus($args)
     if (!empty($seenlist)) {
         $seen = explode(';', $seenlist);
     } else {
-        $seen = array();
+        $seen = [];
     }
-    $tplData['items'] = array();
+    $tplData['items'] = [];
     foreach ($items['data'] as $index => $info) {
         if (in_array($info['instanceId'], $seen)) {
             continue;
@@ -133,7 +133,7 @@ function workflow_userapi_showstatus($args)
         if (!empty($args['actionlist'])) {
             $tplData['actionlist'] = explode(',', $args['actionlist']);
         } else {
-            $tplData['actionlist'] = array();
+            $tplData['actionlist'] = [];
         }
     }
 

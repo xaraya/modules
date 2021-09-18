@@ -26,7 +26,7 @@ function workflow_userapi_showactivity($args)
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     include(GALAXIA_LIBRARY.'/api.php');
 

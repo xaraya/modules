@@ -18,7 +18,7 @@
  */
 function workflow_userapi_getitemtypes($args)
 {
-    $itemtypes = array();
+    $itemtypes = [];
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
@@ -28,15 +28,15 @@ function workflow_userapi_getitemtypes($args)
     $processes = $processMonitor->monitor_list_all_processes('name_asc', "isActive = 'y'");
 
     foreach ($processes as $process) {
-        $itemtypes[$process['pId']] = array('label' => xarVar::prepForDisplay($process['name'] . ' ' . $process['version']),
+        $itemtypes[$process['pId']] = ['label' => xarVar::prepForDisplay($process['name'] . ' ' . $process['version']),
                                             'title' => xarVar::prepForDisplay(xarML('View Process')),
                                             'url'   => xarController::URL(
                                                 'workflow',
                                                 'user',
                                                 'activities',
-                                                array('filter_process' => $process['pId'])
-                                            )
-                                           );
+                                                ['filter_process' => $process['pId']]
+                                            ),
+                                           ];
     }
     return $itemtypes;
 }

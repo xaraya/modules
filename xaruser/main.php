@@ -28,5 +28,5 @@ function workflow_user_main()
     }
 
     // Return the output
-    return array();
+    return [];
 }

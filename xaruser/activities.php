@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -28,7 +29,7 @@ function workflow_user_activities()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-user_activities.php
     include_once(GALAXIA_LIBRARY.'/gui.php');
@@ -42,7 +43,7 @@ function workflow_user_activities()
     // filter_active, filter_valid, find, sort_mode,
     // filter_process
     $where = '';
-    $wheres = array();
+    $wheres = [];
 
     /*
     if(isset($_REQUEST['filter_active'])&&$_REQUEST['filter_active']) $wheres[]="isActive='".$_REQUEST['filter_active']."'";
@@ -106,7 +107,7 @@ function workflow_user_activities()
     }
 
     if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-        $actid2item = array();
+        $actid2item = [];
         foreach (array_keys($tplData['items']) as $index) {
             $actid2item[$tplData['items'][$index]['activityId']] = $index;
         }
@@ -132,7 +133,7 @@ function workflow_user_activities()
                                 'workflow',
                                 'user',
                                 'instances',
-                                array('filter_process' => $info['pId'])
+                                ['filter_process' => $info['pId']]
                             );
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
                             $map .= $mapline;
@@ -158,7 +159,7 @@ function workflow_user_activities()
 
     //$section = 'workflow';
     //include_once ('tiki-section_options.php');
-    $sameurl_elements = array(
+    $sameurl_elements = [
         'offset',
         'sort_mode',
         'where',
@@ -168,19 +169,19 @@ function workflow_user_activities()
         'filter_activity',
         'filter_type',
         'processId',
-        'filter_process'
-    );
+        'filter_process',
+    ];
 
     $tplData['mid'] =  'tiki-g-user_activities.tpl';
 
     // Missing variable
-    $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
+    $tplData['filter_process'] = $_REQUEST['filter_process'] ?? '';
 
     /*        $tplData['pager'] = xarTplPager::getPager($tplData['offset'],
                                                $items['cant'],
                                                $url,
                                                $maxRecords);*/
     $tplData['maxRecords'] = $maxRecords;
-    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     return $tplData;
 }

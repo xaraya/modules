@@ -39,7 +39,7 @@ function workflow_adminapi_createhook($args)
         return;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     // When called via hooks, modname wil be empty, but we get it from the
@@ -94,12 +94,12 @@ function workflow_adminapi_createhook($args)
         'workflow',
         'user',
         'run_activity',
-        array('activityId' => $activityId,
+        ['activityId' => $activityId,
                              'auto' => 1,
                              // standard arguments for use in activity code
                              'module' => $modname,
                              'itemtype' => $itemtype,
-                             'itemid' => $objectid)
+                             'itemid' => $objectid, ]
     )) {
         return $extrainfo;
     }

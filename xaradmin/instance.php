@@ -27,7 +27,7 @@ function workflow_admin_instance()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-admin_instance.php
 
@@ -84,7 +84,7 @@ function workflow_admin_instance()
             'roles',
             'user',
             'get',
-            array('id' => $mapitems['data'][$index]['user'])
+            ['id' => $mapitems['data'][$index]['user']]
         );
         if (!empty($role)) {
             $mapitems['data'][$index]['userId'] = $role['id'];
@@ -103,7 +103,7 @@ function workflow_admin_instance()
     }
 
     if (!is_array($props)) {
-        $props = array();
+        $props = [];
     }
 
     $tplData['props'] =&  $props;

@@ -11,7 +11,7 @@ include_once(GALAXIA_LIBRARY.'/common/base.php');
 class WorkItem extends Base
 {
     public $instance;
-    public $properties = array();
+    public $properties = [];
     public $started;
     public $ended;
     public $activity;

@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/managers/base.php');
 //!! ProcessManager
 //! A class to maniplate processes.
@@ -38,7 +39,7 @@ class ProcessManager extends BaseManager
         $out.= '  ]]></sharedCode>'."\n";
         // Now loop over activities
         $query = "select * from ".self::tbl('activities')."where pId= ?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, [$pId]);
         $out.='  <activities>'."\n";
         $am = new ActivityManager($this->db);
         while ($res = $result->fetchRow()) {
@@ -110,12 +111,12 @@ class ProcessManager extends BaseManager
         xml_set_object($this->parser, $this);
         xml_set_element_handler($this->parser, "_start_element_handler", "_end_element_handler");
         xml_set_character_data_handler($this->parser, "_data_handler");
-        $aux=array(
+        $aux=[
           'name'=>'root',
-          'children'=>array(),
+          'children'=>[],
           'parent' => 0,
-          'data'=>''
-        );
+          'data'=>'',
+        ];
         $this->tree[0]=$aux;
         $this->current=0;
         if (!xml_parse($this->parser, $xml, true)) {
@@ -129,9 +130,9 @@ class ProcessManager extends BaseManager
         xml_parser_free($this->parser);
         // Now that we have the tree we can do interesting things
         //print_r($this->tree);
-        $process=array();
-        $activities=array();
-        $transitions=array();
+        $process=[];
+        $activities=[];
+        $transitions=[];
         for ($i=0;$i<count($this->tree[1]['children']);$i++) {
             // Process attributes
             $z=$this->tree[1]['children'][$i];
@@ -146,7 +147,7 @@ class ProcessManager extends BaseManager
                             $name = trim($this->tree[$z3]['name']);
                             $value= trim($this->tree[$z3]['data']);
                             if ($name=='roles') {
-                                $roles=array();
+                                $roles=[];
                                 for ($l=0;$l<count($this->tree[$z3]['children']);$l++) {
                                     $z4 = $this->tree[$z3]['children'][$l];
                                     $name = trim($this->tree[$z4]['name']);
@@ -201,14 +202,14 @@ class ProcessManager extends BaseManager
         $am = new ActivityManager($this->db);
         $rm = new RoleManager($this->db);
         // First create the process
-        $vars = array(
+        $vars = [
             'name'          => $data['name'],
             'version'       => $data['version'],
             'description'   => $data['description'],
             'lastModif'     => $data['lastModif'],
             'isActive'      => $data['isActive'],
-            'isValid'       => $data['isValid']
-        );
+            'isValid'       => $data['isValid'],
+        ];
 
         $pid = $this->replace_process(0, $vars, false);
         //Put the shared code
@@ -218,17 +219,17 @@ class ProcessManager extends BaseManager
         $fp = fopen(GALAXIA_PROCESSES."/$procname/code/shared.php", "w");
         fwrite($fp, $data['sharedCode']);
         fclose($fp);
-        $actids = array();
+        $actids = [];
         // Foreach activity create activities
         foreach ($data['activities'] as $activity) {
-            $vars = array(
+            $vars = [
                 'name' => $activity['name'],
                 'description' => $activity['description'],
                 'type' => $activity['type'],
                 'lastModif' => $activity['lastModif'],
                 'isInteractive' => $activity['isInteractive'],
-                'isAutoRouted' => $activity['isAutoRouted']
-            );
+                'isAutoRouted' => $activity['isAutoRouted'],
+            ];
 
             $actid = $am->replace_activity($pid, 0, $vars);
             $act = WorkFlowActivity::get($actid);
@@ -246,11 +247,11 @@ class ProcessManager extends BaseManager
             $now = date("U");
 
             foreach ($activity['roles'] as $role) {
-                $vars = array(
+                $vars = [
                     'name' => $role,
                     'description' => $role,
                     'lastModif' => $now,
-                );
+                ];
                 if (!$rm->role_name_exists($pid, $role)) {
                     $rid=$rm->replace_role($pid, 0, $vars);
                 } else {
@@ -313,15 +314,15 @@ class ProcessManager extends BaseManager
         // And here copy all the activities & so
         $am = new ActivityManager($this->db);
         $query = "select * from ".self::tbl('activities')." where pId=?";
-        $result = $this->query($query, array($oldpid));
-        $newaid = array();
+        $result = $this->query($query, [$oldpid]);
+        $newaid = [];
         while ($res = $result->fetchRow()) {
             $oldaid = $res['activityId'];
             $newaid[$oldaid] = $am->replace_activity($pid, 0, $res);
         }
         // create transitions
         $query = "select * from ".self::tbl('transitions')." where pId=?";
-        $result = $this->query($query, array($oldpid));
+        $result = $this->query($query, [$oldpid]);
         while ($res = $result->fetchRow()) {
             if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
                 continue;
@@ -332,8 +333,8 @@ class ProcessManager extends BaseManager
         // create roles
         $rm = new RoleManager($this->db);
         $query = "select * from ".self::tbl('roles')."where pId=?";
-        $result = $this->query($query, array($oldpid));
-        $newrid = array();
+        $result = $this->query($query, [$oldpid]);
+        $newrid = [];
         while ($res = $result->fetchRow()) {
             if (!$rm->role_name_exists($pid, $res['name'])) {
                 $rid=$rm->replace_role($pid, 0, $res);
@@ -345,7 +346,7 @@ class ProcessManager extends BaseManager
         // map users to roles
         if (count($newrid) > 0) {
             $query = "select * from ".self::tbl('user_roles')."where pId=?";
-            $result = $this->query($query, array($oldpid));
+            $result = $this->query($query, [$oldpid]);
             while ($res = $result->fetchRow()) {
                 if (empty($newrid[$res['roleId']])) {
                     continue;
@@ -384,7 +385,7 @@ class ProcessManager extends BaseManager
     public function get_process($pId)
     {
         $query = "select * from ".self::tbl('processes')." where pId=?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, [$pId]);
         if (!$result->numRows()) {
             return false;
         }
@@ -401,10 +402,10 @@ class ProcessManager extends BaseManager
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid=" where ((name like ?) or (description like ?))";
-            $bindvars = array($findesc,$findesc);
+            $bindvars = [$findesc,$findesc];
         } else {
             $mid="";
-            $bindvars = array();
+            $bindvars = [];
         }
         if ($where) {
             if ($mid) {
@@ -417,11 +418,11 @@ class ProcessManager extends BaseManager
         $query_cant = "select count(*) from ".self::tbl('processes')." $mid";
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -440,7 +441,7 @@ class ProcessManager extends BaseManager
         $aM = new ActivityManager($this->db);
         // Remove process activities
         $query = "select activityId from ".self::tbl('activities')." where pId=?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, [$pId]);
         while ($res = $result->fetchRow()) {
             $process->removeActivity($res['activityId']);
         }
@@ -457,7 +458,7 @@ class ProcessManager extends BaseManager
         }
         // And finally remove the proc
         $query = "delete from ".self::tbl('processes')." where pId=?";
-        $this->query($query, array($pId));
+        $this->query($query, [$pId]);
         $msg = sprintf(tra('Process %s removed'), $name);
         $this->notify_all(5, $msg);
 
@@ -482,7 +483,7 @@ class ProcessManager extends BaseManager
             // update mode
             $oldProcess = new Process($pId);
             $first = true;
-            $bindvars = array();
+            $bindvars = [];
             $query ="update $TABLE_NAME set";
             foreach ($vars as $key=>$value) {
                 if (!$first) {
@@ -520,7 +521,7 @@ class ProcessManager extends BaseManager
             }
             $query .=") values(";
             $first = true;
-            $bindvars = array();
+            $bindvars = [];
             foreach (array_values($vars) as $value) {
                 if (!$first) {
                     $query.= ',';
@@ -531,25 +532,25 @@ class ProcessManager extends BaseManager
             }
             $query .=")";
             $this->query($query, $bindvars);
-            $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=?", array($now));
+            $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=?", [$now]);
             // Now automatically add a start and end activity
             // unless importing ($create = false)
             if ($create) {
                 $aM= new ActivityManager($this->db);
-                $vars1 = array(
+                $vars1 = [
                   'name' => 'start',
                   'description' => 'default start activity',
                   'type' => 'start',
                   'isInteractive' => 'y',
-                  'isAutoRouted' => 'y'
-                  );
-                $vars2 = array(
+                  'isAutoRouted' => 'y',
+                  ];
+                $vars2 = [
                   'name' => 'end',
                   'description' => 'default end activity',
                   'type' => 'end',
                   'isInteractive' => 'n',
-                  'isAutoRouted' => 'y'
-                  );
+                  'isAutoRouted' => 'y',
+                  ];
                 $aM->replace_activity($pId, 0, $vars1);
                 $aM->replace_activity($pId, 0, $vars2);
             }
@@ -643,10 +644,10 @@ class ProcessManager extends BaseManager
 
     public function _start_element_handler($parser, $element, $attribs)
     {
-        $aux=array('name'=>$element,
+        $aux=['name'=>$element,
                'data'=>'',
                'parent' => $this->current,
-               'children'=>array());
+               'children'=>[], ];
         $i = count($this->tree);
         $this->tree[$i] = $aux;
 

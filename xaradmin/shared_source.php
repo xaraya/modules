@@ -27,7 +27,7 @@ function workflow_admin_shared_source()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-admin_shared_source.php
 
@@ -78,12 +78,12 @@ function workflow_admin_shared_source()
             $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
         }
         // Then editing an activity
-        $tplData['act_info'] =  array(
+        $tplData['act_info'] =  [
             'isInteractive' => $act->isInteractive(),
-            'type'          => $act->getType());
+            'type'          => $act->getType(), ];
     } else {
         $tplData['template'] =  'n';
-        $tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');
+        $tplData['act_info'] =  ['isInteractive' => 'n', 'type' => 'shared'];
         // Then editing shared code
         $source = GALAXIA_PROCESSES."/$procname/code/shared.php";
     }
@@ -131,7 +131,7 @@ function workflow_admin_shared_source()
     }
 
     $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
-    $errors = array();
+    $errors = [];
 
     if (!$valid) {
         $errors = $activityManager->get_error();

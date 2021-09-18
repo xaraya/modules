@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -28,7 +29,7 @@ function workflow_user_processes()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-user_processes.php
     include_once(GALAXIA_LIBRARY.'/gui.php');
@@ -42,7 +43,7 @@ function workflow_user_processes()
     // filter_active, filter_valid, find, sort_mode,
     // filter_process
     $where = '';
-    $wheres = array();
+    $wheres = [];
 
     /*
     if(isset($_REQUEST['filter_active'])&&$_REQUEST['filter_active']) $wheres[]="isActive='".$_REQUEST['filter_active']."'";
@@ -98,7 +99,7 @@ function workflow_user_processes()
     //$section = 'workflow';
     //include_once ('tiki-section_options.php');
 
-    $sameurl_elements = array(
+    $sameurl_elements = [
         'offset',
         'sort_mode',
         'where',
@@ -106,8 +107,8 @@ function workflow_user_processes()
         'filter_valid',
         'filter_process',
         'filter_active',
-        'processId'
-    );
+        'processId',
+    ];
 
     $tplData['mid'] =  'tiki-g-user_processes.tpl';
 
@@ -116,7 +117,7 @@ function workflow_user_processes()
                                                $items['cant'],
                                                $url,
                                                $maxRecords);*/
-    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     $tplData['maxRecords'] = $maxRecords;
     return $tplData;
 }

@@ -1,4 +1,5 @@
 <?php
+
 //!! Observable
 //! An abstract class implementing observable objects
 /*!
@@ -14,7 +15,7 @@
 */
 class Observable
 {
-    public $_observers=array();
+    public $_observers=[];
 
     /*!
      This method can be used to attach an object to the class listening for

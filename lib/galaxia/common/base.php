@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/common/observable.php');
 //!! Abstract class representing the base of the API
 //! An abstract class representing the API base
@@ -56,7 +57,7 @@ class Base extends Observable
         if ($res === false) {
             return (null);
         } //simulate pears behaviour
-        list($key, $value) = each($res);
+        [$key, $value] = each($res);
         return $value;
     }
 

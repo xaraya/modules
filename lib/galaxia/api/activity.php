@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
 /**
  * Base class for Workflow activities
@@ -16,8 +17,8 @@ class WorkflowActivity extends Base
     public $isInteractive;
     public $isAutoRouted;
 
-    public $outbound=array();
-    public $inbound=array();
+    public $outbound=[];
+    public $inbound=[];
 
     public $pId;
     public $activityId;
@@ -33,7 +34,7 @@ class WorkflowActivity extends Base
         // Get an object with a db object for now
         $dummy = new Base();
         $query = "select * from ".self::tbl('activities')." where `activityId`=?";
-        $result = $dummy->query($query, array($activityId));
+        $result = $dummy->query($query, [$activityId]);
 
         if (!$result->numRows()) {
             $false = false;
@@ -120,7 +121,7 @@ class WorkflowActivity extends Base
     {
         // @todo cache
         $query = "update ".self::tbl('activities')."set isInteractive=? where pId=? and activityId=?";
-        $this->query($query, array($is?'y':'n', $this->getProcessId(), $this->getActivityId()));
+        $this->query($query, [$is ? 'y' : 'n', $this->getProcessId(), $this->getActivityId()]);
         // If template does not exist then create template
         $this->compile();
 
@@ -184,8 +185,8 @@ class WorkflowActivity extends Base
         $query = "select activityId,roles.roleId,roles.name
                 from ".self::tbl('activity_roles')."  gar, ".self::tbl('roles')."  roles
                 where roles.roleId = gar.roleId and activityId=?";
-        $result = $this->query($query, array($this->activityId));
-        $ret = array();
+        $result = $this->query($query, [$this->activityId]);
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res;
         }
@@ -196,19 +197,19 @@ class WorkflowActivity extends Base
     {
         $this->removeRole($roleId);
         $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
-        $this->query($query, array($this->activityId, $roleId));
+        $this->query($query, [$this->activityId, $roleId]);
     }
     public function removeRole($roleId)
     {
         $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
-        $this->query($query, array($this->activityId, $roleId));
+        $this->query($query, [$this->activityId, $roleId]);
     }
     /** END role manipulation **/
 
     public function removeTransitions()
     {
         $query = "delete from ".self::tbl('transitions')."  where pId=? and (actFromId=? or actToId=?)";
-        $this->query($query, array($this->pId, $this->activityId, $this->activityId));
+        $this->query($query, [$this->pId, $this->activityId, $this->activityId]);
     }
 
 
@@ -306,8 +307,8 @@ class WorkflowActivity extends Base
     public function getUserRoles($user)
     {
         $query = "select `roleId` from ".self::tbl('user_roles')." where `user`=?";
-        $result=$this->query($query, array($user));
-        $ret = array();
+        $result=$this->query($query, [$user]);
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res['roleId'];
         }
@@ -324,8 +325,8 @@ class WorkflowActivity extends Base
     {
         $aid = $this->activityId;
         $query = "select gr.`roleId`, `name` from ".self::tbl('activity_roles')." gar, ".self::tbl('roles')." gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
-        $result=$this->query($query, array($aid));
-        $ret = array();
+        $result=$this->query($query, [$aid]);
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res;
         }
@@ -347,6 +348,6 @@ class WorkflowActivity extends Base
         return $this->getOne("
              select count(*)
              from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr
-             where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?", array($aid, $user, $rolename));
+             where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?", [$aid, $user, $rolename]);
     }
 }

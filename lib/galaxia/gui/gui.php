@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
 //!! GUI
 //! A GUI class for use in typical user interface scripts
@@ -7,7 +8,6 @@ This class provides methods for use in typical user interface scripts
 */
 class GUI extends Base
 {
-
   /*!
   List user processes, user processes should follow one of these conditions:
   1) The process has an instance assigned to the user
@@ -27,7 +27,7 @@ class GUI extends Base
         $sort_mode = str_replace("_", " ", $sort_mode);
 
         $mid = "where gp.isActive=? and gur.user=?";
-        $bindvars = array('y',$user);
+        $bindvars = ['y',$user];
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid .= " and ((gp.name like ?) or (gp.description like ?))";
@@ -58,7 +58,7 @@ class GUI extends Base
               $mid";
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
             // Get instances per activity
             $pId=$res['pId'];
@@ -70,7 +70,7 @@ class GUI extends Base
                 INNER JOIN ".self::tbl('roles')." gr ON gr.roleId=gar.roleId
                 INNER JOIN ".self::tbl('user_roles')."gur ON gur.roleId=gr.roleId
               where gp.pId=? and gur.user=?",
-                array($pId,$user)
+                [$pId,$user]
             );
             $res['instances']=$this->getOne(
                 "select count(distinct(gi.instanceId))
@@ -79,11 +79,11 @@ class GUI extends Base
                 INNER JOIN ".self::tbl('activity_roles')."gar ON gia.activityId=gar.activityId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId
               where gi.pId=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
-                array($pId,$user,'*',$user)
+                [$pId,$user,'*',$user]
             );
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -97,7 +97,7 @@ class GUI extends Base
         $sort_mode = str_replace("_", " ", $sort_mode);
 
         $mid = "where gp.isActive=? and gur.user=?";
-        $bindvars = array('y',$user);
+        $bindvars = ['y',$user];
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid .= " and ((ga.name like ?) or (ga.description like ?))";
@@ -133,7 +133,7 @@ class GUI extends Base
               $mid";
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
-        $ret = array();
+        $ret = [];
         // TODO: check http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/1.10/lib/Galaxia/src/GUI/GUI.php?annotate=5629
         while ($res = $result->fetchRow()) {
             // Get instances per activity
@@ -144,11 +144,11 @@ class GUI extends Base
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gia.activityId=gar.activityId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId
               where gia.activityId=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
-                array($res['activityId'],$user,'*',$user)
+                [$res['activityId'],$user,'*',$user]
             );
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -161,7 +161,7 @@ class GUI extends Base
         $sort_mode = str_replace("_", " ", $sort_mode);
 
         $mid = "where (gia.user=? or (gia.user=? and gur.user=?))";
-        $bindvars = array($user,'*',$user);
+        $bindvars = [$user,'*',$user];
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid .= " and ((ga.name like ?) or (ga.description like ?))";
@@ -203,12 +203,12 @@ class GUI extends Base
               $mid";
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
             // Get instances per activity
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -224,7 +224,7 @@ class GUI extends Base
             "select count(*)
                        from ".self::tbl('instance_activities')." gia, ".self::tbl('instances')." gi
                        where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
-            array($activityId,$instanceId,$user,$user)
+            [$activityId,$instanceId,$user,$user]
         )) {
             return false;
         }
@@ -248,14 +248,14 @@ class GUI extends Base
             "select count(*)
                        from ".self::tbl('instance_activities')."gia, ".self::tbl('instances')." gi
                        where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
-            array($activityId,$instanceId,$user,$user)
+            [$activityId,$instanceId,$user,$user]
         )) {
             return false;
         }
         $query = "update ".self::tbl('instances')."
               set status=?
               where instanceId=?";
-        $this->query($query, array('exception',$instanceId));
+        $this->query($query, ['exception',$instanceId]);
     }
 
     /*!
@@ -268,14 +268,14 @@ class GUI extends Base
             "select count(*)
                        from ".self::tbl('instance_activities')." gia, ".self::tbl('instances')." gi
                        where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
-            array($activityId,$instanceId,$user,$user)
+            [$activityId,$instanceId,$user,$user]
         )) {
             return false;
         }
         $query = "update ".self::tbl('instances')."
               set status=?
               where instanceId=?";
-        $this->query($query, array('active',$instanceId));
+        $this->query($query, ['active',$instanceId]);
     }
 
 
@@ -286,7 +286,7 @@ class GUI extends Base
           "select count(*)
                       from ".self::tbl('instance_activities')."
                       where activityId=? and instanceId=? and user=?",
-          array($activityId,$instanceId,$user)
+          [$activityId,$instanceId,$user]
       ))
       ||
       ($this->getOne(
@@ -295,7 +295,7 @@ class GUI extends Base
                       INNER JOIN ".self::tbl('activity_roles')."gar ON gar.activityId=gia.activityId
                       INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId
                       where gia.instanceId=? and gia.activityId=? and gia.user=? and gur.user=?",
-          array($instanceId,$activityId,'*',$user)
+          [$instanceId,$activityId,'*',$user]
       ))
       ) {
             return false;
@@ -313,14 +313,14 @@ class GUI extends Base
             "select count(*)
                        from ".self::tbl('instance_activities')."
                        where activityId=? and instanceId=? and user=?",
-            array($activityId,$instanceId,$user)
+            [$activityId,$instanceId,$user]
         )) {
             return false;
         }
         $query = "update ".self::tbl('instance_activities')."
               set user=?
               where instanceId=? and activityId=?";
-        $this->query($query, array('*',$instanceId,$activityId));
+        $this->query($query, ['*',$instanceId,$activityId]);
     }
 
     public function gui_grab_instance($user, $activityId, $instanceId)
@@ -332,13 +332,13 @@ class GUI extends Base
                       INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=gia.activityId
                       INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId
                       where gia.instanceId=? and gia.activityId=? and gia.user=? and gur.user=?",
-            array($instanceId,$activityId,'*',$user)
+            [$instanceId,$activityId,'*',$user]
         )) {
             return false;
         }
         $query = "update ".self::tbl('instance_activities')."
               set user=?
               where instanceId=? and activityId=?";
-        $this->query($query, array($user,$instanceId,$activityId));
+        $this->query($query, [$user,$instanceId,$activityId]);
     }
 }

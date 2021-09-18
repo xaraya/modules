@@ -28,9 +28,9 @@ function workflow_schedulerapi_activities($args)
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
-        $jobs = array();
+        $jobs = [];
     }
-    $hasrun = array();
+    $hasrun = [];
     $now = time() + 60; // add some margin here
     foreach ($jobs as $id => $job) {
         $lastrun = $job['lastrun'];
@@ -77,7 +77,7 @@ function workflow_schedulerapi_activities($args)
             'workflow',
             'user',
             'run_activity',
-            array('activityId' => $job['activity']),
+            ['activityId' => $job['activity']],
             0
         )) {
             $jobs[$id]['result'] = xarML('failed');
@@ -106,7 +106,7 @@ function workflow_schedulerapi_activities($args)
     if (!empty($serialjobs)) {
         $newjobs = unserialize($serialjobs);
     } else {
-        $newjobs = array();
+        $newjobs = [];
     }
     // set the job information
     foreach ($hasrun as $id) {

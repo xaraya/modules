@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/managers/base.php');
 //!! RoleManager
 //! A class to maniplate roles.
@@ -18,7 +19,7 @@ class RoleManager extends BaseManager
 {
     public function get_role_id($pid, $name)
     {
-        return ($this->getOne("select roleId from ".self::tbl('roles')." where name=? and pId=?", array($name,$pid)));
+        return ($this->getOne("select roleId from ".self::tbl('roles')." where name=? and pId=?", [$name,$pid]));
     }
 
     /*!
@@ -27,7 +28,7 @@ class RoleManager extends BaseManager
     public function get_role($pId, $roleId)
     {
         $query = "select * from ".self::tbl('roles')." where `pId`=? and `roleId`=?";
-        $result = $this->query($query, array($pId, $roleId));
+        $result = $this->query($query, [$pId, $roleId]);
         $res = $result->fetchRow();
         return $res;
     }
@@ -37,7 +38,7 @@ class RoleManager extends BaseManager
     */
     public function role_name_exists($pid, $name)
     {
-        return ($this->getOne("select count(*) from ".self::tbl('roles')."where pId=? and name=?", array($pid,$name)));
+        return ($this->getOne("select count(*) from ".self::tbl('roles')."where pId=? and name=?", [$pid,$name]));
     }
 
     /*!
@@ -46,9 +47,9 @@ class RoleManager extends BaseManager
     public function map_user_to_role($pId, $user, $roleId)
     {
         $query = "delete from ".self::tbl('user_roles')." where `roleId`=? and `user`=?";
-        $this->query($query, array($roleId, $user));
+        $this->query($query, [$roleId, $user]);
         $query = "insert into ".self::tbl('user_roles')."(`pId`, `user`, `roleId`) values(?,?,?)";
-        $this->query($query, array($pId,$user,$roleId));
+        $this->query($query, [$pId,$user,$roleId]);
     }
 
     /*!
@@ -57,7 +58,7 @@ class RoleManager extends BaseManager
     public function remove_mapping($user, $roleId)
     {
         $query = "delete from ".self::tbl('user_roles')." where `user`=? and `roleId`=?";
-        $this->query($query, array($user, $roleId));
+        $this->query($query, [$user, $roleId]);
     }
 
     /*!
@@ -70,20 +71,20 @@ class RoleManager extends BaseManager
             // no more quoting here - this is done in bind vars already
             $findesc = '%'.$find.'%';
             $query = "select `name`,`gr`.`roleId`,`user` from ".self::tbl('roles')." gr, ".self::tbl('user_roles')." gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? and ((`name` like ?) or (`user` like ?) or (`description` like ?)) order by $sort_mode";
-            $result = $this->query($query, array($pId,$findesc,$findesc,$findesc), $maxRecords, $offset);
+            $result = $this->query($query, [$pId,$findesc,$findesc,$findesc], $maxRecords, $offset);
             $query_cant = "select count(*) from ".self::tbl('roles')." gr, ".self::tbl('user_roles')." gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? and ((`name` like ?) or (`user` like ?) or (`description` like ?))";
-            $cant = $this->getOne($query_cant, array($pId,$findesc,$findesc,$findesc));
+            $cant = $this->getOne($query_cant, [$pId,$findesc,$findesc,$findesc]);
         } else {
             $query = "select `name`,`gr`.`roleId`,`user` from ".self::tbl('roles')."gr, ".self::tbl('user_roles')." gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? order by $sort_mode";
-            $result = $this->query($query, array($pId), $maxRecords, $offset);
+            $result = $this->query($query, [$pId], $maxRecords, $offset);
             $query_cant = "select count(*) from ".self::tbl('roles')."gr, ".self::tbl('user_roles')." gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=?";
-            $cant = $this->getOne($query_cant, array($pId));
+            $cant = $this->getOne($query_cant, [$pId]);
         }
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -99,10 +100,10 @@ class RoleManager extends BaseManager
             // no more quoting here - this is done in bind vars already
             $findesc = '%'.$find.'%';
             $mid=" where pId=? and ((name like ?) or (description like ?))";
-            $bindvars = array($pId,$findesc,$findesc);
+            $bindvars = [$pId,$findesc,$findesc];
         } else {
             $mid=" where pId=? ";
-            $bindvars = array($pId);
+            $bindvars = [$pId];
         }
         if ($where) {
             $mid.= " and ($where) ";
@@ -111,11 +112,11 @@ class RoleManager extends BaseManager
         $query_cant = "select count(*) from ".self::tbl('roles')." $mid";
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -129,11 +130,11 @@ class RoleManager extends BaseManager
     public function remove_role($pId, $roleId)
     {
         $query = "delete from ".self::tbl('roles')." where `pId`=? and `roleId`=?";
-        $this->query($query, array($pId, $roleId));
+        $this->query($query, [$pId, $roleId]);
         $query = "delete from ".self::tbl('activity_roles')." where `roleId`=?";
-        $this->query($query, array($roleId));
+        $this->query($query, [$roleId]);
         $query = "delete from ".self::tbl('user_roles')." where `roleId`=?";
-        $this->query($query, array($roleId));
+        $this->query($query, [$roleId]);
     }
 
     /*!
@@ -153,7 +154,7 @@ class RoleManager extends BaseManager
             // update mode
             $first = true;
             $query ="update $TABLE_NAME set";
-            $bindvars = array();
+            $bindvars = [];
             foreach ($vars as $key=>$value) {
                 if (!$first) {
                     $query.= ',';
@@ -168,7 +169,7 @@ class RoleManager extends BaseManager
             $this->query($query, $bindvars);
         } else {
             $name = $vars['name'];
-            if ($this->getOne("select count(*) from ".self::tbl('roles')." where pId=? and name=?", array($pId,$name))) {
+            if ($this->getOne("select count(*) from ".self::tbl('roles')." where pId=? and name=?", [$pId,$name])) {
                 return false;
             }
             unset($vars['roleId']);
@@ -184,7 +185,7 @@ class RoleManager extends BaseManager
             }
             $query .=") values(";
             $first = true;
-            $bindvars = array();
+            $bindvars = [];
             foreach (array_values($vars) as $value) {
                 if (!$first) {
                     $query.= ',';
@@ -195,7 +196,7 @@ class RoleManager extends BaseManager
             }
             $query .=")";
             $this->query($query, $bindvars);
-            $roleId = $this->getOne("select max(roleId) from $TABLE_NAME where pId=? and lastModif=?", array($pId,$now));
+            $roleId = $this->getOne("select max(roleId) from $TABLE_NAME where pId=? and lastModif=?", [$pId,$now]);
         }
         // Get the id
         return $roleId;

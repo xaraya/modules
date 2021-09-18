@@ -81,9 +81,9 @@ if (!function_exists('galaxia_execute_activity')) {
             'workflow',
             'user',
             'run_activity',
-            array('activityId' => $activityId,
+            ['activityId' => $activityId,
                                       'iid' => $iid,
-                                      'auto' => $auto)
+                                      'auto' => $auto, ]
         );
     }
 }

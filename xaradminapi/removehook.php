@@ -24,7 +24,7 @@ function workflow_adminapi_removehook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     // When called via hooks, we should get the real module name from objectid

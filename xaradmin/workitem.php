@@ -26,7 +26,7 @@ function workflow_admin_workitem()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-view_workitem.php
 
@@ -46,13 +46,13 @@ function workflow_admin_workitem()
 
     $tplData['stats'] =  $processMonitor->monitor_stats();
 
-    $sameurl_elements = array(
+    $sameurl_elements = [
     'offset',
     'sort_mode',
     'where',
     'find',
-    'itemId'
-);
+    'itemId',
+];
 
     $tplData['mid'] =  'tiki-g-view_workitem.tpl';
 

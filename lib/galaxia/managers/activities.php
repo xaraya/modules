@@ -1,4 +1,5 @@
 <?php
+
 include_once(GALAXIA_LIBRARY.'/managers/base.php');
 include_once(GALAXIA_LIBRARY.'/api/activity.php');
 
@@ -19,7 +20,7 @@ class ActivityManager extends BaseManager
     **/
     public function transition_exists($pid, $actFromId, $actToId)
     {
-        return($this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=? and actToId=?", array($pid, $actFromId, $actToId)));
+        return($this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=? and actToId=?", [$pid, $actFromId, $actToId]));
     }
 
     /**
@@ -40,8 +41,8 @@ class ActivityManager extends BaseManager
         if (!$actFrom || !$actTo) {
             return false;
         }
-        if (!in_array($actFrom->getType(), array('switch','split'))) {
-            if ($this->getOne("select count(*) from ".self::tbl('transitions')."  where actFromId=?", array($actFromId))) {
+        if (!in_array($actFrom->getType(), ['switch','split'])) {
+            if ($this->getOne("select count(*) from ".self::tbl('transitions')."  where actFromId=?", [$actFromId])) {
                 $this->error = tra('Cannot add transition only split activities can have more than one outbound transition');
                 return false;
             }
@@ -64,9 +65,9 @@ class ActivityManager extends BaseManager
 
 
         $query = "delete from ".self::tbl('transitions')."  where `actFromId`=? and `actToId`=?";
-        $this->query($query, array($actFromId, $actToId));
+        $this->query($query, [$actFromId, $actToId]);
         $query = "insert into ".self::tbl('transitions')." (`pId`,`actFromId`,`actToId`) values(?,?,?)";
-        $this->query($query, array($pId, $actFromId, $actToId));
+        $this->query($query, [$pId, $actFromId, $actToId]);
 
         return true;
     }
@@ -79,7 +80,7 @@ class ActivityManager extends BaseManager
     public function remove_transition($actFromId, $actToId)
     {
         $query = "delete from ".self::tbl('transitions')." where actFromId=? and actToId=?";
-        $this->query($query, array($actFromId, $actToId));
+        $this->query($query, [$actFromId, $actToId]);
         return true;
     }
 
@@ -94,7 +95,7 @@ class ActivityManager extends BaseManager
             SELECT a1.name AS actFromName, a2.name AS actToName, actFromId, actToId
             FROM ".self::tbl('transitions')."gt,".self::tbl('activities')."a1, ".self::tbl('activities')." a2
             WHERE gt.actFromId = a1.activityId AND gt.actToId = a2.activityId AND gt.pId = ? ";
-        $bindvars = array($pId);
+        $bindvars = [$pId];
 
         // Filter on Activity too?
         if ($actId) {
@@ -103,7 +104,7 @@ class ActivityManager extends BaseManager
         }
 
         $result = $this->query($query, $bindvars);
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
             $ret[] = $res;
         }
@@ -119,7 +120,7 @@ class ActivityManager extends BaseManager
     **/
     public function build_process_graph($pId)
     {
-        $attributes = array();
+        $attributes = [];
         $process = new Process($pId);
         $graph   = new Process_GraphViz(true, $attributes);
 
@@ -133,14 +134,14 @@ class ActivityManager extends BaseManager
             $auto[$node->getName()] = $node->isAutoRouted();
             $graph->addNode(
                 $node->getName(),
-                array(
+                [
                     'URL'=> "foourl?activityId=".$node->getActivityId(),
                     'label'=>$node->getName(),
                     'shape' => $node->getShape(),
                     'color' => $node->isInteractive() ? 'blue' : 'black',
                     'fontsize' =>8,
-                    'fontname' => 'Windsor'
-                )
+                    'fontname' => 'Windsor',
+                ]
             );
         }
 
@@ -153,7 +154,7 @@ class ActivityManager extends BaseManager
             } else {
                 $color = 'black';
             }
-            $graph->addEdge(array($edge['actFromName'] => $edge['actToName']), array('color'=>$color));
+            $graph->addEdge([$edge['actFromName'] => $edge['actToName']], ['color'=>$color]);
         }
 
 
@@ -178,31 +179,31 @@ class ActivityManager extends BaseManager
     */
     public function validate_process_activities($pId)
     {
-        $errors = array();
+        $errors = [];
         // Pre rule no cricular activities
-        $cant = $this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=actToId", array($pId));
+        $cant = $this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=actToId", [$pId]);
         if ($cant) {
             $errors[] = tra('Circular reference found some activity has a transition leading to itself');
         }
 
         // Rule 1 must have exactly one start and end activity
-        $cant = $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and type=?", array($pId, 'start'));
+        $cant = $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and type=?", [$pId, 'start']);
         if ($cant < 1) {
             $errors[] = tra('Process does not have a start activity');
         }
-        $cant = $this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and type=?", array($pId, 'end'));
+        $cant = $this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and type=?", [$pId, 'end']);
         if ($cant != 1) {
             $errors[] = tra('Process does not have exactly one end activity');
         }
 
         // Rule 2 end must be reachable from start
-        $nodes = array();
-        $endId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?", array($pId, 'end'));
+        $nodes = [];
+        $endId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?", [$pId, 'end']);
         $aux['id']=$endId;
         $aux['visited']=false;
         $nodes[] = $aux;
 
-        $startId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?", array($pId,'start'));
+        $startId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?", [$pId,'start']);
         $start_node['id']=$startId;
         $start_node['visited']=true;
 
@@ -212,8 +213,8 @@ class ActivityManager extends BaseManager
                 if (!$node['visited']) {
                     $node['visited']=true;
                     $query = "select actFromId from ".self::tbl('transitions')."where actToId=?";
-                    $result = $this->query($query, array($node['id']));
-                    $ret = array();
+                    $result = $this->query($query, [$node['id']]);
+                    $ret = [];
                     while ($res = $result->fetchRow()) {
                         $aux['id'] = $res['actFromId'];
                         $aux['visited']=false;
@@ -234,24 +235,24 @@ class ActivityManager extends BaseManager
         //assigned.
         //Rule 5: standalone activities can't have transitions
         $query = "select * from ".self::tbl('activities')." where pId = ?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, [$pId]);
         while ($res = $result->fetchRow()) {
             $aid = $res['activityId'];
             if ($res['isInteractive'] == 'y') {
-                $cant = $this->getOne("select count(*) from ".self::tbl('activity_roles')." where activityId=?", array($res['activityId']));
+                $cant = $this->getOne("select count(*) from ".self::tbl('activity_roles')." where activityId=?", [$res['activityId']]);
                 if (!$cant) {
                     $errors[] = tra('Activity').': '.$res['name'].tra(' is interactive but has no role assigned');
                 }
             } else {
                 if ($res['type'] != 'end' && $res['isAutoRouted'] == 'n') {
-                    $cant = $this->getOne("select count(*) from".self::tbl('activity_roles')." where activityId=?", array($res['activityId']));
+                    $cant = $this->getOne("select count(*) from".self::tbl('activity_roles')." where activityId=?", [$res['activityId']]);
                     if (!$cant) {
                         $errors[] = tra('Activity').': '.$res['name'].tra(' is non-interactive and non-autorouted but has no role assigned');
                     }
                 }
             }
             if ($res['type']=='standalone') {
-                if ($this->getOne("select count(*) from ".self::tbl('transitions')."where actFromId=? or actToId=?", array($aid,$aid))) {
+                if ($this->getOne("select count(*) from ".self::tbl('transitions')."where actFromId=? or actToId=?", [$aid,$aid])) {
                     $errors[] = tra('Activity').': '.$res['name'].tra(' is standalone but has transitions');
                 }
             }
@@ -260,9 +261,9 @@ class ActivityManager extends BaseManager
 
         //Rule4: roles should be mapped
         $query = "select * from ".self::tbl('roles')." where pId = ?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, [$pId]);
         while ($res = $result->fetchRow()) {
-            $cant = $this->getOne("select count(*) from ".self::tbl('user_roles')." where roleId=?", array($res['roleId']));
+            $cant = $this->getOne("select count(*) from ".self::tbl('user_roles')." where roleId=?", [$res['roleId']]);
             if (!$cant) {
                 $errors[] = tra('Role').': '.$res['name'].tra(' is not mapped');
             }
@@ -282,7 +283,7 @@ class ActivityManager extends BaseManager
         $isValid = (count($errors)==0) ? 'y' : 'n';
 
         $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
-        $this->query($query, array($isValid,$pId));
+        $this->query($query, [$isValid,$pId]);
 
         $this->_label_nodes($pId);
 
@@ -299,11 +300,11 @@ class ActivityManager extends BaseManager
     */
     public function validate_process_sources($pid)
     {
-        $errors=array();
-        $procname= $this->getOne("select normalized_name from ".self::tbl('processes')." where pId=?", array($pid));
+        $errors=[];
+        $procname= $this->getOne("select normalized_name from ".self::tbl('processes')." where pId=?", [$pid]);
 
         $query = "select * from ".self::tbl('activities')."where pId=?";
-        $result = $this->query($query, array($pid));
+        $result = $this->query($query, [$pid]);
         while ($res = $result->fetchRow()) {
             $actname = $res['normalized_name'];
             $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php';
@@ -349,10 +350,10 @@ class ActivityManager extends BaseManager
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid=" where pId=? and ((name like ?) or (description like ?))";
-            $bindvars = array($pId,$findesc,$findesc);
+            $bindvars = [$pId,$findesc,$findesc];
         } else {
             $mid=" where pId=? ";
-            $bindvars = array($pId);
+            $bindvars = [$pId];
         }
         if ($where) {
             $mid.= " and ($where) ";
@@ -361,12 +362,12 @@ class ActivityManager extends BaseManager
         $query_cant = "select count(*) from ".self::tbl('activities')." $mid";
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
-        $ret = array();
+        $ret = [];
         while ($res = $result->fetchRow()) {
-            $res['roles'] = $this->getOne("select count(*) from ".self::tbl('activity_roles')." where activityId=?", array($res['activityId']));
+            $res['roles'] = $this->getOne("select count(*) from ".self::tbl('activity_roles')." where activityId=?", [$res['activityId']]);
             $ret[] = $res;
         }
-        $retval = array();
+        $retval = [];
         $retval["data"] = $ret;
         $retval["cant"] = $cant;
         return $retval;
@@ -396,7 +397,7 @@ class ActivityManager extends BaseManager
             // update mode
             $first = true;
             $query ="update $TABLE_NAME set";
-            $bindvars = array();
+            $bindvars = [];
             foreach ($vars as $key=>$value) {
                 if (!$first) {
                     $query.= ',';
@@ -473,7 +474,7 @@ class ActivityManager extends BaseManager
     public function set_autorouting($pId, $actid, $value)
     {
         $query = "update ".self::tbl('activities')." set isAutoRouted=? where pId=? and activityId=?";
-        $this->query($query, array($value, $pId, $actid));
+        $this->query($query, [$value, $pId, $actid]);
     }
 
     /**
@@ -483,8 +484,8 @@ class ActivityManager extends BaseManager
     **/
     public function _get_activity_id_by_name($pid, $name)
     {
-        if ($this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and name=?", array($pid, $name))) {
-            return($this->getOne("select activityId from ".self::tbl('activities')." where pId=? and name=?", array($pid,$name)));
+        if ($this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and name=?", [$pid, $name])) {
+            return($this->getOne("select activityId from ".self::tbl('activities')." where pId=? and name=?", [$pid,$name]));
         } else {
             return '';
         }
@@ -529,21 +530,21 @@ class ActivityManager extends BaseManager
 
 
         ///an empty list of nodes starts the process
-        $nodes = array();
+        $nodes = [];
         // the end activity id
-        $endId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?", array($pId,'end'));
+        $endId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?", [$pId,'end']);
         // and the number of total nodes (=activities)
-        $cant = $this->getOne("select count(*) from ".self::tbl('activities')."where pId=?", array($pId));
+        $cant = $this->getOne("select count(*) from ".self::tbl('activities')."where pId=?", [$pId]);
         $nodes[] = $endId;
         $label = $cant;
         $num = $cant+1;
 
         $query = "update ".self::tbl('activities')." set flowNum=? where pId=?";
-        $this->query($query, array($num,$pId));
+        $this->query($query, [$num,$pId]);
 
-        $seen = array();
+        $seen = [];
         while (count($nodes)) {
-            $newnodes = array();
+            $newnodes = [];
             foreach ($nodes as $node) {
                 // avoid endless loops
                 if (isset($seen[$node])) {
@@ -551,23 +552,23 @@ class ActivityManager extends BaseManager
                 }
                 $seen[$node] = 1;
                 $query = "update ".self::tbl('activities')." set flowNum=? where activityId=?";
-                $this->query($query, array($num, $node));
+                $this->query($query, [$num, $node]);
                 $query = "select actFromId from ".self::tbl('transitions')." where actToId=?";
-                $result = $this->query($query, array($node));
-                $ret = array();
+                $result = $this->query($query, [$node]);
+                $ret = [];
                 while ($res = $result->fetchRow()) {
                     $newnodes[] = $res['actFromId'];
                 }
             }
             $num--;
-            $nodes=array();
+            $nodes=[];
             $nodes=$newnodes;
         }
 
-        $min = $this->getOne("select min(flowNum) from ".self::tbl('activities')."where pId=?", array($pId));
+        $min = $this->getOne("select min(flowNum) from ".self::tbl('activities')."where pId=?", [$pId]);
         if (isset($min)) {
             $query = "update ".self::tbl('activities')." set flowNum=flowNum-$min where pId=?";
-            $this->query($query, array($pId));
+            $this->query($query, [$pId]);
         }
         //$query = "update ".self::tbl('activities')." set flowNum=0 where flowNum=$cant+1";
         //$this->query($query);

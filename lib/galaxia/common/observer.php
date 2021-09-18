@@ -1,4 +1,5 @@
 <?php
+
 //!! Observer
 //! An abstract class implementing observer objects
 /*!
@@ -20,7 +21,7 @@ class Observer
 {
     ///This will be assigned by an observable object when attaching.
     public $_observerId='';
-  
+
     public function notify($event, $msg)
     {
         // do something...

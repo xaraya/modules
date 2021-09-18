@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -30,19 +31,19 @@ function workflow_admin_processes()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $data = array();
+    $data = [];
     $maxRecords = xarModVars::get('workflow', 'itemsperpage');
 
     // Adapted from tiki-g-admin_processes.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     // Initialize
-    $data['proc_info'] = array(
+    $data['proc_info'] = [
         'name'          => '',
         'description'   => '',
         'version'       => '1.0',
         'isActive'      => 'n',
-        'pId'           => 0);
+        'pId'           => 0, ];
 
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.
@@ -110,11 +111,11 @@ function workflow_admin_processes()
 
     // Update or create action
     if (isset($_REQUEST['save'])) {
-        $vars = array('name' => $_REQUEST['name'],
+        $vars = ['name' => $_REQUEST['name'],
                       'description' => $_REQUEST['description'],
                       'version' => $_REQUEST['version'],
-                      'isActive' => 'n'
-                      );
+                      'isActive' => 'n',
+                      ];
 
         // If process is known and we're not updating, error out.
         if (Process::Exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
@@ -142,7 +143,7 @@ function workflow_admin_processes()
 
     // Filtering by name, status or direct
     $data['where'] = '';
-    $wheres = array();
+    $wheres = [];
     if (isset($_REQUEST['filter'])) {
         if ($_REQUEST['filter_name']) {
             $wheres[]=" name='".$_REQUEST['filter_name']."'";
@@ -157,16 +158,16 @@ function workflow_admin_processes()
     }
 
     // Specific sorting specified?
-    $data['sort_mode'] = isset($_REQUEST["sort_mode"]) ? $_REQUEST["sort_mode"] : 'lastModif_desc';
+    $data['sort_mode'] = $_REQUEST["sort_mode"] ?? 'lastModif_desc';
     // Offset into the processlist
-    $data['offset'] = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 1;
+    $data['offset'] = $_REQUEST["offset"] ?? 1;
     // Specific find text
-    $data['find'] = isset($_REQUEST["find"]) ? $_REQUEST["find"] : '';
+    $data['find'] = $_REQUEST["find"] ?? '';
 
     // Validate the process
     if ($_REQUEST['pid']) {
         $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
-        $data['errors'] = array();
+        $data['errors'] = [];
         if (!$valid) {
             $process = new Process($_REQUEST['pid']);
             $process->deactivate();
@@ -194,8 +195,8 @@ function workflow_admin_processes()
     $data['all_procs'] =  $items['data'];
 
 //    $data['pager'] = xarTplPager::getPager($data['offset'], $items['cant'], $url, $maxRecords);
-    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     $data['maxRecords'] = $maxRecords;
-    
+
     return $data;
 }

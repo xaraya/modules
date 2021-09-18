@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -50,7 +51,7 @@ function workflow_admin_monitor_workitems()
     // filter_active, filter_valid, find, sort_mode,
     // filter_process
     $where = '';
-    $wheres = array();
+    $wheres = [];
 
     if (!empty($data['filter_instance'])) {
         $wheres[] = "instanceId='" . $data['filter_instance'] . "'";
@@ -123,7 +124,7 @@ function workflow_admin_monitor_workitems()
     }
     foreach ($items['data'] as $index => $info) {
         $items['data'][$index]['timescale'] = intval($scale * $info['duration']);
-        $items['data'][$index]['duration'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']));
+        $items['data'][$index]['duration'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', ['time'=>$info['duration']]);
         if (!empty($info['started'])) {
             $items['data'][$index]['started'] = xarLocale::getFormattedDate('medium', $info['started']) . ' '
                                             . xarLocale::getFormattedTime('short', $info['started']);
@@ -136,9 +137,9 @@ function workflow_admin_monitor_workitems()
     $data['items'] =&  $items["data"];
 
     $allprocs = $processMonitor->monitor_list_all_processes('name_asc');
-    $data['all_procs'] = array();
+    $data['all_procs'] = [];
     foreach ($allprocs as $row) {
-        $data['all_procs'][] = array('pId' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version'], 'version'=>$row['version']);
+        $data['all_procs'][] = ['pId' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version'], 'version'=>$row['version']];
     }
 
     if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
@@ -150,7 +151,7 @@ function workflow_admin_monitor_workitems()
     $all_acts = $processMonitor->monitor_list_all_activities('name_desc', $where);
     $data['all_acts'] =&  $all_acts;
 
-    $sameurl_elements = array(
+    $sameurl_elements = [
     'offset',
     'sort_mode',
     'where',
@@ -160,8 +161,8 @@ function workflow_admin_monitor_workitems()
     'filter_process',
     'filter_instance',
     'processId',
-    'filter_process'
-);
+    'filter_process',
+];
 
     $types = $processMonitor->monitor_list_activity_types();
     $data['types'] =&  $types;
@@ -169,7 +170,7 @@ function workflow_admin_monitor_workitems()
     $data['stats'] =  $processMonitor->monitor_stats();
 
     $users = $processMonitor->monitor_list_wi_users();
-    $data['users'] = array();
+    $data['users'] = [];
     foreach (array_keys($users) as $index) {
         if (!is_numeric($users[$index])) {
             $data['users'][$index]['user'] = $users[$index];
@@ -184,12 +185,12 @@ function workflow_admin_monitor_workitems()
 
 
 
-    $url = xarServer::getCurrentURL(array('offset' => '%%'));
+    $url = xarServer::getCurrentURL(['offset' => '%%']);
     /*    $data['pager'] = xarTplPager::getPager($data['offset'],
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/
-    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     $data['maxRecords'] = $maxRecords;
     return $data;
 }

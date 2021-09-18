@@ -1,4 +1,5 @@
 <?php
+
 // Load configuration of the Galaxia Workflow Engine
 include_once(dirname(__FILE__) . '/config.php');
 

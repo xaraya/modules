@@ -132,12 +132,12 @@ function workflow_adminapi_deletehook($args)
         'workflow',
         'user',
         'run_activity',
-        array('activityId' => $activityId,
+        ['activityId' => $activityId,
                              'auto' => 1,
                              // standard arguments for use in activity code
                              'module' => $modname,
                              'itemtype' => $itemtype,
-                             'itemid' => $itemid)
+                             'itemid' => $itemid, ]
     )) {
         return $extrainfo;
     }

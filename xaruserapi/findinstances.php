@@ -33,7 +33,7 @@ function workflow_userapi_findinstances($args)
     }
 
     $where = '';
-    $wheres = array();
+    $wheres = [];
     // TODO: reformulate this with bindvars
     if (!empty($status)) {
         $wheres[] = "gi.status='" . $status . "'";
@@ -53,11 +53,11 @@ function workflow_userapi_findinstances($args)
 
     $where = implode(' and ', $wheres);
 
-    $items = $processMonitor->monitor_list_instances(0, -1, 'instanceId_asc', '', $where, array());
+    $items = $processMonitor->monitor_list_instances(0, -1, 'instanceId_asc', '', $where, []);
 
     if (isset($items) && isset($items['data'])) {
         return $items['data'];
     } else {
-        return array();
+        return [];
     }
 }

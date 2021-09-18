@@ -26,7 +26,7 @@ function workflow_admin_save_process()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
 
     // Adapted from tiki-g-save_process.php
 

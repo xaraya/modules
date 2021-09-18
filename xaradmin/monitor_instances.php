@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -28,7 +29,7 @@ function workflow_admin_monitor_instances()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
     $maxRecords = xarModVars::get('workflow', 'itemsperpage');
     // Adapted from tiki-g-monitor_instances.php
 
@@ -39,7 +40,7 @@ function workflow_admin_monitor_instances()
     // filter_active, filter_valid, find, sort_mode,
     // filter_process
     $where = '';
-    $wheres = array();
+    $wheres = [];
 
     if (isset($_REQUEST['update'])) {
         foreach ($_REQUEST['update_status'] as $key => $val) {
@@ -129,7 +130,7 @@ function workflow_admin_monitor_instances()
     $tplData['where'] =  $where;
     $tplData['sort_mode'] =&  $sort_mode;
 
-    $items = $processMonitor->monitor_list_instances($offset - 1, $maxRecords, $sort_mode, $find, $where, array());
+    $items = $processMonitor->monitor_list_instances($offset - 1, $maxRecords, $sort_mode, $find, $where, []);
     $tplData['cant'] =  $items['cant'];
 
     $cant_pages = ceil($items["cant"] / $maxRecords);
@@ -167,7 +168,7 @@ function workflow_admin_monitor_instances()
     }
     foreach ($items['data'] as $index => $info) {
         $items['data'][$index]['timescale'] = intval($scale * $info['duration']);
-        $items['data'][$index]['duration'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', array('time'=>$info['duration']));
+        $items['data'][$index]['duration'] = xarMod::apiFunc('workflow', 'user', 'timetodhms', ['time'=>$info['duration']]);
         if (!empty($info['started'])) {
             $items['data'][$index]['started'] = xarLocale::getFormattedDate('medium', $info['started']) . ' '
                                             . xarLocale::getFormattedTime('short', $info['started']);
@@ -198,16 +199,16 @@ function workflow_admin_monitor_instances()
 
     $tplData['stats'] =  $processMonitor->monitor_stats();
 
-    $all_statuses = array(
+    $all_statuses = [
     'aborted',
     'active',
     'completed',
-    'exception'
-);
+    'exception',
+];
 
     $tplData['all_statuses'] =  $all_statuses;
 
-    $sameurl_elements = array(
+    $sameurl_elements = [
     'offset',
     'sort_mode',
     'where',
@@ -219,12 +220,12 @@ function workflow_admin_monitor_instances()
     'processId',
     'filter_process',
     'filter_owner',
-    'filter_activity'
-);
+    'filter_activity',
+];
 
     $tplData['statuses'] =  $processMonitor->monitor_list_statuses();
     $users = $processMonitor->monitor_list_users();
-    $tplData['users'] = array();
+    $tplData['users'] = [];
     foreach (array_keys($users) as $index) {
         if (!is_numeric($users[$index])) {
             $tplData['users'][$index]['user'] = $users[$index];
@@ -235,7 +236,7 @@ function workflow_admin_monitor_instances()
         }
     }
     $owners =  $processMonitor->monitor_list_owners();
-    $tplData['owners'] = array();
+    $tplData['owners'] = [];
     foreach (array_keys($owners) as $index) {
         if (!is_numeric($owners[$index])) {
             $tplData['owners'][$index]['user'] = $owners[$index];
@@ -248,18 +249,18 @@ function workflow_admin_monitor_instances()
     $tplData['mid'] =  'tiki-g-monitor_instances.tpl';
 
     // Missing variables
-    $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
-    $tplData['filter_activity'] = isset($_REQUEST['filter_activity']) ? $_REQUEST['filter_activity'] : '';
-    $tplData['filter_status'] = isset($_REQUEST['filter_status']) ? $_REQUEST['filter_status'] : '';
-    $tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUEST['filter_act_status'] : '';
-    $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
-    $tplData['filter_owner'] = isset($_REQUEST['filter_owner']) ? $_REQUEST['filter_owner'] : '';
+    $tplData['filter_process'] = $_REQUEST['filter_process'] ?? '';
+    $tplData['filter_activity'] = $_REQUEST['filter_activity'] ?? '';
+    $tplData['filter_status'] = $_REQUEST['filter_status'] ?? '';
+    $tplData['filter_act_status'] = $_REQUEST['filter_act_status'] ?? '';
+    $tplData['filter_user'] = $_REQUEST['filter_user'] ?? '';
+    $tplData['filter_owner'] = $_REQUEST['filter_owner'] ?? '';
 
     /*$tplData['pager'] = xarTplPager::getPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);*/
-    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     $tplData['maxRecords'] = $maxRecords;
     return $tplData;
 }

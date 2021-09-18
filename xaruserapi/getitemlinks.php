@@ -22,7 +22,7 @@ function workflow_userapi_getitemlinks($args)
 {
     extract($args);
 
-    $itemlinks = array();
+    $itemlinks = [];
     if (empty($itemtype)) {
         return $itemlinks;
     }
@@ -43,7 +43,7 @@ function workflow_userapi_getitemlinks($args)
         return $itemlinks;
     }
 
-    $itemid2key = array();
+    $itemid2key = [];
     foreach ($items['data'] as $key => $item) {
         $itemid2key[$item['instanceId']] = $key;
     }
@@ -52,14 +52,14 @@ function workflow_userapi_getitemlinks($args)
             continue;
         }
         $item = $items['data'][$itemid2key[$itemid]];
-        $itemlinks[$itemid] = array('url'   => xarController::URL(
+        $itemlinks[$itemid] = ['url'   => xarController::URL(
             'workflow',
             'user',
             'instances',
-            array('filter_process' => $itemtype)
+            ['filter_process' => $itemtype]
         ),
                                     'title' => xarML('Display Instance'),
-                                    'label' => xarVar::prepForDisplay($item['procname'] . ' ' . $item['version'] . ' # ' . $item['instanceId']));
+                                    'label' => xarVar::prepForDisplay($item['procname'] . ' ' . $item['version'] . ' # ' . $item['instanceId']), ];
     }
     return $itemlinks;
 }

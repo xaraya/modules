@@ -1,4 +1,5 @@
 <?php
+
 //Code to be executed before a switch activity
 // If we didn't retrieve the instance before
 if (empty($instance->instanceId)) {

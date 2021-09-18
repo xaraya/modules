@@ -1,4 +1,5 @@
 <?php
+
 //
 // +----------------------------------------------------------------------+
 // | PEAR :: Image :: GraphViz                                            |
@@ -86,7 +87,7 @@ class Process_GraphViz
     * @param  array   Attributes of the graph
     * @access public
     */
-    public function __construct($directed = true, $attributes = array())
+    public function __construct($directed = true, $attributes = [])
     {
         $this->setDirected($directed);
         $this->setAttributes($attributes);
@@ -225,7 +226,7 @@ class Process_GraphViz
     * @param  string  Group of the node.
     * @access public
     */
-    public function addNode($name, $attributes = array(), $group = 'default')
+    public function addNode($name, $attributes = [], $group = 'default')
     {
         $this->graph['nodes'][$group][$name] = $attributes;
     }
@@ -250,7 +251,7 @@ class Process_GraphViz
     * @param  array Attributes of the edge.
     * @access public
     */
-    public function addEdge($edge, $attributes = array())
+    public function addEdge($edge, $attributes = [])
     {
         if (is_array($edge)) {
             $from = key($edge);
@@ -408,7 +409,7 @@ class Process_GraphViz
                     $parsedGraph .= sprintf(
                         "subgraph \"cluster_%s\" {\nlabel=\"%s\";\n",
                         $group,
-                        isset($this->graph['clusters'][$group]) ? $this->graph['clusters'][$group] : ''
+                        $this->graph['clusters'][$group] ?? ''
                     );
                 }
 

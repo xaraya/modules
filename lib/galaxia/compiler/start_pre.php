@@ -1,4 +1,5 @@
 <?php
+
 //Code to be executed before a start activity
 // If we didn't retrieve the instance before
 if (empty($instance->instanceId) && isset($_REQUEST['iid'])) {

@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -29,7 +30,7 @@ function workflow_admin_graph()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
     $maxRecords = xarModVars::get('workflow', 'itemsperpage');
     // Adapted from tiki-g-admin_processes.php
 
@@ -65,7 +66,7 @@ function workflow_admin_graph()
                 'workflow',
                 'admin',
                 'activities',
-                array('pid' => $info['pId'])
+                ['pid' => $info['pId']]
             );
             $map = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $map);
             // Darn graphviz does not close the area tags
@@ -75,13 +76,13 @@ function workflow_admin_graph()
             $info['graph'] = '';
         }
     } else {
-        $info = array(
+        $info = [
                       'name' => '',
                       'description' => '',
                       'version' => '1.0',
                       'isActive' => 'n',
-                      'pId' => 0
-                      );
+                      'pId' => 0,
+                      ];
     }
 
     $tplData['proc_info'] = $info;
@@ -89,7 +90,7 @@ function workflow_admin_graph()
     $tplData['info'] =  $info;
 
     $where = '';
-    $wheres = array();
+    $wheres = [];
 
     if (isset($_REQUEST['filter'])) {
         if ($_REQUEST['filter_name']) {
@@ -155,7 +156,7 @@ function workflow_admin_graph()
     if ($_REQUEST['pid']) {
         $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
 
-        $errors = array();
+        $errors = [];
 
         if (!$valid) {
             $process->deactivate();
@@ -166,14 +167,14 @@ function workflow_admin_graph()
         $tplData['errors'] =  $errors;
     }
 
-    $sameurl_elements = array(
+    $sameurl_elements = [
                               'offset',
                               'sort_mode',
                               'where',
                               'find',
                               'filter_name',
-                              'filter_active'
-                              );
+                              'filter_active',
+                              ];
 
     $all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
     $tplData['all_procs'] =  $all_procs['data'];
@@ -184,7 +185,7 @@ function workflow_admin_graph()
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/
-    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['url'] = xarServer::getCurrentURL(['offset' => '%%']);
     $tplData['maxRecords'] = $maxRecords;
     return $tplData;
 }

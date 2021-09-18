@@ -28,13 +28,13 @@ function workflow_admin_updateconfig()
         return;
     }
 
-    if (!xarVar::fetch('jobs', 'isset', $jobs, array(), xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('jobs', 'isset', $jobs, [], xarVar::NOT_REQUIRED)) {
         return;
     }
     if (empty($jobs)) {
-        $jobs = array();
+        $jobs = [];
     }
-    $savejobs = array();
+    $savejobs = [];
     foreach ($jobs as $job) {
         if (!empty($job['activity']) && !empty($job['interval'])) {
             $savejobs[] = $job;
@@ -52,9 +52,9 @@ function workflow_admin_updateconfig()
             'scheduler',
             'user',
             'get',
-            array('module' => 'workflow',
+            ['module' => 'workflow',
                                    'type' => 'scheduler',
-                                   'func' => 'activities')
+                                   'func' => 'activities', ]
         );
         if (empty($job) || empty($job['interval'])) {
             if (!empty($interval)) {
@@ -63,10 +63,10 @@ function workflow_admin_updateconfig()
                     'scheduler',
                     'admin',
                     'create',
-                    array('module' => 'workflow',
+                    ['module' => 'workflow',
                                     'type' => 'scheduler',
                                     'func' => 'activities',
-                                    'interval' => $interval)
+                                    'interval' => $interval, ]
                 );
             }
         } elseif (empty($interval)) {
@@ -75,9 +75,9 @@ function workflow_admin_updateconfig()
                 'scheduler',
                 'admin',
                 'delete',
-                array('module' => 'workflow',
+                ['module' => 'workflow',
                                 'type' => 'scheduler',
-                                'func' => 'activities')
+                                'func' => 'activities', ]
             );
         } elseif ($interval != $job['interval']) {
             // update the scheduler job
@@ -85,15 +85,15 @@ function workflow_admin_updateconfig()
                 'scheduler',
                 'admin',
                 'update',
-                array('module' => 'workflow',
+                ['module' => 'workflow',
                                 'type' => 'scheduler',
                                 'func' => 'activities',
-                                'interval' => $interval)
+                                'interval' => $interval, ]
             );
         }
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'blocks'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'blocks']);
     $data['module_settings']->getItem();
     $isvalid = $data['module_settings']->checkInput();
     if (!$isvalid) {
@@ -101,7 +101,7 @@ function workflow_admin_updateconfig()
     } else {
         $itemid = $data['module_settings']->updateItem();
     }
-    
+
     xarResponse::redirect(xarController::URL('workflow', 'admin', 'modifyconfig'));
 
     return true;

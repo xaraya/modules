@@ -28,7 +28,7 @@ function workflow_user_run_activity()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $tplData = [];
     // global $user variable used by instance
     global $user;
     $user = xarUser::getVar('id');
@@ -181,8 +181,8 @@ function workflow_user_run_activity()
             if (!empty($instance->instanceId)) {
                 // get object properties for this instance - that's a bit much :)
                 //$item = get_object_vars($instance);
-                $props = array('pId','instanceId','properties','owner','status','started','ended','nextActivity','nextUser','workitems');
-                $item = array();
+                $props = ['pId','instanceId','properties','owner','status','started','ended','nextActivity','nextUser','workitems'];
+                $item = [];
                 foreach ($props as $prop) {
                     $item[$prop] = $instance->$prop;
                 }
@@ -193,8 +193,8 @@ function workflow_user_run_activity()
                     'workflow',
                     'user',
                     'run_activity',
-                    array('activityId' => $activity->getActivityId(),
-                                                     'iid' => $instance->getInstanceId())
+                    ['activityId' => $activity->getActivityId(),
+                                                     'iid' => $instance->getInstanceId(), ]
                 );
                 $tplData['hooks'] = xarModHooks::call('item', 'display', $instance->instanceId, $item);
             }
