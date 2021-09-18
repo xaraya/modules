@@ -31,7 +31,7 @@ function release_userapi_getdocs($args)
         $numitems = -1;
     }
 
-    $releasedocs = array();
+    $releasedocs = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -44,7 +44,7 @@ function release_userapi_getdocs($args)
 
     $releasedocstable = $xartable['release_docs'];
 
-    $bindvars = array();
+    $bindvars = [];
     $query = "SELECT xar_rdid,
                      xar_eid,
                      xar_rid,
@@ -76,16 +76,16 @@ function release_userapi_getdocs($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
+        [$rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releasedocs[] = array('rdid'       => $rdid,
+            $releasedocs[] = ['rdid'       => $rdid,
                                    'eid'        => $eid,
                                    'rid'        => $rid,
                                    'title'      => $title,
                                    'docs'       => $docs,
                                    'exttype'       => $exttype,
                                    'time'       => $time,
-                                   'approved'   => $approved);
+                                   'approved'   => $approved, ];
         }
     }
 

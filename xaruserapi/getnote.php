@@ -51,20 +51,20 @@ function release_userapi_getnote($args)
                      xar_exttype
             FROM $releasetable
             WHERE xar_rnid = ?";
-    $result =& $dbconn->Execute($query, array($rnid));
+    $result =& $dbconn->Execute($query, [$rnid]);
     if (!$result) {
         return;
     }
 
-    list($rnid, $eid,$rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink,
-        $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype) = $result->fields;
+    [$rnid, $eid,$rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink,
+        $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype] = $result->fields;
     $result->Close();
 
     if (!xarSecurity::check('OverviewRelease', 0)) {
         return false;
     }
 
-    $releaseinfo = array('rnid'       => (int)$rnid,
+    $releaseinfo = ['rnid'       => (int)$rnid,
                          'eid'        => (int)$eid,
                          'rid'        => (int)$rid,
                          'version'    => $version,
@@ -83,7 +83,7 @@ function release_userapi_getnote($args)
                          'approved'   => $approved,
                          'rstate'     => $rstate,
                          'usefeed'    => $usefeed,
-                         'exttype'    => $exttype);
+                         'exttype'    => $exttype, ];
 
     return $releaseinfo;
 }

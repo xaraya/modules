@@ -22,7 +22,7 @@ function release_userapi_getallnotes($args)
         $numitems = -1;
     }
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -35,7 +35,7 @@ function release_userapi_getallnotes($args)
 
     $releasenotes = $xartable['release_notes'];
     $releaseids = $xartable['release_id'];
-    $bindvars=array();
+    $bindvars=[];
     $where = '';
     $query = "SELECT rnotes.xar_rnid,
                      rnotes.xar_rid,
@@ -108,10 +108,10 @@ function release_userapi_getallnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid,$eid,$regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink,
-             $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype) = $result->fields;
+        [$rnid, $rid,$eid,$regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink,
+             $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rnid'       => $rnid,
+            $releaseinfo[] = ['rnid'       => $rnid,
                                    'rid'        => $rid,
                                    'eid'        => $eid,
                                    'regname'    => $regname,
@@ -132,7 +132,7 @@ function release_userapi_getallnotes($args)
                                    'approved'   => $approved,
                                    'rstate'     => $rstate,
                                    'usefeed'    => $usefeed,
-                                   'exttype'    => $exttype);
+                                   'exttype'    => $exttype, ];
         }
     }
 

@@ -33,7 +33,7 @@ function release_adminapi_deletedoc($args)
         'release',
         'user',
         'getdoc',
-        array('rdid' => $rdid)
+        ['rdid' => $rdid]
     );
 
     if ($link == false) {
@@ -54,7 +54,7 @@ function release_adminapi_deletedoc($args)
     // Delete the item
     $query = "DELETE FROM $releasetable
             WHERE xar_rnid = ?";
-    $result =& $dbconn->Execute($query, array($rdid));
+    $result =& $dbconn->Execute($query, [$rdid]);
     if (!$result) {
         return;
     }

@@ -29,7 +29,7 @@ function release_userapi_getallids($args)
         $numitems = -1;
     }
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -41,7 +41,7 @@ function release_userapi_getallids($args)
     $xartable =& xarDB::getTables();
 
     $releasetable = $xartable['release_id'];
-    $bindvars=array();
+    $bindvars=[];
     $query = "SELECT xar_eid,
                      xar_rid,
                      xar_uid,
@@ -80,10 +80,10 @@ function release_userapi_getallids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
-             $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype) = $result->fields;
+        [$eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
+             $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('eid'        => $eid,
+            $releaseinfo[] = ['eid'        => $eid,
                                    'rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
@@ -98,7 +98,7 @@ function release_userapi_getallids($args)
                                    'members'    => $members,
                                    'scmlink'    => $scmlink,
                                    'openproj'   => $openproj,
-                                   'exttype'    => $exttype);
+                                   'exttype'    => $exttype, ];
         }
     }
 

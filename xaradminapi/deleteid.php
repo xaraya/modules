@@ -33,7 +33,7 @@ function release_adminapi_deleteid($args)
         'release',
         'user',
         'getid',
-        array('eid' => $eid)
+        ['eid' => $eid]
     );
 
     if ($link == false) {
@@ -54,7 +54,7 @@ function release_adminapi_deleteid($args)
     // Delete the item
     $query = "DELETE FROM $releasetable
             WHERE xar_eid = ?";
-    $result =& $dbconn->Execute($query, array($eid));
+    $result =& $dbconn->Execute($query, [$eid]);
     if (!$result) {
         return;
     }

@@ -18,7 +18,7 @@
  * @return array
  * @author Release module development team
  */
- 
+
 function release_user_getdoc()
 {
     // Security Check
@@ -33,7 +33,7 @@ function release_user_getdoc()
         'release',
         'user',
         'getdoc',
-        array('rdid' => $rdid)
+        ['rdid' => $rdid]
     );
 
     if ($item == false) {
@@ -44,14 +44,14 @@ function release_user_getdoc()
         'item',
         'display',
         $rdid,
-        array('itemtype'  => '3',
+        ['itemtype'  => '3',
                                        'returnurl' => xarController::URL(
                                            'release',
                                            'user',
                                            'getdoc',
-                                           array('rdid' => $rdid)
-                                       )
-                                             )
+                                           ['rdid' => $rdid]
+                                       ),
+                                             ]
     );
 
     if (empty($hooks)) {

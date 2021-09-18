@@ -19,7 +19,7 @@
  */
 function release_user_view()
 {
-    return array();
+    return [];
     if (!xarVar::fetch('startnum', 'int:1:', $startnum, 1, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -52,7 +52,7 @@ function release_user_view()
         }
     }
 
-    $data = array();
+    $data = [];
     if (empty($sort)) {
         $sort = 'id';
     }
@@ -62,7 +62,7 @@ function release_user_view()
         'release',
         'user',
         'getallrids',
-        array('exttype'  => $exttype,
+        ['exttype'  => $exttype,
                          'catid'     => $catid,
                          'sort'      => $sort,
                          'startnum'  => $startnum,
@@ -71,7 +71,7 @@ function release_user_view()
                              'itemsperpage',
                              $uid
                          ),
-                          )
+                          ]
     );
 
 
@@ -93,7 +93,7 @@ function release_user_view()
             'roles',
             'user',
             'get',
-            array('uid' => $item['uid'])
+            ['uid' => $item['uid']]
         );
 
         // Author Name and Contact URL
@@ -102,7 +102,7 @@ function release_user_view()
             'roles',
             'user',
             'display',
-            array('uid' => $item['uid'])
+            ['uid' => $item['uid']]
         );
 
         // InfoURL
@@ -110,10 +110,10 @@ function release_user_view()
             'release',
             'user',
             'display',
-            array('eid' => $item['eid'],
+            ['eid' => $item['eid'],
                                                 'phase' => 'view',
-                                                'tab'  => 'basic'
-                                          )
+                                                'tab'  => 'basic',
+                                          ]
         );
         $items[$i]['infotitle'] = xarML('View');
 
@@ -123,7 +123,7 @@ function release_user_view()
                 'release',
                 'user',
                 'modifyid',
-                array('eid' => $item['eid'])
+                ['eid' => $item['eid']]
             );
             $items[$i]['edittitle'] = xarML('Edit');
         } else {
@@ -136,7 +136,7 @@ function release_user_view()
                 'release',
                 'admin',
                 'deleteid',
-                array('eid' => $item['eid'])
+                ['eid' => $item['eid']]
             );
             $items[$i]['deltitle'] = xarML('Delete');
         } else {
@@ -149,8 +149,8 @@ function release_user_view()
                 'release',
                 'user',
                 'addnotes',
-                array('eid' => $item['eid'],
-                                                     'phase' => 'start')
+                ['eid' => $item['eid'],
+                                                     'phase' => 'start', ]
             );
             $items[$i]['addtitle'] = xarML('Add');
         } else {
@@ -164,8 +164,8 @@ function release_user_view()
                 'release',
                 'user',
                 'adddocs',
-                array('eid' => $item['eid'],
-                                                     'phase' => 'start')
+                ['eid' => $item['eid'],
+                                                     'phase' => 'start', ]
             );
             $items[$i]['adddocstitle'] = xarML('Add');
         } else {
@@ -180,9 +180,9 @@ function release_user_view()
                 'comments',
                 'user',
                 'get_count',
-                array('modid' => xarMod::getRegId('release'),
+                ['modid' => xarMod::getRegId('release'),
                                                         'itemtype' => $item['exttype'],
-                                                         'objectid' => (int)$item['eid'])
+                                                         'objectid' => (int)$item['eid'], ]
             );
 
             if ($items[$i]['comments'] != '0') {
@@ -197,9 +197,9 @@ function release_user_view()
                 'hitcount',
                 'user',
                 'get',
-                array('modid' => xarMod::getRegId('release'),
+                ['modid' => xarMod::getRegId('release'),
                                                          'itemtype' => $item['exttype'],
-                                                         'objectid' => (int)$item['eid'])
+                                                         'objectid' => (int)$item['eid'], ]
             );
 
             if ($items[$i]['hitcount'] != '0') {
@@ -211,7 +211,7 @@ function release_user_view()
             'release',
             'user',
             'countdocs',
-            array('eid' => $item['eid'])
+            ['eid' => $item['eid']]
         );
 
         //Get some info for the extensions state
@@ -221,7 +221,7 @@ function release_user_view()
             }
         }
 
-        $allitems = xarMod::apiFunc('release', 'user', 'countitems', array('exttype'=>$exttype,'catid'=>$catid));
+        $allitems = xarMod::apiFunc('release', 'user', 'countitems', ['exttype'=>$exttype,'catid'=>$catid]);
 
         $data['pager'] = xarTplPager::getPager(
             $startnum,
@@ -230,10 +230,10 @@ function release_user_view()
                 'release',
                 'user',
                 'view',
-                array('startnum' => '%%',
+                ['startnum' => '%%',
                      'exttype'=>$exttype,
                      'catid'=>$catid,
-                     'sort'=>$sort)
+                     'sort'=>$sort, ]
             ),
             xarModUserVars::get('release', 'itemsperpage', $uid)
         );
@@ -248,6 +248,6 @@ function release_user_view()
     $data['exttype'] = $exttype;
     // Add the array of items to the template variables
     $data['items'] = $items;
-    
+
     return $data;
 }

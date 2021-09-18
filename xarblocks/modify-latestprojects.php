@@ -33,9 +33,9 @@ function release_latestprojectsblock_modify($blockinfo)
     }
 
     // Send content to template
-    return array('numitems' => $vars['numitems'],
+    return ['numitems' => $vars['numitems'],
                  'showonlists' => $vars['showonlists'],
-                 'blockid' => $blockinfo['bid']);
+                 'blockid' => $blockinfo['bid'], ];
 }
 
 /**
@@ -51,7 +51,7 @@ function release_latestprojectsblock_update($blockinfo)
     if (!xarVar::fetch('showonlists', 'checkbox', $vars['showonlists'], false, xarVar::DONT_SET)) {
         return;
     }
-    $vars['showonlists'] = $vars['showonlists']?1:0;
+    $vars['showonlists'] = $vars['showonlists'] ? 1 : 0;
     $blockinfo['content'] = $vars;
 
     return $blockinfo;

@@ -33,7 +33,7 @@ function release_userapi_search($args)
     $xartable =& xarDB::getTables();
     $releasetable = & $xartable['release_id'];
     $where = '';
-    $releases = array();
+    $releases = [];
     $sql = "SELECT  xar_eid,
                     xar_rid,
                     xar_uid,
@@ -44,7 +44,7 @@ function release_userapi_search($args)
               FROM  $releasetable
               WHERE  (";
 
-    $bindvars = array();
+    $bindvars = [];
 
     if (isset($rid)) {
         $sql .= "xar_rid LIKE ?";
@@ -89,19 +89,19 @@ function release_userapi_search($args)
     }
     // no results to return .. then return them :p
     if ($result->EOF) {
-        return array();
+        return [];
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eid, $rid, $uid, $regname, $displname, $desc, $exttype) = $result->fields;
+        [$eid, $rid, $uid, $regname, $displname, $desc, $exttype] = $result->fields;
         if (xarSecurity::check('ReadRelease', 0)) {
-            $releases[] = array('eid' => $eid,
+            $releases[] = ['eid' => $eid,
                                 'rid' => $rid,
                                 'uid' => $uid,
                                 'regname' => $regname,
                                 'displname' => $displname,
                                 'desc' => $desc,
                                 'author' => xarUser::getVar('name', $uid),
-                                'exttype' => $exttype );
+                                'exttype' => $exttype, ];
         }
     }
     $result->Close();

@@ -53,7 +53,7 @@ function release_user_display($args)
             'release',
             'user',
             'getid',
-            array('eid' => $eid)
+            ['eid' => $eid]
         );
         $rid = (int)$id['rid'];
         $exttype = (int)$id['exttype'];
@@ -63,15 +63,15 @@ function release_user_display($args)
                 'release',
                 'user',
                 'getid',
-                array('rid' => $rid,
-                                'exttype' => $exttype)
+                ['rid' => $rid,
+                                'exttype' => $exttype, ]
             );
         } else {
             $id = xarMod::apiFunc(
                 'release',
                 'user',
                 'getid',
-                array('rid' => (int)$rid)
+                ['rid' => (int)$rid]
             );
         }
         $eid = (int)$id['eid'];
@@ -83,7 +83,7 @@ function release_user_display($args)
         'categories',
         'user',
         'getitemcats',
-        array('module'=>'release','item'=>$eid)
+        ['module'=>'release','item'=>$eid]
     );
 
 
@@ -99,18 +99,18 @@ function release_user_display($args)
         'roles',
         'user',
         'get',
-        array('uid' => $id['uid'])
+        ['uid' => $id['uid']]
     );
 
     $realname = $getuser['name'];
     //determine edit link
     if ((xarUser::getVar('id') == $id['uid']) || xarSecurity::check('EditRelease', 0)) {
-        $data['editlink']=xarController::URL('release', 'user', 'modifyid', array('eid'=>$eid));
+        $data['editlink']=xarController::URL('release', 'user', 'modifyid', ['eid'=>$eid]);
     } else {
         $data['editlink']='';
     }
 
-    $stateoptions=array();
+    $stateoptions=[];
     $stateoptions[0] = xarML('Planning');
     $stateoptions[1] = xarML('Alpha');
     $stateoptions[2] = xarML('Beta');
@@ -118,14 +118,14 @@ function release_user_display($args)
     $stateoptions[4] = xarML('Mature');
     $stateoptions[5] = xarML('Inactive');
 
-    $memberlist = array();
+    $memberlist = [];
     $members = trim($id['members']);
     $memberstring='';
     if (isset($members) && !empty($members)) {
         $memberdata = unserialize($members);
         if (count($memberdata)>0) {
             foreach ($memberdata as $k => $v) {
-                $memberlist[]=array($v => xarUser::getVar('uname', $v));
+                $memberlist[]=[$v => xarUser::getVar('uname', $v)];
             }
         }
 
@@ -133,9 +133,9 @@ function release_user_display($args)
         foreach ($memberlist as $key=>$iid) {
             foreach ($iid as $userid=>$username) {
                 if ($key == 0) {
-                    $memberstring = "<a href=\"".xarController::URL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
+                    $memberstring = "<a href=\"".xarController::URL('roles', 'user', 'display', ['uid'=>$userid])."\">".$username."</a>";
                 } else {
-                    $memberstring .=", <a href=\"".xarController::URL('roles', 'user', 'display', array('uid'=>$userid))."\">".$username."</a>";
+                    $memberstring .=", <a href=\"".xarController::URL('roles', 'user', 'display', ['uid'=>$userid])."\">".$username."</a>";
                 }
             }
         }
@@ -143,7 +143,7 @@ function release_user_display($args)
     $item['module'] = 'release';
     $item['itemtype'] = $exttype;
     $item['item'] = $eid;
-    $item['returnurl']=xarController::URL('release', 'user', 'display', array('eid' => $eid));
+    $item['returnurl']=xarController::URL('release', 'user', 'display', ['eid' => $eid]);
     $hooks = xarModHooks::call('item', 'display', $eid, $item);
 
     if (empty($hooks)) {
@@ -153,22 +153,22 @@ function release_user_display($args)
     }
 
     // The user API function is called.
-    $items = array();
+    $items = [];
     $items = xarMod::apiFunc(
         'release',
         'user',
         'getallnotes',
-        array('startnum' => $startnum,
+        ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'release',
                                             'itemsperpage'
                                         ),
-                                        'eid' => $eid)
+                                        'eid' => $eid, ]
     );
     if (empty($items)) {
         $data['message'] = xarML('There is no version history on this module');
     }
-    $latest=array();
+    $latest=[];
     if (isset($items) && isset($items[0])) {
         $latest=$items[0];
     }
@@ -186,7 +186,7 @@ function release_user_display($args)
         $latest['nightlylink']='';
     }
     if (xarMod::isAvailable('articles') && xarMod::isAvailable('keywords') && isset($id['regname'])) {
-        $latest['onsitedocs']=xarController::URL('keywords', 'user', 'main', array('keyword'=>$id['regname']));
+        $latest['onsitedocs']=xarController::URL('keywords', 'user', 'main', ['keyword'=>$id['regname']]);
     } else {
         $latest['onsitedocs'] ='';
     }
@@ -217,7 +217,7 @@ function release_user_display($args)
                     'release',
                     'user',
                     'getid',
-                    array('eid' => $items[$i]['eid'])
+                    ['eid' => $items[$i]['eid']]
                 );
 
                 $items[$i]['rid'] = xarVar::prepForDisplay($getid['rid']);
@@ -229,14 +229,14 @@ function release_user_display($args)
                     'release',
                     'user',
                     'displaynote',
-                    array('rnid' => $items[$i]['rnid'])
+                    ['rnid' => $items[$i]['rnid']]
                 );
                 if (xarSecurity::check('AdminRelease', 0)) {
                     $items[$i]['editlink'] =  xarController::URL(
                         'release',
                         'admin',
                         'modifynote',
-                        array('rnid' => $items[$i]['rnid'])
+                        ['rnid' => $items[$i]['rnid']]
                     );
                 } else {
                     $items[$i]['editlink'] =  '';
@@ -246,14 +246,14 @@ function release_user_display($args)
                     'roles',
                     'user',
                     'get',
-                    array('uid' => $getid['uid'])
+                    ['uid' => $getid['uid']]
                 );
 
                 $items[$i]['contacturl'] = xarController::URL(
                     'roles',
                     'user',
                     'display',
-                    array('uid' => $getid['uid'])
+                    ['uid' => $getid['uid']]
                 );
 
 
@@ -272,11 +272,11 @@ function release_user_display($args)
                     'comments',
                     'user',
                     'get_count',
-                    array('modid' => xarMod::getRegId('release'),
+                    ['modid' => xarMod::getRegId('release'),
                                                              'itemtype' =>(int)$item['exttype'],
-                                                             'objectid' => $item['rnid'])
+                                                             'objectid' => $item['rnid'], ]
                 );
-                
+
                 if (!$items[$i]['comments']) {
                     $items[$i]['comments'] = '0';
                 } elseif ($items[$i]['comments'] == 1) {
@@ -289,9 +289,9 @@ function release_user_display($args)
                     'hitcount',
                     'user',
                     'get',
-                    array('modname' => 'release',
+                    ['modname' => 'release',
                                                         'itemtype' =>(int)$item['exttype'],
-                                                             'objectid' => $item['rnid'])
+                                                             'objectid' => $item['rnid'], ]
                 );
 
                 if (!$items[$i]['hitcount']) {
@@ -503,7 +503,7 @@ function release_user_display($args)
     $data['class'] = $id['class'];
     $data['modified'] = $id['modified'];
     $data['memberstring']= $memberstring;
-    $data['contacturl'] = xarController::URL('roles', 'user', 'email', array('uid' => $id['uid']));
+    $data['contacturl'] = xarController::URL('roles', 'user', 'email', ['uid' => $id['uid']]);
     $data['realname'] = $realname;
     $data['startnum']=$startnum;
 

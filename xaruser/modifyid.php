@@ -32,7 +32,7 @@ function release_user_modifyid($args)
         return;
     }
 
-    $data = xarMod::apiFunc('release', 'user', 'getid', array('eid' => $eid));
+    $data = xarMod::apiFunc('release', 'user', 'getid', ['eid' => $eid]);
 
     if ($data == false) {
         return;
@@ -73,13 +73,13 @@ function release_user_modifyid($args)
 
             $data['memberlist']=$memberstring;
             $openproj = $data['openproj'];
-            $data['openproj'] = isset($openproj) && $openproj>0 ? 1:0;
+            $data['openproj'] = isset($openproj) && $openproj>0 ? 1 : 0;
             if (($data['uid'] == $uid) or (xarSecurity::check('EditRelease', 0))) {
                 $message = '';
             } else {
                 $message = xarML('You are not allowed to add a release notification to this module');
             }
-            $stateoptions=array();
+            $stateoptions=[];
             $stateoptions[0] = xarML('Planning');
             $stateoptions[1] = xarML('Alpha');
             $stateoptions[2] = xarML('Beta');
@@ -162,8 +162,8 @@ function release_user_modifyid($args)
                 return;
             }
             $existingmembers = $data['members'];
-            $openproj = isset($openproj)? 1:0;
-            $memberslist=array();
+            $openproj = isset($openproj) ? 1 : 0;
+            $memberslist=[];
             if (!empty($newmembers)) {
                 $newmemberlist = explode(',', $newmembers);
 
@@ -172,7 +172,7 @@ function release_user_modifyid($args)
                         'roles',
                         'user',
                         'get',
-                        array('uname' => trim($v))
+                        ['uname' => trim($v)]
                     );
                     if (is_array($userRole)) {
                         $memberslist[]=$userRole['uid'];
@@ -189,7 +189,7 @@ function release_user_modifyid($args)
                 'release',
                 'user',
                 'updateid',
-                array('eid'       => $eid,
+                ['eid'       => $eid,
                                       'rid'       => $rid,
                                       'uid'       => $uid,
                                       'regname'   => $regname,
@@ -202,12 +202,12 @@ function release_user_modifyid($args)
                                       'members'   => $members,
                                       'scmlink'   => $scmlink,
                                       'openproj'  => $openproj,
-                                      'cids'      => $cids)
+                                      'cids'      => $cids, ]
             )) {
                 return;
             }
 
-                xarController::redirect(xarController::URL('release', 'user', 'display', array('eid'=>$eid)));
+                xarController::redirect(xarController::URL('release', 'user', 'display', ['eid'=>$eid]));
           return true;
 
             break;

@@ -17,13 +17,13 @@
  */
 function release_latestblock_init()
 {
-    return array(
+    return [
         'numitems' => 5,
         'nocache' => 0, // cache by default
         'pageshared' => 1,
         'usershared' => 1, // share across group members
-        'cacheexpire' => null
-    );
+        'cacheexpire' => null,
+    ];
 }
 
 /**
@@ -33,13 +33,13 @@ function release_latestblock_init()
 function release_latestblock_info()
 {
     // Values
-    return array('text_type' => 'Latest',
+    return ['text_type' => 'Latest',
         'module' => 'release',
         'text_type_long' => 'Show latest release notes',
         'allow_multiple' => true,
         'form_content' => false,
         'form_refresh' => false,
-        'show_preview' => true);
+        'show_preview' => true, ];
 }
 
 /**
@@ -69,23 +69,23 @@ function release_latestblock_display($blockinfo)
     if (!isset($vars['shownonfeeditems']) || empty($vars['shownonfeeditems'])) {
         $vars['shownonfeeditems'] = 0;
     }
-    $usefeed = ($vars['shownonfeeditems'] == 0)?1:null; //null - no selection on usefeed, 1 selecct for rss only
+    $usefeed = ($vars['shownonfeeditems'] == 0) ? 1 : null; //null - no selection on usefeed, 1 selecct for rss only
     // The API function is called to get all notes
     $items = xarMod::apiFunc(
         'release',
         'user',
         'getallnotes',
-        array('numitems' => $vars['numitems'],
-                           'usefeed'  => $usefeed)
+        ['numitems' => $vars['numitems'],
+                           'usefeed'  => $usefeed, ]
     );
-    
+
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return;
     } // throw back
 
     // TODO: check for conflicts between transformation hook output and xarVar::prepForDisplay
     // Loop through each item and display it.
-    $data['items'] = array();
+    $data['items'] = [];
     if (is_array($items)) {
         foreach ($items as $item) {
             // Security check 2 - if the user has read access to the item, show a
@@ -95,7 +95,7 @@ function release_latestblock_display($blockinfo)
                     'release',
                     'user',
                     'displaynote',
-                    array('rnid' => $item['rnid'])
+                    ['rnid' => $item['rnid']]
                 );
 
             // Security check 2 - else only display the item name (or whatever is
@@ -106,7 +106,7 @@ function release_latestblock_display($blockinfo)
             $roles = new xarRoles();
             $role = $roles->getRole($item['uid']);
             $item['author']= $role->getName();
-            $item['authorlink']=xarController::URL('roles', 'user', 'display', array('uid'=>$item['uid']));
+            $item['authorlink']=xarController::URL('roles', 'user', 'display', ['uid'=>$item['uid']]);
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }

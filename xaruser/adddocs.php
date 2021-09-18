@@ -37,7 +37,7 @@ function release_user_adddocs()
         return;
     }
 
-    $data['items'] = array();
+    $data['items'] = [];
     $data['rid'] = $rid;
     $data['eid'] = $eid;
     if (empty($phase)) {
@@ -51,7 +51,7 @@ function release_user_adddocs()
             // This will be done in several stages so that the information is accurate.
 
             $authid = xarSec::genAuthKey();
-            $data = xarTpl::module('release', 'user', 'adddocs_getmodule', array('authid'    => $authid));
+            $data = xarTpl::module('release', 'user', 'adddocs_getmodule', ['authid'    => $authid]);
 
             xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Documentation')));
 
@@ -70,10 +70,10 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'getid',
-                array('eid' => $eid)
+                ['eid' => $eid]
             );
 
-            
+
             $uid = xarUser::getVar('id');
 
             if (($data['uid'] == $uid) or (xarSecurity::check('EditRelease', 0))) {
@@ -95,13 +95,13 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'adddocs_start',
-                array('rid'       => $data['rid'],
+                ['rid'       => $data['rid'],
                         'eid'       => $data['eid'],
                         'name'      => $data['name'],
                         'desc'      => $data['desc'],
                         'exttype'      => $data['exttype'],
                         'message'   => $message,
-                        'authid'    => $authid)
+                        'authid'    => $authid, ]
             );
 
             break;
@@ -116,8 +116,8 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'getdocs',
-                array('eid' => $eid,
-                                          'exttype'=> $data['mtype'])
+                ['eid' => $eid,
+                                          'exttype'=> $data['mtype'], ]
             );
 
             if (empty($items)) {
@@ -139,9 +139,9 @@ function release_user_adddocs()
 
             $data['items'] = $items;
             $data['authid'] = xarSec::genAuthKey();
-        
+
             break;
-        
+
         case 'theme':
 
             $data['mtype'] = 'tgeneral';
@@ -152,15 +152,15 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'getdocs',
-                array('eid' => $eid,
-                                          'exttype'=> $data['mtype'])
+                ['eid' => $eid,
+                                          'exttype'=> $data['mtype'], ]
             );
 
             if (empty($items)) {
                 $data['message'] = xarML('There is no general theme documentation defined');
             }
 
-            
+
             xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
@@ -188,15 +188,15 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'getdocs',
-                array('eid' => $eid,
-                                          'type'=> $data['mtype'])
+                ['eid' => $eid,
+                                          'type'=> $data['mtype'], ]
             );
 
             if (empty($items)) {
                 $data['message'] = xarML('There is no block groups documentation defined');
             }
 
-            
+
             xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
@@ -213,7 +213,7 @@ function release_user_adddocs()
             $data['authid'] = xarSec::genAuthKey();
 
             break;
-        
+
         case 'blocks':
 
             $data['mtype'] = 'mblocks';
@@ -224,15 +224,15 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'getdocs',
-                array('eid' => $eid,
-                                          'exttype'=> $data['mtype'])
+                ['eid' => $eid,
+                                          'exttype'=> $data['mtype'], ]
             );
 
             if (empty($items)) {
                 $data['message'] = xarML('There is no blocks documentation defined');
             }
 
-            
+
             xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
@@ -261,15 +261,15 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'getdocs',
-                array('eid' => $eid,
-                                          'exttype'=> $data['mtype'])
+                ['eid' => $eid,
+                                          'exttype'=> $data['mtype'], ]
             );
 
             if (empty($items)) {
                 $data['message'] = xarML('There is no hook documentation defined');
             }
 
-            
+
             xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('General Information')));
 
 
@@ -322,22 +322,22 @@ function release_user_adddocs()
                 'release',
                 'user',
                 'createdoc',
-                array('eid'         => $eid,
+                ['eid'         => $eid,
                                       'rid'         => $rid,
                                       'type'        => $mtype,
                                       'title'       => $title,
                                       'doc'         => $doc,
-                                      'approved'    => $approved)
+                                      'approved'    => $approved, ]
             )) {
                 return;
             }
 
-            xarController::redirect(xarController::URL('release', 'user', 'adddocs', array('phase' => $return,
-                                                                              'eid' => $eid)));
+            xarController::redirect(xarController::URL('release', 'user', 'adddocs', ['phase' => $return,
+                                                                              'eid' => $eid, ]));
 
            $data = '';
             break;
     }
-    
+
     return $data;
 }

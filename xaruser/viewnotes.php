@@ -38,7 +38,7 @@ function release_user_viewnotes()
     }
 
     $uid = xarUser::getVar('id');
-    $data['items'] = array();
+    $data['items'] = [];
 
     if (empty($phase)) {
         $phase = 'viewall';
@@ -56,13 +56,13 @@ function release_user_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'release',
                                             'itemsperpage'
                                         ),
                                         'approved' => 2,
-                                        'usefeed'  => 1)
+                                        'usefeed'  => 1, ]
             );//only those that want to be on the feed
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
@@ -77,12 +77,12 @@ function release_user_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'release',
                                             'itemsperpage'
                                         ),
-                                        'certified'=> 2)
+                                        'certified'=> 2, ]
             );
 
             if ($items == false) {
@@ -98,14 +98,14 @@ function release_user_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'release',
                                             'itemsperpage'
                                         ),
-                                        'price'    => 2)
+                                        'price'    => 2, ]
             );
-            
+
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -119,14 +119,14 @@ function release_user_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'release',
                                             'itemsperpage'
                                         ),
-                                        'price'    => 1)
+                                        'price'    => 1, ]
             );
-            
+
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -140,14 +140,14 @@ function release_user_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'release',
                                             'itemsperpage'
                                         ),
-                                        'supported'=> 2)
+                                        'supported'=> 2, ]
             );
-            
+
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -165,7 +165,7 @@ function release_user_viewnotes()
             'release',
             'user',
             'getid',
-            array('eid' => $items[$i]['eid'])
+            ['eid' => $items[$i]['eid']]
         );
 
 
@@ -173,21 +173,21 @@ function release_user_viewnotes()
             'release',
             'user',
             'displaynote',
-            array('rnid' => $item['rnid'])
+            ['rnid' => $item['rnid']]
         );
 
         $getuser = xarMod::apiFunc(
             'roles',
             'user',
             'get',
-            array('uid' => $getid['uid'])
+            ['uid' => $getid['uid']]
         );
 
         $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
-            array('uid' => $getid['uid'])
+            ['uid' => $getid['uid']]
         );
 
         $flipext = array_flip($exttypes);
@@ -205,10 +205,10 @@ function release_user_viewnotes()
         //Add pager
         $data['pager'] = xarTplPager::getPager(
             $startnum,
-            xarMod::apiFunc('release', 'user', 'countnotes', array('phase'=>$phase)),
-            xarController::URL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
+            xarMod::apiFunc('release', 'user', 'countnotes', ['phase'=>$phase]),
+            xarController::URL('release', 'user', 'viewnotes', ['startnum' => '%%','phase'=>$phase,
                                                                            'filter'=>$filter,
-                                                                            'exttype' =>$exttype)),
+                                                                            'exttype' =>$exttype, ]),
             xarModUserVars::get('release', 'itemsperpage', $uid)
         );
     }

@@ -34,26 +34,26 @@ function release_userapi_getdoc($args)
                      xar_approved
             FROM $releasetable
             WHERE xar_rdid = ?";
-    $result =& $dbconn->Execute($query, array($rdid));
+    $result =& $dbconn->Execute($query, [$rdid]);
     if (!$result) {
         return;
     }
 
-    list($rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
+    [$rdid, $eid, $rid, $title, $docs, $exttype, $time, $approved] = $result->fields;
     $result->Close();
 
     if (!xarSecurity::check('OverviewRelease', 0)) {
         return false;
     }
 
-    $releaseinfo = array('rdid'       => $rdid,
+    $releaseinfo = ['rdid'       => $rdid,
                          'eid'        => $eid,
                          'rid'        => $rid,
                          'title'      => $title,
                          'docs'       => $docs,
                          'exttype'       => $exttype,
                          'time'       => $time,
-                         'approved'   => $approved);
+                         'approved'   => $approved, ];
 
     return $releaseinfo;
 }

@@ -15,7 +15,7 @@
  *
  */
     sys::import('modules.dynamicdata.class.objects.master');
-    
+
     function release_user_display_documentation()
     {
         if (!xarSecurity::check('ReadRelease')) {
@@ -29,8 +29,8 @@
             return;
         }
 
-        $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-        $data['object']->getItem(array('itemid' => $data['itemid']));
+        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+        $data['object']->getItem(['itemid' => $data['itemid']]);
 
         $data['tplmodule'] = 'release';
 

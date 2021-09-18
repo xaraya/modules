@@ -39,7 +39,7 @@ function release_user_displaynote($args)
         'release',
         'user',
         'getnote',
-        array('rnid' => $rnid)
+        ['rnid' => $rnid]
     );
 
     if ($item == false) {
@@ -51,14 +51,14 @@ function release_user_displaynote($args)
         'release',
         'user',
         'getid',
-        array('eid' => $item['eid'])
+        ['eid' => $item['eid']]
     );
 
     $getuser = xarMod::apiFunc(
         'roles',
         'user',
         'get',
-        array('uid' => $id['uid'])
+        ['uid' => $id['uid']]
     );
 
 
@@ -66,14 +66,14 @@ function release_user_displaynote($args)
         'item',
         'display',
         $rnid,
-        array('itemtype'  => $item['exttype'],
+        ['itemtype'  => $item['exttype'],
                                           'returnurl' => xarController::URL(
                                               'release',
                                               'user',
                                               'displaynote',
-                                              array('rnid' => $rnid)
-                                          )
-                                         )
+                                              ['rnid' => $rnid]
+                                          ),
+                                         ]
     );
     // TODO: MichelV rewrite hookcall to array
     if (empty($hooks)) {
@@ -88,7 +88,7 @@ function release_user_displaynote($args)
     } else {
         $item['certifiedstatus'] = xarML('No');
     }
-    $stateoptions=array();
+    $stateoptions=[];
     $stateoptions[0] = xarML('Planning');
     $stateoptions[1] = xarML('Alpha');
     $stateoptions[2] = xarML('Beta');
@@ -114,14 +114,14 @@ function release_user_displaynote($args)
     $item['exttype'] = $id['exttype'];
     $item['exttypes'] = $exttypes;
     $item['class'] = $id['class'];
-    $item['contacturl'] = xarController::URL('roles', 'user', 'email', array('uid' => $id['uid']));
+    $item['contacturl'] = xarController::URL('roles', 'user', 'email', ['uid' => $id['uid']]);
     $item['extensionpage']= xarController::URL(
         'release',
         'user',
         'display',
-        array('eid' => $item['eid'],
+        ['eid' => $item['eid'],
                                       'phase' => 'version',
-                                      'tab'  => 'versions')
+                                      'tab'  => 'versions', ]
     );
 
     $item['realname'] = $getuser['name'];

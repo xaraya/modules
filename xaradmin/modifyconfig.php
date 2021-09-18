@@ -27,14 +27,14 @@ function release_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'release'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'release']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls', 'use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
     switch (strtolower($phase)) {
         case 'modify':
         default:
-            
+
             switch ($data['tab']) {
                 case 'general':
                     break;
@@ -62,7 +62,7 @@ function release_admin_modifyconfig()
                     break;
             }
             // Jump to the next page
-            xarController::redirect(xarController::URL('release', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('release', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
     }
@@ -71,7 +71,7 @@ function release_admin_modifyconfig()
         'module',
         'modifyconfig',
         'release',
-        array('module' => 'release')
+        ['module' => 'release']
     );
     if (empty($hooks)) {
         $data['hooks'] = '';

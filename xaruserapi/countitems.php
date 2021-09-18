@@ -32,20 +32,20 @@ function release_userapi_countitems($args)
             'categories',
             'user',
             'leftjoin',
-            array('modid'    => 773,
+            ['modid'    => 773,
                                     'itemtype' => 0,
-                                    'cids'     => array($catid),
-                                    'andcids'  => 1)
+                                    'cids'     => [$catid],
+                                    'andcids'  => 1, ]
         );
     }
 
     $query = "SELECT COUNT(1)
              FROM $releasetable";
-    $bindvars = array();
+    $bindvars = [];
 
     $from ='';
-    $where = array();
-    if (!empty($catid) && count(array($catid)) > 0) {
+    $where = [];
+    if (!empty($catid) && count([$catid]) > 0) {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
@@ -94,7 +94,7 @@ function release_userapi_countitems($args)
         return;
     }
     // Obtain the number of items
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();

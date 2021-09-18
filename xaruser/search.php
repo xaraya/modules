@@ -60,8 +60,8 @@ function release_user_search($args)
     if (!xarVar::fetch('authorsearch', 'isset', $authorsearch, null, xarVar::DONT_SET)) {
         return;
     }
-    $data       = array();
-    $search     = array();
+    $data       = [];
+    $search     = [];
     if (isset($args['objectid'])) {
         $ishooked = 1;
     } else {
@@ -128,7 +128,7 @@ function release_user_search($args)
         $query = "SELECT xar_uid
                   FROM $rolestable
                   WHERE xar_uname = ? or xar_name = ?";
-        $result =& $dbconn->Execute($query, array($search['author'],$search['author']));
+        $result =& $dbconn->Execute($query, [$search['author'],$search['author']]);
         if (!$result) {
             return;
         }

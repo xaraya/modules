@@ -17,14 +17,14 @@
  */
 function release_latestprojectsblock_init()
 {
-    return array(
+    return [
         'numitems' => 5,
         'showonlists'=>0,
         'nocache' => 0, // cache by default
         'pageshared' => 1,
         'usershared' => 1, // share across group members
-        'cacheexpire' => null
-    );
+        'cacheexpire' => null,
+    ];
 }
 
 /**
@@ -34,13 +34,13 @@ function release_latestprojectsblock_init()
 function release_latestprojectsblock_info()
 {
     // Values
-    return array('text_type' => 'Latest Extensions',
+    return ['text_type' => 'Latest Extensions',
         'module' => 'release',
         'text_type_long' => 'Show latest registered extensions',
         'allow_multiple' => true,
         'form_content' => false,
         'form_refresh' => false,
-        'show_preview' => true);
+        'show_preview' => true, ];
 }
 
 /**
@@ -69,15 +69,15 @@ function release_latestprojectsblock_display($blockinfo)
     if (!isset($vars['showonlists']) || empty($vars['showonlists'])) {
         $vars['showonlists'] = 1;
     }
-    $usefeed = ($vars['showonlists'] == 1)?1:null; //null - no selection on usefeed, 1 select for lists
+    $usefeed = ($vars['showonlists'] == 1) ? 1 : null; //null - no selection on usefeed, 1 select for lists
     // The API function is called to get all notes
     $items = xarMod::apiFunc(
         'release',
         'user',
         'getallrids',
-        array('numitems' => $vars['numitems'],
+        ['numitems' => $vars['numitems'],
                            'openproj' => $vars['showonlists'],
-                           'sort'     => 'regtime')
+                           'sort'     => 'regtime', ]
     );
 
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
@@ -86,7 +86,7 @@ function release_latestprojectsblock_display($blockinfo)
 
     // TODO: check for conflicts between transformation hook output and xarVar::prepForDisplay
     // Loop through each item and display it.
-    $data['items'] = array();
+    $data['items'] = [];
     if (is_array($items)) {
         foreach ($items as $item) {
             if (xarSecurity::check('OverviewRelease', 0)) {
@@ -94,7 +94,7 @@ function release_latestprojectsblock_display($blockinfo)
                     'release',
                     'user',
                     'display',
-                    array('eid' => $item['eid'])
+                    ['eid' => $item['eid']]
                 );
 
             // Security check 2 - else only display the item name (or whatever is
@@ -112,7 +112,7 @@ function release_latestprojectsblock_display($blockinfo)
             $roles = new xarRoles();
             $role = $roles->getRole($item['uid']);
             $item['author']= $role->getName();
-            $item['authorlink']=xarController::URL('roles', 'user', 'display', array('uid'=>$item['uid']));
+            $item['authorlink']=xarController::URL('roles', 'user', 'display', ['uid'=>$item['uid']]);
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }

@@ -38,7 +38,7 @@ function release_userapi_updateid($args)
         'release',
         'user',
         'getid',
-        array('eid' => $eid)
+        ['eid' => $eid]
     );
 
     if ($link == false) {
@@ -83,15 +83,15 @@ function release_userapi_updateid($args)
                 xar_openproj  = ?,
                 xar_exttype   = ?
             WHERE xar_eid     = ?";
-    $bindvars = array((int)$uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
-                      $regtime, $modified, $members, $scmlink, $openproj, (int)$exttype,(int)$eid);
+    $bindvars = [(int)$uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
+                      $regtime, $modified, $members, $scmlink, $openproj, (int)$exttype,(int)$eid, ];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
     }
 
     if (empty($cids)) {
-        $cids = array();
+        $cids = [];
     }
     $args['module'] = 'release';
     $args['cids'] = $cids;

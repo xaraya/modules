@@ -22,7 +22,7 @@ function release_userapi_getallrssextnotes($args)
 {
     extract($args);
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -51,13 +51,13 @@ function release_userapi_getallrssextnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $eid, $rid, $exttype, $version) = $result->fields;
+        [$rnid, $eid, $rid, $exttype, $version] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rnid'       => $rnid,
+            $releaseinfo[] = ['rnid'       => $rnid,
                                    'eid'        => $eid,
                                    'rid'        => $rid,
                                    'exttype'    => $exttype,
-                                   'version'    => $version);
+                                   'version'    => $version, ];
         }
     }
 

@@ -23,7 +23,7 @@ function release_userapi_getallrssextnotes($args)
     extract($args);
     //Make provision to pass in $releaseno to set defined number of items to get
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -56,13 +56,13 @@ function release_userapi_getallrssextnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $eid, $rid, $version, $exttype) = $result->fields;
+        [$rnid, $eid, $rid, $version, $exttype] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rnid'       => $rnid,
+            $releaseinfo[] = ['rnid'       => $rnid,
                                    'eid'        => $eid,
                                    'rid'        => $rid,
                                    'version'    => $version,
-                                   'exttype'    => $exttype);
+                                   'exttype'    => $exttype, ];
         }
     }
 

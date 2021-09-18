@@ -117,13 +117,13 @@ function release_init()
     # Create DD objects
 #
     $module = 'release';
-    $objects = array(
+    $objects = [
                      'release_extensions',
                      'release_notes',
                      'release_docs',
-                     );
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
     # --------------------------------------------------------
@@ -140,15 +140,15 @@ function release_init()
     }
     if (empty($basecid)) {
         sys::import('modules.dynamicdata.class.objects.master');
-        $categories = DataObjectMaster::getObject(array('name' => 'categories'));
-        $fieldValues = array(
+        $categories = DataObjectMaster::getObject(['name' => 'categories']);
+        $fieldValues = [
                 'name' => $catName,
                 'description' => xarML('Main Release Cats.'),
                 'parent_id' => 0,
-        );
+        ];
         $basecid = $categories->createItem($fieldValues);
     }
-    
+
     // Save the base category in a modvar
     xarModVars::set('release', 'mastercids', $basecid);
 
@@ -163,8 +163,8 @@ function release_init()
         'blocks',
         'admin',
         'register_block_type',
-        array('modName'   => 'release',
-                             'blockType' => 'latest')
+        ['modName'   => 'release',
+                             'blockType' => 'latest', ]
     )) {
         return;
     }
@@ -173,8 +173,8 @@ function release_init()
         'blocks',
         'admin',
         'register_block_type',
-        array('modName'   => 'release',
-                             'blockType' => 'latestprojects')
+        ['modName'   => 'release',
+                             'blockType' => 'latestprojects', ]
     )) {
         return;
     }
@@ -188,7 +188,7 @@ function release_init()
         'modules',
         'admin',
         'enablehooks',
-        array('callerModName' => 'release', 'hookModName' => 'categories')
+        ['callerModName' => 'release', 'hookModName' => 'categories']
     );
     // search hook
     if (!xarModHooks::register('item', 'search', 'GUI', 'release', 'user', 'search')) {
@@ -232,5 +232,5 @@ function release_upgrade($oldversion)
 function release_delete()
 {
     $module = 'publications';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }

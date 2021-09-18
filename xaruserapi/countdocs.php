@@ -28,12 +28,12 @@ function release_userapi_countdocs($args)
     $query = "SELECT COUNT(1)
             FROM $releasetable
             WHERE xar_eid = ?";
-    $result =&$dbconn->Execute($query, array($eid));
+    $result =&$dbconn->Execute($query, [$eid]);
     if (!$result) {
         return;
     }
 
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
 
     $result->Close();
 

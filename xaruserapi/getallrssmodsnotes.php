@@ -15,7 +15,7 @@ function release_userapi_getallrssmodsnotes($args)
 {
     extract($args);
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -37,7 +37,7 @@ function release_userapi_getallrssmodsnotes($args)
             AND xar_exttype = ?
             ORDER by xar_time DESC";
 
-    $bindvars = array(2, 1, $exttype);
+    $bindvars = [2, 1, $exttype];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
@@ -45,12 +45,12 @@ function release_userapi_getallrssmodsnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $eid, $rid, $version) = $result->fields;
+        [$rnid, $eid, $rid, $version] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rnid'       => $rnid,
+            $releaseinfo[] = ['rnid'       => $rnid,
                                    'eid'        => $eid,
                                    'rid'        => $rid,
-                                   'version'    => $version);
+                                   'version'    => $version, ];
         }
     }
 

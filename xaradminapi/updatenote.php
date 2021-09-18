@@ -33,9 +33,9 @@ function release_adminapi_updatenote($args)
         'release',
         'user',
         'getnote',
-        array('rnid' => $rnid)
+        ['rnid' => $rnid]
     );
-    
+
     if ($link == false) {
         throw new EmptyParameterException(null, xarML('No Such Release Note Present'));
     }
@@ -75,8 +75,8 @@ function release_adminapi_updatenote($args)
                 xar_usefeed = ?,
                 xar_exttype = ?
             WHERE xar_rnid = ?";
-    $bindvars=array($rid,$version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
-                    $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,(int)$exttype,$rnid);
+    $bindvars=[$rid,$version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
+                    $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,(int)$exttype,$rnid, ];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

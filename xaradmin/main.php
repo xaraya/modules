@@ -17,8 +17,8 @@ function release_admin_main()
 
     $redirect = xarModVars::get('release', 'backend_page');
     if (!empty($redirect)) {
-        $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $truecurrenturl = xarServer::getCurrentURL([], false);
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', ['url'=> $redirect,'truecurrenturl'=>$truecurrenturl]);
         xarController::redirect($urldata['redirecturl']);
         return true;
     } else {

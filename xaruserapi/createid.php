@@ -30,9 +30,9 @@ function release_userapi_createid($args)
         'release',
         'user',
         'allocateid',
-        array('regname' => $regname,
+        ['regname' => $regname,
                 'exttype' => $exttype,
-                'ridno'     => $ridno)
+                'ridno'     => $ridno, ]
     );
 
     if (!($regid)) {
@@ -51,7 +51,7 @@ function release_userapi_createid($args)
     //- this column was copied from the rid column to maintain backward compatiblity when we added new itemtypes
     // so now we have to continue to generate the 'nextid' for this table to fill in gaps
 
-    $alleids=array();
+    $alleids=[];
     // Get all EIDs
     $query = "SELECT xar_eid FROM $releasetable ORDER BY xar_eid";
 
@@ -60,8 +60,8 @@ function release_userapi_createid($args)
         return;
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eid) = $result->fields;
-        $alleids[] = array('eid'=> $eid);
+        [$eid] = $result->fields;
+        $alleids[] = ['eid'=> $eid];
     }
     $result->Close();
 
@@ -105,8 +105,8 @@ function release_userapi_createid($args)
               )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nexteid,(int)$rid,(int)$uid,$regname,$displname,$desc,$class,$certified,$approved,$rstate,
-                      (int)$regtime,(int)$modified,$members,$scmlink,(int)$openproj,(int)$exttype);
+    $bindvars = [$nexteid,(int)$rid,(int)$uid,$regname,$displname,$desc,$class,$certified,$approved,$rstate,
+                      (int)$regtime,(int)$modified,$members,$scmlink,(int)$openproj,(int)$exttype, ];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

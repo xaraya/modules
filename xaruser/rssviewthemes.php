@@ -25,16 +25,16 @@ function release_user_rssviewthemes()
         return;
     }
 
-    $data['items'] = array();
+    $data['items'] = [];
 
     // The user API function is called.
     $items = xarMod::apiFunc(
         'release',
         'user',
         'getallrssmodsnotes',
-        array('exttype' => 2)
+        ['exttype' => 2]
     ); //themes
-    
+
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
@@ -44,7 +44,7 @@ function release_user_rssviewthemes()
             'release',
             'user',
             'getid',
-            array('eid' => $items[$i]['eid'])
+            ['eid' => $items[$i]['eid']]
         );
 
         $items[$i]['regname'] = xarVar::prepForDisplay($getid['regname']);
@@ -55,7 +55,7 @@ function release_user_rssviewthemes()
             'release',
             'user',
             'displaynote',
-            array('rnid' => $item['rnid']),
+            ['rnid' => $item['rnid']],
             '1'
         );
 

@@ -32,9 +32,9 @@ function release_userapi_getthemeids($args)
     $exttypes= xarMod::apiFunc('release', 'user', 'getexttypes');
     $text = xarML('Theme');
     $extid = array_search($text, $exttypes);
-    $releaseinfo = array();
+    $releaseinfo = [];
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -66,7 +66,7 @@ function release_userapi_getthemeids($args)
             FROM $releasetable
             WHERE xar_exttype = ?
             ORDER BY xar_eid";
-    $bindvars = array($extid);
+    $bindvars = [$extid];
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) {
         return;
@@ -74,10 +74,10 @@ function release_userapi_getthemeids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
-                     $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj, $exttype) = $result->fields;
+        [$eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
+                     $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj, $exttype] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('eid'        => $eid,
+            $releaseinfo[] = ['eid'        => $eid,
                                    'rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
@@ -92,7 +92,7 @@ function release_userapi_getthemeids($args)
                                    'members'    => $members,
                                    'scmlink'    => $scmlink,
                                    'openproj'   => $openproj,
-                                   'exttype'    => $exttype);
+                                   'exttype'    => $exttype, ];
         }
     }
 

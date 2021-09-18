@@ -33,7 +33,7 @@ function release_userapi_allocateid($args)
         throw new Exception(null, $msg);
     }
     if (isset($ridno) && is_integer($ridno) && $ridno >0) { //could be a supplied ID, let's check if it's available.
-        $checkrid = xarMod::apiFunc('release', 'user', 'getid', array('rid'=>$ridno, 'exttype'=>$exttype));
+        $checkrid = xarMod::apiFunc('release', 'user', 'getid', ['rid'=>$ridno, 'exttype'=>$exttype]);
         if (isset($checkrid['regname']) && !empty($checkrid['regname'])) { //the rid is take, try again
             xarErrorFree();
             xarErrorHandled();
@@ -55,7 +55,7 @@ function release_userapi_allocateid($args)
               WHERE xar_regname = ?
               AND xar_exttype = ?";
 
-    $result =& $dbconn->Execute($query, array($regname,$exttype));
+    $result =& $dbconn->Execute($query, [$regname,$exttype]);
     if (!$result) {
         return;
     }
@@ -65,30 +65,30 @@ function release_userapi_allocateid($args)
         throw new Exception(null, $msg);
     }
 
-    $bindvars=array();
+    $bindvars=[];
     //for modules and themes the numbers are allocated as previously sharing and unique within the range
 
 
     //now get an array of all existing registrations for this itemtypes
-    $allrids=array();
+    $allrids=[];
     // Get all IDs
     $query2 = "SELECT xar_rid FROM $releasetable ";
     if ($exttype ==1 or $exttype ==2) {//modules or themes
         $query2 .= " WHERE xar_exttype <= 2";
     } else {
         $query2 .= " WHERE xar_exttype = ?";
-        $bindvars =array((int)$exttype);
+        $bindvars =[(int)$exttype];
     }
 
     $query2 .= " ORDER BY xar_rid";
-            
+
     $result =& $dbconn->Execute($query2, $bindvars);
     if (!$result) {
         return;
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid) = $result->fields;
-        $allrids[] = array('rid'=> $rid);
+        [$rid] = $result->fields;
+        $allrids[] = ['rid'=> $rid];
     }
     $result->Close();
 

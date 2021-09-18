@@ -30,6 +30,6 @@ function release_user_rssviewdocs()
         'release',
         'user',
         'getallids',
-        array('certified' => '2')
+        ['certified' => '2']
     );
 }

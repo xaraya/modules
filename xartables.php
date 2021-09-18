@@ -21,7 +21,7 @@
 function release_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     // Get the name for the release id table
     $xartable['releases'] = xarDB::getPrefix() . '_release_releases';

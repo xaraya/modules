@@ -17,7 +17,7 @@ function release_admin_view_extensions()
     }
 
     // Get the object to be listed
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_extensions'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'release_extensions']);
 
     return $data;
 

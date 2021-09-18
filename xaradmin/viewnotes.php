@@ -41,7 +41,7 @@ function release_admin_viewnotes()
     }
 
     $uid = xarUser::getVar('id');
-    $data['items'] = array();
+    $data['items'] = [];
 
     if (empty($phase)) {
         $phase = 'unapproved';
@@ -56,12 +56,12 @@ function release_admin_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'roles',
                                             'itemsperpage'
                                         ),
-                                        'unapproved' => 1)
+                                        'unapproved' => 1, ]
             );
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
@@ -76,12 +76,12 @@ function release_admin_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'roles',
                                             'itemsperpage'
                                         ),
-                                        'approved' => 2)
+                                        'approved' => 2, ]
             );
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
@@ -96,14 +96,14 @@ function release_admin_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'roles',
                                             'itemsperpage'
                                         ),
-                                        'certified'=> $filter)
+                                        'certified'=> $filter, ]
             );
-            
+
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -121,14 +121,14 @@ function release_admin_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'roles',
                                             'itemsperpage'
                                         ),
-                                        'price'    => $filter)
+                                        'price'    => $filter, ]
             );
-            
+
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -147,14 +147,14 @@ function release_admin_viewnotes()
                 'release',
                 'user',
                 'getallnotes',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                         'numitems' => xarModVars::get(
                                             'roles',
                                             'itemsperpage'
                                         ),
-                                        'supported'=> $filter)
+                                        'supported'=> $filter, ]
             );
-            
+
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -176,7 +176,7 @@ function release_admin_viewnotes()
                 'release',
                 'admin',
                 'modifynote',
-                array('rnid' => $item['rnid'])
+                ['rnid' => $item['rnid']]
             );
         } else {
             $items[$i]['editurl'] = '';
@@ -187,7 +187,7 @@ function release_admin_viewnotes()
                 'release',
                 'admin',
                 'deletenote',
-                array('rnid' => $item['rnid'])
+                ['rnid' => $item['rnid']]
             );
         } else {
             $items[$i]['deleteurl'] = '';
@@ -200,7 +200,7 @@ function release_admin_viewnotes()
             'release',
             'user',
             'getid',
-            array('rid' => $items[$i]['rid'])
+            ['rid' => $items[$i]['rid']]
         );
 
         $items[$i]['exttype'] = xarVar::prepForDisplay($getid['exttype']);
@@ -209,21 +209,21 @@ function release_admin_viewnotes()
             'release',
             'user',
             'displaynote',
-            array('rnid' => $item['rnid'])
+            ['rnid' => $item['rnid']]
         );
 
         $getuser = xarMod::apiFunc(
             'roles',
             'user',
             'get',
-            array('uid' => $getid['uid'])
+            ['uid' => $getid['uid']]
         );
 
         $items[$i]['contacturl'] = xarController::URL(
             'roles',
             'user',
             'display',
-            array('uid' => $getid['uid'])
+            ['uid' => $getid['uid']]
         );
 
 
@@ -240,8 +240,8 @@ function release_admin_viewnotes()
 
         $data['pager'] = xarTplPager::getPager(
             $startnum,
-            xarMod::apiFunc('release', 'user', 'countnotes', array('phase'=>$phase,'filter'=>$filter)),
-            xarController::URL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
+            xarMod::apiFunc('release', 'user', 'countnotes', ['phase'=>$phase,'filter'=>$filter]),
+            xarController::URL('release', 'admin', 'viewnotes', ['startnum' => '%%','phase'=>$phase, 'filter'=>$filter]),
             xarModUserVars::get('release', 'itemsperpage', $uid)
         );
     }

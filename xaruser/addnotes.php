@@ -27,13 +27,13 @@ function release_user_addnotes($args)
     if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     if (isset($eid) && $eid>0) {
         $data = xarMod::apiFunc(
             'release',
             'user',
             'getid',
-            array('eid' => $eid)
+            ['eid' => $eid]
         );
     }
     if (!isset($eid) && isset($rid) && isset($exttype)) {
@@ -41,7 +41,7 @@ function release_user_addnotes($args)
             'release',
             'user',
             'getid',
-            array('rid' => $rid, 'exttype' =>$exttype)
+            ['rid' => $rid, 'exttype' =>$exttype]
         );
     }
     if (isset($data) && !empty($data['regname'])) {
@@ -61,7 +61,7 @@ function release_user_addnotes($args)
         $phase = 'getmodule';
     }
     //Set the stateoptions array for rstate field
-    $stateoptions=array();
+    $stateoptions=[];
     $stateoptions[0] = xarML('Planning');
     $stateoptions[1] = xarML('Alpha');
     $stateoptions[2] = xarML('Beta');
@@ -83,12 +83,12 @@ function release_user_addnotes($args)
                 'release',
                 'user',
                 'addnote_getmodule',
-                array('authid' => $authid,
+                ['authid' => $authid,
                       'rid'=>$rid,
                       'regname'=>$regname,
                       'exttype'=>$exttype,
                       'exttypes'=>$exttypes,
-                      'message'=>$m)
+                      'message'=>$m, ]
             );
 
             break;
@@ -99,7 +99,7 @@ function release_user_addnotes($args)
                 'release',
                 'user',
                 'getid',
-                array('rid' => $rid, 'exttype' => $exttype)
+                ['rid' => $rid, 'exttype' => $exttype]
             );
 
             $exttypename = array_search($exttype, array_flip($exttypes));
@@ -111,7 +111,7 @@ function release_user_addnotes($args)
                     'release',
                     'user',
                     'addnotes',
-                    array('m'=>$m,'rid'=>$rid,'exttype'=>$exttype,'phase'=>'getmodule')
+                    ['m'=>$m,'rid'=>$rid,'exttype'=>$exttype,'phase'=>'getmodule']
                 ));
             }
 
@@ -135,14 +135,14 @@ function release_user_addnotes($args)
                 'release',
                 'user',
                 'addnote_start',
-                array('eid'       => $data['eid'],
+                ['eid'       => $data['eid'],
                                                          'rid'       => $data['rid'],
                                                          'regname'   => $data['regname'],
                                                          'displname'=>   $data['displname'],
                                                          'desc'      => $data['desc'],
                                                          'message'   => $message,
                                                          'exttype'  => $exttype,
-                                                         'authid'    => $authid)
+                                                         'authid'    => $authid, ]
             );
             break;
 
@@ -155,14 +155,14 @@ function release_user_addnotes($args)
             xarTpl::setPageTitle(xarVar::prepForDisplay($regname));
 
            $authid = xarSec::genAuthKey();
-           $data = xarTpl::module('release', 'user', 'addnote_getbasics', array('eid'       => $eid,
+           $data = xarTpl::module('release', 'user', 'addnote_getbasics', ['eid'       => $eid,
                                                                              'rid'      => $rid,
                                                                              'regname'  => $regname,
                                                                              'authid'   => $authid,
                                                                              'democheck' => $democheck,
                                                                              'supportcheck' => $supportcheck,
                                                                              'exttype'  => $exttype,
-                                                                             'pricecheck' => $pricecheck));
+                                                                             'pricecheck' => $pricecheck, ]);
             break;
 
         case 'getdetails':
@@ -195,11 +195,11 @@ function release_user_addnotes($args)
                return;
            }
            //if (!xarSec::confirmAuthKey()) return;
-           $usefeed = $usefeedchecked?1:0;
+           $usefeed = $usefeedchecked ? 1 : 0;
             xarTpl::setPageTitle(xarVar::prepForDisplay($regname));
 
            $authid = xarSec::genAuthKey();
-           $data = xarTpl::module('release', 'user', 'addnote_getdetails', array('eid'          => $eid,
+           $data = xarTpl::module('release', 'user', 'addnote_getdetails', ['eid'          => $eid,
                                                                               'rid'          => $rid,
                                                                               'regname'      => $regname,
                                                                               'authid'       => $authid,
@@ -209,10 +209,10 @@ function release_user_addnotes($args)
                                                                               'democheck'    => $democheck,
                                                                               'exttype'      => $exttype,
                                                                               'stateoptions' => $stateoptions,
-                                                                              'usefeed'      => $usefeed));
+                                                                              'usefeed'      => $usefeed, ]);
 
             break;
-        
+
         case 'preview':
            if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
                return;
@@ -262,7 +262,7 @@ function release_user_addnotes($args)
            if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
                return;
            }
-           $usefeed = $usefeedchecked?1:0;
+           $usefeed = $usefeedchecked ? 1 : 0;
            //if (!xarSec::confirmAuthKey()) return;
            //Get some info for the extensions state
            foreach ($stateoptions as $key => $value) {
@@ -276,7 +276,7 @@ function release_user_addnotes($args)
             xarTpl::setPageTitle(xarVar::prepForDisplay($regname));
 
            $authid = xarSec::genAuthKey();
-           $data = xarTpl::module('release', 'user', 'addnote_preview', array('rid'         => $rid,
+           $data = xarTpl::module('release', 'user', 'addnote_preview', ['rid'         => $rid,
                                                                               'eid'         => $eid,
                                                                               'regname'     => $regname,
                                                                               'authid'      => $authid,
@@ -296,7 +296,7 @@ function release_user_addnotes($args)
                                                                               'exttype'     => $exttype,
                                                                               'stateoptions'=> $stateoptions,
                                                                               'extstate'     => $extstate,
-                                                                              'usefeed'      => $usefeed));
+                                                                              'usefeed'      => $usefeed, ]);
 
 
 
@@ -353,12 +353,12 @@ function release_user_addnotes($args)
            }
            //if (!xarSec::confirmAuthKey()) return;
             // The user API function is called.
-            $usefeed = $usefeedchecked?1:0;
+            $usefeed = $usefeedchecked ? 1 : 0;
             $data = xarMod::apiFunc(
                 'release',
                 'user',
                 'getid',
-                array('rid' => $rid)
+                ['rid' => $rid]
             );
 
             $exttype = $data['exttype'];
@@ -367,7 +367,7 @@ function release_user_addnotes($args)
                 'release',
                 'user',
                 'createnote',
-                array('eid'         => $eid,
+                ['eid'         => $eid,
                                       'rid'         => $rid,
                                       'version'     => $version,
                                       'price'       => $pricecheck,
@@ -381,7 +381,7 @@ function release_user_addnotes($args)
                                       'exttype'     => $exttype,
                                       'notes'       => $notes,
                                       'rstate'      => $rstate,
-                                      'usefeed'     => $usefeed)
+                                      'usefeed'     => $usefeed, ]
             )) {
                 return;
             }
@@ -392,6 +392,6 @@ function release_user_addnotes($args)
 
             break;
     }
-    
+
     return $data;
 }

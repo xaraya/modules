@@ -32,11 +32,11 @@ function release_admin_new_documentation($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
     $data['tplmodule'] = 'release';
 
     if ($data['confirm']) {
-    
+
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
         if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;
@@ -46,17 +46,17 @@ function release_admin_new_documentation($args)
         if (!xarSec::confirmAuthKey()) {
             return;
         }
-        
+
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
-        
+
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTpl::module('release', 'admin', 'new_documentation', $data);
         } else {
             // Good data: create the item
             $itemid = $data['object']->createItem();
-            
+
             // Jump to the next page
             xarController::redirect(xarController::URL('release', 'admin', 'view_documentation'));
             return true;

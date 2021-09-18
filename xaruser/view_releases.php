@@ -17,7 +17,7 @@ function release_user_view_releases()
     }
 
     // Get the object to be listed
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_notes'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'release_notes']);
 
     return $data;
 }

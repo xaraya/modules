@@ -33,7 +33,7 @@ function release_user_addid($args)
     if (empty($phase)) {
         $phase = 'add';
     }
-    $stateoptions=array();
+    $stateoptions=[];
     $stateoptions[0] = xarML('Planning');
     $stateoptions[1] = xarML('Alpha');
     $stateoptions[2] = xarML('Beta');
@@ -106,10 +106,10 @@ function release_user_addid($args)
                 if (!xarVar::fetch('modify_cids', 'list:int:1:', $cids, null, xarVar::NOT_REQUIRED)) {
                     return;
                 };
-                
+
                 // Get the UID of the person submitting the module
                 $uid = xarUser::getVar('id');
-                $openproj = isset($openproj)? 1:0;
+                $openproj = isset($openproj) ? 1 : 0;
                 // Confirm authorisation code
                 if (!xarSec::confirmAuthKey()) {
                     return;
@@ -122,7 +122,7 @@ function release_user_addid($args)
                     'release',
                     'user',
                     'createid',
-                    array('ridno'     => $ridno,
+                    ['ridno'     => $ridno,
                                           'uid'       => $uid,
                                           'regname'   => $regname,
                                           'displname' => $displname,
@@ -134,7 +134,7 @@ function release_user_addid($args)
                                           'members'   => $members,
                                           'scmlink'   => $scmlink,
                                           'openproj'  => $openproj,
-                                          'cids'      => $cids)
+                                          'cids'      => $cids, ]
                 );
                 if ($newid==false) {
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
@@ -148,7 +148,7 @@ function release_user_addid($args)
                     return $data;
                 }
 
-                xarController::redirect(xarController::URL('release', 'user', 'display', array('eid'=>$newid)));
+                xarController::redirect(xarController::URL('release', 'user', 'display', ['eid'=>$newid]));
                 return true;
                 break;
         }

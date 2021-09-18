@@ -57,7 +57,7 @@ function release_userapi_createdoc($args)
               )
             VALUES (?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId,$eid,$rid,$title,$doc,$exttype,$time,$approved);
+    $bindvars = [$nextId,$eid,$rid,$title,$doc,$exttype,$time,$approved];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

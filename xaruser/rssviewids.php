@@ -24,7 +24,7 @@ function release_user_rssviewids()
         $phase = 'all';
     }
 
-    $data = array();
+    $data = [];
 
     switch (strtolower($phase)) {
 
@@ -69,7 +69,7 @@ function release_user_rssviewids()
             'roles',
             'user',
             'get',
-            array('uid' => $item['uid'])
+            ['uid' => $item['uid']]
         );
 
         // Author Name and Contact URL
@@ -78,7 +78,7 @@ function release_user_rssviewids()
             'roles',
             'user',
             'display',
-            array('uid' => $item['uid'])
+            ['uid' => $item['uid']]
         );
 
         // InfoURL
@@ -86,7 +86,7 @@ function release_user_rssviewids()
             'release',
             'user',
             'display',
-            array('rid' => $item['rid'])
+            ['rid' => $item['rid']]
         );
     }
 

@@ -17,7 +17,7 @@ function release_admin_view_documentation()
     }
 
     // Get the object to be listed
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'release_docs'));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'release_docs']);
 
     return $data;
 }

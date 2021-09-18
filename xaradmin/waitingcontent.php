@@ -23,14 +23,14 @@
  */
 function release_admin_waitingcontent()
 {
-    
+
     // Get releasenotes
     unset($released);
     $released = xarMod::apiFunc(
         'release',
         'user',
         'getreleaselinks',
-        array('approved' => 1)
+        ['approved' => 1]
     );
 
     $data['loop'] = $released;

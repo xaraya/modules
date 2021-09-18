@@ -31,16 +31,16 @@ function release_userapi_createnote($args)
     $releasetable = $xartable['release_notes'];
 
     $certified   = !empty($certified) ? $certified : '1';
-    $approved    = !empty($approved)  ? $approved : '1';
-    $priceterms  = !empty($priceterms)? $priceterms : '';
-    $demolink    = !empty($demolink)? $demolink : '';
-    $dllink      = !empty($dllink)? $dllink : '';
-    $supportlink = !empty($supportlink)? $supportlink : '';
-    $changelog   = !empty($changelog)? $changelog : '';
-    $notes       = !empty($notes)? $notes : '';
-    $exttype     = !empty($exttype)? $exttype : 1;
-    $rstate      =  isset($rstate)? $rstate : 0;
-    $usefeed     =  isset($usefeed)? $usefeed : 0;
+    $approved    = !empty($approved) ? $approved : '1';
+    $priceterms  = !empty($priceterms) ? $priceterms : '';
+    $demolink    = !empty($demolink) ? $demolink : '';
+    $dllink      = !empty($dllink) ? $dllink : '';
+    $supportlink = !empty($supportlink) ? $supportlink : '';
+    $changelog   = !empty($changelog) ? $changelog : '';
+    $notes       = !empty($notes) ? $notes : '';
+    $exttype     = !empty($exttype) ? $exttype : 1;
+    $rstate      =  $rstate ?? 0;
+    $usefeed     =  $usefeed ?? 0;
 
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
@@ -68,8 +68,8 @@ function release_userapi_createnote($args)
               )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId,(int)$eid,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
-                      $supportlink,$changelog,$notes,$time,$certified,$approved,$rstate,(int)$usefeed,(int)$exttype);
+    $bindvars = [$nextId,(int)$eid,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
+                      $supportlink,$changelog,$notes,$time,$certified,$approved,$rstate,(int)$usefeed,(int)$exttype, ];
     $result =&$dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

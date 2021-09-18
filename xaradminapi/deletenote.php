@@ -33,7 +33,7 @@ function release_adminapi_deletenote($args)
         'release',
         'user',
         'getnote',
-        array('rnid' => $rnid)
+        ['rnid' => $rnid]
     );
 
     if ($link == false) {
@@ -54,7 +54,7 @@ function release_adminapi_deletenote($args)
     // Delete the item
     $query = "DELETE FROM $releasenotetable
             WHERE xar_rnid = ?";
-    $result =& $dbconn->Execute($query, array($rnid));
+    $result =& $dbconn->Execute($query, [$rnid]);
     if (!$result) {
         return;
     }

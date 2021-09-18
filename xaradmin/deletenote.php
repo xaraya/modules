@@ -30,7 +30,7 @@ function release_admin_deletenote()
     if (!xarVar::fetch('confirmation', 'str:1:', $confirmation, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     if (!empty($obid)) {
         $rnid = $obid;
     }
@@ -40,7 +40,7 @@ function release_admin_deletenote()
         'release',
         'user',
         'getnote',
-        array('rnid' => $rnid)
+        ['rnid' => $rnid]
     );
 
     if ($data == false) {
@@ -70,7 +70,7 @@ function release_admin_deletenote()
         'release',
         'admin',
         'deletenote',
-        array('rnid' => $rnid)
+        ['rnid' => $rnid]
     )) {
         return;
     }

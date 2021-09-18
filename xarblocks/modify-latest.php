@@ -33,9 +33,9 @@ function release_latestblock_modify($blockinfo)
     }
 
     // Send content to template
-    return array('numitems' => $vars['numitems'],
+    return ['numitems' => $vars['numitems'],
                  'shownonfeeditems' => $vars['shownonfeeditems'],
-                 'blockid' => $blockinfo['bid']);
+                 'blockid' => $blockinfo['bid'], ];
 }
 
 /**
@@ -51,7 +51,7 @@ function release_latestblock_update($blockinfo)
     if (!xarVar::fetch('shownonfeeditems', 'checkbox', $vars['shownonfeeditems'], false, xarVar::DONT_SET)) {
         return;
     }
-    $vars['shownonfeeditems'] = $vars['shownonfeeditems']?1:0;
+    $vars['shownonfeeditems'] = $vars['shownonfeeditems'] ? 1 : 0;
     $blockinfo['content'] = $vars;
 
     return $blockinfo;

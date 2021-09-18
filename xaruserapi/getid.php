@@ -43,14 +43,14 @@ function release_userapi_getid($args)
             FROM $releasetable ";
     if (isset($eid)) {
         $query .= "WHERE xar_eid = ?";
-        $bindvars = array($eid);
+        $bindvars = [$eid];
     } elseif (isset($rid) && isset($exttype) && !empty($exttype)) {
         $query .= "WHERE xar_rid = ? AND xar_exttype = ?";
-        $bindvars = array((int)$rid,(int)$exttype);
+        $bindvars = [(int)$rid,(int)$exttype];
     } elseif (isset($rid) && (!isset($exttype) || empty($exttype))) { //legacy check
         //try modules and themes for backward compatibility
         $query .= "WHERE xar_rid = ? ";
-        $bindvars = array((int)$rid);
+        $bindvars = [(int)$rid];
     }
 
     $result =& $dbconn->Execute($query, $bindvars);
@@ -58,15 +58,15 @@ function release_userapi_getid($args)
         return;
     }
 
-    list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
-         $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype) = $result->fields;
+    [$eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
+         $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype] = $result->fields;
     $result->Close();
 
     if (!xarSecurity::check('OverviewRelease', 0)) {
         return false;
     }
 
-    $releaseinfo = array('eid'        => (int)$eid,
+    $releaseinfo = ['eid'        => (int)$eid,
                          'rid'        => (int)$rid,
                          'uid'        => (int)$uid,
                          'regname'    => $regname,
@@ -81,7 +81,7 @@ function release_userapi_getid($args)
                          'members'    => $members,
                          'scmlink'    => $scmlink,
                          'openproj'   => $openproj,
-                         'exttype'    => (int)$exttype);
+                         'exttype'    => (int)$exttype, ];
 
     return $releaseinfo;
 }

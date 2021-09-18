@@ -59,7 +59,7 @@ function release_userapi_countnotes($args)
         return;
     }
     // Obtain the number of items
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();

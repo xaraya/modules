@@ -37,7 +37,7 @@ function release_admin_modifynote()
         'release',
         'user',
         'getnote',
-        array('rnid' => $rnid)
+        ['rnid' => $rnid]
     );
     $eid = $data['eid'];
 
@@ -55,7 +55,7 @@ function release_admin_modifynote()
                 'release',
                 'user',
                 'getid',
-                array('eid' => $data['eid'])
+                ['eid' => $data['eid']]
             );
 
             if ($id == false) {
@@ -67,14 +67,14 @@ function release_admin_modifynote()
                 'roles',
                 'user',
                 'get',
-                array('uid' => $id['uid'])
+                ['uid' => $id['uid']]
             );
 
             if ($id == false) {
                 return;
             }
 
-            $stateoptions=array();
+            $stateoptions=[];
             $stateoptions[0] = xarML('Planning');
             $stateoptions[1] = xarML('Alpha');
             $stateoptions[2] = xarML('Beta');
@@ -169,7 +169,7 @@ function release_admin_modifynote()
             if (!xarSec::confirmAuthKey()) {
                 return;
             }
-            $usefeed = $usefeedchecked? 1: 0;
+            $usefeed = $usefeedchecked ? 1 : 0;
             $newtime = strtotime($newtime);
             if ($newtime >0) {
                 $newtime= $newtime- xarMLS::userOffset($newtime) * 3600;
@@ -182,7 +182,7 @@ function release_admin_modifynote()
                 'release',
                 'admin',
                 'updatenote',
-                array('eid'         => $eid,
+                ['eid'         => $eid,
                                       'rid'         => $rid,
                                       'rnid'        => $rnid,
                                       'version'     => $version,
@@ -201,12 +201,12 @@ function release_admin_modifynote()
                                       'certified'   => $certified,
                                       'approved'    => $approved,
                                       'rstate'      => $rstate,
-                                      'usefeed'     => $usefeed)
+                                      'usefeed'     => $usefeed, ]
             )) {
                 return;
             }
 
-            xarController::redirect(xarController::URL('release', 'user', 'displaynote', array('rnid'=>$rnid)));
+            xarController::redirect(xarController::URL('release', 'user', 'displaynote', ['rnid'=>$rnid]));
 
             return true;
 

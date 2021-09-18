@@ -32,14 +32,14 @@ function release_userapi_getallrids($args)
         $catid =null;
     }
     if (empty($sort)) {
-        $sortlist = array('rids');
+        $sortlist = ['rids'];
     } elseif (is_array($sort)) {
         $sortlist = $sort;
     } else {
         $sortlist = explode(',', $sort);
     }
 
-    $releaseinfo = array();
+    $releaseinfo = [];
 
     // Security Check
     if (!xarSecurity::check('OverviewRelease')) {
@@ -58,10 +58,10 @@ function release_userapi_getallrids($args)
             'categories',
             'user',
             'leftjoin',
-            array('modid'    => 773,
+            ['modid'    => 773,
                                     'itemtype' => 0, //has to stay this way til we can convert this
-                                    'cids'     => array($catid),
-                                    'andcids'  => 1)
+                                    'cids'     => [$catid],
+                                    'andcids'  => 1, ]
         );
     }
 
@@ -85,21 +85,21 @@ function release_userapi_getallrids($args)
             FROM $releasetable 
             LEFT JOIN $rolestable
             ON $releasetable.xar_uid = $rolestable.xar_uid";
-    $bindvars = array();
+    $bindvars = [];
     die("Y");
     $from ='';
-    $where = array();
-    if (!empty($catid) && count(array($catid)) > 0) {
+    $where = [];
+    if (!empty($catid) && count([$catid]) > 0) {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
         $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_eid';
-        
+
         if (!empty($categoriesdef['more'])) {
             //$from = ' ( ' . $from . ' ) ';
             $from .= $categoriesdef['more'];
         }
-        
+
         $where[] = $categoriesdef['where'];
         $query .= $from;
     }
@@ -129,7 +129,7 @@ function release_userapi_getallrids($args)
     }
 
     if (count($sortlist) > 0) {
-        $sortparts = array();
+        $sortparts = [];
         foreach ($sortlist as $criteria) {
             // ignore empty sort criteria
             if (empty($criteria)) {
@@ -169,10 +169,10 @@ function release_userapi_getallrids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eid,$rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
-             $regtime, $modified, $members, $scmlink, $openproj, $exttype, $uname) = $result->fields;
+        [$eid,$rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
+             $regtime, $modified, $members, $scmlink, $openproj, $exttype, $uname] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
-            $releaseinfo[] = array('eid'        => $eid,
+            $releaseinfo[] = ['eid'        => $eid,
                                    'rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
@@ -188,7 +188,7 @@ function release_userapi_getallrids($args)
                                    'scmlink'    => $scmlink,
                                    'openproj'   => $openproj,
                                    'exttype'    => $exttype,
-                                   'author'     => $uname);
+                                   'author'     => $uname, ];
         }
     }
     $result->Close();

@@ -24,10 +24,10 @@
 function release_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
-    $args = array();
+    $args = [];
     $exttypes = xarMod::apiFunc('release', 'user', 'getexttypes');
     $flipext = array_flip($exttypes);
-    $extnamearray =array();
+    $extnamearray =[];
     foreach ($exttypes as $k=>$v) {
         $extnamearray[] = strtolower($v);
     }
@@ -35,21 +35,21 @@ function release_userapi_decode_shorturl($params)
     if (isset($params[1]) && ($params[1] == 'eid')) {
         if (is_numeric($params[2])) {
             $args['eid'] = (int) $params[2];
-            return array('display', $args);
+            return ['display', $args];
         } else {
             //Lots of hits for categories... But how can we discover them
             //as what we know about them is c107 or c31? Time for Good Urls instead of Short?
-            return array('view', $args);
+            return ['view', $args];
         }
     } elseif (empty($params[1])) {
         // nothing specified -> we'll go to the main function
-        return array('main', $args);
+        return ['main', $args];
     } elseif (preg_match('/^index/i', $params[1])) {
         // some search engine/someone tried using index.html (or similar)
         // -> we'll go to the main function
-        return array('main', $args);
+        return ['main', $args];
     } elseif (preg_match('/^viewnotes/i', $params[1])) {
-        return array('viewnotes', $args);
+        return ['viewnotes', $args];
     } elseif (preg_match('/^view/i', $params[1])) {
         if (!empty($params[2]) && ($params[2] == 'id.html')) {
             $args['sort']='id';
@@ -60,17 +60,17 @@ function release_userapi_decode_shorturl($params)
         } elseif (!empty($params[2]) && ($params[2] == 'rstate.html')) {
             $args['sort']='rstate';
         }
-        return array('view', $args);
+        return ['view', $args];
     } elseif (preg_match('/^addid/i', $params[1])) {
-        return array('addid', $args);
+        return ['addid', $args];
     } elseif (preg_match('/^displaynote/i', $params[1])) {
         if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)) {
             $args['rnid']=$matches[1];
         }
-        return array('displaynote', $args);
+        return ['displaynote', $args];
     } elseif (preg_match('/^addnotes/i', $params[1])) {
         if (empty($params[2])) {
-            return array('addnotes', $args);
+            return ['addnotes', $args];
         } elseif (!empty($params[2]) && ($params[2] == 'start')) {
             $args['phase']='start';
         }
@@ -87,7 +87,7 @@ function release_userapi_decode_shorturl($params)
             $args['exttype']= 1;//try module?
         }
 
-        return array('addnotes', $args);
+        return ['addnotes', $args];
     } elseif ($params[1] == 'modifyid') {
         if (!empty($params[2]) && in_array($params[2], $extnamearray)) {//try eid first
             if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)) {
@@ -101,7 +101,7 @@ function release_userapi_decode_shorturl($params)
             $args['rid']=$matches[1];
             $args['exttype']= 1;//try module?
         }
-        return array('modifyid', $args);
+        return ['modifyid', $args];
     } elseif ($params[1] == 'version') {
         if (!empty($params[2]) && in_array($params[2], $extnamearray)) {//try eid first
             if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)) {
@@ -118,14 +118,14 @@ function release_userapi_decode_shorturl($params)
         } elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)) {
             $args['rid']=(int)$matches[1];
         }
-        return array('display', $args);
+        return ['display', $args];
     } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
         // something that starts with a number must try the display function for modules
         $rid = $matches[1];
         $args['rid'] = $rid;
         $args['exttype']=1;//module
         $args['phase']='view';
-        return array('display', $args);
+        return ['display', $args];
     } else {
         $cid = xarModVars::get('release', 'mastercids');
         if (xarMod::apiLoad('categories', 'user')) {
@@ -133,9 +133,9 @@ function release_userapi_decode_shorturl($params)
                 'categories',
                 'user',
                 'getcat',
-                array('cid' => $cid,
+                ['cid' => $cid,
                                'return_itself' => true,
-                               'getchildren' => true)
+                               'getchildren' => true, ]
             );
             // lower-case for fanciful search engines/people
             $params[1] = strtolower($params[1]);
@@ -156,7 +156,7 @@ function release_userapi_decode_shorturl($params)
         // we have no idea what this virtual path could be, so we'll just
         // forget about trying to decode this thing
         // you *could* return the main function here if you want to
-        return array('main', $args);
+        return ['main', $args];
     }
     // default : return nothing -> no short URL decoded
 }
