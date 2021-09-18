@@ -78,7 +78,7 @@
                         break;
                 }
 
-                xarResponse::redirect(xarController::URL('karma', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+                xarResponse::redirect(xarController::URL('karma', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
                 // Return
                 return true;
                 break;

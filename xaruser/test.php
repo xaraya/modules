@@ -16,5 +16,5 @@
  */
     function karma_user_test()
     {
-        return array();
+        return [];
     }

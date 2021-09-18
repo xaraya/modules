@@ -14,7 +14,7 @@
  * Modify an item of the tags object
  *
  */
-    
+
 function karma_admin_modify()
 {
     if (!xarSecurity::check('EditKarma')) {
@@ -32,14 +32,14 @@ function karma_admin_modify()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'karma';
     $data['authid'] = xarSec::genAuthKey('karma');
 
     if ($data['confirm']) {
-    
+
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -47,13 +47,13 @@ function karma_admin_modify()
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
-        
+
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTpl::module('karma', 'admin', 'modify', $data);
         } else {
             // Good data: create the item
-            $itemid = xarMod::apiFunc('karma', 'admin', 'modify_tag', array('itemid' => $data['itemid']));
+            $itemid = xarMod::apiFunc('karma', 'admin', 'modify_tag', ['itemid' => $data['itemid']]);
             // Jump to the next page
             xarController::redirect(xarController::URL('karma', 'admin', 'view'));
             return true;

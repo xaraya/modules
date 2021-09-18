@@ -20,7 +20,7 @@
             return;
         }
 
-        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('name' => 'karma_tags'));
+        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'karma_tags']);
         $data['object']->getItems();
         return $data;
     }

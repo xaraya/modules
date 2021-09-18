@@ -27,7 +27,7 @@
         #
         $q = new Query();
         $prefix = xarDB::getPrefix();
-        
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_tags";
         if (!$q->run($query)) {
             return;
@@ -51,7 +51,7 @@
         if (!$q->run($query)) {
             return;
         }
-  
+
         $query = "DROP TABLE IF EXISTS " . $prefix . "_karma_posts";
         if (!$q->run($query)) {
             return;
@@ -178,12 +178,12 @@
         # Create DD objects
         #
         $module = 'karma';
-        $objects = array(
+        $objects = [
                          'karma_tags',
                          'karma_posts',
-                         );
+                         ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
             return;
         }
 
@@ -202,7 +202,7 @@
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'karma', 'hookModName' => 'karma')
+            ['callerModName' => 'karma', 'hookModName' => 'karma']
         );
 
         return true;
@@ -216,5 +216,5 @@
     function karma_delete()
     {
         $this_module = 'karma';
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
     }

@@ -19,7 +19,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function karma_adminapi_new_tag($args)
 {
-    $tag = DataObjectMaster::getObject(array('name' => 'karma_tags'));
+    $tag = DataObjectMaster::getObject(['name' => 'karma_tags']);
     $itemid = $tag->createItem($args);
     return $itemid;
 }

@@ -24,5 +24,5 @@
 
 //        xarResponse::redirect(xarController::URL('karma', 'user', 'view'));
         // success
-        return array(); //true;
+        return []; //true;
     }

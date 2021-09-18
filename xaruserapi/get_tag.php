@@ -21,9 +21,9 @@ function karma_userapi_get_tag($args)
     if (empty($args['itemid'])) {
         die(xarML('No tag ID passed'));
     }
-    
-    $tag = DataObjectMaster::getObject(array('name' => 'karma_tags'));
-    $tag->getItem(array('itemid' => $args['itemid']));
+
+    $tag = DataObjectMaster::getObject(['name' => 'karma_tags']);
+    $tag->getItem(['itemid' => $args['itemid']]);
     $tag_info = $tag->getFieldValues();
     return $tag_info;
 }

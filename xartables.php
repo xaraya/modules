@@ -19,7 +19,7 @@
     function karma_xartables()
     {
         // Initialise table array
-        $xartable = array();
+        $xartable = [];
 
         $xartable['karma_tags']          = xarDB::getPrefix() . '_karma_tags';
         $xartable['karma_posts']         = xarDB::getPrefix() . '_karma_posts';

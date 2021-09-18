@@ -17,16 +17,16 @@
 
 function karma_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     if (xarSecurity::check('ViewKarma', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'karma',
             'user',
             'main'
         ),
                               'title' => xarML(''),
-                              'label' => xarML(''));
+                              'label' => xarML(''), ];
     }
 
     return $menulinks;

@@ -32,14 +32,14 @@ function karma_admin_delete_tag()
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'karma';
     $data['authid'] = xarSec::genAuthKey('karma');
 
     if ($data['confirm']) {
-    
+
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -47,7 +47,7 @@ function karma_admin_delete_tag()
 
         // Delete the item
         $item = $data['object']->deleteItem();
-            
+
         // Jump to the next page
         xarController::redirect(xarController::URL('karma', 'admin', 'view'));
         return true;
