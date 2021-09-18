@@ -24,8 +24,8 @@ function publications_admin_waitingcontent()
         'publications',
         'user',
         'getpublinks',
-        array('state' => array(0),
-                                'typemod' => 'admin')
+        ['state' => [0],
+                                'typemod' => 'admin', ]
     );
 
     $data['loop'] = $publinks;

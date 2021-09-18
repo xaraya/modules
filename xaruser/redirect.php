@@ -36,7 +36,7 @@ function publications_user_redirect($args)
         'publications',
         'user',
         'get',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     if (!is_array($publication)) {
@@ -61,9 +61,9 @@ function publications_user_redirect($args)
                 'item',
                 'display',
                 $id,
-                array('module'    => 'publications',
+                ['module'    => 'publications',
                                            'itemtype'  => $ptid,
-                                          ),
+                                          ],
                 'publications'
             );
             xarController::redirect($article[$field]);
@@ -75,9 +75,9 @@ function publications_user_redirect($args)
                     'item',
                     'display',
                     $id,
-                    array('module'    => 'publications',
+                    ['module'    => 'publications',
                                                'itemtype'  => $ptid,
-                                              ),
+                                              ],
                     'publications'
                 );
                 xarController::redirect($array['link']);

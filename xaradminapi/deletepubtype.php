@@ -65,7 +65,7 @@ function publications_adminapi_deletepubtype($args)
     // Delete the publication type
     $query = "DELETE FROM $pubtypestable
             WHERE pubtype_id = ?";
-    $result = $dbconn->Execute($query, array($ptid));
+    $result = $dbconn->Execute($query, [$ptid]);
     if (!$result) {
         return;
     }
@@ -75,7 +75,7 @@ function publications_adminapi_deletepubtype($args)
     // Delete all publications for this publication type
     $query = "DELETE FROM $publicationstable
             WHERE pubtype_id = ?";
-    $result = $dbconn->Execute($query, array($ptid));
+    $result = $dbconn->Execute($query, [$ptid]);
     if (!$result) {
         return;
     }

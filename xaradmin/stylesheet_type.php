@@ -34,12 +34,12 @@ function publications_admin_stylesheet_type($args)
         return;
     }
 
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $data['ptid']]);
     $pubtype = explode('_', $pubtypeobject->properties['name']->value);
-    $pubtype = isset($pubtype[1]) ? $pubtype[1] : $pubtype[0];
-    
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $pubtype = $pubtype[1] ?? $pubtype[0];
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
 
     $basepath = sys::code() . "modules/publications/xarstyles";
     $sourcefile = $basepath . "/" . $data['file'] . ".css";
@@ -48,9 +48,9 @@ function publications_admin_stylesheet_type($args)
 
     // If we are saving, write the file now
     if ($confirm && !empty($data['file']) && !empty($data['source_data'])) {
-        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
+        xarMod::apiFunc('publications', 'admin', 'write_file', ['file' => $overridefile, 'data' => $data['source_data']]);
     }
-    
+
     // Let the template know what kind of file this is
     if (empty($data['file'])) {
         $data['filetype'] = 'empty';
@@ -69,7 +69,7 @@ function publications_admin_stylesheet_type($args)
         $filepath = $overridefile;
         $data['writable'] = is_writeable_dir($overridepath);
     }
-    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
+    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', ['file' => $filepath]));
 
     return $data;
 }

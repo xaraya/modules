@@ -18,15 +18,15 @@
  * @return array(id => array('name' => name, 'description' => description)), or false on
  *         failure
  */
- 
+
  sys::import('modules.dynamicdata.class.objects.master');
- 
+
 function publications_userapi_get_pubtypes($args)
 {
     if (xarCoreCache::isCached('Publications.Data', 'producttypes')) {
         return xarCoreCache::getCached('Publications.Data', 'producttypes');
     }
-    $object = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+    $object = DataObjectMaster::getObjectList(['name' => 'publications_types']);
     $items = $object->getItems();
     xarCoreCache::setCached('Publications.Data', 'producttypes', $items);
     return $items;

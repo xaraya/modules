@@ -30,7 +30,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
@@ -50,7 +50,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
     public function display()
     {
         $vars = $this->getContent();
-            
+
         // Trick : work with cached variables here (set by the module function)
         // Check if we've been through publications display
         if (!xarVar::isCached('Blocks.publications', 'current_id')) {
@@ -58,7 +58,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
         }
 
         $links = 0;
-            
+
         if ($vars['showpubtype']) {
             // Show publication type (for now)
             $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
@@ -69,14 +69,14 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                         'publications',
                         'user',
                         'view',
-                        array('ptid' => $ptid)
+                        ['ptid' => $ptid]
                     );
                     $vars['pubtypename'] = $pubtypes[$ptid]['description'];
                     $links++;
                 }
             }
         }
-            
+
         if ($vars['showcategory']) {
             // Show categories (for now)
             if (xarVar::isCached('Blocks.publications', 'cids')) {
@@ -84,7 +84,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                 // TODO: add related links
             }
         }
-            
+
         if ($vars['showauthor']) {
             // Show author (for now)
             if (xarVar::isCached('Blocks.publications', 'author')) {
@@ -94,8 +94,8 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                         'publications',
                         'user',
                         'view',
-                        array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                              'owner' => $author)
+                        ['ptid' => (!empty($ptid) ? $ptid : null),
+                                                              'owner' => $author, ]
                     );
                     $vars['authorid'] = $author;
                     if (!empty($vars['showvalue'])) {
@@ -103,11 +103,11 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                             'publications',
                             'user',
                             'countitems',
-                            array('ptid' => (!empty($ptid) ? $ptid : null),
+                            ['ptid' => (!empty($ptid) ? $ptid : null),
                                                                        'owner' => $author,
                                                                        // limit to approved / frontpage publications
-                                                                       'state' => array(2,3),
-                                                                       'enddate' => time())
+                                                                       'state' => [2,3],
+                                                                       'enddate' => time(), ]
                         );
                     }
                     $links++;
@@ -119,7 +119,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
         if ($links > 0) {
             return $vars;
         }
-        
+
         return;
     }
 }

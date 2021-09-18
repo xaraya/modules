@@ -22,7 +22,7 @@ function publications_adminapi_write_file($args)
             mkdir($dir, 0777, true);
         }
         $fp = fopen($args['file'], "wb");
-    
+
         if (get_magic_quotes_gpc()) {
             $data = stripslashes($args['data']);
         }

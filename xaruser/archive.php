@@ -55,9 +55,9 @@ function publications_user_archive($args)
         return xarML('You have no permission to view these items');
     }
 
-    $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
+    $state = [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED];
 
-    $seencid = array();
+    $seencid = [];
     $andcids = false;
     // turn $catid into $cids array and set $andcids flag
     if (!empty($catid)) {
@@ -71,7 +71,7 @@ function publications_user_archive($args)
             $cids = explode('-', $catid);
             $andcids = false;
         } else {
-            $cids = array($catid);
+            $cids = [$catid];
             if (strstr($catid, '_')) {
                 $andcids = false; // don't combine with current category
             } else {
@@ -133,16 +133,16 @@ function publications_user_archive($args)
         'publications',
         'user',
         'getmonthcount',
-        array('ptid' => $ptid,
+        ['ptid' => $ptid,
                                      'state' => $state,
-                                     'enddate' => time())
+                                     'enddate' => time(), ]
     );
     if (empty($monthcount)) {
-        $monthcount = array();
+        $monthcount = [];
     }
     krsort($monthcount);
     reset($monthcount);
-    $months = array();
+    $months = [];
     $total = 0;
     foreach ($monthcount as $thismonth => $count) {
         if ($thismonth == $month) {
@@ -152,13 +152,13 @@ function publications_user_archive($args)
                 'publications',
                 'user',
                 'archive',
-                array('ptid' => $ptid,
-                                    'month' => $thismonth)
+                ['ptid' => $ptid,
+                                    'month' => $thismonth, ]
             );
         }
-        $months[] = array('month' => $thismonth,
+        $months[] = ['month' => $thismonth,
                           'mcount' => $count,
-                          'mlink' => $mlink);
+                          'mlink' => $mlink, ];
         $total += $count;
     }
     if (empty($ptid)) {
@@ -173,13 +173,13 @@ function publications_user_archive($args)
             'publications',
             'user',
             'archive',
-            array('ptid' => $ptid,
-                                'month' => 'all')
+            ['ptid' => $ptid,
+                                'month' => 'all', ]
         );
     }
-    $months[] = array('month' => $thismonth,
+    $months[] = ['month' => $thismonth,
                       'mcount' => $total,
-                      'mlink' => $mlink);
+                      'mlink' => $mlink, ];
 
     // Load API
     if (!xarMod::apiLoad('categories', 'user')) {
@@ -188,13 +188,13 @@ function publications_user_archive($args)
 
     // Get the list of root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => $ptid));
+        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => $ptid]);
     } else {
-        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => 0));
+        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => 0]);
     }
-    $catlist = array();
-    $catinfo = array();
-    $catsel = array();
+    $catlist = [];
+    $catinfo = [];
+    $catsel = [];
     if (!empty($rootcats)) {
         // TODO: do this in categories API ?
         $count = 1;
@@ -207,12 +207,12 @@ function publications_user_archive($args)
                 'categories',
                 'user',
                 'getcat',
-                array('cid' => $cid['category_id'],
+                ['cid' => $cid['category_id'],
                                        'return_itself' => true,
-                                       'getchildren' => true)
+                                       'getchildren' => true, ]
             );
             foreach ($cats as $info) {
-                $item = array();
+                $item = [];
                 $item['name'] = $info['name'];
                 $item['root'] = $cid['category_id'];
                 $catinfo[$info['cid']] = $item;
@@ -226,25 +226,25 @@ function publications_user_archive($args)
                     'publications',
                     'user',
                     'archive',
-                    array('ptid' => $ptid,
+                    ['ptid' => $ptid,
                                        'month' => $month,
-                                       'sort' => $count)
+                                       'sort' => $count, ]
                 );
             }
             // catch more faulty categories assignments
             if (isset($catinfo[$cid['category_id']])) {
-                $catlist[] = array('cid' => $cid['category_id'],
+                $catlist[] = ['cid' => $cid['category_id'],
                                    'name' => $catinfo[$cid['category_id']]['name'],
-                                   'link' => $link);
+                                   'link' => $link, ];
                 $catsel[] = xarMod::apiFunc(
                     'categories',
                     'visual',
                     'makeselect',
-                    array('cid' => $cid['category_id'],
+                    ['cid' => $cid['category_id'],
                                                 'return_itself' => true,
                                                 'select_itself' => true,
                                                 'values' => &$seencid,
-                                                'multiple' => 0)
+                                                'multiple' => 0, ]
                 );
                 $count++;
             }
@@ -257,22 +257,22 @@ function publications_user_archive($args)
             'publications',
             'user',
             'getall',
-            array('ptid' => (isset($ptid) ? $ptid : null),
+            ['ptid' => ($ptid ?? null),
                                        'startdate' => $startdate,
                                        'enddate' => $enddate,
                                        'state' => $state,
                                        'cids' => $cids,
                                        'andcids' => $andcids,
-                                       'fields' => array('id','title',
-                                                  'start_date','pubtype_id','cids')
-                                      )
+                                       'fields' => ['id','title',
+                                                  'start_date','pubtype_id','cids', ],
+                                      ]
         );
         if (!is_array($publications)) {
             $msg = xarML('Failed to retrieve publications in #(3)_#(1)_#(2).php', 'user', 'getall', 'publications');
             throw new DataNotFoundException(null, $msg);
         }
     } else {
-        $publications = array();
+        $publications = [];
     }
 
     // TODO: add print / recommend_us link for each article ?
@@ -282,8 +282,8 @@ function publications_user_archive($args)
             'publications',
             'user',
             'display',
-            array('ptid' => isset($ptid) ? $publications[$key]['pubtype_id'] : null,
-                                     'id' => $publications[$key]['id'])
+            ['ptid' => isset($ptid) ? $publications[$key]['pubtype_id'] : null,
+                                     'id' => $publications[$key]['id'], ]
         );
         if (empty($publications[$key]['title'])) {
             $publications[$key]['title'] = xarML('(none)');
@@ -297,11 +297,11 @@ function publications_user_archive($args)
                 }
         */
         // TODO: find some better way to do this...
-        $list = array();
+        $list = [];
         // get all the categories for that article and put them under the
         // right root category
         if (!isset($publications[$key]['cids'])) {
-            $publications[$key]['cids'] = array();
+            $publications[$key]['cids'] = [];
         }
         foreach ($publications[$key]['cids'] as $cid) {
             // skip unknown categories (e.g. when not under root categories)
@@ -309,12 +309,12 @@ function publications_user_archive($args)
                 continue;
             }
             if (!isset($list[$catinfo[$cid]['root']])) {
-                $list[$catinfo[$cid]['root']] = array();
+                $list[$catinfo[$cid]['root']] = [];
             }
             array_push($list[$catinfo[$cid]['root']], $cid);
         }
         // fill in the column corresponding to each root category
-        $publications[$key]['cats'] = array();
+        $publications[$key]['cats'] = [];
         foreach ($catlist as $cat) {
             if (isset($list[$cat['cid']])) {
                 $descr = '';
@@ -325,9 +325,9 @@ function publications_user_archive($args)
                     }
                     $descr .= $catinfo[$cid]['name'];
                 }
-                $publications[$key]['cats'][] = array('list' => $descr);
+                $publications[$key]['cats'][] = ['list' => $descr];
             } else {
-                $publications[$key]['cats'][] = array('list' => '-');
+                $publications[$key]['cats'][] = ['list' => '-'];
             }
         }
     }
@@ -356,14 +356,14 @@ function publications_user_archive($args)
             'publications',
             'user',
             'archive',
-            array('ptid' => $ptid,
+            ['ptid' => $ptid,
                                'month' => $month,
-                               'sort' => 't')
+                               'sort' => 't', ]
         );
     }
-    $catlist[] = array('cid' => 0,
+    $catlist[] = ['cid' => 0,
                        'name' => xarML('Title'),
-                       'link' => $link);
+                       'link' => $link, ];
     $catsel[] = '<input type="submit" value="' . xarML('Filter') . '" />';
 
     if ($showdate) {
@@ -375,13 +375,13 @@ function publications_user_archive($args)
                 'publications',
                 'user',
                 'archive',
-                array('ptid' => $ptid,
-                                   'month' => $month)
+                ['ptid' => $ptid,
+                                   'month' => $month, ]
             );
         }
-        $catlist[] = array('cid' => 0,
+        $catlist[] = ['cid' => 0,
                            'name' => xarML('Date'),
-                           'link' => $link);
+                           'link' => $link, ];
         $catsel[] = '&#160;';
     }
 
@@ -426,7 +426,7 @@ function publications_user_archive($args)
 //    $show_catcount = 0; // unused here
 
     // return template out
-    $data = array('months' => $months,
+    $data = ['months' => $months,
                  'publications' => $publications,
                  'catlist' => $catlist,
                  'catsel' => $catsel,
@@ -436,9 +436,9 @@ function publications_user_archive($args)
                      'publications',
                      'user',
                      'archive',
-                     array('ptid' => $ptid,
+                     ['ptid' => $ptid,
                                               'month' => $month,
-                                               'sort' => $sort)
+                                               'sort' => $sort, ]
                  ),
                  'showdate' => $showdate,
                  'show_publinks' => $show_publinks,
@@ -447,26 +447,26 @@ function publications_user_archive($args)
                      'publications',
                      'user',
                      'getpublinks',
-                     array('ptid' => $ptid,
-                                                  'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
+                     ['ptid' => $ptid,
+                                                  'state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
                                                   'count' => $show_pubcount,
                                                   // override default 'view'
-                                                  'func' => 'archive')
+                                                  'func' => 'archive', ]
                  ),
                  'maplabel' => xarML('View Publication Map'),
                  'maplink' => xarController::URL(
                      'publications',
                      'user',
                      'viewmap',
-                     array('ptid' => $ptid)
+                     ['ptid' => $ptid]
                  ),
                  'viewlabel' => (empty($ptid) ? xarML('Back to Publications') : xarML('Back to') . ' ' . $pubtypes[$ptid]['description']),
                  'viewlink' => xarController::URL(
                      'publications',
                      'user',
                      'view',
-                     array('ptid' => $ptid)
-                 ));
+                     ['ptid' => $ptid]
+                 ), ];
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];

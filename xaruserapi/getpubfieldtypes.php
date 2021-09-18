@@ -18,7 +18,7 @@
  */
 function publications_userapi_getpubfieldtypes($args)
 {
-    return array(
+    return [
         'title'    => 'string',
         'summary'  => 'text',
         'notes'    => 'text',
@@ -26,5 +26,5 @@ function publications_userapi_getpubfieldtypes($args)
         'owner' => 'integer',
         'pubdate'  => 'integer',
         'state'   => 'integer',
-    );
+    ];
 }

@@ -45,7 +45,7 @@ function publications_userapi_getpublinks($args)
         $count = true;
     }
     if (!isset($state)) {
-        $state = array(0);
+        $state = [0];
     }
     if (!$count) {
         $all = 1;
@@ -60,14 +60,14 @@ function publications_userapi_getpublinks($args)
                 'publications',
                 'user',
                 'getpubcount',
-                array('state' => $state)
+                ['state' => $state]
             );
         } else {
             $pubcount = xarMod::apiFunc('publications', 'user', 'getpubcount');
         }
     }
 
-    $publinks = array();
+    $publinks = [];
     $isfirst = 1;
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurity::check('ViewPublications', 0, 'Publication', $id.':All:All:All')) {
@@ -79,7 +79,7 @@ function publications_userapi_getpublinks($args)
             if (isset($ptid) && $ptid == $id) {
                 $item['publink'] = '';
             } else {
-                $item['publink'] = xarController::URL('publications', $typemod, $func, array('ptid' => $id));
+                $item['publink'] = xarController::URL('publications', $typemod, $func, ['ptid' => $id]);
             }
             if ($count && isset($pubcount[$id])) {
                 $item['pubcount'] = $pubcount[$id];

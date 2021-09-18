@@ -25,14 +25,14 @@ function publications_userapi_getchildcats($args)
     extract($args);
 
     if (!isset($cid) || !is_numeric($cid)) {
-        return array();
+        return [];
     }
     if (empty($ptid)) {
         $ptid = null;
     }
     if (!isset($state)) {
         // frontpage or approved
-        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
+        $state = [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED];
     }
     if (!isset($showcid)) {
         $showcid = false;
@@ -53,12 +53,12 @@ function publications_userapi_getchildcats($args)
         'categories',
         'visual',
         'listarray',
-        array('cid' => $cid)
+        ['cid' => $cid]
     );
     // get the counts for all child categories
     if ($count) {
         if (empty($filter)) {
-            $seencid = array();
+            $seencid = [];
             foreach ($list as $info) {
                 $seencid[$info['id']] = 1;
             }
@@ -66,7 +66,7 @@ function publications_userapi_getchildcats($args)
             $andcids = false;
         } else {
             // we'll combine the parent cid with the filter here
-            $childlist = array('_'.$cid,$filter);
+            $childlist = ['_'.$cid,$filter];
             $andcids = true;
         }
 
@@ -75,11 +75,11 @@ function publications_userapi_getchildcats($args)
             'user',
             'getpubcatcount',
                                     // frontpage or approved
-                                    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
+                                    ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
                                           'cids' => $childlist,
                                           'andcids' => $andcids,
                                           'ptid' => $ptid,
-                                          'reverse' => 1)
+                                          'reverse' => 1, ]
         );
         if (!empty($ptid)) {
             $curptid = $ptid;
@@ -88,7 +88,7 @@ function publications_userapi_getchildcats($args)
         }
     }
 
-    $cats = array();
+    $cats = [];
     foreach ($list as $info) {
         if ($info['id'] == $cid && !$showcid) {
             continue;
@@ -103,8 +103,8 @@ function publications_userapi_getchildcats($args)
             'publications',
             'user',
             'view',
-            array('ptid' => $ptid,
-                                       'catid' => $catid)
+            ['ptid' => $ptid,
+                                       'catid' => $catid, ]
         );
         $info['name'] = xarVar::prepForDisplay($info['name']);
         if ($count) {

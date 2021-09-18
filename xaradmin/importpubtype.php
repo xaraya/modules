@@ -27,11 +27,11 @@ function publications_admin_importpubtype($args)
 
     extract($args);
 
-    $data = array();
+    $data = [];
     $data['menutitle'] = xarML('Dynamic Data Utilities');
 
     $data['warning'] = '';
-    $data['options'] = array();
+    $data['options'] = [];
 
     $basedir = 'modules/publications';
     $filetype = 'xml';
@@ -39,11 +39,11 @@ function publications_admin_importpubtype($args)
         'dynamicdata',
         'admin',
         'browse',
-        array('basedir' => $basedir,
-                                 'filetype' => $filetype)
+        ['basedir' => $basedir,
+                                 'filetype' => $filetype, ]
     );
     if (!isset($files) || count($files) < 1) {
-        $files = array();
+        $files = [];
         $data['warning'] = xarML('There are currently no XML files available for import in "#(1)"', $basedir);
     }
 
@@ -68,14 +68,14 @@ function publications_admin_importpubtype($args)
                 'publications',
                 'admin',
                 'importpubtype',
-                array('file' => $basedir . '/' . $file)
+                ['file' => $basedir . '/' . $file]
             );
         } else {
             $ptid = xarMod::apiFunc(
                 'publications',
                 'admin',
                 'importpubtype',
-                array('xml' => $xml)
+                ['xml' => $xml]
             );
         }
         if (empty($ptid)) {
@@ -88,8 +88,8 @@ function publications_admin_importpubtype($args)
     natsort($files);
     array_unshift($files, '');
     foreach ($files as $file) {
-        $data['options'][] = array('id' => $file,
-                                    'name' => $file);
+        $data['options'][] = ['id' => $file,
+                                    'name' => $file, ];
     }
 
     $data['authid'] = xarSec::genAuthKey();

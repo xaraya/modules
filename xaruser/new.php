@@ -32,18 +32,18 @@ function publications_user_new($args)
     if (!xarVar::fetch('itemtype', 'id', $itemtype, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    $data['items'] = array();
+    $data['items'] = [];
 
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $data['ptid']]);
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
+
     # --------------------------------------------------------
 #
     # Are we allowed to add a page?
 #
-    $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $data['object']->properties['access']));
-    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', ['property' => $data['object']->properties['access']]);
+    $access = DataPropertyMaster::getProperty(['name' => 'access']);
     $allow = $access->check($accessconstraints['add']);
 
     // If no access, then bail showing a forbidden or the "no permission" page or an empty page
@@ -52,12 +52,12 @@ function publications_user_new($args)
         if ($accessconstraints['add']['failure']) {
             return xarResponse::Forbidden();
         } elseif ($nopermissionpage_id) {
-            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', ['itemid' => $nopermissionpage_id]));
         } else {
             return xarTpl::module('publications', 'user', 'empty');
         }
     }
-    
+
     # --------------------------------------------------------
 #
     # Good to go. Continue
@@ -72,7 +72,7 @@ function publications_user_new($args)
     }
 
     // Get the settings of the publication type we are using
-    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
-    
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $data['ptid']]);
+
     return xarTpl::module('publications', 'user', 'new', $data, $template);
 }

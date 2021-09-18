@@ -62,17 +62,17 @@ function publications_admin_update()
 //    if (!xarSec::confirmAuthKey()) return;
 
     $items = explode(',', $items);
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $data['ptid']]);
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
+
     // First we need to check all the data on the template
     // If checkInput fails, don't bail
-    $itemsdata = array();
+    $itemsdata = [];
     $isvalid = true;
     foreach ($items as $prefix) {
         $data['object']->setFieldPrefix($prefix);
-    
+
         // Disable the celkoposition property according if this is not the base document
         $fieldname = $prefix . '_dd_' . $data['object']->properties['parent']->id;
         $data['object']->properties['parent']->checkInput($fieldname);
@@ -81,12 +81,12 @@ function publications_admin_update()
         } else {
             $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
-        
+
         // Now get the input from the form
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
         // Store each item for later processing
-        $itemsdata[$prefix] = $data['object']->getFieldValues(array(), 1);
+        $itemsdata[$prefix] = $data['object']->getFieldValues([], 1);
     }
 
     if ($data['preview'] || !$isvalid) {
@@ -103,13 +103,13 @@ function publications_admin_update()
         }
         $data['items'] = $itemsdata;
         // Get the settings of the publication type we are using
-        $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
+        $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $data['ptid']]);
 
         return xarTpl::module('publications', 'admin', 'modify', $data);
     }
-    
+
     // call transform input hooks
-    $article['transform'] = array('summary','body','notes');
+    $article['transform'] = ['summary','body','notes'];
 //    $article = xarModHooks::call('item', 'transform-input', $data['itemid'], $article,
 //                               'publications', $data['ptid']);
 
@@ -124,7 +124,7 @@ function publications_admin_update()
         } else {
             $item = $data['object']->updateItem();
         }
-        
+
         // Check if we have an alias and set it as an alias of the publications module
         $alias_flag = $data['object']->properties['alias_flag']->value;
         if ($alias_flag == 1) {
@@ -147,7 +147,7 @@ function publications_admin_update()
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
     // Inform the world via hooks
-    $item = array('module' => 'publications', 'itemid' => $data['itemid'], 'itemtype' => $data['object']->properties['itemtype']->value);
+    $item = ['module' => 'publications', 'itemid' => $data['itemid'], 'itemtype' => $data['object']->properties['itemtype']->value];
     xarHooks::notify('ItemUpdate', $item);
 
     // If quitting, go to admin view; otherwise redisplay the page
@@ -162,21 +162,21 @@ function publications_admin_update()
             'publications',
             'admin',
             'view',
-            array('ptid' => $data['ptid'])
+            ['ptid' => $data['ptid']]
         ));
     } elseif ($data['front']) {
         xarController::redirect(xarController::URL(
             'publications',
             'user',
             'display',
-            array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])
+            ['name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid']]
         ));
     } else {
         xarController::redirect(xarController::URL(
             'publications',
             'admin',
             'modify',
-            array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])
+            ['name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid']]
         ));
     }
     return true;

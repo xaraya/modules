@@ -28,7 +28,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
@@ -51,8 +51,8 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
     //public $state               = '2,3';
     public $pubstate            = '2,3';
 
-        
-    public function display(array $data=array())
+
+    public function display(array $data=[])
     {
         $data = $this->getContent();
 
@@ -76,11 +76,11 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
         if (!empty($data['nocatlimit'])) {
             // don't limit by category
             $cid = 0;
-            $cidsarray = array();
+            $cidsarray = [];
         } else {
             if (!empty($data['catfilter'])) {
                 // use admin defined category
-                $cidsarray = array($data['catfilter']);
+                $cidsarray = [$data['catfilter']];
                 $cid = $data['catfilter'];
             } else {
                 // use the current category
@@ -92,19 +92,19 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                         if ($curid == -1) {
                             //$cid = $curcids[0]['name'];
                             $cid = $curcids[0];
-                            $cidsarray = array($curcids[0]);
+                            $cidsarray = [$curcids[0]];
                         } else {
                             $cid = $curcids[0];
-                            $cidsarray = array($curcids[0]);
+                            $cidsarray = [$curcids[0]];
                         }
                     } else {
                         $cid = 0;
-                        $cidsarray = array();
+                        $cidsarray = [];
                     }
                 } else {
                     // pull from all categories
                     $cid = 0;
-                    $cidsarray = array();
+                    $cidsarray = [];
                 }
             }
 
@@ -120,7 +120,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                     'categories',
                     'user',
                     'getcat',
-                    array('cid' => $cid, 'return_itself' => 'return_itself')
+                    ['cid' => $cid, 'return_itself' => 'return_itself']
                 );
             }
             if ((!empty($cidsarray)) && (isset($thiscategory[0]['name'])) && !empty($data['dynamictitle'])) {
@@ -165,7 +165,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
 
         // frontpage or approved state
         if (empty($data['pubstate'])) {
-            $statearray = array(2,3);
+            $statearray = [2,3];
         } elseif (!is_array($data['pubstate'])) {
             $statearray = preg_split('/,/', $data['pubstate']);
         } else {
@@ -173,7 +173,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
         }
 
         // get cids for security check in getall
-        $fields = array('id', 'title', 'pubtype_id', 'cids');
+        $fields = ['id', 'title', 'pubtype_id', 'cids'];
         if ($data['toptype'] == 'rating' && xarModHooks::isHooked('ratings', 'publications', $ptid)) {
             array_push($fields, 'rating');
             $sort = 'rating';
@@ -196,7 +196,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
             'publications',
             'user',
             'getall',
-            array(
+            [
                     'ptid' => $ptid,
                     'cids' => $cidsarray,
                     'andcids' => 'false',
@@ -204,14 +204,14 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                     'create_date' => time(),
                     'fields' => $fields,
                     'sort' => $sort,
-                    'numitems' => $data['numitems']
-                )
+                    'numitems' => $data['numitems'],
+                ]
         );
 
         if (!isset($publications) || !is_array($publications) || count($publications) == 0) {
             return;
         }
-        $items = array();
+        $items = [];
         foreach ($publications as $article) {
             $article['title'] = xarVar::prepHTMLDisplay($article['title']);
             if ($article['id'] != $curid) {
@@ -220,10 +220,10 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                     'publications',
                     'user',
                     'display',
-                    array(
+                    [
                             'itemid' => $article['id'],
-                            'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : null)
-                        )
+                            'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : null),
+                        ]
                 );
             } else {
                 $article['link'] = '';
@@ -258,7 +258,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
             // MikeC: Bring the summary field back as $desc
             if (!empty($data['showsummary'])) {
                 $article['summary']  = xarVar::prepHTMLDisplay($article['summary']);
-                $article['transform'] = array('summary', 'title');
+                $article['transform'] = ['summary', 'title'];
                 $article = xarModHooks::call('item', 'transform', $article['id'], $article, 'publications');
             } else {
                 $article['summary'] = '';

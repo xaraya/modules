@@ -14,10 +14,10 @@ function publications_adminapi_getconfighook($args)
 {
     extract($args);
     if (!isset($extrainfo['tabs'])) {
-        $extrainfo['tabs'] = array();
+        $extrainfo['tabs'] = [];
     }
     $module = 'publications';
-    $tabinfo = array(
+    $tabinfo = [
             'module'  => $module,
             'configarea'  => 'general',
             'configtitle'  => xarML('Publications'),
@@ -25,8 +25,8 @@ function publications_adminapi_getconfighook($args)
                 $module,
                 'admin',
                 'modifyconfig_general'
-            )
-    );
+            ),
+    ];
     $extrainfo['tabs'][] = $tabinfo;
     return $extrainfo;
 }

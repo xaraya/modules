@@ -93,7 +93,7 @@ function publications_user_view($args)
     // publications module ID
     $c_modid = xarMod::getID('publications');
     // state: front page or approved
-    $c_posted = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
+    $c_posted = [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED];
 
     // Default parameters
     if (!isset($startnum)) {
@@ -106,7 +106,7 @@ function publications_user_view($args)
         // default publication type
         $ptid = xarModVars::get('publications', 'defaultpubtype');
         // frontpage state
-        $state = array(PUBLICATIONS_STATE_FRONTPAGE);
+        $state = [PUBLICATIONS_STATE_FRONTPAGE];
     } else {
         $ishome = false;
         // frontpage or approved state
@@ -114,8 +114,8 @@ function publications_user_view($args)
     }
 
     // Get the publication type for this display
-    $data['pubtypeobject'] = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $data['pubtypeobject']->getItem(array('itemid' => $ptid));
+    $data['pubtypeobject'] = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $data['pubtypeobject']->getItem(['itemid' => $ptid]);
 
     // Pass the access rules of the publication type to the template
     xarCoreCache::setCached('Publications', 'pubtype_access', $data['pubtypeobject']->properties['access']->getValue());
@@ -126,7 +126,7 @@ function publications_user_view($args)
     }
 
     // Get the settings of this publication type
-    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $ptid));
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $ptid]);
 
     // Get the template for this publication type
     if ($ishome) {
@@ -134,7 +134,7 @@ function publications_user_view($args)
     } else {
         $data['template'] = $data['pubtypeobject']->properties['template']->getValue();
     }
-        
+
     $isdefault = 0;
     // check default view for this type of publications
     if (empty($catid) && empty($cids) && empty($owner) && empty($sort)) {
@@ -164,11 +164,11 @@ function publications_user_view($args)
         'publications',
         'user',
         'getpublinks',
-        array(
+        [
             'ptid' => $ishome ? '' : $ptid,
             'state' => $c_posted,
-            'count' => $data['settings']['show_pubcount']
-        )
+            'count' => $data['settings']['show_pubcount'],
+        ]
     );
 //    $data['pager'] = '';
 
@@ -206,7 +206,7 @@ function publications_user_view($args)
             $cids = explode('-', $catid);
             $andcids = false;
         } else {
-            $cids = array($catid);
+            $cids = [$catid];
             if (strstr($catid, '_')) {
                 $andcids = false; // don't combine with current category
             } else {
@@ -215,7 +215,7 @@ function publications_user_view($args)
         }
     } else {
         if (empty($cids)) {
-            $cids = array();
+            $cids = [];
         }
         if (!isset($andcids)) {
             $andcids = true;
@@ -224,7 +224,7 @@ function publications_user_view($args)
     // rebuild $catid in standard format again
     $catid = null;
     if (count($cids) > 0) {
-        $seencid = array();
+        $seencid = [];
         foreach ($cids as $cid) {
             // make sure cids are numeric
             if (!empty($cid) && preg_match('/^_?[0-9]+$/', $cid)) {
@@ -241,7 +241,7 @@ function publications_user_view($args)
     }
 
     // every field you always wanted to know about but were afraid to ask for :)
-    $extra = array();
+    $extra = [];
 //    $extra[] = 'author';
 
     // Note: we always include cids for security checks now (= performance impact if show_categories was 0)
@@ -277,7 +277,7 @@ function publications_user_view($args)
             $extrawhere = "title LIKE '$letter%'";
         } else {
             // Loop through the alphabet for the 'not in' part.
-            $letterwhere = array();
+            $letterwhere = [];
             for ($i = ord('a'); $i <= ord('z'); $i++) {
                 $letterwhere[] = "title NOT LIKE '" . chr($i) . "%'";
             }
@@ -357,12 +357,12 @@ function publications_user_view($args)
         if (count($cids) > 0) {
             foreach ($cids as $cid) {
                 if (xarSecurity::check('SubmitPublications', 0, 'Publication', "$curptid:$cid:All:All")) {
-                    $data['submitlink'] = xarController::URL('publications', 'admin', 'new', array('ptid' => $ptid, 'catid' => $catid));
+                    $data['submitlink'] = xarController::URL('publications', 'admin', 'new', ['ptid' => $ptid, 'catid' => $catid]);
                     break;
                 }
             }
         } elseif (xarSecurity::check('SubmitPublications', 0, 'Publication', "$curptid:All:All:All")) {
-            $data['submitlink'] = xarController::URL('publications', 'admin', 'new', array('ptid' => $ptid));
+            $data['submitlink'] = xarController::URL('publications', 'admin', 'new', ['ptid' => $ptid]);
         }
     }
     $data['cids'] = $cids;
@@ -384,7 +384,7 @@ function publications_user_view($args)
                 'user',
                 'getpubcatcount',
                 // frontpage or approved
-                array('state' => $c_posted, 'ptid' => $ptid)
+                ['state' => $c_posted, 'ptid' => $ptid]
             );
             if (isset($pubcatcount[$ptid])) {
                 xarCoreCache::setCached('Blocks.categories', 'catcount', $pubcatcount[$ptid]);
@@ -396,11 +396,11 @@ function publications_user_view($args)
                 'user',
                 'getpubcatcount',
                 // frontpage or approved
-                array('state' => $c_posted, 'reverse' => 1)
+                ['state' => $c_posted, 'reverse' => 1]
             );
 
             if (isset($pubcatcount) && count($pubcatcount) > 0) {
-                $catcount = array();
+                $catcount = [];
                 foreach ($pubcatcount as $cat => $count) {
                     $catcount[$cat] = $count['total'];
                 }
@@ -415,7 +415,7 @@ function publications_user_view($args)
     // retrieve the number of comments for each article
     if (xarMod::isAvailable('comments')) {
         if ($data['settings']['show_comments']) {
-            $idlist = array();
+            $idlist = [];
             foreach ($publications as $article) {
                 $idlist[] = $article['id'];
             }
@@ -423,7 +423,7 @@ function publications_user_view($args)
                 'comments',
                 'user',
                 'get_countlist',
-                array('modid' => $c_modid, 'objectids' => $idlist)
+                ['modid' => $c_modid, 'objectids' => $idlist]
             );
         }
     }
@@ -431,20 +431,20 @@ function publications_user_view($args)
     // retrieve the keywords for each article
     if (xarMod::isAvailable('coments')) {
         if ($data['settings']['show_keywords']) {
-            $idlist = array();
+            $idlist = [];
             foreach ($publications as $article) {
                 $idlist[] = $article['id'];
             }
-    
+
             $keywords = xarMod::apiFunc(
                 'keywords',
                 'user',
                 'getmultiplewords',
-                array(
+                [
                     'modid' => $c_modid,
                     'objectids' =>  $idlist,
-                    'itemtype'  => $ptid
-                )
+                    'itemtype'  => $ptid,
+                ]
             );
         }
     }
@@ -591,18 +591,18 @@ function publications_user_view($args)
     }
 
     // Get the publications we want to view
-    $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
+    $data['object'] = DataObjectMaster::getObject(['name' => $data['pubtypeobject']->properties['name']->value]);
     $data['objectname'] = $data['pubtypeobject']->properties['name']->value;
     $data['ptid'] = (int)$ptid;
-    
+
 //    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
 //    $data['items'] = $object->getItems();
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
+    $data['object'] = DataObjectMaster::getObjectList(['name' => $data['pubtypeobject']->properties['name']->value]);
     // Set the itemtype to static for filtering
-    $data['object']->modifyProperty('itemtype', array('type' => 1));
+    $data['object']->modifyProperty('itemtype', ['type' => 1]);
 
     $q = $data['object']->dataquery;
-    
+
     // Cater to default settings
     if ($data['sort'] == 'date ASC') {
         $q->setorder('modify_date', 'ASC');
@@ -619,7 +619,7 @@ function publications_user_view($args)
     $data['numitems'] = (int)$numitems;
     $data['startnum'] = (int)$startnum;
     $q->setrowstodo($numitems);
-    
+
     // Set the page template if needed
     // Page template for frontpage or depending on publication type (optional)
     // Note : this cannot be overridden in templates
@@ -638,7 +638,7 @@ function publications_user_view($args)
     xarCore::setCached('publications', 'settings_' . $data['ptid'], $data['settings']);
 
     // Flag this as the current list view
-    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $data['ptid'])));
-    
+    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(['ptid' => $data['ptid']]));
+
     return xarTpl::module('publications', 'user', 'view', $data, $data['template']);
 }

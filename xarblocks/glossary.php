@@ -28,7 +28,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
@@ -37,11 +37,11 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     public $paramname = 'glossaryterm';
     public $ptid = 0;
     public $cid = 0;
-    
+
     public function display()
     {
         $vars = $this->getContent();
-        
+
         if (!xarVar::fetch($vars['paramname'], 'str', $glossaryterm, null, xarVar::NOT_REQUIRED)) {
             return;
         }
@@ -49,7 +49,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
             return;
         }
 
-        $articlecriteria = array();
+        $articlecriteria = [];
         $articlecriteria['title'] = $glossaryterm;
 
         if (!empty($vars['ptid'])) {
@@ -76,7 +76,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
                 'publications',
                 'user',
                 'display',
-                array('id' => $article['id'], 'ptid' => $article['pubtype_id'])
+                ['id' => $article['id'], 'ptid' => $article['pubtype_id']]
             );
             $vars['detailavailable'] = !empty($article['body']);
         }
@@ -87,7 +87,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         // because it is normally under admin control (the admin may wish to
         // add working tags to the title).
         $this->setTitle(str_replace('{term}', xarVar::prepForDisplay($glossaryterm), $this->title));
-        
+
         return $vars;
     }
 
@@ -116,7 +116,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         // Return output
         return $vars;
     }
-    
+
     public function update()
     {
         xarVar::fetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', xarVar::NOT_REQUIRED);
@@ -125,7 +125,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         $this->setContent($vars);
         return true;
     }
-    
+
     public function help()
     {
         return (

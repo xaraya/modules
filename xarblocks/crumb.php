@@ -30,14 +30,14 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
     protected $contact = '';
     protected $credits = '';
     protected $license = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $include_root        = false;
-    public $root_ids           = array();
+    public $root_ids           = [];
 
     /**
      * Display func.
@@ -55,7 +55,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         if (!empty($vars['root_ids']) && is_array($vars['root_ids'])) {
             $root_ids = $vars['root_ids'];
         } else {
-            $root_ids = array();
+            $root_ids = [];
         }
 
         // To start with, we need to know the current page.
@@ -90,7 +90,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
             // If the cached tree does not contain the current page,
             // then we cannot use it.
             if (!isset($pagedata['pages'][$id])) {
-                $pagedata = array();
+                $pagedata = [];
             }
         }
 
@@ -100,7 +100,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         // If necessary, check whether the current page is under one of the
         // of the allowed root pids.
         if (!empty($root_ids)) {
-            if (!xarMod::apiFunc('publications', 'user', 'pageintrees', array('pid' => $id, 'tree_roots' => $root_ids))) {
+            if (!xarMod::apiFunc('publications', 'user', 'pageintrees', ['pid' => $id, 'tree_roots' => $root_ids])) {
                 return;
             }
         }
@@ -116,7 +116,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
             'publications',
             'user',
             'addcurrentpageflags',
-            array('pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids)
+            ['pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids]
         );
 
         // If we don't want to include the root page in the crumbs, then shift it off now.

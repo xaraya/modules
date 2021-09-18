@@ -40,19 +40,19 @@ function publications_admin_delete_translation()
     /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $publication = DataObjectMaster::getObject(array('name' => 'publications_publications'));
+    $publication = DataObjectMaster::getObject(['name' => 'publications_publications']);
     if (!isset($confirmed)) {
         $data['title'] = xarML("Delete Translation");
         $data['authid'] = xarSec::genAuthKey();
-        $publication->getItem(array('itemid' => $data['itemid']));
+        $publication->getItem(['itemid' => $data['itemid']]);
         $data['item'] = $publication->getFieldValues();
-        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete', array('itemid' => $data['itemid']));
+        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete', ['itemid' => $data['itemid']]);
         return xarTpl::module('publications', 'admin', 'delete_translation', $data);
     } else {
         if (!xarSec::confirmAuthKey()) {
             return;
         }
-        $itemid = $publication->deleteItem(array('itemid' => $data['itemid']));
+        $itemid = $publication->deleteItem(['itemid' => $data['itemid']]);
         $data['message'] = "Translation deleted [ID $itemid]";
         if (isset($returnurl)) {
             xarController::redirect($returnurl);

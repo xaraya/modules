@@ -27,12 +27,12 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
-    
+
     public $layout = 1;
     public $show_catcount = 0;
     public $showchildren = 0;
@@ -47,15 +47,15 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         if (!empty($vars) && is_array($vars)) {
             extract($vars);
         }
-    
+
         // Get requested layout
         if (empty($layout)) {
             $layout = 1; // default tree here
         }
-    
+
         if (!empty($startmodule)) {
             // static behaviour
-            list($module, $itemtype, $rootcid) = explode('.', $startmodule);
+            [$module, $itemtype, $rootcid] = explode('.', $startmodule);
             if (empty($rootcid)) {
                 $rootcids = null;
             } elseif (strpos($rootcid, ' ')) {
@@ -100,7 +100,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         if (empty($itemtype)) {
             $itemtype = null;
         }
-    
+
         // Get current item id (if any)
         if (!isset($itemid)) {
             if (xarVar::isCached('Blocks.categories', 'itemid')) {
@@ -116,38 +116,38 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         if (empty($itemid)) {
             $itemid = null;
         }
-    
+
         if (isset($rootcids)) {
             $mastercids = $rootcids;
         } else {
             // Get number of categories for this module + item type
-    
+
             $numcats = xarMod::apiFunc(
                 'categories',
                 'user',
                 'countcatbases',
-                array(
+                [
                     'module'=>$modname,
-                    'itemtype'=>(empty($itemtype) ? null : $itemtype)
-                )
+                    'itemtype'=>(empty($itemtype) ? null : $itemtype),
+                ]
             );
-    
+
             if (empty($numcats)) {
                 // no categories to show here -> return empty output
                 return;
             }
-    
+
             // Get master cids for this module + item type
             $mastercids = xarMod::apiFunc(
                 'categories',
                 'user',
                 'getallcatbases',
-                array(
+                [
                     'module' => $modname,
                     'format' => 'cids',
                     'order' => 'cid',
-                    'itemtype' => (empty($itemtype) ? null : $itemtype)
-                )
+                    'itemtype' => (empty($itemtype) ? null : $itemtype),
+                ]
             );
 
             if (empty($mastercids)) {
@@ -156,7 +156,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
 
             $mastercids = array_unique($mastercids);
-    
+
             if (!empty($startmodule)) {
                 $rootcids = $mastercids;
             }
@@ -166,15 +166,15 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         if (!isset($show_catcount)) {
             $show_catcount = 0;
         }
-    
+
         // See if we need to show the children of current categories
         if (!isset($showchildren)) {
             $showchildren = 1;
         }
-    
+
         // Get current category counts (optional array of cid => count)
         if (empty($show_catcount)) {
-            $catcount = array();
+            $catcount = [];
         }
         if (empty($showempty) || !empty($show_catcount)) {
             // A 'deep count' sums the totals at each node with the totals of all descendants.
@@ -185,36 +185,36 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                     'categories',
                     'user',
                     'deepcount',
-                    array('modid' => $modid, 'itemtype' => $itemtype)
+                    ['modid' => $modid, 'itemtype' => $itemtype]
                 );
                 xarCoreCache::setCached('Blocks.categories', 'deepcount', $deepcount);
             }
         }
-    
+
         if (!empty($show_catcount)) {
             if (xarVar::isCached('Blocks.categories', 'catcount')) {
                 $catcount = xarCoreCache::getCached('Blocks.categories', 'catcount');
             } else {
                 // Get number of items per category (for this module).
                 // If show_catcount == 2 then add in all descendants too.
-    
+
                 if ($show_catcount == 1) {
                     // We want to display only children category counts.
                     $catcount = xarMod::apiFunc(
                         'categories',
                         'user',
                         'groupcount',
-                        array('modid' => $modid, 'itemtype' => $itemtype)
+                        ['modid' => $modid, 'itemtype' => $itemtype]
                     );
                 } else {
                     // We want to display the deep counts.
                     $catcount =& $deepcount;
                 }
-    
+
                 xarCoreCache::setCached('Blocks.categories', 'catcount', $catcount);
             }
         }
-    
+
         // Specify type=... & func = ... arguments for xarController::URL()
         if (empty($type)) {
             if (xarVar::isCached('Blocks.categories', 'type')) {
@@ -232,7 +232,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $func = 'view';
             }
         }
-    
+
         // Get current categories
         if (xarVar::isCached('Blocks.categories', 'catid')) {
             $catid = xarCoreCache::getCached('Blocks.categories', 'catid');
@@ -270,17 +270,17 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 // try to get cids from input
                 xarVar::fetch('cids', 'isset', $cids, null, xarVar::DONT_SET);
                 xarVar::fetch('andcids', 'isset', $andcids, false, xarVar::NOT_REQUIRED);
-    
+
                 if (empty($cids)) {
-                    $cids = array();
+                    $cids = [];
                     if ((empty($module) || $module == $modname) && !empty($itemid)) {
                         $links = xarMod::apiFunc(
                             'categories',
                             'user',
                             'getlinks',
-                            array('modid' => $modid,
+                            ['modid' => $modid,
                                                     'itemtype' => $itemtype,
-                                                    'iids' => array($itemid))
+                                                    'iids' => [$itemid], ]
                         );
                         if (!empty($links) && count($links) > 0) {
                             $cids = array_keys($links);
@@ -290,7 +290,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
         }
         if (count($cids) > 0) {
-            $seencid = array();
+            $seencid = [];
             foreach ($cids as $cid) {
                 if (empty($cid) || ! is_numeric($cid)) {
                     continue;
@@ -299,8 +299,8 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
             $cids = array_keys($seencid);
         }
-    
-        $data = array();
+
+        $data = [];
         $data['cids'] = $cids;
         // pass information about current module, item type and item id (if any) to template
         $data['module'] = $modname;
@@ -309,38 +309,38 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         // pass information about current function to template
         $data['type'] = $type;
         $data['func'] = $func;
-    
+
         $blockinfo['content'] = '';
-    
+
         // Generate output
         switch ($layout) {
-    
+
             case 3: // menu category
                 $template = 'menu';
                 break;
-    
+
             case 2: // crumbtrails
                 $template = 'trails';
-                $data['cattrees'] = array();
-    
+                $data['cattrees'] = [];
+
                 if (empty($cids) || sizeof($cids) <= 0) {
                     return;
                 }// if
-    
+
                 $cid = current($cids);
                 $data['cid'] = $cid;
-    
+
                 # Get category parents
                 $parents = xarMod::apiFunc(
                     'categories',
                     'user',
                     'getparents',
-                    array('cid' => $cid)
+                    ['cid' => $cid]
                 );
                 if (empty($parents)) {
                     return;
                 }// if
-    
+
                 $root = '';
                 $parentid = 0;
                 foreach ($parents as $id => $info) {
@@ -348,106 +348,106 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                         'publications',
                         'user',
                         'getall',
-                        array('cid'=>$info['cid'],
+                        ['cid'=>$info['cid'],
                                                   'ptid'=>$itemtype,
-                                                  'fields'=>array('id','title')
-                                                  )
+                                                  'fields'=>['id','title'],
+                                                  ]
                     );
                     foreach ($publications as $k=>$article) {
                         $publications[$article['title']] = $article['id'];
                         unset($publications[$k]);
                     }// foreach
-    
+
                     $label = xarVar::prepForDisplay($info['name']);
-    
+
                     if (isset($publications[$label])) {
                         $link = xarController::URL(
                             $modname,
                             $type,
                             'display',
-                            array('ptid' => $itemtype,
+                            ['ptid' => $itemtype,
                                             'catid' => $info['cid'],
-                                            'id'=>$publications[$label])
+                                            'id'=>$publications[$label], ]
                         );
                     } else {
                         $link = xarController::URL(
                             $modname,
                             $type,
                             $func,
-                            array('itemtype' => $itemtype,
-                                            'catid' => $info['cid'])
+                            ['itemtype' => $itemtype,
+                                            'catid' => $info['cid'], ]
                         );
                     }// if
-    
+
                     if (empty($root)) {
                         $link = xarController::URL('', '', '');
                         $root = $label;
                     }// if
-    
+
                     if (!empty($catcount[$info['cid']])) {
                         $count = $catcount[$info['cid']];
                     } else {
                         $count = 0;
                     }// if
-                    $catparents[] = array('catlabel' => $label,
+                    $catparents[] = ['catlabel' => $label,
                                         'catid' => $info['cid'],
                                         'catlink' => $link,
-                                        'catcount' => $count);
+                                        'catcount' => $count, ];
                 }// foreach
-    
-                $data['cattrees'][] = array('catparents' => $catparents);
+
+                $data['cattrees'][] = ['catparents' => $catparents];
                 $data['crumbSeparator'] = '&#160;>&#160;';
                 break;
-    
-    
-    
+
+
+
             case 1: // tree
             default:
-    
+
                 $template = 'tree';
-                $data['cattrees'] = array();
-    
+                $data['cattrees'] = [];
+
                 if (empty($cids) || sizeof($cids) <= 0) {
                     return;
                 }// if
-    
+
                 $cid = current($cids);
-    
+
                 $cat = xarMod::apiFunc(
                     'categories',
                     'user',
                     'getcatinfo',
-                    array('cid' => $cid)
+                    ['cid' => $cid]
                 );
-    
+
                 $blockinfo['title'] = xarVar::prepForDisplay($cat['name']);
                 if (isset($cat['blockimage'])) {
                     $data['catimage'] = $cat['blockimage'];
                 }// if
-    
-    
+
+
                 # Get child categories
                 $childrenCategories = xarMod::apiFunc(
                     'categories',
                     'user',
                     'getchildren',
-                    array('cid' => $cid)
+                    ['cid' => $cid]
                 );
-    
-    
+
+
                 # get all the pubtypes so we can digest the ids
-                $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes', array());
-    
+                $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes', []);
+
                 # get immediate items in current category
                 $items = xarMod::apiFunc(
                     'publications',
                     'user',
                     'getall',
-                    array('cids'=>array($cid),
-                                                'fields'=>array('id', 'pubtype_id', 'title')
-                                                )
+                    ['cids'=>[$cid],
+                                                'fields'=>['id', 'pubtype_id', 'title'],
+                                                ]
                 );
-                $tmpPublications = array();
+                $tmpPublications = [];
                 foreach ($items as $k=>$item) {
                     if (strtolower($item['title']) == strtolower($cat['name'])) {
                         unset($items[$k]);
@@ -458,86 +458,86 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                             $modname,
                             $type,
                             'display',
-                            array('id'       => $item['id'],
+                            ['id'       => $item['id'],
                                             'itemtype'  => $item['pubtype_id'],
-                                            'catid'     => $cid)
+                                            'catid'     => $cid, ]
                         );
-    
+
                         $count = 0;
-                        $items[$k] = array('label' => $label,
+                        $items[$k] = ['label' => $label,
                                        'id' => $item['id'],
                                        'class'=>$class,
-                                       'link' => $link);
-    
+                                       'link' => $link, ];
+
                         $tmpPublications[$pubtypes[$item['pubtype_id']]['description']][] = $items[$k];
                     }// if
                 }// foreach
                 $items = $tmpPublications;
                 unset($tmpPublications);
-    
-    
+
+
                 if (empty($itemid) && empty($andcids)) {
                     $link = '';
                 }
-    
-                $catitems = array();
+
+                $catitems = [];
                 if (!empty($childrenCategories) && count($childrenCategories) > 0) {
                     foreach ($childrenCategories as $child) {
                         $publications = xarMod::apiFunc(
                             'publications',
                             'user',
                             'getall',
-                            array('cid'=>$child['cid'],
+                            ['cid'=>$child['cid'],
                                                       'ptid'=>$itemtype,
-                                                      'fields'=>array('id','title')
-                                                      )
+                                                      'fields'=>['id','title'],
+                                                      ]
                         );
                         foreach ($publications as $k=>$article) {
                             $publications[$article['title']] = $article['id'];
                             unset($publications[$k]);
                         }// foreach
-    
+
                         $clabel = xarVar::prepForDisplay($child['name']);
-    
+
                         if (isset($publications[$clabel])) {
                             $clink = xarController::URL(
                                 $modname,
                                 $type,
                                 'display',
-                                array('ptid' => $itemtype,
+                                ['ptid' => $itemtype,
                                                 'catid' => $child['cid'],
-                                                'id'=>$publications[$clabel])
+                                                'id'=>$publications[$clabel], ]
                             );
                         } else {
                             $clink = xarController::URL(
                                 $modname,
                                 $type,
                                 $func,
-                                array('itemtype' => $itemtype,
-                                                'catid' => $child['cid'])
+                                ['itemtype' => $itemtype,
+                                                'catid' => $child['cid'], ]
                             );
                         }// if
-    
+
                         if (!empty($catcount[$child['cid']])) {
                             $ccount = $catcount[$child['cid']];
                         } else {
                             $ccount = 0;
                         }
-                        $catitems[] = array('catlabel' => $clabel,
+                        $catitems[] = ['catlabel' => $clabel,
                                              'catid' => $child['cid'],
                                              'catlink' => $clink,
                                              'catcount' => $ccount,
-                                             'catchildren'=>array());
+                                             'catchildren'=>[], ];
                     }// foreach
                 }// if
-    
+
                 if (sizeof($catitems) > 0 || sizeof($items) > 0) {
-                    $data['cattrees'][] = array('catitems' => $catitems,
-                                              'items' => $items);
+                    $data['cattrees'][] = ['catitems' => $catitems,
+                                              'items' => $items, ];
                 } else {
                     return;
                 }// if
-    
+
                 break;
         }
         $data['blockid'] = $this->block_id;
@@ -545,7 +545,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         // The base is 'nav-tree', 'nav-trails' or 'nav-prevnext', but allow
         // the admin to override this completely.
         $this->setTemplateBase('nav-' . $template);
-        
+
         return $data;
     }
 }

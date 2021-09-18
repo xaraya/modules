@@ -13,7 +13,7 @@
 /**
  * Download a template or stylesheet
  */
- 
+
 function publications_user_download()
 {
     if (!xarVar::fetch('filepath', 'str', $filepath, '', xarVar::NOT_REQUIRED)) {
@@ -30,7 +30,7 @@ function publications_user_download()
     $filesize = filesize($filepath);
     $filetype = filetype($filepath);
     $filename = basename($filepath);
-    
+
     // Xaraya security
     if (!xarSecurity::check('ManagePublications')) {
         return;
@@ -54,7 +54,7 @@ function publications_user_download()
 
         fclose($fp);
     }
-    
+
     # --------------------------------------------------------
     # Send the header
 #

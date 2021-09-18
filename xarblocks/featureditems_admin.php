@@ -21,25 +21,25 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
     public function modify()
     {
         $data = $this->getContent();
-    
-        $data['fields'] = array('id', 'name');
+
+        $data['fields'] = ['id', 'name'];
 
         if (!is_array($data['pubstate'])) {
-            $statearray = array($data['pubstate']);
+            $statearray = [$data['pubstate']];
         } else {
             $statearray = $data['pubstate'];
         }
-    
+
         if (!empty($data['catfilter'])) {
-            $cidsarray = array($data['catfilter']);
+            $cidsarray = [$data['catfilter']];
         } else {
-            $cidsarray = array();
+            $cidsarray = [];
         }
 
         # ------------------------------------------------------------
         # Set up the different conditions for getting the items that can be featured
 #
-        $conditions = array();
+        $conditions = [];
 
         // Only include pubtype if a specific pubtype is selected
         if (!empty($data['pubtype_id'])) {
@@ -50,7 +50,7 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         if ($data['itemlimit'] != 0) {
             $conditions['numitems'] = $data['itemlimit'];
         }
-    
+
         // Add the rest of the arguments
         $conditions['cids'] = $cidsarray;
         $conditions['enddate'] = time();
@@ -64,7 +64,7 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         $items = xarMod::apiFunc('publications', 'user', 'getall', $conditions);
 
         // Limit the titles to less than 50 characters
-        $data['filtereditems'] = array();
+        $data['filtereditems'] = [];
         foreach ($items as $key => $value) {
             if (strlen($value['title']) > 50) {
                 $value['title'] = substr($value['title'], 0, 47) . '...';
@@ -83,20 +83,20 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
 #
         $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
         $data['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
-        $data['sortoptions'] = array(
-            array('id' => 'author', 'name' => xarML('Author')),
-            array('id' => 'date', 'name' => xarML('Date')),
-            array('id' => 'hits', 'name' => xarML('Hit Count')),
-            array('id' => 'rating', 'name' => xarML('Rating')),
-            array('id' => 'title', 'name' => xarML('Title'))
-        );
-    
+        $data['sortoptions'] = [
+            ['id' => 'author', 'name' => xarML('Author')],
+            ['id' => 'date', 'name' => xarML('Date')],
+            ['id' => 'hits', 'name' => xarML('Hit Count')],
+            ['id' => 'rating', 'name' => xarML('Rating')],
+            ['id' => 'title', 'name' => xarML('Title')],
+        ];
+
         return $data;
     }
 
-    public function update(array $data=array())
+    public function update(array $data=[])
     {
-        $args = array();
+        $args = [];
         xarVar::fetch('pubtype_id', 'int', $args['pubtype_id'], 0, xarVar::NOT_REQUIRED);
         xarVar::fetch('catfilter', 'id', $args['catfilter'], $this->catfilter, xarVar::NOT_REQUIRED);
         xarVar::fetch('nocatlimit', 'checkbox', $args['nocatlimit'], $this->nocatlimit, xarVar::NOT_REQUIRED);
@@ -114,12 +114,12 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
         xarVar::fetch('linkcat', 'checkbox', $args['linkcat'], 0, xarVar::NOT_REQUIRED);
 
         sys::import('modules.dynamicdata.class.properties.master');
-        $multiselect = DataPropertyMaster::getProperty(array('name' => 'multiselect'));
+        $multiselect = DataPropertyMaster::getProperty(['name' => 'multiselect']);
         // We cheat a bit here. Allowing override means we don't need to load the options
         $multiselect->validation_override = true;
         $multiselect->checkInput('moreitems');
         $args['moreitems'] = $multiselect->getValue();
-        
+
         $this->setContent($args);
         return true;
     }

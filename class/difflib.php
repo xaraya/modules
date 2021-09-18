@@ -135,9 +135,9 @@ class _DiffEngine
         $n_from = sizeof($from_lines);
         $n_to = sizeof($to_lines);
 
-        $this->xchanged = $this->ychanged = array();
-        $this->xv = $this->yv = array();
-        $this->xind = $this->yind = array();
+        $this->xchanged = $this->ychanged = [];
+        $this->xv = $this->yv = [];
+        $this->xind = $this->yind = [];
         unset($this->seq);
         unset($this->in_seq);
         unset($this->lcs);
@@ -189,14 +189,14 @@ class _DiffEngine
         $this->_shift_boundaries($to_lines, $this->ychanged, $this->xchanged);
 
         // Compute the edit operations.
-        $edits = array();
+        $edits = [];
         $xi = $yi = 0;
         while ($xi < $n_from || $yi < $n_to) {
             USE_ASSERTS && assert($yi < $n_to || $this->xchanged[$xi]);
             USE_ASSERTS && assert($xi < $n_from || $this->ychanged[$yi]);
 
             // Skip matching "snake".
-            $copy = array();
+            $copy = [];
             while ($xi < $n_from && $yi < $n_to
                     && !$this->xchanged[$xi] && !$this->ychanged[$yi]) {
                 $copy[] = $from_lines[$xi++];
@@ -207,12 +207,12 @@ class _DiffEngine
             }
 
             // Find deletes & adds.
-            $delete = array();
+            $delete = [];
             while ($xi < $n_from && $this->xchanged[$xi]) {
                 $delete[] = $from_lines[$xi++];
             }
 
-            $add = array();
+            $add = [];
             while ($yi < $n_to && $this->ychanged[$yi]) {
                 $add[] = $to_lines[$yi++];
             }
@@ -253,8 +253,8 @@ class _DiffEngine
             // Things seems faster (I'm not sure I understand why)
             // when the shortest sequence in X.
             $flip = true;
-            list($xoff, $xlim, $yoff, $ylim)
-        = array( $yoff, $ylim, $xoff, $xlim);
+            [$xoff, $xlim, $yoff, $ylim]
+        = [ $yoff, $ylim, $xoff, $xlim];
         }
 
         if ($flip) {
@@ -269,8 +269,8 @@ class _DiffEngine
 
         $this->lcs = 0;
         $this->seq[0]= $yoff - 1;
-        $this->in_seq = array();
-        $ymids[0] = array();
+        $this->in_seq = [];
+        $ymids[0] = [];
 
         $numer = $xlim - $xoff + $nchunks - 1;
         $x = $xoff;
@@ -289,7 +289,7 @@ class _DiffEngine
                 }
                 $matches = $ymatches[$line];
                 reset($matches);
-                while (list($junk, $y) = each($matches)) {
+                while ([$junk, $y] = each($matches)) {
                     if (empty($this->in_seq[$y])) {
                         $k = $this->_lcs_pos($y);
                         USE_ASSERTS && assert($k > 0);
@@ -297,7 +297,7 @@ class _DiffEngine
                         break;
                     }
                 }
-                while (list($junk, $y) = each($matches)) {
+                while ([$junk, $y] = each($matches)) {
                     if ($y > $this->seq[$k-1]) {
                         USE_ASSERTS && assert($y < $this->seq[$k]);
                         // Optimization: this is a common case:
@@ -314,16 +314,16 @@ class _DiffEngine
             }
         }
 
-        $seps[] = $flip ? array($yoff, $xoff) : array($xoff, $yoff);
+        $seps[] = $flip ? [$yoff, $xoff] : [$xoff, $yoff];
         $ymid = $ymids[$this->lcs];
         for ($n = 0; $n < $nchunks - 1; $n++) {
             $x1 = $xoff + (int)(($numer + ($xlim - $xoff) * $n) / $nchunks);
             $y1 = $ymid[$n] + 1;
-            $seps[] = $flip ? array($y1, $x1) : array($x1, $y1);
+            $seps[] = $flip ? [$y1, $x1] : [$x1, $y1];
         }
-        $seps[] = $flip ? array($ylim, $xlim) : array($xlim, $ylim);
+        $seps[] = $flip ? [$ylim, $xlim] : [$xlim, $ylim];
 
-        return array($this->lcs, $seps);
+        return [$this->lcs, $seps];
     }
 
     public function _lcs_pos($ypos)
@@ -387,7 +387,7 @@ class _DiffEngine
             //$nchunks = sqrt(min($xlim - $xoff, $ylim - $yoff) / 2.5);
             //$nchunks = max(2,min(8,(int)$nchunks));
             $nchunks = min(7, $xlim - $xoff, $ylim - $yoff) + 1;
-            list($lcs, $seps)
+            [$lcs, $seps]
         = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
         }
 
@@ -559,7 +559,7 @@ class Diff
      */
     public function Diff($from_lines, $to_lines)
     {
-        $eng = new _DiffEngine;
+        $eng = new _DiffEngine();
         $this->edits = $eng->diff($from_lines, $to_lines);
         //$this->_check($from_lines, $to_lines);
     }
@@ -577,7 +577,7 @@ class Diff
     public function reverse()
     {
         $rev = $this;
-        $rev->edits = array();
+        $rev->edits = [];
         foreach ($this->edits as $edit) {
             $rev->edits[] = $edit->reverse();
         }
@@ -627,7 +627,7 @@ class Diff
      */
     public function orig()
     {
-        $lines = array();
+        $lines = [];
 
         foreach ($this->edits as $edit) {
             if ($edit->orig) {
@@ -647,7 +647,7 @@ class Diff
      */
     public function _final()
     {
-        $lines = array();
+        $lines = [];
 
         foreach ($this->edits as $edit) {
             if ($edit->final) {
@@ -790,7 +790,7 @@ class DiffFormatter
     {
         $xi = $yi = 1;
         $block = false;
-        $context = array();
+        $context = [];
 
         $nlead = $this->leading_context_lines;
         $ntrail = $this->trailing_context_lines;
@@ -823,7 +823,7 @@ class DiffFormatter
                     $context = array_slice($context, max(0, sizeof($context) - $nlead));
                     $x0 = $xi - sizeof($context);
                     $y0 = $yi - sizeof($context);
-                    $block = array();
+                    $block = [];
                     if ($context) {
                         $block[] = new _DiffOp_Copy($context);
                     }

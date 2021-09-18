@@ -21,10 +21,10 @@ function publications_treeapi_getleftright($args)
         $query = 'SELECT xar_parent, xar_left, xar_right'
             . ' FROM ' . $tablename
             . ' WHERE ' . $idname . ' = ?';
-        $result = $dbconn->execute($query, array((int)$id));
+        $result = $dbconn->execute($query, [(int)$id]);
         if (!$result->EOF) {
-            list($parent, $left, $right) = $result->fields;
-            $return = array('parent'=>(int)$parent, 'left'=>(int)$left, 'right'=>(int)$right);
+            [$parent, $left, $right] = $result->fields;
+            $return = ['parent'=>(int)$parent, 'left'=>(int)$left, 'right'=>(int)$right];
         } else {
             // Item not found.
             // TODO: raise error.
@@ -40,14 +40,14 @@ function publications_treeapi_getleftright($args)
         $result = $dbconn->execute($query);
         $parent = 0;
         if (!$result->EOF) {
-            list($parent, $left, $right) = $result->fields;
-            $return = array('parent'=>(int)$parent, 'left'=>(int)$left, 'right'=>(int)$right);
+            [$parent, $left, $right] = $result->fields;
+            $return = ['parent'=>(int)$parent, 'left'=>(int)$left, 'right'=>(int)$right];
             // Hack for MySQL where EOF does not work on MIN/MAX group functions.
             if (!isset($left)) {
-                $return = array('parent'=>0, 'left'=>1, 'right'=>2);
+                $return = ['parent'=>0, 'left'=>1, 'right'=>2];
             }
         } else {
-            $return = array('parent'=>0, 'left'=>1, 'right'=>2);
+            $return = ['parent'=>0, 'left'=>1, 'right'=>2];
         }
     }
 

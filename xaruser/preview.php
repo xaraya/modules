@@ -36,14 +36,14 @@ function publications_user_preview($data)
     if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     // Override xarVar::fetch
     extract($data);
 
     if (empty($data['object'])) {
         return xarResponse::NotFound();
     }
-    
+
     # --------------------------------------------------------
 #
     # We have an object, now get the page
@@ -56,46 +56,46 @@ function publications_user_preview($data)
     if (empty($ptid)) {
         return xarResponse::NotFound();
     }
-    
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $ptid));
+
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $ptid]);
     // Save this as the current pubtype
     xarCoreCache::setCached('Publications', 'current_pubtype_object', $pubtypeobject);
-        
+
     # --------------------------------------------------------
 #
     # Are we allowed to see this page?
 #
     $accessconstraints = unserialize($data['object']->properties['access']->value);
-    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $access = DataPropertyMaster::getProperty(['name' => 'access']);
     $allow = $access->check($accessconstraints['display']);
     $nopublish = (time() < $data['object']->properties['start_date']->value) || ((time() > $data['object']->properties['end_date']->value) && !$data['object']->properties['no_end']->value);
-    
+
     // If no access, then bail showing a forbidden or the "no permission" page or an empty page
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow || $nopublish) {
         if ($accessconstraints['display']['failure']) {
             return xarResponse::Forbidden();
         } elseif ($nopermissionpage_id) {
-            xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            xarController::redirect(xarController::URL('publications', 'user', 'display', ['itemid' => $nopermissionpage_id]));
         } else {
             return xarTpl::module('publications', 'user', 'empty');
         }
     }
-    
+
     // If we use process states, then also check that
     if (xarModVars::get('publications', 'use_process_states')) {
         if ($data['object']->properties['process_state']->value < 3) {
             if ($accessconstraints['display']['failure']) {
                 return xarResponse::Forbidden();
             } elseif ($nopermissionpage_id) {
-                xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                xarController::redirect(xarController::URL('publications', 'user', 'display', ['itemid' => $nopermissionpage_id]));
             } else {
                 return xarTpl::module('publications', 'user', 'empty');
             }
         }
     }
-    
+
     # --------------------------------------------------------
 #
     # If this is a blocklayout page, then process it
@@ -104,10 +104,10 @@ function publications_user_preview($data)
         // Get a copy of the compiler
         sys::import('xaraya.templating.compiler');
         $blCompiler = XarayaCompiler::instance();
-        
+
         // Get the data fields
-        $fields = array();
-        $sourcefields = array('title','description','summary','body1','body2','body3','body4','body5','notes');
+        $fields = [];
+        $sourcefields = ['title','description','summary','body1','body2','body3','body4','body5','notes'];
         $prefix = strlen('publications.')-1;
         foreach ($data['object']->properties as $prop) {
             if (in_array(substr($prop->source, $prefix), $sourcefields)) {
@@ -119,13 +119,13 @@ function publications_user_preview($data)
         foreach ($fields as $field) {
             try {
                 $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
-                $tplString .= xarMod::apiFunc('publications', 'user', 'prepareforbl', array('string' => $data['object']->properties[$field]->value));
+                $tplString .= xarMod::apiFunc('publications', 'user', 'prepareforbl', ['string' => $data['object']->properties[$field]->value]);
 
                 $tplString .= '</xar:template>';
 
                 $tplString = $blCompiler->compilestring($tplString);
                 // We don't allow passing $data to the template for now
-                $tpldata = array();
+                $tpldata = [];
                 $tplString = xarTpl::string($tplString, $tpldata);
             } catch (Exception $e) {
                 var_dump($tplString);
@@ -173,11 +173,11 @@ function publications_user_preview($data)
     $data['layout'] = $layout;
 
     // Get the settings for this publication type
-    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $ptid));
-    
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $ptid]);
+
     // The name of this object
     $data['objectname'] = $data['object']->name;
-    
+
     # --------------------------------------------------------
 #
     # Set the theme if needed

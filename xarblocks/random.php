@@ -28,14 +28,14 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $numitems          = 1;
-    public $catfilter         = array();
+    public $catfilter         = [];
     public $pubtype_id        = 0;
     public $locale            = '';
     public $alttitle          = '';
@@ -71,7 +71,7 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
         }
 
         // get cids for security check in getall
-        $fields = array('id', 'title', 'body', 'notes', 'pubtype_id', 'cids', 'owner');
+        $fields = ['id', 'title', 'body', 'notes', 'pubtype_id', 'cids', 'owner'];
 
         if (!empty($data['showpubdate'])) {
             array_push($fields, 'pubdate');
@@ -91,11 +91,11 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
 
         if (!empty($data['catfilter'])) {
             // use admin defined category
-            $cidsarray = array($data['catfilter']);
+            $cidsarray = [$data['catfilter']];
             $cid = $data['catfilter'];
         } else {
             $cid = 0;
-            $cidsarray = array();
+            $cidsarray = [];
         }
 
         // check if dynamicdata is hooked for all pubtypes or the current one (= defaults to 0 anyway here)
@@ -111,14 +111,14 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
             'publications',
             'user',
             'getrandom',
-            array('ptid'     => $data['pubtype_id'],
+            ['ptid'     => $data['pubtype_id'],
                                             'cids'     => $cidsarray,
                                             'andcids'  => false,
                                             'state'   => $statearray,
                                             'locale' => $lang,
                                             'numitems' => $data['numitems'],
                                             'fields'   => $fields,
-                                            'unique'   => true)
+                                            'unique'   => true, ]
         );
 
         if (!isset($publications) || !is_array($publications) || count($publications) == 0) {

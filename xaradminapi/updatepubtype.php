@@ -28,7 +28,7 @@ function publications_adminapi_updatepubtype($args)
     // message and return
     // Note : since we have several arguments we want to check here, we'll
     // report all those that are invalid at the same time...
-    $invalid = array();
+    $invalid = [];
     if (!isset($ptid) || !is_numeric($ptid) || $ptid < 1) {
         $invalid[] = 'publication type ID';
     }
@@ -95,7 +95,7 @@ function publications_adminapi_updatepubtype($args)
             SET pubtypedescr = ?,
                 pubtypeconfig = ?
             WHERE pubtype_id = ?";
-    $bindvars = array($descr, serialize($config), $ptid);
+    $bindvars = [$descr, serialize($config), $ptid];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

@@ -59,12 +59,12 @@ function publications_userapi_get($args)
     // bypass this function, call getall instead?
     if (isset($fields) || isset($extra)) {
         if (!empty($id)) {
-            $args['ids'] = array($id);
+            $args['ids'] = [$id];
         }
         if (!empty($pubtype_id)) {
             $args['ptid'] = $pubtype_id;
         }
-        $wheres = array();
+        $wheres = [];
         if (!empty($title)) {
             $wheres[] = "title eq '$title'";
         }
@@ -100,14 +100,14 @@ function publications_userapi_get($args)
 
     // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
-    $bindvars = array();
+    $bindvars = [];
     if (!empty($id)) {
         $where = "WHERE id = ?";
         $bindvars[] = $id;
     } else {
-        $wherelist = array();
-        $fieldlist = array('title','summary','owner','start_date','pubtype_id',
-                           'notes','state','body1','locale');
+        $wherelist = [];
+        $fieldlist = ['title','summary','owner','start_date','pubtype_id',
+                           'notes','state','body1','locale', ];
         foreach ($fieldlist as $field) {
             if (isset($$field)) {
                 $wherelist[] = "$field = ?";
@@ -154,10 +154,10 @@ function publications_userapi_get($args)
         return false;
     }
 
-    list($id, $title, $summary, $body, $owner, $start_date, $pubtype_id, $leftpage_id, $rightpage_id, $notes,
-         $state, $locale) = $result->fields;
+    [$id, $title, $summary, $body, $owner, $start_date, $pubtype_id, $leftpage_id, $rightpage_id, $notes,
+         $state, $locale] = $result->fields;
 
-    $article = array('id' => $id,
+    $article = ['id' => $id,
                      'title' => $title,
                      'summary' => $summary,
                      'body' => $body,
@@ -168,10 +168,10 @@ function publications_userapi_get($args)
                      'rightpage_id' => $rightpage_id,
                      'notes' => $notes,
                      'state' => $state,
-                     'locale' => $locale);
+                     'locale' => $locale, ];
 
     if (!empty($withcids)) {
-        $article['cids'] = array();
+        $article['cids'] = [];
         if (!xarMod::apiLoad('categories', 'user')) {
             return;
         }
@@ -182,11 +182,11 @@ function publications_userapi_get($args)
             'categories',
             'user',
             'getlinks',
-            array('iids' => array($id),
+            ['iids' => [$id],
                                           'itemtype' => $pubtype_id,
                                           'modid' => $regid,
-                                          'reverse' => 0
-                                         )
+                                          'reverse' => 0,
+                                         ]
         );
         if (is_array($articlecids) && count($articlecids) > 0) {
             $article['cids'] = array_keys($articlecids);

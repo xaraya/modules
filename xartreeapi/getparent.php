@@ -21,10 +21,10 @@ function publications_treeapi_getparent($args)
         $query = 'SELECT xar_parent'
             . ' FROM ' . $tablename
             . ' WHERE ' . $idname . ' = ?';
-        $result = $dbconn->execute($query, array((int)$id));
+        $result = $dbconn->execute($query, [(int)$id]);
         if (!$result->EOF) {
-            list($parent) = $result->fields;
-            $return = array((int)$parent);
+            [$parent] = $result->fields;
+            $return = [(int)$parent];
         } else {
             // Item not found.
             // TODO: raise error.
@@ -32,6 +32,6 @@ function publications_treeapi_getparent($args)
         }
     } else {
         // Insert point is the virtual root.
-        $return = array(0);
+        $return = [0];
     }
 }

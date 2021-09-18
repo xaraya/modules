@@ -60,20 +60,20 @@ class Diff_SequenceMatcher
     /**
      * @var array Array of characters that are considered junk from the second sequence. Characters are the array key.
      */
-    private $junkDict = array();
+    private $junkDict = [];
 
     /**
      * @var array Array of indices that do not contain junk elements.
      */
-    private $b2j = array();
+    private $b2j = [];
 
-    private $options = array();
+    private $options = [];
 
-    private $defaultOptions = array(
+    private $defaultOptions = [
         'ignoreNewLines' => false,
         'ignoreWhitespace' => false,
-        'ignoreCase' => false
-    );
+        'ignoreCase' => false,
+    ];
 
     /**
      * The constructor. With the sequences being passed, they'll be set for the
@@ -159,8 +159,8 @@ class Diff_SequenceMatcher
     private function chainB()
     {
         $length = count($this->b);
-        $this->b2j = array();
-        $popularDict = array();
+        $this->b2j = [];
+        $popularDict = [];
 
         for ($i = 0; $i < $length; ++$i) {
             $char = $this->b[$i];
@@ -172,9 +172,9 @@ class Diff_SequenceMatcher
                     $this->b2j[$char][] = $i;
                 }
             } else {
-                $this->b2j[$char] = array(
-                    $i
-                );
+                $this->b2j[$char] = [
+                    $i,
+                ];
             }
         }
 
@@ -183,7 +183,7 @@ class Diff_SequenceMatcher
             unset($this->b2j[$char]);
         }
 
-        $this->junkDict = array();
+        $this->junkDict = [];
         if (is_callable($this->junkCallback)) {
             foreach (array_keys($popularDict) as $char) {
                 if (call_user_func($this->junkCallback, $char)) {
@@ -244,11 +244,11 @@ class Diff_SequenceMatcher
         $bestJ = $blo;
         $bestSize = 0;
 
-        $j2Len = array();
-        $nothing = array();
+        $j2Len = [];
+        $nothing = [];
 
         for ($i = $alo; $i < $ahi; ++$i) {
-            $newJ2Len = array();
+            $newJ2Len = [];
             $jDict = $this->arrayGetDefault($this->b2j, $a[$i], $nothing);
             foreach ($jDict as $jKey => $j) {
                 if ($j < $blo) {
@@ -293,11 +293,11 @@ class Diff_SequenceMatcher
             ++$bestSize;
         }
 
-        return array(
+        return [
             $bestI,
             $bestJ,
-            $bestSize
-        );
+            $bestSize,
+        ];
     }
 
     /**
@@ -313,7 +313,7 @@ class Diff_SequenceMatcher
         $lineB = $this->b[$bIndex];
 
         if ($this->options['ignoreWhitespace']) {
-            $replace = array("\t", ' ');
+            $replace = ["\t", ' '];
             $lineA = str_replace($replace, '', $lineA);
             $lineB = str_replace($replace, '', $lineB);
         }
@@ -349,59 +349,59 @@ class Diff_SequenceMatcher
         $aLength = count($this->a);
         $bLength = count($this->b);
 
-        $queue = array(
-            array(
+        $queue = [
+            [
                 0,
                 $aLength,
                 0,
-                $bLength
-            )
-        );
+                $bLength,
+            ],
+        ];
 
-        $matchingBlocks = array();
+        $matchingBlocks = [];
         while (!empty($queue)) {
-            list($alo, $ahi, $blo, $bhi) = array_pop($queue);
+            [$alo, $ahi, $blo, $bhi] = array_pop($queue);
             $x = $this->findLongestMatch($alo, $ahi, $blo, $bhi);
-            list($i, $j, $k) = $x;
+            [$i, $j, $k] = $x;
             if ($k) {
                 $matchingBlocks[] = $x;
                 if ($alo < $i && $blo < $j) {
-                    $queue[] = array(
+                    $queue[] = [
                         $alo,
                         $i,
                         $blo,
-                        $j
-                    );
+                        $j,
+                    ];
                 }
 
                 if ($i + $k < $ahi && $j + $k < $bhi) {
-                    $queue[] = array(
+                    $queue[] = [
                         $i + $k,
                         $ahi,
                         $j + $k,
-                        $bhi
-                    );
+                        $bhi,
+                    ];
                 }
             }
         }
 
-        usort($matchingBlocks, array($this, 'tupleSort'));
+        usort($matchingBlocks, [$this, 'tupleSort']);
 
         $i1 = 0;
         $j1 = 0;
         $k1 = 0;
-        $nonAdjacent = array();
+        $nonAdjacent = [];
         foreach ($matchingBlocks as $block) {
-            list($i2, $j2, $k2) = $block;
+            [$i2, $j2, $k2] = $block;
             if ($i1 + $k1 == $i2 && $j1 + $k1 == $j2) {
                 $k1 += $k2;
             } else {
                 if ($k1) {
-                    $nonAdjacent[] = array(
+                    $nonAdjacent[] = [
                         $i1,
                         $j1,
-                        $k1
-                    );
+                        $k1,
+                    ];
                 }
 
                 $i1 = $i2;
@@ -411,18 +411,18 @@ class Diff_SequenceMatcher
         }
 
         if ($k1) {
-            $nonAdjacent[] = array(
+            $nonAdjacent[] = [
                 $i1,
                 $j1,
-                $k1
-            );
+                $k1,
+            ];
         }
 
-        $nonAdjacent[] = array(
+        $nonAdjacent[] = [
             $aLength,
             $bLength,
-            0
-        );
+            0,
+        ];
 
         $this->matchingBlocks = $nonAdjacent;
         return $this->matchingBlocks;
@@ -458,11 +458,11 @@ class Diff_SequenceMatcher
 
         $i = 0;
         $j = 0;
-        $this->opCodes = array();
+        $this->opCodes = [];
 
         $blocks = $this->getMatchingBlocks();
         foreach ($blocks as $block) {
-            list($ai, $bj, $size) = $block;
+            [$ai, $bj, $size] = $block;
             $tag = '';
             if ($i < $ai && $j < $bj) {
                 $tag = 'replace';
@@ -473,26 +473,26 @@ class Diff_SequenceMatcher
             }
 
             if ($tag) {
-                $this->opCodes[] = array(
+                $this->opCodes[] = [
                     $tag,
                     $i,
                     $ai,
                     $j,
-                    $bj
-                );
+                    $bj,
+                ];
             }
 
             $i = $ai + $size;
             $j = $bj + $size;
 
             if ($size) {
-                $this->opCodes[] = array(
+                $this->opCodes[] = [
                     'equal',
                     $ai,
                     $i,
                     $bj,
-                    $j
-                );
+                    $j,
+                ];
             }
         }
         return $this->opCodes;
@@ -516,64 +516,64 @@ class Diff_SequenceMatcher
     {
         $opCodes = $this->getOpCodes();
         if (empty($opCodes)) {
-            $opCodes = array(
-                array(
+            $opCodes = [
+                [
                     'equal',
                     0,
                     1,
                     0,
-                    1
-                )
-            );
+                    1,
+                ],
+            ];
         }
 
         if ($opCodes[0][0] == 'equal') {
-            $opCodes[0] = array(
+            $opCodes[0] = [
                 $opCodes[0][0],
                 max($opCodes[0][1], $opCodes[0][2] - $context),
                 $opCodes[0][2],
                 max($opCodes[0][3], $opCodes[0][4] - $context),
-                $opCodes[0][4]
-            );
+                $opCodes[0][4],
+            ];
         }
 
         $lastItem = count($opCodes) - 1;
         if ($opCodes[$lastItem][0] == 'equal') {
-            list($tag, $i1, $i2, $j1, $j2) = $opCodes[$lastItem];
-            $opCodes[$lastItem] = array(
+            [$tag, $i1, $i2, $j1, $j2] = $opCodes[$lastItem];
+            $opCodes[$lastItem] = [
                 $tag,
                 $i1,
                 min($i2, $i1 + $context),
                 $j1,
-                min($j2, $j1 + $context)
-            );
+                min($j2, $j1 + $context),
+            ];
         }
 
         $maxRange = $context * 2;
-        $groups = array();
-        $group = array();
+        $groups = [];
+        $group = [];
         foreach ($opCodes as $code) {
-            list($tag, $i1, $i2, $j1, $j2) = $code;
+            [$tag, $i1, $i2, $j1, $j2] = $code;
             if ($tag == 'equal' && $i2 - $i1 > $maxRange) {
-                $group[] = array(
+                $group[] = [
                     $tag,
                     $i1,
                     min($i2, $i1 + $context),
                     $j1,
-                    min($j2, $j1 + $context)
-                );
+                    min($j2, $j1 + $context),
+                ];
                 $groups[] = $group;
-                $group = array();
+                $group = [];
                 $i1 = max($i1, $i2 - $context);
                 $j1 = max($j1, $j2 - $context);
             }
-            $group[] = array(
+            $group[] = [
                 $tag,
                 $i1,
                 $i2,
                 $j1,
-                $j2
-            );
+                $j2,
+            ];
         }
 
         if (!empty($group) && !(count($group) == 1 && $group[0][0] == 'equal')) {
@@ -599,7 +599,7 @@ class Diff_SequenceMatcher
      */
     public function Ratio()
     {
-        $matches = array_reduce($this->getMatchingBlocks(), array($this, 'ratioReduce'), 0);
+        $matches = array_reduce($this->getMatchingBlocks(), [$this, 'ratioReduce'], 0);
         return $this->calculateRatio($matches, count($this->a) + count($this->b));
     }
 
@@ -624,7 +624,7 @@ class Diff_SequenceMatcher
     private function quickRatio()
     {
         if ($this->fullBCount === null) {
-            $this->fullBCount = array();
+            $this->fullBCount = [];
             $bLength = count($b);
             for ($i = 0; $i < $bLength; ++$i) {
                 $char = $this->b[$i];
@@ -632,7 +632,7 @@ class Diff_SequenceMatcher
             }
         }
 
-        $avail = array();
+        $avail = [];
         $matches = 0;
         $aLength = count($this->a);
         for ($i = 0; $i < $aLength; ++$i) {

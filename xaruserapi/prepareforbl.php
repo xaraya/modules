@@ -16,14 +16,14 @@ function publications_userapi_prepareforbl($args)
     if (empty($args['string'])) {
         return '';
     }
-    
+
     $args['string'] = str_replace(array_keys(merge_array()), merge_array(), $args['string']);
     return $args['string'];
 }
 
 function merge_array()
 {
-    return array(
+    return [
             '&amp;'       =>      '&#38;',
             '&lsquo;'     =>      '&#145;',
             '&rsquo;'     =>      '&#146;',
@@ -131,5 +131,5 @@ function merge_array()
             '&ndash;'     =>      '&#8211;',
             '&mdash;'     =>      '&#8212;',
             '&bull;'      =>      '&#8226;',
-            );
+            ];
 }

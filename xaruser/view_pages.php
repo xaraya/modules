@@ -27,7 +27,7 @@ function publications_user_view_pages($args)
         'publications',
         'user',
         'getpagestree',
-        array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
+        ['key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains]
     );
 
     if (empty($data['pages'])) {
@@ -46,17 +46,17 @@ function publications_user_view_pages($args)
     if (!empty($data['pages'])) {
         // Bring in the access property for security checks
         sys::import('modules.dynamicdata.class.properties.master');
-        $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+        $accessproperty = DataPropertyMaster::getProperty(['name' => 'access']);
         $accessproperty->module = 'publications';
         $accessproperty->component = 'Page';
         foreach ($data['pages'] as $key => $page) {
             $thisinstance = $page['name'] . ':' . $page['pubtype_name'];
 
             // Do we have admin access?
-            $args = array(
+            $args = [
                 'instance' => $thisinstance,
                 'level' => 800,
-            );
+            ];
             $adminaccess = $accessproperty->check($args);
 
             // Decide whether this page can be modified by the current user

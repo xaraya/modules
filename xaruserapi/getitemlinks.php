@@ -17,11 +17,11 @@
  * @param $args['itemids'] array of item ids to get
  * @return array Array containing the itemlink(s) for the item(s).
  */
- 
+
 function publications_userapi_getitemlinks($args)
 {
-    $itemlinks = array();
-    
+    $itemlinks = [];
+
     sys::import('xaraya.structures.query');
     $xartable =& xarDB::getTables();
     $q = new Query('SELECT', $xartable['publications']);
@@ -30,7 +30,7 @@ function publications_userapi_getitemlinks($args)
     $q->addfield('description');
     $q->addfield('pubtype_id');
     $q->addfield('modify_date AS modified');
-    $q->in('state', array(3,4));
+    $q->in('state', [3,4]);
     if (!empty($args['itemids'])) {
         if (is_array($args['itemids'])) {
             $itemids = $args['itemids'];
@@ -42,7 +42,7 @@ function publications_userapi_getitemlinks($args)
     $q->addorder('title');
     $q->run();
     $result = $q->output();
-    
+
     if (empty($result)) {
         return $itemlinks;
     }
@@ -51,16 +51,16 @@ function publications_userapi_getitemlinks($args)
         if (empty($item['title'])) {
             $item['title'] = xarML('Display Publication');
         }
-        $itemlinks[$item['id']] = array('url'   => xarController::URL(
+        $itemlinks[$item['id']] = ['url'   => xarController::URL(
             'publications',
             'user',
             'display',
-            array('itemid' => $item['id'])
+            ['itemid' => $item['id']]
         ),
                                     'title' => $item['title'],
                                     'label' => $item['description'],
                                     'modified' => $item['modified'],
-                                    );
+                                    ];
     }
     return $itemlinks;
 }

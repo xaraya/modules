@@ -17,16 +17,16 @@
 
     class Publications_TopitemsBlockAdmin extends Publications_TopitemsBlock
     {
-        public function modify(array $data=array())
+        public function modify(array $data=[])
         {
             $data = $this->getContent();
             return $data;
         }
 
-        public function update(array $data=array())
+        public function update(array $data=[])
         {
-            $args = array();
-            
+            $args = [];
+
             if (!xarVar::fetch('numitems', 'int:1:200', $args['numitems'], $this->numitems, xarVar::NOT_REQUIRED)) {
                 return;
             }

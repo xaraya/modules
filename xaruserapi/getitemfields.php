@@ -19,7 +19,7 @@ function publications_userapi_getitemfields($args)
 {
     extract($args);
 
-    $itemfields = array();
+    $itemfields = [];
 
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
@@ -32,9 +32,9 @@ function publications_userapi_getitemfields($args)
         if (empty($info['label'])) {
             continue;
         }
-        $itemfields[$name] = array('name'  => $name,
+        $itemfields[$name] = ['name'  => $name,
                                    'label' => $info['label'],
-                                   'type'  => $info['format']);
+                                   'type'  => $info['format'], ];
     }
 
     return $itemfields;

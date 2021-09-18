@@ -138,7 +138,7 @@ function publications_init()
     # Create DD objects
 #
     $module = 'publications';
-    $objects = array(
+    $objects = [
                      'publications_types',
                      'publications_documents',
                      'publications_downloads',
@@ -154,32 +154,32 @@ function publications_init()
                      'publications_blog',
                      'publications_catalogue',
                      'publications_versions',
-                     );
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
-    $categories = array();
+    $categories = [];
     // Create publications categories
-    $cids = array();
+    $cids = [];
     foreach ($categories as $category) {
         $cid[$category['name']] = xarMod::apiFunc(
             'categories',
             'admin',
             'create',
-            array('name' => $category['name'],
+            ['name' => $category['name'],
                               'description' => $category['description'],
-                              'parent_id' => 0)
+                              'parent_id' => 0, ]
         );
         foreach ($category['children'] as $child) {
             $cid[$child] = xarMod::apiFunc(
                 'categories',
                 'admin',
                 'create',
-                array('name' => $child,
+                ['name' => $child,
                               'description' => $child,
-                              'parent_id' => $cid[$category['name']])
+                              'parent_id' => $cid[$category['name']], ]
             );
         }
     }
@@ -283,7 +283,7 @@ function publications_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'search', 'hookModName' => 'publications')
+            ['callerModName' => 'search', 'hookModName' => 'publications']
         );
     }
 
@@ -297,7 +297,7 @@ function publications_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'publications', 'hookModName' => 'comments')
+            ['callerModName' => 'publications', 'hookModName' => 'comments']
         );
     }
     // Enable hitcount hooks for publications
@@ -306,7 +306,7 @@ function publications_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'publications', 'hookModName' => 'hitcount')
+            ['callerModName' => 'publications', 'hookModName' => 'hitcount']
         );
     }
     // Enable ratings hooks for publications
@@ -315,7 +315,7 @@ function publications_init()
             'modules',
             'admin',
             'enablehooks',
-            array('callerModName' => 'publications', 'hookModName' => 'ratings')
+            ['callerModName' => 'publications', 'hookModName' => 'ratings']
         );
     }
 
@@ -327,21 +327,21 @@ function publications_init()
     $info = xarMod::getBaseInfo('publications');
     $sysid = $info['systemid'];
     $xartable =& xarDB::getTables();
-    $instances = array(
-                       array('header' => 'external', // this keyword indicates an external "wizard"
+    $instances = [
+                       ['header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarController::URL('publications', 'admin', 'privileges'),
-                             'limit'  => 0
-                            )
-                    );
+                             'limit'  => 0,
+                            ],
+                    ];
     xarPrivileges::defineInstance('publications', 'Publication', $instances);
 
     $query = "SELECT DISTINCT instances.title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.id = instances.type_id WHERE modid = $sysid";
-    $instances = array(
-                        array('header' => 'Publication Block Title:',
+    $instances = [
+                        ['header' => 'Publication Block Title:',
                                 'query' => $query,
-                                'limit' => 20
-                            )
-                    );
+                                'limit' => 20,
+                            ],
+                    ];
     xarPrivileges::defineInstance('publications', 'Block', $instances);
 
     # --------------------------------------------------------
@@ -379,7 +379,7 @@ function publications_init()
 /**
  * Upgrade this module from an old version
  */
- 
+
 function publications_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
@@ -398,9 +398,9 @@ function publications_upgrade($oldversion)
 /**
  * Remove this module
  */
- 
+
 function publications_delete()
 {
     $module = 'publications';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }

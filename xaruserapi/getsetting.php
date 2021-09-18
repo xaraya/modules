@@ -16,7 +16,7 @@
  * @param $args array containing the publication type
  * @return array of setting keys and values
  */
- 
+
 function publications_userapi_getsetting($data)
 {
     $settings = xarMod::apiFunc('publications', 'user', 'getsettings', $data);

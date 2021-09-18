@@ -38,18 +38,18 @@ function publications_userapi_get_sitemap_pages($args)
 
     // Make sure we have the base translation id
     if (!empty($args['itemid'])) {
-        $args['itemid'] = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')));
+        $args['itemid'] = xarMod::apiFunc('publications', 'user', 'gettranslationid', ['id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')]);
     }
 
     // Identify any filters
-    $filters = array();
+    $filters = [];
     foreach ($args as $k => $v) {
         if (strpos($k, 'filter_') === 0) {
             $argname = substr($k, 7);
             $filters[$argname] = $v;
         }
     }
-    
+
     $xartable =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
@@ -89,12 +89,12 @@ function publications_userapi_get_sitemap_pages($args)
     $q->addfield('p.rightpage_id AS rightpage_id');
     $q->addfield('p.redirect_flag AS redirect_flag');
     $q->addfield('p.state AS state');
-    
+
     // Add any fiters we found
     foreach ($filters as $k => $v) {
         $q->eq('p.'.$k, $v);
     }
-    
+
     // We can force alpha sorting, or else sort according to tree position
     if ($args['sort']) {
         $q->setorder('p.title');
@@ -104,8 +104,8 @@ function publications_userapi_get_sitemap_pages($args)
 //    $q->qecho();
     $q->run();
     $pages = $q->output();
-    
-    $depthstack = array();
+
+    $depthstack = [];
     foreach ($pages as $key => $page) {
         // Calculate the relative nesting level.
         // 'depth' is 0-based. Top level (root node) is zero.
@@ -127,18 +127,18 @@ function publications_userapi_get_sitemap_pages($args)
         // in admin pages and reports.
         $pages[$key]['namepath'] = $pathstack;
     }
-    
+
     // If we are looking for translations rather than base documents, then find what translations are available and substitute them
     // CHECKME: is there a better way?
     // If there is no translation the base document remains. Is this desired outcome?
-    
+
     if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUser::getNavigationLocale()) {
-        $indexedpages = array();
+        $indexedpages = [];
         foreach ($pages as $v) {
             $indexedpages[$v['id']] = $v;
         }
         $ids = array_keys($indexedpages);
-        
+
         $q = new Query();
         $q->addtable($xartable['publications']);
         $q->addfield('id');
@@ -156,7 +156,7 @@ function publications_userapi_get_sitemap_pages($args)
         foreach ($filters as $k => $v) {
             $q->eq($k, $v);
         }
-    
+
         $q->run();
         foreach ($q->output() as $row) {
             // Copy the name and id paths so we don't have to recalculate them

@@ -29,7 +29,7 @@
          * @param $blockinfo array containing title,content
          */
 
-        public function modify(array $data=array())
+        public function modify(array $data=[])
         {
             $data = $this->getContent();
 
@@ -39,7 +39,7 @@
                 'publications',
                 'user',
                 'getpagestree',
-                array('dd_flag' => false, 'key' => 'pid')
+                ['dd_flag' => false, 'key' => 'pid']
             );
 
             // Implode the names for each page into a path for display.
@@ -79,7 +79,7 @@
          * Updates the Block config from the Blocks Admin
          * @param $blockinfo array containing title,content
          */
-        public function update(array $data=array())
+        public function update(array $data=[])
         {
             xarVar::fetch('multi_homed', 'int', $args['multi_homed'], 0, xarVar::NOT_REQUIRED);
 
@@ -103,7 +103,7 @@
                 $args['root_ids'][] = $new_root_id;
             }
 
-            xarVar::fetch('remove_root_id', 'list:int:1', $remove_root_id, array(), xarVar::NOT_REQUIRED);
+            xarVar::fetch('remove_root_id', 'list:int:1', $remove_root_id, [], xarVar::NOT_REQUIRED);
             // Easier to check with the keys and values flipped.
             $args['root_ids'] = array_flip($args['root_ids']);
             foreach ($remove_root_id as $remove) {
@@ -128,7 +128,7 @@
                 $args['prune_ids'][] = $new_prune_id;
             }
 
-            xarVar::fetch('remove_prune_id', 'list:int:1', $remove_prune_id, array(), xarVar::NOT_REQUIRED);
+            xarVar::fetch('remove_prune_id', 'list:int:1', $remove_prune_id, [], xarVar::NOT_REQUIRED);
             // Easier to check with the keys and values flipped.
             $args['prune_ids'] = array_flip($args['prune_ids']);
             foreach ($remove_prune_id as $remove) {

@@ -18,11 +18,11 @@ function publications_userapi_getstates()
 {
     // Simplistic getstates function
     // Obviously needs to be smarter along with the other state functions
-    return array(0 => xarML('Deleted'),
+    return [0 => xarML('Deleted'),
                  1 => xarML('Inactive'),
                  2 => xarML('Draft'),
                  3 => xarML('Active'),
                  4 => xarML('Frontpage'),
-                 5 => xarML('Empty')
-                 );
+                 5 => xarML('Empty'),
+                 ];
 }

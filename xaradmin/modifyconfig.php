@@ -32,8 +32,8 @@ function publications_admin_modifyconfig()
             return;
         }
 
-        $viewoptions = array();
-        $viewoptions[] = array('id' => 1, 'name' => xarML('Latest Items'));
+        $viewoptions = [];
+        $viewoptions[] = ['id' => 1, 'name' => xarML('Latest Items')];
 
         if (!isset($data['usetitleforurl'])) {
             $data['usetitleforurl'] = 0;
@@ -44,20 +44,20 @@ function publications_admin_modifyconfig()
 
         // get root categories for this publication type
         if (!empty($id)) {
-            $catlinks = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => $data['ptid']));
+            $catlinks = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => $data['ptid']]);
             // Note: if you want to use a *combination* of categories here, you'll
             //       need to use something like 'c15+32'
             foreach ($catlinks as $catlink) {
-                $viewoptions[] = array('id' => 'c' . $catlink['category_id'],
+                $viewoptions[] = ['id' => 'c' . $catlink['category_id'],
                                        'name' => xarML('Browse in') . ' ' .
-                                                  $catlink['name']);
+                                                  $catlink['name'], ];
             }
         }
         $data['viewoptions'] = $viewoptions;
 
         // Get the publication type for this display
-        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-        $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+        $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+        $pubtypeobject->getItem(['itemid' => $data['ptid']]);
 
         // Get the settings for this publication type
         sys::import('modules.publications.xaruserapi.getsettings');
@@ -80,7 +80,7 @@ function publications_admin_modifyconfig()
         }
 
         //The usual bunch of vars
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'publications'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'publications']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, user_menu_link, use_module_icons, frontend_page, backend_page');
         $data['module_settings']->getItem();
 
@@ -98,14 +98,14 @@ function publications_admin_modifyconfig()
 
         // Get the tree of all pages.
 //        $data['tree'] = xarMod::apiFunc('publications', 'user', 'getpagestree', array('dd_flag' => false));
-        $data['tree'] = array();
+        $data['tree'] = [];
 
         // Implode the names for each page into a path for display.
-        $data['treeoptions'] = array();
+        $data['treeoptions'] = [];
         if (!empty($data['tree']['pages'])) {
             foreach ($data['tree']['pages'] as $key => $page) {
                 //        $data['tree']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
-                $data['treeoptions'][] = array('id' => $page['id'], 'name' => '/' . implode('/', $page['namepath']));
+                $data['treeoptions'][] = ['id' => $page['id'], 'name' => '/' . implode('/', $page['namepath'])];
             }
         }
 

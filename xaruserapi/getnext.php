@@ -43,11 +43,11 @@ function publications_userapi_getnext($args)
     if (!isset($state)) {
         // frontpage or approved or placeholder
         xarMod::load('publications');
-        $state = array(PUBLICATIONS_STATE_ACTIVE,PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_PLACEHOLDER);
+        $state = [PUBLICATIONS_STATE_ACTIVE,PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_PLACEHOLDER];
     }
 
     // Default fields in publications (for now)
-    $fields = array('id','name','title');
+    $fields = ['id','name','title'];
 
     // Create the query
     sys::import('xaraya.structures.query');
@@ -58,9 +58,9 @@ function publications_userapi_getnext($args)
     $q->addfield('title');
     $q->addfield('pubtype_id');
     $q->in('state', $state);
-    
+
     // Get the current article
-    $current = xarMod::apiFunc('publications', 'user', 'get', array('id' => $id));
+    $current = xarMod::apiFunc('publications', 'user', 'get', ['id' => $id]);
 
     // Add the ordering
     switch ($sort) {
@@ -92,7 +92,7 @@ function publications_userapi_getnext($args)
 
     // We only want a single row
     $q->setrowstodo(1);
-    
+
     // Run the query
     $q->run();
     return $q->row();

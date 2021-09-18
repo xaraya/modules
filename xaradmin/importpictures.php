@@ -84,12 +84,12 @@ function publications_admin_importpictures()
         'publications',
         'admin',
         'browse',
-        array('basedir' => $data['basedir'],
-                                            'filetype' => '(gif|jpg|jpeg|png)')
+        ['basedir' => $data['basedir'],
+                                            'filetype' => '(gif|jpg|jpeg|png)', ]
     );
 
     // try to match the thumbnails with the pictures
-    $data['thumblist'] = array();
+    $data['thumblist'] = [];
     if (!empty($data['thumbnail'])) {
         foreach ($data['filelist'] as $file) {
             // for subdir/myfile.jpg
@@ -137,9 +137,9 @@ function publications_admin_importpictures()
     // Get current publication types
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
-    $data['pubtypes'] = array();
+    $data['pubtypes'] = [];
     foreach ($pubtypes as $pubtype) {
-        $data['pubtypes'][] = array('id' => $pubtype['id'], 'name' => $pubtype['description']);
+        $data['pubtypes'][] = ['id' => $pubtype['id'], 'name' => $pubtype['description']];
     }
 
     // Set default pubtype to Pictures (if it exists)
@@ -147,8 +147,8 @@ function publications_admin_importpictures()
     $data['summaryfield'] = 'summary';
     $data['contentfield'] = 'body';
 
-    $data['fields'] = array();
-    $data['cats'] = array();
+    $data['fields'] = [];
+    $data['cats'] = [];
     if (!empty($data['ptid'])) {
 
 # --------------------------------------------------------
@@ -156,14 +156,14 @@ function publications_admin_importpictures()
         # Get the fields of hte chosen pubtype
 #
         sys::import('modules.dynamicdata.class.objects.master');
-        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-        $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+        $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+        $pubtypeobject->getItem(['itemid' => $data['ptid']]);
         $objectname = $pubtypeobject->properties['name']->value;
-        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
-    
+        $pageobject = DataObjectMaster::getObject(['name' => $objectname]);
+
         foreach ($pageobject->properties as $name => $property) {
             if ($property->basetype == 'string') {
-                $data['fields'][] = array('id' => $name, 'name' => $property->label);
+                $data['fields'][] = ['id' => $name, 'name' => $property->label];
             }
         }
 
@@ -194,7 +194,7 @@ function publications_admin_importpictures()
                 }*/
     }
 
-    $data['selected'] = array();
+    $data['selected'] = [];
     if (!isset($refresh) && isset($filelist) && is_array($filelist) && count($filelist) > 0) {
         foreach ($filelist as $file) {
             if (!empty($file) && in_array($file, $data['filelist'])) {
@@ -251,7 +251,7 @@ function publications_admin_importpictures()
                 $thumburl = '';
             }
 
-            $article = array('title' => ' ',
+            $article = ['title' => ' ',
                              'summary' => '',
                              'body' => '',
                              'notes' => '',
@@ -262,7 +262,7 @@ function publications_admin_importpictures()
                           // for preview
                              'pubtype_id' => $data['ptid'],
                              'owner' => xarUser::getVar('id'),
-                             'id' => 0);
+                             'id' => 0, ];
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;
             }
@@ -278,7 +278,7 @@ function publications_admin_importpictures()
                     'publications',
                     'user',
                     'display',
-                    array('article' => $article, 'preview' => true)
+                    ['article' => $article, 'preview' => true]
                 );
                 break;
             } else {

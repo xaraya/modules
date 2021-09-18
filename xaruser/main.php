@@ -29,7 +29,7 @@ function publications_user_main($args)
         if (!xarVar::fetch('translate', 'int:1', $translate, 1, xarVar::NOT_REQUIRED)) {
             return;
         }
-        return xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
+        return xarController::redirect(xarController::URL('publications', 'user', 'display', ['itemid' => $id,'translate' => $translate]));
     } else {
         # --------------------------------------------------------
 #
@@ -37,8 +37,8 @@ function publications_user_main($args)
 #
         $redirect = xarModVars::get('publications', 'frontend_page');
         if (!empty($redirect)) {
-            $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $truecurrenturl = xarServer::getCurrentURL([], false);
+            $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', ['url'=> $redirect,'truecurrenturl'=>$truecurrenturl]);
             xarController::redirect($urldata['redirecturl']);
             return true;
         } else {

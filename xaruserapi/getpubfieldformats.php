@@ -21,7 +21,7 @@
  */
 function publications_userapi_getpubfieldformats($args)
 {
-    $fieldlist=array(
+    $fieldlist=[
         'static'          => xarML('Static Text'),
         'textbox'         => xarML('Text Box'),
         'textarea'  => xarML('Small Text Area'),
@@ -42,12 +42,12 @@ function publications_userapi_getpubfieldformats($args)
         'locale'        => xarML('Language List'),
     // TODO: add more property types after testing
    //other 'text' DD property types won't give significant performance hits
-    );
+    ];
 
     // Add  'text' dd properites that are dependent on module availability
-    $extrafields=array();
+    $extrafields=[];
     if (xarMod::isAvailable('tinymce')) {
-        $extrafields=array('tinymce'=> xarML('TinyMCE GUI'));
+        $extrafields=['tinymce'=> xarML('TinyMCE GUI')];
         $fieldlist=array_merge($fieldlist, $extrafields);
     }
 

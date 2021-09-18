@@ -40,13 +40,13 @@ function publications_admin_templates_page($args)
     if (empty($data['itemid']) || empty($data['ptid'])) {
         return xarResponse::NotFound();
     }
-    
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $data['ptid']]);
     $pubtype = explode('_', $pubtypeobject->properties['name']->value);
-    $pubtype = isset($pubtype[1]) ? $pubtype[1] : $pubtype[0];
-    
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $pubtype = $pubtype[1] ?? $pubtype[0];
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
 
     $basepath = sys::code() . "modules/publications/xartemplates/objects/" . $pubtype;
     $sourcefile = $basepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
@@ -55,9 +55,9 @@ function publications_admin_templates_page($args)
 
     // If we are saving, write the file now
     if ($confirm && !empty($data['source_data'])) {
-        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
+        xarMod::apiFunc('publications', 'admin', 'write_file', ['file' => $overridefile, 'data' => $data['source_data']]);
     }
-    
+
     // Let the template know what kind of file this is
     if (file_exists($overridefile)) {
         $data['filetype'] = 'theme';
@@ -68,8 +68,8 @@ function publications_admin_templates_page($args)
         $filepath = $sourcefile;
         $data['writable'] = is_writeable_dir($overridepath);
     }
-    
-    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
+
+    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', ['file' => $filepath]));
 
     // Initialize the template
     if (empty($data['source_data'])) {
@@ -78,10 +78,10 @@ function publications_admin_templates_page($args)
         $data['source_data'] .= "\n" . '</xar:template>';
     }
 
-    $data['files'] = array(
-        array('id' => 'summary', 'name' => 'summary display'),
-        array('id' => 'detail',  'name' => 'detail display'),
-    );
+    $data['files'] = [
+        ['id' => 'summary', 'name' => 'summary display'],
+        ['id' => 'detail',  'name' => 'detail display'],
+    ];
     return $data;
 }
 

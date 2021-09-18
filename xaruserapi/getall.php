@@ -53,7 +53,7 @@ function publications_userapi_getall($args)
         $startnum = 1;
     }
     if (empty($cids)) {
-        $cids = array();
+        $cids = [];
     }
     if (!isset($andcids)) {
         $andcids = false;
@@ -63,8 +63,8 @@ function publications_userapi_getall($args)
     }
 
     // Default fields in publications (for now)
-    $columns = array('id','name','title','description','summary','body1','owner','pubtype_id',
-                     'notes','state','start_date');
+    $columns = ['id','name','title','description','summary','body1','owner','pubtype_id',
+                     'notes','state','start_date', ];
 
     // Optional fields in publications (for now)
     // + 'cids' = list of categories an article belongs to
@@ -89,10 +89,10 @@ function publications_userapi_getall($args)
                 $fields[] = 'relevance';
             }
             // let the database sort by relevance (= default for fulltext)
-            $sortlist = array();
+            $sortlist = [];
         } else {
             // default sort by create_date
-            $sortlist = array('create_date');
+            $sortlist = ['create_date'];
         }
     } elseif (is_array($sort)) {
         $sortlist = $sort;
@@ -100,7 +100,7 @@ function publications_userapi_getall($args)
         $sortlist = explode(',', $sort);
     }
 
-    $publications = array();
+    $publications = [];
 
     // Security check
     if (!xarSecurity::check('ViewPublications')) {
@@ -108,7 +108,7 @@ function publications_userapi_getall($args)
     }
 
     // Fields requested by the calling function
-    $required = array();
+    $required = [];
     foreach ($fields as $field) {
         $required[$field] = 1;
     }
@@ -164,10 +164,10 @@ function publications_userapi_getall($args)
             'categories',
             'user',
             'leftjoin',
-            array('cids' => $cids,
+            ['cids' => $cids,
                                             'andcids' => $andcids,
-                                            'itemtype' => isset($ptid) ? $ptid : null,
-                                            'modid' => $regid)
+                                            'itemtype' => $ptid ?? null,
+                                            'modid' => $regid, ]
         );
         if (empty($categoriesdef)) {
             return;
@@ -185,8 +185,8 @@ function publications_userapi_getall($args)
             'hitcount',
             'user',
             'leftjoin',
-            array('modid' => $regid,
-                                          'itemtype' => isset($ptid) ? $ptid : null)
+            ['modid' => $regid,
+                                          'itemtype' => $ptid ?? null, ]
         );
     }
 
@@ -201,13 +201,13 @@ function publications_userapi_getall($args)
             'ratings',
             'user',
             'leftjoin',
-            array('modid' => $regid,
-                                          'itemtype' => isset($ptid) ? $ptid : null)
+            ['modid' => $regid,
+                                          'itemtype' => $ptid ?? null, ]
         );
     }
 
     // Create the SELECT part
-    $select = array();
+    $select = [];
     foreach ($required as $field => $val) {
         // we'll handle this later
         if ($field == 'cids') {
@@ -294,7 +294,7 @@ function publications_userapi_getall($args)
 
     // TODO: check the order of the conditions for brain-dead databases ?
     // Create the WHERE part
-    $where = array();
+    $where = [];
     // we rely on leftjoin() to create the necessary publications clauses now
     if (!empty($publicationsdef['where'])) {
         $where[] = $publicationsdef['where'];
@@ -316,7 +316,7 @@ function publications_userapi_getall($args)
     // TODO: support other non-publications fields too someday ?
     // Create the ORDER BY part
     if (count($sortlist) > 0) {
-        $sortparts = array();
+        $sortparts = [];
         $seenid = 0;
         foreach ($sortlist as $criteria) {
             // ignore empty sort criteria
@@ -378,11 +378,11 @@ function publications_userapi_getall($args)
         return;
     }
 
-    $itemids_per_type = array();
+    $itemids_per_type = [];
     // Put publications into result array
     for (; !$result->EOF; $result->MoveNext()) {
         $data = $result->fields;
-        $item = array();
+        $item = [];
         // loop over all required fields again
         foreach ($required as $field => $val) {
             if ($field == 'cids' || $field == 'dynamicdata' || $val != 1) {
@@ -402,7 +402,7 @@ function publications_userapi_getall($args)
         if (!empty($required['dynamicdata'])) {
             $pubtype = $item['pubtype_id'];
             if (!isset($itemids_per_type[$pubtype])) {
-                $itemids_per_type[$pubtype] = array();
+                $itemids_per_type[$pubtype] = [];
             }
             $itemids_per_type[$pubtype][] = $item['id'];
         }
@@ -411,7 +411,7 @@ function publications_userapi_getall($args)
 
     if (!empty($required['cids']) && count($publications) > 0) {
         // Get all the categories at once
-        $ids = array();
+        $ids = [];
         foreach ($publications as $article) {
             $ids[] = $article['id'];
         }
@@ -426,15 +426,15 @@ function publications_userapi_getall($args)
             'categories',
             'user',
             'getlinks',
-            array('iids' => $ids,
+            ['iids' => $ids,
                                    'reverse' => 1,
                                // Note : we don't need to specify the item type here for publications, since we use unique ids anyway
-                                   'modid' => $regid)
+                                   'modid' => $regid, ]
         );
 
         // Inserting the corresponding Category ID in the Publication Description
-        $delete = array();
-        $cachesec = array();
+        $delete = [];
+        $cachesec = [];
         foreach ($publications as $key => $article) {
             if (isset($cids[$article['id']]) && count($cids[$article['id']]) > 0) {
                 $publications[$key]['cids'] = $cids[$article['id']];
@@ -472,15 +472,15 @@ function publications_userapi_getall($args)
             if (!xarModHooks::isHooked('dynamicdata', 'publications', $pubtype)) {
                 continue;
             }
-            list($properties, $items) = xarMod::apiFunc(
+            [$properties, $items] = xarMod::apiFunc(
                 'dynamicdata',
                 'user',
                 'getitemsforview',
-                array('module'   => 'publications',
+                ['module'   => 'publications',
                                                            'itemtype' => $pubtype,
                                                            'itemids'  => $itemids,
                                                            // ignore the display-only properties
-                                                           'state'   => 1)
+                                                           'state'   => 1, ]
             );
 
             if (empty($properties) || count($properties) == 0) {
@@ -505,7 +505,7 @@ function publications_userapi_getall($args)
 
                     // TODO: clean up this temporary fix
                     if (!empty($value)) {
-                        $publications[$key][$name.'_output'] = $properties[$name]->showOutput(array('value' => $value));
+                        $publications[$key][$name.'_output'] = $properties[$name]->showOutput(['value' => $value]);
                     }
                 }
             }

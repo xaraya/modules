@@ -30,7 +30,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
@@ -48,7 +48,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     public $alttitle            = '';
     public $altsummary          = '';
     public $showvalue           = true;
-    public $moreitems           = array();
+    public $moreitems           = [];
     public $showfeaturedsum     = false;
     public $showfeaturedbod     = false;
     public $showsummary         = false;
@@ -60,52 +60,52 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     public function display()
     {
         $data = $this->getContent();
-        
+
         // defaults
         $featuredid = $data['featuredid'];
-        
-        $fields = array('id', 'title', 'cids');
-        
+
+        $fields = ['id', 'title', 'cids'];
+
         $fields[] = 'dynamicdata';
-        
+
         // Initialize arrays
-        $data['items'] = array();
+        $data['items'] = [];
 
         // Load the query class and the publications tables
         sys::import('xaraya.structures.query');
         xarMod::apiLoad('publications');
         $tables =& xarDB::getTables();
-        
+
         // Get all the publications types
         sys::import('modules.dynamicdata.class.objects.master');
-        $pubtypeobject = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+        $pubtypeobject = DataObjectMaster::getObjectList(['name' => 'publications_types']);
         $types = $pubtypeobject->getItems();
 
         # ------------------------------------------------------------
         # Set up the featured item
 #
         if ($data['featuredid'] > 0) {
-        
+
             // Get the database entry of the featured item
             $q = new Query('SELECT', $tables['publications']);
             $q->eq('id', $data['featuredid']);
             $q->run();
             $result = $q->row();
-            
+
             // Use that information to get the featured item as an object
             $featuredtype = $types[$result['pubtype_id']]['name'];
-            $data['featured'] = DataObjectMaster::getObject(array('name' => $featuredtype));
-            $data['featured']->getItem(array('itemid' => $data['featuredid']));
-            $feature = $data['featured']->getFieldValues(array(), 1);
+            $data['featured'] = DataObjectMaster::getObject(['name' => $featuredtype]);
+            $data['featured']->getItem(['itemid' => $data['featuredid']]);
+            $feature = $data['featured']->getFieldValues([], 1);
             $data['properties'] =& $data['featured']->properties;
 
             $feature['link'] = xarController::URL(
                 'publications',
                 'user',
                 'display',
-                array(
+                [
                                             'itemid' => $data['properties']['id']->value,
-                                        )
+                                        ]
             );
             $feature['alttitle']   = $data['alttitle'];
             $feature['altsummary'] = $data['altsummary'];
@@ -135,14 +135,14 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                 'publications',
                 'user',
                 'getall',
-                array(
+                [
                     'ids' => $data['moreitems'],
                     'enddate' => time(),
                     'fields' => $fields,
-                    'sort' => $sort
-                )
+                    'sort' => $sort,
+                ]
             );
-    
+
             // See if we're currently displaying a publication
             // We do this to remove a link form a featured item if that item is already being displayed
             if (xarVar::isCached('Blocks.publications', 'id')) {
@@ -150,24 +150,24 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
             } else {
                 $curid = -1;
             }
-    
+
             // Since each item could potentially be a different publication type
             // we need to go through a loop.
-            $data['items'] = array();
+            $data['items'] = [];
             foreach ($publications as $publication) {
                 $itemname = $types[$publication['pubtype_id']]['name'];
-                $object = DataObjectMaster::getObject(array('name' => $itemname));
-                $object->getItem(array('itemid' => $publication['id']));
-                $itemvalues = $object->getFieldValues(array(), 1);
+                $object = DataObjectMaster::getObject(['name' => $itemname]);
+                $object->getItem(['itemid' => $publication['id']]);
+                $itemvalues = $object->getFieldValues([], 1);
 
                 if ($publication['id'] != $curid) {
                     $link = xarController::URL(
                         'publications',
                         'user',
                         'display',
-                        array(
+                        [
                             'itemid' => $publication['id'],
-                        )
+                        ]
                     );
                 } else {
                     $link = '';
@@ -179,7 +179,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                 $data['items'][$publication['id']] = $itemvalues;
             }
         }
-        
+
         # ------------------------------------------------------------
         # Suppress the block and its title if there is nothing to display
 #

@@ -79,8 +79,8 @@ function publications_admin_importpages()
         'publications',
         'admin',
         'browse',
-        array('basedir' => $data['basedir'],
-                                            'filetype' => 'html?')
+        ['basedir' => $data['basedir'],
+                                            'filetype' => 'html?', ]
     );
 
     if (isset($refresh) || isset($test) || isset($import)) {
@@ -98,12 +98,12 @@ function publications_admin_importpages()
 #
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
-    $data['pubtypes'] = array();
+    $data['pubtypes'] = [];
     foreach ($pubtypes as $pubtype) {
-        $data['pubtypes'][] = array('id' => $pubtype['id'], 'name' => $pubtype['description']);
+        $data['pubtypes'][] = ['id' => $pubtype['id'], 'name' => $pubtype['description']];
     }
-    $data['fields'] = array();
-    $data['cats'] = array();
+    $data['fields'] = [];
+    $data['cats'] = [];
     if (!empty($data['ptid'])) {
 
 # --------------------------------------------------------
@@ -111,14 +111,14 @@ function publications_admin_importpages()
         # Get the fields of hte chosen pubtype
 #
         sys::import('modules.dynamicdata.class.objects.master');
-        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-        $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+        $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+        $pubtypeobject->getItem(['itemid' => $data['ptid']]);
         $objectname = $pubtypeobject->properties['name']->value;
-        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
-    
+        $pageobject = DataObjectMaster::getObject(['name' => $objectname]);
+
         foreach ($pageobject->properties as $name => $property) {
             if ($property->basetype == 'string') {
-                $data['fields'][] = array('id' => $name, 'name' => $property->label);
+                $data['fields'][] = ['id' => $name, 'name' => $property->label];
             }
         }
         /*
@@ -153,7 +153,7 @@ function publications_admin_importpages()
 #
     # Get the data from the form
 #
-    $data['selected'] = array();
+    $data['selected'] = [];
     if (!isset($refresh) && isset($filelist) && is_array($filelist) && count($filelist) > 0) {
         foreach ($filelist as $file) {
             if (!empty($file) && in_array($file, $data['filelist'])) {
@@ -181,8 +181,8 @@ function publications_admin_importpages()
     if (!isset($numrules)) {
         $numrules = 3;
     }
-    $data['search'] = array();
-    $data['replace'] = array();
+    $data['search'] = [];
+    $data['replace'] = [];
     for ($i = 0; $i < $numrules; $i++) {
         if (isset($search[$i])) {
             $data['search'][$i] = $search[$i];
@@ -203,8 +203,8 @@ function publications_admin_importpages()
 #
     if (!empty($data['ptid']) && isset($data['contentfield']) && count($data['selected']) > 0
         && (isset($test) || isset($import))) {
-        $mysearch = array();
-        $myreplace = array();
+        $mysearch = [];
+        $myreplace = [];
         for ($i = 0; $i < $numrules; $i++) {
             if (!empty($data['search'][$i])) {
                 $mysearch[] = $data['search'][$i];
@@ -243,7 +243,7 @@ function publications_admin_importpages()
                 $args[$data['titlefield']] = $title;
                 $args['name'] = str_replace(' ', '_', trim(strtolower($title)));
             }
-            $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
+            $pageobject = DataObjectMaster::getObject(['name' => $objectname]);
             $pageobject->setFieldValues($args, 1);
 
             if (isset($test)) {
@@ -252,7 +252,7 @@ function publications_admin_importpages()
                     'publications',
                     'user',
                     'preview',
-                    array('object' => $pageobject)
+                    ['object' => $pageobject]
                 );
                 break;
             } else {

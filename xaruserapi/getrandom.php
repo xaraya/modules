@@ -33,7 +33,7 @@ function publications_userapi_getrandom($args)
     // 1. count the number of items that apply
     $count = xarMod::apiFunc('publications', 'user', 'countitems', $args);
     if (empty($count)) {
-        return array();
+        return [];
     }
 
     // 2. retrieve numitems random publications
@@ -43,15 +43,15 @@ function publications_userapi_getrandom($args)
         $numitems = $args['numitems'];
     }
 
-    $idlist = array();
+    $idlist = [];
     if (empty($args['unique'])) {
         $args['unique'] = false;
     } else {
         $args['unique'] = true;
     }
 
-    $publications = array();
-    mt_srand((double) microtime() * 1000000);
+    $publications = [];
+    mt_srand((float) microtime() * 1000000);
 
     if ($count <= $numitems) {
         unset($args['numitems']);
@@ -59,7 +59,7 @@ function publications_userapi_getrandom($args)
         $items = xarMod::apiFunc('publications', 'user', 'getall', $args);
         $randomkeys = array_rand($items, $count);
         if (!is_array($randomkeys)) {
-            $randomkeys = array($randomkeys);
+            $randomkeys = [$randomkeys];
         }
         foreach ($randomkeys as $key) {
             array_push($publications, $items[$key]);

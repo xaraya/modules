@@ -32,8 +32,8 @@
         public $multi_homed         = true;
         public $current_source      = 'AUTO'; // Other values: 'DEFAULT'
         public $default_id          = 0; // 0 == 'None'
-        public $root_ids            = array();
-        public $prune_ids           = array();
+        public $root_ids            = [];
+        public $prune_ids           = [];
         public $max_level           = 0;
         public $start_level         = 0;
 
@@ -45,7 +45,7 @@
          * @param $blockinfo array
          * @returns $blockinfo array
          */
-        public function display(array $data=array())
+        public function display(array $data=[])
         {
             $data = $this->getContent();
 
@@ -58,7 +58,7 @@
             if (empty($pagedata)) {
                 $pagedata = xarMod::apiFunc('publications', 'user', 'get_menu_pages');
             }
-        
+
             #------------------------------------------------------------
             # Add the chosen pages as nodes to a graph
 #
@@ -70,7 +70,7 @@
                 $n->setIndex($page['id']);
                 $g->addNode($n);
             }
-        
+
             #------------------------------------------------------------
             # Connect the nodes according to which page has which ancestor
 #
@@ -78,26 +78,26 @@
             foreach ($allnodes as $k => $n) {
                 $ndata = $n->getData();
                 $thisparent = $ndata['parentpage_id'];
-            
+
                 // If we are at the top level, then no parent to connect to
                 if (empty($thisparent)) {
                     continue;
                 }
-            
+
                 // Otherwise carry on
                 $thisindex = $ndata['id'];
                 $thisleft = $ndata['leftpage_id'];
                 $parentcandidate = null;
-            
+
                 foreach ($allnodes as $k1 => $n1) {
                     $n1data = $n1->getData();
                     $thatindex = $n1data['id'];
-                
+
                     // Don't bother testing the node against itself
                     if ($thisindex == $thatindex) {
                         continue;
                     }
-                
+
                     $thatleft = $n1data['leftpage_id'];
                     $thatright = $n1data['rightpage_id'];
                     if ($thisparent == $thatindex) {
@@ -108,7 +108,7 @@
                     } elseif (($thisleft > $thatleft) && ($thisleft < $thatright)) {
                         if (empty($parentcandidate) || ($parentcandidate[1] < $thatleft)) {
                             // Replace the current parent candidate if this one is a closer ancestor
-                            $parentcandidate = array($thatindex,$thatleft,$allnodes[$k1]);
+                            $parentcandidate = [$thatindex,$thatleft,$allnodes[$k1]];
                         }
                     }
                 }
@@ -121,7 +121,7 @@
                     $allnodes[$k]->setData($ndata);
                 }
             }
-        
+
             #------------------------------------------------------------
             # Sort the nodes
 #
@@ -132,25 +132,25 @@
             # Rearrange them as needed for menus
 #
             // Define some things we will need
-            $data['menuarray'] = array();
-        
-            $access = DataPropertyMaster::getProperty(array('name' => 'access'));
-        
+            $data['menuarray'] = [];
+
+            $access = DataPropertyMaster::getProperty(['name' => 'access']);
+
             // Get the information on publication types
-            $pubtypes = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+            $pubtypes = DataObjectMaster::getObjectList(['name' => 'publications_types']);
             $pubtypes->dataquery->gt($pubtypes->properties['state']->source, 2);
             $typeinfo = $pubtypes->getItems();
 
             foreach ($g->getNodes() as $node) {
                 $ndata = $node->getData();
-            
+
                 // Ignore this page if we don't have display access
                 $access->value = $ndata['access'];
                 $filter = $access->getValue();
                 if (!$access->check($filter['display'])) {
                     continue;
                 }
-            
+
                 // Figure out where the data for the label will be taken from
                 $menusource = $ndata['menu_source_flag'];
                 if ($menusource == 1) {
@@ -161,15 +161,15 @@
                 case 3: $label = 'description'; break;
                 case 4: $label = 'menu_alias'; break;
             }
-            
+
                 // Assemble the menu item
-                $data['menuarray'][$ndata['parentpage_id']][] = array(
+                $data['menuarray'][$ndata['parentpage_id']][] = [
                                                         'id'             => $ndata['id'],
                                                         'name'           => $ndata['name'],
                                                         'label'          => !empty($ndata[$label]) ? $ndata[$label] : $ndata['name'],
                                                         'state'          => $ndata['state'],
                                                         'redirect_flag'  => $ndata['redirect_flag'],
-                                                    );
+                                                    ];
             }
             return $data;
         }

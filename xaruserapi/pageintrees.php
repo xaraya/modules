@@ -40,7 +40,7 @@ function publications_userapi_pageintrees($args)
         return false;
     }
 
-    list($count) = $result->fields;
+    [$count] = $result->fields;
 
     if ($count > 0) {
         return true;

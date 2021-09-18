@@ -20,5 +20,5 @@ function publications_admin_view_pubtypes()
     }
 
     // Return the template variables defined in this function
-    return array();
+    return [];
 }

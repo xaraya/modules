@@ -28,7 +28,7 @@ function publications_admin_updateconfig()
     // Get parameters
     //A lot of these probably are bools, still might there be a need to change the template to return
     //'true' and 'false' to use those...
-    if (!xarVar::fetch('settings', 'array', $settings, array(), xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('settings', 'array', $settings, [], xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!xarVar::fetch('usetitleforurl', 'int', $usetitleforurl, xarModVars::get('publications', 'usetitleforurl'), xarVar::NOT_REQUIRED)) {
@@ -93,7 +93,7 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'use_versions', $use_versions);
         xarModVars::set('publications', 'hide_tree_display', $hide_tree_display);
         xarModVars::set('publications', 'admin_override', $admin_override);
-        
+
         // Allow multilanguage only if the languages property is present
         sys::import('modules.dynamicdata.class.properties.registration');
         $types = PropertyRegistration::Retrieve();
@@ -104,7 +104,7 @@ function publications_admin_updateconfig()
         }
 
         // Get the special pages.
-        foreach (array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
+        foreach (['defaultpage', 'errorpage', 'notfoundpage', 'noprivspage'] as $special_name) {
             unset($special_id);
             if (!xarVar::fetch($special_name, 'id', $special_id, 0, xarVar::NOT_REQUIRED)) {
                 return;
@@ -131,7 +131,7 @@ function publications_admin_updateconfig()
                 }
                 xarModVars::set('publications', 'fulltextsearch', '');
             } elseif (!empty($fulltext) && empty($oldval)) {
-                $searchfields = array('title','description','summary','body1');
+                $searchfields = ['title','description','summary','body1'];
 //                $searchfields = explode(',',$fulltext);
                 // Get database setup
                 $dbconn = xarDB::getConn();
@@ -146,9 +146,9 @@ function publications_admin_updateconfig()
                 xarModVars::set('publications', 'fulltextsearch', join(',', $searchfields));
             }
         }
-        
+
         // Module settings
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'publications'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'publications']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link, use_module_icons, frontend_page, backend_page');
         $isvalid = $data['module_settings']->checkInput();
         if (!$isvalid) {
@@ -158,17 +158,17 @@ function publications_admin_updateconfig()
         }
 
         // Pull the base category ids from the template and save them
-        $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
+        $picker = DataPropertyMaster::getProperty(['name' => 'categorypicker']);
         $picker->checkInput('basecid');
     } elseif ($data['tab'] == 'pubtypes') {
 
         // Get the publication type for this display and save the settings to it
-        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-        $pubtypeobject->getItem(array('itemid' => $ptid));
+        $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+        $pubtypeobject->getItem(['itemid' => $ptid]);
         $configsettings = $pubtypeobject->properties['configuration']->getValue();
 
-        $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
-        $boxes = array(
+        $checkbox = DataPropertyMaster::getProperty(['name' => 'checkbox']);
+        $boxes = [
                         'show_hitount',
                         'show_ratings',
                         'show_keywords',
@@ -182,7 +182,7 @@ function publications_admin_updateconfig()
                         'title_transform',
                         'show_categories',
                         'show_catcount',
-                       );
+                       ];
         foreach ($boxes as $box) {
             $isvalid = $checkbox->checkInput($box);
             if ($isvalid) {
@@ -197,9 +197,9 @@ function publications_admin_updateconfig()
                 $settings[$name] = $field;
             }
         }
-        
+
         $pubtypeobject->properties['configuration']->setValue(serialize($settings));
-        $pubtypeobject->updateItem(array('itemid' => $ptid));
+        $pubtypeobject->updateItem(['itemid' => $ptid]);
 
         $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
         if ($usealias) {
@@ -208,8 +208,8 @@ function publications_admin_updateconfig()
             xarModAlias::delete($pubtypes[$ptid]['name'], 'publications');
         }
     } elseif ($data['tab'] == 'redirects') {
-        $redirects = DataPropertyMaster::getProperty(array('name' => 'array'));
-        $redirects->display_column_definition['value'] = array(array("From","To"),array(2,2),array("",""),array("",""));
+        $redirects = DataPropertyMaster::getProperty(['name' => 'array']);
+        $redirects->display_column_definition['value'] = [["From","To"],[2,2],["",""],["",""]];
         $isvalid = $redirects->checkInput("redirects");
         xarModVars::set('publications', 'redirects', $redirects->value);
     }
@@ -217,7 +217,7 @@ function publications_admin_updateconfig()
         'publications',
         'admin',
         'modifyconfig',
-        array('ptid' => $ptid, 'tab' => $data['tab'])
+        ['ptid' => $ptid, 'tab' => $data['tab']]
     ));
     return true;
 }

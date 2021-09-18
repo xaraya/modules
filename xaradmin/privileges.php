@@ -64,7 +64,7 @@ function publications_admin_privileges($args)
     }
 
     sys::import('modules.dynamicdata.class.properties.master');
-    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
+    $categories = DataPropertyMaster::getProperty(['name' => 'categories']);
     $cids = $categories->returnInput('privcategories');
 
     if (!empty($extinstance)) {
@@ -119,8 +119,8 @@ function publications_admin_privileges($args)
             'publications',
             'user',
             'get',
-            array('id'      => $id,
-                                       'withcids' => true)
+            ['id'      => $id,
+                                       'withcids' => true, ]
         );
         if (empty($article)) {
             $id = 0;
@@ -154,7 +154,7 @@ function publications_admin_privileges($args)
                 'roles',
                 'user',
                 'get',
-                array('name' => $author)
+                ['name' => $author]
             );
             if (!empty($user) && !empty($user['uid'])) {
                 if (strtolower($author) == 'myself') {
@@ -178,7 +178,7 @@ function publications_admin_privileges($args)
     }
 
     // define the new instance
-    $newinstance = array();
+    $newinstance = [];
     $newinstance[] = empty($ptid) ? 'All' : $ptid;
     $newinstance[] = empty($cid) ? 'All' : $cid;
     $newinstance[] = empty($uid) ? 'All' : $uid;
@@ -196,7 +196,7 @@ function publications_admin_privileges($args)
             'privileges',
             'admin',
             'modifyprivilege',
-            array('id' => $id)
+            ['id' => $id]
         ));
         return true;
     }
@@ -206,8 +206,8 @@ function publications_admin_privileges($args)
         'publications',
         'user',
         'getauthors',
-        array('ptid' => $ptid,
-                                       'cids' => empty($cid) ? array() : array($cid))
+        ['ptid' => $ptid,
+                                       'cids' => empty($cid) ? [] : [$cid], ]
     );
     if (!empty($author) && isset($authorlist[$uid])) {
         $author = '';
@@ -218,14 +218,14 @@ function publications_admin_privileges($args)
             'publications',
             'user',
             'countitems',
-            array('ptid' => $ptid,
-                                        'cids' => empty($cid) ? array() : array($cid),
-                                        'owner' => $uid)
+            ['ptid' => $ptid,
+                                        'cids' => empty($cid) ? [] : [$cid],
+                                        'owner' => $uid, ]
         );
     } else {
         $numitems = 1;
     }
-    $data = array(
+    $data = [
                   'ptid'         => $ptid,
                   'cid'          => $cid,
                   'uid'          => $uid,
@@ -241,14 +241,14 @@ function publications_admin_privileges($args)
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
                   'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
-                 );
+                 ];
 
     // Get publication types
     $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
-    $catlist = array();
+    $catlist = [];
     if (!empty($ptid)) {
-        $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications', 'itemtype' => $ptid));
+        $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications', 'itemtype' => $ptid]);
         foreach ($basecats as $catid) {
             $catlist[$catid['id']] = 1;
         }
@@ -259,7 +259,7 @@ function publications_admin_privileges($args)
         }
     } else {
         foreach (array_keys($data['pubtypes']) as $pubid) {
-            $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications', 'itemtype' => $pubid));
+            $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications', 'itemtype' => $pubid]);
             foreach ($basecats as $catid) {
                 $catlist[$catid['id']] = 1;
             }
@@ -267,7 +267,7 @@ function publications_admin_privileges($args)
         $data['showauthor'] = 1;
     }
 
-    $seencid = array();
+    $seencid = [];
     if (!empty($cid)) {
         $seencid[$cid] = 1;
     }

@@ -19,12 +19,12 @@ function publications_adminapi_getpageaccessconstraints($args)
         throw new Exception(xarML('Missing property param in publications_adminapi_getpageaccessconstraints'));
     }
 
-    $constraints = array(
-        'display' => array('level' => 800, 'group' => 0, 'failure' => 1),
-        'add'     => array('level' => 800, 'group' => 0, 'failure' => 1),
-        'modify'  => array('level' => 800, 'group' => 0, 'failure' => 1),
-        'delete'  => array('level' => 800, 'group' => 0, 'failure' => 1),
-    );
+    $constraints = [
+        'display' => ['level' => 800, 'group' => 0, 'failure' => 1],
+        'add'     => ['level' => 800, 'group' => 0, 'failure' => 1],
+        'modify'  => ['level' => 800, 'group' => 0, 'failure' => 1],
+        'delete'  => ['level' => 800, 'group' => 0, 'failure' => 1],
+    ];
 
     $unpacked_constraints = $args['property']->getValue();
     if (empty($unpacked_constraints)) {

@@ -19,16 +19,16 @@
 
     class Publications_RelatedBlockAdmin extends Publications_RelatedBlock
     {
-        public function modify(array $data=array())
+        public function modify(array $data=[])
         {
             $data = $this->getContent();
 
             return $data;
         }
 
-        public function update(array $data=array())
+        public function update(array $data=[])
         {
-            $args = array();
+            $args = [];
             xarVar::fetch('numitems', 'int', $args['numitems'], $this->numitems, xarVar::NOT_REQUIRED);
             xarVar::fetch('showvalue', 'checkbox', $args['showvalue'], 0, xarVar::NOT_REQUIRED);
 

@@ -26,7 +26,7 @@ class Publications_FillerBlock extends BasicBlock implements iBlock
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     // @todo: drop the show_help flag, and go back to checking if help method is declared
@@ -49,12 +49,12 @@ class Publications_FillerBlock extends BasicBlock implements iBlock
 
         // Setup featured item
         if ($data['fillerid'] > 0) {
-            $fillerid = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $data['fillerid']));
-            $ptid = xarMod::apiFunc('publications', 'user', 'getitempubtype', array('itemid' => $data['fillerid']));
-            $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-            $pubtypeobject->getItem(array('itemid' => $ptid));
-            $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-            $data['object']->getItem(array('itemid' => $data['fillerid']));
+            $fillerid = xarMod::apiFunc('publications', 'user', 'gettranslationid', ['id' => $data['fillerid']]);
+            $ptid = xarMod::apiFunc('publications', 'user', 'getitempubtype', ['itemid' => $data['fillerid']]);
+            $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+            $pubtypeobject->getItem(['itemid' => $ptid]);
+            $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
+            $data['object']->getItem(['itemid' => $data['fillerid']]);
 
             return $data;
         }

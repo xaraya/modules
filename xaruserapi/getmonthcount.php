@@ -59,9 +59,9 @@ function publications_userapi_getmonthcount($args)
         return;
     }
 
-    $months = array();
+    $months = [];
     while (!$result->EOF) {
-        list($month, $count) = $result->fields;
+        [$month, $count] = $result->fields;
         $months[$month] = $count;
         $result->MoveNext();
     }

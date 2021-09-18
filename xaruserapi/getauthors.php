@@ -52,7 +52,7 @@ function publications_userapi_getauthors($args)
     $query .= ' ON ' . $usersdef['field'] . ' = ' . $publicationsdef['owner'];
 
     if (!isset($args['cids'])) {
-        $args['cids'] = array();
+        $args['cids'] = [];
     }
     if (!isset($args['andcids'])) {
         $args['andcids'] = false;
@@ -78,7 +78,7 @@ function publications_userapi_getauthors($args)
     }
 
     // Create the WHERE part
-    $where = array();
+    $where = [];
     // we rely on leftjoin() to create the necessary publications clauses now
     if (!empty($publicationsdef['where'])) {
         $where[] = $publicationsdef['where'];
@@ -100,10 +100,10 @@ function publications_userapi_getauthors($args)
         return;
     }
 
-    $authors = array();
+    $authors = [];
     while (!$result->EOF) {
-        list($uid, $name) = $result->fields;
-        $authors[$uid] = array('id' => $uid, 'name' => $name);
+        [$uid, $name] = $result->fields;
+        $authors[$uid] = ['id' => $uid, 'name' => $name];
         $result->MoveNext();
     }
 

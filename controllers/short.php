@@ -46,9 +46,9 @@ xarMod::load('publications');
 
 class PublicationsShortController extends ShortActionController
 {
-    public $pubtypes = array();
-    
-    public function decode(array $data=array())
+    public $pubtypes = [];
+
+    public function decode(array $data=[])
     {
         $token1 = $this->shorturl_decode($this->firstToken());
         switch ($token1) {
@@ -123,14 +123,14 @@ class PublicationsShortController extends ShortActionController
 
            case 'view':
                 $data['func'] = 'view';
-                
+
                 // Get the pubtype
                 $token2 = $this->nextToken();
                 if ($token2) {
                     $data['ptid'] = $this->decode_pubtype($token2);
                 }
             break;
-            
+
             case 'display':
                 $data['func'] = 'display';
 
@@ -142,9 +142,9 @@ class PublicationsShortController extends ShortActionController
                     'publications',
                     'user',
                     'getpages',
-                    array('name' => strtolower($roottoken), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
+                    ['name' => strtolower($roottoken), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid']
                 );
-                            
+
                 // If no root page matches, and an alias was provided, look for a non-root start page.
                 // These are used as short-cuts.
                 if (empty($rootpage) && $module != 'publications') {
@@ -152,46 +152,46 @@ class PublicationsShortController extends ShortActionController
                         'publications',
                         'user',
                         'getpages',
-                        array('name' => strtolower($roottoken), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
+                        ['name' => strtolower($roottoken), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid']
                     );
                 }
-                            
+
                 // TODO: allow any starting point to be a module alias, and so provide
                 // short-cuts to the requested page. For example, the 'about' page could
                 // be set as an alias. That page could also be under /site/about, but
                 // just 'index.php/about' would work, and would be equivalent to
                 // index.php/site/about or index.php/publications/site/about
-            
+
                 if (!empty($rootpage)) {
                     // The first part of the path matches
-            
+
                     // Fetch the complete page tree for the root page.
                     $tree = xarMod::apiFunc(
                         'publications',
                         'user',
                         'getpagestree',
-                        array(
-                            'left_range' => array($rootpage['left'], $rootpage['right']),
+                        [
+                            'left_range' => [$rootpage['left'], $rootpage['right']],
                             'dd_flag' => false,
                             'key' => 'pid',
-                            'status' => 'ACTIVE,EMPTY'
-                        )
+                            'status' => 'ACTIVE,EMPTY',
+                        ]
                     );
-            
+
                     // TODO: Cache the tree away for use in the main module (perhaps getpagestree can go that?).
                     // If doing that, then ensure the dd data is retrieved at some point.
-            
+
                     // Walk the page tree, matching as many path components as possible.
                     $pid = $rootpage['pid'];
-                    
+
                     while (($token = $this->nextToken()) && isset($tree['child_refs']['names'][$pid]) && array_key_exists(strtolower($token), $tree['child_refs']['names'][$pid])) {
                         $token = strtolower($token);
                         $pid = $tree['child_refs']['names'][$pid][$token];
                     }
-            
+
                     // We have the page ID.
                     $data['pid'] = $pid;
-            
+
                     // Run any further URL decode functions, and merge in the result.
                     // The custom decode URL functions are coded the same as normal
                     // decode functions, but placed into the 'xardecodeapi' API
@@ -201,9 +201,9 @@ class PublicationsShortController extends ShortActionController
                         try {
                             $args2 = xarMod::apiFunc('publications', 'decode', $decode_url, $params);
                         } catch (Exception $e) {
-                            $args2 = array();
+                            $args2 = [];
                         }
-            
+
                         // If any decoding was done, merge in the results.
                         if (!empty($args2) && is_array($args2)) {
                             foreach ($args2 as $key => $value) {
@@ -266,7 +266,7 @@ class PublicationsShortController extends ShortActionController
         }
 
         $params = $request->getFunctionArgs();
-        $path = array();
+        $path = [];
         switch ($request->getFunction()) {
 
             case 'search':
@@ -295,7 +295,7 @@ class PublicationsShortController extends ShortActionController
                         $path = array_merge($path, $this->encode_page($row));
                     }
                 }
-                $params = array();
+                $params = [];
             break;
 
             case 'update':
@@ -311,7 +311,7 @@ class PublicationsShortController extends ShortActionController
                         $path = array_merge($path, $this->encode_page($row));
                     }
                 }
-                $params = array();
+                $params = [];
             break;
 
             case 'view':
@@ -321,10 +321,10 @@ class PublicationsShortController extends ShortActionController
                     unset($params['ptid']);
                 }
             break;
-            
+
             case 'viewmap':
                 $path[] = 'viewmap';
-                $params = array();
+                $params = [];
             break;
 
             case 'display':
@@ -335,9 +335,9 @@ class PublicationsShortController extends ShortActionController
                         $path = $this->encode_page($row);
                     }
                 }
-                $params = array();
+                $params = [];
             break;
-            
+
             case 'main':
 
                 // We need a page ID to continue, for now.
@@ -350,7 +350,7 @@ class PublicationsShortController extends ShortActionController
 
                 // The components of the path.
             //    $get = $args;
-            
+
                 // Get the page tree that includes this page.
                 // TODO: Do some kind of cacheing on a tree-by-tree basis to prevent
                 // fetching this too many times. Every time any tree is fetched, anywhere
@@ -364,7 +364,7 @@ class PublicationsShortController extends ShortActionController
                         'publications',
                         'user',
                         'getpages',
-                        array('dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/)
+                        ['dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/]
                     );
                 }
 
@@ -396,7 +396,7 @@ class PublicationsShortController extends ShortActionController
 
                 // Do the final path part.
                 array_unshift($path, $pages[$pid_follow]['name']);
-            
+
                 // If the base path component is not the module alias, then add the
                 // module name to the start of the path.
                 if (xarModAlias::resolve($pages[$pid_follow]['name']) != 'publications') {
@@ -410,13 +410,13 @@ class PublicationsShortController extends ShortActionController
                 // any unconsumed (or new) get parameters.
                 if (!empty($pages[$pid]['encode_url'])) {
                     $extra = xarMod::apiFunc('publications', 'encode', $pages[$pid]['encode_url'], $get, false);
-            
+
                     if (!empty($extra)) {
                         // The handler has supplied some further short URL path components.
                         if (!empty($extra['path'])) {
                             $path = array_merge($path, $extra['path']);
                         }
-            
+
                         // Assume it has consumed some GET parameters too.
                         // Take what is left (i.e. unconsumed).
                         if (isset($extra['get']) && is_array($extra['get'])) {
@@ -429,7 +429,7 @@ class PublicationsShortController extends ShortActionController
             default:
                 return;
             break;
-            
+
         }
         // Encode the processed params
         $request->setFunction($this->getFunction($path));
@@ -438,7 +438,7 @@ class PublicationsShortController extends ShortActionController
         $request->setFunctionArgs($params);
         return parent::encode($request);
     }
-    
+
     private function decode_pubtype($token='')
     {
         $token = $this->shorturl_decode($token);
@@ -458,7 +458,7 @@ class PublicationsShortController extends ShortActionController
             return $token;
         }
     }
-    
+
     private function decode_page($token2='', $ptid)
     {
         $xartables =& xarDB::getTables();
@@ -523,10 +523,10 @@ class PublicationsShortController extends ShortActionController
         }
     }
 
-    private function encode_page($row=array())
+    private function encode_page($row=[])
     {
         $usetitles = xarModVars::get('publications', 'usetitleforurl');
-        $path = array();
+        $path = [];
         if ($usetitles == 0) {
             // We're not using names: just use the ID
             $path[] = $row['id'];
@@ -542,7 +542,7 @@ class PublicationsShortController extends ShortActionController
             if (!empty($row['title'])) {
                 $path[] = $this->shorturl_encode($row['title']);
             }
-        } elseif (!empty($row['name']) && in_array($usetitles, array(1,2,3))) {
+        } elseif (!empty($row['name']) && in_array($usetitles, [1,2,3])) {
             // Now come the cases where we distinguish duplicates in the URL
             // For this we need to do another SELECT on the name to see if there are actually duplicates
             $xartables =& xarDB::getTables();
@@ -555,7 +555,7 @@ class PublicationsShortController extends ShortActionController
             $q->addfield('id');
             $q->run();
             $duplicates = $q->output();
-            
+
             $path[] = $this->encode_pubtype($row['pubtype_id']);
             if (count($duplicates) == 1) {
                 // No duplicates, so we just put the name
@@ -572,7 +572,7 @@ class PublicationsShortController extends ShortActionController
                 // We will use just the publication ID to distinguish duplicates
                 $path[] = $row['id'];
             }
-        } elseif (!empty($row['title']) && in_array($usetitles, array(5,6,7))) {
+        } elseif (!empty($row['title']) && in_array($usetitles, [5,6,7])) {
             // Now come the cases where we distinguish duplicates in the URL
             // For this we need to do another SELECT on the name to see if there are actually duplicates
             $xartables =& xarDB::getTables();
@@ -585,7 +585,7 @@ class PublicationsShortController extends ShortActionController
             $q->addfield('id');
             $q->run();
             $duplicates = $q->output();
-            
+
             $path[] = $this->encode_pubtype($row['pubtype_id']);
             if (count($duplicates) == 1) {
                 // No duplicates, so we just put the name
@@ -649,7 +649,7 @@ class PublicationsShortController extends ShortActionController
         }
         return $string;
     }
-    
+
     private function shorturl_decode($string)
     {
         $string = urldecode($string);

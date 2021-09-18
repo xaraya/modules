@@ -20,9 +20,9 @@ function publications_userapi_addcurrentpageflags($args)
     extract($args);
 
     if (empty($pagedata) || empty($id)) {
-        return array();
+        return [];
     }
-    
+
     $targetpagekey = false;
     foreach ($pagedata['pages'] as $key => $page) {
         if ($page['id'] == $id) {
@@ -31,11 +31,11 @@ function publications_userapi_addcurrentpageflags($args)
         }
     }
     if (!$targetpagekey) {
-        return array();
+        return [];
     }
-    
+
     if (empty($root_ids) || !is_array($root_ids)) {
-        $root_ids = array();
+        $root_ids = [];
     }
 
     // Set up a bunch of flags against pages to allow hierarchical menus
@@ -70,7 +70,7 @@ function publications_userapi_addcurrentpageflags($args)
     // TODO: stop at a non-ACTIVE page. Non-ACTIVE pages act as blockers
     // in the hierarchy.
     // Ancestors will include self - filter out in the template if required.
-    $pagedata['ancestors'] = array();
+    $pagedata['ancestors'] = [];
     $this_id = $key;
 
     // TODO: allow a 'virtual root' to stop before we reach the real root page. Used
@@ -78,7 +78,7 @@ function publications_userapi_addcurrentpageflags($args)
     // do not fall into this range.
     // This *could* happen if a root page is set to INACTIVE and a child page is
     // set as a module alias.
-    $ancestor_ids = array();
+    $ancestor_ids = [];
     while (true) {
         // Set flag for menus.
         $pagedata['pages'][$this_id]['is_ancestor'] = true;
@@ -122,7 +122,7 @@ function publications_userapi_addcurrentpageflags($args)
     }
 
     // Create a 'children' array for children of the current page.
-    $pagedata['children'] = array();
+    $pagedata['children'] = [];
     if (!empty($pagedata['current_page']['child_keys'])) {
         foreach ($pagedata['current_page']['child_keys'] as $key => $child) {
             // Set flag for menus. The flag 'is_child' means the page is a
@@ -138,7 +138,7 @@ function publications_userapi_addcurrentpageflags($args)
     // The root page will have no siblings, as we want to keep this in
     // a single tree.
     // Siblings will include self - filter out in the template if necessary.
-    $pagedata['siblings'] = array();
+    $pagedata['siblings'] = [];
     if (!empty($pagedata['current_page']['parentpage_id']) && isset($pagedata['pages'][$pagedata['current_page']['parentpage_id']]['child_keys'])) {
         // Loop though all children of the parent.
         foreach ($pagedata['pages'][$pagedata['current_page']['parentpage_id']]['child_keys'] as $key => $child) {

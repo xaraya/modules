@@ -23,11 +23,11 @@ function publications_userapi_getpagestree($args)
 
     // Return if no pages found.
     if (empty($pages)) {
-        return array('pages' => array(), 'children' => array());
+        return ['pages' => [], 'children' => []];
     }
 
     // Inititalise the return value.
-    $tree = array();
+    $tree = [];
 
     // Create a children list, so the tree can be walked recursively by page key index.
     // Three forms are available, useful in different circumstances:
@@ -38,28 +38,28 @@ function publications_userapi_getpagestree($args)
     // Note the pages version contains linked references to each page, to save memory
     // and allow changes made to the main 'pages' array to be visible in the 'pages'
     // children array.
-    $children_ids = array();
-    $children_keys = array();
-    $children_names = array();
-    $children_pages = array();
-    $depthstack = array();
-    $pathstack = array();
-    $translations = array();
+    $children_ids = [];
+    $children_keys = [];
+    $children_names = [];
+    $children_pages = [];
+    $depthstack = [];
+    $pathstack = [];
+    $translations = [];
 
     // Create some additional arrays to help navigate the [flat] pages array.
     foreach ($pages as $key => $page) {
-    
+
         // Assign where the locale info will be placed
         if ($page['base_id']) {
             $translations[$page['base_id']][] = substr($page['locale'], 0, 2);
         } else {
             $translations[$page['id']][] = substr($page['locale'], 0, 2);
         }
-        
+
         // Put links in the pages themselves.
         // Ensure each page has at least an empty array of child keys.
         if (!isset($pages[$key]['child_keys'])) {
-            $pages[$key]['child_keys'] = array();
+            $pages[$key]['child_keys'] = [];
         }
         // Each page has a children array, based on the array keys.
         // If this page has a parent, then add this key to that parent page.
@@ -71,9 +71,9 @@ function publications_userapi_getpagestree($args)
         // Add an entry to the children array of pages.
         // Create a new 'parent' page if it does not exist.
         if (!isset($children_keys[$page['parent_key']])) {
-            $children_keys[$page['parent_key']] = array();
-            $children_names[$page['parent_key']] = array();
-            $children_pages[$page['parent_key']] = array();
+            $children_keys[$page['parent_key']] = [];
+            $children_names[$page['parent_key']] = [];
+            $children_pages[$page['parent_key']] = [];
         }
 
         // Don't allow item 0 to loop back onto itself.
@@ -116,7 +116,7 @@ function publications_userapi_getpagestree($args)
     }
 
     // Now remove all pages that are not base pages and add the locales
-    $finishedpages = array();
+    $finishedpages = [];
     foreach ($pages as $key => $page) {
         if ($page['base_id']) {
             continue;
@@ -130,11 +130,11 @@ function publications_userapi_getpagestree($args)
 
     $tree['pages'] =& $finishedpages;
 
-    $tree['child_refs'] = array(
+    $tree['child_refs'] = [
         'keys' => $children_keys,
         'names' => $children_names,
-        'pages' => $children_pages
-    );
+        'pages' => $children_pages,
+    ];
 
     return $tree;
 }

@@ -41,24 +41,24 @@ function publications_userapi_getrelativepages($args)
 
     // Make sure we have the base translation id
     if (!empty($args['itemid'])) {
-        $args['itemid'] = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')));
+        $args['itemid'] = xarMod::apiFunc('publications', 'user', 'gettranslationid', ['id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')]);
     }
 
     // Identify any filters
-    $filters = array();
+    $filters = [];
     foreach ($args as $k => $v) {
         if (strpos($k, 'filter_') === 0) {
             $argname = substr($k, 7);
             $filters[$argname] = $v;
         }
     }
-    
+
     // FIXME: Combine everything below to single query to avoid the two loops at the end
     $xartable =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
     $q->addtable($xartable['publications'], 'p');
-    
+
     switch ($args['scope']) {
         case 'all':
             $q->gt('p.leftpage_id', 0);
@@ -90,13 +90,13 @@ function publications_userapi_getrelativepages($args)
     if (!empty($args['itemtype'])) {
         $q->eq('p.pubtype_id', $args['itemtype']);
     }
-    
+
     // We need to grab all the pages if we are looking for translations, because the translation might have a valid state
     if (xarModVars::get('publications', 'defaultlanguage') == xarUser::getNavigationLocale()) {
         // Allow filtering on state nonetheless
         if (!empty($args['state'])) {
             if (!is_array($args['state'])) {
-                $state = array($args['state']);
+                $state = [$args['state']];
             } else {
                 $state = $args['state'];
             }
@@ -114,24 +114,24 @@ function publications_userapi_getrelativepages($args)
     $q->addfield('p.summary AS summary');
     $q->addfield('p.locale AS locale');
     $q->addfield('p.rightpage_id AS rightpage_id');
-    
+
     // Add any fiters we found
     foreach ($filters as $k => $v) {
         $q->eq('p.'.$k, $v);
     }
-    
+
     // We can force alpha sorting, or else sort according to tree position
     if ($args['sort']) {
         $q->setorder('p.title');
     } else {
         $q->setorder('p.leftpage_id');
     }
-        
+
 //    $q->qecho();
     $q->run();
     $pages = $q->output();
-    
-    $depthstack = array();
+
+    $depthstack = [];
     foreach ($pages as $key => $page) {
         // Calculate the relative nesting level.
         // 'depth' is 0-based. Top level (root node) is zero.
@@ -157,14 +157,14 @@ function publications_userapi_getrelativepages($args)
     // If we are looking for translations rather than base documents, then find what translations are available and substitute them
     // CHECKME: is there a better way?
     // If there is no translation the base document remains, unless $args['no_fallback_locale'] is true;
-    
+
     if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUser::getNavigationLocale()) {
-        $indexedpages = array();
+        $indexedpages = [];
         foreach ($pages as $v) {
             $indexedpages[$v['id']] = $v;
         }
         $ids = array_keys($indexedpages);
-        
+
         $q = new Query();
         $q->addtable($xartable['publications']);
         $q->addfield('id');
@@ -181,7 +181,7 @@ function publications_userapi_getrelativepages($args)
         // Allow state filter, if there is one
         if (!empty($args['state'])) {
             if (!is_array($args['state'])) {
-                $state = array($args['state']);
+                $state = [$args['state']];
             } else {
                 $state = $args['state'];
             }
@@ -192,14 +192,14 @@ function publications_userapi_getrelativepages($args)
         foreach ($filters as $k => $v) {
             $q->eq($k, $v);
         }
-    
+
         $q->run();
         foreach ($q->output() as $row) {
             // Remove any pages with invalid states now
             if ($row['state'] < 3) {
                 unset($indexedpages[$row['parent_id']]);
             }
-            
+
             // Copy the name and id paths so we don't have to recalculate them
             $row['depth'] = $indexedpages[$row['parent_id']]['depth'];
             $row['idpath'] = $indexedpages[$row['parent_id']]['idpath'];
@@ -207,7 +207,7 @@ function publications_userapi_getrelativepages($args)
             // Add the entire row to the result pages
             $indexedpages[$row['parent_id']] = $row;
         }
-        
+
         // Now go through the remaining pages and check for no-show states
         foreach ($indexedpages as $key => $page) {
             if ($page['state'] < 3) {
@@ -218,7 +218,7 @@ function publications_userapi_getrelativepages($args)
                 unset($indexedpages[$key]);
             }
         }
-        
+
         // Now sort by title if we need to
         if ($args['sort']) {
             usort($indexedpages, 'multi_sort');

@@ -33,13 +33,13 @@ function publications_treeapi_getancestors($args)
         if (isset($rootonly) && $rootonly == true) {
             $query .= " ASC LIMIT 1";
         }
-        $result = $dbconn->execute($query, array((int)$id));
+        $result = $dbconn->execute($query, [(int)$id]);
 
-        $ancestors = array();
+        $ancestors = [];
 
         // return results in order from root to leaf
         while (!$result->EOF) {
-            list($pid) = $result->fields;
+            [$pid] = $result->fields;
             $ancestors[] = $pid;
             $result->MoveNext();
         }
@@ -50,6 +50,6 @@ function publications_treeapi_getancestors($args)
         }
     } else {
         // Insert point is the virtual root, return it
-        return array(0);
+        return [0];
     }
 }

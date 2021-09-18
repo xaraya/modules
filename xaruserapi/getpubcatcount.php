@@ -30,7 +30,7 @@ function publications_userapi_getpubcatcount($args)
             return $pubcatcount;
         }
     */
-    $pubcatcount = array();
+    $pubcatcount = [];
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -66,7 +66,7 @@ function publications_userapi_getpubcatcount($args)
     }
     if ($result->EOF) {
         if (!empty($args['ptid']) && empty($args['reverse'])) {
-            $pubcatcount[$args['ptid']] = array();
+            $pubcatcount[$args['ptid']] = [];
         }
         return $pubcatcount;
     }

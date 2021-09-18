@@ -35,7 +35,7 @@ function publications_admin_delete()
         $idlist = $itemid;
     }
     $ids = explode(',', trim($idlist, ','));
-    
+
     if (empty($idlist)) {
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
@@ -50,7 +50,7 @@ function publications_admin_delete()
     /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $publication = DataObjectMaster::getObject(array('name' => 'publications_publications'));
+    $publication = DataObjectMaster::getObject(['name' => 'publications_publications']);
     if (!isset($confirmed)) {
         $data['idlist'] = $idlist;
         if (count($ids) > 1) {
@@ -59,25 +59,25 @@ function publications_admin_delete()
             $data['title'] = xarML("Delete Publication");
         }
         $data['authid'] = xarSec::genAuthKey();
-        $items = array();
+        $items = [];
         foreach ($ids as $i) {
-            $publication->getItem(array('itemid' => $i));
+            $publication->getItem(['itemid' => $i]);
             $item = $publication->getFieldValues();
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete', array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('publications', 'admin', 'delete', ['idlist' => $idlist]);
         return xarTpl::module('publications', 'admin', 'delete', $data);
     } else {
         if (!xarSec::confirmAuthKey()) {
             return;
         }
         foreach ($ids as $id) {
-            $itemid = $publication->deleteItem(array('itemid' => $id));
+            $itemid = $publication->deleteItem(['itemid' => $id]);
             $data['message'] = "Publication deleted [ID $id]";
 
             // Inform the world via hooks
-            $item = array('module' => 'publications', 'itemid' => $itemid, 'itemtype' => $publication->properties['itemtype']->value);
+            $item = ['module' => 'publications', 'itemid' => $itemid, 'itemtype' => $publication->properties['itemtype']->value];
             xarHooks::notify('ItemDelete', $item);
         }
         if (isset($returnurl)) {

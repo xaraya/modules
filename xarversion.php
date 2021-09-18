@@ -26,36 +26,36 @@ $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
+$modversion['dependencyinfo'] = [
+                                    0 => [
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.2.0'
-                                         ),
-                                    30066 => array(
+                                            'version_ge' => '2.2.0',
+                                         ],
+                                    30066 => [
                                             'name' => 'ckeditor',
-                                            'minversion' => '1.0.0'
-                                         ),
-                                      );
-$modversion['propertyinfo'] = array(
-                                    30039 => array(
+                                            'minversion' => '1.0.0',
+                                         ],
+                                      ];
+$modversion['propertyinfo'] = [
+                                    30039 => [
                                         'name' => 'language',
-                                        ),
-                                    30059 => array(
+                                        ],
+                                    30059 => [
                                         'name' => 'datetime',
-                                        ),
-                                    30099 => array(
+                                        ],
+                                    30099 => [
                                         'name' => 'pager',
-                                        ),
-                                    30100 => array(
+                                        ],
+                                    30100 => [
                                         'name' => 'listing',
-                                        ),
-                                    30101 => array(
+                                        ],
+                                    30101 => [
                                         'name' => 'codemirror',
-                                        ),
-                                    30122 => array(
+                                        ],
+                                    30122 => [
                                         'name' => 'iconcheckbox',
-                                        ),
-                                    30123 => array(
+                                        ],
+                                    30123 => [
                                         'name' => 'icondropown',
-                                        ),
-                                    );
+                                        ],
+                                    ];

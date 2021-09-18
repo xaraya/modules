@@ -35,7 +35,7 @@ function publications_admin_view_pages($args)
         'publications',
         'user',
         'getpagestree',
-        array('key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id)
+        ['key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id]
     );
 
     if (empty($data['pages'])) {
@@ -54,17 +54,17 @@ function publications_admin_view_pages($args)
     if (!empty($data['pages'])) {
         // Bring in the access property for security checks
         sys::import('modules.dynamicdata.class.properties.master');
-        $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+        $accessproperty = DataPropertyMaster::getProperty(['name' => 'access']);
         $accessproperty->module = 'publications';
         $accessproperty->component = 'Page';
         foreach ($data['pages'] as $key => $page) {
             $thisinstance = $page['name'] . ':' . $page['pubtype_name'];
 
             // Do we have admin access?
-            $args = array(
+            $args = [
                 'instance' => $thisinstance,
                 'level' => 800,
-            );
+            ];
             $adminaccess = $accessproperty->check($args);
 
             // Decide whether this page can be modified by the current user
@@ -95,6 +95,6 @@ function publications_admin_view_pages($args)
 
     // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL());
-    
+
     return $data;
 }

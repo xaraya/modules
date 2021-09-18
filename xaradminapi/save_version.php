@@ -18,8 +18,8 @@ function publications_adminapi_save_version($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $entries = DataObjectMaster::getObject(array('name' => 'publications_versions'));
-    $entries->properties['content']->value = serialize($args['object']->getFieldValues(array(), 1));
+    $entries = DataObjectMaster::getObject(['name' => 'publications_versions']);
+    $entries->properties['content']->value = serialize($args['object']->getFieldValues([], 1));
     $entries->properties['operation']->value = $args['operation'];
     $entries->properties['version']->value = $args['object']->properties['version']->value;
     $entries->properties['page_id']->value = $args['object']->properties['id']->value;

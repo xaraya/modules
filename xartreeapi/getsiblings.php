@@ -33,11 +33,11 @@ function publications_treeapi_getsiblings($args)
         }
         $query .= " ORDER BY parent.xar_left";
 
-        $siblings = array();
+        $siblings = [];
 
         // return results in proper order
         while (!$result->EOF) {
-            list($pid) = $result->fields;
+            [$pid] = $result->fields;
             $siblings[] = $pid;
             $result->MoveNext();
         }
@@ -50,7 +50,7 @@ function publications_treeapi_getsiblings($args)
         // Insert point is the virtual root.
         // Virtual root has no siblings
         if (isset($includeself) && $includeself == true) {
-            return array(0);
+            return [0];
         } else {
             return;
         }

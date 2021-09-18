@@ -47,12 +47,12 @@ class Diff_Renderer_Text_Context extends Diff_Renderer_Abstract
     /**
      * @var array Array of the different opcode tags and how they map to the context diff equivalent.
      */
-    private $tagMap = array(
+    private $tagMap = [
         'insert' => '+',
         'delete' => '-',
         'replace' => '!',
-        'equal' => ' '
-    );
+        'equal' => ' ',
+    ];
 
     /**
      * Render and return a context formatted (old school!) diff file.
@@ -93,7 +93,7 @@ class Diff_Renderer_Text_Context extends Diff_Renderer_Abstract
 
             if ($hasVisible) {
                 foreach ($group as $code) {
-                    list($tag, $i1, $i2, $j1, $j2) = $code;
+                    [$tag, $i1, $i2, $j1, $j2] = $code;
                     if ($tag == 'insert') {
                         continue;
                     }
@@ -113,7 +113,7 @@ class Diff_Renderer_Text_Context extends Diff_Renderer_Abstract
 
             if ($hasVisible) {
                 foreach ($group as $code) {
-                    list($tag, $i1, $i2, $j1, $j2) = $code;
+                    [$tag, $i1, $i2, $j1, $j2] = $code;
                     if ($tag == 'delete') {
                         continue;
                     }

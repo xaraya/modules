@@ -29,7 +29,7 @@ function publications_userapi_generatekeywords($args)
     $keywords = explode(" ", strtolower($symbolLess));
     $keywords = array_unique($keywords);
 
-    $list = array();
+    $list = [];
     // Remove words that are < four characters in length
     foreach ($keywords as $word) {
         if (strlen($word) >= 4 && !empty($word)) {

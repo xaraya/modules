@@ -56,7 +56,7 @@ function publications_user_viewmap($args)
             $andcids = false;
         }
     }
-    $seencid = array();
+    $seencid = [];
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
             // make sure cids are numeric
@@ -70,7 +70,7 @@ function publications_user_viewmap($args)
 
     // Get publication types
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+    $object = DataObjectMaster::getObjectList(['name' => 'publications_types']);
     $data['pubtypes'] = $object->getItems();
 
     // redirect to filtered view
@@ -80,27 +80,27 @@ function publications_user_viewmap($args)
         } else {
             $catid = null;
         }
-        $url = xarController::URL('publications', 'user', 'view', array('ptid' => $ptid, 'catid' => $catid));
+        $url = xarController::URL('publications', 'user', 'view', ['ptid' => $ptid, 'catid' => $catid]);
         xarController::redirect($url);
         return;
     }
 
-    $data['catfilter'] = array();
-    $data['cattree'] = array();
-    $data['catgrid'] = array();
+    $data['catfilter'] = [];
+    $data['cattree'] = [];
+    $data['catgrid'] = [];
 
     $dump = '';
 
-    $publinks = array();
+    $publinks = [];
 
     if ($by == 'cat') {
-        $data['maplink'] = xarController::URL('publications', 'user', 'viewmap', array('by' => 'cat'));
+        $data['maplink'] = xarController::URL('publications', 'user', 'viewmap', ['by' => 'cat']);
 
         // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications'));
+        $basecats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications']);
 
-        $catlist = array();
+        $catlist = [];
         foreach ($basecats as $basecat) {
             $catlist[$basecat['category_id']] = 1;
         }
@@ -117,36 +117,36 @@ function publications_user_viewmap($args)
                 'user',
                 'getchildcats',
                                                          // frontpage or approved
-                                                   array('state' => array(PUBLICATIONS_STATE_APPROVED,PUBLICATIONS_STATE_FRONTPAGE),
+                                                   ['state' => [PUBLICATIONS_STATE_APPROVED,PUBLICATIONS_STATE_FRONTPAGE],
                                                          'cid' => $cid,
                                                          'ptid' => null,
                                                          // keep a link to the parent cid
-                                                         'showcid' => true)
+                                                         'showcid' => true, ]
             );
         }
     } elseif ($by == 'grid') {
-        $data['catgrid'][0] = array();
+        $data['catgrid'][0] = [];
         $data['catgrid'][0][0] = '';
 
         // Get the base categories
         if (!empty($ptid)) {
-            $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => $ptid));
+            $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => $ptid]);
         } else {
-            $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => 0));
+            $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => 0]);
             $ptid = null;
         }
 
         if (count($rootcats) != 2) {
             $data['catgrid'][0][0] = xarML('You need 2 base categories in order to use this grid view');
         } else {
-            $catlist = array();
+            $catlist = [];
             if (!empty($rootcats) && is_array($rootcats)) {
                 foreach ($rootcats as $cid) {
                     $catlist[$catid['category_id']] = 1;
                 }
             }
 
-            $cattree = array();
+            $cattree = [];
             // Get the category tree for each base category
             foreach ($catlist as $cid => $val) {
                 if (empty($val)) {
@@ -157,11 +157,11 @@ function publications_user_viewmap($args)
                     'user',
                     'getchildcats',
                                                    // frontpage or approved
-                                               array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
+                                               ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
                                                      'cid' => $cid,
                                                      'ptid' => $ptid,
                                                      // keep a link to the parent cid
-                                                     'showcid' => true)
+                                                     'showcid' => true, ]
                 );
             }
 
@@ -177,7 +177,7 @@ function publications_user_viewmap($args)
             // Fill in the column headers
             $row = 0;
             $col = 1;
-            $colcid = array();
+            $colcid = [];
             foreach ($cattree[$colcat] as $info) {
                 $data['catgrid'][$row][$col] = '<a href="' . $info['link'] . '">' . $info['name'] . '</a>';
                 $colcid[$info['id']] = $col;
@@ -188,8 +188,8 @@ function publications_user_viewmap($args)
             // Fill in the row headers
             $row = 1;
             $col = 0;
-            $data['catgrid'][$row] = array();
-            $rowcid = array();
+            $data['catgrid'][$row] = [];
+            $rowcid = [];
             foreach ($cattree[$rowcat] as $info) {
                 $data['catgrid'][$row][$col] = '<a href="' . $info['link'] . '">' . $info['name'] . '</a>';
                 $rowcid[$info['id']] = $row;
@@ -200,7 +200,7 @@ function publications_user_viewmap($args)
             // Initialise the rest of the array
             for ($row = 1; $row < $maxrow; $row++) {
                 if (!isset($data['catgrid'][$row])) {
-                    $data['catgrid'][$row] = array();
+                    $data['catgrid'][$row] = [];
                 }
                 for ($col = 1; $col < $maxcol; $col++) {
                     $data['catgrid'][$row][$col] = '';
@@ -213,10 +213,10 @@ function publications_user_viewmap($args)
                 'user',
                 'getpubcatcount',
                                          // frontpage or approved
-                                         array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
+                                         ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
                                                'ptid' => $ptid,
                                                'groupcids' => 2,
-                                               'reverse' => 1)
+                                               'reverse' => 1, ]
             );
 
             if (!empty($ptid)) {
@@ -226,14 +226,14 @@ function publications_user_viewmap($args)
             }
             // Fill in the count values
             foreach ($pubcatcount as $cids => $counts) {
-                list($ca, $cb) = explode('+', $cids);
+                [$ca, $cb] = explode('+', $cids);
                 if (isset($rowcid[$ca]) && isset($colcid[$cb])) {
                     $link = xarController::URL(
                         'publications',
                         'user',
                         'view',
-                        array('ptid' => $ptid,
-                                            'catid' => $ca . '+' . $cb)
+                        ['ptid' => $ptid,
+                                            'catid' => $ca . '+' . $cb, ]
                     );
                     $data['catgrid'][$rowcid[$ca]][$colcid[$cb]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
                 }
@@ -242,8 +242,8 @@ function publications_user_viewmap($args)
                         'publications',
                         'user',
                         'view',
-                        array('ptid' => $ptid,
-                                            'catid' => $cb . '+' . $ca)
+                        ['ptid' => $ptid,
+                                            'catid' => $cb . '+' . $ca, ]
                     );
                     $data['catgrid'][$rowcid[$cb]][$colcid[$ca]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
                 }
@@ -254,20 +254,20 @@ function publications_user_viewmap($args)
             $descr = $data['pubtypes'][$ptid]['description'];
         }
     } else {
-        $data['maplink'] = xarController::URL('publications', 'user', 'viewmap', array('by' => 'pub'));
+        $data['maplink'] = xarController::URL('publications', 'user', 'viewmap', ['by' => 'pub']);
 
         // get the links and counts for all publication types
         $publinks = xarMod::apiFunc(
             'publications',
             'user',
             'getpublinks',
-            array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
-                                        'all' => 1)
+            ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                                        'all' => 1, ]
         );
 
         // build the list of root categories for all publication types
         // and save results in publinks as well
-        $catlist = array();
+        $catlist = [];
         for ($i=0;$i<count($publinks);$i++) {
             $pubid = $publinks[$i]['pubid'];
             $cidstring = xarModVars::get('publications', 'mastercids.'.$pubid);
@@ -278,13 +278,13 @@ function publications_user_viewmap($args)
                 }
                 $publinks[$i]['rootcats'] = $rootcats;
             } else {
-                $publinks[$i]['rootcats'] = array();
+                $publinks[$i]['rootcats'] = [];
             }
         }
 
         // for all publication types
         for ($i=0;$i<count($publinks);$i++) {
-            $publinks[$i]['cats'] = array();
+            $publinks[$i]['cats'] = [];
             $pubid = $publinks[$i]['pubid'];
             // for each root category of this publication type
             foreach ($publinks[$i]['rootcats'] as $cid) {
@@ -294,17 +294,17 @@ function publications_user_viewmap($args)
                     'user',
                     'getchildcats',
                                             // frontpage or approved
-                                            array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
+                                            ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
                                                   'cid' => $cid,
                                                   'ptid' => $pubid,
                                                   // keep a link to the parent cid
-                                                  'showcid' => true)
+                                                  'showcid' => true, ]
                 );
                 $publinks[$i]['cats'][] = $childcats;
             }
         }
 
-        $array = array();
+        $array = [];
         if (empty($ptid)) {
             $ptid = $default;
         }
@@ -351,30 +351,30 @@ function publications_user_viewmap($args)
         'publications',
         'user',
         'view',
-        array('ptid' => $ptid)
+        ['ptid' => $ptid]
     );
     $data['archivelabel'] = xarML('View Archives');
     $data['archivelink'] = xarController::URL(
         'publications',
         'user',
         'archive',
-        array('ptid' => $ptid)
+        ['ptid' => $ptid]
     );
     $data['dump'] = $dump;
     if (count($data['catfilter']) == 2) {
     }
 
     if (!empty($ptid)) {
-        $object = DataObjectMaster::getObject(array('name' => 'publications_types'));
-        $object->getItem(array('itemid' => $ptid));
+        $object = DataObjectMaster::getObject(['name' => 'publications_types']);
+        $object->getItem(['itemid' => $ptid]);
         $template = $object->properties['template']->value;
     } else {
         // TODO: allow templates per category ?
         $template = null;
     }
-    
+
     // Pass the type of map to the template, so we can decide what links to show
     $data['by'] = $by;
-    
+
     return xarTpl::module('publications', 'user', 'viewmap', $data, $template);
 }

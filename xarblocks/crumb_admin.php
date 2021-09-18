@@ -33,7 +33,7 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
             $data['include_root'] = false;
         }
         if (!isset($data['root_ids'])) {
-            $data['root_ids'] = array();
+            $data['root_ids'] = [];
         }
 
         // Get a list of all pages for the drop-downs.
@@ -42,14 +42,14 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
             'publications',
             'user',
             'getpagestree',
-            array('dd_flag' => false, 'key' => 'id')
+            ['dd_flag' => false, 'key' => 'id']
         );
 
         // Implode the names for each page into a path for display.
         // TODO: move this into getpagestree
-        $data['options'] = array();
+        $data['options'] = [];
         foreach ($data['all_pages']['pages'] as $key => $page) {
-            $data['options'][$page['id']] = array('id' => $page['id'], 'name' =>  '/' . implode('/', $page['namepath']));
+            $data['options'][$page['id']] = ['id' => $page['id'], 'name' =>  '/' . implode('/', $page['namepath'])];
         }
 
         // Get the descriptions together for the current root pids.
@@ -82,12 +82,12 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
 
         // The root pages define sections of the page landscape that this block applies to.
         if (!isset($vars['root_ids'])) {
-            $vars['root_ids'] = array();
+            $vars['root_ids'] = [];
         }
         if (xarVar::fetch('new_root_pid', 'int:0', $new_root_pid, 0, xarVar::NOT_REQUIRED) && !empty($new_root_pid)) {
             $vars['root_ids'][] = $new_root_pid;
         }
-        if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
+        if (xarVar::fetch('remove_root_pid', 'list:int:1', $remove_root_pid, [], xarVar::NOT_REQUIRED) && !empty($remove_root_pid)) {
             // Easier to check with the keys and values flipped.
             $vars['root_ids'] = array_flip($vars['root_ids']);
             foreach ($remove_root_pid as $remove) {

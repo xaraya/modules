@@ -96,26 +96,26 @@ function publications_treeapi_array_maptree($items)
     // raise an exception and return an empty array.
     if (!is_array($items) || count($items) == 0) {
         // TODO: Raise Exception
-        return array();
+        return [];
     }
 
     $current_depth  = 0;         // depth of the current comment in the array
     $next_depth     = 0;         // depth of the next comment in the array (closer to beginning of array)
     $prev_depth     = 0;         // depth of the previous comment in the array (closer to end of array)
-    $matrix         = array();   // initialize the matrix to a null array
-    $depth_flags    = array();
+    $matrix         = [];   // initialize the matrix to a null array
+    $depth_flags    = [];
 
     $total = count($items);
     $listsize = $total - 1;
 
-    $depth_flags = array_pad(array(0 => 0), _PUBLICATIONS_MAX_DEPTH, false);
+    $depth_flags = array_pad([0 => 0], _PUBLICATIONS_MAX_DEPTH, false);
 
     // Create the matrix starting from the end and working our way towards
     // the beginning.
     // FIXME: the items array is not necessarily indexed by a sequential number.
     for ($counter = $listsize; $counter >= 0; $counter -= 1) {
         // Unmapped matrix for current page.
-        $matrix = array_pad(array(0 => 0), _PUBLICATIONS_MAX_DEPTH, _PUBLICATIONS_NO_CONNECTOR);
+        $matrix = array_pad([0 => 0], _PUBLICATIONS_MAX_DEPTH, _PUBLICATIONS_NO_CONNECTOR);
 
         // Make sure to $depth = $depth modulus _PUBLICATIONS_MAX_DEPTH  - because we are only ever showing
         // limited levels of depth.

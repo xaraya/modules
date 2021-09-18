@@ -18,13 +18,13 @@
  * @return array(id => array('name' => name, 'description' => description)), or false on
  *         failure
  */
-  
+
 function publications_userapi_get_nextname($args)
 {
     if (empty($args['ptid'])) {
         return xarML('new_publication');
     }
-    
+
     // Get the namestring for this pubtype
     switch ($args['ptid']) {
         case 1: $namestring = 'new'; break;    // news
@@ -41,7 +41,7 @@ function publications_userapi_get_nextname($args)
         case 12: $namestring = 'cat'; break;    // catalogue
         case 13: $namestring = 'eve'; break;    // event
         default:
-            $namestring = xarMod::apiFunc('publications', 'user', 'getsetting', array('ptid' => $args['ptid'], 'setting' => 'namestring'));
+            $namestring = xarMod::apiFunc('publications', 'user', 'getsetting', ['ptid' => $args['ptid'], 'setting' => 'namestring']);
         break;
     }
 
@@ -55,7 +55,7 @@ function publications_userapi_get_nextname($args)
     $count = $q->row();
     $count = (int)reset($count);
     $count++;
-    
+
     // Put them together
     if (!empty($namestring)) {
         $namestring .= "_";

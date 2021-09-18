@@ -31,20 +31,20 @@ function publications_admin_create()
     if (!xarVar::fetch('save', 'str', $save, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     // Confirm authorisation code
     // This has been disabled for now
     // if (!xarSec::confirmAuthKey()) return;
 
-    $data['items'] = array();
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    
+    $data['items'] = [];
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $data['ptid']]);
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
+
     $isvalid = $data['object']->checkInput();
-    
-    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
-    
+
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $data['ptid']]);
+
     if ($data['preview'] || !$isvalid) {
         // Show debug info if called for
         if (!$isvalid &&
@@ -59,12 +59,12 @@ function publications_admin_create()
         }
         return xarTpl::module('publications', 'admin', 'new', $data);
     }
-    
+
     // Create the object
     $itemid = $data['object']->createItem();
 
     // Inform the world via hooks
-    $item = array('module' => 'publications', 'itemid' => $itemid, 'itemtype' => $data['object']->properties['itemtype']->value);
+    $item = ['module' => 'publications', 'itemid' => $itemid, 'itemtype' => $data['object']->properties['itemtype']->value];
     xarHooks::notify('ItemCreate', $item);
 
     // Redirect if we came from somewhere else
@@ -72,12 +72,12 @@ function publications_admin_create()
     if (!empty($cuurent_listview)) {
         xarController::redirect($current_listview);
     }
-    
+
     xarController::redirect(xarController::URL(
         'publications',
         'admin',
         'view',
-        array('ptid' => $data['ptid'])
+        ['ptid' => $data['ptid']]
     ));
     return true;
 }

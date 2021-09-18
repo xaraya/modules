@@ -17,13 +17,13 @@
 
     class Publications_RandomBlockAdmin extends Publications_RandomBlock
     {
-        public function modify(array $data=array())
+        public function modify(array $data=[])
         {
             $data = $this->getContent();
             if (!empty($data['catfilter'])) {
-                $cidsarray = array($data['catfilter']);
+                $cidsarray = [$data['catfilter']];
             } else {
-                $cidsarray = array();
+                $cidsarray = [];
             }
 
             $data['locales'] = xarMLS::listSiteLocales();
@@ -32,7 +32,7 @@
             return $data;
         }
 
-        public function update(array $data=array())
+        public function update(array $data=[])
         {
             xarVar::fetch('locale', 'str', $data['locale'], '', xarVar::NOT_REQUIRED);
             xarVar::fetch('alttitle', 'str', $data['alttitle'], '', xarVar::NOT_REQUIRED);

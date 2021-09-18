@@ -19,12 +19,12 @@ function publications_adminapi_getpubtypeaccess($args)
         throw new Exception(xarML('Missing ptid param in publications_adminapi_getpubtypeaccess'));
     }
 
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
     if (null == $pubtypeobject) {
         return false;
     }
-    
-    $pubtypeobject->getItem(array('itemid' => $args['ptid']));
+
+    $pubtypeobject->getItem(['itemid' => $args['ptid']]);
     if (empty($pubtypeobject->properties['access']->value)) {
         return "a:0:{}";
     }

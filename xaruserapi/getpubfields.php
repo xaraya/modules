@@ -22,27 +22,27 @@
  */
 function publications_userapi_getpubfields($args)
 {
-    return array(
-        'title'    => array('label'  => xarML('Title'),
+    return [
+        'title'    => ['label'  => xarML('Title'),
                             'format' => 'textbox',
-                            'input'  => 1),
-        'summary'  => array('label'  => xarML('Summary'),
+                            'input'  => 1, ],
+        'summary'  => ['label'  => xarML('Summary'),
                             'format' => 'textarea_medium',
-                            'input'  => 1),
-        'body' => array('label'  => xarML('Body'),
+                            'input'  => 1, ],
+        'body' => ['label'  => xarML('Body'),
                             'format' => 'textarea_large',
-                            'input'  => 1),
-        'notes'    => array('label'  => xarML('Notes'),
+                            'input'  => 1, ],
+        'notes'    => ['label'  => xarML('Notes'),
                             'format' => 'textarea',
-                            'input'  => 0),
-        'owner' => array('label'  => xarML('Author'),
+                            'input'  => 0, ],
+        'owner' => ['label'  => xarML('Author'),
                             'format' => 'username',
-                            'input'  => 0),
-        'pubdate'  => array('label'  => xarML('Publication Date'),
+                            'input'  => 0, ],
+        'pubdate'  => ['label'  => xarML('Publication Date'),
                             'format' => 'calendar',
-                            'input'  => 0),
-        'state'   => array('label'  => xarML('Status'),
+                            'input'  => 0, ],
+        'state'   => ['label'  => xarML('Status'),
                             'format' => 'state',
-                            'input'  => 0),
-    );
+                            'input'  => 0, ],
+    ];
 }

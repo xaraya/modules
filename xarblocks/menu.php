@@ -32,8 +32,8 @@
         public $multi_homed         = true;
         public $current_source      = 'AUTO'; // Other values: 'DEFAULT'
         public $default_id          = 0; // 0 == 'None'
-        public $root_ids            = array();
-        public $prune_ids           = array();
+        public $root_ids            = [];
+        public $prune_ids           = [];
         public $max_level           = 0;
         public $start_level         = 0;
 
@@ -53,7 +53,7 @@
          * @returns $blockinfo array
          * @todo Option to display the menu even when not on a relevant page
          */
-        public function display(array $data=array())
+        public function display(array $data=[])
         {
 
     // TODO:
@@ -80,13 +80,13 @@
             if (!empty($data['root_ids']) && is_array($data['root_ids'])) {
                 $root_ids = $data['root_ids'];
             } else {
-                $root_ids = array();
+                $root_ids = [];
             }
 
             if (!empty($data['prune_ids']) && is_array($data['prune_ids'])) {
                 $prune_ids = $data['prune_ids'];
             } else {
-                $prune_ids = array();
+                $prune_ids = [];
             }
 
             // To start with, we need to know the current page.
@@ -124,7 +124,7 @@
                 // If the cached tree does not contain the current page,
                 // then we cannot use it.
                 if (!isset($pagedata['pages'][$id])) {
-                    $pagedata = array();
+                    $pagedata = [];
                 }
             }
 
@@ -136,7 +136,7 @@
             // If necessary, check whether the current page is under one of the
             // of the allowed root ids.
             if (!empty($root_ids)) {
-                if (!xarMod::apiFunc('publications', 'user', 'pageintrees', array('id' => $id, 'tree_roots' => $root_ids))) {
+                if (!xarMod::apiFunc('publications', 'user', 'pageintrees', ['id' => $id, 'tree_roots' => $root_ids])) {
                     // Not under a root.
                     // If the mode is AUTO then leave the menu blank.
                     if ($data['current_source'] == 'AUTO' || $data['current_source'] == 'DEFAULT' || empty($data['default_id'])) {
@@ -144,7 +144,7 @@
                     } else {
                         // Use the default page instead.
                         $id = $data['default_id'];
-                        $pagedata = array();
+                        $pagedata = [];
                     }
                 }
             }
@@ -156,12 +156,12 @@
                     'publications',
                     'user',
                     'getmenutree',
-                    array(
+                    [
                     'tree_contains_id' => $id,
 //                    'dd_flag' => true,
 //                    'key' => 'id',
 //                    'status' => 'ACTIVE,EMPTY'
-                )
+                ]
                 );
 
                 // If $pagedata is empty, then we have an invalid ID or
@@ -233,26 +233,26 @@
                         }
 
                         // Reset any of the pruning point's children.
-                        $pagedata['pages'][$prune_id]['child_keys'] = array();
+                        $pagedata['pages'][$prune_id]['child_keys'] = [];
                         $pagedata['pages'][$prune_id]['has_children'] = false;
                     }
                 }
             }
 
             // transform to the format we need for displaying the menu
-            $temp = array();
+            $temp = [];
             foreach ($pagedata['pages'] as $k => $v) {
                 $temp[$v['id']] = $v;
             }
             $pagedata['pages'] = $temp;
-        
+
             // Here we add the various flags to the pagedata, based on
             // the current page.
             $pagedata = xarMod::apiFunc(
                 'publications',
                 'user',
                 'addcurrentpageflags',
-                array('pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids)
+                ['pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids]
             );
 
             // If not multi-homed, then create a 'root root' page - a virtual page
@@ -261,10 +261,10 @@
             // root page passed into them, and always start with the children of
             // that root page.
             if (empty($data['multi_homed'])) {
-                $pagedata['pages'][0] = array(
-                'child_keys' => array($pagedata['root_page']['id']),
-                'has_children' => true, 'is_ancestor' => true
-            );
+                $pagedata['pages'][0] = [
+                'child_keys' => [$pagedata['root_page']['id']],
+                'has_children' => true, 'is_ancestor' => true,
+            ];
                 unset($pagedata['root_page']);
                 $pagedata['root_page'] =& $pagedata['pages'][0];
             }

@@ -28,7 +28,7 @@ function publications_adminapi_browse($args)
         throw new BadParameterException(null, $msg);
     }
 
-    $filelist = array();
+    $filelist = [];
 
     // Security Check
     if (!xarSecurity::check('SubmitPublications', 0)) {
@@ -38,7 +38,7 @@ function publications_adminapi_browse($args)
     // not supported under safe_mode
     @set_time_limit(120);
 
-    $todo = array();
+    $todo = [];
     $basedir = realpath($basedir);
     array_push($todo, $basedir);
     while (count($todo) > 0) {

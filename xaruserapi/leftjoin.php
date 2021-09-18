@@ -55,7 +55,7 @@ function publications_userapi_leftjoin($args)
 
     // Optional argument
     if (empty($ids) || !is_array($ids)) {
-        $ids = array();
+        $ids = [];
     }
 
     // Note : no security checks here
@@ -65,11 +65,11 @@ function publications_userapi_leftjoin($args)
     $dbconn   = xarDB::getConn();
     $publicationstable = $xartable['publications'];
 
-    $leftjoin = array();
+    $leftjoin = [];
 
     // Add available columns in the publications table (for now)
-    $columns = array('id','name','title','description','summary','owner','pubtype_id',
-                     'notes','state','body1','locale','create_date','start_date','parent_id');
+    $columns = ['id','name','title','description','summary','owner','pubtype_id',
+                     'notes','state','body1','locale','create_date','start_date','parent_id', ];
     foreach ($columns as $column) {
         $leftjoin[$column] = $publicationstable . '.' . $column;
     }
@@ -81,7 +81,7 @@ function publications_userapi_leftjoin($args)
     // Specify the WHERE part
     // FIXME: <mrb> someone better informed about this should replace
     // the xar-varprepforstore with qstr() method where appropriate
-    $whereclauses = array();
+    $whereclauses = [];
     if (!empty($owner) && is_numeric($owner)) {
         $whereclauses[] = $leftjoin['owner'] . ' = ' . $owner;
     }
@@ -89,7 +89,7 @@ function publications_userapi_leftjoin($args)
         if (is_numeric($ptid)) {
             $whereclauses[] = $leftjoin['pubtype_id'] . ' = ' . $ptid;
         } elseif (is_array($ptid) && count($ptid) > 0) {
-            $seenptid = array();
+            $seenptid = [];
             foreach ($ptid as $id) {
                 if (empty($id) || !is_numeric($id)) {
                     continue;
@@ -169,7 +169,7 @@ function publications_userapi_leftjoin($args)
         // find all single-quoted pieces of text and replace them first, to allow where clauses
         // like : title eq 'this and that' and body1 eq 'here or there'
         $idx = 0;
-        $found = array();
+        $found = [];
         if (preg_match_all("/'(.*?)'/", $where, $matches)) {
             foreach ($matches[1] as $match) {
                 $found[$idx] = $match;
@@ -183,8 +183,8 @@ function publications_userapi_leftjoin($args)
         }
 
         // cfr. BL compiler - adapt as needed (I don't think == and === are accepted in SQL)
-        $findLogic      = array(' eq ', ' ne ', ' lt ', ' gt ', ' id ', ' nd ', ' le ', ' ge ');
-        $replaceLogic   = array( ' = ', ' != ',  ' < ',  ' > ',  ' = ', ' != ', ' <= ', ' >= ');
+        $findLogic      = [' eq ', ' ne ', ' lt ', ' gt ', ' id ', ' nd ', ' le ', ' ge '];
+        $replaceLogic   = [ ' = ', ' != ',  ' < ',  ' > ',  ' = ', ' != ', ' <= ', ' >= '];
 
         $where = str_replace($findLogic, $replaceLogic, $where);
         $parts = preg_split('/\s+(and|or)\s+/', $where, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -225,14 +225,14 @@ function publications_userapi_leftjoin($args)
     }
 
     if (empty($searchfields)) {
-        $searchfields = array('title','description','summary','body1');
+        $searchfields = ['title','description','summary','body1'];
     }
 
     if (!empty($search)) {
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
 
-        $normal = array();
-        $find = array();
+        $normal = [];
+        $find = [];
 
         // 0. Check for "'equal whole string' searchType"
         if (!empty($searchtype) && $searchtype == 'equal whole string') {
@@ -248,9 +248,9 @@ function publications_userapi_leftjoin($args)
             if (!empty($fulltext)) {
                 $fulltextfields = explode(',', $fulltext);
             } else {
-                $fulltextfields = array();
+                $fulltextfields = [];
             }
-            $matchfields = array();
+            $matchfields = [];
             foreach ($fulltextfields as $field) {
                 if (empty($leftjoin[$field])) {
                     continue;
@@ -274,7 +274,7 @@ function publications_userapi_leftjoin($args)
                 $searchtype = '';
             } else {
                 // we're done here
-                $searchfields = array();
+                $searchfields = [];
                 $search = '';
             }
         }

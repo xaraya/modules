@@ -16,33 +16,33 @@
  */
 function publications_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
     if (!xarSecurity::check('ViewPublications', 0)) {
         return $menulinks;
     }
 
-    $menulinks[] = array('url'   => xarController::URL(
+    $menulinks[] = ['url'   => xarController::URL(
         'publications',
         'user',
         'main'
     ),
                          'title' => xarML('Highlighted Publications'),
-                         'label' => xarML('Front Page'));
+                         'label' => xarML('Front Page'), ];
 
     $items = xarMod::apiFunc('publications', 'user', 'get_menu_pages');
     foreach ($items as $item) {
-        $menulinks[] = array('url'   => xarController::URL('publications', 'user', 'display', array('itemid' => $item['id'])),
+        $menulinks[] = ['url'   => xarController::URL('publications', 'user', 'display', ['itemid' => $item['id']]),
                              'title' => xarML('Display #(1)', $item['description']),
-                             'label' => $item['title']);
+                             'label' => $item['title'], ];
     }
 
-    $menulinks[] = array('url'   => xarController::URL(
+    $menulinks[] = ['url'   => xarController::URL(
         'publications',
         'user',
         'viewmap'
     ),
                          'title' => xarML('Displays a map of all published content'),
-                         'label' => xarML('Publication Map'));
-                             
+                         'label' => xarML('Publication Map'), ];
+
     return $menulinks;
 }

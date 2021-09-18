@@ -53,7 +53,7 @@ function publications_userapi_getpages($args)
         $q->addfield('tpages.state AS status');
         $q->addfield('pt.description AS pubtype_name');
     }
-    
+
     if (isset($baseonly)) {
         $q->eq('tpages.parent_id', 0);
     }
@@ -67,7 +67,7 @@ function publications_userapi_getpages($args)
             $q->eq('tpages.state', strtoupper($status));
         } else {
             $statuses = explode(',', strtoupper($status));
-            $numeric_statuses = array();
+            $numeric_statuses = [];
             foreach ($statuses as $stat) {
                 $numeric_statuses[] = convert_status($stat);
             }
@@ -79,7 +79,7 @@ function publications_userapi_getpages($args)
         $where[] = 'tpages.id = ?';
         $bind[] = (int)$id;
     } elseif (!empty($ids)) {
-        $addwhere = array();
+        $addwhere = [];
         foreach ($ids as $myid) {
             if (!empty($myid) && is_numeric($myid)) {
                 $addwhere[] = (int)$myid;
@@ -117,7 +117,7 @@ function publications_userapi_getpages($args)
     // page, then add the extra sub-queries in here.
     if (!empty($tree_contains_id) || !empty($tree_contains_name)) {
         $q->addtable($xartable['publications'], 'tpages_member');
-        
+
         if (!empty($tree_contains_id)) {
             $q->eq('tpages_member.id', (int)$tree_contains_id);
         }
@@ -148,20 +148,20 @@ function publications_userapi_getpages($args)
 
 //    $q->qecho();
     $q->run();
-    
+
     if ($count) {
         $pages = count($q->output());
     } else {
         $index = 0;
-        $id2key = array();
-        $pages = array();
+        $id2key = [];
+        $pages = [];
 
         // Get all the page type details.
         $pagetypes = xarMod::apiFunc(
             'publications',
             'user',
             'get_pubtypes',
-            array('key' => 'id')
+            ['key' => 'id']
         );
 
         foreach ($q->output() as $row) {
@@ -193,24 +193,24 @@ function publications_userapi_getpages($args)
 
             // Define admin access
             sys::import('modules.dynamicdata.class.properties.master');
-            $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+            $accessproperty = DataPropertyMaster::getProperty(['name' => 'access']);
             $typename = $pagetypes[$row['ptid']]['name'];
-            $args = array(
+            $args = [
                 'instance' => $row['name'] . ":" . $typename,
                 'level' => 800,
-            );
+            ];
             $adminaccess = $accessproperty->check($args);
 
             $info = unserialize($row['access']);
             if (!empty($info['view_access'])) {
                 // Decide whether the current user can create blocks of this type
-                $args = array(
+                $args = [
                     'module' => 'publications',
                     'component' => 'Page',
                     'instance' => $name . ":" . $typename,
                     'group' => $info['view_access']['group'],
                     'level' => $info['view_access']['level'],
-                );
+                ];
                 if (!$accessproperty->check($args)) {
                     // Save the right value. We need to skip all subsequent
                     // pages until we get to a page to the right of this one.
@@ -230,13 +230,13 @@ function publications_userapi_getpages($args)
             }
 
             if (!empty($info['display_access'])) {
-                $args = array(
+                $args = [
                     'module' => 'publications',
                     'component' => 'Page',
                     'instance' => $name . ":" . $typename,
                     'group' => $info['display_access']['group'],
                     'level' => $info['display_access']['level'],
-                );
+                ];
                 if (!$accessproperty->check($args)) {
                     // We have reached a page that allows only overview access.
                     // Flag all pages with the restricted view until we get past this page.

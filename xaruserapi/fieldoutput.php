@@ -22,9 +22,9 @@ function publications_userapi_fieldoutput($args)
         return '';
     }
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array('name' => $object));
-    $itemid = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $itemid));
-    $object->getItem(array('itemid' => $itemid));
+    $object = DataObjectMaster::getObject(['name' => $object]);
+    $itemid = xarMod::apiFunc('publications', 'user', 'gettranslationid', ['id' => $itemid]);
+    $object->getItem(['itemid' => $itemid]);
     $field = $object->properties[$field]->getValue();
     return $field;
 }

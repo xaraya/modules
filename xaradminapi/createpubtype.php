@@ -27,7 +27,7 @@ function publications_adminapi_createpubtype($args)
     // message and return
     // Note : since we have several arguments we want to check here, we'll
     // report all those that are invalid at the same time...
-    $invalid = array();
+    $invalid = [];
     if (!isset($name) || !is_string($name) || empty($name)) {
         $invalid[] = 'name';
     }
@@ -81,7 +81,7 @@ function publications_adminapi_createpubtype($args)
     $query = "INSERT INTO $pubtypestable (pubtype_id, pubtypename,
             pubtypedescr, pubtypeconfig)
             VALUES (?,?,?,?)";
-    $bindvars = array($nextId, $name, $descr, serialize($config));
+    $bindvars = [$nextId, $name, $descr, serialize($config)];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

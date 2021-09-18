@@ -40,9 +40,9 @@ function publications_admin_new($args)
     }
     xarSession::setVar('publications_current_pubtype', $data['ptid']);
 
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $data['ptid']]);
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
 
     //FIXME This should be configuration in the celko property itself
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
@@ -52,7 +52,7 @@ function publications_admin_new($args)
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
 
     $data['properties'] = $data['object']->getProperties();
-    $data['items'] = array();
+    $data['items'] = [];
 
     if (!empty($data['ptid'])) {
         $template = $pubtypeobject->properties['template']->value;
@@ -62,7 +62,7 @@ function publications_admin_new($args)
     }
 
     // Get the settings of the publication type we are using
-    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $data['ptid']));
-    
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $data['ptid']]);
+
     return xarTpl::module('publications', 'admin', 'new', $data, $template);
 }

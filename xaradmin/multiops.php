@@ -30,10 +30,10 @@ function publications_admin_multiops()
 
     // Catch missing params here, rather than below
     if (empty($idlist)) {
-        return xarTpl::module('publications', 'user', 'errors', array('layout' => 'no_items'));
+        return xarTpl::module('publications', 'user', 'errors', ['layout' => 'no_items']);
     }
     if ($operation === '') {
-        return xarTpl::module('publications', 'user', 'errors', array('layout' => 'no_operation'));
+        return xarTpl::module('publications', 'user', 'errors', ['layout' => 'no_operation']);
     }
 
     $ids = explode(',', $idlist);
@@ -46,10 +46,10 @@ function publications_admin_multiops()
             }
 
             // Get the item
-            $item = $object->getItem(array('itemid' => $val));
-            
+            $item = $object->getItem(['itemid' => $val]);
+
             // Update it
-            if (!$object->deleteItem(array('state' => $operation))) {
+            if (!$object->deleteItem(['state' => $operation])) {
                 return;
             }
         }

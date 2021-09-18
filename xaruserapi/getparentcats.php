@@ -26,14 +26,14 @@ function publications_userapi_getparentcats($args)
     extract($args);
 
     if (!isset($cids) || !is_array($cids) || count($cids) == 0) {
-        return array();
+        return [];
     }
     if (empty($ptid)) {
         $ptid = null;
     }
     if (!isset($state)) {
         // frontpage or approved
-        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
+        $state = [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED];
     }
     if (!isset($showcids)) {
         $showcids = true;
@@ -51,10 +51,10 @@ function publications_userapi_getparentcats($args)
             'publications',
             'user',
             'getpubcatcount',
-            array('state' => $state,
+            ['state' => $state,
                                           'cids' => $cids,
                                           'ptid' => $ptid,
-                                          'reverse' => 1)
+                                          'reverse' => 1, ]
         );
     }
 
@@ -64,18 +64,18 @@ function publications_userapi_getparentcats($args)
         $curptid = 'total';
     }
 
-    $trails = array();
+    $trails = [];
     foreach ($cids as $cid) {
-        $trailitem = array();
+        $trailitem = [];
         $trailitem['cid'] = $cid;
         // TODO : retrieve all parents in 1 call ?
         $trail = xarMod::apiFunc(
             'categories',
             'user',
             'getcat',
-            array('cid' => $cid,
+            ['cid' => $cid,
                                     'return_itself' => true,
-                                    'getparents' => true)
+                                    'getparents' => true, ]
         );
 
         if ($count && isset($pubcatcount[$cid][$curptid])) {
@@ -84,14 +84,14 @@ function publications_userapi_getparentcats($args)
             $trailitem['cidcount'] = '';
         }
 
-        $trailitem['parentlinks'] = array();
-        $item = array();
+        $trailitem['parentlinks'] = [];
+        $item = [];
         $item['plink'] = xarController::URL(
             'publications',
             'user',
             'view',
-            array('ptid' => $ptid,
-                                        'sort' => $sort)
+            ['ptid' => $ptid,
+                                        'sort' => $sort, ]
         );
         $item['ptitle'] = xarML('All');
         $item['pjoin'] = ' &gt; ';
@@ -102,8 +102,8 @@ function publications_userapi_getparentcats($args)
                 'publications',
                 'user',
                 'view',
-                array('ptid' => $ptid,
-                                             'catid' => $info['cid'])
+                ['ptid' => $ptid,
+                                             'catid' => $info['cid'], ]
             );
             $item['ptitle'] = xarVar::prepForDisplay($info['name']);
             if ($info['cid'] == $cid) {
@@ -117,16 +117,16 @@ function publications_userapi_getparentcats($args)
                 }
                 // TODO: improve the case where we have several icons :)
                 if (!empty($info['image'])) {
-                    $trailitem['icon'] = array('image' => $info['image'],
+                    $trailitem['icon'] = ['image' => $info['image'],
                                                'text' => $item['ptitle'],
                                                'link' =>
                           xarController::URL(
                               'publications',
                               'user',
                               'view',
-                              array('ptid' => $ptid,
-                                         'catid' => $info['cid'])
-                          ));
+                              ['ptid' => $ptid,
+                                         'catid' => $info['cid'], ]
+                          ), ];
                 }
             } else {
                 $item['pjoin'] = ' &gt; ';

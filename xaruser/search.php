@@ -142,17 +142,17 @@ function publications_user_search($args)
 
     // frontpage or approved state
     if (!$isadmin || !isset($state)) {
-        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
+        $state = [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED];
     } elseif (is_string($state)) {
         if (strpos($state, ' ')) {
             $state = explode(' ', $state);
         } elseif (strpos($state, '+')) {
             $state = explode('+', $state);
         } else {
-            $state = array($state);
+            $state = [$state];
         }
     }
-    $seenstate = array();
+    $seenstate = [];
     foreach ($state as $that) {
         if (empty($that) || !is_numeric($that)) {
             continue;
@@ -172,7 +172,7 @@ function publications_user_search($args)
 
     // default publication type(s) to search in
     if (!empty($ptid) && isset($pubtypes[$ptid])) {
-        $ptids = array($ptid);
+        $ptids = [$ptid];
         $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
         if (empty($settings['show_categories'])) {
             $show_categories = 0;
@@ -186,7 +186,7 @@ function publications_user_search($args)
         $show_categories = 1;
     } elseif (!isset($ptids)) {
         //    $ptids = array(xarModVars::get('publications','defaultpubtype'));
-        $ptids = array();
+        $ptids = [];
         foreach ($pubtypes as $pubid => $pubtype) {
             $ptids[] = $pubid;
         }
@@ -209,7 +209,7 @@ function publications_user_search($args)
             $andcids = false;
         }
     }
-    $seencid = array();
+    $seencid = [];
     $catid = null;
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
@@ -225,7 +225,7 @@ function publications_user_search($args)
             $catid = join('-', $cids);
         }
     }
-    $seenptid = array();
+    $seenptid = [];
     if (isset($ptids) && is_array($ptids)) {
         foreach ($ptids as $curptid) {
             if (empty($curptid) || !isset($pubtypes[$curptid])) {
@@ -250,7 +250,7 @@ function publications_user_search($args)
             'roles',
             'user',
             'get',
-            array('name' => $author)
+            ['name' => $author]
         );
         if (!empty($user['uid'])) {
             $owner = $user['uid'];
@@ -271,7 +271,7 @@ function publications_user_search($args)
     }
 
     if (empty($fields)) {
-        $fieldlist = array('title', 'description', 'summary', 'body1');
+        $fieldlist = ['title', 'description', 'summary', 'body1'];
     } else {
         $fieldlist = array_keys($fields);
         // don't pass fields via URLs if we stick to the default list
@@ -290,8 +290,8 @@ function publications_user_search($args)
         $fieldlist = explode(',', $fulltext);
     }
 
-    $data = array();
-    $data['results'] = array();
+    $data = [];
+    $data['results'] = [];
     $data['state'] = '';
     $data['ishooked'] = $ishooked;
     // TODO: MichelV: $ishooked is never empty, but either 0 or 1
@@ -302,39 +302,39 @@ function publications_user_search($args)
     }
     if ($isadmin) {
         $states = xarMod::apiFunc('publications', 'user', 'getstates');
-        $data['statelist'] = array();
+        $data['statelist'] = [];
         foreach ($states as $id => $name) {
-            $data['statelist'][] = array('id' => $id, 'name' => $name, 'checked' => in_array($id, $state));
+            $data['statelist'][] = ['id' => $id, 'name' => $name, 'checked' => in_array($id, $state)];
         }
     }
 
     // TODO: show field labels when we're dealing with only 1 pubtype
-    $data['fieldlist'] = array(
-                                    array('id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title', $fieldlist)),
-                                    array('id' => 'description', 'name' => xarML('description'), 'checked' => in_array('description', $fieldlist)),
-                                    array('id' => 'summary', 'name' => xarML('summary'), 'checked' => in_array('summary', $fieldlist)),
-                                    array('id' => 'body1', 'name' => xarML('body1'), 'checked' => in_array('body1', $fieldlist)),
+    $data['fieldlist'] = [
+                                    ['id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title', $fieldlist)],
+                                    ['id' => 'description', 'name' => xarML('description'), 'checked' => in_array('description', $fieldlist)],
+                                    ['id' => 'summary', 'name' => xarML('summary'), 'checked' => in_array('summary', $fieldlist)],
+                                    ['id' => 'body1', 'name' => xarML('body1'), 'checked' => in_array('body1', $fieldlist)],
 //                                     array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
-                                   );
+                                   ];
 
-    $data['publications'] = array();
+    $data['publications'] = [];
     foreach ($pubtypes as $pubid => $pubtype) {
         if (!empty($seenptid[$pubid])) {
             $checked = ' checked="checked"';
         } else {
             $checked = '';
         }
-        $data['publications'][] = array('id' => $pubid,
+        $data['publications'][] = ['id' => $pubid,
                                         'description' => xarVar::prepForDisplay($pubtype['description']),
-                                        'checked' => $checked);
+                                        'checked' => $checked, ];
     }
 
-    $data['categories'] = array();
+    $data['categories'] = [];
     if (!empty($by) && $by == 'cat') {
-        $catarray = array();
+        $catarray = [];
         foreach ($ptids as $curptid) {
             // get root categories for this publication type
-            $catlinks = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => $curptid));
+            $catlinks = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => $curptid]);
             foreach ($catlinks as $cat) {
                 $catarray[$cat['category_id']] = $cat['name'];
             }
@@ -345,14 +345,14 @@ function publications_user_search($args)
                 'categories',
                 'visual',
                 'makeselect',
-                array('cid' => $cid,
+                ['cid' => $cid,
                                           'return_itself' => true,
                                           'select_itself' => true,
                                           'values' => &$seencid,
-                                          'multiple' => 1)
+                                          'multiple' => 1, ]
             );
-            $data['categories'][] = array('cattitle' => $title,
-                                          'catselect' => $select);
+            $data['categories'][] = ['cattitle' => $title,
+                                          'catselect' => $select, ];
         }
         $data['searchurl'] = xarController::URL('search', 'user', 'main');
     } else {
@@ -360,7 +360,7 @@ function publications_user_search($args)
             'search',
             'user',
             'main',
-            array('by' => 'cat')
+            ['by' => 'cat']
         );
     }
 
@@ -397,7 +397,7 @@ function publications_user_search($args)
     }
 
     if (!empty($q) || (!empty($author) && isset($owner)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
-        $getfields = array('id','title', 'start_date','pubtype_id','cids');
+        $getfields = ['id','title', 'start_date','pubtype_id','cids'];
         // Return the relevance when using MySQL full-text search
         //if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
         //    $getfields[] = 'relevance';
@@ -409,7 +409,7 @@ function publications_user_search($args)
                 'publications',
                 'user',
                 'getall',
-                array('startnum' => $startnum,
+                ['startnum' => $startnum,
                                            'cids' => $cids,
                                            'andcids' => $andcids,
                                            'ptid' => $curptid,
@@ -422,16 +422,16 @@ function publications_user_search($args)
                                            'searchfields' => $fieldlist,
                                            'searchtype' => $searchtype,
                                            'search' => $q,
-                                           'fields' => $getfields
-                                          )
+                                           'fields' => $getfields,
+                                          ]
             );
             // TODO: re-use article output code from elsewhere (view / archive / admin)
             if (!empty($publications) && count($publications) > 0) {
 
                 // retrieve the categories for each article
-                $catinfo = array();
+                $catinfo = [];
                 if ($show_categories) {
-                    $cidlist = array();
+                    $cidlist = [];
                     foreach ($publications as $article) {
                         if (!empty($article['cids']) && count($article['cids']) > 0) {
                             foreach ($article['cids'] as $cid) {
@@ -444,16 +444,16 @@ function publications_user_search($args)
                             'categories',
                             'user',
                             'getcatinfo',
-                            array('cids' => array_keys($cidlist))
+                            ['cids' => array_keys($cidlist)]
                         );
                         // get root categories for this publication type
                         $catroots = xarMod::apiFunc(
                             'publications',
                             'user',
                             'getrootcats',
-                            array('ptid' => $curptid)
+                            ['ptid' => $curptid]
                         );
-                        $catroots = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications','itemtype' => $curptid));
+                        $catroots = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications','itemtype' => $curptid]);
                     }
                     foreach ($catinfo as $cid => $info) {
                         $catinfo[$cid]['name'] = xarVar::prepForDisplay($info['name']);
@@ -461,8 +461,8 @@ function publications_user_search($args)
                             'publications',
                             'user',
                             'view',
-                            array('ptid' => $curptid,
-                                                                 'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) )
+                            ['ptid' => $curptid,
+                                                                 'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid), ]
                         );
                         // only needed when sorting by root category id
                         $catinfo[$cid]['root'] = 0; // means not found under a root category
@@ -486,7 +486,7 @@ function publications_user_search($args)
                 // needed for sort function below
                 $GLOBALS['artsearchcatinfo'] = $catinfo;
 
-                $items = array();
+                $items = [];
                 foreach ($publications as $article) {
                     $count++;
                     $curptid = $article['pubtype_id'];
@@ -494,8 +494,8 @@ function publications_user_search($args)
                         'publications',
                         'user',
                         'display',
-                        array('ptid' => $article['pubtype_id'],
-                                           'itemid' => $article['id'])
+                        ['ptid' => $article['pubtype_id'],
+                                           'itemid' => $article['id'], ]
                     );
                     // publication date of article (if needed)
                     if (!empty($pubtypes[$curptid]['config']['startdate']['label'])
@@ -511,7 +511,7 @@ function publications_user_search($args)
                     }
 
                     // categories this article belongs to
-                    $categories = array();
+                    $categories = [];
                     if ($show_categories && !empty($article['cids']) &&
                         is_array($article['cids']) && count($article['cids']) > 0) {
                         $cidlist = $article['cids'];
@@ -524,28 +524,28 @@ function publications_user_search($args)
 
                         $join = '';
                         foreach ($cidlist as $cid) {
-                            $item = array();
+                            $item = [];
                             if (!isset($catinfo[$cid])) {
                                 // oops
                                 continue;
                             }
-                            $categories[] = array('cname' => $catinfo[$cid]['name'],
+                            $categories[] = ['cname' => $catinfo[$cid]['name'],
                                                   'clink' => $catinfo[$cid]['link'],
-                                                  'cjoin' => $join);
+                                                  'cjoin' => $join, ];
                             if (empty($join)) {
                                 $join = ' | ';
                             }
                         }
                     }
 
-                    $items[] = array('title' => xarVar::prepHTMLDisplay($article['title']),
+                    $items[] = ['title' => xarVar::prepHTMLDisplay($article['title']),
                                      'locale' => $article['locale'],
 
                                      'link' => $link,
                                      'date' => $date,
                                      'startdate' => $startdate,
-                                     'relevance' => isset($article['relevance']) ? $article['relevance'] : null,
-                                     'categories' => $categories);
+                                     'relevance' => $article['relevance'] ?? null,
+                                     'categories' => $categories, ];
                 }
                 unset($publications);
 
@@ -558,7 +558,7 @@ function publications_user_search($args)
                         'publications',
                         'user',
                         'countitems',
-                        array('cids' => $cids,
+                        ['cids' => $cids,
                                                             'andcids' => $andcids,
                                                             'ptid' => $curptid,
                                                             'owner' => $owner,
@@ -567,7 +567,7 @@ function publications_user_search($args)
                                                             'enddate' => $enddate,
                                                             'searchfields' => $fieldlist,
                                                             'searchtype' => $searchtype,
-                                                            'search' => $q)
+                                                            'search' => $q, ]
                     ),
 
 /* trick : use *this* publications search instead of global search for pager :-)
@@ -577,17 +577,17 @@ function publications_user_search($args)
                                             'publications',
                                             'user',
                                             'search',
-                                            array('ptid' => $curptid,
+                                            ['ptid' => $curptid,
                                                         'catid' => $catid,
-                                                        'q' => isset($q) ? $q : null,
-                                                        'author' => isset($author) ? $author : null,
+                                                        'q' => $q ?? null,
+                                                        'author' => $author ?? null,
                                                         'start' => $startdate,
                                                         'end' => ($enddate != $now) ? $enddate : null,
                                                         'state' => $stateline,
                                                         'sort' => $sort,
                                                         'fields' => $fields,
                                                         'searchtype' => !empty($searchtype) ? $searchtype : null,
-                                                        'startnum' => '%%')
+                                                        'startnum' => '%%', ]
                                         ),
                     $numitems
                 );
@@ -602,25 +602,25 @@ function publications_user_search($args)
                         'publications',
                         'user',
                         'search',
-                        array('ptid' => $curptid,
+                        ['ptid' => $curptid,
                                                'catid' => $catid,
-                                               'q' => isset($q) ? $q : null,
-                                               'author' => isset($author) ? $author : null,
+                                               'q' => $q ?? null,
+                                               'author' => $author ?? null,
                                                'start' => $startdate,
                                                'end' => ($enddate != $now) ? $enddate : null,
                                                'state' => $stateline,
                                                'fields' => $fields,
                                                'searchtype' => !empty($searchtype) ? $searchtype : null,
-                                               'sort' => $othersort)
+                                               'sort' => $othersort, ]
                     );
 
                     $pager .= '&#160;&#160;<a href="' . $sortlink . '">' .
                               xarML('sort by') . ' ' . xarML($othersort) . '</a>';
                 }
 
-                $data['results'][] = array('description' => xarVar::prepForDisplay($pubtypes[$curptid]['description']),
+                $data['results'][] = ['description' => xarVar::prepForDisplay($pubtypes[$curptid]['description']),
                                            'items' => $items,
-                                           'pager' => $pager);
+                                           'pager' => $pager, ];
             }
         }
         unset($catinfo);

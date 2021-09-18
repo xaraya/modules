@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class PublicationType extends DataObject
 {
-    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
+    public function checkInput(array $args = [], $suppress=0, $priority='dd')
     {
         // The access property is ignored here
         $isvalid = parent::checkInput($args, $suppress, $priority);
@@ -23,7 +23,7 @@ class PublicationType extends DataObject
         // If the rest of the publication is valid, then do the access part
         // Note this is a collection of access properties; hence the complicated process of saving it
         if ($isvalid) {
-            $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+            $access = DataPropertyMaster::getProperty(['name' => 'access']);
             $access->initialization_group_multiselect = true;
             $access->validation_override = true;
 
@@ -38,18 +38,18 @@ class PublicationType extends DataObject
             $validprop = $access->checkInput("access_delete");
             $deleteaccess = $access->getValue();
             $isvalid = $isvalid && $validprop;
-            $allaccess = array(
+            $allaccess = [
                 'add'     => $addaccess,
                 'display' => $displayaccess,
                 'modify'  => $modifyaccess,
                 'delete'  => $deleteaccess,
-            );
+            ];
             $this->properties['access']->setValue($allaccess);
         }
         return $isvalid;
     }
 
-    public function createItem(array $args = array())
+    public function createItem(array $args = [])
     {
         // Make sure we can save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
@@ -59,11 +59,11 @@ class PublicationType extends DataObject
         return $id;
     }
 
-    public function updateItem(array $args = array())
+    public function updateItem(array $args = [])
     {
         // Make sure we can save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
-        
+
         // Save the item
         $id = parent::updateItem($args);
         return $id;
@@ -71,7 +71,7 @@ class PublicationType extends DataObject
 
     public function getLabel()
     {
-        $settings = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $this->properties['id']->value));
+        $settings = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $this->properties['id']->value]);
         if (!empty($settings['alias'])) {
             return $settings['alias'];
         } else {

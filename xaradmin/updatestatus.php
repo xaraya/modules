@@ -70,8 +70,8 @@ function publications_admin_updatestate()
             'publications',
             'user',
             'get',
-            array('id' => $id,
-                                       'withcids' => 1)
+            ['id' => $id,
+                                       'withcids' => 1, ]
         );
         if (!isset($article) || !is_array($article)) {
             $msg = xarML(
@@ -83,7 +83,7 @@ function publications_admin_updatestate()
         }
         $article['ptid'] = $article['pubtype_id'];
         // Security check
-        $input = array();
+        $input = [];
         $input['article'] = $article;
         if ($state < 0) {
             $input['mask'] = 'ManagePublications';
@@ -126,10 +126,10 @@ function publications_admin_updatestate()
                 'publications',
                 'admin',
                 'view',
-                array('ptid' => $ptid,
+                ['ptid' => $ptid,
                                                 'catid' => $catid,
                                                 'state' => $state,
-                                                'startnum' => $startnum)
+                                                'startnum' => $startnum, ]
             ));
             return true;
         }
@@ -142,7 +142,7 @@ function publications_admin_updatestate()
         'publications',
         'admin',
         'view',
-        array('ptid' => $ptid, 'catid' => $catid)
+        ['ptid' => $ptid, 'catid' => $catid]
     ));
 
     return true;

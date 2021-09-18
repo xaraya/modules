@@ -29,15 +29,15 @@
         if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::DONT_SET)) {
             return;
         }
-    
+
         if (empty($data['itemid'])) {
             return xarResponse::NotFound();
         }
 
         // If a pubtype ID was passed, get the name of the pub object
         if (isset($ptid)) {
-            $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-            $pubtypeobject->getItem(array('itemid' => $ptid));
+            $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+            $pubtypeobject->getItem(['itemid' => $ptid]);
             $objectname = $pubtypeobject->properties['name']->value;
         }
         if (empty($objectname)) {
@@ -45,7 +45,7 @@
         }
 
         sys::import('modules.dynamicdata.class.objects.master');
-        $data['object'] = DataObjectMaster::getObject(array('name' => $objectname));
+        $data['object'] = DataObjectMaster::getObject(['name' => $objectname]);
         if (empty($data['object'])) {
             return xarResponse::NotFound();
         }
@@ -55,18 +55,18 @@
             return xarResponse::Forbidden(xarML('Clone #(1) is forbidden', $object->label));
         }
 
-        $data['object']->getItem(array('itemid' => $data['itemid']));
-        
+        $data['object']->getItem(['itemid' => $data['itemid']]);
+
         $data['authid'] = xarSec::genAuthKey();
         $data['name'] = $data['object']->properties['name']->value;
         $data['label'] = $data['object']->label;
         xarTpl::setPageTitle(xarML('Clone Publication #(1) in #(2)', $data['itemid'], $data['label']));
-        
+
         if ($confirm) {
             if (!xarSec::confirmAuthKey()) {
                 return;
             }
-            
+
             // Get the name for the clone
             if (!xarVar::fetch('newname', 'str', $newname, "", xarVar::NOT_REQUIRED)) {
                 return;
@@ -78,12 +78,12 @@
                 $newname = $data['name'] . "_copy";
             }
             $newname = strtolower(str_ireplace(" ", "_", $newname));
-    
+
             // Create the clone
             $data['object']->properties['name']->setValue($newname);
             $data['object']->properties['id']->setValue(0);
-            $cloneid = $data['object']->createItem(array('itemid' => 0));
-    
+            $cloneid = $data['object']->createItem(['itemid' => 0]);
+
             // Create the clone's translations
             if (!xarVar::fetch('clone_translations', 'int', $clone_translations, 0, xarVar::NOT_REQUIRED)) {
                 return;
@@ -100,17 +100,17 @@
                 $q->addfield('p.id AS id');
                 $q->addfield('pt.name AS name');
                 $q->run();
-                
+
                 // Clone each one
                 foreach ($q->output() as $item) {
-                    $object = DataObjectMaster::getObject(array('name' => $item['name']));
-                    $object->getItem(array('itemid' => $item['id']));
+                    $object = DataObjectMaster::getObject(['name' => $item['name']]);
+                    $object->getItem(['itemid' => $item['id']]);
                     $object->properties['parent']->value = $cloneid;
                     $object->properties['id']->value = 0;
-                    $object->createItem(array('itemid' => 0));
+                    $object->createItem(['itemid' => 0]);
                 }
             }
-            
+
             // Redirect if we came from somewhere else
             $current_listview = xarSession::getVar('publications_current_listview');
             if (!empty($return_url)) {

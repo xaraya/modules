@@ -16,23 +16,23 @@
  */
 function publications_userapi_getitemtypes($args)
 {
-    $itemtypes = array();
+    $itemtypes = [];
 
-    $itemtypes[300] = array('label' => xarML('Bare Publication'),
+    $itemtypes[300] = ['label' => xarML('Bare Publication'),
                           'title' => xarML('View Bare Publication'),
-                          'url'   => xarController::URL('publications', 'user', 'view')
-                         );
+                          'url'   => xarController::URL('publications', 'user', 'view'),
+                         ];
     // Get publication types
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     foreach ($pubtypes as $id => $pubtype) {
-        $itemtypes[$id] = array('label' => xarVar::prepForDisplay($pubtype['description']),
+        $itemtypes[$id] = ['label' => xarVar::prepForDisplay($pubtype['description']),
                                 'title' => xarVar::prepForDisplay(xarML('Display #(1)', $pubtype['description'])),
-                                'url'   => xarController::URL('publications', 'user', 'view', array('ptid' => $id))
-                               );
+                                'url'   => xarController::URL('publications', 'user', 'view', ['ptid' => $id]),
+                               ];
     }
 
-    $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', array('moduleid' => 30065, 'native' =>false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata', 'user', 'getmoduleitemtypes', ['moduleid' => 30065, 'native' =>false]);
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
@@ -40,7 +40,7 @@ function publications_userapi_getitemtypes($args)
     return array_combine($keys,$values);
     */
 
-    $types = array();
+    $types = [];
     foreach ($itemtypes as $key => $value) {
         $types[$key] = $value;
     }

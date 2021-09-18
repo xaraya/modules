@@ -20,16 +20,16 @@ class Publications_FillerBlockAdmin extends Publications_FillerBlock
         $data = $this->getContent();
 
         if (!is_array($data['pubstate'])) {
-            $statearray = array($data['pubstate']);
+            $statearray = [$data['pubstate']];
         } else {
             $statearray = $data['pubstate'];
         }
-        
+
         // Only include pubtype if a specific pubtype is selected
         if (!empty($data['pubtype_id'])) {
             $article_args['ptid'] = $data['pubtype_id'];
         }
-        
+
         // Add the rest of the arguments
         $article_args['state'] = $statearray;
 
@@ -41,18 +41,18 @@ class Publications_FillerBlockAdmin extends Publications_FillerBlock
         );
 
         $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
-        $data['stateoptions'] = array(
-            array('id' => '', 'name' => xarML('All Published')),
-            array('id' => '3', 'name' => xarML('Frontpage')),
-            array('id' => '2', 'name' => xarML('Approved'))
-        );
+        $data['stateoptions'] = [
+            ['id' => '', 'name' => xarML('All Published')],
+            ['id' => '3', 'name' => xarML('Frontpage')],
+            ['id' => '2', 'name' => xarML('Approved')],
+        ];
 
         return $data;
     }
 
-    public function update(array $data=array())
+    public function update(array $data=[])
     {
-        $args = array();
+        $args = [];
         xarVar::fetch('pubtype_id', 'int', $args['pubtype_id'], $this->pubtype_id, xarVar::NOT_REQUIRED);
         xarVar::fetch('pubstate', 'str', $args['pubstate'], $this->pubstate, xarVar::NOT_REQUIRED);
         xarVar::fetch('displaytype', 'str', $args['displaytype'], $this->displaytype, xarVar::NOT_REQUIRED);

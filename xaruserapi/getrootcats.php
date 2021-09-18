@@ -27,7 +27,7 @@ function publications_userapi_getrootcats($args)
     }
 
     // see which root categories we need to handle
-    $rootcats = array();
+    $rootcats = [];
     if (!empty($ptid)) {
         $rootcats = unserialize(xarModUserVars::get('publications', 'basecids', $ptid));
     } elseif (empty($all)) {
@@ -40,7 +40,7 @@ function publications_userapi_getrootcats($args)
         // add the defaults too, in case we have other base categories there
         $publist[] = '';
         // build the list of root categories for all required publication types
-        $catlist = array();
+        $catlist = [];
         foreach ($publist as $pubid) {
             if (empty($pubid)) {
                 $cidstring = xarModVars::get('publications', 'basecids');
@@ -50,7 +50,7 @@ function publications_userapi_getrootcats($args)
             if (!empty($cidstring)) {
                 $rootcats = unserialize($cidstring);
             } else {
-                $rootcats = array();
+                $rootcats = [];
             }
             foreach ($rootcats as $cid) {
                 $catlist[$cid] = 1;
@@ -61,11 +61,11 @@ function publications_userapi_getrootcats($args)
         }
     }
     if (empty($rootcats)) {
-        $rootcats = array();
+        $rootcats = [];
     }
 
     if (count($rootcats) < 1) {
-        return array();
+        return [];
     }
 
     if (!xarMod::apiLoad('categories', 'user')) {
@@ -73,12 +73,12 @@ function publications_userapi_getrootcats($args)
     }
 
     $isfirst = 1;
-    $catlinks = array();
+    $catlinks = [];
     $catlist = xarMod::apiFunc(
         'categories',
         'user',
         'getcatinfo',
-        array('cids' => $rootcats)
+        ['cids' => $rootcats]
     );
     if (empty($catlist)) {
         return $catlinks;
@@ -89,15 +89,15 @@ function publications_userapi_getrootcats($args)
             continue;
         }
         $info = $catlist[$cid];
-        $item = array();
+        $item = [];
         $item['catid'] = $info['cid'];
         $item['cattitle'] = xarVar::prepForDisplay($info['name']);
         $item['catlink'] = xarController::URL(
             'publications',
             'user',
             'view',
-            array('ptid' => $ptid,
-                                          'catid' => $info['cid'])
+            ['ptid' => $ptid,
+                                          'catid' => $info['cid'], ]
         );
         if ($isfirst) {
             $item['catjoin'] = '';

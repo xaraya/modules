@@ -28,7 +28,7 @@ function publications_userapi_gettranslationid($args)
     if (empty($args['id'])) {
         return 0;
     }
-    
+
     // We can check on a full locale or just a partial one (excluding charset)
     if (empty($args['partiallocale'])) {
         $args['partiallocale'] = 0;
@@ -41,14 +41,14 @@ function publications_userapi_gettranslationid($args)
     }
 
     sys::import('xaraya.structures.query');
-    
+
     if ($args['partiallocale']) {
         $parts = explode('.', $locale);
         $locale = $parts[0];
     }
 
     $xartable =& xarDB::getTables();
-    
+
     if (empty($args['locale'])) {
         // Return the id of the translation if it exists, or else the base document
         // Strategy: don't filter on locale in the SQL, so that we are assured of a non-empty result.

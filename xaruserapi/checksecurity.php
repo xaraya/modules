@@ -63,8 +63,8 @@ function publications_userapi_checksecurity($args)
             'publications',
             'user',
             'get',
-            array('id' => $id,
-                                      'withcids' => true)
+            ['id' => $id,
+                                      'withcids' => true, ]
         );
         if ($publication == false) {
             return false;
@@ -105,13 +105,13 @@ function publications_userapi_checksecurity($args)
 
     // Get root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications', 'itemtype' => $ptid));
+        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications', 'itemtype' => $ptid]);
     } else {
         $ptid = null;
     }
     if (!isset($rootcids)) {
         // TODO: handle cross-pubtype views better
-        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', array('module' => 'publications'));
+        $rootcats = xarMod::apiFunc('categories', 'user', 'getallcatbases', ['module' => 'publications']);
     }
 
     // Get category information for this article
@@ -125,25 +125,25 @@ function publications_userapi_checksecurity($args)
             'categories',
             'user',
             'getlinks',
-            array('iids' => array($id),
+            ['iids' => [$id],
                                           'itemtype' => $ptid,
                                           'modid' => $sysid,
-                                          'reverse' => 0
-                                         )
+                                          'reverse' => 0,
+                                         ]
         );
         if (is_array($publicationcids) && count($publicationcids) > 0) {
             $publication['cids'] = array_keys($publicationcids);
         }
     }
     if (!isset($publication['cids'])) {
-        $publication['cids'] = array();
+        $publication['cids'] = [];
     }
 
     if (!isset($cids)) {
-        $cids = array();
+        $cids = [];
     }
 
-    $jointcids = array();
+    $jointcids = [];
     /* TODO: forget about parent/root cids for now
         foreach ($rootcids as $cid) {
             $jointcids[$cid] = 1;

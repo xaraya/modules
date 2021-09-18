@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -14,7 +15,7 @@ sys::import('modules.base.class.pager');
 /**
  * view items
  */
-function publications_admin_view($args=array())
+function publications_admin_view($args=[])
 {
     if (!xarSecurity::check('EditPublications')) {
         return;
@@ -91,7 +92,7 @@ function publications_admin_view($args=array())
     if (empty($sort)) {
         $sort = 'date';
     }
-    $data = array();
+    $data = [];
     $data['ptid'] = $ptid;
     $data['sort'] = $sort;
     $data['owner'] = $owner;
@@ -110,7 +111,7 @@ function publications_admin_view($args=array())
             $andcids = false;
         }
     } else {
-        $cids = array();
+        $cids = [];
         $andcids = false;
     }
     $data['catid'] = $catid;
@@ -157,16 +158,16 @@ function publications_admin_view($args=array())
                                    'state'   => $state));
 */
     // Save the current admin view, so that we can return to it after update
-    $lastview = array('ptid' => $ptid,
+    $lastview = ['ptid' => $ptid,
                       'owner' => $owner,
                       'locale' => $lang,
                       'catid' => $catid,
                       'state' => $state,
                       'pubdate' => $pubdate,
-                      'startnum' => $startnum > 1 ? $startnum : null);
+                      'startnum' => $startnum > 1 ? $startnum : null, ];
     xarSession::setVar('Publications.LastView', serialize($lastview));
 
-    $labels = array();
+    $labels = [];
     $data['labels'] = $labels;
 
     // only show the date if this publication type has one
@@ -180,7 +181,7 @@ function publications_admin_view($args=array())
 
     $data['states'] = xarMod::apiFunc('publications', 'user', 'getstates');
 
-    $items = array();
+    $items = [];
     /*
     if ($publications != false) {
         foreach ($publications as $article) {
@@ -291,7 +292,7 @@ function publications_admin_view($args=array())
 
         // Create filters based on publication type
         */
-    $pubfilters = array();
+    $pubfilters = [];
     /*
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurity::check('EditPublications',0,'Publication',"$id:All:All:All")) {
@@ -310,28 +311,28 @@ function publications_admin_view($args=array())
 */
     $data['pubfilters'] = $pubfilters;
     // Create filters based on article state
-    $statefilters = array();
+    $statefilters = [];
     if (!empty($labels['state'])) {
-        $statefilters[] = array('stitle' => xarML('All'),
+        $statefilters[] = ['stitle' => xarML('All'),
                                  'slink' => !is_array($state) ? '' :
                                                 xarController::URL(
                                                     'publications',
                                                     'admin',
                                                     'view',
-                                                    array('ptid' => $ptid,
-                                                                'catid' => $catid)
-                                                ));
+                                                    ['ptid' => $ptid,
+                                                                'catid' => $catid, ]
+                                                ), ];
         foreach ($data['states'] as $id => $name) {
-            $statefilters[] = array('stitle' => $name,
+            $statefilters[] = ['stitle' => $name,
                                      'slink' => (is_array($state) && $state[0] == $id) ? '' :
                                                     xarController::URL(
                                                         'publications',
                                                         'admin',
                                                         'view',
-                                                        array('ptid' => $ptid,
+                                                        ['ptid' => $ptid,
                                                                     'catid' => $catid,
-                                                                    'state' => array($id))
-                                                    ));
+                                                                    'state' => [$id], ]
+                                                    ), ];
         }
     }
     $data['statefilters'] = $statefilters;
@@ -342,7 +343,7 @@ function publications_admin_view($args=array())
             'publications',
             'admin',
             'new',
-            array('ptid' => $ptid)
+            ['ptid' => $ptid]
         );
         $data['shownewlink'] = true;
     } else {
@@ -366,14 +367,14 @@ function publications_admin_view($args=array())
         // TODO: allow templates per category ?
         $template = null;
     }
-    
+
     // Get the available publications objects
-    $object = DataObjectMaster::getObjectList(array('objectid' => 1));
+    $object = DataObjectMaster::getObjectList(['objectid' => 1]);
     $items = $object->getItems();
-    $options = array();
+    $options = [];
     foreach ($items as $item) {
         if (strpos($item['name'], 'publications_') !== false) {
-            $options[] = array('id' => $item['objectid'], 'name' => $item['name'], 'title' => $item['label']);
+            $options[] = ['id' => $item['objectid'], 'name' => $item['name'], 'title' => $item['label']];
         }
     }
     $data['objects'] = $options;
@@ -383,7 +384,7 @@ function publications_admin_view($args=array())
     $q = new Query();
     $q->eq('parent_id', 0);
     $q->eq('pubtype_id', $ptid);
-    
+
     // Suppress deleted items if not an admin
     // Remove this once listing property works with dataobject access
     if (!xarRoles::isParent('Administrators', xarUser::getVar('uname'))) {
@@ -391,12 +392,12 @@ function publications_admin_view($args=array())
     }
     $data['conditions'] = $q;
 
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $ptid));
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $ptid]);
+    $data['object'] = DataObjectMaster::getObjectList(['name' => $pubtypeobject->properties['name']->value]);
 
     // Flag this as the current list view
-    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $ptid)));
-    
+    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(['ptid' => $ptid]));
+
     return xarTpl::module('publications', 'admin', 'view', $data, $template);
 }

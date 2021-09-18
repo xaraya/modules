@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -64,7 +65,7 @@ function publications_admin_display($args)
     if (!xarVar::fetch('layout', 'str:1', $layout, 'detail', xarVar::NOT_REQUIRED)) {
         return;
     }
-    
+
     // Override xarVar::fetch
     extract($args);
 
@@ -72,7 +73,7 @@ function publications_admin_display($args)
     if (isset($itemid)) {
         $id = $itemid;
     }
-        
+
     # --------------------------------------------------------
 #
     # If no ID supplied, try getting the id of the default page.
@@ -89,9 +90,9 @@ function publications_admin_display($args)
     xarCoreCache::setCached('Blocks.publications', 'current_base_id', $id);
 
     if ($translate) {
-        $id = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $id));
+        $id = xarMod::apiFunc('publications', 'user', 'gettranslationid', ['id' => $id]);
     }
-    
+
     # --------------------------------------------------------
 #
     # If still no ID, check if we are trying to display a pubtype
@@ -103,7 +104,7 @@ function publications_admin_display($args)
         // We're missing an id but can get a pubtype: jump to the pubtype view
         xarController::redirect(xarController::URL('publications', 'user', 'view'));
     }
-    
+
     # --------------------------------------------------------
 #
     # If still no ID, we have come to the end of the line
@@ -118,7 +119,7 @@ function publications_admin_display($args)
 #
     // Here we get the publication type first, and then from that the page
     // Perhaps more efficient to get the page directly?
-    $ptid = xarMod::apiFunc('publications', 'user', 'getitempubtype', array('itemid' => $id));
+    $ptid = xarMod::apiFunc('publications', 'user', 'getitempubtype', ['itemid' => $id]);
 
     // An empty publication type means the page does not exist
     if (empty($ptid)) {
@@ -135,21 +136,21 @@ function publications_admin_display($args)
             $ptid = $item['id'];
         }
     */
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $ptid));
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $ptid]);
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
 //    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
-    $itemid = $data['object']->getItem(array('itemid' => $id));
-    
+    $itemid = $data['object']->getItem(['itemid' => $id]);
+
     # --------------------------------------------------------
 #
     # Are we allowed to see this page?
 #
     $accessconstraints = unserialize($data['object']->properties['access']->value);
-    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $access = DataPropertyMaster::getProperty(['name' => 'access']);
     $data['allow'] = $access->check($accessconstraints['display']);
     $nopublish = (time() < $data['object']->properties['start_date']->value) || ((time() > $data['object']->properties['end_date']->value) && !$data['object']->properties['no_end']->value);
-    
+
     // If no access, then bail showing a forbidden or an empty page
     if (!$data['allow'] || $nopublish) {
         if ($accessconstraints['display']['failure']) {
@@ -158,7 +159,7 @@ function publications_admin_display($args)
             return $data;
         }
     }
-    
+
     # --------------------------------------------------------
 #
     # If this is a redirect page, then send it on its way now
@@ -168,13 +169,13 @@ function publications_admin_display($args)
         // This is a simple redirect to another page
         try {
             $url = $data['object']->properties['redirect_url']->value;
-                
+
             // Check if this is a Xaraya function
             $pos = strpos($url, 'xar');
             if ($pos === 0) {
                 eval('$url = ' . $url .';');
             }
-                
+
             xarController::redirect($url, 301);
         } catch (Exception $e) {
             return xarResponse::NotFound();
@@ -191,7 +192,7 @@ function publications_admin_display($args)
         } else {
             $url = $data['object']->properties['proxy_url']->value;
         }
-        
+
         // Bail if the URL is bad
         try {
             // Check if this is a Xaraya function
@@ -199,13 +200,13 @@ function publications_admin_display($args)
             if ($pos === 0) {
                 eval('$url = ' . $url .';');
             }
-            
+
             $params = parse_url($url);
             $params['query'] = preg_replace('/&amp;/', '&', $params['query']);
         } catch (Exception $e) {
             return xarResponse::NotFound();
         }
-        
+
         // If this is an external link, show it without further processing
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
             xarController::redirect($url, 301);
@@ -221,7 +222,7 @@ function publications_admin_display($args)
             } catch (Exception $e) {
                 return xarResponse::NotFound();
             }
-            
+
             // Debug
             // echo xarController::URL($info['module'],'user',$info['func'],$other_params);
             # --------------------------------------------------------
@@ -231,8 +232,8 @@ function publications_admin_display($args)
             // Find the URLs in submits
             $pattern='/(action)="([^"\r\n]*)"/';
             preg_match_all($pattern, $page, $matches);
-            $pattern = array();
-            $replace = array();
+            $pattern = [];
+            $replace = [];
             foreach ($matches[2] as $match) {
                 $pattern[] = '%</form%';
                 $replace[] = '<input type="hidden" name="return_url" id="return_url" value="' . urlencode(xarServer::getCurrentURL()) . '"/><input type="hidden" name="child" value="' . urlencode($match) . '"/></form';
@@ -273,10 +274,10 @@ function publications_admin_display($args)
         // Get a copy of the compiler
         sys::import('xaraya.templating.compiler');
         $blCompiler = XarayaCompiler::instance();
-        
+
         // Get the data fields
-        $fields = array();
-        $sourcefields = array('title','description','summary','body1','body2','body3','body4','body5','notes');
+        $fields = [];
+        $sourcefields = ['title','description','summary','body1','body2','body3','body4','body5','notes'];
         $prefix = strlen('publications.')-1;
         foreach ($data['object']->properties as $prop) {
             if (in_array(substr($prop->source, $prefix), $sourcefields)) {
@@ -288,13 +289,13 @@ function publications_admin_display($args)
         foreach ($fields as $field) {
             try {
                 $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
-                $tplString .= xarMod::apiFunc('publications', 'user', 'prepareforbl', array('string' => $data['object']->properties[$field]->value));
+                $tplString .= xarMod::apiFunc('publications', 'user', 'prepareforbl', ['string' => $data['object']->properties[$field]->value]);
 
                 $tplString .= '</xar:template>';
 
                 $tplString = $blCompiler->compilestring($tplString);
                 // We don't allow passing $data to the template for now
-                $tpldata = array();
+                $tpldata = [];
                 $tplString = xarTpl::string($tplString, $tpldata);
             } catch (Exception $e) {
                 var_dump($tplString);
@@ -307,35 +308,35 @@ function publications_admin_display($args)
 #
     # Get the complete tree for this section of pages. We need this for blocks etc.
 #
-            
+
     $tree = xarMod::apiFunc(
         'publications',
         'user',
         'getpagestree',
-        array(
+        [
             'tree_contains_pid' => $id,
             'key' => 'id',
-            'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
-        )
+            'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER',
+        ]
     );
-        
+
     // If this page is of type PLACEHOLDER, then look in its descendents
     if ($data['object']->properties['state']->value == 5) {
-    
+
         // Scan for a descendent that is ACTIVE or FRONTPAGE
         if (!empty($tree['pages'][$id]['child_keys'])) {
             foreach ($tree['pages'][$id]['child_keys'] as $scan_key) {
                 // If the page is displayable, then treat it as the new page.
                 if ($tree['pages'][$scan_key]['status'] == 3 || $tree['pages'][$scan_key]['status'] == 4) {
                     $id = $tree['pages'][$scan_key]['id'];
-                    $id = xarMod::apiFunc('publications', 'user', 'gettranslationid', array('id' => $id));
-                    $itemid = $data['object']->getItem(array('itemid' => $id));
+                    $id = xarMod::apiFunc('publications', 'user', 'gettranslationid', ['id' => $id]);
+                    $itemid = $data['object']->getItem(['itemid' => $id]);
                     break;
                 }
             }
         }
     }
-    
+
     # --------------------------------------------------------
 #
     # Additional data
@@ -344,11 +345,11 @@ function publications_admin_display($args)
     $data['layout'] = $layout;
 
     // Get the settings for this publication type;
-    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', array('ptid' => $ptid));
-    
+    $data['settings'] = xarMod::apiFunc('publications', 'user', 'getsettings', ['ptid' => $ptid]);
+
     // The name of this object
     $data['objectname'] = $data['object']->name;
-    
+
     # --------------------------------------------------------
 #
     # Set the theme if needed
@@ -356,7 +357,7 @@ function publications_admin_display($args)
     if (!empty($data['object']->properties['theme']->value)) {
         xarTpl::setThemeName($data['object']->properties['theme']->value);
     }
-    
+
     # --------------------------------------------------------
 #
     # Set the page template from the pubtype if needed
@@ -406,7 +407,7 @@ function publications_admin_display($args)
     # Make the properties available to the template
 #
     $data['properties'] =& $data['object']->properties;
-    
+
     # --------------------------------------------------------
 #
     # Get information on next and previous items
@@ -415,17 +416,17 @@ function publications_admin_display($args)
         'publications',
         'user',
         'getnext',
-        array('id' => $id,
+        ['id' => $id,
                                        'ptid' => $ptid,
-                                       'sort' => 'tree',)
+                                       'sort' => 'tree',]
     );
     $data['nextpublication'] = xarMod::apiFunc(
         'publications',
         'user',
         'getnext',
-        array('id' => $id,
+        ['id' => $id,
                                        'ptid' => $ptid,
-                                       'sort' => 'tree',)
+                                       'sort' => 'tree',]
     );
     return $data;
 
@@ -521,9 +522,9 @@ function publications_admin_display($args)
 
 // TODO: improve the case where we have several icons :)
     $data['topic_icons'] = '';
-    $data['topic_images'] = array();
-    $data['topic_urls'] = array();
-    $data['topic_names'] = array();
+    $data['topic_images'] = [];
+    $data['topic_urls'] = [];
+    $data['topic_names'] = [];
     /*
     if (count($cids) > 0) {
         if (!xarMod::apiLoad('categories', 'user')) return;
@@ -601,7 +602,7 @@ function publications_admin_display($args)
                     'publications',
                     'user',
                     'display',
-                    array('ptid' => $ptid, 'id' => $id, 'page' => '%%')
+                    ['ptid' => $ptid, 'id' => $id, 'page' => '%%']
                 );
                 $data['pager'] = xarTplPager::getPager(
                     $page,
@@ -648,14 +649,14 @@ function publications_admin_display($args)
 
     // temp. fix to include dynamic data fields without changing templates
     if (xarModHooks::isHooked('dynamicdata', 'publications', $pubtype_id)) {
-        list($properties) = xarMod::apiFunc(
+        [$properties] = xarMod::apiFunc(
             'dynamicdata',
             'user',
             'getitemfordisplay',
-            array('module'   => 'publications',
+            ['module'   => 'publications',
                                                 'itemtype' => $pubtype_id,
                                                 'itemid'   => $id,
-                                                'preview'  => $preview)
+                                                'preview'  => $preview, ]
         );
         if (!empty($properties) && count($properties) > 0) {
             foreach (array_keys($properties) as $field) {
@@ -721,7 +722,7 @@ function publications_admin_display($args)
 
     // Navigation links
     $data['publabel'] = xarML('Publication');
-    $data['publinks'] = array(); //xarMod::apiFunc('publications','user','getpublinks',
+    $data['publinks'] = []; //xarMod::apiFunc('publications','user','getpublinks',
     //    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
     //          'count' => $show_pubcount));
     if (isset($show_map)) {
@@ -733,7 +734,7 @@ function publications_admin_display($args)
             'publications',
             'user',
             'viewmap',
-            array('ptid' => $ptid)
+            ['ptid' => $ptid]
         );
     }
     if (isset($show_archives)) {
@@ -745,7 +746,7 @@ function publications_admin_display($args)
             'publications',
             'user',
             'archive',
-            array('ptid' => $ptid)
+            ['ptid' => $ptid]
         );
     }
     if (isset($show_publinks)) {
@@ -799,7 +800,7 @@ function publications_admin_display($args)
         'publications',
         'user',
         'generatekeywords',
-        array('incomingkey' => $data['body'])
+        ['incomingkey' => $data['body']]
     );
 
     xarCoreCache::setCached('Blocks.publications', 'body', $keywords);
@@ -831,8 +832,8 @@ function publications_admin_display($args)
             'user',
             'getpubcatcount',
                                     // frontpage or approved
-                                    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
-                                          'ptid' => $ptid)
+                                    ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                                          'ptid' => $ptid, ]
         );
         if (!empty($pubcatcount[$ptid])) {
             xarCoreCache::setCached('Blocks.categories', 'catcount', $pubcatcount[$ptid]);
@@ -856,11 +857,11 @@ function publications_admin_display($args)
         $data['layout'] = $layout;
     }
 
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $ptid));
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $id = xarMod::apiFunc('publications', 'user', 'getranslationid', array('id' => $id));
-    $data['object']->getItem(array('itemid' => $id));
+    $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+    $pubtypeobject->getItem(['itemid' => $ptid]);
+    $data['object'] = DataObjectMaster::getObject(['name' => $pubtypeobject->properties['name']->value]);
+    $id = xarMod::apiFunc('publications', 'user', 'getranslationid', ['id' => $id]);
+    $data['object']->getItem(['itemid' => $id]);
 
     return xarTpl::module('publications', 'user', 'display', $data, $template);
 }

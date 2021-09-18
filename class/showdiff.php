@@ -22,20 +22,20 @@ define('COPY_BGCOLOR', 'white');//white
 
 class showdiff
 {
-    public $add_orig_array = array();
-    public $add_final_array = array();
-    public $delete_orig_array = array();
-    public $delete_final_array = array();
-    public $change_orig_array = array();
-    public $change_final_array = array();
-    public $copy_orig_array = array();
-    public $copy_final_array = array();
-    public $oldLineCheckFlag = array();
-    public $newLineCheckFlag = array();
-    public $highlight_old_arr = array();
-    public $highlight_new_arr = array();
-    public $orig_array = array();
-    public $final_array = array();
+    public $add_orig_array = [];
+    public $add_final_array = [];
+    public $delete_orig_array = [];
+    public $delete_final_array = [];
+    public $change_orig_array = [];
+    public $change_final_array = [];
+    public $copy_orig_array = [];
+    public $copy_final_array = [];
+    public $oldLineCheckFlag = [];
+    public $newLineCheckFlag = [];
+    public $highlight_old_arr = [];
+    public $highlight_new_arr = [];
+    public $orig_array = [];
+    public $final_array = [];
     public $highlight_old ;
     public $highlight_new ;
 
@@ -94,63 +94,63 @@ class showdiff
         }
         if ($Flag =='Line') {
             $this->highlightLines($oldString, $newString);
-            
+
             $this->orig_array = $this->change_orig_array;
             $this->final_array = $this->change_final_array;
-            
+
             $this->checkChangeWords();
         } else {
             $this->highlightWords($oldString, $newString);
         }
-        
+
         $this->highlight_old = "";
         foreach ($this->highlight_old_arr as $line) {
             $this->highlight_old .= "\n".$line;
         }
-        
+
         $this->highlight_new = "";
         foreach ($this->highlight_new_arr as $line) {
             $this->highlight_new .= "\n".$line;
         }
-        
+
         $ReturnString=$this->highlight_old."<br>".$this->highlight_new;
-        
+
         return $ReturnString;
     }
-    
+
     public function checkChangeWords()
     {
         foreach ($this->final_array as $key => $final_string) {
-            $orig_string = isset($this->orig_array[$key])? $this->orig_array[$key]: null;
+            $orig_string = $this->orig_array[$key] ?? null;
             $orig_string = $this->check_lastcharacter($orig_string);
-            $final_string = isset($final_string)? $final_string: null;
+            $final_string = $final_string ?? null;
             $diff = new Diff(explode(" ", $orig_string), explode(" ", $final_string));
             //$diff = new Diff( explode(" ",$this->orig_array[$key]), explode(" ",$final_string));
-            
-            $this->add_orig_array = array();
-            $this->add_final_array = array();
-            $this->delete_orig_array = array();
-            $this->delete_final_array =array();
-            $this->change_orig_array = array();
-            $this->change_final_array =array() ;
-            $this->copy_orig_array = array();
-            $this->copy_final_array = array();
-            
-            $orig_string = isset($this->orig_array[$key])? $this->orig_array[$key]: null;
+
+            $this->add_orig_array = [];
+            $this->add_final_array = [];
+            $this->delete_orig_array = [];
+            $this->delete_final_array =[];
+            $this->change_orig_array = [];
+            $this->change_final_array =[] ;
+            $this->copy_orig_array = [];
+            $this->copy_final_array = [];
+
+            $orig_string = $this->orig_array[$key] ?? null;
             $orig_string = $this->check_lastcharacter($orig_string);
             $final_string = $this->final_array[$key];
-            $final_string = isset($final_string)? $final_string: null;
+            $final_string = $final_string ?? null;
             $this->checkdiff($orig_string, $final_string, $diff, 'Words');
         }
     }
-    
+
     public function highlightWords_orig($string_old, $changed, $deleted)
     {
         $string = explode(" ", $string_old);
-        
+
         $StringTemp = $string;
         $checkFlag = $string;
-        
+
         $words = $deleted;
         foreach ($words as $keyTop => $word) {
             foreach ($string as $key => $strItem) {
@@ -162,15 +162,15 @@ class showdiff
                 }
             }
         }
-        
+
         $words = $changed;
         foreach ($words as $keyTop => $word) {
             foreach ($string as $key => $strItem) {
                 if ($word == $strItem && $checkFlag[$key] != false) {
                     $strItem = str_ireplace($word, DELETED_BLUE_START_TAG.$word.DELETED_BLUE_END_TAG, $strItem);
-                    
-                    $word = isset($this->change_final_array[$keyTop])?$this->change_final_array[$keyTop]:null;
-                    
+
+                    $word = $this->change_final_array[$keyTop] ?? null;
+
                     $checkFlag[$key] = false;
                     $strItem = str_ireplace($word, COPY_WHITE_START_TAG.$word.COPY_WHITE_END_TAG, $strItem);
                     $StringTemp[$key] = $strItem;
@@ -178,33 +178,33 @@ class showdiff
                 }
             }
         }
-    
+
         $str_highlighted = "";
         foreach ($StringTemp as $str) {
             $str_highlighted .= $str." ";
         }
         $str_highlighted = str_ireplace(DELETED_BLUE_START_TAG, '<span style="background-color:'.DELETED_BGCOLOR.'">', $str_highlighted);
         $str_highlighted = str_ireplace(DELETED_BLUE_END_TAG, '</span>', $str_highlighted);
-        
+
         $str_highlighted = str_ireplace(COPY_WHITE_START_TAG, '<span style="background-color:'.COPY_BGCOLOR.'">', $str_highlighted);
         $str_highlighted = str_ireplace(COPY_WHITE_END_TAG, '</span>', $str_highlighted);
-        
+
         foreach ($this->highlight_old_arr as $key =>$Line) {
             if ($this->oldLineCheckFlag[$key]) {
                 $this->highlight_old_arr[$key]=str_ireplace($string_old, $str_highlighted, $Line);
             }
         }
-        
+
         return $str_highlighted;
     }
-    
+
     public function highlightWords_final($string_new, $changed, $added)
     {
         $string = explode(" ", $string_new);
         $StringTempNew = $string;
         $checkFlag = $string;
         $words = $changed;
-        
+
         foreach ($words as $word) {
             foreach ($string as $key => $strItem) {
                 if ($word == $strItem && $checkFlag[$key]!=false) {
@@ -226,28 +226,28 @@ class showdiff
                 }
             }
         }
-    
+
         $str_highlighted="";
-        
+
         foreach ($StringTempNew as $str) {
             $str_highlighted .= $str." ";
         }
-        
+
         $str_highlighted = str_ireplace(CHANGED_RED_START_TAG, '<span style="background-color:'.CHANGED_BGCOLOR.'">', $str_highlighted);
         $str_highlighted = str_ireplace(CHANGED_RED_END_TAG, '</span>', $str_highlighted);
-    
+
         $str_highlighted = str_ireplace(ADDED_GREEN_START_TAG, '<span style="background-color:'.ADDED_BGCOLOR.'">', $str_highlighted);
         $str_highlighted = str_ireplace(ADDED_GREEN_END_TAG, '</span>', $str_highlighted);
-        
+
         foreach ($this->highlight_new_arr as $key => $Line) {
             if ($this->newLineCheckFlag[$key]) {
                 $this->highlight_new_arr[$key] = str_ireplace($string_new, $str_highlighted, $Line);
             }
         }
-        
+
         return $str_highlighted;
     }
-    
+
     public function highlightLine_delete($string, $words)
     {
         $StringTemp = $string;
@@ -261,20 +261,20 @@ class showdiff
                 }
             }
         }
-    
+
         $str_highlighted = "";
         foreach ($StringTemp as $str) {
             $str_highlighted .= $str."\n";
         }
-        
+
         $str_highlighted = str_ireplace(DELETED_BLUE_START_TAG, '<span style="background-color:'.DELETED_BGCOLOR.'">', $str_highlighted);
         $str_highlighted = str_ireplace(DELETED_BLUE_END_TAG, '</span>', $str_highlighted);
-    
+
         $str_highlighted = substr($str_highlighted, 0, strlen($str_highlighted)-1);
-        
+
         return $str_highlighted;
     }
-    
+
     public function highlightLine_added($string, $words)
     {
         $StringTempNew = $string;
@@ -288,25 +288,25 @@ class showdiff
                 }
             }
         }
-    
+
         $str_highlighted = "";
-    
+
         foreach ($StringTempNew as $str) {
             $str_highlighted .= $str."\n";
         }
-    
+
         $str_highlighted = str_ireplace(ADDED_GREEN_START_TAG, '<span style="background-color:'.ADDED_BGCOLOR.'">', $str_highlighted);
         $str_highlighted = str_ireplace(ADDED_GREEN_END_TAG, '</span>', $str_highlighted);
-    
+
         $str_highlighted = substr($str_highlighted, 0, strlen($str_highlighted)-1);
         return $str_highlighted;
     }
-    
+
     public function Line_copy_Old($string, $words)
     {
         foreach ($words as $word) {
             foreach ($string as $key => $strItem) {
-                $this->newLineCheckFlag[$key] = isset($this->newLineCheckFlag[$key])?$this->newLineCheckFlag[$key]:null;
+                $this->newLineCheckFlag[$key] = $this->newLineCheckFlag[$key] ?? null;
                 if ($word == $strItem && $this->newLineCheckFlag[$key] != false) {
                     $this->oldLineCheckFlag[$key]=false;
                     break;
@@ -315,7 +315,7 @@ class showdiff
         }
         return true;
     }
-    
+
     public function Line_copy_New($string, $words)
     {
         foreach ($words as $word) {
@@ -328,33 +328,33 @@ class showdiff
         }
         return true;
     }
-    
+
     public function highlightLines($string_old, $string_new)
     {
         $string_old = explode("\n", $string_old);
         $string_new = explode("\n", $string_new);
-    
+
         $this->highlight_old_arr = $string_old;
         $this->highlight_new_arr = $string_new;
         $this->oldLineCheckFlag = $string_old;
         $this->newLineCheckFlag = $string_new;
-            
+
         $this->Line_copy_Old($string_old, $this->copy_orig_array);
         $this->Line_copy_New($string_new, $this->copy_orig_array);
-    
+
         $this->highlight_old = $this->highlightLine_delete($string_old, $this->delete_orig_array);
         $this->highlight_new =  $this->highlightLine_added($string_new, $this->add_final_array);
-    
+
         $this->highlight_old_arr = explode("\n", $this->highlight_old);
         $this->highlight_new_arr = explode("\n", $this->highlight_new);
     }
-    
+
     public function highlightWords($string_old, $string_new)
     {
         $this->highlightWords_orig($string_old, $this->change_orig_array, $this->delete_orig_array);
         $this->highlightWords_final($string_new, $this->change_final_array, $this->add_final_array);
     }
-    
+
     public function displayDiff()
     {
         ?><html>
@@ -384,7 +384,7 @@ class showdiff
     {
         $oldstr_lastcharcter = substr($str, -1, 1);
         $str_len = strlen($str);
-    
+
         if ($oldstr_lastcharcter=="\n") {
             $str = substr($str, 0, strlen($str)-1);
             $str = $this->check_lastcharacter($str);

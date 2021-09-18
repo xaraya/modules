@@ -19,12 +19,12 @@ function publications_adminapi_getstats($args)
 {
     extract($args);
 
-    $allowedfields = array('pubtype_id', 'state', 'owner', 'locale', 'pubdate_year', 'pubdate_month', 'pubdate_day');
+    $allowedfields = ['pubtype_id', 'state', 'owner', 'locale', 'pubdate_year', 'pubdate_month', 'pubdate_day'];
     if (empty($group)) {
-        $group = array();
+        $group = [];
     }
-    $newfields = array();
-    $newgroups = array();
+    $newfields = [];
+    $newgroups = [];
     foreach ($group as $field) {
         if (empty($field) || !in_array($field, $allowedfields)) {
             continue;
@@ -95,8 +95,8 @@ function publications_adminapi_getstats($args)
         }
     }
     if (empty($newfields) || count($newfields) < 1) {
-        $newfields = array('pubtype_id', 'state', 'owner');
-        $newgroups = array('pubtype_id', 'state', 'owner');
+        $newfields = ['pubtype_id', 'state', 'owner'];
+        $newgroups = ['pubtype_id', 'state', 'owner'];
     }
 
     // Database information
@@ -113,19 +113,19 @@ function publications_adminapi_getstats($args)
         return;
     }
 
-    $stats = array();
+    $stats = [];
     while (!$result->EOF) {
         if (count($newfields) > 3) {
-            list($field1, $field2, $field3, $field4, $count) = $result->fields;
+            [$field1, $field2, $field3, $field4, $count] = $result->fields;
             $stats[$field1][$field2][$field3][$field4] = $count;
         } elseif (count($newfields) == 3) {
-            list($field1, $field2, $field3, $count) = $result->fields;
+            [$field1, $field2, $field3, $count] = $result->fields;
             $stats[$field1][$field2][$field3] = $count;
         } elseif (count($newfields) == 2) {
-            list($field1, $field2, $count) = $result->fields;
+            [$field1, $field2, $count] = $result->fields;
             $stats[$field1][$field2] = $count;
         } elseif (count($newfields) == 1) {
-            list($field1, $count) = $result->fields;
+            [$field1, $count] = $result->fields;
             $stats[$field1] = $count;
         }
         $result->MoveNext();

@@ -76,7 +76,7 @@ function publications_adminapi_create($args)
     if (empty($cids) || !is_array($cids) ||
         // catch common mistake of using array('') instead of array()
         (count($cids) > 0 && empty($cids[0]))) {
-        $cids = array();
+        $cids = [];
         // for security check below
         $args['cids'] = $cids;
     }
@@ -133,7 +133,7 @@ function publications_adminapi_create($args)
     // Get next ID in table
     if (empty($id) || !is_numeric($id) || $id == 0) {
         $result = $dbconn->Execute("SELECT MAX(id) FROM $publicationstable");
-        list($id) = $result->fields;
+        [$id] = $result->fields;
         $id++;
     }
 
@@ -150,7 +150,7 @@ function publications_adminapi_create($args)
               state,
               locale)
               VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($id,
+    $bindvars = [$id,
                       (string)  $title,
                       (string)  $summary,
                       (string)  $body,
@@ -159,7 +159,7 @@ function publications_adminapi_create($args)
                       (int)     $ptid,
                       (string)  $notes,
                       (int)     $state,
-                      (string)  $locale);
+                      (string)  $locale, ];
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
@@ -171,12 +171,12 @@ function publications_adminapi_create($args)
     }
 
     if (empty($cids)) {
-        $cids = array();
+        $cids = [];
     }
 
     /* ---------------------------- TODO: Remove once publications uses dd objects */
     sys::import('modules.dynamicdata.class.properties.master');
-    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
+    $categories = DataPropertyMaster::getProperty(['name' => 'categories']);
     $categories->checkInput('categories', $id);
     $categories->createValue($id);
     /*------------------------------- */

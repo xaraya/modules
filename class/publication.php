@@ -18,7 +18,7 @@ class Publication extends DataObject
     public function __construct(DataObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
-        
+
         // If we allow multilanguage, then turn the locale property into type languages
         if (xarModVars::get('publications', 'multilanguage')) {
             if (isset($this->properties['locale']) && DataPropertyMaster::isAvailable('languages')) {
@@ -30,8 +30,8 @@ class Publication extends DataObject
             }
         }
     }
-    
-    public function checkInput(array $args = array(), $suppress=0, $priority='dd')
+
+    public function checkInput(array $args = [], $suppress=0, $priority='dd')
     {
         // The access property is ignored here
         $isvalid = parent::checkInput($args, $suppress, $priority);
@@ -39,7 +39,7 @@ class Publication extends DataObject
         // If the rest of the publication is valid, then do the access part
         // Note this is a collection of access properties; hence the complicated process of saving it
         if ($isvalid) {
-            $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+            $access = DataPropertyMaster::getProperty(['name' => 'access']);
             $access->initialization_group_multiselect = true;
             $access->validation_override = true;
             $prefix = $this->getFieldPrefix();
@@ -60,17 +60,17 @@ class Publication extends DataObject
             $validprop = $access->checkInput($name . "_delete");
             $deleteaccess = $access->getValue();
             $isvalid = $isvalid && $validprop;
-            $allaccess = array(
+            $allaccess = [
                 'display' => $displayaccess,
                 'modify'  => $modifyaccess,
                 'delete'  => $deleteaccess,
-            );
+            ];
             $this->properties['access']->setValue($allaccess);
         }
         return $isvalid;
     }
 
-    public function createItem(array $args = array())
+    public function createItem(array $args = [])
     {
         // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
@@ -88,40 +88,40 @@ class Publication extends DataObject
         } else {
             $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
-        $this->fieldlist = array();
+        $this->fieldlist = [];
 
         $id = parent::createItem($args);
         return $id;
     }
 
-    public function updateItem(array $args = array())
+    public function updateItem(array $args = [])
     {
         if (xarModVars::get('publications', 'use_versions')) {
-            $temp = $this->getFieldValues(array(), 1);
-            $this->getItem(array('itemid' => $this->properties['id']->value));
+            $temp = $this->getFieldValues([], 1);
+            $this->getItem(['itemid' => $this->properties['id']->value]);
             $operation = xarML('Update');
-            xarMod::apiFunc('publications', 'admin', 'save_version', array('object' => $this, 'operation' => $operation));
+            xarMod::apiFunc('publications', 'admin', 'save_version', ['object' => $this, 'operation' => $operation]);
             $this->setFieldValues($temp, 1);
             $this->properties['version']->value++;
         }
 
         // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
-        
+
         // Ignore the position if this isn't the base document
         if (empty($this->properties['parent']->value)) {
             $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
         } else {
             $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
-        $this->fieldlist = array();
-        
+        $this->fieldlist = [];
+
         // Set the time modified
         $this->properties['modified']->value = time();
-        
+
         // Save the item
         $id = parent::updateItem($args);
-        
+
         return $id;
     }
 }

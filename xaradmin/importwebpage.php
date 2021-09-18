@@ -81,12 +81,12 @@ function publications_admin_importwebpage()
 #
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
-    $data['pubtypes'] = array();
+    $data['pubtypes'] = [];
     foreach ($pubtypes as $pubtype) {
-        $data['pubtypes'][] = array('id' => $pubtype['id'], 'name' => $pubtype['description']);
+        $data['pubtypes'][] = ['id' => $pubtype['id'], 'name' => $pubtype['description']];
     }
-    $data['fields'] = array();
-    $data['cats'] = array();
+    $data['fields'] = [];
+    $data['cats'] = [];
     if (!empty($data['ptid'])) {
 
 # --------------------------------------------------------
@@ -94,14 +94,14 @@ function publications_admin_importwebpage()
         # Get the fields of hte chosen pubtype
 #
         sys::import('modules.dynamicdata.class.objects.master');
-        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-        $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+        $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
+        $pubtypeobject->getItem(['itemid' => $data['ptid']]);
         $objectname = $pubtypeobject->properties['name']->value;
-        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
-    
+        $pageobject = DataObjectMaster::getObject(['name' => $objectname]);
+
         foreach ($pageobject->properties as $name => $property) {
             if ($property->basetype == 'string') {
-                $data['fields'][] = array('id' => $name, 'name' => $property->label);
+                $data['fields'][] = ['id' => $name, 'name' => $property->label];
             }
         }
         /*
@@ -155,8 +155,8 @@ function publications_admin_importwebpage()
     if (!isset($numrules)) {
         $numrules = 3;
     }
-    $data['search'] = array();
-    $data['replace'] = array();
+    $data['search'] = [];
+    $data['replace'] = [];
     for ($i = 0; $i < $numrules; $i++) {
         if (isset($search[$i])) {
             $data['search'][$i] = $search[$i];
@@ -177,8 +177,8 @@ function publications_admin_importwebpage()
 #
     if (!empty($data['ptid']) && isset($data['contentfield'])
         && (isset($test) || isset($import))) {
-        $mysearch = array();
-        $myreplace = array();
+        $mysearch = [];
+        $myreplace = [];
         for ($i = 0; $i < $numrules; $i++) {
             if (!empty($data['search'][$i])) {
                 $mysearch[] = $data['search'][$i];
@@ -230,7 +230,7 @@ function publications_admin_importwebpage()
             $args[$data['titlefield']] = $title;
             $args['name'] = str_replace(' ', '_', trim(strtolower($title)));
         }
-        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
+        $pageobject = DataObjectMaster::getObject(['name' => $objectname]);
         $pageobject->setFieldValues($args, 1);
 
         # --------------------------------------------------------
@@ -243,7 +243,7 @@ function publications_admin_importwebpage()
                 'publications',
                 'user',
                 'preview',
-                array('object' => $pageobject)
+                ['object' => $pageobject]
             );
         } else {
             $id = $pageobject->createItem();

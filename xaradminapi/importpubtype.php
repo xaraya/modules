@@ -32,7 +32,7 @@ function publications_adminapi_importpubtype($args)
     $pubtypes = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
-    $name2id = array();
+    $name2id = [];
     foreach ($proptypes as $propid => $proptype) {
         $name2id[$proptype['name']] = $propid;
     }
@@ -54,9 +54,9 @@ function publications_adminapi_importpubtype($args)
     $what = '';
     $count = 0;
     $ptid = 0;
-    $objectname2objectid = array();
-    $objectcache = array();
-    $objectmaxid = array();
+    $objectname2objectid = [];
+    $objectcache = [];
+    $objectmaxid = [];
     while ((!empty($file) && !feof($fp)) || (!empty($xml) && $count < $maxcount)) {
         if (!empty($file)) {
             $line = fgets($fp, 4096);
@@ -66,7 +66,7 @@ function publications_adminapi_importpubtype($args)
         $count++;
         if (empty($what)) {
             if (preg_match('#<object name="(\w+)">#', $line, $matches)) { // in case we import the object definition
-                $object = array();
+                $object = [];
                 $object['name'] = $matches[1];
                 $what = 'object';
             } elseif (preg_match('#<items>#', $line)) { // in case we only import data
@@ -92,7 +92,7 @@ function publications_adminapi_importpubtype($args)
                     $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)', 'object', 'config', $count);
                     throw new DuplicateException(null, $msg);
                 }
-                $config = array();
+                $config = [];
                 $what = 'config';
             } elseif (preg_match('#<properties>#', $line)) {
                 if (empty($object['name']) || empty($object['moduleid'])) {
@@ -105,7 +105,7 @@ function publications_adminapi_importpubtype($args)
                 // make sure we drop the object id, because it might already exist here
                 unset($object['objectid']);
 
-                $properties = array();
+                $properties = [];
                 $what = 'property';
             } elseif (preg_match('#<items>#', $line)) {
                 $what = 'item';
@@ -131,14 +131,14 @@ function publications_adminapi_importpubtype($args)
                 $config['defaultview'] = 1;
 
                 $object['config'] = serialize($config);
-                $config = array();
+                $config = [];
                 $what = 'object';
             } else {
                 // multi-line entries not relevant here
             }
         } elseif ($what == 'property') {
             if (preg_match('#<property name="(\w+)">#', $line, $matches)) {
-                $property = array();
+                $property = [];
                 $property['name'] = $matches[1];
             } elseif (preg_match('#</property>#', $line)) {
                 if (empty($property['name']) || empty($property['type'])) {
@@ -179,8 +179,8 @@ function publications_adminapi_importpubtype($args)
                 }
 
                 // 2. fill in the pubtype field config
-                $fields = array();
-                $extra = array();
+                $fields = [];
+                $extra = [];
                 foreach ($properties as $property) {
                     $field = $property['name'];
                     switch ($field) {
@@ -211,11 +211,11 @@ function publications_adminapi_importpubtype($args)
                             if (!isset($property['validation'])) {
                                 $property['validation'] = '';
                             }
-                            $fields[$field] = array('label' => $property['label'],
+                            $fields[$field] = ['label' => $property['label'],
                                                     'format' => $property['type'],
                                                     'input' => $property['input'],
                                                     'validation' => $property['validation'],
-                                                    );
+                                                    ];
                             break;
 
                         default:
@@ -237,9 +237,9 @@ function publications_adminapi_importpubtype($args)
                     'publications',
                     'admin',
                     'createpubtype',
-                    array('name' => $object['name'],
+                    ['name' => $object['name'],
                                             'descr' => $object['label'],
-                                            'config' => $fields)
+                                            'config' => $fields, ]
                 );
                 if (empty($ptid)) {
                     return;
@@ -294,14 +294,14 @@ function publications_adminapi_importpubtype($args)
                             'modules',
                             'admin',
                             'enablehooks',
-                            array('callerModName' => 'publications',
+                            ['callerModName' => 'publications',
                                             'callerItemType' => $ptid,
-                                            'hookModName' => 'dynamicdata')
+                                            'hookModName' => 'dynamicdata', ]
                         );
                     }
                 }
 
-                $properties = array();
+                $properties = [];
                 $what = 'object';
             } elseif (preg_match('#<items>#', $line)) {
                 $what = 'item';

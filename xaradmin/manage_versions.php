@@ -18,7 +18,7 @@ function publications_admin_manage_versions($args)
     if (!xarSecurity::check('ManagePublications')) {
         return;
     }
-    
+
     if (!xarVar::fetch('itemid', 'id', $data['page_id'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -28,16 +28,16 @@ function publications_admin_manage_versions($args)
     if (empty($data['page_id'])) {
         return xarResponse::NotFound();
     }
-    
+
     sys::import('modules.dynamicdata.class.objects.master');
-    $entries = DataObjectMaster::getObjectList(array('name' => 'publications_versions'));
+    $entries = DataObjectMaster::getObjectList(['name' => 'publications_versions']);
     $entries->dataquery->eq($entries->properties['page_id']->source, $data['page_id']);
     $data['versions'] = $entries->countItems() + 1;
-    
+
     if ($data['versions'] < 2) {
         return $data;
     }
-    
+
     if (!xarVar::fetch('version_1', 'int', $version_1, $data['versions'], xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -46,21 +46,21 @@ function publications_admin_manage_versions($args)
     }
     $data['version_1'] = $version_1;
     $data['version_2'] = $version_2;
-        
-    // Assemple options for the version dropdowns
-    $data['options'] = array();
-    for ($i=$data['versions'];$i>=1;$i--) {
-        $data['options'][] = array('id' => $i, 'name' => $i);
-    }
-        
-    // Get an empty object for the page data
-    $page = DataObjectMaster::getObject(array('name' => $data['objectname']));
 
-    $version = DataObjectMaster::getObjectList(array('name' => 'publications_versions'));
+    // Assemple options for the version dropdowns
+    $data['options'] = [];
+    for ($i=$data['versions'];$i>=1;$i--) {
+        $data['options'][] = ['id' => $i, 'name' => $i];
+    }
+
+    // Get an empty object for the page data
+    $page = DataObjectMaster::getObject(['name' => $data['objectname']]);
+
+    $version = DataObjectMaster::getObjectList(['name' => 'publications_versions']);
 
     if ($data['version_1'] == $data['versions']) {
-        $page->getItem(array('itemid' => $data['page_id']));
-        $content_array_1 = $page->getFieldValues(array(), 1);
+        $page->getItem(['itemid' => $data['page_id']]);
+        $content_array_1 = $page->getFieldValues([], 1);
     } else {
         $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
         $version->dataquery->eq($version->properties['version_number']->source, $version_1);
@@ -73,8 +73,8 @@ function publications_admin_manage_versions($args)
     }
 
     if ($data['version_2'] == $data['versions']) {
-        $page->getItem(array('itemid' => $data['page_id']));
-        $content_array_2 = $page->getFieldValues(array(), 1);
+        $page->getItem(['itemid' => $data['page_id']]);
+        $content_array_2 = $page->getFieldValues([], 1);
     } else {
         $version->dataquery->clearconditions();
         $version->dataquery->eq($version->properties['page_id']->source, $data['page_id']);
@@ -95,7 +95,7 @@ function publications_admin_manage_versions($args)
     $content_1 = $page->showDisplay();
     $page->setFieldValues($content_array_2, 1);
     $content_2 = $page->showDisplay();
-    
+
     // Keep a copy to show if the two versions are identical
     $data['content'] = $content_2;
     /*
@@ -116,14 +116,14 @@ function publications_admin_manage_versions($args)
     $content_2 = explode("\n", $content_2);
 
     // Options for generating the diff
-    $options = array(
+    $options = [
         //'ignoreWhitespace' => true,
         //'ignoreCase' => true,
-    );
+    ];
 
     // Initialize the diff class
     $diff = new Diff($content_1, $content_2, $options);
-    $renderer = new Diff_Renderer_Html_Inline;
+    $renderer = new Diff_Renderer_Html_Inline();
     $data['diffresult'] = $diff->render($renderer);
 
 
