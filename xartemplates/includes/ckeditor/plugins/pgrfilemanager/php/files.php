@@ -48,11 +48,11 @@ if (strpos($directory, realpath(PGRFileManagerConfig::$rootDir)) !== 0) {
 //check for extra function to do
 if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
     $fun = $_POST['fun'];
-    
+
     if (($fun === 'deleteFiles') && (isset($_POST['files']))) {
         $files = str_replace("\\", "", $_POST['files']);
         $files = json_decode($files, true);
-        
+
         foreach ($files as $filename) {
             $file = realpath($directory . '/' . $filename);
             //check if file is in dir
@@ -72,10 +72,10 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if ($directory === $targetDirectory) {
             die();
         }
-        
+
         $files = str_replace("\\", "", $_POST['files']);
         $files = json_decode($files, true);
-        
+
         foreach ($files as $filename) {
             $filename = basename($filename);
             $file = realpath($directory . '/' . $filename);
@@ -97,10 +97,10 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if ($directory === $targetDirectory) {
             die();
         }
-        
+
         $files = str_replace("\\", "", $_POST['files']);
         $files = json_decode($files, true);
-        
+
         foreach ($files as $filename) {
             $filename = basename($filename);
             $file = realpath($directory . '/' . $filename);
@@ -117,12 +117,12 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
     } elseif (($fun === 'renameFile') && (isset($_POST['filename'])) && (isset($_POST['newFilename']))) {
         $filename = basename($_POST['filename']);
         $newFilename = basename($_POST['newFilename']);
-        
+
         //allowed chars
         if (preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newFilename) === 0) {
             die();
         }
-        
+
         $fileLength = strlen($newFilename);
         if ($fileLength === 0) {
             die();
@@ -130,7 +130,7 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if ($fileLength > 200) {
             die();
         }
-                
+
         $file = realpath($directory . '/' . $filename);
         $newFile = $directory . '/' . $newFilename;
         //check if file is in dir
@@ -169,7 +169,7 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
     }
 }
 
-$files = array();
+$files = [];
 //group files
 foreach (scandir($directory) as $elem) {
     if (($elem === '.') || ($elem === '..')) {
@@ -181,10 +181,10 @@ foreach (scandir($directory) as $elem) {
             continue;
         }
     }
-   
+
     $filepath = $directory . '/' . $elem;
     if (is_file($filepath)) {
-        $file = array();
+        $file = [];
         $file['filename'] = $elem;
         $file['shortname'] = (strlen($elem) > 17) ? substr($elem, 0, 17) . '...' : $elem;
         $file['size'] = PGRFileManagerUtils::formatBytes(filesize($filepath));
@@ -205,9 +205,9 @@ foreach (scandir($directory) as $elem) {
     }
 }
 
-echo json_encode(array(
+echo json_encode([
     'res'     => 'OK',
-    'files' => $files
-));
+    'files' => $files,
+]);
 
 exit(0);

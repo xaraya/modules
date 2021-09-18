@@ -13,27 +13,27 @@
 
 function ckeditor_adminapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     if (xarSecurity::check('AdminCKEditor', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'ckeditor',
             'admin',
             'modifyconfig'
         ),
                               'title' => xarML('Modify Configuration'),
-                              'label' => xarML('Modify Configuration'));
+                              'label' => xarML('Modify Configuration'), ];
     }
 
     if (xarSecurity::check('AdminCKEditor', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'ckeditor',
             'admin',
             'overview'
         ),
                               'title' => xarML('Module Overview'),
                               'label' => xarML('Overview'),
-                              'active' => array('main'));
+                              'active' => ['main'], ];
     }
 
     return $menulinks;

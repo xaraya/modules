@@ -24,7 +24,7 @@ THE SOFTWARE.
 */
 class PGRFileManagerUtils
 {
-    private static $imageType = array(
+    private static $imageType = [
         1  => 'GIF',
         2  => 'JPEG',
         3  => 'PNG',
@@ -40,42 +40,42 @@ class PGRFileManagerUtils
         13 => 'SWC',
         14 => 'IFF',
         15 => 'WBMP',
-        16 => 'XBM'
-    );
-    
+        16 => 'XBM',
+    ];
+
     public static function formatBytes($bytes, $precision = 2)
     {
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
-  
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
         $bytes = max($bytes, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
         $pow = min($pow, count($units) - 1);
-  
+
         $bytes /= pow(1024, $pow);
-  
+
         return round($bytes, $precision) . ' ' . $units[$pow];
     }
-    
+
     public static function getImageInfo($filename)
     {
-        if ((list($width, $height, $type, $attr) = getimagesize($filename)) !== false) {
+        if (([$width, $height, $type, $attr] = getimagesize($filename)) !== false) {
             if (($type == 4) || ($type == 13)) {
                 return false;
             }
-            return array(
+            return [
                 'type' => self::$imageType[$type],
                 'width' => $width,
-                'height' => $height
-            );
+                'height' => $height,
+            ];
         }
         return false;
     }
-    
+
     public static function getPhpThumb($params)
     {
         return PGRFileManagerConfig::$pgrThumbPath . '/pgrthumb.php?' . $params . '&hash=' . md5($params . PGRThumb_Config::$pass);
     }
-            
+
     public static function deleteDirectory($dir)
     {
         if (!file_exists($dir)) {
@@ -94,20 +94,20 @@ class PGRFileManagerUtils
         }
         return rmdir($dir);
     }
-    
+
     public static function sendError($message)
     {
-        echo json_encode(array(
+        echo json_encode([
             'res' => 'ERROR',
-            'msg' => $message
-        ));
-        
+            'msg' => $message,
+        ]);
+
         die();
     }
-        
+
     public static function curPageURL()
     {
-        $pageURL = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on'))?'https':'http';
+        $pageURL = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 'https' : 'http';
         $pageURL .= '://' . $_SERVER['SERVER_NAME'];
         if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80')) {
             $pageURL .= ':' . $_SERVER['SERVER_PORT'];

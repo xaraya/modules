@@ -50,7 +50,7 @@ if (isset($_GET['type'])) {
     } else {
         $PGRUploaderDescription = 'all files';
     }
-    
+
     $PGRUploaderType = $_GET['type'];
 } else {
     $PGRUploaderType = 'all files';

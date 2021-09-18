@@ -50,7 +50,7 @@
         }
         $PGRFileManager_rootPath = realpath(sys::varpath()) . $str;
         $PGRFileManager_urlPath = xarServer::getBaseURL() . 'var/uploads';
- 
+
         xarModVars::set('ckeditor', 'PGRFileManager_rootPath', $PGRFileManager_rootPath);
         xarModVars::set('ckeditor', 'PGRFileManager_urlPath', $PGRFileManager_urlPath);
         xarModVars::set('ckeditor', 'PGRFileManager_allowedExtensions', 'pdf, txt, rtf, jpg, gif, jpeg, png');
@@ -60,14 +60,14 @@
         xarModVars::set('ckeditor', 'PGRFileManager_imageMaxWidth', 1280);
         xarModVars::set('ckeditor', 'PGRFileManager_allowEdit', 'true');
 
-        xarMod::apiFunc('ckeditor', 'admin', 'modifypluginsconfig', array(
+        xarMod::apiFunc('ckeditor', 'admin', 'modifypluginsconfig', [
             'name' => 'PGRFileManager.rootPath',
-            'value' => $PGRFileManager_rootPath
-            ));
-        xarMod::apiFunc('ckeditor', 'admin', 'modifypluginsconfig', array(
+            'value' => $PGRFileManager_rootPath,
+            ]);
+        xarMod::apiFunc('ckeditor', 'admin', 'modifypluginsconfig', [
             'name' => 'PGRFileManager.urlPath',
-            'value' => $PGRFileManager_urlPath
-            ));
+            'value' => $PGRFileManager_urlPath,
+            ]);
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file
@@ -85,5 +85,5 @@
     function ckeditor_delete()
     {
         $this_module = 'ckeditor';
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
     }

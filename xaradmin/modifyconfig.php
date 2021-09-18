@@ -27,7 +27,7 @@ function ckeditor_admin_modifyconfig()
             break;
 
         case 'update':
-            
+
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
                 return;
@@ -37,8 +37,8 @@ function ckeditor_admin_modifyconfig()
             if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, xarVar::NOT_REQUIRED)) return;
             if (!xarVar::fetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), xarVar::NOT_REQUIRED)) return;
             if (!xarVar::fetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), xarVar::NOT_REQUIRED)) return;*/
-      
-            $pgrconfig = array(
+
+            $pgrconfig = [
                 'rootPath' => 'str',
                 'urlPath' => 'str',
                 'allowedExtensions' => 'str',
@@ -46,15 +46,15 @@ function ckeditor_admin_modifyconfig()
                 'fileMaxSize' => 'int',
                 'imageMaxHeight' => 'int',
                 'imageMaxWidth' => 'int',
-                'allowEdit' => 'str'
-            );
+                'allowEdit' => 'str',
+            ];
 
             foreach ($pgrconfig as $key => $type) {
                 $setting = 'PGRFileManager_'.$key;
                 if (!xarVar::fetch($setting, $type, ${$setting}, xarModVars::get('ckeditor', $setting), xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                
+
                 if ($key == 'imagesExtensions' || $key == 'allowedExtensions') {
                     ${$setting} = str_replace(' ', '', ${$setting});
                     $arr = explode(',', ${$setting});
@@ -66,12 +66,12 @@ function ckeditor_admin_modifyconfig()
                 }
 
                 xarModVars::set('ckeditor', $setting, ${$setting});
-                xarMod::apiFunc('ckeditor', 'admin', 'modifypluginsconfig', array(
+                xarMod::apiFunc('ckeditor', 'admin', 'modifypluginsconfig', [
                 'name' => 'PGRFileManager.' . $key,
-                'value' => ${$setting}
-                ));
+                'value' => ${$setting},
+                ]);
             }
-    
+
             xarResponse::Redirect(xarController::URL('ckeditor', 'admin', 'modifyconfig'));
             // Return
             return true;

@@ -19,5 +19,5 @@ function ckeditor_user_main()
         return;
     }
 
-    return array();
+    return [];
 }

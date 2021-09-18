@@ -51,9 +51,9 @@ class PGRThumb_UrlThumb
      * @var bool
      */
     private static $_aspectRatio = true;
-    
+
     private static $_watermarkText = null;
-    
+
     private static function _getParamsFromUrl()
     {
         if (isset($_GET['src'])) {
@@ -76,7 +76,7 @@ class PGRThumb_UrlThumb
             self::$_watermarkText =  strip_tags(htmlspecialchars($_GET['wt']));
         }
     }
-    
+
     public static function error($msg)
     {
         header("HTTP/1.0 404 Not Found");
@@ -85,7 +85,7 @@ class PGRThumb_UrlThumb
         echo "<p>An error was triggered: <b>$msg</b></p>";
         exit();
     }
-    
+
     /**
      * Generate thumb
      *
@@ -98,37 +98,37 @@ class PGRThumb_UrlThumb
             ($_GET['hash'] != md5(str_replace('&hash='.$_GET['hash'], '', $_SERVER['QUERY_STRING']) . PGRThumb_Config::$pass))) {
             self::error("can't do this");
         }
-        
+
         self::_getParamsFromUrl();
-        
+
         //check if file is set
         if (!self::$_file) {
             return false;
         }
-        
+
         //generate cached filename
         $cachedFile = realpath(dirname(__FILE__) . '/../cache') . PGRThumb_Cache::generateFilename(self::$_file, $_SERVER['QUERY_STRING']);
-        
+
         //check if cached file exist
         if (file_exists($cachedFile)) {
             PGRThumb_Cache::outputCache($cachedFile);
         }
-        
+
         //file is not cached, so I will generate thumb
-        
+
         //check if file exist
         if (!file_exists(self::$_file)) {
             self::error("can't find file");
         }
-        
+
         //Get image library
         include_once 'Image.php';
         $image = PGRThumb_Image::factory(self::$_file);
-        
+
         if (!$image) {
             self::error("image library doesn't exist");
         }
-        
+
         //watermark
         if (self::$_watermarkText) {
             $image->resize(355, 0, true);
@@ -136,12 +136,12 @@ class PGRThumb_UrlThumb
                 self::$_watermarkText,
                 realpath(dirname(__FILE__) . '/ttf/Parkvane.ttf'),
                 28,
-                array(210,210,210),
+                [210,210,210],
                 80,
                 'CB'
             );
         }
-        
+
         //resize image
         $res = null;
         if ((self::$_width > 0) && (self::$_height > 0)) {
@@ -151,12 +151,12 @@ class PGRThumb_UrlThumb
                 $res = $image->resize(self::$_width, self::$_height, false);
             }
         }
-                
+
         //save thumb
         if ($res) {
             $res = PGRThumb_Cache::saveImage($cachedFile, $image);
         }
-        
+
         if ($res) {
             PGRThumb_Cache::outputFile($cachedFile);
         }

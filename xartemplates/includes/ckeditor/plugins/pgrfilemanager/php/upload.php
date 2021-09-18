@@ -54,23 +54,23 @@ if (strpos($directory, realpath(PGRFileManagerConfig::$rootDir)) === false) {
 if (!empty($_FILES)) {
     $tempFile = $_FILES['Filedata']['tmp_name'];
     $targetFile =  $directory . '/' . $_FILES['Filedata']['name'];
-            
-    
+
+
     // Validate the file size (Warning: the largest files supported by this code is 2GB)
     $file_size = filesize($tempFile);
     if (!$file_size || $file_size > PGRFileManagerConfig::$fileMaxSize) {
         exit(0);
     }
-        
+
     //check file ext
     if (PGRFileManagerConfig::$allowedExtensions != "") {
         if (preg_match('/^.*\.(' . PGRFileManagerConfig::$allowedExtensions . ')$/', strtolower($_FILES['Filedata']['name'])) === 0) {
             exit(0);
         }
     }
-    
+
     move_uploaded_file($tempFile, $targetFile);
-    
+
     //if image check size, and rescale if necessary
     try {
         if (preg_match('/^.*\.(jpg|gif|jpeg|png|bmp)$/', strtolower($_FILES['Filedata']['name'])) > 0) {

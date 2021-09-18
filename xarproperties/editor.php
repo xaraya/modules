@@ -22,11 +22,11 @@ class EditorProperty extends TextAreaProperty
     public $id         = 30091;
     public $name       = 'editor';
     public $desc       = 'Editor';
-    public $reqmodules = array('ckeditor');
-    
+    public $reqmodules = ['ckeditor'];
+
     public $editor     = null;
     public $version;
-    
+
     public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -36,7 +36,7 @@ class EditorProperty extends TextAreaProperty
         $this->version = xarModVars::get('ckeditor', 'editorversion');
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         if ($this->version == 'fckeditor') {
             sys::import('modules.ckeditor.xartemplates.includes.fckeditor.fckeditor');

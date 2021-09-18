@@ -27,7 +27,7 @@ include_once dirname(__FILE__) . '/utils.php';
 
 //get dir from post
 $directory = realpath(PGRFileManagerConfig::$rootDir);
- 
+
 $relativePath = '';
 
 //check if dir exist
@@ -38,12 +38,12 @@ if (!is_dir($directory)) {
 //check for extra function to do
 if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
     $fun = $_POST['fun'];
-    
+
     if (($fun === 'deleteDir') && isset($_POST['dirname'])) {
         $dirname = $_POST['dirname'];
-        
+
         $dir = realpath($directory . $dirname);
-        
+
         //check if dir is not a rootdir
         if ($dir === $directory) {
             die();
@@ -52,25 +52,25 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if (strpos($dir, $directory) !== 0) {
             die();
         }
-        
+
         if (is_dir($dir)) {
             PGRFileManagerUtils::deleteDirectory($dir);
         }
-        
-        echo json_encode(array(
+
+        echo json_encode([
             'res'     => 'OK',
-        ));
+        ]);
 
         exit(0);
     } elseif (($fun === 'addDir') && isset($_POST['dirname']) && isset($_POST['newDirname'])) {
         $dirname = $_POST['dirname'];
         $newDirname = $_POST['newDirname'];
-        
+
         //allowed chars
         if (preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newDirname) === 0) {
             die();
         }
-        
+
         $dirnameLength = strlen($newDirname);
         if ($dirnameLength === 0) {
             die();
@@ -78,14 +78,14 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if ($dirnameLength > 200) {
             die();
         }
-                
+
         $dir = realpath($directory . $dirname);
-        
+
         //check if dir is in rootdir
         if (strpos($dir, $directory) !== 0) {
             die();
         }
-        
+
         if (is_dir($dir . '/' . basename($newDirname))) {
             die();
         }
@@ -95,12 +95,12 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
     } elseif (($fun === 'renameDir') && (isset($_POST['dirname'])) && (isset($_POST['newDirname']))) {
         $dirname = $_POST['dirname'];
         $newDirname = basename($_POST['newDirname']);
-        
+
         //allowed chars
         if (preg_match("/^[.A-Z0-9_ !@#$%^&()+={}\\[\\]\\',~`-]+$/i", $newDirname) === 0) {
             die();
         }
-        
+
         $dirnameLength = strlen($newDirname);
         if ($dirnameLength === 0) {
             die();
@@ -108,9 +108,9 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if ($dirnameLength > 200) {
             die();
         }
-        
+
         $dir = realpath($directory . $dirname);
-        
+
         //check if dir is not a rootdir
         if ($dir === $directory) {
             die();
@@ -119,11 +119,11 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if (strpos($dir, $directory) !== 0) {
             die();
         }
-        
+
         if (is_dir($dir . '/../' . $newDirname)) {
             die();
         }
-        
+
         if (is_dir($dir)) {
             rename($dir, $dir . '/../' . $newDirname);
         }
@@ -144,11 +144,11 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
         if (strpos($targetDir . '/', $dir . '/') === 0) {
             die();
         }
-        
+
         if (is_dir($targetDir . '/' . $dirname)) {
             die();
         }
-                
+
         if (is_dir($dir)) {
             rename($dir, $targetDir . '/' . $dirname);
         }
@@ -157,9 +157,9 @@ if (isset($_POST['fun']) && PGRFileManagerConfig::$allowEdit) {
 
 if (isset($_POST['fetchDir']) && ($_POST['fetchDir'])) {
     $dirname = $_POST['fetchDir'];
-        
+
     $dir = realpath($directory . $dirname);
-        
+
     //check if dir is not a rootdir
     if ($dir === $directory) {
         die();
@@ -168,32 +168,32 @@ if (isset($_POST['fetchDir']) && ($_POST['fetchDir'])) {
     if (strpos($dir, $directory) !== 0) {
         die();
     }
-        
+
     $directory = $dir;
     $relativePath = $dirname;
 }
 
-$folders = array();
+$folders = [];
 $depth = 0;
 //group folders
 function getFolders($dir, $relativePath)
 {
     global $folders;
     global $depth;
-    
+
     foreach (scandir($dir) as $elem) {
         if (($elem === '.') || ($elem === '..')) {
             continue;
         }
         $dirpath = $dir . '/' . $elem;
         if (is_dir($dirpath)) {
-            $folder = array();
+            $folder = [];
             $folder['dirname'] = $elem;
             $folder['shortname'] = (strlen($elem) > 17) ? substr($elem, 0, 17) . '...' : $elem;
             $folder['relativePath'] = $relativePath . '/' . $elem;
             $folder['depth'] = $depth;
             $folders[] = $folder;
-            
+
             if ($depth < 1) {
                 $depth++;
                 getFolders($dirpath, $folder['relativePath']);
@@ -207,9 +207,9 @@ function getFolders($dir, $relativePath)
 
 getFolders($directory, $relativePath);
 
-echo json_encode(array(
+echo json_encode([
     'res'     => 'OK',
-    'folders' => $folders
-));
+    'folders' => $folders,
+]);
 
 exit(0);

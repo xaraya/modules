@@ -31,7 +31,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
      * @var string
      */
     private static $_gdVer = null;
-    
+
     /**
      * @param string $file
      * @return PGRThumb_Image|false
@@ -44,7 +44,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
             return false;
         }
     }
-    
+
     /**
      * Get GD version
      *
@@ -55,7 +55,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if (self::$_gdVer != null) {
             return self::$_gdVer;
         }
-        
+
         $res = false;
         if (!extension_loaded('gd')) {
             if (dl('gd.so')) {
@@ -64,7 +64,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         } else {
             $res = true;
         }
-        
+
         if ($res) {
             if (function_exists('gd_info')) {
                 $gdInfo = gd_info();
@@ -77,29 +77,29 @@ class PGRThumb_Image_GD extends PGRThumb_Image
                 $res = false;
             }
         }
-    
+
         return $res;
     }
-    
+
     public function __construct($file)
     {
         parent::__construct($file);
         $this->_processedImage = $this->_imageCreate();
     }
-    
+
     public function destroy()
     {
         if ($this->_processedImage) {
             imagedestroy($this->_processedImage);
         }
     }
-        
+
     public function resize($newWidth, $newHeight, $aspectRatio = true)
     {
         if (!$this->_processedImage) {
             return false;
         }
-        
+
         //Save proportions
         if ($aspectRatio) {
             $scale = 0;
@@ -108,26 +108,26 @@ class PGRThumb_Image_GD extends PGRThumb_Image
             } else {
                 $scale = $newHeight / $this->_height;
             }
-            
+
             $newWidth = $this->_width * $scale;
             $newHeight = $this->_height * $scale;
         }
-        
+
         // Load
         $source = $this->_processedImage;
         $this->_processedImage = imagecreatetruecolor($newWidth, $newHeight);
 
         //Resize
         $res = imagecopyresampled($this->_processedImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $this->_width, $this->_height);
-        
+
         $this->_scaleX = $newWidth/$this->_width;
         $this->_scaleY = $newHeight/$this->_height;
-        
+
         $this->_width = $newWidth;
         $this->_height = $newHeight;
-        
+
         imagedestroy($source);
-        
+
         return $res;
     }
 
@@ -136,32 +136,32 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if (!$this->_processedImage) {
             return false;
         }
-                
+
         // Load
         $source = $this->_processedImage;
-        
+
         $x = min($x1, $x2);
         $y = min($y1, $y2);
         $width = abs($x2 - $x1);
         $height = abs($y2 - $y1);
-        
+
         if (($width <= 0) || ($height == 0)) {
             return false;
         }
-        
+
         $this->_processedImage = imagecreatetruecolor($width, $height);
 
         //Resize
         $res = imagecopy($this->_processedImage, $source, 0, 0, $x, $y, $width, $height);
-        
+
         $this->_width = $width;
         $this->_height = $height;
-        
+
         imagedestroy($source);
-        
+
         return $res;
     }
-    
+
     private function _imageCreate()
     {
         switch (self::$_imageType[$this->_type]) {
@@ -181,7 +181,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if (!$type) {
             $type = self::$_imageType[$this->_type];
         }
-        
+
         switch ($type) {
             case 'GIF':
                 return imagegif($this->_processedImage, $file);
@@ -193,7 +193,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
                 return false;
         }
     }
-    
+
     public function filterGray()
     {
         if (!$this->_processedImage) {
@@ -202,7 +202,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if (!imagefilter($this->_processedImage, IMG_FILTER_GRAYSCALE)) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -217,24 +217,24 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if (!imagefilter($this->_processedImage, IMG_FILTER_COLORIZE, 100, 50, 0)) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     public function border($size, $color)
     {
         if (!$this->_processedImage) {
             return false;
         }
-        
+
         if (is_array($color)) {
-            list($red, $green, $blue) = $color;
+            [$red, $green, $blue] = $color;
         } else {
-            list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+            [$red, $green, $blue] = PGRThumb_Utils::html2rgb($color);
         }
         $width = $this->_width + 2 * $size;
         $height = $this->_height + 2 * $size;
-        
+
         $newimage = imagecreatetruecolor($width, $height);
         $border_color = imagecolorallocate($newimage, $red, $green, $blue);
         imagefilledrectangle($newimage, 0, 0, $width, $height, $border_color);
@@ -243,36 +243,36 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if ($res) {
             $this->_processedImage = $newimage;
         }
-        
+
         $this->_width = $width;
         $this->_height = $height;
-                
+
         return $res;
     }
-    
+
     public function watermark($text, $font, $size, $color, $transparency, $place)
     {
         if (strlen($text) == 0) {
             return;
         }
-        
+
         if (is_array($color)) {
-            list($red, $green, $blue) = $color;
+            [$red, $green, $blue] = $color;
         } else {
-            list($red, $green, $blue) = PGRThumb_Utils::html2rgb($color);
+            [$red, $green, $blue] = PGRThumb_Utils::html2rgb($color);
         }
-        
+
         $x = 0;
         $y = 0;
-        
+
         $textcord = imagettfbbox($size, 0, $font, $text);
         $textWidth = $textcord[4] - $textcord[6];
         $textHeight = $textcord[1] - $textcord[7];
         $textCenterX =  round($this->_width/2 - $textWidth/2);
         $textCenterY =  round($this->_height/2 + $textHeight/3);
-        
+
         $padding = 2;
-        
+
         switch ($place) {
             case 'LT':
                 $y = $padding + $textHeight;
@@ -311,7 +311,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
                 $x = $this->_width - $textWidth - $padding;
                 break;
         }
-        
+
         $color = imagecolorallocatealpha($this->_processedImage, $red, $green, $blue, $transparency);
         imagettftext($this->_processedImage, $size, 0, $x, $y, $color, $font, $text);
     }
@@ -321,7 +321,7 @@ class PGRThumb_Image_GD extends PGRThumb_Image
         if (!$this->_processedImage) {
             return false;
         }
-        
+
         $this->_processedImage = imagerotate($this->_processedImage, $angle, 0);
     }
 }

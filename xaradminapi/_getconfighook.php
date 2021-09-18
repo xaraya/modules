@@ -8,15 +8,15 @@
     {
         extract($args);
         if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = array();
+            $extrainfo['tabs'] = [];
         }
         $module = 'ckeditor';
-        $tabinfo = array(
+        $tabinfo = [
                 'module'  => $module,
                 'configarea'  => 'general',
                 'configtitle'  => xarML('CKEditor'),
-                'configcontent' => ''
-        );
+                'configcontent' => '',
+        ];
         $extrainfo['tabs'][] = $tabinfo;
         return $extrainfo;
     }

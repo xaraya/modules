@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 
     include_once dirname(__FILE__) . '/php/init.php';
-    
+
     $PGRUploaderExtension = "";
     if (PGRFileManagerConfig::$allowedExtensions == "") {
         $PGRUploaderExtension = "*.*";
@@ -120,7 +120,7 @@ THE SOFTWARE.
                 fileMaxSize : "<?php echo PGRFileManagerConfig::$fileMaxSize?> B",
                 lang: "<?php echo $PGRLang?>",
                 ckEditorFuncNum: "<?php echo $ckEditorFuncNum?>",
-                allowEdit: <?php echo PGRFileManagerConfig::$allowEdit?'true':'false'?>
+                allowEdit: <?php echo PGRFileManagerConfig::$allowEdit ? 'true' : 'false'?>
             });
             filemanager.init();
         });    

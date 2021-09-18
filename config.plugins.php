@@ -18,7 +18,7 @@
     $config['PGRFileManager.allowedExtensions'] = 'pdf, txt, rtf, jpg, gif, jpeg, png';  //'' means all files
 
     $config['PGRFileManager.imagesExtensions'] = 'jpg, gif, jpeg, png, bmp';
-    
+
     $config['PGRFileManager.fileMaxSize'] = 1024 * 1024 * 10; // bytes
 
     $config['PGRFileManager.imageMaxHeight'] = 724;

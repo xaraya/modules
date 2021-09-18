@@ -13,16 +13,16 @@
 
 function ckeditor_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     if (xarSecurity::check('ViewCKEditor', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'ckeditor',
             'user',
             'main'
         ),
                               'title' => xarML(''),
-                              'label' => xarML(''));
+                              'label' => xarML(''), ];
     }
 
     return $menulinks;

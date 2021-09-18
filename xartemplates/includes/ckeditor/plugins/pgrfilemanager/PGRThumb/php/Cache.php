@@ -43,7 +43,7 @@ class PGRThumb_Cache
      * @var string
      */
     public static $fileMode = 0600;
-    
+
     /**
      * Generate cached filename
      *
@@ -59,12 +59,12 @@ class PGRThumb_Cache
         foreach (str_split($dir, strlen($dir) / self::$dirDepth) as $chunk) {
             $hashedFile .= '/' . md5($chunk);
         }
-        
+
         $hashedFile .= '/' . md5($filename . $params) . '.jpg';
-        
+
         return $hashedFile;
     }
-    
+
     /**
      * Save image to cache file
      *
@@ -84,15 +84,15 @@ class PGRThumb_Cache
 
         return false;
     }
-    
+
     public static function outputCache($file)
     {
         if (headers_sent()) {
             PGRThumb_UrlThumb::error('headers already sent');
         }
-                        
+
         $modifiedDate  = filemtime($file);
-        
+
         if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) &&
             ($modifiedDate == strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) &&
             $_SERVER['SERVER_PROTOCOL']) {
@@ -102,13 +102,13 @@ class PGRThumb_Cache
 
         return false;
     }
-    
+
     public static function outputFile($file)
     {
         if (headers_sent()) {
             PGRThumb_UrlThumb::error('headers already sent');
         }
-                        
+
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', @filemtime($file)).' GMT');
         //header('Location: ' . $file . '?new');
         header("Content-Type: image/jpg");

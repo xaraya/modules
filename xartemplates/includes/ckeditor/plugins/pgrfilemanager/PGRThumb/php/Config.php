@@ -31,7 +31,7 @@ class PGRThumb_Config
      * @var string
      */
     public static $pass = null;
-        
+
     /**
      * Path to ImageMagic
      *
