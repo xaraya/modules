@@ -21,7 +21,7 @@ function messages_admin_overview()
         return;
     }
 
-    $data=array();
+    $data=[];
 
     return xarTpl::module('messages', 'admin', 'overview', $data);
 }

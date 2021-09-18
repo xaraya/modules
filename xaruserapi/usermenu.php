@@ -28,7 +28,7 @@ function messages_userapi_usermenu($args)
     if (!xarUser::isLoggedIn()) {
         // redirect user to their account page after login
         $redirecturl = xarController::URL('roles', 'user', 'account');
-        xarResponse::redirect(xarController::URL($defaultloginmodname, 'user', 'showloginform', array('redirecturl' => $redirecturl)));
+        xarResponse::redirect(xarController::URL($defaultloginmodname, 'user', 'showloginform', ['redirecturl' => $redirecturl]));
     }
 
     // edit account is disabled?
@@ -40,7 +40,7 @@ function messages_userapi_usermenu($args)
     // Get arguments from argument array
     extract($args);
 
-    $data = array();
+    $data = [];
 
     if (empty($phase)) {
         $phase = 'showform';
@@ -51,16 +51,16 @@ function messages_userapi_usermenu($args)
     }
 
     if (!isset($object)) {
-        $object = xarMod::apiFunc('base', 'admin', 'getusersettings', array('module' => 'messages', 'itemid' => $id));
+        $object = xarMod::apiFunc('base', 'admin', 'getusersettings', ['module' => 'messages', 'itemid' => $id]);
     }
     // only get the fields we need
-    $fieldlist = array();
+    $fieldlist = [];
     $settings = explode(',', xarModVars::get('roles', 'duvsettings'));
     $fieldlist[] = 'user_sendemail';
     $fieldlist[] = 'enable_autoreply';
     $fieldlist[] = 'autoreply';
     $fieldlist[] = 'user_send_redirect';
-    
+
     $object->setFieldList(join(',', $fieldlist));
     switch (strtolower($phase)) {
 
@@ -76,7 +76,7 @@ function messages_userapi_usermenu($args)
             $object->tplmodule = 'messages'; // roles/xartemplates/objects/
             $object->template = 'usermenu'; // showform-usermenu.xt
             //$object->layout = 'messages_user_settings';
-            $object->getItem(array('itemid' => $id));
+            $object->getItem(['itemid' => $id]);
 
             // pass all relevant data back to the calling function
             // the object to be displayed
@@ -84,9 +84,9 @@ function messages_userapi_usermenu($args)
             // any extra data needed can be added to the $formdata array. This will be
             // available in your showform- template as #$formdata#. Use this if
             // your form needs data not available from the object itself.
-            $data['formdata'] = array(
-                'settings' => $settings
-            );
+            $data['formdata'] = [
+                'settings' => $settings,
+            ];
             // if you want to provide your own update function, you can specify
             // the form action url to be used. When the form is POSTed your function
             // will be used. (see roles user usermenu for an example).
@@ -108,7 +108,7 @@ function messages_userapi_usermenu($args)
         **/
         case 'checkinput':
             $isvalid = $object->checkInput();
-    
+
             //$user_sendemail = $object->properties['user_sendemail']->value;
             //xarModItemVars::set('messages', "user_sendemail", $user_sendemail ,$id);
 

@@ -42,8 +42,8 @@ function messages_user_delete()
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(array('name' => $object));
-    $data['object']->getItem(array('itemid' => $id));
+    $data['object'] = DataObjectMaster::getObject(['name' => $object]);
+    $data['object']->getItem(['itemid' => $id]);
 
     $folder = xarSession::getVar('messages_currentfolder');
 
@@ -51,17 +51,17 @@ function messages_user_delete()
     switch ($folder) {
         case 'inbox':
             if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {
-                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             }
             break;
         case 'drafts':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
-                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             }
             break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
-                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             }
             break;
     }
@@ -86,7 +86,7 @@ function messages_user_delete()
 
             $data['object']->updateItem();
 
-            xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder' => $folder)));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'view', ['folder' => $folder]));
             break;
 
         case "check":

@@ -17,7 +17,7 @@
  * @author Carl P. Corliss (aka rabbitt)
  * @access  public
  */
- 
+
 sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_markunread()
@@ -33,8 +33,8 @@ function messages_user_markunread()
         return;
     }
 
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'messages_messages'));
-    $data['object']->getItem(array('itemid' => $id));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'messages_messages']);
+    $data['object']->getItem(['itemid' => $id]);
 
     $folder = xarSession::getVar('messages_currentfolder');
 
@@ -42,14 +42,14 @@ function messages_user_markunread()
     switch ($folder) {
         case 'inbox':
             if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {
-                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             } else {
                 $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
             }
             break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
-                return xarTpl::module('messages', 'user', 'message_errors', array('layout' => 'bad_id'));
+                return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             } else {
                 $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
             }
@@ -60,7 +60,7 @@ function messages_user_markunread()
 
     $data['object']->updateItem();
 
-    xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder' => $folder)));
-         
+    xarResponse::redirect(xarController::URL('messages', 'user', 'view', ['folder' => $folder]));
+
     return true;
 }

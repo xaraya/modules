@@ -60,20 +60,20 @@ function messages_init()
     # Create DD objects
     #
     $module = 'messages';
-    $objects = array(
+    $objects = [
                     'messages_user_settings',
                     'messages_module_settings',
-                    'messages_messages'
-                     );
+                    'messages_messages',
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
     xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
     xarModVars::set('messages', 'allowautoreply', true);
     xarModVars::set('messages', 'allowanonymous', false);
-    xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
+    xarModVars::set('messages', 'allowedsendmessages', serialize([]));
     xarModVars::set('messages', 'strip_tags', true);
     xarModVars::set('messages', 'send_redirect', 1);
     xarModVars::set('messages', 'allowusersendredirect', false);
@@ -103,7 +103,7 @@ function messages_init()
     # Set up configuration modvars (general)
     #
 
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'messages'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'messages']);
     $module_settings->initialize();
 
 
@@ -115,8 +115,8 @@ function messages_init()
         'blocks',
         'admin',
         'register_block_type',
-        array('modName'  => 'messages',
-                             'blockType'=> 'newmessages')
+        ['modName'  => 'messages',
+                             'blockType'=> 'newmessages', ]
     )) {
         return;
     }
@@ -129,9 +129,8 @@ function messages_init()
         'modules',
         'admin',
         'enablehooks',
-        array(
-            'hookModName'       => 'roles'
-            ,'callerModName'    => 'messages')
+        [
+            'hookModName'       => 'roles','callerModName'    => 'messages', ]
     );
 
     /*
@@ -156,8 +155,8 @@ function messages_init()
     # Create privilege instances
 #
 
-    xarPrivileges::defineInstance('messages', 'Block', array());
-    xarPrivileges::defineInstance('messages', 'Item', array());
+    xarPrivileges::defineInstance('messages', 'Block', []);
+    xarPrivileges::defineInstance('messages', 'Item', []);
 
     /*
      * REGISTER MASKS
@@ -217,21 +216,21 @@ function messages_upgrade($oldversion)
         case '1.9':
         case '1.9.0':
 
-            xarMod::apiFunc('dynamicdata', 'util', 'import', array(
+            xarMod::apiFunc('dynamicdata', 'util', 'import', [
                         'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
-                        'overwrite' => true
-                        ));
-             
+                        'overwrite' => true,
+                        ]);
+
             // new module vars
             xarModVars::set('messages', 'allowautoreply', true);
             xarModVars::set('messages', 'send_redirect', true);
             xarModVars::set('messages', 'allowusersendredirect', false);
 
-            xarMod::apiFunc('dynamicdata', 'util', 'import', array(
+            xarMod::apiFunc('dynamicdata', 'util', 'import', [
                         'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
-                        'overwrite' => true
-                        ));
-            
+                        'overwrite' => true,
+                        ]);
+
             // new user vars
             xarModVars::set('messages', 'user_send_redirect', 1);
 
@@ -260,13 +259,13 @@ function messages_delete()
         'blocks',
         'admin',
         'unregister_block_type',
-        array('modName'  => 'messages',
-                             'blockType'=> 'newmessages')
+        ['modName'  => 'messages',
+                             'blockType'=> 'newmessages', ]
     )) {
         return;
     }
 
     //	xarPrivileges::removeModule('messages');
 
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'messages'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'messages']);
 }

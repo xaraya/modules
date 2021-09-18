@@ -71,34 +71,34 @@ function messages_user_view()
             break;
     }
 
-    $sort = xarMod::apiFunc('messages', 'admin', 'sort', array(
+    $sort = xarMod::apiFunc('messages', 'admin', 'sort', [
         //how to sort if the URL or config say otherwise...
         //'object' => $object,
         'sortfield_fallback' => 'time',
-        'ascdesc_fallback' => 'DESC'
-    ));
+        'ascdesc_fallback' => 'DESC',
+    ]);
     $data['sort'] = $sort;
 
-    $total = DataObjectMaster::getObjectList(array(
+    $total = DataObjectMaster::getObjectList([
                             'name' => 'messages_messages',
                             'status'    =>DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
                             'numitems' => null,
-                            'where' => $where
-                            ));
+                            'where' => $where,
+                            ]);
     $data['total'] = count($total->getItems());
 
-    $list = DataObjectMaster::getObjectList(array(
+    $list = DataObjectMaster::getObjectList([
                             'name' => 'messages_messages',
                             'status'    =>DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
                             'startnum'  => $startnum,
                             'numitems' => $numitems,
                             'sort' => $data['sort'],
-                            'where' => $where
-                            ));
-    
+                            'where' => $where,
+                            ]);
+
     $list->getItems();
     $data['list'] = $list;
- 
+
     if (xarUser::isLoggedIn()) {
         if (!xarVar::fetch('away', 'str', $away, null, xarVar::NOT_REQUIRED)) {
             return;
@@ -110,7 +110,7 @@ function messages_user_view()
     } else {
         $data['away_message'] = '';
     }
- 
+
     $data['folder'] = $folder;
 
     return $data;

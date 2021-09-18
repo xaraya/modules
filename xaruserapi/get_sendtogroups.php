@@ -25,7 +25,7 @@ sys::import('modules.messages.xarincludes.defines');
         if (!isset($currentuser)) {
             $currentuser = xarUser::getVar('id');
         }
-    
+
         // First we get all the parents of the current user
         sys::import('xaraya.structures.query');
         $xartable = xarDB::getTables();
@@ -41,9 +41,9 @@ sys::import('modules.messages.xarincludes.defines');
             return;
         }
         $parents =  $q->output();
- 
+
         // Find the groups these parents can send to
-        $sendtogroups = array();
+        $sendtogroups = [];
         foreach ($parents as $parent) {
             $allowedgroups = unserialize(xarModItemVars::get('messages', "allowedsendmessages", $parent['parent_id']));
             if (!empty($allowedgroups)) {
@@ -52,6 +52,6 @@ sys::import('modules.messages.xarincludes.defines');
                 }
             }
         }
-     
+
         return $sendtogroups;
     }

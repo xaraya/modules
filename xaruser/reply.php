@@ -26,6 +26,6 @@ function messages_user_reply()
     if (!xarVar::fetch('replyto', 'int', $replyto, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    xarResponse::redirect(xarController::URL('messages', 'user', 'new', array('replyto' => $replyto)));
+    xarResponse::redirect(xarController::URL('messages', 'user', 'new', ['replyto' => $replyto]));
     return true;
 }

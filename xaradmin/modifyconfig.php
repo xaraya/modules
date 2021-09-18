@@ -31,14 +31,14 @@ function messages_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'banks'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'banks']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for content-specific configuration
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'messages_module_settings'));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'messages_module_settings']);
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['object']->getItem();
 
@@ -83,10 +83,10 @@ function messages_admin_modifyconfig()
                 //$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key));
                 //$property->checkInput('roleid_'.$key);
                 $the_key = $value['id'];
-                if (!xarVar::fetch('roleid_'.$the_key, 'array', $roleid_{$the_key}, 0, xarVar::NOT_REQUIRED)) {
+                if (!xarVar::fetch('roleid_'.$the_key, 'array', $roleid_[$the_key], 0, xarVar::NOT_REQUIRED)) {
                     return;
                 }
-                xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}), $the_key);
+                xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_[$the_key]), $the_key);
             }
 
             # --------------------------------------------------------
@@ -124,17 +124,17 @@ function messages_admin_modifyconfig()
             # Note that, as in those examples, this code could be placed in the modifyconfig.php file
             # and this file dispensed with.
             #
-            
+
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
-                $object = DataObjectMaster::getObject(array('name' => 'messages_module_settings'));
+                $object = DataObjectMaster::getObject(['name' => 'messages_module_settings']);
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-                 
-                
-                $item = $object->updateItem(array('itemid' => 0));
+
+
+                $item = $object->updateItem(['itemid' => 0]);
 
                 xarResponse::redirect(xarController::URL('messages', 'admin', 'modifyconfig'));
 
@@ -157,7 +157,7 @@ function messages_admin_modifyconfig()
 
             break;
     }
- 
+
     // Return the template variables defined in this function
     return $data;
 }

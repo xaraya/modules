@@ -54,7 +54,7 @@ function messages_userapi_get_count($args)
               FROM  $xartable[messages]
              WHERE  ";
 
-    $bindvars = array();
+    $bindvars = [];
     if (isset($recipient)) {
         $sql .= "recipient_delete=? AND recipient=? AND author_status!=?";
         $bindvars[] = MESSAGES_NOTDELETED;
@@ -91,7 +91,7 @@ function messages_userapi_get_count($args)
         return 0;
     }
 
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
 
     $result->Close();
 

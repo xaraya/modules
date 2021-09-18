@@ -19,7 +19,7 @@ function messages_userapi_encode_shorturl($args)
     $func = null;
     $module = null;
     $id = null;
-    $rest = array();
+    $rest = [];
 
     foreach ($args as $name => $value) {
         switch ($name) {
@@ -127,7 +127,7 @@ function messages_userapi_encode_shorturl($args)
         $rest['folder'] = $folder;
     }
 
-    $add = array();
+    $add = [];
     foreach ($rest as $key => $value) {
         if (isset($rest[$key])) {
             $add[] =  $key . '=' . $value;

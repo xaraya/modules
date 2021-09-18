@@ -19,7 +19,7 @@ function messages_user_new()
     if (!xarSecurity::check('AddMessages')) {
         return;
     }
- 
+
     if (!xarVar::fetch('replyto', 'int', $replyto, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -50,7 +50,7 @@ function messages_user_new()
     $draft = (!empty($draft)) ? true : false;
     $saveandedit = (!empty($saveandedit)) ? true : false;
 
-    $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
+    $object = DataObjectMaster::getObject(['name' => 'messages_messages']);
     $data['object'] = $object;
 
     $data['post_url']       = xarController::URL('messages', 'user', 'new');
@@ -73,8 +73,8 @@ function messages_user_new()
     }
 
     if ($reply) {
-        $reply = DataObjectMaster::getObject(array('name' => 'messages_messages'));
-        $reply->getItem(array('itemid' => $replyto)); // get the message we're replying to
+        $reply = DataObjectMaster::getObject(['name' => 'messages_messages']);
+        $reply->getItem(['itemid' => $replyto]); // get the message we're replying to
         $data['to'] = $reply->properties['from']->value; // get the user we're replying to
         $data['display'] = $reply;
         xarTpl::setPageTitle(xarML('Reply to Message'));
@@ -85,7 +85,7 @@ function messages_user_new()
 
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         }
 
         $isvalid = $object->checkInput();
@@ -95,7 +95,7 @@ function messages_user_new()
         } else {
             $object->properties['replyto']->setValue(0);
         }
-        
+
         $object->properties['from']->setValue(xarUser::getVar('uname'));
 
         if (!$isvalid) {
@@ -103,13 +103,13 @@ function messages_user_new()
         }
 
         $object->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
-         
+
         if ($send) {
             $object->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
         } else {
             $object->properties['author_status']->setValue(MESSAGES_STATUS_DRAFT);
         }
-            
+
         $id = $object->createItem();
 
         $to = $object->properties['to']->value;
@@ -118,7 +118,7 @@ function messages_user_new()
         if ($send && xarModVars::get('messages', 'sendemail')) {
             // user setting
             if (xarModItemVars::get('messages', "user_sendemail", $to)) {
-                xarMod::apiFunc('messages', 'user', 'sendmail', array('id' => $id, 'to' => $to));
+                xarMod::apiFunc('messages', 'user', 'sendmail', ['id' => $id, 'to' => $to]);
             }
         }
 
@@ -131,7 +131,7 @@ function messages_user_new()
                 $autoreply = xarModItemVars::get('messages', "autoreply", $to);
             }
             if (!empty($autoreply)) {
-                $autoreplyobj = DataObjectMaster::getObject(array('name' => 'messages_messages'));
+                $autoreplyobj = DataObjectMaster::getObject(['name' => 'messages_messages']);
                 $autoreplyobj->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
                 $autoreplyobj->properties['from']->setValue(xarUser::getVar('uname', $to));
                 $autoreplyobj->properties['to']->setValue($uid);
@@ -151,7 +151,7 @@ function messages_user_new()
         }
 
         if ($saveandedit) {
-            xarResponse::redirect(xarController::URL('messages', 'user', 'modify', array('id' => $id)));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'modify', ['id' => $id]));
             return true;
         }
 
@@ -160,13 +160,13 @@ function messages_user_new()
         } else {
             $redirect = xarModVars::get('messages', 'send_redirect');
         }
-        $tabs = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'new');
+        $tabs = [1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'new'];
         $redirect = $tabs[$redirect];
-        
+
         if ($redirect == 'new') {
             xarResponse::redirect(xarController::URL('messages', 'user', 'new'));
         } else {
-            xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder' => $redirect)));
+            xarResponse::redirect(xarController::URL('messages', 'user', 'view', ['folder' => $redirect]));
         }
         return true;
     }

@@ -14,7 +14,7 @@
 function messages_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     // Name for template database entities
     $messages_table     = xarDB::getPrefix() . '_messages';

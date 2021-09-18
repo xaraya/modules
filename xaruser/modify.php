@@ -58,20 +58,20 @@ function messages_user_modify()
     sys::import('modules.dynamicdata.class.objects.master');
 
     // Get the object name
-    $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
-    $object->getItem(array('itemid' => $id));
+    $object = DataObjectMaster::getObject(['name' => 'messages_messages']);
+    $object->getItem(['itemid' => $id]);
     $replyto = $object->properties['replyto']->value;
     $data['replyto'] = $replyto;
 
     $data['reply'] = ($replyto > 0) ? true : false;
-    
+
     $data['object'] = $object;
 
     $data['to'] = null;
 
     if ($data['reply']) {
-        $reply = DataObjectMaster::getObject(array('name' => 'messages_messages'));
-        $reply->getItem(array('itemid' => $replyto)); // get the message we're replying to
+        $reply = DataObjectMaster::getObject(['name' => 'messages_messages']);
+        $reply->getItem(['itemid' => $replyto]); // get the message we're replying to
         $data['to'] = $reply->properties['from']->value; // get the user we're replying to
         $data['display'] = $reply;
         xarTpl::setPageTitle(xarML('Reply to Message'));
@@ -84,7 +84,7 @@ function messages_user_modify()
 
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         }
 
         // Get the data from the form
@@ -100,18 +100,18 @@ function messages_user_modify()
                 $object->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
             }
 
-            $object->updateItem(array('itemid' => $id));
+            $object->updateItem(['itemid' => $id]);
 
             if ($saveandedit) {
-                xarResponse::redirect(xarController::URL('messages', 'user', 'modify', array('id'=>$id)));
+                xarResponse::redirect(xarController::URL('messages', 'user', 'modify', ['id'=>$id]));
                 return true;
             } elseif ($draft) {
-                xarResponse::redirect(xarController::URL('messages', 'user', 'view', array('folder'=> 'drafts')));
+                xarResponse::redirect(xarController::URL('messages', 'user', 'view', ['folder'=> 'drafts']));
                 return true;
             } elseif ($send) {
                 if (xarModVars::get('messages', 'sendemail')) {
                     $to = $object->properties['to']->value;
-                    xarMod::apiFunc('messages', 'user', 'sendmail', array('id' => $id, 'to' => $to));
+                    xarMod::apiFunc('messages', 'user', 'sendmail', ['id' => $id, 'to' => $to]);
                 }
                 xarResponse::redirect(xarController::URL('messages', 'user', 'view'));
                 return true;

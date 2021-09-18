@@ -23,7 +23,7 @@ function messages_userapi_sendmail($args)
 {
     extract($args);
 
-    $msgurl = xarController::URL('messages', 'user', 'display', array('id' => $id));
+    $msgurl = xarController::URL('messages', 'user', 'display', ['id' => $id]);
     $from = xarUser::getVar('name');
     $msgdata['info'] = xarUser::getVar('email', $to);
     $msgdata['name'] = xarUser::getVar('name', $to);

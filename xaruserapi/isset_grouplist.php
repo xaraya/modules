@@ -24,14 +24,14 @@ sys::import('modules.messages.xarincludes.defines');
 function messages_userapi_isset_grouplist($args)
 {
     extract($args);
-    
+
     $users = xarMod::apiFunc(
         'roles',
         'user',
         'getall',
-        array('state'   => 3,
+        ['state'   => 3,
                                     'include_anonymous' => false,
-                                    'include_myself' => false)
+                                    'include_myself' => false, ]
     );
     $userid = xarUser::getVar('id');
 
@@ -50,12 +50,12 @@ function messages_userapi_isset_grouplist($args)
         return;
     }
     $CurrentUser =  $q->output();
-    
+
     $id=$CurrentUser[0]['parent_id'];
     $groupID=$CurrentUser[0]['parent_id'];
-    
+
     $allowedsendmessages = unserialize(xarModItemVars::get('messages', "allowedsendmessages", $groupID));
-    
+
     if (isset($allowedsendmessages)) {
         if (empty($allowedsendmessages[0])) {
             return false;

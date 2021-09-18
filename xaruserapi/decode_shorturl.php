@@ -25,41 +25,41 @@ function messages_userapi_decode_shorturl($params)
     }
 
     if (is_numeric($params[1])) {
-        return array('display', array('id' => $params[1]));
+        return ['display', ['id' => $params[1]]];
     }
 
     switch ($params[1]) {
         case 'new':
-            $args = array();
+            $args = [];
             if (isset($params[2])) {
                 $args['to'] = $params[2];
             }
             if (isset($params[3]) && $params[3] == 'opt') {
                 $args['opt'] = true;
             }
-            return array('new', $args);
+            return ['new', $args];
             break;
         case 'modify':
-            return array('modify', array('id' => $params[2]));
+            return ['modify', ['id' => $params[2]]];
             break;
         case 'reply':
-            return array('reply', array('replyto' => $params[2]));
+            return ['reply', ['replyto' => $params[2]]];
             break;
         case 'markunread':
-            return array('markunread', array('id' => $params[2]));
+            return ['markunread', ['id' => $params[2]]];
             break;
         case 'sent':
-            return array('view', array('folder' => 'sent'));
+            return ['view', ['folder' => 'sent']];
             break;
         case 'drafts':
-            return array('view', array('folder' => 'drafts'));
+            return ['view', ['folder' => 'drafts']];
             break;
         case 'delete':
-            return array('delete', array('id' => $params[2]));
+            return ['delete', ['id' => $params[2]]];
             break;
         default:
         case 'inbox':
-            return array('view', array());
+            return ['view', []];
             break;
     }
 }

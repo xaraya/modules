@@ -38,7 +38,7 @@ function messages_adminapi_sort($args)
             $sort = $config['sort'];
         }
     }*/
-    
+
     if (!isset($sort)) {
         if (!isset($sortfield)) {
             $sortfield = $sortfield_fallback;
