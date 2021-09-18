@@ -94,10 +94,10 @@ function ratings_userapi_getitems($args)
         return;
     }
 
-    $getitems = array();
+    $getitems = [];
     while (!$result->EOF) {
-        list($id, $rating, $numratings) = $result->fields;
-        $getitems[$id] = array('numratings' => $numratings, 'rating' => $rating);
+        [$id, $rating, $numratings] = $result->fields;
+        $getitems[$id] = ['numratings' => $numratings, 'rating' => $rating];
         $result->MoveNext();
     }
     $result->close();

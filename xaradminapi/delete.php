@@ -31,7 +31,7 @@ function ratings_adminapi_delete($args)
         // TODO: cfr. hitcount delete stuff, once we enable item delete hooks
         // Return the extra info
         if (!isset($extrainfo)) {
-            $extrainfo = array();
+            $extrainfo = [];
         }
         return $extrainfo;
 
@@ -43,7 +43,7 @@ function ratings_adminapi_delete($args)
         $ratingstable = $xartable['ratings'];
 
         $query = "DELETE FROM $ratingstable ";
-        $bindvars = array();
+        $bindvars = [];
         if (!empty($modid)) {
             if (!is_numeric($modid)) {
                 $msg = xarML(

@@ -34,7 +34,7 @@ function ratings_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'ratings'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'ratings']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
 
@@ -48,17 +48,17 @@ function ratings_admin_modifyconfig()
                 $defaultseclevel = xarModVars::get('ratings', 'seclevel');
                 $defaultshownum = xarModVars::get('ratings', 'shownum');
 
-                $data['settings'] = array();
-                $data['settings']['default'] = array('label' => xarML('Default configuration'),
+                $data['settings'] = [];
+                $data['settings']['default'] = ['label' => xarML('Default configuration'),
                                                      'ratingsstyle' => $defaultratingsstyle,
                                                      'seclevel' => $defaultseclevel,
-                                                     'shownum' => $defaultshownum);
+                                                     'shownum' => $defaultshownum, ];
 
                 $hookedmodules = xarMod::apiFunc(
                     'modules',
                     'admin',
                     'gethookedmodules',
-                    array('hookModName' => 'ratings')
+                    ['hookModName' => 'ratings']
                 );
 
                 if (isset($hookedmodules) && is_array($hookedmodules)) {
@@ -71,7 +71,7 @@ function ratings_admin_modifyconfig()
                                 'user',
                                 'getitemtypes',
                                                      // don't throw an exception if this function doesn't exist
-                                                     array(),
+                                                     [],
                                 0
                             );
                             foreach ($value as $itemtype => $val) {
@@ -93,12 +93,12 @@ function ratings_admin_modifyconfig()
                                     $link = $mytypes[$itemtype]['url'];
                                 } else {
                                     $type = xarML('type #(1)', $itemtype);
-                                    $link = xarController::URL($modname, 'user', 'view', array('itemtype' => $itemtype));
+                                    $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                                 }
-                                $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                                $data['settings']["$modname.$itemtype"] = ['label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                                 'ratingsstyle' => $ratingsstyle,
                                                                                 'seclevel' => $seclevel,
-                                                                                'shownum' => $shownum);
+                                                                                'shownum' => $shownum, ];
                             }
                         } else {
                             $ratingsstyle = xarModVars::get('ratings', 'ratingsstyle.' . $modname);
@@ -115,19 +115,19 @@ function ratings_admin_modifyconfig()
                                 xarModVars::set('ratings', "shownum.$modname", $defaultshownum);
                             }
                             $link = xarController::URL($modname, 'user', 'main');
-                            $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                            $data['settings'][$modname] = ['label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                                 'ratingsstyle' => $ratingsstyle,
                                                                 'seclevel' => $seclevel,
-                                                                'shownum' => $shownum);
+                                                                'shownum' => $shownum, ];
                         }
                     }
                 }
 
-                $data['secleveloptions'] = array(
-                    array('id' => 'low', 'name' => xarML('Low : users can vote multiple times')),
-                    array('id' => 'medium', 'name' => xarML('Medium : users can vote once per day')),
-                    array('id' => 'high', 'name' => xarML('High : users must be logged in and can only vote once')),
-                    );
+                $data['secleveloptions'] = [
+                    ['id' => 'low', 'name' => xarML('Low : users can vote multiple times')],
+                    ['id' => 'medium', 'name' => xarML('Medium : users can vote once per day')],
+                    ['id' => 'high', 'name' => xarML('High : users must be logged in and can only vote once')],
+                    ];
 
                 $data['authid'] = xarSec::genAuthKey();
                     break;
@@ -142,7 +142,7 @@ function ratings_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             switch ($data['tab']) {
                 case 'general':

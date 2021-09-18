@@ -23,8 +23,8 @@ class RatingProperty extends FloatBoxProperty
     public $id         = 30118;
     public $name       = 'rating';
     public $desc       = 'Rating';
-    public $reqmodules = array('ratings');
-    
+    public $reqmodules = ['ratings'];
+
     public $initialization_ratingstyle = 'outoffivestars';
 
     public $display_tooltip = 'Number of times this item was displayed';
@@ -51,23 +51,23 @@ class RatingProperty extends FloatBoxProperty
 
     public function getItemValue($itemid)
     {
-        return $this->getHitcount(array('value' => $itemid));
+        return $this->getHitcount(['value' => $itemid]);
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
 //        $data['value'] = $this->getHitcount($data);
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data = array())
+    public function showOutput(array $data = [])
     {
         // the dummy datastore will use the itemid as value for this property !
 //        $data['value'] = $this->getHitcount($data, 1);
         return parent::showOutput($data);
     }
 
-    private function getHitcount(array $data = array(), $update = 0)
+    private function getHitcount(array $data = [], $update = 0)
     {
         // if we don't have an objectref, return the value as is
         if (empty($this->objectref) || empty($this->objectref->objectid)) {
@@ -87,9 +87,9 @@ class RatingProperty extends FloatBoxProperty
                         'hitcount',
                         'admin',
                         'update',
-                        array('modname'  => xarMod::getName($this->objectref->moduleid),
+                        ['modname'  => xarMod::getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid)
+                                                            'objectid' => $this->objectref->itemid, ]
                     );
                 } else {
                     // get the hitcount for this item
@@ -97,9 +97,9 @@ class RatingProperty extends FloatBoxProperty
                         'hitcount',
                         'user',
                         'get',
-                        array('modname'  => xarMod::getName($this->objectref->moduleid),
+                        ['modname'  => xarMod::getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid)
+                                                            'objectid' => $this->objectref->itemid, ]
                     );
                 }
                 if (empty($this->hitcache)) {
@@ -116,12 +116,12 @@ class RatingProperty extends FloatBoxProperty
                     'hitcount',
                     'user',
                     'getitems',
-                    array('modid'    => $this->objectref->moduleid,
+                    ['modid'    => $this->objectref->moduleid,
                                                         'itemtype' => $this->objectref->itemtype,
-                                                        'itemids'  => $this->objectref->itemids)
+                                                        'itemids'  => $this->objectref->itemids, ]
                 );
                 if (empty($this->hitcache)) {
-                    $this->hitcache = array();
+                    $this->hitcache = [];
                 }
                 /*
                                 // set the hitcount for all the items in the objectref ? No, we'll work via local hitcache
@@ -187,9 +187,9 @@ class RatingProperty extends FloatBoxProperty
             'hitcount',
             'admin',
             'delete',
-            array('modname'  => xarMod::getName($this->objectref->moduleid),
+            ['modname'  => xarMod::getName($this->objectref->moduleid),
                               'itemtype' => $this->objectref->itemtype,
-                              'objectid' => $itemid)
+                              'objectid' => $itemid, ]
         );
         return true;
     }

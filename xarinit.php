@@ -25,13 +25,13 @@ function ratings_init()
     // Load Table Maintainance API
     sys::import('xaraya.tableddl');
     // Create table
-    $fields = array('id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'module_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'rating' => array('type' => 'float', 'size' => 'double', 'width' => 15, 'decimals' => 5, 'null' => false, 'default' => '0'),
-        'numratings' => array('type' => 'integer', 'size' => 'medium', 'null' => false, 'default' => '1')
-        );
+    $fields = ['id' => ['type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true],
+        'module_id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'],
+        'itemtype' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'],
+        'itemid' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'],
+        'rating' => ['type' => 'float', 'size' => 'double', 'width' => 15, 'decimals' => 5, 'null' => false, 'default' => '0'],
+        'numratings' => ['type' => 'integer', 'size' => 'medium', 'null' => false, 'default' => '1'],
+        ];
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarTableDDL::createTable($xartable['ratings'], $fields);
@@ -47,9 +47,9 @@ function ratings_init()
     // TODO: compare with having 2 indexes (cfr. hitcount)
     $query = xarTableDDL::createIndex(
         $xartable['ratings'],
-        array('name' => 'i_' . xarDB::getPrefix() . '_ratingcombo',
-            'fields' => array('module_id', 'itemtype', 'itemid'),
-            'unique' => true)
+        ['name' => 'i_' . xarDB::getPrefix() . '_ratingcombo',
+            'fields' => ['module_id', 'itemtype', 'itemid'],
+            'unique' => true, ]
     );
 
     $result = $dbconn->Execute($query);
@@ -59,9 +59,9 @@ function ratings_init()
 
     $query = xarTableDDL::createIndex(
         $xartable['ratings'],
-        array('name' => 'i_' . xarDB::getPrefix() . '_rating',
-            'fields' => array('rating'),
-            'unique' => false)
+        ['name' => 'i_' . xarDB::getPrefix() . '_rating',
+            'fields' => ['rating'],
+            'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
@@ -71,27 +71,27 @@ function ratings_init()
 
     $query = xarTableDDL::createTable(
         $xartable['ratings_likes'],
-        array('id'         => array('type'        => 'integer',
+        ['id'         => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'increment'   => true,
-                                                            'primary_key' => true),
-                                   'object_id'  => array('type'        => 'integer',
+                                                            'primary_key' => true, ],
+                                   'object_id'  => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'itemid'     => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'itemid'     => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'role_id'    => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'role_id'    => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'),
-                                   'udid'       => array('type'        => 'integer',
+                                                            'default'     => '0', ],
+                                   'udid'       => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0'))
+                                                            'default'     => '0', ], ]
     );
 
     $result = $dbconn->Execute($query);
@@ -101,9 +101,9 @@ function ratings_init()
 
     $query = xarTableDDL::createIndex(
         $xartable['ratings_likes'],
-        array('name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
-                                   'fields' => array('object_id', 'itemid'),
-                                   'unique' => false)
+        ['name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
+                                   'fields' => ['object_id', 'itemid'],
+                                   'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
@@ -113,28 +113,28 @@ function ratings_init()
 
     $query = xarTableDDL::createIndex(
         $xartable['ratings_likes'],
-        array('name'   => 'i_' . xarDB::getPrefix() . '_role_id',
-                                   'fields' => array('role_id'),
-                                   'unique' => false)
+        ['name'   => 'i_' . xarDB::getPrefix() . '_role_id',
+                                   'fields' => ['role_id'],
+                                   'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
-    
+
     $query = xarTableDDL::createIndex(
         $xartable['ratings_likes'],
-        array('name'   => 'i_' . xarDB::getPrefix() . '_udid',
-                                   'fields' => array('udid'),
-                                   'unique' => false)
+        ['name'   => 'i_' . xarDB::getPrefix() . '_udid',
+                                   'fields' => ['udid'],
+                                   'unique' => false, ]
     );
 
     $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
-    
+
     # --------------------------------------------------------
     #
     # Set up modvars
@@ -180,40 +180,40 @@ function ratings_init()
     $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[ratings] LEFT JOIN $xartable[modules] ON $xartable[ratings].module_id = $xartable[modules].regid";
     $query2 = "SELECT DISTINCT itemtype FROM $xartable[ratings]";
     $query3 = "SELECT DISTINCT itemid FROM $xartable[ratings]";
-    $instances = array(
-        array('header' => 'Module Name:',
+    $instances = [
+        ['header' => 'Module Name:',
             'query' => $query1,
-            'limit' => 20
-            ),
-        array('header' => 'Item Type:',
+            'limit' => 20,
+            ],
+        ['header' => 'Item Type:',
             'query' => $query2,
-            'limit' => 20
-            ),
-        array('header' => 'Item ID:',
+            'limit' => 20,
+            ],
+        ['header' => 'Item ID:',
             'query' => $query3,
-            'limit' => 20
-            )
-        );
+            'limit' => 20,
+            ],
+        ];
     xarPrivileges::defineInstance('ratings', 'Item', $instances);
     $ratingstable=$xartable['ratings'];
 
     $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[ratings] LEFT JOIN $xartable[modules] ON $xartable[ratings].module_id = $xartable[modules].regid";
     $query2 = "SELECT DISTINCT itemtype FROM $xartable[ratings]";
     $query3 = "SELECT DISTINCT itemid FROM $xartable[ratings]";
-    $instances = array(
-        array('header' => 'Module Name:',
+    $instances = [
+        ['header' => 'Module Name:',
             'query' => $query1,
-            'limit' => 20
-            ),
-        array('header' => 'Item Type:',
+            'limit' => 20,
+            ],
+        ['header' => 'Item Type:',
             'query' => $query2,
-            'limit' => 20
-            ),
-        array('header' => 'Item ID:',
+            'limit' => 20,
+            ],
+        ['header' => 'Item ID:',
             'query' => $query3,
-            'limit' => 20
-            )
-        );
+            'limit' => 20,
+            ],
+        ];
     // FIXME: this seems to be some left-over from the old template module
     xarPrivileges::defineInstance('ratings', 'Template', $instances);
 
@@ -260,7 +260,7 @@ function ratings_upgrade($oldversion)
                 'modules',
                 'admin',
                 'gethookedmodules',
-                array('hookModName' => 'ratings')
+                ['hookModName' => 'ratings']
             );
             if (isset($hookedmodules) && is_array($hookedmodules)) {
                 foreach ($hookedmodules as $modname => $value) {
@@ -269,9 +269,9 @@ function ratings_upgrade($oldversion)
                             'modules',
                             'admin',
                             'enablehooks',
-                            array('hookModName' => 'ratings',
+                            ['hookModName' => 'ratings',
                                             'callerModName' => $modname,
-                                            'callerItemType' => $itemtype)
+                                            'callerItemType' => $itemtype, ]
                         );
                     }
                 }
@@ -285,7 +285,7 @@ function ratings_upgrade($oldversion)
                 'modules',
                 'admin',
                 'gethookedmodules',
-                array('hookModName' => 'ratings')
+                ['hookModName' => 'ratings']
             );
             if (isset($hookedmodules) && is_array($hookedmodules)) {
                 foreach ($hookedmodules as $modname => $value) {
@@ -297,7 +297,7 @@ function ratings_upgrade($oldversion)
                             'user',
                             'getitemtypes',
                                                  // don't throw an exception if this function doesn't exist
-                                                 array(),
+                                                 [],
                             0
                         );
                         foreach ($value as $itemtype => $val) {
@@ -351,5 +351,5 @@ function ratings_delete()
     )) {
         return;
     }
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'ratings'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'ratings']);
 }

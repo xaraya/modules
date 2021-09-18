@@ -25,7 +25,7 @@ function ratings_user_display($args)
 {
     extract($args);
 
-    $data = array();
+    $data = [];
     $data['itemid'] = $itemid;
 
     $itemtype = 0;
@@ -40,7 +40,7 @@ function ratings_user_display($args)
             $data['returnurl'] = $extrainfo['returnurl'];
         }
         if (isset($extrainfo['ratingsstyle']) && is_string($extrainfo['ratingsstyle'])) {
-            if (in_array($ratingsstyle, array('outoffive','outoffivestars','outoften','outoftenstars','customised'))) {
+            if (in_array($ratingsstyle, ['outoffive','outoffivestars','outoften','outoftenstars','customised'])) {
                 $ratingsstyle = $extrainfo['ratingsstyle'];
             }
         }
@@ -112,7 +112,7 @@ function ratings_user_display($args)
     // Select the right rating
     $args['modname'] = $modname;
     $args['itemtype'] = $itemtype;
-    $args['itemids'] = array($itemid);
+    $args['itemids'] = [$itemid];
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results

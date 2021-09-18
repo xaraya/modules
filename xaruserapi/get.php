@@ -65,7 +65,7 @@ function ratings_userapi_get($args)
             WHERE module_id = ?
               AND itemid = ?
               AND itemtype = ?";
-    $bindvars = array($modid, $itemid, $itemtype);
+    $bindvars = [$modid, $itemid, $itemtype];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;

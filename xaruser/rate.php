@@ -42,10 +42,10 @@ function ratings_user_rate($args)
         'ratings',
         'user',
         'rate',
-        array('modname'    => $modname,
+        ['modname'    => $modname,
                                     'itemtype'   => $itemtype,
                                     'itemid'     => $itemid,
-                                    'rating'     => $rating)
+                                    'rating'     => $rating, ]
     );
 
     if (isset($newrating)) {

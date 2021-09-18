@@ -15,13 +15,13 @@
  */
 function ratings_userapi_getstyles($args)
 {
-    $ratingstyles = array(
-        array('id' => 'percentage', 'name' => xarML('Percentage')),
-        array('id' => 'outoffive', 'name' => xarML('Number out of five')),
-        array('id' => 'outoffivestars', 'name' => xarML('Stars out of five')),
-        array('id' => 'outoften', 'name' => xarML('Number out of ten')),
-        array('id' => 'outoftenstars', 'name' => xarML('Stars out of ten')),
-        array('id' => 'customised', 'name' => xarML('Customized: see the user-display template')),
-    );
+    $ratingstyles = [
+        ['id' => 'percentage', 'name' => xarML('Percentage')],
+        ['id' => 'outoffive', 'name' => xarML('Number out of five')],
+        ['id' => 'outoffivestars', 'name' => xarML('Stars out of five')],
+        ['id' => 'outoften', 'name' => xarML('Number out of ten')],
+        ['id' => 'outoftenstars', 'name' => xarML('Stars out of ten')],
+        ['id' => 'customised', 'name' => xarML('Customized: see the user-display template')],
+    ];
     return $ratingstyles;
 }

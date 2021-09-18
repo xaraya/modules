@@ -108,7 +108,7 @@ function ratings_userapi_rate($args)
             WHERE module_id = ?
               AND itemid = ?
               AND itemtype = ?";
-    $bindvars = array($modid, $itemid, $itemtype);
+    $bindvars = [$modid, $itemid, $itemtype];
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
@@ -116,7 +116,7 @@ function ratings_userapi_rate($args)
 
     if (!$result->EOF) {
         // Update current rating
-        list($id, $currating, $numratings) = $result->fields;
+        [$id, $currating, $numratings] = $result->fields;
         $result->close();
 
         // Calculate new rating
@@ -128,7 +128,7 @@ function ratings_userapi_rate($args)
                 SET rating = ?,
                     numratings = ?
                 WHERE id = ?";
-        $bindvars = array($newrating, $newnumratings, $id);
+        $bindvars = [$newrating, $newnumratings, $id];
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;
@@ -151,7 +151,7 @@ function ratings_userapi_rate($args)
                         ?,
                         ?,
                         ?)";
-        $bindvars = array($id, $modid, $itemid, $itemtype, $rating, 1);
+        $bindvars = [$id, $modid, $itemid, $itemtype, $rating, 1];
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;

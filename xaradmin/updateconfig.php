@@ -35,13 +35,13 @@ function ratings_admin_updateconfig()
         return;
     }
 
-    $settings = array('default');
-    
+    $settings = ['default'];
+
     $hookedmodules = xarMod::apiFunc(
         'modules',
         'admin',
         'gethookedmodules',
-        array('hookModName' => 'ratings')
+        ['hookModName' => 'ratings']
     );
 
     if (isset($hookedmodules) && is_array($hookedmodules)) {
@@ -54,7 +54,7 @@ function ratings_admin_updateconfig()
                     'user',
                     'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(),
+                                         [],
                     0
                 );
                 foreach ($value as $itemtype => $val) {

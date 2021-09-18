@@ -67,7 +67,7 @@ function ratings_userapi_topitems($args)
             WHERE module_id = ?
               AND itemtype = ?
             ORDER BY rating DESC";
-    $bindvars = array($modid, $itemtype);
+    $bindvars = [$modid, $itemtype];
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = 10;
     }
@@ -81,10 +81,10 @@ function ratings_userapi_topitems($args)
         return;
     }
 
-    $topitems = array();
+    $topitems = [];
     while (!$result->EOF) {
-        list($id, $rating) = $result->fields;
-        $topitems[] = array('itemid' => $id, 'rating' => $rating);
+        [$id, $rating] = $result->fields;
+        $topitems[] = ['itemid' => $id, 'rating' => $rating];
         $result->MoveNext();
     }
     $result->close();

@@ -38,10 +38,10 @@ function ratings_userapi_getmodules($args)
         return;
     }
 
-    $modlist = array();
+    $modlist = [];
     while (!$result->EOF) {
-        list($modid, $itemtype, $numitems, $numratings) = $result->fields;
-        $modlist[$modid][$itemtype] = array('items' => $numitems, 'ratings' => $numratings);
+        [$modid, $itemtype, $numitems, $numratings] = $result->fields;
+        $modlist[$modid][$itemtype] = ['items' => $numitems, 'ratings' => $numratings];
         $result->MoveNext();
     }
     $result->close();

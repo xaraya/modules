@@ -60,7 +60,7 @@ function ratings_adminapi_deleteall($args)
 
     $query = "DELETE FROM $ratingstable
             WHERE module_id = ?";
-    $result =& $dbconn->Execute($query, array($modid));
+    $result =& $dbconn->Execute($query, [$modid]);
     if (!$result) {
         return;
     }
@@ -72,7 +72,7 @@ function ratings_adminapi_deleteall($args)
 
     // Return the extra info
     if (!isset($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
     return $extrainfo;
 }

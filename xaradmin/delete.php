@@ -35,7 +35,7 @@ function ratings_admin_delete()
 
     // Check for confirmation.
     if (empty($confirm)) {
-        $data = array();
+        $data = [];
         $data['modid'] = $modid;
         $data['itemtype'] = $itemtype;
         $data['itemid'] = $itemid;
@@ -52,7 +52,7 @@ function ratings_admin_delete()
                     'user',
                     'getitemtypes',
                                          // don't throw an exception if this function doesn't exist
-                                         array(),
+                                         [],
                     0
                 );
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -75,10 +75,10 @@ function ratings_admin_delete()
         'ratings',
         'admin',
         'delete',
-        array('modid' => $modid,
+        ['modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
-                             'confirm' => $confirm)
+                             'confirm' => $confirm, ]
     )) {
         return;
     }

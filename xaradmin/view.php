@@ -33,12 +33,12 @@ function ratings_admin_view()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     if (empty($modid)) {
         $modlist = xarMod::apiFunc('ratings', 'user', 'getmodules');
 
-        $data['moditems'] = array();
+        $data['moditems'] = [];
         $data['numitems'] = 0;
         $data['numratings'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
@@ -49,11 +49,11 @@ function ratings_admin_view()
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             foreach ($itemtypes as $itemtype => $stats) {
-                $moditem = array();
+                $moditem = [];
                 $moditem['numitems'] = $stats['items'];
                 $moditem['numratings'] = $stats['ratings'];
                 if ($itemtype == 0) {
@@ -72,15 +72,15 @@ function ratings_admin_view()
                     'ratings',
                     'admin',
                     'view',
-                    array('modid' => $modid,
-                                                   'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                   'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 );
                 $moditem['delete'] = xarController::URL(
                     'ratings',
                     'admin',
                     'delete',
-                    array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 );
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
@@ -100,7 +100,7 @@ function ratings_admin_view()
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -117,9 +117,9 @@ function ratings_admin_view()
             'ratings',
             'user',
             'getitems',
-            array('modid' => $modid,
+            ['modid' => $modid,
                                                 'itemtype' => $itemtype,
-                                                'sort' => $sort)
+                                                'sort' => $sort, ]
         );
         $data['numratings'] = 0;
         foreach ($data['moditems'] as $itemid => $moditem) {
@@ -128,19 +128,19 @@ function ratings_admin_view()
                 'ratings',
                 'admin',
                 'delete',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                                    'itemtype' => $itemtype,
-                                                                   'itemid' => $itemid)
+                                                                   'itemid' => $itemid, ]
             );
         }
         $data['delete'] = xarController::URL(
             'ratings',
             'admin',
             'delete',
-            array('modid' => $modid,
-                                          'itemtype' => $itemtype)
+            ['modid' => $modid,
+                                          'itemtype' => $itemtype, ]
         );
-        $data['sortlink'] = array();
+        $data['sortlink'] = [];
         if (empty($sort) || $sort == 'itemid') {
             $data['sortlink']['itemid'] = '';
         } else {
@@ -148,8 +148,8 @@ function ratings_admin_view()
                 'ratings',
                 'admin',
                 'view',
-                array('modid' => $modid,
-                                                           'itemtype' => $itemtype)
+                ['modid' => $modid,
+                                                           'itemtype' => $itemtype, ]
             );
         }
         if (!empty($sort) && $sort == 'numratings') {
@@ -159,9 +159,9 @@ function ratings_admin_view()
                 'ratings',
                 'admin',
                 'view',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                                'itemtype' => $itemtype,
-                                                               'sort' => 'numratings')
+                                                               'sort' => 'numratings', ]
             );
         }
         if (!empty($sort) && $sort == 'rating') {
@@ -171,9 +171,9 @@ function ratings_admin_view()
                 'ratings',
                 'admin',
                 'view',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                            'itemtype' => $itemtype,
-                                                           'sort' => 'rating')
+                                                           'sort' => 'rating', ]
             );
         }
     }
