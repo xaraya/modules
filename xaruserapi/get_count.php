@@ -63,7 +63,7 @@ function comments_userapi_get_count($args)
              WHERE  objectid = ? AND modid = ?
                AND  status = ?";
     // Note: objectid is not an integer here (yet ?)
-    $bindvars = array((string) $objectid, (int) $modid, (int) $status);
+    $bindvars = [(string) $objectid, (int) $modid, (int) $status];
 
     if (isset($itemtype) && is_numeric($itemtype)) {
         $sql .= " AND itemtype = ?";
@@ -79,7 +79,7 @@ function comments_userapi_get_count($args)
         return 0;
     }
 
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
 
     $result->Close();
 

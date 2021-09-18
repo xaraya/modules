@@ -101,21 +101,21 @@ function comments_userapi_modify($args)
     if (($useeditstamp ==1) ||
                      (($useeditstamp == 2) && (xarUser::getVar('id')<>$adminid))) {
         $text .= "\n";
-        $text .= xarTpl::module('comments', 'user', 'modifiedby', array(
+        $text .= xarTpl::module('comments', 'user', 'modifiedby', [
                               'isauthor' => (xarUser::getVar('id') == $authorid),
-                              'postanon'=>$postanon));
+                              'postanon'=>$postanon, ]);
         $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array(
-                            'name' => 'comments_comments'
-        ));
+    $object = DataObjectMaster::getObject([
+                            'name' => 'comments_comments',
+        ]);
 
     if (!is_object($object)) {
         return;
     }
-    $object->getItem(array('itemid' => $id));
+    $object->getItem(['itemid' => $id]);
 
     $object->properties['title']->setValue($title);
     $object->properties['text']->setValue($text);

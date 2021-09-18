@@ -33,23 +33,23 @@ function comments_init()
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     //Psspl:Added the code for anonpost_to field.
-    $fields = array(
-        'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'date'      => array('type'=>'integer',  'null'=>false),
-        'author'    => array('type'=>'integer',  'null'=>false,  'size'=>'medium','default'=>1),
-        'title'     => array('type'=>'varchar',  'null'=>false,  'size'=>100),
-        'text'      => array('type'=>'text',     'null'=>true,   'size'=>'medium'),
-        'parent_id' => array('type'=>'integer',  'null'=>false, 'default'=> '0'),
-        'parent_url'=> array('type'=>'text',     'null'=>false,  'size'=>'medium'),
-        'module_id' => array('type'=>'integer',  'null'=>true),
-        'itemtype'  => array('type'=>'integer',  'null'=>false),
-        'itemid'    => array('type'=>'varchar',  'null'=>false,  'size'=>255),
-        'hostname'  => array('type'=>'varchar',  'null'=>false,  'size'=>255),
-        'left_id'   => array('type'=>'integer',  'null'=>false, 'default'=> '0'),
-        'right_id'  => array('type'=>'integer',  'null'=>false, 'default'=> '0'),
-        'anonpost'  => array('type'=>'integer',  'null'=>true,   'size'=>'tiny', 'default'=>0),
-        'status'    => array('type'=>'integer',  'null'=>false,  'size'=>'tiny'),
-    );
+    $fields = [
+        'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+        'date'      => ['type'=>'integer',  'null'=>false],
+        'author'    => ['type'=>'integer',  'null'=>false,  'size'=>'medium','default'=>1],
+        'title'     => ['type'=>'varchar',  'null'=>false,  'size'=>100],
+        'text'      => ['type'=>'text',     'null'=>true,   'size'=>'medium'],
+        'parent_id' => ['type'=>'integer',  'null'=>false, 'default'=> '0'],
+        'parent_url'=> ['type'=>'text',     'null'=>false,  'size'=>'medium'],
+        'module_id' => ['type'=>'integer',  'null'=>true],
+        'itemtype'  => ['type'=>'integer',  'null'=>false],
+        'itemid'    => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+        'hostname'  => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+        'left_id'   => ['type'=>'integer',  'null'=>false, 'default'=> '0'],
+        'right_id'  => ['type'=>'integer',  'null'=>false, 'default'=> '0'],
+        'anonpost'  => ['type'=>'integer',  'null'=>true,   'size'=>'tiny', 'default'=>0],
+        'status'    => ['type'=>'integer',  'null'=>false,  'size'=>'tiny'],
+    ];
 
     $query = xarTableDDL::createTable($xartable['comments'], $fields);
 
@@ -58,9 +58,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_left',
-                   'fields'    => array('left_id'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_left',
+                   'fields'    => ['left_id'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -69,9 +69,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_right',
-                   'fields'    => array('right_id'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_right',
+                   'fields'    => ['right_id'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -80,9 +80,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_parent_id',
-                   'fields'    => array('parent_id'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_parent_id',
+                   'fields'    => ['parent_id'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -91,9 +91,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_moduleid',
-                   'fields'    => array('module_id'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_moduleid',
+                   'fields'    => ['module_id'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -102,9 +102,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemtype',
-                   'fields'    => array('itemtype'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_itemtype',
+                   'fields'    => ['itemtype'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -113,9 +113,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemid',
-                   'fields'    => array('itemid'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_itemid',
+                   'fields'    => ['itemid'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -124,9 +124,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_status',
-                   'fields'    => array('status'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_status',
+                   'fields'    => ['status'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -135,9 +135,9 @@ function comments_init()
         return;
     }
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_author',
-                   'fields'    => array('author'),
-                   'unique'    => false);
+    $index = ['name'      => 'i_' . xarDB::getPrefix() . '_comments_author',
+                   'fields'    => ['author'],
+                   'unique'    => false, ];
 
     $query = xarTableDDL::createIndex($xartable['comments'], $index);
 
@@ -151,10 +151,10 @@ function comments_init()
     $btable = $xartable['blacklist'];
     $bbtable = &$xartable['blacklist_column'];
 
-    $fields = array(
-        'id'       => array('type'=>'integer',  'null'=>false,  'increment'=> true, 'primary_key'=>true),
-        'domain'   => array('type'=>'varchar',  'null'=>false,  'size'=>255)
-    );
+    $fields = [
+        'id'       => ['type'=>'integer',  'null'=>false,  'increment'=> true, 'primary_key'=>true],
+        'domain'   => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+    ];
 
     $query = xarTableDDL::createTable($xartable['blacklist'], $fields);
 
@@ -164,13 +164,13 @@ function comments_init()
     }
 
     $module = 'comments';
-    $objects = array(
+    $objects = [
                 'comments_comments',
                 'comments_module_settings',
-                'comments_blacklist'
-                );
+                'comments_blacklist',
+                ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -185,7 +185,7 @@ function comments_init()
     xarModVars::set('comments', 'AllowPostAsAnon', 1);
     xarModVars::set('comments', 'AuthorizeComments', 0);
     xarModVars::set('comments', 'AllowCollapsableThreads', 1);
-    xarModVars::set('comments', 'CollapsedBranches', serialize(array()));
+    xarModVars::set('comments', 'CollapsedBranches', serialize([]));
     xarModVars::set('comments', 'editstamp', 1);
     xarModVars::set('comments', 'usersetrendering', false);
     xarModVars::set('comments', 'allowhookoverride', false);
@@ -202,7 +202,7 @@ function comments_init()
 #
     # Set up configuration modvars (general)
 #
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'comments'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'comments']);
     $module_settings->initialize();
 
     # --------------------------------------------------------
@@ -250,20 +250,20 @@ function comments_init()
     $query3 = "SELECT DISTINCT id
                           FROM $ctable
                          WHERE status != '"._COM_STATUS_ROOT_NODE."'";
-    $instances = array(
-                        array('header' => 'Module ID:',
+    $instances = [
+                        ['header' => 'Module ID:',
                                 'query' => $query1,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Module Page ID:',
+                                'limit' => 20,
+                            ],
+                        ['header' => 'Module Page ID:',
                                 'query' => $query2,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Comment ID:',
+                                'limit' => 20,
+                            ],
+                        ['header' => 'Comment ID:',
                                 'query' => $query3,
-                                'limit' => 20
-                            )
-                    );
+                                'limit' => 20,
+                            ],
+                    ];
     xarPrivileges::defineInstance('comments', 'All', $instances);
 
     # --------------------------------------------------------
@@ -314,5 +314,5 @@ function comments_upgrade($oldversion)
 */
 function comments_delete()
 {
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'comments'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'comments']);
 }

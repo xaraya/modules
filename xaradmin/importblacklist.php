@@ -23,5 +23,5 @@ function comments_admin_importblacklist()
     if (!xarMod::apiFunc('comments', 'admin', 'import_blacklist')) {
         return;
     }
-    return array();
+    return [];
 }

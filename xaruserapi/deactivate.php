@@ -36,7 +36,7 @@ function comments_userapi_deactivate($args)
     $sql = "UPDATE $xartable[comments]
             SET status='"._COM_STATUS_OFF."'
             WHERE id=?";
-    $bindvars = array((int) $id);
+    $bindvars = [(int) $id];
 
     $result =& $dbconn->Execute($sql, $bindvars);
 

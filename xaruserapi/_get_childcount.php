@@ -45,7 +45,7 @@ function comments_userapi_get_childcount($id)
         'comments',
         'user',
         'get_node_lrvalues',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     $sql = "SELECT  COUNT(id) as numitems
@@ -62,7 +62,7 @@ function comments_userapi_get_childcount($id)
         return 0;
     }
 
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
 
     $result->Close();
 

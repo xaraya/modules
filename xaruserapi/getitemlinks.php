@@ -22,18 +22,18 @@
 function comments_userapi_getitemlinks($args)
 {
     extract($args);
-    $itemlinks = array();
+    $itemlinks = [];
     if (!xarSecurity::check('ReadComments', 0)) {
         return $itemlinks;
     }
 
     if (empty($itemids)) {
-        $itemids = array();
+        $itemids = [];
     }
 
     // FIXME: support retrieving several comments at once
     foreach ($itemids as $itemid) {
-        $item = xarMod::apiFunc('comments', 'user', 'get_one', array('id' => $itemid));
+        $item = xarMod::apiFunc('comments', 'user', 'get_one', ['id' => $itemid]);
         if (!isset($item)) {
             return;
         }
@@ -42,14 +42,14 @@ function comments_userapi_getitemlinks($args)
         } else {
             $title = xarML('Comment #(1)', $itemid);
         }
-        $itemlinks[$itemid] = array('url'   => xarController::URL(
+        $itemlinks[$itemid] = ['url'   => xarController::URL(
             'comments',
             'user',
             'display',
-            array('id' => $itemid)
+            ['id' => $itemid]
         ),
                                     'title' => xarML('Display Comment'),
-                                    'label' => xarVar::prepForDisplay($title));
+                                    'label' => xarVar::prepForDisplay($title), ];
     }
     return $itemlinks;
 }

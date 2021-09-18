@@ -21,14 +21,14 @@ function comments_userapi_get_blacklist($args)
     if (!isset($numitems)) {
         $numitems = 5000;
     }
-    $items = array();
+    $items = [];
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $list = DataObjectMaster::getObjectList(array(
+    $list = DataObjectMaster::getObjectList([
                             'name' => 'comments_blacklist',
                             'numitems' => $numitems,
-                            'startnum' => $startnum
-        ));
+                            'startnum' => $startnum,
+        ]);
 
     if (!is_object($list)) {
         return;
@@ -36,12 +36,12 @@ function comments_userapi_get_blacklist($args)
 
     $items = $list->getItems();
 
-    $arr = array();
+    $arr = [];
 
     foreach ($items as $val) {
-        $arr[] = array('id'       => $val['id'],
-                             'domain'   => $val['domain']
-                            );
+        $arr[] = ['id'       => $val['id'],
+                             'domain'   => $val['domain'],
+                            ];
     }
 
     $items = $arr;

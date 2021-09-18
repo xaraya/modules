@@ -100,7 +100,7 @@ function comments_adminapi_count_comments($args)
     if ($result->EOF) {
         return 0;
     }
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
     return $numitems;
 }

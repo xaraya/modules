@@ -57,7 +57,7 @@ function comments_userapi_get_module_lrvalues($args)
             $result->MoveNext();
         }
     } else {
-        $lrvalues = array();
+        $lrvalues = [];
     }
 
     $result->Close();

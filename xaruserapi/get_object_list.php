@@ -53,7 +53,7 @@ function comments_userapi_get_object_list($args)
 
     // if it's an empty set, return array()
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
     // zip through the list of results and

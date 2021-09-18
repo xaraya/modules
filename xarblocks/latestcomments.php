@@ -33,7 +33,7 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $howmany = 5;
-    public $modid = array('all');
+    public $modid = ['all'];
     public $pubtypeid = 0;
     public $addauthor = true;
     public $addmodule = false;
@@ -62,10 +62,10 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
             'modules',
             'admin',
             'gethookedmodules',
-            array('hookModName' => 'comments')
+            ['hookModName' => 'comments']
         );
 
-        $modlist = array();
+        $modlist = [];
         $modlist['all'] = xarML('All');
         if (isset($hookedmodules) && is_array($hookedmodules)) {
             foreach ($hookedmodules as $modname => $value) {
@@ -75,7 +75,7 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
                     'user',
                     'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                     0
                 );
                 // we have hooks for individual item types here
@@ -109,11 +109,11 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
 
     public function update()
     {
-        $vars = array();
+        $vars = [];
         if (!xarVar::fetch('howmany', 'int:1:', $vars['howmany'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('modid', 'isset', $vars['modid'], array(), xarVar::NOT_REQUIRED)) {
+        if (!xarVar::fetch('modid', 'isset', $vars['modid'], [], xarVar::NOT_REQUIRED)) {
             return;
         }
         if (!xarVar::fetch('pubtypeid', 'isset', $vars['pubtypeid'], 0, xarVar::NOT_REQUIRED)) {

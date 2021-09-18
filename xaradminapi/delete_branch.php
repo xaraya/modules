@@ -33,7 +33,7 @@ function comments_adminapi_delete_branch($args)
         'comments',
         'user',
         'get_one',
-        array('id' => $node)
+        ['id' => $node]
     );
     $left = $comments[0]['left_id'];
     $right = $comments[0]['right_id'];
@@ -64,11 +64,11 @@ function comments_adminapi_delete_branch($args)
 
 
     // Go through and fix all the l/r values for the comments
-    if (xarMod::apiFunc('comments', 'user', 'remove_gap', array('startpoint' => $left,
+    if (xarMod::apiFunc('comments', 'user', 'remove_gap', ['startpoint' => $left,
                                                             'modid'      => $modid,
                                                             'objectid'   => $objectid,
                                                             'itemtype'   => $itemtype,
-                                                            'gapsize'    => $adjust_value))) {
+                                                            'gapsize'    => $adjust_value, ])) {
         return $dbconn->Affected_Rows();
     }
 }

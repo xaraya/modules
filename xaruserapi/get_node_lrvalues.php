@@ -46,7 +46,7 @@ function comments_userapi_get_node_lrvalues($args)
     if (!$result->EOF) {
         $lrvalues = $result->GetRowAssoc(false);
     } else {
-        $lrvalues = array();
+        $lrvalues = [];
     }
 
     $result->Close();

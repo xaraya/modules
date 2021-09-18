@@ -39,7 +39,7 @@ function comments_adminapi_delete_node($args)
         'comments',
         'user',
         'get_one',
-        array('id' => $node)
+        ['id' => $node]
     );
     $left = $comments[0]['left_id'];
     $right = $comments[0]['right_id'];
@@ -61,13 +61,13 @@ function comments_adminapi_delete_node($args)
     $sql = "DELETE
               FROM  $xartable[comments]
              WHERE  id = ?";
-    $bindvars1 = array($node);
+    $bindvars1 = [$node];
     // reset all parent id's == deletion node's id to that of
     // the deletion node's parent id
     $sql2 = "UPDATE $xartable[comments]
                 SET parent_id = ?
               WHERE parent_id = ?";
-    $bindvars2 = array($parent_id, $node);
+    $bindvars2 = [$parent_id, $node];
     if (!$dbconn->Execute($sql, $bindvars1)) {
         return;
     }
@@ -81,18 +81,18 @@ function comments_adminapi_delete_node($args)
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
     if ($right > $left + 1) {
-        xarMod::apiFunc('comments', 'user', 'remove_gap', array('startpoint' => $left,
+        xarMod::apiFunc('comments', 'user', 'remove_gap', ['startpoint' => $left,
                                                            'endpoint'   => $right,
                                                            'modid'      => $modid,
                                                            'objectid'   => $objectid,
                                                            'itemtype'   => $itemtype,
-                                                           'gapsize'    => 1));
+                                                           'gapsize'    => 1, ]);
     }
-    xarMod::apiFunc('comments', 'user', 'remove_gap', array('startpoint' => $right,
+    xarMod::apiFunc('comments', 'user', 'remove_gap', ['startpoint' => $right,
                                                        'modid'      => $modid,
                                                        'objectid'   => $objectid,
                                                        'itemtype'   => $itemtype,
-                                                       'gapsize'    => 2));
+                                                       'gapsize'    => 2, ]);
 
 
 

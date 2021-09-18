@@ -19,7 +19,7 @@ class CommentTreeProperty extends DataProperty
     public $id         = 30058;
     public $name       = 'commenttree';
     public $desc       = 'CommentTree';
-    public $reqmodules = array('comments');
+    public $reqmodules = ['comments'];
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -29,7 +29,7 @@ class CommentTreeProperty extends DataProperty
         $this->filepath   = 'modules/comments/xarproperties';
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         if (isset($data['configuration'])) {
             $this->parseConfiguration($data['configuration']);
@@ -50,9 +50,9 @@ class CommentTreeProperty extends DataProperty
             'comments',
             'user',
             'get_node_root',
-            array('modid' => xarMod::getID($module),
+            ['modid' => xarMod::getID($module),
                               'objectid' => $itemid,
-                              'itemtype' => $itemtype)
+                              'itemtype' => $itemtype, ]
         );
 
         // If we don't have one, make one
@@ -61,9 +61,9 @@ class CommentTreeProperty extends DataProperty
                 'comments',
                 'user',
                 'add_rootnode',
-                array('modid'    => xarMod::getID($module),
+                ['modid'    => xarMod::getID($module),
                                         'objectid' => $itemid,
-                                        'itemtype' => $itemtype)
+                                        'itemtype' => $itemtype, ]
             );
             if (empty($cid)) {
                 throw new Exception('Unable to create root node');
@@ -73,10 +73,10 @@ class CommentTreeProperty extends DataProperty
             'comments',
             'user',
             'display',
-            array('objectid' => $itemid,
+            ['objectid' => $itemid,
                                        'module' => $module,
                                        'itemtype' => $itemtype,
-                                       'returnurl' => xarServer::getCurrentURL())
+                                       'returnurl' => xarServer::getCurrentURL(), ]
         );
         /*if (isset($data['options'])) {
             $this->options = $data['options'];

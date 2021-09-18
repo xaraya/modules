@@ -126,9 +126,9 @@ function comments_userapi_add($args)
             'comments',
             'user',
             'get_node_root',
-            array('moduleid' => $moduleid,
+            ['moduleid' => $moduleid,
                                          'itemid'   => $itemid,
-                                         'itemtype' => $itemtype)
+                                         'itemtype' => $itemtype, ]
         );
 
         // ok, if the there was no root left and right values then
@@ -140,9 +140,9 @@ function comments_userapi_add($args)
                 'comments',
                 'user',
                 'add_rootnode',
-                array('moduleid' => $moduleid,
+                ['moduleid' => $moduleid,
                                         'itemid'   => $itemid,
-                                        'itemtype' => $itemtype)
+                                        'itemtype' => $itemtype, ]
             );
         } else {
             $parent_id = $root_lnr['id'];
@@ -157,7 +157,7 @@ function comments_userapi_add($args)
         'comments',
         'user',
         'get_node_lrvalues',
-        array('id' => $parent_id)
+        ['id' => $parent_id]
     );
 
     // there should be -at-least- one affected row -- if not
@@ -167,10 +167,10 @@ function comments_userapi_add($args)
         'comments',
         'user',
         'create_gap',
-        array('startpoint' => $parent_lnr['right_id'],
+        ['startpoint' => $parent_lnr['right_id'],
                               'moduleid'   => $moduleid,
                               'itemid'     => $itemid,
-                              'itemtype'   => $itemtype)
+                              'itemtype'   => $itemtype, ]
     )) {
         $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
         $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');
@@ -194,15 +194,15 @@ function comments_userapi_add($args)
 
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array(
-                            'name' => 'comments_comments'
-        ));
+    $object = DataObjectMaster::getObject([
+                            'name' => 'comments_comments',
+        ]);
 
     if (!is_object($object)) {
         return;
     }
 
-    $fields = array(
+    $fields = [
                  'text',
                  'module_id',
                  'itemtype',
@@ -214,7 +214,7 @@ function comments_userapi_add($args)
                  'right_id',
                  'parent_url',
                  'parent_id',
-                 'status');
+                 'status', ];
 
     $text = $comment;
     $left_id = $left;

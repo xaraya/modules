@@ -51,7 +51,7 @@ function comments_admin_modifyconfig()
         }
         array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
     } else {
-        $hooks['tabs'] = array();
+        $hooks['tabs'] = [];
     }
     switch (strtolower($phase)) {
         case 'modify':
@@ -182,8 +182,8 @@ function comments_admin_modifyconfig()
                          'modules',
                          'admin',
                          'enablehooks',
-                         array('callerModName' => 'roles',
-                                               'hookModName' => 'comments')
+                         ['callerModName' => 'roles',
+                                               'hookModName' => 'comments', ]
                      );
                  }
              } else {
@@ -193,13 +193,13 @@ function comments_admin_modifyconfig()
                          'modules',
                          'admin',
                          'disablehooks',
-                         array('callerModName' => 'roles',
-                                               'hookModName' => 'comments')
+                         ['callerModName' => 'roles',
+                                               'hookModName' => 'comments', ]
                      );
                  }
              }
 
-            xarController::redirect(xarController::URL('comments', 'admin', 'modifyconfig', array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('comments', 'admin', 'modifyconfig', ['tabmodule' => $tabmodule, 'tab' => $data['tab']]));
             // Return
             return true;
             break;

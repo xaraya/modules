@@ -29,7 +29,7 @@ function comments_userapi_get_multipleall($args)
     extract($args);
     // $modid
     if (!isset($modarray) || empty($modarray) || !is_array($modarray)) {
-        $modarray=array('all');
+        $modarray=['all'];
     }
     if (empty($order) || $order != 'ASC') {
         $order = 'DESC';
@@ -40,7 +40,7 @@ function comments_userapi_get_multipleall($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
-    $commentlist = array();
+    $commentlist = [];
 
     $query = "SELECT  title AS subject,
                       text AS comment,
@@ -56,10 +56,10 @@ function comments_userapi_get_multipleall($args)
                WHERE  status="._COM_STATUS_ON." ";
 
     if (count($modarray) > 0 && $modarray[0] != 'all') {
-        $where = array();
+        $where = [];
         foreach ($modarray as $modname) {
             if (strstr($modname, '.')) {
-                list($module, $itemtype) = explode('.', $modname);
+                [$module, $itemtype] = explode('.', $modname);
                 $modid = xarMod::getRegID($module);
                 if (empty($itemtype)) {
                     $itemtype = 0;

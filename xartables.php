@@ -19,7 +19,7 @@
 function comments_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     // Name for template database entities
     $comments_table     = xarDB::getPrefix() . '_comments_comments';

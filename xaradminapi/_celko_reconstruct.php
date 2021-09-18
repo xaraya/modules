@@ -26,7 +26,7 @@ function comments_adminapi_celko_reconstruct()
     $xartable =& xarDB::getTables();
 
     // initialize the commentlist array
-    $commentlist = array();
+    $commentlist = [];
 
     // if the depth is zero then we
     // only want one comment

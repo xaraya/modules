@@ -24,7 +24,7 @@
 function comments_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
-    $args = array();
+    $args = [];
 
     // Analyse the different parts of the virtual path
     // $params[1] contains the first part after index.php/example
@@ -34,13 +34,13 @@ function comments_userapi_decode_shorturl($params)
 
     if (empty($params[1])) {
         // nothing specified -> we'll go to the main function
-        return array('main', $args);
+        return ['main', $args];
     } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
         $id = $matches[1];
         $args['id'] = $id;
-        return array('display', $args);
+        return ['display', $args];
 
     /* to be reviewed - probably better to redirect to the module item itself if we know all this
         } elseif (preg_match('/^(\w+)/',$params[1],$matches)) {

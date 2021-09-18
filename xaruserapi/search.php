@@ -32,9 +32,9 @@ function comments_userapi_search($args)
     $where = '';
 
     // initialize the commentlist array
-    $commentlist = array();
+    $commentlist = [];
 
-    $bindvars = array(_COM_STATUS_ON);
+    $bindvars = [_COM_STATUS_ON];
 
     $sql = "SELECT  title AS title,
                     date AS date,
@@ -89,7 +89,7 @@ function comments_userapi_search($args)
     // if we have nothing to return
     // we return nothing ;) duh? lol
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
     // zip through the list of results and

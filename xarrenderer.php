@@ -143,9 +143,9 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
     // start the initial depth off at zero
     $depth = 0;
 
-    $parents = array();
-    $new_list = array();
-    $prep_list = array();
+    $parents = [];
+    $new_list = [];
+    $prep_list = [];
 
     // Initialize parents array and make the first key in it equal
     // to the first node in the array's parentid
@@ -159,7 +159,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
     $comments_list = $new_list;
 
     // re-initialize the new_list array
-    $new_list = array();
+    $new_list = [];
 
     // foreach node in the array, check to see if we
     // have it's parent id marked in memory and, if so
@@ -212,7 +212,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
         $new_list[] = $node;
     }
 
-    $comments_list = array();
+    $comments_list = [];
 
     // remove any items that aren't really a part of the array
     // and are just excess baggage from previous code
@@ -267,16 +267,16 @@ function comments_renderer_array_prune_excessdepth($args)
         'comments',
         'user',
         'get_childcountlist',
-        array(
+        [
             'left' => $left,
             'right' => $right,
             'moduleid' => $moduleid,
             'itemtype' => $itemtype,
-            'itemid' => $itemid
-        )
+            'itemid' => $itemid,
+        ]
     );
 
-    $new_list = array();
+    $new_list = [];
     foreach ($array_list as $node) {
         if (isset($countlist[$node['id']])) {
             $childcount = $countlist[$node['id']];
@@ -336,10 +336,10 @@ function comments_renderer_array_prune_excessdepth($args)
 
 function comments_renderer_array_depthbuoy($action, $depth, $value=true)
 {
-    static $matrix = array();
+    static $matrix = [];
 
     if (empty($matrix)) {
-        $matrix = array_pad(array(0=>0), _COM_MAX_DEPTH, _COM_NO_CONNECTOR);
+        $matrix = array_pad([0=>0], _COM_MAX_DEPTH, _COM_NO_CONNECTOR);
     }
 
     if (strtolower($action) == 'set') {
@@ -371,7 +371,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = null)
     // if $CommentList isn't an array or it is empty,
     // return an empty array
     if (!is_array($CommentList) || count($CommentList) == 0) {
-        return array();
+        return [];
     }
 
     // if comments in the list don't have depth then we can't generate
@@ -385,7 +385,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = null)
     $current_depth  = 0;         // depth of the current comment in the array
     $next_depth     = 0;         // depth of the next comment in the array (closer to beginning of array)
     $prev_depth     = 0;         // depth of the previous comment in the array (closer to end of array)
-    $matrix         = array();   // initialize the matrix to a null array
+    $matrix         = [];   // initialize the matrix to a null array
 
     $listsize = (count($CommentList) - 1);
     $total = count($CommentList);
@@ -394,7 +394,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = null)
     // the beginning.
     for ($counter = $listsize; $counter >= 0; $counter = $counter - 1) {
         // unmapped matrix for current comment
-        $matrix = array_pad(array(0=>0), _COM_MAX_DEPTH, _COM_NO_CONNECTOR);
+        $matrix = array_pad([0=>0], _COM_MAX_DEPTH, _COM_NO_CONNECTOR);
 
         // make sure to $depth = $depth modulus _COM_MAX_DEPTH  - because we are only ever showing
         // ten levels of depth -- anything more than that and the display doesn't look good
@@ -496,7 +496,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = null)
 
 function comments_renderer_array_image_substitution($matrix, $modName = null)
 {
-    $map = array();
+    $map = [];
 
     foreach ($matrix as $value) {
         switch ($value) {
@@ -670,8 +670,8 @@ function comments_renderer_array_sort(&$comment_list, $sortby, $direction)
         throw new Exception($msg);
     }
 
-    $index      = array();
-    $new_list   = array();
+    $index      = [];
+    $new_list   = [];
 
     comments_renderer_array_sortvalue($direction);
 
@@ -710,7 +710,7 @@ function comments_renderer_array_sort(&$comment_list, $sortby, $direction)
             $new_list[$key .":". $node['id']] = $node;
         }
         $comment_list = $new_list;
-        $new_list = array();
+        $new_list = [];
 
         uksort($comment_list, 'comments_renderer_array_fieldrelation_compare');
         // End of PreSORT
@@ -750,7 +750,7 @@ function comments_renderer_array_sort(&$comment_list, $sortby, $direction)
     uksort($comment_list, 'comments_renderer_array_fieldrelation_compare');
 
     // reset the indexes on the comments_list
-    $comments = array();
+    $comments = [];
     foreach ($comment_list as $comment) {
         $comments[] = $comment;
     }

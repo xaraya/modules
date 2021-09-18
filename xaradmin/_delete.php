@@ -25,7 +25,7 @@ function comments_admin_delete()
     if (!xarVar::fetch('dtype', 'str:1:', $dtype)) {
         return;
     }
-    $delete_args = array();
+    $delete_args = [];
 
     if (!isset($dtype) || !eregi('^(all|module|object)$', $dtype)) {
         $msg = xarML('Invalid or Missing Parameter \'dtype\'');
@@ -116,8 +116,8 @@ function comments_admin_delete()
                         'comments',
                         'admin',
                         'delete_module_nodes',
-                        array('modid'=>$modid,
-                                         'itemtype' => $itemtype)
+                        ['modid'=>$modid,
+                                         'itemtype' => $itemtype, ]
                     );
                     break;
                 case 'object':
@@ -125,9 +125,9 @@ function comments_admin_delete()
                         'comments',
                         'admin',
                         'delete_object_nodes',
-                        array('modid'    => $modid,
+                        ['modid'    => $modid,
                                          'itemtype' => $itemtype,
-                                         'objectid' => $objectid)
+                                         'objectid' => $objectid, ]
                     );
                     break;
                 case 'all':
@@ -154,8 +154,8 @@ function comments_admin_delete()
                     'comments',
                     'admin',
                     'module_stats',
-                    array('modid' => $modid,
-                                                    'itemtype' => empty($itemtype) ? null : $itemtype)
+                    ['modid' => $modid,
+                                                    'itemtype' => empty($itemtype) ? null : $itemtype, ]
                 ));
             } else {
                 xarController::redirect(xarController::URL('comments', 'admin', 'stats'));
@@ -167,8 +167,8 @@ function comments_admin_delete()
                 'comments',
                 'admin',
                 'module_stats',
-                array('modid' => $modid,
-                                                'itemtype' => empty($itemtype) ? null : $itemtype)
+                ['modid' => $modid,
+                                                'itemtype' => empty($itemtype) ? null : $itemtype, ]
             ));
         } else {
             xarController::redirect(xarController::URL('comments', 'admin', 'stats'));

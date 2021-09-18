@@ -30,25 +30,25 @@ function comments_user_rss($args)
         'modules',
         'admin',
         'gethookedmodules',
-        array('hookModName' => 'comments')
+        ['hookModName' => 'comments']
     );
 
     // initialize list of module and pubtype names
-    $items   = array();
-    $modlist = array();
-    $modname = array();
-    $modview = array();
+    $items   = [];
+    $modlist = [];
+    $modname = [];
+    $modview = [];
     $modlist['all'] = xarML('All');
     // make sure we only retrieve comments from hooked modules
-    $todolist = array();
+    $todolist = [];
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $module => $value) {
             $modid = xarMod::getRegID($module);
             if (!isset($modname[$modid])) {
-                $modname[$modid] = array();
+                $modname[$modid] = [];
             }
             if (!isset($modview[$modid])) {
-                $modview[$modid] = array();
+                $modview[$modid] = [];
             }
             $modname[$modid][0] = ucwords($module);
             $modview[$modid][0] = xarController::URL($module, 'user', 'view');
@@ -58,7 +58,7 @@ function comments_user_rss($args)
                 'user',
                 'getitemtypes',
                                      // don't throw an exception if this function doesn't exist
-                                     array(),
+                                     [],
                 0
             );
             if (!empty($mytypes) && count($mytypes) > 0) {
@@ -106,8 +106,8 @@ function comments_user_rss($args)
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
-                array('itemtype' => $item['itemtype'],
-                                                              'itemids'  => array($item['objectid']))
+                ['itemtype' => $item['itemtype'],
+                                                              'itemids'  => [$item['objectid']], ]
             );
         } catch (Exception $e) {
         }
@@ -117,7 +117,7 @@ function comments_user_rss($args)
             }
         } else {
             // We'll use the comment link instead
-            $items[$i]['link'] = xarController::URL('comments', 'user', 'display', array('id' => $item['id']));
+            $items[$i]['link'] = xarController::URL('comments', 'user', 'display', ['id' => $item['id']]);
         }
 
         $items[$i]['rsssummary'] = preg_replace('<br />', "\n", $item['text']);

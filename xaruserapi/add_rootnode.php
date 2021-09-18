@@ -74,7 +74,7 @@ function comments_userapi_add_rootnode($args)
                modid, itemtype,
                hostname, date )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array( $nextId,
+    $bindvars = [ $nextId,
                        0,
                        'This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.',
                        'ROOT NODE - PLACEHOLDER. DO NOT DELETE!',
@@ -86,8 +86,8 @@ function comments_userapi_add_rootnode($args)
                        $modid,
                        $itemtype,
                        '',
-                       $cdate
-                       );
+                       $cdate,
+                       ];
 
     $result =& $dbconn->Execute($sql, $bindvars);
 

@@ -38,8 +38,8 @@ function comments_adminapi_delete_module_nodes($args)
         'comments',
         'user',
         'get_object_list',
-        array('modid' => $modid,
-                                  'itemtype' => $itemtype )
+        ['modid' => $modid,
+                                  'itemtype' => $itemtype, ]
     );
 
     if (count($pages) <= 0 || empty($pages)) {
@@ -50,9 +50,9 @@ function comments_adminapi_delete_module_nodes($args)
                 'comments',
                 'admin',
                 'delete_object_nodes',
-                array('modid'     => $modid,
+                ['modid'     => $modid,
                                 'itemtype'  => $itemtype,
-                                'objectid'  => $object['pageid'])
+                                'objectid'  => $object['pageid'], ]
             );
         }
     }

@@ -33,10 +33,10 @@ function comments_admin_stats()
         'comments',
         'user',
         'modcounts',
-        array('status' => 'inactive')
+        ['status' => 'inactive']
     );
 
-    $moditems = array();
+    $moditems = [];
     foreach ($modlist as $modid => $itemtypes) {
         $modinfo = xarMod::getInfo($modid);
         // Get the list of all item types for this module (if any)
@@ -45,7 +45,7 @@ function comments_admin_stats()
         // don't throw an exception if this function doesn't exist
         //                       array(), 0);
         foreach ($itemtypes as $itemtype => $stats) {
-            $moditem = array();
+            $moditem = [];
             $moditem['modid'] = $modid;
             $moditem['items'] = $stats['items'];
             $moditem['total'] = $stats['comments'];
@@ -70,18 +70,18 @@ function comments_admin_stats()
                 'comments',
                 'admin',
                 'module_stats',
-                array('modid' => $modid,
-                                                     'itemtype' => $itemtype)
+                ['modid' => $modid,
+                                                     'itemtype' => $itemtype, ]
             );
 
             $moditem['delete_url'] = xarController::URL(
                 'comments',
                 'admin',
                 'delete',
-                array('dtype' => 'itemtype',
+                ['dtype' => 'itemtype',
                                                      'modid' => $modid,
                                                     'redirect' => 'stats',
-                                                    'itemtype' => $itemtype)
+                                                    'itemtype' => $itemtype, ]
             );
             $moditems[] = $moditem;
             $data['gt_items'] += $moditem['items'];
@@ -94,7 +94,7 @@ function comments_admin_stats()
         'comments',
         'admin',
         'delete',
-        array('dtype' => 'all', 'redirect' => 'stats')
+        ['dtype' => 'all', 'redirect' => 'stats']
     );
 
     return $data;

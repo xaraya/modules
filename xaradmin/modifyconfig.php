@@ -33,13 +33,13 @@ function comments_admin_modifyconfig()
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for comments-specific configuration
-    $object = DataObjectMaster::getObject(array('name' => 'comments_module_settings'));
+    $object = DataObjectMaster::getObject(['name' => 'comments_module_settings']);
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $object->getItem(array('itemid' => 0));
+    $object->getItem(['itemid' => 0]);
     $data['object'] = $object;
 
     // Get the object we'll be working with for common configuration settings
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'comments'));
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'comments']);
     // Decide which fields are configurable in this module
     $data['module_settings']->setFieldList('items_per_page, enable_user_menu, user_menu_link');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
@@ -121,13 +121,13 @@ function comments_admin_modifyconfig()
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
-                $object = DataObjectMaster::getObject(array('name' => 'comments_module_settings'));
+                $object = DataObjectMaster::getObject(['name' => 'comments_module_settings']);
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
 
 
-                $item = $object->updateItem(array('itemid' => 0));
+                $item = $object->updateItem(['itemid' => 0]);
 
                 xarController::redirect(xarController::URL('comments', 'admin', 'modifyconfig'));
 

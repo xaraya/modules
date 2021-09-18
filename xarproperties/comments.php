@@ -23,7 +23,7 @@ class CommentsProperty extends DataProperty
     public $id         = 103;
     public $name       = 'comments';
     public $desc       = 'Comments';
-    public $reqmodules = array('comments');
+    public $reqmodules = ['comments'];
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -33,7 +33,7 @@ class CommentsProperty extends DataProperty
         $this->filepath   = 'modules/comments/xarproperties';
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         if (!xarSecurity::check('ReadComments', 0)) {
             return;
@@ -147,13 +147,13 @@ class CommentsProperty extends DataProperty
         }
 
         $package['comments'] = comments_renderer_array_prune_excessdepth(
-            array(
+            [
                 'array_list'    => $package['comments'],
                 'cutoff'        => $package['settings']['depth'],
                 'modid'         => $header['modid'],
                 'itemtype'      => $header['itemtype'],
                 'objectid'      => $header['objectid'],
-            )
+            ]
         );
 
         if ($package['settings']['render'] == _COM_VIEW_THREADED) {
@@ -166,7 +166,7 @@ class CommentsProperty extends DataProperty
                 $comment['text'] = xarVar::prepHTMLDisplay($comment['text']);
                 $comment['title'] = xarVar::prepForDisplay($comment['title']);
                 // say which pieces of text (array keys) you want to be transformed
-                $comment['transform'] = array('text');
+                $comment['transform'] = ['text'];
                 // call the item transform hooks
                 // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
                 $package['comments'][$key] = xarModHooks::call('item', 'transform', $comment['id'], $comment, 'comments');
@@ -195,7 +195,7 @@ class CommentsProperty extends DataProperty
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
-                array('itemtype' => $header['itemtype'], 'itemids' => array($header['objectid']))
+                ['itemtype' => $header['itemtype'], 'itemids' => [$header['objectid']]]
             );
         } catch (Exception $e) {
         }

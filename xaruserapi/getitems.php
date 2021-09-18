@@ -105,7 +105,7 @@ function comments_userapi_getitems($args)
     if (!empty($where)) {
         $filters['where'] = $where;
     } else {
-        $filters = array();
+        $filters = [];
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
@@ -143,7 +143,7 @@ function comments_userapi_getitems($args)
     $items = $q->output();
 
     // Get items
-    $bindvars = array();
+    $bindvars = [];
     $query = "SELECT id,parent_id,parent_url,title,text,left_id,right_id,module_id,itemtype,itemid,date,author,anonpost, COUNT(*)
                 FROM $commentstable
                WHERE module_id = ?

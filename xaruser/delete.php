@@ -23,7 +23,7 @@ function comments_user_delete()
     if (!xarSecurity::check('ManageComments')) {
         return;
     }
-    
+
     if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -40,10 +40,10 @@ function comments_user_delete()
     if (empty($data['id'])) {
         return xarResponse::NotFound();
     }
-    
+
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-    $data['object']->getItem(array('itemid' => $data['id']));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
+    $data['object']->getItem(['itemid' => $data['id']]);
     $values = $data['object']->getFieldValues();
     foreach ($values as $key => $val) {
         $data[$key] = $val;
@@ -55,12 +55,12 @@ function comments_user_delete()
                 'comments',
                 'admin',
                 'delete_branch',
-                array('node' => $header['id'])
+                ['node' => $header['id']]
             );
             xarController::redirect($data['parent_url']);
             return true;
         } else {
-            $data['object']->deleteItem(array('itemid' => $data['id']));
+            $data['object']->deleteItem(['itemid' => $data['id']]);
             xarController::redirect($data['parent_url']);
             return true;
         }
@@ -68,7 +68,7 @@ function comments_user_delete()
 
     $data['package']['delete_url'] = xarController::URL('comments', 'user', 'delete');
 
-    $comments = xarMod::apiFunc('comments', 'user', 'get_one', array('id' => $data['id']));
+    $comments = xarMod::apiFunc('comments', 'user', 'get_one', ['id' => $data['id']]);
     if ($comments[0]['position_atomic']['right'] == $comments[0]['position_atomic']['left'] + 1) {
         $data['package']['haschildren'] = false;
     } else {

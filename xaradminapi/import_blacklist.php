@@ -34,11 +34,11 @@ function comments_adminapi_import_blacklist($args)
         'base',
         'user',
         'getfile',
-        array('url' => $feedfile,
+        ['url' => $feedfile,
                                  'cached' => true,
                                  'cachedir' => 'cache/rss',
                                  'refresh' => 604800,
-                                 'extension' => '.txt')
+                                 'extension' => '.txt', ]
     );
     if (!$filegrab) {
         $msg = xarML('Could not get new blacklist file.');
@@ -56,11 +56,11 @@ function comments_adminapi_import_blacklist($args)
 
 
     // Create blacklist tables
-    $fields = array(
-        'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+    $fields = [
+        'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
 //        'id'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=> TRUE, 'primary_key'=>TRUE),
-        'domain'   => array('type'=>'varchar',  'null'=>false,  'size'=>255)
-    );
+        'domain'   => ['type'=>'varchar',  'null'=>false,  'size'=>255],
+    ];
 
     $query = xarTableDDL::createTable($xartable['blacklist'], $fields);
     $file = file('var/cache/rss/'.md5($feedfile).'.txt');
@@ -97,7 +97,7 @@ function comments_adminapi_import_blacklist($args)
             $query = "INSERT INTO $btable(id,
                                           domain)
                       VALUES (?,?)";
-            $bindvars = array($nextId, $domain);
+            $bindvars = [$nextId, $domain];
             $result =& $dbconn->Execute($query, $bindvars);
             if (!$result) {
                 return;

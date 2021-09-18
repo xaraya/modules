@@ -61,7 +61,7 @@ function comments_userapi_get_node_root($args)
                AND  objectid=?
                AND  status=?";
     // objectid is still a string for now
-    $bindvars = array((int) $modid, (int) $itemtype, (string) $objectid, (int) _COM_STATUS_ROOT_NODE);
+    $bindvars = [(int) $modid, (int) $itemtype, (string) $objectid, (int) _COM_STATUS_ROOT_NODE];
 
     $result =& $dbconn->Execute($sql, $bindvars);
 
@@ -76,7 +76,7 @@ function comments_userapi_get_node_root($args)
     if (!$result->EOF) {
         $node = $result->GetRowAssoc(false);
     } else {
-        $node = array();
+        $node = [];
     }
     $result->Close();
 

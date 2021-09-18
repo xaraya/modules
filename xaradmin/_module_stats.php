@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -43,7 +44,7 @@ function comments_admin_module_stats()
             'user',
             'getitemtypes',
                                  // don't throw an exception if this function doesn't exist
-                                 array(),
+                                 [],
             0
         );
         if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -71,11 +72,11 @@ function comments_admin_module_stats()
         'comments',
         'user',
         'getitems',
-        array('moditemscommentcount' => true,
+        ['moditemscommentcount' => true,
                                     'modid' => $modid,
                                     'itemtype' => $itemtype,
                                     'numitems' => $numstats,
-                                    'startnum' => $startnum)
+                                    'startnum' => $startnum, ]
     );
 
     // get the number of inactive comments for these items
@@ -83,10 +84,10 @@ function comments_admin_module_stats()
         'comments',
         'user',
         'getitems',
-        array('modid' => $modid,
+        ['modid' => $modid,
                                     'itemtype' => $itemtype,
                                     'itemids' => array_keys($moditems),
-                                    'status' => 'inactive')
+                                    'status' => 'inactive', ]
     );
 
     // get the title and url for the items
@@ -98,32 +99,32 @@ function comments_admin_module_stats()
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
-                array('itemtype' => $itemtype,
-                                            'itemids' => $itemids)
+                ['itemtype' => $itemtype,
+                                            'itemids' => $itemids, ]
             ); // don't throw an exception here
         } catch (Exception $e) {
         }
     } else {
-        $itemlinks = array();
+        $itemlinks = [];
     }
 
-    $pages = array();
+    $pages = [];
 
     $data['gt_total']     = 0;
     $data['gt_inactive']  = 0;
 
     foreach ($moditems as $itemid => $numcomments) {
-        $pages[$itemid] = array();
+        $pages[$itemid] = [];
         $pages[$itemid]['pageid'] = $itemid;
         $pages[$itemid]['total'] = $numcomments;
         $pages[$itemid]['delete_url'] = xarController::URL(
             'comments',
             'admin',
             'delete',
-            array('dtype' => 'object',
+            ['dtype' => 'object',
                                                         'modid' => $modid,
                                                         'itemtype' => $itemtype,
-                                                        'objectid' => $itemid)
+                                                        'objectid' => $itemid, ]
         );
         $data['gt_total'] .= $numcomments;
         if (isset($inactive[$itemid])) {
@@ -143,9 +144,9 @@ function comments_admin_module_stats()
         'comments',
         'admin',
         'delete',
-        array('dtype' => 'module',
+        ['dtype' => 'module',
                                                   'modid' => $modid,
-                                                  'itemtype' => $itemtype)
+                                                  'itemtype' => $itemtype, ]
     );
 
     // get statistics for all comments (excluding root nodes)
@@ -153,8 +154,8 @@ function comments_admin_module_stats()
         'comments',
         'user',
         'getmodules',
-        array('modid' => $modid,
-                                   'itemtype' => $itemtype)
+        ['modid' => $modid,
+                                   'itemtype' => $itemtype, ]
     );
     if (isset($modlist[$modid]) && isset($modlist[$modid][$itemtype])) {
         $numitems = $modlist[$modid][$itemtype]['items'];
@@ -169,9 +170,9 @@ function comments_admin_module_stats()
                 'comments',
                 'admin',
                 'module_stats',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                           'itemtype' => $itemtype,
-                                                          'startnum' => '%%')
+                                                          'startnum' => '%%', ]
             ),
             $numstats
         );

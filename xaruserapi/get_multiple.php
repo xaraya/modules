@@ -70,7 +70,7 @@ function comments_userapi_get_multiple($args)
             'comments',
             'user',
             'get_node_lrvalues',
-            array('id' => $id)
+            ['id' => $id]
         );
     }
 
@@ -91,7 +91,7 @@ function comments_userapi_get_multiple($args)
     //$xartable =& xarDB::getTables();
 
     // initialize the commentlist array
-    $commentlist = array();
+    $commentlist = [];
 
     if (isset($author) && $author > 0) {
         $args['author'] = $author;
@@ -105,7 +105,7 @@ function comments_userapi_get_multiple($args)
 
     $commentlist = xarMod::apiFunc('comments', 'user', 'getitems', $args);
 
-    $arr = array();
+    $arr = [];
 
     foreach ($commentlist as $row) {
         $row['postanon'] = $row['anonpost'];

@@ -16,7 +16,7 @@
  */
 function comments_userapi_moditemcounts($args)
 {
-    $moditemcounts = array();
+    $moditemcounts = [];
 
     $items = xarMod::apiFunc('comments', 'user', 'getitems', $args);
 
@@ -36,15 +36,15 @@ function comments_userapi_moditemcounts($args)
             } else {
                 $filters['where'] .= ' and status ne ' . _COM_STATUS_ROOT_NODE;
             }
-            $list = DataObjectMaster::getObjectList(array(
-                                'name' => 'comments_comments'
-                            ));
+            $list = DataObjectMaster::getObjectList([
+                                'name' => 'comments_comments',
+                            ]);
             $items = $list->getItems($filters);
             $count = count($items);
             $id = $item['itemid'];
             $itemtype = $item['itemtype'];
 
-            $moditemcounts[$id] = array('count' => $count, 'itemtype' => $itemtype);
+            $moditemcounts[$id] = ['count' => $count, 'itemtype' => $itemtype];
         }
         $objectid = $item['objectid'];
     }

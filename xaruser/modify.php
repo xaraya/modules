@@ -43,13 +43,13 @@ function comments_user_modify()
     if (empty($data['comment_id'])) {
         return xarResponse::NotFound();
     }
-        
+
     # --------------------------------------------------------
     # Create the comment object and get the item to modify
 #
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-    $data['object']->getItem(array('itemid' => $data['comment_id']));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
+    $data['object']->getItem(['itemid' => $data['comment_id']]);
 
     # --------------------------------------------------------
     # Check that this user can modify this comment
@@ -71,8 +71,8 @@ function comments_user_modify()
             $modinfo['name'],
             'user',
             'getitemlinks',
-            array('itemtype' => $header['itemtype'],
-                                         'itemids' => array($header['itemid']))
+            ['itemtype' => $header['itemtype'],
+                                         'itemids' => [$header['itemid']], ]
         );
     } catch (Exception $e) {
     }
@@ -105,7 +105,7 @@ function comments_user_modify()
 
             // call transform input hooks
             // should we look at the title as well?
-            $package['transform'] = array('text');
+            $package['transform'] = ['text'];
 
             if (empty($package['settings']['edittimelimit'])
                or (time() <= ($package['comments'][0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))
@@ -130,7 +130,7 @@ function comments_user_modify()
 #
                 $data['comment_id'] = $data['object']->updateItem();
             }
-            
+
             if (isset($data['adminreturn']) && $data['adminreturn'] == 'yes') { // if we got here via the admin side
                 xarController::redirect(xarController::URL('comments', 'admin', 'view'));
             } else {
@@ -140,14 +140,14 @@ function comments_user_modify()
         case 'modify':
             $title =& $data['object']->properties['title']->value;
             $text  =& $data['object']->properties['text']->value;
-            list($transformed_text,
-                 $transformed_title) =
+            [$transformed_text,
+                 $transformed_title] =
                         xarModHooks::call(
                             'item',
                             'transform',
                             $data['comment_id'],
-                            array($text,
-                                               $title)
+                            [$text,
+                                               $title, ]
                         );
 
             $data['transformed_text']    = xarVar::prepHTMLDisplay($transformed_text);
@@ -159,13 +159,13 @@ function comments_user_modify()
             break;
         case 'preview':
         default:
-            list($package['transformed-text'],
-                 $package['transformed-title']) = xarModHooks::call(
+            [$package['transformed-text'],
+                 $package['transformed-title']] = xarModHooks::call(
                      'item',
                      'transform',
                      $header['parent_id'],
-                     array($package['text'],
-                                                                        $package['title'])
+                     [$package['text'],
+                                                                        $package['title'], ]
                  );
 
             $package['transformed-text']  = xarVar::prepHTMLDisplay($package['transformed-text']);

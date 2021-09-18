@@ -29,8 +29,8 @@ class CommentsNumberOfProperty extends DataProperty
      **/
     public function getBasePropertyInfo()
     {
-        $args = array();
-        $baseInfo = array(
+        $args = [];
+        $baseInfo = [
                             'id'         => 104,
                             'name'       => 'numcomments',
                             'label'      => '# of Comments',
@@ -42,7 +42,7 @@ class CommentsNumberOfProperty extends DataProperty
                             'aliases' => '',
                             'args'           => serialize($args),
                             // ...
-                           );
+                           ];
         return $baseInfo;
     }
 }

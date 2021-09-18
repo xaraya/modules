@@ -36,9 +36,9 @@ function comments_user_usermenu($args)
                 'comments',
                 'user',
                 'usermenu_icon',
-                array('icon' => $icon,
-                      'usermenu_form_url' => xarController::URL('comments', 'user', 'usermenu', array('phase' => 'form'))
-                     )
+                ['icon' => $icon,
+                      'usermenu_form_url' => xarController::URL('comments', 'user', 'usermenu', ['phase' => 'form']),
+                     ]
             );
             break;
 
@@ -47,13 +47,13 @@ function comments_user_usermenu($args)
             $settings = xarMod::apiFunc('comments', 'user', 'getoptions');
             $settings['max_depth'] = _COM_MAX_DEPTH - 1;
             $authid = xarSec::genAuthKey('comments');
-            $data = xarTpl::module('comments', 'user', 'usermenu_form', array('authid'   => $authid,
-                                                                           'settings' => $settings));
+            $data = xarTpl::module('comments', 'user', 'usermenu_form', ['authid'   => $authid,
+                                                                           'settings' => $settings, ]);
             break;
 
         case 'update':
 
-            if (!xarVar::fetch('settings', 'array', $settings, array(), xarVar::NOT_REQUIRED)) {
+            if (!xarVar::fetch('settings', 'array', $settings, [], xarVar::NOT_REQUIRED)) {
                 return;
             }
 

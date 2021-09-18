@@ -41,6 +41,6 @@ function comments_adminapi_remove_module($args)
 
     // FIXME: we need to remove the comments for items of all types here, so a direct DB call
 //        would be better than this "delete recursively" trick
-    xarMod::apiFunc('comments', 'admin', 'delete_module_nodes', array('modid'=>$modid));
+    xarMod::apiFunc('comments', 'admin', 'delete_module_nodes', ['modid'=>$modid]);
     return $extrainfo;
 }

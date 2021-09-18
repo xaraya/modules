@@ -61,14 +61,14 @@ function comments_user_display($args)
             $data['selected_id'] = $data['comment_id'];
         }
     }
-    
+
     # --------------------------------------------------------
     # Bail if the proper args were not passed
 #
     if (empty($fields)) {
-        return xarTpl::module('comments', 'user', 'errors', array('layout' => 'no_direct_access'));
+        return xarTpl::module('comments', 'user', 'errors', ['layout' => 'no_direct_access']);
     }
-        
+
     # --------------------------------------------------------
     # Try and get a selectee ID if we don't have one yet
 #
@@ -80,9 +80,9 @@ function comments_user_display($args)
     # Get the current comment
 #
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
     if (!empty($data['selected_id'])) {
-        $data['object']->getItem(array('itemid' => $data['selected_id']));
+        $data['object']->getItem(['itemid' => $data['selected_id']]);
     }
     $data['selected_id'] = $data['object']->properties['id']->value;
 
@@ -97,12 +97,12 @@ function comments_user_display($args)
     # Load the comment object with what we know about the environment
 #
     $data['object']->setFieldValues($fields, 1);
-    $fields = $data['object']->getFieldValues(array(), 1);
+    $fields = $data['object']->getFieldValues([], 1);
 
     # --------------------------------------------------------
     # Create an empty object for display and add any attributes passed
 #
-    $data['emptyobject'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    $data['emptyobject'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
     if (isset($args['tplmodule'])) {
         $data['object']->tplmodule = $args['tplmodule'];
     }
@@ -136,13 +136,13 @@ function comments_user_display($args)
     }
 
     $data['comments'] = comments_renderer_array_prune_excessdepth(
-        array(
+        [
             'array_list'    => $data['comments'],
             'cutoff'        => $package['settings']['depth'],
             'moduleid'      => $fields['moduleid'],
             'itemtype'      => $fields['itemtype'],
             'itemid'        => $fields['itemid'],
-        )
+        ]
     );
 
     if ($package['settings']['render'] == _COM_VIEW_THREADED) {
@@ -155,7 +155,7 @@ function comments_user_display($args)
             $comment['text'] = xarVar::prepHTMLDisplay($comment['text']);
             $comment['title'] = xarVar::prepForDisplay($comment['title']);
             // say which pieces of text (array keys) you want to be transformed
-            $comment['transform'] = array('text');
+            $comment['transform'] = ['text'];
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
             $data['comments'][$key] = xarModHooks::call('item', 'transform', $comment['id'], $comment, 'comments');

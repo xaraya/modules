@@ -39,9 +39,9 @@ function comments_user_search($args)
         return;
     }
 
-    $postinfo   = array('q' => $q, 'author' => $author);
-    $data       = array();
-    $search     = array();
+    $postinfo   = ['q' => $q, 'author' => $author];
+    $data       = [];
+    $search     = [];
 
     // TODO:  check 'q' and 'author' for '%' value
     //        and sterilize if found
@@ -102,7 +102,7 @@ function comments_user_search($args)
         foreach ($package['comments'] as $key => $comment) {
             if ($header['text']) {
                 // say which pieces of text (array keys) you want to be transformed
-                $comment['transform'] = array('text');
+                $comment['transform'] = ['text'];
                 // call the item transform hooks
                 // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
                 $comment = xarModHooks::call('item', 'transform', $comment['id'], $comment, 'comments');

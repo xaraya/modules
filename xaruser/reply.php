@@ -52,12 +52,12 @@ function comments_user_reply()
 # --------------------------------------------------------
 # Get the values from the form
 #
-            $data['reply'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+            $data['reply'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
             $valid = $data['reply']->checkInput();
 
             // call transform input hooks
             // should we look at the title as well?
-            $package['transform'] = array('text');
+            $package['transform'] = ['text'];
 
             $package = xarModHooks::call(
                 'item',
@@ -107,8 +107,8 @@ function comments_user_reply()
 # Create the comment object
 #
             sys::import('modules.dynamicdata.class.objects.master');
-            $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-            $data['object']->getItem(array('itemid' => $data['comment_id']));
+            $data['object'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
+            $data['object']->getItem(['itemid' => $data['comment_id']]);
 
             // replace the deprecated eregi stuff below
             $title =& $data['object']->properties['title']->value;
@@ -123,8 +123,8 @@ function comments_user_reply()
                     $modinfo['name'],
                     'user',
                     'getitemlinks',
-                    array('itemtype' => $data['object']->properties['itemtype']->value,
-                                                 'itemids' => array($data['object']->properties['itemid']->value))
+                    ['itemtype' => $data['object']->properties['itemtype']->value,
+                                                 'itemids' => [$data['object']->properties['itemid']->value], ]
                 );
             } catch (Exception $e) {
             }
@@ -151,7 +151,7 @@ function comments_user_reply()
             $data['package']               = $package;
 
             // Create an object item for the reply
-            $data['reply'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+            $data['reply'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
             $data['reply']->properties['title']->value = $new_title;
             $data['reply']->properties['position']->reference_id = $data['comment_id'];
             $data['reply']->properties['position']->position = 3;
@@ -162,13 +162,13 @@ function comments_user_reply()
             break;
         case 'preview':
         default:
-            list($package['transformed-text'],
-                 $package['transformed-title']) = xarModHooks::call(
+            [$package['transformed-text'],
+                 $package['transformed-title']] = xarModHooks::call(
                      'item',
                      'transform',
                      $header['parent_id'],
-                     array($package['text'],
-                                                            $package['title'])
+                     [$package['text'],
+                                                            $package['title'], ]
                  );
 
             $package['transformed-text']  = xarVar::prepHTMLDisplay($package['transformed-text']);

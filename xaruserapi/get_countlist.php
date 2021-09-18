@@ -86,9 +86,9 @@ function comments_userapi_get_countlist($args)
         return;
     }
 
-    $count = array();
+    $count = [];
     while (!$result->EOF) {
-        list($id, $numitems) = $result->fields;
+        [$id, $numitems] = $result->fields;
         $count[$id] = $numitems;
         $result->MoveNext();
     }

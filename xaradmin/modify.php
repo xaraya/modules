@@ -51,11 +51,11 @@ function comments_admin_modify()
     sys::import('modules.dynamicdata.class.objects.master');
 
     // Get the object name
-    $commentsobject = DataObjectMaster::getObject(array('name' => 'comments'));
-    $check = $commentsobject->getItem(array('itemid' => $id));
+    $commentsobject = DataObjectMaster::getObject(['name' => 'comments']);
+    $check = $commentsobject->getItem(['itemid' => $id]);
     if (empty($check)) {
         $msg = 'There is no comment with an itemid of ' . $id;
-        return xarTpl::module('base', 'message', 'notfound', array('msg' => $msg));
+        return xarTpl::module('base', 'message', 'notfound', ['msg' => $msg]);
     }
 
     if (!xarSecurity::check('EditComments', 0)) {
@@ -65,7 +65,7 @@ function comments_admin_modify()
     $data['pathval'] = '';
 
     // Get the object we'll be working with
-    $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    $object = DataObjectMaster::getObject(['name' => 'comments_comments']);
     $data['object'] = $object; // save for later
 
     $data['label'] = $object->label;
@@ -78,7 +78,7 @@ function comments_admin_modify()
 
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         }
 
         // Get the data from the form
@@ -92,19 +92,19 @@ function comments_admin_modify()
         } else {
             // Good data: update the item
 
-            $data['object']->updateItem(array('itemid' => $id));
+            $data['object']->updateItem(['itemid' => $id]);
 
             $values = $data['object']->getFieldValues();
 
             if (!empty($data['view'])) {
                 xarController::redirect($values['parent_url']);
             } else {
-                xarController::redirect(xarController::URL('comments', 'admin', 'modify', array('id'=>$id)));
+                xarController::redirect(xarController::URL('comments', 'admin', 'modify', ['id'=>$id]));
             }
             return true;
         }
     } else {
-        $data['object']->getItem(array('itemid' => $id));
+        $data['object']->getItem(['itemid' => $id]);
     }
 
     return $data;

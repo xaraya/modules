@@ -35,15 +35,15 @@
                                 status,
                                 anonpost
                            FROM  " . $xartable['comments'] . " WHERE id = ?";
-            $bindvars = array($id);
+            $bindvars = [$id];
             $result = $dbconn->Execute($SQLquery, $bindvars);
             if (!$result) {
                 return;
             }
 
             $c = new CommentTreeNode();
-            list($c->id, $c->parent_id, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
-            $c->hostname, $c->text, $c->left, $c->right, $c->status, $c->anonpost) = $result->fields;
+            [$c->id, $c->parent_id, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
+            $c->hostname, $c->text, $c->left, $c->right, $c->status, $c->anonpost] = $result->fields;
             return $c;
         }
     }
@@ -89,7 +89,7 @@
                                 status,
                                 anonpost
                            FROM  " . $xartable['comments'] . " WHERE parent = ? ORDER BY left_id";
-            $bindvars = array($this->id);
+            $bindvars = [$this->id];
             $result = $dbconn->Execute($SQLquery, $bindvars);
             if (!$result) {
                 return;
@@ -99,8 +99,8 @@
             $set = new BasecSet();
             while (!$result->EOF) {
                 $c = new CommentTreeNode();
-                list($c->id, $c->parent_id, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
-                $c->hostname, $c->text, $c->left, $c->right, $c->status, $c->anonpost) = $result->fields;
+                [$c->id, $c->parent_id, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
+                $c->hostname, $c->text, $c->left, $c->right, $c->status, $c->anonpost] = $result->fields;
                 $collection->add($c);
             }
             return $collection;
@@ -121,7 +121,7 @@
             $xartable =& xarDB::getTables();
 
             $SQLquery = "SELECT COUNT(*) FROM " . $xartable['comments'] . " WHERE parent_id = ? ORDER BY left_id";
-            $bindvars = array($this->id);
+            $bindvars = [$this->id];
             $result = $dbconn->Execute($SQLquery, $bindvars);
             if (!$result) {
                 return;
@@ -166,7 +166,7 @@
             }
         }
 
-        public function setfilter($args=array())
+        public function setfilter($args=[])
         {
             foreach ($args as $key => $value) {
                 $this->$key = $value;
@@ -174,7 +174,7 @@
         }
         public function toArray()
         {
-            return array('id' => $this->id, 'name' => $this->name);
+            return ['id' => $this->id, 'name' => $this->name];
         }
     }
 
@@ -189,16 +189,16 @@
     //                                array(
     //                                      'id' => false,
     //                                      'getchildren' => true));
-                                  array('eid' => $node->eid,
+                                  ['eid' => $node->eid,
                                         'id' => $node->id,
                                         'return_itself' => $node->returnitself,
                                         'getchildren' => $node->getchildren,
                                         'maximum_depth' => $node->maxdepth,
                                         'minimum_depth' => $node->mindepth,
-                                        )
+                                        ]
             );
             foreach ($data as $row) {
-                $nodedata = array(
+                $nodedata = [
                     'id' => $row['id'],
                     'parent' => $row['parent'],
                     'name' => $row['name'],
@@ -207,7 +207,7 @@
                     'image' => $row['image'],
                     'left' => $row['left'],
                     'right' => $row['right'],
-                );
+                ];
                 if (!empty($node->idlist) && isset($node->idlist[$node->id])) {
                     $idlist = $node->idlist[$node->id];
                     if (in_array($row['id'], $idlist)) {

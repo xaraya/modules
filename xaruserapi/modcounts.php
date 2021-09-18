@@ -71,13 +71,13 @@ function comments_userapi_modcounts($args)
         return;
     }
 
-    $modlist = array();
+    $modlist = [];
     while (!$result->EOF) {
-        list($modid, $itemtype, $numcomments, $numitems) = $result->fields;
+        [$modid, $itemtype, $numcomments, $numitems] = $result->fields;
         if (!isset($modlist[$modid])) {
-            $modlist[$modid] = array();
+            $modlist[$modid] = [];
         }
-        $modlist[$modid][$itemtype] = array('items' => $numitems, 'comments' => $numcomments);
+        $modlist[$modid][$itemtype] = ['items' => $numitems, 'comments' => $numcomments];
         $result->MoveNext();
     }
     $result->close();

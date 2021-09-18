@@ -39,16 +39,16 @@ function comments_userapi_get_one($args)
     $xartable =& xarDB::getTables();
 
     // initialize the commentlist array
-    $commentlist = array();
+    $commentlist = [];
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-    $object->getItem(array('itemid' => $id));
+    $object = DataObjectMaster::getObject(['name' => 'comments_comments']);
+    $object->getItem(['itemid' => $id]);
     $values = $object->getFieldValues();
     $values['position_atomic'] = $object->properties['position']->atomic_value;
 
     if ($values['status'] != _COM_STATUS_ON) {
-        return array();
+        return [];
     }
 
     $values['postanon'] = $values['anonpost'];

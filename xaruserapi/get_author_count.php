@@ -67,6 +67,6 @@ function comments_userapi_get_author_count($args)
     }
     $q->run();
     $result = $q->row();
-    
+
     return $result['numitems'];
 }

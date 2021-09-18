@@ -1,4 +1,5 @@
 <?php
+
 sys::import('modules.base.class.pager');
 
 /**
@@ -38,7 +39,7 @@ function comments_admin_module_stats()
         $urlitemtype = -1;
     } else {
         $data['itemtype'] = $urlitemtype;
-        $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes', array(), 0);
+        $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes', [], 0);
         if (isset($mytypes) && !empty($mytypes[$urlitemtype])) {
             $data['itemtypelabel'] = $mytypes[$urlitemtype]['label'];
         //$data['modlink'] = $mytypes[$urlitemtype]['url'];
@@ -58,7 +59,7 @@ function comments_admin_module_stats()
         $startnum = 1;
     }
 
-    $args = array('modid' => $modid, 'numitems' => $numstats, 'startnum' => $startnum);
+    $args = ['modid' => $modid, 'numitems' => $numstats, 'startnum' => $startnum];
     if (!xarVar::fetch('itemtype', 'int', $itemtypearg, null, xarVar::NOT_REQUIRED)) {
         return;
     }
@@ -91,34 +92,34 @@ function comments_admin_module_stats()
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
-                array('itemtype' => $urlitemtype,
-                                            'itemids' => $itemids)
+                ['itemtype' => $urlitemtype,
+                                            'itemids' => $itemids, ]
             ); // don't throw an exception here
         } catch (Exception $e) {
         }
     } else {
-        $itemlinks = array();
+        $itemlinks = [];
     }
 
-    $stats = array();
+    $stats = [];
 
     $data['gt_total']     = 0;
     $data['gt_inactive']  = 0;
 
     foreach ($moditems as $itemid => $info) {
-        $stats[$itemid] = array();
+        $stats[$itemid] = [];
         $stats[$itemid]['pageid'] = $itemid;
         $stats[$itemid]['total'] = $info['count'];
         $stats[$itemid]['delete_url'] = xarController::URL(
             'comments',
             'admin',
             'delete',
-            array('dtype' => 'object',
+            ['dtype' => 'object',
                                                         'modid' => $modid,
                                                         'itemtype' => $info['itemtype'],
                                                         'objectid' => $itemid,
-                                                        'redirect' => $modid
-                                                  )
+                                                        'redirect' => $modid,
+                                                  ]
         );
         $data['gt_total'] += $info['count'];
         if (isset($inactive[$itemid])) {
@@ -143,11 +144,11 @@ function comments_admin_module_stats()
         'comments',
         'admin',
         'delete',
-        array('dtype' => $dalltype,
+        ['dtype' => $dalltype,
                                                   'modid' => $modid,
                                                   'itemtype' => $urlitemtype,
-                                                    'redirect' => 'stats'
-                                            )
+                                                    'redirect' => 'stats',
+                                            ]
     );
 
     // get statistics for all comments (excluding root nodes)
@@ -155,8 +156,8 @@ function comments_admin_module_stats()
         'comments',
         'user',
         'modcounts',
-        array('modid' => $modid,
-                                   'itemtype' => $urlitemtype)
+        ['modid' => $modid,
+                                   'itemtype' => $urlitemtype, ]
     );
     if (isset($modlist[$modid]) && isset($modlist[$modid][$urlitemtype])) {
         $numitems = $modlist[$modid][$urlitemtype]['items'];
@@ -171,9 +172,9 @@ function comments_admin_module_stats()
                 'comments',
                 'admin',
                 'module_stats',
-                array('modid' => $modid,
+                ['modid' => $modid,
                                                           'itemtype' => $urlitemtype,
-                                                          'startnum' => '%%')
+                                                          'startnum' => '%%', ]
             ),
             $numstats
         );

@@ -35,10 +35,10 @@ function comments_admin_stats()
         'comments',
         'user',
         'getmodules',
-        array('status' => 'inactive')
+        ['status' => 'inactive']
     );
 
-    $data = array();
+    $data = [];
     foreach ($modlist as $modid => $itemtypes) {
         $modinfo = xarMod::getInfo($modid);
         // Get the list of all item types for this module (if any)
@@ -47,7 +47,7 @@ function comments_admin_stats()
         // don't throw an exception if this function doesn't exist
         //                       array(), 0);
         foreach ($itemtypes as $itemtype => $stats) {
-            $moditem = array();
+            $moditem = [];
             $moditem['modid'] = $modid;
             $moditem['pages'] = $stats['items'];
             $moditem['total'] = $stats['comments'];
@@ -72,16 +72,16 @@ function comments_admin_stats()
                 'comments',
                 'admin',
                 'module_stats',
-                array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype)
+                ['modid' => $modid,
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype, ]
             );
             $moditem['delete_url'] = xarController::URL(
                 'comments',
                 'admin',
                 'delete',
-                array('dtype' => 'module',
+                ['dtype' => 'module',
                                                      'modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype)
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype, ]
             );
             $data[] = $moditem;
             $output['gt_pages'] += $moditem['pages'];
@@ -93,7 +93,7 @@ function comments_admin_stats()
         'comments',
         'admin',
         'delete',
-        array('dtype' => 'all')
+        ['dtype' => 'all']
     );
 
     return $output;

@@ -33,7 +33,7 @@ function comments_userapi_get_childcountlist($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
-    $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$moduleid, (int)$itemid, (int)$itemtype);
+    $bind = [(int)$left, (int)$right, _COM_STATUS_ON, (int)$moduleid, (int)$itemid, (int)$itemtype];
 
     $sql = "SELECT P1.id, COUNT(P2.id) AS numitems"
         . " FROM $xartable[comments] AS P1, $xartable[comments] AS P2"
@@ -50,12 +50,12 @@ function comments_userapi_get_childcountlist($args)
     }
 
     if ($result->EOF) {
-        return array();
+        return [];
     }
 
-    $count = array();
+    $count = [];
     while (!$result->EOF) {
-        list($id, $numitems) = $result->fields;
+        [$id, $numitems] = $result->fields;
         // return total count - 1 ... the -1 is so we don't count the comment root.
         $count[$id] = $numitems - 1;
         $result->MoveNext();

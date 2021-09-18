@@ -36,7 +36,7 @@ function comments_userapi_activate($args)
     $sql = "UPDATE $xartable[comments]
             SET status='" . _COM_STATUS_ON."'
             WHERE id=?";
-    $bindvars = array((int) $id);
+    $bindvars = [(int) $id];
 
     $result =& $dbconn->Execute($sql, $bindvars);
 

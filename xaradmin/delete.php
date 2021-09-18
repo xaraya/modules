@@ -51,8 +51,8 @@ function comments_admin_delete()
                 return;
             }
 
-            $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-            $object->getItem(array('itemid' => $itemid));
+            $object = DataObjectMaster::getObject(['name' => 'comments_comments']);
+            $object->getItem(['itemid' => $itemid]);
             $values = $object->getFieldValues();
             foreach ($values as $key => $val) {
                 $data[$key] = $val;
@@ -104,21 +104,21 @@ function comments_admin_delete()
 
             break;
         case 'all': // delete all comments
-            $filters = array();
-            $delete_args = array();
+            $filters = [];
+            $delete_args = [];
             break;
     }
 
     if ($data['dtype'] != 'item') { // multiple items
 
-        $list = DataObjectMaster::getObjectList(array(
-                            'name' => 'comments'
-            ));
+        $list = DataObjectMaster::getObjectList([
+                            'name' => 'comments',
+            ]);
         $data['items'] = $list->getItems($filters);
 
-        $countlist = DataObjectMaster::getObjectList(array(
-                            'name' => 'comments'
-            ));
+        $countlist = DataObjectMaster::getObjectList([
+                            'name' => 'comments',
+            ]);
         if ($data['dtype'] == 'all') {
             $filters['where'] = 'status ne 3';
         } else {
@@ -136,13 +136,13 @@ function comments_admin_delete()
 
             if (!empty($data['items'])) {
                 foreach ($data['items'] as $val) {
-                    $object = DataObjectMaster::getObject(array(
-                                    'name' => 'comments_comments'
-                    ));
+                    $object = DataObjectMaster::getObject([
+                                    'name' => 'comments_comments',
+                    ]);
                     if (!is_object($object)) {
                         return;
                     }
-                    $object->deleteItem(array('itemid' => $val['id']));
+                    $object->deleteItem(['itemid' => $val['id']]);
                 }
             }
         }
@@ -152,12 +152,12 @@ function comments_admin_delete()
                 return;
             }
             if ($deletebranch) {
-                xarMod::apiFunc('comments', 'admin', 'delete_branch', array('node' => $id));
+                xarMod::apiFunc('comments', 'admin', 'delete_branch', ['node' => $id]);
             } else {
-                xarMod::apiFunc('comments', 'admin', 'delete_node', array('node' => $id, 'parent_id' =>$values['parent_id']));
+                xarMod::apiFunc('comments', 'admin', 'delete_node', ['node' => $id, 'parent_id' =>$values['parent_id']]);
             }
         } else {
-            $comments = xarMod::apiFunc('comments', 'user', 'get_one', array('id' => $itemid));
+            $comments = xarMod::apiFunc('comments', 'user', 'get_one', ['id' => $itemid]);
 
             if ($comments[0]['position_atomic']['right'] == $comments[0]['position_atomic']['left'] + 1) {
                 $data['haschildren'] = false;
@@ -177,7 +177,7 @@ function comments_admin_delete()
         } elseif ($data['redirect'] == 'stats') {
             xarController::redirect(xarController::URL('comments', 'admin', 'stats'));
         } elseif (is_numeric($data['redirect'])) {
-            xarController::redirect(xarController::URL('comments', 'admin', 'module_stats', array('modid' => $data['redirect'])));
+            xarController::redirect(xarController::URL('comments', 'admin', 'module_stats', ['modid' => $data['redirect']]));
         }
     }
 
