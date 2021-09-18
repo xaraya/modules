@@ -29,7 +29,7 @@ function html_admin_modifyconfig()
         case 'modify':
         default:
             //Set Data Array
-            $data                   = array();
+            $data                   = [];
             $data['authid']         = xarSec::genAuthKey();
             $data['submitlabel']    = xarML('Submit');
 
@@ -38,12 +38,12 @@ function html_admin_modifyconfig()
                 'module',
                 'modifyconfig',
                 'html',
-                array('module'     => 'html',
-                                           'itemtype'   => 0)
+                ['module'     => 'html',
+                                           'itemtype'   => 0, ]
             );
 
             if (empty($hooks)) {
-                $hooks = array();
+                $hooks = [];
             }
             $data['hooks'] = $hooks;
             break;
@@ -71,8 +71,8 @@ function html_admin_modifyconfig()
                 'module',
                 'updateconfig',
                 'html',
-                array('module'      => 'html',
-                                  'itemtype'    => 0)
+                ['module'      => 'html',
+                                  'itemtype'    => 0, ]
             );
 
             xarController::redirect(xarController::URL('html', 'admin', 'modifyconfig'));

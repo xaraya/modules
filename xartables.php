@@ -23,7 +23,7 @@
 function html_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
     $prefix = xarDB::getPrefix();
 
     // Set the prefix name for the html table

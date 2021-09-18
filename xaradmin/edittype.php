@@ -42,7 +42,7 @@ function html_admin_edittype()
         'html',
         'user',
         'gettype',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     // Check for exceptions
@@ -84,8 +84,8 @@ function html_admin_edittype()
         'html',
         'admin',
         'edittype',
-        array('id' => $id,
-                             'tagtype' => $tagtype)
+        ['id' => $id,
+                             'tagtype' => $tagtype, ]
     )) {
         return; // throw back
     }

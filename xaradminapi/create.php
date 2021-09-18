@@ -30,7 +30,7 @@ function html_adminapi_create($args)
 
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
-    $invalid = array();
+    $invalid = [];
     if (!isset($tag) || !is_string($tag)) {
         $invalid[] = 'tag';
     }
@@ -62,7 +62,7 @@ function html_adminapi_create($args)
         'html',
         'user',
         'gettype',
-        array('type' => $type)
+        ['type' => $type]
     );
 
     // Add item

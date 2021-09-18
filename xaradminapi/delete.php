@@ -37,7 +37,7 @@ function html_adminapi_delete($args)
         'html',
         'user',
         'gettag',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     if ($html == false) {
@@ -56,7 +56,7 @@ function html_adminapi_delete($args)
 
     // Delete the tag
     $query = "DELETE FROM $htmltable WHERE id = ?";
-    $result =& $dbconn->Execute($query, array($id));
+    $result =& $dbconn->Execute($query, [$id]);
     if (!$result) {
         return;
     }
@@ -67,11 +67,11 @@ function html_adminapi_delete($args)
         'html',
         'user',
         'gettype',
-        array('id' => $html['tid'])
+        ['id' => $html['tid']]
     );
 
     if ($tagtype['type'] == 'html') {
-        $allowedhtml = array();
+        $allowedhtml = [];
         // Get the current tags from config vars
         foreach (xarConfigVars::get(null, 'Site.Core.AllowableHTML') as $key => $value) {
             // Remove the deleted html tag from the config vars

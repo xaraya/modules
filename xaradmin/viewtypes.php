@@ -20,7 +20,7 @@
 function html_admin_viewtypes()
 {
     // Initialise the variable
-    $data['items'] = array();
+    $data['items'] = [];
 
     // Specify some labels for display
     $data['submitlabel'] = xarML('Submit');
@@ -50,7 +50,7 @@ function html_admin_viewtypes()
                 'html',
                 'admin',
                 'edittype',
-                array('id' => $tagtypes[$idx]['id'])
+                ['id' => $tagtypes[$idx]['id']]
             );
         } else {
             $tagtypes[$idx]['editurl'] = '';
@@ -61,7 +61,7 @@ function html_admin_viewtypes()
                 'html',
                 'admin',
                 'deletetype',
-                array('id' => $tagtypes[$idx]['id'])
+                ['id' => $tagtypes[$idx]['id']]
             );
         } else {
             $tagtypes[$idx]['deleteurl'] = '';

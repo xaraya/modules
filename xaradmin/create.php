@@ -56,9 +56,9 @@ function html_admin_create($args)
         'html',
         'admin',
         'create',
-        array('tag' => $tag,
+        ['tag' => $tag,
                                'type' => $tagtype,
-                               'allowed' => $allowed)
+                               'allowed' => $allowed, ]
     );
 
     xarController::redirect(xarController::URL('html', 'admin', 'set'));

@@ -26,7 +26,7 @@ function html_userapi_getalltypes($args)
     extract($args);
 
     // Set empty array
-    $types = array();
+    $types = [];
 
     // Security Check
     if (!xarSecurity::check('ReadHTML')) {
@@ -55,10 +55,10 @@ function html_userapi_getalltypes($args)
 
     // Put types into an array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $type) = $result->fields;
+        [$id, $type] = $result->fields;
 
-        $types[] = array('id'        => $id,
-                          'type'      => $type);
+        $types[] = ['id'        => $id,
+                          'type'      => $type, ];
     }
 
     // Close result set

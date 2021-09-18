@@ -21,7 +21,7 @@
 function html_admin_set()
 {
     // Initialise the variable
-    $data['items'] = array();
+    $data['items'] = [];
 
     // Specify some labels for display
     $data['submitlabel'] = xarML('Submit');
@@ -51,7 +51,7 @@ function html_admin_set()
                 'html',
                 'admin',
                 'edit',
-                array('id' => $allowed[$idx]['id'])
+                ['id' => $allowed[$idx]['id']]
             );
         } else {
             $allowed[$idx]['editurl'] = '';
@@ -62,7 +62,7 @@ function html_admin_set()
                 'html',
                 'admin',
                 'delete',
-                array('id' => $allowed[$idx]['id'])
+                ['id' => $allowed[$idx]['id']]
             );
         } else {
             $allowed[$idx]['deleteurl'] = '';

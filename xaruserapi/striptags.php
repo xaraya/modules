@@ -23,7 +23,7 @@ function html_userapi_striptags($args)
     if (!isset($args['string'])) {
         throw new Exception(xarML('No string was passed to the striptags function'));
     }
-        
+
     if (empty($args['string'])) {
         return $args['string'];
     }
@@ -31,35 +31,35 @@ function html_userapi_striptags($args)
     // This turns the entities into UTF-8 chars
     // see http://www.php.net/manual/en/function.html-entity-decode.php#104617
     $string = html_entities_to_unicode($args['string']);
-    
+
     // This replaces the &amp; in entities with &
     // See lib/xaraya/variables.php
     // $string = preg_replace('/&amp;([a-z#0-9]+);/i', "&\\1;", $args['string']);
-    
+
     // This replaces the non-numeric with numeric entities
 //    $string = html_convert_entities($string);
-    
+
 //    $string = html_entity_decode($args['string']);
 //    $string = utf8_encode($string);echo "<pre>";echo($string);
-    
+
     // Add start and end tags to the string
     $string = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">' . $string;
     $string .= '</xar:template>';
-    
+
     // Load the string to be transformed into a DOM document
     $xmlFile = new DOMDocument();
     $xmlFile->loadXML($string);
-     
+
     // Instantiate an XSL processor and load the stylesheet for transforms
     $tagFile = realpath(sys::code() . 'modules/html/xslt/tagstripper.xsl');
     $xslFile = new DOMDocument();
     $xslFile->load($tagFile);
     $xslProc = new XSLTProcessor();
     $xslProc->importStyleSheet($xslFile);
-    
+
     // Get the tags to be removed and pass them to the stylesheet
-    $stripTag = array();
-    $stripAttrs = array();
+    $stripTag = [];
+    $stripAttrs = [];
     foreach ($GLOBALS['xarVar::ALLOWableHTML'] as $k=>$v) {
         if ($k == '!--') {
             if ($v < 2) {
@@ -96,7 +96,7 @@ function html_convert_entities($str)
 }
 function convert_entity($matches)
 {
-    static $table = array(
+    static $table = [
     '&quot'      => '&#34;',   # quotation mark
     '&nbsp;'     => '&#160;',  # no-break space = non-breaking space, U+00A0 ISOnum
     '&iexcl;'    => '&#161;',  # inverted exclamation mark, U+00A1 ISOnum
@@ -350,7 +350,7 @@ function convert_entity($matches)
     '&lsaquo;'   => '&#8249;', # single left-pointing angle quotation mark, U+2039 ISO proposed
     '&rsaquo;'   => '&#8250;', # single right-pointing angle quotation mark, U+203A ISO proposed
     '&euro;'     => '&#8364;', # euro sign, U+20AC NEW
-);
+];
     // Entity not found? Destroy it.
-    return isset($table[$matches[1]]) ? $table[$matches[1]] : '';
+    return $table[$matches[1]] ?? '';
 }

@@ -46,7 +46,7 @@ function html_userapi_transformoutput($args)
             }
             return $extrainfo;
         }
-        $transformed = array();
+        $transformed = [];
         foreach ($extrainfo as $text) {
             $transformed[] = html_userapitransformoutput($text);
         }
@@ -100,7 +100,7 @@ function html_userapitransformoutput($text)
         $text = preg_replace('!(</(?:table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6])>)!', "$1\n\n", $text);
 
         // cross-platform newlines
-        $text = str_replace(array("\r\n", "\r"), "\n", $text);
+        $text = str_replace(["\r\n", "\r"], "\n", $text);
 
         // take care of duplicaten newlines - turns runs of two or more into just two (treated as paragraphs)
         $text = preg_replace("/\n\n+/", "\n\n", $text);

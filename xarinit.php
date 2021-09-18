@@ -45,13 +45,13 @@ function html_init()
     *       PRIMARY KEY (id),
     *       UNIQUE KEY tag (tag))";
     *****************************************************************/
-    $fields = array(
-    'id'      => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+    $fields = [
+    'id'      => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
 //    'id'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-    'tid'      => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
-    'tag'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
-    'allowed'  => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
-    );
+    'tid'      => ['type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'],
+    'tag'      => ['type'=>'varchar','size'=>100,'null'=>false,'default'=>''],
+    'allowed'  => ['type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'],
+    ];
 
     // Create table
     $query = xarTableDDL::createTable($htmltable, $fields);
@@ -61,9 +61,9 @@ function html_init()
     }
 
     // Create index on tag
-    $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_tag',
-                   'fields'    => array('tid, tag'),
-                   'unique'    => true);
+    $index = ['name'      => 'i_'.xarDB::getPrefix().'_html_tag',
+                   'fields'    => ['tid, tag'],
+                   'unique'    => true, ];
 
     // Create index
     $query = xarTableDDL::createIndex($htmltable, $index);
@@ -82,11 +82,11 @@ function html_init()
     *       PRIMARY KEY (type),
     *       UNIQUE KEY tag (xar_name))";
     *****************************************************************/
-    $fields = array(
-    'id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+    $fields = [
+    'id'       => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
 //    'id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-    'type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
-    );
+    'type'     => ['type'=>'varchar','size'=>20,'null'=>false,'default'=>''],
+    ];
 
     // Create table
     $query = xarTableDDL::createTable($htmltypestable, $fields);
@@ -96,9 +96,9 @@ function html_init()
     }
 
     // Create index on type
-    $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
-                   'fields'    => array('type'),
-                   'unique'    => true);
+    $index = ['name'      => 'i_'.xarDB::getPrefix().'_html_type',
+                   'fields'    => ['type'],
+                   'unique'    => true, ];
 
     $query = xarTableDDL::createIndex($htmltypestable, $index);
     $result =& $dbconn->Execute($query);
@@ -118,7 +118,7 @@ function html_init()
                 type)
               VALUES (?, ?)";
 
-    $result =& $dbconn->Execute($query, array($nextid, (string) $defaulttype));
+    $result =& $dbconn->Execute($query, [$nextid, (string) $defaulttype]);
 
     // Check for error
     if (!$result) {
@@ -132,7 +132,7 @@ function html_init()
     //   0 = Not allowed
     //   1 = Allowed
     //   2 = Allowed with parameters
-    $htmltags = array('!--' =>      2,
+    $htmltags = ['!--' =>      2,
                       'a' =>        2,
                       'abbr' =>     0,
                       'acronym' =>  0,
@@ -218,7 +218,7 @@ function html_init()
                       'tt' =>       2,
                       'u' =>        0,
                       'ul' =>       2,
-                      'var' =>      0);
+                      'var' =>      0, ];
 
     // Insert HTML tags into xar_html table
     foreach ($htmltags as $htmltag=>$allowed) {
@@ -233,10 +233,10 @@ function html_init()
                         allowed)
                     VALUES (?, ?, ?, ?)";
 
-        $bindvars = array( $nextid,
+        $bindvars = [ $nextid,
                           (int) $htmltypeid,
                           (string) $htmltag,
-                          (int) $allowed);
+                          (int) $allowed, ];
 
         $result =& $dbconn->Execute($query, $bindvars);
 
@@ -368,11 +368,11 @@ function html_upgrade($oldversion)
             *       PRIMARY KEY (type),
             *       UNIQUE KEY tag (xar_name))";
             *****************************************************************/
-            $fields = array(
-                'id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+            $fields = [
+                'id'       => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
 //                'id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-                'type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
-            );
+                'type'     => ['type'=>'varchar','size'=>20,'null'=>false,'default'=>''],
+            ];
 
             // Create table
             $query = xarTableDDL::createTable($htmltypestable, $fields);
@@ -382,9 +382,9 @@ function html_upgrade($oldversion)
             }
 
             // Create index on type
-            $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
-                           'fields'    => array('type'),
-                           'unique'    => true);
+            $index = ['name'      => 'i_'.xarDB::getPrefix().'_html_type',
+                           'fields'    => ['type'],
+                           'unique'    => true, ];
 
             $query = xarTableDDL::createIndex($htmltypestable, $index);
             $result =& $dbconn->Execute($query);
@@ -401,7 +401,7 @@ function html_upgrade($oldversion)
                          type)
                      VALUES (?, ?)";
 
-            $result =& $dbconn->Execute($query, array( $nextid, (string) $defaulttype));
+            $result =& $dbconn->Execute($query, [ $nextid, (string) $defaulttype]);
 
             // Check for error
             if (!$result) {
@@ -414,11 +414,11 @@ function html_upgrade($oldversion)
             // Add the column 'tid' to the xar_html table
              $query = xarTableDDL::alterTable(
                  $htmltable,
-                 array('command' => 'add',
+                 ['command' => 'add',
                                            'field' => 'tid',
                                            'type' => 'integer',
                                            'null' => false,
-                                           'default' => $htmltypeid)
+                                           'default' => $htmltypeid, ]
              );
             $result = & $dbconn->Execute($query);
             if (!$result) {
@@ -426,8 +426,8 @@ function html_upgrade($oldversion)
             }
 
             // Drop current index
-            $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_1',
-                           'fields'    => array('tag'));
+            $index = ['name'      => 'i_'.xarDB::getPrefix().'_html_1',
+                           'fields'    => ['tag'], ];
             $query = xarTableDDL::dropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
             if (!$result) {
@@ -444,9 +444,9 @@ function html_upgrade($oldversion)
             }
 
             // Create new index on xar_html table
-            $index = array('name'      => 'i_'.xarDB::getPrefix().'_html',
-                           'fields'    => array('tid, tag'),
-                           'unique'    => true);
+            $index = ['name'      => 'i_'.xarDB::getPrefix().'_html',
+                           'fields'    => ['tid, tag'],
+                           'unique'    => true, ];
 
             // Create index
             $query = xarTableDDL::createIndex($htmltable, $index);

@@ -26,7 +26,7 @@ function html_adminapi_edittype($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -44,7 +44,7 @@ function html_adminapi_edittype($args)
         'html',
         'user',
         'gettype',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     if ($type == false) {
@@ -69,7 +69,7 @@ function html_adminapi_edittype($args)
     $query = "UPDATE $htmltypestable
               SET type = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query, array($tagtype, $id));
+    $result =& $dbconn->Execute($query, [$tagtype, $id]);
     if (!$result) {
         return;
     }

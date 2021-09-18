@@ -40,7 +40,7 @@ function html_admin_delete()
         'html',
         'user',
         'gettag',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     // Check for exceptions
@@ -82,7 +82,7 @@ function html_admin_delete()
         'html',
         'admin',
         'delete',
-        array('id' => $id)
+        ['id' => $id]
     )) {
         return; // throw back
     }

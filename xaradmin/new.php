@@ -24,7 +24,7 @@ function html_admin_new()
     if (!xarSecurity::check('AddHTML')) {
         return;
     }
-    
+
     $data['authid'] = xarSec::genAuthKey();
     $data['createbutton'] = xarML('Create Tag');
 
@@ -48,7 +48,7 @@ function html_admin_new()
         'base',
         'javascript',
         'modulefile',
-        array('module'=>'base', 'filename'=>'formcheck.js')
+        ['module'=>'base', 'filename'=>'formcheck.js']
     );
 
     // Return the output

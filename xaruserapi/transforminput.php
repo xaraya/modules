@@ -46,7 +46,7 @@ function html_userapi_transforminput($args)
             }
             return $extrainfo;
         }
-        $transformed = array();
+        $transformed = [];
         foreach ($extrainfo as $text) {
             $transformed[] = html_userapitransforminput($text);
         }

@@ -47,7 +47,7 @@ function html_admin_createtype($args)
         'html',
         'admin',
         'createtype',
-        array('tagtype' => $tagtype)
+        ['tagtype' => $tagtype]
     );
 
     if (!$id) {

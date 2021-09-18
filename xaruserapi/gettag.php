@@ -53,20 +53,20 @@ function html_userapi_gettag($args)
               WHERE $htmltable.id = ?
               AND $htmltable.tid = $htmltypestable.id";
 
-    $result =& $dbconn->Execute($query, array($id));
+    $result =& $dbconn->Execute($query, [$id]);
     if (!$result) {
         return;
     }
-    list($id,
+    [$id,
          $tid,
          $type,
          $tag,
-         $allowed) = $result->fields;
+         $allowed] = $result->fields;
     $result->Close();
-    $tag = array('id'       => $id,
+    $tag = ['id'       => $id,
                  'tid'      => $tid,
                  'type'     => $type,
                  'tag'      => $tag,
-                 'allowed'  => $allowed);
+                 'allowed'  => $allowed, ];
     return $tag;
 }

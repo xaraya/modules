@@ -27,7 +27,7 @@ function html_adminapi_update($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -53,7 +53,7 @@ function html_adminapi_update($args)
     $query = "UPDATE $htmltable
               SET   allowed = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query, array($allowed, $id));
+    $result =& $dbconn->Execute($query, [$allowed, $id]);
     if (!$result) {
         return;
     }

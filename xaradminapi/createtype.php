@@ -27,7 +27,7 @@ function html_adminapi_createtype($args)
 
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
-    $invalid = array();
+    $invalid = [];
     if (!isset($tagtype) || !is_string($tagtype)) {
         $invalid[] = 'tagtype';
     }
@@ -58,7 +58,7 @@ function html_adminapi_createtype($args)
     $query = "SELECT id
               FROM $htmltypestable
               WHERE type = ?";
-    $result =& $dbconn->Execute($query, array($tagtype));
+    $result =& $dbconn->Execute($query, [$tagtype]);
     if (!$result) {
         return false;
     }
@@ -78,7 +78,7 @@ function html_adminapi_createtype($args)
                     ?,
                     ?)";
 
-    $result =& $dbconn->Execute($query, array($nextId, $tagtype));
+    $result =& $dbconn->Execute($query, [$nextId, $tagtype]);
     if (!$result) {
         return;
     }

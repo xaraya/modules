@@ -42,7 +42,7 @@ function html_admin_edit()
         'html',
         'user',
         'gettag',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     // Check for exceptions
@@ -85,8 +85,8 @@ function html_admin_edit()
         'html',
         'admin',
         'edit',
-        array('id' => $id,
-                             'tag' => $tag)
+        ['id' => $id,
+                             'tag' => $tag, ]
     )) {
         return; // throw back
     }

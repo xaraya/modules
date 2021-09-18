@@ -39,7 +39,7 @@ function html_admin_updateset()
     }
 
     // Initialize array for config vars
-    $allowedhtml = array();
+    $allowedhtml = [];
 
     // Update HTML tags
     foreach ($tags as $id=>$allowed) {
@@ -48,7 +48,7 @@ function html_admin_updateset()
             'html',
             'user',
             'gettag',
-            array('id' => $id)
+            ['id' => $id]
         );
 
         if ($thistag) {
@@ -61,8 +61,8 @@ function html_admin_updateset()
                     'html',
                     'admin',
                     'update',
-                    array('id' => $id,
-                                         'allowed' => $allowed)
+                    ['id' => $id,
+                                         'allowed' => $allowed, ]
                 )) {
                     return false;
                 }

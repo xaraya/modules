@@ -39,7 +39,7 @@ function html_userapi_countitems()
         return;
     }
     // Get number of items
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     // Close result set
     $result->Close();
     // Return number of items

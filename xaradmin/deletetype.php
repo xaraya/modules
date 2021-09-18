@@ -39,7 +39,7 @@ function html_admin_deletetype()
         'html',
         'user',
         'gettype',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     // Check for exceptions
@@ -81,7 +81,7 @@ function html_admin_deletetype()
         'html',
         'admin',
         'deletetype',
-        array('id' => $id)
+        ['id' => $id]
     )) {
         return; // throw back
     }

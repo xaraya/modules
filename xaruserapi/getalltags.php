@@ -51,17 +51,17 @@ function html_userapi_getalltags($args)
         $query = "SELECT id
                   FROM $htmltypestable
                   WHERE type = ?";
-        $result =& $dbconn->Execute($query, array($type));
+        $result =& $dbconn->Execute($query, [$type]);
         if (!$result) {
             return;
         }
 
         // Get type
-        list($typeid) = $result->fields;
+        [$typeid] = $result->fields;
         $result->Close();
 
         $where = " WHERE $htmltable.tid = ? ";
-        $bindvars = array((int) $typeid);
+        $bindvars = [(int) $typeid];
     } else {
         $where = " WHERE $htmltable.tid = $htmltypestable.id";
     }
@@ -87,21 +87,21 @@ function html_userapi_getalltags($args)
     }
 
     // Set empty array
-    $tags = array();
+    $tags = [];
 
     // Put tags into an array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id,
+        [$id,
              $tid,
              $type,
              $tag,
-             $allowed) = $result->fields;
+             $allowed] = $result->fields;
 
-        $tags[] = array('id'        => $id,
+        $tags[] = ['id'        => $id,
                          'tid'       => $tid,
                          'type'      => $type,
                          'tag'       => $tag,
-                         'allowed'   => $allowed);
+                         'allowed'   => $allowed, ];
     }
 
     // Close result set

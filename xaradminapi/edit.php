@@ -26,7 +26,7 @@ function html_adminapi_edit($args)
     extract($args);
 
     // Argument check
-    $invalid = array();
+    $invalid = [];
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
@@ -45,7 +45,7 @@ function html_adminapi_edit($args)
         'html',
         'user',
         'gettag',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     if ($html == false) {
@@ -70,7 +70,7 @@ function html_adminapi_edit($args)
     $query = "UPDATE $htmltable
               SET tag = ?
               WHERE id = ?";
-    $result =& $dbconn->Execute($query, array($tag, $id));
+    $result =& $dbconn->Execute($query, [$tag, $id]);
     if (!$result) {
         return;
     }
@@ -81,11 +81,11 @@ function html_adminapi_edit($args)
         'html',
         'user',
         'gettype',
-        array('id' => $html['tid'])
+        ['id' => $html['tid']]
     );
 
     if ($tagtype['type'] == 'html') {
-        $allowedhtml = array();
+        $allowedhtml = [];
         // Get the current html tags from config vars
         foreach (xarConfigVars::get(null, 'Site.Core.AllowableHTML') as $key => $value) {
             // Update html tag from the config vars

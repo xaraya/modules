@@ -36,7 +36,7 @@ function html_adminapi_deletetype($args)
         'html',
         'user',
         'gettype',
-        array('id' => $id)
+        ['id' => $id]
     );
 
     if ($type == false) {
@@ -59,14 +59,14 @@ function html_adminapi_deletetype($args)
 
     // Delete the tag type
     $query = "DELETE FROM $htmltypestable WHERE id = ?";
-    $result =& $dbconn->Execute($query, array($id));
+    $result =& $dbconn->Execute($query, [$id]);
     if (!$result) {
         return;
     }
 
     // Also delete the associated tags from the xar_html table
     $query = "DELETE FROM $htmltable WHERE tid = ?";
-    $result =& $dbconn->Execute($query, array($id));
+    $result =& $dbconn->Execute($query, [$id]);
     if (!$result) {
         return;
     }
@@ -75,7 +75,7 @@ function html_adminapi_deletetype($args)
     // If this is a tag type HTML, then
     // also delete the tags from the config vars
     if ($type['type'] == 'html') {
-        $allowedhtml = array();
+        $allowedhtml = [];
         // Set the config vars to an empty array
         xarConfigVars::set(null, 'Site.Core.AllowableHTML', $allowedhtml);
     }
