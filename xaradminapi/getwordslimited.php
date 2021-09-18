@@ -31,7 +31,7 @@ function keywords_adminapi_getwordslimited($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
-    $bindvars = array();
+    $bindvars = [];
 
     // Get restricted keywords for this module item
     $query = "SELECT id,
@@ -51,15 +51,15 @@ function keywords_adminapi_getwordslimited($args)
     if (!$result) {
         return;
     }
-    $keywords = array();
+    $keywords = [];
     $keywords = '';
     if ($result->EOF) {
         $result->Close();
         return $keywords;
     }
     while (!$result->EOF) {
-        list($id,
-             $word) = $result->fields;
+        [$id,
+             $word] = $result->fields;
         $keywords[$id] = $word;
         $result->MoveNext();
     }

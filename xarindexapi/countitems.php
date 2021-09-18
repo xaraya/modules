@@ -1,5 +1,6 @@
 <?php
-function keywords_indexapi_countitems(array $args=array())
+
+function keywords_indexapi_countitems(array $args=[])
 {
     extract($args);
 
@@ -24,7 +25,7 @@ function keywords_indexapi_countitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'indexapi', 'countitems');
+        $vars = [implode(', ', $invalid), 'keywords', 'indexapi', 'countitems'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -32,13 +33,13 @@ function keywords_indexapi_countitems(array $args=array())
     $tables =& xarDB::getTables();
     $idxtable = $tables['keywords_index'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
     //$orderby = array();
-    $groupby = array();
-    $bindvars = array();
+    $groupby = [];
+    $bindvars = [];
 
     $select['count'] = "COUNT(idx.id) as count";
 
@@ -78,7 +79,7 @@ function keywords_indexapi_countitems(array $args=array())
 
     // return the count
     $result = $dbconn->Execute($query, $bindvars);
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
 
     return $numitems;

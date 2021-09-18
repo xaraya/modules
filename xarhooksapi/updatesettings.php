@@ -1,5 +1,6 @@
 <?php
-function keywords_hooksapi_updatesettings(array $args=array())
+
+function keywords_hooksapi_updatesettings(array $args=[])
 {
     extract($args);
 
@@ -18,12 +19,12 @@ function keywords_hooksapi_updatesettings(array $args=array())
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $module,
             'itemtype' => $itemtype,
-        )
+        ]
     );
-    
+
     if ($defaults['config_state'] == 'default') {
         // per module settings disabled, if this isn't the keywords module, bail
         if ($module != 'keywords') {
@@ -39,7 +40,7 @@ function keywords_hooksapi_updatesettings(array $args=array())
     if (empty($settings)) {
         $settings = $defaults;
     }
-        
+
     Keywords::setConfig($module, $itemtype, $settings);
 
     return true;

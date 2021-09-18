@@ -23,7 +23,7 @@ function keywords_admin_newhook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     // When called via hooks, the module name may be empty. Get it from current module.
@@ -36,7 +36,7 @@ function keywords_admin_newhook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'admin', 'newhook', 'keywords');
+        $vars = ['module', 'admin', 'newhook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -66,10 +66,10 @@ function keywords_admin_newhook($args)
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
-        )
+        ]
     );
 
     // see if keywords were passed to hook call
@@ -94,15 +94,15 @@ function keywords_admin_newhook($args)
             'keywords',
             'admin',
             'separatekeywords',
-            array(
+            [
                 'keywords' => $keywords,
-            )
+            ]
         );
     }
 
     // it's ok if there are no keywords
     if (empty($keywords)) {
-        $keywords = array();
+        $keywords = [];
     }
 
     // Retrieve the list of allowed delimiters
@@ -120,9 +120,9 @@ function keywords_admin_newhook($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $settings['index_id'],
-            )
+            ]
         );
         // return only keywords that are also in the restricted list
         $data['keywords'] = array_intersect($keywords, $data['restricted_list']);

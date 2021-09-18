@@ -22,7 +22,7 @@
 function keywords_xartables()
 {
     // Initialise table array
-    $xarTables = array();
+    $xarTables = [];
     $xarTables['keywords'] = xarDB::getPrefix() . '_keywords';
     $xarTables['keywords_restr'] = xarDB::getPrefix() . '_keywords_restr';
     $xarTables['keywords_index'] = xarDB::getPrefix() . '_keywords_index';

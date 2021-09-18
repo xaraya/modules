@@ -27,12 +27,12 @@ function keywords_admin_new($args)
         return;
     }
 
-    $data = array();
+    $data = [];
     $data['object'] = xarMod::apiFunc(
         'dynamicdata',
         'user',
         'getobject',
-        array('module' => 'keywords')
+        ['module' => 'keywords']
     );
     if (!isset($data['object'])) {
         return;
@@ -56,7 +56,7 @@ function keywords_admin_new($args)
             return true;
         }
     }
-    $item = array();
+    $item = [];
     $item['module'] = 'keywords';
     $hooks = xarModHooks::call('item', 'new', '', $item);
     if (empty($hooks)) {

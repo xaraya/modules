@@ -31,12 +31,12 @@ function keywords_user_search($args)
         return;
     }
 
-    $data['keys'] = array();
+    $data['keys'] = [];
     if ($data['search'] == '') {
         return $data;
     }
 
-    $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', array('search' => $data['search']));
+    $data['keys'] = xarMod::apiFunc('keywords', 'user', 'search', ['search' => $data['search']]);
 
     return $data;
 }

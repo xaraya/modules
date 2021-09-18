@@ -23,12 +23,12 @@ function keywords_user_displayhook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('objectid', 'user', 'displayhook', 'keywords');
+        $vars = ['objectid', 'user', 'displayhook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -43,7 +43,7 @@ function keywords_user_displayhook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'admin', 'updatehook', 'keywords');
+        $vars = ['module', 'admin', 'updatehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -69,10 +69,10 @@ function keywords_user_displayhook($args)
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
-        )
+        ]
     );
 
     // Retrieve the list of allowed delimiters
@@ -84,11 +84,11 @@ function keywords_user_displayhook($args)
         'keywords',
         'index',
         'getid',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     );
 
     // get the keywords associated with this item
@@ -96,9 +96,9 @@ function keywords_user_displayhook($args)
         'keywords',
         'words',
         'getwords',
-        array(
+        [
             'index_id' => $index_id,
-        )
+        ]
     );
 
     // @checkme: do we need to merge in auto tags here ?
@@ -113,9 +113,9 @@ function keywords_user_displayhook($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $data['index_id'],
-            )
+            ]
         );
         // show only keywords that are also in the restricted list
         $keywords = array_intersect($keywords, $restricted_list);
@@ -139,8 +139,8 @@ function keywords_user_displayhook($args)
     }
 
     $data['keywords'] = $keywords;
-    $data['showlabel'] = isset($extrainfo['showlabel']) ? $extrainfo['showlabel'] : true;
+    $data['showlabel'] = $extrainfo['showlabel'] ?? true;
 
-    $tpltype = isset($extrainfo['tpltype']) ? $extrainfo['tpltype'] : 'user';
+    $tpltype = $extrainfo['tpltype'] ?? 'user';
     return xarTpl::module('keywords', $tpltype, 'displayhook', $data);
 }

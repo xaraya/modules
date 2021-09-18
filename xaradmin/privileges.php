@@ -88,19 +88,19 @@ function keywords_admin_privileges($args)
     // get the list of modules (and their itemtypes) keywords is currently hooked to
     $subjects = xarMod::apiFunc('keywords', 'hooks', 'getsubjects');
 
-    $modlist = array();
-    $typelist = array();
+    $modlist = [];
+    $typelist = [];
     foreach ($subjects as $modname => $modinfo) {
-        $modlist[$modinfo['regid']] = array('id' => $modinfo['regid'], 'name' =>$modinfo['displayname']);
+        $modlist[$modinfo['regid']] = ['id' => $modinfo['regid'], 'name' =>$modinfo['displayname']];
         if ($moduleid == $modinfo['regid'] && !empty($modinfo['itemtypes'])) {
             foreach ($modinfo['itemtypes'] as $typeid => $typeinfo) {
-                $typelist[$typeid] = array('id' => $typeid, 'name' => $typeid . ' - ' .$typeinfo['label']);
+                $typelist[$typeid] = ['id' => $typeid, 'name' => $typeid . ' - ' .$typeinfo['label']];
             }
         }
     }
 
     // define the new instance
-    $newinstance = array();
+    $newinstance = [];
     $newinstance[] = empty($moduleid) ? 'All' : $moduleid;
     $newinstance[] = empty($itemtype) ? 'All' : $itemtype;
     $newinstance[] = empty($itemid) ? 'All' : $itemid;
@@ -126,7 +126,7 @@ function keywords_admin_privileges($args)
             'privileges',
             'admin',
             'modifyprivilege',
-            array('id' => $pid)
+            ['id' => $pid]
         ));
         return true;
     }
@@ -143,15 +143,15 @@ function keywords_admin_privileges($args)
     */
     $numitems = xarML('probably');
 
-    $extlevels = array(
-        0 => array('id' => 0, 'name' => 'No Access'),
-        200 => array('id' => 200, 'name' => 'Read Access'),
-        300 => array('id' => 300, 'name' => 'Add Access'),
-        700 => array('id' => 700, 'name' => 'Manage Access'),
-        800 => array('id' => 800, 'name' => 'Admin Access'),
-    );
+    $extlevels = [
+        0 => ['id' => 0, 'name' => 'No Access'],
+        200 => ['id' => 200, 'name' => 'Read Access'],
+        300 => ['id' => 300, 'name' => 'Add Access'],
+        700 => ['id' => 700, 'name' => 'Manage Access'],
+        800 => ['id' => 800, 'name' => 'Admin Access'],
+    ];
 
-    $data = array(
+    $data = [
                   'moduleid'     => $moduleid,
                   'itemtype'     => $itemtype,
                   'itemid'       => $itemid,
@@ -167,7 +167,7 @@ function keywords_admin_privileges($args)
                   'extlevels'    => $extlevels,
                   'pparentid'    => $pparentid,
                   'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
-                 );
+                 ];
 
     $data['refreshlabel'] = xarML('Refresh');
     $data['applylabel'] = xarML('Finish and Apply to Privilege');
@@ -181,12 +181,12 @@ function keywords_admin_privileges($args)
         'modules',
         'admin',
         'gethookedmodules',
-        array('hookModName' => 'keywords')
+        ['hookModName' => 'keywords']
     );
     if (!isset($hookedmodlist)) {
-        $hookedmodlist = array();
+        $hookedmodlist = [];
     }
-    $modlist = array();
+    $modlist = [];
     foreach ($hookedmodlist as $modname => $val) {
         if (empty($modname)) {
             continue;
@@ -202,7 +202,7 @@ function keywords_admin_privileges($args)
 
 
     // define the new instance
-    $newinstance = array();
+    $newinstance = [];
     $newinstance[] = empty($moduleid) ? 'All' : $moduleid;
     $newinstance[] = empty($itemtype) ? 'All' : $itemtype;
     $newinstance[] = empty($itemid) ? 'All' : $itemid;
@@ -219,7 +219,7 @@ function keywords_admin_privileges($args)
             'privileges',
             'admin',
             'modifyprivilege',
-            array('pid' => $pid)
+            ['pid' => $pid]
         ));
         return true;
     }
@@ -236,7 +236,7 @@ function keywords_admin_privileges($args)
     */
     $numitems = xarML('probably');
 
-    $data = array(
+    $data = [
                   'moduleid'     => $moduleid,
                   'itemtype'     => $itemtype,
                   'itemid'       => $itemid,
@@ -249,7 +249,7 @@ function keywords_admin_privileges($args)
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
                   'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
-                 );
+                 ];
 
     $data['refreshlabel'] = xarML('Refresh');
     $data['applylabel'] = xarML('Finish and Apply to Privilege');

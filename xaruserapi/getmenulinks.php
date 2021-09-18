@@ -18,7 +18,7 @@
  */
 function keywords_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     return $menulinks;
 }

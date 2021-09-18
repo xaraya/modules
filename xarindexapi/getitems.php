@@ -1,5 +1,6 @@
 <?php
-function keywords_indexapi_getitems(array $args=array())
+
+function keywords_indexapi_getitems(array $args=[])
 {
     extract($args);
 
@@ -24,7 +25,7 @@ function keywords_indexapi_getitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'indexapi', 'getitems');
+        $vars = [implode(', ', $invalid), 'keywords', 'indexapi', 'getitems'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -32,13 +33,13 @@ function keywords_indexapi_getitems(array $args=array())
     $tables =& xarDB::getTables();
     $idxtable = $tables['keywords_index'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $orderby = array();
-    $groupby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $orderby = [];
+    $groupby = [];
+    $bindvars = [];
 
     $select['id'] = 'idx.id';
     $select['module_id'] = 'idx.module_id';
@@ -92,9 +93,9 @@ function keywords_indexapi_getitems(array $args=array())
     }
     $result = $stmt->executeQuery($bindvars);
 
-    $items = array();
+    $items = [];
     while ($result->next()) {
-        $item = array();
+        $item = [];
         foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
         }

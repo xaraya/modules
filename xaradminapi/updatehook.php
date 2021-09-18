@@ -24,12 +24,12 @@ function keywords_adminapi_updatehook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('objectid', 'admin', 'updatehook', 'keywords');
+        $vars = ['objectid', 'admin', 'updatehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -50,7 +50,7 @@ function keywords_adminapi_updatehook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'admin', 'updatehook', 'keywords');
+        $vars = ['module', 'admin', 'updatehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -71,10 +71,10 @@ function keywords_adminapi_updatehook($args)
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
-        )
+        ]
     );
 
     // get the index_id for this module/itemtype/item
@@ -82,11 +82,11 @@ function keywords_adminapi_updatehook($args)
         'keywords',
         'index',
         'getid',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     );
 
     // see if keywords were passed to hook call
@@ -116,15 +116,15 @@ function keywords_adminapi_updatehook($args)
             'keywords',
             'admin',
             'separekeywords',
-            array(
+            [
                 'keywords' => $keywords,
-            )
+            ]
         );
     }
 
     // it's ok if there are no keywords
     if (empty($keywords)) {
-        $keywords = array();
+        $keywords = [];
     }
 
     // if there are auto tags and they're persistent, add them to keywords
@@ -137,9 +137,9 @@ function keywords_adminapi_updatehook($args)
         'keywords',
         'words',
         'getwords',
-        array(
+        [
             'index_id' => $index_id,
-        )
+        ]
     );
 
     if (!empty($settings['restrict_words'])) {
@@ -147,9 +147,9 @@ function keywords_adminapi_updatehook($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $settings['index_id'],
-            )
+            ]
         );
         // store only keywords that are also in the restricted list
         $keywords = array_intersect($keywords, $restricted_list);
@@ -167,7 +167,7 @@ function keywords_adminapi_updatehook($args)
                         'restricted_extra',
                         'isset',
                         $toadd,
-                        array(),
+                        [],
                         xarVar::NOT_REQUIRED
                     )) {
                         return;
@@ -179,9 +179,9 @@ function keywords_adminapi_updatehook($args)
                         'keywords',
                         'admin',
                         'separekeywords',
-                        array(
+                        [
                             'keywords' => $toadd,
-                        )
+                        ]
                     );
                 }
                 if (!empty($toadd)) {
@@ -190,10 +190,10 @@ function keywords_adminapi_updatehook($args)
                         'keywords',
                         'words',
                         'createitems',
-                        array(
+                        [
                             'index_id' => $settings['index_id'],
                             'keyword' => array_unique(array_diff($toadd, $keywords)),
-                        )
+                        ]
                     )) {
                         return;
                     }
@@ -211,10 +211,10 @@ function keywords_adminapi_updatehook($args)
             'keywords',
             'words',
             'createitems',
-            array(
+            [
                 'index_id' => $index_id,
                 'keyword' => $toadd,
-            )
+            ]
         )) {
             return;
         }
@@ -224,10 +224,10 @@ function keywords_adminapi_updatehook($args)
             'keywords',
             'words',
             'deleteitems',
-            array(
+            [
                 'index_id' => $index_id,
                 'keyword' => $toremove,
-            )
+            ]
         )) {
             return;
         }

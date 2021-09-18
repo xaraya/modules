@@ -75,18 +75,18 @@ function keywords_admin_view($args)
         $modname = xarMod::getName($module_id);
     }
 
-    $data = array();
+    $data = [];
 
     $modlist = xarMod::apiFunc(
         'keywords',
         'words',
         'getmodulecounts',
-        array(
+        [
             'skip_restricted' => true,
-        )
+        ]
     );
-    $modtypes = array();
-    $modules = array();
+    $modtypes = [];
+    $modules = [];
     foreach ($modlist as $module => $itemtypes) {
         $modules[$module] = xarMod::getBaseInfo($module);
         $modules[$module]['itemtypes'] = $itemtypes;
@@ -94,7 +94,7 @@ function keywords_admin_view($args)
             try {
                 $modtypes[$module] = xarMod::apiFunc($module, 'user', 'getitemtypes');
             } catch (Exception $e) {
-                $modtypes[$module] = array();
+                $modtypes[$module] = [];
             }
         }
         foreach ($itemtypes as $typeid => $typeinfo) {
@@ -102,11 +102,11 @@ function keywords_admin_view($args)
                 continue;
             }
             if (!isset($modtypes[$module][$typeid])) {
-                $modtypes[$module][$typeid] = array(
+                $modtypes[$module][$typeid] = [
                     'label' => xarML('Itemtype #(1)', $typeid),
                     'title' => xarML('View itemtype #(1) items', $typeid),
-                    'url' => xarController::URL($module, 'user', 'view', array('itemtype' => $typeid)),
-                );
+                    'url' => xarController::URL($module, 'user', 'view', ['itemtype' => $typeid]),
+                ];
             }
             $modules[$module]['itemtypes'][$typeid] += $modtypes[$module][$typeid];
         }
@@ -116,40 +116,40 @@ function keywords_admin_view($args)
         'keywords',
         'words',
         'countitems',
-        array(
+        [
             'module_id' => $module_id,
             'itemtype' => $itemtype,
             'keyword' => $keyword,
             'skip_restricted' => true,
-        )
+        ]
     );
     $items = xarMod::apiFunc(
         'keywords',
         'words',
         'getitemcounts',
-        array(
+        [
             'module_id' => $module_id,
             'itemtype' => $itemtype,
             'keyword' => $keyword,
             'skip_restricted' => true,
             'startnum' => $startnum,
             'numitems' => $items_per_page,
-        )
+        ]
     );
 
 
-    $seenitems = array();
+    $seenitems = [];
     foreach ($items as $item) {
         if (!isset($seenitems[$item['module']])) {
-            $seenitems[$item['module']] = array();
+            $seenitems[$item['module']] = [];
         }
         if (!isset($seenitems[$item['module']][$item['itemtype']])) {
-            $seenitems[$item['module']][$item['itemtype']] = array();
+            $seenitems[$item['module']][$item['itemtype']] = [];
         }
         $seenitems[$item['module']][$item['itemtype']][$item['itemid']] = $item;
     }
     foreach ($seenitems as $module => $itemtypes) {
-        $modules[$module]['itemlinks'] = array();
+        $modules[$module]['itemlinks'] = [];
         foreach ($itemtypes as $typeid => $itemids) {
             $modules[$module]['itemlinks'][$typeid] = $itemids;
             try {
@@ -157,26 +157,26 @@ function keywords_admin_view($args)
                     $module,
                     'user',
                     'getitemlinks',
-                    array(
+                    [
                         'itemtype' => $typeid,
                         'itemids' => array_keys($itemids),
-                    )
+                    ]
                 );
             } catch (Exception $e) {
-                $itemlinks = array();
+                $itemlinks = [];
             }
             foreach (array_keys($itemids) as $id) {
                 if (!isset($itemlinks[$id])) {
-                    $itemlinks[$id] = array(
+                    $itemlinks[$id] = [
                         'label' => xarML('Item #(1)', $id),
                         'title' => xarML('Display Item #(1)', $id),
                         'url' => xarController::URL(
                             $module,
                             'user',
                             'display',
-                            array('itemtype' => !empty($itemtype) ? $itemtype : null, 'itemid' => $id)
+                            ['itemtype' => !empty($itemtype) ? $itemtype : null, 'itemid' => $id]
                         ),
-                    );
+                    ];
                 }
                 $modules[$module]['itemlinks'][$typeid][$id] += $itemlinks[$id];
             }
@@ -217,12 +217,12 @@ function keywords_admin_view($args)
                     'keywords',
                     'words',
                     'getitems',
-                    array(
+                    [
                         'module' => $modname,
                         'itemtype' => $itemtype,
                         'skip_restricted' => true,
                         'keyword' => $data['keyword'],
-                    )
+                    ]
                 );
             } else {
                 // list keywords
@@ -231,11 +231,11 @@ function keywords_admin_view($args)
                     'keywords',
                     'words',
                     'getwordcounts',
-                    array(
+                    [
                         'module' => $modname,
                         'itemtype' => $itemtype,
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
             }
 
@@ -250,7 +250,7 @@ function keywords_admin_view($args)
 
     extract($args);
 
-    $data = array();
+    $data = [];
 
     if (!xarVar::fetch(
         'modname',
@@ -297,9 +297,9 @@ function keywords_admin_view($args)
             try {
                 $itemtypes = xarMod::apiFunc($hookedto, 'user', 'getitemtypes');
             } catch (Exception $e) {
-                $itemtypes = array();
+                $itemtypes = [];
             }
-            $modinfo['itemtypes'] = array();
+            $modinfo['itemtypes'] = [];
             foreach ($itemtypes as $typeid => $typeinfo) {
                 if (!isset($hooks[0]) && !isset($hooks[$typeid])) {
                     continue;
@@ -328,12 +328,12 @@ function keywords_admin_view($args)
                     'keywords',
                     'words',
                     'getitems',
-                    array(
+                    [
                         'module' => $modname,
                         'itemtype' => $itemtype,
                         'skip_restricted' => true,
                         'keyword' => $data['keyword'],
-                    )
+                    ]
                 );
             } else {
                 // list keywords
@@ -342,11 +342,11 @@ function keywords_admin_view($args)
                     'keywords',
                     'words',
                     'getwordcounts',
-                    array(
+                    [
                         'module' => $modname,
                         'itemtype' => $itemtype,
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
             }
         break;
@@ -357,11 +357,11 @@ function keywords_admin_view($args)
                     'keywords',
                     'words',
                     'getitems',
-                    array(
+                    [
                         'module' => $modname,
                         'itemtype' => $itemtype,
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
 
         break;
@@ -373,11 +373,11 @@ function keywords_admin_view($args)
                     'keywords',
                     'words',
                     'getwordcounts',
-                    array(
+                    [
                         'module' => $modname,
                         'itemtype' => $itemtype,
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
 /*
   // how wordpress does it
@@ -419,10 +419,10 @@ function keywords_admin_view($args)
                 'keywords',
                 'hooks',
                 'modulemodifyconfig',
-                array(
+                [
                     'objectid' => $modname,
-                    'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype)
-                )
+                    'extrainfo' => ['module' => $modname, 'itemtype' => $itemtype],
+                ]
             );
         break;
     }

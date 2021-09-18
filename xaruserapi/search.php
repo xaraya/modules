@@ -28,9 +28,9 @@ function keywords_userapi_search($args)
     if ($args['search'] == '') {
         return;
     }
-    
+
     // If there is more than one keyword passed, separate them
-    $words = xarMod::apiFunc('keywords', 'admin', 'separatekeywords', array('keywords' => $args['search']));
+    $words = xarMod::apiFunc('keywords', 'admin', 'separatekeywords', ['keywords' => $args['search']]);
 
     // Get item
     sys::import('xaraya.structures.query');
@@ -44,7 +44,7 @@ function keywords_userapi_search($args)
     $q->addfield('i.itemtype AS itemtype');
     $q->addfield('i.itemid AS itemid');
     $q->addfield('COUNT(i.id) AS count');
-    $a = array();
+    $a = [];
     foreach ($words as $word) {
         $a[] = $q->plike('keyword', "%" . $word . "%");
     }

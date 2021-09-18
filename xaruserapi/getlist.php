@@ -70,13 +70,13 @@ function keywords_userapi_getlist($args)
             return;
         }
 
-        $items = array();
+        $items = [];
         if ($result->EOF) {
             $result->Close();
             return $items;
         }
         while (!$result->EOF) {
-            list($word, $count) = $result->fields;
+            [$word, $count] = $result->fields;
             $items[$word] = $count;
             $result->MoveNext();
         }
@@ -93,14 +93,14 @@ function keywords_userapi_getlist($args)
         return;
     }
 
-    $items = array();
+    $items = [];
     $items[''] = '';
     if ($result->EOF) {
         $result->Close();
         return $items;
     }
     while (!$result->EOF) {
-        list($word) = $result->fields;
+        [$word] = $result->fields;
         $items[$word] = $word;
         $result->MoveNext();
     }

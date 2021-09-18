@@ -21,7 +21,7 @@ function keywords_adminapi_limited($args)
     if (!xarSecurity::check('AdminKeywords')) {
         return;
     }
-    $invalid = array();
+    $invalid = [];
     if (!isset($moduleid) || !is_numeric($moduleid)) {
         $invalid[] = 'moduleid';
     }
@@ -51,7 +51,7 @@ function keywords_adminapi_limited($args)
         'keywords',
         'admin',
         'separatekeywords',
-        array('keywords' => $keyword)
+        ['keywords' => $keyword]
     );
 
     foreach ($key as $keyres) {
@@ -71,7 +71,7 @@ function keywords_adminapi_limited($args)
               ?,
               ?,
               ?)";
-        $result =& $dbconn->Execute($query, array($nextId, $keyres, $moduleid, $itemtype));
+        $result =& $dbconn->Execute($query, [$nextId, $keyres, $moduleid, $itemtype]);
         if (!$result) {
             return;
         }

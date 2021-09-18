@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_createitems(array $args=array())
+
+function keywords_wordsapi_createitems(array $args=[])
 {
     extract($args);
 
@@ -10,7 +11,7 @@ function keywords_wordsapi_createitems(array $args=array())
     if (isset($keyword)) {
         if (is_string($keyword)) {
             $keyword = (strpos($keyword, ',') !== false) ?
-                array_map('trim', explode(',', $keyword)) : array(trim($keyword));
+                array_map('trim', explode(',', $keyword)) : [trim($keyword)];
         }
         if (is_array($keyword)) {
             $keyword = array_unique(array_filter($keyword));
@@ -29,7 +30,7 @@ function keywords_wordsapi_createitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'wordsapi', 'createitems');
+        $vars = [implode(', ', $invalid), 'keywords', 'wordsapi', 'createitems'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -37,8 +38,8 @@ function keywords_wordsapi_createitems(array $args=array())
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
 
-    $values = array();
-    $bindvars = array();
+    $values = [];
+    $bindvars = [];
 
     foreach ($keyword as $word) {
         $values[] = '(?,?)';

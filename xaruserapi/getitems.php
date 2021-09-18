@@ -45,7 +45,7 @@ function keywords_userapi_getitems($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
-    $bindvars = array();
+    $bindvars = [];
 
     // Get module item for this id
     $query = "SELECT id,
@@ -96,18 +96,18 @@ function keywords_userapi_getitems($args)
         return;
     }
 
-    $items = array();
+    $items = [];
     if ($result->EOF) {
         $result->Close();
         return $items;
     }
     while (!$result->EOF) {
-        $item = array();
-        list($item['id'],
+        $item = [];
+        [$item['id'],
              $item['itemid'],
              $item['keyword'],
              $item['module_id'],
-             $item['itemtype']) = $result->fields;
+             $item['itemtype']] = $result->fields;
         $items[$item['id']] = $item;
         $result->MoveNext();
     }

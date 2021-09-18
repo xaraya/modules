@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_deleteitems(array $args=array())
+
+function keywords_wordsapi_deleteitems(array $args=[])
 {
     extract($args);
 
@@ -36,9 +37,9 @@ function keywords_wordsapi_deleteitems(array $args=array())
                 'keywords',
                 'admin',
                 'separatekeywords',
-                array(
+                [
                     'keywords' => $keyword,
-                )
+                ]
             );
         }
         if (is_array($keyword)) {
@@ -56,7 +57,7 @@ function keywords_wordsapi_deleteitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'wordsapi', 'deleteitems');
+        $vars = [implode(', ', $invalid), 'keywords', 'wordsapi', 'deleteitems'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -65,8 +66,8 @@ function keywords_wordsapi_deleteitems(array $args=array())
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];
 
-    $where = array();
-    $bindvars = array();
+    $where = [];
+    $bindvars = [];
 
     if (!empty($index_id)) {
         // deleting some words by index_id

@@ -24,12 +24,12 @@ function keywords_adminapi_createhook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('objectid', 'admin', 'createhook', 'keywords');
+        $vars = ['objectid', 'admin', 'createhook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -43,7 +43,7 @@ function keywords_adminapi_createhook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'admin', 'newhook', 'keywords');
+        $vars = ['module', 'admin', 'newhook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -69,10 +69,10 @@ function keywords_adminapi_createhook($args)
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
-        )
+        ]
     );
 
     // get the index_id for this module/itemtype/item
@@ -80,11 +80,11 @@ function keywords_adminapi_createhook($args)
         'keywords',
         'index',
         'getid',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     );
 
     // see if keywords were passed to hook call
@@ -109,9 +109,9 @@ function keywords_adminapi_createhook($args)
             'keywords',
             'admin',
             'separatekeywords',
-            array(
+            [
                 'keywords' => $keywords,
-            )
+            ]
         );
     }
 
@@ -125,9 +125,9 @@ function keywords_adminapi_createhook($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $settings['index_id'],
-            )
+            ]
         );
         // store only keywords that are also in the restricted list
         $keywords = array_intersect($keywords, $restricted_list);
@@ -144,10 +144,10 @@ function keywords_adminapi_createhook($args)
         'keywords',
         'words',
         'createitems',
-        array(
+        [
             'index_id' => $index_id,
             'keyword' => $keywords,
-        )
+        ]
     )) {
         return;
     }

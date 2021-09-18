@@ -28,29 +28,29 @@ function keywords_user_display($args)
     extract($args);
 
     if (empty($itemid)) {
-        return array();
+        return [];
     }
     $items = xarMod::apiFunc(
         'keywords',
         'user',
         'getitems',
-        array('id' => $itemid)
+        ['id' => $itemid]
     );
     if (!isset($items)) {
         return;
     }
     if (!isset($items[$itemid])) {
-        return array();
+        return [];
     }
 
     $item = $items[$itemid];
     if (count($item) == 0 || empty($item['moduleid'])) {
-        return array();
+        return [];
     }
 
     $modinfo = xarMod::getInfo($item['moduleid']);
     if (!isset($modinfo) || empty($modinfo['name'])) {
-        return array();
+        return [];
     }
 
     if (!empty($item['itemtype'])) {
@@ -60,7 +60,7 @@ function keywords_user_display($args)
             'user',
             'getitemtypes',
                                  // don't throw an exception if this function doesn't exist
-                                 array(),
+                                 [],
             0
         );
         if (isset($mytypes) && isset($mytypes[$item['itemtype']])) {
@@ -76,8 +76,8 @@ function keywords_user_display($args)
         $modinfo['name'],
         'user',
         'getitemlinks',
-        array('itemtype' => $item['itemtype'],
-                                     'itemids' => array($item['itemid'])),
+        ['itemtype' => $item['itemtype'],
+                                     'itemids' => [$item['itemid']], ],
         0
     );
 
@@ -91,8 +91,8 @@ function keywords_user_display($args)
             $modinfo['name'],
             'user',
             'display',
-            array('itemtype' => $item['itemtype'],
-                                       'itemid' => $item['itemid'])
+            ['itemtype' => $item['itemtype'],
+                                       'itemid' => $item['itemid'], ]
         );
     }
     return $item;

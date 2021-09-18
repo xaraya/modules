@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_countmoduleitems(array $args=array())
+
+function keywords_wordsapi_countmoduleitems(array $args=[])
 {
     extract($args);
 
@@ -9,12 +10,12 @@ function keywords_wordsapi_countmoduleitems(array $args=array())
     $idxtable = $tables['keywords_index'];
     $modstable = $tables['modules'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $groupby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $groupby = [];
+    $bindvars = [];
 
     $select['count'] = "COUNT(DISTINCT idx.module_id, idx.itemtype)";
     $from['idx'] = "$idxtable idx";
@@ -37,7 +38,7 @@ function keywords_wordsapi_countmoduleitems(array $args=array())
 
     // return the count
     $result = $dbconn->Execute($query, $bindvars);
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
     return $numitems;
 }

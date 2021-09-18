@@ -42,12 +42,12 @@ function keywords_adminapi_getallkey($args)
               WHERE module_id = ?
               OR module_id = '0'
               ORDER BY keyword ASC";
-    $result =& $dbconn->Execute($query, array($moduleid));
+    $result =& $dbconn->Execute($query, [$moduleid]);
     if (!$result) {
         return;
     }
 
-    $keywords = array();
+    $keywords = [];
 
     //$keywords[''] = '';
     if ($result->EOF) {
@@ -56,8 +56,8 @@ function keywords_adminapi_getallkey($args)
     }
 
     while (!$result->EOF) {
-        list($id,
-             $word) = $result->fields;
+        [$id,
+             $word] = $result->fields;
         $keywords[$id] = $word;
         $result->MoveNext();
     }

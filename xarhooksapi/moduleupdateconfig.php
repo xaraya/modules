@@ -9,7 +9,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     // objectid is the name of the module
@@ -23,7 +23,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
 
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('objectid (module name)', 'admin', 'moduleupdatehook', 'keywords');
+        $vars = ['objectid (module name)', 'admin', 'moduleupdatehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -32,7 +32,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'admin', 'moduleupdatehook', 'keywords');
+        $vars = ['module', 'admin', 'moduleupdatehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -50,10 +50,10 @@ function keywords_hooksapi_moduleupdateconfig($args)
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
-        )
+        ]
     );
 
     if ($settings['config_state'] == 'default') {
@@ -121,9 +121,9 @@ function keywords_hooksapi_moduleupdateconfig($args)
             'keywords',
             'admin',
             'separekeywords',
-            array(
+            [
                 'keywords' => $auto_tag_create,
-            )
+            ]
         );
     }
 
@@ -166,17 +166,17 @@ function keywords_hooksapi_moduleupdateconfig($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $settings['index_id'],
-            )
+            ]
         );
         $new_list = xarMod::apiFunc(
             'keywords',
             'admin',
             'separekeywords',
-            array(
+            [
                 'keywords' => $restricted_list,
-            )
+            ]
         );
         // be sure to add any auto tags to the list
         if (!empty($auto_tag_create)) {
@@ -193,10 +193,10 @@ function keywords_hooksapi_moduleupdateconfig($args)
                 'keywords',
                 'words',
                 'createitems',
-                array(
+                [
                     'index_id' => $settings['index_id'],
                     'keyword' => $toadd,
-                )
+                ]
             )) {
                 return;
             }
@@ -206,10 +206,10 @@ function keywords_hooksapi_moduleupdateconfig($args)
                 'keywords',
                 'words',
                 'deleteitems',
-                array(
+                [
                     'index_id' => $settings['index_id'],
                     'keyword' => $toremove,
-                )
+                ]
             )) {
                 return;
             }
@@ -217,7 +217,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
     }
 
     $settings['global_config'] = $global_config;
-    $settings['auto_tag_create'] = !empty($auto_tag_create) ? $auto_tag_create : array();
+    $settings['auto_tag_create'] = !empty($auto_tag_create) ? $auto_tag_create : [];
     $settings['auto_tag_persist'] = $auto_tag_persist;
     $settings['meta_keywords'] = $meta_keywords;
     $settings['restrict_words'] = $restrict_words;
@@ -225,11 +225,11 @@ function keywords_hooksapi_moduleupdateconfig($args)
         'keywords',
         'hooks',
         'updatesettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
             'settings' => $settings,
-        )
+        ]
     )) {
         return $extrainfo;
     }

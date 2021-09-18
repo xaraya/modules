@@ -1,9 +1,10 @@
 <?php
-function keywords_indexapi_getitem(array $args=array())
+
+function keywords_indexapi_getitem(array $args=[])
 {
     if (empty($args)) {
         $msg = 'Missing #(1) for #(2) module #(3) function #(4)()';
-        $vars = array('arguments', 'keywords', 'indexapi', 'getitem');
+        $vars = ['arguments', 'keywords', 'indexapi', 'getitem'];
         throw new EmptyParameterException($vars, $msg);
     }
 
@@ -13,7 +14,7 @@ function keywords_indexapi_getitem(array $args=array())
         return false;
     } elseif (count($items) > 1) {
         $msg = 'Missing or invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array('arguments', 'keywords', 'indexapi', 'getitem');
+        $vars = ['arguments', 'keywords', 'indexapi', 'getitem'];
         throw new EmptyParameterException($vars, $msg);
     } else {
         return reset($items);

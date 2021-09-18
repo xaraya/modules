@@ -1,5 +1,6 @@
 <?php
-function keywords_indexapi_deleteitems(array $args=array())
+
+function keywords_indexapi_deleteitems(array $args=[])
 {
     extract($args);
 
@@ -29,7 +30,7 @@ function keywords_indexapi_deleteitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'indexapi', 'getid');
+        $vars = [implode(', ', $invalid), 'keywords', 'indexapi', 'getid'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -37,8 +38,8 @@ function keywords_indexapi_deleteitems(array $args=array())
     $tables =& xarDB::getTables();
     $idxtable = $tables['keywords_index'];
 
-    $where = array();
-    $bindvars = array();
+    $where = [];
+    $bindvars = [];
     if (!empty($id)) {
         $where[] = 'id = ?';
         $bindvars[] = $id;

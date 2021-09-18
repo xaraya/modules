@@ -48,7 +48,7 @@ function keywords_userapi_getwordslimited($args)
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
-    $bindvars = array();
+    $bindvars = [];
 
     // Get restricted keywords for this module item
 
@@ -75,11 +75,11 @@ function keywords_userapi_getwordslimited($args)
         $result->Close();
     }
 
-    $keywords = array();
+    $keywords = [];
 
     while (!$result->EOF) {
-        list($id,
-             $word) = $result->fields;
+        [$id,
+             $word] = $result->fields;
         $keywords[$id] = $word;
         $result->MoveNext();
     }

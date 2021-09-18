@@ -23,14 +23,14 @@ function keywords_adminapi_removehook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array('objectid (module name)', 'keywords', 'adminapi', 'removehook');
+        $vars = ['objectid (module name)', 'keywords', 'adminapi', 'removehook'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -39,7 +39,7 @@ function keywords_adminapi_removehook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array('objectid (module name)', 'keywords', 'adminapi', 'removehook');
+        $vars = ['objectid (module name)', 'keywords', 'adminapi', 'removehook'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -48,9 +48,9 @@ function keywords_adminapi_removehook($args)
         'keywords',
         'words',
         'deleteitems',
-        array(
+        [
             'module_id' => $modid,
-        )
+        ]
     )) {
         return;
     }
@@ -60,9 +60,9 @@ function keywords_adminapi_removehook($args)
         'keywords',
         'index',
         'deleteitems',
-        array(
+        [
             'module_id' => $modid,
-        )
+        ]
     )) {
         return;
     }

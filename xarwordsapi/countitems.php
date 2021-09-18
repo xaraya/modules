@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_countitems(array $args=array())
+
+function keywords_wordsapi_countitems(array $args=[])
 {
     extract($args);
 
@@ -18,9 +19,9 @@ function keywords_wordsapi_countitems(array $args=array())
                 'keywords',
                 'admin',
                 'separatekeywords',
-                array(
+                [
                     'keywords' => $keyword,
-                )
+                ]
             );
         }
         if (is_array($keyword)) {
@@ -52,7 +53,7 @@ function keywords_wordsapi_countitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'wordsapi', 'countitems');
+        $vars = [implode(', ', $invalid), 'keywords', 'wordsapi', 'countitems'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -63,13 +64,13 @@ function keywords_wordsapi_countitems(array $args=array())
     $idxtable = $tables['keywords_index'];
     $modstable = $tables['modules'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $groupby = array();
-    $orderby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $groupby = [];
+    $orderby = [];
+    $bindvars = [];
 
     $select['count'] = "COUNT(DISTINCT words.index_id) as count";
 
@@ -137,7 +138,7 @@ function keywords_wordsapi_countitems(array $args=array())
 
     // return the count
     $result = $dbconn->Execute($query, $bindvars);
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
 
     return $numitems;

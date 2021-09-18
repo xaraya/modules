@@ -25,12 +25,12 @@ function keywords_admin_modifyhook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('objectid', 'admin', 'modifyhook', 'keywords');
+        $vars = ['objectid', 'admin', 'modifyhook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -44,7 +44,7 @@ function keywords_admin_modifyhook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'admin', 'modifyhook', 'keywords');
+        $vars = ['module', 'admin', 'modifyhook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -70,10 +70,10 @@ function keywords_admin_modifyhook($args)
         'keywords',
         'hooks',
         'getsettings',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
-        )
+        ]
     );
 
     // get the index_id for this module/itemtype/item
@@ -81,11 +81,11 @@ function keywords_admin_modifyhook($args)
         'keywords',
         'index',
         'getid',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     );
 
     // see if keywords were passed to hook call
@@ -110,9 +110,9 @@ function keywords_admin_modifyhook($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $index_id,
-            )
+            ]
         );
     }
     // we may have been given a string list
@@ -121,27 +121,27 @@ function keywords_admin_modifyhook($args)
             'keywords',
             'admin',
             'separekeywords',
-            array(
+            [
                 'keywords' => $keywords,
-            )
+            ]
         );
     }
 
     // it's ok if there are no keywords
     if (empty($keywords)) {
-        $keywords = array();
+        $keywords = [];
     }
-    
+
     // if there are auto tags and they're persistent, add them to keywords
     if (!empty($data['auto_tag_create']) && !empty($data['auto_tag_persist'])) {
         $keywords = array_merge($keywords, $data['auto_tag_create']);
     }
-    
+
 
     // Retrieve the list of allowed delimiters
     $delimiters = xarModVars::get('keywords', 'delimiters');
     $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
-    
+
     if (empty($data['restrict_words'])) {
         // no restrictions, display expects a string
         // Use first delimiter to join words
@@ -152,9 +152,9 @@ function keywords_admin_modifyhook($args)
             'keywords',
             'words',
             'getwords',
-            array(
+            [
                 'index_id' => $data['index_id'],
-            )
+            ]
         );
         // return only keywords that are also in the restricted list
         $data['keywords'] = array_intersect($keywords, $data['restricted_list']);
@@ -172,7 +172,7 @@ function keywords_admin_modifyhook($args)
                         'restricted_extra',
                         'isset',
                         $toadd,
-                        array(),
+                        [],
                         xarVar::NOT_REQUIRED
                     )) {
                         return;
@@ -184,9 +184,9 @@ function keywords_admin_modifyhook($args)
                         'keywords',
                         'admin',
                         'separekeywords',
-                        array(
+                        [
                             'keywords' => $toadd,
-                        )
+                        ]
                     );
                 }
                 // display expects a string

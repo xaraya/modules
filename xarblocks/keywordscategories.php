@@ -67,7 +67,7 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
                     return '';
                 }
 
-                $keywords = array();
+                $keywords = [];
                 foreach ($vars['cids'] as $id => $cid) {
                     // if we're viewing all items below a certain category, i.e. catid = _NN
                     $cid = str_replace('_', '', $cid);
@@ -75,16 +75,16 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
                         'keywords',
                         'user',
                         'getwords',
-                        array('itemid' => $cid,
-                                            'modid' => $vars['modid'])
+                        ['itemid' => $cid,
+                                            'modid' => $vars['modid'], ]
                     );
                 }
                 if (empty($keywords) || !is_array($keywords) || count($keywords) == 0) {
                     return '';
                 }
                 //for each keyword in keywords[]
-                $items = array();
-                $vars['items'] = array();
+                $items = [];
+                $vars['items'] = [];
                 foreach ($keywords as $id => $word) {
                     // get the list of items to which this keyword is assigned
                     //TODO Make itemtype / modid dependant
@@ -92,13 +92,13 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
                         'keywords',
                         'user',
                         'getitems',
-                        array('keyword' => $word,
-                                        'modid' => $vars['modid'])
+                        ['keyword' => $word,
+                                        'modid' => $vars['modid'], ]
                     );
                 }
                 //make itemid unique (worst ever code)
-                $tmp = array();
-                $itemsB = array();
+                $tmp = [];
+                $itemsB = [];
                 foreach ($items as $id => $item) {
                     if (!in_array($item['itemid'], $tmp)) {
                         $tmp[] = $item['itemid'];
@@ -111,12 +111,12 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
                             'categories',
                             'user',
                             'getcatinfo',
-                            array('cid' => $item['itemid'])
+                            ['cid' => $item['itemid']]
                         );
                         //TODO : display config
                         //'aid','title','summary','authorid', 'pubdate','pubtypeid','notes','status','body'
                         //if the related article already exist do not add it
-                        $vars['items'][] = array(
+                        $vars['items'][] = [
                                 'keyword' => $item['keyword'],
                                 'modid' =>  $item['moduleid'],
                                 'itemtype' => $item['itemtype'],
@@ -127,8 +127,8 @@ class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
                                 'parent' => $categories['parent'],
                                 'left' => $categories['left'],
                                 'right' => $categories['right'],
-                                'link' => xarController::URL('articles', 'user', 'view', array('cids' => array(0 => $item['itemid'])))
-                                );
+                                'link' => xarController::URL('articles', 'user', 'view', ['cids' => [0 => $item['itemid']]]),
+                                ];
                     }
                 }
             }

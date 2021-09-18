@@ -25,12 +25,12 @@ function keywords_adminapi_deletehook($args)
     extract($args);
 
     if (empty($extrainfo)) {
-        $extrainfo = array();
+        $extrainfo = [];
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('objectid', 'adminapi', 'deletehook', 'keywords');
+        $vars = ['objectid', 'adminapi', 'deletehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -44,7 +44,7 @@ function keywords_adminapi_deletehook($args)
     $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module', 'adminapi', 'deletehook', 'keywords');
+        $vars = ['module', 'adminapi', 'deletehook', 'keywords'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -65,11 +65,11 @@ function keywords_adminapi_deletehook($args)
         'keywords',
         'index',
         'getid',
-        array(
+        [
             'module' => $modname,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     );
 
     // delete all keywords associated with this item
@@ -77,9 +77,9 @@ function keywords_adminapi_deletehook($args)
         'keywords',
         'words',
         'deleteitems',
-        array(
+        [
             'index_id' => $index_id,
-        )
+        ]
     )) {
         return;
     }
@@ -89,9 +89,9 @@ function keywords_adminapi_deletehook($args)
         'keywords',
         'index',
         'deleteitem',
-        array(
+        [
             'id' => $index_id,
-        )
+        ]
     )) {
         return;
     }

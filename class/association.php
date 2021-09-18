@@ -16,20 +16,20 @@ sys::import('xaraya.structures.query');
 class Keyword_Association extends Object
 {
     public $tables;
-    
+
     public function __construct()
     {
         xarMod::apiLoad('keywords');
         $this->tables =& xarDB::getTables();
     }
-    
+
     /**
      * Utility function to synchronise keyword associations on validation
      * Given a list of resokeywordurce IDs, this makes sure that there is an entry in the associations table
      * for each with the appropriate $itemid, $itemtype, $moduleid
      *
      */
-    public function sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $keyword_ids = array())
+    public function sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $keyword_ids = [])
     {
         var_dump($keyword_ids);
         // see if we have anything to work with
@@ -44,9 +44,9 @@ class Keyword_Association extends Object
         }
 
         // get the current keyword associations for this module item
-        $assoc = $this->get_associations(array('module_id'    => $moduleid,
+        $assoc = $this->get_associations(['module_id'    => $moduleid,
                                                'itemtype'     => $itemtype,
-                                               'itemid'       => $itemid));
+                                               'itemid'       => $itemid, ]);
 
         // see what we need to add or delete
         if (!empty($assoc) && count($assoc) > 0) {
@@ -54,26 +54,26 @@ class Keyword_Association extends Object
             $del = array_diff(array_keys($assoc), $keyword_ids);
         } else {
             $add = $keyword_ids;
-            $del = array();
+            $del = [];
         }
 
         foreach ($add as $id) {
             if (empty($id)) {
                 continue;
             }
-            $this->add_association(array('keyword_id'      => $id,
+            $this->add_association(['keyword_id'      => $id,
                                          'module_id'    => $moduleid,
                                          'itemtype'     => $itemtype,
-                                         'itemid'       => $itemid));
+                                         'itemid'       => $itemid, ]);
         }
         foreach ($del as $id) {
             if (empty($id)) {
                 continue;
             }
-            $this->delete_association(array('keyword_id'      => $id,
+            $this->delete_association(['keyword_id'      => $id,
                                             'module_id'    => $moduleid,
                                             'itemtype'     => $itemtype,
-                                            'itemid'       => $itemid));
+                                            'itemid'       => $itemid, ]);
         }
     }
 
@@ -90,26 +90,26 @@ class Keyword_Association extends Object
      * @return array   A list of associations, including the keyword_id -> (module_id + itemtype + property_id + itemid)
      */
 
-    public function get_associations($args=array())
+    public function get_associations($args=[])
     {
         $q = new Query('SELECT', $this->tables['keywords_index']);
         if (isset($args['keyword_id'])) {
             $q->in('keyword_id', (int)$args['keyword_id']);
         }
-        
+
         // We need all the $args to have values
         if (empty($args['module_id']) || empty($args['itemtype']) || empty($args['itemid'])) {
-            return array();
+            return [];
         }
-        
+
         $q->eq('module_id', (int)$args['module_id']);
         $q->eq('itemtype', (int)$args['itemtype']);
         $q->eq('itemid', (int)$args['itemid']);
-    
+
         if (!$q->run()) {
             return false;
         }
-        $result = array();
+        $result = [];
         foreach ($q->output() as $row) {
             $result[$row['keyword_id']] = $row;
         }
@@ -133,7 +133,7 @@ class Keyword_Association extends Object
      *  @return bool TRUE on success, FALSE with exception on error
      */
 
-    public function delete_association($args=array())
+    public function delete_association($args=[])
     {
         $q = new Query('DELETE', $this->tables['keywords_index']);
         if (!isset($args['keyword_id'])) {
@@ -143,7 +143,7 @@ class Keyword_Association extends Object
         } else {
             $q->eq('keyword_id', (int)$args['keyword_id']);
         }
-    
+
         if (isset($args['module_id'])) {
             $q->eq('module_id', (int)$args['module_id']);
             if (isset($args['itemtype'])) {
@@ -173,7 +173,7 @@ class Keyword_Association extends Object
      *  @return integer The id of the keyword that was associated, FALSE with exception on error
      */
 
-    public function add_association($args=array())
+    public function add_association($args=[])
     {
         $q = new Query('INSERT', $this->tables['keywords_index']);
         if (!isset($args['keyword_id'])) {
@@ -185,12 +185,12 @@ class Keyword_Association extends Object
         if (!isset($args['itemtype'])) {
             $args['itemtype'] = 0;
         }
-        
+
         // If we don't have an itemid, just bail
         if (empty($args['itemid'])) {
             return $args['keyword_id'];
         }
-    
+
         $q->addfield('keyword_id', (int)$args['keyword_id']);
         $q->addfield('module_id', (int)$args['module_id']);
         $q->addfield('itemtype', (int)$args['itemtype']);
@@ -215,7 +215,7 @@ class Keyword_Association extends Object
      *                           or an array of keyword_id's and their number of associations
      */
 
-    public function count_associations($args=array())
+    public function count_associations($args=[])
     {
         $q = new Query('SELECT', $this->tables['keywords_index']);
         if (isset($keyword_id)) {
@@ -226,7 +226,7 @@ class Keyword_Association extends Object
                 $q->eq('keyword_id', $args['keyword_id']);
             }
         }
-    
+
         if (isset($args['module_id'])) {
             $q->addfield('module_id', $args['module_id']);
             if (isset($args['itemtype'])) {
@@ -236,7 +236,7 @@ class Keyword_Association extends Object
                 }
             }
         }
-    
+
         if (empty($isgrouped)) {
             $q->addfield('COUNT(id)');
         } else {

@@ -1,5 +1,6 @@
 <?php
-function keywords_hooksapi_getsubjects(array $args=array())
+
+function keywords_hooksapi_getsubjects(array $args=[])
 {
     extract($args);
 
@@ -14,9 +15,9 @@ function keywords_hooksapi_getsubjects(array $args=array())
             try {
                 $itemtypes = xarMod::apiFunc($hookedto, 'user', 'getitemtypes');
             } catch (Exception $e) {
-                $itemtypes = array();
+                $itemtypes = [];
             }
-            $modinfo['itemtypes'] = array();
+            $modinfo['itemtypes'] = [];
             foreach ($itemtypes as $typeid => $typeinfo) {
                 if (!isset($hooks[0]) && !isset($hooks[$typeid])) {
                     continue;

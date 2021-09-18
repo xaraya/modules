@@ -19,7 +19,7 @@ function keywords_userapi_getkeywordhits($args)
 
     // Return nothing if we asked for hits and the hitcount module is not available
     if ($args['cloudtype'] == 1 && !xarMod::isAvailable('hitcount')) {
-        return array();
+        return [];
     }
 
     sys::import('xaraya.structures.query');
@@ -50,7 +50,7 @@ function keywords_userapi_getkeywordhits($args)
     $result = $q->output();
 
     // Reorganize to an array where the keywords are keys
-    $tags = array();
+    $tags = [];
     if ($args['cloudtype'] == 2) {
         foreach ($result as $tag) {
             $tags[$tag['keyword']] = $tag['hits'];

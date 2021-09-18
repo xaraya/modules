@@ -71,7 +71,7 @@ function keywords_init()
      * Set up Module Vars (common configuration)
      *********************************************************************/
 
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => $module));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => $module]);
     $module_settings->initialize();
 
 
@@ -94,12 +94,12 @@ function keywords_init()
      * Create Module DD Objects
      *********************************************************************/
 
-    $objects = array('keywords_keywords');
+    $objects = ['keywords_keywords'];
     if (!xarMod::apiFunc(
         'modules',
         'admin',
         'standardinstall',
-        array('module' => $module, 'objects' => $objects)
+        ['module' => $module, 'objects' => $objects]
     )) {
         return;
     }
@@ -126,12 +126,12 @@ function keywords_init()
      *********************************************************************/
 
     // Defined Instances are: module_id, itemtype and itemid
-    $instances = array(
-                       array('header' => 'external', // this keyword indicates an external "wizard"
+    $instances = [
+                       ['header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarController::URL($module, 'admin', 'privileges'),
-                             'limit'  => 0
-                            )
-                    );
+                             'limit'  => 0,
+                            ],
+                    ];
     xarPrivileges::defineInstance($module, 'Item', $instances);
 
 
@@ -174,19 +174,19 @@ function keywords_upgrade($oldversion)
                 $xartable =& xarDB::getTables();
                 $query = xarTableDDL::createTable(
                     $xartable['keywords_restr'],
-                    array('id'         => array('type'        => 'integer',
+                    ['id'         => ['type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
-                                                            'primary_key' => true),
-                                   'keyword'    => array('type'        => 'varchar',
+                                                            'primary_key' => true, ],
+                                   'keyword'    => ['type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
-                                                            'default'     => ''),
-                                   'module_id'   => array('type'        => 'integer',
+                                                            'default'     => '', ],
+                                   'module_id'   => ['type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0')
-                                  )
+                                                            'default'     => '0', ],
+                                  ]
                 );
 
                 if (empty($query)) {
@@ -220,11 +220,11 @@ function keywords_upgrade($oldversion)
             // Add column 'itemtype' to table
              $query = xarTableDDL::alterTable(
                  $xartable['keywords_restr'],
-                 array('command' => 'add',
+                 ['command' => 'add',
                                            'field' => 'itemtype',
                                            'type' => 'integer',
                                            'null' => false,
-                                           'default' => '0')
+                                           'default' => '0', ]
              );
             $result = & $dbconn->Execute($query);
             if (!$result) {
@@ -236,8 +236,8 @@ function keywords_upgrade($oldversion)
                 'blocks',
                 'admin',
                 'register_block_type',
-                array('modName'  => 'keywords',
-                            'blockType'=> 'keywordsarticles')
+                ['modName'  => 'keywords',
+                            'blockType'=> 'keywordsarticles', ]
             )) {
                 return;
             }
@@ -245,8 +245,8 @@ function keywords_upgrade($oldversion)
                 'blocks',
                 'admin',
                 'register_block_type',
-                array('modName'  => 'keywords',
-                            'blockType'=> 'keywordscategories')
+                ['modName'  => 'keywords',
+                            'blockType'=> 'keywordscategories', ]
             )) {
                 return;
             }
@@ -304,7 +304,7 @@ function keywords_delete()
     xarMasks::removemasks('keywords');
     xarPrivileges::removeInstances('keywords');
 
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'keywords'));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'keywords']);
 }
 
 function keywords_upgrade_200()
@@ -337,23 +337,23 @@ function keywords_upgrade_200()
         //   PRIMARY KEY (id)
         // )
         //
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'module_id' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-            'itemtype' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-            'itemid' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'module_id' => ['type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'],
+            'itemtype' => ['type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'],
+            'itemid' => ['type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'],
+        ];
         // Create the index table
         $query = xarTableDDL::createTable($indextable, $fields);
         $dbconn->Execute($query);
 
         // Create indices
         // unique entries
-        $index = array(
+        $index = [
             'name'   => 'i_'.$prefix.'_keywords_index',
-            'fields' => array('module_id', 'itemtype', 'itemid'),
-            'unique' => true
-        );
+            'fields' => ['module_id', 'itemtype', 'itemid'],
+            'unique' => true,
+        ];
         $query = xarTableDDL::createIndex($indextable, $index);
         $dbconn->Execute($query);
         // Let's commit this, since we're gonna do some other stuff
@@ -368,14 +368,14 @@ function keywords_upgrade_200()
               FROM $keywordstable
               GROUP BY module_id, itemtype, itemid";
     $stmt = $dbconn->prepareStatement($query);
-    $result = $stmt->executeQuery(array());
+    $result = $stmt->executeQuery([]);
 
-    $values = array();
-    $bindvars = array();
+    $values = [];
+    $bindvars = [];
     while ($result->next()) {
         $values[] = "(?,?,?)";
-        list($module_id, $itemtype, $itemid) = $result->fields;
-        $bindvars = array_merge($bindvars, array($module_id, $itemtype, $itemid));
+        [$module_id, $itemtype, $itemid] = $result->fields;
+        $bindvars = array_merge($bindvars, [$module_id, $itemtype, $itemid]);
     }
     $result->close();
 
@@ -384,11 +384,11 @@ function keywords_upgrade_200()
               FROM $restrtable
               GROUP BY module_id, itemtype";
     $stmt = $dbconn->prepareStatement($query);
-    $result = $stmt->executeQuery(array());
+    $result = $stmt->executeQuery([]);
     while ($result->next()) {
         $values[] = "(?,?,?)";
-        list($module_id, $itemtype) = $result->fields;
-        $bindvars = array_merge($bindvars, array($module_id, $itemtype, 0));
+        [$module_id, $itemtype] = $result->fields;
+        $bindvars = array_merge($bindvars, [$module_id, $itemtype, 0]);
     }
     $result->close();
 
@@ -411,15 +411,15 @@ function keywords_upgrade_200()
     $query = "SELECT module_id, itemtype, itemid, keyword
               FROM $keywordstable";
     $stmt = $dbconn->prepareStatement($query);
-    $result = $stmt->executeQuery(array());
+    $result = $stmt->executeQuery([]);
 
-    $keywords = array();
+    $keywords = [];
     while ($result->next()) {
-        list($module_id, $itemtype, $itemid, $keyword) = $result->fields;
+        [$module_id, $itemtype, $itemid, $keyword] = $result->fields;
         if (!isset($keywords[$keyword])) {
-            $keywords[$keyword] = array();
+            $keywords[$keyword] = [];
         }
-        $keywords[$keyword][] = array('module_id' => $module_id, 'itemtype' => $itemtype, 'itemid' => $itemid);
+        $keywords[$keyword][] = ['module_id' => $module_id, 'itemtype' => $itemtype, 'itemid' => $itemid];
     }
     $result->close();
 
@@ -427,13 +427,13 @@ function keywords_upgrade_200()
     $query = "SELECT module_id, itemtype, keyword
               FROM $restrtable";
     $stmt = $dbconn->prepareStatement($query);
-    $result = $stmt->executeQuery(array());
+    $result = $stmt->executeQuery([]);
     while ($result->next()) {
-        list($module_id, $itemtype, $keyword) = $result->fields;
+        [$module_id, $itemtype, $keyword] = $result->fields;
         if (!isset($keywords[$keyword])) {
-            $keywords[$keyword] = array();
+            $keywords[$keyword] = [];
         }
-        $keywords[$keyword][] = array('module_id' => $module_id, 'itemtype' => $itemtype, 'itemid' => 0);
+        $keywords[$keyword][] = ['module_id' => $module_id, 'itemtype' => $itemtype, 'itemid' => 0];
     }
     $result->close();
 
@@ -460,28 +460,28 @@ function keywords_upgrade_200()
         //   PRIMARY KEY (id)
         // )
         //
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'index_id' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-             'keyword' => array('type' => 'varchar', 'size' => 254,'null' => false,'default' => ''),
-        );
+        $fields = [
+            'id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true],
+            'index_id' => ['type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'],
+             'keyword' => ['type' => 'varchar', 'size' => 254,'null' => false,'default' => ''],
+        ];
         // Create the keywords table
         $query = xarTableDDL::createTable($keywordstable, $fields);
         $dbconn->Execute($query);
 
         // Create indices
-        $index = array(
+        $index = [
             'name'   => 'i_'.$prefix.'_keywords_keyword',
-            'fields' => array('keyword'),
-            'unique' => false
-        );
+            'fields' => ['keyword'],
+            'unique' => false,
+        ];
         $query = xarTableDDL::createIndex($keywordstable, $index);
         $dbconn->Execute($query);
-        $index = array(
+        $index = [
             'name'   => 'i_'.$prefix.'_keywords_index_id',
-            'fields' => array('index_id'),
-            'unique' => false
-        );
+            'fields' => ['index_id'],
+            'unique' => false,
+        ];
         $query = xarTableDDL::createIndex($keywordstable, $index);
         $dbconn->Execute($query);
         // Let's commit this, since we're gonna do some other stuff
@@ -497,22 +497,22 @@ function keywords_upgrade_200()
         $query = "SELECT id, module_id, itemtype, itemid
                   FROM $indextable";
         $stmt = $dbconn->prepareStatement($query);
-        $result = $stmt->executeQuery(array());
+        $result = $stmt->executeQuery([]);
         // create hash table of index ids
         while ($result->next()) {
-            list($id, $module_id, $itemtype, $itemid) = $result->fields;
+            [$id, $module_id, $itemtype, $itemid] = $result->fields;
             if (!isset($indexes[$module_id])) {
-                $indexes[$module_id] = array();
+                $indexes[$module_id] = [];
             }
             if (!isset($indexes[$module_id][$itemtype])) {
-                $indexes[$module_id][$itemtype] = array();
+                $indexes[$module_id][$itemtype] = [];
             }
             $indexes[$module_id][$itemtype][$itemid] = $id;
         }
         $result->close();
 
-        $values = array();
-        $bindvars = array();
+        $values = [];
+        $bindvars = [];
         foreach ($keywords as $keyword => $items) {
             foreach ($items as $item) {
                 if (isset($indexes[$item['module_id']][$item['itemtype']][$item['itemid']])) {
@@ -550,9 +550,9 @@ function keywords_upgrade_200()
                     'keywords',
                     'hooks',
                     'getsettings',
-                    array(
+                    [
                         'module' => $hookedto,
-                    )
+                    ]
                 );
                 // set module default to restricted words
                 $settings['restrict_words'] = true;
@@ -570,21 +570,21 @@ function keywords_upgrade_200()
                                 'keywords',
                                 'hooks',
                                 'getsettings',
-                                array(
+                                [
                                     'module' => $hookedto,
                                     'itemtype' => $itemtype,
-                                )
+                                ]
                             );
                             $typesettings['restrict_words'] = true;
                             xarMod::apiFunc(
                                 'keywords',
                                 'hooks',
                                 'updatesettings',
-                                array(
+                                [
                                     'module' => $hookedto,
                                     'itemtype' => $itemtype,
                                     'settings' => $typesettings,
-                                )
+                                ]
                             );
                         }
                     }
@@ -593,10 +593,10 @@ function keywords_upgrade_200()
                     'keywords',
                     'hooks',
                     'updatesettings',
-                    array(
+                    [
                         'module' => $hookedto,
                         'settings' => $settings,
-                    )
+                    ]
                 );
             }
         }

@@ -75,7 +75,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                         'articles',
                         'user',
                         'get',
-                        array('aid' => $vars['itemid'])
+                        ['aid' => $vars['itemid']]
                     );
                     $vars['itemtype'] = $article['pubtypeid'];
                 }
@@ -84,16 +84,16 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                     'keywords',
                     'user',
                     'getwords',
-                    array('itemid' => $vars['itemid'],
+                    ['itemid' => $vars['itemid'],
                                             'itemtype' => $vars['itemtype'],
-                                            'modid' => $vars['modid'])
+                                            'modid' => $vars['modid'], ]
                 );
                 if (empty($keywords) || !is_array($keywords) || count($keywords) == 0) {
                     return '';
                 }
                 //for each keyword in keywords[]
-                $items = array();
-                $vars['items'] = array();
+                $items = [];
+                $vars['items'] = [];
                 foreach ($keywords as $id => $word) {
                     //$item['id'] = $id;
                     //$item['keyword'] = xarVar::prepForDisplay($word);
@@ -103,13 +103,13 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                         'keywords',
                         'user',
                         'getitems',
-                        array('keyword' => $word,
-                                        'itemtype' => $vars['ptid'])
+                        ['keyword' => $word,
+                                        'itemtype' => $vars['ptid'], ]
                     );
                 }
                 //make itemid unique (worst ever code)
-                $tmp = array();
-                $itemsB = array();
+                $tmp = [];
+                $itemsB = [];
                 foreach ($items as $id => $item) {
                     if (!in_array($item['itemid'], $tmp)) {
                         $tmp[] = $item['itemid'];
@@ -123,13 +123,13 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                             'articles',
                             'user',
                             'get',
-                            array('aid' => $item['itemid'])
+                            ['aid' => $item['itemid']]
                         )) {
                             //TODO : display config
                             //'aid','title','summary','authorid', 'pubdate','pubtypeid','notes','status','body'
                             //if the related article already exist do not add it
                             if (stristr($vars['status'], $articles['status'])) {
-                                $vars['items'][] = array(
+                                $vars['items'][] = [
                                         'keyword' => $item['keyword'],
                                         'modid' =>  $item['moduleid'],
                                         'itemtype' => $item['itemtype'],
@@ -140,8 +140,8 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                                         'pubdate' => $articles['pubdate'],
                                         'pubtypeid' => $articles['pubtypeid'],
                                         'status' => $articles['status'],
-                                        'link' => xarController::URL('articles', 'user', 'display', array('aid' => $articles['aid'], 'ptid' => $articles['pubtypeid']))
-                                        );
+                                        'link' => xarController::URL('articles', 'user', 'display', ['aid' => $articles['aid'], 'ptid' => $articles['pubtypeid']]),
+                                        ];
                             }
                         }
                     }

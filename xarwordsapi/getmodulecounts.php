@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_getmodulecounts(array $args=array())
+
+function keywords_wordsapi_getmodulecounts(array $args=[])
 {
     extract($args);
 
@@ -9,13 +10,13 @@ function keywords_wordsapi_getmodulecounts(array $args=array())
     $idxtable = $tables['keywords_index'];
     $modstable = $tables['modules'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $groupby = array();
-    $orderby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $groupby = [];
+    $orderby = [];
+    $bindvars = [];
 
     $select['module_id'] = 'idx.module_id';
     $select['itemtype'] = 'idx.itemtype';
@@ -65,14 +66,14 @@ function keywords_wordsapi_getmodulecounts(array $args=array())
     }
     $result = $stmt->executeQuery($bindvars);
 
-    $items = array();
+    $items = [];
     while ($result->next()) {
-        $item = array();
+        $item = [];
         foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
         }
         if (!isset($items[$item['module']])) {
-            $items[$item['module']] = array();
+            $items[$item['module']] = [];
         }
         $items[$item['module']][$item['itemtype']] = $item;
     }

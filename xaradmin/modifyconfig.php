@@ -42,7 +42,7 @@ function keywords_admin_modifyconfig()
         return;
     }
 
-    $data = array();
+    $data = [];
 
     if (empty($module_id)) {
         $modname = 'keywords';
@@ -52,14 +52,14 @@ function keywords_admin_modifyconfig()
     }
 
     if ($modname == 'keywords') {
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'keywords'));
+        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'keywords']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, use_module_icons, frontend_page, backend_page');
         $data['module_settings']->getItem();
     }
 
     if ($phase == 'update') {
         if (!xarSec::confirmAuthKey()) {
-            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+            return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
         }
         if ($modname == 'keywords') {
             $isvalid = $data['module_settings']->checkInput();
@@ -111,10 +111,10 @@ function keywords_admin_modifyconfig()
             'keywords',
             'hooks',
             'moduleupdateconfig',
-            array(
+            [
                 'objectid' => $modname,
-                'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype),
-            )
+                'extrainfo' => ['module' => $modname, 'itemtype' => $itemtype],
+            ]
         )) {
             return;
         }
@@ -123,10 +123,10 @@ function keywords_admin_modifyconfig()
                 'keywords',
                 'admin',
                 'modifyconfig',
-                array(
+                [
                     'module_id' => $module_id,
                     'itemtype' => $itemtype,
-                )
+                ]
             );
         }
         xarController::redirect($return_url);
@@ -150,18 +150,18 @@ function keywords_admin_modifyconfig()
             $data['cloud_font_min'] = xarModVars::get('keywords', 'cloud_font_min', 1);
             $data['cloud_font_max'] = xarModVars::get('keywords', 'cloud_font_max', 3);
             $data['cloud_font_unit'] = xarModVars::get('keywords', 'cloud_font_unit', 'em');
-            $data['font_units'] = array(
-                array('id' => 'em', 'name' => 'em'),
-                array('id' => 'pt', 'name' => 'pt'),
-                array('id' => 'px', 'name' => 'px'),
-                array('id' => '%', 'name' => '%'),
-            );
+            $data['font_units'] = [
+                ['id' => 'em', 'name' => 'em'],
+                ['id' => 'pt', 'name' => 'pt'],
+                ['id' => 'px', 'name' => 'px'],
+                ['id' => '%', 'name' => '%'],
+            ];
         }
 
-        $data['user_layouts'] = array(
-            array('id' => 'list', 'name' => xarML('List')),
-            array('id' => 'cloud', 'name' => xarML('Cloud')),
-        );
+        $data['user_layouts'] = [
+            ['id' => 'list', 'name' => xarML('List')],
+            ['id' => 'cloud', 'name' => xarML('Cloud')],
+        ];
     }
 
     $data['subjects'] = xarMod::apiFunc('keywords', 'hooks', 'getsubjects');
@@ -169,10 +169,10 @@ function keywords_admin_modifyconfig()
         'keywords',
         'hooks',
         'modulemodifyconfig',
-        array(
+        [
             'objectid' => $modname,
-            'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype)
-        )
+            'extrainfo' => ['module' => $modname, 'itemtype' => $itemtype],
+        ]
     );
 
     return $data;

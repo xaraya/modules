@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_getitems(array $args=array())
+
+function keywords_wordsapi_getitems(array $args=[])
 {
     extract($args);
 
@@ -18,9 +19,9 @@ function keywords_wordsapi_getitems(array $args=array())
                 'keywords',
                 'admin',
                 'separatekeywords',
-                array(
+                [
                     'keywords' => $keyword,
-                )
+                ]
             );
         }
         if (is_array($keyword)) {
@@ -52,7 +53,7 @@ function keywords_wordsapi_getitems(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'wordsapi', 'getitems');
+        $vars = [implode(', ', $invalid), 'keywords', 'wordsapi', 'getitems'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -62,13 +63,13 @@ function keywords_wordsapi_getitems(array $args=array())
     $idxtable = $tables['keywords_index'];
     $modstable = $tables['modules'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $orderby = array();
-    $groupby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $orderby = [];
+    $groupby = [];
+    $bindvars = [];
 
     $select['id'] = 'words.id';
     $select['index_id'] = 'words.index_id';
@@ -159,9 +160,9 @@ function keywords_wordsapi_getitems(array $args=array())
     }
     $result = $stmt->executeQuery($bindvars);
 
-    $items = array();
+    $items = [];
     while ($result->next()) {
-        $item = array();
+        $item = [];
         foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
         }

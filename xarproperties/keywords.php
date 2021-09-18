@@ -18,7 +18,7 @@ class KeywordsProperty extends TextAreaProperty
     public $id         = 30117;
     public $name       = 'keywords';
     public $desc       = 'Keywords';
-    public $reqmodules = array('keywords');
+    public $reqmodules = ['keywords'];
 
     private $wordcache  = null;
 
@@ -39,8 +39,8 @@ class KeywordsProperty extends TextAreaProperty
             return false;
         }
 
-        $words = xarMod::apiFunc('keywords', 'admin', 'separatekeywords', array('keywords' => $value));
-        $cleanwords = array();
+        $words = xarMod::apiFunc('keywords', 'admin', 'separatekeywords', ['keywords' => $value]);
+        $cleanwords = [];
         foreach ($words as $word) {
             if (empty($word)) {
                 continue;
@@ -58,31 +58,31 @@ class KeywordsProperty extends TextAreaProperty
 
     public function getItemValue($itemid)
     {
-        return $this->getKeywords(array('itemid' => $itemid));
+        return $this->getKeywords(['itemid' => $itemid]);
     }
 
-    public function showInput(array $data = array())
+    public function showInput(array $data = [])
     {
         //  if(!empty($this->getValue())) {
         if (!isset($data['value'])) {
             $data['value'] = $this->getValue();
         }
-            
-        $keywords = array();
+
+        $keywords = [];
         foreach ($data['value'] as $word) {
             $keywords[] = $word['keyword'];
         }
         $data['value'] = implode(',', $keywords);
         //   }
-        
+
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data = array())
+    public function showOutput(array $data = [])
     {
         if (!isset($data['value'])) {
             $data['value'] = $this->getValue();
-            $keywords = array();
+            $keywords = [];
             foreach ($data['value'] as $word) {
                 $keywords[] = $word['keyword'];
             }
@@ -91,7 +91,7 @@ class KeywordsProperty extends TextAreaProperty
         return parent::showOutput($data);
     }
 
-    private function getKeywords(array $data = array())
+    private function getKeywords(array $data = [])
     {
         // The virtual datastore will use the itemid as value for this property
         if (!isset($data['itemid'])) {
@@ -148,9 +148,9 @@ class KeywordsProperty extends TextAreaProperty
     private function updateKeywords($words)
     {
         if (empty($words)) {
-            return array();
+            return [];
         }
-        
+
         // Make sure we have the keywords table
         xarMod::apiLoad('keywords');
 
@@ -158,9 +158,9 @@ class KeywordsProperty extends TextAreaProperty
         $q = new Query('SELECT', $table['keywords']);
         $q->in('keyword', $words);
         $q->run();
-        $keywords = array();
-        $keyword_ids = array();
-        
+        $keywords = [];
+        $keyword_ids = [];
+
         // Reshuffle the results. This may be overkill as we don't (for now) pass it back
         foreach ($q->output() as $row) {
             $keywords[$row['keyword']] = $row;
@@ -169,18 +169,18 @@ class KeywordsProperty extends TextAreaProperty
 
         $q = new Query('INSERT', $table['keywords']);
         foreach ($this->value as $word) {
-        
+
             // If we already have this keyword in the database, move on
             if (isset($keywords[$word])) {
                 continue;
             }
-            
+
             // Thiis is a new keyword; add it to the index
             $q->addfield('keyword', $word);
             $q->run();
             $keyword_id = $q->lastid($table['keywords'], 'id');
-            $keywords[$word] = array('id' => $keyword_id, 'keyword' => $word);
-            $keyword_ids[$keyword_id] = array('id' => $keyword_id, 'keyword' => $word);
+            $keywords[$word] = ['id' => $keyword_id, 'keyword' => $word];
+            $keyword_ids[$keyword_id] = ['id' => $keyword_id, 'keyword' => $word];
             $q->clearfields();
         }
         $ids = array_keys($keyword_ids);
@@ -190,10 +190,10 @@ class KeywordsProperty extends TextAreaProperty
     #----------------------------------------------------------------
     # After saving one or more keyword entries, update the associations table
 #
-    private function updateAssociations($itemid, $keyword_ids=array())
+    private function updateAssociations($itemid, $keyword_ids=[])
     {
         // Check if we are in an object or not
-        $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
+        $moduleid = $this->objectref->moduleid ?? null;
         if (!empty($moduleid) && !empty($itemid)) {
             sys::import('modules.keywords.class.association');
             $association = new Keyword_Association();
@@ -207,23 +207,23 @@ class KeywordsProperty extends TextAreaProperty
 #
     private function getAssociations($itemid)
     {
-        $associations = array();
+        $associations = [];
         // Check if we are in an object or not
-        $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
+        $moduleid = $this->objectref->moduleid ?? null;
         if (!empty($moduleid) && !empty($itemid)) {
             sys::import('modules.keywords.class.association');
             $association = new Keyword_Association();
-            $args = array(
+            $args = [
                     'module_id'    => $moduleid,
                     'itemtype'     => $this->objectref->itemtype,
                     'property_id'  => (int)$this->id,
                     'itemid'       => $itemid,
-            );
+            ];
             $associations = $association->get_associations($args);
         }
         return $associations;
     }
-    
+
     public function preList()
     {
         if (empty($this->objectref)) {
@@ -232,17 +232,17 @@ class KeywordsProperty extends TextAreaProperty
 
         // Get the parent object's query;
         $q = $this->objectref->dataquery;
-       
+
         // Get the primary propety of the parent object, and its source
         $primary = $this->objectref->primary;
         $primary_source = $this->objectref->properties[$primary]->source;
-        
+
         // Assemble the links to the object's table
         //xarMod::load('keywords');
         xarMod::apiLoad('keywords');
         //xarMod::load('dam');
         $tables = xarDB::getTables();
-        
+
         $q->addtable($tables['dam_resources'], 'resource');
         $q->addtable($tables['keywords'], 'k');
         $q->addtable($tables['keywords_index'], 'i');
@@ -263,24 +263,24 @@ class KeywordsProperty extends TextAreaProperty
         $this->source = 'k.keyword';
         return true;
     }
-   
+
     #----------------------------------------------------------------
     # After creating a keyword entry, add the required association
 #
     private function addAssociation($itemid, $keyword_id=0)
     {
         // Check if we are in an object or not
-        $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
+        $moduleid = $this->objectref->moduleid ?? null;
         if (!empty($moduleid) && !empty($itemid)) {
             sys::import('modules.keywords.class.association');
             $association = new Keyword_Association();
-            $args = array(
+            $args = [
                     'keyword_id'  => $keyword_id,
                     'module_id'    => $moduleid,
                     'itemtype'     => $this->objectref->itemtype,
                     'property_id'  => (int)$this->id,
                     'itemid'       => $itemid,
-            );
+            ];
             $association->add_association($args);
         }
         return true;

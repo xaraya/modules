@@ -1,5 +1,6 @@
 <?php
-function keywords_wordsapi_countwords(array $args=array())
+
+function keywords_wordsapi_countwords(array $args=[])
 {
     extract($args);
 
@@ -21,7 +22,7 @@ function keywords_wordsapi_countwords(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', '', '');
+        $vars = [implode(', ', $invalid), 'keywords', '', ''];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -33,12 +34,12 @@ function keywords_wordsapi_countwords(array $args=array())
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $groupby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $groupby = [];
+    $bindvars = [];
 
     $select['count'] = "COUNT(DISTINCT words.keyword) AS wordcount";
 
@@ -86,7 +87,7 @@ function keywords_wordsapi_countwords(array $args=array())
 
     // return the count
     $result = $dbconn->Execute($query, $bindvars);
-    list($numitems) = $result->fields;
+    [$numitems] = $result->fields;
     $result->Close();
 
     return $numitems;

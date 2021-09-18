@@ -1,24 +1,25 @@
 <?php
+
 class Keywords extends Object
 {
-    const CONFIG_MODVAR = 'keywords_config';
+    public const CONFIG_MODVAR = 'keywords_config';
     protected static $instance;
-    protected static $configs = array();
-    
+    protected static $configs = [];
+
     public function __construct()
     {
     }
-    
+
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
             $c = __CLASS__;
-            self::$instance = new $c;
+            self::$instance = new $c();
         }
         return self::$instance;
     }
-    
-    public static function getConfig($module, $itemtype=0, $args=array())
+
+    public static function getConfig($module, $itemtype=0, $args=[])
     {
         sys::import('modules.keywords.class.config');
         $hash = "$module:$itemtype";
@@ -54,8 +55,8 @@ class Keywords extends Object
         }
         return self::$configs[$hash] = $config;
     }
-    
-    public static function setConfig($module, $itemtype=0, $args=array())
+
+    public static function setConfig($module, $itemtype=0, $args=[])
     {
         $config = self::getConfig($module, $itemtype);
         if (!empty($args)) {

@@ -28,7 +28,7 @@ function keywords_user_view($args)
         return;
     }
 
-    $data = array();
+    $data = [];
 
     if (!empty($keyword)) {
         $items_per_page = xarModVars::get('keywords', 'items_per_page', 20);
@@ -36,37 +36,37 @@ function keywords_user_view($args)
             'keywords',
             'words',
             'countitems',
-            array(
+            [
                 //'module_id' => $module_id,
                 //'itemtype' => $itemtype,
                 'keyword' => $keyword,
                 'skip_restricted' => true,
-            )
+            ]
         );
         $items = xarMod::apiFunc(
             'keywords',
             'words',
             'getitems',
-            array(
+            [
                 //'module_id' => $module_id,
                 //'itemtype' => $itemtype,
                 'keyword' => $keyword,
                 'skip_restricted' => true,
                 'startnum' => $startnum,
                 'numitems' => $items_per_page,
-            )
+            ]
         );
 
         $modlist = xarMod::apiFunc(
             'keywords',
             'words',
             'getmodulecounts',
-            array(
+            [
                 'skip_restricted' => true,
-            )
+            ]
         );
-        $modtypes = array();
-        $modules = array();
+        $modtypes = [];
+        $modules = [];
         foreach ($modlist as $module => $itemtypes) {
             $modules[$module] = xarMod::getBaseInfo($module);
             $modules[$module]['itemtypes'] = $itemtypes;
@@ -74,7 +74,7 @@ function keywords_user_view($args)
                 try {
                     $modtypes[$module] = xarMod::apiFunc($module, 'user', 'getitemtypes');
                 } catch (Exception $e) {
-                    $modtypes[$module] = array();
+                    $modtypes[$module] = [];
                 }
             }
             foreach ($itemtypes as $typeid => $typeinfo) {
@@ -82,28 +82,28 @@ function keywords_user_view($args)
                     continue;
                 }
                 if (!isset($modtypes[$module][$typeid])) {
-                    $modtypes[$module][$typeid] = array(
+                    $modtypes[$module][$typeid] = [
                         'label' => xarML('Itemtype #(1)', $typeid),
                         'title' => xarML('View itemtype #(1) items', $typeid),
-                        'url' => xarController::URL($module, 'user', 'view', array('itemtype' => $typeid)),
-                    );
+                        'url' => xarController::URL($module, 'user', 'view', ['itemtype' => $typeid]),
+                    ];
                 }
                 $modules[$module]['itemtypes'][$typeid] += $modtypes[$module][$typeid];
             }
         }
 
-        $seenitems = array();
+        $seenitems = [];
         foreach ($items as $item) {
             if (!isset($seenitems[$item['module']])) {
-                $seenitems[$item['module']] = array();
+                $seenitems[$item['module']] = [];
             }
             if (!isset($seenitems[$item['module']][$item['itemtype']])) {
-                $seenitems[$item['module']][$item['itemtype']] = array();
+                $seenitems[$item['module']][$item['itemtype']] = [];
             }
             $seenitems[$item['module']][$item['itemtype']][$item['itemid']] = $item;
         }
         foreach ($seenitems as $module => $itemtypes) {
-            $modules[$module]['itemlinks'] = array();
+            $modules[$module]['itemlinks'] = [];
             foreach ($itemtypes as $typeid => $itemids) {
                 $modules[$module]['itemlinks'][$typeid] = $itemids;
                 try {
@@ -111,26 +111,26 @@ function keywords_user_view($args)
                         $module,
                         'user',
                         'getitemlinks',
-                        array(
+                        [
                             'itemtype' => $typeid,
                             'itemids' => array_keys($itemids),
-                        )
+                        ]
                     );
                 } catch (Exception $e) {
-                    $itemlinks = array();
+                    $itemlinks = [];
                 }
                 foreach (array_keys($itemids) as $id) {
                     if (!isset($itemlinks[$id])) {
-                        $itemlinks[$id] = array(
+                        $itemlinks[$id] = [
                             'label' => xarML('Item #(1)', $id),
                             'title' => xarML('Display Item #(1)', $id),
                             'url' => xarController::URL(
                                 $module,
                                 'user',
                                 'display',
-                                array('itemtype' => !empty($itemtype) ? $itemtype : null, 'itemid' => $id)
+                                ['itemtype' => !empty($itemtype) ? $itemtype : null, 'itemid' => $id]
                             ),
-                        );
+                        ];
                     }
                     $modules[$module]['itemlinks'][$typeid][$id] += $itemlinks[$id];
                 }
@@ -153,21 +153,21 @@ function keywords_user_view($args)
                     'keywords',
                     'words',
                     'countwords',
-                    array(
+                    [
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
                 $items = xarMod::apiFunc(
                     'keywords',
                     'words',
                     'getwordcounts',
-                    array(
+                    [
                         'startnum' => $startnum,
                         'numitems' => $items_per_page,
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
-                    
+
                 $data['cols_per_page'] = $cols_per_page;
                 $data['items_per_page'] = $items_per_page;
                 $data['total'] = $total;
@@ -178,11 +178,11 @@ function keywords_user_view($args)
                     'keywords',
                     'words',
                     'getwordcounts',
-                    array(
+                    [
                         'skip_restricted' => true,
-                    )
+                    ]
                 );
-                $counts = array();
+                $counts = [];
                 foreach ($items as $item) {
                     $counts[$item['keyword']] = $item['count'];
                 }
@@ -233,31 +233,31 @@ function keywords_user_view($args)
             'keywords',
             'user',
             'getlist',
-            array('count' => 1,
-                                     'tab' => $tab)
+            ['count' => 1,
+                                     'tab' => $tab, ]
         );
 
-        $items = array();
+        $items = [];
         foreach ($words as $word => $count) {
             if (empty($word)) {
                 continue;
             }
-            $items[] = array(
+            $items[] = [
                 'url' => xarController::URL(
                     'keywords',
                     'user',
                     'view',
-                    array('keyword' => $word)
+                    ['keyword' => $word]
                 ),
                 'label' => xarVar::prepForDisplay($word),
-                'count' => $count
-            );
+                'count' => $count,
+            ];
         }
 
-        return array('status' => 0,
+        return ['status' => 0,
                      'displaycolumns' => $displaycolumns,
                      'items' => $items,
-                     'tab' => $tab);
+                     'tab' => $tab, ];
     } elseif (empty($id)) {
         // @checkme: necessary to decode? already done by php?
         $keyword = rawurldecode($keyword);
@@ -270,7 +270,7 @@ function keywords_user_view($args)
             'keywords',
             'user',
             'getitems',
-            array('keyword' => $keyword)
+            ['keyword' => $keyword]
         );
 
         if (!isset($items)) {
@@ -278,16 +278,16 @@ function keywords_user_view($args)
         }
 
         // build up a list of item ids per module & item type
-        $modules = array();
+        $modules = [];
         foreach ($items as $id => $item) {
             if (!isset($modules[$item['module_id']])) {
-                $modules[$item['module_id']] = array();
+                $modules[$item['module_id']] = [];
             }
             if (empty($item['itemtype'])) {
                 $item['itemtype'] = 0;
             }
             if (!isset($modules[$item['module_id']][$item['itemtype']])) {
-                $modules[$item['module_id']][$item['itemtype']] = array();
+                $modules[$item['module_id']][$item['itemtype']] = [];
             }
             $modules[$item['module_id']][$item['itemtype']][$item['itemid']] = $id;
         }
@@ -303,7 +303,7 @@ function keywords_user_view($args)
             try {
                 $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
             } catch (Exception $e) {
-                $mytypes = array();
+                $mytypes = [];
             }
 
             foreach ($itemtypes as $itemtype => $itemlist) {
@@ -311,8 +311,8 @@ function keywords_user_view($args)
                     $modinfo['name'],
                     'user',
                     'getitemlinks',
-                    array('itemtype' => $itemtype,
-                                                 'itemids' => array_keys($itemlist)),
+                    ['itemtype' => $itemtype,
+                                                 'itemids' => array_keys($itemlist), ],
                     0
                 );
                 foreach ($itemlist as $itemid => $id) {
@@ -328,8 +328,8 @@ function keywords_user_view($args)
                             'user',
                             'display',
                         //$items[$id]['url'] = xarController::URL($modinfo['name'],'user','main',
-                                                       array('itemtype' => $itemtype,
-                                                             'itemid' => $itemid)
+                                                       ['itemtype' => $itemtype,
+                                                             'itemid' => $itemid, ]
                         );
                         // you could skip those in the template
                     }
@@ -347,10 +347,10 @@ function keywords_user_view($args)
         }
         unset($modules);
 
-        return array('status' => 1,
+        return ['status' => 1,
                      'displaycolumns' => $displaycolumns,
                      'keyword' => xarVar::prepForDisplay($keyword),
-                     'items' => $items);
+                     'items' => $items, ];
     }
 
     // @checkme: what's all this?
@@ -361,24 +361,24 @@ function keywords_user_view($args)
         'keywords',
         'user',
         'getitems',
-        array('keyword' => $keyword,
-        'id' => $id)
+        ['keyword' => $keyword,
+        'id' => $id, ]
     );
     if (!isset($items)) {
         return;
     }
     if (!isset($items[$id])) {
-        return array('status' => 2);
+        return ['status' => 2];
     }
 
     $item = $items[$id];
     if (!isset($item['moduleid'])) {
-        return array('status' => 2);
+        return ['status' => 2];
     }
 
     $modinfo = xarMod::getInfo($item['moduleid']);
     if (!isset($modinfo) || empty($modinfo['name'])) {
-        return array('status' => 3);
+        return ['status' => 3];
     }
 
     // TODO: make configurable per module/itemtype
@@ -386,8 +386,8 @@ function keywords_user_view($args)
         $modinfo['name'],
         'user',
         'getitemlinks',
-        array('itemtype' => $item['itemtype'],
-                                     'itemids' => array($item['itemid'])),
+        ['itemtype' => $item['itemtype'],
+                                     'itemids' => [$item['itemid']], ],
         0
     );
     if (isset($itemlinks[$item['itemid']]) && !empty($itemlinks[$item['itemid']]['url'])) {
@@ -397,8 +397,8 @@ function keywords_user_view($args)
             $modinfo['name'],
             'user',
             'display',
-            array('itemtype' => $item['itemtype'],
-                               'itemid' => $item['itemid'])
+            ['itemtype' => $item['itemtype'],
+                               'itemid' => $item['itemid'], ]
         );
     }
 

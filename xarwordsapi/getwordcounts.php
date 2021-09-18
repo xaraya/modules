@@ -19,7 +19,7 @@
  * @return array
  * @throws BadParameterException, SQLException
 **/
-function keywords_wordsapi_getwordcounts(array $args=array())
+function keywords_wordsapi_getwordcounts(array $args=[])
 {
     extract($args);
 
@@ -41,7 +41,7 @@ function keywords_wordsapi_getwordcounts(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'wordsapi', 'getwordcounts');
+        $vars = [implode(', ', $invalid), 'keywords', 'wordsapi', 'getwordcounts'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -54,13 +54,13 @@ function keywords_wordsapi_getwordcounts(array $args=array())
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];
 
-    $select = array();
-    $from = array();
-    $join = array();
-    $where = array();
-    $groupby = array();
-    $orderby = array();
-    $bindvars = array();
+    $select = [];
+    $from = [];
+    $join = [];
+    $where = [];
+    $groupby = [];
+    $orderby = [];
+    $bindvars = [];
 
     $select['keyword'] = "words.keyword";
     $select['count'] = "COUNT(words.keyword) AS wordcount";
@@ -128,9 +128,9 @@ function keywords_wordsapi_getwordcounts(array $args=array())
     }
     $result = $stmt->executeQuery($bindvars);
 
-    $items = array();
+    $items = [];
     while ($result->next()) {
-        $item = array();
+        $item = [];
         foreach (array_keys($select) as $field) {
             $item[$field] = array_shift($result->fields);
         }

@@ -27,7 +27,7 @@ function keywords_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-    $path = array();
+    $path = [];
     $get = $args;
 
     $module = 'keywords';
@@ -51,5 +51,5 @@ function keywords_userapi_encode_shorturl($args)
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
     }
-    return array('path'=>$path,'get'=>$get);
+    return ['path'=>$path,'get'=>$get];
 }

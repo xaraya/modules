@@ -38,7 +38,7 @@ function keywords_userapi_getmultiplewords($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    $keywords = array();
+    $keywords = [];
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
@@ -53,16 +53,16 @@ function keywords_userapi_getmultiplewords($args)
         if (isset($itemtype) && is_numeric($itemtype)) {
             $query .= " AND itemtype = $itemtype";
         }
-        $bindvars = array($modid, $item);
+        $bindvars = [$modid, $item];
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;
         }
 
         for (; !$result->EOF; $result->MoveNext()) {
-            list($id, $keyword) = $result->fields;
-            $keywords[$item][] = array('id'      => $id,
-                                       'keyword' => $keyword);
+            [$id, $keyword] = $result->fields;
+            $keywords[$item][] = ['id'      => $id,
+                                       'keyword' => $keyword, ];
         }
     }
     return $keywords;

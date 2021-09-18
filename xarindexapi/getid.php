@@ -1,5 +1,6 @@
 <?php
-function keywords_indexapi_getid(array $args=array())
+
+function keywords_indexapi_getid(array $args=[])
 {
     extract($args);
 
@@ -26,7 +27,7 @@ function keywords_indexapi_getid(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'indexapi', 'getid');
+        $vars = [implode(', ', $invalid), 'keywords', 'indexapi', 'getid'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -39,21 +40,21 @@ function keywords_indexapi_getid(array $args=array())
         'keywords',
         'index',
         'getitem',
-        array(
+        [
             'module_id' => $module_id,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     )) {
         $item = xarMod::apiFunc(
             'keywords',
             'index',
             'createitem',
-            array(
+            [
                 'module_id' => $module_id,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
-            )
+            ]
         );
     }
 

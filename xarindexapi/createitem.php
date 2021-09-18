@@ -1,5 +1,6 @@
 <?php
-function keywords_indexapi_createitem(array $args=array())
+
+function keywords_indexapi_createitem(array $args=[])
 {
     extract($args);
 
@@ -26,7 +27,7 @@ function keywords_indexapi_createitem(array $args=array())
 
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
-        $vars = array(implode(', ', $invalid), 'keywords', 'indexapi', 'createitem');
+        $vars = [implode(', ', $invalid), 'keywords', 'indexapi', 'createitem'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -34,11 +35,11 @@ function keywords_indexapi_createitem(array $args=array())
         'keywords',
         'index',
         'getitem',
-        array(
+        [
             'module_id' => $module_id,
             'itemtype' => $itemtype,
             'itemid' => $itemid,
-        )
+        ]
     )) {
         return $item;
     }
@@ -54,7 +55,7 @@ function keywords_indexapi_createitem(array $args=array())
         $query = "INSERT INTO $idxtable
                   (id, module_id, itemtype, itemid)
                   VALUES (?,?,?,?)";
-        $bindvars = array($nextId, $module_id, $itemtype, $itemid);
+        $bindvars = [$nextId, $module_id, $itemtype, $itemid];
         $stmt = $dbconn->prepareStatement($query);
         $result = $stmt->executeUpdate($bindvars);
         $id = $dbconn->getLastId($idxtable);
@@ -68,12 +69,12 @@ function keywords_indexapi_createitem(array $args=array())
         return;
     }
     // return item to caller (saves a further getitem call)
-    $item = array(
+    $item = [
         'id' => $id,
         'module_id' => $module_id,
         'itemtype' => $itemtype,
         'itemid' => $itemid,
-    );
+    ];
 
     return $item;
 }
