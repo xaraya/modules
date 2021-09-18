@@ -17,16 +17,16 @@
 
 function cacher_userapi_getmenulinks()
 {
-    $menulinks = array();
+    $menulinks = [];
 
     if (xarSecurity::check('ViewCacher', 0)) {
-        $menulinks[] = array('url'   => xarController::URL(
+        $menulinks[] = ['url'   => xarController::URL(
             'cacher',
             'user',
             'main'
         ),
                               'title' => xarML(''),
-                              'label' => xarML(''));
+                              'label' => xarML(''), ];
     }
 
     return $menulinks;

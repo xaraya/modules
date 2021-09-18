@@ -24,8 +24,8 @@ function cacher_user_main()
 
     $redirect = xarModVars::get('cacher', 'frontend_page');
     if (!empty($redirect)) {
-        $truecurrenturl = xarServer::getCurrentURL(array(), false);
-        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        $truecurrenturl = xarServer::getCurrentURL([], false);
+        $urldata = xarMod::apiFunc('roles', 'user', 'parseuserhome', ['url'=> $redirect,'truecurrenturl'=>$truecurrenturl]);
         xarController::redirect($urldata['redirecturl']);
     } else {
         xarController::redirect(xarController::URL('cacher', 'user', 'cacher'));

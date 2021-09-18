@@ -27,7 +27,7 @@ function cacher_init()
 #
     $q = new Query();
     $prefix = xarDB::getPrefix();
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_cacher_caches";
     if (!$q->run($query)) {
         return;
@@ -78,11 +78,11 @@ function cacher_init()
     # Create DD objects
 #
     $module = 'cacher';
-    $objects = array(
-                    'cacher_caches'
-                     );
+    $objects = [
+                    'cacher_caches',
+                     ];
 
-    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', array('module' => $module, 'objects' => $objects))) {
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         return;
     }
 
@@ -90,7 +90,7 @@ function cacher_init()
 #
     # Set up modvars
 #
-    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', array('module' => 'cacher'));
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'cacher']);
     $module_settings->initialize();
 
     // Add variables like this next one when creating utility modules
@@ -114,5 +114,5 @@ function cacher_upgrade()
 function cacher_delete()
 {
     $this_module = 'cacher';
-    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => $this_module));
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
 }

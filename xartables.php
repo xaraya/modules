@@ -19,7 +19,7 @@
 function cacher_xartables()
 {
     // Initialise table array
-    $xartable = array();
+    $xartable = [];
 
     $xartable['cacher_caches']          = xarDB::getPrefix() . '_cacher_caches';
 

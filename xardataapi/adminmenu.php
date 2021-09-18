@@ -18,9 +18,9 @@
 // TODO: turn this into an xml file
 function cacher_dataapi_adminmenu()
 {
-    return array(
-        array('includes' => array('main','overview'), 'target' => 'main', 'label' => xarML('Cacher Overview')),
-        array('mask' => 'ManageCacher', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')),
-        array('mask' => 'AdminCacher', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Cacher configuration'), 'label' => xarML('Modify Config')),
-    );
+    return [
+        ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Cacher Overview')],
+        ['mask' => 'ManageCacher', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
+        ['mask' => 'AdminCacher', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Cacher configuration'), 'label' => xarML('Modify Config')],
+    ];
 }

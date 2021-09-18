@@ -19,15 +19,15 @@ function cacher_adminapi_getconfighook($args)
 {
     extract($args);
     if (!isset($extrainfo['tabs'])) {
-        $extrainfo['tabs'] = array();
+        $extrainfo['tabs'] = [];
     }
     $module = 'cacher';
-    $tabinfo = array(
+    $tabinfo = [
             'module'  => $module,
             'configarea'  => 'general',
             'configtitle'  => xarML('Cacher'),
-            'configcontent' => ''
-    );
+            'configcontent' => '',
+    ];
     $extrainfo['tabs'][] = $tabinfo;
     return $extrainfo;
 }

@@ -17,7 +17,7 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
 {
     public $ext = 'xc';                 // Extension for the cached files
 
-    public function __construct(array $args = array())
+    public function __construct(array $args = [])
     {
         parent::__construct($args);
 
@@ -199,11 +199,11 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
         $this->modtime = 0;
         $this->size = $this->_getCacheDirSize($this->dir, true);
 
-        return array('size'    => $this->size,
+        return ['size'    => $this->size,
                      'items'   => $this->items,
                      'hits'    => $this->hits,
                      'misses'  => $this->misses,
-                     'modtime' => $this->modtime);
+                     'modtime' => $this->modtime, ];
     }
 
     public function saveFile($key = '', $filename = '')
@@ -316,7 +316,7 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
 
     public function getCachedList()
     {
-        $list = array();
+        $list = [];
         if ($handle = @opendir($this->dir)) {
             while (($file = readdir($handle)) !== false) {
                 // filter out the keys that don't start with the right type/namespace prefix
@@ -337,17 +337,17 @@ class CacherCache extends xarCache_FileSystem_Storage implements ixarCache_Stora
                 if (!empty($this->prefix)) {
                     $key = str_replace($this->prefix, '', $key);
                 }
-                $list[] = array('key'   => $key,
+                $list[] = ['key'   => $key,
                                 'code'  => $code,
                                 'time'  => $time,
                                 'size'  => $size,
-                                'check' => $check);
+                                'check' => $check, ];
             }
             closedir($handle);
         }
         return $list;
     }
-    
+
     public function setExtension($x)
     {
         $this->ext = $x;

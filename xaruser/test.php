@@ -16,5 +16,5 @@
  */
 function cacher_user_test()
 {
-    return array();
+    return [];
 }
