@@ -39,8 +39,8 @@ function release_userapi_createnote($args)
     $changelog   = !empty($changelog) ? $changelog : '';
     $notes       = !empty($notes) ? $notes : '';
     $exttype     = !empty($exttype) ? $exttype : 1;
-    $rstate      =  $rstate ?? 0;
-    $usefeed     =  $usefeed ?? 0;
+    $rstate ??= 0;
+    $usefeed ??= 0;
 
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
