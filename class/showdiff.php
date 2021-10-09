@@ -123,7 +123,7 @@ class showdiff
         foreach ($this->final_array as $key => $final_string) {
             $orig_string = $this->orig_array[$key] ?? null;
             $orig_string = $this->check_lastcharacter($orig_string);
-            $final_string = $final_string ?? null;
+            $final_string ??= null;
             $diff = new Diff(explode(" ", $orig_string), explode(" ", $final_string));
             //$diff = new Diff( explode(" ",$this->orig_array[$key]), explode(" ",$final_string));
 
@@ -139,7 +139,7 @@ class showdiff
             $orig_string = $this->orig_array[$key] ?? null;
             $orig_string = $this->check_lastcharacter($orig_string);
             $final_string = $this->final_array[$key];
-            $final_string = $final_string ?? null;
+            $final_string ??= null;
             $this->checkdiff($orig_string, $final_string, $diff, 'Words');
         }
     }
@@ -306,7 +306,7 @@ class showdiff
     {
         foreach ($words as $word) {
             foreach ($string as $key => $strItem) {
-                $this->newLineCheckFlag[$key] = $this->newLineCheckFlag[$key] ?? null;
+                $this->newLineCheckFlag[$key] ??= null;
                 if ($word == $strItem && $this->newLineCheckFlag[$key] != false) {
                     $this->oldLineCheckFlag[$key]=false;
                     break;
