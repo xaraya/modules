@@ -52,20 +52,20 @@
         $data['extrainfo']['itemtype'] = $data['itemtype'];
         $data['extrainfo']['item_id'] = $data['itemid'];
 
-        $data['extrainfo']['name'] = $data['extrainfo']['name'] ?? xarML('Unknown Event');
-        $data['extrainfo']['start_time'] = $data['extrainfo']['start_time'] ?? time();
-        $data['extrainfo']['duration'] = $data['extrainfo']['duration'] ?? 60;
-        $data['extrainfo']['end_time'] = $data['extrainfo']['end_time'] ?? $data['extrainfo']['start_time'] + $data['extrainfo']['duration'];
-        $data['extrainfo']['recurring_code'] = $data['extrainfo']['recurring_code'] ?? 0;
-        $data['extrainfo']['recurring_span'] = $data['extrainfo']['recurring_span'] ?? 0;
+        $data['extrainfo']['name'] ??= xarML('Unknown Event');
+        $data['extrainfo']['start_time'] ??= time();
+        $data['extrainfo']['duration'] ??= 60;
+        $data['extrainfo']['end_time'] ??= $data['extrainfo']['start_time'] + $data['extrainfo']['duration'];
+        $data['extrainfo']['recurring_code'] ??= 0;
+        $data['extrainfo']['recurring_span'] ??= 0;
 
-        $data['extrainfo']['start_location'] = $data['extrainfo']['start_location'] ?? null;
-        $data['extrainfo']['end_location'] = $data['extrainfo']['end_location'] ?? null;
-        $data['extrainfo']['object_id'] = $data['extrainfo']['object_id'] ?? 0;
-        $data['extrainfo']['role_id'] = $data['extrainfo']['role_id'] ?? xarSession::getVar('role_id');
-        $data['extrainfo']['return_link'] = $data['extrainfo']['return_link'] ?? '';
-        $data['extrainfo']['state'] = $data['extrainfo']['state'] ?? 3;
-        $data['extrainfo']['timestamp'] = $data['extrainfo']['timestamp'] ?? time();
+        $data['extrainfo']['start_location'] ??= null;
+        $data['extrainfo']['end_location'] ??= null;
+        $data['extrainfo']['object_id'] ??= 0;
+        $data['extrainfo']['role_id'] ??= xarSession::getVar('role_id');
+        $data['extrainfo']['return_link'] ??= '';
+        $data['extrainfo']['state'] ??= 3;
+        $data['extrainfo']['timestamp'] ??= time();
 
         $object = DataObjectMaster::getObject(['name' => 'calendar_event']);
         $item = $object->updateItem($data['extrainfo']);
