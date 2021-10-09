@@ -20,8 +20,8 @@ function crispbb_userapi_gettopics($args)
 {
     extract($args);
 
-    $startnum = $startnum ?? 1;
-    $numitems = $numitems ?? -1;
+    $startnum ??= 1;
+    $numitems ??= -1;
     if (empty($cids) && !empty($catid)) {
         $cids = [$catid];
     }
