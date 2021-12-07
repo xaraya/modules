@@ -97,7 +97,7 @@ function reminders_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_reminders_lookups (
         id                integer unsigned NOT NULL auto_increment,
-        entry_id          integer unsigned NOT NULL default 0, 
+        name              varchar(255) NOT NULL default '',  
         message           varchar(255) NOT NULL default '', 
         phone             varchar(255) NOT NULL default '', 
         email             varchar(255) NOT NULL default '', 
