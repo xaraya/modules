@@ -93,6 +93,31 @@ function reminders_init()
     )";
     if (!$q->run($query)) return;
 
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_lookups";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_reminders_lookups (
+        id                integer unsigned NOT NULL auto_increment,
+        entry_id          integer unsigned NOT NULL default 0, 
+        message           varchar(255) NOT NULL default '', 
+        phone             varchar(255) NOT NULL default '', 
+        email             varchar(255) NOT NULL default '', 
+        timecreated       integer unsigned NOT NULL default 0, 
+        PRIMARY KEY  (id)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_lookup_history";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_reminders_lookup_history (
+        id                integer unsigned NOT NULL auto_increment,
+        lookmeup_id       integer unsigned NOT NULL default 0, 
+        date              integer unsigned NOT NULL default 0, 
+        promised          tinyint(1) unsigned NOT NULL default 0, 
+        timecreated       integer unsigned NOT NULL default 0, 
+        PRIMARY KEY  (id)
+    )";
+    if (!$q->run($query)) return;
+
 # --------------------------------------------------------
 #
 # Set up masks
