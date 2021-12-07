@@ -36,16 +36,6 @@
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="message">
-      <id>4049</id>
-      <label>Message</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>lookups.message</source>
-      <status>33</status>
-      <seq>3</seq>
-      <configuration>a:0:{}</configuration>
-    </property>
     <property name="phone">
       <id>4050</id>
       <label>Phone</label>
@@ -53,7 +43,7 @@
       <defaultvalue></defaultvalue>
       <source>lookups.phone</source>
       <status>33</status>
-      <seq>4</seq>
+      <seq>3</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="email">
@@ -63,7 +53,7 @@
       <defaultvalue></defaultvalue>
       <source>lookups.email</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>4</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
@@ -73,7 +63,7 @@
       <defaultvalue></defaultvalue>
       <source>lookups.timecreated</source>
       <status>65</status>
-      <seq>6</seq>
+      <seq>5</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_modified">
@@ -83,7 +73,7 @@
       <defaultvalue></defaultvalue>
       <source>lookups.timemodified</source>
       <status>65</status>
-      <seq>7</seq>
+      <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
   </properties>
