@@ -1,0 +1,70 @@
+<object name="reminders_lookups">
+  <objectid>168</objectid>
+  <label>Lookups</label>
+  <module_id>182</module_id>
+  <itemtype>98</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{i:0;a:2:{i:0;s:0:"";i:1;s:0:"";}}</config>
+  <sources>a:1:{s:7:&quot;lookups&quot;;a:2:{i:0;s:21:&quot;xar_reminders_lookups&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category>a:1:{i:0;a:19:{s:2:&quot;id&quot;;s:2:&quot;43&quot;;s:4:&quot;name&quot;;s:7:&quot;General&quot;;s:11:&quot;description&quot;;s:36:&quot;DataObjects used by non core modules&quot;;s:5:&quot;image&quot;;s:0:&quot;&quot;;s:8:&quot;template&quot;;s:0:&quot;&quot;;s:9:&quot;parent_id&quot;;s:1:&quot;5&quot;;s:7:&quot;left_id&quot;;s:2:&quot;14&quot;;s:8:&quot;right_id&quot;;s:2:&quot;15&quot;;s:12:&quot;child_object&quot;;s:0:&quot;&quot;;s:5:&quot;links&quot;;s:1:&quot;0&quot;;s:5:&quot;state&quot;;s:1:&quot;3&quot;;s:11:&quot;category_id&quot;;s:1:&quot;8&quot;;s:17:&quot;child_category_id&quot;;s:1:&quot;0&quot;;s:7:&quot;item_id&quot;;s:3:&quot;168&quot;;s:9:&quot;module_id&quot;;s:3:&quot;182&quot;;s:8:&quot;itemtype&quot;;s:1:&quot;0&quot;;s:11:&quot;property_id&quot;;s:2:&quot;17&quot;;s:7:&quot;tree_id&quot;;s:1:&quot;0&quot;;s:12:&quot;basecategory&quot;;s:1:&quot;5&quot;;}}</category>
+  <properties>
+    <property name="id">
+      <id>4048</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="message">
+      <id>4049</id>
+      <label>Message</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.message</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="phone">
+      <id>4050</id>
+      <label>Phone</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.phone</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="email">
+      <id>4051</id>
+      <label>Email</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.email</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_created">
+      <id>4052</id>
+      <label>Time Created</label>
+      <type>datetime</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.timecreated</source>
+      <status>65</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+  </properties>
+</object>
