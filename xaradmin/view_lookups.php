@@ -14,7 +14,7 @@
  * View items of the lookups object
  *
  */
-function reminders_admin_view_entries($args)
+function reminders_admin_view_lookups($args)
 {
     if (!xarSecurityCheck('ManageReminders')) return;
 
