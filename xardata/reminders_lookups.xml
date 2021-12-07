@@ -76,5 +76,15 @@
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="time_modified">
+      <id>4054</id>
+      <label>Time Modified</label>
+      <type>datetime</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.timemodified</source>
+      <status>65</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
   </properties>
 </object>

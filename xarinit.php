@@ -102,6 +102,7 @@ function reminders_init()
         phone             varchar(255) NOT NULL default '', 
         email             varchar(255) NOT NULL default '', 
         timecreated       integer unsigned NOT NULL default 0, 
+        timemodified      integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
     )";
     if (!$q->run($query)) return;
@@ -153,6 +154,8 @@ function reminders_init()
                      'reminders_emails',
                      'reminders_entries',
                      'reminders_history',
+                     'reminders_lookups',
+                     'reminders_lookup_history',
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

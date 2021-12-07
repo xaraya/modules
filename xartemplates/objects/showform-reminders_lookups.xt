@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="warning_periods">xarMod::apiFunc('reminders', 'admin', 'get_warning_periods')</xar:set>
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['code']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Message</xar:var>
+            <xar:data-label property="$properties['message']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['message']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email 1</xar:var>
+            <xar:data-label property="$properties['email_1']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email_1']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email 2</xar:var>
+            <xar:data-label property="$properties['email_2']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email_2']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Template</xar:var>
+            <xar:data-label property="$properties['template']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['template']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Due Date</xar:var>
+            <xar:data-label property="$properties['due_date']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['due_date']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Recurring</xar:var>
+            <xar:data-label property="$properties['recurring']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['recurring']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Recur Period</xar:var>
+            <xar:data-label property="$properties['recur_period']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['recur_period']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 1</xar:var>
+            <xar:data-label property="$properties['reminder_1']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_1']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_1']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_1']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 2</xar:var>
+            <xar:data-label property="$properties['reminder_2']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_2']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_2']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_2']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 3</xar:var>
+            <xar:data-label property="$properties['reminder_3']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_3']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_3']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_3']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 4</xar:var>
+            <xar:data-label property="$properties['reminder_4']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_4']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_4']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_4']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 5</xar:var>
+            <xar:data-label property="$properties['reminder_5']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_5']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_5']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_5']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 6</xar:var>
+            <xar:data-label property="$properties['reminder_6']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_6']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_6']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_6']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 7</xar:var>
+            <xar:data-label property="$properties['reminder_7']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_7']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_7']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_7']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 8</xar:var>
+            <xar:data-label property="$properties['reminder_8']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_8']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_8']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_8']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 9</xar:var>
+            <xar:data-label property="$properties['reminder_9']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_9']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_9']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_9']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Reminder 10</xar:var>
+            <xar:data-label property="$properties['reminder_10']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['reminder_10']"/>                    
+        </div>        
+        <div class="xar-col-condensed">
+            <xar:var name="value">Done</xar:var>
+            <xar:data-label property="$properties['reminder_done_10']" label="$value"/>                    
+            <xar:data-input property="$properties['reminder_done_10']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">State</xar:var>
+            <xar:data-label property="$properties['state']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['state']"/>                    
+        </div>        
+    </div>
+    <xar:if condition="!empty($properties['id']->value)">
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                <xar:var name="value">Created</xar:var>
+                <xar:data-label property="$properties['time_created']" label="$value"/>                    
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['time_created']"/>                    
+                <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+            </div>        
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                <xar:var name="value">Modified</xar:var>
+                <xar:data-label property="$properties['time_modified']" label="$value"/>                    
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['time_modified']"/>                    
+                <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
+            </div>        
+        </div>
+    <xar:else/>
+        <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+        <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
+    </xar:if>
+</xar:template>
