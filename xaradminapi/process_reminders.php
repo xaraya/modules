@@ -71,6 +71,16 @@ function reminders_adminapi_process_reminders($args)
 		$params['message_body'] = $templates[$this_template_id]['message_body'];
 		$params['subject']      = $templates[$this_template_id]['subject'];
     	
+    	// If this is a test, just send the mail
+		if ($args['test']) {
+			// Send the email
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['results'] = array_merge($data['results'], array($data['result']));
+
+			// We are done with this reminder
+			break;
+		}
+
     	// If we are past the due date, then make this reminder inactive and spawn a new one if need be
     	if ($row['due_date'] < $today) {
 

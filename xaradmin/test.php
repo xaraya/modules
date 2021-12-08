@@ -26,7 +26,7 @@ function reminders_admin_test()
         // Check for a valid confirmation key
         if(!xarSecConfirmAuthKey()) return;
 
-        // Check if we get a copy of the email(s)
+        // Check if we send a bcc of the email(s)
         $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
         $checkbox->checkInput('copy_emails');
         $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
