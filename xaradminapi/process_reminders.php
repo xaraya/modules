@@ -12,7 +12,7 @@
  */
 
 
-function reminders_adminapi_process($args)
+function reminders_adminapi_process_reminders($args)
 {
     if (!isset($args['test']))        $args['test'] = false;
     if (!isset($args['params']))      $args['params'] = array();
