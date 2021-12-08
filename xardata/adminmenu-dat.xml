@@ -24,8 +24,8 @@
                 <includeitem>view</includeitem>
             </includes>
             <target>view</target>
-            <title>Add, edit, delete entries scheduler entries</title>
-            <label>Manage Entries</label>
+            <title>Add, edit, delete scheduler jobs</title>
+            <label>Manage Jobs</label>
         </menuitem>
         <menuitem>
             <mask>AdminScheduler</mask>
