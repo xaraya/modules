@@ -64,6 +64,15 @@
             <label>View Lookup History</label>
         </menuitem>
         <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>test_lookup</includeitem>
+            </includes>
+            <target>test_lookup</target>
+            <title>Test the lookup process</title>
+            <label>Test Lookup</label>
+        </menuitem>
+        <menuitem>
             <mask>AdminReminders</mask>
             <includes>
                 <includeitem>modifyconfig</includeitem>
