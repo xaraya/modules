@@ -76,5 +76,15 @@
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="template">
+      <id>4055</id>
+      <label>Template</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.template_id</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
   </properties>
 </object>
