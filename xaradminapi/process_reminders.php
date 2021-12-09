@@ -25,10 +25,12 @@ function reminders_adminapi_process_reminders($args)
     // Get the reminder entries to process
     if ($args['test']) {
     	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
+    	$state = 0;
     } else {
     	$data['entry_list'] = '';
+    	$state = 3;
     }
-    $items = xarMod::apiFunc('reminders', 'user', 'getall', array('itemids' => $data['entry_list']));
+    $items = xarMod::apiFunc('reminders', 'user', 'getall', array('itemids' => $data['entry_list'], 'state' => $state));
 
     // Get today's date
     $datetime = new XarDateTime();
