@@ -66,9 +66,9 @@
         <menuitem>
             <mask>ManageReminders</mask>
             <includes>
-                <includeitem>test_lookup</includeitem>
+                <includeitem>test_lookups</includeitem>
             </includes>
-            <target>test_lookup</target>
+            <target>test_lookups</target>
             <title>Test the lookup process</title>
             <label>Test Lookup</label>
         </menuitem>
