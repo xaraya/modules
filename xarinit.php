@@ -98,8 +98,10 @@ function reminders_init()
     $query = "CREATE TABLE " . $prefix . "_reminders_lookups (
         id                integer unsigned NOT NULL auto_increment,
         name              varchar(255) NOT NULL default '',  
-        template_id       integer unsigned NOT NULL default 0, 
         message           varchar(255) NOT NULL default '', 
+        email_id_1        integer unsigned NOT NULL default 0, 
+        email_id_2        integer unsigned NOT NULL default 0, 
+        template_id       integer unsigned NOT NULL default 0, 
         phone             varchar(255) NOT NULL default '', 
         email             varchar(255) NOT NULL default '', 
         timecreated       integer unsigned NOT NULL default 0, 

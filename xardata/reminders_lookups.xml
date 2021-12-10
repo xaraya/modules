@@ -86,5 +86,25 @@
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="email_1">
+      <id>4056</id>
+      <label>Email 1</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.email_id_1</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="email_2">
+      <id>4057</id>
+      <label>Email 2</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>lookups.email_id_2</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
   </properties>
 </object>
