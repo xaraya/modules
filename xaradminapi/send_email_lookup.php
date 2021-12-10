@@ -11,7 +11,7 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
  
-function reminders_adminapi_send_email($data)
+function reminders_adminapi_send_email_lookup($data)
 {
 # --------------------------------------------------------
 #
@@ -54,15 +54,14 @@ function reminders_adminapi_send_email($data)
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $data['reminder_text'] = trim($data['info']['message']);
-    $data['entry_id']      = (int)$data['info']['id'];
-    $data['code']          = $data['info']['code'];
-    $data['due_date']      = (int)$data['info']['due_date'];
+    $data['lookup_id']      = (int)$data['info']['id'];
     
     // Get today's date
     $datetime = new XarDateTime();
     $datetime->settoday();
     $today = $datetime->getTimestamp();
 
+/*
     if ($data['due_date'] == $today) {
     	// If today is the due date, then this is the last email
 		$data['remaining'] = 0;
@@ -72,6 +71,7 @@ function reminders_adminapi_send_email($data)
 		// By default we also send an email on the due date
 		$data['remaining'] = count($remaining) + 1;
     }
+*/
 
     unset($data['info']);
 

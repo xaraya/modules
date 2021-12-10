@@ -76,7 +76,7 @@ function reminders_adminapi_process_lookups($args)
     	// If this is a test, just send the mail
 		if ($args['test']) {
 			// Send the email
-			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 			$data['results'] = array_merge($data['results'], array($data['result']));
 
 			// We are done with this reminder
@@ -96,7 +96,7 @@ function reminders_adminapi_process_lookups($args)
     	// If today is the due date, send the email in any case
     	if ($row['due_date'] == $today) {
 			// Send the email
-			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 			$data['results'] = array_merge($data['results'], array($data['result']));
 
 			// Retire the reminder
@@ -127,7 +127,7 @@ function reminders_adminapi_process_lookups($args)
     		// If the step date coincides with today's date and an email has not been sent, we send an email
     		if (($step['date'] == $today) && ($step['done'] == 0)) {
 				// Send the email
-				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 				$data['results'] = array_merge($data['results'], array($data['result']));
                
     			// This is not a test, so set this period reminder as done
