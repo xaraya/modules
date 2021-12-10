@@ -76,7 +76,7 @@
 
     <xar:data-input type="listing" 
                     object="$object" 
-                    fieldlist="message,email_1,email_2,template,due_date,recurring,recur_period,state"
+                    fieldlist="name, phone, email, template,state"
                     tplmodule="reminders" 
                     layout="test"/>
     <form method="post" action="#xarServer::getCurrentURL()#">
