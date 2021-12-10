@@ -33,6 +33,7 @@ function reminders_userapi_getall_Lookups($args)
     			  	'email_2.name AS name_2',
     			  	'email_2.address AS address_2',
     			  	'message',
+    			  	'template_id',
     			  )
     );
     
