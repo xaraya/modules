@@ -38,7 +38,34 @@
             <xar:data-input property="$properties['promised']"/>                    
         </div>        
     </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email 1</xar:var>
+            <xar:data-label property="$properties['email_1']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email_1']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email 2</xar:var>
+            <xar:data-label property="$properties['email_2']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email_2']"/>                    
+        </div>        
+    </div>
     <xar:if condition="!empty($properties['id']->value)">
+		<div class="xar-row">
+			<div class="xar-col-condensed">
+				<xar:var name="value">Template</xar:var>
+				<xar:data-label property="$properties['template']" label="$value"/>                    
+			</div>
+			<div class="xar-col">
+				<xar:data-input property="$properties['template']"/>                    
+			</div>        
+		</div>
         <div class="xar-row">
             <div class="xar-col-condensed">
                 <xar:var name="value">Created</xar:var>
