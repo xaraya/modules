@@ -54,7 +54,10 @@ function reminders_adminapi_send_email_lookup($data)
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $data['reminder_text'] = trim($data['info']['message']);
-    $data['lookup_id']      = (int)$data['info']['id'];
+    $data['lookup_id']     = (int)$data['info']['id'];
+    $data['name']          = $data['info']['lookiup_name'];
+    $data['email']         = $data['info']['lookiup_email'];
+    $data['phone']         = $data['info']['lookiup_phone'];
     
     // Get today's date
     $datetime = new XarDateTime();
