@@ -55,9 +55,9 @@ function reminders_adminapi_send_email_lookup($data)
 
     $data['reminder_text'] = trim($data['info']['message']);
     $data['lookup_id']     = (int)$data['info']['id'];
-    $data['name']          = $data['info']['lookiup_name'];
-    $data['email']         = $data['info']['lookiup_email'];
-    $data['phone']         = $data['info']['lookiup_phone'];
+    $data['name']          = $data['info']['lookup_name'];
+    $data['email']         = $data['info']['lookup_email'];
+    $data['phone']         = $data['info']['lookup_phone'];
     
     // Get today's date
     $datetime = new XarDateTime();
