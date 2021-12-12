@@ -5,10 +5,10 @@
     <div class="xar-row">
         <div class="xar-col-condensed">
             <xar:var name="value">Name</xar:var>
-            <xar:data-label property="$properties['name']" label="$value"/>                    
+            <xar:data-label property="$properties['lookup']" label="$value"/>                    
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['name']"/>                    
+            <xar:data-input property="$properties['lookup']"/>                    
         </div>        
     </div>
     <div class="xar-row">
