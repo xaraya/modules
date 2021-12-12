@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
 	    <xar:data-input type="listing" 
                         object="$object" 
-                    	fieldlist="name,phone,email,state" 
+                    	fieldlist="lookup,phone,email,state" 
                     	tplmodule="reminders"/>
     </div>
 </xar:template>
