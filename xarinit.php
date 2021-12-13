@@ -106,7 +106,9 @@ function reminders_init()
     }
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_lookups";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_reminders_lookups (
         id                integer unsigned NOT NULL auto_increment,
         lookup            varchar(255) NOT NULL default '',  
@@ -120,10 +122,14 @@ function reminders_init()
         timemodified      integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
     )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_lookup_history";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
     $query = "CREATE TABLE " . $prefix . "_reminders_lookup_history (
         id                integer unsigned NOT NULL auto_increment,
         lookmeup_id       integer unsigned NOT NULL default 0, 
@@ -132,9 +138,11 @@ function reminders_init()
         timecreated       integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
     )";
-    if (!$q->run($query)) return;
+    if (!$q->run($query)) {
+        return;
+    }
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
     # Set up masks
 #

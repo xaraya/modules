@@ -16,16 +16,19 @@
  */
 function reminders_admin_view_lookups($args)
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurityCheck('ManageReminders')) {
+        return;
+    }
 
     $modulename = 'reminders';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_lookups', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_lookups', XARVAR_DONT_SET)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_lookups'));
+    $data['object'] = DataObjectMaster::getObject(['name' => 'reminders_lookups']);
     $data['object']->dataquery->eq('state', 3);
     return $data;
 }
-?>

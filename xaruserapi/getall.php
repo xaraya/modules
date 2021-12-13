@@ -61,10 +61,10 @@ function reminders_userapi_getall($args)
                     'reminder_done_10',
                   ]
     );
-    
+
     // All reminders unless we passed a state
     if (!empty($args['state'])) {
-    	$q->eq('entries.state', $args['state']);
+        $q->eq('entries.state', $args['state']);
     }
 
     // Check if a list of reminder IDs was passed
