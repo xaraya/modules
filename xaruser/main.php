@@ -65,8 +65,6 @@
         }
 
         switch (xarModItemVars::get('payments', 'process', $module_id)) {
-            default:
-                return xarTpl::module('payments', 'user', 'errors', ['layout' => 'no_process']);
             case 1:
                 xarController::redirect(xarController::URL('payments', 'user', 'amount'));
                 break;
