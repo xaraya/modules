@@ -47,7 +47,6 @@ function release_admin_viewdocs()
     switch (strtolower($phase)) {
 
         case 'unapproved':
-        default:
 
             $items = xarMod::apiFunc(
                 'release',
