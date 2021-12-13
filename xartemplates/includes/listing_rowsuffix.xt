@@ -32,6 +32,22 @@
             <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" onchange="listing_getchecked('entry_list')"/>
         </xar:if>
     </td>
+<xar:elseif condition="$objectname eq 'reminders_lookups'"/>
+    <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
+        <xar:access level="500">
+            <a href="#xarModURL($module, 'admin', 'modify_lookup', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this entry')#" style="margin-right: 5px">
+                <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+            </a>
+        </xar:access>
+        <xar:access level="700">
+            <a href="#xarModURL($module, 'admin', 'delete_lookup', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this entry')#" style="margin-right: 5px">
+                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+            </a>
+        </xar:access>
+        <xar:if condition="isset($show_bulk) AND $show_bulk">
+            <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#" onchange="listing_getchecked('lookup_list')"/>
+        </xar:if>
+    </td>
 <xar:else/>
 </xar:if>
 </xar:template>

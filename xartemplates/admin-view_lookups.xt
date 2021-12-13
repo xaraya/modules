@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <h2>View Lookups</h2>
+    <div class="xar-mod-body">
+	    <xar:data-input type="listing" 
+                        object="$object" 
+                    	fieldlist="lookup,phone,email,template,state" 
+                    	tplmodule="reminders"/>
+    </div>
+</xar:template>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="warning_periods">xarMod::apiFunc('reminders', 'admin', 'get_warning_periods')</xar:set>
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Name</xar:var>
+            <xar:data-label property="$properties['lookup']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['lookup']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Phone</xar:var>
+            <xar:data-label property="$properties['phone']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['phone']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email</xar:var>
+            <xar:data-label property="$properties['email']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Promised</xar:var>
+            <xar:data-label property="$properties['promised']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['promised']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email 1</xar:var>
+            <xar:data-label property="$properties['email_1']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email_1']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email 2</xar:var>
+            <xar:data-label property="$properties['email_2']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['email_2']"/>                    
+        </div>        
+    </div>
+	<div class="xar-row">
+		<div class="xar-col-condensed">
+			<xar:var name="value">Template</xar:var>
+			<xar:data-label property="$properties['template']" label="$value"/>                    
+		</div>
+		<div class="xar-col">
+			<xar:data-input property="$properties['template']"/>                    
+		</div>        
+	</div>
+    <xar:if condition="!empty($properties['id']->value)">
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                <xar:var name="value">Created</xar:var>
+                <xar:data-label property="$properties['time_created']" label="$value"/>                    
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['time_created']"/>                    
+                <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+            </div>        
+        </div>
+        <div class="xar-row">
+            <div class="xar-col-condensed">
+                <xar:var name="value">Modified</xar:var>
+                <xar:data-label property="$properties['time_modified']" label="$value"/>                    
+            </div>
+            <div class="xar-col">
+                <xar:data-output property="$properties['time_modified']"/>                    
+                <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
+            </div>        
+        </div>
+    <xar:else/>
+        <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+        <xar:data-input property="$properties['time_modified']" hidden="hidden"/>
+    </xar:if>
+</xar:template>

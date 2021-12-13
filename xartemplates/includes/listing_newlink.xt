@@ -7,11 +7,21 @@
             <xar:button type="link" target="$link" label="$label" title="Add an email"/>
         </xar:access>
     <xar:elseif condition="$objectname eq 'reminders_entries'"/>
-        <xar:access level="600">
-            <xar:set name="link">xarController::URL($module, 'admin', 'new_entry', array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
-            <xar:var name="label">Add Entry</xar:var>
-            <xar:button type="link" target="$link" label="$label" title="Add an entry"/>
-        </xar:access>
+    	<xar:if condition="$layout != 'test'">
+			<xar:access level="600">
+				<xar:set name="link">xarModURL($module, 'admin', 'new_entry', array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+				<xar:var name="label">Add Entry</xar:var>
+				<xar:button type="link" target="$link" label="$label" title="Add an entry"/>
+			</xar:access>
+    	</xar:if>
+    <xar:elseif condition="$objectname eq 'reminders_lookups'"/>
+    	<xar:if condition="$layout != 'test'">
+			<xar:access level="600">
+				<xar:set name="link">xarModURL($module, 'admin', 'new_lookup', array('name'=> $objectname, 'tplmodule'=> $module))</xar:set>
+				<xar:var name="label">Add Lookup</xar:var>
+				<xar:button type="link" target="$link" label="$label" title="Add a lookup"/>
+			</xar:access>
+    	</xar:if>
     <xar:else/>
     </xar:if>
 </xar:template>

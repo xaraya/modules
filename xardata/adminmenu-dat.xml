@@ -30,20 +30,47 @@
         <menuitem>
             <mask>ManageReminders</mask>
             <includes>
-                <includeitem>test</includeitem>
-            </includes>
-            <target>test</target>
-            <title>Test the reminder process</title>
-            <label>Test</label>
-        </menuitem>
-        <menuitem>
-            <mask>ManageReminders</mask>
-            <includes>
                 <includeitem>view_history</includeitem>
             </includes>
             <target>view_history</target>
             <title>View the emails sent</title>
             <label>View History</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>test</includeitem>
+            </includes>
+            <target>test</target>
+            <title>Test the reminder process</title>
+            <label>Test Reminder</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>view_lookups</includeitem>
+            </includes>
+            <target>view_lookups</target>
+            <title>Manage the lookups</title>
+            <label>Lookups</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>view_lookup_history</includeitem>
+            </includes>
+            <target>view_lookup_history</target>
+            <title>View the lookups sent</title>
+            <label>View Lookup History</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageReminders</mask>
+            <includes>
+                <includeitem>test_lookups</includeitem>
+            </includes>
+            <target>test_lookups</target>
+            <title>Test the lookup process</title>
+            <label>Test Lookup</label>
         </menuitem>
         <menuitem>
             <mask>AdminReminders</mask>

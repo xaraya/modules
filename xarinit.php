@@ -105,7 +105,36 @@ function reminders_init()
         return;
     }
 
-    # --------------------------------------------------------
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_lookups";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_reminders_lookups (
+        id                integer unsigned NOT NULL auto_increment,
+        lookup            varchar(255) NOT NULL default '',  
+        message           varchar(255) NOT NULL default '', 
+        email_id_1        integer unsigned NOT NULL default 0, 
+        email_id_2        integer unsigned NOT NULL default 0, 
+        template_id       integer unsigned NOT NULL default 0, 
+        phone             varchar(255) NOT NULL default '', 
+        email             varchar(255) NOT NULL default '', 
+        timecreated       integer unsigned NOT NULL default 0, 
+        timemodified      integer unsigned NOT NULL default 0, 
+        PRIMARY KEY  (id)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_reminders_lookup_history";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_reminders_lookup_history (
+        id                integer unsigned NOT NULL auto_increment,
+        lookmeup_id       integer unsigned NOT NULL default 0, 
+        date              integer unsigned NOT NULL default 0, 
+        promised          tinyint(1) unsigned NOT NULL default 0, 
+        timecreated       integer unsigned NOT NULL default 0, 
+        PRIMARY KEY  (id)
+    )";
+    if (!$q->run($query)) return;
+
+# --------------------------------------------------------
 #
     # Set up masks
 #
@@ -140,6 +169,8 @@ function reminders_init()
                      'reminders_emails',
                      'reminders_entries',
                      'reminders_history',
+                     'reminders_lookups',
+                     'reminders_lookup_history',
                      ];
 
     if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
