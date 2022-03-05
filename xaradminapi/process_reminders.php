@@ -19,7 +19,6 @@ function reminders_adminapi_process_reminders($args)
     if (!isset($args['copy_emails'])) $args['copy_emails'] = false;
 
     sys::import('modules.dynamicdata.class.objects.master');
-    //$entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
     $mailer_template = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
     
     // Get the reminder entries to process
@@ -30,6 +29,7 @@ function reminders_adminapi_process_reminders($args)
     	$data['entry_list'] = '';
     	$state = 3;
     }
+
     $items = xarMod::apiFunc('reminders', 'user', 'getall', array('itemids' => $data['entry_list'], 'state' => $state));
 
     // Get today's date

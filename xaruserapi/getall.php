@@ -67,11 +67,16 @@ function reminders_userapi_getall($args)
     }
 
     // Check if a list of reminder IDs was passed
-    if (!empty($args['itemids'])) {
-    	$entry_list = explode(',', $args['itemids']);
-    	$q->in('entries.id', $entry_list);
-    }
-
+    if (isset($args['itemids'])) {
+		if (!empty($args['itemids'])) {
+			$entry_list = explode(',', $args['itemids']);
+			$q->in('entries.id', $entry_list);
+		} else {
+			// If an empty list was passed, bail
+			return array();
+		}
+	}
+    
 	$q->run();
     $items = $q->output();
     

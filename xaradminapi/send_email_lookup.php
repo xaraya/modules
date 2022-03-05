@@ -89,11 +89,11 @@ function reminders_adminapi_send_email_lookup($data)
                       'attachments'      => $attachments,
                       'data'             => $data, 
                     );
-
+		
         // Check if we have a subject/message or a message ID
         if (empty($data['params']['subject']) && empty($data['params']['message_body'])) {
             // Bail if no message ID available
-            if (empty($data['params']['message_id']))
+            if (empty($data['params']['message_id']));
             $result['code'] = 2;
             return $result;
         }
@@ -125,10 +125,13 @@ function reminders_adminapi_send_email_lookup($data)
             $args['message'] = $data['params']['message_body'];
             // In this case we set the mail type to "text to html"
             $args['mail_type'] = 2;
+        } else {
+        	// This should not happen
+        	$result['code'] = 2;
         }
         // Send the email
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
-        
+       
         // Save to the database if called for
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
