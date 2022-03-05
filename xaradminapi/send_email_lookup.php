@@ -58,6 +58,8 @@ function reminders_adminapi_send_email_lookup($data)
     $data['lookup_name']          = $data['info']['lookup_name'];
     $data['lookup_email']         = $data['info']['lookup_email'];
     $data['lookup_phone']         = $data['info']['lookup_phone'];
+    $data['entry_id']      = (int)$data['info']['id'];
+//    $data['code']          = $data['info']['code'];
     
     // Get today's date
     $datetime = new XarDateTime();
@@ -131,7 +133,7 @@ function reminders_adminapi_send_email_lookup($data)
         }
         // Send the email
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
-       
+
         // Save to the database if called for
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
@@ -139,7 +141,7 @@ function reminders_adminapi_send_email_lookup($data)
 									'entry_id' => $data['entry_id'],
 									'message'  => $data['reminder_text'],
 									'address'  => $recipientaddress,
-									'due_date' => $data['due_date'],
+//									'due_date' => $data['due_date'],
 								));
         }
       
