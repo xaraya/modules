@@ -43,10 +43,10 @@ function reminders_adminapi_send_email_lookup($data)
 	$recipientaddress = $data['info']['address_1'];
 
 	// Add a CC if there is one
-	if (!empty($data['info']['address_1'])) {
+	if (!empty($data['info']['address_2'])) {
 	    $data['name']->value = $data['info']['name_1'];
 	    $ccname = $data['name']->getValue();
-    	$ccaddress = array($data['info']['address_1'] => $ccname);
+    	$ccaddress = array($data['info']['address_2'] => $ccname);
 	} else {
     	$ccaddress = array();
 	}
