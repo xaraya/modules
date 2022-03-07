@@ -16,7 +16,7 @@
             </includes>
             <target>view_emails</target>
             <title>Manage the reminder emails</title>
-            <label>Emails</label>
+            <label>Owners</label>
         </menuitem>
         <menuitem>
             <mask>ManageReminders</mask>
