@@ -21,6 +21,24 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Email Subject</xar:var>
+            <xar:data-label property="$properties['subject']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['subject']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Email Salutation</xar:var>
+            <xar:data-label property="$properties['salutation']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['salutation']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">State</xar:var>
             <xar:data-label property="$properties['state']" value="$value"/>                    
         </div>

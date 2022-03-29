@@ -25,9 +25,9 @@ function reminders_adminapi_process_lookups($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $mailer_template = DataObjectMaster::getObject(['name' => 'mailer_mails']);
-
-    // Get the reminder entries to process
+    $mailer_template = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
+    
+    // Get the lookup entries to process
     if ($args['test']) {
         if (!xarVarFetch('entry_list', 'str', $data['entry_list'], '', XARVAR_NOT_REQUIRED)) {
             return;
@@ -37,7 +37,8 @@ function reminders_adminapi_process_lookups($args)
         $data['entry_list'] = '';
         $state = 3;
     }
-    $items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', ['itemids' => $data['entry_list'], 'state' => $state]);
+    
+	$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list'], 'state' => $state));
 
     // Get today's date
     $datetime = new XarDateTime();

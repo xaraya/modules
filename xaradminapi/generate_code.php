@@ -11,6 +11,10 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
+/**
+ * Generate a unique code for each entry or lookup
+ * The code is independent of the itemid
+ */
 
 function reminders_adminapi_generate_code($args)
 {

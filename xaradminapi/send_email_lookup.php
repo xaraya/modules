@@ -36,22 +36,20 @@ function reminders_adminapi_send_email_lookup($data)
     $data['name']->value = $data['info']['name_1'];
 
     // Set a placeholder name if we don't have one
-    if (empty($data['name']->value)) {
-        $data['name']->setValue([['id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname')]]);
-    }
+	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
+    
+	// Get the name and address of the chosen participant
+	$recipientname    = $data['name']->getValue();
+	$recipientaddress = $data['info']['address_1'];
 
-    // Get the name and address of the chosen participant
-    $recipientname    = $data['name']->getValue();
-    $recipientaddress = $data['info']['address_1'];
-
-    // Add a CC if there is one
-    if (!empty($data['info']['address_1'])) {
-        $data['name']->value = $data['info']['name_1'];
-        $ccname = $data['name']->getValue();
-        $ccaddress = [$data['info']['address_1'] => $ccname];
-    } else {
-        $ccaddress = [];
-    }
+	// Add a CC if there is one
+	if (!empty($data['info']['address_2'])) {
+	    $data['name']->value = $data['info']['name_1'];
+	    $ccname = $data['name']->getValue();
+    	$ccaddress = array($data['info']['address_2'] => $ccname);
+	} else {
+    	$ccaddress = array();
+	}
     // Maybe we'll add a BCC at some point
     $bccaddress = $data['copy_emails'] ? [xarUser::getVar('email')] : [];
 
@@ -60,7 +58,9 @@ function reminders_adminapi_send_email_lookup($data)
     $data['lookup_name']          = $data['info']['lookup_name'];
     $data['lookup_email']         = $data['info']['lookup_email'];
     $data['lookup_phone']         = $data['info']['lookup_phone'];
-
+    $data['entry_id']      = (int)$data['info']['id'];
+//    $data['code']          = $data['info']['code'];
+    
     // Get today's date
     $datetime = new XarDateTime();
     $datetime->settoday();
@@ -89,15 +89,15 @@ function reminders_adminapi_send_email_lookup($data)
                       'ccaddresses'      => $ccaddress,
                       'bccaddresses'     => $bccaddress,
                       'attachments'      => $attachments,
-                      'data'             => $data,
-                    ];
-
+                      'data'             => $data, 
+                    );
+		
         // Check if we have a subject/message or a message ID
         if (empty($data['params']['subject']) && empty($data['params']['message_body'])) {
             // Bail if no message ID available
-            if (empty($data['params']['message_id'])) {
-                $result['code'] = 2;
-            }
+            if (empty($data['params']['message_id']));
+            $result['code'] = 2;
+
             return $result;
         }
 
@@ -136,19 +136,22 @@ function reminders_adminapi_send_email_lookup($data)
             $args['message'] = $data['params']['message_body'];
             // In this case we set the mail type to "text to html"
             $args['mail_type'] = 2;
+        } else {
+        	// This should not happen
+        	$result['code'] = 2;
         }
         // Send the email
-        $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $args);
+        $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
 
         // Save to the database if called for
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
-            $history = DataObjectMaster::getObject(['name' => 'reminders_history']);
-            $history->createItem([
-                                    'entry_id' => $data['entry_id'],
-                                    'message'  => $data['reminder_text'],
-                                    'address'  => $recipientaddress,
-                                    'due_date' => $data['due_date'],
-                                ]);
+			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
+			$history->createItem(array(
+									'entry_id' => $data['entry_id'],
+									'message'  => $data['reminder_text'],
+									'address'  => $recipientaddress,
+//									'due_date' => $data['due_date'],
+								));
         }
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();

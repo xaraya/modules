@@ -13,6 +13,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Owner</xar:var>
+            <xar:data-label property="$properties['owner']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['owner']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">Phone</xar:var>
             <xar:data-label property="$properties['phone']" label="$value"/>                    
         </div>

@@ -72,8 +72,8 @@ function reminders_userapi_getall($args)
         $entry_list = explode(',', $args['itemids']);
         $q->in('entries.id', $entry_list);
     }
-
-    $q->run();
+        
+	$q->run();
     $items = $q->output();
 
     return $items;
