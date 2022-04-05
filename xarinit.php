@@ -135,7 +135,8 @@ function reminders_init()
     }
     $query = "CREATE TABLE " . $prefix . "_reminders_lookup_history (
         id                integer unsigned NOT NULL auto_increment,
-        lookmeup_id       integer unsigned NOT NULL default 0, 
+        lookup_id         integer unsigned NOT NULL default 0, 
+        owner             integer unsigned NOT NULL default 0, 
         date              integer unsigned NOT NULL default 0, 
         promised          tinyint(1) unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
