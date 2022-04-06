@@ -32,6 +32,8 @@ function reminders_adminapi_process_lookups($args)
     }
     
 	$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
+	
+	$owners = xarMod::apiFunc('reminders', 'user', 'getall_owners', array('do_lookup' => true)); 
 /*
 echo "<pre>";var_dump($items);exit;
     // Get today's date
