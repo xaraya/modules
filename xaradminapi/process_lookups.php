@@ -27,8 +27,8 @@ function reminders_adminapi_process_lookups($args)
     	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
     } else {
     	// In the live invironment we get exactly one lookup, which will correspond to a single email we receive
-    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => xarUser::getVar('id')));
-    	$data['entry_list'] = (int)$row['id'];
+//    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => xarUser::getVar('id')));
+//    	$data['entry_list'] = (int)$row['id'];
     }
     
 	$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
