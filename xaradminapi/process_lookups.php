@@ -101,6 +101,24 @@ echo "<pre>";var_dump($items);exit;
 		foreach ($owners as $owner) {
 			// Get the entry which will figure in the email
 			$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owner['id']));
+
+			// Prepare the data we need to send an email
+			// Get the template information for this message
+			$this_template_id = $row['template_id'];
+			if (isset($templates[$this_template_id])) {
+				// We already have the information.
+			} else {
+				// Get the information
+				$mailer_template->getItem(array('itemid' => $this_template_id));
+				$values = $mailer_template->getFieldValues();
+				$templates[$this_template_id]['message_id']   = $values['id'];
+				$templates[$this_template_id]['message_body'] = $values['body'];
+				$templates[$this_template_id]['subject']      = $values['subject'];
+			}
+			// Assemble the parameters for the email
+			$params['message_id']   = $templates[$this_template_id]['message_id'];
+			$params['message_body'] = $templates[$this_template_id]['message_body'];
+			$params['subject']      = $templates[$this_template_id]['subject'];
 		}
 		var_dump($owners);var_dump($rows);exit;
 	}
