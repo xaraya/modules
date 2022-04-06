@@ -27,11 +27,10 @@ function reminders_adminapi_process_lookups($args)
     	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
     } else {
     	// In the live invironment we get exactly one lookup, which will correspond to a single email we receive
-    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => xarUser::getVar('id')));
-    	$data['entry_list'] = (int)$row['id'];
+//    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => xarUser::getVar('id')));
+//    	$data['entry_list'] = (int)$row['id'];
     }
 
-	$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
 	
 /*
 echo "<pre>";var_dump($items);exit;
@@ -56,6 +55,9 @@ echo "<pre>";var_dump($items);exit;
     */
     
 	if ($args['test']) {
+
+		$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
+
 		$data['results'] = array();
 		foreach ($items as $key => $row) {
 	
@@ -93,8 +95,10 @@ echo "<pre>";var_dump($items);exit;
 		}
 	} else {
 		// Get the owners to be processed (sent an email)
-		$owners = xarMod::apiFunc('reminders', 'user', 'getall_owners', array('do_lookup' => true));     
-		var_dump($owners);exit;
+		$owners = xarMod::apiFunc('reminders', 'user', 'getall_owners', array('do_lookup' => true));
+		// Get the entry which will figure in the email
+    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owners['id']));
+		var_dump($owners);var_dump($rows);exit;
 	}
     return $data['results'];
 }
