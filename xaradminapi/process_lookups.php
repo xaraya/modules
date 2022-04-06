@@ -25,15 +25,15 @@ function reminders_adminapi_process_lookups($args)
     if ($args['test']) {
     	// In the test environment, we just look which lookups were checked in the test lookup admin page. We will receive all those emails.
     	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
-    	$state = 0;
     } else {
     	// In the live invironment we get exactly one lookup, which will correspond to a single email we receive
-    	$id = xarMod::apiFunc('reminders', 'admin', 'generate_renadom_entry('user', xarUser::getVar('id'));
-    	$data['entry_list'] = $id;
+    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => xarUser::getVar('id')));
+    	$data['entry_list'] = (int)$row['id'];
     }
     
-	$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list'], 'state' => $state));
-
+	$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
+/*
+echo "<pre>";var_dump($items);exit;
     // Get today's date
     $datetime = new XarDateTime();
     $datetime->settoday();
@@ -49,7 +49,7 @@ function reminders_adminapi_process_lookups($args)
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
     $q = new Query('UPDATE', $tables['reminders_lookups']);    
-    
+*/    
     /*
     * For each item we need to find the latest reminder that has not yet been sent
     */
@@ -83,17 +83,11 @@ function reminders_adminapi_process_lookups($args)
 
 			// We are done with this reminder
 			break;
+		} else {
+			// This a live email
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['results'] = array_merge($data['results'], array($data['result']));
 		}
-
-    	// If we are past the due date, then make this reminder inactive and spawn a new one if need be
-    	if ($row['due_date'] < $today) {
-
-			// Retire the reminder
-			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $row['id'], 'recurring' => $row['recurring']));
-	    	
-			// We are done with this reminder
-			break;
-    	}    	
     }
     return $data['results'];
 }
