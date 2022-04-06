@@ -20,22 +20,21 @@ function reminders_userapi_getall_Lookups($args)
     $tables = xarDB::getTables();
     $q = new Query('SELECT');
     $q->addtable($tables['reminders_lookups'], 'lookups');
-/*
     $q->addtable($tables['reminders_emails'], 'email_1');
     $q->leftjoin('lookups.email_id_1', 'email_1.id');
     $q->addtable($tables['reminders_emails'], 'email_2');
     $q->leftjoin('lookups.email_id_2', 'email_2.id');
-*/        
+        
     // Add only these fields
     $q->addfields(array(
     				'lookups.id',
     				'lookups.lookup AS lookup_name',
     				'lookups.email AS lookup_email',
     				'lookups.phone AS lookup_phone',
-//    			  	'email_1.name AS name_1',
-//    			  	'email_1.address AS address_1',
-//    			  	'email_2.name AS name_2',
-//    			  	'email_2.address AS address_2',
+    			  	'email_1.name AS name_1',
+    			  	'email_1.address AS address_1',
+    			  	'email_2.name AS name_2',
+    			  	'email_2.address AS address_2',
     			  	'message',
     			  	'template_id',
     			  )
