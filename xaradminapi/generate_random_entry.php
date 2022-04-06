@@ -50,9 +50,10 @@ function reminders_adminapi_generate_random_entry($args)
     if (!empty($recent_lookups)) $q->notin('id', $recent_lookups);
 
     $q->setstartat($random_id);
+    // Get a bunch of items so we can skip over deleted ones and recently sent, and still get one to send
     $q->setrowstodo(100);
     
-    $q->qecho();
+//    $q->qecho();
 
     // Get one row
     $q->run();

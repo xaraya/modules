@@ -40,7 +40,7 @@ function reminders_userapi_getall_Lookups($args)
     			  )
     );
     
-    // All reminders unless we passed a state
+    // All lookups unless we passed a state
     if (!empty($args['state'])) {
     	$q->eq('lookups.state', $args['state']);
     }
