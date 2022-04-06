@@ -39,6 +39,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Do Lookups</xar:var>
+            <xar:data-label property="$properties['do_lookup']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['do_lookup']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">State</xar:var>
             <xar:data-label property="$properties['state']" value="$value"/>                    
         </div>
