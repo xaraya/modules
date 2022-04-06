@@ -79,19 +79,10 @@ echo "<pre>";var_dump($items);exit;
 			$params['message_body'] = $templates[$this_template_id]['message_body'];
 			$params['subject']      = $templates[$this_template_id]['subject'];
 	
-			// If this is a test, just send the mail
-			if ($args['test']) {
-				// Send the email
-				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
-				$data['results'] = array_merge($data['results'], array($data['result']));
+			// Send the email
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['results'] = array_merge($data['results'], array($data['result']));
 
-				// We are done with this reminder
-				break;
-			} else {
-				// This a live email
-				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
-				$data['results'] = array_merge($data['results'], array($data['result']));
-			}
 		}
 	} else {
 		// Get the owners to be processed (sent an email)
@@ -119,8 +110,13 @@ echo "<pre>";var_dump($items);exit;
 			$params['message_id']   = $templates[$this_template_id]['message_id'];
 			$params['message_body'] = $templates[$this_template_id]['message_body'];
 			$params['subject']      = $templates[$this_template_id]['subject'];
+			
+			// Send the email
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['results'] = array_merge($data['results'], array($data['result']));
 		}
-		var_dump($owners);var_dump($rows);exit;
+
+		var_dump($owners);var_dump($row);exit;
 	}
     return $data['results'];
 }
