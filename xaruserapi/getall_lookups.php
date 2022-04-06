@@ -11,12 +11,12 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Return the entries
+ * Return the lookups
  *
  */
 function reminders_userapi_getall_Lookups($args)
 {
-    // Set up this function to get all entries and the emails AND names of gthe users
+    // Set up this function to get all entries and the emails AND names of the users
     $tables = xarDB::getTables();
     $q = new Query('SELECT');
     $q->addtable($tables['reminders_lookups'], 'lookups');
