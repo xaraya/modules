@@ -93,6 +93,10 @@ echo "<pre>";var_dump($items);exit;
 			// Get the entry which will figure in the email
 			$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owner['id']));
 
+			// Add the owner name and addfress to the row data so we know where to send
+			$row['name_1'] = $owner['name'];
+			$row['address_1'] = $owner['address'];
+			
 			// Prepare the data we need to send an email
 			// Get the template information for this message
 			$this_template_id = $row['template_id'];
