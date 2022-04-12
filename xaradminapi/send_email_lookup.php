@@ -33,18 +33,18 @@ function reminders_adminapi_send_email_lookup($data)
 
     $result = array();
     $attachments = array();
-    $data['name']->value = $data['info']['name_1'];
+    $data['name']->value = $data['info']['name'];
     
     // Set a placeholder name if we don't have one
 	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
     
 	// Get the name and address of the chosen participant
 	$recipientname    = $data['name']->getValue();
-	$recipientaddress = $data['info']['address_1'];
+	$recipientaddress = $data['info']['address'];
 
 	// Add a CC if there is one
 	if (!empty($data['info']['address_2'])) {
-	    $data['name']->value = $data['info']['name_1'];
+	    $data['name']->value = $data['info']['name'];
 	    $ccname = $data['name']->getValue();
     	$ccaddress = array($data['info']['address_2'] => $ccname);
 	} else {

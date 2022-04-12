@@ -95,7 +95,7 @@ echo "<pre>";var_dump($items);exit;
 
 			// Rename the parameters for sending to the email template
 			$row['lookup_name'] = $row['name'];
-			$row['lookup_email'] = $row['address'];
+			$row['lookup_email'] = $row['email'];
 			$row['lookup_phone'] = $row['phone'];
 			
 			// Add the owner name and addfress to the row data so we know where to send
