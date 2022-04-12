@@ -32,7 +32,7 @@ function reminders_userapi_getall_Lookups($args)
     				'lookups.email AS lookup_email',
     				'lookups.phone AS lookup_phone',
     			  	'email_1.name AS name',
-    			  	'email_1.address AS email',
+    			  	'email_1.address AS address',
     			  	'email_2.name AS name_2',
     			  	'email_2.address AS address_2',
     			  	'message',
