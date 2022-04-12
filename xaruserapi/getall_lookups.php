@@ -28,7 +28,7 @@ function reminders_userapi_getall_Lookups($args)
     // Add only these fields
     $q->addfields(array(
     				'lookups.id',
-    				'lookups.lookup AS lookup_name',
+    				'lookups.name AS lookup_name',
     				'lookups.email AS lookup_email',
     				'lookups.phone AS lookup_phone',
     			  	'email_1.name AS name_1',
