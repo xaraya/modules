@@ -88,7 +88,8 @@ echo "<pre>";var_dump($items);exit;
 		// Get the owners to be processed (sent an email)
 		$owners = xarMod::apiFunc('reminders', 'user', 'getall_owners', array('do_lookup' => true));
 		
-		// Run through ithe owners
+		// Run through the owners
+		$data['results'] = array();
 		foreach ($owners as $owner) {
 			// Get the entry which will figure in the email
 			$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owner['id']));
