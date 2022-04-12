@@ -20,42 +20,15 @@ function reminders_adminapi_process_lookups($args)
 
     sys::import('modules.dynamicdata.class.objects.master');
     $mailer_template = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
-    
-    // Get the lookups we want an email for
-    if ($args['test']) {
-    	// In the test environment, we just look which lookups were checked in the test lookup admin page. We will receive all those emails.
-    	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
-    } else {
-    	// In the live invironment we get exactly one lookup, which will correspond to a single email we receive
-//    	$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => xarUser::getVar('id')));
-//    	$data['entry_list'] = (int)$row['id'];
-    }
-
-	
-/*
-echo "<pre>";var_dump($items);exit;
-    // Get today's date
-    $datetime = new XarDateTime();
-    $datetime->settoday();
-    $today = $datetime->getTimestamp();
-
-    // Run through the active reminders and send emails
-    $current_id = 0;
-    $previous_id = 0;
-    $templates = array();
-    $data['results'] = array();
-        
-    // Create a query object for reuse throughout
-    sys::import('xaraya.structures.query');
-    $tables = xarDB::getTables();
-    $q = new Query('UPDATE', $tables['reminders_lookups']);    
-*/    
+    	
     /*
     * For each item we need to find the latest reminder that has not yet been sent
     */
     
 	if ($args['test']) {
 
+    	// In the test environment, we just look which lookups were checked in the test lookup admin page. We will receive all those emails.
+    	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
 		$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
 
 		$data['results'] = array();
