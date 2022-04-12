@@ -79,32 +79,42 @@
     <property name="template">
       <id>4055</id>
       <label>Template</label>
-      <type>integerbox</type>
+      <type>dropdown</type>
       <defaultvalue></defaultvalue>
       <source>lookups.template_id</source>
       <status>33</status>
       <seq>7</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:94:"xarMod::apiFunc('mailer','user','getall_mails',array('module'=>xarMod::getRegID('reminders')))";}</configuration>
     </property>
     <property name="email_1">
       <id>4056</id>
       <label>Email 1</label>
-      <type>email</type>
+      <type>objectref</type>
       <defaultvalue></defaultvalue>
       <source>lookups.email_id_1</source>
       <status>33</status>
       <seq>8</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:25:"0,Choose an email address";}</configuration>
     </property>
     <property name="email_2">
       <id>4057</id>
       <label>Email 2</label>
-      <type>email</type>
+      <type>objectref</type>
       <defaultvalue></defaultvalue>
       <source>lookups.email_id_2</source>
       <status>33</status>
       <seq>9</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:25:"0,Choose an email address";}</configuration>
+    </property>
+    <property name="owner">
+      <id>4058</id>
+      <label>Owner</label>
+      <type>objectref</type>
+      <defaultvalue>0</defaultvalue>
+      <source>lookups.owner</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:16:"reminders_emails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
   </properties>
 </object>
