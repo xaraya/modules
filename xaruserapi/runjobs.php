@@ -39,6 +39,7 @@ function scheduler_userapi_runjobs($args)
 # Get the current jobs
 #
     if(!empty($itemid)) {
+    	// An ID is passed: we will run a single job
         $job = xarMod::apiFunc('scheduler','user','get',$args);
 
         if(empty($job)) {
@@ -50,6 +51,7 @@ function scheduler_userapi_runjobs($args)
 
         $jobs[$job['id']] = $job;
     } else {
+    	// Get all the jobs 
         $jobs = xarMod::apiFunc('scheduler','user','getall',$args);
     }
 
@@ -86,7 +88,7 @@ function scheduler_userapi_runjobs($args)
 
 # --------------------------------------------------------
 #
-# Checks for jobs not called by an external scheduler, such as a scheduler block
+# Checks for jobs not called by an external scheduler, such as a scheduler block or the sheduler main user page
 #
         } elseif($job['job_trigger'] != 1) {
             
@@ -108,7 +110,7 @@ function scheduler_userapi_runjobs($args)
                 continue;
     
             // if this is the first time we run this job and it's not a crontab job, always run it
-            } elseif (empty($lastrun) && $job['job_interval'] != '0c') {
+            } elseif (empty($job['lastrun']) && $job['job_interval'] != '0c') {
     
             // if the job already ran, check if we need to run it again
             } else {
@@ -129,28 +131,28 @@ function scheduler_userapi_runjobs($args)
                         }
                         break;
                     case 'n':    // Minutes
-                        if ($now - $lastrun < $count * 60) {
+                        if ($now - $job['lastrun'] < $count * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'h':
-                        if ($now - $lastrun < $count * 60 * 60) {
+                        if ($now - $job['lastrun'] < $count * 60 * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'd':
-                        if ($now - $lastrun < $count * 24 * 60 * 60) {
+                        if ($now - $job['lastrun'] < $count * 24 * 60 * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'w':
-                        if ($now - $lastrun < $count * 7 * 24 * 60 * 60) {
+                        if ($now - $job['lastrun'] < $count * 7 * 24 * 60 * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'm': // work with day of the month here
                         $new = getdate($now);
-                        $old = getdate($lastrun);
+                        $old = getdate($job['lastrun']);
                         $new['mon'] += 12 * ($new['year'] - $old['year']);
                         if ($new['mon'] < $old['mon'] + $count) {
                             $skip = 1;
@@ -183,7 +185,7 @@ function scheduler_userapi_runjobs($args)
             }
 # --------------------------------------------------------
 #
-# Checks for jobs called by an external scheduler
+# Checks for jobs called by an external scheduler, such as linux crontab
 #
         } else {
             
