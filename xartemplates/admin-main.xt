@@ -51,13 +51,13 @@
           Reminder emails remind you of an upcoming event once or several times.
       </p>
       <p>
-          For instance, if you pay monthly parking fees you can define reminders one or more days ahead of the due date for the payment, say 7, 3 and 1 days before the due date. Each email lets you disable further reminders if they are no longer useful (e.g., if you have paid the fee.
+          For instance, if you pay monthly parking fees, you can define reminders one or more days ahead of the due date for the payment, say 7, 3 and 1 days before the due date. Each email lets you disable further reminders if they are no longer useful (e.g., if you have paid the fee).
       </p>
       <h3>
         Lookup Emails
       </h3>
       <p>
-        Lookup emails are sent periodically, for instance daily. A lookup email contains the contact details taken from a contact list you define and suggest you make contact with them. 
+        Lookup emails are sent periodically, for instance daily. A lookup email contains the contact details taken from a contact list you define and suggests you make contact with them. 
       </p>
       <p>
          The contact details suggested are taken randomly from your contact list, but you can define a minimal interval from one email to the next for given contact. For instance, you may not want to be reminded to contact the same person for, say, 3 months.
