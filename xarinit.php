@@ -181,6 +181,10 @@ function reminders_init()
     xarModVars::set('reminders', 'defaultmastertable','reminders_history');
     xarModVars::set('reminders', 'debugmode', false);
     xarModVars::set('reminders', 'save_history', false);
+    xarModVars::set('reminders', 'salutation', "Getting in touch");
+    xarModVars::set('reminders', 'message', 's:49:"Hello #$first_name#,
+
+I wanted to get in touch.";');
 
 # --------------------------------------------------------
 #

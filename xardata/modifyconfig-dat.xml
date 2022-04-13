@@ -10,5 +10,10 @@
             <target>modifyconfig</target>
             <label>General</label>
         </menuitem>
+        <menuitem>
+            <value>lookups</value>
+            <target>modifyconfig</target>
+            <label>Lookups</label>
+        </menuitem>
     </menuitems>
 </menu>
