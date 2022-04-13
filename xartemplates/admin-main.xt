@@ -44,22 +44,23 @@
           </li>
         </ol>
       </p>
+      <h3>
+        Reminder Emails
+      </h3>
       <p>
-        <a href="&xar-modurl-scheduler-admin-search;">
-          Search for scheduler API functions
-        </a>
-      </p>
-    
-      <p>
-          Then you need some kind of <b>trigger</b> to wake up the scheduler -
-          this can be done e.g. by requesting a specific webpage automatically
-          from your own system via a Unix cron entry or Windows AT command,
-          or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>,
-          or (if you really have no other choice) by relying on web hits from your
-          visitors if your site is relatively busy.
+          Reminder emails remind you of an upcoming event once or several times.
       </p>
       <p>
-        The rest will be handled by the scheduler module :-)
+          For instance, if you pay monthly parking fees you can define reminders one or more days ahead of the due date for the payment, say 7, 3 and 1 days before the due date. Each email lets you disable further reminders if they are no longer useful (e.g., if you have paid the fee.
+      </p>
+      <h3>
+        Lookup Emails
+      </h3>
+      <p>
+        Lookup emails are sent periodically, for instance daily. A lookup email contains the contact details taken from a contact list you define and suggest you make contact with them. 
+      </p>
+      <p>
+         The contact details suggested are taken randomly from your contact list, but you can define a minimal interval from one email to the next for given contact. For instance, you may not want to be reminded to contact the same person for, say, 3 months.
       </p>
       <h3>
         Included Blocks
