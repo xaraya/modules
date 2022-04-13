@@ -45,8 +45,8 @@ function scheduler_userapi_runjobs($args)
         if(empty($job)) {
             return xarML('Invalid job ID');
         }
-        if($job['job_trigger'] != $trigger) {
-            return xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[$job['trigger']], $triggers[$trigger]);
+        if((int)$job['job_trigger'] != $trigger) {
+            return xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[(int)$job['trigger']], $triggers[$trigger]);
         }
 
         $jobs[$job['id']] = $job;
@@ -82,7 +82,7 @@ function scheduler_userapi_runjobs($args)
 
         $log[] = xarML('Starting: ') . $jobname;
         
-        if($job['job_trigger'] == 0) {
+        if((int)$job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log[] = xarML('Skipped: ') . $jobname;
             continue;
@@ -91,7 +91,7 @@ function scheduler_userapi_runjobs($args)
 #
 # Checks for jobs not called by an external scheduler, such as a scheduler block or the sheduler main user page
 #
-        } elseif($job['job_trigger'] != 1) {
+        } elseif((int)$job['job_trigger'] != 1) {
             
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
@@ -190,7 +190,7 @@ function scheduler_userapi_runjobs($args)
 #
         } else {
             
-            $sourcetype = $job['source_type'];  // Localhost, IP with or without proxy, host name
+            $sourcetype = (int)$job['source_type'];  // Localhost, IP with or without proxy, host name
             $source = $job['source'];           // IP or host name
 
             $isvalid = false;
