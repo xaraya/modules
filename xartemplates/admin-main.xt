@@ -2,17 +2,83 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
+
     <div class="xar-mod-body">
-        <xar:var name="label">Official Icon</xar:var>
-        <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon" />
-
-        <h2>
-            Overview
-        </h2>
-
-        <p>
-            Dummy reminders text
-        </p>
-        <div style="clear:both">&#160;</div>
+      <xar:var name="label">Official Icon</xar:var>
+      <img src="#xarTplGetImage('module-generic.png','base')#" class="xar-module-icon" alt="#$label#" width="96" height="96"/>
+      <h2>
+          Overview
+      </h2>
+      <h3>
+        What is it?
+      </h3>
+      <p>
+        <em>
+          This module lets you set up automatic emails to remind you (or others) about events ou have defined.
+        </em>
+      </p>
+      <p>
+        The module supports two types of events:
+        <ul>
+          <li>
+            Reminders: These are emails that remind one of upcoming events. Reminder emails are sent at defined intervals prior to an event.
+          </li>
+          <li>
+            Lookups: These are emails that suggest contacting someone from a list of defined contacts. Lookup emails are sent at periodic intervals (for instance, daily).
+          </li>
+        </ul>
+      </p>
+      <h3>
+        How to use it?
+      </h3>
+      <p>
+        <ol>
+          <li>
+            Set up the scheduler module and define reminders and lookups as jobs in that module.
+          </li>
+          <li>
+            Set up reminder emails.
+          </li>
+          <li>
+            Set up lookup emails.
+          </li>
+        </ol>
+      </p>
+      <p>
+        <a href="&xar-modurl-scheduler-admin-search;">
+          Search for scheduler API functions
+        </a>
+      </p>
+    
+      <p>
+          Then you need some kind of <b>trigger</b> to wake up the scheduler -
+          this can be done e.g. by requesting a specific webpage automatically
+          from your own system via a Unix cron entry or Windows AT command,
+          or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>,
+          or (if you really have no other choice) by relying on web hits from your
+          visitors if your site is relatively busy.
+      </p>
+      <p>
+        The rest will be handled by the scheduler module :-)
+      </p>
+      <h3>
+        Included Blocks
+      </h3>
+      <p>
+        <ul>
+          <li>None</li>
+        </ul>
+      </p>
+      <h3>
+        Included Hooks
+      </h3>
+      <p>
+        <ul>
+          <li>to be defined</li>
+        </ul>
+      </p>
+      <p class="xar-sub">
+        <strong>&#160;Reminders Module Overview</strong><br />&#160;Version 1.0.0&#160; 2022-01-01
+      </p>
     </div>
 </xar:template>
