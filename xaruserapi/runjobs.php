@@ -75,6 +75,7 @@ function scheduler_userapi_runjobs($args)
 #
     $log[] = xarML('Starting jobs');
     $hasrun = array();
+    $now = time();
     foreach ($jobs as $id => $job) {
 
         $jobname = $job['module'] . "_xar" . $job['type'] . "_" . $job['function'];
@@ -277,7 +278,7 @@ function scheduler_userapi_runjobs($args)
             $log[] = xarML('Succeeded: ') . $jobname;
             $log[] = $output;
         }
-        $jobs[$id]['last_run'] = time();
+        $job['last_run'] = $now;
         $hasrun[$id] = $job;
 
 # --------------------------------------------------------
