@@ -40,21 +40,21 @@ function scheduler_userapi_runjobs($args)
 #
     # Get the current jobs
 #
-    if(!empty($itemid)) {
-    	// An ID is passed: we will run a single job
-        $job = xarMod::apiFunc('scheduler','user','get',$args);
+    if (!empty($itemid)) {
+        // An ID is passed: we will run a single job
+        $job = xarMod::apiFunc('scheduler', 'user', 'get', $args);
 
         if (empty($job)) {
             return xarML('Invalid job ID');
         }
-        if((int)$job['job_trigger'] != $trigger) {
+        if ((int)$job['job_trigger'] != $trigger) {
             return xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[(int)$job['trigger']], $triggers[$trigger]);
         }
 
         $jobs[$job['id']] = $job;
     } else {
-    	// Get all the jobs 
-        $jobs = xarMod::apiFunc('scheduler','user','getall',$args);
+        // Get all the jobs
+        $jobs = xarMod::apiFunc('scheduler', 'user', 'getall', $args);
     }
 
     # --------------------------------------------------------
@@ -77,9 +77,9 @@ function scheduler_userapi_runjobs($args)
 #
     $log_identifier = 'Scheduler runjobs:';
     $logs = xarML('#(1) Starting jobs', $log_identifier);
-	$logs[] = $log;
-	xarLog::message($log, xarLog::LEVEL_INFO);  
-	
+    $logs[] = $log;
+    xarLog::message($log, xarLog::LEVEL_INFO);
+
     $hasrun = array();
     $now = time();
     foreach ($jobs as $id => $job) {
@@ -87,53 +87,53 @@ function scheduler_userapi_runjobs($args)
 
         $log = xarML('#(2) Starting: #(1)', $jobname, $log_identifier);
         $logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
-		      
-        if((int)$job['job_trigger'] == 0) {
+        xarLog::message($log, xarLog::LEVEL_INFO);
+
+        if ((int)$job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+            $logs[] = $log;
+            xarLog::message($log, xarLog::LEVEL_INFO);
             continue;
 
         # --------------------------------------------------------
 #
 # Checks for jobs not called by an external scheduler, such as a scheduler block or the sheduler main user page
 #
-        } elseif((int)$job['job_trigger'] != 1) {
-            
+        } elseif ((int)$job['job_trigger'] != 1) {
+
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+                $logs[] = $log;
+                xarLog::message($log, xarLog::LEVEL_INFO);
                 continue;
 
             // if we are outside the start- or end-date, skip it
             } elseif ((!empty($job['startdate']) && $now < $job['startdate']) ||
                       (!empty($job['enddate']) && $now > $job['enddate'])) {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+                $logs[] = $log;
+                xarLog::message($log, xarLog::LEVEL_INFO);
                 continue;
 
             // if this is a crontab job and the next run is later, skip it
             } elseif ($job['job_interval'] == '0c' && !empty($job['crontab']) &&
                       !empty($job['crontab']['nextrun']) && $now < $job['crontab']['nextrun'] + 60) {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+                $logs[] = $log;
+                xarLog::message($log, xarLog::LEVEL_INFO);
                 continue;
 
             // if this is the first time we run this job and it's not a crontab job, always run it
             } elseif (empty($job['lastrun']) && $job['job_interval'] != '0c') {
-    
+
             // if the job already ran, check if we need to run it again
             } else {
-                if (!preg_match('/(\d+)(\w)/',$job['job_interval'],$matches)) {
+                if (!preg_match('/(\d+)(\w)/', $job['job_interval'], $matches)) {
                     $log = xarML('#(1) invalid interval', $log_identifier);
-					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+                    $logs[] = $log;
+                    xarLog::message($log, xarLog::LEVEL_INFO);
                     continue;
                 }
                 $count = $matches[1];
@@ -197,9 +197,9 @@ function scheduler_userapi_runjobs($args)
                         break;
                 }
                 if ($skip) {
-					$log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+                    $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
+                    $logs[] = $log;
+                    xarLog::message($log, xarLog::LEVEL_INFO);
                     continue;
                 }
             }
@@ -208,7 +208,6 @@ function scheduler_userapi_runjobs($args)
 # Checks for jobs called by an external scheduler, such as linux crontab
 #
         } else {
-            
             $sourcetype = (int)$job['source_type'];  // Localhost, IP with or without proxy, host name
             $source = $job['source'];           // IP or host name
 
@@ -220,16 +219,16 @@ function scheduler_userapi_runjobs($args)
                         $isvalid = true;
                     }
                     $log = xarML('#(1) Source type: localhost', $log_identifier);
-					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+                    $logs[] = $log;
+                    xarLog::message($log, xarLog::LEVEL_INFO);
                     break;
                 case 2: // IP direct connection
                     if (empty($proxy) && !empty($ip) && $ip == $source) {
                         $isvalid = true;
                     }
                     $log = xarML('#(1) Source type: IP direct connection', $log_identifier);
-					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+                    $logs[] = $log;
+                    xarLog::message($log, xarLog::LEVEL_INFO);
                     break;
                 case 3: // IP behind proxy
                     if (!empty($proxy) && !empty($ip) && $ip == $source) {
@@ -244,8 +243,8 @@ function scheduler_userapi_runjobs($args)
                             $hostname = @gethostbyaddr($ip);
                         }
                         $log = xarML('#(2) Source type: host #(1)', $hostname, $log_identifier);
-						$logs[] = $log;
-						xarLog::message($log, xarLog::LEVEL_INFO);  
+                        $logs[] = $log;
+                        xarLog::message($log, xarLog::LEVEL_INFO);
                         if (!empty($hostname) && $hostname == $source) {
                             $isvalid = true;
                         }
@@ -271,21 +270,21 @@ function scheduler_userapi_runjobs($args)
             }
             if (!$isvalid) {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+                $logs[] = $log;
+                xarLog::message($log, xarLog::LEVEL_INFO);
                 continue;
             } else {
                 $log = xarML('#(2) Host: #(1)', $hostname, $log_identifier);
-				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+                $logs[] = $log;
+                xarLog::message($log, xarLog::LEVEL_INFO);
             }
         }
 
         xarModVars::set('scheduler', 'running.' . $job['id'], 1);
         if (!xarMod::isAvailable($job['module'])) {
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
-			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+            $logs[] = $log;
+            xarLog::message($log, xarLog::LEVEL_INFO);
             continue;
         }
         if (!empty($job['params'])) {
@@ -304,19 +303,19 @@ function scheduler_userapi_runjobs($args)
         if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
             $log = xarML('#(2) Failed: #(1)', $jobname, $log_identifier);
-			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+            $logs[] = $log;
+            xarLog::message($log, xarLog::LEVEL_INFO);
             $log = isset($output) ? $output : xarML('No output');
-			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+            $logs[] = $log;
+            xarLog::message($log, xarLog::LEVEL_INFO);
         } else {
             $jobs[$id]['result'] = xarML('OK');
             $log = xarML('#(2) Succeeded: #(1)', $jobname, $log_identifier);
-			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+            $logs[] = $log;
+            xarLog::message($log, xarLog::LEVEL_INFO);
             $log = $output;
-			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+            $logs[] = $log;
+            xarLog::message($log, xarLog::LEVEL_INFO);
         }
         $job['last_run'] = $now;
         $hasrun[$id] = $job;
@@ -328,13 +327,12 @@ function scheduler_userapi_runjobs($args)
         $jobobject->setFieldValues($job);
         $jobobject->updateItem(array('itemid' => $job['id']));
         $log = xarML('#(2) Updated: #(1)', $jobname, $log_identifier);
-		$logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
-
+        $logs[] = $log;
+        xarLog::message($log, xarLog::LEVEL_INFO);
     }
     $log = xarML('#(1) Done', $log_identifier);
-	$logs[] = $log;
-	xarLog::message($log, xarLog::LEVEL_INFO);  
+    $logs[] = $log;
+    xarLog::message($log, xarLog::LEVEL_INFO);
 
     // we didn't run anything, so return now
     if (count($hasrun) == 0) {
