@@ -1,0 +1,8 @@
+{
+    "name": "xaraya/payments",
+    "type": "xaraya-module",
+    "description": "Manage ebanking/ecommerce payments",
+    "homepage": "https://github.com/mikespub/xaraya-payments",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}
