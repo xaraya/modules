@@ -80,7 +80,7 @@ function scheduler_userapi_runjobs($args)
     $logs[] = $log;
     xarLog::message($log, xarLog::LEVEL_INFO);
 
-    $hasrun = array();
+    $hasrun = [];
     $now = time();
     foreach ($jobs as $id => $job) {
         $jobname = $job['module'] . "_xar" . $job['type'] . "_" . $job['function'];
@@ -305,7 +305,7 @@ function scheduler_userapi_runjobs($args)
             $log = xarML('#(2) Failed: #(1)', $jobname, $log_identifier);
             $logs[] = $log;
             xarLog::message($log, xarLog::LEVEL_INFO);
-            $log = isset($output) ? $output : xarML('No output');
+            $log = $output ?? xarML('No output');
             $logs[] = $log;
             xarLog::message($log, xarLog::LEVEL_INFO);
         } else {
@@ -325,7 +325,7 @@ function scheduler_userapi_runjobs($args)
         # Update this job
 #
         $jobobject->setFieldValues($job);
-        $jobobject->updateItem(array('itemid' => $job['id']));
+        $jobobject->updateItem(['itemid' => $job['id']]);
         $log = xarML('#(2) Updated: #(1)', $jobname, $log_identifier);
         $logs[] = $log;
         xarLog::message($log, xarLog::LEVEL_INFO);
