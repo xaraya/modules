@@ -1,11 +1,14 @@
 <?php
+
 // $Id: calendar_tests.php 159563 2004-05-24 22:25:43Z quipo $
 
 require_once('simple_include.php');
 require_once('calendar_include.php');
 
-class CalendarTests extends GroupTest {
-    function CalendarTests() {
+class CalendarTests extends GroupTest
+{
+    public function CalendarTests()
+    {
         $this->GroupTest('Calendar Tests');
         $this->addTestFile('calendar_test.php');
         $this->addTestFile('year_test.php');
@@ -19,7 +22,6 @@ class CalendarTests extends GroupTest {
 
 if (!defined('TEST_RUNNING')) {
     define('TEST_RUNNING', true);
-    $test = &new CalendarTests();
+    $test = new CalendarTests();
     $test->run(new HtmlReporter());
 }
-?>
