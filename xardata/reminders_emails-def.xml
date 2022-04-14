@@ -80,17 +80,17 @@
       <id>4059</id>
       <label>Subject</label>
       <type>textbox</type>
-      <defaultvalue>Touching base</defaultvalue>
+      <defaultvalue>xarModVars::get('reminders','subject')</defaultvalue>
       <source>emails.subject</source>
       <status>33</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="salutation">
+    <property name="message">
       <id>4060</id>
-      <label>Salutation</label>
-      <type>textbox</type>
-      <defaultvalue>Hello</defaultvalue>
+      <label>Message</label>
+      <type>textarea</type>
+      <defaultvalue>unserialize(xarModVars::get('reminders','message'))</defaultvalue>
       <source>emails.salutation</source>
       <status>33</status>
       <seq>8</seq>

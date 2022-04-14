@@ -74,7 +74,7 @@ function reminders_init()
         name              varchar(255) NOT NULL default '', 
         address           varchar(255) NOT NULL default '', 
         subject           varchar(255) NOT NULL default '', 
-        salutation        varchar(255) NOT NULL default '', 
+        message           varchar(255) NOT NULL default '', 
         do_lookups        tinyint unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         timemodified      integer unsigned NOT NULL default 0, 
@@ -181,7 +181,7 @@ function reminders_init()
     xarModVars::set('reminders', 'defaultmastertable','reminders_history');
     xarModVars::set('reminders', 'debugmode', false);
     xarModVars::set('reminders', 'save_history', false);
-    xarModVars::set('reminders', 'salutation', "Getting in touch");
+    xarModVars::set('reminders', 'subject', "Getting in touch");
     xarModVars::set('reminders', 'message', 's:49:"Hello #$first_name#,
 
 I wanted to get in touch.";');
