@@ -1,0 +1,8 @@
+{
+    "name": "xaraya/comments",
+    "type": "xaraya-module",
+    "description": "Allows users to post comments on items",
+    "homepage": "https://github.com/mikespub/xaraya-comments",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}
