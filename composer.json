@@ -1,0 +1,8 @@
+{
+    "name": "xaraya/calendar",
+    "type": "xaraya-module",
+    "description": "Calendar System",
+    "homepage": "https://github.com/mikespub/xaraya-calendar",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}
