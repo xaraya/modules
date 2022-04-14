@@ -1,0 +1,8 @@
+{
+    "name": "xaraya/cachemanager",
+    "type": "xaraya-module",
+    "description": "Manage the output cache system of Xaraya",
+    "homepage": "https://github.com/mikespub/xaraya-cachemanager",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}
