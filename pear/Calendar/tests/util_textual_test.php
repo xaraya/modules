@@ -47,7 +47,7 @@ class TestOfUtilTextual extends UnitTestCase
     }
     public function testMonthNamesLong()
     {
-        $monthNames = array(
+        $monthNames = [
             1=>'January',
             2=>'February',
             3=>'March',
@@ -60,12 +60,12 @@ class TestOfUtilTextual extends UnitTestCase
             10=>'October',
             11=>'November',
             12=>'December',
-        );
+        ];
         $this->assertEqual($monthNames, Calendar_Util_Textual::monthNames());
     }
     public function testMonthNamesShort()
     {
-        $monthNames = array(
+        $monthNames = [
             1=>'Jan',
             2=>'Feb',
             3=>'Mar',
@@ -78,12 +78,12 @@ class TestOfUtilTextual extends UnitTestCase
             10=>'Oct',
             11=>'Nov',
             12=>'Dec',
-        );
+        ];
         $this->assertEqual($monthNames, Calendar_Util_Textual::monthNames('short'));
     }
     public function testMonthNamesTwo()
     {
-        $monthNames = array(
+        $monthNames = [
             1=>'Ja',
             2=>'Fe',
             3=>'Ma',
@@ -96,12 +96,12 @@ class TestOfUtilTextual extends UnitTestCase
             10=>'Oc',
             11=>'No',
             12=>'De',
-        );
+        ];
         $this->assertEqual($monthNames, Calendar_Util_Textual::monthNames('two'));
     }
     public function testMonthNamesOne()
     {
-        $monthNames = array(
+        $monthNames = [
             1=>'J',
             2=>'F',
             3=>'M',
@@ -114,12 +114,12 @@ class TestOfUtilTextual extends UnitTestCase
             10=>'O',
             11=>'N',
             12=>'D',
-        );
+        ];
         $this->assertEqual($monthNames, Calendar_Util_Textual::monthNames('one'));
     }
     public function testWeekdayNamesLong()
     {
-        $weekdayNames = array(
+        $weekdayNames = [
             0=>'Sunday',
             1=>'Monday',
             2=>'Tuesday',
@@ -127,12 +127,12 @@ class TestOfUtilTextual extends UnitTestCase
             4=>'Thursday',
             5=>'Friday',
             6=>'Saturday',
-        );
+        ];
         $this->assertEqual($weekdayNames, Calendar_Util_Textual::weekdayNames());
     }
     public function testWeekdayNamesShort()
     {
-        $weekdayNames = array(
+        $weekdayNames = [
             0=>'Sun',
             1=>'Mon',
             2=>'Tue',
@@ -140,12 +140,12 @@ class TestOfUtilTextual extends UnitTestCase
             4=>'Thu',
             5=>'Fri',
             6=>'Sat',
-        );
+        ];
         $this->assertEqual($weekdayNames, Calendar_Util_Textual::weekdayNames('short'));
     }
     public function testWeekdayNamesTwo()
     {
-        $weekdayNames = array(
+        $weekdayNames = [
             0=>'Su',
             1=>'Mo',
             2=>'Tu',
@@ -153,12 +153,12 @@ class TestOfUtilTextual extends UnitTestCase
             4=>'Th',
             5=>'Fr',
             6=>'Sa',
-        );
+        ];
         $this->assertEqual($weekdayNames, Calendar_Util_Textual::weekdayNames('two'));
     }
     public function testWeekdayNamesOne()
     {
-        $weekdayNames = array(
+        $weekdayNames = [
             0=>'S',
             1=>'M',
             2=>'T',
@@ -166,7 +166,7 @@ class TestOfUtilTextual extends UnitTestCase
             4=>'T',
             5=>'F',
             6=>'S',
-        );
+        ];
         $this->assertEqual($weekdayNames, Calendar_Util_Textual::weekdayNames('one'));
     }
     public function testPrevMonthNameShort()
@@ -187,7 +187,7 @@ class TestOfUtilTextual extends UnitTestCase
     }
     public function testOrderedWeekdaysShort()
     {
-        $weekdayNames = array(
+        $weekdayNames = [
             0=>'Sun',
             1=>'Mon',
             2=>'Tue',
@@ -195,7 +195,7 @@ class TestOfUtilTextual extends UnitTestCase
             4=>'Thu',
             5=>'Fri',
             6=>'Sat',
-        );
+        ];
         $nShifts = CALENDAR_FIRST_DAY_OF_WEEK;
         while ($nShifts-- > 0) {
             $day = array_shift($weekdayNames);

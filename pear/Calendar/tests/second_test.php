@@ -20,13 +20,13 @@ class TestOfSecond extends TestOfCalendar
     public function testPrevDay_Array()
     {
         $this->assertEqual(
-            array(
+            [
                 'year'   => 2003,
                 'month'  => 10,
                 'day'    => 24,
                 'hour'   => 0,
                 'minute' => 0,
-                'second' => 0),
+                'second' => 0, ],
             $this->cal->prevDay('array')
         );
     }
