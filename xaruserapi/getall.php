@@ -27,7 +27,7 @@ function reminders_userapi_getall($args)
 
     // Add only these fields
     $q->addfields(
-        array(
+        [
                     'entries.id',
                     'email_1.name AS name_1',
                     'email_1.address AS address_1',
@@ -59,7 +59,7 @@ function reminders_userapi_getall($args)
                     'reminder_done_9',
                     'reminder_warning_10 AS reminder_10',
                     'reminder_done_10',
-                  )
+                  ]
     );
 
     // All reminders unless we passed a state

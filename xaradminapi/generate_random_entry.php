@@ -21,7 +21,7 @@ function reminders_adminapi_generate_random_entry($args)
 
     // We will disregard recipients of recent emails
     if (empty($args['recent_lookups'])) {
-        $recent_lookups = array();
+        $recent_lookups = [];
     } else {
         $recent_lookups = unserialize($args['recent_lookups']);
     }

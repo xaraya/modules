@@ -27,7 +27,7 @@ function reminders_userapi_getall_Lookups($args)
 
     // Add only these fields
     $q->addfields(
-        array(
+        [
                     'lookups.id',
                     'lookups.name AS lookup_name',
                     'lookups.email AS lookup_email',
@@ -38,7 +38,7 @@ function reminders_userapi_getall_Lookups($args)
                     'email_2.address AS address_2',
                     'email_2.message as message',
                     'template_id',
-                  )
+                  ]
     );
 
     // All lookups unless we passed a state
@@ -53,7 +53,7 @@ function reminders_userapi_getall_Lookups($args)
             $q->in('lookups.id', $entry_list);
         } else {
             // If an empty list was passed, bail
-            return array();
+            return [];
         }
     }
 

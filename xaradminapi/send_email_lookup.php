@@ -31,13 +31,13 @@ function reminders_adminapi_send_email_lookup($data)
     # Send the participant an email with the attachments
 #
 
-    $result = array();
-    $attachments = array();
+    $result = [];
+    $attachments = [];
     $data['name']->value = $data['info']['name'];
 
     // Set a placeholder name if we don't have one
     if (empty($data['name']->value)) {
-        $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
+        $data['name']->setValue([['id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname')]]);
     }
 
     // Get the name and address of the chosen participant
@@ -48,9 +48,9 @@ function reminders_adminapi_send_email_lookup($data)
     if (!empty($data['info']['address_2'])) {
         $data['name']->value = $data['info']['name'];
         $ccname = $data['name']->getValue();
-        $ccaddress = array($data['info']['address_2'] => $ccname);
+        $ccaddress = [$data['info']['address_2'] => $ccname];
     } else {
-        $ccaddress = array();
+        $ccaddress = [];
     }
     // Maybe we'll add a BCC at some point
     $bccaddress = $data['copy_emails'] ? [xarUser::getVar('email')] : [];
@@ -134,12 +134,12 @@ function reminders_adminapi_send_email_lookup($data)
 
         // Save to the database if called for
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
-            $history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
-            $history->createItem(array(
+            $history = DataObjectMaster::getObject(['name' => 'reminders_history']);
+            $history->createItem([
                                     'entry_id' => $data['entry_id'],
                                     'message'  => $data['reminder_text'],
                                     'address'  => $recipientaddress,
-                                ));
+                                ]);
         }
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
