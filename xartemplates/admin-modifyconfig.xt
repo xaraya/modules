@@ -68,7 +68,32 @@
         <!--
                  - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
         -->
-        <xar:elseif condition="$tab eq 'tab2'"/>
+        <xar:elseif condition="$tab eq 'lookups'"/>
+            <form id="modifyconfig-form" method="post" action="&xar-modurl-reminders-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        General Options
+                    </legend>
+                    <div class="xar-row">
+                        <div class="xar-col-condensed">
+                            Salutation
+                        </div>
+                        <div class="xar-col">
+                    	  <xar:data-input type="textbox" name="salutation" value="$salutation" cols="40"/>
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col-condensed">
+                            Message
+                        </div>
+                        <div class="xar-col">
+                    	  <xar:data-input type="textarea" name="message" value="$message" cols="40" rows="10"/>
+                        </div>
+                    </div>
+                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
+            </form>
         </xar:if>
     </div>
 </xar:template>

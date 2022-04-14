@@ -11,12 +11,12 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * Return the entries
+ * Return the lookups
  *
  */
 function reminders_userapi_getall_Lookups($args)
 {
-    // Set up this function to get all entries and the emails AND names of gthe users
+    // Set up this function to get all entries and the emails AND names of the users
     $tables = xarDB::getTables();
     $q = new Query('SELECT');
     $q->addtable($tables['reminders_lookups'], 'lookups');
@@ -26,22 +26,21 @@ function reminders_userapi_getall_Lookups($args)
     $q->leftjoin('lookups.email_id_2', 'email_2.id');
 
     // Add only these fields
-    $q->addfields(
-        [
-                    'lookups.id',
-                    'lookups.lookup AS lookup_name',
-                    'lookups.email AS lookup_email',
-                    'lookups.phone AS lookup_phone',
-                    'email_1.name AS name_1',
-                    'email_1.address AS address_1',
-                    'email_2.name AS name_2',
-                    'email_2.address AS address_2',
-                    'message',
-                    'template_id',
-                  ]
+    $q->addfields(array(
+    				'lookups.id',
+    				'lookups.name AS lookup_name',
+    				'lookups.email AS lookup_email',
+    				'lookups.phone AS lookup_phone',
+    			  	'email_1.name AS name',
+    			  	'email_1.address AS address',
+    			  	'email_2.name AS name_2',
+    			  	'email_2.address AS address_2',
+    			  	'email_2.message as message',
+    			  	'template_id',
+    			  )
     );
-
-    // All reminders unless we passed a state
+    
+    // All lookups unless we passed a state
     if (!empty($args['state'])) {
         $q->eq('lookups.state', $args['state']);
     }

@@ -31,20 +31,20 @@ function reminders_adminapi_send_email_lookup($data)
     # Send the participant an email with the attachments
 #
 
-    $result = [];
-    $attachments = [];
-    $data['name']->value = $data['info']['name_1'];
-
+    $result = array();
+    $attachments = array();
+    $data['name']->value = $data['info']['name'];
+    
     // Set a placeholder name if we don't have one
 	if (empty($data['name']->value)) $data['name']->setValue(array(array('id' => 'last_name', 'value' => xarModVars::get('mailer', 'defaultrecipientname'))));
     
 	// Get the name and address of the chosen participant
 	$recipientname    = $data['name']->getValue();
-	$recipientaddress = $data['info']['address_1'];
+	$recipientaddress = $data['info']['address'];
 
 	// Add a CC if there is one
 	if (!empty($data['info']['address_2'])) {
-	    $data['name']->value = $data['info']['name_1'];
+	    $data['name']->value = $data['info']['name'];
 	    $ccname = $data['name']->getValue();
     	$ccaddress = array($data['info']['address_2'] => $ccname);
 	} else {
@@ -55,28 +55,15 @@ function reminders_adminapi_send_email_lookup($data)
 
     $data['reminder_text'] = trim($data['info']['message']);
     $data['lookup_id']     = (int)$data['info']['id'];
-    $data['lookup_name']          = $data['info']['lookup_name'];
-    $data['lookup_email']         = $data['info']['lookup_email'];
-    $data['lookup_phone']         = $data['info']['lookup_phone'];
+    $data['lookup_name']   = $data['info']['lookup_name'];
+    $data['lookup_email']  = $data['info']['lookup_email'];
+    $data['lookup_phone']  = $data['info']['lookup_phone'];
     $data['entry_id']      = (int)$data['info']['id'];
-//    $data['code']          = $data['info']['code'];
     
     // Get today's date
     $datetime = new XarDateTime();
     $datetime->settoday();
     $today = $datetime->getTimestamp();
-
-    /*
-        if ($data['due_date'] == $today) {
-            // If today is the due date, then this is the last email
-            $data['remaining'] = 0;
-        } else {
-            // Otherwise, get the number of remaining emails to send
-            $remaining = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['info']));
-            // By default we also send an email on the due date
-            $data['remaining'] = count($remaining) + 1;
-        }
-    */
 
     unset($data['info']);
 
@@ -150,7 +137,6 @@ function reminders_adminapi_send_email_lookup($data)
 									'entry_id' => $data['entry_id'],
 									'message'  => $data['reminder_text'],
 									'address'  => $recipientaddress,
-//									'due_date' => $data['due_date'],
 								));
         }
     } catch (Exception $e) {
