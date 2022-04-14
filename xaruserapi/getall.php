@@ -33,7 +33,7 @@ function reminders_userapi_getall($args)
     			  	'email_2.name AS name_2',
     			  	'email_2.address AS address_2',
     			  	'code',
-    			  	'message',
+    			  	'entries.message AS message',
     			  	'template_id',
     			  	'due_date',
     			  	'recurring',
