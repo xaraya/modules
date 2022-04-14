@@ -15,15 +15,17 @@
 function reminders_adminapi_generate_random_entry($args)
 {
     // We need a user in order to filter for just one set of lookups
-    if (empty($args['user'])) die(xarML('No user passed'));
-    
+    if (empty($args['user'])) {
+        die(xarML('No user passed'));
+    }
+
     // We will disregard recipients of recent emails
     if (empty($args['recent_lookups'])) {
-    	$recent_lookups = array();
+        $recent_lookups = array();
     } else {
-    	$recent_lookups = unserialize($args['recent_lookups']);
+        $recent_lookups = unserialize($args['recent_lookups']);
     }
-    
+
     // Get the number entries for this user in the lookup table
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
@@ -31,28 +33,30 @@ function reminders_adminapi_generate_random_entry($args)
     $q->addfield('max(id) AS highest');
     // Only get lookups of this user
     $q->eq('owner', $args['user']);
-    
+
 //    $q->qecho();
 
     $q->run();
     $result = $q->row();
-    
+
     // Generate a random id
     $random_id = rand(1, max((int)$result['highest'], 1));
 
     // Remove fields and conditions
     $q->clearfields();
     $q->clearconditions();
-    
+
     // Only get lookups of this user
     $q->eq('owner', $args['user']);
     // Ignore lookups we contacted recently
-    if (!empty($recent_lookups)) $q->notin('id', $recent_lookups);
+    if (!empty($recent_lookups)) {
+        $q->notin('id', $recent_lookups);
+    }
 
     $q->setstartat($random_id);
     // Get a bunch of items so we can skip over deleted ones and recently sent, and still get one to send
     $q->setrowstodo(100);
-    
+
 //    $q->qecho();
 
     // Get one row
@@ -61,4 +65,3 @@ function reminders_adminapi_generate_random_entry($args)
 
     return $result;
 }
-?>

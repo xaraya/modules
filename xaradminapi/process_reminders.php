@@ -26,7 +26,7 @@ function reminders_adminapi_process_reminders($args)
 
     sys::import('modules.dynamicdata.class.objects.master');
     $mailer_template = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
-    
+
     // Get the reminder entries to process
     if ($args['test']) {
         if (!xarVarFetch('entry_list', 'str', $data['entry_list'], '', XARVAR_NOT_REQUIRED)) {

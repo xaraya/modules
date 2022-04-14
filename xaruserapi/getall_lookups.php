@@ -26,20 +26,21 @@ function reminders_userapi_getall_Lookups($args)
     $q->leftjoin('lookups.email_id_2', 'email_2.id');
 
     // Add only these fields
-    $q->addfields(array(
-    				'lookups.id',
-    				'lookups.name AS lookup_name',
-    				'lookups.email AS lookup_email',
-    				'lookups.phone AS lookup_phone',
-    			  	'email_1.name AS name',
-    			  	'email_1.address AS address',
-    			  	'email_2.name AS name_2',
-    			  	'email_2.address AS address_2',
-    			  	'email_2.message as message',
-    			  	'template_id',
-    			  )
+    $q->addfields(
+        array(
+                    'lookups.id',
+                    'lookups.name AS lookup_name',
+                    'lookups.email AS lookup_email',
+                    'lookups.phone AS lookup_phone',
+                    'email_1.name AS name',
+                    'email_1.address AS address',
+                    'email_2.name AS name_2',
+                    'email_2.address AS address_2',
+                    'email_2.message as message',
+                    'template_id',
+                  )
     );
-    
+
     // All lookups unless we passed a state
     if (!empty($args['state'])) {
         $q->eq('lookups.state', $args['state']);
@@ -47,14 +48,14 @@ function reminders_userapi_getall_Lookups($args)
 
     // Check if a list of reminder IDs was passed
     if (isset($args['itemids'])) {
-		if (!empty($args['itemids'])) {
-			$entry_list = explode(',', $args['itemids']);
-			$q->in('lookups.id', $entry_list);
-		} else {
-			// If an empty list was passed, bail
-			return array();
-		}
-	}
+        if (!empty($args['itemids'])) {
+            $entry_list = explode(',', $args['itemids']);
+            $q->in('lookups.id', $entry_list);
+        } else {
+            // If an empty list was passed, bail
+            return array();
+        }
+    }
 
     $q->run();
     $items = $q->output();
