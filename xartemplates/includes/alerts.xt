@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div style="clear:both"></div>
+    <xar:template file="alert_success" module="grader"/>
+    <xar:template file="alert_info" module="grader"/>
+    <xar:template file="alert_warning" module="grader"/>
+    <xar:template file="alert_error" module="grader"/>
+</xar:template>
