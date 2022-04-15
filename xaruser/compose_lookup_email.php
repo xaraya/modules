@@ -51,7 +51,7 @@ function reminders_user_compose_lookup_email($args)
 	$emailargs['my_first_name'] = $components[1]['value'];
 	$emailargs['my_last_name'] = $components[2]['value'];
 	$emailargs['my_name'] = $emailargs['my_first_name'] . " " . $emailargs['my_last_name'];
-	$emailargs['my_address'] = $args['params']['address'];
+	$emailargs['my_email'] = $args['params']['address'];
 	
 # --------------------------------------------------------
 #
@@ -138,8 +138,8 @@ function reminders_user_compose_lookup_email($args)
                 $data['result']['exception'] = $e->getMessage();
             }
             
-			$data['result']['name'] = $recipientname;
-			$data['result']['email'] = $recipientaddress;
+			$data['result']['name'] = $emailargs['my_name'];
+			$data['result']['email'] = $emailargs['my_email'];
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;
