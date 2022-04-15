@@ -87,7 +87,7 @@ function scheduler_userapi_runjobs($args)
         $log = xarML('#(2) Starting: #(1)', $jobname, $log_identifier);
         $logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_INFO);  
-		      
+	  
 		$log = xarML('#(2) Trigger is: #(1)', (int)$job['job_trigger'], $log_identifier);
 		$logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_INFO);  
