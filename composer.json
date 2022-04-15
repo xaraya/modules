@@ -2,7 +2,7 @@
     "name": "xaraya/realms",
     "type": "xaraya-module",
     "description": "A module for managing multi-realm sites",
-    "homepage": "https://github.com/mikespub/xaraya-realms",
+    "homepage": "https://github.com/xaraya-modules/realms",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
