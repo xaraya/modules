@@ -28,7 +28,7 @@ function reminders_adminapi_send_email_lookup($data)
 
 # --------------------------------------------------------
 #
-# Send the participant an email with the attachments
+# Send the participant an email
 #
 
     $result = array();
