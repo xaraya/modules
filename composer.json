@@ -2,7 +2,7 @@
     "name": "xaraya/otp",
     "type": "xaraya-module",
     "description": "A generic Web 2.0 module",
-    "homepage": "https://github.com/mikespub/xaraya-otp",
+    "homepage": "https://github.com/xaraya-modules/otp",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
