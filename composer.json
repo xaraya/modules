@@ -4,5 +4,9 @@
     "description": "A generic Web 2.0 module",
     "homepage": "https://github.com/mikespub/xaraya-karma",
     "license": "GPL-2.0-or-later",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
 }
