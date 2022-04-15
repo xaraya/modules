@@ -132,8 +132,8 @@ function reminders_user_compose_lookup_email($args)
                 $data['result']['exception'] = $e->getMessage();
             }
             
-			$data['result']['name'] = $emailargs['lookup_name'];
-			$data['result']['email'] = $emailargs['lookup_address'];
+			$data['result']['name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
+			$data['result']['email'] = $emailargs['lookup_email'];
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;
