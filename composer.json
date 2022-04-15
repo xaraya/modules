@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/keywords",
+    "type": "xaraya-module",
+    "description": "Assign keywords to module items (taxonomy) and look up items by keyword",
+    "homepage": "https://github.com/mikespub/xaraya-keywords",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
