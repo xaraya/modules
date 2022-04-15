@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/eav",
+    "type": "xaraya-module",
+    "description": "A module that implements EAV",
+    "homepage": "https://github.com/mikespub/xaraya-eav",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
