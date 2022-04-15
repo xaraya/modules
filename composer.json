@@ -2,7 +2,7 @@
     "name": "xaraya/workflow",
     "type": "xaraya-module",
     "description": "Workflow Module based on the Galaxia Workflow Engine",
-    "homepage": "https://github.com/mikespub/xaraya-workflow",
+    "homepage": "https://github.com/xaraya-modules/workflow",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
