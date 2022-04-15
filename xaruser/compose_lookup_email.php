@@ -36,6 +36,8 @@ function reminders_user_compose_lookup_email($args)
 	
 	$data['subject'] = $args['params']['subject'];
 	$data['message_body'] = unserialize($args['params']['message']);
+	$sender = DataPropertyMaster::getProperty(array('name' => 'name'));
+	$sender->value = $data['name'];
 	
 # --------------------------------------------------------
 #
@@ -54,17 +56,7 @@ function reminders_user_compose_lookup_email($args)
 # --------------------------------------------------------
 #
 # Send the email
-#
-        $attachments = array();
-        
-    	// An attachment taken from the dropdown list
-        if (!empty($data['trusted_attachment'])) {
-            $attachments[] = array(
-                                'name' => $data['trusted_attachment'],
-                                'path' => xarModVars::get('grader', 'attachment_dir') . "/" . $data['trusted_attachment'],
-                                );
-        }
-        
+#        
         $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
         $checkbox->checkInput('copy_emails');
         $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
@@ -78,12 +70,6 @@ function reminders_user_compose_lookup_email($args)
         // Are we testing?
         if (!xarVarFetch('test',        'int', $data['test'],                0, XARVAR_NOT_REQUIRED)) return;
         
-        // Bail if no participant was chosen
-        if ($data['participant_id'] == 0) {
-            $data['message_warning'] = xarML('No participant was defined');
-            return $data;
-        }
-            
         if ($data['test']) {
             // If we are testing, then send to this user
             $recipientname    = xarUser::getVar('name');
@@ -91,8 +77,8 @@ function reminders_user_compose_lookup_email($args)
             $bccaddress = array();
         } else {
             // If we are not testing, then send to the chosen participant
-            $recipientname    = $emailargs['participant']['roles_name'];
-            $recipientaddress = $emailargs['participant']['email'];
+            $recipientname    = $data['lookup_name'];
+            $recipientaddress = $data['lookup_email'];
         }
         // Only send if we don't have any errors
         if (empty($data['message'])) {
@@ -103,7 +89,6 @@ function reminders_user_compose_lookup_email($args)
                               'recipientname'    => $recipientname,
                               'recipientaddress' => $recipientaddress,
                               'bccaddresses'     => $bccaddress,
-                              'attachments'      => $attachments,
                               'data'             => $emailargs,
                                             );
                 if (!empty($data['message_id']))  {
