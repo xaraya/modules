@@ -28,7 +28,7 @@ function reminders_adminapi_send_email_lookup($data)
 
     # --------------------------------------------------------
 #
-# Send the participant an email
+    # Send the participant an email
 #
 
     $result = [];
@@ -65,7 +65,7 @@ function reminders_adminapi_send_email_lookup($data)
     $data['name']->value = $data['lookup_name'];
     $components = $data['name']->getValueArray();
     $data['lookup_first_name']   = $components[1]['value'];
-    
+
     $data['encoded']      = $data['info']['encoded'];
 
     // Get today's date
