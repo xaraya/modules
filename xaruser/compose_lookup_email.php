@@ -36,11 +36,16 @@ function reminders_user_compose_lookup_email($args)
 	
 	$data['subject'] = $args['params']['subject'];
 	$data['message_body'] = unserialize($args['params']['message']);
-	$sender = DataPropertyMaster::getProperty(array('name' => 'name'));
-	$sender->value = $args['params']['name'];
-	// Get the name components to pass to the template
-	$components = $sender->getValueArray();
-	foreach ($components as $component) $emailargs[$component['value']] =  $component['value'];
+	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
+	// Get the name components of the recipient to pass to the template
+	$name->value = $args['params']['lookup_name'];
+	$components = $name->getValueArray();
+	foreach ($components as $component) $emailargs[$component['id']] =  $component['value'];
+	// Get the name components of the sender to pass to the template
+	$name->value = $args['params']['name'];
+	$components = $name->getValueArray();
+	$emailargs['my_first_name'] = $components[1]['value'];
+	$emailargs['my_last_name'] = $components[2]['value'];
 	
 # --------------------------------------------------------
 #
