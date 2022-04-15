@@ -32,7 +32,7 @@ function reminders_user_compose_lookup_email($args)
 #
 	if (empty($code)) die(xarML('No code passed'));
 	
-	$args['params'] = unserialize(base64_encode($code));
+	$args['params'] = unserialize(base64_decode($code));
 # --------------------------------------------------------
 #
 # Get some properties for use in the template
