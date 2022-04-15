@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/release",
+    "type": "xaraya-module",
+    "description": "Registration and Release information for themes and modules",
+    "homepage": "https://github.com/mikespub/xaraya-release",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
