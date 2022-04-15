@@ -2,7 +2,7 @@
     "name": "xaraya/crispbb",
     "type": "xaraya-module",
     "description": "Feature rich forum module for Xaraya",
-    "homepage": "https://github.com/mikespub/xaraya-crispbb",
+    "homepage": "https://github.com/xaraya-modules/crispbb",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
