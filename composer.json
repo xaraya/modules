@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/mime",
+    "type": "xaraya-module",
+    "description": "Hook based module that returns the content-type of a given file.",
+    "homepage": "https://github.com/mikespub/xaraya-mime",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
