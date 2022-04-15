@@ -2,7 +2,7 @@
     "name": "xaraya/reminders",
     "type": "xaraya-module",
     "description": "Sends email reminders to users",
-    "homepage": "https://github.com/mikespub/xaraya-reminders",
+    "homepage": "https://github.com/xaraya-modules/reminders",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
