@@ -2,7 +2,7 @@
     "name": "xaraya/hitcount",
     "type": "xaraya-module",
     "description": "Count displays of module items",
-    "homepage": "https://github.com/mikespub/xaraya-hitcount",
+    "homepage": "https://github.com/xaraya-modules/hitcount",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
