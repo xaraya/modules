@@ -2,7 +2,7 @@
     "name": "xaraya/images",
     "type": "xaraya-module",
     "description": "Handles image manipulation with resizing/cropping/scaling/rotating and various filters",
-    "homepage": "https://github.com/mikespub/xaraya-images",
+    "homepage": "https://github.com/xaraya-modules/images",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
