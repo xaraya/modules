@@ -40,7 +40,7 @@ function reminders_user_compose_lookup_email($args)
 	$sender->value = $args['params']['name'];
 	// Get the name components to pass to the template
 	$components = $sender->getValueArray();
-	foreach ($components as $component) emailargs[$component['value']] =  $component['value'];
+	foreach ($components as $component) $emailargs[$component['value']] =  $component['value'];
 	
 # --------------------------------------------------------
 #
