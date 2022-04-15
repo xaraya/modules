@@ -2,7 +2,7 @@
     "name": "xaraya/html",
     "type": "xaraya-module",
     "description": "Configure the allowed HTML or your site",
-    "homepage": "https://github.com/mikespub/xaraya-html",
+    "homepage": "https://github.com/xaraya-modules/html",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
