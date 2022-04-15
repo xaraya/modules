@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/sitemapper",
+    "type": "xaraya-module",
+    "description": "Module to create a site map",
+    "homepage": "https://github.com/mikespub/xaraya-sitemapper",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
