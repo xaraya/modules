@@ -92,7 +92,7 @@ function scheduler_userapi_runjobs($args)
 		$logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_INFO);  
 
-		$log = xarML('#(2) Interval is: #(1)', $interval, $log_identifier);
+		$log = xarML('#(2) Interval is: #(1)', $job['job_interval'], $log_identifier);
 		$logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_INFO);  
 
