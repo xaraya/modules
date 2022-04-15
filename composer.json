@@ -2,7 +2,7 @@
     "name": "xaraya/scraper",
     "type": "xaraya-module",
     "description": "A module for scraping HTML pages",
-    "homepage": "https://github.com/mikespub/xaraya-scraper",
+    "homepage": "https://github.com/xaraya-modules/scraper",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
