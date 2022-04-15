@@ -76,6 +76,13 @@ function reminders_adminapi_process_lookups($args)
 			$row['name'] = $owner['name'];
 			$row['address'] = $owner['address'];
 			
+		    // Add the information for subject and message the email recipient can use to create his/her email
+		    $row['subject'] = xarModVars::get('reminders', 'subject');
+		    $row['message'] = xarModVars::get('reminders', 'message');
+		    
+		    // Encode the row information so we can send that to the template
+			$row['encoded'] = 'dork' //base64_encode($row);
+			
 			// Prepare the data we need to send an email
 			// Get the template information for this message
 			$this_template_id = $row['template_id'];
@@ -93,6 +100,7 @@ function reminders_adminapi_process_lookups($args)
 			$params['message_id']   = $templates[$this_template_id]['message_id'];
 			$params['message_body'] = $templates[$this_template_id]['message_body'];
 			$params['subject']      = $templates[$this_template_id]['subject'];
+			
 			
 			// Send the email
 			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
