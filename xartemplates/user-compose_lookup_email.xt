@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+	<xar:set name="allow_upload">1</xar:set>
+
+    <xar:template file="user-mod-head"/>
+
+    <xar:style src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.0.3/jquery-confirm.min.css" />
+    <xar:style scope="theme" file="bundled" />
+    <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:javascript filename="jquery-confirm.js" position="head"/>
+
+    <div class="xar-mod-body">
+        <xar:var name="title">Send an Email</xar:var>
+        <xar:template file="title" module="reminders" type="module"/>
+        <xar:template file="alerts" module="reminders"/>
+
+        <xar:if condition="isset($result)">
+            <div class="xar-row">
+                <xar:if condition="isset($result['exception'])">
+                    <xar:set name="isdebug">
+                        xarModVars::get('grader','debugmode')
+                    </xar:set>
+                    <xar:set name="isadmin">
+                        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))
+                    </xar:set>
+                    <xar:if condition="$isdebug AND $isadmin">
+                        <p class="alert alert-danger" style="text-align: left; padding:20px;">
+                            #$result['exception']#
+                        </p>
+                    <xar:else/>
+                        <p class="alert alert-danger" style="text-align: left; padding:20px;">
+                            The email failed. Please contact the site administrator
+                        </p>
+                    </xar:if>
+                <xar:elseif condition="$result['code'] eq 0"/>
+                    <p class="alert alert-success" style="text-align: left; padding:20px;">
+                        <xar:if condition="$test">
+                            A test email was sent successfully to<br/>
+                            #$result['test_name']# (#$result['test_email']#)<br/>
+                            <xar:if condition="!empty($result['email'])">
+                                The actual recipient would be:<br/>
+                                #$result['name']# (#$result['email']#)
+                            <xar:else/>
+                                No actual recipient was chosen
+                            </xar:if>
+                        <xar:else/>
+                            A custom email was sent successfully to<br/>
+                            #$result['name']# (#$result['email']#)
+                        </xar:if>
+                    </p>
+                <xar:elseif condition="$result['code'] eq -1"/>
+                    <p class="alert-success" style="text-align: left; padding:20px;">
+                        Thank you for your submission
+                    </p>
+                <xar:else />
+                    <p class="alert alert-danger" style="text-align: left; padding:20px;">
+                        The email failed. The result code was #$result['code']#.
+                        <br/>
+                        <xar:if condition="$result['code'] == 0">
+                            Message sent
+                        <xar:elseif condition="$result['code'] == 1"/>
+                            Message not sent: No recipient address available
+                        <xar:elseif condition="$result['code'] == 2"/>
+                            Message not sent: No message available
+                        <xar:elseif condition="$result['code'] == 3"/>
+                            Message not sent: Default redirect checked, but no redirect address available
+                        <xar:elseif condition="$result['code'] == 4"/>
+                            Message not sent: Message redirect checked, but no redirect address available
+                        <xar:elseif condition="$result['code'] == 5"/>
+                            Message not sent: Sending message failed
+                        <xar:elseif condition="$result['code'] == 6"/>
+                            Message not sent: Blocklayout compilation failed
+                        <xar:else/>
+                            Message not sent: Mail module used? No details available
+                        </xar:if>
+                    </p>
+                </xar:if>
+            </div>
+        </xar:if>
+        <xar:if condition="xarModVars::get('mail', 'suppresssending')">
+            <div class="xar-row">
+                <p class="alert-info" style="text-align: left; padding:20px;">
+                    Attention: Global email suppression is in effect
+                    <br/>
+                    No emails will be sent
+                </p>
+            </div>
+        <xar:elseif condition="xarModVars::get('mail', 'redirectsending')"/>
+            <div class="xar-row">
+                <p class="alert-info" style="text-align: left; padding:20px;">
+                    Attention: Global redirect is in effect
+                    <br/>
+                    Emails are redirected to: <xar:var scope="module" module="mail" name="redirectaddress"/>
+                </p>
+            </div>
+        </xar:if>
+        
+        <xar:if condition="$allow_upload">
+            <xar:set name="enctype">
+                'multipart/form-data'
+            </xar:set>
+        <xar:else />
+            <xar:set name="enctype">
+                'application/x-www-form-urlencoded'
+            </xar:set>
+        </xar:if>
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#" style="margin-top: 10px; margin-bottom: 10px;" class="thisForm basic_layout send_custom_email">
+                  
+			<div class="xar-row">
+				<div class="xar-col-label">
+					<xar:var name="label">Mailer mail messages found</xar:var>
+					<label for="import" title="#$label#">
+						Available mail messages
+					</label>
+				</div>
+				<div class="xar-col">
+					<xar:var name="firstline">Choose a mail message</xar:var>
+					<xar:set name="firstline">"0,$firstline"</xar:set>
+					<xar:data-input type="dropdown" name="message_id" value="$message_id" options="$message_options" firstline="$firstline"/>
+				</div>
+			</div>
+			<div class="xar-row">
+				<div class="xar-col-label">
+					<xar:var name="label">The subject of the mail message</xar:var>
+					<label for="import" title="#$label#">
+						Subject
+						&#160;(ignored if no message added below)
+					</label>
+				</div>
+				<div class="xar-col">
+					<xar:data-input type="textbox" name="subject" value="$subject"/>
+				</div>
+			</div>
+			<div class="xar-row">
+				<div class="xar-col-label">
+					<xar:var name="label">Message to send</xar:var>
+					<label for="import" title="#$label#">
+						Message
+					</label>
+				</div>
+				<div class="" style="">
+					<xar:data-input type="editor" name="message_body" value="$message_body" style=""/>
+				</div>
+			</div>
+
+ 			<div class="xar-row">
+				Send a copy to #xarUser::getVar('email')# <xar:data-input type="checkbox" name="copy_emails" value="$copy_emails"/>
+            </div>
+            
+            <div class="xar-row" style="clear: both">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="confirm" id="confirm" value="1" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" value="$label" />
+                    <xar:var name="label">Send</xar:var>
+                    <xar:button type="button" label="$label" class="btn-warning liveButton"/>
+                    <input type="hidden" name="live" id="live" value="0"/>
+                    <xar:var name="label">Send Test to Me</xar:var>
+                    <xar:button type="button" label="$label" class="testButton"/>
+                    <input type="hidden" name="test" id="test" value="0"/>
+                </div>
+            </div> 
+
+        </form>
+        <script>
+            $('.liveButton').on('click', function () {
+                $.confirm({
+                    title: 'Email sending',
+                    content: 'You are about to send an email. Proceed?',
+                    autoClose: 'cancelAction|10000',
+                    escapeKey: 'cancelAction',
+                    buttons: {
+                        cancelAction: {
+                            text: 'Cancel',
+                            action: function () {
+                                $.alert('Email sending timed out. No emails were sent.');
+                            }
+                        },
+                        confirm: {
+                            btnClass: 'btn-warning',
+                            text: 'Yes',
+                            action: function () {
+                                $('##live').val("1");
+                                $(".thisForm").submit();
+                            }
+                        }
+                    }
+                });
+            });
+            $('.testButton').on('click', function () {
+                $.confirm({
+                    title: 'Email sending',
+                    content: 'You are about to send an email to yourself. Proceed?',
+                    autoClose: 'cancelAction|10000',
+                    escapeKey: 'cancelAction',
+                    buttons: {
+                        cancelAction: {
+                            text: 'Cancel',
+                            action: function () {
+                                $.alert('Email sending timed out. No emails were sent.');
+                            }
+                        },
+                        confirm: {
+                            btnClass: 'btn',
+                            text: 'Yes',
+                            action: function () {
+                                $('##test').val("1");
+                                $(".thisForm").submit();
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </div>
+</xar:template>

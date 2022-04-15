@@ -28,7 +28,7 @@ function reminders_adminapi_send_email_lookup($data)
 
     # --------------------------------------------------------
 #
-    # Send the participant an email with the attachments
+# Send the participant an email
 #
 
     $result = [];
@@ -61,6 +61,12 @@ function reminders_adminapi_send_email_lookup($data)
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
     $data['entry_id']      = (int)$data['info']['id'];
+    // We also neede the first name of the recipient for the mailto address
+    $data['name']->value = $data['lookup_name'];
+    $components = $data['name']->getValueArray();
+    $data['lookup_first_name']   = $components[1]['value'];
+    
+    $data['encoded']      = $data['info']['encoded'];
 
     // Get today's date
     $datetime = new XarDateTime();
