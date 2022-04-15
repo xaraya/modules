@@ -82,12 +82,16 @@ function scheduler_userapi_runjobs($args)
     $now = time();
     foreach ($jobs as $id => $job) {
 
-        $jobname = $job['module'] . "_xar" . $job['type'] . "_" . $job['function'];
+        $jobname = $job['module'] . "_xar" . $job['type'] . "_" . $job['function'] . " itemid=" . $id;
 
         $log = xarML('#(2) Starting: #(1)', $jobname, $log_identifier);
         $logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_INFO);  
 		      
+		$log = xarML('#(2) Trigger is: #(1)', (int)$job['job_trigger'], $log_identifier);
+		$logs[] = $log;
+		xarLog::message($log, xarLog::LEVEL_INFO);  
+
         if((int)$job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
@@ -99,7 +103,7 @@ function scheduler_userapi_runjobs($args)
 #
 # Checks for jobs not called by an external scheduler, such as a scheduler block or the sheduler main user page
 #
-        } elseif((int)$job['job_trigger'] != 1) {
+        } elseif ((int)$job['job_trigger'] != 1) {
             
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
@@ -281,6 +285,7 @@ function scheduler_userapi_runjobs($args)
         }
 
         xarModVars::set('scheduler','running.' . $job['id'], 1);
+        // Don't run jobs of modules that are not installed
         if (!xarMod::isAvailable($job['module'])) {
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 			$logs[] = $log;
