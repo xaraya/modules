@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/messages",
+    "type": "xaraya-module",
+    "description": "Xaraya Messages module",
+    "homepage": "https://github.com/mikespub/xaraya-messages",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
