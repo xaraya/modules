@@ -4,5 +4,9 @@
     "description": "Workflow Module based on the Galaxia Workflow Engine",
     "homepage": "https://github.com/mikespub/xaraya-workflow",
     "license": "GPL-2.0-or-later",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/", "/lib/"]
+    }
 }
