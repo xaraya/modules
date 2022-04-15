@@ -7,6 +7,6 @@
     "require": {},
     "autoload": {
         "classmap": ["./"],
-        "exclude-from-classmap": ["/vendor/"]
+        "exclude-from-classmap": ["/vendor/", "xartemplates/includes/ckeditor/ckeditor_php4.php"]
     }
 }
