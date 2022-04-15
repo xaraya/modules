@@ -58,24 +58,6 @@ function reminders_user_send_lookup_email($args)
                                 );
         }
         
-        // An attachment from the fileupload property
-        if (isset($_FILES['attachment'])) {
-        	if ($_FILES['attachment']['error'] == UPLOAD_ERR_OK) {
-				$attachments[] = array(
-									'name' => $_FILES['attachment']['name'],
-									'path' => $_FILES['attachment']['tmp_name'],
-									);
-			} else {
-        		if ($_FILES['attachment']['error'] == UPLOAD_ERR_FORM_SIZE) {
-        			$max_size = (int)xarModVars::get('grader', 'MAX_FILE_SIZE')/1000000;
-					$data['message_warning'] = xarML('The file to be uploaded is too big. A maximum of #(1)MB is allowed', $max_size);
-        		} else {
-					$data['message_warning'] = xarML('Error from the uploaded file');
-				}
-				return $data;
-			}
-        }
-
         $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
         $checkbox->checkInput('copy_emails');
         $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
