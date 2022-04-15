@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/xarpages",
+    "type": "xaraya-module",
+    "description": "Static pages administration",
+    "homepage": "https://github.com/mikespub/xaraya-xarpages",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
