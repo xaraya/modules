@@ -2,7 +2,7 @@
     "name": "xaraya/sitetools",
     "type": "xaraya-module",
     "description": "Set of tools for site and database maintenance",
-    "homepage": "https://github.com/mikespub/xaraya-sitetools",
+    "homepage": "https://github.com/xaraya-modules/sitetools",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
