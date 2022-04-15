@@ -131,20 +131,16 @@ function reminders_user_compose_lookup_email($args)
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
             }
-            if ($data['participant_id'] != 0) {
-                $data['result']['name'] = $emailargs['participant']['roles_name'];
-                $data['result']['email'] = $emailargs['participant']['email'];
-            } else {
-                $data['result']['name'] = '';
-                $data['result']['email'] = '';
-            }
+            
+			$data['result']['name'] = $emailargs['lookup_name'];
+			$data['result']['email'] = $emailargs['lookup_address'];
+
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;
                 $data['result']['test_email'] = $recipientaddress;
             }
         }
     }
-
     return $data;
 }
 ?>
