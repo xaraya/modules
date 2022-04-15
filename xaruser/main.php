@@ -37,9 +37,10 @@ function scheduler_user_main()
     xarModVars::delete('scheduler','running');
     
 	if (xarModVars::get('scheduler','debugmode') && in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-        // Show the output to administrators
+        // Show the output only to administrators
         return $data;
     } else {
+        // Everyone else gets turned away
         return xarController::$response->NotFound();
     }
 }
