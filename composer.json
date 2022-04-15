@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/uploads",
+    "type": "xaraya-module",
+    "description": "Upload/Download File Handler",
+    "homepage": "https://github.com/mikespub/xaraya-uploads",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
