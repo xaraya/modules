@@ -92,6 +92,10 @@ function scheduler_userapi_runjobs($args)
 		$logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_INFO);  
 
+		$log = xarML('#(2) Interval is: #(1)', $interval, $log_identifier);
+		$logs[] = $log;
+		xarLog::message($log, xarLog::LEVEL_INFO);  
+
         if((int)$job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
