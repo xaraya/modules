@@ -29,7 +29,7 @@
     <property name="name">
       <id>4053</id>
       <label>Name</label>
-      <type>textbox</type>
+      <type>name</type>
       <defaultvalue></defaultvalue>
       <source>lookups.name</source>
       <status>33</status>
