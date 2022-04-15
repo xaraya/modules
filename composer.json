@@ -4,5 +4,9 @@
     "description": "A module for scraping HTML pages",
     "homepage": "https://github.com/mikespub/xaraya-scraper",
     "license": "GPL-2.0-or-later",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
 }
