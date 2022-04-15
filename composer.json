@@ -2,7 +2,7 @@
     "name": "xaraya/xarayatesting",
     "type": "xaraya-module",
     "description": "Module with QA checks and unit tests",
-    "homepage": "https://github.com/mikespub/xaraya-xarayatesting",
+    "homepage": "https://github.com/xaraya-modules/xarayatesting",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
