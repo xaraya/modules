@@ -2,7 +2,7 @@
     "name": "xaraya/pubsub",
     "type": "xaraya-module",
     "description": "Allow users to subscribe to updates to events",
-    "homepage": "https://github.com/mikespub/xaraya-pubsub",
+    "homepage": "https://github.com/xaraya-modules/pubsub",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
