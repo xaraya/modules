@@ -74,7 +74,7 @@ function scheduler_userapi_runjobs($args)
 # Run the jobs: we go through the loop
 #
     $log_identifier = 'Scheduler runjobs:';
-    $logs = xarML('#(1) Starting jobs', $log_identifier);
+    $log = xarML('#(1) Starting jobs', $log_identifier);
 	$logs[] = $log;
 	xarLog::message($log, xarLog::LEVEL_INFO);  
 	
