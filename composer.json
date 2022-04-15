@@ -2,7 +2,7 @@
     "name": "xaraya/publications",
     "type": "xaraya-module",
     "description": "Manage publications on a Xaraya site",
-    "homepage": "https://github.com/mikespub/xaraya-publications",
+    "homepage": "https://github.com/xaraya-modules/publications",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
