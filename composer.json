@@ -4,5 +4,9 @@
     "description": "Manage the output cache system of Xaraya",
     "homepage": "https://github.com/mikespub/xaraya-cachemanager",
     "license": "GPL-2.0-or-later",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
 }
