@@ -2,7 +2,7 @@
     "name": "xaraya/messages",
     "type": "xaraya-module",
     "description": "Xaraya Messages module",
-    "homepage": "https://github.com/mikespub/xaraya-messages",
+    "homepage": "https://github.com/xaraya-modules/messages",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
