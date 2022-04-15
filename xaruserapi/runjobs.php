@@ -133,7 +133,7 @@ function scheduler_userapi_runjobs($args)
                 continue;
     
             // if this is the first time we run this job and it's not a crontab job, always run it
-            } elseif (empty($job['lastrun']) && $job['job_interval'] != '0c') {
+            } elseif (empty($job['last_run']) && $job['job_interval'] != '0c') {
     
             // if the job already ran, check if we need to run it again
             } else {
@@ -156,28 +156,28 @@ function scheduler_userapi_runjobs($args)
                         }
                         break;
                     case 'n':    // Minutes
-                        if ($now - $job['lastrun'] < $count * 60) {
+                        if ($now - $job['last_run'] < $count * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'h':
-                        if ($now - $job['lastrun'] < $count * 60 * 60) {
+                        if ($now - $job['last_run'] < $count * 60 * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'd':
-                        if ($now - $job['lastrun'] < $count * 24 * 60 * 60) {
+                        if ($now - $job['last_run'] < $count * 24 * 60 * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'w':
-                        if ($now - $job['lastrun'] < $count * 7 * 24 * 60 * 60) {
+                        if ($now - $job['last_run'] < $count * 7 * 24 * 60 * 60) {
                             $skip = 1;
                         }
                         break;
                     case 'm': // work with day of the month here
                         $new = getdate($now);
-                        $old = getdate($job['lastrun']);
+                        $old = getdate($job['last_run']);
                         $new['mon'] += 12 * ($new['year'] - $old['year']);
                         if ($new['mon'] < $old['mon'] + $count) {
                             $skip = 1;
