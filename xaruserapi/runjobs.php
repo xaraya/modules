@@ -77,28 +77,27 @@ function scheduler_userapi_runjobs($args)
 #
     $log_identifier = 'Scheduler runjobs:';
     $log = xarML('#(1) Starting jobs', $log_identifier);
-	$logs[] = $log;
-	xarLog::message($log, xarLog::LEVEL_INFO);  
-	
-    $hasrun = array();
+    $logs[] = $log;
+    xarLog::message($log, xarLog::LEVEL_INFO);
+
+    $hasrun = [];
     $now = time();
     foreach ($jobs as $id => $job) {
-
         $jobname = $job['module'] . "_xar" . $job['type'] . "_" . $job['function'] . " itemid=" . $id;
 
         $log = xarML('#(2) Starting: #(1)', $jobname, $log_identifier);
         $logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
-	  
-		$log = xarML('#(2) Trigger is: #(1)', (int)$job['job_trigger'], $log_identifier);
-		$logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
+        xarLog::message($log, xarLog::LEVEL_INFO);
 
-		$log = xarML('#(2) Interval is: #(1)', $job['job_interval'], $log_identifier);
-		$logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
+        $log = xarML('#(2) Trigger is: #(1)', (int)$job['job_trigger'], $log_identifier);
+        $logs[] = $log;
+        xarLog::message($log, xarLog::LEVEL_INFO);
 
-        if((int)$job['job_trigger'] == 0) {
+        $log = xarML('#(2) Interval is: #(1)', $job['job_interval'], $log_identifier);
+        $logs[] = $log;
+        xarLog::message($log, xarLog::LEVEL_INFO);
+
+        if ((int)$job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
             $logs[] = $log;
@@ -110,7 +109,7 @@ function scheduler_userapi_runjobs($args)
 # Checks for jobs not called by an external scheduler, such as a scheduler block or the sheduler main user page
 #
         } elseif ((int)$job['job_trigger'] != 1) {
-            
+
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
@@ -136,7 +135,7 @@ function scheduler_userapi_runjobs($args)
 
             // if this is the first time we run this job and it's not a crontab job, always run it
             } elseif (empty($job['last_run']) && $job['job_interval'] != '0c') {
-    
+
             // if the job already ran, check if we need to run it again
             } else {
                 if (!preg_match('/(\d+)(\w)/', $job['job_interval'], $matches)) {
@@ -289,7 +288,7 @@ function scheduler_userapi_runjobs($args)
             }
         }
 
-        xarModVars::set('scheduler','running.' . $job['id'], 1);
+        xarModVars::set('scheduler', 'running.' . $job['id'], 1);
         // Don't run jobs of modules that are not installed
         if (!xarMod::isAvailable($job['module'])) {
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
