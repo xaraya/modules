@@ -2,7 +2,7 @@
     "name": "xaraya/wurfl",
     "type": "xaraya-module",
     "description": "A wrapper module for the WURFL API",
-    "homepage": "https://github.com/mikespub/xaraya-wurfl",
+    "homepage": "https://github.com/xaraya-modules/wurfl",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
