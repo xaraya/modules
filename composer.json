@@ -4,5 +4,9 @@
     "description": "Schedule Xaraya jobs at certain times of the day/week/month (cron)",
     "homepage": "https://github.com/mikespub/xaraya-scheduler",
     "license": "GPL-2.0-or-later",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
 }
