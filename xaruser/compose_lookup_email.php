@@ -37,15 +37,21 @@ function reminders_user_compose_lookup_email($args)
 	$data['subject'] = $args['params']['subject'];
 	$data['message_body'] = unserialize($args['params']['message']);
 	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
+	
 	// Get the name components of the recipient to pass to the template
 	$name->value = $args['params']['lookup_name'];
 	$components = $name->getValueArray();
 	foreach ($components as $component) $emailargs[$component['id']] =  $component['value'];
+	$emailargs['lookup_name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
+	$emailargs['lookup_email'] = $args['params']['lookup_email'];
+	
 	// Get the name components of the sender to pass to the template
 	$name->value = $args['params']['name'];
 	$components = $name->getValueArray();
 	$emailargs['my_first_name'] = $components[1]['value'];
 	$emailargs['my_last_name'] = $components[2]['value'];
+	$emailargs['my_name'] = $emailargs['my_first_name'] . " " . $emailargs['my_last_name'];
+	$emailargs['my_address'] = $args['params']['address'];
 	
 # --------------------------------------------------------
 #
@@ -85,15 +91,15 @@ function reminders_user_compose_lookup_email($args)
             $bccaddress = array();
         } else {
             // If we are not testing, then send to the chosen participant
-            $recipientname    = $data['lookup_name'];
-            $recipientaddress = $data['lookup_email'];
+            $recipientname    = $emailargs['lookup_name'];
+            $recipientaddress = $emailargs['lookup_email'];
         }
         // Only send if we don't have any errors
         if (empty($data['message'])) {
             $data['result'] = array();
             try {
-                $args = array('sendername'       => xarModVars::get('grader', 'defaultsendername'),
-                              'senderaddress'    => xarModVars::get('grader', 'defaultsenderaddress'),
+                $args = array('sendername'       => $emailargs['my_name'],
+                              'senderaddress'    => $emailargs['my_email'],
                               'recipientname'    => $recipientname,
                               'recipientaddress' => $recipientaddress,
                               'bccaddresses'     => $bccaddress,
@@ -132,8 +138,8 @@ function reminders_user_compose_lookup_email($args)
                 $data['result']['exception'] = $e->getMessage();
             }
             
-			$data['result']['name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
-			$data['result']['email'] = $emailargs['lookup_email'];
+			$data['result']['name'] = $recipientname;
+			$data['result']['email'] = $recipientaddress;
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;
