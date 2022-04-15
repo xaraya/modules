@@ -39,7 +39,7 @@ function reminders_adminapi_process_lookups($args)
 		    $row['message'] = xarModVars::get('reminders', 'message');
 		    
 		    // Encode the row information so we can send that to the template
-			$row['encoded'] = 'dork'; //base64_encode($row);
+			$row['encoded'] = base64_encode($row);
 			
 			// Prepare the data we need to send an email
 			// Get the template information for this message
@@ -88,7 +88,7 @@ function reminders_adminapi_process_lookups($args)
 		    $row['message'] = xarModVars::get('reminders', 'message');
 		    
 		    // Encode the row information so we can send that to the template
-			$row['encoded'] = 'dork'; //base64_encode($row);
+			$row['encoded'] = base64_encode($row);
 			
 			// Prepare the data we need to send an email
 			// Get the template information for this message
