@@ -38,30 +38,34 @@ function reminders_user_compose_lookup_email($args)
 #
     # Unpack the code that was passed
 #
-	if (empty($code)) die(xarML('No code passed'));
-	
-	$args['params'] = unserialize(base64_decode($code));
-	
-	$data['subject'] = $args['params']['subject'];
-	$data['message_body'] = unserialize($args['params']['message']);
-	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
-	
-	// Get the name components of the recipient to pass to the template
-	$name->value = $args['params']['lookup_name'];
-	$components = $name->getValueArray();
-	foreach ($components as $component) $emailargs[$component['id']] =  $component['value'];
-	$emailargs['lookup_name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
-	$emailargs['lookup_email'] = $args['params']['lookup_email'];
-	
-	// Get the name components of the sender to pass to the template
-	$name->value = $args['params']['name'];
-	$components = $name->getValueArray();
-	$emailargs['my_first_name'] = $components[1]['value'];
-	$emailargs['my_last_name'] = $components[2]['value'];
-	$emailargs['my_name'] = $emailargs['my_first_name'] . " " . $emailargs['my_last_name'];
-	$emailargs['my_email'] = $args['params']['address'];
-	
-# --------------------------------------------------------
+    if (empty($code)) {
+        die(xarML('No code passed'));
+    }
+
+    $args['params'] = unserialize(base64_decode($code));
+
+    $data['subject'] = $args['params']['subject'];
+    $data['message_body'] = unserialize($args['params']['message']);
+    $name = DataPropertyMaster::getProperty(['name' => 'name']);
+
+    // Get the name components of the recipient to pass to the template
+    $name->value = $args['params']['lookup_name'];
+    $components = $name->getValueArray();
+    foreach ($components as $component) {
+        $emailargs[$component['id']] =  $component['value'];
+    }
+    $emailargs['lookup_name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
+    $emailargs['lookup_email'] = $args['params']['lookup_email'];
+
+    // Get the name components of the sender to pass to the template
+    $name->value = $args['params']['name'];
+    $components = $name->getValueArray();
+    $emailargs['my_first_name'] = $components[1]['value'];
+    $emailargs['my_last_name'] = $components[2]['value'];
+    $emailargs['my_name'] = $emailargs['my_first_name'] . " " . $emailargs['my_last_name'];
+    $emailargs['my_email'] = $args['params']['address'];
+
+    # --------------------------------------------------------
 #
     # Get some properties for use in the template
 #
@@ -108,7 +112,7 @@ function reminders_user_compose_lookup_email($args)
         if (empty($data['message'])) {
             $data['result'] = [];
             try {
-                $args = array('sendername'       => $emailargs['my_name'],
+                $args = ['sendername'       => $emailargs['my_name'],
                               'senderaddress'    => $emailargs['my_email'],
                               'recipientname'    => $recipientname,
                               'recipientaddress' => $recipientaddress,
@@ -150,9 +154,9 @@ function reminders_user_compose_lookup_email($args)
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
             }
-            
-			$data['result']['name'] = $emailargs['my_name'];
-			$data['result']['email'] = $emailargs['my_email'];
+
+            $data['result']['name'] = $emailargs['my_name'];
+            $data['result']['email'] = $emailargs['my_email'];
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;
