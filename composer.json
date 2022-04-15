@@ -2,7 +2,7 @@
     "name": "xaraya/xarpages",
     "type": "xaraya-module",
     "description": "Static pages administration",
-    "homepage": "https://github.com/mikespub/xaraya-xarpages",
+    "homepage": "https://github.com/xaraya-modules/xarpages",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
