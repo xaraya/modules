@@ -34,6 +34,13 @@ function reminders_adminapi_process_lookups($args)
 		$data['results'] = array();
 		foreach ($items as $key => $row) {
 	
+		    // Add the information for subject and message the email recipient can use to create his/her email
+		    $row['subject'] = xarModVars::get('reminders', 'subject');
+		    $row['message'] = xarModVars::get('reminders', 'message');
+		    
+		    // Encode the row information so we can send that to the template
+			$row['encoded'] = 'dork'; //base64_encode($row);
+			
 			// Prepare the data we need to send an email
 			// Get the template information for this message
 			$this_template_id = $row['template_id'];
