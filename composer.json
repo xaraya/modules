@@ -1,0 +1,12 @@
+{
+    "name": "xaraya/ckeditor",
+    "type": "xaraya-module",
+    "description": "A WYSIWYG editor module",
+    "homepage": "https://github.com/mikespub/xaraya-ckeditor",
+    "license": "GPL-2.0-or-later",
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/"]
+    }
+}
