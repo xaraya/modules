@@ -4,5 +4,9 @@
     "description": "Manage publications on a Xaraya site",
     "homepage": "https://github.com/mikespub/xaraya-publications",
     "license": "GPL-2.0-or-later",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": ["./"],
+        "exclude-from-classmap": ["/vendor/", "/class/lib/"]
+    }
 }
