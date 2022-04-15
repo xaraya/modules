@@ -2,7 +2,7 @@
     "name": "xaraya/ratings",
     "type": "xaraya-module",
     "description": "Rate Xaraya items",
-    "homepage": "https://github.com/mikespub/xaraya-ratings",
+    "homepage": "https://github.com/xaraya-modules/ratings",
     "license": "GPL-2.0-or-later",
     "require": {},
     "autoload": {
