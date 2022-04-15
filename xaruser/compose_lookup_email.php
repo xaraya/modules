@@ -35,7 +35,7 @@ function reminders_user_compose_lookup_email($args)
 	$args['params'] = unserialize(base64_decode($code));
 	
 	$data['subject'] = $args['params']['subject'];
-	$data['message_body'] = $args['params']['message'];
+	$data['message_body'] = unserialize($args['params']['message']);
 	
 # --------------------------------------------------------
 #
