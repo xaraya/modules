@@ -24,7 +24,7 @@ function reminders_user_compose_lookup_email($args)
     $data['copy_emails'] = true;
     
     // Get the available email messages
-    $data['message_options'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'custom_emails')));
+    $data['message_options'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')));
 
 # --------------------------------------------------------
 #
