@@ -32,6 +32,7 @@ function reminders_adminapi_send_email_lookup($data)
 #
 
     $result = array();
+    $attachments = array();
     $data['name']->value = $data['info']['lookup_name'];
     
     // Set a placeholder name if we don't have one
