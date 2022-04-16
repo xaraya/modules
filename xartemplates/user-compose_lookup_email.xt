@@ -165,6 +165,16 @@
             </div> 
 
         </form>
+        <tab
+ 		<div class="xar-row">
+ 			<div class="xar-col-condensed">$my_first_name</div>
+ 			<div class="xar-col-condensed">First name of the recipient</div>
+ 			<div class="xar-col-condensed">$my_last_name</div>
+ 			<div class="xar-col-condensed">Last name of the recipient</div>
+ 			<div class="xar-col-condensed">$my_name</div>
+ 			<div class="xar-col-condensed">Full name of the recipient</div>
+ 		</div>
+        	
         <script>
             $('.liveButton').on('click', function () {
                 $.confirm({
