@@ -38,25 +38,21 @@
         <xar:mlstring>
             The IMAGE tag is useful for displaying (cached) images at different proportions. Images are resized according
             to the height/width values you specify with the resulting image cached for faster displaying later on. Note: Any other attribute
-            not listed will be passed directly on to the resultant <pre>&lt;img&gt;</pre> tag.
+            not listed will be passed directly on to the resultant img tag.
         </xar:mlstring>
     </p>
     <p>
-        <xar:mlstring>
-            Examples:
-            <p>
-                Resize an image's width while keeping the proportions:<br />
-                <br />
-                <pre>&lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;</pre>
-            </p>
-        </xar:mlstring>
-        <xar:mlstring>
-            <p>
-                Apply some pre-defined image processing (e.g. watermark):<br />
-                <br />
-                <pre>&lt;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&gt;</pre>
-            </p>
-        </xar:mlstring>
+        <xar:mlstring>Examples:</xar:mlstring>
+        <p>
+            <xar:mlstring>Resize an image's width while keeping the proportions:</xar:mlstring><br />
+            <br />
+            <pre>&lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;</pre>
+        </p>
+        <p>
+            <xar:mlstring>Apply some pre-defined image processing (e.g. watermark):</xar:mlstring><br />
+            <br />
+            <pre>&lt;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&gt;</pre>
+        </p>
     </p>
     <h3>
         <xar:mlstring>Included Blocks</xar:mlstring>
