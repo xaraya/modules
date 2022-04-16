@@ -67,6 +67,8 @@
       </h3>
       <p>
         <ul>
+          <li>This module requires the scheduler module (ID 189)</li>
+          <li>This module requires the mailer module (ID 30064)</li>
           <li>This module requires the ckeditor module (ID 30066)</li>
         </ul>
       </p>
