@@ -48,6 +48,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Lookup Interval</xar:var>
+            <xar:data-label property="$properties['lookup_interval']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['lookup_interval']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">State</xar:var>
             <xar:data-label property="$properties['state']" value="$value"/>                    
         </div>
