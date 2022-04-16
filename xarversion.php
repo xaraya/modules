@@ -50,10 +50,10 @@ $modversion['dependency']   = [ 999 ];
 $modversion['dependencyinfo'] = [
                                     0 => [
                                             'name' => 'core',
-                                            'version_ge' => '1.4.0',
+                                            'version_ge' => '2.0.0',
                                          ],
                                     999 => [
                                             'name' => 'mime',
-                                            'version_ge' => '1.2.0',
+                                            'version_ge' => '1.1.0',
                                          ],
                                 ];
