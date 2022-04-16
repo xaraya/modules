@@ -89,7 +89,7 @@
     <property name="message">
       <id>4060</id>
       <label>Message</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue>unserialize(xarModVars::get('reminders','message'))</defaultvalue>
       <source>emails.message</source>
       <status>33</status>
@@ -104,6 +104,16 @@
       <source>emails.do_lookup</source>
       <status>33</status>
       <seq>9</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="lookup_interval">
+      <id>4062</id>
+      <label>Lookup Interval</label>
+      <type>integerbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>emails.lookup_interval</source>
+      <status>33</status>
+      <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
   </properties>

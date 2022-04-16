@@ -76,6 +76,7 @@ function reminders_init()
         subject           varchar(255) NOT NULL default '', 
         message           varchar(255) NOT NULL default '', 
         do_lookups        tinyint unsigned NOT NULL default 0, 
+        lookup_interval   integer unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         timemodified      integer unsigned NOT NULL default 0, 
         state             tinyint(3) NOT NULL default 3, 
