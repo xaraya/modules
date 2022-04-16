@@ -87,7 +87,7 @@
                             Message
                         </div>
                         <div class="xar-col">
-                    	  <xar:data-input type="textarea" name="message" value="$message" cols="40" rows="10"/>
+                    	  <xar:data-input type="editor" name="message" value="$message" cols="40" rows="10"/>
                         </div>
                     </div>
                 </fieldset>
