@@ -77,7 +77,7 @@ function reminders_admin_modifyconfig()
     				$textarea = DataPropertyMaster::getProperty(array('name' => 'textarea'));
     				$textarea->checkInput('message');
 					xarModVars::set('reminders', 'message', serialize($textarea->value));
-					xarModVars::set('reminders', 'subject', $salutation);
+					xarModVars::set('reminders', 'subject', $subject);
                     break;
                 default:
                     break;
