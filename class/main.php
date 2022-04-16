@@ -1,6 +1,6 @@
 <?php
 
-class Keywords extends Object
+class Keywords extends xarObject
 {
     public const CONFIG_MODVAR = 'keywords_config';
     protected static $instance;

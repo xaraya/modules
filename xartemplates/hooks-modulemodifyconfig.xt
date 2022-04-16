@@ -9,6 +9,9 @@
     <xar:if condition="($config_state eq 'default' and $module eq 'keywords') or
         ($config_state eq 'module' and empty($itemtype)) or
         ($config_state eq 'itemtype')">
+        <xar:if condition="empty($delimiters)">
+            <xar:set name="delimiters">','</xar:set>
+        </xar:if>
         <xar:if condition="empty($itemtype)">
             <!-- no itemtype, we're displaying the defaults for a module -->
             <xar:if condition="$module eq 'keywords'">

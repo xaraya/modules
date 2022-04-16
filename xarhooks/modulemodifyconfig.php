@@ -60,6 +60,10 @@ function keywords_hooks_modulemodifyconfig(array $args=[])
         $data['restricted_list'] = implode(', ', $restricted_list);
     }
 
+    if (empty($data['delimiters'])) {
+        $data['delimiters'] = ',';
+    }
+
     $data['module'] = $modname;
     $data['module_id'] = $modid;
     $data['itemtype'] = $itemtype;

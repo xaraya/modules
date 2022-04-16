@@ -138,7 +138,7 @@ function keywords_admin_modifyconfig()
     $data['itemtype'] = $itemtype;
 
     if ($modname == 'keywords') {
-        $data['delimiters'] = xarModVars::get('keywords', 'delimiters');
+        $data['delimiters'] = xarModVars::get('keywords', 'delimiters', ',');
         $data['stats_per_page'] = xarModVars::get('keywords', 'stats_per_page', 100);
         $data['items_per_page'] = xarModVars::get('keywords', 'items_per_page', 20);
         $data['user_layout'] = xarModVars::get('keywords', 'user_layout', 'list');
