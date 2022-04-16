@@ -72,7 +72,7 @@
             <form id="modifyconfig-form" method="post" action="&xar-modurl-reminders-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>
-                        General Options
+                        Default Options
                     </legend>
                     <div class="xar-row">
                         <div class="xar-col-condensed">
@@ -100,7 +100,7 @@
 						<div class="xar-col">
 							<xar:var name="firstline">Choose a template</xar:var>
 							<xar:set name="firstline">"0,$firstline"</xar:set>
-							<xar:data-input type="dropdown" name="lookup_template" value="$lookup_template" options="$template_options" firstline="$firstline"/>
+							<xar:data-input type="dropdown" name="lookup_template" value="$lookup_template" options="$lookup_options" firstline="$firstline"/>
 						</div>
                     </div>
                 </fieldset>
