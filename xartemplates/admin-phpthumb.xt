@@ -33,7 +33,6 @@
         |
         <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
         </xar:if>
-    </p>
     <form method="post" name="post" id="post" action="#xarController::URL('images', 'admin', 'phpthumb')#">
     <table class="xar-fullwidth xar-accent">
     <xar:if condition="!empty($selimage)">
@@ -590,6 +589,7 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
 </xar:if>
 
     </div>
+    </fieldset>
 </div>
     <div>
         <p><i>
