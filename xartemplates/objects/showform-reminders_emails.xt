@@ -57,6 +57,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">Lookup Template</xar:var>
+            <xar:data-label property="$properties['lookup_template']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['lookup_template']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">State</xar:var>
             <xar:data-label property="$properties['state']" value="$value"/>                    
         </div>

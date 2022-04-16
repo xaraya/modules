@@ -116,5 +116,15 @@
       <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="lookup_template">
+      <id>4063</id>
+      <label>Lookup Template</label>
+      <type>integerbox</type>
+      <defaultvalue>xarModVars::get('reminders','lookup_template')</defaultvalue>
+      <source>emails.lookup_template</source>
+      <status>33</status>
+      <seq>11</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
   </properties>
 </object>
