@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body"><h2>
@@ -41,4 +42,4 @@
     </xar:if>
 
     </div>
-</xar:template >
+</xar:template>

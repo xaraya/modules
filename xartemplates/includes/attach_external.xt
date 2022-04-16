@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     Attach an external file: <br />
     <input type="text" name="#$id#_attach_external" id="#$id#_attach_external_id" value="" size="40" maxlength="128"/>

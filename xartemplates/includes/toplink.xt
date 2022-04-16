@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <h1 align="center">
       <a href="#xarController::URL('uploads', 'admin')#">Uploads Administration</a>
     </h1>
 </xar:template >
+</xar:template>

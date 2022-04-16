@@ -46,10 +46,14 @@ $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Utility';
 $modversion['category']     = 'Global';
-$modversion['dependency'] = [
-                                  999,
-                                  ];
+$modversion['dependency']   = [ 999 ];
 $modversion['dependencyinfo'] = [
-                                      999 => 'mime',
-                                      934 => 'jquery',
-                                      ];
+                                    0 => [
+                                            'name' => 'core',
+                                            'version_ge' => '1.4.0',
+                                         ],
+                                    999 => [
+                                            'name' => 'mime',
+                                            'version_ge' => '1.2.0',
+                                         ],
+                                ];
