@@ -28,7 +28,7 @@ function reminders_admin_modifyconfig()
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
     $data['module_settings']->getItem();
 
-	$data['salutation'] = xarModVars::get('reminders', 'salutation');
+	$data['subject'] = xarModVars::get('reminders', 'subject');
 	$data['message'] = unserialize(xarModVars::get('reminders', 'message'));
 
     switch (strtolower($phase)) {
@@ -73,11 +73,11 @@ function reminders_admin_modifyconfig()
                     foreach ($modvars as $var) if (isset($$var)) xarModVars::set('reminders', $var, $$var);
                     break;
                 case 'lookups':
-                    if (!xarVarFetch('salutation', 'str', $salutation, xarModVars::get('reminders', 'salutation'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('subject', 'str', $subject, xarModVars::get('reminders', 'subject'), XARVAR_NOT_REQUIRED)) return;
     				$textarea = DataPropertyMaster::getProperty(array('name' => 'textarea'));
     				$textarea->checkInput('message');
 					xarModVars::set('reminders', 'message', serialize($textarea->value));
-					xarModVars::set('reminders', 'salutation', $salutation);
+					xarModVars::set('reminders', 'subject', $salutation);
                     break;
                 default:
                     break;
