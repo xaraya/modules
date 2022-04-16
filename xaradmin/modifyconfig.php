@@ -30,6 +30,10 @@ function reminders_admin_modifyconfig()
 
 	$data['subject'] = xarModVars::get('reminders', 'subject');
 	$data['message'] = unserialize(xarModVars::get('reminders', 'message'));
+	$data['lookup_template'] = xarModVars::get('reminders', 'lookup_template');
+
+    // Get the available email templates
+    $data['lookup_options'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state' => 3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')));
 
     switch (strtolower($phase)) {
         case 'modify':
