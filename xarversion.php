@@ -48,5 +48,10 @@
 											'displayname' => 'Mailer module',
 											'minversion' => '1.0.0'
 										 ),
+									30066 => array(
+											'name' => 'ckeditor',
+											'displayname' => 'CKEditor module',
+											'minversion' => '1.0.0'
+										 ),
 									);
 ?>
