@@ -32,7 +32,7 @@ function reminders_user_compose_lookup_email($args)
     $data['copy_emails'] = true;
 
     // Get the available email messages
-    $data['message_options'] = xarMod::apiFunc('mailer', 'user', 'getall_mails', ['state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'custom_emails')]);
+    $data['message_options'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')));
 
     # --------------------------------------------------------
 #
@@ -154,9 +154,9 @@ function reminders_user_compose_lookup_email($args)
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
             }
-
-            $data['result']['name'] = $emailargs['my_name'];
-            $data['result']['email'] = $emailargs['my_email'];
+            
+			$data['result']['name'] = $emailargs['lookup_name'];
+			$data['result']['email'] = $emailargs['lookup_email'];
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;

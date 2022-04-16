@@ -256,6 +256,7 @@ Sizes: [
 																&lt;tr&gt;
 																	&lt;td align=&quot;center&quot; valign=&quot;middle&quot; class=&quot;textContent&quot;&gt;
 																		&lt;h1 style=&quot;color:##FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;&quot;&gt;
+                                                                            &lt;!-- &lt;img src=&quot;https://www.luetolf-carroll.com/grades/var/ckfinder/userfiles/images/ESADELogo.png&quot; alt=&quot;ESADE&quot;/&gt; --&gt;
                                                                             Due Date Reminder
 																		&lt;/h1&gt;
 																	&lt;/td&gt;
@@ -357,6 +358,959 @@ Sizes: [
 								&lt;a href=&quot;#xarModURL('reminders','user','remove',array('code'=&gt;$code))#&quot;&gt;Remove&lt;/a&gt;
 							&lt;/div&gt;
 						&lt;/xar:if&gt;
+																					&lt;/div&gt;
+																				&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // MODULE ROW --&gt;
+
+							&lt;!-- MODULE DIVIDER // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table class=&quot;flexibleContainerCellDivider&quot; border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;padding-top:0px;padding-bottom:0px;&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;border-top:1px solid ##C8C8C8;&quot;&gt;&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // END --&gt;
+
+							&lt;!-- MODULE DIVIDER // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table class=&quot;flexibleContainerCellDivider&quot; border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;padding-top:0px;padding-bottom:0px;&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;border-top:1px solid ##C8C8C8;&quot;&gt;&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // END --&gt;
+
+							&lt;!-- MODULE ROW // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td valign=&quot;top&quot; class=&quot;textContent&quot;&gt;
+																					&lt;div style=&quot;text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:##5F5F5F;line-height:135%;&quot;&gt;
+																					    sent by Xaraya Reminder
+																					&lt;/div&gt;
+																				&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // MODULE ROW --&gt;
+						&lt;/table&gt;
+						&lt;!-- // END --&gt;
+					&lt;/td&gt;
+				&lt;/tr&gt;
+			&lt;/table&gt;
+		&lt;/center&gt;
+&lt;!--
+	&lt;/body&gt;
+&lt;/html&gt;
+--&gt;</body>
+    <footer>0</footer>
+    <locale>en_US.utf-8</locale>
+    <owner>6</owner>
+    <editor>4</editor>
+    <redirect>0</redirect>
+    <redirect_address></redirect_address>
+    <mail_type>4</mail_type>
+    <module_id>30227</module_id>
+    <alias>0</alias>
+    <created>1415448970</created>
+    <modified>1415448970</modified>
+    <state>3</state>
+    <header_x_mailer></header_x_mailer>
+    <realm_id>0</realm_id>
+    <parameters></parameters>
+  </mailer_mails>
+  <mailer_mails itemid="19">
+    <id>19</id>
+    <name>Automatic Lookup Reminder</name>
+    <description>An email reminder for a lookup</description>
+    <sender_name>Gabriella</sender_name>
+    <sender_address>gabriella@luetolf-carroll.com</sender_address>
+    <subject>Lookup Reminder</subject>
+    <header>0</header>
+    <body>&lt;!--
+Xaraya adjustments
+
+1. Remove the doctype, html, head and body tags
+2. Make single hashes double hashes
+3. Make all entities numeric
+4. Remove any Mailchimp features. They are not XML conform
+5. Remove meta and title tags
+--&gt;
+&lt;!--
+==================== Respmail ====================
+Respmail is a response HTML email designed to work
+on all major devices and responsive for smartphones
+that support media queries.
+** NOTE **
+This template comes with a lot of standard features
+that has been thoroughly tested on major platforms
+and devices, it is extremely flexible to use and
+can be easily customized by removing any row that
+you do not need.
+it is gauranteed to work 95% without any major flaws,
+any changes or adjustments should thoroughly be
+tested and reviewed to match with the general
+structure.
+** Profile **
+Licensed under MIT (https://github.com/charlesmudy/responsive-html-email-template/blob/master/LICENSE)
+Designed by Shina Charles Memud
+Respmail v1.2 (https://charlesmudy.com/respmail/)
+** Quick modification **
+We are using width of 500 for the whole content,
+you can change it any size you want (e.g. 600).
+The fastest and safest way is to use find &amp; replace
+Sizes: [
+		wrapper   : '500',
+		columns   : '210',
+		x-columns : [
+						left : '90',
+						right: '350'
+				]
+		}
+	--&gt;
+&lt;!--
+	&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+	&lt;html xmlns=&quot;https://www.w3.org/1999/xhtml&quot;&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+		&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
+		&lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot; /&gt; 
+--&gt;
+		&lt;!-- disable auto telephone linking in iOS --&gt;
+&lt;!--
+		&lt;title&gt;Respmail is a response HTML email designed to work on all major email platforms and smartphones&lt;/title&gt;
+--&gt;
+		&lt;style type=&quot;text/css&quot;&gt;
+			&lt;!-- RESET STYLES --&gt;
+			html { background-color:##E1E1E1; margin:0; padding:0; }
+			body, ##bodyTable, ##bodyCell, ##bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif;}
+			table{border-collapse:collapse;}
+			table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:##7A7A7A;font-weight:normal;}
+			img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
+			a {text-decoration:none !important;border-bottom: 1px solid;}
+			h1, h2, h3, h4, h5, h6{color:##5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
+			&lt;!-- CLIENT-SPECIFIC STYLES --&gt;
+			.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} &lt;!-- Force Hotmail/Outlook.com to display emails at full width. --&gt;
+			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height:100%;} &lt;!--* Force Hotmail/Outlook.com to display line heights normally. --&gt;
+			table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} &lt;!-- Remove spacing between tables in Outlook 2007 and up. --&gt;
+			##outlook a{padding:0;} &lt;!-- Force Outlook 2007 and up to provide a &quot;view in browser&quot; message. --&gt;
+			img{-ms-interpolation-mode: bicubic;display:block;outline:none; text-decoration:none;} &lt;!-- Force IE to smoothly render resized images. --&gt;
+			body, table, td, p, a, li, blockquote{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-weight:normal!important;} &lt;!-- Prevent Windows- and Webkit-based mobile platforms from changing declared text sizes. --&gt;
+			.ExternalClass td[class=&quot;ecxflexibleContainerBox&quot;] h3 {padding-top: 10px !important;} &lt;!-- Force hotmail to push 2-grid sub headers down --&gt;
+			&lt;!-- /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ --&gt;
+			&lt;!-- ========== Page Styles ========== --&gt;
+			h1{display:block;font-size:26px;font-style:normal;font-weight:normal;line-height:100%;}
+			h2{display:block;font-size:20px;font-style:normal;font-weight:normal;line-height:120%;}
+			h3{display:block;font-size:17px;font-style:normal;font-weight:normal;line-height:110%;}
+			h4{display:block;font-size:18px;font-style:italic;font-weight:normal;line-height:100%;}
+			.flexibleImage{height:auto;}
+			.linkRemoveBorder{border-bottom:0 !important;}
+			table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
+			body, ##bodyTable{background-color:##E1E1E1;}
+			##emailHeader{background-color:##E1E1E1;}
+			##emailBody{background-color:##FFFFFF;}
+			##emailFooter{background-color:##E1E1E1;}
+			.nestedContainer{background-color:##F8F8F8; border:1px solid ##CCCCCC;}
+			.emailButton{background-color:##205478; border-collapse:separate;}
+			.buttonContent{color:##FFFFFF; font-family:Helvetica; font-size:18px; font-weight:bold; line-height:100%; padding:15px; text-align:center;}
+			.buttonContent a{color:##FFFFFF; display:block; text-decoration:none!important; border:0!important;}
+			.emailCalendar{background-color:##FFFFFF; border:1px solid ##CCCCCC;}
+			.emailCalendarMonth{background-color:##205478; color:##FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; padding-top:10px; padding-bottom:10px; text-align:center;}
+			.emailCalendarDay{color:##205478; font-family:Helvetica, Arial, sans-serif; font-size:60px; font-weight:bold; line-height:100%; padding-top:20px; padding-bottom:20px; text-align:center;}
+			.imageContentText {margin-top: 10px;line-height:0;}
+			.imageContentText a {line-height:0;}
+			##invisibleIntroduction {display:none !important;} &lt;!-- Removing the introduction text from the view --&gt;
+			&lt;!-- FRAMEWORK HACKS &amp; OVERRIDES --&gt;
+			span[class=ios-color-hack] a {color:##275100!important;text-decoration:none!important;} &lt;!-- Remove all link colors in IOS (below are duplicates based on the color preference) --&gt;
+			span[class=ios-color-hack2] a {color:##205478!important;text-decoration:none!important;}
+			span[class=ios-color-hack3] a {color:##8B8B8B!important;text-decoration:none!important;}
+			&lt;!-- A nice and clean way to target phone numbers you want clickable and avoid a mobile phone from linking other numbers that look like, but are not phone numbers.  Use these two blocks of code to &quot;unstyle&quot; any numbers that may be linked.  The second block gives you a class to apply with a span tag to the numbers you would like linked and styled.
+			Inspired by Campaign Monitor's article on using phone numbers in email: https://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
+			--&gt;
+			.a[href^=&quot;tel&quot;], a[href^=&quot;sms&quot;] {text-decoration:none!important;color:##606060!important;pointer-events:none!important;cursor:default!important;}
+			.mobile_link a[href^=&quot;tel&quot;], .mobile_link a[href^=&quot;sms&quot;] {text-decoration:none!important;color:##606060!important;pointer-events:auto!important;cursor:default!important;}
+			&lt;!-- MOBILE STYLES --&gt;
+			@media only screen and (max-width: 480px){
+				&lt;!-- ////// CLIENT-SPECIFIC STYLES //////--&gt;
+				body{width:100% !important; min-width:100% !important;} &lt;!-- Force iOS Mail to render the email at full width. --&gt;
+				&lt;!-- FRAMEWORK STYLES --&gt;
+				&lt;!--
+				CSS selectors are written in attribute
+				selector format to prevent Yahoo Mail
+				from rendering media query styles on
+				desktop.
+				--&gt;
+				&lt;!-- td[class=&quot;textContent&quot;], td[class=&quot;flexibleContainerCell&quot;] { width: 100%; padding-left: 10px !important; padding-right: 10px !important; }--&gt;
+				table[id=&quot;emailHeader&quot;],
+				table[id=&quot;emailBody&quot;],
+				table[id=&quot;emailFooter&quot;],
+				table[class=&quot;flexibleContainer&quot;],
+				td[class=&quot;flexibleContainerCell&quot;] {width:100% !important;}
+				td[class=&quot;flexibleContainerBox&quot;], td[class=&quot;flexibleContainerBox&quot;] table {display: block;width: 100%;text-align: left;}
+				&lt;!--
+				The following style rule makes any
+				image classed with 'flexibleImage'
+				fluid when the query activates.
+				Make sure you add an inline max-width
+				to those images to prevent them
+				from blowing out.
+				--&gt;
+				td[class=&quot;imageContent&quot;] img {height:auto !important; width:100% !important; max-width:100% !important; }
+				img[class=&quot;flexibleImage&quot;]{height:auto !important; width:100% !important;max-width:100% !important;}
+				img[class=&quot;flexibleImageSmall&quot;]{height:auto !important; width:auto !important;}
+				&lt;!--
+				Create top space for every second element in a block
+				--&gt;
+				table[class=&quot;flexibleContainerBoxNext&quot;]{padding-top: 10px !important;}
+				&lt;!--
+				Make buttons in the email span the
+				full width of their container, allowing
+				for left- or right-handed ease of use.
+				--&gt;
+				table[class=&quot;emailButton&quot;]{width:100% !important;}
+				td[class=&quot;buttonContent&quot;]{padding:0 !important;}
+				td[class=&quot;buttonContent&quot;] a{padding:15px !important;}
+			}
+			&lt;!--  CONDITIONS FOR ANDROID DEVICES ONLY
+			*   https://developer.android.com/guide/webapps/targeting.html
+			*   https://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/ ;
+			===================================================== --&gt;
+			@media only screen and (-webkit-device-pixel-ratio:.75){
+				&lt;!-- Put CSS for low density (ldpi) Android layouts in here --&gt;
+			}
+			@media only screen and (-webkit-device-pixel-ratio:1){
+				&lt;!-- Put CSS for medium density (mdpi) Android layouts in here --&gt;
+			}
+			@media only screen and (-webkit-device-pixel-ratio:1.5){
+				&lt;!-- Put CSS for high density (hdpi) Android layouts in here --&gt;
+			}
+			&lt;!-- end Android targeting --&gt;
+			&lt;!-- CONDITIONS FOR IOS DEVICES ONLY
+			=====================================================--&gt;
+			@media only screen and (min-device-width : 320px) and (max-device-width:568px) {
+			}
+			&lt;!-- end IOS targeting --&gt;
+		&lt;/style&gt;
+		&lt;!--
+			Outlook Conditional CSS
+			These two style blocks target Outlook 2007 &amp; 2010 specifically, forcing
+			columns into a single vertical stack as on mobile clients. This is
+			primarily done to avoid the 'page break bug' and is optional.
+			More information here:
+			https://templates.mailchimp.com/development/css/outlook-conditional-css
+		--&gt;
+		&lt;!--[if mso 12]&gt;
+			&lt;style type=&quot;text/css&quot;&gt;
+				.flexibleContainer{display:block !important; width:100% !important;}
+			&lt;/style&gt;
+		&lt;![endif]--&gt;
+		&lt;!--[if mso 14]&gt;
+			&lt;style type=&quot;text/css&quot;&gt;
+				.flexibleContainer{display:block !important; width:100% !important;}
+			&lt;/style&gt;
+		&lt;![endif]--&gt;
+&lt;!--
+	&lt;/head&gt;
+	&lt;body bgcolor=&quot;##E1E1E1&quot; leftmargin=&quot;0&quot; marginwidth=&quot;0&quot; topmargin=&quot;0&quot; marginheight=&quot;0&quot; offset=&quot;0&quot;&gt;
+--&gt;
+
+		&lt;!-- CENTER THE EMAIL // --&gt;
+		&lt;!--
+		1.  The center tag should normally put all the
+			content in the middle of the email page.
+			I added &quot;table-layout: fixed;&quot; style to force
+			yahoomail which by default put the content left.
+		2.  For hotmail and yahoomail, the contents of
+			the email starts from this center, so we try to
+			apply necessary styling e.g. background-color.
+		--&gt;
+		&lt;center style=&quot;background-color:##E1E1E1;&quot;&gt;
+			&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; height=&quot;100%&quot; width=&quot;100%&quot; id=&quot;bodyTable&quot; style=&quot;table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;&quot;&gt;
+				&lt;tr&gt;
+					&lt;td align=&quot;center&quot; valign=&quot;top&quot; id=&quot;bodyCell&quot;&gt;
+
+						&lt;!-- EMAIL BODY // --&gt;
+						&lt;!--
+							The table &quot;emailBody&quot; is the email's container.
+							Its width can be set to 100% for a color band
+							that spans the width of the page.
+						--&gt;
+						&lt;table bgcolor=&quot;##FFFFFF&quot;  border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; id=&quot;emailBody&quot;&gt;
+
+							&lt;!-- MODULE ROW // --&gt;
+							&lt;!--
+								To move or duplicate any of the design patterns
+								in this email, simply move or copy the entire
+								MODULE ROW section for each content block.
+							--&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;!--
+										The centering table keeps the content
+										tables centered in the emailBody table,
+										in case its width is set to 100%.
+									--&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;color:##FFFFFF;&quot; bgcolor=&quot;##3498db&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;!--
+													The flexible container has a set width
+													that gets overridden by the media query.
+													Most content tables within can then be
+													given 100% widths.
+												--&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;middle&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+
+															&lt;!-- CONTENT TABLE // --&gt;
+															&lt;!--
+															The content table is the first element
+																that's entirely separate from the structural
+																framework of the email.
+															--&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;middle&quot; class=&quot;textContent&quot;&gt;
+																		&lt;h1 style=&quot;color:##FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;&quot;&gt;
+                                                                            Get In Touch Reminder
+																		&lt;/h1&gt;
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+															&lt;!-- // CONTENT TABLE --&gt;
+
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // MODULE ROW --&gt;
+
+
+
+
+							&lt;!-- MODULE ROW // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td valign=&quot;top&quot; class=&quot;textContent&quot;&gt;
+																				&lt;!--
+																					&lt;h3 style=&quot;color:##5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;&quot;&gt;
+																					Get In Touch Reminder
+																					&lt;/h3&gt;
+																				--&gt;
+																					&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:##5F5F5F;line-height:135%;&quot;&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:20px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            Hello &lt;xar:data-output property=&quot;$name&quot; layout=&quot;fl&quot;/&gt;,
+                        &lt;/div&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:20px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            This is a suggestion to get in touch with
+                        &lt;/div&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:20px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                        	&lt;b&gt;&lt;xar:data-output type=&quot;name&quot; value=&quot;$lookup_name&quot; layout=&quot;fl&quot;/&gt;&lt;/b&gt;
+                        &lt;/div&gt;
+                        &lt;xar:if condition=&quot;!empty($lookup_email)&quot;&gt;
+							&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+								&lt;xar:set name=&quot;target&quot;&gt;'mailto:' . $lookup_email . '?subject=Touching&amp;#160;base&amp;#38;body=Hi&amp;#160;' . $lookup_first_name . ','&lt;/xar:set&gt;
+								Email: &lt;a href=&quot;#$target#&quot;&gt;#$lookup_email#&lt;/a&gt;
+							&lt;/div&gt;
+                        &lt;/xar:if&gt;
+                        &lt;xar:if condition=&quot;!empty($lookup_phone)&quot;&gt;
+							&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+								Phone: #$lookup_phone#
+							&lt;/div&gt;
+                        &lt;/xar:if&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            To send a composable elegant email, click here:
+							&lt;a href=&quot;#xarModURL('reminders','user','compose_lookup_email',array('code'=&gt;$encoded))#&quot;&gt;Compose&lt;/a&gt;
+                        &lt;/div&gt;
+																					&lt;/div&gt;
+																				&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // MODULE ROW --&gt;
+
+							&lt;!-- MODULE DIVIDER // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table class=&quot;flexibleContainerCellDivider&quot; border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;padding-top:0px;padding-bottom:0px;&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;border-top:1px solid ##C8C8C8;&quot;&gt;&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // END --&gt;
+
+							&lt;!-- MODULE DIVIDER // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table class=&quot;flexibleContainerCellDivider&quot; border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;padding-top:0px;padding-bottom:0px;&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;border-top:1px solid ##C8C8C8;&quot;&gt;&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // END --&gt;
+
+							&lt;!-- MODULE ROW // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td valign=&quot;top&quot; class=&quot;textContent&quot;&gt;
+																					&lt;div style=&quot;text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:##5F5F5F;line-height:135%;&quot;&gt;
+																					    sent by Xaraya Reminder
+																					&lt;/div&gt;
+																				&lt;/td&gt;
+																			&lt;/tr&gt;
+																		&lt;/table&gt;
+																		&lt;!-- // CONTENT TABLE --&gt;
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // MODULE ROW --&gt;
+						&lt;/table&gt;
+						&lt;!-- // END --&gt;
+					&lt;/td&gt;
+				&lt;/tr&gt;
+			&lt;/table&gt;
+		&lt;/center&gt;
+&lt;!--
+	&lt;/body&gt;
+&lt;/html&gt;
+--&gt;</body>
+    <footer>0</footer>
+    <locale>en_US.utf-8</locale>
+    <owner>6</owner>
+    <editor>4</editor>
+    <redirect>0</redirect>
+    <redirect_address></redirect_address>
+    <mail_type>4</mail_type>
+    <module_id>30227</module_id>
+    <alias>0</alias>
+    <created>1415448970</created>
+    <modified>1415448970</modified>
+    <state>3</state>
+    <header_x_mailer></header_x_mailer>
+    <realm_id>0</realm_id>
+    <parameters></parameters>
+  </mailer_mails>
+  <mailer_mails itemid="20">
+    <id>20</id>
+    <name>Lookup email</name>
+    <description>A &quot;touching base&quot; email sent to a lookup contact</description>
+    <sender_name>Gabriella</sender_name>
+    <sender_address>gabriella@luetolf-carroll.com</sender_address>
+    <subject>Touching base</subject>
+    <header>0</header>
+    <body>&lt;!--
+Xaraya adjustments
+
+1. Remove the doctype, html, head and body tags
+2. Make single hashes double hashes
+3. Make all entities numeric
+4. Remove any Mailchimp features. They are not XML conform
+5. Remove meta and title tags
+--&gt;
+&lt;!--
+==================== Respmail ====================
+Respmail is a response HTML email designed to work
+on all major devices and responsive for smartphones
+that support media queries.
+** NOTE **
+This template comes with a lot of standard features
+that has been thoroughly tested on major platforms
+and devices, it is extremely flexible to use and
+can be easily customized by removing any row that
+you do not need.
+it is gauranteed to work 95% without any major flaws,
+any changes or adjustments should thoroughly be
+tested and reviewed to match with the general
+structure.
+** Profile **
+Licensed under MIT (https://github.com/charlesmudy/responsive-html-email-template/blob/master/LICENSE)
+Designed by Shina Charles Memud
+Respmail v1.2 (https://charlesmudy.com/respmail/)
+** Quick modification **
+We are using width of 500 for the whole content,
+you can change it any size you want (e.g. 600).
+The fastest and safest way is to use find &amp; replace
+Sizes: [
+		wrapper   : '500',
+		columns   : '210',
+		x-columns : [
+						left : '90',
+						right: '350'
+				]
+		}
+	--&gt;
+&lt;!--
+	&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+	&lt;html xmlns=&quot;https://www.w3.org/1999/xhtml&quot;&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+		&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
+		&lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot; /&gt; 
+--&gt;
+		&lt;!-- disable auto telephone linking in iOS --&gt;
+&lt;!--
+		&lt;title&gt;Respmail is a response HTML email designed to work on all major email platforms and smartphones&lt;/title&gt;
+--&gt;
+		&lt;style type=&quot;text/css&quot;&gt;
+			&lt;!-- RESET STYLES --&gt;
+			html { background-color:##E1E1E1; margin:0; padding:0; }
+			body, ##bodyTable, ##bodyCell, ##bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif;}
+			table{border-collapse:collapse;}
+			table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:##7A7A7A;font-weight:normal;}
+			img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
+			a {text-decoration:none !important;border-bottom: 1px solid;}
+			h1, h2, h3, h4, h5, h6{color:##5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
+			&lt;!-- CLIENT-SPECIFIC STYLES --&gt;
+			.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} &lt;!-- Force Hotmail/Outlook.com to display emails at full width. --&gt;
+			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height:100%;} &lt;!--* Force Hotmail/Outlook.com to display line heights normally. --&gt;
+			table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} &lt;!-- Remove spacing between tables in Outlook 2007 and up. --&gt;
+			##outlook a{padding:0;} &lt;!-- Force Outlook 2007 and up to provide a &quot;view in browser&quot; message. --&gt;
+			img{-ms-interpolation-mode: bicubic;display:block;outline:none; text-decoration:none;} &lt;!-- Force IE to smoothly render resized images. --&gt;
+			body, table, td, p, a, li, blockquote{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-weight:normal!important;} &lt;!-- Prevent Windows- and Webkit-based mobile platforms from changing declared text sizes. --&gt;
+			.ExternalClass td[class=&quot;ecxflexibleContainerBox&quot;] h3 {padding-top: 10px !important;} &lt;!-- Force hotmail to push 2-grid sub headers down --&gt;
+			&lt;!-- /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ --&gt;
+			&lt;!-- ========== Page Styles ========== --&gt;
+			h1{display:block;font-size:26px;font-style:normal;font-weight:normal;line-height:100%;}
+			h2{display:block;font-size:20px;font-style:normal;font-weight:normal;line-height:120%;}
+			h3{display:block;font-size:17px;font-style:normal;font-weight:normal;line-height:110%;}
+			h4{display:block;font-size:18px;font-style:italic;font-weight:normal;line-height:100%;}
+			.flexibleImage{height:auto;}
+			.linkRemoveBorder{border-bottom:0 !important;}
+			table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
+			body, ##bodyTable{background-color:##E1E1E1;}
+			##emailHeader{background-color:##E1E1E1;}
+			##emailBody{background-color:##FFFFFF;}
+			##emailFooter{background-color:##E1E1E1;}
+			.nestedContainer{background-color:##F8F8F8; border:1px solid ##CCCCCC;}
+			.emailButton{background-color:##205478; border-collapse:separate;}
+			.buttonContent{color:##FFFFFF; font-family:Helvetica; font-size:18px; font-weight:bold; line-height:100%; padding:15px; text-align:center;}
+			.buttonContent a{color:##FFFFFF; display:block; text-decoration:none!important; border:0!important;}
+			.emailCalendar{background-color:##FFFFFF; border:1px solid ##CCCCCC;}
+			.emailCalendarMonth{background-color:##205478; color:##FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; padding-top:10px; padding-bottom:10px; text-align:center;}
+			.emailCalendarDay{color:##205478; font-family:Helvetica, Arial, sans-serif; font-size:60px; font-weight:bold; line-height:100%; padding-top:20px; padding-bottom:20px; text-align:center;}
+			.imageContentText {margin-top: 10px;line-height:0;}
+			.imageContentText a {line-height:0;}
+			##invisibleIntroduction {display:none !important;} &lt;!-- Removing the introduction text from the view --&gt;
+			&lt;!-- FRAMEWORK HACKS &amp; OVERRIDES --&gt;
+			span[class=ios-color-hack] a {color:##275100!important;text-decoration:none!important;} &lt;!-- Remove all link colors in IOS (below are duplicates based on the color preference) --&gt;
+			span[class=ios-color-hack2] a {color:##205478!important;text-decoration:none!important;}
+			span[class=ios-color-hack3] a {color:##8B8B8B!important;text-decoration:none!important;}
+			&lt;!-- A nice and clean way to target phone numbers you want clickable and avoid a mobile phone from linking other numbers that look like, but are not phone numbers.  Use these two blocks of code to &quot;unstyle&quot; any numbers that may be linked.  The second block gives you a class to apply with a span tag to the numbers you would like linked and styled.
+			Inspired by Campaign Monitor's article on using phone numbers in email: https://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
+			--&gt;
+			.a[href^=&quot;tel&quot;], a[href^=&quot;sms&quot;] {text-decoration:none!important;color:##606060!important;pointer-events:none!important;cursor:default!important;}
+			.mobile_link a[href^=&quot;tel&quot;], .mobile_link a[href^=&quot;sms&quot;] {text-decoration:none!important;color:##606060!important;pointer-events:auto!important;cursor:default!important;}
+			&lt;!-- MOBILE STYLES --&gt;
+			@media only screen and (max-width: 480px){
+				&lt;!-- ////// CLIENT-SPECIFIC STYLES //////--&gt;
+				body{width:100% !important; min-width:100% !important;} &lt;!-- Force iOS Mail to render the email at full width. --&gt;
+				&lt;!-- FRAMEWORK STYLES --&gt;
+				&lt;!--
+				CSS selectors are written in attribute
+				selector format to prevent Yahoo Mail
+				from rendering media query styles on
+				desktop.
+				--&gt;
+				&lt;!-- td[class=&quot;textContent&quot;], td[class=&quot;flexibleContainerCell&quot;] { width: 100%; padding-left: 10px !important; padding-right: 10px !important; }--&gt;
+				table[id=&quot;emailHeader&quot;],
+				table[id=&quot;emailBody&quot;],
+				table[id=&quot;emailFooter&quot;],
+				table[class=&quot;flexibleContainer&quot;],
+				td[class=&quot;flexibleContainerCell&quot;] {width:100% !important;}
+				td[class=&quot;flexibleContainerBox&quot;], td[class=&quot;flexibleContainerBox&quot;] table {display: block;width: 100%;text-align: left;}
+				&lt;!--
+				The following style rule makes any
+				image classed with 'flexibleImage'
+				fluid when the query activates.
+				Make sure you add an inline max-width
+				to those images to prevent them
+				from blowing out.
+				--&gt;
+				td[class=&quot;imageContent&quot;] img {height:auto !important; width:100% !important; max-width:100% !important; }
+				img[class=&quot;flexibleImage&quot;]{height:auto !important; width:100% !important;max-width:100% !important;}
+				img[class=&quot;flexibleImageSmall&quot;]{height:auto !important; width:auto !important;}
+				&lt;!--
+				Create top space for every second element in a block
+				--&gt;
+				table[class=&quot;flexibleContainerBoxNext&quot;]{padding-top: 10px !important;}
+				&lt;!--
+				Make buttons in the email span the
+				full width of their container, allowing
+				for left- or right-handed ease of use.
+				--&gt;
+				table[class=&quot;emailButton&quot;]{width:100% !important;}
+				td[class=&quot;buttonContent&quot;]{padding:0 !important;}
+				td[class=&quot;buttonContent&quot;] a{padding:15px !important;}
+			}
+			&lt;!--  CONDITIONS FOR ANDROID DEVICES ONLY
+			*   https://developer.android.com/guide/webapps/targeting.html
+			*   https://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/ ;
+			===================================================== --&gt;
+			@media only screen and (-webkit-device-pixel-ratio:.75){
+				&lt;!-- Put CSS for low density (ldpi) Android layouts in here --&gt;
+			}
+			@media only screen and (-webkit-device-pixel-ratio:1){
+				&lt;!-- Put CSS for medium density (mdpi) Android layouts in here --&gt;
+			}
+			@media only screen and (-webkit-device-pixel-ratio:1.5){
+				&lt;!-- Put CSS for high density (hdpi) Android layouts in here --&gt;
+			}
+			&lt;!-- end Android targeting --&gt;
+			&lt;!-- CONDITIONS FOR IOS DEVICES ONLY
+			=====================================================--&gt;
+			@media only screen and (min-device-width : 320px) and (max-device-width:568px) {
+			}
+			&lt;!-- end IOS targeting --&gt;
+		&lt;/style&gt;
+		&lt;!--
+			Outlook Conditional CSS
+			These two style blocks target Outlook 2007 &amp; 2010 specifically, forcing
+			columns into a single vertical stack as on mobile clients. This is
+			primarily done to avoid the 'page break bug' and is optional.
+			More information here:
+			https://templates.mailchimp.com/development/css/outlook-conditional-css
+		--&gt;
+		&lt;!--[if mso 12]&gt;
+			&lt;style type=&quot;text/css&quot;&gt;
+				.flexibleContainer{display:block !important; width:100% !important;}
+			&lt;/style&gt;
+		&lt;![endif]--&gt;
+		&lt;!--[if mso 14]&gt;
+			&lt;style type=&quot;text/css&quot;&gt;
+				.flexibleContainer{display:block !important; width:100% !important;}
+			&lt;/style&gt;
+		&lt;![endif]--&gt;
+&lt;!--
+	&lt;/head&gt;
+	&lt;body bgcolor=&quot;##E1E1E1&quot; leftmargin=&quot;0&quot; marginwidth=&quot;0&quot; topmargin=&quot;0&quot; marginheight=&quot;0&quot; offset=&quot;0&quot;&gt;
+--&gt;
+
+		&lt;!-- CENTER THE EMAIL // --&gt;
+		&lt;!--
+		1.  The center tag should normally put all the
+			content in the middle of the email page.
+			I added &quot;table-layout: fixed;&quot; style to force
+			yahoomail which by default put the content left.
+		2.  For hotmail and yahoomail, the contents of
+			the email starts from this center, so we try to
+			apply necessary styling e.g. background-color.
+		--&gt;
+		&lt;center style=&quot;background-color:##E1E1E1;&quot;&gt;
+			&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; height=&quot;100%&quot; width=&quot;100%&quot; id=&quot;bodyTable&quot; style=&quot;table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;&quot;&gt;
+				&lt;tr&gt;
+					&lt;td align=&quot;center&quot; valign=&quot;top&quot; id=&quot;bodyCell&quot;&gt;
+
+						&lt;!-- EMAIL BODY // --&gt;
+						&lt;!--
+							The table &quot;emailBody&quot; is the email's container.
+							Its width can be set to 100% for a color band
+							that spans the width of the page.
+						--&gt;
+						&lt;table bgcolor=&quot;##FFFFFF&quot;  border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; id=&quot;emailBody&quot;&gt;
+
+							&lt;!-- MODULE ROW // --&gt;
+							&lt;!--
+								To move or duplicate any of the design patterns
+								in this email, simply move or copy the entire
+								MODULE ROW section for each content block.
+							--&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;!--
+										The centering table keeps the content
+										tables centered in the emailBody table,
+										in case its width is set to 100%.
+									--&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;color:##FFFFFF;&quot; bgcolor=&quot;##3498db&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;!--
+													The flexible container has a set width
+													that gets overridden by the media query.
+													Most content tables within can then be
+													given 100% widths.
+												--&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;middle&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+
+															&lt;!-- CONTENT TABLE // --&gt;
+															&lt;!--
+															The content table is the first element
+																that's entirely separate from the structural
+																framework of the email.
+															--&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;15&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;middle&quot; class=&quot;textContent&quot;&gt;
+																		&lt;h4 style=&quot;color:##FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:24px;font-weight:normal;margin-bottom:5px;text-align:center;&quot;&gt;
+                                                                            Get In Touch Reminder
+																		&lt;/h4&gt;
+																	&lt;/td&gt;
+																&lt;/tr&gt;
+															&lt;/table&gt;
+															&lt;!-- // CONTENT TABLE --&gt;
+
+														&lt;/td&gt;
+													&lt;/tr&gt;
+												&lt;/table&gt;
+												&lt;!-- // FLEXIBLE CONTAINER --&gt;
+											&lt;/td&gt;
+										&lt;/tr&gt;
+									&lt;/table&gt;
+									&lt;!-- // CENTERING TABLE --&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;!-- // MODULE ROW --&gt;
+
+							&lt;!-- MODULE ROW // --&gt;
+							&lt;tr&gt;
+								&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+									&lt;!-- CENTERING TABLE // --&gt;
+									&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+										&lt;tr&gt;
+											&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+												&lt;!-- FLEXIBLE CONTAINER // --&gt;
+												&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; class=&quot;flexibleContainer&quot;&gt;
+													&lt;tr&gt;
+														&lt;td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;500&quot; class=&quot;flexibleContainerCell&quot;&gt;
+															&lt;table border=&quot;0&quot; cellpadding=&quot;30&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																&lt;tr&gt;
+																	&lt;td align=&quot;center&quot; valign=&quot;top&quot;&gt;
+
+																		&lt;!-- CONTENT TABLE // --&gt;
+																		&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+																			&lt;tr&gt;
+																				&lt;td valign=&quot;top&quot; class=&quot;textContent&quot;&gt;
+																					&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:##5F5F5F;line-height:135%;&quot;&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:20px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            #$message#
+                        &lt;/div&gt;
 																					&lt;/div&gt;
 																				&lt;/td&gt;
 																			&lt;/tr&gt;

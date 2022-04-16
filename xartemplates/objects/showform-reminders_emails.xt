@@ -30,11 +30,11 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
-            <xar:var name="value">Email Salutation</xar:var>
-            <xar:data-label property="$properties['salutation']" value="$value"/>                    
+            <xar:var name="value">Message</xar:var>
+            <xar:data-label property="$properties['message']" value="$value"/>                    
         </div>
-        <div class="xar-col">
-            <xar:data-input property="$properties['salutation']"/>                    
+        <div class="">
+            <xar:data-input property="$properties['message']"/>                    
         </div>        
     </div>
     <div class="xar-row">
@@ -44,6 +44,24 @@
         </div>
         <div class="xar-col">
             <xar:data-input property="$properties['do_lookup']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Lookup Interval</xar:var>
+            <xar:data-label property="$properties['lookup_interval']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['lookup_interval']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="value">Lookup Template</xar:var>
+            <xar:data-label property="$properties['lookup_template']" value="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['lookup_template']"/>                    
         </div>        
     </div>
     <div class="xar-row">

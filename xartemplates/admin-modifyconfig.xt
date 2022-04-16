@@ -72,23 +72,36 @@
             <form id="modifyconfig-form" method="post" action="&xar-modurl-reminders-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>
-                        General Options
+                        Default Options
                     </legend>
                     <div class="xar-row">
                         <div class="xar-col-condensed">
-                            Salutation
+                            Subject
                         </div>
                         <div class="xar-col">
-                    	  <xar:data-input type="textbox" name="salutation" value="$salutation" cols="40"/>
+                    	  <xar:data-input type="textbox" name="subject" value="$subject" cols="40"/>
                         </div>
                     </div>
                     <div class="xar-row">
                         <div class="xar-col-condensed">
                             Message
                         </div>
-                        <div class="xar-col">
-                    	  <xar:data-input type="textarea" name="message" value="$message" cols="40" rows="10"/>
+                        <div class="">
+                    	  <xar:data-input type="editor" name="message" value="$message" cols="40" rows="10"/>
                         </div>
+                    </div>
+                    <div class="xar-row">
+						<div class="xar-col-label">
+							<xar:var name="label">Mailer mail messages found</xar:var>
+							<label for="import" title="#$label#">
+								Lookup Template
+							</label>
+						</div>
+						<div class="xar-col">
+							<xar:var name="firstline">Choose a template</xar:var>
+							<xar:set name="firstline">"0,$firstline"</xar:set>
+							<xar:data-input type="dropdown" name="lookup_template" value="$lookup_template" options="$lookup_options" firstline="$firstline"/>
+						</div>
                     </div>
                 </fieldset>
                 <input type="hidden" name="tab" id="tab" value="#$tab#"/>

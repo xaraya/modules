@@ -82,6 +82,8 @@ function reminders_init()
         subject           varchar(255) NOT NULL default '', 
         message           varchar(255) NOT NULL default '', 
         do_lookups        tinyint unsigned NOT NULL default 0, 
+        lookup_interval   integer unsigned NOT NULL default 0, 
+        lookup_template   integer unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         timemodified      integer unsigned NOT NULL default 0, 
         state             tinyint(3) NOT NULL default 3, 
@@ -204,9 +206,14 @@ function reminders_init()
     xarModVars::set('reminders', 'debugmode', false);
     xarModVars::set('reminders', 'save_history', false);
     xarModVars::set('reminders', 'subject', "Touching base");
-    xarModVars::set('reminders', 'message', 's:49:"Hello #$first_name#,
+    xarModVars::set('reminders', 'message', 's:110:"<p>Hello #$first_name#,<br />
+<br />
+I wanted to get in touch.</p>
 
-I wanted to get in touch.";');
+<p>Best,<br />
+#$my_first_name#</p>
+";');
+    xarModVars::set('reminders', 'lookup_template', 20); // TODO: get rid of this hard coding
 
     # --------------------------------------------------------
 #
