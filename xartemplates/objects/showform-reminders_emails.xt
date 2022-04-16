@@ -30,10 +30,10 @@
     </div>
     <div class="xar-row">
         <div class="xar-col-condensed">
-            <xar:var name="value">Email Salutation</xar:var>
+            <xar:var name="value">Message</xar:var>
             <xar:data-label property="$properties['message']" value="$value"/>                    
         </div>
-        <div class="xar-col">
+        <div class="">
             <xar:data-input property="$properties['message']"/>                    
         </div>        
     </div>
