@@ -91,7 +91,7 @@
       <label>Message</label>
       <type>textarea</type>
       <defaultvalue>unserialize(xarModVars::get('reminders','message'))</defaultvalue>
-      <source>emails.salutation</source>
+      <source>emails.message</source>
       <status>33</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
