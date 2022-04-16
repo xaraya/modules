@@ -86,7 +86,7 @@
                         <div class="xar-col-condensed">
                             Message
                         </div>
-                        <div class="xar-col">
+                        <div class="">
                     	  <xar:data-input type="editor" name="message" value="$message" cols="40" rows="10"/>
                         </div>
                     </div>

@@ -63,6 +63,14 @@
          The contact details suggested are taken randomly from your contact list, but you can define a minimal interval from one email to the next for given contact. For instance, you may not want to be reminded to contact the same person for, say, 3 months.
       </p>
       <h3>
+        Dependencies
+      </h3>
+      <p>
+        <ul>
+          <li>This module requires the ckeditor module (ID 30066)</li>
+        </ul>
+      </p>
+      <h3>
         Included Blocks
       </h3>
       <p>
