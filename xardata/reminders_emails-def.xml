@@ -119,12 +119,12 @@
     <property name="lookup_template">
       <id>4063</id>
       <label>Lookup Template</label>
-      <type>integerbox</type>
+      <type>dropdown</type>
       <defaultvalue>xarModVars::get('reminders','lookup_template')</defaultvalue>
       <source>emails.lookup_template</source>
       <status>33</status>
       <seq>11</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:155:"xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')))";}</configuration>
     </property>
   </properties>
 </object>
