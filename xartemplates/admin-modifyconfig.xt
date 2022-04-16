@@ -76,10 +76,10 @@
                     </legend>
                     <div class="xar-row">
                         <div class="xar-col-condensed">
-                            Salutation
+                            Subject
                         </div>
                         <div class="xar-col">
-                    	  <xar:data-input type="textbox" name="salutation" value="$salutation" cols="40"/>
+                    	  <xar:data-input type="textbox" name="subject" value="$subject" cols="40"/>
                         </div>
                     </div>
                     <div class="xar-row">
