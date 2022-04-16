@@ -47,6 +47,7 @@ function images_init()
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
+    /*
     // Register the tag
     $imageAttributes = [new xarTemplateAttribute('src', XAR_TPL_REQUIRED | XAR_TPL_STRING),
                              new xarTemplateAttribute('height', XAR_TPL_OPTIONAL | XAR_TPL_STRING),
@@ -54,6 +55,7 @@ function images_init()
                              new xarTemplateAttribute('constrain', XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('label', XAR_TPL_REQUIRED | XAR_TPL_STRING), ];
     xarTplRegisterTag('images', 'image-resize', $imageAttributes, 'images_userapi_handle_image_tag');
+     */
 
     // Initialisation successful
     return true;
@@ -103,7 +105,7 @@ function images_upgrade($oldversion)
 function images_delete()
 {
     // Unregister template tag
-    xarTplUnregisterTag('image-resize');
+    // xarTplUnregisterTag('image-resize');
     // Remove mask
     xarMasks::unregister('AdminImages');
     // Unregister the hook
