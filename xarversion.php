@@ -54,6 +54,6 @@ $modversion['dependencyinfo'] = [
                                          ],
                                     999 => [
                                             'name' => 'mime',
-                                            'version_ge' => '1.1.0',
+                                            'minversion' => '1.1.0',
                                          ],
                                 ];
