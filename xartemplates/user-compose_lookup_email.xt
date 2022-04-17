@@ -141,7 +141,7 @@
 					</label>
 				</div>
 				<div class="" style="">
-					<xar:data-input type="editor" name="message_body" value="$message_body" style=""/>
+					<xar:data-input type="editor" name="message" value="$message" style=""/>
 				</div>
 			</div>
 
