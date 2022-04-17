@@ -33,8 +33,8 @@ function reminders_user_compose_lookup_email($args)
 	
 	$args['params'] = unserialize(base64_decode($code));
 	
-	$data['subject'] = $args['params']['subject'];
-	$data['message_body'] = unserialize($args['params']['message']);
+	$data['lookup_subject'] = $args['params']['subject'];
+	$data['message_body'] = unserialize($args['params']['lookup_message']);
 	$data['lookup_template'] = $args['params']['lookup_template'];
 	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
 	
