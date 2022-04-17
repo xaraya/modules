@@ -58,7 +58,7 @@ function reminders_adminapi_send_email_lookup($data)
     $data['lookup_name']   = $data['info']['lookup_name'];
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
-    $data['entry_id']      = (int)$data['info']['id'];
+
     // We also neede the first name of the recipient for the mailto address
     $data['name']->value = $data['lookup_name'];
     $components = $data['name']->getValueArray();
