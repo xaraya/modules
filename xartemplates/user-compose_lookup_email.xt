@@ -118,7 +118,7 @@
 				<div class="xar-col">
 					<xar:var name="firstline">Choose a mail message</xar:var>
 					<xar:set name="firstline">"0,$firstline"</xar:set>
-					<xar:data-input type="integerbox" name="message_id" value="$message_id" options="$message_options" firstline="$firstline"/>
+					<xar:data-input type="integerbox" name="message_id" value="$lookup_template" options="$lookup_template" firstline="$firstline" hidden="hidden"/>
 				</div>
 			</div>
 			<div class="xar-row">
