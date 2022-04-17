@@ -97,7 +97,7 @@ function reminders_user_compose_lookup_email($args)
             $recipientaddress = $emailargs['lookup_email'];
         }
         // Only send if we don't have any errors
-        if (empty($data['message'])) {
+        if (empty($data['message_warning'])) {
             $data['result'] = array();
             try {
                 $args = array('sendername'       => $emailargs['my_name'],
@@ -136,17 +136,19 @@ function reminders_user_compose_lookup_email($args)
                 // This sends the mail
                 $data['result']['code'] = xarMod::apiFunc('mailer','user','send', $args);
                 
-                // Now record this email in the history table
-                sys::import('xaraya.structures.query');
-                $tables = xarDB::getTables();
-                $q = new Query('INSERT', $tables['reminders_lookup_history']);
-                $q->addfield('lookup_id',   (int)$data['lookup_id']);
-                $q->addfield('owner_id',    (int)$data['owner_id']);
-                $q->addfield('date',        time());
-                $q->addfield('subject',     $data['subject']);
-                $q->addfield('message',     $data['message']);
-                $q->addfield('timecreated', time());
-                $q->run();
+                // Now record this email in the history table, if the email was successfully sent
+                if ($data['result']['code'] == 0) {
+					sys::import('xaraya.structures.query');
+					$tables = xarDB::getTables();
+					$q = new Query('INSERT', $tables['reminders_lookup_history']);
+					$q->addfield('lookup_id',   (int)$data['lookup_id']);
+					$q->addfield('owner_id',    (int)$data['owner_id']);
+					$q->addfield('date',        time());
+					$q->addfield('subject',     $data['subject']);
+					$q->addfield('message',     $data['message']);
+					$q->addfield('timecreated', time());
+					$q->run();
+                }
                 
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
