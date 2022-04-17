@@ -54,7 +54,7 @@ function reminders_adminapi_send_email_lookup($data)
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
     $data['reminder_text'] = trim($data['info']['message']);
-    $data['lookup_id']     = (int)$data['info']['id'];
+    $data['lookup_id']     = (int)$data['info']['lookup_id'];
     $data['lookup_name']   = $data['info']['lookup_name'];
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
