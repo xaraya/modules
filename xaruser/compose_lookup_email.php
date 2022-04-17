@@ -33,8 +33,10 @@ function reminders_user_compose_lookup_email($args)
 	
 	$args['params'] = unserialize(base64_decode($code));
 	
+	$data['lookup_id'] = $args['params']['lookup_id'];
+	$data['owner_id'] = $args['params']['owner_id'];
 	$data['subject'] = $args['params']['lookup_subject'];
-	$data['message_body'] = unserialize($args['params']['lookup_message']);
+	$data['message'] = unserialize($args['params']['lookup_message']);
 	$data['lookup_template'] = $args['params']['lookup_template'];
 	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
 	
@@ -76,7 +78,7 @@ function reminders_user_compose_lookup_email($args)
         $bccaddress = $checkbox->value ? array(xarUser::getVar('email')) : array();
 
         // Bail if no message was chosen
-        if (empty($data['lookup_template']) && empty($data['message_body'])) {
+        if (empty($data['lookup_template']) && empty($data['message'])) {
             $data['message_warning'] = xarML('No message was defined');
             return $data;
         }
@@ -108,14 +110,14 @@ function reminders_user_compose_lookup_email($args)
                 if (!empty($data['lookup_template']))  {
                     // We have a message ID
                     $args['id'] = (int)$data['lookup_template'];
-                    if (!empty($data['message_body'])) {
+                    if (!empty($data['message'])) {
                     // We have a message ID (which indicates a template) and also a message body
                         $args['subject'] = $data['subject'];
                     // In this case we insert the latter into the former
                         $object = DataObjectMaster::getObject(array('name' => 'mailer_mails'));
                         $object->getItem(array('itemid' => $args['id']));
                         $message = $object->properties['body']->value;
-                        $args['message'] = str_replace('#$message#', $data['message_body'], $message);
+                        $args['message'] = str_replace('#$message#', $data['message'], $message);
                         $args['mail_type'] = $object->properties['mail_type']->value;
                         $sendername = $object->properties['sender_name']->value;
                         if (!empty($sendername)) $args['sendername'] = $sendername;
@@ -123,10 +125,10 @@ function reminders_user_compose_lookup_email($args)
                         if (!empty($senderaddress)) $args['senderaddress'] = $senderaddress;
                         unset($args['id']);
                     }
-                } elseif (!empty($data['message_body'])) {
+                } elseif (!empty($data['message'])) {
                     // We have only a message body
                     $args['subject'] = $data['subject'];
-                    $args['message'] = $data['message_body'];
+                    $args['message'] = $data['message'];
                     // In this case we set the mail type to "text to html"
                     $args['mail_type'] = 2;
                 }
@@ -138,11 +140,11 @@ function reminders_user_compose_lookup_email($args)
                 sys::import('xaraya.structures.query');
                 $tables = xarDB::getTables();
                 $q = new Query('INSERT', $tables['reminders_lookup_history']);
-                $q->addfield('lookup_id',   (int)$args['params']['lookup_id']);
-                $q->addfield('owner_id',    (int)$args['params']['owner_id']);
+                $q->addfield('lookup_id',   (int)$data['lookup_id']);
+                $q->addfield('owner_id',    (int)$data['owner_id']);
                 $q->addfield('date',        time());
-                $q->addfield('subject',     $args['params']['lookup_subject']);
-                $q->addfield('message',     $args['params']['lookup_message']);
+                $q->addfield('subject',     $data['subject'];
+                $q->addfield('message',     $data['message'];
                 $q->addfield('timecreated', time());
                 $q->run();
                 
