@@ -18,7 +18,7 @@
             <div class="xar-row">
                 <xar:if condition="isset($result['exception'])">
                     <xar:set name="isdebug">
-                        xarModVars::get('grader','debugmode')
+                        xarModVars::get('reminders','debugmode')
                     </xar:set>
                     <xar:set name="isadmin">
                         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))
