@@ -138,12 +138,13 @@ function reminders_user_compose_lookup_email($args)
                 sys::import('xaraya.structures.query');
                 $tables = xarDB::getTables();
                 $q = new Query('INSERT', $tables['reminders_lookup_history']);
-                $q-> addfield('lookup',  (int)$args['params']['lookup_id']);
-                $q-> addfield('owner',   (int)$args['params']['owner_id']);
-                $q-> addfield('date', time());
-                $q-> addfield('subject', $args['subject']);
-                $q-> addfield('message', $args['message']);
-                $q-> addfield('timecreated', time());
+                $q->addfield('lookup_id',   (int)$args['params']['lookup_id']);
+                $q->addfield('owner_id',    (int)$args['params']['owner_id']);
+                $q->addfield('date',        time());
+                $q->addfield('subject',     $args['params']['lookup_subject']);
+                $q->addfield('message',     $args['params']['lookup_message']);
+                $q->addfield('timecreated', time());
+                $q->run();
                 
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
