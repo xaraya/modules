@@ -50,7 +50,7 @@ function messages_init()
       state             tinyint unsigned NOT NULL default 3,
       PRIMARY KEY  (id),
       KEY `messages_from_id` (`from_id`)
-    ) TYPE=MyISAM";
+    )";
     if (!$q->run($query)) {
         return;
     }
