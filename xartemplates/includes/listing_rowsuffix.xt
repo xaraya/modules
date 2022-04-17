@@ -17,7 +17,7 @@
                 <xar:access level="500">
                     <a href="#xarController::URL('comments','admin','modify',array('itemid' => $loopitem[$primaryalias]))#"
                     title="Modify this comment">
-                        <xar:if condition = "xarModVars::get('ledgerar','use_module_icons')">
+                        <xar:if condition = "xarModVars::get('comments','use_module_icons')">
                             <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
                         <xar:else />
                             <b style="margin-right: 5px">M</b>
