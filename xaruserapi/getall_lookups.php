@@ -37,6 +37,7 @@ function reminders_userapi_getall_Lookups($args)
     			  	'email_1.address AS address',
     			  	'email_1.lookup_interval as lookup_interval',
     			  	'email_1.lookup_template as lookup_template',
+    			  	'email_1.lookup_subject as lookup_subject',
     			  	'email_2.name AS name_2',
     			  	'email_2.address AS address_2',
     			  	'email_2.message as message',
