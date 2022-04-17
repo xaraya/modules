@@ -27,7 +27,7 @@ function workflow_admin_main()
         return;
     }
 
-    xarResponse::Redirect(xarController::URL('workflow', 'admin', 'processes'));
+    xarController::redirect(xarController::URL('workflow', 'admin', 'processes'));
     // success
     return true;
 }

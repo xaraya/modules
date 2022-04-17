@@ -87,11 +87,3 @@ if (!function_exists('galaxia_execute_activity')) {
         );
     }
 }
-
-// Translate strings and variables
-if (!function_exists('tra')) {
-    function tra($what)
-    {
-        return xarML($what);
-    }
-}

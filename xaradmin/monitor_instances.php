@@ -30,7 +30,7 @@ function workflow_admin_monitor_instances()
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = [];
-    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'items_per_page');
     // Adapted from tiki-g-monitor_instances.php
 
     include_once(GALAXIA_LIBRARY.'/processmonitor.php');

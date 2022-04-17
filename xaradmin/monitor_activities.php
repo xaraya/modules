@@ -29,7 +29,7 @@ function workflow_admin_monitor_activities()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'items_per_page');
 
     // Adapted from tiki-g-monitor_activities.php
     include_once(GALAXIA_LIBRARY.'/processmonitor.php');
@@ -64,7 +64,7 @@ function workflow_admin_monitor_activities()
         $wheres[] = "isAutoRouted='" . $data['filter_isAutoRouted'] . "'";
     }
     if (!empty($data['filter_process'])) {
-        $wheres[] = "id='" . $data['filter_process'] . "'";
+        $wheres[] = "pId='" . $data['filter_process'] . "'";
     }
     if (!empty($data['filter_activity'])) {
         $wheres[] = "activityId='" . $data['filter_activity'] . "'";

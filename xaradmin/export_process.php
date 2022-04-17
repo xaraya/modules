@@ -17,10 +17,14 @@
  * @author mikespub
  * @access public
  */
-function workflow_admin_save_process()
+function workflow_admin_export_process()
 {
     // Security Check
     if (!xarSecurity::check('AdminWorkflow')) {
+        return;
+    }
+
+    if (!xarVar::fetch('pid', 'int', $data['processid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -40,11 +44,7 @@ function workflow_admin_save_process()
         $_REQUEST['pid'] = 0;
     }
 
-    header('Content-type: text/xml');
-    echo('<?xml version="1.0"?>');
-    $data = $processManager->serialize_process($_REQUEST['pid']);
-    echo $data;
-
-    // TODO: clean up properly
-    die;
+    $data['xml'] = htmlentities($processManager->serialize_process($_REQUEST['pid']));
+    $data['fields'] = $processManager->get_process($_REQUEST['pid']);
+    return $data;
 }

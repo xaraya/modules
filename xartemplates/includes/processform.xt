@@ -31,12 +31,14 @@
           <textarea id="processdescription" rows="5" cols="55" name="description">#$proc_info['description']#</textarea>
         </div>
         <div class="xar-form-input-wrapper-after">
-          <xar:if condition="$proc_info['isActive'] eq 'y'">
-            <input type="checkbox" name="isActive" checked="checked"/>
-          <xar:else/>
-            <input type="checkbox" name="isActive"/>
-          </xar:if>
+          <xar:data-input type="checkbox" name="isActive" checked="$proc_info['isActive']"/>
+          &#10;
           <label>Active</label>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+          <xar:data-input type="checkbox" name="isSingleton" checked="$proc_info['isSingleton']"/>
+          &#10;
+          <label>Only one instance per user</label>
         </div>
         <div class="xar-form-input-wrapper-after">
           <xar:if condition="$pid gt 0">

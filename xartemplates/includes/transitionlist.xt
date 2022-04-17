@@ -7,7 +7,7 @@
           <!-- Filter form -->
           <form action="&xar-modurl-workflow-admin-activities;" method="post" id='filtran'>
             <input type="hidden" name="pid" value="#$pid#"/>
-            <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+            <input type="hidden" name="activityId" value="#$activityId#"/>
             <input type="hidden" name="find" value="#$find2#"/>
             <input type="hidden" name="where" value="#$where2#"/>
             <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
@@ -34,7 +34,7 @@
 
           <form action="&xar-modurl-workflow-admin-activities;" method="post">
             <input type="hidden" name="pid" value="#$pid#"/>
-            <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+            <input type="hidden" name="activityId" value="#$activityId#"/>
             <input type="hidden" name="find" value="#$find#"/>
             <input type="hidden" name="where" value="#$where#"/>
             <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
@@ -102,13 +102,14 @@
                     <input type="submit" name="add_trans" value="#xarML('Add transition')#"/>
                   </td>
                 </tr>
-                <tr>
-                  <td colspan="3"><input type="submit" name="delete_tran" value="#xarML('Delete selected')# "/></td>
-                </tr>
               <xar:else/>
                 <tr><td colspan="3">No transitions defined yet</td></tr>
               </xar:if>
             </table>
+          <div class="xar-form-input-wrapper-after">
+              <xar:var name="label">Delete selected</xar:var>
+              <xar:button type="submit" name="delete_tran" label="$label"/>
+          </div>
           </form>
         </fieldset>
     </div>

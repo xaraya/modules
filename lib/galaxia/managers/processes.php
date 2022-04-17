@@ -67,9 +67,9 @@ class ProcessManager extends BaseManager
             }
             fclose($fp);
             $out.='      ]]></code>'."\n";
-            if ($res['isInteractive']=='y') {
+            if ($res['isInteractive']==1) {
                 $out.='      <template><![CDATA[';
-                $fp=fopen(GALAXIA_PROCESSES."/$procname/code/templates/$name.tpl", "r");
+                $fp=fopen(GALAXIA_PROCESSES."/$procname/code/templates/$name.xt", "r");
                 while (!feof($fp)) {
                     $line=fread($fp, 8192);
                     $out.=$line;
@@ -238,8 +238,8 @@ class ProcessManager extends BaseManager
             $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php', "w");
             fwrite($fp, $activity['code']);
             fclose($fp);
-            if ($activity['isInteractive']=='y') {
-                $fp = fopen(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl', "w");
+            if ($activity['isInteractive']==1) {
+                $fp = fopen(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.xt', "w");
                 $nr = fwrite($fp, $activity['template']);
                 fclose($fp);
             }
@@ -275,7 +275,7 @@ class ProcessManager extends BaseManager
         $am->build_process_graph($pid);
         unset($am);
         unset($rm);
-        $msg = sprintf(tra('Process %s %s imported'), $process->getName(), $process->getVersion());
+        $msg = sprintf(xarML('Process %s %s imported'), $process->getName(), $process->getVersion());
         $this->notify_all(2, $msg);
         return $pid;
     }
@@ -305,7 +305,7 @@ class ProcessManager extends BaseManager
         }
         // Make new versions unactive
         $proc_info['version'] = $version;
-        $proc_info['isActive'] = 'n';
+        $proc_info['isActive'] = 0;
 
         // create a new process, but don't create start/end activities
         $pid = $this->replace_process(0, $proc_info, false);
@@ -459,7 +459,7 @@ class ProcessManager extends BaseManager
         // And finally remove the proc
         $query = "delete from ".self::tbl('processes')." where pId=?";
         $this->query($query, [$pId]);
-        $msg = sprintf(tra('Process %s removed'), $name);
+        $msg = sprintf(xarML('Process %s removed'), $name);
         $this->notify_all(5, $msg);
 
         return true;
@@ -503,7 +503,7 @@ class ProcessManager extends BaseManager
             if ($newname != $oldname) {
                 rename(GALAXIA_PROCESSES."/$oldname", GALAXIA_PROCESSES."/$newname");
             }
-            $msg = sprintf(tra('Process %s has been updated'), $vars['name']);
+            $msg = sprintf(xarML('Process %s has been updated'), $vars['name']);
             $this->notify_all(3, $msg);
         } else {
             unset($vars['pId']);
@@ -541,20 +541,20 @@ class ProcessManager extends BaseManager
                   'name' => 'start',
                   'description' => 'default start activity',
                   'type' => 'start',
-                  'isInteractive' => 'y',
-                  'isAutoRouted' => 'y',
+                  'isInteractive' => 1,
+                  'isAutoRouted' => 1,
                   ];
                 $vars2 = [
                   'name' => 'end',
                   'description' => 'default end activity',
                   'type' => 'end',
-                  'isInteractive' => 'n',
-                  'isAutoRouted' => 'y',
+                  'isInteractive' => 0,
+                  'isAutoRouted' => 1,
                   ];
                 $aM->replace_activity($pId, 0, $vars1);
                 $aM->replace_activity($pId, 0, $vars2);
             }
-            $msg = sprintf(tra('Process %s has been created'), $vars['name']);
+            $msg = sprintf(xarML('Process %s has been created'), $vars['name']);
             $this->notify_all(4, $msg);
         }
         // Get the id

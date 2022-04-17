@@ -74,7 +74,7 @@
             <div class="xar-form-input-wrapper">
               <label class="xar-form-label">Activities</label>
               <xar:if condition="count($acts)">
-                <table>
+                <table style="width: 400px">
                   <tr>
                     <th>Activity</th>
                     <th>Act status</th>
@@ -84,7 +84,7 @@
                   <xar:foreach in="$acts" key="$ix">
                     <tr>
                       <td class="odd">#$acts[$ix]['name']#
-                        <xar:if condition="$acts[$ix]['isInteractive'] eq 'y'">
+                        <xar:if condition="$acts[$ix]['isInteractive'] eq 1">
                           <a href="#xarController::URL('workflow','user','run_activity',array('activityId' => $acts[$ix]['activityId'], 'iid' => $iid))#">
                             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run')#"/></a>
                         </xar:if>

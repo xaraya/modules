@@ -35,7 +35,7 @@ function workflow_admin_workitem()
     if (!isset($_REQUEST['itemId'])) {
         $tplData['msg'] =  xarML("No item indicated");
 
-        return xarTpl::module('workflow', 'admin', 'error', $tplData);
+        return xarTpl::module('workflow', 'admin', 'errors', $tplData);
     }
 
     $wi = $processMonitor->monitor_get_workitem($_REQUEST['itemId']);

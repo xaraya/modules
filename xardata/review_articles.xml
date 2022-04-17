@@ -82,7 +82,7 @@ if (empty($reason)) $reason = '';
 
 if (!empty($edit)) {
     // Go to the articles modify page
-    xarResponse::Redirect(xarController::URL('articles', 'admin', 'modify',
+    xarController::redirect(xarController::URL('articles', 'admin', 'modify',
                                   array('aid' => $itemid)));
     return true;
 } elseif (!empty($approve)) {

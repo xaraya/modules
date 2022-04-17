@@ -1,106 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:set name="func">xarRequest::getVar('func')</xar:set>
+    <xar:set name="func">xarController::getVar('func')</xar:set>
 
-    <dl class="xar-tabs">
-      <dt class="help">Process:</dt>
-      <xar:set name="classstring">''</xar:set>
-      <xar:if condition="$func eq 'processes' and $pid eq 0">
-        <xar:set name="classstring">'active'</xar:set>
-      </xar:if>
-      <dd class="#$classstring#">
-        <a class="link" href="#xarController::URL('workflow','admin','processes')#">
-          <img src="#xarTpl::getImage('index.gif')#" alt="#xarML('processlist')#" title="#xarML('processlist')#"/>
-          List 
-        </a>
-      </dd>
+    <ul class="xar-tabs">
+        <li class="help">Process:</li>
+        <xar:if condition="$func eq 'processes' and $pid eq 0">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','processes')#" class="#$linkclass#">
+            <img src="#xarTpl::getImage('index.gif')#" alt="#xarML('processlist')#" title="#xarML('processlist')#"/>
+            View Processes
+          </a>
+        </li>
 
       <xar:if condition="$pid gt 0">
         <!-- Show the deactivate and activate if the process is valid -->
-        <xar:set name="classstring">''</xar:set>
-        <xar:if condition="$proc_info['isActive'] eq 'y'">
-          <dd class="#$classstring#">
-            <a class="link" href="#xarController::URL('workflow','admin','activities')#&amp;pid=#$pid#&amp;deactivate_proc=#$pid#">
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        <xar:if condition="$proc_info['isActive']">
+          <li class="#$tabclass#">
+            <a href="#xarController::URL('workflow','admin','activities',array('pid' => $pid, 'deactivate_proc' => $pid))#" class="#$linkclass#">
               <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#"/>
-              Deactivate 
-            </a>
-          </dd>
-          <xar:else/>
-          <xar:if condition="$proc_info['isValid'] eq 'y'">
-            <dd class="#$classstring#">
-              <a href="#xarController::URL('workflow','admin','activities')#&amp;pid=#$pid#&amp;activate_proc=#$pid#">
+              Deactivate Process
+             </a>
+          </li>
+        <xar:else/>
+          <xar:if condition="$proc_info['isValid']">
+            <li class="#$tabclass#">
+              <a href="#xarController::URL('workflow','admin','activities',array('pid' => $pid, 'activate_proc' => $pid))#" class="#$linkclass#">
                 <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt="#xarML('activate')#" title="#xarML('activate')#"/>
-                Activate 
-              </a>
-            </dd>
+                Activate Process
+               </a>
+            </li>
           </xar:if>
         </xar:if>
 
-        <xar:set name="classstring">''</xar:set>
         <xar:if condition="$func eq 'processes'">
-          <xar:set name="classstring">'active'</xar:set>
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
-        <dd class="#$classstring#">
-          <a href="#xarController::URL('workflow','admin','processes')#&amp;pid=#$pid#">
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','processes',array('pid' => $pid))#" class="#$linkclass#">
             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/change.gif" alt="#xarML('edit')#" title="#xarML('edit')#"/>
             Process Details
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="classstring">''</xar:set>
         <xar:if condition="$func eq 'activities'">
-          <xar:set name="classstring">'active'</xar:set>
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
-        <dd class="#$classstring#">
-          <a href="#xarController::URL('workflow','admin','activities')#&amp;pid=#$pid#">
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','activities',array('pid' => $pid))#" class="#$linkclass#">
             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#"/>
             Activities
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="classstring">''</xar:set>
         <xar:if condition="$func eq 'shared_source'">
-          <xar:set name="classstring">'active'</xar:set>
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
-        <dd class="#$classstring#">
-          <a href="#xarController::URL('workflow','admin','shared_source')#&amp;pid=#$pid#">
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','shared_source',array('pid' => $pid))#" class="#$linkclass#">
             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#"/>
             Code
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="classstring">''</xar:set>
         <xar:if condition="$func eq 'roles'">
-          <xar:set name="classstring">'active'</xar:set>
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
-        <dd class="#$classstring#">
-          <a href="#xarController::URL('workflow','admin','roles')#&amp;pid=#$pid#">
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','roles',array('pid' => $pid))#" class="#$linkclass#">
             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#"/>
             Roles
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="classstring">''</xar:set>
         <xar:if condition="$func eq 'graph'">
-          <xar:set name="classstring">'active'</xar:set>
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
-        <dd class="#$classstring#">
-          <a href="#xarController::URL('workflow','admin','graph')#&amp;pid=#$pid#">
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','graph',array('pid' => $pid))#" class="#$linkclass#">
             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#"/>
             Graph
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="classstring">''</xar:set>
-        <dd class="#$classstring#">
-          <a href="#xarController::URL('workflow','admin','save_process')#&amp;pid=#$pid#">
+        <xar:if condition="$func eq 'export'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','admin','export_process',array('pid' => $pid))#" class="#$linkclass#">
             <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#"/>
             Export
           </a>
-        </dd>
+        </li>
       </xar:if>
-    </dl>
+    </ul>
 
     <!-- We can only show the process if we have one -->
     <xar:if condition="$pid gt 0">

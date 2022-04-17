@@ -1,0 +1,114 @@
+<object name="workflow_activities">
+  <objectid>18</objectid>
+  <label>Workflow Activities</label>
+  <module_id>182</module_id>
+  <itemtype>13</itemtype>
+  <class>Activity</class>
+  <filepath>modules/workflow/class/activity.php</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>141</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.activityId</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>142</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="normalized_name">
+      <id>143</id>
+      <label>Normalized Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.normalized_name</source>
+      <status>34</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="description">
+      <id>150</id>
+      <label>Description</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.description</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="process_id">
+      <id>144</id>
+      <label>Process_id</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.pId</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="type">
+      <id>145</id>
+      <label>Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.type</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:96:"start,start;end,end;activity,activity;switch,switch;split,split;join,join;standalone,standalone;";}</configuration>
+    </property>
+    <property name="autorouted">
+      <id>146</id>
+      <label>Autorouted</label>
+      <type>checkbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>xar_workflow_activities.isAutoRouted</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="interactive">
+      <id>148</id>
+      <label>Interactive</label>
+      <type>checkbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>xar_workflow_activities.isInteractive</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="flow_number">
+      <id>147</id>
+      <label>Flow Number</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_activities.flowNum</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="last_modified">
+      <id>149</id>
+      <label>Last Modified</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_workflow_activities.lastModif</source>
+      <status>65</status>
+      <seq>10</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

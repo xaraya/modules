@@ -98,14 +98,14 @@
                     </td>
                     <td class="xar-align-right">#$items[$ix]['version']#</td>
                     <td class="xar-align-center">
-                      <xar:if condition="$items[$ix]['isActive'] eq 'y'">
+                      <xar:if condition="$items[$ix]['isActive']">
                         <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt="(#xarML('active')#)" title="#xarML('active process')#"/>
                       <xar:else/>
                         &#160;
                       </xar:if>
                     </td>
                     <td class="xar-align-center">
-                      <xar:if condition="$items[$ix]['isValid'] eq 'n'">
+                      <xar:if condition="$items[$ix]['isValid'] eq 0">
                         <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#"/>
                       <xar:else/>
                         <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#"/>
@@ -132,21 +132,21 @@
                         <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#"/></a>
                     </td>
                     <td class="xar-align-center">
-                      <a class="link" href="#xarController::URL('workflow','admin','save_process')#&amp;pid=#$items[$ix]['pId']#">
+                      <a class="link" href="#xarController::URL('workflow','admin','export_process')#&amp;pid=#$items[$ix]['pId']#">
                         <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#"/></a>
                     </td>
                   </tr>
                 </xar:foreach>
-                <tr>
-                  <td><input type="submit" name="delete" value="#xarML('Delete selected')#"/></td>
-                  <td colspan="14">&#160;</td>
-                </tr>
                 <xar:else/>
                 <tr>
                   <td colspan="15">No processes defined yet</td>
                 </tr>
               </xar:if>
             </table>
+              <div class="xar-form-input-wrapper-after">
+                  <xar:var name="label">Delete selected</xar:var>
+                  <xar:button type="submit" name="delete" label="$label"/>
+              </div>
           </form>
           </div>
       </fieldset>

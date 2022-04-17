@@ -27,6 +27,5 @@ function workflow_user_main()
         return;
     }
 
-    // Return the output
     return [];
 }

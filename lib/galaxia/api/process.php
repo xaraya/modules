@@ -58,8 +58,8 @@ class Process extends Base
         assert('$value === true or $value===false');
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-        $this->query($query, [$value ? 'y' : 'n',$this->pId]);
-        $msg = sprintf(tra('Process %d has been (de)-activated'), $this->pId);
+        $this->query($query, [$value ? 1 : 0,$this->pId]);
+        $msg = sprintf(xarML('Process %d has been (de)-activated'), $this->pId);
         // Object
         $this->active = $value;
         $this->notify_all(3, $msg);
@@ -78,7 +78,7 @@ class Process extends Base
         $this->deactivate();
 
         $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
-        $this->query($query, ['n',$this->pId]);
+        $this->query($query, [0,$this->pId]);
         $this->valid = false;
     }
     public function validate()
@@ -243,8 +243,8 @@ class Process extends Base
         if (file_exists(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php')) {
             unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php');
         }
-        if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
-            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl');
+        if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.xt')) {
+            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.xt');
         }
         if (file_exists(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php')) {
             unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php');

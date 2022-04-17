@@ -16,7 +16,7 @@
           </div>
           <div class="xar-form-input-wrapper">
             <label class="xar-form-label">Map users</label>
-            <table>
+            <table style="width: 400px">
               <tr>
                 <th>Users</th>
                 <th>Process roles</th>

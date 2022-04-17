@@ -6,7 +6,7 @@
         <legend>Process activities</legend>
         <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
         <input type="hidden" name="pid" value="#$pid#"/>
-        <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+        <input type="hidden" name="activityId" value="#$activityId#"/>
         <input type="hidden" name="where2" value="#$where2#"/>
         <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
         <table>
@@ -56,118 +56,117 @@
     </form>
 
     <form action="&xar-modurl-workflow-admin-activities;" method="post">
-        <input type="hidden" name="find" value="#$find#"/>
-        <input type="hidden" name="where" value="#$where#"/>
-        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-        <input type="hidden" name="where2" value="#$where2#"/>
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
-        <input type="hidden" name="pid" value="#$pid#"/>
-        <input type="hidden" name="activityId" value="#$info['activityId']#"/>
-
-        <!--
-            Yeah, this could be done smarter, but we consider BL1 and BL2 here.
-            BL1 is a bit confused on when to escape ampersands and when not
-            So, if you change these long things below keep in mind that:
-            1. it should work in BL1 and BL2 (for now)
-            2, both the template AND the resulting output should be valid XML
-
-        -->
-        <table style="border-collapse: separate; width: 99%">
-          <tr>
-            <xar:if condition="$sort_mode eq 'flowNum_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_asc">Nr.</a></th>
-            <xar:else/>
-               <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_desc">Nr.</a></th>
-            </xar:if>
-            <xar:if condition="$sort_mode eq 'name_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_asc">Name</a></th>
-              <xar:else/>
-              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_desc">Name</a></th>
-            </xar:if>
-            <xar:if condition="$sort_mode eq 'type_desc'">
-              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_asc">Type</a></th>
-              <xar:else/>
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_desc">Type</a></th>
-            </xar:if>
-            <xar:if condition="$sort_mode eq 'isInteractive_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_asc">Interactive</a></th>
-              <xar:else/>
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_desc">Interactive</a></th>
-            </xar:if>
-            <xar:if condition="$sort_mode eq 'isInteractive_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_asc">Autoroute</a></th>
-              <xar:else/>
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_desc">Autoroute</a></th>
-            </xar:if>
-            <th>Code</th>
-            <th>Template</th>
-          </tr>
-          <xar:if condition="!empty($items) and count($items) gt 0">
-            <xar:foreach in="$items" key="$ix">
-              <xar:set name="rowclass">'xar-norm'</xar:set>
-              <xar:if condition="$ix % 2">
-                <xar:set name="rowclass">'xar-alt'</xar:set>
-              </xar:if>
-              <tr class="#$rowclass#">
-                <td style="text-align:right;">
-                  #$items[$ix]['flowNum']#
-                </td>
-                <td style="text-align:left;">
-                  <input type="checkbox" name="activity[#$items[$ix]['activityId']#]"/>&#160;
-                  <a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
-                  <xar:if condition="$items[$ix]['roles'] lt 1">
-                    <small>(no roles)</small>
-                  </xar:if>
-                </td>
-                <td style="text-align:center;">
-                  <!-- Get an image for the activity -->
-                  <xar:template file="activity_image" subdata="$items[$ix]"/>
-                </td>
-                <td style="text-align:center;">
-                  <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
-                    <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]" checked="checked"/>
-                    <xar:else/>
-                    <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]"/>
-                  </xar:if>
-                </td>
-                <td style="text-align:center;">
-                  <xar:if condition="$items[$ix]['isAutoRouted'] eq 'y'">
-                    <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]" checked="checked"/>
-                    <xar:else/>
-                    <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]"/>
-                  </xar:if>
-                </td>
-
-                <td style="text-align: center;">
-                  <a href="#xarController::URL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId']))#">
-                    <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#"/>
-                  </a>
-                </td>
-                <td style="text-align: center;">
-                  <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
-                    <a class="link" href="#xarController::URL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId'], 'template' => 1))#">
-                      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#"/>
-                    </a>
+        <fieldset>
+            <legend>Activities List</legend>
+            <input type="hidden" name="find" value="#$find#"/>
+            <input type="hidden" name="where" value="#$where#"/>
+            <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+            <input type="hidden" name="where2" value="#$where2#"/>
+            <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+            <input type="hidden" name="pid" value="#$pid#"/>
+            <input type="hidden" name="activityId" value="#$activityId#"/>
+    
+            <!--
+                Yeah, this could be done smarter, but we consider BL1 and BL2 here.
+                BL1 is a bit confused on when to escape ampersands and when not
+                So, if you change these long things below keep in mind that:
+                1. it should work in BL1 and BL2 (for now)
+                2, both the template AND the resulting output should be valid XML
+    
+            -->
+            <table style="border-collapse: separate; width: 99%">
+              <tr>
+                <xar:if condition="$sort_mode eq 'flowNum_desc'">
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_asc">Nr.</a></th>
+                <xar:else/>
+                   <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_desc">Nr.</a></th>
+                </xar:if>
+                <xar:if condition="$sort_mode eq 'name_desc'">
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_asc">Name</a></th>
                   <xar:else/>
-                    &#160;
-                  </xar:if>
-                </td>
+                  <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_desc">Name</a></th>
+                </xar:if>
+                <xar:if condition="$sort_mode eq 'type_desc'">
+                  <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_asc">Type</a></th>
+                  <xar:else/>
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_desc">Type</a></th>
+                </xar:if>
+                <xar:if condition="$sort_mode eq 'isInteractive_desc'">
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_asc">Interactive</a></th>
+                  <xar:else/>
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_desc">Interactive</a></th>
+                </xar:if>
+                <xar:if condition="$sort_mode eq 'isInteractive_desc'">
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_asc">Autoroute</a></th>
+                  <xar:else/>
+                  <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_desc">Autoroute</a></th>
+                </xar:if>
+                <th>Code</th>
+                <th>Template</th>
               </tr>
-            </xar:foreach>
-          <xar:else/>
-            <tr>
-              <td colspan="6">
-                No activities defined yet
-              </td>
-            </tr>
-          </xar:if>
-          <tr>
-            <td>
-              <input type="submit" name="update_act" value="#xarML('Update')#"/>
-            </td>
-            <td colspan="6"><input type="submit" name="delete_act" value="#xarML('Delete selected')#"/></td>
-          </tr>
-        </table>
+              <xar:if condition="!empty($items) and count($items) gt 0">
+                <xar:foreach in="$items" key="$ix">
+                  <xar:set name="rowclass">'xar-norm'</xar:set>
+                  <xar:if condition="$ix % 2">
+                    <xar:set name="rowclass">'xar-alt'</xar:set>
+                  </xar:if>
+                  <tr class="#$rowclass#">
+                    <td style="text-align:right;">
+                      #$items[$ix]['flowNum']#
+                    </td>
+                    <td style="text-align:left;">
+                      <input type="checkbox" name="activity[#$items[$ix]['activityId']#]"/>&#160;
+                      <a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
+                      <xar:if condition="$items[$ix]['roles'] lt 1">
+                        &#160;<small>(no roles)</small>
+                      </xar:if>
+                    </td>
+                    <td style="text-align:center;">
+                      <!-- Get an image for the activity -->
+                      <xar:template file="activity_image" subdata="$items[$ix]"/>
+                    </td>
+                    <td style="text-align:center;">
+                      <xar:set name="name">'activity_inter[' . $items[$ix]['activityId'] . ']'</xar:set>
+                      <xar:set name="value">$items[$ix]['isInteractive']</xar:set>
+                      <xar:data-input type="checkbox" name="$name" value="$value"/>
+                    </td>
+                    <td style="text-align:center;">
+                      <xar:set name="name">'activity_route[' . $items[$ix]['activityId'] . ']'</xar:set>
+                      <xar:set name="value">$items[$ix]['isAutoRouted']</xar:set>
+                      <xar:data-input type="checkbox" name="$name" value="$value"/>
+                    </td>
+    
+                    <td style="text-align: center;">
+                      <a href="#xarController::URL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId']))#">
+                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#"/>
+                      </a>
+                    </td>
+                    <td style="text-align: center;">
+                      <xar:if condition="$items[$ix]['isInteractive']">
+                        <a class="link" href="#xarController::URL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId'], 'template' => 1))#">
+                          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#"/>
+                        </a>
+                      <xar:else/>
+                        &#160;
+                      </xar:if>
+                    </td>
+                  </tr>
+                </xar:foreach>
+              <xar:else/>
+                <tr>
+                  <td colspan="6">
+                    No activities defined yet
+                  </td>
+                </tr>
+              </xar:if>
+            </table>
+              <div class="xar-form-input-wrapper-after">
+                  <xar:var name="label">Update</xar:var>
+                  <xar:button type="submit" name="update_act" label="$label"/>&#160;&#160;
+                  <xar:var name="label">Delete selected</xar:var>
+                  <xar:button type="submit" name="delete_act" label="$label"/>
+              </div>
+          </fieldset>
       </form>
   </div>
 </xar:template>

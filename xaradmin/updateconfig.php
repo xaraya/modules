@@ -102,7 +102,7 @@ function workflow_admin_updateconfig()
         $itemid = $data['module_settings']->updateItem();
     }
 
-    xarResponse::redirect(xarController::URL('workflow', 'admin', 'modifyconfig'));
+    xarController::redirect(xarController::URL('workflow', 'admin', 'modifyconfig'));
 
     return true;
 }

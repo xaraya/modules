@@ -76,7 +76,7 @@ if (!function_exists('galaxia_execute_activity')) {
         $data = '';
 
         if (!$fp) {
-            trigger_error(tra("Fatal error: cannot execute automatic activity $activityId"), E_USER_WARNING);
+            trigger_error(xarML("Fatal error: cannot execute automatic activity $activityId"), E_USER_WARNING);
             die;
         }
 
@@ -86,7 +86,7 @@ if (!function_exists('galaxia_execute_activity')) {
 
         /*
         if(!empty($data)) {
-            trigger_error(tra("Fatal error: automatic activity produced some output:$data"), E_USER_WARNING);
+            trigger_error(xarML("Fatal error: automatic activity produced some output:$data"), E_USER_WARNING);
         }
         */
         fclose($fp);

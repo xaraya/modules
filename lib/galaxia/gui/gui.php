@@ -8,18 +8,18 @@ This class provides methods for use in typical user interface scripts
 */
 class GUI extends Base
 {
-    /*!
-    List user processes, user processes should follow one of these conditions:
-    1) The process has an instance assigned to the user
-    2) The process has a begin activity with a role compatible to the
-       user roles
-    3) The process has an instance assigned to '*' and the
-       roles for the activity match the roles assigned to
-       the user
-    The method returns the list of processes that match this
-    and it also returns the number of instances that are in the
-    process matching the conditions.
-    */
+  /*!
+  List user processes, user processes should follow one of these conditions:
+  1) The process has an instance assigned to the user
+  2) The process has a begin activity with a role compatible to the
+     user roles
+  3) The process has an instance assigned to '*' and the
+     roles for the activity match the roles assigned to
+     the user
+  The method returns the list of processes that match this
+  and it also returns the number of instances that are in the
+  process matching the conditions.
+  */
     public function gui_list_user_processes($user, $offset, $maxRecords, $sort_mode, $find, $where='')
     {
         // FIXME: this doesn't support multiple sort criteria
@@ -27,7 +27,7 @@ class GUI extends Base
         $sort_mode = str_replace("_", " ", $sort_mode);
 
         $mid = "where gp.isActive=? and gur.user=?";
-        $bindvars = ['y',$user];
+        $bindvars = [1,$user];
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid .= " and ((gp.name like ?) or (gp.description like ?))";
@@ -59,6 +59,7 @@ class GUI extends Base
         $result = $this->query($query, $bindvars, $maxRecords, $offset);
         $cant = $this->getOne($query_cant, $bindvars);
         $ret = [];
+
         while ($res = $result->fetchRow()) {
             // Get instances per activity
             $pId=$res['pId'];
@@ -97,7 +98,7 @@ class GUI extends Base
         $sort_mode = str_replace("_", " ", $sort_mode);
 
         $mid = "where gp.isActive=? and gur.user=?";
-        $bindvars = ['y',$user];
+        $bindvars = [1,$user];
         if ($find) {
             $findesc = '%'.$find.'%';
             $mid .= " and ((ga.name like ?) or (ga.description like ?))";

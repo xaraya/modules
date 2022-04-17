@@ -98,7 +98,7 @@
                   <!-- Get an input image for the action -->
                   <xar:set name="info">array('action' => $action)</xar:set>
                   <xar:if condition="$action eq 'run'">
-                    <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active' and $item['user'] eq $userId">
+                    <xar:if condition="$item['isInteractive'] eq 1 and $item['status'] eq 'active' and $item['user'] eq $userId">
                       <input type="hidden" name="activityId" value="#$item['activityId']#"/>
                       <xar:template file="action_input_image" subdata="$info"/>
                     </xar:if>

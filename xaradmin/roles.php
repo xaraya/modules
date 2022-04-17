@@ -31,7 +31,7 @@ function workflow_admin_roles()
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $data = [];
-    $maxRecords = xarModVars::get('workflow', 'itemsperpage');
+    $maxRecords = xarModVars::get('workflow', 'items_per_page');
 
     // Adapted from tiki-g-admin_roles.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
@@ -41,7 +41,7 @@ function workflow_admin_roles()
     }
     if (empty($pid)) {
         $data['msg'] =  xarML("No process indicated");
-        return xarTpl::module('workflow', 'admin', 'error', $data);
+        return xarTpl::module('workflow', 'admin', 'errors', $data);
     }
     $data['pid'] =  $pid;
 
@@ -197,7 +197,7 @@ function workflow_admin_roles()
     $data['items'] =&  $all_roles['data'];
 
     $valid = $activityManager->validate_process_activities($pid);
-    $proc_info['isValid'] = $valid ? 'y' : 'n';
+    $proc_info['isValid'] = $valid ? 1 : 0;
     $errors = [];
     if (!$valid) {
         $errors = $activityManager->get_error();

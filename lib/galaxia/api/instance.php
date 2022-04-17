@@ -77,7 +77,10 @@ class Instance extends Base
         $actname=trim($actname);
         $aid = $this->getOne("select `activityId` from ".self::tbl('activities')."where `pId`=? and `name`=?", [$pId,$actname]);
         if (!$this->getOne("select count(*) from ".self::tbl('activities')." where `activityId`=? and `pId`=?", [$aid,$pId])) {
-            trigger_error(tra('Fatal error: setting next activity to an unexisting activity'), E_USER_WARNING);
+//            return xarTpl::module('workflow', 'user', 'errors', array('layout' => 'unknown_activity', 'id' => $aid));
+
+            //REMOVEME
+            trigger_error(xarML('Fatal error: setting next activity to an unexisting activity'), E_USER_WARNING);
         }
         $this->nextActivity=$aid;
         $query = "update ".self::tbl('instances')." set `nextActivity`=? where `instanceId`=?";
@@ -138,7 +141,7 @@ class Instance extends Base
 
     /**
     Sets a property in this instance. This method is used in activities to
-    set instance properties. Instance properties are inemdiately serialized.
+    set instance properties. Instance properties are immediately serialized.
     */
     public function set($name, $value)
     {
@@ -378,7 +381,7 @@ class Instance extends Base
     $addworkitem indicates if a workitem should be added for the completed
     activity.
     YOU MUST NOT CALL complete() for non-interactive activities since
-    the engine does automatically complete automatic activities after
+    the engine does automatically complete such (automatic) activities after
     executing them.
     */
     public function complete($activityId=0, $force=false, $addworkitem=true)
@@ -397,15 +400,20 @@ class Instance extends Base
         if ($activityId==0) {
             $activityId=$_REQUEST['activityId'];
         }
-        // If we are completing a start activity then the instance must
-        // be created first!
+        //---------------------------------------------
+
+        // If we are completing a start activity then the instance must be created first!
         $type = $this->getOne("select `type` from ".self::tbl('activities')." where `activityId`=?", [(int)$activityId]);
         if ($type=='start') {
             $this->_createNewInstance((int)$activityId, $theuser);
         }
+        //---------------------------------------------
+
+        // Clock the time the instance-activity ended and set its status to completed
         $now = date("U");
-        $query = "update ".self::tbl('instance_activities')." set `ended`=? where `activityId`=? and `instanceId`=?";
-        $this->query($query, [(int)$now,(int)$activityId,(int)$this->instanceId]);
+        $query = "update ".self::tbl('instance_activities')." set `ended`=?, `status`=? where `activityId`=? and `instanceId`=?";
+        $this->query($query, [(int)$now,'completed',(int)$activityId,(int)$this->instanceId]);
+        //---------------------------------------------
 
         //Add a workitem to the instance
         $iid = $this->instanceId;
@@ -430,20 +438,23 @@ class Instance extends Base
             $query="insert into ".self::tbl('workitems')."(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";
             $this->query($query, [(int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser]);
         }
+        //---------------------------------------------
 
         //Set the status for the instance-activity to completed
-        $this->setActivityStatus($activityId, 'completed');
+        //Not needed: this is done above when setting the end time
+        // $this->setActivityStatus($activityId,'completed');
+        //---------------------------------------------
 
-        //If this and end actt then terminate the instance
+        //If this is an end activity then terminate the instance
         if ($type=='end') {
             $this->terminate();
             return;
         }
+        //---------------------------------------------
 
-        //If the activity ending is autorouted then send to the
-        //activity
+        //If the activity ending is autorouted then send to the next activity
         if ($type != 'end') {
-            if (($force) || ($this->getOne("select `isAutoRouted` from ".self::tbl('activities')." where `activityId`=?", [$activityId]) == 'y')) {
+            if (($force) || ($this->getOne("select `isAutoRouted` from ".self::tbl('activities')." where `activityId`=?", [$activityId]) == 1)) {
                 // Now determine where to send the instance
                 $query = "select `actToId` from ".self::tbl('transitions')." where `actFromId`=?";
                 $result = $this->query($query, [(int)$activityId]);
@@ -461,11 +472,15 @@ class Instance extends Base
                     if (in_array($this->nextActivity, $candidates)) {
                         $this->sendTo((int)$activityId, (int)$this->nextActivity);
                     } else {
-                        trigger_error(tra('Fatal error: nextActivity does not match any candidate in autorouting switch activity'), E_USER_WARNING);
+//            return xarTpl::module('workflow', 'user', 'errors', array('layout' => 'unknown_activity', 'id' => $this->nextActivity));
+                        // REMOVEME
+                        trigger_error(xarML('Fatal error: nextActivity does not match any candidate in autorouting switch activity'), E_USER_WARNING);
                     }
                 } else {
                     if (count($candidates)>1) {
-                        trigger_error(tra('Fatal error: non-deterministic decision for autorouting activity'), E_USER_WARNING);
+                        trigger_error(xarML('Fatal error: non-deterministic decision for autorouting activity'), E_USER_WARNING);
+                    } elseif (count($candidates)==0) {
+                        trigger_error(xarML('Fatal error: no next activity found'), E_USER_WARNING);
                     } else {
                         $this->sendTo((int)$activityId, (int)$candidates[0]);
                     }
@@ -475,8 +490,7 @@ class Instance extends Base
     }
 
     /**
-    Aborts an activity and terminates the whole instance. We still create a workitem to keep track
-    of where in the process the instance was aborted
+    Aborts an activity and terminates the whole instance. We still create a workitem to keep track of where in the process the instance was aborted
     */
     public function abort($activityId=0, $theuser = '', $addworkitem=true)
     {
@@ -571,7 +585,7 @@ class Instance extends Base
 
         // Verify the existance of a transition
         if (!$this->getOne("select count(*) from ".self::tbl('transitions')."where `actFromId`=? and `actToId`=?", [$from,(int)$activityId])) {
-            trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'), E_USER_WARNING);
+            trigger_error(xarML('Fatal error: trying to send an instance to an activity but no transition found'), E_USER_WARNING);
         }
 
         //try to determine the user or *
@@ -634,13 +648,26 @@ class Instance extends Base
         //complete the activity
         $isInteractive = $this->getOne("select `isInteractive` from ".self::tbl('activities')." where `activityId`=?", [(int)$activityId]);
 
-        if ($isInteractive == 'n') {
+        if ($isInteractive == 0) {
+            // This activity is not interactive: execute and complete it
             // Now execute the code for the activity (function defined in lib/galaxia/config.php)
             galaxia_execute_activity($activityId, $iid, 1);
 
             // Reload in case the activity did some change
             $this->getInstance($this->instanceId);
             $this->complete($activityId);
+        } else {
+            // This activity is interactive: just execute it as running
+            xarController::redirect(
+                xarController::URL(
+                                    'workflow',
+                                    'user',
+                                    'run_activity',
+                                    ['activityId' => $activityId,
+                                      'iid' => $iid,
+                                      'auto' => 0, ]
+                                )
+            );
         }
     }
 

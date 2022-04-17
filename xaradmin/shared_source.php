@@ -27,41 +27,38 @@ function workflow_admin_shared_source()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = [];
+    $data = [];
 
     // Adapted from tiki-g-admin_shared_source.php
 
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     if (!isset($_REQUEST['pid'])) {
-        $tplData['msg'] =  xarML("No process indicated");
-        return xarTpl::module('workflow', 'admin', 'error', $tplData);
+        $data['msg'] =  xarML("No process indicated");
+        return xarTpl::module('workflow', 'admin', 'errors', $data);
     }
 
-    $tplData['pid'] =  $_REQUEST['pid'];
+    $data['pid'] =  $_REQUEST['pid'];
 
     if (isset($_REQUEST['code'])) {
         unset($_REQUEST['template']);
-        $_REQUEST['save'] = 'y';
-    } elseif (isset($_REQUEST['template'])) {
-        unset($_REQUEST['code']);
         $_REQUEST['save'] = 'y';
     }
 
     $process = new Process($_REQUEST['pid']);
     $proc_info = $processManager->get_process($_REQUEST['pid']);
     $proc_info['graph']=$process->getGraph();
-    $tplData['proc_info'] =& $proc_info;
+    $data['proc_info'] =& $proc_info;
 
     $procname = $process->getNormalizedName();
 
-    $tplData['warn'] =  '';
+    $data['warn'] =  '';
 
     if (!isset($_REQUEST['activityId'])) {
         $_REQUEST['activityId'] = 0;
     }
 
-    $tplData['activityId'] =  $_REQUEST['activityId'];
+    $data['activityId'] =  $_REQUEST['activityId'];
 
     if ($_REQUEST['activityId']) {
         $act = WorkFlowActivity::get($_REQUEST['activityId']);
@@ -69,27 +66,30 @@ function workflow_admin_shared_source()
         $actname = $act->getNormalizedName();
 
         if (isset($_REQUEST['template'])) {
-            $tplData['template'] =  'y';
+            $data['template'] =  1;
 
-            $source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.tpl';
+            $source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.xt';
         } else {
-            $tplData['template'] =  'n';
+            $data['template'] =  0;
 
             $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
         }
+
         // Then editing an activity
-        $tplData['act_info'] =  [
-            'isInteractive' => $act->isInteractive(),
+        $data['act_info'] =  [
+            'isInteractive' => $act->isInteractive() ? 1 : 0,
             'type'          => $act->getType(), ];
     } else {
-        $tplData['template'] =  'n';
-        $tplData['act_info'] =  ['isInteractive' => 'n', 'type' => 'shared'];
+        $data['template'] =  0;
+        $data['act_info'] =  ['isInteractive' => 0, 'type' => 'shared'];
         // Then editing shared code
         $source = GALAXIA_PROCESSES."/$procname/code/shared.php";
     }
 
     //First of all save
-    if (isset($_REQUEST['source']) && isset($_REQUEST['save'])) {
+    xarVar::fetch('source', 'str', $source_data, '', xarVar::NOT_REQUIRED);
+    if (!empty($source_data)) {
+        //var_dump($source);exit;
         // security check on paths
         $basedir = GALAXIA_PROCESSES . "/$procname/code/";
         $basepath = realpath($basedir);
@@ -98,9 +98,9 @@ function workflow_admin_shared_source()
             $fp = fopen($_REQUEST['source_name'], "wb");
 
             if (get_magic_quotes_gpc()) {
-                $_REQUEST['source'] = stripslashes($_REQUEST['source']);
+                $source_data = stripslashes($source_data);
             }
-            fwrite($fp, $_REQUEST['source']);
+            fwrite($fp, $source_data);
             fclose($fp);
             if ($_REQUEST['activityId']) {
                 $act = WorkflowActivity::get($_REQUEST['activityId']);
@@ -111,23 +111,21 @@ function workflow_admin_shared_source()
         }
     }
 
-    $tplData['source_name'] =  $source;
+    $data['source_name'] =  $source;
 
     $fp = fopen($source, "rb");
-    $tplData['data'] = '';
+    $data['data'] = '';
     while (!feof($fp)) {
-        $data = fread($fp, 4096);
-        $tplData['data'] .=  htmlspecialchars($data);
+        $filestring = fread($fp, 4096);
+        $data['data'] .=  $filestring;
     }
     fclose($fp);
 
     // initialize template
-    if (empty($tplData['data']) && isset($_REQUEST['template']) && !empty($act)) {
-        // load sample template
-        $sample = file_get_contents(sys::code() . 'modules/workflow/xartemplates/includes/sample.xt');
-        // replace title with current activity name
-        $sample = str_replace('#$title#', $act->name, $sample);
-        $tplData['data'] = htmlspecialchars($sample);
+    if (empty($data['data']) && isset($_REQUEST['template']) && !empty($act)) {
+        $data['data'] = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+        $data['data'] .= "\n" . $act->name;
+        $data['data'] .= "\n" . '</xar:template>';
     }
 
     $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
@@ -136,17 +134,17 @@ function workflow_admin_shared_source()
     if (!$valid) {
         $errors = $activityManager->get_error();
 
-        $proc_info['isValid'] = 'n';
+        $proc_info['isValid'] = 0;
     } else {
-        $proc_info['isValid'] = 'y';
+        $proc_info['isValid'] = 1;
     }
 
-    $tplData['errors'] =  $errors;
+    $data['errors'] =  $errors;
 
     $activities = $activityManager->list_activities($_REQUEST['pid'], 0, -1, 'name_asc', '');
-    $tplData['items'] = $activities['data'];
+    $data['items'] = $activities['data'];
 
-    $tplData['mid'] =  'tiki-g-admin_shared_source.tpl';
+    $data['mid'] =  'tiki-g-admin_shared_source.tpl';
 
-    return $tplData;
+    return $data;
 }

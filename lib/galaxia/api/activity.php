@@ -121,7 +121,7 @@ class WorkflowActivity extends Base
     {
         // @todo cache
         $query = "update ".self::tbl('activities')."set isInteractive=? where pId=? and activityId=?";
-        $this->query($query, [$is ? 'y' : 'n', $this->getProcessId(), $this->getActivityId()]);
+        $this->query($query, [$is, $this->getProcessId(), $this->getActivityId()]);
         // If template does not exist then create template
         $this->compile();
 
@@ -139,7 +139,7 @@ class WorkflowActivity extends Base
     }
     public function isAutoRouted()
     {
-        return $this->isAutoRouted == 'y';
+        return $this->isAutoRouted == 1;
     }
 
     public function setProcessId($pid)
@@ -223,7 +223,7 @@ class WorkflowActivity extends Base
         $procNName = $process->getNormalizedName();
 
         $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$actname.'.php';
-        $template_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$actname.'.tpl';
+        $template_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$actname.'.xt';
         $user_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$actname.'.php';
         $pre_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pre.php';
         $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
@@ -286,13 +286,13 @@ class WorkflowActivity extends Base
         }
         if ($this->isInteractive() && file_exists($template_file)) {
             // remove the copy of the template, if any
-            if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl")) {
-                unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
+            if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.xt")) {
+                unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.xt");
             }
         }
         if (GALAXIA_TEMPLATES && file_exists($template_file)) {
             // and make a fresh one
-            copy($template_file, GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
+            copy($template_file, GALAXIA_TEMPLATES.'/'.$procNName."/$actname.xt");
         }
     }
 

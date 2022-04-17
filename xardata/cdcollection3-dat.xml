@@ -1,110 +1,110 @@
 <items>
   <cdcollection itemid="3">
-    <cdid>3</cdid>
-    <title>Avalon - Roxy Music</title>
+    <id>3</id>
+    <name>Avalon - Roxy Music</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="4">
-    <cdid>4</cdid>
-    <title>Abacab - Genesis</title>
+    <id>4</id>
+    <name>Abacab - Genesis</name>
     <status>not available</status>
-    <user>6</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="5">
-    <cdid>5</cdid>
-    <title>Four Seasons - Vivaldi</title>
+    <id>5</id>
+    <name>Four Seasons - Vivaldi</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="6">
-    <cdid>6</cdid>
-    <title>Rubber Soul - Beatles</title>
+    <id>6</id>
+    <name>Rubber Soul - Beatles</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="7">
-    <cdid>7</cdid>
-    <title>Back in Black - AC/DC</title>
+    <id>7</id>
+    <name>Back in Black - AC/DC</name>
     <status>not available</status>
-    <user>6</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="8">
-    <cdid>8</cdid>
-    <title>Kashmir - Led Zeppelin</title>
+    <id>8</id>
+    <name>Kashmir - Led Zeppelin</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="9">
-    <cdid>9</cdid>
-    <title>Aqualung - Jethro Tull</title>
+    <id>9</id>
+    <name>Aqualung - Jethro Tull</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="10">
-    <cdid>10</cdid>
-    <title>Curse of the Pheromones - Startled Insects</title>
+    <id>10</id>
+    <name>Curse of the Pheromones - Startled Insects</name>
     <status>not available</status>
-    <user>6</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="11">
-    <cdid>11</cdid>
-    <title>Autobahm - Kraftwerk</title>
+    <id>11</id>
+    <name>Autobahm - Kraftwerk</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="12">
-    <cdid>12</cdid>
-    <title>Bolero - Ravel</title>
+    <id>12</id>
+    <name>Bolero - Ravel</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="13">
-    <cdid>13</cdid>
-    <title>Rumours - Fleetwood Mac</title>
+    <id>13</id>
+    <name>Rumours - Fleetwood Mac</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="14">
-    <cdid>14</cdid>
-    <title>Come on Over - Shania Twain</title>
+    <id>14</id>
+    <name>Come on Over - Shania Twain</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="15">
-    <cdid>15</cdid>
-    <title>Pyramid - Alan Parsons Project</title>
+    <id>15</id>
+    <name>Pyramid - Alan Parsons Project</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="16">
-    <cdid>16</cdid>
-    <title>Friday Night in SF - de Lucia/di Meola/McLaughlin</title>
+    <id>16</id>
+    <name>Friday Night in SF - de Lucia/di Meola/McLaughlin</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="17">
-    <cdid>17</cdid>
-    <title>A Night at the Opera - Queen</title>
+    <id>17</id>
+    <name>A Night at the Opera - Queen</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="18">
-    <cdid>18</cdid>
-    <title>Sevilla - Romero San Juan</title>
+    <id>18</id>
+    <name>Sevilla - Romero San Juan</name>
     <status>not available</status>
-    <user>6</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="19">
-    <cdid>19</cdid>
-    <title>Tubular Bells - Mike Oldfield</title>
+    <id>19</id>
+    <name>Tubular Bells - Mike Oldfield</name>
     <status>not available</status>
-    <user>6</user>
+    <user>5</user>
   </cdcollection>
   <cdcollection itemid="20">
-    <cdid>20</cdid>
-    <title>The Nutcracker - Pyotr Tschaikovsky</title>
+    <id>20</id>
+    <name>The Nutcracker - Pyotr Tschaikovsky</name>
     <status>available</status>
-    <user>0</user>
+    <user>5</user>
   </cdcollection>
 </items>
