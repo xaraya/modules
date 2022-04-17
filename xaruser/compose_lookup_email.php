@@ -135,6 +135,7 @@ function reminders_user_compose_lookup_email($args)
                 $data['result']['code'] = xarMod::apiFunc('mailer','user','send', $args);
                 
                 // Now record this email in the history table
+                sys::import('xaraya.structures.query');
                 $tables = xarDB::getTables();
                 $q = Query('INSERT', $tables['reminders_lookup_history']);
                 $q-> addfield('lookup', $args['message']);
